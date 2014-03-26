@@ -221,13 +221,6 @@
         },
         {
             "name": "loader",
-            "runner": "http://dev.kissyui.com/kissy/src/loader/tests/runner/cache.jss",
-            "email": [
-                "yiminghe@gmail.com"
-            ]
-        },
-        {
-            "name": "loader2",
             "runner": "http://dev.kissyui.com/kissy/src/loader/tests/runner/test.html",
             "email": [
                 "yiminghe@gmail.com"

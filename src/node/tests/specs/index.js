@@ -1,21 +1,13 @@
-KISSY.add(function(S,io){
-    io({
-        url:'../specs/node.fragment.html',
-        async:false,
-        success:function(data){
+KISSY.add(function (S, require) {
+    require('io')({
+        url: '../specs/node.fragment.html',
+        async: false,
+        success: function (data) {
             window.$('body').append(data);
         }
     });
-    S.each(arguments,function(a,i){
-        if(i>1){
-            a.run();
-        }
-    });
-},{
-    requires:[
-        'io',
-        './anim',
-        './event',
-        './node'
-    ]
+
+    require('./anim');
+    require('./event');
+    require('./node');
 });

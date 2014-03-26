@@ -457,35 +457,9 @@ KISSY.add(function (S, require) {
             }
         });
 
-        it('S.error', function () {
-            try {
-                S.error('wrong');
-            } catch (e) {
-                expect(e.message).toBe('wrong');
-            }
-        });
-
         it('S.guid', function () {
             expect(typeof S.guid()).toBe('string');
             expect(S.guid() - S.guid()).toBe(-1);
-        });
-
-        it('S.setImmediate works', function () {
-            var order = [];
-            S.setImmediate(function () {
-                order.push(2);
-                S.setImmediate(function () {
-                    order.push(4);
-                });
-            });
-            S.setImmediate(function () {
-                order.push(3);
-            });
-            order.push(1);
-            waits(100);
-            runs(function () {
-                expect(order).toEqual([1, 2, 3, 4]);
-            });
         });
 
         it('S.makeArray', function () {

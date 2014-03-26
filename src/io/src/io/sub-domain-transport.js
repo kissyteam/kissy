@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Event = require('event/dom'),
+        Uri = require('uri'),
         Dom = require('dom'),
         XhrTransportBase = require('./xhr-transport-base');
     var logger = S.getLogger('s/io');
@@ -58,7 +59,7 @@ KISSY.add(function (S, require) {
                     top: '-9999px'
                 });
                 Dom.prepend(iframe, doc.body || doc.documentElement);
-                iframeUri = new S.Uri();
+                iframeUri = new Uri();
                 iframeUri.setScheme(uri.getScheme());
                 iframeUri.setPort(uri.getPort());
                 iframeUri.setHostname(hostname);

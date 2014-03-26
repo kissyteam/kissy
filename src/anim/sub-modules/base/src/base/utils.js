@@ -89,12 +89,12 @@ KISSY.add(function (S,require) {
         savePausedAnim: savePausedAnim,
         isAnimRunning: isAnimRunning,
         // whether node has paused anim
-        'isElPaused': function (node) {
+        isElPaused: function (node) {
             var paused = Dom.data(node, pausedKey);
             return paused && !S.isEmptyObject(paused);
         },
         // whether node is running anim
-        'isElRunning': function (node) {
+        isElRunning: function (node) {
             var allRunning = Dom.data(node, runningKey);
             return allRunning && !S.isEmptyObject(allRunning);
         },

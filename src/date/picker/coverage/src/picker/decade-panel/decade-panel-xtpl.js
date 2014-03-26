@@ -368,7 +368,7 @@ if (! _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].branchData) {
   _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].branchData['137'] = [];
   _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].branchData['137'][1] = new BranchData();
 }
-_$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].branchData['137'][1].init(6158, 37, 'commandRet28 && commandRet28.isBuffer');
+_$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].branchData['137'][1].init(6152, 37, 'commandRet28 && commandRet28.isBuffer');
 function visit18_137_1(result) {
   _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].branchData['137'][1].ranCondition(result);
   return result;
@@ -627,7 +627,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].lineData[133]++;
     require("date/picker/decade-panel/decades-xtpl");
     _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].lineData[134]++;
-    option26.params[0] = moduleWrap.resolveByName(option26.params[0]);
+    option26.params[0] = moduleWrap.resolve(option26.params[0]);
   }
   _$jscoverage['/picker/decade-panel/decade-panel-xtpl.js'].lineData[136]++;
   var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 24, payload);

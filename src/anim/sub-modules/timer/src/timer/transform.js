@@ -20,9 +20,9 @@ KISSY.add(function (S, require) {
     // blog.yiminghe.me/2013/12/03/decomposing-css-2d-transform-matrix-into-simple-transformations
     function decomposeMatrix(matrix) {
         matrix = toMatrixArray(matrix);
-        var scaleX, scaleY , skew ,
+        var scaleX, scaleY, skew,
             A = matrix[0],
-            B = matrix[1] ,
+            B = matrix[1],
             C = matrix[2],
             D = matrix[3];
 
@@ -45,25 +45,25 @@ KISSY.add(function (S, require) {
         // The recomposition order is very important
         // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
         return {
-            'translateX': myParse(matrix[4]),
-            'translateY': myParse(matrix[5]),
-            'rotate': myParse(Math.atan2(B, A) * 180 / Math.PI),
-            'skewX': myParse(Math.atan(skew) * 180 / Math.PI),
-            'skewY': 0,
-            'scaleX': myParse(scaleX),
-            'scaleY': myParse(scaleY)
+            translateX: myParse(matrix[4]),
+            translateY: myParse(matrix[5]),
+            rotate: myParse(Math.atan2(B, A) * 180 / Math.PI),
+            skewX: myParse(Math.atan(skew) * 180 / Math.PI),
+            skewY: 0,
+            scaleX: myParse(scaleX),
+            scaleY: myParse(scaleY)
         };
     }
 
     function defaultDecompose() {
         return {
-            'translateX': 0,
-            'translateY': 0,
-            'rotate': 0,
-            'skewX': 0,
-            'skewY': 0,
-            'scaleX': 1,
-            'scaleY': 1
+            translateX: 0,
+            translateY: 0,
+            rotate: 0,
+            skewX: 0,
+            skewY: 0,
+            scaleX: 1,
+            scaleY: 1
         };
     }
 

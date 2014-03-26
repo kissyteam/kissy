@@ -2,9 +2,9 @@
  * test cases for attribute sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
-    S.get = Dom.get;
-    S.query = Dom.query;
+KISSY.add(function (S, require) {
+    var Uri = require('uri');
+    var Dom = require('dom');
 
     var $ = window.jQuery;
 
@@ -25,24 +25,24 @@ KISSY.add(function (S, Dom) {
 
         beforeEach(function () {
             $('body').append(tpl);
-            foo = S.get('#foo');
-            a = S.get('#foo a');
-            img = S.get('#test-img');
-            input = S.get('#foo input');
-            radio = S.get('#test-radio');
-            radio2 = S.get('#test-radio2');
-            button = S.get('#foo button');
-            label = S.get('#foo label');
-            table = S.get('#test-table');
-            td = S.get('#test-table td');
-            select = S.get('#test-select');
-            select2 = S.get('#test-select2');
-            select3 = S.get('#test-select3');
-            opt = S.get('#test-opt');
-            div = S.get('#test-div');
-            opt2 = S.query('#test-select option')[1];
-            area = S.get('#foo textarea');
-            disabledTest = S.get('#test-20100728-disabled');
+            foo = Dom.get('#foo');
+            a = Dom.get('#foo a');
+            img = Dom.get('#test-img');
+            input = Dom.get('#foo input');
+            radio = Dom.get('#test-radio');
+            radio2 = Dom.get('#test-radio2');
+            button = Dom.get('#foo button');
+            label = Dom.get('#foo label');
+            table = Dom.get('#test-table');
+            td = Dom.get('#test-table td');
+            select = Dom.get('#test-select');
+            select2 = Dom.get('#test-select2');
+            select3 = Dom.get('#test-select3');
+            opt = Dom.get('#test-opt');
+            div = Dom.get('#test-div');
+            opt2 = Dom.query('#test-select option')[1];
+            area = Dom.get('#foo textarea');
+            disabledTest = Dom.get('#test-20100728-disabled');
         });
 
         afterEach(function () {
@@ -52,16 +52,16 @@ KISSY.add(function (S, Dom) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 20;
                 },
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
 
-        S.get = Dom.get;
-        S.query = Dom.query;
+        Dom.get = Dom.get;
+        Dom.query = Dom.query;
 
         var foo ,
             a ,
@@ -149,7 +149,7 @@ KISSY.add(function (S, Dom) {
                 Dom.attr(img, 'src', '../others/space.gif');
 
                 expect(Dom.prop(img, 'src'))
-                    .toBe(new S.Uri(location.href).resolve('../others/space.gif').toString());
+                    .toBe(new Uri(location.href).resolve('../others/space.gif').toString());
 
                 expect(Dom.attr(img, 'src')).toBe('../others/space.gif');
 
@@ -186,7 +186,7 @@ KISSY.add(function (S, Dom) {
 
             it('should handle checked attribute correctly', function () {
                 // 测试 checked 的 setter
-                var checkbox2 = S.get('#test-20100728-checkbox');
+                var checkbox2 = Dom.get('#test-20100728-checkbox');
                 var body = document.body;
                 Dom.attr(checkbox2, 'checked', true);
                 expect(Dom.attr(checkbox2, 'checked')).toBe('checked');
@@ -389,6 +389,4 @@ KISSY.add(function (S, Dom) {
             });
         });
     });
-}, {
-    requires: ['dom']
 });

@@ -10,7 +10,7 @@ S.config({
     packages: [
         {
             name: 'nodejs',
-            path: path.dirname(__filename).replace(/\\/g, '/') + '/../'
+            base: path.dirname(__filename).replace(/\\/g, '/') + '/../'
         }
     ]
 });

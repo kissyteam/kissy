@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
         propFix = Dom._propFix,
         HREF = 'href',
         hrefFix,
-        IE_VERSION = S.UA.ieMode;
+        IE_VERSION = require('ua').ieMode;
 
     if (IE_VERSION < 8) {
         attrHooks.style.set = function (el, val) {
@@ -60,7 +60,7 @@ KISSY.add(function (S, require) {
 
         // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
         // 注意 colSpan rowSpan 已经由 propFix 转为大写
-        S.each([ HREF, 'src', 'width', 'height', 'colSpan', 'rowSpan' ], function (name) {
+        S.each([HREF, 'src', 'width', 'height', 'colSpan', 'rowSpan'], function (name) {
             attrHooks[ name ] = {
                 get: function (elem) {
                     var ret = elem.getAttribute(name, 2);
@@ -96,6 +96,7 @@ KISSY.add(function (S, require) {
     // http://gabriel.nagmay.com/2008/11/javascript-href-bug-in-ie/
     // https://groups.google.com/group/jquery-dev/browse_thread/thread/22029e221fe635c6?pli=1
     hrefFix = attrHooks[HREF] = attrHooks[HREF] || {};
+
     hrefFix.set = function (el, val, name) {
         var childNodes = el.childNodes,
             b,
@@ -116,7 +117,6 @@ KISSY.add(function (S, require) {
             el.removeChild(b);
         }
     };
-
 
     function getText(el) {
         var ret = '',

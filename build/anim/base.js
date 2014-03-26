@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:45
+build time: Mar 25 17:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -154,8 +154,8 @@ KISSY.add("anim/base/short-hand", [], function() {
   return{background:["backgroundColor"], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderColor:["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderBottom:["borderBottomWidth", "borderBottomColor"], borderLeft:["borderLeftWidth", "borderLeftColor"], borderTop:["borderTopWidth", "borderTopColor"], borderRight:["borderRightWidth", "borderRightColor"], 
   font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
 });
-KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise", "./base/short-hand"], function(S, require) {
-  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, camelCase = S.camelCase, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
+KISSY.add("anim/base", ["dom", "ua", "./base/utils", "./base/queue", "promise", "./base/short-hand"], function(S, require) {
+  var Dom = require("dom"), UA = require("ua"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, camelCase = S.camelCase, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
   var SHORT_HANDS = require("./base/short-hand");
   var defaultConfig = {duration:1, easing:"linear"};
   function syncComplete(self) {
@@ -250,7 +250,7 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise", "./bas
         S.mix(_backupProps, {overflow:elStyle.overflow, "overflow-x":elStyle.overflowX, "overflow-y":elStyle.overflowY});
         elStyle.overflow = "hidden";
         if(Dom.css(node, "display") === "inline" && Dom.css(node, "float") === "none") {
-          if(S.UA.ieMode < 10) {
+          if(UA.ieMode < 10) {
             elStyle.zoom = 1
           }else {
             elStyle.display = "inline-block"

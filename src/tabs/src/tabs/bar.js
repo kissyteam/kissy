@@ -22,11 +22,11 @@ KISSY.add(function (S, require) {
         },
 
         syncUI: function () {
-            var bar = this,
-                children = bar.get('children');
+            var self = this,
+                children = self.get('children');
             S.each(children, function (c) {
                 if (c.get('selected')) {
-                    bar.setInternal('selectedTab', c);
+                    self.setInternal('selectedTab', c);
                     return false;
                 }
                 return undefined;

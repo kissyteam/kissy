@@ -20,16 +20,16 @@ KISSY.add(function (S, require) {
 
     Special.change = {
         setup: function () {
-            var el = this;
-            if (isFormElement(el)) {
+            var self = this;
+            if (isFormElement(self)) {
                 // checkbox/radio only fires change when blur in ie<9
                 // so use another technique from jquery
-                if (isCheckBoxOrRadio(el)) {
+                if (isCheckBoxOrRadio(self)) {
                     // change in ie<9
                     // change = propertychange -> click
-                    DomEvent.on(el, 'propertychange', propertyChange);
+                    DomEvent.on(self, 'propertychange', propertyChange);
                     // click may not cause change! (eg: radio)
-                    DomEvent.on(el, 'click', onClick);
+                    DomEvent.on(self, 'click', onClick);
                 } else {
                     // other form elements use native , do not bubble
                     return false;
@@ -38,21 +38,21 @@ KISSY.add(function (S, require) {
                 // if bind on parentNode, lazy bind change event to its form elements
                 // note event order : beforeactivate -> change
                 // note 2: checkbox/radio is exceptional
-                DomEvent.on(el, 'beforeactivate', beforeActivate);
+                DomEvent.on(self, 'beforeactivate', beforeActivate);
             }
         },
         tearDown: function () {
-            var el = this;
-            if (isFormElement(el)) {
-                if (isCheckBoxOrRadio(el)) {
-                    DomEvent.remove(el, 'propertychange', propertyChange);
-                    DomEvent.remove(el, 'click', onClick);
+            var self = this;
+            if (isFormElement(self)) {
+                if (isCheckBoxOrRadio(self)) {
+                    DomEvent.remove(self, 'propertychange', propertyChange);
+                    DomEvent.remove(self, 'click', onClick);
                 } else {
                     return false;
                 }
             } else {
-                DomEvent.remove(el, 'beforeactivate', beforeActivate);
-                Dom.query('textarea,input,select', el).each(function (fel) {
+                DomEvent.remove(self, 'beforeactivate', beforeActivate);
+                Dom.query('textarea,input,select', self).each(function (fel) {
                     if (fel.__changeHandler) {
                         fel.__changeHandler = 0;
                         DomEvent.remove(fel, 'change', {fn: changeHandler, last: 1});
@@ -97,7 +97,7 @@ KISSY.add(function (S, require) {
     }
 
     function changeHandler(e) {
-        var fel = this;
+        var self = this;
 
         if (
         // in case stopped by user's callback,same with submit
@@ -105,11 +105,11 @@ KISSY.add(function (S, require) {
         // see : test/change/bubble.html
             e.isPropagationStopped() ||
                 // checkbox/radio already bubble using another technique
-                isCheckBoxOrRadio(fel)) {
+                isCheckBoxOrRadio(self)) {
             return;
         }
         var p;
-        if ((p = fel.parentNode)) {
+        if ((p = self.parentNode)) {
             // fire from parent , itself is handled natively
             DomEvent.fire(p, 'change', e);
         }

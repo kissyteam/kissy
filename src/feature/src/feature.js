@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    require('util');
     var win = S.Env.host,
         Config = S.Config,
         UA = require('ua'),

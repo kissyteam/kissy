@@ -3,16 +3,16 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Const=require('./const');
+KISSY.add(function (S, require) {
+    var Const = require('./const');
     var ACCUMULATED_DAYS_IN_MONTH
             //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
-            = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
+            = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
 
         ACCUMULATED_DAYS_IN_MONTH_LEAP
             //   1/1 2/1   3/1   4/1   5/1   6/1   7/1   8/1   9/1
             // 10/1   11/1   12/1
-            = [ 0, 31, 59 + 1, 90 + 1, 120 + 1, 151 + 1, 181 + 1,
+            = [0, 31, 59 + 1, 90 + 1, 120 + 1, 151 + 1, 181 + 1,
             212 + 1, 243 + 1, 273 + 1, 304 + 1, 334 + 1],
 
         DAYS_OF_YEAR = 365,
@@ -62,7 +62,7 @@ KISSY.add(function (S,require) {
     }
 
     S.mix(Utils, {
-        'isLeapYear': function (year) {
+        isLeapYear: function (year) {
             if ((year & 3) !== 0) {
                 return false;
             }

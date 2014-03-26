@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 11:17
+build time: Mar 25 16:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -19,8 +19,8 @@ build time: Mar 24 11:17
  dom/base
 */
 
-KISSY.add("dom/base/api", [], function(S) {
-  var WINDOW = S.Env.host || {}, DOCUMENT = WINDOW.document, UA = S.UA, RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, NodeType = {ELEMENT_NODE:1, ATTRIBUTE_NODE:2, TEXT_NODE:3, CDATA_SECTION_NODE:4, ENTITY_REFERENCE_NODE:5, ENTITY_NODE:6, PROCESSING_INSTRUCTION_NODE:7, COMMENT_NODE:8, DOCUMENT_NODE:9, DOCUMENT_TYPE_NODE:10, DOCUMENT_FRAGMENT_NODE:11, NOTATION_NODE:12}, Dom = {isCustomDomain:function(win) {
+KISSY.add("dom/base/api", ["ua"], function(S, require) {
+  var WINDOW = S.Env.host || {}, DOCUMENT = WINDOW.document, UA = require("ua"), RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, NodeType = {ELEMENT_NODE:1, ATTRIBUTE_NODE:2, TEXT_NODE:3, CDATA_SECTION_NODE:4, ENTITY_REFERENCE_NODE:5, ENTITY_NODE:6, PROCESSING_INSTRUCTION_NODE:7, COMMENT_NODE:8, DOCUMENT_NODE:9, DOCUMENT_TYPE_NODE:10, DOCUMENT_FRAGMENT_NODE:11, NOTATION_NODE:12}, Dom = {isCustomDomain:function(win) {
     win = win || WINDOW;
     win = Dom.get(win);
     var domain = win.document.domain, hostname = win.location.hostname;
@@ -407,10 +407,10 @@ KISSY.add("dom/base/class", ["./api"], function(S, require) {
   }, addClass:batchEls("_addClass"), removeClass:batchEls("_removeClass"), toggleClass:batchEls("_toggleClass")});
   return Dom
 });
-KISSY.add("dom/base/create", ["./api"], function(S, require) {
+KISSY.add("dom/base/create", ["./api", "ua"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
-  var doc = S.Env.host.document, NodeType = Dom.NodeType, UA = S.UA, ie = UA.ieMode, DIV = "div", PARENT_NODE = "parentNode", DEFAULT_DIV = doc && doc.createElement(DIV), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(ie && ie < 9), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = doc && "outerHTML" in doc.documentElement, RE_SIMPLE_TAG = 
+  var doc = S.Env.host.document, NodeType = Dom.NodeType, UA = require("ua"), ie = UA.ieMode, DIV = "div", PARENT_NODE = "parentNode", DEFAULT_DIV = doc && doc.createElement(DIV), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(ie && ie < 9), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = doc && "outerHTML" in doc.documentElement, RE_SIMPLE_TAG = 
   /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
   function getElementsByTagName(el, tag) {
     return el.getElementsByTagName(tag)
@@ -1034,9 +1034,9 @@ KISSY.add("dom/base/insertion", ["./api"], function(S, require) {
   });
   return Dom
 });
-KISSY.add("dom/base/offset", ["./api"], function(S, require) {
+KISSY.add("dom/base/offset", ["./api", "ua"], function(S, require) {
   var Dom = require("./api");
-  var win = S.Env.host, UA = S.UA, doc = win.document, NodeType = Dom.NodeType, docElem = doc && doc.documentElement, getWindow = Dom.getWindow, CSS1Compat = "CSS1Compat", compatMode = "compatMode", MAX = Math.max, POSITION = "position", RELATIVE = "relative", DOCUMENT = "document", BODY = "body", DOC_ELEMENT = "documentElement", VIEWPORT = "viewport", SCROLL = "scroll", CLIENT = "client", LEFT = "left", TOP = "top", SCROLL_LEFT = SCROLL + "Left", SCROLL_TOP = SCROLL + "Top";
+  var win = S.Env.host, UA = require("ua"), doc = win.document, NodeType = Dom.NodeType, docElem = doc && doc.documentElement, getWindow = Dom.getWindow, CSS1Compat = "CSS1Compat", compatMode = "compatMode", MAX = Math.max, POSITION = "position", RELATIVE = "relative", DOCUMENT = "document", BODY = "body", DOC_ELEMENT = "documentElement", VIEWPORT = "viewport", SCROLL = "scroll", CLIENT = "client", LEFT = "left", TOP = "top", SCROLL_LEFT = SCROLL + "Left", SCROLL_TOP = SCROLL + "Top";
   S.mix(Dom, {offset:function(selector, coordinates, relativeWin) {
     var elem;
     if(coordinates === undefined) {
@@ -1234,10 +1234,10 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
   }
   return Dom
 });
-KISSY.add("dom/base/style", ["./api"], function(S, require) {
+KISSY.add("dom/base/style", ["./api", "ua"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
-  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, 
+  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = require("ua"), BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, 
   zoom:1}, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, defaultDisplay = {}, userSelectVendorInfo = getCssVendorInfo("userSelect"), userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName, camelCase = S.camelCase;
   cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {

@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         start: function () {
             SingleTouch.superclass.start.apply(this, arguments);
             var self = this,
-                touches =self.lastTouches;
+                touches = self.lastTouches;
             // ios will share touches with touchmove...
             self.lastXY = {
                 pageX: touches[0].pageX,

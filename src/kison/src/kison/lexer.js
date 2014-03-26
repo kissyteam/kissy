@@ -188,7 +188,7 @@ KISSY.add(function (S, require) {
                 input = self.input;
             matched = matched.slice(0, matched.length - match.length);
             var past = (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
-                    matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '),
+                    matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '),
                 next = match + input;
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
                 (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');

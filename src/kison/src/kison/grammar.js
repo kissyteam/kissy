@@ -727,7 +727,6 @@ KISSY.add(function (S, require) {
         }
     });
 
-
     // #-------------- for generation start
     function parse(input, filename) {
         var self = this,

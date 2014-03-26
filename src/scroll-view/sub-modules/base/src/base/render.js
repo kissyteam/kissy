@@ -73,15 +73,15 @@ KISSY.add(function (S, require) {
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] = 'translateX(' + floor(-v) + 'px)' +
-                ' translateY(' + floor(-control.get('scrollTop')) + 'px)' +
+            control.contentEl.style[transformProperty] = 'translateX(' + floor(0 - v) + 'px)' +
+                ' translateY(' + floor(0 - control.get('scrollTop')) + 'px)' +
                 (isTransform3dSupported ? ' translateZ(0)' : '');
         };
 
         methods._onSetScrollTop = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] = 'translateX(' + floor(-control.get('scrollLeft')) + 'px)' +
-                ' translateY(' + floor(-v) + 'px)' +
+            control.contentEl.style[transformProperty] = 'translateX(' + floor(0 - control.get('scrollLeft')) + 'px)' +
+                ' translateY(' + floor(0 - v) + 'px)' +
                 (isTransform3dSupported ? ' translateZ(0)' : '');
         };
     }

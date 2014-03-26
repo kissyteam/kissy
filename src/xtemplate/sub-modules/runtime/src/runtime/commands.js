@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Scope = require('./scope');
 
     var commands = {
-        'each': function (scope, option, buffer) {
+        each: function (scope, option, buffer) {
             var params = option.params;
             var param0 = params[0];
             var xindexName = params[2] || 'xindex';
@@ -79,7 +79,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        'set': function (scope, option, buffer) {
+        set: function (scope, option, buffer) {
             scope.mix(option.hash);
             return buffer;
         },
@@ -152,7 +152,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        'macro': function (scope, option, buffer, lineNumber, payload) {
+        macro: function (scope, option, buffer, lineNumber, payload) {
             var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);

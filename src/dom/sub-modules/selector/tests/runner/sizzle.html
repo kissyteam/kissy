@@ -270,9 +270,8 @@
 <br id="last"/>
 <script>
     var S = KISSY;
-    var loc = new S.Uri(location.href);
     var component = 'dom/selector';
-    if (loc.getQuery().has('coverage')) {
+    if (location.search.indexOf('coverage')!==-1) {
         S.config('map', [
             [/kissy\/src\/(.+)\/src\//g, function (m, m1) {
                 var mm = m1.replace(/sub-modules\//g, '');

@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var CustomEvent = require('event/custom'),
         Promise = require('promise');
+    var Uri = require('uri');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
         mirror = function (s) {
@@ -16,7 +17,7 @@ KISSY.add(function (S, require) {
         location = win.location || {},
         simulatedLocation = /**
          @type KISSY.Uri
-         @ignore*/new S.Uri(location.href),
+         @ignore*/new Uri(location.href),
         isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
@@ -338,7 +339,6 @@ KISSY.add(function (S, require) {
             status: 0,
             transport: null
         });
-
 
 
         var TransportConstructor,

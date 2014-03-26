@@ -7,8 +7,7 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var win = S.Env.host,
         $ = Node.all,
-        UA = S.UA;
-
+        UA = require('ua');
 
     // http://yiminghe.iteye.com/blog/1124720
 
@@ -191,7 +190,6 @@ KISSY.add(function (S, require) {
         return S.mix(pos, size);
     }
 
-
     function flip(points, reg, map) {
         var ret = [];
         S.each(points, function (p) {
@@ -207,7 +205,6 @@ KISSY.add(function (S, require) {
         return offset;
     }
 
-
     /**
      * @class KISSY.Component.Extension.Align
      * Align extension class.Align component with specified element.
@@ -215,14 +212,11 @@ KISSY.add(function (S, require) {
     function Align() {
     }
 
-
     Align.__getOffsetParent = getOffsetParent;
 
     Align.__getVisibleRectForElement = getVisibleRectForElement;
 
-    Align.ATTRS =
-    {
-
+    Align.ATTRS = {
         /**
          * alignment config.
          * @type {Object}
@@ -237,7 +231,6 @@ KISSY.add(function (S, require) {
          *      }
          */
 
-
         /**
          * alignment config.
          * @cfg {Object} align
@@ -250,7 +243,6 @@ KISSY.add(function (S, require) {
          *        offset: [0, 0]      // 有效值为 [n, m]
          *      }
          */
-
 
         /**
          * @ignore
@@ -309,7 +301,7 @@ KISSY.add(function (S, require) {
             x += w;
         }
 
-        return { left: x, top: y };
+        return {left: x, top: y};
     }
 
     function beforeVisibleChange(e) {
@@ -336,7 +328,7 @@ KISSY.add(function (S, require) {
             self.$el.getWindow().on('resize', onResize, self);
         },
 
-        '_onSetAlign': function (v) {
+        _onSetAlign: function (v) {
             if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
@@ -426,8 +418,8 @@ KISSY.add(function (S, require) {
             // 相对于屏幕位置没变，而 left/top 变了
             // 例如 <div 'relative'><el absolute></div>
             self.set({
-                'x': newElRegion.left,
-                'y': newElRegion.top
+                x: newElRegion.left,
+                y: newElRegion.top
             }, {
                 force: 1
             });

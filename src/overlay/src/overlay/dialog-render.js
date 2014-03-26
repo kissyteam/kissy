@@ -32,26 +32,27 @@ KISSY.add(function (S, require) {
             return this.control.get('body');
         },
 
-        '_onSetBodyStyle': function (v) {
+        _onSetBodyStyle: function (v) {
             this.control.get('body').css(v);
         },
 
-        '_onSetHeaderStyle': function (v) {
+        _onSetHeaderStyle: function (v) {
             this.control.get('header').css(v);
         },
-        '_onSetFooterStyle': function (v) {
+
+        _onSetFooterStyle: function (v) {
             this.control.get('footer').css(v);
         },
 
-        '_onSetBodyContent': function (v) {
+        _onSetBodyContent: function (v) {
             _setStdModRenderContent(this, 'body', v);
         },
 
-        '_onSetHeaderContent': function (v) {
+        _onSetHeaderContent: function (v) {
             _setStdModRenderContent(this, 'header', v);
         },
 
-        '_onSetFooterContent': function (v) {
+        _onSetFooterContent: function (v) {
             _setStdModRenderContent(this, 'footer', v);
         }
     }, {

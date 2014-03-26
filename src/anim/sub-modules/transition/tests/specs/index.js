@@ -1,10 +1,7 @@
-KISSY.add(function (S, Simple, Queue) {
-    if (KISSY.Feature.getCssVendorInfo('transition')) {
-        Simple.run();
-        Queue.run();
+KISSY.add(function (S, require) {
+    if (S.Feature.getCssVendorInfo('transition')) {
+        require('src/anim/tests/specs/simple');
+        require('src/anim/tests/specs/queue');
+        require('src/anim/tests/specs/promise');
     }
-}, {
-    requires: ['src/anim/tests/specs/simple',
-        'src/anim/tests/specs/queue',
-        'src/anim/tests/specs/promise']
 });

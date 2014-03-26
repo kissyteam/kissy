@@ -3,7 +3,7 @@
  * month panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S,require){
+KISSY.add(function (S, require) {
     var Node = require('node'),
         Control = require('component/control'),
         YearPanel = require('../year-panel/control'),
@@ -14,8 +14,8 @@ KISSY.add(function(S,require){
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.addYear( direction);
-        self.set('value',next);
+        next.addYear(direction);
+        self.set('value', next);
     }
 
     function nextYear(e) {
@@ -34,13 +34,13 @@ KISSY.add(function(S,require){
         var tr = td.parent();
         var tdIndex = td.index();
         var trIndex = tr.index();
-        var value=this.get('value').clone();
-        value.setMonth(trIndex*4+tdIndex);
-        this.fire('select',{
-            value:value
+        var value = this.get('value').clone();
+        value.setMonth(trIndex * 4 + tdIndex);
+        this.fire('select', {
+            value: value
         });
     }
-    
+
     function showYearPanel(e) {
         e.preventDefault();
         var yearPanel = this.get('yearPanel');
@@ -51,7 +51,7 @@ KISSY.add(function(S,require){
     function setUpYearPanel() {
         var self = this;
         var yearPanel = new YearPanel({
-            locale:this.get('locale'),
+            locale: this.get('locale'),
             render: self.get('render')
         });
         yearPanel.on('select', onYearPanelSelect, self);
@@ -74,22 +74,22 @@ KISSY.add(function(S,require){
                 chooseCell,
                 self
             );
-            self.get('yearSelectEl').on(tap,showYearPanel,self);
+            self.get('yearSelectEl').on(tap, showYearPanel, self);
         }
-    },{
-        xclass:'date-picker-month-panel',
-        ATTRS:{
-            focusable:{
-                value:false
+    }, {
+        xclass: 'date-picker-month-panel',
+        ATTRS: {
+            focusable: {
+                value: false
             },
-            value:{
-                view:1
+            value: {
+                view: 1
             },
             yearPanel: {
                 valueFn: setUpYearPanel
             },
-            xrender:{
-                value:MonthPanelRender
+            xrender: {
+                value: MonthPanelRender
             }
         }
     });

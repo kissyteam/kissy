@@ -113,7 +113,7 @@ KISSY.add(function (S, require, exports) {
 
     function dispatch(backward, replace) {
         var url = getUrlForRouter();
-        var uri = new S.Uri(url);
+        var uri = new Uri(url);
         var query = uri.query.get();
         uri.query.reset();
         // normalize to '/'
@@ -293,7 +293,6 @@ KISSY.add(function (S, require, exports) {
         dispatchByVid(state.vid);
     }
 
-
     function onHashChange(e) {
         //S.log('onHashChange');
         // no view id, just return
@@ -322,7 +321,6 @@ KISSY.add(function (S, require, exports) {
         }
         S.mix(globalConfig, opts);
     };
-
 
     var started;
 
@@ -395,7 +393,7 @@ KISSY.add(function (S, require, exports) {
                     triggerRoute = 0;
                     needReplaceHistory = false;
                 } else if (!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId) {
-                    setPathByHash(utils.getHash(new S.Uri(href)), true);
+                    setPathByHash(utils.getHash(new Uri(href)), true);
                     triggerRoute = 0;
                 } else if (supportHistoryPushState && utils.hasVid(href)) {
                     location.replace(href = utils.removeVid(href));

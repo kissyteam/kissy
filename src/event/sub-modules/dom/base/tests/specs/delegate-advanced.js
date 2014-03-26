@@ -4,10 +4,6 @@
  */
 KISSY.add(function (S, Dom, Event) {
     /*jshint quotmark:false*/
-
-    S.get = Dom.get;
-    S.query = Dom.query;
-
     describe('delegate-advanced', function () {
 
         beforeEach(function () {

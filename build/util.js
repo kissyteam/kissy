@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -159,18 +159,20 @@ KISSY.add("util/escape", [], function(S) {
   unEscapeHtmlReg = getUnEscapeReg();
   function getEscapeReg() {
     var str = EMPTY;
-    S.each(htmlEntities, function(entity) {
+    for(var e in htmlEntities) {
+      var entity = htmlEntities[e];
       str += entity + "|"
-    });
+    }
     str = str.slice(0, -1);
     escapeHtmlReg = new RegExp(str, "g");
     return escapeHtmlReg
   }
   function getUnEscapeReg() {
     var str = EMPTY;
-    S.each(reverseEntities, function(entity) {
+    for(var e in reverseEntities) {
+      var entity = reverseEntities[e];
       str += entity + "|"
-    });
+    }
     str += "&#(\\d{1,5});";
     unEscapeHtmlReg = new RegExp(str, "g");
     return unEscapeHtmlReg
@@ -267,8 +269,57 @@ KISSY.add("util/function", [], function(S, undefined) {
 });
 KISSY.add("util/object", [], function(S, undefined) {
   var logger = S.getLogger("s/util");
-  var MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR", STAMP_MARKER = "__~ks_stamped", host = S.Env.host, TRUE = true, EMPTY = "", Obj = Object, objectCreate = Obj.create;
-  mix(S, {stamp:function(o, readOnly, marker) {
+  var MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR", STAMP_MARKER = "__~ks_stamped", host = S.Env.host, TRUE = true, EMPTY = "", toString = {}.toString, Obj = Object, objectCreate = Obj.create;
+  var hasEnumBug = !{toString:1}.propertyIsEnumerable("toString"), enumProperties = ["constructor", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toString", "toLocaleString", "valueOf"];
+  mix(S, {keys:Object.keys || function(o) {
+    var result = [], p, i;
+    for(p in o) {
+      if(o.hasOwnProperty(p)) {
+        result.push(p)
+      }
+    }
+    if(hasEnumBug) {
+      for(i = enumProperties.length - 1;i >= 0;i--) {
+        p = enumProperties[i];
+        if(o.hasOwnProperty(p)) {
+          result.push(p)
+        }
+      }
+    }
+    return result
+  }, each:function(object, fn, context) {
+    if(object) {
+      var key, val, keys, i = 0, length = object && object.length, isObj = length === undefined || toString.call(object) === "[object Function]";
+      context = context || null;
+      if(isObj) {
+        keys = S.keys(object);
+        for(;i < keys.length;i++) {
+          key = keys[i];
+          if(fn.call(context, object[key], key, object) === false) {
+            break
+          }
+        }
+      }else {
+        for(val = object[0];i < length;val = object[++i]) {
+          if(fn.call(context, val, i, object) === false) {
+            break
+          }
+        }
+      }
+    }
+    return object
+  }, now:Date.now || function() {
+    return+new Date
+  }, isArray:function(obj) {
+    return toString.call(obj) === "[object Array]"
+  }, isEmptyObject:function(o) {
+    for(var p in o) {
+      if(p !== undefined) {
+        return false
+      }
+    }
+    return true
+  }, stamp:function(o, readOnly, marker) {
     marker = marker || STAMP_MARKER;
     var guid = o[marker];
     if(guid) {
@@ -433,12 +484,101 @@ KISSY.add("util/object", [], function(S, undefined) {
   }
 });
 KISSY.add("util/string", [], function(S, undefined) {
+  var logger = S.getLogger("s/util");
   var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g, EMPTY = "";
   var RE_DASH = /-([a-z])/ig;
+  var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g, trim = String.prototype.trim;
+  var SEP = "&", EQ = "=", TRUE = true;
+  function isValidParamValue(val) {
+    var t = typeof val;
+    return val == null || t !== "object" && t !== "function"
+  }
   function upperCase() {
     return arguments[1].toUpperCase()
   }
-  S.mix(S, {camelCase:function(name) {
+  S.mix(S, {param:function(o, sep, eq, serializeArray) {
+    sep = sep || SEP;
+    eq = eq || EQ;
+    if(serializeArray === undefined) {
+      serializeArray = TRUE
+    }
+    var buf = [], key, i, v, len, val, encode = S.urlEncode;
+    for(key in o) {
+      val = o[key];
+      key = encode(key);
+      if(isValidParamValue(val)) {
+        buf.push(key);
+        if(val !== undefined) {
+          buf.push(eq, encode(val + EMPTY))
+        }
+        buf.push(sep)
+      }else {
+        if(S.isArray(val) && val.length) {
+          for(i = 0, len = val.length;i < len;++i) {
+            v = val[i];
+            if(isValidParamValue(v)) {
+              buf.push(key, serializeArray ? encode("[]") : EMPTY);
+              if(v !== undefined) {
+                buf.push(eq, encode(v + EMPTY))
+              }
+              buf.push(sep)
+            }
+          }
+        }
+      }
+    }
+    buf.pop();
+    return buf.join(EMPTY)
+  }, unparam:function(str, sep, eq) {
+    if(typeof str !== "string" || !(str = S.trim(str))) {
+      return{}
+    }
+    sep = sep || SEP;
+    eq = eq || EQ;
+    var ret = {}, eqIndex, decode = S.urlDecode, pairs = str.split(sep), key, val, i = 0, len = pairs.length;
+    for(;i < len;++i) {
+      eqIndex = pairs[i].indexOf(eq);
+      if(eqIndex === -1) {
+        key = decode(pairs[i]);
+        val = undefined
+      }else {
+        key = decode(pairs[i].substring(0, eqIndex));
+        val = pairs[i].substring(eqIndex + 1);
+        try {
+          val = decode(val)
+        }catch(e) {
+          logger.error("decodeURIComponent error : " + val);
+          logger.error(e)
+        }
+        if(S.endsWith(key, "[]")) {
+          key = key.substring(0, key.length - 2)
+        }
+      }
+      if(key in ret) {
+        if(S.isArray(ret[key])) {
+          ret[key].push(val)
+        }else {
+          ret[key] = [ret[key], val]
+        }
+      }else {
+        ret[key] = val
+      }
+    }
+    return ret
+  }, startsWith:function(str, prefix) {
+    return str.lastIndexOf(prefix, 0) === 0
+  }, endsWith:function(str, suffix) {
+    var ind = str.length - suffix.length;
+    return ind >= 0 && str.indexOf(suffix, ind) === ind
+  }, trim:trim ? function(str) {
+    return str == null ? EMPTY : trim.call(str)
+  } : function(str) {
+    return str == null ? EMPTY : (str + "").replace(RE_TRIM, EMPTY)
+  }, urlEncode:function(s) {
+    return encodeURIComponent(String(s))
+  }, urlDecode:function(s) {
+    return decodeURIComponent(s.replace(/\+/g, " "))
+  }, camelCase:function(name) {
     return name.replace(RE_DASH, upperCase)
   }, substitute:function(str, o, regexp) {
     if(typeof str !== "string" || !o) {
@@ -481,12 +621,15 @@ KISSY.add("util/type", [], function(S, undefined) {
   if("@DEBUG@") {
     S.mix(S, {isBoolean:noop, isNumber:noop, isString:noop, isFunction:noop, isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
   }
-  S.each("Boolean Number String Function Date RegExp Object Array".split(" "), function(name, lc) {
-    class2type["[object " + name + "]"] = lc = name.toLowerCase();
-    S["is" + name] = function(o) {
-      return S.type(o) === lc
-    }
-  });
+  var types = "Boolean Number String Function Date RegExp Object Array".split(" ");
+  for(var i = 0;i < types.length;i++) {
+    (function(name, lc) {
+      class2type["[object " + name + "]"] = lc = name.toLowerCase();
+      S["is" + name] = function(o) {
+        return S.type(o) === lc
+      }
+    })(types[i], i)
+  }
   S.isArray = Array.isArray || S.isArray
 });
 KISSY.add("util/web", [], function(S, undefined) {
@@ -635,6 +778,12 @@ KISSY.add("util/web", [], function(S, undefined) {
 });
 KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", "util/string", "util/type", "util/web"], function(S, require) {
   var FALSE = false, CLONE_MARKER = "__~ks_cloned";
+  S.mix = function(to, from) {
+    for(var i in from) {
+      to[i] = from[i]
+    }
+    return to
+  };
   require("util/array");
   require("util/escape");
   require("util/function");

@@ -147,7 +147,7 @@ KISSY.add(function (S, require, exports, module) {
             option30.params = params31;
             if (moduleWrap) {
                 require("date/picker/month-panel/months-xtpl");
-                option30.params[0] = moduleWrap.resolveByName(option30.params[0]);
+                option30.params[0] = moduleWrap.resolve(option30.params[0]);
             }
             var commandRet32 = includeCommand.call(engine, scope, option30, buffer, 32, payload);
             if (commandRet32 && commandRet32.isBuffer) {

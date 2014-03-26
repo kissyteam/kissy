@@ -40,7 +40,7 @@ KISSY.add(function (S, require) {
              * @protected
              * @param data
              */
-            'normalizeData': function (data) {
+            normalizeData: function (data) {
                 var self = this,
                     contents, v, i, c;
                 if (data && data.length) {
@@ -112,7 +112,7 @@ KISSY.add(function (S, require) {
             },
 
             // buffer/bridge between check timer and change logic
-            '_onSetValue': function (v, e) {
+            _onSetValue: function (v, e) {
                 var self = this,
                     value;
                 // only trigger menu when timer cause change
@@ -350,7 +350,6 @@ KISSY.add(function (S, require) {
                     view: 1
                 },
 
-
                 /**
                  * label for placeholder in ie
                  * @ignore
@@ -532,7 +531,6 @@ KISSY.add(function (S, require) {
             xclass: 'combobox'
         });
 
-
     // #----------------------- private start
 
     function getFirstEnabledItem(children) {
@@ -545,34 +543,33 @@ KISSY.add(function (S, require) {
     }
 
     function onMenuFocusout() {
-        var combobox = this;
-        delayHide(combobox);
+        delayHide(this);
     }
 
     function onMenuFocusin() {
-        var combobox = this;
+        var self = this;
         // different event sequence
         // ie fire focusin blur
         // others fire blur focusin
         setTimeout(function () {
-            clearDismissTimer(combobox);
+            clearDismissTimer(self);
         }, 0);
     }
 
     function onMenuMouseOver() {
-        var combobox = this;
+        var self = this;
         // trigger el focus
-        combobox.focus();
+        self.focus();
         // prevent menu from hiding
-        clearDismissTimer(combobox);
+        clearDismissTimer(self);
     }
 
     function onMenuMouseDown() {
-        var combobox = this;
+        var self = this;
         // consider multi-input
         // input.val(self.get('value'));
         // force change event for cursor keep
-        combobox.setValueFromAutocomplete(combobox.getValueForAutocomplete(), {
+        self.setValueFromAutocomplete(self.getValueForAutocomplete(), {
             force: 1
         });
     }
@@ -692,7 +689,7 @@ KISSY.add(function (S, require) {
             }
 
             // Whether or not the first row should be highlighted by default.
-            if (!matchVal && ( self.get('autoHighlightFirst'))) {
+            if (!matchVal && self.get('autoHighlightFirst')) {
                 for (i = 0; i < children.length; i++) {
                     if (!children[i].get('disabled')) {
                         children[i].set('highlighted', true);

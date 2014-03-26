@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:49
+build time: Mar 25 16:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Mar 24 02:49
  dom/ie
 */
 
-KISSY.add("dom/ie/create", ["dom/base"], function(S, require) {
+KISSY.add("dom/ie/create", ["dom/base", "ua"], function(S, require) {
   var Dom = require("dom/base");
   Dom._fixCloneAttributes = function(src, dest) {
     if(dest.clearAttributes) {
@@ -56,7 +56,7 @@ KISSY.add("dom/ie/create", ["dom/base"], function(S, require) {
     dest.removeAttribute(Dom.__EXPANDO)
   };
   var creators = Dom._creators, defaultCreator = Dom._defaultCreator, R_TBODY = /<tbody/i;
-  if(S.UA.ieMode < 8) {
+  if(require("ua").ieMode < 8) {
     creators.table = function(html, ownerDoc) {
       var frag = defaultCreator(html, ownerDoc), hasTBody = R_TBODY.test(html);
       if(hasTBody) {
@@ -72,9 +72,9 @@ KISSY.add("dom/ie/create", ["dom/base"], function(S, require) {
     }
   }
 });
-KISSY.add("dom/ie/insertion", ["dom/base"], function(S, require) {
+KISSY.add("dom/ie/insertion", ["dom/base", "ua"], function(S, require) {
   var Dom = require("dom/base");
-  var UA = S.UA;
+  var UA = require("ua");
   if(UA.ieMode < 8) {
     Dom._fixInsertionChecked = function fixChecked(ret) {
       for(var i = 0;i < ret.length;i++) {
@@ -102,10 +102,10 @@ KISSY.add("dom/ie/insertion", ["dom/base"], function(S, require) {
     }
   }
 });
-KISSY.add("dom/ie/style", ["dom/base"], function(S, require) {
+KISSY.add("dom/ie/style", ["dom/base", "ua"], function(S, require) {
   var Dom = require("dom/base");
   var logger = S.getLogger("s/dom");
-  var cssProps = Dom._cssProps, UA = S.UA, FLOAT = "float", HUNDRED = 100, doc = S.Env.host.document, docElem = doc && doc.documentElement, OPACITY = "opacity", STYLE = "style", RE_POS = /^(top|right|bottom|left)$/, FILTER = "filter", CURRENT_STYLE = "currentStyle", RUNTIME_STYLE = "runtimeStyle", LEFT = "left", PX = "px", cssHooks = Dom._cssHooks, backgroundPosition = "backgroundPosition", R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
+  var cssProps = Dom._cssProps, UA = require("ua"), FLOAT = "float", HUNDRED = 100, doc = S.Env.host.document, docElem = doc && doc.documentElement, OPACITY = "opacity", STYLE = "style", RE_POS = /^(top|right|bottom|left)$/, FILTER = "filter", CURRENT_STYLE = "currentStyle", RUNTIME_STYLE = "runtimeStyle", LEFT = "left", PX = "px", cssHooks = Dom._cssHooks, backgroundPosition = "backgroundPosition", R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
   cssProps[FLOAT] = "styleFloat";
   cssHooks[backgroundPosition] = {get:function(elem, computed) {
     if(computed) {
@@ -475,9 +475,9 @@ KISSY.add("dom/ie/input-selection", ["dom/base"], function(S, require) {
     }
   }
 });
-KISSY.add("dom/ie/attr", ["dom/base"], function(S, require) {
+KISSY.add("dom/ie/attr", ["dom/base", "ua"], function(S, require) {
   var Dom = require("dom/base");
-  var attrHooks = Dom._attrHooks, attrNodeHook = Dom._attrNodeHook, NodeType = Dom.NodeType, valHooks = Dom._valHooks, propFix = Dom._propFix, HREF = "href", hrefFix, IE_VERSION = S.UA.ieMode;
+  var attrHooks = Dom._attrHooks, attrNodeHook = Dom._attrNodeHook, NodeType = Dom.NodeType, valHooks = Dom._valHooks, propFix = Dom._propFix, HREF = "href", hrefFix, IE_VERSION = require("ua").ieMode;
   if(IE_VERSION < 8) {
     attrHooks.style.set = function(el, val) {
       el.style.cssText = val

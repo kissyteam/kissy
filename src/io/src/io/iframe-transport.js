@@ -3,11 +3,12 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom'),
         IO = require('./base'),
         Event = require('event/dom');
-    var   logger = S.getLogger('s/io');
+    var logger = S.getLogger('s/io');
+    var UA = require('ua');
     var doc = S.Env.host.document,
         OK_CODE = 200,
 
@@ -145,7 +146,7 @@ KISSY.add(function (S,require) {
             }
 
             // ie6 need a breath
-            if (S.UA.ie === 6) {
+            if (UA.ie === 6) {
                 setTimeout(go, 0);
             } else {
                 // can not setTimeout or else chrome will submit to top window
@@ -169,7 +170,7 @@ KISSY.add(function (S,require) {
             }
 
             // ie6 立即设置 action 设置为空导致白屏
-            if (eventType === 'abort' && S.UA.ie === 6) {
+            if (eventType === 'abort' && UA.ie === 6) {
                 setTimeout(function () {
                     Dom.attr(form, self.attrs);
                 }, 0);

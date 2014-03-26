@@ -10,34 +10,34 @@ KISSY.add(function (S, require) {
 
         floor = Math.floor,
         KEYWORDS = {
-            'black': [0, 0, 0],
-            'silver': [192, 192, 192],
-            'gray': [128, 128, 128],
-            'white': [255, 255, 255],
-            'maroon': [128, 0, 0],
-            'red': [255, 0, 0],
-            'purple': [128, 0, 128],
-            'fuchsia': [255, 0, 255],
-            'green': [0, 128, 0],
-            'lime': [0, 255, 0],
-            'olive': [128, 128, 0],
-            'yellow': [255, 255, 0],
-            'navy': [0, 0, 128],
-            'blue': [0, 0, 255],
-            'teal': [0, 128, 128],
-            'aqua': [0, 255, 255]
+            black: [0, 0, 0],
+            silver: [192, 192, 192],
+            gray: [128, 128, 128],
+            white: [255, 255, 255],
+            maroon: [128, 0, 0],
+            red: [255, 0, 0],
+            purple: [128, 0, 128],
+            fuchsia: [255, 0, 255],
+            green: [0, 128, 0],
+            lime: [0, 255, 0],
+            olive: [128, 128, 0],
+            yellow: [255, 255, 0],
+            navy: [0, 0, 128],
+            blue: [0, 0, 255],
+            teal: [0, 128, 128],
+            aqua: [0, 255, 255]
         },
         RE_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
         RE_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
         RE_HEX = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
 
         COLORS = [
-            'backgroundColor' ,
-            'borderBottomColor' ,
-            'borderLeftColor' ,
-            'borderRightColor' ,
-            'borderTopColor' ,
-            'color' ,
+            'backgroundColor',
+            'borderBottomColor',
+            'borderLeftColor',
+            'borderRightColor',
+            'borderTopColor',
+            'color',
             'outlineColor'
         ];
 
@@ -51,16 +51,14 @@ KISSY.add(function (S, require) {
                 parseInt(match[2], 10),
                 parseInt(match[3], 10)
             ];
-        }
-        else if ((match = val.match(RE_RGBA))) {
+        } else if ((match = val.match(RE_RGBA))) {
             return [
                 parseInt(match[1], 10),
                 parseInt(match[2], 10),
                 parseInt(match[3], 10),
                 parseInt(match[4], 10)
             ];
-        }
-        else if ((match = val.match(RE_HEX))) {
+        } else if ((match = val.match(RE_HEX))) {
             for (var i = 1; i < match.length; i++) {
                 if (match[i].length < 2) {
                     match[i] += match[i];

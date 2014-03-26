@@ -241,7 +241,7 @@ KISSY.add(function (S, require) {
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
-        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
+        fire: function (targets, eventType, eventData, onlyHandlers) {
             var ret;
             // custom event firing moved to target.js
             eventData = eventData || {};
@@ -313,7 +313,6 @@ KISSY.add(function (S, require) {
         fireHandler: function (targets, eventType, eventData) {
             return DomEvent.fire(targets, eventType, eventData, 1);
         },
-
 
         /**
          * copy event from src to dest

@@ -48,13 +48,13 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Event.CustomEvent.CustomEventObservable}
          */
         getCustomEventObservable: function (type, create) {
-            var target = this,
+            var self = this,
                 customEvent,
-                customEventObservables = target.getCustomEvents();
+                customEventObservables = self.getCustomEvents();
             customEvent = customEventObservables && customEventObservables[type];
             if (!customEvent && create) {
                 customEvent = customEventObservables[type] = new CustomEventObservable({
-                    currentTarget: target,
+                    currentTarget: self,
                     type: type
                 });
             }

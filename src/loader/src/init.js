@@ -53,7 +53,7 @@
                 base += '/';
             }
             parts = src.substring(index + comboPrefix.length).split(comboSep);
-            S.each(parts, function (part) {
+            Utils.each(parts, function (part) {
                 if (part.match(baseTestReg)) {
                     base += part.replace(baseReg, '$1');
                     return false;
@@ -113,22 +113,14 @@
         charset: 'utf-8',
         lang: 'zh-cn'
     });
-        // ejecta
+    // ejecta
     if (doc && doc.getElementsByTagName) {
         // will transform base to absolute path
-        S.config(S.mix({
+        S.config(Utils.mix({
             // 2k(2048) url length
             comboMaxUrlLength: 2000,
             // file limit number for a single combo url
             comboMaxFileNum: 40
         }, getBaseInfo()));
     }
-
-    S.add('uri', function () {
-        return S.Uri;
-    });
-
-    S.add('path', function () {
-        return S.Path;
-    });
 })(KISSY);

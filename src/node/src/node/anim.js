@@ -13,11 +13,11 @@ KISSY.add(function (S, require) {
 
     var FX = [
         // height animations
-        [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
+        ['height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom'],
         // width animations
-        [ 'width', 'margin-left', 'margin-right', 'padding-left', 'padding-right' ],
+        ['width', 'margin-left', 'margin-right', 'padding-left', 'padding-right'],
         // opacity animations
-        [ 'opacity' ]
+        ['opacity']
     ];
 
     function getFxs(type, num, from) {
@@ -129,7 +129,6 @@ KISSY.add(function (S, require) {
         }
     });
 
-
     /**
      * animate show effect for current node list.
      * @param {Number} duration duration of effect
@@ -139,7 +138,6 @@ KISSY.add(function (S, require) {
      * @member KISSY.NodeList
      * @method show
      */
-
 
     /**
      * animate hide effect for current node list.
@@ -151,7 +149,6 @@ KISSY.add(function (S, require) {
      * @method hide
      */
 
-
     /**
      * toggle show and hide effect for current node list.
      * @param {Number} duration duration of effect
@@ -161,7 +158,6 @@ KISSY.add(function (S, require) {
      * @member KISSY.NodeList
      * @method toggle
      */
-
 
     /**
      * animate fadeIn effect for current node list.
@@ -173,7 +169,6 @@ KISSY.add(function (S, require) {
      * @method fadeIn
      */
 
-
     /**
      * animate fadeOut effect for current node list.
      * @param {Number} duration duration of effect
@@ -183,7 +178,6 @@ KISSY.add(function (S, require) {
      * @member KISSY.NodeList
      * @method fadeOut
      */
-
 
     /**
      * toggle fadeIn and fadeOut effect for current node list.
@@ -195,7 +189,6 @@ KISSY.add(function (S, require) {
      * @method fadeToggle
      */
 
-
     /**
      * animate slideUp effect for current node list.
      * @param {Number} duration duration of effect
@@ -205,7 +198,6 @@ KISSY.add(function (S, require) {
      * @member KISSY.NodeList
      * @method slideUp
      */
-
 
     /**
      * animate slideDown effect for current node list.
@@ -217,7 +209,6 @@ KISSY.add(function (S, require) {
      * @method slideDown
      */
 
-
     /**
      * toggle slideUp and slideDown effect for current node list.
      * @param {Number} duration duration of effect
@@ -227,7 +218,6 @@ KISSY.add(function (S, require) {
      * @member KISSY.NodeList
      * @method slideToggle
      */
-
 
     S.each({
             show: getFxs('show', 3),

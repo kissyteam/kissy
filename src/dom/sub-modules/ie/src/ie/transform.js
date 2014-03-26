@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
                 matrix;
             if (elemStyle && rMatrix.test(elemStyle.filter)) {
                 matrix = RegExp.$1.split(',');
-                var dx = 0 ,
+                var dx = 0,
                     dy = 0;
                 var dxs = matrix[4] && matrix[4].split('=');
                 var dys = matrix[5] && matrix[5].split('=');
@@ -232,7 +232,7 @@ KISSY.add(function (S, require) {
     }
 
     function cssMatrixToComputableMatrix(matrix) {
-        return[
+        return [
             [matrix[0], matrix[2], matrix[4]],
             [matrix[1], matrix[3], matrix[5]],
             [0, 0, 1]

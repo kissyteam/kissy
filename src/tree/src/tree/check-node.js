@@ -85,13 +85,11 @@ KISSY.add(function (S, require) {
                 // 儿子都没选，父亲也不选
                 if (checkCount === 0) {
                     parent.set('checkState', EMPTY);
-                } else
-                // 儿子全都选了，父亲也全选
-                if (checkCount === cs.length) {
+                } else if (checkCount === cs.length) {
+                    // 儿子全都选了，父亲也全选
                     parent.set('checkState', CHECK);
-                }
-                // 有的儿子选了，有的没选，父亲部分选
-                else {
+                } else {
+                    // 有的儿子选了，有的没选，父亲部分选
                     parent.set('checkState', PARTIAL_CHECK);
                 }
             }

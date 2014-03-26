@@ -5,7 +5,8 @@
 /*jshint quotmark:false*/
 /*global $*/
 (function (S) {
-    var d = window.location.href.replace(/[^/]*$/, "") + "../specs/loader-simple";
+    var d = S.Loader.Utils.normalizePath(window.location.href.replace(/[^/]*$/, ""),
+        "../specs/loader-simple");
     var run = function (combine) {
         describe("loader-simple " + (combine ? 'at combo mode' : ''), function () {
             beforeEach(function () {
@@ -20,7 +21,7 @@
                     packages: [
                         {
                             name: "1.2", //包名
-                            tag: S.now(),
+                            tag: S.Loader.Utils.now(),
                             path: d //包对应路径，相对路径指相对于当前页面路径
                         }
                     ]

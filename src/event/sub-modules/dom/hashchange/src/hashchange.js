@@ -6,7 +6,8 @@
 KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
-    var UA = S.UA,
+    var Uri = require('uri');
+    var UA = require('ua'),
         urlWithoutHash,
         Special = DomEvent.Special,
         win = S.Env.host,
@@ -39,7 +40,7 @@ KISSY.add(function (S, require) {
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
             // firefox 15 => #!/home/q={'thedate':'20121010~20121010'}
             // !! :(
-            var uri = new S.Uri(location.href);
+            var uri = new Uri(location.href);
             return '#' + uri.getFragment();
         },
 
@@ -238,7 +239,6 @@ KISSY.add(function (S, require) {
  - support newURL oldURL
  - known bugs: newURL oldURL always contains #, for example xx.com/#
  - when backward, url contains #, for example xx.com/#
-
 
  已知 bug :
  - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange

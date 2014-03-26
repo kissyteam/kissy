@@ -3,9 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Event, io) {
-    S.get = Dom.get;
-    S.query = Dom.query;
-
     var DomEventUtils = S.require('event/dom/base/utils');
 
     var tpl = '';
@@ -36,9 +33,9 @@ KISSY.add(function (S, Dom, Event, io) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), 'click', '.xx', test);
-            var a = S.get('#test-delegate-a');
-            var b = S.get('#test-delegate-b');
+            Event.delegate(Dom.get('#test-delegate'), 'click', '.xx', test);
+            var a = Dom.get('#test-delegate-a');
+            var b = Dom.get('#test-delegate-b');
             // support native dom event
             jasmine.simulate(a, 'click', {
                 which: 1
@@ -72,7 +69,7 @@ KISSY.add(function (S, Dom, Event, io) {
             });
 
             runs(function () {
-                Event.undelegate(S.get('#test-delegate'), 'click', '.xx', test);
+                Event.undelegate(Dom.get('#test-delegate'), 'click', '.xx', test);
                 ret = [];
                 // support simulated event
                 Event.fire(b, 'click', {
@@ -82,7 +79,7 @@ KISSY.add(function (S, Dom, Event, io) {
             waits(10);
             runs(function () {
                 expect(ret).toEqual([]);
-                var eventDesc = DomEventUtils.data(S.get('#test-delegate'), undefined, false);
+                var eventDesc = DomEventUtils.data(Dom.get('#test-delegate'), undefined, false);
                 expect(eventDesc).toBe(undefined);
             });
         });
@@ -97,8 +94,8 @@ KISSY.add(function (S, Dom, Event, io) {
                 e.stopPropagation();
             }
 
-            Event.delegate(S.get('#test-delegate'), 'click', '.xx', test);
-            var a = S.get('#test-delegate-b');
+            Event.delegate(Dom.get('#test-delegate'), 'click', '.xx', test);
+            var a = Dom.get('#test-delegate-b');
             // support native dom event
             jasmine.simulate(a, 'click');
             waits(10);
@@ -122,7 +119,7 @@ KISSY.add(function (S, Dom, Event, io) {
             });
 
             runs(function () {
-                Event.undelegate(S.get('#test-delegate'), 'click', '.xx', test);
+                Event.undelegate(Dom.get('#test-delegate'), 'click', '.xx', test);
                 ret = [];
                 // support simulated event
                 Event.fire(a, 'click');
@@ -130,7 +127,7 @@ KISSY.add(function (S, Dom, Event, io) {
             waits(10);
             runs(function () {
                 expect(ret + '').toBe([] + '');
-                var eventDesc = DomEventUtils.data(S.get('#test-delegate'), undefined, false);
+                var eventDesc = DomEventUtils.data(Dom.get('#test-delegate'), undefined, false);
                 expect(eventDesc).toBe(undefined);
             });
         });
@@ -144,8 +141,8 @@ KISSY.add(function (S, Dom, Event, io) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), 'click', '.xx', test);
-            var a = S.get('#test-delegate-b');
+            Event.delegate(Dom.get('#test-delegate'), 'click', '.xx', test);
+            var a = Dom.get('#test-delegate-b');
             // support native dom event
 
             Event.fire(a, 'click');

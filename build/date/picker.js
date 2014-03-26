@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:48
+build time: Mar 25 16:51
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -458,7 +458,7 @@ KISSY.add("date/picker/year-panel/year-panel-xtpl", ["date/picker/year-panel/yea
     option31.params = params32;
     if(moduleWrap) {
       require("date/picker/year-panel/years-xtpl");
-      option31.params[0] = moduleWrap.resolveByName(option31.params[0])
+      option31.params[0] = moduleWrap.resolve(option31.params[0])
     }
     var commandRet33 = includeCommand.call(engine, scope, option31, buffer, 33, payload);
     if(commandRet33 && commandRet33.isBuffer) {
@@ -772,7 +772,7 @@ KISSY.add("date/picker/decade-panel/decade-panel-xtpl", ["date/picker/decade-pan
     option26.params = params27;
     if(moduleWrap) {
       require("date/picker/decade-panel/decades-xtpl");
-      option26.params[0] = moduleWrap.resolveByName(option26.params[0])
+      option26.params[0] = moduleWrap.resolve(option26.params[0])
     }
     var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 24, payload);
     if(commandRet28 && commandRet28.isBuffer) {
@@ -1121,7 +1121,7 @@ KISSY.add("date/picker/month-panel/month-panel-xtpl", ["date/picker/month-panel/
     option30.params = params31;
     if(moduleWrap) {
       require("date/picker/month-panel/months-xtpl");
-      option30.params[0] = moduleWrap.resolveByName(option30.params[0])
+      option30.params[0] = moduleWrap.resolve(option30.params[0])
     }
     var commandRet32 = includeCommand.call(engine, scope, option30, buffer, 32, payload);
     if(commandRet32 && commandRet32.isBuffer) {

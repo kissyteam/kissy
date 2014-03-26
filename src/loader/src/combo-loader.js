@@ -6,22 +6,20 @@
 (function (S, undefined) {
     var logger = S.getLogger('s/loader');
 
+    // ie11 is a new one!
     var Loader = S.Loader,
         Config = S.Config,
-        each = S.each,
         Status = Loader.Status,
         Utils = Loader.Utils,
+        each = Utils.each,
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         READY_TO_ATTACH = Status.READY_TO_ATTACH,
         ERROR = Status.ERROR,
-        groupTag = S.now();
+        oldIE = Utils.ie < 10;
 
-    // ie11 is a new one!
-    var oldIE = Utils.ie < 10;
-
-    function loadScripts(rss, callback, charset, timeout) {
+    function loadScripts(rss, callback, timeout) {
         var count = rss && rss.length,
             errorList = [],
             successList = [];
@@ -50,7 +48,7 @@
                     errorList.push(rs);
                     complete();
                 },
-                charset: charset
+                charset: rs.charset
             };
             if (!rs.combine) {
                 mod = rs.mods[0];
@@ -70,16 +68,19 @@
         });
     }
 
-    ComboLoader.groupTag = groupTag;
+    var loaderId = 0;
 
     /**
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
-     * @param waitingModules
+     * @param callback
      * @private
      */
-    function ComboLoader(waitingModules) {
-        this.waitingModules = waitingModules;
+    function ComboLoader(callback) {
+        this.callback = callback;
+        this.waitMods = {};
+        this.head = this.tail = undefined;
+        this.id = 'loader' + (++loaderId);
     }
 
     var currentMod;
@@ -88,7 +89,7 @@
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        // function(S,require){require('node')}
+        // function(S, require){ require('node') }
         if (!config && typeof factory === 'function' && factory.length > 1) {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
@@ -106,7 +107,7 @@
 
     ComboLoader.add = function (name, factory, config, argsLen) {
         // KISSY.add('xx',[],function(){});
-        if (argsLen === 3 && S.isArray(factory)) {
+        if (argsLen === 3 && Utils.isArray(factory)) {
             var tmp = factory;
             factory = config;
             config = {
@@ -162,6 +163,7 @@
                 break;
             }
         }
+
         if (re) {
             name = re.getAttribute('data-mod-name');
         } else {
@@ -189,107 +191,101 @@
                     }
                 });
                 if (ms.length) {
-                    logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.modPath + '"');
+                    logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.url + '"');
                 }
             });
         };
     }
 
     function getCommonPrefix(str1, str2) {
-        str1 = str1.split(/\//);
-        str2 = str2.split(/\//);
+        // ie bug
+        // 'a//b'.split(/\//) => [a,b]
+        var prefix = str1.substring(0, str1.indexOf('//') + 2);
+        str1 = str1.substring(prefix.length).split(/\//);
+        str2 = str2.substring(prefix.length).split(/\//);
         var l = Math.min(str1.length, str2.length);
         for (var i = 0; i < l; i++) {
             if (str1[i] !== str2[i]) {
                 break;
             }
         }
-        return str1.slice(0, i).join('/') + '/';
+        return prefix + str1.slice(0, i).join('/') + '/';
     }
 
-    S.mix(ComboLoader.prototype, {
+    Utils.mix(ComboLoader.prototype, {
         /**
          * load modules asynchronously
          */
         use: function (normalizedModNames) {
             var self = this,
-                allModNames,
-                comboUrls,
+                allMods, comboUrls,
                 timeout = Config.timeout;
 
-            allModNames = S.keys(self.calculate(normalizedModNames));
+            allMods = self.calculate(normalizedModNames);
 
-            Utils.createModulesInfo(allModNames);
-
-            comboUrls = self.getComboUrls(allModNames);
+            comboUrls = self.getComboUrls(allMods);
 
             // load css first to avoid page blink
-            each(comboUrls.css, function (cssOne) {
-                loadScripts(cssOne, function (success, error) {
+            if (comboUrls.css) {
+                loadScripts(comboUrls.css, function (success, error) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
 
                     each(success, function (one) {
                         each(one.mods, function (mod) {
-                            Utils.registerModule(mod.name, S.noop);
+                            Utils.registerModule(mod.name, Utils.noop);
                             // notify all loader instance
-                            mod.notifyAll();
+                            mod.flush();
                         });
                     });
 
                     each(error, function (one) {
                         each(one.mods, function (mod) {
-                            var msg = mod.name +
-                                ' is not loaded! can not find module in path : ' +
-                                one.path;
+                            var msg = mod.name + ' is not loaded! can not find module in url : ' + one.url;
                             S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
-                            mod.notifyAll();
+                            mod.flush();
                         });
                     });
-                }, cssOne.charset, timeout);
-            });
+                }, timeout);
+            }
 
             // jss css download in parallel
-            each(comboUrls.js, function (jsOne) {
-                loadScripts(jsOne, function (success) {
+            if (comboUrls.js) {
+                loadScripts(comboUrls.js, function (success) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
 
-                    each(jsOne, function (one) {
+                    each(comboUrls.js, function (one) {
                         each(one.mods, function (mod) {
                             // fix #111
                             // https://github.com/kissyteam/kissy/issues/111
                             if (!mod.factory) {
                                 var msg = mod.name +
-                                    ' is not loaded! can not find module in path : ' +
-                                    one.path;
+                                    ' is not loaded! can not find module in url : ' +
+                                    one.url;
                                 S.log(msg, 'error');
                                 mod.status = ERROR;
                             }
                             // notify all loader instance
-                            mod.notifyAll();
+                            mod.flush();
                         });
                     });
-                }, jsOne.charset, timeout);
-            });
+                }, timeout);
+            }
         },
 
         /**
          * calculate dependency
          */
         calculate: function (modNames, cache, ret) {
-            var i,
-                m,
-                mod,
-                modStatus,
-                self = this,
-                waitingModules = self.waitingModules;
+            var i, m, mod, modStatus,
+                self = this;
 
-            ret = ret || {};
+            ret = ret || [];
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
             cache = cache || {};
@@ -306,18 +302,13 @@
                     continue;
                 }
                 if (modStatus !== LOADED) {
-                    if (!waitingModules.contains(m)) {
+                    if (!mod.contains(self)) {
                         if (modStatus !== LOADING) {
                             mod.status = LOADING;
-                            ret[m] = 1;
+                            ret.push(mod);
                         }
-                        /*jshint loopfunc:true*/
-                        mod.wait(function (mod) {
-                            waitingModules.remove(mod.name);
-                            // notify current loader instance
-                            waitingModules.notifyAll();
-                        });
-                        waitingModules.add(m);
+                        mod.add(self);
+                        self.wait(mod);
                     }
                 }
                 self.calculate(mod.getNormalizedRequires(), cache, ret);
@@ -329,164 +320,238 @@
         /**
          * get combo mods for modNames
          */
-        getComboMods: function (modNames, comboPrefixes) {
-            var comboMods = {},
-                packageUri,
-                i = 0,
-                l = modNames.length,
-                modName, mod, packageInfo, type, typedCombos, mods,
-                tag, charset, packagePath, groupPrefixUri, comboName,
-                packageName, group, modPath;
-
-            for (; i < l; ++i) {
-                modName = modNames[i];
-                mod = Utils.createModuleInfo(modName);
+        getComboMods: function (mods) {
+            var i, l = mods.length,
+                tmpMods, mod, packageInfo, type,
+                tag, charset, packageBase,
+                packageName, group, modUrl;
+            var groups = {
+                /*
+                 js: {
+                 'groupA-gbk':{
+                 'http://x.com':[m1,m2]
+                 }
+                 }
+                 */
+            };
+            var normals = {
+                /*
+                 js:{
+                 'http://x.com':[m1,m2]
+                 }
+                 */
+            };
+            for (i = 0; i < l; ++i) {
+                mod = mods[i];
                 type = mod.getType();
-                modPath = mod.getPath();
+                modUrl = mod.getUrl();
                 packageInfo = mod.getPackage();
+                packageBase = packageInfo.getBase();
                 packageName = packageInfo.name;
                 charset = packageInfo.getCharset();
                 tag = packageInfo.getTag();
                 group = packageInfo.getGroup();
-                packagePath = packageInfo.getPath();
-                packageUri = packageInfo.getUri();
-                comboName = packageName;
-                // whether group packages can be combined (except default package and non-combo modules)
-                if ((mod.canBeCombined = packageInfo.isCombine() &&
-                    S.startsWith(modPath, packagePath)) && group) {
-                    // combined package name
-                    comboName = group + '_' + charset + '_' + groupTag;
-                    if ((groupPrefixUri = comboPrefixes[comboName])) {
-                        if (groupPrefixUri.isSameOriginAs(packageUri)) {
-                            groupPrefixUri.setPath(
-                                getCommonPrefix(groupPrefixUri.getPath(), packageUri.getPath())
-                            );
-                        } else {
-                            comboName = packageName;
-                            comboPrefixes[packageName] = packageUri;
+
+                if (packageInfo.isCombine() && group) {
+                    var typeGroups = groups[type] || (groups[type] = {});
+                    group = group + '-' + charset;
+                    var typeGroup = typeGroups[group] || (typeGroups[group] = {});
+                    var find = 0;
+                    /*jshint loopfunc:true*/
+                    Utils.each(typeGroup, function (tmpMods, prefix) {
+                        if (Utils.isSameOriginAs(prefix, packageBase)) {
+                            var newPrefix = getCommonPrefix(prefix, packageBase);
+                            tmpMods.push(mod);
+                            if (tag && tag !== tmpMods.tag) {
+                                tmpMods.tag = getHash(tmpMods.tag + tag);
+                            }
+                            delete typeGroup[prefix];
+                            typeGroup[newPrefix] = tmpMods;
+                            find = 1;
                         }
-                    } else {
-                        comboPrefixes[comboName] = packageUri.clone();
+                    });
+                    if (!find) {
+                        tmpMods = typeGroup[packageBase] = [mod];
+                        tmpMods.charset = charset;
+                        tmpMods.tag = tag || '';
                     }
                 } else {
-                    comboPrefixes[packageName] = packageUri;
+                    var normalTypes = normals[type] || (normals[type] = {});
+                    if (!(tmpMods = normalTypes[packageBase])) {
+                        tmpMods = normalTypes[packageBase] = [];
+                        tmpMods.charset = charset;
+                        tmpMods.tag = tag || '';
+                    } else {
+                        if (tag && tag !== tmpMods.tag) {
+                            tmpMods.tag = getHash(tmpMods.tag + tag);
+                        }
+                    }
+                    tmpMods.push(mod);
                 }
 
-                typedCombos = comboMods[type] = comboMods[type] || {};
-                if (!(mods = typedCombos[comboName])) {
-                    mods = typedCombos[comboName] = [];
-                    mods.charset = charset;
-                    mods.tags = [tag]; // [package tag]
-                } else {
-                    if (!(mods.tags.length === 1 && mods.tags[0] === tag)) {
-                        mods.tags.push(tag);
-                    }
-                }
-                mods.push(mod);
             }
 
-            return comboMods;
+            return {
+                groups: groups,
+                normals: normals
+            };
         },
 
         /**
          * Get combo urls
          */
-        getComboUrls: function (modNames) {
+        getComboUrls: function (mods) {
             var comboPrefix = Config.comboPrefix,
                 comboSep = Config.comboSep,
                 maxFileNum = Config.comboMaxFileNum,
                 maxUrlLength = Config.comboMaxUrlLength;
 
-            var comboPrefixes = {};
-            // {type, {comboName, [modInfo]}}}
-            var comboMods = this.getComboMods(modNames, comboPrefixes);
-            // {type, {comboName, [url]}}}
+            var comboMods = this.getComboMods(mods);
+
             var comboRes = {};
 
-            // generate combo urls
-            for (var type in comboMods) {
-                comboRes[type] = {};
-                for (var comboName in comboMods[type]) {
-                    var currentComboUrls = [];
-                    var currentComboMods = [];
-                    var mods = comboMods[type][comboName];
-                    var tags = mods.tags;
-                    var tag = tags.length > 1 ? getHash(tags.join('')) : tags[0];
+            function processSamePrefixUrlMods(type, basePrefix, sendMods) {
+                var currentComboUrls = [];
+                var currentComboMods = [];
+                var tag = sendMods.tag;
+                var charset = sendMods.charset;
+                var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : ''),
+                    suffixLength = suffix.length;
 
-                    var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : ''),
-                        suffixLength = suffix.length,
-                        basePrefix = comboPrefixes[comboName].toString(),
-                        baseLen = basePrefix.length,
-                        prefix = basePrefix + comboPrefix,
-                        res = comboRes[type][comboName] = [];
+                var baseLen = basePrefix.length,
+                    prefix = basePrefix + comboPrefix,
+                    res = [];
 
-                    var l = prefix.length;
-                    res.charset = mods.charset;
-                    res.mods = [];
+                var l = prefix.length;
 
-                    /*jshint loopfunc:true*/
-                    var pushComboUrl = function () {
-                        //noinspection JSReferencingMutableVariableFromClosure
+                /*jshint loopfunc:true*/
+                var pushComboUrl = function () {
+                    //noinspection JSReferencingMutableVariableFromClosure
+                    res.push({
+                        combine: 1,
+                        url: prefix + currentComboUrls.join(comboSep) + suffix,
+                        charset: charset,
+                        mods: currentComboMods
+                    });
+                };
+
+                for (var i = 0; i < sendMods.length; i++) {
+                    var currentMod = sendMods[i];
+                    var url = currentMod.getUrl();
+                    if (!currentMod.getPackage().isCombine() ||
+                        // use(x/y) packageName: x/y ...
+                        !Utils.startsWith(url, basePrefix)) {
                         res.push({
-                            combine: 1,
-                            path: prefix + currentComboUrls.join(comboSep) + suffix,
-                            mods: currentComboMods
+                            combine: 0,
+                            url: url,
+                            charset: charset,
+                            mods: [currentMod]
                         });
-                    };
-
-                    for (var i = 0; i < mods.length; i++) {
-                        var currentMod = mods[i];
-                        res.mods.push(currentMod);
-                        var path = currentMod.getPath();
-                        if (!currentMod.canBeCombined) {
-                            res.push({
-                                combine: 0,
-                                path: path,
-                                mods: [currentMod]
-                            });
-                            continue;
-                        }
-                        // ignore query parameter
-                        var subPath = path.slice(baseLen).replace(/\?.*$/, '');
-                        currentComboUrls.push(subPath);
-                        currentComboMods.push(currentMod);
-
-                        if (currentComboUrls.length > maxFileNum ||
-                            (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)) {
-                            currentComboUrls.pop();
-                            currentComboMods.pop();
-                            pushComboUrl();
-                            currentComboUrls = [];
-                            currentComboMods = [];
-                            i--;
-                        }
+                        continue;
                     }
-                    if (currentComboUrls.length) {
+                    // ignore query parameter
+                    var subPath = url.slice(baseLen).replace(/\?.*$/, '');
+                    currentComboUrls.push(subPath);
+                    currentComboMods.push(currentMod);
+
+                    if (currentComboUrls.length > maxFileNum ||
+                        (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)) {
+                        currentComboUrls.pop();
+                        currentComboMods.pop();
                         pushComboUrl();
+                        currentComboUrls = [];
+                        currentComboMods = [];
+                        i--;
+                    }
+                }
+                if (currentComboUrls.length) {
+                    pushComboUrl();
+                }
+
+                comboRes[type].push.apply(comboRes[type], res);
+            }
+
+            var type, prefix;
+            var normals = comboMods.normals;
+            var groups = comboMods.groups;
+            var group;
+
+            // generate combo urls
+            for (type in normals) {
+                comboRes[type] = comboRes[type] || [];
+                for (prefix in normals[type]) {
+                    processSamePrefixUrlMods(type, prefix, normals[type][prefix]);
+                }
+            }
+            for (type in groups) {
+                comboRes[type] = comboRes[type] || [];
+                for (group in groups[type]) {
+                    for (prefix in groups[type][group]) {
+                        processSamePrefixUrlMods(type, prefix, groups[type][group][prefix]);
                     }
                 }
             }
             return comboRes;
+        },
+
+
+        flush: function () {
+            if (!this.callback) {
+                return;
+            }
+            var self = this,
+                head = self.head,
+                callback = self.callback;
+            while (head) {
+                var node = head.node,
+                    status = node.status;
+                if (status >= Status.LOADED || status === Status.ERROR) {
+                    node.remove(self);
+                    head = self.head = head.next;
+                } else {
+                    return;
+                }
+            }
+            self.callback = null;
+            callback();
+        },
+
+        wait: function (mod) {
+            var self = this;
+            if (!self.head) {
+                self.tail = self.head = {
+                    node: mod
+                };
+            } else {
+                var newNode = {
+                    node: mod
+                };
+                self.tail.next = newNode;
+                self.tail = newNode;
+            }
         }
     });
 
     Loader.ComboLoader = ComboLoader;
 })(KISSY);
 /*
- 2014-01-14 yiminghe
+ 2014-03-24 yiminghe@gmail.com
+ - refactor group combo logic
+
+ 2014-01-14 yiminghe@gmail.com
  - support System.ondemand from es6
 
- 2013-09-11 yiminghe
+ 2013-09-11 yiminghe@gmail.com
  - unify simple loader and combo loader
 
- 2013-07-25 阿古, yiminghe
+ 2013-07-25 阿古, yiminghe@gmail.com
  - support group combo for packages
 
  2013-06-04 yiminghe@gmail.com
  - refactor merge combo loader and simple loader
  - support error callback
 
- 2012-02-20 yiminghe note:
+ 2012-02-20 yiminghe@gmail.com
  - three status
  0: initialized
  LOADED: load into page

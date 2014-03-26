@@ -1,9 +1,5 @@
-KISSY.add(function(S,DomainError){
-    DomainError.run();
-},{
-    requires:[
-        './domain-error',
-        './domain',
-        './hashchange'
-    ]
+KISSY.add(function (S, require) {
+    require('./domain');
+    require('./hashchange');
+    require('./domain-error');
 });

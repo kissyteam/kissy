@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var addGestureEvent = require('./add-event');
     var DomEvent = require('event/dom/base');
     var SingleTouch = require('./single-touch');
-
+    var UA = require('ua');
     var SINGLE_TAP_EVENT = 'singleTap',
         DOUBLE_TAP_EVENT = 'doubleTap',
         TAP_HOLD_EVENT = 'tapHold',
@@ -115,8 +115,8 @@ KISSY.add(function (S, require) {
             DomEvent.fire(target, TAP_EVENT, eventObject);
 
             // call e.preventDefault on tap event to prevent tap penetration in real touch device
-            if (eventObject.isDefaultPrevented() && S.UA.mobile) {
-                if (S.UA.ios) {
+            if (eventObject.isDefaultPrevented() && UA.mobile) {
+                if (UA.ios) {
                     e.preventDefault();
                 } else {
                     DomEvent.on(target.ownerDocument || target, 'click', {

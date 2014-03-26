@@ -153,7 +153,7 @@ KISSY.add(function (S, require) {
             var lastMonthDiffDay = (day + 7 - value.getFirstDayOfWeek()) % 7;
             // calculate last month
             var lastMonth1 = month1.clone();
-            lastMonth1.addDayOfMonth(-lastMonthDiffDay);
+            lastMonth1.addDayOfMonth(0 - lastMonthDiffDay);
             var passed = 0;
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 for (j = 0; j < DATE_COL_COUNT; j++) {
@@ -228,7 +228,7 @@ KISSY.add(function (S, require) {
             this.$el.attr('aria-activedescendant', getIdFromDate(this.control.get('value')));
         },
 
-        '_onSetClear': function (v) {
+        _onSetClear: function (v) {
             var control = this.control;
             var value = control.get('value');
             var selectedCls = this.getBaseCssClasses('selected-day');

@@ -22,7 +22,6 @@ KISSY.add(function (S, require) {
     ], {
         isMenu: 1,
 
-
         // 只能允许一个方向，这个属性只是为了记录和排他性选择
         // 只允许调用 menuItem 的 set('highlighted')
         // 不允许调用 menu 的 set('highlightedItem')，内部调用时防止循环更新

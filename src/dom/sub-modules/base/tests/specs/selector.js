@@ -26,34 +26,34 @@ KISSY.add(function (S, Dom) {
 
         if (document.getElementsByClassName) {
             it('return array type', function () {
-                expect(S.isArray(S.query('.test-selector'))).toBe(true);
-                expect(S.query('.test-selector').length).toBe(document.getElementsByClassName('test-selector').length);
+                expect(S.isArray(Dom.query('.test-selector'))).toBe(true);
+                expect(Dom.query('.test-selector').length).toBe(document.getElementsByClassName('test-selector').length);
             });
         }
 
         it('throws exception when encounter #.', function () {
             expect(function () {
-                S.query('#');
+                Dom.query('#');
             }).toThrow();
             expect(function () {
-                S.query('.');
+                Dom.query('.');
             }).toThrow();
         });
 
         it('works for fragment', function () {
             var node = Dom.create('<div><i id="i"></i></div><div><b id="b"></b></div>');
-            expect(S.query('#i', node).length).toBe(1);
-            expect(S.query('i', node).length).toBe(1);
+            expect(Dom.query('#i', node).length).toBe(1);
+            expect(Dom.query('i', node).length).toBe(1);
         });
 
         it('works for detached node', function () {
             var node = Dom.create('<div><i id="i"></i></div>');
-            expect(S.query('#i', node).length).toBe(1);
-            expect(S.query('i', node).length).toBe(1);
+            expect(Dom.query('#i', node).length).toBe(1);
+            expect(Dom.query('i', node).length).toBe(1);
         });
 
         it('should return empty when context is null', function () {
-            expect(S.query('#test-selector', null).length).toBe(0);
+            expect(Dom.query('#test-selector', null).length).toBe(0);
         });
 
         it('test support disconnect node', function () {
@@ -62,63 +62,63 @@ KISSY.add(function (S, Dom) {
         });
 
         it('support #id', function () {
-            expect(S.get('#test-selector').id).toBe('test-selector');
+            expect(Dom.get('#test-selector').id).toBe('test-selector');
 
-            expect(S.query('#test-selector').length).toBe(1);
+            expect(Dom.query('#test-selector').length).toBe(1);
 
-            expect(S.get('#test-selector-xx')).toBe(null);
+            expect(Dom.get('#test-selector-xx')).toBe(null);
 
-            expect(S.query('#test-selector-xx').length).toBe(0);
+            expect(Dom.query('#test-selector-xx').length).toBe(0);
         });
 
         it('support tag ignore case', function () {
-            expect(S.get('#test-selector-1 s').id).toBe('test-selector-tag');
-            expect(S.query('#test-selector-1 s').length).toBe(1);
+            expect(Dom.get('#test-selector-1 s').id).toBe('test-selector-tag');
+            expect(Dom.query('#test-selector-1 s').length).toBe(1);
 
-            expect(S.query('#test-selector-1 S').length).toBe(1);
+            expect(Dom.query('#test-selector-1 S').length).toBe(1);
 
-            expect(S.get('sub')).toBe(null);
-            expect(S.query('sub').length).toBe(0);
+            expect(Dom.get('sub')).toBe(null);
+            expect(Dom.query('sub').length).toBe(0);
         });
 
         it('support .cls', function () {
-            expect(S.get('.test-selector').id).toBe('test-selector-1');
-            expect(S.query('.test-selector').length).toBe(4);
+            expect(Dom.get('.test-selector').id).toBe('test-selector-1');
+            expect(Dom.query('.test-selector').length).toBe(4);
         });
 
         it('support #id tag', function () {
-            expect(S.get('#test-selector s').id).toBe('test-selector-tag');
-            expect(S.get('#test-selector-2 s').id).toBe('');
+            expect(Dom.get('#test-selector s').id).toBe('test-selector-tag');
+            expect(Dom.get('#test-selector-2 s').id).toBe('');
 
-            expect(S.query('#test-selector s').length).toBe(2);
-            expect(S.query('#test-selector S').length).toBe(2);
-            expect(S.query('#test-selector-2 s').length).toBe(1);
+            expect(Dom.query('#test-selector s').length).toBe(2);
+            expect(Dom.query('#test-selector S').length).toBe(2);
+            expect(Dom.query('#test-selector-2 s').length).toBe(1);
         });
 
         it('support comma', function () {
-            expect(S.query('#test-selector-1 .test-selector ,' +
+            expect(Dom.query('#test-selector-1 .test-selector ,' +
                 ' #test-selector-2 .test-selector').length)
                 .toBe(2);
         });
 
         it('support #id .cls', function () {
-            expect(S.get('#test-selector-1 .test-selector').tagName.toLowerCase()).toBe('div');
-            expect(S.get('#test-selector-2 .test-selector').tagName.toLowerCase()).toBe('p');
-            expect(S.query('#test-selector-1 .test-selector').length).toBe(1);
-            expect(S.query('#test-selector .test-selector').length).toBe(4);
+            expect(Dom.get('#test-selector-1 .test-selector').tagName.toLowerCase()).toBe('div');
+            expect(Dom.get('#test-selector-2 .test-selector').tagName.toLowerCase()).toBe('p');
+            expect(Dom.query('#test-selector-1 .test-selector').length).toBe(1);
+            expect(Dom.query('#test-selector .test-selector').length).toBe(4);
         });
 
         it('support tag.cls', function () {
-            expect(S.get('div.test-selector').id).toBe('test-selector-1');
-            expect(S.query('div.test-selector').length).toBe(3);
-            expect(S.query('DIV.test-selector').length).toBe(3);
-            expect(S.get('p.test-selector').tagName.toLowerCase()).toBe('p');
-            expect(S.query('p.test-selector').length).toBe(1);
+            expect(Dom.get('div.test-selector').id).toBe('test-selector-1');
+            expect(Dom.query('div.test-selector').length).toBe(3);
+            expect(Dom.query('DIV.test-selector').length).toBe(3);
+            expect(Dom.get('p.test-selector').tagName.toLowerCase()).toBe('p');
+            expect(Dom.query('p.test-selector').length).toBe(1);
         });
 
         it('support #id tag.cls', function () {
-            expect(S.get('#test-selector-1 p.test-selector')).toBe(null);
-            expect(S.get('#test-selector-2 p.test-selector').tagName.toLowerCase()).toBe('p');
+            expect(Dom.get('#test-selector-1 p.test-selector')).toBe(null);
+            expect(Dom.get('#test-selector-2 p.test-selector').tagName.toLowerCase()).toBe('p');
         });
 
         it('does not confuse name with id', function () {
@@ -153,7 +153,7 @@ KISSY.add(function (S, Dom) {
         Dom.prepend(html, document.body);
 
         it('should attach each properly', function () {
-            var c3 = S.query('.context-test-3');
+            var c3 = Dom.query('.context-test-3');
             expect(c3.length).toBe(3);
             var a = [];
             // each 绑定正常
@@ -165,41 +165,41 @@ KISSY.add(function (S, Dom) {
         });
 
         it('should support #id', function () {
-            expect(S.query('.context-test-3', '#context-test-1').length).toBe(1);
+            expect(Dom.query('.context-test-3', '#context-test-1').length).toBe(1);
 
             expect($('.context-test-3', '#context-test-1').length).toBe(1);
 
-            expect(S.query('.context-test-3').length).toBe(3);
+            expect(Dom.query('.context-test-3').length).toBe(3);
 
             expect($('.context-test-3').length).toBe(3);
 
-            expect(S.get('.context-test-3', '#context-test-1').id).toBe('context-test-2');
+            expect(Dom.get('.context-test-3', '#context-test-1').id).toBe('context-test-2');
 
             expect($('.context-test-3', '#context-test-1').attr('id')).toBe('context-test-2');
         });
 
         it('should support other string form selector and unique works', function () {
-            expect(S.query('.context-test-3', '.context-test').length).toBe(2);
+            expect(Dom.query('.context-test-3', '.context-test').length).toBe(2);
         });
 
         it('should support node array form selector and unique works', function () {
             var r;
-            var c3 = S.query('.context-test-3');
+            var c3 = Dom.query('.context-test-3');
             expect(r = c3.length).toBe(3);
 
             var c3j = $('.context-test-3');
             expect(r = c3j.length).toBe(3);
 
-            var c = S.query('.context-test');
+            var c = Dom.query('.context-test');
             expect(r = c.length).toBe(3);
 
             var cj = jQuery('.context-test');
             expect(r = cj.length).toBe(3);
 
-            expect(r = S.query(c3).length).toBe(3);
-            expect(r = S.query('.context-test-3', c).length).toBe(2);
-            expect(r = S.query(c3).length).toBe(3);
-            expect(r = S.query('.context-test-3', '.context-test').length).toBe(2);
+            expect(r = Dom.query(c3).length).toBe(3);
+            expect(r = Dom.query('.context-test-3', c).length).toBe(2);
+            expect(r = Dom.query(c3).length).toBe(3);
+            expect(r = Dom.query('.context-test-3', '.context-test').length).toBe(2);
 
             /*jquery contrast test*/
             var t = jQuery(c3j, '.context-test');

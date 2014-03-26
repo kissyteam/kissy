@@ -278,10 +278,6 @@ if (! _$jscoverage['/init.js']) {
   _$jscoverage['/init.js'].lineData[110] = 0;
   _$jscoverage['/init.js'].lineData[117] = 0;
   _$jscoverage['/init.js'].lineData[119] = 0;
-  _$jscoverage['/init.js'].lineData[127] = 0;
-  _$jscoverage['/init.js'].lineData[128] = 0;
-  _$jscoverage['/init.js'].lineData[131] = 0;
-  _$jscoverage['/init.js'].lineData[132] = 0;
 }
 if (! _$jscoverage['/init.js'].functionData) {
   _$jscoverage['/init.js'].functionData = [];
@@ -290,8 +286,6 @@ if (! _$jscoverage['/init.js'].functionData) {
   _$jscoverage['/init.js'].functionData[2] = 0;
   _$jscoverage['/init.js'].functionData[3] = 0;
   _$jscoverage['/init.js'].functionData[4] = 0;
-  _$jscoverage['/init.js'].functionData[5] = 0;
-  _$jscoverage['/init.js'].functionData[6] = 0;
 }
 if (! _$jscoverage['/init.js'].branchData) {
   _$jscoverage['/init.js'].branchData = {};
@@ -325,66 +319,66 @@ if (! _$jscoverage['/init.js'].branchData) {
   _$jscoverage['/init.js'].branchData['117'][1] = new BranchData();
 }
 _$jscoverage['/init.js'].branchData['117'][1].init(3419, 31, 'doc && doc.getElementsByTagName');
-function visit153_117_1(result) {
+function visit162_117_1(result) {
   _$jscoverage['/init.js'].branchData['117'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['97'][1].init(216, 6, 'i >= 0');
-function visit152_97_1(result) {
+function visit161_97_1(result) {
   _$jscoverage['/init.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['74'][1].init(1730, 21, 'baseInfo.base || base');
-function visit151_74_1(result) {
+}_$jscoverage['/init.js'].branchData['74'][1].init(1734, 21, 'baseInfo.base || base');
+function visit160_74_1(result) {
   _$jscoverage['/init.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['67'][1].init(72, 17, 'queryIndex !== -1');
-function visit150_67_1(result) {
+function visit159_67_1(result) {
   _$jscoverage['/init.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['65'][1].init(1346, 20, '!(\'tag\' in baseInfo)');
-function visit149_65_1(result) {
+}_$jscoverage['/init.js'].branchData['65'][1].init(1350, 20, '!(\'tag\' in baseInfo)');
+function visit158_65_1(result) {
   _$jscoverage['/init.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['57'][1].init(22, 23, 'part.match(baseTestReg)');
-function visit148_57_1(result) {
+function visit157_57_1(result) {
   _$jscoverage['/init.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['52'][1].init(183, 36, 'base.charAt(base.length - 1) !== \'/\'');
-function visit147_52_1(result) {
+function visit156_52_1(result) {
   _$jscoverage['/init.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['46'][1].init(634, 12, 'index === -1');
-function visit146_46_1(result) {
+function visit155_46_1(result) {
   _$jscoverage['/init.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['39'][1].init(472, 36, 'baseInfo.comboSep || defaultComboSep');
-function visit145_39_1(result) {
+function visit154_39_1(result) {
   _$jscoverage['/init.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['38'][1].init(404, 42, 'baseInfo.comboPrefix || defaultComboPrefix');
-function visit144_38_1(result) {
+function visit153_38_1(result) {
   _$jscoverage['/init.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['32'][1].init(260, 8, 'baseInfo');
-function visit143_32_1(result) {
+function visit152_32_1(result) {
   _$jscoverage['/init.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['26'][1].init(122, 23, '!src.match(baseTestReg)');
-function visit142_26_1(result) {
+function visit151_26_1(result) {
   _$jscoverage['/init.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['25'][1].init(91, 16, 'script.src || \'\'');
-function visit141_25_1(result) {
+function visit150_25_1(result) {
   _$jscoverage['/init.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].branchData['7'][1].init(16, 33, 'S.Env.host && S.Env.host.document');
-function visit140_7_1(result) {
+function visit149_7_1(result) {
   _$jscoverage['/init.js'].branchData['7'][1].ranCondition(result);
   return result;
 }_$jscoverage['/init.js'].lineData[6]++;
 (function(S) {
   _$jscoverage['/init.js'].functionData[0]++;
   _$jscoverage['/init.js'].lineData[7]++;
-  var doc = visit140_7_1(S.Env.host && S.Env.host.document);
+  var doc = visit149_7_1(S.Env.host && S.Env.host.document);
   _$jscoverage['/init.js'].lineData[9]++;
   var Utils = S.Loader.Utils;
   _$jscoverage['/init.js'].lineData[10]++;
@@ -405,16 +399,16 @@ function visit140_7_1(result) {
   function getBaseInfoFromOneScript(script) {
     _$jscoverage['/init.js'].functionData[2]++;
     _$jscoverage['/init.js'].lineData[25]++;
-    var src = visit141_25_1(script.src || '');
+    var src = visit150_25_1(script.src || '');
     _$jscoverage['/init.js'].lineData[26]++;
-    if (visit142_26_1(!src.match(baseTestReg))) {
+    if (visit151_26_1(!src.match(baseTestReg))) {
       _$jscoverage['/init.js'].lineData[27]++;
       return 0;
     }
     _$jscoverage['/init.js'].lineData[30]++;
     var baseInfo = script.getAttribute('data-config');
     _$jscoverage['/init.js'].lineData[32]++;
-    if (visit143_32_1(baseInfo)) {
+    if (visit152_32_1(baseInfo)) {
       _$jscoverage['/init.js'].lineData[33]++;
       baseInfo = returnJson(baseInfo);
     } else {
@@ -422,30 +416,30 @@ function visit140_7_1(result) {
       baseInfo = {};
     }
     _$jscoverage['/init.js'].lineData[38]++;
-    var comboPrefix = visit144_38_1(baseInfo.comboPrefix || defaultComboPrefix);
+    var comboPrefix = visit153_38_1(baseInfo.comboPrefix || defaultComboPrefix);
     _$jscoverage['/init.js'].lineData[39]++;
-    var comboSep = visit145_39_1(baseInfo.comboSep || defaultComboSep);
+    var comboSep = visit154_39_1(baseInfo.comboSep || defaultComboSep);
     _$jscoverage['/init.js'].lineData[41]++;
     var parts, base, index = src.indexOf(comboPrefix);
     _$jscoverage['/init.js'].lineData[46]++;
-    if (visit146_46_1(index === -1)) {
+    if (visit155_46_1(index === -1)) {
       _$jscoverage['/init.js'].lineData[47]++;
       base = src.replace(baseReg, '$1');
     } else {
       _$jscoverage['/init.js'].lineData[49]++;
       base = src.substring(0, index);
       _$jscoverage['/init.js'].lineData[52]++;
-      if (visit147_52_1(base.charAt(base.length - 1) !== '/')) {
+      if (visit156_52_1(base.charAt(base.length - 1) !== '/')) {
         _$jscoverage['/init.js'].lineData[53]++;
         base += '/';
       }
       _$jscoverage['/init.js'].lineData[55]++;
       parts = src.substring(index + comboPrefix.length).split(comboSep);
       _$jscoverage['/init.js'].lineData[56]++;
-      S.each(parts, function(part) {
+      Utils.each(parts, function(part) {
   _$jscoverage['/init.js'].functionData[3]++;
   _$jscoverage['/init.js'].lineData[57]++;
-  if (visit148_57_1(part.match(baseTestReg))) {
+  if (visit157_57_1(part.match(baseTestReg))) {
     _$jscoverage['/init.js'].lineData[58]++;
     base += part.replace(baseReg, '$1');
     _$jscoverage['/init.js'].lineData[59]++;
@@ -456,11 +450,11 @@ function visit140_7_1(result) {
 });
     }
     _$jscoverage['/init.js'].lineData[65]++;
-    if (visit149_65_1(!('tag' in baseInfo))) {
+    if (visit158_65_1(!('tag' in baseInfo))) {
       _$jscoverage['/init.js'].lineData[66]++;
       var queryIndex = src.lastIndexOf('?t=');
       _$jscoverage['/init.js'].lineData[67]++;
-      if (visit150_67_1(queryIndex !== -1)) {
+      if (visit159_67_1(queryIndex !== -1)) {
         _$jscoverage['/init.js'].lineData[68]++;
         var query = src.substring(queryIndex + 1);
         _$jscoverage['/init.js'].lineData[70]++;
@@ -468,7 +462,7 @@ function visit140_7_1(result) {
       }
     }
     _$jscoverage['/init.js'].lineData[74]++;
-    baseInfo.base = visit151_74_1(baseInfo.base || base);
+    baseInfo.base = visit160_74_1(baseInfo.base || base);
     _$jscoverage['/init.js'].lineData[76]++;
     return baseInfo;
   }
@@ -478,7 +472,7 @@ function visit140_7_1(result) {
     _$jscoverage['/init.js'].lineData[93]++;
     var scripts = doc.getElementsByTagName('script'), i, info;
     _$jscoverage['/init.js'].lineData[97]++;
-    for (i = scripts.length - 1; visit152_97_1(i >= 0); i--) {
+    for (i = scripts.length - 1; visit161_97_1(i >= 0); i--) {
       _$jscoverage['/init.js'].lineData[98]++;
       if ((info = getBaseInfoFromOneScript(scripts[i]))) {
         _$jscoverage['/init.js'].lineData[99]++;
@@ -499,22 +493,10 @@ function visit140_7_1(result) {
   charset: 'utf-8', 
   lang: 'zh-cn'});
   _$jscoverage['/init.js'].lineData[117]++;
-  if (visit153_117_1(doc && doc.getElementsByTagName)) {
+  if (visit162_117_1(doc && doc.getElementsByTagName)) {
     _$jscoverage['/init.js'].lineData[119]++;
-    S.config(S.mix({
+    S.config(Utils.mix({
   comboMaxUrlLength: 2000, 
   comboMaxFileNum: 40}, getBaseInfo()));
   }
-  _$jscoverage['/init.js'].lineData[127]++;
-  S.add('uri', function() {
-  _$jscoverage['/init.js'].functionData[5]++;
-  _$jscoverage['/init.js'].lineData[128]++;
-  return S.Uri;
-});
-  _$jscoverage['/init.js'].lineData[131]++;
-  S.add('path', function() {
-  _$jscoverage['/init.js'].functionData[6]++;
-  _$jscoverage['/init.js'].lineData[132]++;
-  return S.Path;
-});
 })(KISSY);

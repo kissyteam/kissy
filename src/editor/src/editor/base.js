@@ -3,7 +3,7 @@
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var HtmlParser = require('html-parser');
     var Control = require('component/control');
     var EditorRender = require('./render');
@@ -78,7 +78,7 @@ KISSY.add(function (S,require) {
              * Defaults to: wysiswyg mode
              */
             mode: {
-                view:1,
+                view: 1,
                 value: 1
             },
 

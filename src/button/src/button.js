@@ -3,10 +3,10 @@
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Node=require('node'),
-        Control=require('component/control'),
-        ButtonRender=require('button/render');
+KISSY.add(function (S, require) {
+    var Node = require('node'),
+        Control = require('component/control'),
+        ButtonRender = require('button/render');
 
     var KeyCode = Node.KeyCode;
     /**
@@ -115,7 +115,7 @@ KISSY.add(function (S,require) {
              * @ignore
              */
             checked: {
-                value:false,
+                value: false,
                 view: 1
             },
 

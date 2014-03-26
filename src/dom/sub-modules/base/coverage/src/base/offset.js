@@ -746,7 +746,7 @@ function visit270_58_1(result) {
 function visit269_55_1(result) {
   _$jscoverage['/base/offset.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['12'][1].init(119, 26, 'doc && doc.documentElement');
+}_$jscoverage['/base/offset.js'].branchData['12'][1].init(128, 26, 'doc && doc.documentElement');
 function visit268_12_1(result) {
   _$jscoverage['/base/offset.js'].branchData['12'][1].ranCondition(result);
   return result;
@@ -756,7 +756,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/offset.js'].lineData[7]++;
   var Dom = require('./api');
   _$jscoverage['/base/offset.js'].lineData[8]++;
-  var win = S.Env.host, UA = S.UA, doc = win.document, NodeType = Dom.NodeType, docElem = visit268_12_1(doc && doc.documentElement), getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
+  var win = S.Env.host, UA = require('ua'), doc = win.document, NodeType = Dom.NodeType, docElem = visit268_12_1(doc && doc.documentElement), getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
   _$jscoverage['/base/offset.js'].lineData[30]++;
   S.mix(Dom, {
   offset: function(selector, coordinates, relativeWin) {

@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
 
     var logger = S.getLogger('dd/ddm');
 
-    var UA = S.UA,
+    var UA = require('ua'),
         $ = Node.all,
         win = S.Env.host,
         doc = win.document,
@@ -161,7 +161,6 @@ KISSY.add(function (S, require) {
                 }
             }
         },
-
 
         move: function (ev, activeDrag) {
             // chrome8: click 时 mousedown-mousemove-mouseup-click 也会触发 mousemove

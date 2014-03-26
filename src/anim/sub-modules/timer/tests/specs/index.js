@@ -1,10 +1,10 @@
-KISSY.add(function (S, Simple, Queue) {
-    Simple.run();
-    Queue.run();
-}, {
-    requires: ['src/anim/tests/specs/simple',
-        'src/anim/tests/specs/queue',
-        'src/anim/tests/specs/promise',
-        './promise',
-        './frame', './pause', './scroll', './svg']
+KISSY.add(function (S, require) {
+    require('src/anim/tests/specs/simple');
+    require('src/anim/tests/specs/queue');
+    require('src/anim/tests/specs/promise');
+    require('./promise');
+    require('./frame');
+    require('./pause');
+    require('./scroll');
+    require('./svg');
 });

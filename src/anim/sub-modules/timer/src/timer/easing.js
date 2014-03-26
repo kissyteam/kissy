@@ -35,24 +35,24 @@ KISSY.add(function () {
          * swing effect.
          */
         swing: function (t) {
-            return ( -Math.cos(t * PI) / 2 ) + 0.5;
+            return 0.5 - (Math.cos(t * PI) / 2);
         },
 
         /**
          * Uniform speed between points.
          */
-        'easeNone': easeNone,
+        easeNone: easeNone,
 
-        'linear': easeNone,
+        linear: easeNone,
 
         /**
          * Begins slowly and accelerates towards end. (quadratic)
          */
-        'easeIn': function (t) {
+        easeIn: function (t) {
             return t * t;
         },
 
-        'ease': cubicBezierFunction(0.25, 0.1, 0.25, 1.0),
+        ease: cubicBezierFunction(0.25, 0.1, 0.25, 1.0),
 
         'ease-in': cubicBezierFunction(0.42, 0, 1.0, 1.0),
 
@@ -79,7 +79,7 @@ KISSY.add(function () {
          * Begins quickly and decelerates towards end.  (quadratic)
          */
         easeOut: function (t) {
-            return ( 2 - t) * t;
+            return (2 - t) * t;
         },
 
         /**
@@ -94,7 +94,7 @@ KISSY.add(function () {
         /**
          * Begins slowly and accelerates towards end. (quartic)
          */
-        'easeInStrong': function (t) {
+        easeInStrong: function (t) {
             return t * t * t * t;
         },
 
@@ -108,7 +108,7 @@ KISSY.add(function () {
         /**
          * Begins slowly and decelerates towards end. (quartic)
          */
-        'easeBothStrong': function (t) {
+        easeBothStrong: function (t) {
             return (t *= 2) < 1 ?
                 0.5 * t * t * t * t :
                 0.5 * (2 - (t -= 2) * t * t * t);
@@ -118,12 +118,12 @@ KISSY.add(function () {
          * Snap in elastic effect.
          */
 
-        'elasticIn': function (t) {
+        elasticIn: function (t) {
             var p = 0.3, s = p / 4;
             if (t === 0 || t === 1) {
                 return t;
             }
-            return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
+            return 0 - (pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
         },
 
         /**
@@ -140,7 +140,7 @@ KISSY.add(function () {
         /**
          * Snap both elastic effect.
          */
-        'elasticBoth': function (t) {
+        elasticBoth: function (t) {
             var p = 0.45, s = p / 4;
             if (t === 0 || (t *= 2) === 2) {
                 return t;
@@ -157,7 +157,7 @@ KISSY.add(function () {
         /**
          * Backtracks slightly, then reverses direction and moves to end.
          */
-        'backIn': function (t) {
+        backIn: function (t) {
             if (t === 1) {
                 t -= 0.001;
             }
@@ -175,11 +175,11 @@ KISSY.add(function () {
          * Backtracks slightly, then reverses direction, overshoots end,
          * then reverses and comes back to end.
          */
-        'backBoth': function (t) {
+        backBoth: function (t) {
             var s = BACK_CONST;
             var m = (s *= 1.525) + 1;
 
-            if ((t *= 2 ) < 1) {
+            if ((t *= 2) < 1) {
                 return 0.5 * (t * t * (m * t - s));
             }
             return 0.5 * ((t -= 2) * t * (m * t + s) + 2);
@@ -196,19 +196,16 @@ KISSY.add(function () {
         /**
          * Bounces off end.
          */
-        'bounceOut': function (t) {
+        bounceOut: function (t) {
             var s = 7.5625, r;
 
             if (t < (1 / 2.75)) {
                 r = s * t * t;
-            }
-            else if (t < (2 / 2.75)) {
+            } else if (t < (2 / 2.75)) {
                 r = s * (t -= (1.5 / 2.75)) * t + 0.75;
-            }
-            else if (t < (2.5 / 2.75)) {
+            } else if (t < (2.5 / 2.75)) {
                 r = s * (t -= (2.25 / 2.75)) * t + 0.9375;
-            }
-            else {
+            } else {
                 r = s * (t -= (2.625 / 2.75)) * t + 0.984375;
             }
 
@@ -218,7 +215,7 @@ KISSY.add(function () {
         /**
          * Bounces off start and end.
          */
-        'bounceBoth': function (t) {
+        bounceBoth: function (t) {
             if (t < 0.5) {
                 return Easing.bounceIn(t * 2) * 0.5;
             }
@@ -254,11 +251,11 @@ KISSY.add(function () {
         }
 
         function sampleCurveX(t) {
-            return ((ax * t + bx) * t + cx ) * t;
+            return ((ax * t + bx) * t + cx) * t;
         }
 
         function sampleCurveY(t) {
-            return ((ay * t + by) * t + cy ) * t;
+            return ((ay * t + by) * t + cy) * t;
         }
 
         // Given an x value, find a parametric value it came from.

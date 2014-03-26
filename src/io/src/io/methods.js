@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var Promise = require('promise'),
         IO = require('./base');
+    var Uri=require('uri');
     var OK_CODE = 200,
 
         MULTIPLE_CHOICES = 300,
@@ -281,7 +282,7 @@ KISSY.add(function (S, require) {
                 // and append when send
                 var c = this.config,
                     uri = c.uri,
-                    originalQuery = S.Uri.getComponents(c.url).query || '',
+                    originalQuery = Uri.getComponents(c.url).query || '',
                     url = uri.toString.call(uri, c.serializeArray);
 
                 return url + (originalQuery ?

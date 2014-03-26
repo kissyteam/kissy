@@ -9,8 +9,8 @@ KISSY.add(function (S, require) {
 
     // 让非 IE 浏览器支持 focusin/focusout
     S.each([
-        { name: 'focusin', fix: 'focus' },
-        { name: 'focusout', fix: 'blur' }
+        {name: 'focusin', fix: 'focus'},
+        {name: 'focusout', fix: 'blur'}
     ], function (o) {
         var key = S.guid('attaches_' + S.now() + '_');
         Special[o.name] = {

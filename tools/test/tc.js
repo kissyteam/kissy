@@ -180,12 +180,6 @@ tests.push('/kissy/src/kison/tests/runner?build');
 
 tests.push('/kissy/src/kison/tests/runner?coverage');
 
-tests.push('/kissy/src/loader/tests/runner/cache.jss');
-
-tests.push('/kissy/src/loader/tests/runner/cache.jss?build');
-
-tests.push('/kissy/src/loader/tests/runner/cache.jss?coverage');
-
 tests.push('/kissy/src/loader/tests/runner/test.html');
 
 tests.push('/kissy/src/loader/tests/runner/test.html?build');

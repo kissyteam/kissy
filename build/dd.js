@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:48
+build time: Mar 25 16:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -14,10 +14,10 @@ build time: Mar 24 02:48
  dd
 */
 
-KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
+KISSY.add("dd/ddm", ["node", "base", "ua"], function(S, require) {
   var Node = require("node"), Base = require("base");
   var logger = S.getLogger("dd/ddm");
-  var UA = S.UA, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
+  var UA = require("ua"), $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
   var DDManger = Base.extend({addDrop:function(d) {
     this.get("drops").push(d)
   }, removeDrop:function(d) {
@@ -197,9 +197,9 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
   DDM.PREFIX_CLS = "ks-dd-";
   return DDM
 });
-KISSY.add("dd/draggable", ["node", "./ddm", "base", "event/gesture/drag"], function(S, require) {
+KISSY.add("dd/draggable", ["node", "./ddm", "base", "event/gesture/drag", "ua"], function(S, require) {
   var Node = require("node"), Gesture = Node.Gesture, DDM = require("./ddm"), Base = require("base"), DragType = require("event/gesture/drag");
-  var UA = S.UA, $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  var UA = require("ua"), $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   function checkValid(fn) {
     return function() {
       if(this._isValidDrag) {

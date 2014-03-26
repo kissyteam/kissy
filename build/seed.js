@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140324103447' will replace with current timestamp when compressing.
+         * NOTICE: '20140325174526' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140324103447',
+        __BUILD_TIME: '20140325174526',
 
         /**
          * KISSY Environment.
@@ -165,14 +165,15 @@ var KISSY = (function (undefined) {
                     }
                 }
             } else {
-                S.each(configName, function (configValue, p) {
+                for (var p in configName) {
+                    configValue = configName[p];
                     fn = configFns[p];
                     if (fn) {
                         fn.call(self, configValue);
                     } else {
                         Config[p] = configValue;
                     }
-                });
+                }
             }
             return r;
         },
@@ -258,11 +259,6 @@ var KISSY = (function (undefined) {
          */
         guid: function (pre) {
             return (pre || EMPTY) + guid++;
-        },
-
-        // stub for uri and path
-        add: function (fn) {
-            fn(S);
         }
     };
 
@@ -310,1219 +306,8 @@ var KISSY = (function (undefined) {
          */
     }
 
-    S.mix = function (to, from) {
-        for (var i in from) {
-            to[i] = from[i];
-        }
-        return to;
-    };
-
     return S;
-})();(function (S) {
-    var logger = S.getLogger('s/lang');
-    var SEP = '&',
-        EMPTY = '',
-        EQ = '=',
-        toString = ({}).toString,
-        TRUE = true;
-    var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        trim = String.prototype.trim;
-    // error in native ie678, not in simulated ie9
-    var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
-        enumProperties = [
-            'constructor',
-            'hasOwnProperty',
-            'isPrototypeOf',
-            'propertyIsEnumerable',
-            'toString',
-            'toLocaleString',
-            'valueOf'
-        ];
-
-    function isValidParamValue(val) {
-        var t = typeof val;
-        // If the type of val is null, undefined, number, string, boolean, return TRUE.
-        return val == null || (t !== 'object' && t !== 'function');
-    }
-
-    S.mix(S, {
-        /**
-         * Checks to see if an object is empty.
-         * @member KISSY
-         */
-        isEmptyObject: function (o) {
-            for (var p in o) {
-                if (p !== undefined) {
-                    return false;
-                }
-            }
-            return true;
-        },
-
-        /**
-         * Gets current date in milliseconds.
-         * @method
-         * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
-         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
-         * http://kangax.github.com/es5-compat-table/
-         * @member KISSY
-         * @return {Number} current time
-         */
-        now: Date.now || function () {
-            return +new Date();
-        },
-
-        isArray: function (obj) {
-            return toString.call(obj) === '[object Array]';
-        },
-
-        /**
-         * Call encodeURIComponent to encode a url component
-         * @param {String} s part of url to be encoded.
-         * @return {String} encoded url part string.
-         * @member KISSY
-         */
-        urlEncode: function (s) {
-            return encodeURIComponent(String(s));
-        },
-
-        /**
-         * Call decodeURIComponent to decode a url component
-         * and replace '+' with space.
-         * @param {String} s part of url to be decoded.
-         * @return {String} decoded url part string.
-         * @member KISSY
-         */
-        urlDecode: function (s) {
-            return decodeURIComponent(s.replace(/\+/g, ' '));
-        },
-
-        /**
-         * test whether a string start with a specified substring
-         * @param {String} str the whole string
-         * @param {String} prefix a specified substring
-         * @return {Boolean} whether str start with prefix
-         * @member KISSY
-         */
-        startsWith: function (str, prefix) {
-            return str.lastIndexOf(prefix, 0) === 0;
-        },
-
-        /**
-         * test whether a string end with a specified substring
-         * @param {String} str the whole string
-         * @param {String} suffix a specified substring
-         * @return {Boolean} whether str end with suffix
-         * @member KISSY
-         */
-        endsWith: function (str, suffix) {
-            var ind = str.length - suffix.length;
-            return ind >= 0 && str.indexOf(suffix, ind) === ind;
-        },
-
-        /**
-         * Removes the whitespace from the beginning and end of a string.
-         * @method
-         * @member KISSY
-         */
-        trim: trim ?
-            function (str) {
-                return str == null ? EMPTY : trim.call(str);
-            } :
-            function (str) {
-                return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
-            },
-        /**
-         * Get all the property names of o as array
-         * @param {Object} o
-         * @return {Array}
-         * @member KISSY
-         */
-        keys: Object.keys || function (o) {
-            var result = [], p, i;
-
-            for (p in o) {
-                // S.keys(new XX())
-                if (o.hasOwnProperty(p)) {
-                    result.push(p);
-                }
-            }
-
-            if (hasEnumBug) {
-                for (i = enumProperties.length - 1; i >= 0; i--) {
-                    p = enumProperties[i];
-                    if (o.hasOwnProperty(p)) {
-                        result.push(p);
-                    }
-                }
-            }
-
-            return result;
-        },
-        /**
-         * Executes the supplied function on each item in the array.
-         * @param object {Object} the object to iterate
-         * @param fn {Function} the function to execute on each item. The function
-         *        receives three arguments: the value, the index, the full array.
-         * @param {Object} [context]
-         * @member KISSY
-         */
-        each: function (object, fn, context) {
-            if (object) {
-                var key,
-                    val,
-                    keys,
-                    i = 0,
-                    length = object && object.length,
-                // do not use typeof obj == 'function': bug in phantomjs
-                    isObj = length === undefined || toString.call(object) === '[object Function]';
-
-                context = context || null;
-
-                if (isObj) {
-                    keys = S.keys(object);
-                    for (; i < keys.length; i++) {
-                        key = keys[i];
-                        // can not use hasOwnProperty
-                        if (fn.call(context, object[key], key, object) === false) {
-                            break;
-                        }
-                    }
-                } else {
-                    for (val = object[0];
-                         i < length; val = object[++i]) {
-                        if (fn.call(context, val, i, object) === false) {
-                            break;
-                        }
-                    }
-                }
-            }
-            return object;
-        },
-
-        /**
-         * Creates a serialized string of an array or object.
-         *
-         * for example:
-         *     @example
-         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         *     {foo: TRUE, bar: 2}    // -> 'foo=TRUE&bar=2'
-         *
-         * @param {Object} o json data
-         * @param {String} [sep='&'] separator between each pair of data
-         * @param {String} [eq='='] separator between key and value of data
-         * @param {Boolean} [serializeArray=true] whether add '[]' to array key of data
-         * @return {String}
-         * @member KISSY
-         */
-        param: function (o, sep, eq, serializeArray) {
-            sep = sep || SEP;
-            eq = eq || EQ;
-            if (serializeArray === undefined) {
-                serializeArray = TRUE;
-            }
-            var buf = [], key, i, v, len, val,
-                encode = S.urlEncode;
-            for (key in o) {
-
-                val = o[key];
-                key = encode(key);
-
-                // val is valid non-array value
-                if (isValidParamValue(val)) {
-                    buf.push(key);
-                    if (val !== undefined) {
-                        buf.push(eq, encode(val + EMPTY));
-                    }
-                    buf.push(sep);
-                } else if (S.isArray(val) && val.length) {
-                    // val is not empty array
-                    for (i = 0, len = val.length; i < len; ++i) {
-                        v = val[i];
-                        if (isValidParamValue(v)) {
-                            buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                            if (v !== undefined) {
-                                buf.push(eq, encode(v + EMPTY));
-                            }
-                            buf.push(sep);
-                        }
-                    }
-                }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
-
-            }
-            buf.pop();
-            return buf.join(EMPTY);
-        },
-
-        /**
-         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         *
-         * for example:
-         *      @example
-         *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-         *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-         *      'id=45&raw'        // -> {id: '45', raw: ''}
-         * @param {String} str param string
-         * @param {String} [sep='&'] separator between each pair of data
-         * @param {String} [eq='='] separator between key and value of data
-         * @return {Object} json data
-         * @member KISSY
-         */
-        unparam: function (str, sep, eq) {
-            if (typeof str !== 'string' || !(str = S.trim(str))) {
-                return {};
-            }
-            sep = sep || SEP;
-            eq = eq || EQ;
-            var ret = {},
-                eqIndex,
-                decode = S.urlDecode,
-                pairs = str.split(sep),
-                key, val,
-                i = 0, len = pairs.length;
-
-            for (; i < len; ++i) {
-                eqIndex = pairs[i].indexOf(eq);
-                if (eqIndex === -1) {
-                    key = decode(pairs[i]);
-                    val = undefined;
-                } else {
-                    // remember to decode key!
-                    key = decode(pairs[i].substring(0, eqIndex));
-                    val = pairs[i].substring(eqIndex + 1);
-                    try {
-                        val = decode(val);
-                    } catch (e) {
-                        logger.error('decodeURIComponent error : ' + val);
-                        logger.error(e);
-                    }
-                    if (S.endsWith(key, '[]')) {
-                        key = key.substring(0, key.length - 2);
-                    }
-                }
-                if (key in ret) {
-                    if (S.isArray(ret[key])) {
-                        ret[key].push(val);
-                    } else {
-                        ret[key] = [ret[key], val];
-                    }
-                } else {
-                    ret[key] = val;
-                }
-            }
-            return ret;
-        }
-    });
-})(KISSY);/**
- * @ignore
- * Port Node Utils For KISSY.
- * Note: Only posix mode.
- * @author yiminghe@gmail.com
- */
-KISSY.add(function (S) {
-    // [root, dir, basename, ext]
-    var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
-
-    function filter(arr, fn, context) {
-        var ret = [];
-        S.each(arr, function (item, i, arr) {
-            if (fn.call(context || this, item, i, arr)) {
-                ret.push(item);
-            }
-        });
-        return ret;
-    }
-
-    // Remove .. and . in path array
-    function normalizeArray(parts, allowAboveRoot) {
-        // level above root
-        var up = 0,
-            i = parts.length - 1,
-        // splice costs a lot in ie
-        // use new array instead
-            newParts = [],
-            last;
-
-        for (; i >= 0; i--) {
-            last = parts[i];
-            if (last !== '.') {
-                if (last === '..') {
-                    up++;
-                } else if (up) {
-                    up--;
-                } else {
-                    newParts[newParts.length] = last;
-                }
-            }
-        }
-
-        // if allow above root, has to add ..
-        if (allowAboveRoot) {
-            for (; up--; up) {
-                newParts[newParts.length] = '..';
-            }
-        }
-
-        newParts = newParts.reverse();
-
-        return newParts;
-    }
-
-    /**
-     * Path Utils For KISSY.
-     * @class KISSY.Path
-     * @singleton
-     */
-    var Path = S.Path = {
-        /**
-         * resolve([from ...], to)
-         * @return {String} Resolved path.
-         */
-        resolve: function () {
-            var resolvedPath = '',
-                resolvedPathStr,
-                i,
-                args = (arguments),
-                path,
-                absolute = 0;
-
-            for (i = args.length - 1; i >= 0 && !absolute; i--) {
-                path = args[i];
-                if (typeof path !== 'string' || !path) {
-                    continue;
-                }
-                resolvedPath = path + '/' + resolvedPath;
-                absolute = path.charAt(0) === '/';
-            }
-
-            resolvedPathStr = normalizeArray(filter(resolvedPath.split('/'), function (p) {
-                return !!p;
-            }), !absolute).join('/');
-
-            return ((absolute ? '/' : '') + resolvedPathStr) || '.';
-        },
-
-        /**
-         * normalize .. and . in path
-         * @param {String} path Path tobe normalized
-         *
-         *
-         *      'x/y/../z' => 'x/z'
-         *      'x/y/z/../' => 'x/y/'
-         *
-         * @return {String}
-         */
-        normalize: function (path) {
-            var absolute = path.charAt(0) === '/',
-                trailingSlash = path.slice(0 - 1) === '/';
-
-            path = normalizeArray(filter(path.split('/'), function (p) {
-                return !!p;
-            }), !absolute).join('/');
-
-            if (!path && !absolute) {
-                path = '.';
-            }
-
-            if (path && trailingSlash) {
-                path += '/';
-            }
-
-            return (absolute ? '/' : '') + path;
-        },
-
-        /**
-         * join([path ...]) and normalize
-         * @return {String}
-         */
-        join: function () {
-            var args = Array.prototype.slice.call(arguments);
-            return Path.normalize(filter(args,function (p) {
-                return p && (typeof p === 'string');
-            }).join('/'));
-        },
-
-        /**
-         * Get string which is to relative to from
-         * @param {String} from
-         * @param {String} to
-         *
-         *
-         *      relative('x/','x/y/z') => 'y/z'
-         *      relative('x/t/z','x/') => '../../'
-         *
-         * @return {String}
-         */
-        relative: function (from, to) {
-            from = Path.normalize(from);
-            to = Path.normalize(to);
-
-            var fromParts = filter(from.split('/'), function (p) {
-                    return !!p;
-                }),
-                path = [],
-                sameIndex,
-                sameIndex2,
-                toParts = filter(to.split('/'), function (p) {
-                    return !!p;
-                }), commonLength = Math.min(fromParts.length, toParts.length);
-
-            for (sameIndex = 0; sameIndex < commonLength; sameIndex++) {
-                if (fromParts[sameIndex] !== toParts[sameIndex]) {
-                    break;
-                }
-            }
-
-            sameIndex2 = sameIndex;
-
-            while (sameIndex < fromParts.length) {
-                path.push('..');
-                sameIndex++;
-            }
-
-            path = path.concat(toParts.slice(sameIndex2));
-
-            path = path.join('/');
-
-            return /**@type String  @ignore*/path;
-        },
-
-        /**
-         * Get base name of path
-         * @param {String} path
-         * @param {String} [ext] ext to be stripped from result returned.
-         * @return {String}
-         */
-        basename: function (path, ext) {
-            var result = path.match(splitPathRe) || [],
-                basename;
-            basename = result[3] || '';
-            if (ext && basename && basename.slice(ext.length * -1) === ext) {
-                basename = basename.slice(0, -1 * ext.length);
-            }
-            return basename;
-        },
-
-        /**
-         * Get dirname of path
-         * @param {String} path
-         * @return {String}
-         */
-        dirname: function (path) {
-            var result = path.match(splitPathRe) || [],
-                root = result[1] || '',
-                dir = result[2] || '';
-
-            if (!root && !dir) {
-                // No dirname
-                return '.';
-            }
-
-            if (dir) {
-                // It has a dirname, strip trailing slash
-                dir = dir.substring(0, dir.length - 1);
-            }
-
-            return root + dir;
-        },
-
-        /**
-         * Get extension name of file in path
-         * @param {String} path
-         * @return {String}
-         */
-        extname: function (path) {
-            return (path.match(splitPathRe) || [])[4] || '';
-        }
-    };
-
-    return Path;
-});
-/*
- Refer
- - https://github.com/joyent/node/blob/master/lib/path.js
- *//**
- * @ignore
- * Uri class for KISSY.
- * @author yiminghe@gmail.com
- */
-KISSY.add(function (S, require) {
-    // if combined into loader
-    var Path = require ? require('path') : S.Path;
-    var logger = S.getLogger('s/uri');
-    var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
-        reDisallowedInPathName = /[#\?]/g,
-
-    // ?? combo of taobao
-        reDisallowedInQuery = /[#@]/g,
-        reDisallowedInFragment = /#/g,
-
-        URI_SPLIT_REG = new RegExp(
-            '^' +
-                /*
-                 Scheme names consist of a sequence of characters beginning with a
-                 letter and followed by any combination of letters, digits, plus
-                 ('+'), period ('.'), or hyphen ('-').
-                 */
-                '(?:([\\w\\d+.-]+):)?' + // scheme
-
-                '(?://' +
-                /*
-                 The authority component is preceded by a double slash ('//') and is
-                 terminated by the next slash ('/'), question mark ('?'), or number
-                 sign ('#') character, or by the end of the URI.
-                 */
-                '(?:([^/?#@]*)@)?' + // userInfo
-
-                '(' +
-                '[\\w\\d\\-\\u0100-\\uffff.+%]*' +
-                '|' +
-                // ipv6
-                '\\[[^\\]]+\\]' +
-                ')' + // hostname - restrict to letters,
-                // digits, dashes, dots, percent
-                // escapes, and unicode characters.
-                '(?::([0-9]+))?' + // port
-                ')?' +
-                /*
-                 The path is terminated
-                 by the first question mark ('?') or number sign ('#') character, or
-                 by the end of the URI.
-                 */
-                '([^?#]+)?' + // path. hierarchical part
-                /*
-                 The query component is indicated by the first question
-                 mark ('?') character and terminated by a number sign ('#') character
-                 or by the end of the URI.
-                 */
-                '(?:\\?([^#]*))?' + // query. non-hierarchical data
-                /*
-                 The fragment identifier component of a URI allows indirect
-                 identification of a secondary resource by reference to a primary
-                 resource and additional identifying information.
-
-                 A
-                 fragment identifier component is indicated by the presence of a
-                 number sign ('#') character and terminated by the end of the URI.
-                 */
-                '(?:#(.*))?' + // fragment
-                '$'),
-
-        REG_INFO = {
-            scheme: 1,
-            userInfo: 2,
-            hostname: 3,
-            port: 4,
-            path: 5,
-            query: 6,
-            fragment: 7
-        };
-
-    function parseQuery(self) {
-        if (!self._queryMap) {
-            self._queryMap = S.unparam(self._query);
-        }
-    }
-
-    /**
-     * @class KISSY.Uri.Query
-     * Query data structure.
-     * @param {String} [query] encoded query string(without question mask).
-     */
-    function Query(query) {
-        this._query = query || '';
-    }
-
-    Query.prototype = {
-        constructor: Query,
-
-        /**
-         * Cloned new instance.
-         * @return {KISSY.Uri.Query}
-         */
-        clone: function () {
-            return new Query(this.toString());
-        },
-
-        /**
-         * reset to a new query string
-         * @param {String} query
-         * @chainable
-         */
-        reset: function (query) {
-            var self = this;
-            self._query = query || '';
-            self._queryMap = null;
-            return self;
-        },
-
-        /**
-         * Parameter count.
-         * @return {Number}
-         */
-        count: function () {
-            var self = this,
-                count = 0,
-                _queryMap,
-                k;
-            parseQuery(self);
-            _queryMap = self._queryMap;
-            for (k in _queryMap) {
-
-                if (S.isArray(_queryMap[k])) {
-                    count += _queryMap[k].length;
-                } else {
-                    count++;
-                }
-
-            }
-            return count;
-        },
-
-        /**
-         * judge whether has query parameter
-         * @param {String} [key]
-         */
-        has: function (key) {
-            var self = this, _queryMap;
-            parseQuery(self);
-            _queryMap = self._queryMap;
-            if (key) {
-                return key in _queryMap;
-            } else {
-                return !S.isEmptyObject(_queryMap);
-            }
-        },
-
-        /**
-         * Return parameter value corresponding to current key
-         * @param {String} [key]
-         */
-        get: function (key) {
-            var self = this, _queryMap;
-            parseQuery(self);
-            _queryMap = self._queryMap;
-            if (key) {
-                return _queryMap[key];
-            } else {
-                return _queryMap;
-            }
-        },
-
-        /**
-         * Parameter names.
-         * @return {String[]}
-         */
-        keys: function () {
-            var self = this;
-            parseQuery(self);
-            return S.keys(self._queryMap);
-        },
-
-        /**
-         * Set parameter value corresponding to current key
-         * @param {String} key
-         * @param value
-         * @chainable
-         */
-        set: function (key, value) {
-            var self = this, _queryMap;
-            parseQuery(self);
-            _queryMap = self._queryMap;
-            if (typeof key === 'string') {
-                self._queryMap[key] = value;
-            } else {
-                if (key instanceof Query) {
-                    key = key.get();
-                }
-                S.each(key, function (v, k) {
-                    _queryMap[k] = v;
-                });
-            }
-            return self;
-        },
-
-        /**
-         * Remove parameter with specified name.
-         * @param {String} key
-         * @chainable
-         */
-        remove: function (key) {
-            var self = this;
-            parseQuery(self);
-            if (key) {
-                delete self._queryMap[key];
-            } else {
-                self._queryMap = {};
-            }
-            return self;
-
-        },
-
-        /**
-         * Add parameter value corresponding to current key
-         * @param {String} key
-         * @param value
-         * @chainable
-         */
-        add: function (key, value) {
-            var self = this,
-                _queryMap,
-                currentValue;
-            if (typeof key === 'string') {
-                parseQuery(self);
-                _queryMap = self._queryMap;
-                currentValue = _queryMap[key];
-                if (currentValue === undefined) {
-                    currentValue = value;
-                } else {
-                    currentValue = [].concat(currentValue).concat(value);
-                }
-                _queryMap[key] = currentValue;
-            } else {
-                if (key instanceof Query) {
-                    key = key.get();
-                }
-                for (var k in key) {
-                    self.add(k, key[k]);
-                }
-            }
-            return self;
-        },
-
-        /**
-         * Serialize query to string.
-         * @param {Boolean} [serializeArray=true]
-         * whether append [] to key name when value 's type is array
-         */
-        toString: function (serializeArray) {
-            var self = this;
-            parseQuery(self);
-            return S.param(self._queryMap, undefined, undefined, serializeArray);
-        }
-    };
-
-    function padding2(str) {
-        return str.length === 1 ? '0' + str : str;
-    }
-
-    function equalsIgnoreCase(str1, str2) {
-        return str1.toLowerCase() === str2.toLowerCase();
-    }
-
-    // www.ta#bao.com // => www.ta.com/#bao.com
-    // www.ta%23bao.com
-    // Percent-Encoding
-    function encodeSpecialChars(str, specialCharsReg) {
-        // encodeURI( ) is intended to encode complete URIs,
-        // the following ASCII punctuation characters,
-        // which have special meaning in URIs, are not escaped either:
-        // ; / ? : @ & = + $ , #
-        return encodeURI(str).replace(specialCharsReg, function (m) {
-            return '%' + padding2(m.charCodeAt(0).toString(16));
-        });
-    }
-
-    /**
-     * @class KISSY.Uri
-     * Uri class for KISSY.
-     * Most of its interfaces are same with window.location.
-     * @param {String|KISSY.Uri} [uriStr] Encoded uri string.
-     */
-    function Uri(uriStr) {
-
-        if (uriStr instanceof  Uri) {
-            return uriStr.clone();
-        }
-
-        var components,
-            self = this;
-
-        S.mix(self,
-            {
-                /**
-                 * scheme such as 'http:'. aka protocol without colon
-                 * @type {String}
-                 */
-                scheme: '',
-                /**
-                 * User credentials such as 'yiminghe:gmail'
-                 * @type {String}
-                 */
-                userInfo: '',
-                /**
-                 * hostname such as 'docs.kissyui.com'. aka domain
-                 * @type {String}
-                 */
-                hostname: '',
-                /**
-                 * Port such as '8080'
-                 * @type {String}
-                 */
-                port: '',
-                /**
-                 * path such as '/index.htm'. aka pathname
-                 * @type {String}
-                 */
-                path: '',
-                /**
-                 * Query object for search string. aka search
-                 * @type {KISSY.Uri.Query}
-                 */
-                query: '',
-                /**
-                 * fragment such as '#!/test/2'. aka hash
-                 */
-                fragment: ''
-            });
-
-        components = Uri.getComponents(uriStr);
-
-        S.each(components, function (v, key) {
-            v = v || '';
-            if (key === 'query') {
-                // need encoded content
-                self.query = new Query(v);
-            } else {
-                // https://github.com/kissyteam/kissy/issues/298
-                try {
-                    v = S.urlDecode(v);
-                } catch (e) {
-                    logger.error(e + 'urlDecode error : ' + v);
-                }
-                // need to decode to get data structure in memory
-                self[key] = v;
-            }
-        });
-
-        return self;
-    }
-
-    Uri.prototype = {
-        constructor: Uri,
-
-        /**
-         * Return a cloned new instance.
-         * @return {KISSY.Uri}
-         */
-        clone: function () {
-            var uri = new Uri(), self = this;
-            S.each(REG_INFO, function (index, key) {
-                uri[key] = self[key];
-            });
-            uri.query = uri.query.clone();
-            return uri;
-        },
-
-        /**
-         * The reference resolution algorithm.rfc 5.2
-         * return a resolved uri corresponding to current uri
-         * @param {KISSY.Uri|String} relativeUri
-         *
-         * for example:
-         *      @example
-         *      this: 'http://y/yy/z.com?t=1#v=2'
-         *      'https:/y/' => 'https:/y/'
-         *      '//foo' => 'http://foo'
-         *      'foo' => 'http://y/yy/foo'
-         *      '/foo' => 'http://y/foo'
-         *      '?foo' => 'http://y/yy/z.com?foo'
-         *      '#foo' => http://y/yy/z.com?t=1#foo'
-         *
-         * @return {KISSY.Uri}
-         */
-        resolve: function (relativeUri) {
-
-            if (typeof relativeUri === 'string') {
-                relativeUri = new Uri(relativeUri);
-            }
-
-            var self = this,
-                override = 0,
-                lastSlashIndex,
-                order = ['scheme', 'userInfo', 'hostname', 'port', 'path', 'query', 'fragment'],
-                target = self.clone();
-
-            S.each(order, function (o) {
-                if (o === 'path') {
-                    // relativeUri does not set for scheme/userInfo/hostname/port
-                    if (override) {
-                        target[o] = relativeUri[o];
-                    } else {
-                        var path = relativeUri.path;
-                        if (path) {
-                            // force to override target 's query with relative
-                            override = 1;
-                            if (!S.startsWith(path, '/')) {
-                                if (target.hostname && !target.path) {
-                                    // RFC 3986, section 5.2.3, case 1
-                                    path = '/' + path;
-                                } else if (target.path) {
-                                    // RFC 3986, section 5.2.3, case 2
-                                    lastSlashIndex = target.path.lastIndexOf('/');
-                                    if (lastSlashIndex !== -1) {
-                                        path = target.path.slice(0, lastSlashIndex + 1) + path;
-                                    }
-                                }
-                            }
-                            // remove .. / .  as part of the resolution process
-                            target.path = Path.normalize(path);
-                        }
-                    }
-                } else if (o === 'query') {
-                    if (override || relativeUri.query.toString()) {
-                        target.query = relativeUri.query.clone();
-                        override = 1;
-                    }
-                } else if (override || relativeUri[o]) {
-                    target[o] = relativeUri[o];
-                    override = 1;
-                }
-            });
-
-            return target;
-
-        },
-
-        /**
-         * Get scheme part
-         */
-        getScheme: function () {
-            return this.scheme;
-        },
-
-        /**
-         * Set scheme part
-         * @param {String} scheme
-         * @chainable
-         */
-        setScheme: function (scheme) {
-            this.scheme = scheme;
-            return this;
-        },
-
-        /**
-         * Return hostname
-         * @return {String}
-         */
-        getHostname: function () {
-            return this.hostname;
-        },
-
-        /**
-         * Set hostname
-         * @param {String} hostname
-         * @chainable
-         */
-        setHostname: function (hostname) {
-            this.hostname = hostname;
-            return this;
-        },
-
-        /**
-         * Set user info
-         * @param {String} userInfo
-         * @chainable
-         */
-        setUserInfo: function (userInfo) {
-            this.userInfo = userInfo;
-            return this;
-        },
-
-        /**
-         * Get user info
-         * @return {String}
-         */
-        getUserInfo: function () {
-            return this.userInfo;
-        },
-
-        /**
-         * Set port
-         * @param {String} port
-         * @chainable
-         */
-        setPort: function (port) {
-            this.port = port;
-            return this;
-        },
-
-        /**
-         * Get port
-         * @return {String}
-         */
-        getPort: function () {
-            return this.port;
-        },
-
-        /**
-         * Set path
-         * @param {string} path
-         * @chainable
-         */
-        setPath: function (path) {
-            this.path = path;
-            return this;
-        },
-
-        /**
-         * Get path
-         * @return {String}
-         */
-        getPath: function () {
-            return this.path;
-        },
-
-        /**
-         * Set query
-         * @param {String|KISSY.Uri.Query} query
-         * @chainable
-         */
-        setQuery: function (query) {
-            if (typeof query === 'string') {
-                if (S.startsWith(query, '?')) {
-                    query = query.slice(1);
-                }
-                query = new Query(encodeSpecialChars(query, reDisallowedInQuery));
-            }
-            this.query = query;
-            return this;
-        },
-
-        /**
-         * Get query
-         * @return {KISSY.Uri.Query}
-         */
-        getQuery: function () {
-            return this.query;
-        },
-
-        /**
-         * Get fragment
-         * @return {String}
-         */
-        getFragment: function () {
-            return this.fragment;
-        },
-
-        /**
-         * Set fragment
-         * @param {String} fragment
-         * @chainable
-         */
-        setFragment: function (fragment) {
-            var self = this;
-            if (S.startsWith(fragment, '#')) {
-                fragment = fragment.slice(1);
-            }
-            self.fragment = fragment;
-            return self;
-        },
-
-        /**
-         * Judge whether two uri has same domain.
-         * @param {KISSY.Uri} other
-         * @return {Boolean}
-         */
-        isSameOriginAs: function (other) {
-            var self = this;
-            // port and hostname has to be same
-            return equalsIgnoreCase(self.hostname, other.hostname) &&
-                equalsIgnoreCase(self.scheme, other.scheme) &&
-                equalsIgnoreCase(self.port, other.port);
-        },
-
-        /**
-         * Serialize to string.
-         * See rfc 5.3 Component Recomposition.
-         * But kissy does not differentiate between undefined and empty.
-         * @param {Boolean} [serializeArray=true]
-         * whether append [] to key name when value 's type is array
-         * @return {String}
-         */
-        toString: function (serializeArray) {
-            var out = [],
-                self = this,
-                scheme,
-                hostname,
-                path,
-                port,
-                fragment,
-                query,
-                userInfo;
-
-            if ((scheme = self.scheme)) {
-                out.push(encodeSpecialChars(scheme, reDisallowedInSchemeOrUserInfo));
-                out.push(':');
-            }
-
-            if ((hostname = self.hostname)) {
-                out.push('//');
-                if ((userInfo = self.userInfo)) {
-                    out.push(encodeSpecialChars(userInfo, reDisallowedInSchemeOrUserInfo));
-                    out.push('@');
-                }
-
-                out.push(encodeURIComponent(hostname));
-
-                if ((port = self.port)) {
-                    out.push(':');
-                    out.push(port);
-                }
-            }
-
-            if ((path = self.path)) {
-                if (hostname && !S.startsWith(path, '/')) {
-                    path = '/' + path;
-                }
-                path = Path.normalize(path);
-                out.push(encodeSpecialChars(path, reDisallowedInPathName));
-            }
-
-            if ((query = (self.query.toString(serializeArray)))) {
-                out.push('?');
-                out.push(query);
-            }
-
-            if ((fragment = self.fragment)) {
-                out.push('#');
-                out.push(encodeSpecialChars(fragment, reDisallowedInFragment));
-            }
-
-            return out.join('');
-        }
-    };
-
-    Uri.Query = Query;
-
-    Uri.getComponents = function (url) {
-        url = url || '';
-        var m = url.match(URI_SPLIT_REG) || [],
-            ret = {};
-        S.each(REG_INFO, function (index, key) {
-            ret[key] = m[index];
-        });
-        return ret;
-    };
-
-    S.Uri = Uri;
-
-    return Uri;
-});
-/*
- Refer
- - application/x-www-form-urlencoded
- - http://www.ietf.org/rfc/rfc3986.txt
- - http://en.wikipedia.org/wiki/URI_scheme
- - http://unixpapa.com/js/querystring.html
- - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
- - same origin: http://tools.ietf.org/html/rfc6454
- *//**
+})();/**
  * @ignore
  * setup data structure for kissy loader
  * @author yiminghe@gmail.com
@@ -1557,13 +342,10 @@ KISSY.add(function (S, require) {
  */
 (function (S) {
     var Loader = S.Loader,
-        Path = S.Path,
         Env = S.Env,
         host = Env.host,
         TRUE = !0,
         FALSE = !1,
-        mix = S.mix,
-        startsWith = S.startsWith,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
         READY_TO_ATTACH = data.READY_TO_ATTACH,
@@ -1600,7 +382,7 @@ KISSY.add(function (S, require) {
         if (name.charAt(name.length - 1) === '/') {
             name += 'index';
         }
-        if (S.endsWith(name, '.js')) {
+        if (Utils.endsWith(name, '.js')) {
             name = name.slice(0, -3);
         }
         return name;
@@ -1655,7 +437,108 @@ KISSY.add(function (S, require) {
         Utils.webkit = numberify(m[1]);
     }
 
+    var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/;
+
+    function each(obj, fn) {
+        var i = 0,
+            myKeys, l;
+        if (isArray(obj)) {
+            l = obj.length;
+            for (; i < l; i++) {
+                if (fn(obj[i], i, obj) === false) {
+                    break;
+                }
+            }
+        } else {
+            myKeys = keys(obj);
+            l = myKeys.length;
+            for (; i < l; i++) {
+                if (fn(obj[myKeys[i]], myKeys[i], obj) === false) {
+                    break;
+                }
+            }
+        }
+    }
+
+    function keys(obj) {
+        var ret = [];
+        for (var key in obj) {
+            ret.push(key);
+        }
+        return ret;
+    }
+
+    var isArray = Array.isArray || function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    };
+
+    function mix(to, from) {
+        for (var i in from) {
+            to[i] = from[i];
+        }
+        return to;
+    }
+
+
     mix(Utils, {
+        mix: mix,
+
+        noop: function () {
+        },
+
+        startsWith: function (str, prefix) {
+            return str.lastIndexOf(prefix, 0) === 0;
+        },
+
+        isEmptyObject: function (o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        endsWith: function (str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) === ind;
+        },
+
+        now: Date.now || function () {
+            return +new Date();
+        },
+
+        each: each,
+
+        keys: keys,
+
+        isArray: isArray,
+
+        normalizePath: function (parentPath, subPath) {
+            var firstChar = subPath.charAt(0);
+            if (firstChar !== '.') {
+                return subPath;
+            }
+            var parts = parentPath.split('/');
+            var subParts = subPath.split('/');
+            parts.pop();
+            for (var i = 0, l = subParts.length; i < l; i++) {
+                var subPart = subParts[i];
+                if (subPart === '.') {
+                } else if (subPart === '..') {
+                    parts.pop();
+                } else {
+                    parts.push(subPart);
+                }
+            }
+            return parts.join('/');
+        },
+
+        isSameOriginAs: function (url1, url2) {
+            var urlParts1 = url1.match(urlReg);
+            var urlParts2 = url2.match(urlReg);
+            return urlParts1[0] === urlParts2[0];
+        },
 
         ie: getIEVersion(),
 
@@ -1674,23 +557,14 @@ KISSY.add(function (S, require) {
          * @return {String|String[]} normalized dependency module 's name
          */
         normalDepModuleName: function (moduleName, depName) {
+            if (typeof depName === 'string') {
+                return Utils.normalizePath(moduleName, depName);
+            }
+
             var i = 0, l;
 
-            if (!depName) {
-                return depName;
-            }
-
-            if (typeof depName === 'string') {
-                if (startsWith(depName, '../') || startsWith(depName, './')) {
-                    // x/y/z -> x/y/
-                    return Path.resolve(Path.dirname(moduleName), depName);
-                }
-
-                return Path.normalize(depName);
-            }
-
             for (l = depName.length; i < l; i++) {
-                depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
+                depName[i] = Utils.normalizePath(moduleName, depName[i]);
             }
             return depName;
         },
@@ -1700,9 +574,11 @@ KISSY.add(function (S, require) {
          * @param {String[]} modNames to be created module names
          */
         createModulesInfo: function (modNames) {
-            S.each(modNames, function (m) {
-                Utils.createModuleInfo(m);
+            var ret = [];
+            Utils.each(modNames, function (m, i) {
+                ret[i] = Utils.createModuleInfo(m);
             });
+            return ret;
         },
 
         /**
@@ -1741,7 +617,7 @@ KISSY.add(function (S, require) {
                 m,
                 runtimeMods = Env.mods;
 
-            S.each(modNames, function (modName) {
+            Utils.each(modNames, function (modName) {
                 module = runtimeMods[modName];
                 if (!module || module.getType() !== 'css') {
                     unalias = Utils.unalias(modName);
@@ -2147,11 +1023,9 @@ KISSY.add(function (S, require) {
  */
 (function (S) {
     var Loader = S.Loader,
-        Path = S.Path,
         Config = S.Config,
-        Env= S.Env,
         Utils = Loader.Utils,
-        mix = S.mix;
+        mix = Utils.mix;
 
     function checkGlobalIfNotExist(self, property) {
         return property in self ?
@@ -2192,15 +1066,11 @@ KISSY.add(function (S, require) {
             return this.name;
         },
 
-        getPath: function () {
-            return this.path || (this.path = this.getUri().toString());
-        },
-
         /**
-         * get package uri
+         * get package url
          */
-        getUri: function () {
-            return this.uri;
+        getBase: function () {
+            return this.base;
         },
 
         /**
@@ -2268,7 +1138,7 @@ KISSY.add(function (S, require) {
         // lazy initialize and commonjs module format
         self.cjs = 1;
         mix(self, cfg);
-        self.waitedCallbacks = [];
+        self.waits = {};
     }
 
     Module.prototype = {
@@ -2287,18 +1157,9 @@ KISSY.add(function (S, require) {
             return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
         },
 
-        /**
-         * resolve path
-         * @param {String} relativePath relative path
-         * @returns {KISSY.Uri} resolve uri
-         */
-        resolve: function (relativePath) {
-            return this.getUri().resolve(relativePath);
-        },
-
         // use by xtemplate include
-        resolveByName: function (relativeName) {
-            return Utils.normalDepModuleName(this.name, relativeName);
+        resolve: function (relativeName) {
+            return Utils.normalizePath(this.name, relativeName);
         },
 
         /**
@@ -2310,27 +1171,23 @@ KISSY.add(function (S, require) {
             return S.require(moduleName, this.name);
         },
 
-        wait: function (callback) {
-            this.waitedCallbacks.push(callback);
+        add: function (loader) {
+            this.waits[loader.id] = loader;
         },
 
-        notifyAll: function () {
-            var callback;
-            var len = this.waitedCallbacks.length,
-                i = 0;
-            for (; i < len; i++) {
-                callback = this.waitedCallbacks[i];
-                try {
-                    callback(this);
-                } catch (e) {
-                    S.log(e.stack || e, 'error');
-                    /*jshint loopfunc:true*/
-                    setTimeout(function () {
-                        throw e;
-                    }, 0);
-                }
-            }
-            this.waitedCallbacks = [];
+        remove: function (loader) {
+            delete this.waits[loader.id];
+        },
+
+        contains: function (loader) {
+            return this.waits[loader.id];
+        },
+
+        flush: function () {
+            Utils.each(this.waits, function (loader) {
+                loader.flush();
+            });
+            this.waits = {};
         },
 
         /**
@@ -2341,7 +1198,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 v = self.type;
             if (!v) {
-                if (Path.extname(self.name).toLowerCase() === '.css') {
+                if (Utils.endsWith(self.name, '.css')) {
                     v = 'css';
                 } else {
                     v = 'js';
@@ -2370,30 +1227,15 @@ KISSY.add(function (S, require) {
         },
 
         /**
-         * Get the path uri of current module if load dynamically
-         * @return {KISSY.Uri}
-         */
-        getUri: function () {
-            var self = this, uri;
-            if (!self.uri) {
-                // path can be specified
-                if (self.path) {
-                    uri = new S.Uri(self.path);
-                } else {
-                    uri = S.Config.resolveModFn(self);
-                }
-                self.uri = uri;
-            }
-            return self.uri;
-        },
-
-        /**
-         * Get the path of current module if load dynamically
+         * Get the path url of current module if load dynamically
          * @return {String}
          */
-        getPath: function () {
+        getUrl: function () {
             var self = this;
-            return self.path || (self.path = self.getUri().toString());
+            if (!self.url) {
+                self.url = S.Config.resolveModFn(self);
+            }
+            return self.url;
         },
 
         /**
@@ -2410,8 +1252,19 @@ KISSY.add(function (S, require) {
          */
         getPackage: function () {
             var self = this;
-            return self.packageInfo ||
-                (self.packageInfo = getPackage(self.name));
+            if (!self.packageInfo) {
+                var packages = Config.packages || {},
+                    modNameSlash = self.name + '/',
+                    pName = '',
+                    p;
+                for (p in packages) {
+                    if (Utils.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
+                        pName = p;
+                    }
+                }
+                self.packageInfo = packages[pName] || Config.corePackage;
+            }
+            return self.packageInfo;
         },
 
         /**
@@ -2456,9 +1309,11 @@ KISSY.add(function (S, require) {
          */
         getRequiredMods: function () {
             var self = this;
-            return S.map(self.getNormalizedRequires(), function (r) {
-                return Utils.createModuleInfo(r);
+            var mods = [];
+            Utils.each(self.getNormalizedRequires(), function (r, i) {
+                mods[i] = Utils.createModuleInfo(r);
             });
+            return mods;
         },
 
         /**
@@ -2486,19 +1341,6 @@ KISSY.add(function (S, require) {
     };
 
     Loader.Module = Module;
-
-    function getPackage(modName) {
-        var packages = Config.packages || {},
-            modNameSlash = modName + '/',
-            pName = '',
-            p;
-        for (p in packages) {
-            if (S.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
-                pName = p;
-            }
-        }
-        return packages[pName] || Env.corePackage;
-    }
 })(KISSY);/**
  * @ignore
  * script/css load across browser
@@ -2506,6 +1348,7 @@ KISSY.add(function (S, require) {
  */
 (function (S) {
     var   logger = S.getLogger('s/loader/getScript');
+
     var CSS_POLL_INTERVAL = 30,
         Utils = S.Loader.Utils,
     // central poll for link node
@@ -2563,7 +1406,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        if (S.isEmptyObject(monitors)) {
+        if (Utils.isEmptyObject(monitors)) {
             logger.debug('clear css poll timer');
             timer = 0;
         } else {
@@ -2611,7 +1454,6 @@ KISSY.add(function (S, require) {
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,
-        Path = S.Path,
     // solve concurrent requesting same script file
         jsCssCallbacks = {},
         webkit = Utils.webkit,
@@ -2649,16 +1491,12 @@ KISSY.add(function (S, require) {
         // can not use KISSY.Uri, url can not be encoded for some url
         // eg: /??dom.js,event.js , ? , should not be encoded
         var config = success,
-            css = 0,
+            css = Utils.endsWith(url, '.css'),
             error,
             timeout,
             attrs,
             callbacks,
             timer;
-
-        if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
-            css = 1;
-        }
 
         if (typeof config === 'object') {
             success = config.success;
@@ -2685,7 +1523,7 @@ KISSY.add(function (S, require) {
             };
 
         if (attrs) {
-            S.each(attrs, function (v, n) {
+            Utils.each(attrs, function (v, n) {
                 node.setAttribute(n, v);
             });
         }
@@ -2708,7 +1546,7 @@ KISSY.add(function (S, require) {
             var index = error,
                 fn;
             clearTimer();
-            S.each(jsCssCallbacks[url], function (callback) {
+            Utils.each(jsCssCallbacks[url], function (callback) {
                 if ((fn = callback[index])) {
                     fn.call(node);
                 }
@@ -2788,93 +1626,88 @@ KISSY.add(function (S, require) {
  */
 (function (S) {
     var Loader = S.Loader,
-        Path = S.Path,
         Package = Loader.Package,
         Utils = Loader.Utils,
         host = S.Env.host,
         Config = S.Config,
         location = host.location,
-        simulatedLocation,
-        locationHref,
+        locationPath = '',
         configFns = Config.fns;
 
-    if (location && (locationHref = location.href)) {
-        simulatedLocation = new S.Uri(locationHref);
+    if (location) {
+        locationPath = location.protocol + '//' + location.host + location.pathname;
     }
 
     // how to load mods by path
     Config.loadModsFn = function (rs, config) {
-        S.getScript(rs.path, config);
+        S.getScript(rs.url, config);
     };
 
-    // how to get mod uri
+    // how to get mod url
     Config.resolveModFn = function (mod) {
         var name = mod.name,
             min = '-min',
-            t, subPath;
-
+            t, url, subPath;
         var packageInfo = mod.getPackage();
-        var packageUri = packageInfo.getUri();
+        var packageBase = packageInfo.getBase();
         var packageName = packageInfo.getName();
         var extname = '.' + mod.getType();
-
-        name = Path.join(Path.dirname(name), Path.basename(name, extname));
-
+        // special for css module
+        name = name.replace(/\.css$/, '');
         if (packageInfo.isDebug()) {
             min = '';
         }
 
-        subPath = name + min + extname;
-        if (packageName) {
-            subPath = Path.relative(packageName, subPath);
+        // packageName: a/y use('a/y');
+        if (name === packageName) {
+            url = packageBase.substring(0, packageBase.length - 1) + min + extname;
+        } else {
+            subPath = name + min + extname;
+            if (packageName) {
+                subPath = subPath.substring(packageName.length + 1);
+            }
+            url = packageBase + subPath;
         }
-        var uri = packageUri.resolve(subPath);
+
         if ((t = mod.getTag())) {
             t += '.' + mod.getType();
-            uri.query.set('t', t);
+            url += '?t=' + t;
         }
-        return uri;
+        return url;
     };
 
-    var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
-
     configFns.core = function (cfg) {
-        var base = cfg.base;
+        var base = cfg.base || cfg.path;
+        var corePackage = Config.corePackage;
         if (base) {
-            cfg.uri = normalizePath(base, true);
-            delete cfg.base;
+            cfg.base = normalizePath(base, true);
         }
-        this.Env.corePackage.reset(cfg);
+        if (!corePackage) {
+            corePackage = Config.corePackage = new Package({
+                name: ''
+            });
+        }
+        corePackage.reset(cfg);
     };
 
     configFns.packages = function (config) {
-        var name,
-            Config = this.Config,
+        var Config = this.Config,
             ps = Config.packages = Config.packages || {};
         if (config) {
-            S.each(config, function (cfg, key) {
-                // 兼容数组方式
-                name = cfg.name || key;
-                var path = cfg.base || cfg.path;
-                var newConfig = {
-                    name: name
-                };
-                S.each(PACKAGE_MEMBERS, function (m) {
-                    if (m in cfg) {
-                        newConfig[m] = cfg[m];
-                    }
-                });
-                if (path) {
-                    path += '/';
+            Utils.each(config, function (cfg, key) {
+                // object type
+                var name = cfg.name = cfg.name || key;
+                var base = cfg.base || cfg.path;
+                if (base) {
                     if (!cfg.ignorePackageNameInUri) {
-                        path += name + '/';
+                        base += (base.charAt(base.length - 1) !== '/' ? '/' : '') + name;
                     }
-                    newConfig.uri = normalizePath(path, true);
+                    cfg.base = normalizePath(base, true);
                 }
                 if (ps[name]) {
-                    ps[name].reset(newConfig);
+                    ps[name].reset(cfg);
                 } else {
-                    ps[name] = new Package(newConfig);
+                    ps[name] = new Package(cfg);
                 }
             });
             return undefined;
@@ -2888,16 +1721,15 @@ KISSY.add(function (S, require) {
 
     configFns.modules = function (modules) {
         if (modules) {
-            S.each(modules, function (modCfg, modName) {
-                var path = modCfg.path;
-                if (path) {
-                    modCfg.uri = normalizePath(path);
-                    delete modCfg.path;
+            Utils.each(modules, function (modCfg, modName) {
+                var url = modCfg.url;
+                if (url) {
+                    modCfg.url = normalizePath(url);
                 }
                 var mod = Utils.createModuleInfo(modName, modCfg);
                 // #485, invalid after add
                 if (mod.status === Loader.Status.INIT) {
-                    S.mix(mod, modCfg);
+                    Utils.mix(mod, modCfg);
                 }
             });
         }
@@ -2905,46 +1737,31 @@ KISSY.add(function (S, require) {
 
     configFns.base = function (base) {
         var self = this,
-            Config = self.Config,
-            baseUri;
+            corePackage = Config.corePackage;
 
         if (!base) {
-            return Config.baseUri.toString();
+            return corePackage && corePackage.getBase();
         }
 
-        baseUri = normalizePath(base, true);
-        Config.baseUri = baseUri;
-
-        var corePackage = self.Env.corePackage;
-
-        if (!corePackage) {
-            corePackage = self.Env.corePackage = new Package({
-                name: ''
-            });
-        }
-
-        corePackage.uri = baseUri;
+        self.config('core', {
+            base: base
+        });
 
         return undefined;
     };
 
     function normalizePath(base, isDirectory) {
-        var baseUri;
-        base = base.replace(/\\/g, '/');
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
-        if (simulatedLocation) {
-            baseUri = simulatedLocation.resolve(base);
-        } else {
-            // add scheme for S.Uri
-            // currently only for nodejs
-            if (!S.startsWith(base, 'file:')) {
-                base = 'file:' + base;
+        if (locationPath) {
+            if (base.charAt(0) === '/') {
+                base = location.protocol + '//' + location.host + base;
+            } else {
+                base = Utils.normalizePath(locationPath, base);
             }
-            baseUri = new S.Uri(base);
         }
-        return baseUri;
+        return base;
     }
 })(KISSY);
 /**
@@ -2955,22 +1772,20 @@ KISSY.add(function (S, require) {
 (function (S, undefined) {
     var logger = S.getLogger('s/loader');
 
+    // ie11 is a new one!
     var Loader = S.Loader,
         Config = S.Config,
-        each = S.each,
         Status = Loader.Status,
         Utils = Loader.Utils,
+        each = Utils.each,
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         READY_TO_ATTACH = Status.READY_TO_ATTACH,
         ERROR = Status.ERROR,
-        groupTag = S.now();
+        oldIE = Utils.ie < 10;
 
-    // ie11 is a new one!
-    var oldIE = Utils.ie < 10;
-
-    function loadScripts(rss, callback, charset, timeout) {
+    function loadScripts(rss, callback, timeout) {
         var count = rss && rss.length,
             errorList = [],
             successList = [];
@@ -2999,7 +1814,7 @@ KISSY.add(function (S, require) {
                     errorList.push(rs);
                     complete();
                 },
-                charset: charset
+                charset: rs.charset
             };
             if (!rs.combine) {
                 mod = rs.mods[0];
@@ -3019,16 +1834,19 @@ KISSY.add(function (S, require) {
         });
     }
 
-    ComboLoader.groupTag = groupTag;
+    var loaderId = 0;
 
     /**
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
-     * @param waitingModules
+     * @param callback
      * @private
      */
-    function ComboLoader(waitingModules) {
-        this.waitingModules = waitingModules;
+    function ComboLoader(callback) {
+        this.callback = callback;
+        this.waitMods = {};
+        this.head = this.tail = undefined;
+        this.id = 'loader' + (++loaderId);
     }
 
     var currentMod;
@@ -3037,7 +1855,7 @@ KISSY.add(function (S, require) {
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        // function(S,require){require('node')}
+        // function(S, require){ require('node') }
         if (!config && typeof factory === 'function' && factory.length > 1) {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
@@ -3055,7 +1873,7 @@ KISSY.add(function (S, require) {
 
     ComboLoader.add = function (name, factory, config, argsLen) {
         // KISSY.add('xx',[],function(){});
-        if (argsLen === 3 && S.isArray(factory)) {
+        if (argsLen === 3 && Utils.isArray(factory)) {
             var tmp = factory;
             factory = config;
             config = {
@@ -3111,6 +1929,7 @@ KISSY.add(function (S, require) {
                 break;
             }
         }
+
         if (re) {
             name = re.getAttribute('data-mod-name');
         } else {
@@ -3138,107 +1957,101 @@ KISSY.add(function (S, require) {
                     }
                 });
                 if (ms.length) {
-                    logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.modPath + '"');
+                    logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.url + '"');
                 }
             });
         };
     }
 
     function getCommonPrefix(str1, str2) {
-        str1 = str1.split(/\//);
-        str2 = str2.split(/\//);
+        // ie bug
+        // 'a//b'.split(/\//) => [a,b]
+        var prefix = str1.substring(0, str1.indexOf('//') + 2);
+        str1 = str1.substring(prefix.length).split(/\//);
+        str2 = str2.substring(prefix.length).split(/\//);
         var l = Math.min(str1.length, str2.length);
         for (var i = 0; i < l; i++) {
             if (str1[i] !== str2[i]) {
                 break;
             }
         }
-        return str1.slice(0, i).join('/') + '/';
+        return prefix + str1.slice(0, i).join('/') + '/';
     }
 
-    S.mix(ComboLoader.prototype, {
+    Utils.mix(ComboLoader.prototype, {
         /**
          * load modules asynchronously
          */
         use: function (normalizedModNames) {
             var self = this,
-                allModNames,
-                comboUrls,
+                allMods, comboUrls,
                 timeout = Config.timeout;
 
-            allModNames = S.keys(self.calculate(normalizedModNames));
+            allMods = self.calculate(normalizedModNames);
 
-            Utils.createModulesInfo(allModNames);
-
-            comboUrls = self.getComboUrls(allModNames);
+            comboUrls = self.getComboUrls(allMods);
 
             // load css first to avoid page blink
-            each(comboUrls.css, function (cssOne) {
-                loadScripts(cssOne, function (success, error) {
+            if (comboUrls.css) {
+                loadScripts(comboUrls.css, function (success, error) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
 
                     each(success, function (one) {
                         each(one.mods, function (mod) {
-                            Utils.registerModule(mod.name, S.noop);
+                            Utils.registerModule(mod.name, Utils.noop);
                             // notify all loader instance
-                            mod.notifyAll();
+                            mod.flush();
                         });
                     });
 
                     each(error, function (one) {
                         each(one.mods, function (mod) {
-                            var msg = mod.name +
-                                ' is not loaded! can not find module in path : ' +
-                                one.path;
+                            var msg = mod.name + ' is not loaded! can not find module in url : ' + one.url;
                             S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
-                            mod.notifyAll();
+                            mod.flush();
                         });
                     });
-                }, cssOne.charset, timeout);
-            });
+                }, timeout);
+            }
 
             // jss css download in parallel
-            each(comboUrls.js, function (jsOne) {
-                loadScripts(jsOne, function (success) {
+            if (comboUrls.js) {
+                loadScripts(comboUrls.js, function (success) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
 
-                    each(jsOne, function (one) {
+                    each(comboUrls.js, function (one) {
                         each(one.mods, function (mod) {
                             // fix #111
                             // https://github.com/kissyteam/kissy/issues/111
                             if (!mod.factory) {
                                 var msg = mod.name +
-                                    ' is not loaded! can not find module in path : ' +
-                                    one.path;
+                                    ' is not loaded! can not find module in url : ' +
+                                    one.url;
                                 S.log(msg, 'error');
                                 mod.status = ERROR;
                             }
                             // notify all loader instance
-                            mod.notifyAll();
+                            mod.flush();
                         });
                     });
-                }, jsOne.charset, timeout);
-            });
+                }, timeout);
+            }
         },
 
         /**
          * calculate dependency
          */
         calculate: function (modNames, cache, ret) {
-            var i,
-                m,
-                mod,
-                modStatus,
-                self = this,
-                waitingModules = self.waitingModules;
+            var i, m, mod, modStatus,
+                self = this;
 
-            ret = ret || {};
+            ret = ret || [];
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
             cache = cache || {};
@@ -3255,18 +2068,13 @@ KISSY.add(function (S, require) {
                     continue;
                 }
                 if (modStatus !== LOADED) {
-                    if (!waitingModules.contains(m)) {
+                    if (!mod.contains(self)) {
                         if (modStatus !== LOADING) {
                             mod.status = LOADING;
-                            ret[m] = 1;
+                            ret.push(mod);
                         }
-                        /*jshint loopfunc:true*/
-                        mod.wait(function (mod) {
-                            waitingModules.remove(mod.name);
-                            // notify current loader instance
-                            waitingModules.notifyAll();
-                        });
-                        waitingModules.add(m);
+                        mod.add(self);
+                        self.wait(mod);
                     }
                 }
                 self.calculate(mod.getNormalizedRequires(), cache, ret);
@@ -3278,164 +2086,238 @@ KISSY.add(function (S, require) {
         /**
          * get combo mods for modNames
          */
-        getComboMods: function (modNames, comboPrefixes) {
-            var comboMods = {},
-                packageUri,
-                i = 0,
-                l = modNames.length,
-                modName, mod, packageInfo, type, typedCombos, mods,
-                tag, charset, packagePath, groupPrefixUri, comboName,
-                packageName, group, modPath;
-
-            for (; i < l; ++i) {
-                modName = modNames[i];
-                mod = Utils.createModuleInfo(modName);
+        getComboMods: function (mods) {
+            var i, l = mods.length,
+                tmpMods, mod, packageInfo, type,
+                tag, charset, packageBase,
+                packageName, group, modUrl;
+            var groups = {
+                /*
+                 js: {
+                 'groupA-gbk':{
+                 'http://x.com':[m1,m2]
+                 }
+                 }
+                 */
+            };
+            var normals = {
+                /*
+                 js:{
+                 'http://x.com':[m1,m2]
+                 }
+                 */
+            };
+            for (i = 0; i < l; ++i) {
+                mod = mods[i];
                 type = mod.getType();
-                modPath = mod.getPath();
+                modUrl = mod.getUrl();
                 packageInfo = mod.getPackage();
+                packageBase = packageInfo.getBase();
                 packageName = packageInfo.name;
                 charset = packageInfo.getCharset();
                 tag = packageInfo.getTag();
                 group = packageInfo.getGroup();
-                packagePath = packageInfo.getPath();
-                packageUri = packageInfo.getUri();
-                comboName = packageName;
-                // whether group packages can be combined (except default package and non-combo modules)
-                if ((mod.canBeCombined = packageInfo.isCombine() &&
-                    S.startsWith(modPath, packagePath)) && group) {
-                    // combined package name
-                    comboName = group + '_' + charset + '_' + groupTag;
-                    if ((groupPrefixUri = comboPrefixes[comboName])) {
-                        if (groupPrefixUri.isSameOriginAs(packageUri)) {
-                            groupPrefixUri.setPath(
-                                getCommonPrefix(groupPrefixUri.getPath(), packageUri.getPath())
-                            );
-                        } else {
-                            comboName = packageName;
-                            comboPrefixes[packageName] = packageUri;
+
+                if (packageInfo.isCombine() && group) {
+                    var typeGroups = groups[type] || (groups[type] = {});
+                    group = group + '-' + charset;
+                    var typeGroup = typeGroups[group] || (typeGroups[group] = {});
+                    var find = 0;
+                    /*jshint loopfunc:true*/
+                    Utils.each(typeGroup, function (tmpMods, prefix) {
+                        if (Utils.isSameOriginAs(prefix, packageBase)) {
+                            var newPrefix = getCommonPrefix(prefix, packageBase);
+                            tmpMods.push(mod);
+                            if (tag && tag !== tmpMods.tag) {
+                                tmpMods.tag = getHash(tmpMods.tag + tag);
+                            }
+                            delete typeGroup[prefix];
+                            typeGroup[newPrefix] = tmpMods;
+                            find = 1;
                         }
-                    } else {
-                        comboPrefixes[comboName] = packageUri.clone();
+                    });
+                    if (!find) {
+                        tmpMods = typeGroup[packageBase] = [mod];
+                        tmpMods.charset = charset;
+                        tmpMods.tag = tag || '';
                     }
                 } else {
-                    comboPrefixes[packageName] = packageUri;
+                    var normalTypes = normals[type] || (normals[type] = {});
+                    if (!(tmpMods = normalTypes[packageBase])) {
+                        tmpMods = normalTypes[packageBase] = [];
+                        tmpMods.charset = charset;
+                        tmpMods.tag = tag || '';
+                    } else {
+                        if (tag && tag !== tmpMods.tag) {
+                            tmpMods.tag = getHash(tmpMods.tag + tag);
+                        }
+                    }
+                    tmpMods.push(mod);
                 }
 
-                typedCombos = comboMods[type] = comboMods[type] || {};
-                if (!(mods = typedCombos[comboName])) {
-                    mods = typedCombos[comboName] = [];
-                    mods.charset = charset;
-                    mods.tags = [tag]; // [package tag]
-                } else {
-                    if (!(mods.tags.length === 1 && mods.tags[0] === tag)) {
-                        mods.tags.push(tag);
-                    }
-                }
-                mods.push(mod);
             }
 
-            return comboMods;
+            return {
+                groups: groups,
+                normals: normals
+            };
         },
 
         /**
          * Get combo urls
          */
-        getComboUrls: function (modNames) {
+        getComboUrls: function (mods) {
             var comboPrefix = Config.comboPrefix,
                 comboSep = Config.comboSep,
                 maxFileNum = Config.comboMaxFileNum,
                 maxUrlLength = Config.comboMaxUrlLength;
 
-            var comboPrefixes = {};
-            // {type, {comboName, [modInfo]}}}
-            var comboMods = this.getComboMods(modNames, comboPrefixes);
-            // {type, {comboName, [url]}}}
+            var comboMods = this.getComboMods(mods);
+
             var comboRes = {};
 
-            // generate combo urls
-            for (var type in comboMods) {
-                comboRes[type] = {};
-                for (var comboName in comboMods[type]) {
-                    var currentComboUrls = [];
-                    var currentComboMods = [];
-                    var mods = comboMods[type][comboName];
-                    var tags = mods.tags;
-                    var tag = tags.length > 1 ? getHash(tags.join('')) : tags[0];
+            function processSamePrefixUrlMods(type, basePrefix, sendMods) {
+                var currentComboUrls = [];
+                var currentComboMods = [];
+                var tag = sendMods.tag;
+                var charset = sendMods.charset;
+                var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : ''),
+                    suffixLength = suffix.length;
 
-                    var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : ''),
-                        suffixLength = suffix.length,
-                        basePrefix = comboPrefixes[comboName].toString(),
-                        baseLen = basePrefix.length,
-                        prefix = basePrefix + comboPrefix,
-                        res = comboRes[type][comboName] = [];
+                var baseLen = basePrefix.length,
+                    prefix = basePrefix + comboPrefix,
+                    res = [];
 
-                    var l = prefix.length;
-                    res.charset = mods.charset;
-                    res.mods = [];
+                var l = prefix.length;
 
-                    /*jshint loopfunc:true*/
-                    var pushComboUrl = function () {
-                        //noinspection JSReferencingMutableVariableFromClosure
+                /*jshint loopfunc:true*/
+                var pushComboUrl = function () {
+                    //noinspection JSReferencingMutableVariableFromClosure
+                    res.push({
+                        combine: 1,
+                        url: prefix + currentComboUrls.join(comboSep) + suffix,
+                        charset: charset,
+                        mods: currentComboMods
+                    });
+                };
+
+                for (var i = 0; i < sendMods.length; i++) {
+                    var currentMod = sendMods[i];
+                    var url = currentMod.getUrl();
+                    if (!currentMod.getPackage().isCombine() ||
+                        // use(x/y) packageName: x/y ...
+                        !Utils.startsWith(url, basePrefix)) {
                         res.push({
-                            combine: 1,
-                            path: prefix + currentComboUrls.join(comboSep) + suffix,
-                            mods: currentComboMods
+                            combine: 0,
+                            url: url,
+                            charset: charset,
+                            mods: [currentMod]
                         });
-                    };
-
-                    for (var i = 0; i < mods.length; i++) {
-                        var currentMod = mods[i];
-                        res.mods.push(currentMod);
-                        var path = currentMod.getPath();
-                        if (!currentMod.canBeCombined) {
-                            res.push({
-                                combine: 0,
-                                path: path,
-                                mods: [currentMod]
-                            });
-                            continue;
-                        }
-                        // ignore query parameter
-                        var subPath = path.slice(baseLen).replace(/\?.*$/, '');
-                        currentComboUrls.push(subPath);
-                        currentComboMods.push(currentMod);
-
-                        if (currentComboUrls.length > maxFileNum ||
-                            (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)) {
-                            currentComboUrls.pop();
-                            currentComboMods.pop();
-                            pushComboUrl();
-                            currentComboUrls = [];
-                            currentComboMods = [];
-                            i--;
-                        }
+                        continue;
                     }
-                    if (currentComboUrls.length) {
+                    // ignore query parameter
+                    var subPath = url.slice(baseLen).replace(/\?.*$/, '');
+                    currentComboUrls.push(subPath);
+                    currentComboMods.push(currentMod);
+
+                    if (currentComboUrls.length > maxFileNum ||
+                        (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)) {
+                        currentComboUrls.pop();
+                        currentComboMods.pop();
                         pushComboUrl();
+                        currentComboUrls = [];
+                        currentComboMods = [];
+                        i--;
+                    }
+                }
+                if (currentComboUrls.length) {
+                    pushComboUrl();
+                }
+
+                comboRes[type].push.apply(comboRes[type], res);
+            }
+
+            var type, prefix;
+            var normals = comboMods.normals;
+            var groups = comboMods.groups;
+            var group;
+
+            // generate combo urls
+            for (type in normals) {
+                comboRes[type] = comboRes[type] || [];
+                for (prefix in normals[type]) {
+                    processSamePrefixUrlMods(type, prefix, normals[type][prefix]);
+                }
+            }
+            for (type in groups) {
+                comboRes[type] = comboRes[type] || [];
+                for (group in groups[type]) {
+                    for (prefix in groups[type][group]) {
+                        processSamePrefixUrlMods(type, prefix, groups[type][group][prefix]);
                     }
                 }
             }
             return comboRes;
+        },
+
+
+        flush: function () {
+            if (!this.callback) {
+                return;
+            }
+            var self = this,
+                head = self.head,
+                callback = self.callback;
+            while (head) {
+                var node = head.node,
+                    status = node.status;
+                if (status >= Status.LOADED || status === Status.ERROR) {
+                    node.remove(self);
+                    head = self.head = head.next;
+                } else {
+                    return;
+                }
+            }
+            self.callback = null;
+            callback();
+        },
+
+        wait: function (mod) {
+            var self = this;
+            if (!self.head) {
+                self.tail = self.head = {
+                    node: mod
+                };
+            } else {
+                var newNode = {
+                    node: mod
+                };
+                self.tail.next = newNode;
+                self.tail = newNode;
+            }
         }
     });
 
     Loader.ComboLoader = ComboLoader;
 })(KISSY);
 /*
- 2014-01-14 yiminghe
+ 2014-03-24 yiminghe@gmail.com
+ - refactor group combo logic
+
+ 2014-01-14 yiminghe@gmail.com
  - support System.ondemand from es6
 
- 2013-09-11 yiminghe
+ 2013-09-11 yiminghe@gmail.com
  - unify simple loader and combo loader
 
- 2013-07-25 阿古, yiminghe
+ 2013-07-25 阿古, yiminghe@gmail.com
  - support group combo for packages
 
  2013-06-04 yiminghe@gmail.com
  - refactor merge combo loader and simple loader
  - support error callback
 
- 2012-02-20 yiminghe note:
+ 2012-02-20 yiminghe@gmail.com
  - three status
  0: initialized
  LOADED: load into page
@@ -3453,39 +2335,7 @@ KISSY.add(function (S, require) {
         processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
 
-    function WaitingModules(fn) {
-        this.fn = fn;
-        this.waitMods = {};
-    }
-
-    WaitingModules.prototype = {
-        constructor: WaitingModules,
-
-        notifyAll: function () {
-            var self = this,
-                fn = self.fn;
-            if (fn && S.isEmptyObject(self.waitMods)) {
-                self.fn = null;
-                fn();
-            }
-        },
-
-        add: function (modName) {
-            this.waitMods[modName] = 1;
-        },
-
-        remove: function (modName) {
-            delete this.waitMods[modName];
-        },
-
-        contains: function (modName) {
-            return this.waitMods[modName];
-        }
-    };
-
-    Loader.WaitingModules = WaitingModules;
-
-    S.mix(S, {
+    Utils.mix(S, {
         /**
          * Registers a module with the KISSY global.
          * @param {String} name module name.
@@ -3527,8 +2377,7 @@ KISSY.add(function (S, require) {
                 error,
                 sync,
                 tryCount = 0,
-                finalSuccess,
-                waitingModules = new WaitingModules(loadReady);
+                finalSuccess;
 
             if (typeof success === 'object') {
                 //noinspection JSUnresolvedVariable
@@ -3564,7 +2413,16 @@ KISSY.add(function (S, require) {
                     Utils.attachModsRecursively(normalizedModNames);
                     if (success) {
                         if (sync) {
-                            finalSuccess();
+                            try {
+                                finalSuccess();
+                            } catch (e) {
+                                S.log(e.stack || e, 'error');
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+
                         } else {
                             // standalone error trace
                             processImmediate(finalSuccess);
@@ -3573,7 +2431,15 @@ KISSY.add(function (S, require) {
                 } else if (errorList.length) {
                     if (error) {
                         if (sync) {
-                            error.apply(S, errorList);
+                            try {
+                                error.apply(S, errorList);
+                            } catch (e) {
+                                S.log(e.stack || e, 'error');
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
                         } else {
                             processImmediate(function () {
                                 error.apply(S, errorList);
@@ -3584,21 +2450,21 @@ KISSY.add(function (S, require) {
                     S.log('loader: load above modules error', 'error');
                 } else {
                     logger.debug(tryCount + ' reload ' + modNames);
-                    waitingModules.fn = loadReady;
+                    loader.callback = loadReady;
                     loader.use(normalizedModNames);
                 }
             }
 
-            loader = new ComboLoader(waitingModules);
+            loader = new ComboLoader(loadReady);
 
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
             if (sync) {
-                waitingModules.notifyAll();
+                loader.flush();
             } else {
                 processImmediate(function () {
-                    waitingModules.notifyAll();
+                    loader.flush();
                 });
             }
             return S;
@@ -3612,11 +2478,9 @@ KISSY.add(function (S, require) {
          * @return {*} exports of specified module
          */
         require: function (moduleName, refName) {
-            if (moduleName) {
-                var moduleNames = Utils.unalias(Utils.normalizeModNamesWithAlias([moduleName], refName));
-                Utils.attachModsRecursively(moduleNames);
-                return Utils.getModules(moduleNames)[1];
-            }
+            var moduleNames = Utils.normalizeModNames([moduleName], refName);
+            Utils.attachModsRecursively(moduleNames);
+            return Utils.getModules(moduleNames)[1];
         }
     });
 
@@ -3645,7 +2509,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140324103447';
+    var TIMESTAMP = '20140325174526';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3691,7 +2555,7 @@ KISSY.add('i18n', {
                 base += '/';
             }
             parts = src.substring(index + comboPrefix.length).split(comboSep);
-            S.each(parts, function (part) {
+            Utils.each(parts, function (part) {
                 if (part.match(baseTestReg)) {
                     base += part.replace(baseReg, '$1');
                     return false;
@@ -3751,29 +2615,21 @@ KISSY.add('i18n', {
         charset: 'utf-8',
         lang: 'zh-cn'
     });
-        // ejecta
+    // ejecta
     if (doc && doc.getElementsByTagName) {
         // will transform base to absolute path
-        S.config(S.mix({
+        S.config(Utils.mix({
             // 2k(2048) url length
             comboMaxUrlLength: 2000,
             // file limit number for a single combo url
             comboMaxFileNum: 40
         }, getBaseInfo()));
     }
-
-    S.add('uri', function () {
-        return S.Uri;
-    });
-
-    S.add('path', function () {
-        return S.Path;
-    });
 })(KISSY);
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3931,18 +2787,20 @@ KISSY.add("util/escape", [], function(S) {
   unEscapeHtmlReg = getUnEscapeReg();
   function getEscapeReg() {
     var str = EMPTY;
-    S.each(htmlEntities, function(entity) {
+    for(var e in htmlEntities) {
+      var entity = htmlEntities[e];
       str += entity + "|"
-    });
+    }
     str = str.slice(0, -1);
     escapeHtmlReg = new RegExp(str, "g");
     return escapeHtmlReg
   }
   function getUnEscapeReg() {
     var str = EMPTY;
-    S.each(reverseEntities, function(entity) {
+    for(var e in reverseEntities) {
+      var entity = reverseEntities[e];
       str += entity + "|"
-    });
+    }
     str += "&#(\\d{1,5});";
     unEscapeHtmlReg = new RegExp(str, "g");
     return unEscapeHtmlReg
@@ -4039,8 +2897,57 @@ KISSY.add("util/function", [], function(S, undefined) {
 });
 KISSY.add("util/object", [], function(S, undefined) {
   var logger = S.getLogger("s/util");
-  var MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR", STAMP_MARKER = "__~ks_stamped", host = S.Env.host, TRUE = true, EMPTY = "", Obj = Object, objectCreate = Obj.create;
-  mix(S, {stamp:function(o, readOnly, marker) {
+  var MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR", STAMP_MARKER = "__~ks_stamped", host = S.Env.host, TRUE = true, EMPTY = "", toString = {}.toString, Obj = Object, objectCreate = Obj.create;
+  var hasEnumBug = !{toString:1}.propertyIsEnumerable("toString"), enumProperties = ["constructor", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toString", "toLocaleString", "valueOf"];
+  mix(S, {keys:Object.keys || function(o) {
+    var result = [], p, i;
+    for(p in o) {
+      if(o.hasOwnProperty(p)) {
+        result.push(p)
+      }
+    }
+    if(hasEnumBug) {
+      for(i = enumProperties.length - 1;i >= 0;i--) {
+        p = enumProperties[i];
+        if(o.hasOwnProperty(p)) {
+          result.push(p)
+        }
+      }
+    }
+    return result
+  }, each:function(object, fn, context) {
+    if(object) {
+      var key, val, keys, i = 0, length = object && object.length, isObj = length === undefined || toString.call(object) === "[object Function]";
+      context = context || null;
+      if(isObj) {
+        keys = S.keys(object);
+        for(;i < keys.length;i++) {
+          key = keys[i];
+          if(fn.call(context, object[key], key, object) === false) {
+            break
+          }
+        }
+      }else {
+        for(val = object[0];i < length;val = object[++i]) {
+          if(fn.call(context, val, i, object) === false) {
+            break
+          }
+        }
+      }
+    }
+    return object
+  }, now:Date.now || function() {
+    return+new Date
+  }, isArray:function(obj) {
+    return toString.call(obj) === "[object Array]"
+  }, isEmptyObject:function(o) {
+    for(var p in o) {
+      if(p !== undefined) {
+        return false
+      }
+    }
+    return true
+  }, stamp:function(o, readOnly, marker) {
     marker = marker || STAMP_MARKER;
     var guid = o[marker];
     if(guid) {
@@ -4205,12 +3112,101 @@ KISSY.add("util/object", [], function(S, undefined) {
   }
 });
 KISSY.add("util/string", [], function(S, undefined) {
+  var logger = S.getLogger("s/util");
   var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g, EMPTY = "";
   var RE_DASH = /-([a-z])/ig;
+  var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g, trim = String.prototype.trim;
+  var SEP = "&", EQ = "=", TRUE = true;
+  function isValidParamValue(val) {
+    var t = typeof val;
+    return val == null || t !== "object" && t !== "function"
+  }
   function upperCase() {
     return arguments[1].toUpperCase()
   }
-  S.mix(S, {camelCase:function(name) {
+  S.mix(S, {param:function(o, sep, eq, serializeArray) {
+    sep = sep || SEP;
+    eq = eq || EQ;
+    if(serializeArray === undefined) {
+      serializeArray = TRUE
+    }
+    var buf = [], key, i, v, len, val, encode = S.urlEncode;
+    for(key in o) {
+      val = o[key];
+      key = encode(key);
+      if(isValidParamValue(val)) {
+        buf.push(key);
+        if(val !== undefined) {
+          buf.push(eq, encode(val + EMPTY))
+        }
+        buf.push(sep)
+      }else {
+        if(S.isArray(val) && val.length) {
+          for(i = 0, len = val.length;i < len;++i) {
+            v = val[i];
+            if(isValidParamValue(v)) {
+              buf.push(key, serializeArray ? encode("[]") : EMPTY);
+              if(v !== undefined) {
+                buf.push(eq, encode(v + EMPTY))
+              }
+              buf.push(sep)
+            }
+          }
+        }
+      }
+    }
+    buf.pop();
+    return buf.join(EMPTY)
+  }, unparam:function(str, sep, eq) {
+    if(typeof str !== "string" || !(str = S.trim(str))) {
+      return{}
+    }
+    sep = sep || SEP;
+    eq = eq || EQ;
+    var ret = {}, eqIndex, decode = S.urlDecode, pairs = str.split(sep), key, val, i = 0, len = pairs.length;
+    for(;i < len;++i) {
+      eqIndex = pairs[i].indexOf(eq);
+      if(eqIndex === -1) {
+        key = decode(pairs[i]);
+        val = undefined
+      }else {
+        key = decode(pairs[i].substring(0, eqIndex));
+        val = pairs[i].substring(eqIndex + 1);
+        try {
+          val = decode(val)
+        }catch(e) {
+          logger.error("decodeURIComponent error : " + val);
+          logger.error(e)
+        }
+        if(S.endsWith(key, "[]")) {
+          key = key.substring(0, key.length - 2)
+        }
+      }
+      if(key in ret) {
+        if(S.isArray(ret[key])) {
+          ret[key].push(val)
+        }else {
+          ret[key] = [ret[key], val]
+        }
+      }else {
+        ret[key] = val
+      }
+    }
+    return ret
+  }, startsWith:function(str, prefix) {
+    return str.lastIndexOf(prefix, 0) === 0
+  }, endsWith:function(str, suffix) {
+    var ind = str.length - suffix.length;
+    return ind >= 0 && str.indexOf(suffix, ind) === ind
+  }, trim:trim ? function(str) {
+    return str == null ? EMPTY : trim.call(str)
+  } : function(str) {
+    return str == null ? EMPTY : (str + "").replace(RE_TRIM, EMPTY)
+  }, urlEncode:function(s) {
+    return encodeURIComponent(String(s))
+  }, urlDecode:function(s) {
+    return decodeURIComponent(s.replace(/\+/g, " "))
+  }, camelCase:function(name) {
     return name.replace(RE_DASH, upperCase)
   }, substitute:function(str, o, regexp) {
     if(typeof str !== "string" || !o) {
@@ -4253,12 +3249,15 @@ KISSY.add("util/type", [], function(S, undefined) {
   if("@DEBUG@") {
     S.mix(S, {isBoolean:noop, isNumber:noop, isString:noop, isFunction:noop, isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
   }
-  S.each("Boolean Number String Function Date RegExp Object Array".split(" "), function(name, lc) {
-    class2type["[object " + name + "]"] = lc = name.toLowerCase();
-    S["is" + name] = function(o) {
-      return S.type(o) === lc
-    }
-  });
+  var types = "Boolean Number String Function Date RegExp Object Array".split(" ");
+  for(var i = 0;i < types.length;i++) {
+    (function(name, lc) {
+      class2type["[object " + name + "]"] = lc = name.toLowerCase();
+      S["is" + name] = function(o) {
+        return S.type(o) === lc
+      }
+    })(types[i], i)
+  }
   S.isArray = Array.isArray || S.isArray
 });
 KISSY.add("util/web", [], function(S, undefined) {
@@ -4407,6 +3406,12 @@ KISSY.add("util/web", [], function(S, undefined) {
 });
 KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", "util/string", "util/type", "util/web"], function(S, require) {
   var FALSE = false, CLONE_MARKER = "__~ks_cloned";
+  S.mix = function(to, from) {
+    for(var i in from) {
+      to[i] = from[i]
+    }
+    return to
+  };
   require("util/array");
   require("util/escape");
   require("util/function");
@@ -4475,7 +3480,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4483,7 +3488,8 @@ build time: Mar 24 10:35
  ua
 */
 
-KISSY.add("ua", [], function(S, undefined) {
+KISSY.add("ua", ["util"], function(S, require, module, exports, undefined) {
+  require("util");
   var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || "";
   function numberify(s) {
     var c = 0;
@@ -4658,7 +3664,7 @@ KISSY.add("ua", [], function(S, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4666,7 +3672,8 @@ build time: Mar 24 10:35
  feature
 */
 
-KISSY.add("feature", ["ua"], function(S, require) {
+KISSY.add("feature", ["util", "ua"], function(S, require) {
+  require("util");
   var win = S.Env.host, Config = S.Config, UA = require("ua"), propertyPrefixes = ["Webkit", "Moz", "O", "ms"], propertyPrefixesLength = propertyPrefixes.length, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
   if(documentElement) {
     if(documentElement.querySelector && ie !== 8) {
@@ -4757,8 +3764,8 @@ KISSY.add("feature", ["ua"], function(S, require) {
     });
 
     if (typeof location !== 'undefined') {
-        var https = S.startsWith(location.href, 'https');
-        var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
+        var prefix = location.protocol === 'https' ?
+            'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
         S.config({
             packages: {
                 gallery: {
@@ -4834,7 +3841,7 @@ config({
     }
 });/*Generated By KISSY Module Compiler*/
 config({
-'anim/base': {requires: ['dom','promise']}
+'anim/base': {requires: ['dom','ua','promise']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -4870,11 +3877,11 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'component/control': {requires: ['node','base','component/manager','xtemplate/runtime']}
+'component/control': {requires: ['node','base','component/manager','xtemplate/runtime','ua']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'component/extension/align': {requires: ['node']}
+'component/extension/align': {requires: ['node','ua']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -4882,7 +3889,11 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'component/extension/delegate-children': {requires: ['node','component/manager']}
+'component/extension/delegate-children': {requires: ['node','component/manager','ua']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/extension/shim': {requires: ['ua']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -4910,7 +3921,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-dd: {requires: ['node','base','event/gesture/drag']}
+dd: {requires: ['node','base','ua','event/gesture/drag']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -4940,11 +3951,15 @@ config({
     }
 });/*Generated By KISSY Module Compiler*/
 config({
+'dom/base': {requires: ['ua']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
 'dom/class-list': {requires: ['dom/base']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'dom/ie': {requires: ['dom/base']}
+'dom/ie': {requires: ['dom/base','ua']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -4973,6 +3988,10 @@ config({
 });/*Generated By KISSY Module Compiler*/
 config({
 event: {requires: ['event/dom','event/custom','event/gesture']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/base': {requires: ['util']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -5016,7 +4035,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-feature: {requires: ['ua']}
+feature: {requires: ['util','ua']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -5112,19 +4131,23 @@ tree: {requires: ['node','component/container','component/extension/content-xtpl
 });
 /*Generated By KISSY Module Compiler*/
 config({
+ua: {requires: ['util']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
 uri: {requires: ['path']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-xtemplate: {requires: ['xtemplate/runtime','xtemplate/compiler']}
+xtemplate: {requires: ['util','xtemplate/runtime','xtemplate/compiler']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'xtemplate/compiler': {requires: ['xtemplate/runtime']}
+'xtemplate/compiler': {requires: ['util','xtemplate/runtime']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'xtemplate/runtime': {requires: ['path']}
+'xtemplate/runtime': {requires: ['util']}
 });
 
                 })(function (c) {

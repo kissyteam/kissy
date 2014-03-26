@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:46
+build time: Mar 25 17:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,9 +9,9 @@ build time: Mar 24 02:46
  component/extension/delegate-children
 */
 
-KISSY.add("component/extension/delegate-children", ["node", "component/manager"], function(S, require) {
+KISSY.add("component/extension/delegate-children", ["node", "component/manager", "ua"], function(S, require) {
   var Node = require("node"), Manager = require("component/manager");
-  var UA = S.UA, ie = UA.ieMode, Gesture = Node.Gesture;
+  var UA = require("ua"), ie = UA.ieMode, Gesture = Node.Gesture;
   function onRenderChild(e) {
     if(e.target === this) {
       var child = e.component, el = child.$el;

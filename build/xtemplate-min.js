@@ -1,6 +1,6 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:03
+build time: Mar 25 17:46
 */
-KISSY.add("xtemplate",["xtemplate/runtime","xtemplate/compiler"],function(i,b){function d(a,c){if("string"===typeof a){var f=a,e,b=!c||!1!==c.cache;if(!b||!(e=g[f]))e=h.compileToFn(f,c&&c.name),b&&(g[f]=e);a=e}d.superclass.constructor.call(this,a,c)}var a=b("xtemplate/runtime"),h=b("xtemplate/compiler"),g=d.cache={};i.extend(d,a,{},{Compiler:h,Scope:a.Scope,RunTime:a,addCommand:a.addCommand,removeCommand:a.removeCommand});return d});
+KISSY.add("xtemplate",["util","xtemplate/runtime","xtemplate/compiler"],function(i,b){function d(a,c){if("string"===typeof a){var b=a,e,f=!c||!1!==c.cache;if(!f||!(e=g[b]))e=h.compileToFn(b,c&&c.name),f&&(g[b]=e);a=e}d.superclass.constructor.call(this,a,c)}b("util");var a=b("xtemplate/runtime"),h=b("xtemplate/compiler"),g=d.cache={};i.extend(d,a,{},{Compiler:h,Scope:a.Scope,RunTime:a,addCommand:a.addCommand,removeCommand:a.removeCommand});return d});

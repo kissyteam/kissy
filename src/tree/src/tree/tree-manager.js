@@ -6,8 +6,7 @@
 KISSY.add(function (S, require) {
     var Node = require('node');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-
-    var UA = S.UA,
+    var UA = require('ua'),
         ie = UA.ieMode,
         Feature = S.Feature,
         Gesture = Node.Gesture,

@@ -3,8 +3,10 @@
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var splitAndRun, getGroupsRe;
+
+    require('util');
 
     function getTypedGroups(type) {
         if (type.indexOf('.') < 0) {

@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var UA = S.UA,
+    var UA = require('ua'),
         Node = require('node'),
         ie6 = (UA.ie === 6),
         $ = Node.all;

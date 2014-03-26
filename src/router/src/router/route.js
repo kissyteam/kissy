@@ -52,7 +52,7 @@ KISSY.add(function (S) {
                 return false;
             }
 
-            var keys = self.keys ,
+            var keys = self.keys,
                 params = [];
 
             for (var i = 1, len = m.length; i < len; ++i) {

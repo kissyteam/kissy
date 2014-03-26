@@ -3,10 +3,10 @@
  * dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var WINDOW = S.Env.host || {},
         DOCUMENT = WINDOW.document,
-        UA = S.UA,
+        UA = require('ua'),
         RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
         /**
          * Dom Element node type.

@@ -24,7 +24,6 @@ KISSY.add(function (S, require) {
          * @property el
          */
 
-
         if (el.el) {
             el = el.el;
         }
@@ -167,9 +166,7 @@ KISSY.add(function (S, require) {
                 return css.join('\n');
             }
         }
-
     };
-
 
     // # ------------------ private start
 
@@ -200,7 +197,6 @@ KISSY.add(function (S, require) {
     // # ------------------ private end
 
     return StyleSheet;
-
 });
 /**
  * @ignore

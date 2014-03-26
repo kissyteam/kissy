@@ -220,7 +220,7 @@ KISSY.add(function (S, UA, io, Node) {
             // 标准浏览器是 cors 关系
             url += ':' + window.SERVER_CONFIG.ports[1];
 
-            var uploadRc = 'http://' + url + '/kissy/src/io/tests/others/form/upload-domain.jss';
+            var uploadRc = 'http://' + url + '/kissy/src/io/tests/others/form/upload.jss';
 
             io({
                 type: 'post',

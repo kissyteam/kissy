@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:48
+build time: Mar 25 16:51
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -38,7 +38,7 @@ KISSY.add("date/popup-picker/render-xtpl", ["date/picker-xtpl"], function(S, req
     option3.params = params4;
     if(moduleWrap) {
       require("date/picker-xtpl");
-      option3.params[0] = moduleWrap.resolveByName(option3.params[0])
+      option3.params[0] = moduleWrap.resolve(option3.params[0])
     }
     var commandRet5 = includeCommand.call(engine, scope, option3, buffer, 2, payload);
     if(commandRet5 && commandRet5.isBuffer) {

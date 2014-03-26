@@ -40,9 +40,10 @@ KISSY.add(function (S) {
 
     function getEscapeReg() {
         var str = EMPTY;
-        S.each(htmlEntities, function (entity) {
+        for (var e in htmlEntities) {
+            var entity = htmlEntities[e];
             str += entity + '|';
-        });
+        }
         str = str.slice(0, -1);
         escapeHtmlReg = new RegExp(str, 'g');
         return escapeHtmlReg;
@@ -50,9 +51,10 @@ KISSY.add(function (S) {
 
     function getUnEscapeReg() {
         var str = EMPTY;
-        S.each(reverseEntities, function (entity) {
+        for (var e in reverseEntities) {
+            var entity = reverseEntities[e];
             str += entity + '|';
-        });
+        }
         str += '&#(\\d{1,5});';
         unEscapeHtmlReg = new RegExp(str, 'g');
         return unEscapeHtmlReg;

@@ -19,12 +19,6 @@ KISSY.clearLoader = function () {
         packages: false
     });
 
-    self.Env.corePackage = new self.Loader.Package({
-        name: '',
-        runtime: self,
-        uri: self.Config.baseUri
-    });
-
     for (m in modules) {
         if (!ignore[m]) {
             delete modules[m];

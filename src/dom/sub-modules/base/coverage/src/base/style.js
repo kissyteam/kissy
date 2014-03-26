@@ -1205,11 +1205,11 @@ function visit406_52_1(result) {
 function visit405_48_1(result) {
   _$jscoverage['/base/style.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['42'][1].init(1006, 57, 'userSelectVendorInfo && userSelectVendorInfo.propertyName');
+}_$jscoverage['/base/style.js'].branchData['42'][1].init(1015, 57, 'userSelectVendorInfo && userSelectVendorInfo.propertyName');
 function visit404_42_1(result) {
   _$jscoverage['/base/style.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['18'][1].init(315, 27, 'globalWindow.document || {}');
+}_$jscoverage['/base/style.js'].branchData['18'][1].init(324, 27, 'globalWindow.document || {}');
 function visit403_18_1(result) {
   _$jscoverage['/base/style.js'].branchData['18'][1].ranCondition(result);
   return result;
@@ -1221,7 +1221,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[8]++;
   var logger = S.getLogger('s/dom');
   _$jscoverage['/base/style.js'].lineData[9]++;
-  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = S.UA, BOX_MODELS = ['margin', 'border', 'padding'], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = visit403_18_1(globalWindow.document || {}), RE_MARGIN = /^margin/, WIDTH = 'width', HEIGHT = 'height', DISPLAY = 'display', OLD_DISPLAY = DISPLAY + S.now(), NONE = 'none', cssNumber = {
+  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = require('ua'), BOX_MODELS = ['margin', 'border', 'padding'], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = visit403_18_1(globalWindow.document || {}), RE_MARGIN = /^margin/, WIDTH = 'width', HEIGHT = 'height', DISPLAY = 'display', OLD_DISPLAY = DISPLAY + S.now(), NONE = 'none', cssNumber = {
   fillOpacity: 1, 
   fontWeight: 1, 
   lineHeight: 1, 

@@ -463,7 +463,6 @@ KISSY.add(function (S, require) {
             };
             var clipboardCommandsList = ['copy', 'cut', 'paste'];
 
-
             // 给所有右键都加入复制粘贴
             editor.on('contextmenu', function (ev) {
                 var contextmenu = ev.contextmenu,

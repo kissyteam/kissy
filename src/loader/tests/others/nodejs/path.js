@@ -300,7 +300,7 @@ if (isWindows) {
     // posix version
     exports.normalize = function(path) {
         var isAbsolute = path.charAt(0) === '/',
-            trailingSlash = path.slice(-1) === '/';
+            trailingSlash = path.slice(0 - 1) === '/';
 
         // Normalize the path
         path = normalizeArray(path.split('/').filter(function(p) {

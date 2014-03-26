@@ -579,7 +579,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[7]++;
   var Node = require('node'), Gesture = Node.Gesture, DDM = require('./ddm'), Base = require('base'), DragType = require('event/gesture/drag');
   _$jscoverage['/dd/draggable.js'].lineData[13]++;
-  var UA = S.UA, $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  var UA = require('ua'), $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   _$jscoverage['/dd/draggable.js'].lineData[21]++;
   function checkValid(fn) {
     _$jscoverage['/dd/draggable.js'].functionData[1]++;

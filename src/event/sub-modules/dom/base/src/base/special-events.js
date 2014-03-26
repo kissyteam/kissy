@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var DomEvent = require('./dom-event');
     var Special = require('./special');
 
-    var UA = S.UA,
+    var UA = require('ua'),
         MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
     return S.mix(Special, {

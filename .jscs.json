@@ -21,5 +21,5 @@
     "disallowMultipleLineBreaks": true,
     "disallowKeywordsOnNewLine": ["else"],
     "safeContextKeyword": "self",
-    "excludeFiles": ["**/*-tpl.js","**/*-xtpl.js"]
+    "excludeFiles": ["**/*-tpl.js", "**/*-xtpl.js", "**/parser.js", "**/parser.js","**/modules.js"]
 }

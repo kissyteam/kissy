@@ -116,7 +116,7 @@ KISSY.add(function (S, require) {
             }
         },
 
-        '_onSetExpandedItem': function (v, e) {
+        _onSetExpandedItem: function (v, e) {
             if (e && e.prevVal) {
                 e.prevVal.set('collapsed', true);
             }

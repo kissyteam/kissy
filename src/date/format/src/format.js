@@ -455,7 +455,7 @@ KISSY.add(function (S, require) {
     }
 
     function matchNumber(dateStr, startIndex, count, obeyCount) {
-        var str = dateStr , n;
+        var str = dateStr, n;
         if (obeyCount) {
             if (dateStr.length <= startIndex + count) {
                 return null;
@@ -731,7 +731,7 @@ KISSY.add(function (S, require) {
          * @returns {KISSY.Date.Gregorian}
          * @static
          */
-        'getDateInstance': function (dateStyle, locale, timeZoneOffset) {
+        getDateInstance: function (dateStyle, locale, timeZoneOffset) {
             return this.getDateTimeInstance(dateStyle, undefined, locale, timeZoneOffset);
         },
 
@@ -776,7 +776,7 @@ KISSY.add(function (S, require) {
          * @returns {KISSY.Date.Gregorian}
          * @static
          */
-        'getTimeInstance': function (timeStyle, locale, timeZoneOffset) {
+        getTimeInstance: function (timeStyle, locale, timeZoneOffset) {
             return this.getDateTimeInstance(undefined, timeStyle, locale, timeZoneOffset);
         }
     });

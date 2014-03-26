@@ -305,7 +305,7 @@ function visit54_22_1(result) {
 function visit53_20_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['10'][1].init(64, 13, 'UA.ieMode < 8');
+}_$jscoverage['/ie/insertion.js'].branchData['10'][1].init(73, 13, 'UA.ieMode < 8');
 function visit52_10_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['10'][1].ranCondition(result);
   return result;
@@ -315,7 +315,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/ie/insertion.js'].lineData[7]++;
   var Dom = require('dom/base');
   _$jscoverage['/ie/insertion.js'].lineData[8]++;
-  var UA = S.UA;
+  var UA = require('ua');
   _$jscoverage['/ie/insertion.js'].lineData[10]++;
   if (visit52_10_1(UA.ieMode < 8)) {
     _$jscoverage['/ie/insertion.js'].lineData[19]++;

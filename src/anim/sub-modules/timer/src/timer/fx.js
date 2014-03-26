@@ -69,9 +69,8 @@ KISSY.add(function (S, require) {
 
             if (propData.frame) {
                 propData.frame.call(self, anim, self);
-            }
-            // in case completed in frame
-            else if (!self.isCustomFx) {
+            } else if (!self.isCustomFx) {
+                // in case completed in frame
                 if (val === /**@type Number @ignore*/undefined) {
                     // 插值出错，直接设置为最终值
                     self.pos = 1;
@@ -173,8 +172,7 @@ KISSY.add(function (S, require) {
             SubClass;
         if ((fxType = cfg.fxType)) {
             Constructor = Fx.FxTypes[fxType];
-        }
-        else if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
+        } else if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
             Constructor = SubClass;
         }
         return new Constructor(cfg);

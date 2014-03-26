@@ -5,6 +5,7 @@
 KISSY.add(function (S, require) {
     var utils;
     var DomEvent = require('event/dom');
+    var Uri = require('uri');
 
     function removeVid(str) {
         return str.replace(/__ks-vid=.+$/, '');
@@ -89,7 +90,7 @@ KISSY.add(function (S, require) {
         },
 
         getVidFromUrlWithHash: function (url) {
-            return getVidFromHash(new S.Uri(url).getFragment());
+            return getVidFromHash(new Uri(url).getFragment());
         },
 
         getVidFromHash: getVidFromHash

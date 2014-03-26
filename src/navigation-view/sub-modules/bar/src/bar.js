@@ -49,12 +49,10 @@ KISSY.add(function (S, require) {
         if (reverse) {
             newOffset = -oldBackWidth;
             oldOffset = Math.min(titleX - oldBackWidth, minOffset);
-        }
-        else {
+        } else {
             oldOffset = -oldBackWidth;
             newOffset = Math.min(titleX, minOffset);
         }
-
 
         backElAnims = {
             element: {
@@ -84,8 +82,7 @@ KISSY.add(function (S, require) {
 
             if (omega !== undefined) {
                 newOffset = omega;
-            }
-            else {
+            } else {
                 newOffset = theta;
             }
         } else {
@@ -93,8 +90,7 @@ KISSY.add(function (S, require) {
 
             if (omega !== undefined) {
                 oldOffset = omega;
-            }
-            else {
+            } else {
                 oldOffset = theta;
             }
 

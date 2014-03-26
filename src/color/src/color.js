@@ -26,7 +26,7 @@ KISSY.add(function (S, require, exports, module) {
          * To hsla string format
          * @return {String}
          */
-        'toHSLA': function () {
+        toHSLA: function () {
             var hsl = this.getHSL();
             return 'hsla(' + (Math.round(hsl.h || 0)) + ', ' + percentage(hsl.s) + ', ' +
                 percentage(hsl.l) + ', ' + this.get('a') + ')';
@@ -135,7 +135,6 @@ KISSY.add(function (S, require, exports, module) {
             self.set(hsv2rgb(cfg));
         },
 
-
         /**
          * Set value by hsl
          * @param cfg
@@ -143,7 +142,7 @@ KISSY.add(function (S, require, exports, module) {
          * @param cfg.s
          * @param cfg.l
          */
-        'setHSL': function (cfg) {
+        setHSL: function (cfg) {
             var self = this,
                 current;
             if (!('h' in cfg && 's' in cfg && 'l' in cfg)) {
@@ -265,13 +264,12 @@ KISSY.add(function (S, require, exports, module) {
                         b = paddingHex(b);
                     }
                 }
-            }
-            else {
+            } else {
                 values = str.match(rgbaRe);
                 if (values) {
-                    r = parseInt(values[1],10);
-                    g = parseInt(values[2],10);
-                    b = parseInt(values[3],10);
+                    r = parseInt(values[1], 10);
+                    g = parseInt(values[2], 10);
+                    b = parseInt(values[3], 10);
                     a = parseFloat(values[4]) || 1;
                 }
             }
@@ -293,7 +291,7 @@ KISSY.add(function (S, require, exports, module) {
          * @param {Number} cfg.l lightness
          * @param {Number} cfg.a alpha
          */
-        'fromHSL': function (cfg) {
+        fromHSL: function (cfg) {
             var rgb = hsl2rgb(cfg);
             rgb.a = cfg.a;
             return new Color(rgb);

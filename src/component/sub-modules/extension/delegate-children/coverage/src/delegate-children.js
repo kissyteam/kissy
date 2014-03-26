@@ -339,7 +339,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/delegate-children.js'].lineData[7]++;
   var Node = require('node'), Manager = require('component/manager');
   _$jscoverage['/delegate-children.js'].lineData[10]++;
-  var UA = S.UA, ie = UA.ieMode, Gesture = Node.Gesture;
+  var UA = require('ua'), ie = UA.ieMode, Gesture = Node.Gesture;
   _$jscoverage['/delegate-children.js'].lineData[14]++;
   function onRenderChild(e) {
     _$jscoverage['/delegate-children.js'].functionData[1]++;

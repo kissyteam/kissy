@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:29
+build time: Mar 25 17:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -150,7 +150,7 @@ KISSY.add("component/control/render-xtpl", [], function(S, require, exports, mod
   t.TPL_NAME = module.name;
   return t
 });
-KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./render-xtpl", "component/manager"], function(S, require) {
+KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./render-xtpl", "component/manager", "ua"], function(S, require) {
   var Base = require("base");
   var __getHook = Base.prototype.__getHook;
   var noop = S.noop;
@@ -158,7 +158,7 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
   var XTemplateRuntime = require("xtemplate/runtime");
   var RenderTpl = require("./render-xtpl");
   var Manager = require("component/manager");
-  var ON_SET = "_onSet", trim = S.trim, $ = Node.all, UA = S.UA, startTpl = RenderTpl, endTpl = "</div>", doc = S.Env.host.document, HTML_PARSER = "HTML_PARSER";
+  var ON_SET = "_onSet", trim = S.trim, $ = Node.all, UA = require("ua"), startTpl = RenderTpl, endTpl = "</div>", doc = S.Env.host.document, HTML_PARSER = "HTML_PARSER";
   function pxSetter(v) {
     if(typeof v === "number") {
       v += "px"
@@ -424,12 +424,13 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
     return el.hasClass(this.getBaseCssClass("disabled"))
   }}, name:"render"})
 });
-KISSY.add("component/control", ["node", "./control/process", "component/manager", "./control/render"], function(S, require) {
+KISSY.add("component/control", ["node", "./control/process", "component/manager", "./control/render", "ua"], function(S, require) {
   var Node = require("node");
   var ControlProcess = require("./control/process");
   var Manager = require("component/manager");
   var Render = require("./control/render");
-  var ie = S.UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchGestureSupported = Feature.isTouchGestureSupported();
+  var UA = require("ua");
+  var ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchGestureSupported = Feature.isTouchGestureSupported();
   var Control = ControlProcess.extend({isControl:true, createDom:function() {
     var self = this, Render = self.get("xrender"), view = self.get("view"), id = self.get("id"), el;
     if(view) {

@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
         _onScrollMove: function (e) {
             var self = this,
                 b = e.newVal;
-            if (-b > self.elHeight) {
+            if (0 - b > self.elHeight) {
                 self.set('state', 'releasing');
             } else if (b < 0) {
                 self.set('state', 'pulling');
@@ -46,7 +46,7 @@ KISSY.add(function (S, require) {
             var self = this;
             var scrollView = self.scrollView;
             var b = scrollView.get('scrollTop');
-            if (-b > self.elHeight) {
+            if (0 - b > self.elHeight) {
                 scrollView.minScroll.top = -self.elHeight;
                 var loadFn = self.get('loadFn');
                 self.set('state', 'loading');

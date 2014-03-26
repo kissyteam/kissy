@@ -117,10 +117,7 @@ describe("ComboLoader", function () {
     it("should calculate rightly", function () {
         waits(10);
         runs(function () {
-
-            var waitingModules = new S.Loader.WaitingModules(function () {
-            });
-            var l = new S.Loader.ComboLoader(waitingModules);
+            var l = new S.Loader.ComboLoader();
 
             S.config('modules', {
                 a: {
@@ -138,10 +135,9 @@ describe("ComboLoader", function () {
             });
 
             var r;
-            r = S.keys(l.calculate(["a", "h"]));
-            S.Loader.Utils.createModulesInfo(r);
+            r = l.calculate((["a", "h"]));
             var c = l.getComboUrls(r);
-            expect(c.js[''][0].path).toBe(kBase +
+            expect(c.js[0].url).toBe(kBase +
                 "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
 
         });
@@ -156,9 +152,7 @@ describe("ComboLoader", function () {
 
             S.config('comboMaxFileNum', 2);
 
-            var waitingModules = new S.Loader.WaitingModules(function () {
-            });
-            var l = new S.Loader.ComboLoader(waitingModules);
+            var l = new S.Loader.ComboLoader();
 
             S.config('modules', {
                 a: {
@@ -170,14 +164,13 @@ describe("ComboLoader", function () {
             });
 
             var r;
-            r = S.keys(l.calculate(["a", "b"]));
-            S.Loader.Utils.createModulesInfo(r);
+            r = l.calculate((["a", "b"]));
             var c = l.getComboUrls(r);
-            var js = c.js[''];
+            var js = c.js;
             expect(js.length).toBe(3);
-            expect(js[0].path).toBe(kBase + "??a.js,b.js");
-            expect(js[1].path).toBe(kBase + "??d.js,e.js");
-            expect(js[2].path).toBe(kBase + "??c.js");
+            expect(js[0].url).toBe(kBase + "??a.js,b.js");
+            expect(js[1].url).toBe(kBase + "??d.js,e.js");
+            expect(js[2].url).toBe(kBase + "??c.js");
 
             S.config('comboMaxFileNum', comboMaxFileNum);
         });
@@ -200,9 +193,7 @@ describe("ComboLoader", function () {
                 };
             }
 
-            var waitingModules = new S.Loader.WaitingModules(function () {
-            });
-            var l = new S.Loader.ComboLoader(waitingModules);
+            var l = new S.Loader.ComboLoader();
 
             S.config('modules', x);
 
@@ -211,14 +202,13 @@ describe("ComboLoader", function () {
                 ret.push('y' + i);
             }
             var r;
-            r = S.keys(l.calculate(ret));
-            S.Loader.Utils.createModulesInfo(r);
+            r = l.calculate((ret));
             var c = l.getComboUrls(r);
-            var cjs = c.js[''];
+            var cjs = c.js;
             expect(cjs.length).toBe(3);
 
-            S.each(cjs, function (j) {
-                expect(j.path.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength);
+            S.Loader.Utils.each(cjs, function (j) {
+                expect(j.url.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength);
             });
         });
     });
@@ -243,15 +233,12 @@ describe("ComboLoader", function () {
                 }
             });
 
-            var waitingModules = new S.Loader.WaitingModules(function () {
-            });
-            var loader = new S.Loader.ComboLoader(waitingModules);
-            var mods = S.keys(loader.calculate(["tests/a"]));
-            S.Loader.Utils.createModulesInfo(mods);
+            var loader = new S.Loader.ComboLoader();
+            var mods = loader.calculate((["tests/a"]));
             var urls = loader.getComboUrls(mods);
             var host = location.host;
 
-            expect(urls.js.tests[0].path)
+            expect(urls.js[0].url)
                 .toBe("http://" + host + "/kissy/src/loader/tests/specs/combo/" +
                     "tests/??a.js,b.js,c.js");
 
@@ -353,25 +340,17 @@ describe("ComboLoader", function () {
         });
 
         runs(function () {
-            var waitingModules = new S.Loader.WaitingModules(function () {
-            });
-            var loader = new S.Loader.ComboLoader(waitingModules);
-            var Loader = S.Loader,
-                utils = Loader.Utils;
+            var loader = new S.Loader.ComboLoader();
 
-            var allModNames = S.keys(loader.calculate(["timestamp/y"]));
+            var allMods =loader.calculate((["timestamp/y"]));
 
-            utils.createModulesInfo(allModNames);
-            var comboUrls = loader.getComboUrls(allModNames);
+            var comboUrls = loader.getComboUrls(allMods);
 
-            var key = "timestamp";
+            var jss = comboUrls.js;
 
-            var jss = comboUrls.js[key];
-
-            expect(jss[0].path).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/y.js");
-            expect(jss[1].path).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/x.js");
-            expect(jss[2].path).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/z.js");
-
+            expect(jss[0].url).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/y.js");
+            expect(jss[1].url).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/x.js");
+            expect(jss[2].url).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/z.js");
         });
     });
 

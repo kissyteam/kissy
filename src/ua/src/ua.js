@@ -2,7 +2,9 @@
  * @ignore
  * ua
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S, require, module, exports, undefined) {
+    require('util');
+
     /*global process*/
     var win = S.Env.host,
         doc = win.document,
@@ -51,6 +53,7 @@ KISSY.add(function (S, undefined) {
             IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
             div = doc && doc.createElement('div'),
             s = [];
+
         /**
          * KISSY UA
          * @class KISSY.UA
@@ -199,7 +202,6 @@ KISSY.add(function (S, undefined) {
         }
 
         if (s.length > 0) {
-
             setTridentVersion(ua, UA);
 
             // Detect the accurate version
@@ -221,7 +223,6 @@ KISSY.add(function (S, undefined) {
             if (!UA.ie && (ieVersion = getIEVersion(ua))) {
                 UA[shell = 'ie'] = ieVersion;
             }
-
         } else {
             // WebKit
             // https://github.com/kissyteam/kissy/issues/545

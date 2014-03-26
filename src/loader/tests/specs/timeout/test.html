@@ -20,7 +20,7 @@
 <body>
 <h1>KISSY ComboLoader Test Cases</h1>
 <script>
-    var combine = new KISSY.Uri(location.href).query.get('combine') == '1';
+    var combine =location.search.indexOf('combine')!==-1;
     window.specsPath = './' + (combine ? 'combo/' : 'simple/');
     KISSY.config('combine', combine);
 </script>

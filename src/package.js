@@ -8,8 +8,8 @@ var SERVER_CONFIG = {
     "docsDir": "/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
 };
 KISSY.config('tag', KISSY.now());
-var loc = new KISSY.Uri(location.href);
-if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
+var loc = location;
+if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
     KISSY.config('packages', {
         "anim/base": {
             "base": "/kissy/src/anim/sub-modules/base/src/base",

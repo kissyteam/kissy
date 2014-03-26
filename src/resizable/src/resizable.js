@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
         vertical = ['t', 'b'],
         ATTRS_ORDER = ['width', 'height', 'top', 'left'],
         hcNormal = {
-            't': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            t: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var h = getBoundValue(minH, maxH, oh - diffT),
                     t = ot + oh - h,
                     w = 0;
@@ -26,7 +26,7 @@ KISSY.add(function (S, require) {
                 }
                 return [w, h, t, 0];
             },
-            'b': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            b: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var h = getBoundValue(minH, maxH, oh + diffT),
                     w = 0;
                 if (preserveRatio) {
@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
                 }
                 return [w, h, 0, 0];
             },
-            'r': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            r: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var w = getBoundValue(minW, maxW, ow + diffL),
                     h = 0;
                 if (preserveRatio) {
@@ -42,7 +42,7 @@ KISSY.add(function (S, require) {
                 }
                 return [w, h, 0, 0];
             },
-            'l': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            l: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var w = getBoundValue(minW, maxW, ow - diffL),
                     h = 0,
                     l = ol + ow - w;

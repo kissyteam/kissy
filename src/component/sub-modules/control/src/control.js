@@ -8,7 +8,8 @@ KISSY.add(function (S, require) {
     var ControlProcess = require('./control/process');
     var Manager = require('component/manager');
     var Render = require('./control/render');
-    var ie = S.UA.ieMode,
+    var UA = require('ua');
+    var ie = UA.ieMode,
         Feature = S.Feature,
         Gesture = Node.Gesture,
         isTouchGestureSupported = Feature.isTouchGestureSupported();
@@ -130,7 +131,7 @@ KISSY.add(function (S, require) {
                 return Manager.createComponent(cfg, parent || this);
             },
 
-            '_onSetFocused': function (v) {
+            _onSetFocused: function (v) {
                 var target = this.view.getKeyEventTarget()[0];
                 if (v) {
                     try {
@@ -148,13 +149,13 @@ KISSY.add(function (S, require) {
                 }
             },
 
-            '_onSetX': function (x) {
+            _onSetX: function (x) {
                 this.$el.offset({
                     left: x
                 });
             },
 
-            '_onSetY': function (y) {
+            _onSetY: function (y) {
                 this.$el.offset({
                     top: y
                 });
@@ -526,7 +527,6 @@ KISSY.add(function (S, require) {
                     }
                 },
 
-
                 /**
                  * Horizontal axis
                  * @type {Number}
@@ -844,10 +844,10 @@ KISSY.add(function (S, require) {
 
     function getDefaultRender() {
         var attrs,
-            constructor = this;
+            self = this;
         do {
-            attrs = constructor.ATTRS;
-            constructor = constructor.superclass;
+            attrs = self.ATTRS;
+            self = self.superclass;
         } while (!attrs || !attrs.xrender);
         return attrs.xrender.value;
     }
@@ -876,7 +876,7 @@ KISSY.add(function (S, require) {
     Control.extend = function extend(extensions, px, sx) {
         /*jshint unused: false*/
         var args = S.makeArray(arguments),
-            baseClass = this,
+            self = this,
             xclass,
             newClass,
             argsLen = args.length,
@@ -886,7 +886,7 @@ KISSY.add(function (S, require) {
             last.name = xclass;
         }
 
-        newClass = ControlProcess.extend.apply(baseClass, args);
+        newClass = ControlProcess.extend.apply(self, args);
 
         if (xclass) {
             Manager.setConstructorByXClass(xclass, newClass);
@@ -901,11 +901,9 @@ KISSY.add(function (S, require) {
     return Control;
 });
 /*
-
  yiminghe@gmail.com - 2012.10.31
  - 考虑触屏，绑定 Event.Gesture.tap 为主行为事件
  - handleMouseDown/up 对应 Gesture.start/end
-
 
  事件冒泡机制
  - child 组件的冒泡源配置为其所属的 parent
@@ -916,17 +914,13 @@ KISSY.add(function (S, require) {
  - control createDom -> createDom -> view.createDom()
  - control renderUI -> renderUI -> view.render()
 
-
  控制层元属性配置中 view 的作用
  - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
  - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
 
-
  observer synchronization, model 分成两类
  - view 负责监听 view 类 model 变化更新界面
  - control 负责监听 control 类变化改变逻辑
-
-
 
  problem: Observer behavior is hard to understand and debug
  because it's implicit behavior.
@@ -948,5 +942,4 @@ KISSY.add(function (S, require) {
 
  Refer
  - http://martinfowler.com/eaaDev/uiArchs.html
-
  */

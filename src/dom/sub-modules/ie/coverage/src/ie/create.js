@@ -323,7 +323,7 @@ function visit37_85_1(result) {
 function visit36_79_1(result) {
   _$jscoverage['/ie/create.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['73'][1].init(2860, 15, 'S.UA.ieMode < 8');
+}_$jscoverage['/ie/create.js'].branchData['73'][1].init(2860, 24, 'require(\'ua\').ieMode < 8');
 function visit35_73_1(result) {
   _$jscoverage['/ie/create.js'].branchData['73'][1].ranCondition(result);
   return result;
@@ -465,7 +465,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/ie/create.js'].lineData[68]++;
   var creators = Dom._creators, defaultCreator = Dom._defaultCreator, R_TBODY = /<tbody/i;
   _$jscoverage['/ie/create.js'].lineData[73]++;
-  if (visit35_73_1(S.UA.ieMode < 8)) {
+  if (visit35_73_1(require('ua').ieMode < 8)) {
     _$jscoverage['/ie/create.js'].lineData[76]++;
     creators.table = function(html, ownerDoc) {
   _$jscoverage['/ie/create.js'].functionData[2]++;

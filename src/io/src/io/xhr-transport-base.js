@@ -5,11 +5,12 @@
  */
 KISSY.add(function (S, require) {
     var IO = require('./base');
+    var UA = require('ua');
     var logger = S.getLogger('s/io');
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        XDomainRequest_ = S.UA.ieMode > 7 && win.XDomainRequest,
+        XDomainRequest_ = UA.ieMode > 7 && win.XDomainRequest,
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,

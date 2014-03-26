@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:46
+build time: Mar 25 17:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,9 +9,9 @@ build time: Mar 24 02:46
  component/extension/align
 */
 
-KISSY.add("component/extension/align", ["node"], function(S, require) {
+KISSY.add("component/extension/align", ["node", "ua"], function(S, require) {
   var Node = require("node");
-  var win = S.Env.host, $ = Node.all, UA = S.UA;
+  var win = S.Env.host, $ = Node.all, UA = require("ua");
   function getOffsetParent(element) {
     var doc = element.ownerDocument, body = doc.body, parent, positionStyle = $(element).css("position"), skipStatic = positionStyle === "fixed" || positionStyle === "absolute";
     if(!skipStatic) {

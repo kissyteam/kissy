@@ -23,9 +23,9 @@ KISSY.add(function (S,require) {
         for (var i = 0; i < 3; i++) {
             months[i] = [];
             for (var j = 0; j < 4; j++) {
-                current.setMonth( index);
+                current.setMonth(index);
                 months[i][j] = {
-                    value:index,
+                    value: index,
                     content: shortMonths[index],
                     title: dateFormatter.format(current)
                 };
@@ -33,9 +33,9 @@ KISSY.add(function (S,require) {
             }
         }
         S.mix(control.view.renderData,{
-            months:months,
+            months: months,
             year: value.getYear(),
-            month:currentMonth
+            month: currentMonth
         });
         control.months = months;
         return months;

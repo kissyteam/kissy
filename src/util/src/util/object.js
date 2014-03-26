@@ -11,10 +11,120 @@ KISSY.add(function (S, undefined) {
         host= S.Env.host,
         TRUE = true,
         EMPTY = '',
+        toString = ({}).toString,
         Obj = Object,
         objectCreate = Obj.create;
 
+
+    // error in native ie678, not in simulated ie9
+    var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        enumProperties = [
+            'constructor',
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ];
+
     mix(S, {
+        /**
+         * Get all the property names of o as array
+         * @param {Object} o
+         * @return {Array}
+         * @member KISSY
+         */
+        keys: Object.keys || function (o) {
+            var result = [], p, i;
+
+            for (p in o) {
+                // S.keys(new XX())
+                if (o.hasOwnProperty(p)) {
+                    result.push(p);
+                }
+            }
+
+            if (hasEnumBug) {
+                for (i = enumProperties.length - 1; i >= 0; i--) {
+                    p = enumProperties[i];
+                    if (o.hasOwnProperty(p)) {
+                        result.push(p);
+                    }
+                }
+            }
+
+            return result;
+        },
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param {Object} [context]
+         * @member KISSY
+         */
+        each: function (object, fn, context) {
+            if (object) {
+                var key,
+                    val,
+                    keys,
+                    i = 0,
+                    length = object && object.length,
+                // do not use typeof obj == 'function': bug in phantomjs
+                    isObj = length === undefined || toString.call(object) === '[object Function]';
+
+                context = context || null;
+
+                if (isObj) {
+                    keys = S.keys(object);
+                    for (; i < keys.length; i++) {
+                        key = keys[i];
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === false) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (val = object[0];
+                         i < length; val = object[++i]) {
+                        if (fn.call(context, val, i, object) === false) {
+                            break;
+                        }
+                    }
+                }
+            }
+            return object;
+        },
+        /**
+         * Gets current date in milliseconds.
+         * @method
+         * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
+         * http://kangax.github.com/es5-compat-table/
+         * @member KISSY
+         * @return {Number} current time
+         */
+        now: Date.now || function () {
+            return +new Date();
+        },
+
+        isArray: function (obj) {
+            return toString.call(obj) === '[object Array]';
+        },
+
+        /**
+         * Checks to see if an object is empty.
+         * @member KISSY
+         */
+        isEmptyObject: function (o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return false;
+                }
+            }
+            return true;
+        },
         /**
          * stamp a object by guid
          * @param {Object} o object needed to be stamped

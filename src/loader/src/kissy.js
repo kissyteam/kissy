@@ -155,14 +155,15 @@ var KISSY = (function (undefined) {
                     }
                 }
             } else {
-                S.each(configName, function (configValue, p) {
+                for (var p in configName) {
+                    configValue = configName[p];
                     fn = configFns[p];
                     if (fn) {
                         fn.call(self, configValue);
                     } else {
                         Config[p] = configValue;
                     }
-                });
+                }
             }
             return r;
         },
@@ -248,11 +249,6 @@ var KISSY = (function (undefined) {
          */
         guid: function (pre) {
             return (pre || EMPTY) + guid++;
-        },
-
-        // stub for uri and path
-        add: function (fn) {
-            fn(S);
         }
     };
 
@@ -299,13 +295,6 @@ var KISSY = (function (undefined) {
          * @param {String} str log str
          */
     }
-
-    S.mix = function (to, from) {
-        for (var i in from) {
-            to[i] = from[i];
-        }
-        return to;
-    };
 
     return S;
 })();

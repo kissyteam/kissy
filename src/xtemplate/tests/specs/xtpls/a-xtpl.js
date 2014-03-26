@@ -34,7 +34,7 @@ KISSY.add(function (S, require, exports, module) {
             option1.params = params2;
             if (moduleWrap) {
                 require("./b-xtpl");
-                option1.params[0] = moduleWrap.resolveByName(option1.params[0]);
+                option1.params[0] = moduleWrap.resolve(option1.params[0]);
             }
             var commandRet3 = includeCommand.call(engine, scope, option1, buffer, 1, payload);
             if (commandRet3 && commandRet3.isBuffer) {

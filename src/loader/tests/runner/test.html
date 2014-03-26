@@ -3,39 +3,13 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+          content="width=device-width, initial-scale=1.0,
+          maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <title>Seed Test Runner</title>
+    <title>Loader Test Runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
-    <script src="/kissy/build/loader.js"></script>
-
-    <script>
-        var dir = '/kissy/src/loader/src/';
-        if (location.href.indexOf('?coverage') !== -1) {
-            dir = '/kissy/src/loader/coverage/src/'
-        }
-        var files = ['kissy.js', 'util.js'];
-        var middles = ['path.js', 'uri.js'];
-        var last = ['setup.js', 'utils.js',
-            'set-immediate.js', 'data-structure.js',
-            'css-onload.js', 'get-script.js',
-            'configs.js', 'combo-loader.js',
-            'loader.js', 'i18n.js', 'init.js'];
-
-        for (var i = 0; i < files.length; i++) {
-            document.write('<script src="' + dir +
-                    files[i] + '">' + '<' + '/script>');
-        }
-
-        document.write('<script src="/kissy/src/path/src/path.js">' + '<' + '/script>');
-        document.write('<script src="/kissy/src/uri/src/uri.js">' + '<' + '/script>');
-
-        for (i = 0; i < last.length; i++) {
-            document.write('<script src="' + dir +
-                    last[i] + '">' + '<' + '/script>');
-        }
-    </script>
+    <script src="/kissy/src/loader/tests/others/import.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/third-party/jquery.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
@@ -46,9 +20,8 @@
 </head>
 <body>
 <h1>KISSY Loader Test Cases</h1>
-<!--lang-->
-<script src="../specs/logger-spec.js"></script>
-
+<!--kissy-->
+<script src="../specs/kissy-spec.js"></script>
 <!--loader-->
 <script src="../specs/combo/combo-spec.js"></script>
 <script src="../specs/sync/sync-spec.js"></script>

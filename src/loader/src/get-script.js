@@ -7,7 +7,6 @@
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,
-        Path = S.Path,
     // solve concurrent requesting same script file
         jsCssCallbacks = {},
         webkit = Utils.webkit,
@@ -45,16 +44,12 @@
         // can not use KISSY.Uri, url can not be encoded for some url
         // eg: /??dom.js,event.js , ? , should not be encoded
         var config = success,
-            css = 0,
+            css = Utils.endsWith(url, '.css'),
             error,
             timeout,
             attrs,
             callbacks,
             timer;
-
-        if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
-            css = 1;
-        }
 
         if (typeof config === 'object') {
             success = config.success;
@@ -81,7 +76,7 @@
             };
 
         if (attrs) {
-            S.each(attrs, function (v, n) {
+            Utils.each(attrs, function (v, n) {
                 node.setAttribute(n, v);
             });
         }
@@ -104,7 +99,7 @@
             var index = error,
                 fn;
             clearTimer();
-            S.each(jsCssCallbacks[url], function (callback) {
+            Utils.each(jsCssCallbacks[url], function (callback) {
                 if ((fn = callback[index])) {
                     fn.call(node);
                 }

@@ -14,215 +14,215 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Overlay
      */
     var Dialog = Overlay.extend({
-            // also simplify body
-            __afterCreateEffectGhost: function (ghost) {
-                var self = this,
-                    elBody = self.get('body');
+        // also simplify body
+        __afterCreateEffectGhost: function (ghost) {
+            var self = this,
+                elBody = self.get('body');
 
-                ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
-                    .css({
-                        height: elBody.height(),
-                        width: elBody.width()
-                    })
-                    .html('');
+            ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
+                .css({
+                    height: elBody.height(),
+                    width: elBody.width()
+                })
+                .html('');
 
-                return ghost;
-            },
+            return ghost;
+        },
 
-            handleKeyDownInternal: function (e) {
-                if (this.get('escapeToClose') &&
-                    e.keyCode === Node.KeyCode.ESC) {
-                    if (!(e.target.nodeName.toLowerCase() === 'select' && !e.target.disabled)) {
-                        // escape at select
-                        this.close();
-                        e.halt();
-                    }
-                    return;
+        handleKeyDownInternal: function (e) {
+            if (this.get('escapeToClose') &&
+                e.keyCode === Node.KeyCode.ESC) {
+                if (!(e.target.nodeName.toLowerCase() === 'select' && !e.target.disabled)) {
+                    // escape at select
+                    this.close();
+                    e.halt();
                 }
-                trapFocus.call(this, e);
-            },
-
-            _onSetVisible: function (v, e) {
-                var self = this,
-                    el = self.el;
-                if (v) {
-                    self.__lastActive = el.ownerDocument.activeElement;
-                    self.focus();
-                    // if d.show(); d.hide();
-                    // async -> focus event -> handleFocusInternal
-                    // -> set('focused') -> el.focus() -> ie error
-                    // el[0].focus && el[0].focus();
-                    el.setAttribute('aria-hidden', 'false');
-                } else {
-                    el.setAttribute('aria-hidden', 'true');
-                    try {
-                        if(self.__lastActive){
-                            self.__lastActive.focus();
-                        }
-                    } catch (ee) {
-                        // ie can not be focused if lastActive is invisible
-                    }
-                }
-                // prevent display none for effect
-                self.callSuper(v, e);
+                return;
             }
-        },{
-            ATTRS: {
-                /**
-                 * Header element of dialog.
-                 * @type {KISSY.NodeList}
-                 * @property header
-                 * @readonly
-                 */
-                /**
-                 * @ignore
-                 */
-                header: {
-                    view: 1
-                },
-                /**
-                 * Body element of dialog.
-                 * @type {KISSY.NodeList}
-                 * @property body
-                 * @readonly
-                 */
-                /**
-                 * @ignore
-                 */
-                body: {
-                    view: 1
-                },
-                /**
-                 * Footer element of dialog.
-                 * @type {KISSY.NodeList}
-                 * @property footer
-                 * @readonly
-                 */
-                /**
-                 * @ignore
-                 */
-                footer: {
-                    view: 1
-                },
-                /**
-                 * Key-value map of body element's style.
-                 * @cfg {Object} bodyStyle
-                 */
-                /**
-                 * @ignore
-                 */
-                bodyStyle: {
-                    value: {},
-                    view: 1
-                },
-                /**
-                 * Key-value map of footer element's style.
-                 * @cfg {Object} footerStyle
-                 */
-                /**
-                 * @ignore
-                 */
-                footerStyle: {
-                    value: {},
-                    view: 1
-                },
-                /**
-                 * Key-value map of header element's style.
-                 * @cfg {Object} headerStyle
-                 */
-                /**
-                 * @ignore
-                 */
-                headerStyle: {
-                    value: {},
-                    view: 1
-                },
-                /**
-                 * html content of header element.
-                 * @cfg {KISSY.NodeList|String} headerContent
-                 */
-                /**
-                 * @ignore
-                 */
-                headerContent: {
-                    value: '',
-                    view: 1
-                },
-                /**
-                 * html content of body element.
-                 * @cfg {KISSY.NodeList|String} bodyContent
-                 */
-                /**
-                 * @ignore
-                 */
-                bodyContent: {
-                    value: '',
-                    view: 1
-                },
-                /**
-                 * html content of footer element.
-                 * @cfg {KISSY.NodeList|String} footerContent
-                 */
-                /**
-                 * @ignore
-                 */
-                footerContent: {
-                    value: '',
-                    view: 1
-                },
+            trapFocus.call(this, e);
+        },
 
-                /**
-                 * whether this component can be closed.
-                 *
-                 * Defaults to: true
-                 *
-                 * @cfg {Boolean} closable
-                 * @protected
-                 */
-                /**
-                 * @ignore
-                 */
-                closable: {
-                    value: true
-                },
-
-                xrender: {
-                    value: DialogRender
-                },
-
-                /**
-                 * whether this component can be focused.
-                 *
-                 * Defaults to: true
-                 *
-                 * @cfg {Boolean} focusable
-                 * @protected
-                 */
-                /**
-                 * @ignore
-                 */
-                focusable: {
-                    value: true
-                },
-
-
-                /**
-                 * whether this component can be closed by press escape key.
-                 *
-                 * Defaults to: true
-                 *
-                 * @cfg {Boolean} escapeToClose
-                 * @since 1.3.0
-                 */
-                /**
-                 * @ignore
-                 */
-                escapeToClose: {
-                    value: true
+        _onSetVisible: function (v, e) {
+            var self = this,
+                el = self.el;
+            if (v) {
+                self.__lastActive = el.ownerDocument.activeElement;
+                self.focus();
+                // if d.show(); d.hide();
+                // async -> focus event -> handleFocusInternal
+                // -> set('focused') -> el.focus() -> ie error
+                // el[0].focus && el[0].focus();
+                el.setAttribute('aria-hidden', 'false');
+            } else {
+                el.setAttribute('aria-hidden', 'true');
+                try {
+                    if (self.__lastActive) {
+                        self.__lastActive.focus();
+                    }
+                } catch (ee) {
+                    // ie can not be focused if lastActive is invisible
                 }
+            }
+            // prevent display none for effect
+            self.callSuper(v, e);
+        }
+    }, {
+        ATTRS: {
+            /**
+             * Header element of dialog.
+             * @type {KISSY.NodeList}
+             * @property header
+             * @readonly
+             */
+            /**
+             * @ignore
+             */
+            header: {
+                view: 1
             },
-            xclass: 'dialog'
-        });
+            /**
+             * Body element of dialog.
+             * @type {KISSY.NodeList}
+             * @property body
+             * @readonly
+             */
+            /**
+             * @ignore
+             */
+            body: {
+                view: 1
+            },
+            /**
+             * Footer element of dialog.
+             * @type {KISSY.NodeList}
+             * @property footer
+             * @readonly
+             */
+            /**
+             * @ignore
+             */
+            footer: {
+                view: 1
+            },
+            /**
+             * Key-value map of body element's style.
+             * @cfg {Object} bodyStyle
+             */
+            /**
+             * @ignore
+             */
+            bodyStyle: {
+                value: {},
+                view: 1
+            },
+            /**
+             * Key-value map of footer element's style.
+             * @cfg {Object} footerStyle
+             */
+            /**
+             * @ignore
+             */
+            footerStyle: {
+                value: {},
+                view: 1
+            },
+            /**
+             * Key-value map of header element's style.
+             * @cfg {Object} headerStyle
+             */
+            /**
+             * @ignore
+             */
+            headerStyle: {
+                value: {},
+                view: 1
+            },
+            /**
+             * html content of header element.
+             * @cfg {KISSY.NodeList|String} headerContent
+             */
+            /**
+             * @ignore
+             */
+            headerContent: {
+                value: '',
+                view: 1
+            },
+            /**
+             * html content of body element.
+             * @cfg {KISSY.NodeList|String} bodyContent
+             */
+            /**
+             * @ignore
+             */
+            bodyContent: {
+                value: '',
+                view: 1
+            },
+            /**
+             * html content of footer element.
+             * @cfg {KISSY.NodeList|String} footerContent
+             */
+            /**
+             * @ignore
+             */
+            footerContent: {
+                value: '',
+                view: 1
+            },
+
+            /**
+             * whether this component can be closed.
+             *
+             * Defaults to: true
+             *
+             * @cfg {Boolean} closable
+             * @protected
+             */
+            /**
+             * @ignore
+             */
+            closable: {
+                value: true
+            },
+
+            xrender: {
+                value: DialogRender
+            },
+
+            /**
+             * whether this component can be focused.
+             *
+             * Defaults to: true
+             *
+             * @cfg {Boolean} focusable
+             * @protected
+             */
+            /**
+             * @ignore
+             */
+            focusable: {
+                value: true
+            },
+
+
+            /**
+             * whether this component can be closed by press escape key.
+             *
+             * Defaults to: true
+             *
+             * @cfg {Boolean} escapeToClose
+             * @since 1.3.0
+             */
+            /**
+             * @ignore
+             */
+            escapeToClose: {
+                value: true
+            }
+        },
+        xclass: 'dialog'
+    });
 
 
     var KEY_TAB = Node.KeyCode.TAB;

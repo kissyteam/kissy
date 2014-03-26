@@ -42,9 +42,9 @@ KISSY.add(function (S, undefined) {
          * @return {Boolean}
          */
         equals: function (s2) {
-            var s1 = this;
-            return !!S.reduce(s1.keys, function (v, k) {
-                return v && (s1[k] === s2[k]);
+            var self = this;
+            return !!S.reduce(self.keys, function (v, k) {
+                return v && (self[k] === s2[k]);
             }, 1);
         },
 

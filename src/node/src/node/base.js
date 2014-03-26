@@ -126,8 +126,8 @@ KISSY.add(function (S, require) {
          * @return {KISSY.NodeList}
          */
         slice: function () {
-            // ie<9 : [1,2].slice(-2,undefined) => []
-            // ie<9 : [1,2].slice(-2) => [1,2]
+            // ie<9 : [1,2].slice(0 - 2,undefined) => []
+            // ie<9 : [1,2].slice(0 - 2) => [1,2]
             // fix #85
             return new NodeList(slice.apply(this, arguments));
         },

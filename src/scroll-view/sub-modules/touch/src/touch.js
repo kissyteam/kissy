@@ -121,7 +121,7 @@ KISSY.add(function (S, require) {
                 // 1 -> 0
                 var frictionFactor = Math.exp(deltaTime * ALPHA);
                 // 1 - e^-t
-                value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA), 10);
+                value = parseInt(startScroll + velocity * (1 - frictionFactor) / (0 - THETA), 10);
                 if (value > minScroll && value < maxScroll) {
                     // inertia
                     if (fx.lastValue === value) {
@@ -148,7 +148,7 @@ KISSY.add(function (S, require) {
                 var theta = (deltaTime / ACCELERATION),
                 // long tail hump
                 // t * e^-t
-                    powTime = theta * Math.exp(-SPRING_TENSION * theta);
+                    powTime = theta * Math.exp(0 - SPRING_TENSION * theta);
                 value = parseInt(velocity * powTime, 10);
                 if (value === 0) {
                     fx.pos = 1;

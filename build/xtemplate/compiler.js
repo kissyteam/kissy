@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:03
+build time: Mar 25 17:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -497,7 +497,8 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
   ast.Id.prototype.type = "id";
   return ast
 });
-KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./compiler/ast"], function(S, require) {
+KISSY.add("xtemplate/compiler", ["util", "xtemplate/runtime", "./compiler/parser", "./compiler/ast"], function(S, require) {
+  require("util");
   var XTemplateRuntime = require("xtemplate/runtime");
   var parser = require("./compiler/parser");
   parser.yy = require("./compiler/ast");
@@ -653,7 +654,7 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
       }
     }
     if(idString === "include" || idString === "extend") {
-      source.push("if(moduleWrap) {re" + 'quire("' + command.params[0].value + '");' + optionName + ".params[0] = moduleWrap.resolveByName(" + optionName + ".params[0]);" + "}")
+      source.push("if(moduleWrap) {re" + 'quire("' + command.params[0].value + '");' + optionName + ".params[0] = moduleWrap.resolve(" + optionName + ".params[0]);" + "}")
     }
     if(!block) {
       idName = guid("commandRet")

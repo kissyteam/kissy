@@ -134,14 +134,19 @@ KISSY.add(function (S, undefined) {
         });
     }
 
-    S.each('Boolean Number String Function Date RegExp Object Array'.split(' '), function (name, lc) {
-        // populate the class2type map
-        class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+    var types = 'Boolean Number String Function Date RegExp Object Array'.split(' ');
+    for (var i = 0; i < types.length; i++) {
+        /*jshint loopfunc:true*/
+        (function (name, lc) {
+            // populate the class2type map
+            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 
-        // add isBoolean/isNumber/...
-        S['is' + name] = function (o) {
-            return S.type(o) === lc;
-        };
-    });
+            // add isBoolean/isNumber/...
+            S['is' + name] = function (o) {
+                return S.type(o) === lc;
+            };
+        })(types[i], i);
+    }
+
     S.isArray = Array.isArray || S.isArray;
 });

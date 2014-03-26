@@ -3,8 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    S.get = Dom.get;
-    S.query = Dom.query;
     describe('class', function () {
         var tpl = '';
         
@@ -18,22 +16,22 @@ KISSY.add(function (S, Dom) {
         
         beforeEach(function () {
             window.$('body').append(tpl);
-            foo = S.get('#foo-class');
-            a = S.get('#foo-class a');
-            input = S.get('#foo-class input');
-            radio = S.get('#test-radio-class');
-            radio2 = S.get('#test-radio2-class');
-            button = S.get('#foo-class button');
-            label = S.get('#foo-class label');
-            table = S.get('#test-table');
-            td = S.get('#test-table td');
-            select = S.get('#test-select');
-            select2 = S.get('#test-select2');
-            select3 = S.get('#test-select3');
-            opt = S.get('#test-opt');
-            div = S.get('#test-div');
-            opt2 = S.query('#test-select option')[1];
-            area = S.get('#foo textarea');
+            foo = Dom.get('#foo-class');
+            a = Dom.get('#foo-class a');
+            input = Dom.get('#foo-class input');
+            radio = Dom.get('#test-radio-class');
+            radio2 = Dom.get('#test-radio2-class');
+            button = Dom.get('#foo-class button');
+            label = Dom.get('#foo-class label');
+            table = Dom.get('#test-table');
+            td = Dom.get('#test-table td');
+            select = Dom.get('#test-select');
+            select2 = Dom.get('#test-select2');
+            select3 = Dom.get('#test-select3');
+            opt = Dom.get('#test-opt');
+            div = Dom.get('#test-div');
+            opt2 = Dom.query('#test-select option')[1];
+            area = Dom.get('#foo textarea');
         });
 
         afterEach(function () {

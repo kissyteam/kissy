@@ -5,93 +5,88 @@
  */
 (function (S) {
     var Loader = S.Loader,
-        Path = S.Path,
         Package = Loader.Package,
         Utils = Loader.Utils,
         host = S.Env.host,
         Config = S.Config,
         location = host.location,
-        simulatedLocation,
-        locationHref,
+        locationPath = '',
         configFns = Config.fns;
 
-    if (location && (locationHref = location.href)) {
-        simulatedLocation = new S.Uri(locationHref);
+    if (location) {
+        locationPath = location.protocol + '//' + location.host + location.pathname;
     }
 
     // how to load mods by path
     Config.loadModsFn = function (rs, config) {
-        S.getScript(rs.path, config);
+        S.getScript(rs.url, config);
     };
 
-    // how to get mod uri
+    // how to get mod url
     Config.resolveModFn = function (mod) {
         var name = mod.name,
             min = '-min',
-            t, subPath;
-
+            t, url, subPath;
         var packageInfo = mod.getPackage();
-        var packageUri = packageInfo.getUri();
+        var packageBase = packageInfo.getBase();
         var packageName = packageInfo.getName();
         var extname = '.' + mod.getType();
-
-        name = Path.join(Path.dirname(name), Path.basename(name, extname));
-
+        // special for css module
+        name = name.replace(/\.css$/, '');
         if (packageInfo.isDebug()) {
             min = '';
         }
 
-        subPath = name + min + extname;
-        if (packageName) {
-            subPath = Path.relative(packageName, subPath);
+        // packageName: a/y use('a/y');
+        if (name === packageName) {
+            url = packageBase.substring(0, packageBase.length - 1) + min + extname;
+        } else {
+            subPath = name + min + extname;
+            if (packageName) {
+                subPath = subPath.substring(packageName.length + 1);
+            }
+            url = packageBase + subPath;
         }
-        var uri = packageUri.resolve(subPath);
+
         if ((t = mod.getTag())) {
             t += '.' + mod.getType();
-            uri.query.set('t', t);
+            url += '?t=' + t;
         }
-        return uri;
+        return url;
     };
 
-    var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
-
     configFns.core = function (cfg) {
-        var base = cfg.base;
+        var base = cfg.base || cfg.path;
+        var corePackage = Config.corePackage;
         if (base) {
-            cfg.uri = normalizePath(base, true);
-            delete cfg.base;
+            cfg.base = normalizePath(base, true);
         }
-        this.Env.corePackage.reset(cfg);
+        if (!corePackage) {
+            corePackage = Config.corePackage = new Package({
+                name: ''
+            });
+        }
+        corePackage.reset(cfg);
     };
 
     configFns.packages = function (config) {
-        var name,
-            Config = this.Config,
+        var Config = this.Config,
             ps = Config.packages = Config.packages || {};
         if (config) {
-            S.each(config, function (cfg, key) {
-                // 兼容数组方式
-                name = cfg.name || key;
-                var path = cfg.base || cfg.path;
-                var newConfig = {
-                    name: name
-                };
-                S.each(PACKAGE_MEMBERS, function (m) {
-                    if (m in cfg) {
-                        newConfig[m] = cfg[m];
-                    }
-                });
-                if (path) {
-                    path += '/';
+            Utils.each(config, function (cfg, key) {
+                // object type
+                var name = cfg.name = cfg.name || key;
+                var base = cfg.base || cfg.path;
+                if (base) {
                     if (!cfg.ignorePackageNameInUri) {
-                        path += name + '/';
+                        base += (base.charAt(base.length - 1) !== '/' ? '/' : '') + name;
                     }
-                    newConfig.uri = normalizePath(path, true);
+                    cfg.base = normalizePath(base, true);
                 }
                 if (ps[name]) {
-                    ps[name].reset(newConfig);
+                    ps[name].reset(cfg);
                 } else {
-                    ps[name] = new Package(newConfig);
+                    ps[name] = new Package(cfg);
                 }
             });
             return undefined;
@@ -105,16 +100,15 @@
 
     configFns.modules = function (modules) {
         if (modules) {
-            S.each(modules, function (modCfg, modName) {
-                var path = modCfg.path;
-                if (path) {
-                    modCfg.uri = normalizePath(path);
-                    delete modCfg.path;
+            Utils.each(modules, function (modCfg, modName) {
+                var url = modCfg.url;
+                if (url) {
+                    modCfg.url = normalizePath(url);
                 }
                 var mod = Utils.createModuleInfo(modName, modCfg);
                 // #485, invalid after add
                 if (mod.status === Loader.Status.INIT) {
-                    S.mix(mod, modCfg);
+                    Utils.mix(mod, modCfg);
                 }
             });
         }
@@ -122,45 +116,30 @@
 
     configFns.base = function (base) {
         var self = this,
-            Config = self.Config,
-            baseUri;
+            corePackage = Config.corePackage;
 
         if (!base) {
-            return Config.baseUri.toString();
+            return corePackage && corePackage.getBase();
         }
 
-        baseUri = normalizePath(base, true);
-        Config.baseUri = baseUri;
-
-        var corePackage = self.Env.corePackage;
-
-        if (!corePackage) {
-            corePackage = self.Env.corePackage = new Package({
-                name: ''
-            });
-        }
-
-        corePackage.uri = baseUri;
+        self.config('core', {
+            base: base
+        });
 
         return undefined;
     };
 
     function normalizePath(base, isDirectory) {
-        var baseUri;
-        base = base.replace(/\\/g, '/');
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
-        if (simulatedLocation) {
-            baseUri = simulatedLocation.resolve(base);
-        } else {
-            // add scheme for S.Uri
-            // currently only for nodejs
-            if (!S.startsWith(base, 'file:')) {
-                base = 'file:' + base;
+        if (locationPath) {
+            if (base.charAt(0) === '/') {
+                base = location.protocol + '//' + location.host + base;
+            } else {
+                base = Utils.normalizePath(locationPath, base);
             }
-            baseUri = new S.Uri(base);
         }
-        return baseUri;
+        return base;
     }
 })(KISSY);

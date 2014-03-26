@@ -19,10 +19,9 @@ KISSY.add(function (S) {
         // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
         if (navigator.plugins && navigator.mimeTypes.length) {
             ver = (navigator.plugins['Shockwave Flash'] || 0).description;
-        }
-        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        // https://github.com/kissyteam/kissy/issues/586
-        else {
+        } else {
+            // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
+            // https://github.com/kissyteam/kissy/issues/586
             try {
                 ver = new win.ActiveXObject(SF + '.' + SF).GetVariable('$version');
             } catch (ex) {

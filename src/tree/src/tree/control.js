@@ -56,8 +56,6 @@ KISSY.add(function (S, require) {
  1. checked tree 根节点总是 selected ！
  2. 根节点 hover 后取消不了了
 
-
-
  支持 aria
  重用组件框架
  键盘操作指南

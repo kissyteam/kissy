@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
     var ON_SET = '_onSet',
         trim = S.trim,
         $ = Node.all,
-        UA = S.UA,
+        UA = require('ua'),
         startTpl = RenderTpl,
         endTpl = '</div>',
         doc = S.Env.host.document,
@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
     }
 
     function applyParser(srcNode, parser, control) {
-        var view = this,
+        var self = this,
             p, v, ret;
 
         // 从 parser 中，默默设置属性，不触发事件
@@ -40,17 +40,15 @@ KISSY.add(function (S, require) {
             // 函数
             if (typeof v === 'function') {
                 // html parser 放弃
-                ret = v.call(view, srcNode);
+                ret = v.call(self, srcNode);
                 if (ret !== undefined) {
                     control.setInternal(p, ret);
                 }
-            }
-            // 单选选择器
-            else if (typeof v === 'string') {
+            } else if (typeof v === 'string') {
+                // 单选选择器
                 control.setInternal(p, srcNode.one(v));
-            }
-            // 多选选择器
-            else if (S.isArray(v) && v[0]) {
+            } else if (S.isArray(v) && v[0]) {
+                // 多选选择器
                 control.setInternal(p, srcNode.all(v[0]));
             }
         }
@@ -369,7 +367,7 @@ KISSY.add(function (S, require) {
             return this.$el;
         },
 
-        '_onSetWidth': function (w) {
+        _onSetWidth: function (w) {
             this.$el.width(w);
         },
 
@@ -377,7 +375,7 @@ KISSY.add(function (S, require) {
             this.$el.height(h);
         },
 
-        '_onSetContent': function (c) {
+        _onSetContent: function (c) {
             var el = this.$el;
             el.html(c);
             // ie needs to set unselectable attribute recursively
@@ -425,7 +423,7 @@ KISSY.add(function (S, require) {
         /**
          * @ignore
          */
-        '_onSetActive': function (v) {
+        _onSetActive: function (v) {
             var self = this,
                 componentCls = self.getBaseCssClasses('active');
             self.$el[v ? 'addClass' : 'removeClass'](componentCls)
@@ -441,7 +439,7 @@ KISSY.add(function (S, require) {
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
-        '_onSetZIndex': function (x) {
+        _onSetZIndex: function (x) {
             this.$el.css('z-index', x);
         }
     }, {
@@ -464,10 +462,10 @@ KISSY.add(function (S, require) {
          */
         extend: function extend(extensions, px, sx) {
             /*jshint unused: false*/
-            var SuperClass = this,
+            var self = this,
                 NewClass,
                 parsers = {};
-            NewClass = Base.extend.apply(SuperClass, arguments);
+            NewClass = Base.extend.apply(self, arguments);
             NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
@@ -482,7 +480,7 @@ KISSY.add(function (S, require) {
                 });
                 NewClass[HTML_PARSER] = parsers;
             }
-            S.mix(NewClass[HTML_PARSER], SuperClass[HTML_PARSER], false);
+            S.mix(NewClass[HTML_PARSER], self[HTML_PARSER], false);
             NewClass.extend = extend;
             return NewClass;
         },

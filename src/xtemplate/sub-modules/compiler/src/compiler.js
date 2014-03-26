@@ -4,6 +4,7 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
+    require('util');
     var XTemplateRuntime = require('xtemplate/runtime');
     var parser = require('./compiler/parser');
     parser.yy = require('./compiler/ast');
@@ -234,7 +235,7 @@ KISSY.add(function (S, require) {
         if (idString === 'include' || idString === 'extend') {
             // prevent require parse...
             source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
-                optionName + '.params[0] = moduleWrap.resolveByName(' + optionName + '.params[0]);' +
+                optionName + '.params[0] = moduleWrap.resolve(' + optionName + '.params[0]);' +
                 '}');
         }
 
@@ -270,19 +271,19 @@ KISSY.add(function (S, require) {
     }
 
     var xtplAstToJs = {
-        'conditionalOrExpression': opExpression,
+        conditionalOrExpression: opExpression,
 
-        'conditionalAndExpression': opExpression,
+        conditionalAndExpression: opExpression,
 
-        'relationalExpression': opExpression,
+        relationalExpression: opExpression,
 
-        'equalityExpression': opExpression,
+        equalityExpression: opExpression,
 
-        'additiveExpression': opExpression,
+        additiveExpression: opExpression,
 
-        'multiplicativeExpression': opExpression,
+        multiplicativeExpression: opExpression,
 
-        'unaryExpression': function (e) {
+        unaryExpression: function (e) {
             var code = xtplAstToJs[e.value.type](e.value);
             return {
                 exp: e.unaryType + '(' + code.exp + ')',
@@ -290,7 +291,7 @@ KISSY.add(function (S, require) {
             };
         },
 
-        'string': function (e) {
+        string: function (e) {
             // same as contentNode.value
             /*jshint quotmark:false*/
             return {
@@ -299,21 +300,14 @@ KISSY.add(function (S, require) {
             };
         },
 
-        'number': function (e) {
+        number: function (e) {
             return {
                 exp: e.value,
                 source: []
             };
         },
 
-        'boolean': function (e) {
-            return {
-                exp: e.value,
-                source: []
-            };
-        },
-
-        'id': function (idNode) {
+        id: function (idNode) {
             var source = [],
                 depth = idNode.depth,
                 idParts = idNode.parts,
@@ -333,13 +327,13 @@ KISSY.add(function (S, require) {
             };
         },
 
-        'command': generateCommand,
+        command: generateCommand,
 
-        'blockStatement': function (block) {
+        blockStatement: function (block) {
             return generateCommand(block.command, block.escape, block);
         },
 
-        'expressionStatement': function (expressionStatement) {
+        expressionStatement: function (expressionStatement) {
             var source = [],
                 escape = expressionStatement.escape,
                 code,
@@ -362,13 +356,20 @@ KISSY.add(function (S, require) {
             };
         },
 
-        'contentStatement': function (contentStatement) {
+        contentStatement: function (contentStatement) {
             /*jshint quotmark:false*/
             return {
                 exp: '',
                 source: ["buffer.write('" + escapeString(contentStatement.value, 0) + "');"]
             };
         }
+    };
+
+    xtplAstToJs['boolean'] = function (e) {
+        return {
+            exp: e.value,
+            source: []
+        };
     };
 
     var compiler;

@@ -30,7 +30,6 @@ describe("timestamp for individual module works in combine mode", function () {
             },
             modules: {
                 'timestamp/x': {
-                    tag: 'b',
                     requires: ['./z']
                 },
                 'timestamp/y': {
@@ -42,19 +41,13 @@ describe("timestamp for individual module works in combine mode", function () {
             }
         });
 
-        var waitingModules = new S.Loader.WaitingModules(function () {
-        });
-        var loader = new S.Loader.ComboLoader(waitingModules);
-        var Loader = S.Loader,
-            utils = Loader.Utils;
+        var loader = new S.Loader.ComboLoader();
 
-        var allModNames = S.keys(loader.calculate(["timestamp/y"]));
+        var allMods = loader.calculate((["timestamp/y"]));
 
-        utils.createModulesInfo(allModNames);
+        var comboUrls = loader.getComboUrls(allMods);
 
-        var comboUrls = loader.getComboUrls(allModNames);
-
-        expect(comboUrls.js.timestamp[0].path)
+        expect(comboUrls.js[0].url)
             .toBe("http://" + host +
                 "/kissy/src/loader/tests/specs/timestamp/??y.js,x.js,z.js?t=a.js");
 
@@ -127,24 +120,17 @@ describe("timestamp for individual module works in combine mode", function () {
             }
         });
 
-        var waitingModules = new S.Loader.WaitingModules(function () {
-        });
-        var loader = new S.Loader.ComboLoader(waitingModules);
-        var Loader = S.Loader,
-            utils = Loader.Utils;
+        var loader = new S.Loader.ComboLoader();
 
-        var allModNames = S.keys(loader.calculate(["timestamp/y"]));
+        var allMods = loader.calculate(["timestamp/y"]);
 
-        utils.createModulesInfo(allModNames);
-        var comboUrls = loader.getComboUrls(allModNames);
+        var comboUrls = loader.getComboUrls(allMods);
 
-        var key = "timestamp";
+        var jss = comboUrls.js;
 
-        var jss = comboUrls.js[key];
-
-        expect(jss[0].path).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/y.js?t=a.js");
-        expect(jss[1].path).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/x.js?t=b.js");
-        expect(jss[2].path).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/z.js?t=z.js");
+        expect(jss[0].url).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/y.js?t=a.js");
+        expect(jss[1].url).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/x.js?t=b.js");
+        expect(jss[2].url).toBe("http://" + host + "/kissy/src/loader/tests/specs/timestamp/z.js?t=z.js");
 
 
     });

@@ -24,8 +24,7 @@ KISSY.add(function (S, require, exports, module) {
                     right: l + constrain.width(),
                     bottom: t + constrain.height()
                 };
-            }
-            else if (constrain.getDOMNode) {
+            } else if (constrain.getDOMNode) {
                 lt = constrain.offset();
                 self.__constrainRegion = {
                     left: lt.left,

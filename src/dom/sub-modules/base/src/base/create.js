@@ -8,8 +8,7 @@ KISSY.add(function (S, require) {
     var logger = S.getLogger('s/dom');
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
-        UA = S.UA,
-
+        UA = require('ua'),
         ie = UA.ieMode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',

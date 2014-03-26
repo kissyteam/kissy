@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
         Base = require('base'),
         DragType = require('event/gesture/drag');
 
-    var UA = S.UA,
+    var UA = require('ua'),
         $ = Node.all,
         $doc = $(document),
         each = S.each,
@@ -65,7 +65,6 @@ KISSY.add(function (S, require) {
              * @param e.drag current draggable object
              */
 
-
             /**
              * fired during dragging
              * @event drag
@@ -90,7 +89,6 @@ KISSY.add(function (S, require) {
              * @param e.pageY mouse position top
              */
 
-
             /**
              * fired after drop a draggable onto a droppable object
              * @event dragdrophit
@@ -109,7 +107,6 @@ KISSY.add(function (S, require) {
              * @param e.drop current droppable object
              */
 
-
             /**
              * fired after drag
              * @event dragend
@@ -126,7 +123,6 @@ KISSY.add(function (S, require) {
              * @param e.drag current draggable object
              */
 
-
             /**
              * fired after drop a draggable onto nothing
              * @event dragdropmiss
@@ -142,7 +138,6 @@ KISSY.add(function (S, require) {
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param e.drag current draggable object
              */
-
 
             /**
              * fired after a draggable leaves a droppable
@@ -162,7 +157,6 @@ KISSY.add(function (S, require) {
              * @param e.drop current droppable object
              */
 
-
             /**
              * fired after a draggable object mouseenter a droppable object
              * @event dragenter
@@ -181,7 +175,6 @@ KISSY.add(function (S, require) {
              * @param e.drop current droppable object
              */
 
-
             /**
              * fired after a draggable object mouseover a droppable object
              * @event dragover
@@ -199,7 +192,6 @@ KISSY.add(function (S, require) {
              * @param e.drag current draggable object
              * @param e.drop current droppable object
              */
-
 
             /**
              * fired after a draggable object start to drag
@@ -218,7 +210,7 @@ KISSY.add(function (S, require) {
              */
         },
 
-        '_onSetNode': function (n) {
+        _onSetNode: function (n) {
             var self = this;
             // dragNode is equal to node in single mode
             self.setInternal('dragNode', n);
@@ -421,7 +413,7 @@ KISSY.add(function (S, require) {
          * force to stop this drag operation
          * @member KISSY.DD.Draggable
          */
-        'stopDrag': function () {
+        stopDrag: function () {
             if (this._isValidDrag) {
                 this._end();
             }
@@ -727,7 +719,7 @@ KISSY.add(function (S, require) {
                 /**
                  * In point mode, a Drop is targeted by the cursor being over the Target
                  */
-                'POINT': 'point',
+                POINT: 'point',
                 /**
                  * In intersect mode, a Drop is targeted by 'part' of the drag node being over the Target
                  */

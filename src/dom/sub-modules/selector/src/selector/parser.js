@@ -120,7 +120,7 @@ KISSY.add(function (_, undefined) {
                 match = self.match,
                 input = self.input;
             matched = matched.slice(0, matched.length - match.length);
-            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
+            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
                 next = match + input;
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
             return past + next + "\n" + new Array(past.length + 1).join("-") + "^";

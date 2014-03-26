@@ -64,7 +64,7 @@ describe("css-combo", function () {
 
             packages: {
                 x: {
-                    tag: S.now(),
+                    tag: S.Loader.Utils.now(),
                     base: window.specsPath || "../specs/css-combo/"
                 }
             },

@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S,require) {
     var Dom = require('dom/base');
-    var UA = S.UA;
+    var UA = require('ua');
 
     if (UA.ieMode < 8) {
         /*

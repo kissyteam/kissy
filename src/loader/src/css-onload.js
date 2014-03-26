@@ -5,6 +5,7 @@
  */
 (function (S) {
     var   logger = S.getLogger('s/loader/getScript');
+
     var CSS_POLL_INTERVAL = 30,
         Utils = S.Loader.Utils,
     // central poll for link node
@@ -62,7 +63,7 @@
             }
         }
 
-        if (S.isEmptyObject(monitors)) {
+        if (Utils.isEmptyObject(monitors)) {
             logger.debug('clear css poll timer');
             timer = 0;
         } else {

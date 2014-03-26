@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Dom = require('dom/base');
     var logger = S.getLogger('s/dom');
     var cssProps = Dom._cssProps,
-        UA = S.UA,
+        UA = require('ua'),
         FLOAT = 'float',
         HUNDRED = 100,
         doc = S.Env.host.document,
@@ -53,7 +53,7 @@ KISSY.add(function (S, require) {
                         computed && elem[CURRENT_STYLE] ?
                             elem[CURRENT_STYLE][FILTER] :
                             elem[STYLE][FILTER]) || '') ?
-                        ( parseFloat(RegExp.$1) / HUNDRED ) + '' :
+                        (parseFloat(RegExp.$1) / HUNDRED) + '' :
                         computed ? '1' : '';
                 },
 
@@ -181,7 +181,6 @@ KISSY.add(function (S, require) {
  - currentStyle.backgroundPosition undefined
  - currentStyle.backgroundPositionX ok
  - currentStyle.backgroundPositionY ok
-
 
  yiminghe@gmail.com： 2011.05.19 opacity in ie
  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值

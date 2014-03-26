@@ -3,8 +3,9 @@
  * @author yiminghe@gmail.com
  */
 describe('modules and packages', function () {
-    var S = KISSY;
     var isCoverage = location.href.indexOf('?coverage') !== -1;
+
+    var locationPrefix=location.protocol+'//'+location.host;
 
     beforeEach(function () {
         KISSY.config('combine', true);
@@ -16,9 +17,8 @@ describe('modules and packages', function () {
 
     it('can get base correctly', function () {
         expect(KISSY.config('base'))
-            .toBe(new S.Uri(location.href)
-                .resolve(isCoverage ? '/kissy/src/loader/coverage/src/' :
-                    '/kissy/src/loader/src/').toString());
+            .toBe(locationPrefix+(isCoverage ? '/kissy/src/loader/coverage/src/' :
+                    '/kissy/src/loader/src/'));
     });
 
     it('does not depend on order', function () {

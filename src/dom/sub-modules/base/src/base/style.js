@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var logger = S.getLogger('s/dom');
     var globalWindow = S.Env.host,
         getCssVendorInfo = S.Feature.getCssVendorInfo,
-        UA = S.UA,
+        UA = require('ua'),
         BOX_MODELS = ['margin', 'border', 'padding'],
         CONTENT_INDEX = -1,
         PADDING_INDEX = 2,

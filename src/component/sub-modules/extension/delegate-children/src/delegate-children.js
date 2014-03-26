@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Node = require('node'),
         Manager = require('component/manager');
 
-    var UA = S.UA,
+    var UA = require('ua'),
         ie = UA.ieMode,
         Gesture = Node.Gesture;
 

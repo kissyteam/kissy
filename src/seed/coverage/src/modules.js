@@ -299,7 +299,8 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[291] = 0;
   _$jscoverage['/modules.js'].lineData[295] = 0;
   _$jscoverage['/modules.js'].lineData[299] = 0;
-  _$jscoverage['/modules.js'].lineData[304] = 0;
+  _$jscoverage['/modules.js'].lineData[303] = 0;
+  _$jscoverage['/modules.js'].lineData[308] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -314,11 +315,11 @@ if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData['135'][1] = new BranchData();
 }
 _$jscoverage['/modules.js'].branchData['135'][1].init(118, 13, 'UA.ieMode < 9');
-function visit11_135_1(result) {
+function visit12_135_1(result) {
   _$jscoverage['/modules.js'].branchData['135'][1].ranCondition(result);
   return result;
 }_$jscoverage['/modules.js'].branchData['104'][1].init(37, 13, 'UA.ieMode < 9');
-function visit10_104_1(result) {
+function visit11_104_1(result) {
   _$jscoverage['/modules.js'].branchData['104'][1].ranCondition(result);
   return result;
 }_$jscoverage['/modules.js'].lineData[3]++;
@@ -423,7 +424,7 @@ function visit10_104_1(result) {
   _$jscoverage['/modules.js'].lineData[100]++;
   config({
   'dom/basic': {
-  alias: ['dom/base', visit10_104_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list']}, 
+  alias: ['dom/base', visit11_104_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list']}, 
   dom: {
   alias: ['dom/basic', !Feature.isQuerySelectorSupported() ? 'dom/selector' : '']}});
   _$jscoverage['/modules.js'].lineData[115]++;
@@ -445,7 +446,7 @@ function visit10_104_1(result) {
   _$jscoverage['/modules.js'].lineData[130]++;
   config({
   'event/dom': {
-  alias: ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit11_135_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}, 
+  alias: ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit12_135_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}, 
   'event/gesture': {
   alias: ['event/gesture/base', Feature.isTouchGestureSupported() ? 'event/gesture/touch' : '']}});
   _$jscoverage['/modules.js'].lineData[147]++;
@@ -495,7 +496,7 @@ function visit10_104_1(result) {
   _$jscoverage['/modules.js'].lineData[191]++;
   config({
   feature: {
-  requires: ['ua']}});
+  requires: ['util', 'ua']}});
   _$jscoverage['/modules.js'].lineData[195]++;
   config({
   'filter-menu': {
@@ -590,22 +591,26 @@ function visit10_104_1(result) {
   requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children']}});
   _$jscoverage['/modules.js'].lineData[287]++;
   config({
-  uri: {
-  requires: ['path']}});
+  ua: {
+  requires: ['util']}});
   _$jscoverage['/modules.js'].lineData[291]++;
   config({
-  xtemplate: {
-  requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
+  uri: {
+  requires: ['path']}});
   _$jscoverage['/modules.js'].lineData[295]++;
   config({
-  'xtemplate/compiler': {
-  requires: ['xtemplate/runtime']}});
+  xtemplate: {
+  requires: ['util', 'xtemplate/runtime', 'xtemplate/compiler']}});
   _$jscoverage['/modules.js'].lineData[299]++;
   config({
+  'xtemplate/compiler': {
+  requires: ['util', 'xtemplate/runtime']}});
+  _$jscoverage['/modules.js'].lineData[303]++;
+  config({
   'xtemplate/runtime': {
-  requires: ['path']}});
+  requires: ['util']}});
 })(function(c) {
   _$jscoverage['/modules.js'].functionData[1]++;
-  _$jscoverage['/modules.js'].lineData[304]++;
+  _$jscoverage['/modules.js'].lineData[308]++;
   KISSY.config('modules', c);
 }, KISSY.Feature, KISSY.UA);

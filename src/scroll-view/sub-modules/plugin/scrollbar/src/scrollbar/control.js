@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
+    var UA = require('ua');
     var Control = require('component/control');
     var ScrollBarRender = require('./render');
 
@@ -37,29 +38,29 @@ KISSY.add(function (S, require) {
     }
 
     function onScrollViewReflow() {
-        var control = this,
-            scrollView = control.scrollView,
-            trackEl = control.trackEl,
-            scrollWHProperty = control.scrollWHProperty,
-            whProperty = control.whProperty,
-            clientWHProperty = control.clientWHProperty,
-            dragWHProperty = control.dragWHProperty,
+        var self = this,
+            scrollView = self.scrollView,
+            trackEl = self.trackEl,
+            scrollWHProperty = self.scrollWHProperty,
+            whProperty = self.whProperty,
+            clientWHProperty = self.clientWHProperty,
+            dragWHProperty = self.dragWHProperty,
             ratio,
             trackElSize,
             barSize;
 
-        if (scrollView.allowScroll[control.scrollType]) {
-            control.scrollLength = scrollView[scrollWHProperty];
-            trackElSize = control.trackElSize =
+        if (scrollView.allowScroll[self.scrollType]) {
+            self.scrollLength = scrollView[scrollWHProperty];
+            trackElSize = self.trackElSize =
                 whProperty === 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
-            ratio = scrollView[clientWHProperty] / control.scrollLength;
+            ratio = scrollView[clientWHProperty] / self.scrollLength;
             barSize = ratio * trackElSize;
-            control.set(dragWHProperty, barSize);
-            control.barSize = barSize;
-            syncOnScroll(control);
-            control.set('visible', true);
+            self.set(dragWHProperty, barSize);
+            self.barSize = barSize;
+            syncOnScroll(self);
+            self.set('visible', true);
         } else {
-            control.set('visible', false);
+            self.set('visible', false);
         }
     }
 
@@ -88,7 +89,6 @@ KISSY.add(function (S, require) {
         }
         syncOnScroll(self);
     }
-
 
     function onUpDownBtnMouseDown(e) {
         e.halt();
@@ -271,7 +271,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             autoHide: {
-                value: S.UA.ios
+                value: UA.ios
             },
 
             visible: {

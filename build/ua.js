@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 10:35
+build time: Mar 25 17:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,7 +9,8 @@ build time: Mar 24 10:35
  ua
 */
 
-KISSY.add("ua", [], function(S, undefined) {
+KISSY.add("ua", ["util"], function(S, require, module, exports, undefined) {
+  require("util");
   var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || "";
   function numberify(s) {
     var c = 0;

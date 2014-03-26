@@ -131,7 +131,7 @@ KISSY.add(function (S, require, exports, module) {
             option26.params = params27;
             if (moduleWrap) {
                 require("date/picker/decade-panel/decades-xtpl");
-                option26.params[0] = moduleWrap.resolveByName(option26.params[0]);
+                option26.params[0] = moduleWrap.resolve(option26.params[0]);
             }
             var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 24, payload);
             if (commandRet28 && commandRet28.isBuffer) {

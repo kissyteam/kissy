@@ -150,7 +150,7 @@ KISSY.add(function (S, require, exports, module) {
             option31.params = params32;
             if (moduleWrap) {
                 require("date/picker/year-panel/years-xtpl");
-                option31.params[0] = moduleWrap.resolveByName(option31.params[0]);
+                option31.params[0] = moduleWrap.resolve(option31.params[0]);
             }
             var commandRet33 = includeCommand.call(engine, scope, option31, buffer, 33, payload);
             if (commandRet33 && commandRet33.isBuffer) {

@@ -23,7 +23,6 @@ KISSY.add(function (S) {
      * Manage component metadata.
      */
     Manager = {
-
         __instances: componentInstances,
 
         /**
@@ -48,7 +47,7 @@ KISSY.add(function (S) {
          * @param {String} id
          * @return {KISSY.Component.Control}
          */
-        'getComponent': function (id) {
+        getComponent: function (id) {
             return componentInstances[id];
         },
 
@@ -71,7 +70,7 @@ KISSY.add(function (S) {
      *          }]
      *      })
          */
-        'createComponent': function (component, parent) {
+        createComponent: function (component, parent) {
             var ChildConstructor,
                 xclass;
             if (component) {

@@ -39,9 +39,8 @@ KISSY.add(function (S, require) {
                 // process '>' scenario: top -> bottom
                 if (Math.abs(positiveAngle - lastAngle) < diff) {
                     angle = positiveAngle;
-                }
-                // process '>' scenario: bottom -> top
-                else if (Math.abs(negativeAngle - lastAngle) < diff) {
+                } else if (Math.abs(negativeAngle - lastAngle) < diff) {
+                    // process '>' scenario: bottom -> top
                     angle = negativeAngle;
                 }
             }
@@ -59,7 +58,6 @@ KISSY.add(function (S, require) {
                     angle: angle,
                     rotation: 0
                 }));
-
             } else {
                 DomEvent.fire(self.target, ROTATE, S.mix(e, {
                     angle: angle,

@@ -5,11 +5,9 @@
  */
 (function (S) {
     var Loader = S.Loader,
-        Path = S.Path,
         Config = S.Config,
-        Env= S.Env,
         Utils = Loader.Utils,
-        mix = S.mix;
+        mix = Utils.mix;
 
     function checkGlobalIfNotExist(self, property) {
         return property in self ?
@@ -50,15 +48,11 @@
             return this.name;
         },
 
-        getPath: function () {
-            return this.path || (this.path = this.getUri().toString());
-        },
-
         /**
-         * get package uri
+         * get package url
          */
-        getUri: function () {
-            return this.uri;
+        getBase: function () {
+            return this.base;
         },
 
         /**
@@ -126,7 +120,7 @@
         // lazy initialize and commonjs module format
         self.cjs = 1;
         mix(self, cfg);
-        self.waitedCallbacks = [];
+        self.waits = {};
     }
 
     Module.prototype = {
@@ -145,18 +139,9 @@
             return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
         },
 
-        /**
-         * resolve path
-         * @param {String} relativePath relative path
-         * @returns {KISSY.Uri} resolve uri
-         */
-        resolve: function (relativePath) {
-            return this.getUri().resolve(relativePath);
-        },
-
         // use by xtemplate include
-        resolveByName: function (relativeName) {
-            return Utils.normalDepModuleName(this.name, relativeName);
+        resolve: function (relativeName) {
+            return Utils.normalizePath(this.name, relativeName);
         },
 
         /**
@@ -168,27 +153,23 @@
             return S.require(moduleName, this.name);
         },
 
-        wait: function (callback) {
-            this.waitedCallbacks.push(callback);
+        add: function (loader) {
+            this.waits[loader.id] = loader;
         },
 
-        notifyAll: function () {
-            var callback;
-            var len = this.waitedCallbacks.length,
-                i = 0;
-            for (; i < len; i++) {
-                callback = this.waitedCallbacks[i];
-                try {
-                    callback(this);
-                } catch (e) {
-                    S.log(e.stack || e, 'error');
-                    /*jshint loopfunc:true*/
-                    setTimeout(function () {
-                        throw e;
-                    }, 0);
-                }
-            }
-            this.waitedCallbacks = [];
+        remove: function (loader) {
+            delete this.waits[loader.id];
+        },
+
+        contains: function (loader) {
+            return this.waits[loader.id];
+        },
+
+        flush: function () {
+            Utils.each(this.waits, function (loader) {
+                loader.flush();
+            });
+            this.waits = {};
         },
 
         /**
@@ -199,7 +180,7 @@
             var self = this,
                 v = self.type;
             if (!v) {
-                if (Path.extname(self.name).toLowerCase() === '.css') {
+                if (Utils.endsWith(self.name, '.css')) {
                     v = 'css';
                 } else {
                     v = 'js';
@@ -228,30 +209,15 @@
         },
 
         /**
-         * Get the path uri of current module if load dynamically
-         * @return {KISSY.Uri}
-         */
-        getUri: function () {
-            var self = this, uri;
-            if (!self.uri) {
-                // path can be specified
-                if (self.path) {
-                    uri = new S.Uri(self.path);
-                } else {
-                    uri = S.Config.resolveModFn(self);
-                }
-                self.uri = uri;
-            }
-            return self.uri;
-        },
-
-        /**
-         * Get the path of current module if load dynamically
+         * Get the path url of current module if load dynamically
          * @return {String}
          */
-        getPath: function () {
+        getUrl: function () {
             var self = this;
-            return self.path || (self.path = self.getUri().toString());
+            if (!self.url) {
+                self.url = S.Config.resolveModFn(self);
+            }
+            return self.url;
         },
 
         /**
@@ -268,8 +234,19 @@
          */
         getPackage: function () {
             var self = this;
-            return self.packageInfo ||
-                (self.packageInfo = getPackage(self.name));
+            if (!self.packageInfo) {
+                var packages = Config.packages || {},
+                    modNameSlash = self.name + '/',
+                    pName = '',
+                    p;
+                for (p in packages) {
+                    if (Utils.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
+                        pName = p;
+                    }
+                }
+                self.packageInfo = packages[pName] || Config.corePackage;
+            }
+            return self.packageInfo;
         },
 
         /**
@@ -314,9 +291,11 @@
          */
         getRequiredMods: function () {
             var self = this;
-            return S.map(self.getNormalizedRequires(), function (r) {
-                return Utils.createModuleInfo(r);
+            var mods = [];
+            Utils.each(self.getNormalizedRequires(), function (r, i) {
+                mods[i] = Utils.createModuleInfo(r);
             });
+            return mods;
         },
 
         /**
@@ -344,17 +323,4 @@
     };
 
     Loader.Module = Module;
-
-    function getPackage(modName) {
-        var packages = Config.packages || {},
-            modNameSlash = modName + '/',
-            pName = '',
-            p;
-        for (p in packages) {
-            if (S.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
-                pName = p;
-            }
-        }
-        return packages[pName] || Env.corePackage;
-    }
 })(KISSY);

@@ -69,8 +69,8 @@ var code = "/**\n" +
     "*/\n" +
     "var SERVER_CONFIG=" + serverConfig + ";\n" +
     "KISSY.config('tag',KISSY.now());" +
-    "var loc = new KISSY.Uri(location.href);\n" +
-    "if (!loc.getQuery().has('build')&&!loc.getQuery().has('min')) {\n" +
+    "var loc = location;\n" +
+    "if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {\n" +
     "KISSY.config('packages', \n" +
     JSON.stringify(mod) +
     ');}\n';

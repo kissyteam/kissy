@@ -12,7 +12,7 @@
         }
 
         KISSY.config('loadModsFn', function (rs, config) {
-            var path = rs.path, code;
+            var path = rs.url, code;
             if (code = localStorage.getItem(path)) {
                 eval(code);
                 config.success();
@@ -37,8 +37,8 @@
             ignorePackageNameInUri: true
         }
     });
-    var start = S.now();
+    var start = S.Loader.Utils.now();
     S.use('test/t', function (S, t) {
-        alert('load ' + t + ' in ' + (S.now() - start) + ' ms');
+        alert('load ' + t + ' in ' + (S.Loader.Utils.now() - start) + ' ms');
     });
 </script>

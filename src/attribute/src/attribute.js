@@ -271,20 +271,20 @@ KISSY.add(function (S, require) {
     }
 
     function addMembers(px) {
-        var SubClass = this;
-        wrapProtoForSuper(px, SubClass);
-        S.mix(SubClass.prototype, px);
+        var self = this;
+        wrapProtoForSuper(px, self);
+        S.mix(self.prototype, px);
     }
 
     Attribute.extend = function extend(px, sx) {
         var SubClass,
-            SuperClass = this;
+            self = this;
         sx = S.merge(sx);
         // px is shared among classes
         px = S.merge(px);
-        var hooks ,
+        var hooks,
             sxHooks = sx.__hooks__;
-        if ((hooks = SuperClass.__hooks__)) {
+        if ((hooks = self.__hooks__)) {
             sxHooks = sx.__hooks__ = sx.__hooks__ || {};
             S.mix(sxHooks, hooks, false);
         }
@@ -309,11 +309,11 @@ KISSY.add(function (S, require) {
         wrapProtoForSuper(px, SubClass);
         var inheritedStatics,
             sxInheritedStatics = sx.inheritedStatics;
-        if ((inheritedStatics = SuperClass.inheritedStatics)) {
+        if ((inheritedStatics = self.inheritedStatics)) {
             sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
             S.mix(sxInheritedStatics, inheritedStatics, false);
         }
-        S.extend(SubClass, SuperClass, px, sx);
+        S.extend(SubClass, self, px, sx);
         if (sxInheritedStatics) {
             S.mix(SubClass, sxInheritedStatics);
         }
@@ -349,7 +349,7 @@ KISSY.add(function (S, require) {
     S.augment(Attribute, CustomEvent.Target, {
         INVALID: INVALID,
 
-        'callSuper': function () {
+        callSuper: function () {
             var method, obj,
                 self = this,
                 args = arguments;
@@ -477,7 +477,6 @@ KISSY.add(function (S, require) {
 
             return self;
         },
-
 
         /**
          * Sets the value of an attribute.
@@ -638,8 +637,7 @@ KISSY.add(function (S, require) {
                 if (self.hasAttr(name)) {
                     // if attribute does not have default value, then set to undefined
                     return self.set(name, getDefAttrVal(self, name), opts);
-                }
-                else {
+                } else {
                     return self;
                 }
             }

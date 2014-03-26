@@ -18,7 +18,7 @@
             success = success.success;
         }
 
-        if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
+        if (S.endsWith(url, '.css')) {
             S.log('node js can not load css: ' + url, 'warn');
             if (success) {
                 success();
@@ -26,17 +26,14 @@
             return;
         }
 
-        var uri = new S.Uri(url),
-            path = uri.getPath();
-
         try {
             // async is controlled by async option in use
             // sync load in getScript, same as cached load in browser environment
-            var mod = fs.readFileSync(path, charset);
+            var mod = fs.readFileSync(url, charset);
             // code in runInThisContext unlike eval can not access local scope
             //noinspection JSUnresolvedFunction
             // use path, or else use url will error in nodejs debug mode
-            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', path);
+            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
             factory(S, require);
             if (success) {
                 success();

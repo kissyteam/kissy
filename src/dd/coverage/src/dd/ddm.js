@@ -639,7 +639,7 @@ function visit3_65_1(result) {
 function visit2_50_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['18'][1].init(150, 11, 'UA.ie === 6');
+}_$jscoverage['/dd/ddm.js'].branchData['18'][1].init(159, 11, 'UA.ie === 6');
 function visit1_18_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['18'][1].ranCondition(result);
   return result;
@@ -651,7 +651,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/ddm.js'].lineData[10]++;
   var logger = S.getLogger('dd/ddm');
   _$jscoverage['/dd/ddm.js'].lineData[12]++;
-  var UA = S.UA, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = visit1_18_1(UA.ie === 6), MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
+  var UA = require('ua'), $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = visit1_18_1(UA.ie === 6), MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
   _$jscoverage['/dd/ddm.js'].lineData[35]++;
   var DDManger = Base.extend({
   addDrop: function(d) {

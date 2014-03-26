@@ -5,14 +5,46 @@
 /*jshint quotmark:false*/
 describe("modules and groups", function () {
     var S = KISSY,
-        ComboLoader = S.Loader.ComboLoader,
-        groupTag = ComboLoader.groupTag;
+        ComboLoader = S.Loader.ComboLoader;
+
     beforeEach(function () {
         KISSY.config('combine', true);
     });
 
     afterEach(function () {
         KISSY.clearLoader();
+    });
+
+    it("combo packages", function () {
+        KISSY.config({
+            packages: {
+                "pkg-a": {
+                    group: "my",
+                    base: "../specs/packages-groups"
+                },
+                "pkg-b": {
+                    group: "my",
+                    base: "../specs/packages-groups"
+                },
+                "pkg-c": {
+                    base: "../specs/packages-groups"
+                }
+            },
+            modules: {
+                "pkg-a/a": {
+                    requires: ["pkg-b/b", 'pkg-c/c']
+                }
+            }
+        });
+        var l = new ComboLoader();
+        var r = l.calculate((["pkg-a/a", "pkg-c/c"]));
+        var c = l.getComboUrls(r);
+        var js = c.js;
+        expect(js.length).toBe(2);
+        expect(js[0].url.substring(js[0].url.indexOf('??')))
+            .toBe("??c.js");
+        expect(js[1].url.substring(js[1].url.indexOf('??')))
+            .toBe("??pkg-a/a.js,pkg-b/b.js");
     });
 
     it('works', function () {
@@ -48,49 +80,8 @@ describe("modules and groups", function () {
         });
     });
 
-    it("combo packages", function () {
-        KISSY.config({
-            packages: {
-                "pkg-a": {
-                    group: "my",
-                    base: "../specs/packages-groups"
-                },
-                "pkg-b": {
-                    group: "my",
-                    base: "../specs/packages-groups"
-                },
-                "pkg-c": {
-                    base: "../specs/packages-groups"
-                }
-            },
-            modules: {
-                "pkg-a/a": {
-                    requires: ["pkg-b/b", 'pkg-c/c']
-                }
-            }
-        });
-
-        var waitingModules = new S.Loader.WaitingModules(function () {
-        });
-        var l = new ComboLoader(waitingModules);
-        var r = S.keys(l.calculate(["pkg-a/a", "pkg-c/c"]));
-        S.Loader.Utils.createModulesInfo(r);
-        var c = l.getComboUrls(r);
-        var comboName = 'my_utf-8_' + groupTag;
-        var js = c.js[comboName];
-        expect(js.length).toBe(1);
-        expect(js[0].path.substring(js[0].path.indexOf('??')))
-            .toBe("??pkg-a/a.js,pkg-b/b.js");
-        js = c.js['pkg-c'];
-        expect(js.length).toBe(1);
-        expect(js[0].path.substring(js[0].path.indexOf('??')))
-            .toBe("??c.js");
-    });
-
     it("combo packages which have no combo prefix", function () {
-        var waitingModules = new S.Loader.WaitingModules(function () {
-        });
-        var l = new ComboLoader(waitingModules);
+        var l = new ComboLoader();
 
         KISSY.config({
             packages: {
@@ -109,23 +100,17 @@ describe("modules and groups", function () {
             }
         });
 
-        var r = S.keys(l.calculate(["pkg-a/a", "test/x"]));
-        S.Loader.Utils.createModulesInfo(r);
-        var comboName = 'my_utf-8_' + groupTag;
+        var r = l.calculate((["pkg-a/a", "test/x"]));
         var c = l.getComboUrls(r);
-        var js = c.js[comboName];
-        expect(js.length).toBe(1);
-        expect(js[0].path.substring(js[0].path.indexOf('??')))
+        var js = c.js;
+        expect(js.length).toBe(2);
+        expect(js[0].url.substring(js[0].url.indexOf('??')))
             .toBe("??a.js");
-        js = c.js.test;
-        expect(js.length).toBe(1);
-        expect(js[0].path).toBe("http://g.tbcdn.cn/test/??x.js");
+        expect(js[1].url).toBe("http://g.tbcdn.cn/test/??x.js");
     });
 
     it("combo packages with different charset", function () {
-        var waitingModules = new S.Loader.WaitingModules(function () {
-        });
-        var l = new ComboLoader(waitingModules);
+        var l = new ComboLoader();
 
         KISSY.config({
             packages: {
@@ -147,24 +132,19 @@ describe("modules and groups", function () {
             }
         });
 
-        var r = S.keys(l.calculate(["pkg-a/a"]));
-        S.Loader.Utils.createModulesInfo(r);
+        var r = l.calculate((["pkg-a/a"]));
         var c = l.getComboUrls(r);
-        var comboName = 'my_utf-8_' + groupTag;
-        var js = c.js[comboName];
-        expect(js.length).toBe(1);
-        expect(js[0].path.substring(js[0].path.indexOf('??')))
+        var js = c.js;
+        expect(js.length).toBe(2);
+        expect(js[0].url.substring(js[0].url.indexOf('??')))
             .toBe("??a.js");
-        comboName = 'my_gbk_' + groupTag;
-        js = c.js[comboName];
-        expect(js.length).toBe(1);
-        expect(js[0].path.substring(js[0].path.indexOf('??')))
+        expect(js[1].url.substring(js[1].url.indexOf('??')))
             .toBe("??b.js");
     });
 
-    it('can perform 3 package combo',function(){
+    it('can perform 3 package combo', function () {
         KISSY.config({
-            group:'my',
+            group: 'my',
             packages: {
                 "pkg-a": {
                     base: "../specs/packages-groups"
@@ -183,23 +163,54 @@ describe("modules and groups", function () {
             }
         });
 
-        var waitingModules = new S.Loader.WaitingModules(function () {
-        });
-        var l = new ComboLoader(waitingModules);
-        var r = S.keys(l.calculate(["pkg-a/a", "pkg-c/c"]));
-        S.Loader.Utils.createModulesInfo(r);
+        var l = new ComboLoader();
+        var r = l.calculate((["pkg-a/a", "pkg-c/c"]));
         var c = l.getComboUrls(r);
-        var size=0;
-        for(var i in c){
+        var size = 0;
+        for (var i in c) {
             size++;
-            i=0;
+            i = 0;
         }
         expect(size).toBe(1);
-        var comboName = 'my_utf-8_' + groupTag;
-        var js = c.js[comboName];
+        var js = c.js;
         expect(js.length).toBe(1);
-        expect(js[0].path.substring(js[0].path.indexOf('??')))
+        expect(js[0].url.substring(js[0].url.indexOf('??')))
             .toBe('??pkg-a/a.js,pkg-b/b.js,pkg-c/c.js');
 
+    });
+
+
+    it('can skip cross origin package combo', function () {
+        if (location.hostname !== 'localhost') {
+            return;
+        }
+
+        var url = 'http://localhost:9999/src/loader/tests/specs/packages-groups';
+        KISSY.config({
+            group: 'my',
+            packages: {
+                "pkg-a": {
+                    base: "../specs/packages-groups"
+                },
+                "pkg-b": {
+                    base: url
+                },
+                "pkg-c": {
+                    base: "../specs/packages-groups"
+                }
+            },
+            modules: {
+                "pkg-a/a": {
+                    requires: ["pkg-b/b", 'pkg-c/c']
+                }
+            }
+        });
+        var l = new ComboLoader();
+        var r = l.calculate((["pkg-a/a"]));
+        var c = l.getComboUrls(r);
+        expect(c.js.length).toBe(2);
+        var js = c.js;
+        expect(js[0].url).toBe('http://localhost:9999/src/loader/tests/specs/packages-groups/pkg-b/??b.js');
+        expect(js[1].url).toBe('http://localhost:8888/kissy/src/loader/tests/specs/packages-groups/??pkg-a/a.js,pkg-c/c.js');
     });
 });

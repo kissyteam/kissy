@@ -5,13 +5,10 @@
  */
 (function (S) {
     var Loader = S.Loader,
-        Path = S.Path,
         Env = S.Env,
         host = Env.host,
         TRUE = !0,
         FALSE = !1,
-        mix = S.mix,
-        startsWith = S.startsWith,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
         READY_TO_ATTACH = data.READY_TO_ATTACH,
@@ -48,7 +45,7 @@
         if (name.charAt(name.length - 1) === '/') {
             name += 'index';
         }
-        if (S.endsWith(name, '.js')) {
+        if (Utils.endsWith(name, '.js')) {
             name = name.slice(0, -3);
         }
         return name;
@@ -103,7 +100,108 @@
         Utils.webkit = numberify(m[1]);
     }
 
+    var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/;
+
+    function each(obj, fn) {
+        var i = 0,
+            myKeys, l;
+        if (isArray(obj)) {
+            l = obj.length;
+            for (; i < l; i++) {
+                if (fn(obj[i], i, obj) === false) {
+                    break;
+                }
+            }
+        } else {
+            myKeys = keys(obj);
+            l = myKeys.length;
+            for (; i < l; i++) {
+                if (fn(obj[myKeys[i]], myKeys[i], obj) === false) {
+                    break;
+                }
+            }
+        }
+    }
+
+    function keys(obj) {
+        var ret = [];
+        for (var key in obj) {
+            ret.push(key);
+        }
+        return ret;
+    }
+
+    var isArray = Array.isArray || function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    };
+
+    function mix(to, from) {
+        for (var i in from) {
+            to[i] = from[i];
+        }
+        return to;
+    }
+
+
     mix(Utils, {
+        mix: mix,
+
+        noop: function () {
+        },
+
+        startsWith: function (str, prefix) {
+            return str.lastIndexOf(prefix, 0) === 0;
+        },
+
+        isEmptyObject: function (o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        endsWith: function (str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) === ind;
+        },
+
+        now: Date.now || function () {
+            return +new Date();
+        },
+
+        each: each,
+
+        keys: keys,
+
+        isArray: isArray,
+
+        normalizePath: function (parentPath, subPath) {
+            var firstChar = subPath.charAt(0);
+            if (firstChar !== '.') {
+                return subPath;
+            }
+            var parts = parentPath.split('/');
+            var subParts = subPath.split('/');
+            parts.pop();
+            for (var i = 0, l = subParts.length; i < l; i++) {
+                var subPart = subParts[i];
+                if (subPart === '.') {
+                } else if (subPart === '..') {
+                    parts.pop();
+                } else {
+                    parts.push(subPart);
+                }
+            }
+            return parts.join('/');
+        },
+
+        isSameOriginAs: function (url1, url2) {
+            var urlParts1 = url1.match(urlReg);
+            var urlParts2 = url2.match(urlReg);
+            return urlParts1[0] === urlParts2[0];
+        },
 
         ie: getIEVersion(),
 
@@ -122,23 +220,14 @@
          * @return {String|String[]} normalized dependency module 's name
          */
         normalDepModuleName: function (moduleName, depName) {
+            if (typeof depName === 'string') {
+                return Utils.normalizePath(moduleName, depName);
+            }
+
             var i = 0, l;
 
-            if (!depName) {
-                return depName;
-            }
-
-            if (typeof depName === 'string') {
-                if (startsWith(depName, '../') || startsWith(depName, './')) {
-                    // x/y/z -> x/y/
-                    return Path.resolve(Path.dirname(moduleName), depName);
-                }
-
-                return Path.normalize(depName);
-            }
-
             for (l = depName.length; i < l; i++) {
-                depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
+                depName[i] = Utils.normalizePath(moduleName, depName[i]);
             }
             return depName;
         },
@@ -148,9 +237,11 @@
          * @param {String[]} modNames to be created module names
          */
         createModulesInfo: function (modNames) {
-            S.each(modNames, function (m) {
-                Utils.createModuleInfo(m);
+            var ret = [];
+            Utils.each(modNames, function (m, i) {
+                ret[i] = Utils.createModuleInfo(m);
             });
+            return ret;
         },
 
         /**
@@ -189,7 +280,7 @@
                 m,
                 runtimeMods = Env.mods;
 
-            S.each(modNames, function (modName) {
+            Utils.each(modNames, function (modName) {
                 module = runtimeMods[modName];
                 if (!module || module.getType() !== 'css') {
                     unalias = Utils.unalias(modName);

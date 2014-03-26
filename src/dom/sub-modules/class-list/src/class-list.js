@@ -72,7 +72,7 @@ KISSY.add(function (S, require) {
             }
         },
 
-        '_toggleClass': function (elem, classNames, force) {
+        _toggleClass: function (elem, classNames, force) {
             var j, className,
                 result,
                 method,

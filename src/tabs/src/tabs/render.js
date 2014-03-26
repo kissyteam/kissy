@@ -28,7 +28,7 @@ KISSY.add(function (S, require) {
         }
 
     }, {
-        name:'TabsRender',
+        name: 'TabsRender',
         HTML_PARSER: {
             barOrientation: function (el) {
                 var orientation = el[0].className.match(/(top|bottom|left|right)\b/);

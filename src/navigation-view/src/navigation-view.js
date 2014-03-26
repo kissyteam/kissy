@@ -162,8 +162,7 @@ KISSY.add(function (S, require) {
             if (loadingView.get('visible')) {
                 loadingView.transition(false, backward);
                 transition(view, true, backward);
-            }
-            else if (oldView) {
+            } else if (oldView) {
                 transition(oldView, false, backward);
                 transition(view, true, backward);
             } else {
@@ -194,12 +193,12 @@ KISSY.add(function (S, require) {
     }
 
     function onViewAnimEnd() {
-        var view = this;
-        clearAnimCss(view);
-        if (view.get('navigationView').get('activeView') === view) {
-            view.show();
+        var self = this;
+        clearAnimCss(self);
+        if (self.get('navigationView').get('activeView') === self) {
+            self.show();
         } else {
-            view.hide();
+            self.hide();
         }
     }
 
@@ -235,7 +234,7 @@ KISSY.add(function (S, require) {
 
         },
 
-        '_onSetLoadingHtml': function (v) {
+        _onSetLoadingHtml: function (v) {
             if (this.loadingView) {
                 this.loadingView.set('content', v);
             }

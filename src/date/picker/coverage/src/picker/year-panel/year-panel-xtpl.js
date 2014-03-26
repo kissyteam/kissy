@@ -386,7 +386,7 @@ if (! _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['156'] = [];
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['156'][1] = new BranchData();
 }
-_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['156'][1].init(7122, 37, 'commandRet33 && commandRet33.isBuffer');
+_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['156'][1].init(7116, 37, 'commandRet33 && commandRet33.isBuffer');
 function visit101_156_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['156'][1].ranCondition(result);
   return result;
@@ -683,7 +683,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[152]++;
     require("date/picker/year-panel/years-xtpl");
     _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[153]++;
-    option31.params[0] = moduleWrap.resolveByName(option31.params[0]);
+    option31.params[0] = moduleWrap.resolve(option31.params[0]);
   }
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[155]++;
   var commandRet33 = includeCommand.call(engine, scope, option31, buffer, 33, payload);

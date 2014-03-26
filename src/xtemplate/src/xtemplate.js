@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    require('util');
     var XTemplateRuntime = require('xtemplate/runtime');
     var Compiler = require('xtemplate/compiler');
     var cache = XTemplate.cache = {};

@@ -11,7 +11,7 @@
 
         res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res.set('Access-Control-Allow-Credentials', 'true');
-        res.set('Access-Control-Allow-Origin', 'http://*.taobao.com');
-        res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
+        res.set('Access-Control-Allow-Origin', 'http://www.taobao.com');
+        res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, content-type, accept, *');
 
  - [!] withCredentials 默认为 true

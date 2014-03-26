@@ -1,4 +1,4 @@
-module.exports = function (req, res,config) {
+module.exports = function (req, res) {
     setTimeout(function () {
         var t = {}, query = req.body;
         if (query.test) {
@@ -17,7 +17,7 @@ module.exports = function (req, res,config) {
             t.test5 = query.test5;
         }
         var data = '<!doctype html><html><head>' +
-            '<script>document.domain=window.location.hostname.split(".").slice(-3).join(".");</script>' +
+            '<script>document.domain=window.location.hostname.split(".").slice(0 - 3).join(".");</script>' +
             '</head><body>';
         data += '<b>html</b>';
         data += '</body></html>';
@@ -26,7 +26,7 @@ module.exports = function (req, res,config) {
         res.set('Pragma', 'no-cache');
         res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res.set('Access-Control-Allow-Credentials', 'true');
-        res.set('Access-Control-Allow-Origin', 'http://'+req.host+':'+config.server.ports[0]);
+        res.set('Access-Control-Allow-Origin', req.get('origin'));
         res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
         res.send(data);
     }, 10);

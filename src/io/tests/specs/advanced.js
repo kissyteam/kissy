@@ -2,10 +2,10 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.add(function (S, UA, Json, io, Node) {
+KISSY.add(function (S, UA, Json, io, Node, Uri) {
     /*jshint quotmark:false*/
     var $ = Node.all;
-    var pageUri = new S.Uri(location.href);
+    var pageUri = new Uri(location.href);
 
     describe("Advanced IO", function () {
 
@@ -426,5 +426,5 @@ KISSY.add(function (S, UA, Json, io, Node) {
         });
     });
 }, {
-    requires: ['ua', 'json', 'io', 'node']
+    requires: ['ua', 'json', 'io', 'node', 'uri']
 });

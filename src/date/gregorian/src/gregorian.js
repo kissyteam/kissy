@@ -180,7 +180,6 @@ KISSY.add(function (S, require) {
         PM: 1
     });
 
-
     var fields = ['',
         'Year', 'Month', 'DayOfMonth',
         'HourOfDay',
@@ -218,7 +217,6 @@ KISSY.add(function (S, require) {
     var mod = Utils.mod,
         isLeapYear = Utils.isLeapYear,
         floorDivide = Math.floor;
-
 
     var MIN_VALUES = [
         undefined,
@@ -407,7 +405,6 @@ KISSY.add(function (S, require) {
                             fields[MILLISECONDS] = 0;
             }
 
-
             var fixedDateJan1 = Utils.getFixedDate(year, GregorianCalendar.JANUARY, 1);
             var dayOfYear = fixedDate - fixedDateJan1 + 1;
             var fixDateMonth1 = fixedDate - date.dayOfMonth + 1;
@@ -451,7 +448,7 @@ KISSY.add(function (S, require) {
          * (millisecond offset from the Epoch).
          * @protected
          */
-        'computeTime': function () {
+        computeTime: function () {
             if (!this.isSet(YEAR)) {
                 throw new Error('year must be set for KISSY GregorianCalendar');
             }
@@ -604,7 +601,7 @@ KISSY.add(function (S, require) {
          * Sets this Calendar's current time from the given long value.
          * @param time the new time in UTC milliseconds from the epoch.
          */
-        'setTime': function (time) {
+        setTime: function (time) {
             this.time = time;
             this.fieldsComputed = false;
             this.complete();
@@ -626,13 +623,11 @@ KISSY.add(function (S, require) {
          * @returns {Number} the year for the given calendar field.
          */
 
-
         /**
          * Returns the month of the given calendar field.
          * @method getMonth
          * @returns {Number} the month for the given calendar field.
          */
-
 
         /**
          * Returns the day of month of the given calendar field.
@@ -640,13 +635,11 @@ KISSY.add(function (S, require) {
          * @returns {Number} the day of month for the given calendar field.
          */
 
-
         /**
          * Returns the hour of day of the given calendar field.
          * @method getHourOfDay
          * @returns {Number} the hour of day for the given calendar field.
          */
-
 
         /**
          * Returns the minute of the given calendar field.
@@ -654,13 +647,11 @@ KISSY.add(function (S, require) {
          * @returns {Number} the minute for the given calendar field.
          */
 
-
         /**
          * Returns the second of the given calendar field.
          * @method getSecond
          * @returns {Number} the second for the given calendar field.
          */
-
 
         /**
          * Returns the millisecond of the given calendar field.
@@ -668,13 +659,11 @@ KISSY.add(function (S, require) {
          * @returns {Number} the millisecond for the given calendar field.
          */
 
-
         /**
          * Returns the week of year of the given calendar field.
          * @method getWeekOfYear
          * @returns {Number} the week of year for the given calendar field.
          */
-
 
         /**
          * Returns the week of month of the given calendar field.
@@ -719,78 +708,65 @@ KISSY.add(function (S, require) {
             this.time = undefined;
         },
 
-
         /**
          * Set the year of the given calendar field.
          * @method setYear
          */
-
 
         /**
          * Set the month of the given calendar field.
          * @method setMonth
          */
 
-
         /**
          * Set the day of month of the given calendar field.
          * @method setDayOfMonth
          */
-
 
         /**
          * Set the hour of day of the given calendar field.
          * @method setHourOfDay
          */
 
-
         /**
          * Set the minute of the given calendar field.
          * @method setMinute
          */
-
 
         /**
          * Set the second of the given calendar field.
          * @method setSecond
          */
 
-
         /**
          * Set the millisecond of the given calendar field.
          * @method setMilliSecond
          */
-
 
         /**
          * Set the week of year of the given calendar field.
          * @method setWeekOfYear
          */
 
-
         /**
          * Set the week of month of the given calendar field.
          * @method setWeekOfMonth
          */
-
 
         /**
          * Set the day of year of the given calendar field.
          * @method setDayOfYear
          */
 
-
         /**
          * Set the day of week of the given calendar field.
          * @method setDayOfWeek
          */
 
-
         /**
          * Set the day of week in month of the given calendar field.
          * @method setDayOfWeekInMonth
          */
-
 
         /**
          * add for specified field based on two rules:
@@ -879,7 +855,6 @@ KISSY.add(function (S, require) {
 
         },
 
-
         /**
          * add the year of the given calendar field.
          * @method addYear
@@ -928,7 +903,6 @@ KISSY.add(function (S, require) {
          * @param {Number} amount the signed amount to add to field.
          */
 
-
         /**
          * add the week of month of the given calendar field.
          * @method addWeekOfMonth
@@ -952,7 +926,6 @@ KISSY.add(function (S, require) {
          * @method addDayOfWeekInMonth
          * @param {Number} amount the signed amount to add to field.
          */
-
 
         /**
          * Get rolled value for the field
@@ -1011,13 +984,11 @@ KISSY.add(function (S, require) {
             }
         },
 
-
         /**
          * roll the year of the given calendar field.
          * @method rollYear
          * @param {Number} amount the signed amount to add to field.
          */
-
 
         /**
          * roll the month of the given calendar field.
@@ -1031,7 +1002,6 @@ KISSY.add(function (S, require) {
          * @param {Number} amount the signed amount to add to field.
          */
 
-
         /**
          * roll the hour of day of the given calendar field.
          * @method rollHourOfDay
@@ -1043,7 +1013,6 @@ KISSY.add(function (S, require) {
          * @method rollMinute
          * @param {Number} amount the signed amount to add to field.
          */
-
 
         /**
          * roll the second of the given calendar field.
@@ -1057,13 +1026,11 @@ KISSY.add(function (S, require) {
          * @param {Number} amount the signed amount to add to field.
          */
 
-
         /**
          * roll the week of year of the given calendar field.
          * @method rollWeekOfYear
          * @param {Number} amount the signed amount to add to field.
          */
-
 
         /**
          * roll the week of month of the given calendar field.
@@ -1071,20 +1038,17 @@ KISSY.add(function (S, require) {
          * @param {Number} amount the signed amount to add to field.
          */
 
-
         /**
          * roll the day of year of the given calendar field.
          * @method rollDayOfYear
          * @param {Number} amount the signed amount to add to field.
          */
 
-
         /**
          * roll the day of week of the given calendar field.
          * @method rollDayOfWeek
          * @param {Number} amount the signed amount to add to field.
          */
-
 
         /**
          * remove other priority fields when call getFixedDate
@@ -1121,7 +1085,7 @@ KISSY.add(function (S, require) {
         /**
          * set current date instance's timezone offset
          */
-        'setTimezoneOffset': function (timezoneOffset) {
+        setTimezoneOffset: function (timezoneOffset) {
             if (this.timezoneOffset !== timezoneOffset) {
                 this.fieldsComputed = undefined;
                 this.timezoneOffset = timezoneOffset;
@@ -1131,7 +1095,7 @@ KISSY.add(function (S, require) {
         /**
          * set first day of week for current date instance
          */
-        'setFirstDayOfWeek': function (firstDayOfWeek) {
+        setFirstDayOfWeek: function (firstDayOfWeek) {
             if (this.firstDayOfWeek !== firstDayOfWeek) {
                 this.firstDayOfWeek = firstDayOfWeek;
                 this.fieldsComputed = false;
@@ -1142,7 +1106,7 @@ KISSY.add(function (S, require) {
          * Gets what the first day of the week is; e.g., SUNDAY in the U.S., MONDAY in France.
          * @returns {Number} the first day of the week.
          */
-        'getFirstDayOfWeek': function () {
+        getFirstDayOfWeek: function () {
             return this.firstDayOfWeek;
         },
 
@@ -1153,7 +1117,7 @@ KISSY.add(function (S, require) {
          * If it must be a full week, use value 7.
          * @param minimalDaysInFirstWeek the given minimal days required in the first week of the year.
          */
-        'setMinimalDaysInFirstWeek': function (minimalDaysInFirstWeek) {
+        setMinimalDaysInFirstWeek: function (minimalDaysInFirstWeek) {
             if (this.minimalDaysInFirstWeek !== minimalDaysInFirstWeek) {
                 this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
                 this.fieldsComputed = false;
@@ -1167,7 +1131,7 @@ KISSY.add(function (S, require) {
          * If the minimal days required must be a full week, this method returns 7.
          * @returns {Number} the minimal days required in the first week of the year.
          */
-        'getMinimalDaysInFirstWeek': function () {
+        getMinimalDaysInFirstWeek: function () {
             return this.minimalDaysInFirstWeek;
         },
 
@@ -1184,7 +1148,7 @@ KISSY.add(function (S, require) {
          *
          * @return {Number} the number of weeks in the week year.
          */
-        'getWeeksInWeekYear': function () {
+        getWeeksInWeekYear: function () {
             var weekYear = this.getWeekYear();
             if (weekYear === this.get(YEAR)) {
                 return this.getActualMaximum(WEEK_OF_YEAR);
@@ -1227,7 +1191,7 @@ KISSY.add(function (S, require) {
          * @param weekOfYear  the week number based on weekYear
          * @param dayOfWeek   the day of week value
          */
-        'setWeekDate': function (weekYear, weekOfYear, dayOfWeek) {
+        setWeekDate: function (weekYear, weekOfYear, dayOfWeek) {
             if (dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY) {
                 throw new Error('invalid dayOfWeek: ' + dayOfWeek);
             }
@@ -1325,7 +1289,6 @@ KISSY.add(function (S, require) {
                                             GregorianCalendarProto.addDayOfWeek =
                                                 GregorianCalendarProto.addDayOfWeekInMonth = S.noop;
 
-
         GregorianCalendarProto.isSetDayOfMonth =
             GregorianCalendarProto.isSetMonth =
                 GregorianCalendarProto.isSetYear = GregorianCalendarProto.isSetMinutes =
@@ -1382,7 +1345,6 @@ KISSY.add(function (S, require) {
             };
         }
     });
-
 
     // ------------------- private start
 

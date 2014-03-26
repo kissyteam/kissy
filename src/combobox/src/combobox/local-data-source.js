@@ -3,8 +3,8 @@
  * Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Attribute=require('attribute');
+KISSY.add(function (S, require) {
+    var Attribute = require('attribute');
 
     /**
      * Local dataSource for comboBox.

@@ -55,9 +55,7 @@ KISSY.add(function (S, require) {
                         // 无效输入，前缀模式无前缀
                         return undefined;
                     }
-                }
-
-                else if (separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
+                } else if (separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
                     token = token.slice(0, l);
                 }
 
@@ -104,7 +102,7 @@ KISSY.add(function (S, require) {
                 input.prop('selectionEnd', cursorPosition);
             },
 
-            'alignWithCursor': function () {
+            alignWithCursor: function () {
                 var self = this;
                 // does not support align with separator
                 // will cause ime error

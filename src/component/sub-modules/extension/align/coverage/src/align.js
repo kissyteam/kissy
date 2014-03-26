@@ -805,7 +805,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/align.js'].lineData[7]++;
   var Node = require('node');
   _$jscoverage['/align.js'].lineData[8]++;
-  var win = S.Env.host, $ = Node.all, UA = S.UA;
+  var win = S.Env.host, $ = Node.all, UA = require('ua');
   _$jscoverage['/align.js'].lineData[19]++;
   function getOffsetParent(element) {
     _$jscoverage['/align.js'].functionData[1]++;

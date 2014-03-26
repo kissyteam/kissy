@@ -22,7 +22,6 @@ KISSY.add(function (S, require) {
     };
 });
 
-
 /*
  yiminghe@gmail.com: 2012-10-24
  - 重构，新架构，自定义事件，Dom 事件分离

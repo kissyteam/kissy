@@ -45,11 +45,10 @@ KISSY.add(function (S, require) {
 
                 if (!str && highlightedItem) {
                     highlightedItem.set('highlighted', false);
-                }
-                // 尽量保持原始高亮
-                // 如果没有高亮项或者高亮项因为过滤被隐藏了
-                // 默认选择符合条件的第一项
-                else if (str && (!highlightedItem || !highlightedItem.get('visible'))) {
+                } else if (str && (!highlightedItem || !highlightedItem.get('visible'))) {
+                    // 尽量保持原始高亮
+                    // 如果没有高亮项或者高亮项因为过滤被隐藏了
+                    // 默认选择符合条件的第一项
                     highlightedItem = self._getNextEnabledHighlighted(0, 1);
                     if (highlightedItem) {
                         highlightedItem.set('highlighted', true);
@@ -57,7 +56,7 @@ KISSY.add(function (S, require) {
                 }
             },
 
-            '_onSetFilterStr': function (v) {
+            _onSetFilterStr: function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },
@@ -165,7 +164,6 @@ KISSY.add(function (S, require) {
                 self.set('enteredItems', []);
                 self.get('filterInput').val('');
             }
-
         },
         {
             ATTRS: {

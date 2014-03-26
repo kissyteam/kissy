@@ -89,7 +89,6 @@ KISSY.add(function (S, require) {
              * @cfg {String} pluginId
              */
 
-
             /**
              * how to get the proxy node.
              * default clone the node itself deeply.

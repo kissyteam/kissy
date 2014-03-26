@@ -42,7 +42,7 @@ KISSY.add(function (S, require, exports, module) {
             option3.params = params4;
             if (moduleWrap) {
                 require("date/picker-xtpl");
-                option3.params[0] = moduleWrap.resolveByName(option3.params[0]);
+                option3.params[0] = moduleWrap.resolve(option3.params[0]);
             }
             var commandRet5 = includeCommand.call(engine, scope, option3, buffer, 2, payload);
             if (commandRet5 && commandRet5.isBuffer) {

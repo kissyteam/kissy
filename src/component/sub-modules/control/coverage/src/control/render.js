@@ -732,7 +732,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control/render.js'].lineData[14]++;
   var Manager = require('component/manager');
   _$jscoverage['/control/render.js'].lineData[16]++;
-  var ON_SET = '_onSet', trim = S.trim, $ = Node.all, UA = S.UA, startTpl = RenderTpl, endTpl = '</div>', doc = S.Env.host.document, HTML_PARSER = 'HTML_PARSER';
+  var ON_SET = '_onSet', trim = S.trim, $ = Node.all, UA = require('ua'), startTpl = RenderTpl, endTpl = '</div>', doc = S.Env.host.document, HTML_PARSER = 'HTML_PARSER';
   _$jscoverage['/control/render.js'].lineData[25]++;
   function pxSetter(v) {
     _$jscoverage['/control/render.js'].functionData[1]++;

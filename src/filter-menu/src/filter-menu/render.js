@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
             return this.control.get('filterInput');
         },
 
-        '_onSetPlaceholder': function (v) {
+        _onSetPlaceholder: function (v) {
             this.control.get('placeholderEl').html(v);
         }
     }, {
@@ -38,7 +38,7 @@ KISSY.add(function (S, require) {
             placeholderEl: function (el) {
                 return el.one('.' + this.getBaseCssClass('placeholder'));
             },
-            'filterInputWrap': function (el) {
+            filterInputWrap: function (el) {
                 return el.one('.' + this.getBaseCssClass('input-wrap'));
             },
             filterInput: function (el) {

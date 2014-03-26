@@ -201,8 +201,7 @@ KISSY.add(function (S, require) {
                 (function remove() {
                     if (swfObject.readyState === 4) {
                         removeObjectInIE(swfObject);
-                    }
-                    else {
+                    } else {
                         setTimeout(remove, 10);
                     }
                 })();

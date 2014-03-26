@@ -10,6 +10,11 @@ var page = require('webpage').create();
 var specified = '';
 var tests = require('./tc.js')(), index = -1;
 var start = Date.now();
+var args = require('system').args;
+var srcMode = 0;
+if (args.length > 1 && args[1] === 'src') {
+    srcMode = 1;
+}
 
 page.onConsoleMessage = function (m) {
     console.log(m);
@@ -50,6 +55,12 @@ function next(url) {
     }
     if (!url) {
         url = tests[index];
+        if (url.indexOf('?build') !== -1 || url.indexOf('?coverage') !== -1) {
+            if (srcMode) {
+                next();
+                return;
+            }
+        }
     }
     console.log('\n' + 'run test: ' + url);
     // batch run in separated window, it is better than iframe!

@@ -30,9 +30,9 @@ KISSY.add(function () {
             'borderTopColor'
         ],
 
-        'borderBottom': ['borderBottomWidth', 'borderBottomColor'],
+        borderBottom: ['borderBottomWidth', 'borderBottomColor'],
 
-        'borderLeft': ['borderLeftWidth', 'borderLeftColor'],
+        borderLeft: ['borderLeftWidth', 'borderLeftColor'],
 
         borderTop: ['borderTopWidth', 'borderTopColor'],
 

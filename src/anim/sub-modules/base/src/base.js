@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('dom'),
+        UA = require('ua'),
         Utils = require('./base/utils'),
         Q = require('./base/queue'),
         Promise = require('promise'),
@@ -214,7 +215,7 @@ KISSY.add(function (S, require) {
                     // inline element should has layout/inline-block
                     if (Dom.css(node, 'display') === 'inline' &&
                         Dom.css(node, 'float') === 'none') {
-                        if (S.UA.ieMode < 10) {
+                        if (UA.ieMode < 10) {
                             elStyle.zoom = 1;
                         } else {
                             elStyle.display = 'inline-block';
@@ -286,7 +287,6 @@ KISSY.add(function (S, require) {
             return Utils.isAnimPaused(this);
         },
 
-
         /**
          * pause current anim
          * @chainable
@@ -350,7 +350,7 @@ KISSY.add(function (S, require) {
          * @protected
          * @method
          */
-        'beforeResume': noop,
+        beforeResume: noop,
 
         /**
          * start this animation

@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Dom = require('./api');
     var win = S.Env.host,
-        UA = S.UA,
+        UA = require('ua'),
         doc = win.document,
         NodeType = Dom.NodeType,
         docElem = doc && doc.documentElement,

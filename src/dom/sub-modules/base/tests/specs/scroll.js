@@ -116,12 +116,12 @@ KISSY.add(function (S, Dom) {
             it('works for iframe', function () {
                 $('#scroll-iframe-holder')[0].innerHTML = iframeTpl;
 
-                var iframe = S.get('#test-iframe');
+                var iframe = Dom.get('#test-iframe');
 
                 var ok = 0;
 
                 $(iframe).on('load', function () {
-                    var inner = S.get('#test-inner', iframe.contentWindow.document);
+                    var inner = Dom.get('#test-inner', iframe.contentWindow.document);
                     Dom.scrollIntoView(inner, iframe.contentWindow);
                     var nt = Math.round(Dom.offset(inner).top);
                     expect(nt).toBeAbsEqual(Dom.scrollTop(iframe.contentWindow));

@@ -8,6 +8,13 @@ KISSY.add(function (S, require) {
     var FALSE = false,
         CLONE_MARKER = '__~ks_cloned';
 
+    S.mix = function (to, from) {
+        for (var i in from) {
+            to[i] = from[i];
+        }
+        return to;
+    };
+
     require('util/array');
     require('util/escape');
     require('util/function');

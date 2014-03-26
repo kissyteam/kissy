@@ -55,7 +55,7 @@ KISSY.add(function (S, require) {
             return qu;
         },
 
-        'clearQueues': function (node) {
+        clearQueues: function (node) {
             Dom.removeData(node, queueCollectionKey);
         },
 

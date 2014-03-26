@@ -597,10 +597,10 @@ li {
         }
     });
     var xclass;
-    if (new KISSY.Uri(location.href).getQuery().has('search')) {
+    if (location.search.indexOf('search') !== -1) {
         xclass = 'search-menuitem';
     }
-    KISSY.use("event,combobox,search/menuitem", function (S, Event, ComboBox, SearchMenuItem) {
+    KISSY.use("event,dom,combobox,search/menuitem", function (S, Event, Dom, ComboBox, SearchMenuItem) {
         /*
          remote dataSource
          */
@@ -652,7 +652,7 @@ li {
                 }
             });
             basicComboBox.render();
-            if (document.activeElement !== S.get('#q')) {
+            if (document.activeElement !== Dom.get('#q')) {
                 basicComboBox.get('placeholderEl').show();
             }
 

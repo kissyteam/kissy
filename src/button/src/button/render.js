@@ -23,10 +23,10 @@ KISSY.add(function (S, require) {
                 cls = self.getBaseCssClasses('checked');
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         },
-        '_onSetTooltip': function (title) {
+        _onSetTooltip: function (title) {
             this.el.setAttribute('title', title);
         },
-        '_onSetDescribedby': function (describedby) {
+        _onSetDescribedby: function (describedby) {
             this.el.setAttribute('aria-describedby', describedby);
         }
     }, {

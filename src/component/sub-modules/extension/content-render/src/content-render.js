@@ -3,8 +3,8 @@
  * common content box render
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var ContentTpl=require('component/extension/content-xtpl');
+KISSY.add(function (S, require) {
+    var ContentTpl = require('component/extension/content-xtpl');
 
     function shortcut(self) {
         var control = self.control;

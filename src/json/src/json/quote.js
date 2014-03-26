@@ -21,23 +21,23 @@ KISSY.add(function (S) {
         REVERSE_CONTROL_MAP[encoded] = original;
     });
 
-    REVERSE_CONTROL_MAP['\\/']='/';
+    REVERSE_CONTROL_MAP['\\/'] = '/';
 
     return {
         quote: function (value) {
             return '"' + value.replace(QUOTE_REG, function (m) {
                 var v;
                 if (!(v = CONTROL_MAP[m])) {
-                    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(-4);
+                    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(0 - 4);
                 }
                 return v;
             }) + '"';
         },
-        unQuote:function(value){
-            return value.slice(1,value.length-1).replace(UN_QUOTE_REG,function(m){
+        unQuote: function (value) {
+            return value.slice(1, value.length - 1).replace(UN_QUOTE_REG, function (m) {
                 var v;
                 if (!(v = REVERSE_CONTROL_MAP[m])) {
-                    v =String.fromCharCode(parseInt(m.slice(2),16));
+                    v = String.fromCharCode(parseInt(m.slice(2), 16));
                 }
                 return v;
             });

@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var Dom = require('dom');
     var eventHandleMap = {};
+    var UA = require('ua');
     var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special;
     var key = S.guid('touch-handle'),
@@ -32,7 +33,7 @@ KISSY.add(function (S, require) {
     var DUP_DIST = 25;
 
     if (Feature.isTouchEventSupported()) {
-        if (S.UA.ios) {
+        if (UA.ios) {
             // ios mousedown is buggy
             gestureEndEvent = 'touchend touchcancel';
             gestureStartEvent = 'touchstart';
@@ -344,7 +345,7 @@ KISSY.add(function (S, require) {
             });
         },
 
-        'removeEventHandle': function (event) {
+        removeEventHandle: function (event) {
             var eventHandles = this.eventHandles;
             if (eventHandles[event]) {
                 eventHandles[event].count--;

@@ -51,7 +51,6 @@ KISSY.add(function (S, require) {
              * @param e.drop current droppable object
              */
 
-
             /**
              * fired after a draggable object mouseenter a droppable object
              * @event dropenter
@@ -69,7 +68,6 @@ KISSY.add(function (S, require) {
              * @param e.drag current draggable object
              * @param e.drop current droppable object
              */
-
 
             /**
              *
@@ -90,7 +88,6 @@ KISSY.add(function (S, require) {
              * @param e.drag current draggable object
              * @param e.drop current droppable object
              */
-
 
             /**
              *
@@ -172,7 +169,6 @@ KISSY.add(function (S, require) {
             self.get('node').addClass(PREFIX_CLS + 'drop-over');
             self.fire('dropenter', e);
         },
-
 
         _handleOver: function (ev) {
             var self = this,

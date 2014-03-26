@@ -4,6 +4,7 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
+    require('util');
     var nativeCommands = require('./runtime/commands');
     var commands = {};
     var Scope = require('./runtime/scope');

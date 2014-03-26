@@ -94,7 +94,7 @@ KISSY.add(function (S, require) {
 
                     // 相对
                     if (parts[1]) {
-                        to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
+                        to = ((parts[ 1 ] === '-=' ? -1 : 1) * to) + from;
                     }
                 }
 

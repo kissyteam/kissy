@@ -72,10 +72,9 @@ KISSY.add(function (S, require) {
 
         initializer: noop,
 
-        '__getHook': __getHook,
+        __getHook: __getHook,
 
         __callPluginsMethod: callPluginsMethod,
-
 
         /**
          * bind attribute change event
@@ -139,7 +138,7 @@ KISSY.add(function (S, require) {
          * @param {Function|Object} plugin
          * @chainable
          */
-        'plug': function (plugin) {
+        plug: function (plugin) {
             var self = this;
             if (typeof plugin === 'function') {
                 var Plugin = plugin;
@@ -161,7 +160,7 @@ KISSY.add(function (S, require) {
          * @param {Object|String} [plugin]
          * @chainable
          */
-        'unplug': function (plugin) {
+        unplug: function (plugin) {
             var plugins = [],
                 self = this,
                 isString = typeof plugin === 'string';
@@ -198,7 +197,7 @@ KISSY.add(function (S, require) {
          * @param {String} id pluginId of plugin instance
          * @return {Object}
          */
-        'getPlugin': function (id) {
+        getPlugin: function (id) {
             var plugin = null;
             S.each(this.get('plugins'), function (p) {
                 // user defined takes priority
@@ -352,10 +351,10 @@ KISSY.add(function (S, require) {
     var addMembers = Base.addMembers;
 
     function baseAddMembers(px) {
-        var SubClass = this;
-        var extensions = SubClass.__extensions__,
-            hooks = SubClass.__hooks__,
-            proto = SubClass.prototype;
+        var self = this;
+        var extensions = self.__extensions__,
+            hooks = self.__hooks__,
+            proto = self.prototype;
         if (extensions.length && hooks) {
             // stub for call extension method
             for (var h in hooks) {
@@ -366,7 +365,7 @@ KISSY.add(function (S, require) {
                 px[h] = px[h] || noop;
             }
         }
-        return addMembers.call(SubClass, px);
+        return addMembers.call(self, px);
     }
 
     /**

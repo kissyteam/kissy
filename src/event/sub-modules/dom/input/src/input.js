@@ -85,21 +85,21 @@ KISSY.add(function (S, require) {
 
     Special.input = {
         setup: function () {
-            var el = this;
-            if (canFireInput(el)) {
-                monitor(el);
+            var self = this;
+            if (canFireInput(self)) {
+                monitor(self);
             } else {
                 // if bind on parentNode, lazy bind event to its form elements
-                DomEvent.on(el, 'focusin', beforeActivate);
+                DomEvent.on(self, 'focusin', beforeActivate);
             }
         },
         tearDown: function () {
-            var el = this;
-            if (canFireInput(el)) {
-                unmonitored(el);
+            var self = this;
+            if (canFireInput(self)) {
+                unmonitored(self);
             } else {
-                DomEvent.remove(el, 'focusin', beforeActivate);
-                Dom.query('textarea,input', el).each(function (fel) {
+                DomEvent.remove(self, 'focusin', beforeActivate);
+                Dom.query('textarea,input', self).each(function (fel) {
                     if (fel.__inputHandler) {
                         fel.__inputHandler = 0;
                         DomEvent.remove(fel, 'input', noop);

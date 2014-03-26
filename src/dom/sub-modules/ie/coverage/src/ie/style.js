@@ -381,7 +381,7 @@ function visit76_120_2(result) {
 function visit75_120_1(result) {
   _$jscoverage['/ie/style.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3882, 11, 'UA.ie === 8');
+}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3891, 11, 'UA.ie === 8');
 function visit74_105_1(result) {
   _$jscoverage['/ie/style.js'].branchData['105'][1].ranCondition(result);
   return result;
@@ -433,7 +433,7 @@ function visit63_46_1(result) {
 function visit62_34_1(result) {
   _$jscoverage['/ie/style.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['14'][1].init(149, 26, 'doc && doc.documentElement');
+}_$jscoverage['/ie/style.js'].branchData['14'][1].init(158, 26, 'doc && doc.documentElement');
 function visit61_14_1(result) {
   _$jscoverage['/ie/style.js'].branchData['14'][1].ranCondition(result);
   return result;
@@ -445,7 +445,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/ie/style.js'].lineData[8]++;
   var logger = S.getLogger('s/dom');
   _$jscoverage['/ie/style.js'].lineData[9]++;
-  var cssProps = Dom._cssProps, UA = S.UA, FLOAT = 'float', HUNDRED = 100, doc = S.Env.host.document, docElem = visit61_14_1(doc && doc.documentElement), OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
+  var cssProps = Dom._cssProps, UA = require('ua'), FLOAT = 'float', HUNDRED = 100, doc = S.Env.host.document, docElem = visit61_14_1(doc && doc.documentElement), OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
   _$jscoverage['/ie/style.js'].lineData[29]++;
   cssProps[FLOAT] = 'styleFloat';
   _$jscoverage['/ie/style.js'].lineData[32]++;

@@ -41,9 +41,8 @@ KISSY.add(function (S) {
             // pushed to pending list
             if (pendings) {
                 pendings.push([fulfilled, rejected]);
-            }
-            // rejected or nested promise
-            else if (isPromise(v)) {
+            } else if (isPromise(v)) {
+                // rejected or nested promise
                 promiseWhen(v, fulfilled, rejected);
             } else {
                 // fulfilled value
@@ -284,7 +283,6 @@ KISSY.add(function (S) {
 
     S.extend(Reject, Promise);
 
-
     // wrap for promiseWhen
     function when(value, fulfilled, rejected) {
         var defer = new Defer(),
@@ -415,7 +413,7 @@ KISSY.add(function (S) {
          * or
          * Make a promise that fulfills to obj.
          */
-        'cast': function (obj) {
+        cast: function (obj) {
             if (obj instanceof Promise) {
                 return obj;
             }

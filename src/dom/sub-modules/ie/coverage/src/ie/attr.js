@@ -366,7 +366,7 @@ function visit10_104_1(result) {
 function visit9_103_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['98'][1].init(3573, 21, 'attrHooks[HREF] || {}');
+}_$jscoverage['/ie/attr.js'].branchData['98'][1].init(3582, 21, 'attrHooks[HREF] || {}');
 function visit8_98_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['98'][1].ranCondition(result);
   return result;
@@ -394,7 +394,7 @@ function visit3_29_1(result) {
 function visit2_27_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['17'][1].init(296, 14, 'IE_VERSION < 8');
+}_$jscoverage['/ie/attr.js'].branchData['17'][1].init(305, 14, 'IE_VERSION < 8');
 function visit1_17_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['17'][1].ranCondition(result);
   return result;
@@ -404,7 +404,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/ie/attr.js'].lineData[7]++;
   var Dom = require('dom/base');
   _$jscoverage['/ie/attr.js'].lineData[8]++;
-  var attrHooks = Dom._attrHooks, attrNodeHook = Dom._attrNodeHook, NodeType = Dom.NodeType, valHooks = Dom._valHooks, propFix = Dom._propFix, HREF = 'href', hrefFix, IE_VERSION = S.UA.ieMode;
+  var attrHooks = Dom._attrHooks, attrNodeHook = Dom._attrNodeHook, NodeType = Dom.NodeType, valHooks = Dom._valHooks, propFix = Dom._propFix, HREF = 'href', hrefFix, IE_VERSION = require('ua').ieMode;
   _$jscoverage['/ie/attr.js'].lineData[17]++;
   if (visit1_17_1(IE_VERSION < 8)) {
     _$jscoverage['/ie/attr.js'].lineData[18]++;

@@ -387,10 +387,10 @@ function visit1_7_1(result) {
   _$jscoverage['/base/api.js'].branchData['7'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/api.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base/api.js'].functionData[0]++;
   _$jscoverage['/base/api.js'].lineData[7]++;
-  var WINDOW = visit1_7_1(S.Env.host || {}), DOCUMENT = WINDOW.document, UA = S.UA, RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, NodeType = {
+  var WINDOW = visit1_7_1(S.Env.host || {}), DOCUMENT = WINDOW.document, UA = require('ua'), RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, NodeType = {
   ELEMENT_NODE: 1, 
   ATTRIBUTE_NODE: 2, 
   TEXT_NODE: 3, 

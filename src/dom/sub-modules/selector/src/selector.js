@@ -70,8 +70,7 @@ KISSY.add(function (S, require) {
             b = 0;
         if (typeof param === 'number') {
             b = param;
-        }
-        else if (param === 'odd') {
+        } else if (param === 'odd') {
             a = 2;
             b = 1;
         } else if (param === 'even') {
@@ -231,7 +230,7 @@ KISSY.add(function (S, require) {
             }
             return 0;
         },
-        'lang': function (el, lang) {
+        lang: function (el, lang) {
             var elLang;
             lang = unEscape(lang.toLowerCase());
             do {
@@ -244,13 +243,13 @@ KISSY.add(function (S, require) {
             } while ((el = el.parentNode) && el.nodeType === 1);
             return false;
         },
-        'not': function (el, negationArg) {
+        not: function (el, negationArg) {
             return !matchExpr[negationArg.t](el, negationArg.value);
         }
     };
 
     var pseudoIdentExpr = {
-        'empty': function (el) {
+        empty: function (el) {
             var childNodes = el.childNodes,
                 index = 0,
                 len = childNodes.length - 1,
@@ -268,7 +267,7 @@ KISSY.add(function (S, require) {
             }
             return 1;
         },
-        'root': function (el) {
+        root: function (el) {
             return el.ownerDocument &&
                 el === el.ownerDocument.documentElement;
         },
@@ -292,29 +291,29 @@ KISSY.add(function (S, require) {
             return pseudoIdentExpr['first-of-type'](el) &&
                 pseudoIdentExpr['last-of-type'](el);
         },
-        'focus': function (el) {
+        focus: function (el) {
             var doc = el.ownerDocument;
             return doc && el === doc.activeElement &&
                 (!doc.hasFocus || doc.hasFocus()) && !!(el.type || el.href || el.tabIndex >= 0);
         },
-        'target': function (el) {
+        target: function (el) {
             var hash = location.hash;
             return hash && hash.slice(1) === getAttr(el, 'id');
         },
-        'enabled': function (el) {
+        enabled: function (el) {
             return !el.disabled;
         },
-        'disabled': function (el) {
+        disabled: function (el) {
             return el.disabled;
         },
-        'checked': function (el) {
+        checked: function (el) {
             var nodeName = el.nodeName.toLowerCase();
             return (nodeName === 'input' && el.checked) ||
                 (nodeName === 'option' && el.selected);
         }
     };
 
-    var attribExpr = {
+    var attributeExpr = {
         '~=': function (elValue, value) {
             if (!value || value.indexOf(' ') > -1) {
                 return 0;
@@ -339,12 +338,12 @@ KISSY.add(function (S, require) {
     };
 
     var matchExpr = {
-        'tag': isTag,
-        'cls': hasSingleClass,
-        'id': function (el, value) {
+        tag: isTag,
+        cls: hasSingleClass,
+        id: function (el, value) {
             return getAttr(el, 'id') === value;
         },
-        'attrib': function (el, value) {
+        attrib: function (el, value) {
             var name = value.ident;
             if (!isContextXML) {
                 name = name.toLowerCase();
@@ -357,14 +356,14 @@ KISSY.add(function (S, require) {
                 if (elValue === undefined) {
                     return 0;
                 }
-                var matchFn = attribExpr[match];
+                var matchFn = attributeExpr[match];
                 if (matchFn) {
                     return matchFn(elValue + '', value.value + '');
                 }
             }
             return 0;
         },
-        'pseudo': function (el, value) {
+        pseudo: function (el, value) {
             var fn, fnStr, ident;
             if ((fnStr = value.fn)) {
                 if (!(fn = pseudoFnExpr[fnStr])) {

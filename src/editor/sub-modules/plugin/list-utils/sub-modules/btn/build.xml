@@ -4,5 +4,5 @@
 
     <property name="component.meta.dir" location="./ke-meta/"/>
 
-    <import file="../../../../../../common.xml"/>
+    <import file="../../../../../../common.xml"/><target name="jscs"/>
 </project>

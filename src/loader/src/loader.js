@@ -11,39 +11,7 @@
         processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
 
-    function WaitingModules(fn) {
-        this.fn = fn;
-        this.waitMods = {};
-    }
-
-    WaitingModules.prototype = {
-        constructor: WaitingModules,
-
-        notifyAll: function () {
-            var self = this,
-                fn = self.fn;
-            if (fn && S.isEmptyObject(self.waitMods)) {
-                self.fn = null;
-                fn();
-            }
-        },
-
-        add: function (modName) {
-            this.waitMods[modName] = 1;
-        },
-
-        remove: function (modName) {
-            delete this.waitMods[modName];
-        },
-
-        contains: function (modName) {
-            return this.waitMods[modName];
-        }
-    };
-
-    Loader.WaitingModules = WaitingModules;
-
-    S.mix(S, {
+    Utils.mix(S, {
         /**
          * Registers a module with the KISSY global.
          * @param {String} name module name.
@@ -85,8 +53,7 @@
                 error,
                 sync,
                 tryCount = 0,
-                finalSuccess,
-                waitingModules = new WaitingModules(loadReady);
+                finalSuccess;
 
             if (typeof success === 'object') {
                 //noinspection JSUnresolvedVariable
@@ -122,7 +89,16 @@
                     Utils.attachModsRecursively(normalizedModNames);
                     if (success) {
                         if (sync) {
-                            finalSuccess();
+                            try {
+                                finalSuccess();
+                            } catch (e) {
+                                S.log(e.stack || e, 'error');
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+
                         } else {
                             // standalone error trace
                             processImmediate(finalSuccess);
@@ -131,7 +107,15 @@
                 } else if (errorList.length) {
                     if (error) {
                         if (sync) {
-                            error.apply(S, errorList);
+                            try {
+                                error.apply(S, errorList);
+                            } catch (e) {
+                                S.log(e.stack || e, 'error');
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
                         } else {
                             processImmediate(function () {
                                 error.apply(S, errorList);
@@ -142,21 +126,21 @@
                     S.log('loader: load above modules error', 'error');
                 } else {
                     logger.debug(tryCount + ' reload ' + modNames);
-                    waitingModules.fn = loadReady;
+                    loader.callback = loadReady;
                     loader.use(normalizedModNames);
                 }
             }
 
-            loader = new ComboLoader(waitingModules);
+            loader = new ComboLoader(loadReady);
 
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
             if (sync) {
-                waitingModules.notifyAll();
+                loader.flush();
             } else {
                 processImmediate(function () {
-                    waitingModules.notifyAll();
+                    loader.flush();
                 });
             }
             return S;
@@ -170,11 +154,9 @@
          * @return {*} exports of specified module
          */
         require: function (moduleName, refName) {
-            if (moduleName) {
-                var moduleNames = Utils.unalias(Utils.normalizeModNamesWithAlias([moduleName], refName));
-                Utils.attachModsRecursively(moduleNames);
-                return Utils.getModules(moduleNames)[1];
-            }
+            var moduleNames = Utils.normalizeModNames([moduleName], refName);
+            Utils.attachModsRecursively(moduleNames);
+            return Utils.getModules(moduleNames)[1];
         }
     });
 
