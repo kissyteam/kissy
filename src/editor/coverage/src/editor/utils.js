@@ -330,13 +330,13 @@ if (! _$jscoverage['/editor/utils.js']) {
   _$jscoverage['/editor/utils.js'].lineData[223] = 0;
   _$jscoverage['/editor/utils.js'].lineData[225] = 0;
   _$jscoverage['/editor/utils.js'].lineData[226] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[227] = 0;
   _$jscoverage['/editor/utils.js'].lineData[228] = 0;
-  _$jscoverage['/editor/utils.js'].lineData[229] = 0;
-  _$jscoverage['/editor/utils.js'].lineData[233] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[232] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[236] = 0;
   _$jscoverage['/editor/utils.js'].lineData[237] = 0;
-  _$jscoverage['/editor/utils.js'].lineData[238] = 0;
-  _$jscoverage['/editor/utils.js'].lineData[243] = 0;
-  _$jscoverage['/editor/utils.js'].lineData[245] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[242] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[244] = 0;
 }
 if (! _$jscoverage['/editor/utils.js'].functionData) {
   _$jscoverage['/editor/utils.js'].functionData = [];
@@ -417,12 +417,12 @@ if (! _$jscoverage['/editor/utils.js'].branchData) {
   _$jscoverage['/editor/utils.js'].branchData['222'][1] = new BranchData();
   _$jscoverage['/editor/utils.js'].branchData['225'] = [];
   _$jscoverage['/editor/utils.js'].branchData['225'][1] = new BranchData();
-  _$jscoverage['/editor/utils.js'].branchData['228'] = [];
-  _$jscoverage['/editor/utils.js'].branchData['228'][1] = new BranchData();
+  _$jscoverage['/editor/utils.js'].branchData['227'] = [];
+  _$jscoverage['/editor/utils.js'].branchData['227'][1] = new BranchData();
 }
-_$jscoverage['/editor/utils.js'].branchData['228'][1].init(143, 8, 'r.remove');
-function visit1081_228_1(result) {
-  _$jscoverage['/editor/utils.js'].branchData['228'][1].ranCondition(result);
+_$jscoverage['/editor/utils.js'].branchData['227'][1].init(119, 8, 'r.remove');
+function visit1081_227_1(result) {
+  _$jscoverage['/editor/utils.js'].branchData['227'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/utils.js'].branchData['225'][1].init(29, 9, 'r.destroy');
 function visit1080_225_1(result) {
@@ -823,28 +823,28 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/utils.js'].lineData[226]++;
         r.destroy();
       } else {
-        _$jscoverage['/editor/utils.js'].lineData[228]++;
-        if (visit1081_228_1(r.remove)) {
-          _$jscoverage['/editor/utils.js'].lineData[229]++;
+        _$jscoverage['/editor/utils.js'].lineData[227]++;
+        if (visit1081_227_1(r.remove)) {
+          _$jscoverage['/editor/utils.js'].lineData[228]++;
           r.remove();
         }
       }
     }
   }
-  _$jscoverage['/editor/utils.js'].lineData[233]++;
+  _$jscoverage['/editor/utils.js'].lineData[232]++;
   this.__res = [];
 }, 
   getQueryCmd: function(cmd) {
   _$jscoverage['/editor/utils.js'].functionData[24]++;
-  _$jscoverage['/editor/utils.js'].lineData[237]++;
+  _$jscoverage['/editor/utils.js'].lineData[236]++;
   return 'query' + ('-' + cmd).replace(/-(\w)/g, function(m, m1) {
   _$jscoverage['/editor/utils.js'].functionData[25]++;
-  _$jscoverage['/editor/utils.js'].lineData[238]++;
+  _$jscoverage['/editor/utils.js'].lineData[237]++;
   return m1.toUpperCase();
 }) + 'Value';
 }};
-  _$jscoverage['/editor/utils.js'].lineData[243]++;
+  _$jscoverage['/editor/utils.js'].lineData[242]++;
   Editor.Utils = Utils;
-  _$jscoverage['/editor/utils.js'].lineData[245]++;
+  _$jscoverage['/editor/utils.js'].lineData[244]++;
   return Utils;
 });

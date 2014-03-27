@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:59
+build time: Mar 27 21:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -23,29 +23,29 @@ KISSY.add("event/dom/ie/change", ["event/dom/base", "dom"], function(S, require)
     return type === "checkbox" || type === "radio"
   }
   Special.change = {setup:function() {
-    var el = this;
-    if(isFormElement(el)) {
-      if(isCheckBoxOrRadio(el)) {
-        DomEvent.on(el, "propertychange", propertyChange);
-        DomEvent.on(el, "click", onClick)
+    var self = this;
+    if(isFormElement(self)) {
+      if(isCheckBoxOrRadio(self)) {
+        DomEvent.on(self, "propertychange", propertyChange);
+        DomEvent.on(self, "click", onClick)
       }else {
         return false
       }
     }else {
-      DomEvent.on(el, "beforeactivate", beforeActivate)
+      DomEvent.on(self, "beforeactivate", beforeActivate)
     }
   }, tearDown:function() {
-    var el = this;
-    if(isFormElement(el)) {
-      if(isCheckBoxOrRadio(el)) {
-        DomEvent.remove(el, "propertychange", propertyChange);
-        DomEvent.remove(el, "click", onClick)
+    var self = this;
+    if(isFormElement(self)) {
+      if(isCheckBoxOrRadio(self)) {
+        DomEvent.remove(self, "propertychange", propertyChange);
+        DomEvent.remove(self, "click", onClick)
       }else {
         return false
       }
     }else {
-      DomEvent.remove(el, "beforeactivate", beforeActivate);
-      Dom.query("textarea,input,select", el).each(function(fel) {
+      DomEvent.remove(self, "beforeactivate", beforeActivate);
+      Dom.query("textarea,input,select", self).each(function(fel) {
         if(fel.__changeHandler) {
           fel.__changeHandler = 0;
           DomEvent.remove(fel, "change", {fn:changeHandler, last:1})
@@ -80,12 +80,12 @@ KISSY.add("event/dom/ie/change", ["event/dom/base", "dom"], function(S, require)
     }
   }
   function changeHandler(e) {
-    var fel = this;
-    if(e.isPropagationStopped() || isCheckBoxOrRadio(fel)) {
+    var self = this;
+    if(e.isPropagationStopped() || isCheckBoxOrRadio(self)) {
       return
     }
     var p;
-    if(p = fel.parentNode) {
+    if(p = self.parentNode) {
       DomEvent.fire(p, "change", e)
     }
   }
@@ -95,18 +95,18 @@ KISSY.add("event/dom/ie/submit", ["event/dom/base", "dom"], function(S, require)
   var Dom = require("dom");
   var Special = DomEvent.Special, getNodeName = Dom.nodeName;
   Special.submit = {setup:function() {
-    var el = this;
-    if(getNodeName(el) === "form") {
+    var self = this;
+    if(getNodeName(self) === "form") {
       return false
     }
-    DomEvent.on(el, "click keypress", detector)
+    DomEvent.on(self, "click keypress", detector)
   }, tearDown:function() {
-    var el = this;
-    if(getNodeName(el) === "form") {
+    var self = this;
+    if(getNodeName(self) === "form") {
       return false
     }
-    DomEvent.remove(el, "click keypress", detector);
-    Dom.query("form", el).each(function(form) {
+    DomEvent.remove(self, "click keypress", detector);
+    Dom.query("form", self).each(function(form) {
       if(form.__submitFix) {
         form.__submitFix = 0;
         DomEvent.remove(form, "submit", {fn:submitBubble, last:1})
@@ -121,9 +121,9 @@ KISSY.add("event/dom/ie/submit", ["event/dom/base", "dom"], function(S, require)
     }
   }
   function submitBubble(e) {
-    var form = this;
-    if(form.parentNode && !e.isPropagationStopped() && !e.synthetic) {
-      DomEvent.fire(form.parentNode, "submit", e)
+    var self = this;
+    if(self.parentNode && !e.isPropagationStopped() && !e.synthetic) {
+      DomEvent.fire(self.parentNode, "submit", e)
     }
   }
 });

@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         dtd = Editor.XHTML_DTD,
         Node = require('node');
 
@@ -30,8 +30,8 @@ KISSY.add(function (S, require) {
             guard,
             userGuard = self.guard,
             type = self.type,
-            getSourceNodeFn = ( rtl ? '_4ePreviousSourceNode' :
-                '_4eNextSourceNode' );
+            getSourceNodeFn = (rtl ? '_4ePreviousSourceNode' :
+                '_4eNextSourceNode');
 
         // This is the first call. Initialize it.
         if (!self._.start) {
@@ -70,7 +70,7 @@ KISSY.add(function (S, require) {
         if (rtl && !self._.guardRTL) {
             // Gets the node that stops the walker when going LTR.
             var limitRTL = range.startContainer[0],
-                blockerRTL = ( range.startOffset > 0 ) &&
+                blockerRTL = (range.startOffset > 0) &&
                     limitRTL.childNodes[range.startOffset - 1] || null;
 
             self._.guardRTL = function (node, movingOut) {
@@ -96,8 +96,7 @@ KISSY.add(function (S, require) {
                 }
                 return userGuard(node, movingOut);
             };
-        }
-        else {
+        } else {
             guard = stopGuard;
         }
 
@@ -114,11 +113,10 @@ KISSY.add(function (S, require) {
                         node = NULL;
                     }
                 } else {
-                    node = ( guard(node, TRUE) === FALSE ) ?
+                    node = (guard(node, TRUE) === FALSE) ?
                         NULL : node._4ePreviousSourceNode(TRUE, type, guard, undefined);
                 }
-            }
-            else {
+            } else {
                 node = range.startContainer;
                 node = new Node(node[0].childNodes[range.startOffset]);
 
@@ -127,7 +125,7 @@ KISSY.add(function (S, require) {
                         node = NULL;
                     }
                 } else {
-                    node = ( guard(range.startContainer, TRUE) === FALSE ) ?
+                    node = (guard(range.startContainer, TRUE) === FALSE) ?
                         NULL : range.startContainer._4eNextSourceNode(TRUE, type, guard, undefined);
                 }
             }
@@ -188,11 +186,9 @@ KISSY.add(function (S, require) {
          */
         this.guard = NULL;// 人为缩小当前 range 范围
 
-
         /** @private */
         this._ = {};
     }
-
 
     S.augment(Walker, {
         /**
@@ -271,7 +267,6 @@ KISSY.add(function (S, require) {
 
     });
 
-
     S.mix(Walker, {
         /**
          * Whether the to-be-evaluated node is not a block node and does not match given node name map.
@@ -281,7 +276,7 @@ KISSY.add(function (S, require) {
         blockBoundary: function (customNodeNames) {
             return function (node) {
                 return !(node.nodeType === Dom.NodeType.ELEMENT_NODE &&
-                    Dom._4eIsBlockBoundary(node, customNodeNames) );
+                    Dom._4eIsBlockBoundary(node, customNodeNames));
             };
         },
 
@@ -303,9 +298,9 @@ KISSY.add(function (S, require) {
             return function (node) {
                 var isBookmark, parent;
                 // Is bookmark inner text node?
-                isBookmark = ( node.nodeType === Dom.NodeType.TEXT_NODE &&
-                    ( parent = node.parentNode ) &&
-                    isBookmarkNode(parent) );
+                isBookmark = (node.nodeType === Dom.NodeType.TEXT_NODE &&
+                    (parent = node.parentNode) &&
+                    isBookmarkNode(parent));
                 // Is bookmark node?
                 isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
                 // !! 2012-05-15
@@ -351,7 +346,7 @@ KISSY.add(function (S, require) {
             return isBookmark(node) ||
                 isWhitespaces(node) ||
                 node.nodeType === 1 &&
-                    name in dtd.$inline && !( name in dtd.$empty );
+                    name in dtd.$inline && !(name in dtd.$empty);
         };
 
     // Check if there's a filler node at the end of an element, and return it.
@@ -361,7 +356,7 @@ KISSY.add(function (S, require) {
             tail = tail._4ePreviousSourceNode();
         } while (tail && toSkip(tail[0]));
 
-        if (tail && ( !UA.ie ? tail.nodeName() === 'br' : tail[0].nodeType === 3 && tailNbspRegex.test(tail.text()) )) {
+        if (tail && (!UA.ie ? tail.nodeName() === 'br' : tail[0].nodeType === 3 && tailNbspRegex.test(tail.text()))) {
             return tail[0];
         }
         return false;

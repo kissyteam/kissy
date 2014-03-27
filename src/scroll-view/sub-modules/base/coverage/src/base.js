@@ -663,7 +663,7 @@ function visit37_251_1(result) {
 function visit36_239_1(result) {
   _$jscoverage['/base.js'].branchData['239'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['225'][1].init(51, 18, 'control.scrollStep');
+}_$jscoverage['/base.js'].branchData['225'][1].init(48, 15, 'self.scrollStep');
 function visit35_225_1(result) {
   _$jscoverage['/base.js'].branchData['225'][1].ranCondition(result);
   return result;
@@ -723,7 +723,7 @@ function visit22_177_2(result) {
 function visit21_177_1(result) {
   _$jscoverage['/base.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['110'][1].init(805, 9, 'pageIndex');
+}_$jscoverage['/base.js'].branchData['110'][1].init(796, 9, 'pageIndex');
 function visit20_110_1(result) {
   _$jscoverage['/base.js'].branchData['110'][1].ranCondition(result);
   return result;
@@ -739,19 +739,19 @@ function visit18_102_2(result) {
 function visit17_102_1(result) {
   _$jscoverage['/base.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['93'][1].init(91, 24, 'typeof snap === \'string\'');
+}_$jscoverage['/base.js'].branchData['93'][1].init(88, 24, 'typeof snap === \'string\'');
 function visit16_93_1(result) {
   _$jscoverage['/base.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['91'][1].init(1766, 4, 'snap');
+}_$jscoverage['/base.js'].branchData['91'][1].init(1727, 4, 'snap');
 function visit15_91_1(result) {
   _$jscoverage['/base.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['68'][1].init(1179, 25, 'scrollWidth > clientWidth');
+}_$jscoverage['/base.js'].branchData['68'][1].init(1158, 25, 'scrollWidth > clientWidth');
 function visit14_68_1(result) {
   _$jscoverage['/base.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['65'][1].init(1090, 27, 'scrollHeight > clientHeight');
+}_$jscoverage['/base.js'].branchData['65'][1].init(1069, 27, 'scrollHeight > clientHeight');
 function visit13_65_1(result) {
   _$jscoverage['/base.js'].branchData['65'][1].ranCondition(result);
   return result;
@@ -759,7 +759,7 @@ function visit13_65_1(result) {
 function visit12_54_1(result) {
   _$jscoverage['/base.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['53'][2].init(720, 37, 'clientHeight === prevVal.clientHeight');
+}_$jscoverage['/base.js'].branchData['53'][2].init(714, 37, 'clientHeight === prevVal.clientHeight');
 function visit11_53_2(result) {
   _$jscoverage['/base.js'].branchData['53'][2].ranCondition(result);
   return result;
@@ -767,7 +767,7 @@ function visit11_53_2(result) {
 function visit10_53_1(result) {
   _$jscoverage['/base.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['52'][2].init(667, 35, 'prevVal.scrollWidth === scrollWidth');
+}_$jscoverage['/base.js'].branchData['52'][2].init(661, 35, 'prevVal.scrollWidth === scrollWidth');
 function visit9_52_2(result) {
   _$jscoverage['/base.js'].branchData['52'][2].ranCondition(result);
   return result;
@@ -775,19 +775,19 @@ function visit9_52_2(result) {
 function visit8_52_1(result) {
   _$jscoverage['/base.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['51'][2].init(611, 37, 'prevVal.scrollHeight === scrollHeight');
+}_$jscoverage['/base.js'].branchData['51'][2].init(605, 37, 'prevVal.scrollHeight === scrollHeight');
 function visit7_51_2(result) {
   _$jscoverage['/base.js'].branchData['51'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['51'][1].init(611, 195, 'prevVal.scrollHeight === scrollHeight && prevVal.scrollWidth === scrollWidth && clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth');
+}_$jscoverage['/base.js'].branchData['51'][1].init(605, 195, 'prevVal.scrollHeight === scrollHeight && prevVal.scrollWidth === scrollWidth && clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth');
 function visit6_51_1(result) {
   _$jscoverage['/base.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['49'][2].init(574, 14, 'e && e.prevVal');
+}_$jscoverage['/base.js'].branchData['49'][2].init(568, 14, 'e && e.prevVal');
 function visit5_49_2(result) {
   _$jscoverage['/base.js'].branchData['49'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['49'][1].init(574, 20, 'e && e.prevVal || {}');
+}_$jscoverage['/base.js'].branchData['49'][1].init(568, 20, 'e && e.prevVal || {}');
 function visit4_49_1(result) {
   _$jscoverage['/base.js'].branchData['49'][1].ranCondition(result);
   return result;
@@ -840,7 +840,7 @@ KISSY.add(function(S, require) {
   function reflow(v, e) {
     _$jscoverage['/base.js'].functionData[3]++;
     _$jscoverage['/base.js'].lineData[34]++;
-    var control = this, $contentEl = control.$contentEl;
+    var self = this, $contentEl = self.$contentEl;
     _$jscoverage['/base.js'].lineData[42]++;
     var scrollHeight = v.scrollHeight, scrollWidth = v.scrollWidth;
     _$jscoverage['/base.js'].lineData[45]++;
@@ -853,15 +853,15 @@ KISSY.add(function(S, require) {
       return;
     }
     _$jscoverage['/base.js'].lineData[58]++;
-    control.scrollHeight = scrollHeight;
+    self.scrollHeight = scrollHeight;
     _$jscoverage['/base.js'].lineData[59]++;
-    control.scrollWidth = scrollWidth;
+    self.scrollWidth = scrollWidth;
     _$jscoverage['/base.js'].lineData[60]++;
-    control.clientHeight = clientHeight;
+    self.clientHeight = clientHeight;
     _$jscoverage['/base.js'].lineData[61]++;
-    control.clientWidth = clientWidth;
+    self.clientWidth = clientWidth;
     _$jscoverage['/base.js'].lineData[63]++;
-    allowScroll = control.allowScroll = {};
+    allowScroll = self.allowScroll = {};
     _$jscoverage['/base.js'].lineData[65]++;
     if (visit13_65_1(scrollHeight > clientHeight)) {
       _$jscoverage['/base.js'].lineData[66]++;
@@ -873,25 +873,25 @@ KISSY.add(function(S, require) {
       allowScroll.left = 1;
     }
     _$jscoverage['/base.js'].lineData[72]++;
-    control.minScroll = {
+    self.minScroll = {
   left: 0, 
   top: 0};
     _$jscoverage['/base.js'].lineData[77]++;
     var maxScrollLeft, maxScrollTop;
     _$jscoverage['/base.js'].lineData[80]++;
-    control.maxScroll = {
+    self.maxScroll = {
   left: maxScrollLeft = scrollWidth - clientWidth, 
   top: maxScrollTop = scrollHeight - clientHeight};
     _$jscoverage['/base.js'].lineData[85]++;
-    delete control.scrollStep;
+    delete self.scrollStep;
     _$jscoverage['/base.js'].lineData[87]++;
-    var snap = control.get('snap'), scrollLeft = control.get('scrollLeft'), scrollTop = control.get('scrollTop');
+    var snap = self.get('snap'), scrollLeft = self.get('scrollLeft'), scrollTop = self.get('scrollTop');
     _$jscoverage['/base.js'].lineData[91]++;
     if (visit15_91_1(snap)) {
       _$jscoverage['/base.js'].lineData[92]++;
       var elOffset = $contentEl.offset();
       _$jscoverage['/base.js'].lineData[93]++;
-      var pages = control.pages = visit16_93_1(typeof snap === 'string') ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get('pageIndex'), pagesOffset = control.pagesOffset = [];
+      var pages = self.pages = visit16_93_1(typeof snap === 'string') ? $contentEl.all(snap) : $contentEl.children(), pageIndex = self.get('pageIndex'), pagesOffset = self.pagesOffset = [];
       _$jscoverage['/base.js'].lineData[98]++;
       pages.each(function(p, i) {
   _$jscoverage['/base.js'].functionData[4]++;
@@ -909,17 +909,17 @@ KISSY.add(function(S, require) {
       _$jscoverage['/base.js'].lineData[110]++;
       if (visit20_110_1(pageIndex)) {
         _$jscoverage['/base.js'].lineData[111]++;
-        control.scrollToPage(pageIndex);
+        self.scrollToPage(pageIndex);
         _$jscoverage['/base.js'].lineData[112]++;
         return;
       }
     }
     _$jscoverage['/base.js'].lineData[117]++;
-    control.scrollToWithBounds({
+    self.scrollToWithBounds({
   left: scrollLeft, 
   top: scrollTop});
     _$jscoverage['/base.js'].lineData[122]++;
-    control.fire('reflow', v);
+    self.fire('reflow', v);
   }
   _$jscoverage['/base.js'].lineData[131]++;
   return Container.extend({
@@ -938,17 +938,17 @@ KISSY.add(function(S, require) {
   sync: function() {
   _$jscoverage['/base.js'].functionData[7]++;
   _$jscoverage['/base.js'].lineData[146]++;
-  var control = this, el = control.el, contentEl = control.contentEl;
+  var self = this, el = self.el, contentEl = self.contentEl;
   _$jscoverage['/base.js'].lineData[155]++;
   var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
   _$jscoverage['/base.js'].lineData[158]++;
   var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
   _$jscoverage['/base.js'].lineData[161]++;
-  control.set('dimension', {
-  'scrollHeight': scrollHeight, 
-  'scrollWidth': scrollWidth, 
-  'clientWidth': clientWidth, 
-  'clientHeight': clientHeight});
+  self.set('dimension', {
+  scrollHeight: scrollHeight, 
+  scrollWidth: scrollWidth, 
+  clientWidth: clientWidth, 
+  clientHeight: clientHeight});
 }, 
   _onSetDimension: reflow, 
   handleKeyDownInternal: function(e) {
@@ -1036,24 +1036,24 @@ KISSY.add(function(S, require) {
   getScrollStep: function() {
   _$jscoverage['/base.js'].functionData[9]++;
   _$jscoverage['/base.js'].lineData[224]++;
-  var control = this;
+  var self = this;
   _$jscoverage['/base.js'].lineData[225]++;
-  if (visit35_225_1(control.scrollStep)) {
+  if (visit35_225_1(self.scrollStep)) {
     _$jscoverage['/base.js'].lineData[226]++;
-    return control.scrollStep;
+    return self.scrollStep;
   }
   _$jscoverage['/base.js'].lineData[228]++;
   var elDoc = $(this.get('el')[0].ownerDocument);
   _$jscoverage['/base.js'].lineData[229]++;
-  var clientHeight = control.clientHeight;
+  var clientHeight = self.clientHeight;
   _$jscoverage['/base.js'].lineData[230]++;
-  var clientWidth = control.clientWidth;
+  var clientWidth = self.clientWidth;
   _$jscoverage['/base.js'].lineData[231]++;
-  control.scrollStep = {
+  self.scrollStep = {
   top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20), 
   left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)};
   _$jscoverage['/base.js'].lineData[235]++;
-  return control.scrollStep;
+  return self.scrollStep;
 }, 
   handleMouseWheel: function(e) {
   _$jscoverage['/base.js'].functionData[10]++;
@@ -1119,7 +1119,7 @@ KISSY.add(function(S, require) {
   left: self.get('scrollLeft'), 
   top: self.get('scrollTop')});
 }, 
-  '_uiSetPageIndex': function(v) {
+  _uiSetPageIndex: function(v) {
   _$jscoverage['/base.js'].functionData[13]++;
   _$jscoverage['/base.js'].lineData[287]++;
   this.scrollToPage(v);

@@ -52,18 +52,18 @@ KISSY.add(function (S, require) {
                 clientWidth = el.clientWidth;
 
             control.set('dimension', {
-                'scrollHeight': scrollHeight,
-                'scrollWidth': scrollWidth,
-                'clientWidth': clientWidth,
-                'clientHeight': clientHeight
+                scrollHeight: scrollHeight,
+                scrollWidth: scrollWidth,
+                clientWidth: clientWidth,
+                clientHeight: clientHeight
             });
         },
 
-        '_onSetScrollLeft': function (v) {
+        _onSetScrollLeft: function (v) {
             this.control.contentEl.style.left = -v + 'px';
         },
 
-        '_onSetScrollTop': function (v) {
+        _onSetScrollTop: function (v) {
             this.control.contentEl.style.top = -v + 'px';
         }
     };

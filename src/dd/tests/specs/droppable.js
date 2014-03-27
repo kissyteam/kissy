@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event, Node, DD, Droppable, IO) {
-    var Dom = S.DOM,
+    var Dom = S.require('dom'),
         DDM = DD.DDM,
         Draggable = DD.Draggable,
         $ = Node.all;

@@ -5,7 +5,7 @@
  */
 KISSY.add(function () {
     return {
-        scan:function (tag, lexer, opts) {
+        scan: function (tag, lexer, opts) {
             // only terminate when encounter </tag>
             // <textarea><div></div></textarea>
             var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName),
@@ -13,9 +13,8 @@ KISSY.add(function () {
                 node = lexer.nextNode();
             if (node) {
                 // 这段应该永远不会执行到的
-                if (node.nodeType !== 1 ||
-                    !(node.isEndTag() &&
-                        node.tagName === tag.tagName)) {
+                if (node.nodeType !== 1 || !(node.isEndTag() &&
+                    node.tagName === tag.tagName)) {
                     lexer.setPosition(position);
                     node = null;
                 }

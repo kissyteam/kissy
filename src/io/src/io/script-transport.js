@@ -78,9 +78,8 @@ KISSY.add(function (S, require) {
             // Callback if not abort
             if (event !== 'error') {
                 io._ioReady(OK_CODE, 'success');
-            }
-            // 非 ie<9 可以判断出来
-            else if (event === 'error') {
+            } else if (event === 'error') {
+                // 非 ie<9 可以判断出来
                 io._ioReady(ERROR_CODE, 'script error');
             }
         },

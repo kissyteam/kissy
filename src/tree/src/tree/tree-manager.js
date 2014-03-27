@@ -70,7 +70,7 @@ KISSY.add(function (S, require) {
         },
 
         // 单选
-        '_onSetSelectedItem': function (n, ev) {
+        _onSetSelectedItem: function (n, ev) {
             // 仅用于排他性
             if (n && ev.prevVal) {
                 ev.prevVal.set('selected', false, {
@@ -81,7 +81,7 @@ KISSY.add(function (S, require) {
             }
         },
 
-        '_onSetShowRootNode': function (v) {
+        _onSetShowRootNode: function (v) {
             this.get('rowEl')[v ? 'show' : 'hide']();
         }
     });

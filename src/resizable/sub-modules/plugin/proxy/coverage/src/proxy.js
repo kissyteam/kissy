@@ -261,7 +261,7 @@ if (! _$jscoverage['/proxy.js']) {
   _$jscoverage['/proxy.js'].lineData[72] = 0;
   _$jscoverage['/proxy.js'].lineData[78] = 0;
   _$jscoverage['/proxy.js'].lineData[82] = 0;
-  _$jscoverage['/proxy.js'].lineData[103] = 0;
+  _$jscoverage['/proxy.js'].lineData[102] = 0;
 }
 if (! _$jscoverage['/proxy.js'].functionData) {
   _$jscoverage['/proxy.js'].functionData = [];
@@ -403,7 +403,7 @@ KISSY.add(function(S, require) {
   node: {
   value: function(resizable) {
   _$jscoverage['/proxy.js'].functionData[6]++;
-  _$jscoverage['/proxy.js'].lineData[103]++;
+  _$jscoverage['/proxy.js'].lineData[102]++;
   return $('<div class="' + resizable.get('prefixCls') + 'resizable-proxy"></div>');
 }}, 
   proxyNode: {}, 

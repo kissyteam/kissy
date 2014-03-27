@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
                 if (!globalMask) {
                     globalMask = new Overlay({
                         x: 0,
-                        width: S.UA.ie === 6 ? S.DOM.docWidth() : '100%',
+                        width: S.UA.ie === 6 ? S.require('dom').docWidth() : '100%',
                         y: 0,
                         // 指定全局 loading zIndex 值
                         'zIndex': Editor.baseZIndex(Editor.ZIndexManager.LOADING),
@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
                         elCls: prefixCls + 'editor-global-loading'
                     });
                 }
-                globalMask.set('height', S.DOM.docHeight());
+                globalMask.set('height', S.require('dom').docHeight());
                 globalMask.show();
                 globalMask.loading();
             },

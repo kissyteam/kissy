@@ -88,17 +88,17 @@ KISSY.add(function (S) {
         el.stop(1, 1);
         el.css({
             // must show, override box-render _onSetVisible
-            'visibility': 'visible',
+            visibility: 'visible',
             // fadeIn need display none, fadeOut need display block
-            'display': show ? 'none' : 'block'
+            display: show ? 'none' : 'block'
         });
         var m = effect + effects[effect][index];
         el[m](duration, function () {
             el.css({
                 // need compute coordinates when show, so do not use display none for hide
-                'display': 'block',
+                display: 'block',
                 // restore to box-render _onSetVisible
-                'visibility': ''
+                visibility: ''
             });
             callback();
         }, easing);
@@ -155,7 +155,6 @@ KISSY.add(function (S) {
         __afterCreateEffectGhost: function (ghost) {
             return ghost;
         },
-
 
         /**
          * For overlay with effect, it should listen show and hide instead of afterVisibleChange.

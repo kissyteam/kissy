@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 27 21:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -68,11 +68,12 @@ KISSY.add("io/form-serializer", ["dom"], function(S, require) {
   }
   return FormSerializer
 });
-KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
+KISSY.add("io/base", ["event/custom", "promise", "uri"], function(S, require) {
   var CustomEvent = require("event/custom"), Promise = require("promise");
+  var Uri = require("uri");
   var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/, rspace = /\s+/, mirror = function(s) {
     return s
-  }, rnoContent = /^(?:GET|HEAD)$/, win = S.Env.host, location = win.location || {}, simulatedLocation = new S.Uri(location.href), isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()), transports = {}, defaultConfig = {type:"GET", contentType:"application/x-www-form-urlencoded; charset=UTF-8", async:true, serializeArray:true, processData:true, accepts:{xml:"application/xml, text/xml", html:"text/html", text:"text/plain", json:"application/json, text/javascript", "*":"*/*"}, 
+  }, rnoContent = /^(?:GET|HEAD)$/, win = S.Env.host, location = win.location || {}, simulatedLocation = new Uri(location.href), isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()), transports = {}, defaultConfig = {type:"GET", contentType:"application/x-www-form-urlencoded; charset=UTF-8", async:true, serializeArray:true, processData:true, accepts:{xml:"application/xml, text/xml", html:"text/html", text:"text/plain", json:"application/json, text/javascript", "*":"*/*"}, 
   converters:{text:{json:S.parseJson, html:mirror, text:mirror, xml:S.parseXML}}, headers:{"X-Requested-With":"XMLHttpRequest"}, contents:{xml:/xml/, html:/html/, json:/json/}};
   defaultConfig.converters.html = defaultConfig.converters.text;
   function setUpConfig(c) {
@@ -147,7 +148,7 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
         setTimeout(function() {
           throw e;
         }, 0);
-        self._ioReady(-1, e.message)
+        self._ioReady(0 - 1, e.message)
       }else {
         S.error(e)
       }
@@ -166,10 +167,11 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
   }});
   return IO
 });
-KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
+KISSY.add("io/xhr-transport-base", ["./base", "ua"], function(S, require) {
   var IO = require("./base");
+  var UA = require("ua");
   var logger = S.getLogger("s/io");
-  var OK_CODE = 200, win = S.Env.host, XDomainRequest_ = S.UA.ieMode > 7 && win.XDomainRequest, NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
+  var OK_CODE = 200, win = S.Env.host, XDomainRequest_ = UA.ieMode > 7 && win.XDomainRequest, NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
   IO.__lastModifiedCached = lastModifiedCached;
   IO.__eTagCached = eTagCached;
   function createStandardXHR(_, refWin) {
@@ -360,7 +362,7 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
       }, 0);
       nativeXhr.onreadystatechange = S.noop;
       if(!abort) {
-        io._ioReady(-1, e)
+        io._ioReady(0 - 1, e)
       }
     }
   }});
@@ -441,8 +443,8 @@ KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
   };
   return XdrFlashTransport
 });
-KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"], function(S, require) {
-  var Event = require("event/dom"), Dom = require("dom"), XhrTransportBase = require("./xhr-transport-base");
+KISSY.add("io/sub-domain-transport", ["event/dom", "uri", "dom", "./xhr-transport-base"], function(S, require) {
+  var Event = require("event/dom"), Uri = require("uri"), Dom = require("dom"), XhrTransportBase = require("./xhr-transport-base");
   var logger = S.getLogger("s/io");
   var PROXY_PAGE = "/sub_domain_proxy.html", doc = S.Env.host.document, iframeMap = {};
   function SubDomainTransport(io) {
@@ -471,7 +473,7 @@ KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"
       iframe = iframeDesc.iframe = doc.createElement("iframe");
       Dom.css(iframe, {position:"absolute", left:"-9999px", top:"-9999px"});
       Dom.prepend(iframe, doc.body || doc.documentElement);
-      iframeUri = new S.Uri;
+      iframeUri = new Uri;
       iframeUri.setScheme(uri.getScheme());
       iframeUri.setPort(uri.getPort());
       iframeUri.setHostname(hostname);
@@ -668,9 +670,10 @@ KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S, require
   });
   return IO
 });
-KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, require) {
+KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom", "ua"], function(S, require) {
   var Dom = require("dom"), IO = require("./base"), Event = require("event/dom");
   var logger = S.getLogger("s/io");
+  var UA = require("ua");
   var doc = S.Env.host.document, OK_CODE = 200, ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = S.clone(IO.getConfig().converters.text);
   iframeConverter.json = function(str) {
     return S.parseJson(S.unEscapeHtml(str))
@@ -726,7 +729,7 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
       Event.on(iframe, "load error", self._callback, self);
       form.submit()
     }
-    if(S.UA.ie === 6) {
+    if(UA.ie === 6) {
       setTimeout(go, 0)
     }else {
       go()
@@ -736,7 +739,7 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
     if(!iframe) {
       return
     }
-    if(eventType === "abort" && S.UA.ie === 6) {
+    if(eventType === "abort" && UA.ie === 6) {
       setTimeout(function() {
         Dom.attr(form, self.attrs)
       }, 0)
@@ -782,9 +785,10 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
   IO.setupTransport("iframe", IframeTransport);
   return IO
 });
-KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
+KISSY.add("io/methods", ["promise", "./base", "uri"], function(S, require) {
   var Promise = require("promise"), IO = require("./base");
-  var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
+  var Uri = require("uri");
+  var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, HEADER_REG = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
   function handleResponseData(io) {
     var text = io.responseText, xml = io.responseXML, c = io.config, converts = c.converters, type, contentType, responseData, contents = c.contents, dataType = c.dataType;
     if(text || xml) {
@@ -847,12 +851,12 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
     var self = this;
     return self.state === 2 ? self.responseHeadersString : null
   }, getResponseHeader:function(name) {
-    var match, self = this, responseHeaders;
+    var match, responseHeaders, self = this;
     name = name.toLowerCase();
     if(self.state === 2) {
       if(!(responseHeaders = self.responseHeaders)) {
         responseHeaders = self.responseHeaders = {};
-        while(match = rheaders.exec(self.responseHeadersString)) {
+        while(match = HEADER_REG.exec(self.responseHeadersString)) {
           responseHeaders[match[1].toLowerCase()] = match[2]
         }
       }
@@ -927,7 +931,7 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
     IO.fire("complete", eventObject);
     defer[isSuccess ? "resolve" : "reject"](v)
   }, _getUrlForSend:function() {
-    var c = this.config, uri = c.uri, originalQuery = S.Uri.getComponents(c.url).query || "", url = uri.toString.call(uri, c.serializeArray);
+    var c = this.config, uri = c.uri, originalQuery = Uri.getComponents(c.url).query || "", url = uri.toString.call(uri, c.serializeArray);
     return url + (originalQuery ? (uri.query.has() ? "&" : "?") + originalQuery : originalQuery)
   }})
 });
@@ -974,7 +978,7 @@ KISSY.add("io", ["io/form-serializer", "io/base", "io/xhr-transport", "io/script
     }
     return IO({url:url, type:"post", dataType:dataType, form:form, data:data, success:callback})
   }});
-  S.mix(S, {Ajax:IO, IO:IO, ajax:IO, io:IO, jsonp:IO.jsonp});
+  S.mix(S, {io:IO, jsonp:IO.jsonp});
   return IO
 });
 

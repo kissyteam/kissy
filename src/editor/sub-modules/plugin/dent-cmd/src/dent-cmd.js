@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
 
     var listNodeNames = {ol: 1, ul: 1},
         Walker = Editor.Walker,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         Node = S.Node,
         UA = S.UA,
         isNotWhitespaces = Walker.whitespaces(true),

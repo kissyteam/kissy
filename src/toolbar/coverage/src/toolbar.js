@@ -667,7 +667,7 @@ KISSY.add(function(S, require) {
     el.setAttribute('aria-activedescendant', '');
   }
 }, 
-  '_onSetExpandedItem': function(v, e) {
+  _onSetExpandedItem: function(v, e) {
   _$jscoverage['/toolbar.js'].functionData[6]++;
   _$jscoverage['/toolbar.js'].lineData[120]++;
   if (visit22_120_1(e && e.prevVal)) {

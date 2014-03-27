@@ -3,7 +3,7 @@ KISSY.add(function (S, io) {
 
     var URL = '/kissy/src/io/tests/specs/promise/gen-json.jss';
 
-    describe('S.io as a promise', function () {
+    describe('S.IO as a promise', function () {
         it('context should works as before', function () {
             var c = {}, ok = 0;
             io({

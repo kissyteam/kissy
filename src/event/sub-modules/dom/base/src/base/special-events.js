@@ -22,10 +22,10 @@ KISSY.add(function (S, require) {
         click: {
             // use native click for correct check state order
             fire: function (onlyHandlers) {
-                var target = this;
-                if (!onlyHandlers && String(target.type) === 'checkbox' &&
-                    target.click && target.nodeName.toLowerCase() === 'input') {
-                    target.click();
+                var self = this;
+                if (!onlyHandlers && String(self.type) === 'checkbox' &&
+                    self.click && self.nodeName.toLowerCase() === 'input') {
+                    self.click();
                     return false;
                 }
                 return undefined;
@@ -41,10 +41,10 @@ KISSY.add(function (S, require) {
             },
             // guarantee fire blur first
             fire: function (onlyHandlers) {
-                var target = this;
-                if (!onlyHandlers && target.ownerDocument) {
-                    if (target !== target.ownerDocument.activeElement && target.focus) {
-                        target.focus();
+                var self = this;
+                if (!onlyHandlers && self.ownerDocument) {
+                    if (self !== self.ownerDocument.activeElement && self.focus) {
+                        self.focus();
                         return false;
                     }
                 }
@@ -61,10 +61,10 @@ KISSY.add(function (S, require) {
             },
             // guarantee fire blur first
             fire: function (onlyHandlers) {
-                var target = this;
-                if (!onlyHandlers && target.ownerDocument) {
-                    if (target === target.ownerDocument.activeElement && target.blur) {
-                        target.blur();
+                var self = this;
+                if (!onlyHandlers && self.ownerDocument) {
+                    if (self === self.ownerDocument.activeElement && self.blur) {
+                        self.blur();
                         return false;
                     }
                 }

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 27 21:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("json/quote", [], function(S) {
     return'"' + value.replace(QUOTE_REG, function(m) {
       var v;
       if(!(v = CONTROL_MAP[m])) {
-        v = "\\u" + ("0000" + m.charCodeAt(0).toString(16)).slice(-4)
+        v = "\\u" + ("0000" + m.charCodeAt(0).toString(16)).slice(0 - 4)
       }
       return v
     }) + '"'
@@ -226,7 +226,7 @@ KISSY.add("json/parser", [], function(_, undefined) {
   }, showDebugInfo:function() {
     var self = this, DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT, matched = self.matched, match = self.match, input = self.input;
     matched = matched.slice(0, matched.length - match.length);
-    var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
+    var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
     next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
     return past + next + "\n" + (new Array(past.length + 1)).join("-") + "^"
   }, mapSymbol:function(t) {

@@ -9,7 +9,9 @@
           maximum-scale=1.0,
            minimum-scale=1.0,
            user-scalable=no">
-    {{{block ('head')}}}
+    {{#block ('head')}}
+        layout header
+    {{/block}}
 </head>
 <body>
 {{{block ('body')}}}

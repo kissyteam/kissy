@@ -1,6 +1,6 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 16:55
+build time: Mar 27 21:50
 */
 KISSY.add("editor/plugin/font-family/cmd",["../font/cmd"],function(d,a){var b=a("../font/cmd"),c={element:"span",styles:{"font-family":"#(value)"},overrides:[{element:"font",attributes:{face:null}}]};return{init:function(a){b.addSelectCmd(a,"fontFamily",c)}}});

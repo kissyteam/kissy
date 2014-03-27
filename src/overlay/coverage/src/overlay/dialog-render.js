@@ -241,17 +241,17 @@ if (! _$jscoverage['/overlay/dialog-render.js']) {
   _$jscoverage['/overlay/dialog-render.js'].lineData[32] = 0;
   _$jscoverage['/overlay/dialog-render.js'].lineData[36] = 0;
   _$jscoverage['/overlay/dialog-render.js'].lineData[40] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[43] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[47] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[51] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[55] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[65] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[68] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[71] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[74] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[77] = 0;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[80] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[44] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[48] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[52] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[56] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[66] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[69] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[72] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[75] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[78] = 0;
   _$jscoverage['/overlay/dialog-render.js'].lineData[81] = 0;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[82] = 0;
 }
 if (! _$jscoverage['/overlay/dialog-render.js'].functionData) {
   _$jscoverage['/overlay/dialog-render.js'].functionData = [];
@@ -275,12 +275,12 @@ if (! _$jscoverage['/overlay/dialog-render.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/dialog-render.js'].branchData) {
   _$jscoverage['/overlay/dialog-render.js'].branchData = {};
-  _$jscoverage['/overlay/dialog-render.js'].branchData['81'] = [];
-  _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog-render.js'].branchData['82'] = [];
+  _$jscoverage['/overlay/dialog-render.js'].branchData['82'][1] = new BranchData();
 }
-_$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].init(101, 23, 'footer && footer.html()');
-function visit3_81_1(result) {
-  _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].ranCondition(result);
+_$jscoverage['/overlay/dialog-render.js'].branchData['82'][1].init(101, 23, 'footer && footer.html()');
+function visit3_82_1(result) {
+  _$jscoverage['/overlay/dialog-render.js'].branchData['82'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog-render.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -319,34 +319,34 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/dialog-render.js'].lineData[32]++;
   return this.control.get('body');
 }, 
-  '_onSetBodyStyle': function(v) {
+  _onSetBodyStyle: function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[5]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[36]++;
   this.control.get('body').css(v);
 }, 
-  '_onSetHeaderStyle': function(v) {
+  _onSetHeaderStyle: function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[6]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[40]++;
   this.control.get('header').css(v);
 }, 
-  '_onSetFooterStyle': function(v) {
+  _onSetFooterStyle: function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[7]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[43]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[44]++;
   this.control.get('footer').css(v);
 }, 
-  '_onSetBodyContent': function(v) {
+  _onSetBodyContent: function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[8]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[47]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[48]++;
   _setStdModRenderContent(this, 'body', v);
 }, 
-  '_onSetHeaderContent': function(v) {
+  _onSetHeaderContent: function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[9]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[51]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[52]++;
   _setStdModRenderContent(this, 'header', v);
 }, 
-  '_onSetFooterContent': function(v) {
+  _onSetFooterContent: function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[10]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[55]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[56]++;
   _setStdModRenderContent(this, 'footer', v);
 }}, {
   ATTRS: {
@@ -355,34 +355,34 @@ KISSY.add(function(S, require) {
   HTML_PARSER: {
   header: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[11]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[65]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[66]++;
   return el.one('.' + this.getBaseCssClass('header'));
 }, 
   body: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[12]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[68]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[69]++;
   return el.one('.' + this.getBaseCssClass('body'));
 }, 
   footer: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[13]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[71]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[72]++;
   return el.one('.' + this.getBaseCssClass('footer'));
 }, 
   headerContent: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[14]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[74]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[75]++;
   return el.one('.' + this.getBaseCssClass('header')).html();
 }, 
   bodyContent: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[15]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[77]++;
+  _$jscoverage['/overlay/dialog-render.js'].lineData[78]++;
   return el.one('.' + this.getBaseCssClass('body')).html();
 }, 
   footerContent: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[16]++;
-  _$jscoverage['/overlay/dialog-render.js'].lineData[80]++;
-  var footer = el.one('.' + this.getBaseCssClass('footer'));
   _$jscoverage['/overlay/dialog-render.js'].lineData[81]++;
-  return visit3_81_1(footer && footer.html());
+  var footer = el.one('.' + this.getBaseCssClass('footer'));
+  _$jscoverage['/overlay/dialog-render.js'].lineData[82]++;
+  return visit3_82_1(footer && footer.html());
 }}});
 });

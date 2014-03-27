@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:58
+build time: Mar 27 21:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -90,12 +90,12 @@ KISSY.add("event/dom/base/object", ["event/base"], function(S, require) {
       delta = wheelDelta / 120
     }
     if(detail) {
-      delta = -(detail % 3 === 0 ? detail / 3 : detail)
+      delta = 0 - (detail % 3 === 0 ? detail / 3 : detail)
     }
     if(axis !== undefined) {
       if(axis === event.HORIZONTAL_AXIS) {
         deltaY = 0;
-        deltaX = -1 * delta
+        deltaX = 0 - delta
       }else {
         if(axis === event.VERTICAL_AXIS) {
           deltaX = 0;
@@ -562,9 +562,9 @@ KISSY.add("event/dom/base/dom-event", ["event/base", "./utils", "dom", "./specia
   }};
   return DomEvent
 });
-KISSY.add("event/dom/base/key-codes", [], function(S) {
-  var UA = S.UA, KeyCode = {MAC_ENTER:3, BACKSPACE:8, TAB:9, NUM_CENTER:12, ENTER:13, SHIFT:16, CTRL:17, ALT:18, PAUSE:19, CAPS_LOCK:20, ESC:27, SPACE:32, PAGE_UP:33, PAGE_DOWN:34, END:35, HOME:36, LEFT:37, UP:38, RIGHT:39, DOWN:40, PRINT_SCREEN:44, INSERT:45, DELETE:46, ZERO:48, ONE:49, TWO:50, THREE:51, FOUR:52, FIVE:53, SIX:54, SEVEN:55, EIGHT:56, NINE:57, QUESTION_MARK:63, A:65, B:66, C:67, D:68, E:69, F:70, G:71, H:72, I:73, J:74, K:75, L:76, M:77, N:78, O:79, P:80, Q:81, R:82, S:83, T:84, U:85, 
-  V:86, W:87, X:88, Y:89, Z:90, META:91, WIN_KEY_RIGHT:92, CONTEXT_MENU:93, NUM_ZERO:96, NUM_ONE:97, NUM_TWO:98, NUM_THREE:99, NUM_FOUR:100, NUM_FIVE:101, NUM_SIX:102, NUM_SEVEN:103, NUM_EIGHT:104, NUM_NINE:105, NUM_MULTIPLY:106, NUM_PLUS:107, NUM_MINUS:109, NUM_PERIOD:110, NUM_DIVISION:111, F1:112, F2:113, F3:114, F4:115, F5:116, F6:117, F7:118, F8:119, F9:120, F10:121, F11:122, F12:123, NUMLOCK:144, SEMICOLON:186, DASH:189, EQUALS:187, COMMA:188, PERIOD:190, SLASH:191, APOSTROPHE:192, SINGLE_QUOTE:222, 
+KISSY.add("event/dom/base/key-codes", [], function() {
+  var KeyCode = {MAC_ENTER:3, BACKSPACE:8, TAB:9, NUM_CENTER:12, ENTER:13, SHIFT:16, CTRL:17, ALT:18, PAUSE:19, CAPS_LOCK:20, ESC:27, SPACE:32, PAGE_UP:33, PAGE_DOWN:34, END:35, HOME:36, LEFT:37, UP:38, RIGHT:39, DOWN:40, PRINT_SCREEN:44, INSERT:45, DELETE:46, ZERO:48, ONE:49, TWO:50, THREE:51, FOUR:52, FIVE:53, SIX:54, SEVEN:55, EIGHT:56, NINE:57, QUESTION_MARK:63, A:65, B:66, C:67, D:68, E:69, F:70, G:71, H:72, I:73, J:74, K:75, L:76, M:77, N:78, O:79, P:80, Q:81, R:82, S:83, T:84, U:85, V:86, 
+  W:87, X:88, Y:89, Z:90, META:91, WIN_KEY_RIGHT:92, CONTEXT_MENU:93, NUM_ZERO:96, NUM_ONE:97, NUM_TWO:98, NUM_THREE:99, NUM_FOUR:100, NUM_FIVE:101, NUM_SIX:102, NUM_SEVEN:103, NUM_EIGHT:104, NUM_NINE:105, NUM_MULTIPLY:106, NUM_PLUS:107, NUM_MINUS:109, NUM_PERIOD:110, NUM_DIVISION:111, F1:112, F2:113, F3:114, F4:115, F5:116, F6:117, F7:118, F8:119, F9:120, F10:121, F11:122, F12:123, NUMLOCK:144, SEMICOLON:186, DASH:189, EQUALS:187, COMMA:188, PERIOD:190, SLASH:191, APOSTROPHE:192, SINGLE_QUOTE:222, 
   OPEN_SQUARE_BRACKET:219, BACKSLASH:220, CLOSE_SQUARE_BRACKET:221, WIN_KEY:224, MAC_FF_META:224, WIN_IME:229};
   KeyCode.isTextModifyingKeyEvent = function(e) {
     var keyCode = e.keyCode;
@@ -632,7 +632,7 @@ KISSY.add("event/dom/base/key-codes", [], function(S) {
     if(keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
       return true
     }
-    if(UA.webkit && keyCode === 0) {
+    if(window.navigation.userAgent.indexOf("WebKit") !== -1 && keyCode === 0) {
       return true
     }
     switch(keyCode) {
@@ -676,14 +676,14 @@ KISSY.add("event/dom/base/key-codes", [], function(S) {
   };
   return KeyCode
 });
-KISSY.add("event/dom/base/special-events", ["./dom-event", "./special"], function(S, require) {
+KISSY.add("event/dom/base/special-events", ["./dom-event", "./special", "ua"], function(S, require) {
   var DomEvent = require("./dom-event");
   var Special = require("./special");
-  var UA = S.UA, MOUSE_WHEEL = UA.gecko ? "DOMMouseScroll" : "mousewheel";
+  var UA = require("ua"), MOUSE_WHEEL = UA.gecko ? "DOMMouseScroll" : "mousewheel";
   return S.mix(Special, {mousewheel:{typeFix:MOUSE_WHEEL}, load:{bubbles:false}, click:{fire:function(onlyHandlers) {
-    var target = this;
-    if(!onlyHandlers && String(target.type) === "checkbox" && target.click && target.nodeName.toLowerCase() === "input") {
-      target.click();
+    var self = this;
+    if(!onlyHandlers && String(self.type) === "checkbox" && self.click && self.nodeName.toLowerCase() === "input") {
+      self.click();
       return false
     }
     return undefined
@@ -692,10 +692,10 @@ KISSY.add("event/dom/base/special-events", ["./dom-event", "./special"], functio
       return DomEvent.fire(this, "focusin")
     }
   }, fire:function(onlyHandlers) {
-    var target = this;
-    if(!onlyHandlers && target.ownerDocument) {
-      if(target !== target.ownerDocument.activeElement && target.focus) {
-        target.focus();
+    var self = this;
+    if(!onlyHandlers && self.ownerDocument) {
+      if(self !== self.ownerDocument.activeElement && self.focus) {
+        self.focus();
         return false
       }
     }
@@ -705,10 +705,10 @@ KISSY.add("event/dom/base/special-events", ["./dom-event", "./special"], functio
       return DomEvent.fire(this, "focusout")
     }
   }, fire:function(onlyHandlers) {
-    var target = this;
-    if(!onlyHandlers && target.ownerDocument) {
-      if(target === target.ownerDocument.activeElement && target.blur) {
-        target.blur();
+    var self = this;
+    if(!onlyHandlers && self.ownerDocument) {
+      if(self === self.ownerDocument.activeElement && self.blur) {
+        self.blur();
         return false
       }
     }

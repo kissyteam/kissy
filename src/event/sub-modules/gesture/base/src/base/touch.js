@@ -28,9 +28,8 @@ KISSY.add(function (S) {
                 self.lastTouches = e.touches;
                 self.startTime = e.timeStamp;
                 return self.start(e);
-            }
-            // if more or less touches are triggered, then end
-            else if (touchesCount > requiredTouchesCount) {
+            } else if (touchesCount > requiredTouchesCount) {
+                // if more or less touches are triggered, then end
                 self.onTouchEnd(e,true);
             }
             return undefined;

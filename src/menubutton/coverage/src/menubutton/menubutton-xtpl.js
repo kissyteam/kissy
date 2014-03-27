@@ -296,15 +296,15 @@ if (! _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['61'] = [];
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['61'][1].init(2578, 35, 'commandRet8 && commandRet8.isBuffer');
+_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['61'][1].init(2572, 35, 'commandRet8 && commandRet8.isBuffer');
 function visit34_61_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['48'][1].init(2051, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['48'][1].init(2045, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit33_48_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['35'][1].init(1535, 35, 'commandRet2 && commandRet2.isBuffer');
+}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['35'][1].init(1529, 35, 'commandRet2 && commandRet2.isBuffer');
 function visit32_35_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['35'][1].ranCondition(result);
   return result;
@@ -359,7 +359,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[31]++;
     require("component/extension/content-xtpl");
     _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[32]++;
-    option0.params[0] = moduleWrap.resolveByName(option0.params[0]);
+    option0.params[0] = moduleWrap.resolve(option0.params[0]);
   }
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[34]++;
   var commandRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);

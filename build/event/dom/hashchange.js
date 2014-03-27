@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:59
+build time: Mar 27 21:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,16 +9,17 @@ build time: Mar 24 02:59
  event/dom/hashchange
 */
 
-KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require) {
+KISSY.add("event/dom/hashchange", ["event/dom/base", "dom", "uri", "ua"], function(S, require) {
   var DomEvent = require("event/dom/base");
   var Dom = require("dom");
-  var UA = S.UA, urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__ks_replace_history__", ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
+  var Uri = require("uri");
+  var UA = require("ua"), urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__ks_replace_history__", ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
   DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
   function getIframeDoc(iframe) {
     return iframe.contentWindow.document
   }
   var POLL_INTERVAL = 50, IFRAME_TEMPLATE = "<html><head><title>" + (doc && doc.title || "") + " - {hash}</title>{head}</head><body>{hash}</body></html>", getHash = function() {
-    var uri = new S.Uri(location.href);
+    var uri = new Uri(location.href);
     return"#" + uri.getFragment()
   }, timer, lastHash, poll = function() {
     var hash = getHash(), replaceHistory = 0;

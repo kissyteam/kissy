@@ -258,7 +258,7 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData['35'] = [];
   _$jscoverage['/dialog.js'].branchData['35'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['35'][1].init(155, 27, 'y - S.DOM.scrollTop() > 200');
+_$jscoverage['/dialog.js'].branchData['35'][1].init(155, 27, 'y - S.require('dom').scrollTop() > 200');
 function visit1_35_1(result) {
   _$jscoverage['/dialog.js'].branchData['35'][1].ranCondition(result);
   return result;
@@ -299,9 +299,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[33]++;
   var y = self.get('y');
   _$jscoverage['/dialog.js'].lineData[35]++;
-  if (visit1_35_1(y - S.DOM.scrollTop() > 200)) {
+  if (visit1_35_1(y - S.require('dom').scrollTop() > 200)) {
     _$jscoverage['/dialog.js'].lineData[36]++;
-    y = S.DOM.scrollTop() + 200;
+    y = S.require('dom').scrollTop() + 200;
     _$jscoverage['/dialog.js'].lineData[37]++;
     self.set('y', y);
   }

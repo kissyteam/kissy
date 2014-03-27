@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 26 17:46
+build time: Mar 27 22:19
 */
 KISSY.add("combobox/combobox-xtpl",[],function(j,g,m,f){j=function(c,k,b,h,f){var i=this,a=i.nativeCommands,d=i.utils;if("1.50"!==k.version)throw Error("current xtemplate file("+i.name+")(v1.50) need to be recompiled using current kissy(v"+k.version+")!");var l=d.callCommand,k=a["if"];b.write('<div id="ks-combobox-invalid-el-');a=c.resolve(["id"]);b.write(a,!0);b.write('"\n     class="');a={escape:1};d=[];d.push("invalid-el");a.params=d;if((a=l(i,c,a,b,"getBaseCssClasses",2))&&a.isBuffer)b=a,a=f;
 b.write(a,!0);b.write('">\n    <div class="');a={escape:1};d=[];d.push("invalid-inner");a.params=d;if((a=l(i,c,a,b,"getBaseCssClasses",3))&&a.isBuffer)b=a,a=f;b.write(a,!0);b.write('"></div>\n</div>\n\n');var a={escape:1},d=[],g=c.resolve(["hasTrigger"]);d.push(g);a.params=d;a.fn=function(b,a){a.write('\n<div id="ks-combobox-trigger-');var c=b.resolve(["id"]);a.write(c,!0);a.write('"\n     class="');var c={escape:1},d=[];d.push("trigger");c.params=d;if((c=l(i,b,c,a,"getBaseCssClasses",8))&&c.isBuffer)a=

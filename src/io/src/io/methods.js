@@ -6,13 +6,12 @@
 KISSY.add(function (S, require) {
     var Promise = require('promise'),
         IO = require('./base');
-    var Uri=require('uri');
+    var Uri = require('uri');
     var OK_CODE = 200,
-
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
     // get individual response header from response header str
-        rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
+        HEADER_REG = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(io) {
         // text xml 是否原生转化支持
@@ -29,7 +28,6 @@ KISSY.add(function (S, require) {
         // 例如 script 直接是js引擎执行，没有返回值，不需要自己处理初始返回值
         // jsonp 时还需要把 script 转换成 json，后面还得自己来
         if (text || xml) {
-
             contentType = io.mimeType || io.getResponseHeader('Content-Type');
 
             // 去除无用的通用格式
@@ -48,6 +46,7 @@ KISSY.add(function (S, require) {
                     }
                 }
             }
+
             // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
             dataType[0] = dataType[0] || 'text';
 
@@ -56,9 +55,8 @@ KISSY.add(function (S, require) {
                 if (dataType[dataTypeIndex] === 'text' && text !== undefined) {
                     responseData = text;
                     break;
-                }
-                // 有 xml 值才直接取，否则可能还要从 xml 转
-                else if (dataType[dataTypeIndex] === 'xml' && xml !== undefined) {
+                } else if (dataType[dataTypeIndex] === 'xml' && xml !== undefined) {
+                    // 有 xml 值才直接取，否则可能还要从 xml 转
                     responseData = xml;
                     break;
                 }
@@ -98,12 +96,11 @@ KISSY.add(function (S, require) {
         io.responseData = responseData;
     }
 
-    S.extend(IO, Promise,
-        {
+    S.extend(IO, Promise, {
             // Caches the header
             setRequestHeader: function (name, value) {
                 var self = this;
-                self.requestHeaders[ name ] = value;
+                self.requestHeaders[name] = value;
                 return self;
             },
 
@@ -124,17 +121,18 @@ KISSY.add(function (S, require) {
              * @member KISSY.IO
              */
             getResponseHeader: function (name) {
-                var match, self = this, responseHeaders;
+                var match, responseHeaders,
+                    self = this;
                 // ie8 will be lowercase for content-type
                 name = name.toLowerCase();
                 if (self.state === 2) {
                     if (!(responseHeaders = self.responseHeaders)) {
                         responseHeaders = self.responseHeaders = {};
-                        while (( match = rheaders.exec(self.responseHeadersString) )) {
-                            responseHeaders[ match[1].toLowerCase() ] = match[ 2 ];
+                        while ((match = HEADER_REG.exec(self.responseHeadersString))) {
+                            responseHeaders[match[1].toLowerCase()] = match[2];
                         }
                     }
-                    match = responseHeaders[ name ];
+                    match = responseHeaders[name];
                 }
                 return match === undefined ? null : match;
             },

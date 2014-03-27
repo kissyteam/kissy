@@ -1022,7 +1022,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[12]++;
   require('./button');
   _$jscoverage['/table.js'].lineData[13]++;
-  var UA = S.UA, Dom = S.DOM, Node = S.Node, tableRules = ['tr', 'th', 'td', 'tbody', 'table'], cellNodeRegex = /^(?:td|th)$/;
+  var UA = S.UA, Dom = S.require('dom'), Node = S.Node, tableRules = ['tr', 'th', 'td', 'tbody', 'table'], cellNodeRegex = /^(?:td|th)$/;
   _$jscoverage['/table.js'].lineData[19]++;
   function getSelectedCells(selection) {
     _$jscoverage['/table.js'].functionData[1]++;

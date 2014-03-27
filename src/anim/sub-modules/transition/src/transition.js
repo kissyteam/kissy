@@ -165,6 +165,9 @@ KISSY.add(function (S, require) {
 
     S.mix(TransitionAnim, AnimBase.Statics);
 
+    // bad
+    S.Anim = TransitionAnim;
+
     return TransitionAnim;
 });
 /*

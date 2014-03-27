@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 16:52
+build time: Mar 27 21:47
 */
 KISSY.add("dom/ie/create",["dom/base","ua"],function(n,e){var f=e("dom/base");f._fixCloneAttributes=function(c,a){a.clearAttributes&&a.clearAttributes();a.mergeAttributes&&a.mergeAttributes(c);var b=a.nodeName.toLowerCase(),d=c.childNodes,h=(c.type||"").toLowerCase();if("object"===b&&!a.childNodes.length)for(b=0;b<d.length;b++)a.appendChild(d[b].cloneNode(!0));else if("input"===b&&("checkbox"===h||"radio"===h)){if(d=c.checked)a.defaultChecked=a.checked=d;d=c.value;a.value!==d&&(a.value=d)}else if("option"===
 b)a.selected=c.defaultSelected;else if("input"===b||"textarea"===b)a.defaultValue=c.defaultValue,a.value=c.value;a.removeAttribute(f.__EXPANDO)};var j=f._creators,i=f._defaultCreator,l=/<tbody/i;8>e("ua").ieMode&&(j.table=function(c,a){var b=i(c,a);if(l.test(c))return b;var d=b.firstChild,h=n.makeArray(d.childNodes);n.each(h,function(a){"tbody"===f.nodeName(a)&&!a.childNodes.length&&d.removeChild(a)});return b})});

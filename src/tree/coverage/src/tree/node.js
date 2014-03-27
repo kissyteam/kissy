@@ -310,71 +310,71 @@ if (! _$jscoverage['/tree/node.js']) {
   _$jscoverage['/tree/node.js'].lineData[206] = 0;
   _$jscoverage['/tree/node.js'].lineData[207] = 0;
   _$jscoverage['/tree/node.js'].lineData[284] = 0;
-  _$jscoverage['/tree/node.js'].lineData[285] = 0;
   _$jscoverage['/tree/node.js'].lineData[286] = 0;
-  _$jscoverage['/tree/node.js'].lineData[288] = 0;
-  _$jscoverage['/tree/node.js'].lineData[315] = 0;
+  _$jscoverage['/tree/node.js'].lineData[287] = 0;
+  _$jscoverage['/tree/node.js'].lineData[289] = 0;
   _$jscoverage['/tree/node.js'].lineData[316] = 0;
   _$jscoverage['/tree/node.js'].lineData[317] = 0;
   _$jscoverage['/tree/node.js'].lineData[318] = 0;
-  _$jscoverage['/tree/node.js'].lineData[322] = 0;
+  _$jscoverage['/tree/node.js'].lineData[319] = 0;
   _$jscoverage['/tree/node.js'].lineData[323] = 0;
   _$jscoverage['/tree/node.js'].lineData[324] = 0;
   _$jscoverage['/tree/node.js'].lineData[325] = 0;
   _$jscoverage['/tree/node.js'].lineData[326] = 0;
-  _$jscoverage['/tree/node.js'].lineData[330] = 0;
+  _$jscoverage['/tree/node.js'].lineData[327] = 0;
   _$jscoverage['/tree/node.js'].lineData[331] = 0;
   _$jscoverage['/tree/node.js'].lineData[332] = 0;
   _$jscoverage['/tree/node.js'].lineData[333] = 0;
-  _$jscoverage['/tree/node.js'].lineData[338] = 0;
+  _$jscoverage['/tree/node.js'].lineData[334] = 0;
   _$jscoverage['/tree/node.js'].lineData[339] = 0;
-  _$jscoverage['/tree/node.js'].lineData[345] = 0;
-  _$jscoverage['/tree/node.js'].lineData[348] = 0;
+  _$jscoverage['/tree/node.js'].lineData[340] = 0;
+  _$jscoverage['/tree/node.js'].lineData[346] = 0;
   _$jscoverage['/tree/node.js'].lineData[349] = 0;
-  _$jscoverage['/tree/node.js'].lineData[351] = 0;
-  _$jscoverage['/tree/node.js'].lineData[354] = 0;
+  _$jscoverage['/tree/node.js'].lineData[350] = 0;
+  _$jscoverage['/tree/node.js'].lineData[352] = 0;
   _$jscoverage['/tree/node.js'].lineData[355] = 0;
-  _$jscoverage['/tree/node.js'].lineData[357] = 0;
+  _$jscoverage['/tree/node.js'].lineData[356] = 0;
   _$jscoverage['/tree/node.js'].lineData[358] = 0;
-  _$jscoverage['/tree/node.js'].lineData[361] = 0;
-  _$jscoverage['/tree/node.js'].lineData[365] = 0;
+  _$jscoverage['/tree/node.js'].lineData[359] = 0;
+  _$jscoverage['/tree/node.js'].lineData[362] = 0;
   _$jscoverage['/tree/node.js'].lineData[366] = 0;
   _$jscoverage['/tree/node.js'].lineData[367] = 0;
   _$jscoverage['/tree/node.js'].lineData[368] = 0;
-  _$jscoverage['/tree/node.js'].lineData[370] = 0;
-  _$jscoverage['/tree/node.js'].lineData[372] = 0;
-  _$jscoverage['/tree/node.js'].lineData[376] = 0;
+  _$jscoverage['/tree/node.js'].lineData[369] = 0;
+  _$jscoverage['/tree/node.js'].lineData[371] = 0;
+  _$jscoverage['/tree/node.js'].lineData[373] = 0;
   _$jscoverage['/tree/node.js'].lineData[377] = 0;
-  _$jscoverage['/tree/node.js'].lineData[380] = 0;
+  _$jscoverage['/tree/node.js'].lineData[378] = 0;
   _$jscoverage['/tree/node.js'].lineData[381] = 0;
-  _$jscoverage['/tree/node.js'].lineData[385] = 0;
+  _$jscoverage['/tree/node.js'].lineData[382] = 0;
   _$jscoverage['/tree/node.js'].lineData[386] = 0;
   _$jscoverage['/tree/node.js'].lineData[387] = 0;
   _$jscoverage['/tree/node.js'].lineData[388] = 0;
-  _$jscoverage['/tree/node.js'].lineData[390] = 0;
-  _$jscoverage['/tree/node.js'].lineData[397] = 0;
+  _$jscoverage['/tree/node.js'].lineData[389] = 0;
+  _$jscoverage['/tree/node.js'].lineData[391] = 0;
   _$jscoverage['/tree/node.js'].lineData[398] = 0;
   _$jscoverage['/tree/node.js'].lineData[399] = 0;
-  _$jscoverage['/tree/node.js'].lineData[403] = 0;
+  _$jscoverage['/tree/node.js'].lineData[400] = 0;
   _$jscoverage['/tree/node.js'].lineData[404] = 0;
   _$jscoverage['/tree/node.js'].lineData[405] = 0;
   _$jscoverage['/tree/node.js'].lineData[406] = 0;
   _$jscoverage['/tree/node.js'].lineData[407] = 0;
-  _$jscoverage['/tree/node.js'].lineData[411] = 0;
+  _$jscoverage['/tree/node.js'].lineData[408] = 0;
   _$jscoverage['/tree/node.js'].lineData[412] = 0;
   _$jscoverage['/tree/node.js'].lineData[413] = 0;
-  _$jscoverage['/tree/node.js'].lineData[415] = 0;
+  _$jscoverage['/tree/node.js'].lineData[414] = 0;
   _$jscoverage['/tree/node.js'].lineData[416] = 0;
   _$jscoverage['/tree/node.js'].lineData[417] = 0;
-  _$jscoverage['/tree/node.js'].lineData[419] = 0;
-  _$jscoverage['/tree/node.js'].lineData[424] = 0;
+  _$jscoverage['/tree/node.js'].lineData[418] = 0;
+  _$jscoverage['/tree/node.js'].lineData[420] = 0;
   _$jscoverage['/tree/node.js'].lineData[425] = 0;
   _$jscoverage['/tree/node.js'].lineData[426] = 0;
   _$jscoverage['/tree/node.js'].lineData[427] = 0;
-  _$jscoverage['/tree/node.js'].lineData[430] = 0;
+  _$jscoverage['/tree/node.js'].lineData[428] = 0;
   _$jscoverage['/tree/node.js'].lineData[431] = 0;
   _$jscoverage['/tree/node.js'].lineData[432] = 0;
   _$jscoverage['/tree/node.js'].lineData[433] = 0;
+  _$jscoverage['/tree/node.js'].lineData[434] = 0;
 }
 if (! _$jscoverage['/tree/node.js'].functionData) {
   _$jscoverage['/tree/node.js'].functionData = [];
@@ -436,128 +436,128 @@ if (! _$jscoverage['/tree/node.js'].branchData) {
   _$jscoverage['/tree/node.js'].branchData['184'] = [];
   _$jscoverage['/tree/node.js'].branchData['184'][1] = new BranchData();
   _$jscoverage['/tree/node.js'].branchData['184'][2] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['285'] = [];
-  _$jscoverage['/tree/node.js'].branchData['285'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['317'] = [];
-  _$jscoverage['/tree/node.js'].branchData['317'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['324'] = [];
-  _$jscoverage['/tree/node.js'].branchData['324'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['332'] = [];
-  _$jscoverage['/tree/node.js'].branchData['332'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['340'] = [];
-  _$jscoverage['/tree/node.js'].branchData['340'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['286'] = [];
+  _$jscoverage['/tree/node.js'].branchData['286'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['318'] = [];
+  _$jscoverage['/tree/node.js'].branchData['318'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['325'] = [];
+  _$jscoverage['/tree/node.js'].branchData['325'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['333'] = [];
+  _$jscoverage['/tree/node.js'].branchData['333'][1] = new BranchData();
   _$jscoverage['/tree/node.js'].branchData['341'] = [];
   _$jscoverage['/tree/node.js'].branchData['341'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['345'] = [];
-  _$jscoverage['/tree/node.js'].branchData['345'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['345'][2] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['351'] = [];
-  _$jscoverage['/tree/node.js'].branchData['351'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['351'][2] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['351'][3] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['351'][4] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['357'] = [];
-  _$jscoverage['/tree/node.js'].branchData['357'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['367'] = [];
-  _$jscoverage['/tree/node.js'].branchData['367'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['380'] = [];
-  _$jscoverage['/tree/node.js'].branchData['380'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['387'] = [];
-  _$jscoverage['/tree/node.js'].branchData['387'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['398'] = [];
-  _$jscoverage['/tree/node.js'].branchData['398'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['405'] = [];
-  _$jscoverage['/tree/node.js'].branchData['405'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['412'] = [];
-  _$jscoverage['/tree/node.js'].branchData['412'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['416'] = [];
-  _$jscoverage['/tree/node.js'].branchData['416'][1] = new BranchData();
-  _$jscoverage['/tree/node.js'].branchData['430'] = [];
-  _$jscoverage['/tree/node.js'].branchData['430'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['342'] = [];
+  _$jscoverage['/tree/node.js'].branchData['342'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['346'] = [];
+  _$jscoverage['/tree/node.js'].branchData['346'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['346'][2] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['352'] = [];
+  _$jscoverage['/tree/node.js'].branchData['352'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['352'][2] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['352'][3] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['352'][4] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['358'] = [];
+  _$jscoverage['/tree/node.js'].branchData['358'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['368'] = [];
+  _$jscoverage['/tree/node.js'].branchData['368'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['381'] = [];
+  _$jscoverage['/tree/node.js'].branchData['381'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['388'] = [];
+  _$jscoverage['/tree/node.js'].branchData['388'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['399'] = [];
+  _$jscoverage['/tree/node.js'].branchData['399'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['406'] = [];
+  _$jscoverage['/tree/node.js'].branchData['406'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['413'] = [];
+  _$jscoverage['/tree/node.js'].branchData['413'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['417'] = [];
+  _$jscoverage['/tree/node.js'].branchData['417'][1] = new BranchData();
+  _$jscoverage['/tree/node.js'].branchData['431'] = [];
+  _$jscoverage['/tree/node.js'].branchData['431'][1] = new BranchData();
 }
-_$jscoverage['/tree/node.js'].branchData['430'][1].init(177, 11, 'index < len');
-function visit72_430_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['430'][1].ranCondition(result);
+_$jscoverage['/tree/node.js'].branchData['431'][1].init(177, 11, 'index < len');
+function visit72_431_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['431'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['416'][1].init(17, 28, 'typeof setDepth === \'number\'');
-function visit71_416_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['416'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['417'][1].init(17, 28, 'typeof setDepth === \'number\'');
+function visit71_417_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['417'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['412'][1].init(13, 22, 'setDepth !== undefined');
-function visit70_412_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['412'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['413'][1].init(13, 22, 'setDepth !== undefined');
+function visit70_413_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['413'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['405'][1].init(50, 4, 'tree');
-function visit69_405_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['405'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['406'][1].init(50, 4, 'tree');
+function visit69_406_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['406'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['398'][1].init(13, 21, 'self.get && self.view');
-function visit68_398_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['398'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['399'][1].init(13, 21, 'self.get && self.view');
+function visit68_399_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['399'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['387'][1].init(287, 37, '!n && (parent = parent.get(\'parent\'))');
-function visit67_387_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['387'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['388'][1].init(287, 37, '!n && (parent = parent.get(\'parent\'))');
+function visit67_388_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['388'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['380'][1].init(93, 39, 'self.get(\'expanded\') && children.length');
-function visit66_380_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['380'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['381'][1].init(93, 39, 'self.get(\'expanded\') && children.length');
+function visit66_381_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['381'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['367'][1].init(45, 5, '!prev');
-function visit65_367_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['367'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['368'][1].init(45, 5, '!prev');
+function visit65_368_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['368'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['357'][1].init(92, 41, '!self.get(\'expanded\') || !children.length');
-function visit64_357_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['357'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['358'][1].init(92, 41, '!self.get(\'expanded\') || !children.length');
+function visit64_358_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['358'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['351'][4].init(119, 20, 'isLeaf === undefined');
-function visit63_351_4(result) {
-  _$jscoverage['/tree/node.js'].branchData['351'][4].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['352'][4].init(119, 20, 'isLeaf === undefined');
+function visit63_352_4(result) {
+  _$jscoverage['/tree/node.js'].branchData['352'][4].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['351'][3].init(119, 51, 'isLeaf === undefined && self.get(\'children\').length');
-function visit62_351_3(result) {
-  _$jscoverage['/tree/node.js'].branchData['351'][3].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['352'][3].init(119, 51, 'isLeaf === undefined && self.get(\'children\').length');
+function visit62_352_3(result) {
+  _$jscoverage['/tree/node.js'].branchData['352'][3].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['351'][2].init(98, 16, 'isLeaf === false');
-function visit61_351_2(result) {
-  _$jscoverage['/tree/node.js'].branchData['351'][2].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['352'][2].init(98, 16, 'isLeaf === false');
+function visit61_352_2(result) {
+  _$jscoverage['/tree/node.js'].branchData['352'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['351'][1].init(98, 73, 'isLeaf === false || (isLeaf === undefined && self.get(\'children\').length)');
-function visit60_351_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['351'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['352'][1].init(98, 73, 'isLeaf === false || (isLeaf === undefined && self.get(\'children\').length)');
+function visit60_352_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['352'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['345'][2].init(246, 18, 'lastChild === self');
-function visit59_345_2(result) {
-  _$jscoverage['/tree/node.js'].branchData['345'][2].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['346'][2].init(246, 18, 'lastChild === self');
+function visit59_346_2(result) {
+  _$jscoverage['/tree/node.js'].branchData['346'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['345'][1].init(232, 32, '!lastChild || lastChild === self');
-function visit58_345_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['345'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['346'][1].init(232, 32, '!lastChild || lastChild === self');
+function visit58_346_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['346'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['341'][1].init(113, 41, 'children && children[children.length - 1]');
-function visit57_341_1(result) {
+}_$jscoverage['/tree/node.js'].branchData['342'][1].init(113, 41, 'children && children[children.length - 1]');
+function visit57_342_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['342'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tree/node.js'].branchData['341'][1].init(55, 32, 'parent && parent.get(\'children\')');
+function visit56_341_1(result) {
   _$jscoverage['/tree/node.js'].branchData['341'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['340'][1].init(55, 32, 'parent && parent.get(\'children\')');
-function visit56_340_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['340'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['333'][1].init(38, 17, 'e.target === self');
+function visit55_333_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['333'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['332'][1].init(38, 17, 'e.target === self');
-function visit55_332_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['332'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['325'][1].init(38, 17, 'e.target === self');
+function visit54_325_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['325'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['324'][1].init(38, 17, 'e.target === self');
-function visit54_324_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['324'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['318'][1].init(38, 17, 'e.target === self');
+function visit53_318_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['318'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node.js'].branchData['317'][1].init(38, 17, 'e.target === self');
-function visit53_317_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['317'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/tree/node.js'].branchData['285'][1].init(65, 20, 'from && !from.isTree');
-function visit52_285_1(result) {
-  _$jscoverage['/tree/node.js'].branchData['285'][1].ranCondition(result);
+}_$jscoverage['/tree/node.js'].branchData['286'][1].init(102, 20, 'from && !from.isTree');
+function visit52_286_1(result) {
+  _$jscoverage['/tree/node.js'].branchData['286'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/node.js'].branchData['184'][2].init(60, 32, 'e && e.byPassSetTreeSelectedItem');
 function visit51_184_2(result) {
@@ -868,13 +868,13 @@ KISSY.add(function(S, require) {
   getter: function() {
   _$jscoverage['/tree/node.js'].functionData[15]++;
   _$jscoverage['/tree/node.js'].lineData[284]++;
-  var from = this;
-  _$jscoverage['/tree/node.js'].lineData[285]++;
-  while (visit52_285_1(from && !from.isTree)) {
-    _$jscoverage['/tree/node.js'].lineData[286]++;
+  var self = this, from = self;
+  _$jscoverage['/tree/node.js'].lineData[286]++;
+  while (visit52_286_1(from && !from.isTree)) {
+    _$jscoverage['/tree/node.js'].lineData[287]++;
     from = from.get('parent');
   }
-  _$jscoverage['/tree/node.js'].lineData[288]++;
+  _$jscoverage['/tree/node.js'].lineData[289]++;
   return from;
 }}, 
   depth: {
@@ -885,167 +885,167 @@ KISSY.add(function(S, require) {
   value: {
   xclass: 'tree-node'}}}, 
   xclass: 'tree-node'});
-  _$jscoverage['/tree/node.js'].lineData[315]++;
+  _$jscoverage['/tree/node.js'].lineData[316]++;
   function onAddChild(e) {
     _$jscoverage['/tree/node.js'].functionData[16]++;
-    _$jscoverage['/tree/node.js'].lineData[316]++;
-    var self = this;
     _$jscoverage['/tree/node.js'].lineData[317]++;
-    if (visit53_317_1(e.target === self)) {
-      _$jscoverage['/tree/node.js'].lineData[318]++;
+    var self = this;
+    _$jscoverage['/tree/node.js'].lineData[318]++;
+    if (visit53_318_1(e.target === self)) {
+      _$jscoverage['/tree/node.js'].lineData[319]++;
       updateSubTreeStatus(self, e.component, self.get('depth'), e.index);
     }
   }
-  _$jscoverage['/tree/node.js'].lineData[322]++;
+  _$jscoverage['/tree/node.js'].lineData[323]++;
   function onRemoveChild(e) {
     _$jscoverage['/tree/node.js'].functionData[17]++;
-    _$jscoverage['/tree/node.js'].lineData[323]++;
-    var self = this;
     _$jscoverage['/tree/node.js'].lineData[324]++;
-    if (visit54_324_1(e.target === self)) {
-      _$jscoverage['/tree/node.js'].lineData[325]++;
-      recursiveSetDepth(self.get('tree'), e.component);
+    var self = this;
+    _$jscoverage['/tree/node.js'].lineData[325]++;
+    if (visit54_325_1(e.target === self)) {
       _$jscoverage['/tree/node.js'].lineData[326]++;
+      recursiveSetDepth(self.get('tree'), e.component);
+      _$jscoverage['/tree/node.js'].lineData[327]++;
       refreshCssForSelfAndChildren(self, e.index);
     }
   }
-  _$jscoverage['/tree/node.js'].lineData[330]++;
+  _$jscoverage['/tree/node.js'].lineData[331]++;
   function syncAriaSetSize(e) {
     _$jscoverage['/tree/node.js'].functionData[18]++;
-    _$jscoverage['/tree/node.js'].lineData[331]++;
-    var self = this;
     _$jscoverage['/tree/node.js'].lineData[332]++;
-    if (visit55_332_1(e.target === self)) {
-      _$jscoverage['/tree/node.js'].lineData[333]++;
+    var self = this;
+    _$jscoverage['/tree/node.js'].lineData[333]++;
+    if (visit55_333_1(e.target === self)) {
+      _$jscoverage['/tree/node.js'].lineData[334]++;
       self.el.setAttribute('aria-setsize', self.get('children').length);
     }
   }
-  _$jscoverage['/tree/node.js'].lineData[338]++;
+  _$jscoverage['/tree/node.js'].lineData[339]++;
   function isNodeSingleOrLast(self) {
     _$jscoverage['/tree/node.js'].functionData[19]++;
-    _$jscoverage['/tree/node.js'].lineData[339]++;
-    var parent = self.get('parent'), children = visit56_340_1(parent && parent.get('children')), lastChild = visit57_341_1(children && children[children.length - 1]);
-    _$jscoverage['/tree/node.js'].lineData[345]++;
-    return visit58_345_1(!lastChild || visit59_345_2(lastChild === self));
+    _$jscoverage['/tree/node.js'].lineData[340]++;
+    var parent = self.get('parent'), children = visit56_341_1(parent && parent.get('children')), lastChild = visit57_342_1(children && children[children.length - 1]);
+    _$jscoverage['/tree/node.js'].lineData[346]++;
+    return visit58_346_1(!lastChild || visit59_346_2(lastChild === self));
   }
-  _$jscoverage['/tree/node.js'].lineData[348]++;
+  _$jscoverage['/tree/node.js'].lineData[349]++;
   function isNodeLeaf(self) {
     _$jscoverage['/tree/node.js'].functionData[20]++;
-    _$jscoverage['/tree/node.js'].lineData[349]++;
+    _$jscoverage['/tree/node.js'].lineData[350]++;
     var isLeaf = self.get('isLeaf');
-    _$jscoverage['/tree/node.js'].lineData[351]++;
-    return !(visit60_351_1(visit61_351_2(isLeaf === false) || (visit62_351_3(visit63_351_4(isLeaf === undefined) && self.get('children').length))));
+    _$jscoverage['/tree/node.js'].lineData[352]++;
+    return !(visit60_352_1(visit61_352_2(isLeaf === false) || (visit62_352_3(visit63_352_4(isLeaf === undefined) && self.get('children').length))));
   }
-  _$jscoverage['/tree/node.js'].lineData[354]++;
+  _$jscoverage['/tree/node.js'].lineData[355]++;
   function getLastVisibleDescendant(self) {
     _$jscoverage['/tree/node.js'].functionData[21]++;
-    _$jscoverage['/tree/node.js'].lineData[355]++;
+    _$jscoverage['/tree/node.js'].lineData[356]++;
     var children = self.get('children');
-    _$jscoverage['/tree/node.js'].lineData[357]++;
-    if (visit64_357_1(!self.get('expanded') || !children.length)) {
-      _$jscoverage['/tree/node.js'].lineData[358]++;
+    _$jscoverage['/tree/node.js'].lineData[358]++;
+    if (visit64_358_1(!self.get('expanded') || !children.length)) {
+      _$jscoverage['/tree/node.js'].lineData[359]++;
       return self;
     }
-    _$jscoverage['/tree/node.js'].lineData[361]++;
+    _$jscoverage['/tree/node.js'].lineData[362]++;
     return getLastVisibleDescendant(children[children.length - 1]);
   }
-  _$jscoverage['/tree/node.js'].lineData[365]++;
+  _$jscoverage['/tree/node.js'].lineData[366]++;
   function getPreviousVisibleNode(self) {
     _$jscoverage['/tree/node.js'].functionData[22]++;
-    _$jscoverage['/tree/node.js'].lineData[366]++;
-    var prev = self.prev();
     _$jscoverage['/tree/node.js'].lineData[367]++;
-    if (visit65_367_1(!prev)) {
-      _$jscoverage['/tree/node.js'].lineData[368]++;
+    var prev = self.prev();
+    _$jscoverage['/tree/node.js'].lineData[368]++;
+    if (visit65_368_1(!prev)) {
+      _$jscoverage['/tree/node.js'].lineData[369]++;
       prev = self.get('parent');
     } else {
-      _$jscoverage['/tree/node.js'].lineData[370]++;
+      _$jscoverage['/tree/node.js'].lineData[371]++;
       prev = getLastVisibleDescendant(prev);
     }
-    _$jscoverage['/tree/node.js'].lineData[372]++;
+    _$jscoverage['/tree/node.js'].lineData[373]++;
     return prev;
   }
-  _$jscoverage['/tree/node.js'].lineData[376]++;
+  _$jscoverage['/tree/node.js'].lineData[377]++;
   function getNextVisibleNode(self) {
     _$jscoverage['/tree/node.js'].functionData[23]++;
-    _$jscoverage['/tree/node.js'].lineData[377]++;
+    _$jscoverage['/tree/node.js'].lineData[378]++;
     var children = self.get('children'), n, parent;
-    _$jscoverage['/tree/node.js'].lineData[380]++;
-    if (visit66_380_1(self.get('expanded') && children.length)) {
-      _$jscoverage['/tree/node.js'].lineData[381]++;
+    _$jscoverage['/tree/node.js'].lineData[381]++;
+    if (visit66_381_1(self.get('expanded') && children.length)) {
+      _$jscoverage['/tree/node.js'].lineData[382]++;
       return children[0];
     }
-    _$jscoverage['/tree/node.js'].lineData[385]++;
-    n = self.next();
     _$jscoverage['/tree/node.js'].lineData[386]++;
-    parent = self;
+    n = self.next();
     _$jscoverage['/tree/node.js'].lineData[387]++;
-    while (visit67_387_1(!n && (parent = parent.get('parent')))) {
-      _$jscoverage['/tree/node.js'].lineData[388]++;
+    parent = self;
+    _$jscoverage['/tree/node.js'].lineData[388]++;
+    while (visit67_388_1(!n && (parent = parent.get('parent')))) {
+      _$jscoverage['/tree/node.js'].lineData[389]++;
       n = parent.next();
     }
-    _$jscoverage['/tree/node.js'].lineData[390]++;
+    _$jscoverage['/tree/node.js'].lineData[391]++;
     return n;
   }
-  _$jscoverage['/tree/node.js'].lineData[397]++;
+  _$jscoverage['/tree/node.js'].lineData[398]++;
   function refreshCss(self) {
     _$jscoverage['/tree/node.js'].functionData[24]++;
-    _$jscoverage['/tree/node.js'].lineData[398]++;
-    if (visit68_398_1(self.get && self.view)) {
-      _$jscoverage['/tree/node.js'].lineData[399]++;
+    _$jscoverage['/tree/node.js'].lineData[399]++;
+    if (visit68_399_1(self.get && self.view)) {
+      _$jscoverage['/tree/node.js'].lineData[400]++;
       self.view.refreshCss(isNodeSingleOrLast(self), isNodeLeaf(self));
     }
   }
-  _$jscoverage['/tree/node.js'].lineData[403]++;
+  _$jscoverage['/tree/node.js'].lineData[404]++;
   function updateSubTreeStatus(self, c, depth, index) {
     _$jscoverage['/tree/node.js'].functionData[25]++;
-    _$jscoverage['/tree/node.js'].lineData[404]++;
-    var tree = self.get('tree');
     _$jscoverage['/tree/node.js'].lineData[405]++;
-    if (visit69_405_1(tree)) {
-      _$jscoverage['/tree/node.js'].lineData[406]++;
-      recursiveSetDepth(tree, c, depth + 1);
+    var tree = self.get('tree');
+    _$jscoverage['/tree/node.js'].lineData[406]++;
+    if (visit69_406_1(tree)) {
       _$jscoverage['/tree/node.js'].lineData[407]++;
+      recursiveSetDepth(tree, c, depth + 1);
+      _$jscoverage['/tree/node.js'].lineData[408]++;
       refreshCssForSelfAndChildren(self, index);
     }
   }
-  _$jscoverage['/tree/node.js'].lineData[411]++;
+  _$jscoverage['/tree/node.js'].lineData[412]++;
   function recursiveSetDepth(tree, c, setDepth) {
     _$jscoverage['/tree/node.js'].functionData[26]++;
-    _$jscoverage['/tree/node.js'].lineData[412]++;
-    if (visit70_412_1(setDepth !== undefined)) {
-      _$jscoverage['/tree/node.js'].lineData[413]++;
+    _$jscoverage['/tree/node.js'].lineData[413]++;
+    if (visit70_413_1(setDepth !== undefined)) {
+      _$jscoverage['/tree/node.js'].lineData[414]++;
       c.set('depth', setDepth);
     }
-    _$jscoverage['/tree/node.js'].lineData[415]++;
+    _$jscoverage['/tree/node.js'].lineData[416]++;
     S.each(c.get('children'), function(child) {
   _$jscoverage['/tree/node.js'].functionData[27]++;
-  _$jscoverage['/tree/node.js'].lineData[416]++;
-  if (visit71_416_1(typeof setDepth === 'number')) {
-    _$jscoverage['/tree/node.js'].lineData[417]++;
+  _$jscoverage['/tree/node.js'].lineData[417]++;
+  if (visit71_417_1(typeof setDepth === 'number')) {
+    _$jscoverage['/tree/node.js'].lineData[418]++;
     recursiveSetDepth(tree, child, setDepth + 1);
   } else {
-    _$jscoverage['/tree/node.js'].lineData[419]++;
+    _$jscoverage['/tree/node.js'].lineData[420]++;
     recursiveSetDepth(tree, child);
   }
 });
   }
-  _$jscoverage['/tree/node.js'].lineData[424]++;
+  _$jscoverage['/tree/node.js'].lineData[425]++;
   function refreshCssForSelfAndChildren(self, index) {
     _$jscoverage['/tree/node.js'].functionData[28]++;
-    _$jscoverage['/tree/node.js'].lineData[425]++;
-    refreshCss(self);
     _$jscoverage['/tree/node.js'].lineData[426]++;
-    index = Math.max(0, index - 1);
+    refreshCss(self);
     _$jscoverage['/tree/node.js'].lineData[427]++;
+    index = Math.max(0, index - 1);
+    _$jscoverage['/tree/node.js'].lineData[428]++;
     var children = self.get('children'), c, len = children.length;
-    _$jscoverage['/tree/node.js'].lineData[430]++;
-    for (; visit72_430_1(index < len); index++) {
-      _$jscoverage['/tree/node.js'].lineData[431]++;
-      c = children[index];
+    _$jscoverage['/tree/node.js'].lineData[431]++;
+    for (; visit72_431_1(index < len); index++) {
       _$jscoverage['/tree/node.js'].lineData[432]++;
-      refreshCss(c);
+      c = children[index];
       _$jscoverage['/tree/node.js'].lineData[433]++;
+      refreshCss(c);
+      _$jscoverage['/tree/node.js'].lineData[434]++;
       c.el.setAttribute('aria-posinset', index + 1);
     }
   }

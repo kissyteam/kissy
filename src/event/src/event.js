@@ -15,30 +15,12 @@ KISSY.add(function (S, require) {
      * @singleton
      * @mixins KISSY.Event.DomEvent
      */
-    S.Event = S.merge(DomEvent, {
-        DomEvent: DomEvent,
+    var Event = S.merge(DomEvent, {
         Target: CustomEvent.Target,
         global: CustomEvent.global,
-        Gesture: Gesture.Enumeration,
-        CustomEvent: CustomEvent
+        Gesture: Gesture.Enumeration
     });
-
-    return S.Event;
-
-    /**
-     * @member KISSY.Event
-     * @property {KISSY.Event.CustomEvent.Target} Target
-     */
-
-    /**
-     * @property {KISSY.Event.CustomEvent.Target} EventTarget
-     * @member KISSY
-     */
-
-    /**
-     * global event target
-     * @property {KISSY.Event.CustomEvent.Target} global
-     * @member KISSY.Event
-     */
-
+    // bad! compatibility
+    S.Event = Event;
+    return Event;
 });

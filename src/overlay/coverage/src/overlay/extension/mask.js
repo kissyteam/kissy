@@ -339,7 +339,7 @@ function visit27_109_1(result) {
 function visit26_100_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].init(61, 11, 'UA.ie === 6');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].init(70, 11, 'UA.ie === 6');
 function visit25_9_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].ranCondition(result);
   return result;
@@ -347,7 +347,7 @@ function visit25_9_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/mask.js'].functionData[0]++;
   _$jscoverage['/overlay/extension/mask.js'].lineData[7]++;
-  var UA = S.UA, Node = require('node'), ie6 = (visit25_9_1(UA.ie === 6)), $ = Node.all;
+  var UA = require('ua'), Node = require('node'), ie6 = (visit25_9_1(UA.ie === 6)), $ = Node.all;
   _$jscoverage['/overlay/extension/mask.js'].lineData[12]++;
   function docWidth() {
     _$jscoverage['/overlay/extension/mask.js'].functionData[1]++;

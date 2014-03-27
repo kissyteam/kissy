@@ -11,7 +11,6 @@ KISSY.add(function (S, require) {
     var DomEventObserver = require('./observer');
     var DomEventObject = require('./object');
 
-
     // 记录手工 fire(domElement,type) 时的 type
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
@@ -114,7 +113,7 @@ KISSY.add(function (S, require) {
                         if (currentTargetObservers.length) {
                             allObservers.push({
                                 currentTarget: target,
-                                'currentTargetObservers': currentTargetObservers
+                                currentTargetObservers: currentTargetObservers
                             });
                         }
                     }
@@ -168,7 +167,7 @@ KISSY.add(function (S, require) {
          * @param {Object|KISSY.Event.DomEvent.Object} [event] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
          */
-        fire: function (event, onlyHandlers/*internal usage*/) {
+        fire: function (event, onlyHandlers) {
             event = event || {};
 
             var self = this,
@@ -437,7 +436,6 @@ KISSY.add(function (S, require) {
 
         return null;
     };
-
 
     DomEventObservable.getDomEventObservablesHolder = function (node, create) {
         var domEventObservables = DomEventUtils.data(node);

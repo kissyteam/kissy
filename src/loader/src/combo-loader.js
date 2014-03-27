@@ -494,7 +494,6 @@
             return comboRes;
         },
 
-
         flush: function () {
             if (!this.callback) {
                 return;

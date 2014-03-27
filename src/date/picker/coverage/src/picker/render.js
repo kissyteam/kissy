@@ -498,7 +498,7 @@ function visit76_179_1(result) {
 function visit75_173_1(result) {
   _$jscoverage['/picker/render.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['171'][1].init(2182, 18, 'i < DATE_ROW_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['171'][1].init(2185, 18, 'i < DATE_ROW_COUNT');
 function visit74_171_1(result) {
   _$jscoverage['/picker/render.js'].branchData['171'][1].ranCondition(result);
   return result;
@@ -510,7 +510,7 @@ function visit73_161_1(result) {
 function visit72_159_1(result) {
   _$jscoverage['/picker/render.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['158'][1].init(1696, 18, 'i < DATE_ROW_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['158'][1].init(1699, 18, 'i < DATE_ROW_COUNT');
 function visit71_158_1(result) {
   _$jscoverage['/picker/render.js'].branchData['158'][1].ranCondition(result);
   return result;
@@ -754,7 +754,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker/render.js'].lineData[155]++;
   var lastMonth1 = month1.clone();
   _$jscoverage['/picker/render.js'].lineData[156]++;
-  lastMonth1.addDayOfMonth(-lastMonthDiffDay);
+  lastMonth1.addDayOfMonth(0 - lastMonthDiffDay);
   _$jscoverage['/picker/render.js'].lineData[157]++;
   var passed = 0;
   _$jscoverage['/picker/render.js'].lineData[158]++;
@@ -864,7 +864,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker/render.js'].lineData[228]++;
   this.$el.attr('aria-activedescendant', getIdFromDate(this.control.get('value')));
 }, 
-  '_onSetClear': function(v) {
+  _onSetClear: function(v) {
   _$jscoverage['/picker/render.js'].functionData[12]++;
   _$jscoverage['/picker/render.js'].lineData[232]++;
   var control = this.control;

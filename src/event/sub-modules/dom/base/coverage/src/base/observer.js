@@ -267,19 +267,19 @@ if (! _$jscoverage['/base/observer.js'].branchData) {
   _$jscoverage['/base/observer.js'].branchData['54'][1] = new BranchData();
 }
 _$jscoverage['/base/observer.js'].branchData['54'][1].init(696, 13, 'ret === false');
-function visit188_54_1(result) {
+function visit189_54_1(result) {
   _$jscoverage['/base/observer.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observer.js'].branchData['47'][2].init(103, 12, 't.length > 0');
-function visit187_47_2(result) {
+function visit188_47_2(result) {
   _$jscoverage['/base/observer.js'].branchData['47'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/observer.js'].branchData['47'][1].init(98, 17, 't && t.length > 0');
-function visit186_47_1(result) {
+function visit187_47_1(result) {
   _$jscoverage['/base/observer.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observer.js'].branchData['44'][1].init(382, 38, '(s = Special[originalType]) && s.handle');
-function visit185_44_1(result) {
+function visit186_44_1(result) {
   _$jscoverage['/base/observer.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observer.js'].lineData[6]++;
@@ -311,11 +311,11 @@ KISSY.add(function(S, require) {
     originalType = type;
   }
   _$jscoverage['/base/observer.js'].lineData[44]++;
-  if (visit185_44_1((s = Special[originalType]) && s.handle)) {
+  if (visit186_44_1((s = Special[originalType]) && s.handle)) {
     _$jscoverage['/base/observer.js'].lineData[45]++;
     t = s.handle(event, self, ce);
     _$jscoverage['/base/observer.js'].lineData[47]++;
-    if (visit186_47_1(t && visit187_47_2(t.length > 0))) {
+    if (visit187_47_1(t && visit188_47_2(t.length > 0))) {
       _$jscoverage['/base/observer.js'].lineData[48]++;
       ret = t[0];
     }
@@ -324,7 +324,7 @@ KISSY.add(function(S, require) {
     ret = self.simpleNotify(event, ce);
   }
   _$jscoverage['/base/observer.js'].lineData[54]++;
-  if (visit188_54_1(ret === false)) {
+  if (visit189_54_1(ret === false)) {
     _$jscoverage['/base/observer.js'].lineData[55]++;
     event.halt();
   }

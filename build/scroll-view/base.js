@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:01
+build time: Mar 27 22:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -30,11 +30,11 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     transformProperty = transformVendorInfo.propertyName;
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
-      control.contentEl.style[transformProperty] = "translateX(" + floor(-v) + "px)" + " translateY(" + floor(-control.get("scrollTop")) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
+      control.contentEl.style[transformProperty] = "translateX(" + floor(0 - v) + "px)" + " translateY(" + floor(0 - control.get("scrollTop")) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     };
     methods._onSetScrollTop = function(v) {
       var control = this.control;
-      control.contentEl.style[transformProperty] = "translateX(" + floor(-control.get("scrollLeft")) + "px)" + " translateY(" + floor(-v) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
+      control.contentEl.style[transformProperty] = "translateX(" + floor(0 - control.get("scrollLeft")) + "px)" + " translateY(" + floor(0 - v) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     }
   }
   return Container.getDefaultRender().extend([ContentRenderExtension], methods, {name:"ScrollViewRender"})
@@ -59,32 +59,32 @@ KISSY.add("scroll-view/base", ["node", "anim/timer", "component/container", "./b
     anim.scrollView.set(fx.prop, fx.val)
   }
   function reflow(v, e) {
-    var control = this, $contentEl = control.$contentEl;
+    var self = this, $contentEl = self.$contentEl;
     var scrollHeight = v.scrollHeight, scrollWidth = v.scrollWidth;
     var clientHeight = v.clientHeight, allowScroll, clientWidth = v.clientWidth;
     var prevVal = e && e.prevVal || {};
     if(prevVal.scrollHeight === scrollHeight && prevVal.scrollWidth === scrollWidth && clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth) {
       return
     }
-    control.scrollHeight = scrollHeight;
-    control.scrollWidth = scrollWidth;
-    control.clientHeight = clientHeight;
-    control.clientWidth = clientWidth;
-    allowScroll = control.allowScroll = {};
+    self.scrollHeight = scrollHeight;
+    self.scrollWidth = scrollWidth;
+    self.clientHeight = clientHeight;
+    self.clientWidth = clientWidth;
+    allowScroll = self.allowScroll = {};
     if(scrollHeight > clientHeight) {
       allowScroll.top = 1
     }
     if(scrollWidth > clientWidth) {
       allowScroll.left = 1
     }
-    control.minScroll = {left:0, top:0};
+    self.minScroll = {left:0, top:0};
     var maxScrollLeft, maxScrollTop;
-    control.maxScroll = {left:maxScrollLeft = scrollWidth - clientWidth, top:maxScrollTop = scrollHeight - clientHeight};
-    delete control.scrollStep;
-    var snap = control.get("snap"), scrollLeft = control.get("scrollLeft"), scrollTop = control.get("scrollTop");
+    self.maxScroll = {left:maxScrollLeft = scrollWidth - clientWidth, top:maxScrollTop = scrollHeight - clientHeight};
+    delete self.scrollStep;
+    var snap = self.get("snap"), scrollLeft = self.get("scrollLeft"), scrollTop = self.get("scrollTop");
     if(snap) {
       var elOffset = $contentEl.offset();
-      var pages = control.pages = typeof snap === "string" ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get("pageIndex"), pagesOffset = control.pagesOffset = [];
+      var pages = self.pages = typeof snap === "string" ? $contentEl.all(snap) : $contentEl.children(), pageIndex = self.get("pageIndex"), pagesOffset = self.pagesOffset = [];
       pages.each(function(p, i) {
         var offset = p.offset(), left = offset.left - elOffset.left, top = offset.top - elOffset.top;
         if(left <= maxScrollLeft && top <= maxScrollTop) {
@@ -92,12 +92,12 @@ KISSY.add("scroll-view/base", ["node", "anim/timer", "component/container", "./b
         }
       });
       if(pageIndex) {
-        control.scrollToPage(pageIndex);
+        self.scrollToPage(pageIndex);
         return
       }
     }
-    control.scrollToWithBounds({left:scrollLeft, top:scrollTop});
-    control.fire("reflow", v)
+    self.scrollToWithBounds({left:scrollLeft, top:scrollTop});
+    self.fire("reflow", v)
   }
   return Container.extend({initializer:function() {
     this.scrollAnims = []
@@ -105,10 +105,10 @@ KISSY.add("scroll-view/base", ["node", "anim/timer", "component/container", "./b
     var self = this, $el = self.$el;
     $el.on("mousewheel", self.handleMouseWheel, self).on("scroll", onElScroll, self)
   }, sync:function() {
-    var control = this, el = control.el, contentEl = control.contentEl;
+    var self = this, el = self.el, contentEl = self.contentEl;
     var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
     var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
-    control.set("dimension", {scrollHeight:scrollHeight, scrollWidth:scrollWidth, clientWidth:clientWidth, clientHeight:clientHeight})
+    self.set("dimension", {scrollHeight:scrollHeight, scrollWidth:scrollWidth, clientWidth:clientWidth, clientHeight:clientHeight})
   }, _onSetDimension:reflow, handleKeyDownInternal:function(e) {
     var target = e.target, $target = $(target), nodeName = $target.nodeName();
     if(nodeName === "input" || nodeName === "textarea" || nodeName === "select" || $target.hasAttr("contenteditable")) {
@@ -154,15 +154,15 @@ KISSY.add("scroll-view/base", ["node", "anim/timer", "component/container", "./b
     }
     return ok
   }, getScrollStep:function() {
-    var control = this;
-    if(control.scrollStep) {
-      return control.scrollStep
+    var self = this;
+    if(self.scrollStep) {
+      return self.scrollStep
     }
     var elDoc = $(this.get("el")[0].ownerDocument);
-    var clientHeight = control.clientHeight;
-    var clientWidth = control.clientWidth;
-    control.scrollStep = {top:Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20), left:Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)};
-    return control.scrollStep
+    var clientHeight = self.clientHeight;
+    var clientWidth = self.clientWidth;
+    self.scrollStep = {top:Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20), left:Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)};
+    return self.scrollStep
   }, handleMouseWheel:function(e) {
     if(this.get("disabled")) {
       return

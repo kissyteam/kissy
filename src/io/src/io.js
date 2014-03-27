@@ -33,7 +33,6 @@ KISSY.add(function (S, require) {
 
     // some shortcut
     S.mix(IO, {
-
         serialize: serializer.serialize,
 
         /**
@@ -160,14 +159,8 @@ KISSY.add(function (S, require) {
         }
     });
 
-    S.mix(S, {
-        // compatibility
-        'Ajax': IO,
-        'IO': IO,
-        ajax: IO,
-        io: IO,
-        jsonp: IO.jsonp
-    });
+    // bad compatibility
+    S.IO = IO;
 
     return IO;
 });

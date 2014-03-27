@@ -91,7 +91,10 @@ KISSY.add(function (S, require) {
 
             switch (e) {
                 case 'success':
-                    ret = { status: 200, statusText: 'success' };
+                    ret = {
+                        status: 200,
+                        statusText: 'success'
+                    };
                     delete maps[id];
                     break;
                 case 'abort':

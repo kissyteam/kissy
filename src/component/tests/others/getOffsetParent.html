@@ -48,9 +48,7 @@
 <script>
     var UA = KISSY.UA,
             ieMode = UA.ieMode,
-
             Dom = KISSY.DOM;
-
 
     KISSY.use("component/uibase/align", function (S, Align) {
         var getOffsetParent = Align.__getOffsetParent;
@@ -70,8 +68,6 @@
         offsetParent = Dom.get("#d10").offsetParent;
         KISSY.log(offsetParent.id || offsetParent.nodeName);
     });
-
-
 </script>
 </body>
 </html>

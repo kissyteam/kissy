@@ -21,26 +21,28 @@ KISSY.add(function (S, require) {
         AlignExtension
     ], {
         // 根菜单 popupmenu 或者到中间的 menu 菜单
-        'getRootMenu': function () {
-            var cur = this,
+        getRootMenu: function () {
+            var self = this,
+                cur = self,
                 last;
             do {
                 // 沿着 menu，menuitem 链
                 last = cur;
                 cur = cur.get('parent');
             } while (cur && (cur.isMenuItem || cur.isMenu));
-            return last === this ? null : last;
+            return last === self ? null : last;
         },
 
         handleMouseLeaveInternal: function (e) {
-            this.callSuper(e);
+            var self = this;
+            self.callSuper(e);
             // sub menuitem 有时不灵敏
             // var parent = this.get('parent');
             // if (parent && parent.isSubMenu) {
             //  parent.clearShowPopupMenuTimers();
             // }
-            if (this.get('autoHideOnMouseLeave')) {
-                var rootMenu = this.getRootMenu();
+            if (self.get('autoHideOnMouseLeave')) {
+                var rootMenu = self.getRootMenu();
                 if (rootMenu) {
                     clearTimeout(rootMenu._popupAutoHideTimer);
                     rootMenu._popupAutoHideTimer = setTimeout(function () {
@@ -48,7 +50,7 @@ KISSY.add(function (S, require) {
                         if ((item = rootMenu.get('highlightedItem'))) {
                             item.set('highlighted', false);
                         }
-                    }, this.get('parent').get('menuDelay') * 1000);
+                    }, self.get('parent').get('menuDelay') * 1000);
                 }
             }
         },

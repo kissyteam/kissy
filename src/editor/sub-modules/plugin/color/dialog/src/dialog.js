@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Dialog4E = require('../dialog');
-    var map = S.map, Dom = S.DOM;
+    var map = S.map, Dom = S.require('dom');
 
     //获取颜色数组
     function getData(color) {

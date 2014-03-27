@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:02
+build time: Mar 27 22:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -88,7 +88,7 @@ KISSY.add("scroll-view/touch", ["./base", "node", "anim/timer"], function(S, req
       if(inertia) {
         deltaTime = now - anim.startTime;
         var frictionFactor = Math.exp(deltaTime * ALPHA);
-        value = parseInt(startScroll + velocity * (1 - frictionFactor) / -THETA, 10);
+        value = parseInt(startScroll + velocity * (1 - frictionFactor) / (0 - THETA), 10);
         if(value > minScroll && value < maxScroll) {
           if(fx.lastValue === value) {
             fx.pos = 1;
@@ -104,7 +104,7 @@ KISSY.add("scroll-view/touch", ["./base", "node", "anim/timer"], function(S, req
         bounceStartTime = now
       }else {
         deltaTime = now - bounceStartTime;
-        var theta = deltaTime / ACCELERATION, powTime = theta * Math.exp(-SPRING_TENSION * theta);
+        var theta = deltaTime / ACCELERATION, powTime = theta * Math.exp(0 - SPRING_TENSION * theta);
         value = parseInt(velocity * powTime, 10);
         if(value === 0) {
           fx.pos = 1

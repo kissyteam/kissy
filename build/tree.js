@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:03
+build time: Mar 27 22:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -125,7 +125,7 @@ KISSY.add("tree/node-xtpl", ["component/extension/content-xtpl"], function(S, re
     option27.params = params28;
     if(moduleWrap) {
       require("component/extension/content-xtpl");
-      option27.params[0] = moduleWrap.resolveByName(option27.params[0])
+      option27.params[0] = moduleWrap.resolve(option27.params[0])
     }
     var commandRet29 = includeCommand.call(engine, scope, option27, buffer, 18, payload);
     if(commandRet29 && commandRet29.isBuffer) {
@@ -358,7 +358,7 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
       c.collapseAll()
     })
   }}, {ATTRS:{xrender:{value:TreeNodeRender}, checkable:{value:false, view:1}, handleGestureEvents:{value:false}, isLeaf:{view:1}, expandIconEl:{}, iconEl:{}, selected:{view:1}, expanded:{sync:0, value:false, view:1}, tooltip:{view:1}, tree:{getter:function() {
-    var from = this;
+    var self = this, from = self;
     while(from && !from.isTree) {
       from = from.get("parent")
     }
@@ -454,10 +454,10 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
     }
   }
 });
-KISSY.add("tree/tree-manager", ["node", "component/extension/delegate-children"], function(S, require) {
+KISSY.add("tree/tree-manager", ["node", "component/extension/delegate-children", "ua"], function(S, require) {
   var Node = require("node");
   var DelegateChildrenExtension = require("component/extension/delegate-children");
-  var UA = S.UA, ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchEventSupported = Feature.isTouchEventSupported();
+  var UA = require("ua"), ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchEventSupported = Feature.isTouchEventSupported();
   function TreeManager() {
   }
   TreeManager.ATTRS = {showRootNode:{value:true, view:1}, selectedItem:{}, focusable:{value:true}, handleGestureEvents:{value:true}};

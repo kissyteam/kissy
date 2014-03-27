@@ -239,8 +239,7 @@ if (! _$jscoverage['/overlay/extension/loading.js']) {
   _$jscoverage['/overlay/extension/loading.js'].lineData[37] = 0;
   _$jscoverage['/overlay/extension/loading.js'].lineData[45] = 0;
   _$jscoverage['/overlay/extension/loading.js'].lineData[46] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[47] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[52] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[51] = 0;
 }
 if (! _$jscoverage['/overlay/extension/loading.js'].functionData) {
   _$jscoverage['/overlay/extension/loading.js'].functionData = [];
@@ -253,12 +252,12 @@ if (! _$jscoverage['/overlay/extension/loading.js'].branchData) {
   _$jscoverage['/overlay/extension/loading.js'].branchData = {};
   _$jscoverage['/overlay/extension/loading.js'].branchData['23'] = [];
   _$jscoverage['/overlay/extension/loading.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/loading.js'].branchData['46'] = [];
-  _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/loading.js'].branchData['45'] = [];
+  _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1] = new BranchData();
 }
-_$jscoverage['/overlay/extension/loading.js'].branchData['46'][1].init(58, 3, 'lel');
-function visit24_46_1(result) {
-  _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1].ranCondition(result);
+_$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].init(17, 18, 'this._loadingExtEl');
+function visit24_45_1(result) {
+  _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].init(46, 19, '!self._loadingExtEl');
 function visit23_23_1(result) {
@@ -290,13 +289,11 @@ KISSY.add(function(S, require) {
   unloading: function() {
   _$jscoverage['/overlay/extension/loading.js'].functionData[3]++;
   _$jscoverage['/overlay/extension/loading.js'].lineData[45]++;
-  var lel = this._loadingExtEl;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[46]++;
-  if (visit24_46_1(lel)) {
-    _$jscoverage['/overlay/extension/loading.js'].lineData[47]++;
-    lel.hide();
+  if (visit24_45_1(this._loadingExtEl)) {
+    _$jscoverage['/overlay/extension/loading.js'].lineData[46]++;
+    this._loadingExtEl.hide();
   }
 }};
-  _$jscoverage['/overlay/extension/loading.js'].lineData[52]++;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[51]++;
   return Loading;
 });

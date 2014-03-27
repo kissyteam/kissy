@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         KES = Editor.SelectionType;
 
     /*
@@ -70,8 +70,7 @@ KISSY.add(function (S, require) {
                     // Check if pointRange is before/after selection then change the endPoint
                     if (pointRng.compareEndPoints('StartToStart', startRng) > 0) {
                         pointRng.setEndPoint('StartToStart', startRng);
-                    }
-                    else {
+                    } else {
                         pointRng.setEndPoint('EndToEnd', startRng);
                     }
 
@@ -131,7 +130,6 @@ KISSY.add(function (S, require) {
                 }
             });
         }
-
 
         // Other browsers don't loose the selection if the
         // editor document loose the focus. In IE, we don't
@@ -288,10 +286,10 @@ KISSY.add(function (S, require) {
                 // Avoid saving selection from within text input. (#5747)
                 var parentTag;
                 if (nativeSel && nativeSel.type && nativeSel.type !== 'Control' &&
-                    ( parentTag = nativeSel.createRange() ) &&
-                    ( parentTag = parentTag.parentElement() ) &&
-                    ( parentTag = parentTag.nodeName ) &&
-                    parentTag.toLowerCase() in { input: 1, textarea: 1 }) {
+                    (parentTag = nativeSel.createRange()) &&
+                    (parentTag = parentTag.parentElement()) &&
+                    (parentTag = parentTag.nodeName) &&
+                    parentTag.toLowerCase() in {input: 1, textarea: 1}) {
                     return;
                 }
                 savedRange = nativeSel && sel.getRanges()[ 0 ];
@@ -339,7 +337,6 @@ KISSY.add(function (S, require) {
         var emptyParagraphRegexp =
             /\s*<(p|div|address|h\d|center)[^>]*>\s*(?:<br[^>]*>|&nbsp;|\u00A0|&#160;|(<!--[\s\S]*?-->))?\s*(:?<\/\1>)?(?=\s*$|<\/body>)/gi;
 
-
         function isBlankParagraph(block) {
             return block.outerHtml().match(emptyParagraphRegexp);
         }
@@ -386,7 +383,6 @@ KISSY.add(function (S, require) {
 
             blockLimit = blockLimit || body;
 
-
             // Fix gecko link bug, when a link is placed at the end of block elements there is
             // no way to move the caret behind the link. This fix adds a bogus br element after the link
             // kissy-editor #12
@@ -397,7 +393,7 @@ KISSY.add(function (S, require) {
                     // style as block
                     pathBlock._4eIsBlockBoundary() &&
                     // lastNode is not block
-                    !( lastNode && lastNode[0].nodeType === 1 && lastNode._4eIsBlockBoundary() ) &&
+                    !(lastNode && lastNode[0].nodeType === 1 && lastNode._4eIsBlockBoundary()) &&
                     // not pre
                     pathBlock.nodeName() !== 'pre' &&
                     // does not have bogus

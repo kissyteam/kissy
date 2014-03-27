@@ -25,7 +25,7 @@ KISSY.add(function (S) {
         },
         reverseEntities = {},
         escapeHtmlReg,
-        unEscapeHtmlReg ,
+        unEscapeHtmlReg,
         possibleEscapeHtmlReg = /[&<>"'`]/,
     // - # $ ^ * ( ) + [ ] { } | \ , . ?
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;

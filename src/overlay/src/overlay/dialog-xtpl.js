@@ -29,7 +29,7 @@ KISSY.add(function (S, require, exports, module) {
             option0.params = params1;
             if (moduleWrap) {
                 require("./overlay-xtpl");
-                option0.params[0] = moduleWrap.resolveByName(option0.params[0]);
+                option0.params[0] = moduleWrap.resolve(option0.params[0]);
             }
             var commandRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);
             if (commandRet2 && commandRet2.isBuffer) {

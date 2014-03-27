@@ -39,9 +39,7 @@ KISSY.add(function (S, require) {
         // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {
             return self;
-        }
-
-        else if (typeof html === 'string') {
+        } else if (typeof html === 'string') {
             // create from html
             domNode = Dom.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
@@ -49,14 +47,10 @@ KISSY.add(function (S, require) {
                 push.apply(this, makeArray(domNode.childNodes));
                 return self;
             }
-        }
-
-        else if (S.isArray(html) || isNodeList(html)) {
+        } else if (S.isArray(html) || isNodeList(html)) {
             push.apply(self, makeArray(html));
             return self;
-        }
-
-        else {
+        } else {
             // node, document, window
             domNode = html;
         }
@@ -76,7 +70,6 @@ KISSY.add(function (S, require) {
          * @type {Number}
          */
         length: 0,
-
 
         /**
          * Get one node at index
@@ -277,7 +270,6 @@ KISSY.add(function (S, require) {
 
     return NodeList;
 });
-
 
 /*
  Notes:

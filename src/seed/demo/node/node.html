@@ -1,8 +1,13 @@
 <script>
     var src = '/kissy/build/seed.js';
-    if (location.href.indexOf('?build')) {
+    if (location.href.indexOf('?build')!==-1) {
         src = '/kissy/build/seed-min.js';
     }
     document.write('<script src="' + src + '" data-config="{combine:true}"><\/script>');
 </script>
-<script>KISSY.use('node');</script>
+<script>
+    var start = KISSY.now();
+    KISSY.use('node',function(S){
+        console.log(S.now()-start)
+    });
+</script>

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 11:49
+build time: Mar 27 21:59
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -230,7 +230,7 @@ KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], func
     option3.params = params4;
     if(moduleWrap) {
       require("component/extension/content-xtpl");
-      option3.params[0] = moduleWrap.resolveByName(option3.params[0])
+      option3.params[0] = moduleWrap.resolve(option3.params[0])
     }
     var commandRet5 = includeCommand.call(engine, scope, option3, buffer, 3, payload);
     if(commandRet5 && commandRet5.isBuffer) {
@@ -453,16 +453,17 @@ KISSY.add("menu/popupmenu", ["component/extension/align", "component/extension/s
   var Menu = require("./control");
   var PopupMenuRender = require("./popupmenu-render");
   return Menu.extend([Shim, AlignExtension], {getRootMenu:function() {
-    var cur = this, last;
+    var self = this, cur = self, last;
     do {
       last = cur;
       cur = cur.get("parent")
     }while(cur && (cur.isMenuItem || cur.isMenu));
-    return last === this ? null : last
+    return last === self ? null : last
   }, handleMouseLeaveInternal:function(e) {
-    this.callSuper(e);
-    if(this.get("autoHideOnMouseLeave")) {
-      var rootMenu = this.getRootMenu();
+    var self = this;
+    self.callSuper(e);
+    if(self.get("autoHideOnMouseLeave")) {
+      var rootMenu = self.getRootMenu();
       if(rootMenu) {
         clearTimeout(rootMenu._popupAutoHideTimer);
         rootMenu._popupAutoHideTimer = setTimeout(function() {
@@ -470,7 +471,7 @@ KISSY.add("menu/popupmenu", ["component/extension/align", "component/extension/s
           if(item = rootMenu.get("highlightedItem")) {
             item.set("highlighted", false)
           }
-        }, this.get("parent").get("menuDelay") * 1E3)
+        }, self.get("parent").get("menuDelay") * 1E3)
       }
     }
   }, isPopupMenu:1, handleBlurInternal:function(e) {

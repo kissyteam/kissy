@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:45
+build time: Mar 27 22:00
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140325174526' will replace with current timestamp when compressing.
+         * NOTICE: '20140327220031' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140325174526',
+        __BUILD_TIME: '20140327220031',
 
         /**
          * KISSY Environment.
@@ -474,7 +474,6 @@ var KISSY = (function (undefined) {
         return to;
     }
 
-
     mix(Utils, {
         mix: mix,
 
@@ -838,7 +837,8 @@ var KISSY = (function (undefined) {
          * @return {String[]} normalize module names with alias
          */
         normalizeModNamesWithAlias: function (modNames, refModName) {
-            var ret = [], i, l;
+            var ret = [],
+                i, l;
             if (modNames) {
                 // 1. index map
                 for (i = 0, l = modNames.length; i < l; i++) {
@@ -2255,7 +2255,6 @@ var KISSY = (function (undefined) {
             return comboRes;
         },
 
-
         flush: function () {
             if (!this.callback) {
                 return;
@@ -2326,6 +2325,7 @@ var KISSY = (function (undefined) {
     var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
+        mods = Env.mods = {},
         Utils = Loader.Utils,
         processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
@@ -2473,13 +2473,16 @@ var KISSY = (function (undefined) {
          * @return {*} exports of specified module
          */
         require: function (moduleName, refName) {
+            moduleName = Utils.normalizePath(refName, moduleName);
+            // cache module read
+            if (mods[moduleName] && mods[moduleName].status === Loader.Status.ATTACHED) {
+                return mods[moduleName].exports;
+            }
             var moduleNames = Utils.normalizeModNames([moduleName], refName);
             Utils.attachModsRecursively(moduleNames);
             return Utils.getModules(moduleNames)[1];
         }
     });
-
-    Env.mods = {}; // all added mods
 })(KISSY);
 
 /*
@@ -2504,7 +2507,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140325174526';
+    var TIMESTAMP = '20140327220031';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

@@ -296,11 +296,11 @@ function visit9_61_1(result) {
 function visit8_60_1(result) {
   _$jscoverage['/base/observer.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observer.js'].branchData['47'][2].init(30, 15, 's1[k] === s2[k]');
+}_$jscoverage['/base/observer.js'].branchData['47'][2].init(30, 17, 'self[k] === s2[k]');
 function visit7_47_2(result) {
   _$jscoverage['/base/observer.js'].branchData['47'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observer.js'].branchData['47'][1].init(24, 22, 'v && (s1[k] === s2[k])');
+}_$jscoverage['/base/observer.js'].branchData['47'][1].init(24, 24, 'v && (self[k] === s2[k])');
 function visit6_47_1(result) {
   _$jscoverage['/base/observer.js'].branchData['47'][1].ranCondition(result);
   return result;
@@ -319,12 +319,12 @@ KISSY.add(function(S, undefined) {
   equals: function(s2) {
   _$jscoverage['/base/observer.js'].functionData[2]++;
   _$jscoverage['/base/observer.js'].lineData[45]++;
-  var s1 = this;
+  var self = this;
   _$jscoverage['/base/observer.js'].lineData[46]++;
-  return !!S.reduce(s1.keys, function(v, k) {
+  return !!S.reduce(self.keys, function(v, k) {
   _$jscoverage['/base/observer.js'].functionData[3]++;
   _$jscoverage['/base/observer.js'].lineData[47]++;
-  return visit6_47_1(v && (visit7_47_2(s1[k] === s2[k])));
+  return visit6_47_1(v && (visit7_47_2(self[k] === s2[k])));
 }, 1);
 }, 
   simpleNotify: function(event, ce) {

@@ -236,22 +236,23 @@ if (! _$jscoverage['/menu/popupmenu.js']) {
   _$jscoverage['/menu/popupmenu.js'].lineData[10] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[19] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[25] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[27] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[29] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[28] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[30] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[32] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[36] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[42] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[43] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[31] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[33] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[37] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[38] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[44] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[45] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[46] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[47] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[48] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[49] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[64] = 0;
-  _$jscoverage['/menu/popupmenu.js'].lineData[65] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[50] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[51] = 0;
   _$jscoverage['/menu/popupmenu.js'].lineData[66] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[67] = 0;
+  _$jscoverage['/menu/popupmenu.js'].lineData[68] = 0;
 }
 if (! _$jscoverage['/menu/popupmenu.js'].functionData) {
   _$jscoverage['/menu/popupmenu.js'].functionData = [];
@@ -263,35 +264,35 @@ if (! _$jscoverage['/menu/popupmenu.js'].functionData) {
 }
 if (! _$jscoverage['/menu/popupmenu.js'].branchData) {
   _$jscoverage['/menu/popupmenu.js'].branchData = {};
-  _$jscoverage['/menu/popupmenu.js'].branchData['31'] = [];
-  _$jscoverage['/menu/popupmenu.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/menu/popupmenu.js'].branchData['31'][2] = new BranchData();
   _$jscoverage['/menu/popupmenu.js'].branchData['32'] = [];
   _$jscoverage['/menu/popupmenu.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/menu/popupmenu.js'].branchData['42'] = [];
-  _$jscoverage['/menu/popupmenu.js'].branchData['42'][1] = new BranchData();
+  _$jscoverage['/menu/popupmenu.js'].branchData['32'][2] = new BranchData();
+  _$jscoverage['/menu/popupmenu.js'].branchData['33'] = [];
+  _$jscoverage['/menu/popupmenu.js'].branchData['33'][1] = new BranchData();
   _$jscoverage['/menu/popupmenu.js'].branchData['44'] = [];
   _$jscoverage['/menu/popupmenu.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/menu/popupmenu.js'].branchData['46'] = [];
+  _$jscoverage['/menu/popupmenu.js'].branchData['46'][1] = new BranchData();
 }
-_$jscoverage['/menu/popupmenu.js'].branchData['44'][1].init(72, 8, 'rootMenu');
-function visit46_44_1(result) {
+_$jscoverage['/menu/popupmenu.js'].branchData['46'][1].init(72, 8, 'rootMenu');
+function visit46_46_1(result) {
+  _$jscoverage['/menu/popupmenu.js'].branchData['46'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/popupmenu.js'].branchData['44'][1].init(276, 32, 'self.get(\'autoHideOnMouseLeave\')');
+function visit45_44_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['42'][1].init(247, 32, 'this.get(\'autoHideOnMouseLeave\')');
-function visit45_42_1(result) {
-  _$jscoverage['/menu/popupmenu.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/menu/popupmenu.js'].branchData['33'][1].init(284, 13, 'last === self');
+function visit44_33_1(result) {
+  _$jscoverage['/menu/popupmenu.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['32'][1].init(255, 13, 'last === this');
-function visit44_32_1(result) {
+}_$jscoverage['/menu/popupmenu.js'].branchData['32'][2].init(234, 28, 'cur.isMenuItem || cur.isMenu');
+function visit43_32_2(result) {
+  _$jscoverage['/menu/popupmenu.js'].branchData['32'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/popupmenu.js'].branchData['32'][1].init(132, 37, 'cur && (cur.isMenuItem || cur.isMenu)');
+function visit42_32_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['32'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['31'][2].init(205, 28, 'cur.isMenuItem || cur.isMenu');
-function visit43_31_2(result) {
-  _$jscoverage['/menu/popupmenu.js'].branchData['31'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['31'][1].init(132, 37, 'cur && (cur.isMenuItem || cur.isMenu)');
-function visit42_31_1(result) {
-  _$jscoverage['/menu/popupmenu.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -306,54 +307,56 @@ KISSY.add(function(S, require) {
   var PopupMenuRender = require('./popupmenu-render');
   _$jscoverage['/menu/popupmenu.js'].lineData[19]++;
   return Menu.extend([Shim, AlignExtension], {
-  'getRootMenu': function() {
+  getRootMenu: function() {
   _$jscoverage['/menu/popupmenu.js'].functionData[1]++;
   _$jscoverage['/menu/popupmenu.js'].lineData[25]++;
-  var cur = this, last;
-  _$jscoverage['/menu/popupmenu.js'].lineData[27]++;
+  var self = this, cur = self, last;
+  _$jscoverage['/menu/popupmenu.js'].lineData[28]++;
   do {
-    _$jscoverage['/menu/popupmenu.js'].lineData[29]++;
-    last = cur;
     _$jscoverage['/menu/popupmenu.js'].lineData[30]++;
+    last = cur;
+    _$jscoverage['/menu/popupmenu.js'].lineData[31]++;
     cur = cur.get('parent');
-  } while (visit42_31_1(cur && (visit43_31_2(cur.isMenuItem || cur.isMenu))));
-  _$jscoverage['/menu/popupmenu.js'].lineData[32]++;
-  return visit44_32_1(last === this) ? null : last;
+  } while (visit42_32_1(cur && (visit43_32_2(cur.isMenuItem || cur.isMenu))));
+  _$jscoverage['/menu/popupmenu.js'].lineData[33]++;
+  return visit44_33_1(last === self) ? null : last;
 }, 
   handleMouseLeaveInternal: function(e) {
   _$jscoverage['/menu/popupmenu.js'].functionData[2]++;
-  _$jscoverage['/menu/popupmenu.js'].lineData[36]++;
-  this.callSuper(e);
-  _$jscoverage['/menu/popupmenu.js'].lineData[42]++;
-  if (visit45_42_1(this.get('autoHideOnMouseLeave'))) {
-    _$jscoverage['/menu/popupmenu.js'].lineData[43]++;
-    var rootMenu = this.getRootMenu();
-    _$jscoverage['/menu/popupmenu.js'].lineData[44]++;
-    if (visit46_44_1(rootMenu)) {
-      _$jscoverage['/menu/popupmenu.js'].lineData[45]++;
+  _$jscoverage['/menu/popupmenu.js'].lineData[37]++;
+  var self = this;
+  _$jscoverage['/menu/popupmenu.js'].lineData[38]++;
+  self.callSuper(e);
+  _$jscoverage['/menu/popupmenu.js'].lineData[44]++;
+  if (visit45_44_1(self.get('autoHideOnMouseLeave'))) {
+    _$jscoverage['/menu/popupmenu.js'].lineData[45]++;
+    var rootMenu = self.getRootMenu();
+    _$jscoverage['/menu/popupmenu.js'].lineData[46]++;
+    if (visit46_46_1(rootMenu)) {
+      _$jscoverage['/menu/popupmenu.js'].lineData[47]++;
       clearTimeout(rootMenu._popupAutoHideTimer);
-      _$jscoverage['/menu/popupmenu.js'].lineData[46]++;
+      _$jscoverage['/menu/popupmenu.js'].lineData[48]++;
       rootMenu._popupAutoHideTimer = setTimeout(function() {
   _$jscoverage['/menu/popupmenu.js'].functionData[3]++;
-  _$jscoverage['/menu/popupmenu.js'].lineData[47]++;
+  _$jscoverage['/menu/popupmenu.js'].lineData[49]++;
   var item;
-  _$jscoverage['/menu/popupmenu.js'].lineData[48]++;
+  _$jscoverage['/menu/popupmenu.js'].lineData[50]++;
   if ((item = rootMenu.get('highlightedItem'))) {
-    _$jscoverage['/menu/popupmenu.js'].lineData[49]++;
+    _$jscoverage['/menu/popupmenu.js'].lineData[51]++;
     item.set('highlighted', false);
   }
-}, this.get('parent').get('menuDelay') * 1000);
+}, self.get('parent').get('menuDelay') * 1000);
     }
   }
 }, 
   isPopupMenu: 1, 
   handleBlurInternal: function(e) {
   _$jscoverage['/menu/popupmenu.js'].functionData[4]++;
-  _$jscoverage['/menu/popupmenu.js'].lineData[64]++;
-  var self = this;
-  _$jscoverage['/menu/popupmenu.js'].lineData[65]++;
-  self.callSuper(e);
   _$jscoverage['/menu/popupmenu.js'].lineData[66]++;
+  var self = this;
+  _$jscoverage['/menu/popupmenu.js'].lineData[67]++;
+  self.callSuper(e);
+  _$jscoverage['/menu/popupmenu.js'].lineData[68]++;
   self.hide();
 }}, {
   ATTRS: {

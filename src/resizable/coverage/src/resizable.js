@@ -373,7 +373,7 @@ function visit7_69_1(result) {
 function visit6_57_1(result) {
   _$jscoverage['/resizable.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['56'][1].init(1786, 21, 'i < horizontal.length');
+}_$jscoverage['/resizable.js'].branchData['56'][1].init(1778, 21, 'i < horizontal.length');
 function visit5_56_1(result) {
   _$jscoverage['/resizable.js'].branchData['56'][1].ranCondition(result);
   return result;
@@ -404,7 +404,7 @@ KISSY.add(function(S, require) {
   var DD = require('dd');
   _$jscoverage['/resizable.js'].lineData[11]++;
   var $ = Node.all, i, j, Draggable = DD.Draggable, CLS_PREFIX = 'resizable-handler', horizontal = ['l', 'r'], vertical = ['t', 'b'], ATTRS_ORDER = ['width', 'height', 'top', 'left'], hcNormal = {
-  't': function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+  t: function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
   _$jscoverage['/resizable.js'].functionData[1]++;
   _$jscoverage['/resizable.js'].lineData[21]++;
   var h = getBoundValue(minH, maxH, oh - diffT), t = ot + oh - h, w = 0;
@@ -416,7 +416,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resizable.js'].lineData[27]++;
   return [w, h, t, 0];
 }, 
-  'b': function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+  b: function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
   _$jscoverage['/resizable.js'].functionData[2]++;
   _$jscoverage['/resizable.js'].lineData[30]++;
   var h = getBoundValue(minH, maxH, oh + diffT), w = 0;
@@ -428,7 +428,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resizable.js'].lineData[35]++;
   return [w, h, 0, 0];
 }, 
-  'r': function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+  r: function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
   _$jscoverage['/resizable.js'].functionData[3]++;
   _$jscoverage['/resizable.js'].lineData[38]++;
   var w = getBoundValue(minW, maxW, ow + diffL), h = 0;
@@ -440,7 +440,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resizable.js'].lineData[43]++;
   return [w, h, 0, 0];
 }, 
-  'l': function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+  l: function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
   _$jscoverage['/resizable.js'].functionData[4]++;
   _$jscoverage['/resizable.js'].lineData[46]++;
   var w = getBoundValue(minW, maxW, ow - diffL), h = 0, l = ol + ow - w;

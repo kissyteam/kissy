@@ -231,7 +231,6 @@ KISSY.add(function (S, require) {
                 }).render();
                 self.loadingView.navigationView = self;
             }
-
         },
 
         _onSetLoadingHtml: function (v) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:01
+build time: Mar 27 22:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,9 +12,10 @@ build time: Mar 24 03:01
  router
 */
 
-KISSY.add("router/utils", ["event/dom"], function(S, require) {
+KISSY.add("router/utils", ["event/dom", "uri"], function(S, require) {
   var utils;
   var DomEvent = require("event/dom");
+  var Uri = require("uri");
   function removeVid(str) {
     return str.replace(/__ks-vid=.+$/, "")
   }
@@ -60,7 +61,7 @@ KISSY.add("router/utils", ["event/dom"], function(S, require) {
   }, addVid:function(str, vid) {
     return str + "__ks-vid=" + vid
   }, getVidFromUrlWithHash:function(url) {
-    return getVidFromHash((new S.Uri(url)).getFragment())
+    return getVidFromHash((new Uri(url)).getFragment())
   }, getVidFromHash:getVidFromHash};
   return utils
 });
@@ -219,7 +220,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   }
   function dispatch(backward, replace) {
     var url = getUrlForRouter();
-    var uri = new S.Uri(url);
+    var uri = new Uri(url);
     var query = uri.query.get();
     uri.query.reset();
     var path = uri.toString() || "/";
@@ -376,7 +377,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
           needReplaceHistory = false
         }else {
           if(!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId) {
-            setPathByHash(utils.getHash(new S.Uri(href)), true);
+            setPathByHash(utils.getHash(new Uri(href)), true);
             triggerRoute = 0
           }else {
             if(supportHistoryPushState && utils.hasVid(href)) {

@@ -350,11 +350,11 @@ function visit14_114_1(result) {
 function visit13_103_1(result) {
   _$jscoverage['/input.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['98'][1].init(46, 16, 'canFireInput(el)');
+}_$jscoverage['/input.js'].branchData['98'][1].init(48, 18, 'canFireInput(self)');
 function visit12_98_1(result) {
   _$jscoverage['/input.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['89'][1].init(46, 16, 'canFireInput(el)');
+}_$jscoverage['/input.js'].branchData['89'][1].init(48, 18, 'canFireInput(self)');
 function visit11_89_1(result) {
   _$jscoverage['/input.js'].branchData['89'][1].ranCondition(result);
   return result;
@@ -525,29 +525,29 @@ KISSY.add(function(S, require) {
   setup: function() {
   _$jscoverage['/input.js'].functionData[11]++;
   _$jscoverage['/input.js'].lineData[88]++;
-  var el = this;
+  var self = this;
   _$jscoverage['/input.js'].lineData[89]++;
-  if (visit11_89_1(canFireInput(el))) {
+  if (visit11_89_1(canFireInput(self))) {
     _$jscoverage['/input.js'].lineData[90]++;
-    monitor(el);
+    monitor(self);
   } else {
     _$jscoverage['/input.js'].lineData[93]++;
-    DomEvent.on(el, 'focusin', beforeActivate);
+    DomEvent.on(self, 'focusin', beforeActivate);
   }
 }, 
   tearDown: function() {
   _$jscoverage['/input.js'].functionData[12]++;
   _$jscoverage['/input.js'].lineData[97]++;
-  var el = this;
+  var self = this;
   _$jscoverage['/input.js'].lineData[98]++;
-  if (visit12_98_1(canFireInput(el))) {
+  if (visit12_98_1(canFireInput(self))) {
     _$jscoverage['/input.js'].lineData[99]++;
-    unmonitored(el);
+    unmonitored(self);
   } else {
     _$jscoverage['/input.js'].lineData[101]++;
-    DomEvent.remove(el, 'focusin', beforeActivate);
+    DomEvent.remove(self, 'focusin', beforeActivate);
     _$jscoverage['/input.js'].lineData[102]++;
-    Dom.query('textarea,input', el).each(function(fel) {
+    Dom.query('textarea,input', self).each(function(fel) {
   _$jscoverage['/input.js'].functionData[13]++;
   _$jscoverage['/input.js'].lineData[103]++;
   if (visit13_103_1(fel.__inputHandler)) {

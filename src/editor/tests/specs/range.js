@@ -7,7 +7,7 @@ KISSY.add(function (S, Editor) {
     
     var $ = S.all,
         UA = S.UA,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         RangeType = Editor.RangeType,
         Node = S.Node;
     var Range = Editor.Range;

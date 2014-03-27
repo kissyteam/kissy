@@ -259,18 +259,18 @@ if (! _$jscoverage['/ie/attr.js']) {
   _$jscoverage['/ie/attr.js'].lineData[87] = 0;
   _$jscoverage['/ie/attr.js'].lineData[88] = 0;
   _$jscoverage['/ie/attr.js'].lineData[98] = 0;
-  _$jscoverage['/ie/attr.js'].lineData[99] = 0;
   _$jscoverage['/ie/attr.js'].lineData[100] = 0;
-  _$jscoverage['/ie/attr.js'].lineData[104] = 0;
+  _$jscoverage['/ie/attr.js'].lineData[101] = 0;
   _$jscoverage['/ie/attr.js'].lineData[105] = 0;
   _$jscoverage['/ie/attr.js'].lineData[106] = 0;
-  _$jscoverage['/ie/attr.js'].lineData[109] = 0;
+  _$jscoverage['/ie/attr.js'].lineData[107] = 0;
   _$jscoverage['/ie/attr.js'].lineData[110] = 0;
   _$jscoverage['/ie/attr.js'].lineData[111] = 0;
   _$jscoverage['/ie/attr.js'].lineData[112] = 0;
-  _$jscoverage['/ie/attr.js'].lineData[114] = 0;
+  _$jscoverage['/ie/attr.js'].lineData[113] = 0;
   _$jscoverage['/ie/attr.js'].lineData[115] = 0;
   _$jscoverage['/ie/attr.js'].lineData[116] = 0;
+  _$jscoverage['/ie/attr.js'].lineData[117] = 0;
   _$jscoverage['/ie/attr.js'].lineData[121] = 0;
   _$jscoverage['/ie/attr.js'].lineData[122] = 0;
   _$jscoverage['/ie/attr.js'].lineData[125] = 0;
@@ -313,16 +313,16 @@ if (! _$jscoverage['/ie/attr.js'].branchData) {
   _$jscoverage['/ie/attr.js'].branchData['88'][1] = new BranchData();
   _$jscoverage['/ie/attr.js'].branchData['98'] = [];
   _$jscoverage['/ie/attr.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/ie/attr.js'].branchData['103'] = [];
-  _$jscoverage['/ie/attr.js'].branchData['103'][1] = new BranchData();
   _$jscoverage['/ie/attr.js'].branchData['104'] = [];
   _$jscoverage['/ie/attr.js'].branchData['104'][1] = new BranchData();
   _$jscoverage['/ie/attr.js'].branchData['105'] = [];
   _$jscoverage['/ie/attr.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/ie/attr.js'].branchData['109'] = [];
-  _$jscoverage['/ie/attr.js'].branchData['109'][1] = new BranchData();
-  _$jscoverage['/ie/attr.js'].branchData['115'] = [];
-  _$jscoverage['/ie/attr.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/ie/attr.js'].branchData['106'] = [];
+  _$jscoverage['/ie/attr.js'].branchData['106'][1] = new BranchData();
+  _$jscoverage['/ie/attr.js'].branchData['110'] = [];
+  _$jscoverage['/ie/attr.js'].branchData['110'][1] = new BranchData();
+  _$jscoverage['/ie/attr.js'].branchData['116'] = [];
+  _$jscoverage['/ie/attr.js'].branchData['116'][1] = new BranchData();
   _$jscoverage['/ie/attr.js'].branchData['125'] = [];
   _$jscoverage['/ie/attr.js'].branchData['125'][1] = new BranchData();
   _$jscoverage['/ie/attr.js'].branchData['129'] = [];
@@ -346,27 +346,27 @@ function visit15_129_1(result) {
 function visit14_125_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['115'][1].init(499, 1, 'b');
-function visit13_115_1(result) {
-  _$jscoverage['/ie/attr.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/ie/attr.js'].branchData['116'][1].init(499, 1, 'b');
+function visit13_116_1(result) {
+  _$jscoverage['/ie/attr.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['109'][1].init(303, 7, 'allText');
-function visit12_109_1(result) {
-  _$jscoverage['/ie/attr.js'].branchData['109'][1].ranCondition(result);
+}_$jscoverage['/ie/attr.js'].branchData['110'][1].init(303, 7, 'allText');
+function visit12_110_1(result) {
+  _$jscoverage['/ie/attr.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['105'][1].init(17, 47, 'childNodes[len].nodeType !== NodeType.TEXT_NODE');
-function visit11_105_1(result) {
+}_$jscoverage['/ie/attr.js'].branchData['106'][1].init(17, 47, 'childNodes[len].nodeType !== NodeType.TEXT_NODE');
+function visit11_106_1(result) {
+  _$jscoverage['/ie/attr.js'].branchData['106'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/ie/attr.js'].branchData['105'][1].init(152, 8, 'len >= 0');
+function visit10_105_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['104'][1].init(152, 8, 'len >= 0');
-function visit10_104_1(result) {
+}_$jscoverage['/ie/attr.js'].branchData['104'][1].init(105, 7, 'len > 0');
+function visit9_104_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/attr.js'].branchData['103'][1].init(105, 7, 'len > 0');
-function visit9_103_1(result) {
-  _$jscoverage['/ie/attr.js'].branchData['103'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/ie/attr.js'].branchData['98'][1].init(3582, 21, 'attrHooks[HREF] || {}');
+}_$jscoverage['/ie/attr.js'].branchData['98'][1].init(3580, 21, 'attrHooks[HREF] || {}');
 function visit8_98_1(result) {
   _$jscoverage['/ie/attr.js'].branchData['98'][1].ranCondition(result);
   return result;
@@ -483,33 +483,33 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/ie/attr.js'].lineData[98]++;
   hrefFix = attrHooks[HREF] = visit8_98_1(attrHooks[HREF] || {});
-  _$jscoverage['/ie/attr.js'].lineData[99]++;
+  _$jscoverage['/ie/attr.js'].lineData[100]++;
   hrefFix.set = function(el, val, name) {
   _$jscoverage['/ie/attr.js'].functionData[8]++;
-  _$jscoverage['/ie/attr.js'].lineData[100]++;
-  var childNodes = el.childNodes, b, len = childNodes.length, allText = visit9_103_1(len > 0);
-  _$jscoverage['/ie/attr.js'].lineData[104]++;
-  for (len = len - 1; visit10_104_1(len >= 0); len--) {
-    _$jscoverage['/ie/attr.js'].lineData[105]++;
-    if (visit11_105_1(childNodes[len].nodeType !== NodeType.TEXT_NODE)) {
-      _$jscoverage['/ie/attr.js'].lineData[106]++;
+  _$jscoverage['/ie/attr.js'].lineData[101]++;
+  var childNodes = el.childNodes, b, len = childNodes.length, allText = visit9_104_1(len > 0);
+  _$jscoverage['/ie/attr.js'].lineData[105]++;
+  for (len = len - 1; visit10_105_1(len >= 0); len--) {
+    _$jscoverage['/ie/attr.js'].lineData[106]++;
+    if (visit11_106_1(childNodes[len].nodeType !== NodeType.TEXT_NODE)) {
+      _$jscoverage['/ie/attr.js'].lineData[107]++;
       allText = 0;
     }
   }
-  _$jscoverage['/ie/attr.js'].lineData[109]++;
-  if (visit12_109_1(allText)) {
-    _$jscoverage['/ie/attr.js'].lineData[110]++;
-    b = el.ownerDocument.createElement('b');
+  _$jscoverage['/ie/attr.js'].lineData[110]++;
+  if (visit12_110_1(allText)) {
     _$jscoverage['/ie/attr.js'].lineData[111]++;
-    b.style.display = 'none';
+    b = el.ownerDocument.createElement('b');
     _$jscoverage['/ie/attr.js'].lineData[112]++;
+    b.style.display = 'none';
+    _$jscoverage['/ie/attr.js'].lineData[113]++;
     el.appendChild(b);
   }
-  _$jscoverage['/ie/attr.js'].lineData[114]++;
-  el.setAttribute(name, '' + val);
   _$jscoverage['/ie/attr.js'].lineData[115]++;
-  if (visit13_115_1(b)) {
-    _$jscoverage['/ie/attr.js'].lineData[116]++;
+  el.setAttribute(name, '' + val);
+  _$jscoverage['/ie/attr.js'].lineData[116]++;
+  if (visit13_116_1(b)) {
+    _$jscoverage['/ie/attr.js'].lineData[117]++;
     el.removeChild(b);
   }
 };

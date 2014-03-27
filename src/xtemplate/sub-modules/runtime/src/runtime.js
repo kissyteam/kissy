@@ -74,7 +74,7 @@ KISSY.add(function (S, require) {
     }
 
     var utils = {
-        'callCommand': callCommand
+        callCommand: callCommand
     };
 
     /**
@@ -157,7 +157,7 @@ KISSY.add(function (S, require) {
          * remove command by name
          * @param commandName
          */
-        'removeCommand': function (commandName) {
+        removeCommand: function (commandName) {
             var config = this.config;
             if (config.commands) {
                 delete config.commands[commandName];

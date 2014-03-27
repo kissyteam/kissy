@@ -398,7 +398,7 @@ function visit10_97_1(result) {
 function visit9_57_1(result) {
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog-xtpl.js'].branchData['35'][1].init(1498, 35, 'commandRet2 && commandRet2.isBuffer');
+}_$jscoverage['/overlay/dialog-xtpl.js'].branchData['35'][1].init(1492, 35, 'commandRet2 && commandRet2.isBuffer');
 function visit8_35_1(result) {
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['35'][1].ranCondition(result);
   return result;
@@ -453,7 +453,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/overlay/dialog-xtpl.js'].lineData[31]++;
     require("./overlay-xtpl");
     _$jscoverage['/overlay/dialog-xtpl.js'].lineData[32]++;
-    option0.params[0] = moduleWrap.resolveByName(option0.params[0]);
+    option0.params[0] = moduleWrap.resolve(option0.params[0]);
   }
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[34]++;
   var commandRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);

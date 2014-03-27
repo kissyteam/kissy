@@ -61,8 +61,7 @@ KISSY.add(function () {
             var iPosition = cs[i].position;
             if (iPosition === cPosition) {
                 return i;
-            }
-            else if (iPosition < cPosition) {
+            } else if (iPosition < cPosition) {
                 return -1;
             }
         }
@@ -75,8 +74,7 @@ KISSY.add(function () {
             var iPosition = cs[i].position;
             if (iPosition === cPosition) {
                 return -1;
-            }
-            else if (iPosition > cPosition) {
+            } else if (iPosition > cPosition) {
                 return i;
             }
         }

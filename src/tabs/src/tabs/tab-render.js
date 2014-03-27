@@ -22,7 +22,7 @@ KISSY.add(function (S, require) {
                 .attr('aria-selected', !!v);
         }
     }, {
-        name:'TabsTabRender',
+        name: 'TabsTabRender',
         HTML_PARSER: {
             selected: function (el) {
                 return el.hasClass(this.getBaseCssClass('selected'));

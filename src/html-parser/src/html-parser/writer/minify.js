@@ -29,7 +29,6 @@ KISSY.add(function (S, require) {
         return 0;
     }
 
-
     function canRemoveAttributeQuotes(value) {
         // http://www.w3.org/TR/html5/syntax.html#unquoted
         // avoid \w, which could match unicode in some implementations
@@ -111,15 +110,12 @@ KISSY.add(function (S, require) {
             attrValue = trim(attrValue)
                 .replace(/^javascript:[\s\xa0]*/i, '')
                 .replace(/[\s\xa0]*;$/, '');
-        }
-        else if (attrName === 'class') {
+        } else if (attrName === 'class') {
             attrValue = collapseWhitespace(trim(attrValue));
-        }
-        else if (isUriTypeAttribute(attrName, tag) ||
+        } else if (isUriTypeAttribute(attrName, tag) ||
             isNumberTypeAttribute(attrName, tag)) {
             attrValue = trim(attrValue);
-        }
-        else if (attrName === 'style') {
+        } else if (attrName === 'style') {
             attrValue = trim(attrValue).replace(/[\s\xa0]*;[\s\xa0]*$/, '');
         }
         return attrValue;

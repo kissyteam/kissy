@@ -250,97 +250,101 @@ if (! _$jscoverage['/bar.js']) {
   _$jscoverage['/bar.js'].lineData[49] = 0;
   _$jscoverage['/bar.js'].lineData[50] = 0;
   _$jscoverage['/bar.js'].lineData[51] = 0;
+  _$jscoverage['/bar.js'].lineData[53] = 0;
   _$jscoverage['/bar.js'].lineData[54] = 0;
-  _$jscoverage['/bar.js'].lineData[55] = 0;
-  _$jscoverage['/bar.js'].lineData[59] = 0;
+  _$jscoverage['/bar.js'].lineData[57] = 0;
+  _$jscoverage['/bar.js'].lineData[75] = 0;
+  _$jscoverage['/bar.js'].lineData[76] = 0;
   _$jscoverage['/bar.js'].lineData[77] = 0;
-  _$jscoverage['/bar.js'].lineData[78] = 0;
-  _$jscoverage['/bar.js'].lineData[79] = 0;
-  _$jscoverage['/bar.js'].lineData[82] = 0;
+  _$jscoverage['/bar.js'].lineData[80] = 0;
+  _$jscoverage['/bar.js'].lineData[81] = 0;
   _$jscoverage['/bar.js'].lineData[83] = 0;
-  _$jscoverage['/bar.js'].lineData[85] = 0;
+  _$jscoverage['/bar.js'].lineData[84] = 0;
   _$jscoverage['/bar.js'].lineData[86] = 0;
   _$jscoverage['/bar.js'].lineData[89] = 0;
+  _$jscoverage['/bar.js'].lineData[91] = 0;
   _$jscoverage['/bar.js'].lineData[92] = 0;
   _$jscoverage['/bar.js'].lineData[94] = 0;
-  _$jscoverage['/bar.js'].lineData[95] = 0;
-  _$jscoverage['/bar.js'].lineData[98] = 0;
-  _$jscoverage['/bar.js'].lineData[101] = 0;
-  _$jscoverage['/bar.js'].lineData[103] = 0;
-  _$jscoverage['/bar.js'].lineData[121] = 0;
+  _$jscoverage['/bar.js'].lineData[97] = 0;
+  _$jscoverage['/bar.js'].lineData[99] = 0;
+  _$jscoverage['/bar.js'].lineData[117] = 0;
+  _$jscoverage['/bar.js'].lineData[123] = 0;
+  _$jscoverage['/bar.js'].lineData[124] = 0;
   _$jscoverage['/bar.js'].lineData[127] = 0;
   _$jscoverage['/bar.js'].lineData[128] = 0;
   _$jscoverage['/bar.js'].lineData[131] = 0;
   _$jscoverage['/bar.js'].lineData[132] = 0;
   _$jscoverage['/bar.js'].lineData[135] = 0;
   _$jscoverage['/bar.js'].lineData[136] = 0;
+  _$jscoverage['/bar.js'].lineData[137] = 0;
+  _$jscoverage['/bar.js'].lineData[138] = 0;
   _$jscoverage['/bar.js'].lineData[139] = 0;
   _$jscoverage['/bar.js'].lineData[140] = 0;
   _$jscoverage['/bar.js'].lineData[141] = 0;
-  _$jscoverage['/bar.js'].lineData[142] = 0;
-  _$jscoverage['/bar.js'].lineData[143] = 0;
-  _$jscoverage['/bar.js'].lineData[144] = 0;
   _$jscoverage['/bar.js'].lineData[145] = 0;
+  _$jscoverage['/bar.js'].lineData[147] = 0;
+  _$jscoverage['/bar.js'].lineData[148] = 0;
   _$jscoverage['/bar.js'].lineData[149] = 0;
-  _$jscoverage['/bar.js'].lineData[151] = 0;
-  _$jscoverage['/bar.js'].lineData[152] = 0;
-  _$jscoverage['/bar.js'].lineData[153] = 0;
+  _$jscoverage['/bar.js'].lineData[156] = 0;
+  _$jscoverage['/bar.js'].lineData[158] = 0;
+  _$jscoverage['/bar.js'].lineData[159] = 0;
   _$jscoverage['/bar.js'].lineData[160] = 0;
-  _$jscoverage['/bar.js'].lineData[162] = 0;
-  _$jscoverage['/bar.js'].lineData[163] = 0;
-  _$jscoverage['/bar.js'].lineData[164] = 0;
+  _$jscoverage['/bar.js'].lineData[171] = 0;
+  _$jscoverage['/bar.js'].lineData[172] = 0;
+  _$jscoverage['/bar.js'].lineData[174] = 0;
   _$jscoverage['/bar.js'].lineData[175] = 0;
   _$jscoverage['/bar.js'].lineData[176] = 0;
-  _$jscoverage['/bar.js'].lineData[178] = 0;
-  _$jscoverage['/bar.js'].lineData[179] = 0;
   _$jscoverage['/bar.js'].lineData[180] = 0;
+  _$jscoverage['/bar.js'].lineData[182] = 0;
+  _$jscoverage['/bar.js'].lineData[183] = 0;
   _$jscoverage['/bar.js'].lineData[184] = 0;
+  _$jscoverage['/bar.js'].lineData[185] = 0;
   _$jscoverage['/bar.js'].lineData[186] = 0;
   _$jscoverage['/bar.js'].lineData[187] = 0;
   _$jscoverage['/bar.js'].lineData[188] = 0;
-  _$jscoverage['/bar.js'].lineData[189] = 0;
   _$jscoverage['/bar.js'].lineData[190] = 0;
-  _$jscoverage['/bar.js'].lineData[191] = 0;
   _$jscoverage['/bar.js'].lineData[192] = 0;
-  _$jscoverage['/bar.js'].lineData[194] = 0;
-  _$jscoverage['/bar.js'].lineData[196] = 0;
+  _$jscoverage['/bar.js'].lineData[193] = 0;
   _$jscoverage['/bar.js'].lineData[197] = 0;
-  _$jscoverage['/bar.js'].lineData[201] = 0;
+  _$jscoverage['/bar.js'].lineData[198] = 0;
   _$jscoverage['/bar.js'].lineData[202] = 0;
-  _$jscoverage['/bar.js'].lineData[206] = 0;
+  _$jscoverage['/bar.js'].lineData[203] = 0;
   _$jscoverage['/bar.js'].lineData[207] = 0;
   _$jscoverage['/bar.js'].lineData[211] = 0;
-  _$jscoverage['/bar.js'].lineData[215] = 0;
+  _$jscoverage['/bar.js'].lineData[212] = 0;
   _$jscoverage['/bar.js'].lineData[216] = 0;
+  _$jscoverage['/bar.js'].lineData[217] = 0;
+  _$jscoverage['/bar.js'].lineData[219] = 0;
   _$jscoverage['/bar.js'].lineData[220] = 0;
   _$jscoverage['/bar.js'].lineData[221] = 0;
   _$jscoverage['/bar.js'].lineData[223] = 0;
   _$jscoverage['/bar.js'].lineData[224] = 0;
-  _$jscoverage['/bar.js'].lineData[225] = 0;
-  _$jscoverage['/bar.js'].lineData[227] = 0;
-  _$jscoverage['/bar.js'].lineData[228] = 0;
+  _$jscoverage['/bar.js'].lineData[226] = 0;
+  _$jscoverage['/bar.js'].lineData[229] = 0;
   _$jscoverage['/bar.js'].lineData[230] = 0;
-  _$jscoverage['/bar.js'].lineData[233] = 0;
+  _$jscoverage['/bar.js'].lineData[231] = 0;
+  _$jscoverage['/bar.js'].lineData[232] = 0;
   _$jscoverage['/bar.js'].lineData[234] = 0;
-  _$jscoverage['/bar.js'].lineData[235] = 0;
-  _$jscoverage['/bar.js'].lineData[236] = 0;
+  _$jscoverage['/bar.js'].lineData[237] = 0;
   _$jscoverage['/bar.js'].lineData[238] = 0;
+  _$jscoverage['/bar.js'].lineData[239] = 0;
+  _$jscoverage['/bar.js'].lineData[240] = 0;
   _$jscoverage['/bar.js'].lineData[241] = 0;
   _$jscoverage['/bar.js'].lineData[242] = 0;
-  _$jscoverage['/bar.js'].lineData[243] = 0;
   _$jscoverage['/bar.js'].lineData[244] = 0;
   _$jscoverage['/bar.js'].lineData[245] = 0;
   _$jscoverage['/bar.js'].lineData[246] = 0;
-  _$jscoverage['/bar.js'].lineData[248] = 0;
+  _$jscoverage['/bar.js'].lineData[247] = 0;
   _$jscoverage['/bar.js'].lineData[249] = 0;
   _$jscoverage['/bar.js'].lineData[250] = 0;
   _$jscoverage['/bar.js'].lineData[251] = 0;
-  _$jscoverage['/bar.js'].lineData[253] = 0;
-  _$jscoverage['/bar.js'].lineData[254] = 0;
+  _$jscoverage['/bar.js'].lineData[252] = 0;
   _$jscoverage['/bar.js'].lineData[255] = 0;
   _$jscoverage['/bar.js'].lineData[256] = 0;
   _$jscoverage['/bar.js'].lineData[259] = 0;
   _$jscoverage['/bar.js'].lineData[260] = 0;
+  _$jscoverage['/bar.js'].lineData[261] = 0;
+  _$jscoverage['/bar.js'].lineData[262] = 0;
   _$jscoverage['/bar.js'].lineData[263] = 0;
   _$jscoverage['/bar.js'].lineData[264] = 0;
   _$jscoverage['/bar.js'].lineData[265] = 0;
@@ -348,13 +352,9 @@ if (! _$jscoverage['/bar.js']) {
   _$jscoverage['/bar.js'].lineData[267] = 0;
   _$jscoverage['/bar.js'].lineData[268] = 0;
   _$jscoverage['/bar.js'].lineData[269] = 0;
-  _$jscoverage['/bar.js'].lineData[270] = 0;
-  _$jscoverage['/bar.js'].lineData[271] = 0;
-  _$jscoverage['/bar.js'].lineData[272] = 0;
-  _$jscoverage['/bar.js'].lineData[273] = 0;
-  _$jscoverage['/bar.js'].lineData[278] = 0;
-  _$jscoverage['/bar.js'].lineData[279] = 0;
-  _$jscoverage['/bar.js'].lineData[280] = 0;
+  _$jscoverage['/bar.js'].lineData[274] = 0;
+  _$jscoverage['/bar.js'].lineData[275] = 0;
+  _$jscoverage['/bar.js'].lineData[276] = 0;
 }
 if (! _$jscoverage['/bar.js'].functionData) {
   _$jscoverage['/bar.js'].functionData = [];
@@ -383,140 +383,140 @@ if (! _$jscoverage['/bar.js'].branchData) {
   _$jscoverage['/bar.js'].branchData = {};
   _$jscoverage['/bar.js'].branchData['49'] = [];
   _$jscoverage['/bar.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['78'] = [];
-  _$jscoverage['/bar.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['82'] = [];
-  _$jscoverage['/bar.js'].branchData['82'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['85'] = [];
-  _$jscoverage['/bar.js'].branchData['85'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['94'] = [];
-  _$jscoverage['/bar.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['136'] = [];
-  _$jscoverage['/bar.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['144'] = [];
-  _$jscoverage['/bar.js'].branchData['144'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['145'] = [];
-  _$jscoverage['/bar.js'].branchData['145'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['163'] = [];
-  _$jscoverage['/bar.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['175'] = [];
-  _$jscoverage['/bar.js'].branchData['175'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['76'] = [];
+  _$jscoverage['/bar.js'].branchData['76'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['80'] = [];
+  _$jscoverage['/bar.js'].branchData['80'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['83'] = [];
+  _$jscoverage['/bar.js'].branchData['83'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['91'] = [];
+  _$jscoverage['/bar.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['132'] = [];
+  _$jscoverage['/bar.js'].branchData['132'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['140'] = [];
+  _$jscoverage['/bar.js'].branchData['140'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['141'] = [];
+  _$jscoverage['/bar.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['159'] = [];
+  _$jscoverage['/bar.js'].branchData['159'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['171'] = [];
+  _$jscoverage['/bar.js'].branchData['171'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['183'] = [];
+  _$jscoverage['/bar.js'].branchData['183'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['184'] = [];
+  _$jscoverage['/bar.js'].branchData['184'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['185'] = [];
+  _$jscoverage['/bar.js'].branchData['185'][1] = new BranchData();
   _$jscoverage['/bar.js'].branchData['187'] = [];
   _$jscoverage['/bar.js'].branchData['187'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['188'] = [];
-  _$jscoverage['/bar.js'].branchData['188'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['189'] = [];
-  _$jscoverage['/bar.js'].branchData['189'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['191'] = [];
-  _$jscoverage['/bar.js'].branchData['191'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['219'] = [];
+  _$jscoverage['/bar.js'].branchData['219'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['219'][2] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['220'] = [];
+  _$jscoverage['/bar.js'].branchData['220'][1] = new BranchData();
   _$jscoverage['/bar.js'].branchData['223'] = [];
   _$jscoverage['/bar.js'].branchData['223'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['223'][2] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['224'] = [];
-  _$jscoverage['/bar.js'].branchData['224'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['227'] = [];
-  _$jscoverage['/bar.js'].branchData['227'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['235'] = [];
-  _$jscoverage['/bar.js'].branchData['235'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['245'] = [];
-  _$jscoverage['/bar.js'].branchData['245'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['250'] = [];
-  _$jscoverage['/bar.js'].branchData['250'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['253'] = [];
-  _$jscoverage['/bar.js'].branchData['253'][1] = new BranchData();
-  _$jscoverage['/bar.js'].branchData['278'] = [];
-  _$jscoverage['/bar.js'].branchData['278'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['231'] = [];
+  _$jscoverage['/bar.js'].branchData['231'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['241'] = [];
+  _$jscoverage['/bar.js'].branchData['241'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['246'] = [];
+  _$jscoverage['/bar.js'].branchData['246'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['249'] = [];
+  _$jscoverage['/bar.js'].branchData['249'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['274'] = [];
+  _$jscoverage['/bar.js'].branchData['274'][1] = new BranchData();
 }
-_$jscoverage['/bar.js'].branchData['278'][1].init(18, 18, 'this._stack.length');
-function visit28_278_1(result) {
-  _$jscoverage['/bar.js'].branchData['278'][1].ranCondition(result);
+_$jscoverage['/bar.js'].branchData['274'][1].init(18, 18, 'this._stack.length');
+function visit33_274_1(result) {
+  _$jscoverage['/bar.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['253'][1].init(1207, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
-function visit27_253_1(result) {
-  _$jscoverage['/bar.js'].branchData['253'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['249'][1].init(1207, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
+function visit32_249_1(result) {
+  _$jscoverage['/bar.js'].branchData['249'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['250'][1].init(1095, 22, 'backBtn.get(\'visible\')');
-function visit26_250_1(result) {
-  _$jscoverage['/bar.js'].branchData['250'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['246'][1].init(1095, 22, 'backBtn.get(\'visible\')');
+function visit31_246_1(result) {
+  _$jscoverage['/bar.js'].branchData['246'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['245'][1].init(872, 16, 'self.ghostBackEl');
-function visit25_245_1(result) {
-  _$jscoverage['/bar.js'].branchData['245'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['241'][1].init(872, 16, 'self.ghostBackEl');
+function visit30_241_1(result) {
+  _$jscoverage['/bar.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['235'][1].init(488, 16, 'self.ghostBackEl');
-function visit24_235_1(result) {
-  _$jscoverage['/bar.js'].branchData['235'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['231'][1].init(488, 16, 'self.ghostBackEl');
+function visit29_231_1(result) {
+  _$jscoverage['/bar.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['227'][1].init(135, 7, 'backBtn');
-function visit23_227_1(result) {
-  _$jscoverage['/bar.js'].branchData['227'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/bar.js'].branchData['224'][1].init(22, 15, 'self._withTitle');
-function visit22_224_1(result) {
-  _$jscoverage['/bar.js'].branchData['224'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/bar.js'].branchData['223'][2].init(94, 26, 'backBtn && self._withTitle');
-function visit21_223_2(result) {
-  _$jscoverage['/bar.js'].branchData['223'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/bar.js'].branchData['223'][1].init(92, 29, '!(backBtn && self._withTitle)');
-function visit20_223_1(result) {
+}_$jscoverage['/bar.js'].branchData['223'][1].init(135, 7, 'backBtn');
+function visit28_223_1(result) {
   _$jscoverage['/bar.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['191'][1].init(200, 17, 'align === \'right\'');
-function visit19_191_1(result) {
-  _$jscoverage['/bar.js'].branchData['191'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['220'][1].init(22, 15, 'self._withTitle');
+function visit27_220_1(result) {
+  _$jscoverage['/bar.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['189'][1].init(90, 16, 'align === \'left\'');
-function visit18_189_1(result) {
-  _$jscoverage['/bar.js'].branchData['189'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['219'][2].init(94, 26, 'backBtn && self._withTitle');
+function visit26_219_2(result) {
+  _$jscoverage['/bar.js'].branchData['219'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['188'][1].init(45, 22, 'config.align || \'left\'');
-function visit17_188_1(result) {
-  _$jscoverage['/bar.js'].branchData['188'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['219'][1].init(92, 29, '!(backBtn && self._withTitle)');
+function visit25_219_1(result) {
+  _$jscoverage['/bar.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['187'][1].init(163, 34, '!config.elBefore && !config.render');
-function visit16_187_1(result) {
+}_$jscoverage['/bar.js'].branchData['187'][1].init(200, 17, 'align === \'right\'');
+function visit24_187_1(result) {
   _$jscoverage['/bar.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['175'][1].init(18, 13, 'this._backBtn');
-function visit15_175_1(result) {
-  _$jscoverage['/bar.js'].branchData['175'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['185'][1].init(90, 16, 'align === \'left\'');
+function visit23_185_1(result) {
+  _$jscoverage['/bar.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['163'][1].init(133, 26, 'self.get(\'withBackButton\')');
-function visit14_163_1(result) {
-  _$jscoverage['/bar.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['184'][1].init(45, 22, 'config.align || \'left\'');
+function visit22_184_1(result) {
+  _$jscoverage['/bar.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['145'][1].init(54, 26, 'newView.get(\'title\') || \'\'');
-function visit13_145_1(result) {
-  _$jscoverage['/bar.js'].branchData['145'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['183'][1].init(163, 34, '!config.elBefore && !config.render');
+function visit21_183_1(result) {
+  _$jscoverage['/bar.js'].branchData['183'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['144'][1].init(144, 7, 'oldView');
-function visit12_144_1(result) {
-  _$jscoverage['/bar.js'].branchData['144'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['171'][1].init(18, 13, 'this._backBtn');
+function visit20_171_1(result) {
+  _$jscoverage['/bar.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['136'][1].init(28, 28, 'e.newView.get(\'title\') || \'\'');
-function visit11_136_1(result) {
-  _$jscoverage['/bar.js'].branchData['136'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['159'][1].init(133, 26, 'self.get(\'withBackButton\')');
+function visit19_159_1(result) {
+  _$jscoverage['/bar.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['94'][1].init(77, 19, 'omega !== undefined');
-function visit10_94_1(result) {
-  _$jscoverage['/bar.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['141'][1].init(54, 26, 'newView.get(\'title\') || \'\'');
+function visit18_141_1(result) {
+  _$jscoverage['/bar.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['85'][1].init(77, 19, 'omega !== undefined');
-function visit9_85_1(result) {
-  _$jscoverage['/bar.js'].branchData['85'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['140'][1].init(144, 7, 'oldView');
+function visit17_140_1(result) {
+  _$jscoverage['/bar.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['82'][1].init(1468, 7, 'reverse');
-function visit8_82_1(result) {
-  _$jscoverage['/bar.js'].branchData['82'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['132'][1].init(28, 28, 'e.newView.get(\'title\') || \'\'');
+function visit16_132_1(result) {
+  _$jscoverage['/bar.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar.js'].branchData['78'][1].init(1376, 19, 'titleWidth > titleX');
-function visit7_78_1(result) {
-  _$jscoverage['/bar.js'].branchData['78'][1].ranCondition(result);
+}_$jscoverage['/bar.js'].branchData['91'][1].init(77, 19, 'omega !== undefined');
+function visit15_91_1(result) {
+  _$jscoverage['/bar.js'].branchData['91'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/bar.js'].branchData['83'][1].init(77, 19, 'omega !== undefined');
+function visit14_83_1(result) {
+  _$jscoverage['/bar.js'].branchData['83'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/bar.js'].branchData['80'][1].init(1457, 7, 'reverse');
+function visit13_80_1(result) {
+  _$jscoverage['/bar.js'].branchData['80'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/bar.js'].branchData['76'][1].init(1365, 19, 'titleWidth > titleX');
+function visit12_76_1(result) {
+  _$jscoverage['/bar.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['49'][1].init(533, 7, 'reverse');
-function visit6_49_1(result) {
+function visit11_49_1(result) {
   _$jscoverage['/bar.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].lineData[5]++;
@@ -567,18 +567,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/bar.js'].lineData[39]++;
     var barElement = self.get('el'), titleElement = self.get('titleEl'), minOffset = Math.min(barElement[0].offsetWidth / 3, 200), newLeftWidth = backEl[0].offsetWidth, barWidth = barElement[0].offsetWidth, titleX = titleElement.offset().left - barElement.offset().left, titleWidth = titleElement[0].offsetWidth, oldBackWidth = backElProps.width, newOffset, oldOffset, backElAnims, titleAnims, omega, theta;
     _$jscoverage['/bar.js'].lineData[49]++;
-    if (visit6_49_1(reverse)) {
+    if (visit11_49_1(reverse)) {
       _$jscoverage['/bar.js'].lineData[50]++;
       newOffset = -oldBackWidth;
       _$jscoverage['/bar.js'].lineData[51]++;
       oldOffset = Math.min(titleX - oldBackWidth, minOffset);
     } else {
-      _$jscoverage['/bar.js'].lineData[54]++;
+      _$jscoverage['/bar.js'].lineData[53]++;
       oldOffset = -oldBackWidth;
-      _$jscoverage['/bar.js'].lineData[55]++;
+      _$jscoverage['/bar.js'].lineData[54]++;
       newOffset = Math.min(titleX, minOffset);
     }
-    _$jscoverage['/bar.js'].lineData[59]++;
+    _$jscoverage['/bar.js'].lineData[57]++;
     backElAnims = {
   element: {
   from: {
@@ -590,40 +590,40 @@ KISSY.add(function(S, require) {
   to: {
   transform: 'translateX(' + oldOffset + 'px) translateZ(0)', 
   opacity: 0}}};
-    _$jscoverage['/bar.js'].lineData[77]++;
+    _$jscoverage['/bar.js'].lineData[75]++;
     theta = -titleX + newLeftWidth;
-    _$jscoverage['/bar.js'].lineData[78]++;
-    if (visit7_78_1(titleWidth > titleX)) {
-      _$jscoverage['/bar.js'].lineData[79]++;
+    _$jscoverage['/bar.js'].lineData[76]++;
+    if (visit12_76_1(titleWidth > titleX)) {
+      _$jscoverage['/bar.js'].lineData[77]++;
       omega = -titleX - titleWidth;
     }
-    _$jscoverage['/bar.js'].lineData[82]++;
-    if (visit8_82_1(reverse)) {
-      _$jscoverage['/bar.js'].lineData[83]++;
+    _$jscoverage['/bar.js'].lineData[80]++;
+    if (visit13_80_1(reverse)) {
+      _$jscoverage['/bar.js'].lineData[81]++;
       oldOffset = barWidth - titleX - titleWidth;
-      _$jscoverage['/bar.js'].lineData[85]++;
-      if (visit9_85_1(omega !== undefined)) {
-        _$jscoverage['/bar.js'].lineData[86]++;
+      _$jscoverage['/bar.js'].lineData[83]++;
+      if (visit14_83_1(omega !== undefined)) {
+        _$jscoverage['/bar.js'].lineData[84]++;
         newOffset = omega;
       } else {
-        _$jscoverage['/bar.js'].lineData[89]++;
+        _$jscoverage['/bar.js'].lineData[86]++;
         newOffset = theta;
       }
     } else {
-      _$jscoverage['/bar.js'].lineData[92]++;
+      _$jscoverage['/bar.js'].lineData[89]++;
       newOffset = barWidth - titleX - titleWidth;
-      _$jscoverage['/bar.js'].lineData[94]++;
-      if (visit10_94_1(omega !== undefined)) {
-        _$jscoverage['/bar.js'].lineData[95]++;
+      _$jscoverage['/bar.js'].lineData[91]++;
+      if (visit15_91_1(omega !== undefined)) {
+        _$jscoverage['/bar.js'].lineData[92]++;
         oldOffset = omega;
       } else {
-        _$jscoverage['/bar.js'].lineData[98]++;
+        _$jscoverage['/bar.js'].lineData[94]++;
         oldOffset = theta;
       }
-      _$jscoverage['/bar.js'].lineData[101]++;
+      _$jscoverage['/bar.js'].lineData[97]++;
       newOffset = Math.max(0, newOffset);
     }
-    _$jscoverage['/bar.js'].lineData[103]++;
+    _$jscoverage['/bar.js'].lineData[99]++;
     titleAnims = {
   element: {
   from: {
@@ -635,68 +635,68 @@ KISSY.add(function(S, require) {
   to: {
   transform: 'translateX(' + oldOffset + 'px) translateZ(0)', 
   opacity: 0}}};
-    _$jscoverage['/bar.js'].lineData[121]++;
+    _$jscoverage['/bar.js'].lineData[117]++;
     return {
   back: backElAnims, 
   title: titleAnims};
   }
-  _$jscoverage['/bar.js'].lineData[127]++;
+  _$jscoverage['/bar.js'].lineData[123]++;
   function onBackButtonClick() {
     _$jscoverage['/bar.js'].functionData[4]++;
-    _$jscoverage['/bar.js'].lineData[128]++;
+    _$jscoverage['/bar.js'].lineData[124]++;
     this.fire('backward');
   }
-  _$jscoverage['/bar.js'].lineData[131]++;
+  _$jscoverage['/bar.js'].lineData[127]++;
   function onBack() {
     _$jscoverage['/bar.js'].functionData[5]++;
-    _$jscoverage['/bar.js'].lineData[132]++;
+    _$jscoverage['/bar.js'].lineData[128]++;
     this.get('navigationView').pop();
   }
-  _$jscoverage['/bar.js'].lineData[135]++;
+  _$jscoverage['/bar.js'].lineData[131]++;
   function afterInnerViewChange(e) {
     _$jscoverage['/bar.js'].functionData[6]++;
-    _$jscoverage['/bar.js'].lineData[136]++;
-    this.set('title', visit11_136_1(e.newView.get('title') || ''));
+    _$jscoverage['/bar.js'].lineData[132]++;
+    this.set('title', visit16_132_1(e.newView.get('title') || ''));
   }
-  _$jscoverage['/bar.js'].lineData[139]++;
+  _$jscoverage['/bar.js'].lineData[135]++;
   function beforeInnerViewChange(e) {
     _$jscoverage['/bar.js'].functionData[7]++;
-    _$jscoverage['/bar.js'].lineData[140]++;
+    _$jscoverage['/bar.js'].lineData[136]++;
     var self = this;
-    _$jscoverage['/bar.js'].lineData[141]++;
+    _$jscoverage['/bar.js'].lineData[137]++;
     var oldView = e.oldView;
-    _$jscoverage['/bar.js'].lineData[142]++;
+    _$jscoverage['/bar.js'].lineData[138]++;
     var newView = e.newView;
-    _$jscoverage['/bar.js'].lineData[143]++;
+    _$jscoverage['/bar.js'].lineData[139]++;
     var backward = e.backward;
-    _$jscoverage['/bar.js'].lineData[144]++;
-    if (visit12_144_1(oldView)) {
-      _$jscoverage['/bar.js'].lineData[145]++;
-      self[backward ? 'backward' : 'forward'](visit13_145_1(newView.get('title') || ''));
+    _$jscoverage['/bar.js'].lineData[140]++;
+    if (visit17_140_1(oldView)) {
+      _$jscoverage['/bar.js'].lineData[141]++;
+      self[backward ? 'backward' : 'forward'](visit18_141_1(newView.get('title') || ''));
     }
   }
-  _$jscoverage['/bar.js'].lineData[149]++;
+  _$jscoverage['/bar.js'].lineData[145]++;
   return Control.extend({
   initializer: function() {
   _$jscoverage['/bar.js'].functionData[8]++;
-  _$jscoverage['/bar.js'].lineData[151]++;
+  _$jscoverage['/bar.js'].lineData[147]++;
   this._withTitle = this.get('withTitle');
-  _$jscoverage['/bar.js'].lineData[152]++;
+  _$jscoverage['/bar.js'].lineData[148]++;
   this._stack = [];
-  _$jscoverage['/bar.js'].lineData[153]++;
+  _$jscoverage['/bar.js'].lineData[149]++;
   this.publish('backward', {
   defaultFn: onBack, 
   defaultTargetOnly: true});
 }, 
   renderUI: function() {
   _$jscoverage['/bar.js'].functionData[9]++;
-  _$jscoverage['/bar.js'].lineData[160]++;
+  _$jscoverage['/bar.js'].lineData[156]++;
   var self = this, prefixCls = self.get('prefixCls');
-  _$jscoverage['/bar.js'].lineData[162]++;
+  _$jscoverage['/bar.js'].lineData[158]++;
   self._buttons = {};
-  _$jscoverage['/bar.js'].lineData[163]++;
-  if (visit14_163_1(self.get('withBackButton'))) {
-    _$jscoverage['/bar.js'].lineData[164]++;
+  _$jscoverage['/bar.js'].lineData[159]++;
+  if (visit19_159_1(self.get('withBackButton'))) {
+    _$jscoverage['/bar.js'].lineData[160]++;
     self._backBtn = new Button({
   prefixCls: prefixCls + 'navigation-bar-', 
   elCls: prefixCls + 'navigation-bar-backward', 
@@ -707,176 +707,176 @@ KISSY.add(function(S, require) {
 }, 
   bindUI: function() {
   _$jscoverage['/bar.js'].functionData[10]++;
-  _$jscoverage['/bar.js'].lineData[175]++;
-  if (visit15_175_1(this._backBtn)) {
-    _$jscoverage['/bar.js'].lineData[176]++;
+  _$jscoverage['/bar.js'].lineData[171]++;
+  if (visit20_171_1(this._backBtn)) {
+    _$jscoverage['/bar.js'].lineData[172]++;
     this._backBtn.on('click', onBackButtonClick, this);
   }
-  _$jscoverage['/bar.js'].lineData[178]++;
+  _$jscoverage['/bar.js'].lineData[174]++;
   var navigationView = this.get('navigationView');
-  _$jscoverage['/bar.js'].lineData[179]++;
+  _$jscoverage['/bar.js'].lineData[175]++;
   navigationView.on('afterInnerViewChange', afterInnerViewChange, this);
-  _$jscoverage['/bar.js'].lineData[180]++;
+  _$jscoverage['/bar.js'].lineData[176]++;
   navigationView.on('beforeInnerViewChange', beforeInnerViewChange, this);
 }, 
   addButton: function(name, config) {
   _$jscoverage['/bar.js'].functionData[11]++;
-  _$jscoverage['/bar.js'].lineData[184]++;
+  _$jscoverage['/bar.js'].lineData[180]++;
   var self = this, prefixCls = self.get('prefixCls');
-  _$jscoverage['/bar.js'].lineData[186]++;
+  _$jscoverage['/bar.js'].lineData[182]++;
   config.prefixCls = prefixCls + 'navigation-bar-';
-  _$jscoverage['/bar.js'].lineData[187]++;
-  if (visit16_187_1(!config.elBefore && !config.render)) {
-    _$jscoverage['/bar.js'].lineData[188]++;
-    var align = config.align = visit17_188_1(config.align || 'left');
-    _$jscoverage['/bar.js'].lineData[189]++;
-    if (visit18_189_1(align === 'left')) {
-      _$jscoverage['/bar.js'].lineData[190]++;
+  _$jscoverage['/bar.js'].lineData[183]++;
+  if (visit21_183_1(!config.elBefore && !config.render)) {
+    _$jscoverage['/bar.js'].lineData[184]++;
+    var align = config.align = visit22_184_1(config.align || 'left');
+    _$jscoverage['/bar.js'].lineData[185]++;
+    if (visit23_185_1(align === 'left')) {
+      _$jscoverage['/bar.js'].lineData[186]++;
       config.elBefore = self.get('centerEl');
     } else {
-      _$jscoverage['/bar.js'].lineData[191]++;
-      if (visit19_191_1(align === 'right')) {
-        _$jscoverage['/bar.js'].lineData[192]++;
+      _$jscoverage['/bar.js'].lineData[187]++;
+      if (visit24_187_1(align === 'right')) {
+        _$jscoverage['/bar.js'].lineData[188]++;
         config.render = self.get('contentEl');
       }
     }
-    _$jscoverage['/bar.js'].lineData[194]++;
+    _$jscoverage['/bar.js'].lineData[190]++;
     delete config.align;
   }
-  _$jscoverage['/bar.js'].lineData[196]++;
+  _$jscoverage['/bar.js'].lineData[192]++;
   self._buttons[name] = new Button(config).render();
-  _$jscoverage['/bar.js'].lineData[197]++;
+  _$jscoverage['/bar.js'].lineData[193]++;
   return self._buttons[name];
 }, 
   insertButtonBefore: function(name, config, button) {
   _$jscoverage['/bar.js'].functionData[12]++;
-  _$jscoverage['/bar.js'].lineData[201]++;
+  _$jscoverage['/bar.js'].lineData[197]++;
   config.elBefore = button.get('el');
-  _$jscoverage['/bar.js'].lineData[202]++;
+  _$jscoverage['/bar.js'].lineData[198]++;
   return this.addButton(name, config);
 }, 
   removeButton: function(name) {
   _$jscoverage['/bar.js'].functionData[13]++;
-  _$jscoverage['/bar.js'].lineData[206]++;
+  _$jscoverage['/bar.js'].lineData[202]++;
   this._buttons[name].destroy();
-  _$jscoverage['/bar.js'].lineData[207]++;
+  _$jscoverage['/bar.js'].lineData[203]++;
   delete this._buttons[name];
 }, 
   getButton: function(name) {
   _$jscoverage['/bar.js'].functionData[14]++;
-  _$jscoverage['/bar.js'].lineData[211]++;
+  _$jscoverage['/bar.js'].lineData[207]++;
   return this._buttons[name];
 }, 
   forward: function(title) {
   _$jscoverage['/bar.js'].functionData[15]++;
-  _$jscoverage['/bar.js'].lineData[215]++;
+  _$jscoverage['/bar.js'].lineData[211]++;
   this._stack.push(title);
-  _$jscoverage['/bar.js'].lineData[216]++;
+  _$jscoverage['/bar.js'].lineData[212]++;
   this.go(title, true);
 }, 
   go: function(title, hasPrevious, reverse) {
   _$jscoverage['/bar.js'].functionData[16]++;
-  _$jscoverage['/bar.js'].lineData[220]++;
+  _$jscoverage['/bar.js'].lineData[216]++;
   var self = this;
-  _$jscoverage['/bar.js'].lineData[221]++;
+  _$jscoverage['/bar.js'].lineData[217]++;
   var backBtn = self._backBtn;
-  _$jscoverage['/bar.js'].lineData[223]++;
-  if (visit20_223_1(!(visit21_223_2(backBtn && self._withTitle)))) {
-    _$jscoverage['/bar.js'].lineData[224]++;
-    if (visit22_224_1(self._withTitle)) {
-      _$jscoverage['/bar.js'].lineData[225]++;
+  _$jscoverage['/bar.js'].lineData[219]++;
+  if (visit25_219_1(!(visit26_219_2(backBtn && self._withTitle)))) {
+    _$jscoverage['/bar.js'].lineData[220]++;
+    if (visit27_220_1(self._withTitle)) {
+      _$jscoverage['/bar.js'].lineData[221]++;
       self.get('titleEl').html(title);
     }
-    _$jscoverage['/bar.js'].lineData[227]++;
-    if (visit23_227_1(backBtn)) {
-      _$jscoverage['/bar.js'].lineData[228]++;
+    _$jscoverage['/bar.js'].lineData[223]++;
+    if (visit28_223_1(backBtn)) {
+      _$jscoverage['/bar.js'].lineData[224]++;
       backBtn[hasPrevious ? 'show' : 'hide']();
     }
-    _$jscoverage['/bar.js'].lineData[230]++;
+    _$jscoverage['/bar.js'].lineData[226]++;
     return;
   }
-  _$jscoverage['/bar.js'].lineData[233]++;
+  _$jscoverage['/bar.js'].lineData[229]++;
   var backEl = backBtn.get('el');
-  _$jscoverage['/bar.js'].lineData[234]++;
+  _$jscoverage['/bar.js'].lineData[230]++;
   backEl.stop(true);
-  _$jscoverage['/bar.js'].lineData[235]++;
-  if (visit24_235_1(self.ghostBackEl)) {
-    _$jscoverage['/bar.js'].lineData[236]++;
+  _$jscoverage['/bar.js'].lineData[231]++;
+  if (visit29_231_1(self.ghostBackEl)) {
+    _$jscoverage['/bar.js'].lineData[232]++;
     self.ghostBackEl.stop(true);
   }
-  _$jscoverage['/bar.js'].lineData[238]++;
+  _$jscoverage['/bar.js'].lineData[234]++;
   var backElProps = {
   width: backEl[0].offsetWidth};
-  _$jscoverage['/bar.js'].lineData[241]++;
+  _$jscoverage['/bar.js'].lineData[237]++;
   var ghostBackEl = createGhost(backEl);
-  _$jscoverage['/bar.js'].lineData[242]++;
+  _$jscoverage['/bar.js'].lineData[238]++;
   self.ghostBackEl = ghostBackEl;
-  _$jscoverage['/bar.js'].lineData[243]++;
+  _$jscoverage['/bar.js'].lineData[239]++;
   backEl.css('opacity', 0);
-  _$jscoverage['/bar.js'].lineData[244]++;
+  _$jscoverage['/bar.js'].lineData[240]++;
   backBtn[hasPrevious ? 'show' : 'hide']();
-  _$jscoverage['/bar.js'].lineData[245]++;
-  if (visit25_245_1(self.ghostBackEl)) {
-    _$jscoverage['/bar.js'].lineData[246]++;
+  _$jscoverage['/bar.js'].lineData[241]++;
+  if (visit30_241_1(self.ghostBackEl)) {
+    _$jscoverage['/bar.js'].lineData[242]++;
     self.ghostBackEl.stop(true);
   }
-  _$jscoverage['/bar.js'].lineData[248]++;
+  _$jscoverage['/bar.js'].lineData[244]++;
   var anims = getAnimProps(self, backEl, backElProps, reverse);
-  _$jscoverage['/bar.js'].lineData[249]++;
+  _$jscoverage['/bar.js'].lineData[245]++;
   backEl.css(anims.back.element.from);
-  _$jscoverage['/bar.js'].lineData[250]++;
-  if (visit26_250_1(backBtn.get('visible'))) {
-    _$jscoverage['/bar.js'].lineData[251]++;
+  _$jscoverage['/bar.js'].lineData[246]++;
+  if (visit31_246_1(backBtn.get('visible'))) {
+    _$jscoverage['/bar.js'].lineData[247]++;
     anim(backEl, anims.back.element.to);
   }
-  _$jscoverage['/bar.js'].lineData[253]++;
-  if (visit27_253_1(ghostBackEl.css('display') !== 'none')) {
-    _$jscoverage['/bar.js'].lineData[254]++;
+  _$jscoverage['/bar.js'].lineData[249]++;
+  if (visit32_249_1(ghostBackEl.css('display') !== 'none')) {
+    _$jscoverage['/bar.js'].lineData[250]++;
     anim(ghostBackEl, anims.back.ghost.to, function() {
   _$jscoverage['/bar.js'].functionData[17]++;
-  _$jscoverage['/bar.js'].lineData[255]++;
+  _$jscoverage['/bar.js'].lineData[251]++;
   ghostBackEl.remove();
-  _$jscoverage['/bar.js'].lineData[256]++;
+  _$jscoverage['/bar.js'].lineData[252]++;
   self.ghostBackEl = null;
 });
   } else {
-    _$jscoverage['/bar.js'].lineData[259]++;
+    _$jscoverage['/bar.js'].lineData[255]++;
     ghostBackEl.remove();
-    _$jscoverage['/bar.js'].lineData[260]++;
+    _$jscoverage['/bar.js'].lineData[256]++;
     self.ghostBackEl = null;
   }
-  _$jscoverage['/bar.js'].lineData[263]++;
+  _$jscoverage['/bar.js'].lineData[259]++;
   var titleEl = self.get('titleEl');
-  _$jscoverage['/bar.js'].lineData[264]++;
+  _$jscoverage['/bar.js'].lineData[260]++;
   titleEl.stop(true);
-  _$jscoverage['/bar.js'].lineData[265]++;
+  _$jscoverage['/bar.js'].lineData[261]++;
   var ghostTitleEl = createGhost(titleEl.parent());
-  _$jscoverage['/bar.js'].lineData[266]++;
+  _$jscoverage['/bar.js'].lineData[262]++;
   self.ghostTitleEl = ghostTitleEl;
-  _$jscoverage['/bar.js'].lineData[267]++;
+  _$jscoverage['/bar.js'].lineData[263]++;
   titleEl.css('opacity', 0);
-  _$jscoverage['/bar.js'].lineData[268]++;
+  _$jscoverage['/bar.js'].lineData[264]++;
   self.set('title', title);
-  _$jscoverage['/bar.js'].lineData[269]++;
+  _$jscoverage['/bar.js'].lineData[265]++;
   titleEl.css(anims.title.element.from);
-  _$jscoverage['/bar.js'].lineData[270]++;
+  _$jscoverage['/bar.js'].lineData[266]++;
   anim(titleEl, anims.title.element.to);
-  _$jscoverage['/bar.js'].lineData[271]++;
+  _$jscoverage['/bar.js'].lineData[267]++;
   anim(ghostTitleEl, anims.title.ghost.to, function() {
   _$jscoverage['/bar.js'].functionData[18]++;
-  _$jscoverage['/bar.js'].lineData[272]++;
+  _$jscoverage['/bar.js'].lineData[268]++;
   ghostTitleEl.remove();
-  _$jscoverage['/bar.js'].lineData[273]++;
+  _$jscoverage['/bar.js'].lineData[269]++;
   self.ghostTitleEl = null;
 });
 }, 
   backward: function(title) {
   _$jscoverage['/bar.js'].functionData[19]++;
-  _$jscoverage['/bar.js'].lineData[278]++;
-  if (visit28_278_1(this._stack.length)) {
-    _$jscoverage['/bar.js'].lineData[279]++;
+  _$jscoverage['/bar.js'].lineData[274]++;
+  if (visit33_274_1(this._stack.length)) {
+    _$jscoverage['/bar.js'].lineData[275]++;
     this._stack.pop();
-    _$jscoverage['/bar.js'].lineData[280]++;
+    _$jscoverage['/bar.js'].lineData[276]++;
     this.go(title, this._stack.length, true);
   }
 }}, {

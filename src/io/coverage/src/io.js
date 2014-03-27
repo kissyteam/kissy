@@ -244,26 +244,26 @@ if (! _$jscoverage['/io.js']) {
   _$jscoverage['/io.js'].lineData[22] = 0;
   _$jscoverage['/io.js'].lineData[25] = 0;
   _$jscoverage['/io.js'].lineData[35] = 0;
+  _$jscoverage['/io.js'].lineData[70] = 0;
   _$jscoverage['/io.js'].lineData[71] = 0;
-  _$jscoverage['/io.js'].lineData[72] = 0;
+  _$jscoverage['/io.js'].lineData[74] = 0;
   _$jscoverage['/io.js'].lineData[75] = 0;
-  _$jscoverage['/io.js'].lineData[76] = 0;
-  _$jscoverage['/io.js'].lineData[78] = 0;
+  _$jscoverage['/io.js'].lineData[77] = 0;
+  _$jscoverage['/io.js'].lineData[93] = 0;
   _$jscoverage['/io.js'].lineData[94] = 0;
   _$jscoverage['/io.js'].lineData[95] = 0;
-  _$jscoverage['/io.js'].lineData[96] = 0;
-  _$jscoverage['/io.js'].lineData[98] = 0;
+  _$jscoverage['/io.js'].lineData[97] = 0;
+  _$jscoverage['/io.js'].lineData[121] = 0;
   _$jscoverage['/io.js'].lineData[122] = 0;
   _$jscoverage['/io.js'].lineData[123] = 0;
-  _$jscoverage['/io.js'].lineData[124] = 0;
-  _$jscoverage['/io.js'].lineData[126] = 0;
+  _$jscoverage['/io.js'].lineData[125] = 0;
+  _$jscoverage['/io.js'].lineData[143] = 0;
   _$jscoverage['/io.js'].lineData[144] = 0;
-  _$jscoverage['/io.js'].lineData[145] = 0;
+  _$jscoverage['/io.js'].lineData[148] = 0;
   _$jscoverage['/io.js'].lineData[149] = 0;
-  _$jscoverage['/io.js'].lineData[150] = 0;
-  _$jscoverage['/io.js'].lineData[152] = 0;
-  _$jscoverage['/io.js'].lineData[163] = 0;
-  _$jscoverage['/io.js'].lineData[172] = 0;
+  _$jscoverage['/io.js'].lineData[151] = 0;
+  _$jscoverage['/io.js'].lineData[162] = 0;
+  _$jscoverage['/io.js'].lineData[167] = 0;
 }
 if (! _$jscoverage['/io.js'].functionData) {
   _$jscoverage['/io.js'].functionData = [];
@@ -280,30 +280,30 @@ if (! _$jscoverage['/io.js'].branchData) {
   _$jscoverage['/io.js'].branchData['19'][1] = new BranchData();
   _$jscoverage['/io.js'].branchData['26'] = [];
   _$jscoverage['/io.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/io.js'].branchData['71'] = [];
-  _$jscoverage['/io.js'].branchData['71'][1] = new BranchData();
-  _$jscoverage['/io.js'].branchData['94'] = [];
-  _$jscoverage['/io.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/io.js'].branchData['122'] = [];
-  _$jscoverage['/io.js'].branchData['122'][1] = new BranchData();
-  _$jscoverage['/io.js'].branchData['144'] = [];
-  _$jscoverage['/io.js'].branchData['144'][1] = new BranchData();
+  _$jscoverage['/io.js'].branchData['70'] = [];
+  _$jscoverage['/io.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/io.js'].branchData['93'] = [];
+  _$jscoverage['/io.js'].branchData['93'][1] = new BranchData();
+  _$jscoverage['/io.js'].branchData['121'] = [];
+  _$jscoverage['/io.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/io.js'].branchData['143'] = [];
+  _$jscoverage['/io.js'].branchData['143'][1] = new BranchData();
 }
-_$jscoverage['/io.js'].branchData['144'][1].init(17, 26, 'typeof data === \'function\'');
-function visit192_144_1(result) {
-  _$jscoverage['/io.js'].branchData['144'][1].ranCondition(result);
+_$jscoverage['/io.js'].branchData['143'][1].init(17, 26, 'typeof data === \'function\'');
+function visit192_143_1(result) {
+  _$jscoverage['/io.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['122'][1].init(17, 26, 'typeof data === \'function\'');
-function visit191_122_1(result) {
-  _$jscoverage['/io.js'].branchData['122'][1].ranCondition(result);
+}_$jscoverage['/io.js'].branchData['121'][1].init(17, 26, 'typeof data === \'function\'');
+function visit191_121_1(result) {
+  _$jscoverage['/io.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['94'][1].init(17, 26, 'typeof data === \'function\'');
-function visit190_94_1(result) {
-  _$jscoverage['/io.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/io.js'].branchData['93'][1].init(17, 26, 'typeof data === \'function\'');
+function visit190_93_1(result) {
+  _$jscoverage['/io.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['71'][1].init(17, 26, 'typeof data === \'function\'');
-function visit189_71_1(result) {
-  _$jscoverage['/io.js'].branchData['71'][1].ranCondition(result);
+}_$jscoverage['/io.js'].branchData['70'][1].init(17, 26, 'typeof data === \'function\'');
+function visit189_70_1(result) {
+  _$jscoverage['/io.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].branchData['26'][1].init(19, 13, 'type || \'get\'');
 function visit188_26_1(result) {
@@ -356,55 +356,55 @@ KISSY.add(function(S, require) {
   get: get, 
   post: function(url, data, callback, dataType) {
   _$jscoverage['/io.js'].functionData[2]++;
-  _$jscoverage['/io.js'].lineData[71]++;
-  if (visit189_71_1(typeof data === 'function')) {
-    _$jscoverage['/io.js'].lineData[72]++;
+  _$jscoverage['/io.js'].lineData[70]++;
+  if (visit189_70_1(typeof data === 'function')) {
+    _$jscoverage['/io.js'].lineData[71]++;
     dataType = callback;
-    _$jscoverage['/io.js'].lineData[75]++;
+    _$jscoverage['/io.js'].lineData[74]++;
     callback = data;
-    _$jscoverage['/io.js'].lineData[76]++;
+    _$jscoverage['/io.js'].lineData[75]++;
     data = undefined;
   }
-  _$jscoverage['/io.js'].lineData[78]++;
+  _$jscoverage['/io.js'].lineData[77]++;
   return get(url, data, callback, dataType, 'post');
 }, 
   jsonp: function(url, data, callback) {
   _$jscoverage['/io.js'].functionData[3]++;
-  _$jscoverage['/io.js'].lineData[94]++;
-  if (visit190_94_1(typeof data === 'function')) {
-    _$jscoverage['/io.js'].lineData[95]++;
+  _$jscoverage['/io.js'].lineData[93]++;
+  if (visit190_93_1(typeof data === 'function')) {
+    _$jscoverage['/io.js'].lineData[94]++;
     callback = data;
-    _$jscoverage['/io.js'].lineData[96]++;
+    _$jscoverage['/io.js'].lineData[95]++;
     data = undefined;
   }
-  _$jscoverage['/io.js'].lineData[98]++;
+  _$jscoverage['/io.js'].lineData[97]++;
   return get(url, data, callback, 'jsonp');
 }, 
   getScript: S.getScript, 
   getJSON: function(url, data, callback) {
   _$jscoverage['/io.js'].functionData[4]++;
-  _$jscoverage['/io.js'].lineData[122]++;
-  if (visit191_122_1(typeof data === 'function')) {
-    _$jscoverage['/io.js'].lineData[123]++;
+  _$jscoverage['/io.js'].lineData[121]++;
+  if (visit191_121_1(typeof data === 'function')) {
+    _$jscoverage['/io.js'].lineData[122]++;
     callback = data;
-    _$jscoverage['/io.js'].lineData[124]++;
+    _$jscoverage['/io.js'].lineData[123]++;
     data = undefined;
   }
-  _$jscoverage['/io.js'].lineData[126]++;
+  _$jscoverage['/io.js'].lineData[125]++;
   return get(url, data, callback, 'json');
 }, 
   upload: function(url, form, data, callback, dataType) {
   _$jscoverage['/io.js'].functionData[5]++;
-  _$jscoverage['/io.js'].lineData[144]++;
-  if (visit192_144_1(typeof data === 'function')) {
-    _$jscoverage['/io.js'].lineData[145]++;
+  _$jscoverage['/io.js'].lineData[143]++;
+  if (visit192_143_1(typeof data === 'function')) {
+    _$jscoverage['/io.js'].lineData[144]++;
     dataType = callback;
-    _$jscoverage['/io.js'].lineData[149]++;
+    _$jscoverage['/io.js'].lineData[148]++;
     callback = data;
-    _$jscoverage['/io.js'].lineData[150]++;
+    _$jscoverage['/io.js'].lineData[149]++;
     data = undefined;
   }
-  _$jscoverage['/io.js'].lineData[152]++;
+  _$jscoverage['/io.js'].lineData[151]++;
   return IO({
   url: url, 
   type: 'post', 
@@ -413,13 +413,10 @@ KISSY.add(function(S, require) {
   data: data, 
   success: callback});
 }});
-  _$jscoverage['/io.js'].lineData[163]++;
+  _$jscoverage['/io.js'].lineData[162]++;
   S.mix(S, {
-  'Ajax': IO, 
-  'IO': IO, 
-  ajax: IO, 
   io: IO, 
   jsonp: IO.jsonp});
-  _$jscoverage['/io.js'].lineData[172]++;
+  _$jscoverage['/io.js'].lineData[167]++;
   return IO;
 });

@@ -12,7 +12,7 @@ KISSY.add(function (S, HtmlParser, UA) {
             var fs = requireNode('fs');
             callback(fs.readFileSync(path, 'utf-8'));
         } else {
-            S.io({
+            S.IO({
                 url: path,
                 dataType: 'text',
                 async: false,

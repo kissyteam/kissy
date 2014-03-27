@@ -205,7 +205,6 @@ KISSY.add(function (S, require) {
                 value: true
             },
 
-
             /**
              * whether this component can be closed by press escape key.
              *
@@ -224,12 +223,10 @@ KISSY.add(function (S, require) {
         xclass: 'dialog'
     });
 
-
     var KEY_TAB = Node.KeyCode.TAB;
 
     // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
     function trapFocus(e) {
-
         var self = this,
             keyCode = e.keyCode;
 
@@ -253,13 +250,11 @@ KISSY.add(function (S, require) {
         if (node.equals($el) && e.shiftKey) {
             lastFocusItem[0].focus(); // send focus to last item in dialog
             e.halt(); //stop the tab keypress event
-        }
-        // see if we are tabbing from the last focusable item
-        else if (node.equals(lastFocusItem) && !e.shiftKey) {
+        } else if (node.equals(lastFocusItem) && !e.shiftKey) {
+            // see if we are tabbing from the last focusable item
             self.focus(); // send focus to first item in dialog
             e.halt(); //stop the tab keypress event
-        }
-        else {
+        } else {
             // see if the key is for the dialog
             if (node.equals($el) || $el.contains(node)) {
                 return;
@@ -269,6 +264,7 @@ KISSY.add(function (S, require) {
         // allow tabbing into the dialog
         e.halt();//stop the event if not a tab keypress
     } // end of function
+
     return Dialog;
 });
 

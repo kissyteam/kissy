@@ -233,13 +233,13 @@ if (! _$jscoverage['/tabs/render.js']) {
   _$jscoverage['/tabs/render.js'].lineData[7] = 0;
   _$jscoverage['/tabs/render.js'].lineData[9] = 0;
   _$jscoverage['/tabs/render.js'].lineData[11] = 0;
-  _$jscoverage['/tabs/render.js'].lineData[15] = 0;
+  _$jscoverage['/tabs/render.js'].lineData[14] = 0;
+  _$jscoverage['/tabs/render.js'].lineData[18] = 0;
   _$jscoverage['/tabs/render.js'].lineData[19] = 0;
-  _$jscoverage['/tabs/render.js'].lineData[20] = 0;
-  _$jscoverage['/tabs/render.js'].lineData[24] = 0;
-  _$jscoverage['/tabs/render.js'].lineData[27] = 0;
-  _$jscoverage['/tabs/render.js'].lineData[34] = 0;
-  _$jscoverage['/tabs/render.js'].lineData[35] = 0;
+  _$jscoverage['/tabs/render.js'].lineData[23] = 0;
+  _$jscoverage['/tabs/render.js'].lineData[26] = 0;
+  _$jscoverage['/tabs/render.js'].lineData[32] = 0;
+  _$jscoverage['/tabs/render.js'].lineData[33] = 0;
 }
 if (! _$jscoverage['/tabs/render.js'].functionData) {
   _$jscoverage['/tabs/render.js'].functionData = [];
@@ -251,17 +251,17 @@ if (! _$jscoverage['/tabs/render.js'].functionData) {
 }
 if (! _$jscoverage['/tabs/render.js'].branchData) {
   _$jscoverage['/tabs/render.js'].branchData = {};
-  _$jscoverage['/tabs/render.js'].branchData['35'] = [];
-  _$jscoverage['/tabs/render.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/tabs/render.js'].branchData['35'][2] = new BranchData();
+  _$jscoverage['/tabs/render.js'].branchData['33'] = [];
+  _$jscoverage['/tabs/render.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/tabs/render.js'].branchData['33'][2] = new BranchData();
 }
-_$jscoverage['/tabs/render.js'].branchData['35'][2].init(112, 29, 'orientation && orientation[1]');
-function visit14_35_2(result) {
-  _$jscoverage['/tabs/render.js'].branchData['35'][2].ranCondition(result);
+_$jscoverage['/tabs/render.js'].branchData['33'][2].init(112, 29, 'orientation && orientation[1]');
+function visit14_33_2(result) {
+  _$jscoverage['/tabs/render.js'].branchData['33'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/render.js'].branchData['35'][1].init(112, 38, 'orientation && orientation[1] || \'top\'');
-function visit13_35_1(result) {
-  _$jscoverage['/tabs/render.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/tabs/render.js'].branchData['33'][1].init(112, 38, 'orientation && orientation[1] || \'top\'');
+function visit13_33_1(result) {
+  _$jscoverage['/tabs/render.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/render.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -274,30 +274,30 @@ KISSY.add(function(S, require) {
   return Container.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/tabs/render.js'].functionData[1]++;
-  _$jscoverage['/tabs/render.js'].lineData[15]++;
+  _$jscoverage['/tabs/render.js'].lineData[14]++;
   renderData.elCls.push(this.getBaseCssClass(this.control.get('barOrientation')));
 }, 
   decorateDom: function() {
   _$jscoverage['/tabs/render.js'].functionData[2]++;
-  _$jscoverage['/tabs/render.js'].lineData[19]++;
+  _$jscoverage['/tabs/render.js'].lineData[18]++;
   var control = this.control;
-  _$jscoverage['/tabs/render.js'].lineData[20]++;
+  _$jscoverage['/tabs/render.js'].lineData[19]++;
   control.get('bar').set('changeType', control.get('changeType'));
 }, 
-  '_onSetBarOrientation': function(v) {
+  _onSetBarOrientation: function(v) {
   _$jscoverage['/tabs/render.js'].functionData[3]++;
-  _$jscoverage['/tabs/render.js'].lineData[24]++;
+  _$jscoverage['/tabs/render.js'].lineData[23]++;
   var self = this, el = self.$el;
-  _$jscoverage['/tabs/render.js'].lineData[27]++;
+  _$jscoverage['/tabs/render.js'].lineData[26]++;
   el.removeClass(self.getBaseCssClass(CLS)).addClass(self.getBaseCssClass(v));
 }}, {
   name: 'TabsRender', 
   HTML_PARSER: {
   barOrientation: function(el) {
   _$jscoverage['/tabs/render.js'].functionData[4]++;
-  _$jscoverage['/tabs/render.js'].lineData[34]++;
+  _$jscoverage['/tabs/render.js'].lineData[32]++;
   var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
-  _$jscoverage['/tabs/render.js'].lineData[35]++;
-  return visit13_35_1(visit14_35_2(orientation && orientation[1]) || 'top');
+  _$jscoverage['/tabs/render.js'].lineData[33]++;
+  return visit13_33_1(visit14_33_2(orientation && orientation[1]) || 'top');
 }}});
 });

@@ -234,21 +234,21 @@ if (! _$jscoverage['/node/override.js']) {
   _$jscoverage['/node/override.js'].lineData[8] = 0;
   _$jscoverage['/node/override.js'].lineData[9] = 0;
   _$jscoverage['/node/override.js'].lineData[11] = 0;
+  _$jscoverage['/node/override.js'].lineData[31] = 0;
+  _$jscoverage['/node/override.js'].lineData[32] = 0;
   _$jscoverage['/node/override.js'].lineData[33] = 0;
-  _$jscoverage['/node/override.js'].lineData[34] = 0;
   _$jscoverage['/node/override.js'].lineData[35] = 0;
-  _$jscoverage['/node/override.js'].lineData[37] = 0;
+  _$jscoverage['/node/override.js'].lineData[36] = 0;
   _$jscoverage['/node/override.js'].lineData[38] = 0;
-  _$jscoverage['/node/override.js'].lineData[40] = 0;
+  _$jscoverage['/node/override.js'].lineData[39] = 0;
   _$jscoverage['/node/override.js'].lineData[41] = 0;
-  _$jscoverage['/node/override.js'].lineData[43] = 0;
+  _$jscoverage['/node/override.js'].lineData[45] = 0;
+  _$jscoverage['/node/override.js'].lineData[46] = 0;
   _$jscoverage['/node/override.js'].lineData[47] = 0;
   _$jscoverage['/node/override.js'].lineData[48] = 0;
   _$jscoverage['/node/override.js'].lineData[49] = 0;
   _$jscoverage['/node/override.js'].lineData[50] = 0;
-  _$jscoverage['/node/override.js'].lineData[51] = 0;
   _$jscoverage['/node/override.js'].lineData[52] = 0;
-  _$jscoverage['/node/override.js'].lineData[54] = 0;
 }
 if (! _$jscoverage['/node/override.js'].functionData) {
   _$jscoverage['/node/override.js'].functionData = [];
@@ -260,24 +260,24 @@ if (! _$jscoverage['/node/override.js'].functionData) {
 }
 if (! _$jscoverage['/node/override.js'].branchData) {
   _$jscoverage['/node/override.js'].branchData = {};
-  _$jscoverage['/node/override.js'].branchData['37'] = [];
-  _$jscoverage['/node/override.js'].branchData['37'][1] = new BranchData();
-  _$jscoverage['/node/override.js'].branchData['40'] = [];
-  _$jscoverage['/node/override.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/node/override.js'].branchData['51'] = [];
-  _$jscoverage['/node/override.js'].branchData['51'][1] = new BranchData();
+  _$jscoverage['/node/override.js'].branchData['35'] = [];
+  _$jscoverage['/node/override.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/node/override.js'].branchData['38'] = [];
+  _$jscoverage['/node/override.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/node/override.js'].branchData['49'] = [];
+  _$jscoverage['/node/override.js'].branchData['49'][1] = new BranchData();
 }
-_$jscoverage['/node/override.js'].branchData['51'][1].init(46, 26, 'typeof others === \'string\'');
-function visit42_51_1(result) {
-  _$jscoverage['/node/override.js'].branchData['51'][1].ranCondition(result);
+_$jscoverage['/node/override.js'].branchData['49'][1].init(46, 26, 'typeof others === \'string\'');
+function visit42_49_1(result) {
+  _$jscoverage['/node/override.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/override.js'].branchData['40'][1].init(192, 7, 'newNode');
-function visit41_40_1(result) {
-  _$jscoverage['/node/override.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/node/override.js'].branchData['38'][1].init(192, 7, 'newNode');
+function visit41_38_1(result) {
+  _$jscoverage['/node/override.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/override.js'].branchData['37'][1].init(84, 27, 'typeof newNode === \'string\'');
-function visit40_37_1(result) {
-  _$jscoverage['/node/override.js'].branchData['37'][1].ranCondition(result);
+}_$jscoverage['/node/override.js'].branchData['35'][1].init(84, 27, 'typeof newNode === \'string\'');
+function visit40_35_1(result) {
+  _$jscoverage['/node/override.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/override.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -290,44 +290,44 @@ KISSY.add(function(S, require) {
   require('./attach');
   _$jscoverage['/node/override.js'].lineData[11]++;
   var NLP = NodeList.prototype;
-  _$jscoverage['/node/override.js'].lineData[33]++;
+  _$jscoverage['/node/override.js'].lineData[31]++;
   S.each(['append', 'prepend', 'before', 'after'], function(insertType) {
   _$jscoverage['/node/override.js'].functionData[1]++;
-  _$jscoverage['/node/override.js'].lineData[34]++;
+  _$jscoverage['/node/override.js'].lineData[32]++;
   NLP[insertType] = function(html) {
   _$jscoverage['/node/override.js'].functionData[2]++;
-  _$jscoverage['/node/override.js'].lineData[35]++;
+  _$jscoverage['/node/override.js'].lineData[33]++;
   var newNode = html, self = this;
-  _$jscoverage['/node/override.js'].lineData[37]++;
-  if (visit40_37_1(typeof newNode === 'string')) {
-    _$jscoverage['/node/override.js'].lineData[38]++;
+  _$jscoverage['/node/override.js'].lineData[35]++;
+  if (visit40_35_1(typeof newNode === 'string')) {
+    _$jscoverage['/node/override.js'].lineData[36]++;
     newNode = Dom.create(newNode);
   }
-  _$jscoverage['/node/override.js'].lineData[40]++;
-  if (visit41_40_1(newNode)) {
-    _$jscoverage['/node/override.js'].lineData[41]++;
+  _$jscoverage['/node/override.js'].lineData[38]++;
+  if (visit41_38_1(newNode)) {
+    _$jscoverage['/node/override.js'].lineData[39]++;
     Dom[insertType](newNode, self);
   }
-  _$jscoverage['/node/override.js'].lineData[43]++;
+  _$jscoverage['/node/override.js'].lineData[41]++;
   return self;
 };
 });
-  _$jscoverage['/node/override.js'].lineData[47]++;
+  _$jscoverage['/node/override.js'].lineData[45]++;
   S.each(['wrap', 'wrapAll', 'replaceWith', 'wrapInner'], function(fixType) {
   _$jscoverage['/node/override.js'].functionData[3]++;
-  _$jscoverage['/node/override.js'].lineData[48]++;
+  _$jscoverage['/node/override.js'].lineData[46]++;
   var orig = NLP[fixType];
-  _$jscoverage['/node/override.js'].lineData[49]++;
+  _$jscoverage['/node/override.js'].lineData[47]++;
   NLP[fixType] = function(others) {
   _$jscoverage['/node/override.js'].functionData[4]++;
-  _$jscoverage['/node/override.js'].lineData[50]++;
+  _$jscoverage['/node/override.js'].lineData[48]++;
   var self = this;
-  _$jscoverage['/node/override.js'].lineData[51]++;
-  if (visit42_51_1(typeof others === 'string')) {
-    _$jscoverage['/node/override.js'].lineData[52]++;
+  _$jscoverage['/node/override.js'].lineData[49]++;
+  if (visit42_49_1(typeof others === 'string')) {
+    _$jscoverage['/node/override.js'].lineData[50]++;
     others = NodeList.all(others, self[0].ownerDocument);
   }
-  _$jscoverage['/node/override.js'].lineData[54]++;
+  _$jscoverage['/node/override.js'].lineData[52]++;
   return orig.call(self, others);
 };
 });

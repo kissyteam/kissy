@@ -298,14 +298,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog-loader.js'].lineData[13]++;
     globalMask = new Overlay({
   x: 0, 
-  width: visit2_15_1(S.UA.ie === 6) ? S.DOM.docWidth() : '100%', 
+  width: visit2_15_1(S.UA.ie === 6) ? S.require('dom').docWidth() : '100%',
   y: 0, 
   'zIndex': Editor.baseZIndex(Editor.ZIndexManager.LOADING), 
   prefixCls: prefixCls + 'editor-', 
   elCls: prefixCls + 'editor-global-loading'});
   }
   _$jscoverage['/dialog-loader.js'].lineData[23]++;
-  globalMask.set('height', S.DOM.docHeight());
+  globalMask.set('height', S.require('dom').docHeight());
   _$jscoverage['/dialog-loader.js'].lineData[24]++;
   globalMask.show();
   _$jscoverage['/dialog-loader.js'].lineData[25]++;

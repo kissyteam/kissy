@@ -281,7 +281,8 @@ KISSY.add(function (S, require) {
              */
             tree: {
                 getter: function () {
-                    var from = this;
+                    var self = this,
+                        from = self;
                     while (from && !from.isTree) {
                         from = from.get('parent');
                     }

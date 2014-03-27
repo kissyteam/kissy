@@ -151,12 +151,10 @@ KISSY.add(function (S, require) {
                                 }
                             });
                         }
-                    }
-                    // enter as click
-                    else if (keyCode === KeyCode.ENTER) {
+                    } else if (keyCode === KeyCode.ENTER) {
+                        // enter as click
                         return self.handleClickInternal(e);
-                    }
-                    else {
+                    } else {
                         return undefined;
                     }
                 } else if (!menu.handleKeyDownInternal(e)) {

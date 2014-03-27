@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:59
+build time: Mar 27 21:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -74,19 +74,19 @@ KISSY.add("event/dom/input", ["event/dom/base", "dom"], function(S, require) {
     DomEvent.detach(target, "mousedown keyup keydown focus", startPollHandler)
   }
   Special.input = {setup:function() {
-    var el = this;
-    if(canFireInput(el)) {
-      monitor(el)
+    var self = this;
+    if(canFireInput(self)) {
+      monitor(self)
     }else {
-      DomEvent.on(el, "focusin", beforeActivate)
+      DomEvent.on(self, "focusin", beforeActivate)
     }
   }, tearDown:function() {
-    var el = this;
-    if(canFireInput(el)) {
-      unmonitored(el)
+    var self = this;
+    if(canFireInput(self)) {
+      unmonitored(self)
     }else {
-      DomEvent.remove(el, "focusin", beforeActivate);
-      Dom.query("textarea,input", el).each(function(fel) {
+      DomEvent.remove(self, "focusin", beforeActivate);
+      Dom.query("textarea,input", self).each(function(fel) {
         if(fel.__inputHandler) {
           fel.__inputHandler = 0;
           DomEvent.remove(fel, "input", noop)

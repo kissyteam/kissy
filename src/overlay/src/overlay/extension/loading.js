@@ -42,9 +42,8 @@ KISSY.add(function (S, require) {
          * @chainable
          */
         unloading: function () {
-            var lel = this._loadingExtEl;
-            if(lel){
-                lel.hide();
+            if (this._loadingExtEl) {
+                this._loadingExtEl.hide();
             }
         }
     };

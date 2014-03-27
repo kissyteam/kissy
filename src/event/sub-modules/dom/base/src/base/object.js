@@ -63,14 +63,14 @@ KISSY.add(function (S, require) {
                     // gecko
                     if (detail) {
                         // press control e.detail == 1 else e.detail == 3
-                        delta = -(detail % 3 === 0 ? detail / 3 : detail);
+                        delta = 0 - (detail % 3 === 0 ? detail / 3 : detail);
                     }
 
                     // Gecko
                     if (axis !== undefined) {
                         if (axis === event.HORIZONTAL_AXIS) {
                             deltaY = 0;
-                            deltaX = -1 * delta;
+                            deltaX = 0 - delta;
                         } else if (axis === event.VERTICAL_AXIS) {
                             deltaX = 0;
                             deltaY = delta;
@@ -137,17 +137,17 @@ KISSY.add(function (S, require) {
                         doc = eventDoc.documentElement;
                         body = eventDoc.body;
                         event.pageX = originalEvent.clientX +
-                            ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) -
-                            ( doc && doc.clientLeft || body && body.clientLeft || 0 );
+                            (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+                            (doc && doc.clientLeft || body && body.clientLeft || 0);
                         event.pageY = originalEvent.clientY +
-                            ( doc && doc.scrollTop || body && body.scrollTop || 0 ) -
-                            ( doc && doc.clientTop || body && body.clientTop || 0 );
+                            (doc && doc.scrollTop || body && body.scrollTop || 0) -
+                            (doc && doc.clientTop || body && body.clientTop || 0);
                     }
 
                     // which for click: 1 === left; 2 === middle; 3 === right
                     // do not use button
                     if (!event.which && button !== undefined) {
-                        event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
+                        event.which = (button & 1 ? 1 : (button & 2 ? 3 : (button & 4 ? 2 : 0)));
                     }
 
                     // add relatedTarget, if necessary
@@ -454,7 +454,6 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(DomEventObject, BaseEvent.Object, {
-
         constructor: DomEventObject,
 
         preventDefault: function () {
@@ -464,9 +463,8 @@ KISSY.add(function (S, require) {
             // if preventDefault exists run it on the original event
             if (e.preventDefault) {
                 e.preventDefault();
-            }
-            // otherwise set the returnValue property of the original event to FALSE (IE)
-            else {
+            } else {
+                // otherwise set the returnValue property of the original event to FALSE (IE)
                 e.returnValue = FALSE;
             }
 
@@ -480,9 +478,8 @@ KISSY.add(function (S, require) {
             // if stopPropagation exists run it on the original event
             if (e.stopPropagation) {
                 e.stopPropagation();
-            }
-            // otherwise set the cancelBubble property of the original event to TRUE (IE)
-            else {
+            } else {
+                // otherwise set the cancelBubble property of the original event to TRUE (IE)
                 e.cancelBubble = TRUE;
             }
 

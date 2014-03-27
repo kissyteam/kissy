@@ -445,7 +445,7 @@ if (! _$jscoverage['/ua.js'].branchData) {
   _$jscoverage['/ua.js'].branchData['382'] = [];
   _$jscoverage['/ua.js'].branchData['382'][1] = new BranchData();
 }
-_$jscoverage['/ua.js'].branchData['382'][1].init(242, 17, 'S.trim(className)');
+_$jscoverage['/ua.js'].branchData['382'][1].init(242, 9, 'className');
 function visit46_382_1(result) {
   _$jscoverage['/ua.js'].branchData['382'][1].ranCondition(result);
   return result;
@@ -630,7 +630,7 @@ function visit1_12_1(result) {
   _$jscoverage['/ua.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].lineData[5]++;
-KISSY.add(function(S, require, module, exports, undefined) {
+KISSY.add(function(S, require, exports, module, undefined) {
   _$jscoverage['/ua.js'].functionData[0]++;
   _$jscoverage['/ua.js'].lineData[6]++;
   require('util');
@@ -934,7 +934,7 @@ KISSY.add(function(S, require, module, exports, undefined) {
   }
 });
     _$jscoverage['/ua.js'].lineData[382]++;
-    if (visit46_382_1(S.trim(className))) {
+    if (visit46_382_1(className)) {
       _$jscoverage['/ua.js'].lineData[383]++;
       documentElement.className = S.trim(documentElement.className + className);
     }

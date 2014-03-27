@@ -80,7 +80,7 @@ KISSY.add(function (S, require, exports, module) {
             option13.params = params14;
             if (moduleWrap) {
                 require("component/extension/content-xtpl");
-                option13.params[0] = moduleWrap.resolveByName(option13.params[0]);
+                option13.params[0] = moduleWrap.resolve(option13.params[0]);
             }
             var commandRet15 = includeCommand.call(engine, scope, option13, buffer, 11, payload);
             if (commandRet15 && commandRet15.isBuffer) {

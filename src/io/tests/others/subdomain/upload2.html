@@ -18,7 +18,7 @@
 <script>
     document.domain = location.hostname;
     KISSY.use("core", function (S) {
-        var Dom = S.DOM, Event = S.Event, UA = S.UA;
+        var Dom = S.require('dom'), Event = S.require('event'), UA = S.UA;
         var doFormUpload = function (o, ps, url) {
             var id = S.guid("form-upload-");
             var frame = document.createElement('iframe');

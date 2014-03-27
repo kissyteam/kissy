@@ -18,42 +18,42 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         $ = S.all,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         KER = Editor.RangeType,
         KEP = Editor.PositionType,
         KEST,
         UA = S.UA,
         blockElements = {
-            'address': 1,
-            'div': 1,
-            'h1': 1,
-            'h2': 1,
-            'h3': 1,
-            'h4': 1,
-            'h5': 1,
-            'h6': 1,
-            'p': 1,
-            'pre': 1
+            address: 1,
+            div: 1,
+            h1: 1,
+            h2: 1,
+            h3: 1,
+            h4: 1,
+            h5: 1,
+            h6: 1,
+            p: 1,
+            pre: 1
         },
         DTD = Editor.XHTML_DTD,
         objectElements = {
             //why? a should be same to inline? 但是不能互相嵌套
             //a:1,
-            'embed': 1,
-            'hr': 1,
-            'img': 1,
-            'li': 1,
-            'object': 1,
-            'ol': 1,
-            'table': 1,
-            'td': 1,
-            'tr': 1,
-            'th': 1,
-            'ul': 1,
-            'dl': 1,
-            'dt': 1,
-            'dd': 1,
-            'form': 1
+            embed: 1,
+            hr: 1,
+            img: 1,
+            li: 1,
+            object: 1,
+            ol: 1,
+            table: 1,
+            td: 1,
+            tr: 1,
+            th: 1,
+            ul: 1,
+            dl: 1,
+            dt: 1,
+            dd: 1,
+            form: 1
         },
         semicolonFixRegex = /\s*(?:;\s*|$)/g,
         varRegex = /#\((.+?)\)/g;
@@ -85,13 +85,13 @@ KISSY.add(function (S, require) {
 
     function replaceVariables(list, variablesValues) {
         for (var item in list) {
-            if (typeof (list[ item ]) === 'string') {
+            if (typeof (list[item]) === 'string') {
                 /*jshint loopfunc:true*/
-                list[ item ] = list[ item ].replace(varRegex, function (match, varName) {
-                    return variablesValues[ varName ];
+                list[item] = list[item].replace(varRegex, function (match, varName) {
+                    return variablesValues[varName];
                 });
             } else {
-                replaceVariables(list[ item ], variablesValues);
+                replaceVariables(list[item], variablesValues);
             }
         }
     }
@@ -108,15 +108,15 @@ KISSY.add(function (S, require) {
             replaceVariables(styleDefinition, variablesValues);
         }
 
-        var element = this.element = this.element = ( styleDefinition.element || '*' ).toLowerCase();
+        var element = this.element = this.element = (styleDefinition.element || '*').toLowerCase();
 
-        this.type = this.type = ( element === '#text' || blockElements[ element ] ) ?
+        this.type = this.type = (element === '#text' || blockElements[element]) ?
             KEST.STYLE_BLOCK
-            : objectElements[ element ] ?
+            : objectElements[element] ?
             KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
 
         this._ = {
-            'definition': styleDefinition
+            definition: styleDefinition
         };
     }
 
@@ -133,7 +133,7 @@ KISSY.add(function (S, require) {
         var ranges = selection.getRanges();
         for (var i = 0; i < ranges.length; i++) {
             //格式化后，range进入格式标签内
-            func.call(self, ranges[ i ]);
+            func.call(self, ranges[i]);
         }
         selection.selectRanges(ranges);
     }
@@ -151,7 +151,7 @@ KISSY.add(function (S, require) {
 
         applyToRange: function (range) {
             var self = this;
-            return ( self.applyToRange =
+            return (self.applyToRange =
                 this.type === KEST.STYLE_INLINE ?
                     applyInlineStyle
                     : self.type === KEST.STYLE_BLOCK ?
@@ -160,15 +160,15 @@ KISSY.add(function (S, require) {
                     NULL
                     //yiminghe note:no need!
                     //applyObjectStyle
-                    : NULL ).call(self, range);
+                    : NULL).call(self, range);
         },
 
         removeFromRange: function (range) {
             var self = this;
-            return ( self.removeFromRange =
+            return (self.removeFromRange =
                 self.type === KEST.STYLE_INLINE ?
                     removeInlineStyle
-                    : NULL ).call(self, range);
+                    : NULL).call(self, range);
         },
 
         // Checks if an element, or any of its attributes, is removable by the
@@ -199,14 +199,13 @@ KISSY.add(function (S, require) {
 
                         var elementAttr = element.attr(attName) || '';
                         if (attName === 'style' ?
-                            compareCssText(attribs[ attName ],
+                            compareCssText(attribs[attName],
                                 normalizeCssText(elementAttr, FALSE))
-                            : attribs[ attName ] === elementAttr) {
+                            : attribs[attName] === elementAttr) {
                             if (!fullMatch) {
                                 return TRUE;
                             }
-                        }
-                        else if (fullMatch) {
+                        } else if (fullMatch) {
                             return FALSE;
                         }
 
@@ -214,8 +213,7 @@ KISSY.add(function (S, require) {
                     if (fullMatch) {
                         return TRUE;
                     }
-                }
-                else {
+                } else {
                     return TRUE;
                 }
             }
@@ -223,11 +221,11 @@ KISSY.add(function (S, require) {
             // Check if the element can be somehow overriden.
             var overrides = getOverrides(this),
                 i,
-                override = overrides[ element.nodeName() ] || overrides['*'];
+                override = overrides[element.nodeName()] || overrides['*'];
 
             if (override) {
                 // If no attributes have been defined, remove the element.
-                if (!( attribs = override.attributes ) && !( styles = override.styles)) {
+                if (!(attribs = override.attributes) && !(styles = override.styles)) {
                     return TRUE;
                 }
                 if (attribs) {
@@ -243,7 +241,7 @@ KISSY.add(function (S, require) {
                             //    - The override definition value is a regex that
                             //      has matches in the attribute value.
                             if (attValue === NULL ||
-                                ( typeof attValue === 'string' && actualAttrValue === attValue ) ||
+                                (typeof attValue === 'string' && actualAttrValue === attValue) ||
                                 attValue.test && attValue.test(actualAttrValue)) {
                                 return TRUE;
                             }
@@ -256,7 +254,7 @@ KISSY.add(function (S, require) {
                         var actualStyleValue = element.css(styleName);
                         if (actualStyleValue) {
                             var styleValue = styles[i][1];
-                            if (styleValue === NULL || ( typeof styleValue === 'string' && actualStyleValue === styleValue ) ||
+                            if (styleValue === NULL || (typeof styleValue === 'string' && actualStyleValue === styleValue) ||
                                 styleValue.test && styleValue.test(actualStyleValue)) {
                                 return TRUE;
                             }
@@ -282,14 +280,14 @@ KISSY.add(function (S, require) {
                     var elements = elementPath.elements;
 
                     for (var i = 0, element; i < elements.length; i++) {
-                        element = elements[ i ];
+                        element = elements[i];
 
-                        if (this.type === KEST.STYLE_INLINE && ( Dom.equals(element, elementPath.block) ||
-                            Dom.equals(element, elementPath.blockLimit) )) {
+                        if (this.type === KEST.STYLE_INLINE && (Dom.equals(element, elementPath.block) ||
+                            Dom.equals(element, elementPath.blockLimit))) {
                             continue;
                         }
 
-                        if (this.type === KEST.STYLE_OBJECT && !( element.nodeName() in objectElements )) {
+                        if (this.type === KEST.STYLE_OBJECT && !(element.nodeName() in objectElements)) {
                             continue;
                         }
 
@@ -313,7 +311,7 @@ KISSY.add(function (S, require) {
         stylesDef = styleDefinition.styles;
 
         // Builds the StyleText.
-        var stylesText = ( styleDefinition.attributes && styleDefinition.attributes.style ) || '',
+        var stylesText = (styleDefinition.attributes && styleDefinition.attributes.style) || '',
             specialStylesText = '';
 
         if (stylesText.length) {
@@ -322,14 +320,13 @@ KISSY.add(function (S, require) {
 
         for (var style in stylesDef) {
 
-            var styleVal = stylesDef[ style ],
-                text = ( style + ':' + styleVal ).replace(semicolonFixRegex, ';');
+            var styleVal = stylesDef[style],
+                text = (style + ':' + styleVal).replace(semicolonFixRegex, ';');
 
             // Some browsers don't support 'inherit' property value, leave them intact. (#5242)
             if (styleVal === 'inherit') {
                 specialStylesText += text;
-            }
-            else {
+            } else {
                 stylesText += text;
             }
 
@@ -377,7 +374,7 @@ KISSY.add(function (S, require) {
         // Assign all defined attributes.
         if (attributes) {
             for (var att in attributes) {
-                el.attr(att, attributes[ att ]);
+                el.attr(att, attributes[att]);
             }
         }
 
@@ -403,7 +400,7 @@ KISSY.add(function (S, require) {
 
         var block, doc = range.document;
         // Only one =
-        while (( block = iterator.getNextParagraph() )) {
+        while ((block = iterator.getNextParagraph())) {
             var newBlock = getElement(this, doc, block);
             replaceBlock(block, newBlock);
         }
@@ -436,14 +433,14 @@ KISSY.add(function (S, require) {
         var preHTML = block.html();
 
         // 1. Trim head/tail spaces, they're not visible.
-        preHTML = replace(preHTML, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
+        preHTML = replace(preHTML, /(?:^[\t\n\r]+)|(?:[\t\n\r]+$)/g, '');
         // 2. Delete ANSI whitespaces immediately before and after <BR> because
         //    they are not visible.
-        preHTML = preHTML.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
+        preHTML = preHTML.replace(/[\t\r\n]*(<br[^>]*>)[\t\r\n]*/gi, '$1');
         // 3. Compress other ANSI whitespaces since they're only visible as one
         //    single space previously.
         // 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
-        preHTML = preHTML.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
+        preHTML = preHTML.replace(/([\t\n\r]+|&nbsp;)/g, ' ');
         // 5. Convert any <BR /> to \n. This must not be done earlier because
         //    the \n would then get compressed.
         preHTML = preHTML.replace(/<br\b[^>]*>/gi, '\n');
@@ -455,14 +452,12 @@ KISSY.add(function (S, require) {
             newBlock.outerHtml('<pre>' + preHTML + '</pre>');
             newBlock = new Node(temp.firstChild);
             newBlock._4eRemove();
-        }
-        else {
+        } else {
             newBlock.html(preHTML);
         }
 
         return newBlock;
     }
-
 
     // Split into multiple <pre> blocks separated by double line-break.
     function splitIntoPres(preBlock) {
@@ -495,12 +490,10 @@ KISSY.add(function (S, require) {
 
         if (isToPre) {
             newBlock = toPre(block, newBlock);
-        }
-        else if (isFromPre) {
+        } else if (isFromPre) {
             // Split big <pre> into pieces before start to convert.
             newBlock = fromPres(splitIntoPres(block), newBlock);
-        }
-        else {
+        } else {
             block._4eMoveChildren(newBlock);
         }
 
@@ -514,8 +507,8 @@ KISSY.add(function (S, require) {
     // Merge a <pre> block with a previous sibling if available.
     function mergePre(preBlock) {
         var previousBlock;
-        if (!( ( previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE) ) &&
-            previousBlock.nodeName() === 'pre' )) {
+        if (!((previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) &&
+            previousBlock.nodeName() === 'pre')) {
             return;
         }
 
@@ -532,36 +525,32 @@ KISSY.add(function (S, require) {
         // Krugle: IE normalizes innerHTML from <pre>, breaking whitespaces.
         if (UA.ie) {
             preBlock.outerHtml('<pre>' + mergedHTML + '</pre>');
-        }
-        else {
+        } else {
             preBlock.html(mergedHTML);
         }
 
         previousBlock._4eRemove();
     }
 
-
     // Converting a list of <pre> into blocks with format well preserved.
     function fromPres(preHTMLs, newBlock) {
         var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
         for (var i = 0; i < preHTMLs.length; i++) {
-            var blockHTML = preHTMLs[ i ];
+            var blockHTML = preHTMLs[i];
 
             // 1. Trim the first and last line-breaks immediately after and before <pre>,
             // they're not visible.
             blockHTML = blockHTML.replace(/(\r\n|\r)/g, '\n');
-            blockHTML = replace(blockHTML, /^[ \t]*\n/, '');
+            blockHTML = replace(blockHTML, /^[\t]*\n/, '');
             blockHTML = replace(blockHTML, /\n$/, '');
             // 2. Convert spaces or tabs at the beginning or at the end to &nbsp;
             /*jshint loopfunc:true*/
-            blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function (match, offset) {
+            blockHTML = replace(blockHTML, /^[\t]+|[\t]+$/g, function (match, offset) {
                 if (match.length === 1) {// one space, preserve it
                     return '&nbsp;';
-                }
-                else if (!offset) {  // beginning of block
+                } else if (!offset) {  // beginning of block
                     return new Array(match.length).join('&nbsp;') + ' ';
-                }
-                else {             // end of block
+                } else {             // end of block
                     return ' ' + new Array(match.length).join('&nbsp;');
                 }
             });
@@ -569,7 +558,7 @@ KISSY.add(function (S, require) {
             // 3. Convert \n to <BR>.
             // 4. Convert contiguous (i.e. non-singular) spaces or tabs to &nbsp;
             blockHTML = blockHTML.replace(/\n/g, '<br>');
-            blockHTML = blockHTML.replace(/[ \t]{2,}/g,
+            blockHTML = blockHTML.replace(/[\t]{2,}/g,
                 function (match) {
                     return new Array(match.length).join('&nbsp;') + ' ';
                 });
@@ -598,7 +587,7 @@ KISSY.add(function (S, require) {
             def = this._.definition,
             isUnknownElement,
         // Get the DTD definition for the element. Defaults to 'span'.
-            dtd = DTD[ elementName ];
+            dtd = DTD[elementName];
         if (!dtd) {
             isUnknownElement = TRUE;
             dtd = DTD.span;
@@ -625,8 +614,7 @@ KISSY.add(function (S, require) {
             if (Dom.equals(currentNode, lastNode)) {
                 currentNode = NULL;
                 applyStyle = TRUE;
-            }
-            else {
+            } else {
                 var nodeType = currentNode[0].nodeType,
                     nodeName = nodeType === Dom.NodeType.ELEMENT_NODE ?
                         currentNode.nodeName() : NULL;
@@ -638,17 +626,16 @@ KISSY.add(function (S, require) {
 
                 // Check if the current node can be a child of the style element.
                 if (!nodeName || (
-                    dtd[ nodeName ] &&
-                        ( currentNode._4ePosition(lastNode) |
-                            ( KEP.POSITION_PRECEDING |
+                    dtd[nodeName] &&
+                        (currentNode._4ePosition(lastNode) |
+                            (KEP.POSITION_PRECEDING |
                                 KEP.POSITION_IDENTICAL |
-                                KEP.POSITION_IS_CONTAINED) ) === ( KEP.POSITION_PRECEDING +
+                                KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING +
                             KEP.POSITION_IDENTICAL +
-                            KEP.POSITION_IS_CONTAINED ) &&
-                        ( !def.childRule || def.childRule(currentNode) )
-                    )) {
+                            KEP.POSITION_IS_CONTAINED) &&
+                        (!def.childRule || def.childRule(currentNode))
+                   )) {
                     var currentParent = currentNode.parent();
-
 
                     // hack for
                     // 1<a href='http://www.taobao.com'>2</a>3
@@ -665,26 +652,24 @@ KISSY.add(function (S, require) {
                         currentParent._4eMoveChildren(tmpANode);
                         currentParent[0].parentNode.replaceChild(tmpANode[0], currentParent[0]);
                         tmpANode._4eMergeSiblings();
-                    }
-
-                    // Check if the style element can be a child of the current
-                    // node parent or if the element is not defined in the DTD.
-                    else if (currentParent && currentParent[0] && ( ( DTD[currentParent.nodeName()] ||
-                        DTD.span )[ elementName ] ||
-                        isUnknownElement ) && ( !def.parentRule || def.parentRule(currentParent) )) {
+                    } else if (currentParent && currentParent[0] && ((DTD[currentParent.nodeName()] ||
+                        DTD.span)[elementName] ||
+                        isUnknownElement) && (!def.parentRule || def.parentRule(currentParent))) {
+                        // Check if the style element can be a child of the current
+                        // node parent or if the element is not defined in the DTD.
                         // This node will be part of our range, so if it has not
                         // been started, place its start right before the node.
                         // In the case of an element node, it will be included
                         // only if it is entirely inside the range.
                         if (!styleRange &&
-                            ( !nodeName || !DTD.$removeEmpty[ nodeName ] || ( currentNode._4ePosition(lastNode) |
-                                ( KEP.POSITION_PRECEDING |
+                            (!nodeName || !DTD.$removeEmpty[nodeName] || (currentNode._4ePosition(lastNode) |
+                                (KEP.POSITION_PRECEDING |
                                     KEP.POSITION_IDENTICAL |
-                                    KEP.POSITION_IS_CONTAINED )) ===
-                                ( KEP.POSITION_PRECEDING +
+                                    KEP.POSITION_IS_CONTAINED)) ===
+                                (KEP.POSITION_PRECEDING +
                                     KEP.POSITION_IDENTICAL +
-                                    KEP.POSITION_IS_CONTAINED )
-                                )) {
+                                    KEP.POSITION_IS_CONTAINED)
+                               )) {
                             styleRange = new KERange(document);
                             styleRange.setStartBefore(currentNode);
                         }
@@ -692,7 +677,7 @@ KISSY.add(function (S, require) {
                         // Non element nodes, or empty elements can be added
                         // completely to the range.
                         if (nodeType === Dom.NodeType.TEXT_NODE ||
-                            ( nodeType === Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length )) {
+                            (nodeType === Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length)) {
                             var includedNode = currentNode,
                                 parentNode = null;
 
@@ -708,26 +693,24 @@ KISSY.add(function (S, require) {
                             // in this style DTD, so apply the style immediately.
                             while (
                                 (applyStyle = !includedNode.next(notBookmark, 1)) &&
-                                    ( (parentNode = includedNode.parent()) &&
-                                        dtd[ parentNode.nodeName() ] ) &&
-                                    ( parentNode._4ePosition(firstNode) |
+                                    ((parentNode = includedNode.parent()) &&
+                                        dtd[parentNode.nodeName()]) &&
+                                    (parentNode._4ePosition(firstNode) |
                                         KEP.POSITION_FOLLOWING |
                                         KEP.POSITION_IDENTICAL |
-                                        KEP.POSITION_IS_CONTAINED) === ( KEP.POSITION_FOLLOWING +
+                                        KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING +
                                         KEP.POSITION_IDENTICAL +
-                                        KEP.POSITION_IS_CONTAINED ) && ( !def.childRule || def.childRule(parentNode) )) {
+                                        KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(parentNode))) {
                                 includedNode = parentNode;
                             }
 
                             styleRange.setEndAfter(includedNode);
 
                         }
-                    }
-                    else {
+                    } else {
                         applyStyle = TRUE;
                     }
-                }
-                else {
+                } else {
                     applyStyle = TRUE;
                 }
 
@@ -739,10 +722,8 @@ KISSY.add(function (S, require) {
             if (applyStyle && styleRange && !styleRange.collapsed) {
                 // Build the style element, based on the style object definition.
                 var styleNode = getElement(self, document, undefined),
-
                 // Get the element that holds the entire range.
                     parent = styleRange.getCommonAncestor();
-
 
                 var removeList = {
                     styles: {},
@@ -761,15 +742,15 @@ KISSY.add(function (S, require) {
                     if (parent.nodeName() === elementName) {
                         for (attName in def.attributes) {
 
-                            if (removeList.blockedAttrs[ attName ] || !( value = parent.attr(styleName) )) {
+                            if (removeList.blockedAttrs[attName] || !(value = parent.attr(styleName))) {
                                 continue;
                             }
 
                             if (styleNode.attr(attName) === value) {
-                                //removeList.attrs[ attName ] = 1;
+                                //removeList.attrs[attName] = 1;
                                 styleNode.removeAttr(attName);
                             } else {
-                                removeList.blockedAttrs[ attName ] = 1;
+                                removeList.blockedAttrs[attName] = 1;
                             }
 
                         }
@@ -779,15 +760,15 @@ KISSY.add(function (S, require) {
                         //var exit = FALSE;
                         for (styleName in def.styles) {
 
-                            if (removeList.blockedStyles[ styleName ] || !( value = parent.style(styleName) )) {
+                            if (removeList.blockedStyles[styleName] || !(value = parent.style(styleName))) {
                                 continue;
                             }
 
                             if (styleNode.style(styleName) === value) {
-                                //removeList.styles[ styleName ] = 1;
+                                //removeList.styles[styleName] = 1;
                                 styleNode.style(styleName, '');
                             } else {
-                                removeList.blockedStyles[ styleName ] = 1;
+                                removeList.blockedStyles[styleName] = 1;
                             }
 
                         }
@@ -825,18 +806,17 @@ KISSY.add(function (S, require) {
                     if (!UA.ie) {
                         styleNode[0].normalize();
                     }
-                }
-                // Style already inherit from parents, left just to clear up any internal overrides. (#5931)
-                /*
-                 from koubei
-                 1.输入ab
-                 2.ctrl-a 设置字体大小 x
-                 3.选中b设置字体大小 y
-                 4.保持选中b,设置字体大小 x
-                 expect: b 大小为 x
-                 actual: b 大小为 y
-                 */
-                else {
+                } else {
+                    // Style already inherit from parents, left just to clear up any internal overrides. (#5931)
+                    /*
+                     from koubei
+                     1.输入ab
+                     2.ctrl-a 设置字体大小 x
+                     3.选中b设置字体大小 y
+                     4.保持选中b,设置字体大小 x
+                     expect: b 大小为 x
+                     actual: b 大小为 y
+                     */
                     styleNode = new Node(document.createElement('span'));
                     styleNode[0].appendChild(styleRange.extractContents());
                     styleRange.insertNode(styleNode);
@@ -869,13 +849,11 @@ KISSY.add(function (S, require) {
             startNode = bookmark.startNode;
 
         if (range.collapsed) {
-
             var startPath = new ElementPath(startNode.parent()),
             // The topmost element in elements path which we should jump out of.
                 boundaryElement;
 
-
-            for (var i = 0, element; i < startPath.elements.length && ( element = startPath.elements[i] ); i++) {
+            for (var i = 0, element; i < startPath.elements.length && (element = startPath.elements[i]); i++) {
                 /*
                  1. If it's collapsed inside text nodes, try to remove the style from the whole element.
 
@@ -907,7 +885,7 @@ KISSY.add(function (S, require) {
                         if (element.nodeName() !== this.element) {
                             var _overrides = getOverrides(this);
                             removeOverrides(element,
-                                _overrides[ element.nodeName() ] || _overrides['*']);
+                                _overrides[element.nodeName()] || _overrides['*']);
                         } else {
                             removeFromElement(this, element);
                         }
@@ -922,15 +900,13 @@ KISSY.add(function (S, require) {
             if (boundaryElement) {
                 var clonedElement = startNode;
                 for (i = 0; ; i++) {
-                    var newElement = startPath.elements[ i ];
+                    var newElement = startPath.elements[i];
                     if (newElement.equals(boundaryElement)) {
                         break;
-                    }
-                    // Avoid copying any matched element.
-                    else if (newElement.match) {
+                    } else if (newElement.match) {
+                        // Avoid copying any matched element.
                         continue;
-                    }
-                    else {
+                    } else {
                         newElement = newElement.clone();
                     }
                     newElement[0].appendChild(clonedElement[0]);
@@ -939,8 +915,8 @@ KISSY.add(function (S, require) {
                 //脱离当前的元素，将 bookmark 插入到当前元素后面
                 // <strong>xx|</strong>  ->
                 // <strong>xx<strong>|
-                clonedElement[ boundaryElement.match === 'start' ? 'insertBefore' :
-                    'insertAfter' ](boundaryElement);
+                clonedElement[boundaryElement.match === 'start' ? 'insertBefore' :
+                    'insertAfter'](boundaryElement);
                 // <strong>|</strong> ->
                 // <strong></strong>|
                 var tmp = boundaryElement.html();
@@ -948,9 +924,8 @@ KISSY.add(function (S, require) {
                     // filling char
                     tmp === '\u200b') {
                     boundaryElement.remove();
-                }
-                // http://code.google.com/p/chromium/issues/detail?id=149894
-                else if (UA.webkit) {
+                } else if (UA.webkit) {
+                    // http://code.google.com/p/chromium/issues/detail?id=149894
                     $(range.document.createTextNode('\u200b')).insertBefore(clonedElement);
                 }
             }
@@ -960,7 +935,7 @@ KISSY.add(function (S, require) {
              * node via DFS and remove the styles one-by-one.
              */
             var endNode = bookmark.endNode,
-                me = this;
+                self = this;
 
             /*
              * Find out the style ancestor that needs to be broken down at startNode
@@ -973,26 +948,26 @@ KISSY.add(function (S, require) {
                     element,
                     breakEnd = NULL;
                 for (var i = 0; i < startPath.elements.length; i++) {
-                    element = startPath.elements[ i ];
+                    element = startPath.elements[i];
 
                     if (element === startPath.block ||
                         element === startPath.blockLimit) {
                         break;
                     }
 
-                    if (me.checkElementRemovable(element)) {
+                    if (self.checkElementRemovable(element)) {
                         breakStart = element;
                     }
                 }
                 for (i = 0; i < endPath.elements.length; i++) {
-                    element = endPath.elements[ i ];
+                    element = endPath.elements[i];
 
                     if (element === endPath.block ||
                         element === endPath.blockLimit) {
                         break;
                     }
 
-                    if (me.checkElementRemovable(element)) {
+                    if (self.checkElementRemovable(element)) {
                         breakEnd = element;
                     }
                 }
@@ -1021,11 +996,10 @@ KISSY.add(function (S, require) {
                     // Remove style from element or overriding element.
                     if (currentNode.nodeName() === this.element) {
                         removeFromElement(this, currentNode);
-                    }
-                    else {
+                    } else {
                         var overrides = getOverrides(this);
                         removeOverrides(currentNode,
-                            overrides[ currentNode.nodeName() ] || overrides['*']);
+                            overrides[currentNode.nodeName()] || overrides['*']);
 
                     }
 
@@ -1054,7 +1028,7 @@ KISSY.add(function (S, require) {
         styleText.replace(/&quot;/g, '"')
             .replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g,
             function (match, name, value) {
-                retval[ name ] = value;
+                retval[name] = value;
             });
         return retval;
     }
@@ -1070,9 +1044,9 @@ KISSY.add(function (S, require) {
 
             // Value 'inherit'  is treated as a wildcard,
             // which will match any value.
-            if (!( name in target &&
-                ( target[ name ] === source[ name ] ||
-                    source[ name ] === 'inherit' || target[ name ] === 'inherit' ) )) {
+            if (!(name in target &&
+                (target[name] === source[name] ||
+                    source[name] === 'inherit' || target[name] === 'inherit'))) {
                 return FALSE;
             }
 
@@ -1089,8 +1063,7 @@ KISSY.add(function (S, require) {
             temp.style.cssText = unParsedCssText;
             //temp.setAttribute('style', unParsedCssText);
             styleText = temp.style.cssText || '';
-        }
-        else {
+        } else {
             styleText = unParsedCssText;
         }
 
@@ -1122,7 +1095,7 @@ KISSY.add(function (S, require) {
             for (var styleAtt in styleAttribs) {
 
                 length++;
-                attribs[ styleAtt ] = styleAttribs[ styleAtt ];
+                attribs[styleAtt] = styleAttribs[styleAtt];
 
             }
         }
@@ -1145,7 +1118,6 @@ KISSY.add(function (S, require) {
         return attribs;
     }
 
-
     /**
      Get the the collection used to compare the elements and attributes,
      defined in this style overrides, with other element. All information in
@@ -1156,14 +1128,14 @@ KISSY.add(function (S, require) {
             return style._.overrides;
         }
 
-        var overrides = ( style._.overrides = {} ),
+        var overrides = (style._.overrides = {}),
             definition = style._.definition.overrides;
 
         if (definition) {
             // The override description can be a string, object or array.
             // Internally, well handle arrays only, so transform it if needed.
             if (!S.isArray(definition)) {
-                definition = [ definition ];
+                definition = [definition];
             }
 
             // Loop through all override definitions.
@@ -1176,9 +1148,7 @@ KISSY.add(function (S, require) {
                 // If can be a string with the element name.
                 if (typeof override === 'string') {
                     elementName = override.toLowerCase();
-                }
-                // Or an object.
-                else {
+                } else {
                     elementName = override.element ?
                         override.element.toLowerCase() :
                         style.element;
@@ -1189,36 +1159,35 @@ KISSY.add(function (S, require) {
                 // We can have more than one override definition for the same
                 // element name, so we attempt to simply append information to
                 // it if it already exists.
-                overrideEl = overrides[ elementName ] ||
-                    ( overrides[ elementName ] = {} );
+                overrideEl = overrides[elementName] ||
+                    (overrides[elementName] = {});
 
                 if (attrs) {
                     // The returning attributes list is an array, because we
                     // could have different override definitions for the same
                     // attribute name.
-                    var overrideAttrs = ( overrideEl.attributes =
-                        overrideEl.attributes || [] );
+                    var overrideAttrs = (overrideEl.attributes =
+                        overrideEl.attributes || []);
                     for (var attName in attrs) {
                         // Each item in the attributes array is also an array,
                         // where [0] is the attribute name and [1] is the
                         // override value.
-                        overrideAttrs.push([ attName.toLowerCase(), attrs[ attName ] ]);
+                        overrideAttrs.push([attName.toLowerCase(), attrs[attName]]);
                     }
                 }
-
 
                 if (styles) {
                     // The returning attributes list is an array, because we
                     // could have different override definitions for the same
                     // attribute name.
-                    var overrideStyles = ( overrideEl.styles =
-                        overrideEl.styles || [] );
+                    var overrideStyles = (overrideEl.styles =
+                        overrideEl.styles || []);
                     for (var styleName in styles) {
                         // Each item in the styles array is also an array,
                         // where [0] is the style name and [1] is the
                         // override value.
-                        overrideStyles.push([ styleName.toLowerCase(),
-                            styles[ styleName ] ]);
+                        overrideStyles.push([styleName.toLowerCase(),
+                            styles[styleName]]);
                     }
                 }
             }
@@ -1231,9 +1200,9 @@ KISSY.add(function (S, require) {
         var def = style._.definition,
             overrides = getOverrides(style),
             attributes = S.merge(def.attributes,
-                (overrides[ element.nodeName()] || overrides['*'] || {}).attributes),
+                (overrides[element.nodeName()] || overrides['*'] || {}).attributes),
             styles = S.merge(def.styles,
-                (overrides[ element.nodeName()] || overrides['*'] || {}).styles),
+                (overrides[element.nodeName()] || overrides['*'] || {}).styles),
         // If the style is only about the element itself, we have to remove the element.
             removeEmpty = S.isEmptyObject(attributes) &&
                 S.isEmptyObject(styles);
@@ -1242,8 +1211,8 @@ KISSY.add(function (S, require) {
         for (var attName in attributes) {
 
             // The 'class' element value must match (#1318).
-            if (( attName === 'class' || style._.definition.fullMatch ) && element.attr(attName) !== normalizeProperty(attName,
-                attributes[ attName ])) {
+            if ((attName === 'class' || style._.definition.fullMatch) && element.attr(attName) !== normalizeProperty(attName,
+                attributes[attName])) {
                 continue;
             }
             removeEmpty = removeEmpty || !!element.hasAttr(attName);
@@ -1255,7 +1224,7 @@ KISSY.add(function (S, require) {
 
             // Full match style insist on having fully equivalence. (#5018)
             if (style._.definition.fullMatch &&
-                element.style(styleName) !== normalizeProperty(styleName, styles[ styleName ], TRUE)) {
+                element.style(styleName) !== normalizeProperty(styleName, styles[styleName], TRUE)) {
                 continue;
             }
 
@@ -1272,8 +1241,8 @@ KISSY.add(function (S, require) {
 
     function normalizeProperty(name, value, isStyle) {
         var temp = new Node('<span>');
-        temp [ isStyle ? 'style' : 'attr' ](name, value);
-        return temp[ isStyle ? 'style' : 'attr' ](name);
+        temp [isStyle ? 'style' : 'attr'](name, value);
+        return temp[isStyle ? 'style' : 'attr'](name);
     }
 
     // Removes a style from inside an element.
@@ -1297,7 +1266,7 @@ KISSY.add(function (S, require) {
                 for (i = innerElements.length - 1; i >= 0; i--) {
                     var innerElement = new Node(innerElements[i]);
                     removeOverrides(innerElement,
-                        overrides[ overrideElement ]);
+                        overrides[overrideElement]);
                 }
             }
 
@@ -1317,7 +1286,7 @@ KISSY.add(function (S, require) {
             for (i = 0; i < attributes.length; i++) {
                 var attName = attributes[i][0];
 
-                if (( actualAttrValue = element.attr(attName) )) {
+                if ((actualAttrValue = element.attr(attName))) {
                     var attValue = attributes[i][1];
 
                     // Remove the attribute if:
@@ -1327,8 +1296,8 @@ KISSY.add(function (S, require) {
                     //    - The override definition value is a regex that
                     //      has matches in the attribute value.
                     if (attValue === NULL ||
-                        ( attValue.test && attValue.test(actualAttrValue) ) ||
-                        ( typeof attValue === 'string' && actualAttrValue === attValue )) {
+                        (attValue.test && attValue.test(actualAttrValue)) ||
+                        (typeof attValue === 'string' && actualAttrValue === attValue)) {
                         element[0].removeAttribute(attName);
                     }
                 }
@@ -1341,12 +1310,12 @@ KISSY.add(function (S, require) {
             for (i = 0; i < styles.length; i++) {
                 var styleName = styles[i][0], actualStyleValue;
 
-                if (( actualStyleValue = element.css(styleName) )) {
+                if ((actualStyleValue = element.css(styleName))) {
                     var styleValue = styles[i][1];
                     if (styleValue === NULL ||
                         //styleValue === 'inherit' ||
-                        ( styleValue.test && styleValue.test(actualAttrValue) ) ||
-                        ( typeof styleValue === 'string' && actualStyleValue === styleValue )) {
+                        (styleValue.test && styleValue.test(actualAttrValue)) ||
+                        (typeof styleValue === 'string' && actualStyleValue === styleValue)) {
                         element.css(styleName, '');
                     }
                 }
@@ -1370,7 +1339,7 @@ KISSY.add(function (S, require) {
 
             if (firstChild) {
                 // Check the cached nodes for merging.
-                if(firstChild.nodeType === Dom.NodeType.ELEMENT_NODE){
+                if (firstChild.nodeType === Dom.NodeType.ELEMENT_NODE){
                     Dom._4eMergeSiblings(firstChild);
                 }
 

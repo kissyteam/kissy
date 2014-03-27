@@ -278,7 +278,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu/render.js'].lineData[24]++;
   return this.control.get('filterInput');
 }, 
-  '_onSetPlaceholder': function(v) {
+  _onSetPlaceholder: function(v) {
   _$jscoverage['/filter-menu/render.js'].functionData[3]++;
   _$jscoverage['/filter-menu/render.js'].lineData[28]++;
   this.control.get('placeholderEl').html(v);
@@ -292,7 +292,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu/render.js'].lineData[39]++;
   return el.one('.' + this.getBaseCssClass('placeholder'));
 }, 
-  'filterInputWrap': function(el) {
+  filterInputWrap: function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[5]++;
   _$jscoverage['/filter-menu/render.js'].lineData[42]++;
   return el.one('.' + this.getBaseCssClass('input-wrap'));

@@ -27,12 +27,12 @@ KISSY.add(function (S, require) {
      */
     var impliedEndTag = {
         // if dd encounter another dd before encounter dl ,then close last dd
-        'dd': {'dl': 1},
-        'dt': {'dl': 1},
+        dd: {dl: 1},
+        dt: {dl: 1},
         // 2012.06.27 Note: li may has two kinds of parent!
-        'li': {'ul': 1, 'ol': 1},
-        'option': {'select': 1},
-        'optgroup': {'select': 1}
+        li: {ul: 1, ol: 1},
+        option: {select: 1},
+        optgroup: {select: 1}
         // p? rp? rt?
     };
 
@@ -108,9 +108,8 @@ KISSY.add(function (S, require) {
                     while (i < childNodes.length) {
                         if (childNodes[i].tagName === currentChildName) {
                             pTag.appendChild(childNodes[i]);
-                        }
-                        // non-empty text leave it to outer loop
-                        else if (childNodes[i].nodeType === 3 && S.trim(childNodes[i].toHtml())) {
+                        } else if (childNodes[i].nodeType === 3 && S.trim(childNodes[i].toHtml())) {
+                            // non-empty text leave it to outer loop
                             break;
                         }
                         i++;
@@ -173,7 +172,6 @@ KISSY.add(function (S, require) {
 
         return 1;
     }
-
 
     /*
      checked whether tag can include node as its child according to DTD

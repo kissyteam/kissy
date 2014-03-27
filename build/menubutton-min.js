@@ -1,9 +1,9 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 27 21:59
 */
-KISSY.add("menubutton/menubutton-xtpl",["component/extension/content-xtpl"],function(k,h,l,j){k=function(i,g,e,c,a){var b,d=this.nativeCommands,f=this.utils;if("1.50"!==g.version)throw Error("current xtemplate file("+this.name+")(v1.50) need to be recompiled using current kissy(v"+g.version+")!");"undefined"!==typeof j&&j.kissy&&(b=j);g=f.callCommand;d=d.include;e.write("");var f={},m=[];m.push("component/extension/content-xtpl");f.params=m;b&&(h("component/extension/content-xtpl"),f.params[0]=b.resolveByName(f.params[0]));
+KISSY.add("menubutton/menubutton-xtpl",["component/extension/content-xtpl"],function(k,h,l,j){k=function(i,g,e,c,a){var b,d=this.nativeCommands,f=this.utils;if("1.50"!==g.version)throw Error("current xtemplate file("+this.name+")(v1.50) need to be recompiled using current kissy(v"+g.version+")!");"undefined"!==typeof j&&j.kissy&&(b=j);g=f.callCommand;d=d.include;e.write("");var f={},m=[];m.push("component/extension/content-xtpl");f.params=m;b&&(h("component/extension/content-xtpl"),f.params[0]=b.resolve(f.params[0]));
 if((c=d.call(this,i,f,e,1,c))&&c.isBuffer)e=c,c=a;e.write(c,!1);e.write('\n<div class="');c={escape:1};b=[];b.push("dropdown");c.params=b;if((c=g(this,i,c,e,"getBaseCssClasses",2))&&c.isBuffer)e=c,c=a;e.write(c,!0);e.write('">\n    <div class="');c={escape:1};b=[];b.push("dropdown-inner");c.params=b;if((i=g(this,i,c,e,"getBaseCssClasses",3))&&i.isBuffer)e=i,i=a;e.write(i,!0);e.write('">\n    </div>\n</div>');return e};k.TPL_NAME=j.name;return k});
 KISSY.add("menubutton/render",["button","./menubutton-xtpl","component/extension/content-render"],function(k,h){var l=h("button"),j=h("./menubutton-xtpl"),i=h("component/extension/content-render");return l.getDefaultRender().extend([i],{decorateDom:function(g){var e=this.control,c=e.get("prefixCls"),g=g.one("."+c+"popupmenu"),a=g[0].ownerDocument.body;a.insertBefore(g[0],a.firstChild);a=this.getComponentConstructorByNode(c,g);e.setInternal("menu",new a({srcNode:g,prefixCls:c}))},beforeCreateDom:function(g){k.mix(g.elAttrs,
 {"aria-expanded":!1,"aria-haspopup":!0})},_onSetCollapsed:function(g){var e=this.$el,c=this.getBaseCssClass("open");e[g?"removeClass":"addClass"](c).attr("aria-expanded",!g)}},{ATTRS:{contentTpl:{value:j}}})});

@@ -17,4 +17,3 @@ KISSY.add(function (S, require) {
         Object: DomEventObject
     }, DomEvent);
 });
-

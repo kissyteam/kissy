@@ -165,7 +165,7 @@ KISSY.add(function (S, require) {
          * @param func {String} the name of the function to call
          * @param args {Array} the set of arguments to pass to the function.
          */
-        'callSWF': function (func, args) {
+        callSWF: function (func, args) {
             var swf = this.get('el'),
                 ret,
                 params;
@@ -479,9 +479,8 @@ KISSY.add(function (S, require) {
             k = k.toLowerCase();
             if (k in PARAMS) {
                 par += stringParam(k, v);
-            }
-            // 特殊参数
-            else if (k === FLASHVARS) {
+            } else if (k === FLASHVARS) {
+                // 特殊参数
                 par += stringParam(k, toFlashVars(v));
             }
         });

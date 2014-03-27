@@ -504,7 +504,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[8]++;
   var Dialog4E = require('../dialog');
   _$jscoverage['/dialog.js'].lineData[9]++;
-  var map = S.map, Dom = S.DOM;
+  var map = S.map, Dom = S.require('dom');
   _$jscoverage['/dialog.js'].lineData[12]++;
   function getData(color) {
     _$jscoverage['/dialog.js'].functionData[1]++;

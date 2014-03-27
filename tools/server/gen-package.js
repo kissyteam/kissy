@@ -68,7 +68,7 @@ var code = "/**\n" +
     "    For dev mode only!\n" +
     "*/\n" +
     "var SERVER_CONFIG=" + serverConfig + ";\n" +
-    "KISSY.config('tag',KISSY.now());" +
+    "KISSY.config('tag',+ new Date());" +
     "var loc = location;\n" +
     "if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {\n" +
     "KISSY.config('packages', \n" +

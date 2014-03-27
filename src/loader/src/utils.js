@@ -142,7 +142,6 @@
         return to;
     }
 
-
     mix(Utils, {
         mix: mix,
 
@@ -506,7 +505,8 @@
          * @return {String[]} normalize module names with alias
          */
         normalizeModNamesWithAlias: function (modNames, refModName) {
-            var ret = [], i, l;
+            var ret = [],
+                i, l;
             if (modNames) {
                 // 1. index map
                 for (i = 0, l = modNames.length; i < l; i++) {

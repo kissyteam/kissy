@@ -4,7 +4,7 @@
  */
 /*jshint quotmark:false*/
 KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
-    var Dom = S.DOM,
+    var Dom = S.require('dom'),
         $ = Node.all;
     var ie = S.UA.ieMode;
 
@@ -371,7 +371,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it('attribute has order', function () {
-                var Dom = S.DOM;
+                var Dom = S.require('dom');
                 Dom.addStyleSheet('.overlay1522 {position:absolute;}');
                 var o = new Overlay({
                     prefixCls: 'kk-',

@@ -79,7 +79,7 @@ KISSY.add(function (S, require) {
             editor.addCommand('paste', new CutCopyPasteCmd('paste'));
         },
 
-        '_onKeyDown': function (e) {
+        _onKeyDown: function (e) {
             var self = this,
                 editor = self.editor;
             if (editor.get('mode') !== Editor.Mode.WYSIWYG_MODE) {
@@ -108,18 +108,17 @@ KISSY.add(function (S, require) {
                 } catch (e) {
                 }
                 self._isPreventBeforePaste = 0;
-            }
-            // Cut, Copy - check if the selection is not empty
-            else {
+            } else {
+                // Cut, Copy - check if the selection is not empty
                 var sel = editor.getSelection(),
                     ranges = sel && sel.getRanges();
-                ret = ranges && !( ranges.length === 1 && ranges[ 0 ].collapsed );
+                ret = ranges && !(ranges.length === 1 && ranges[ 0 ].collapsed);
             }
 
             return ret;
         },
 
-        '_preventPasteEvent': function () {
+        _preventPasteEvent: function () {
             var self = this;
             if (self._preventPasteTimer) {
                 clearTimeout(self._preventPasteTimer);
@@ -212,9 +211,9 @@ KISSY.add(function (S, require) {
                 var bogusSpan;
                 var oldPasteBin = pasteBin;
 
-                pasteBin = ( UA.webkit && ( bogusSpan = pasteBin.first() ) &&
-                    (bogusSpan.hasClass('Apple-style-span') ) ?
-                    bogusSpan : pasteBin );
+                pasteBin = (UA.webkit && (bogusSpan = pasteBin.first()) &&
+                    (bogusSpan.hasClass('Apple-style-span')) ?
+                    bogusSpan : pasteBin);
 
                 sel.selectBookmarks(bms);
 
@@ -222,7 +221,7 @@ KISSY.add(function (S, require) {
 
                 oldPasteBin.remove();
 
-                if (!( html = cleanPaste(html))) {
+                if (!(html = cleanPaste(html))) {
                     // ie 第2次触发 beforepaste 会报错！
                     // 第一次 bms 是对的，但是 pasteBin 内容是错的
                     // 第二次 bms 是错的，但是内容是对的
@@ -273,7 +272,7 @@ KISSY.add(function (S, require) {
         body.on(command, onExec);
 
         // IE6/7: document.execCommand has problem to paste into positioned element.
-        ( UA.ieMode > 7 ? doc : doc.selection.createRange() ).execCommand(command);
+        (UA.ieMode > 7 ? doc : doc.selection.createRange()).execCommand(command);
 
         body.detach(command, onExec);
 
@@ -297,9 +296,9 @@ KISSY.add(function (S, require) {
         };
 
     var errorTypes = {
-        'cut': '您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成',
-        'copy': '您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成',
-        'paste': '您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成'
+        cut: '您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成',
+        copy: '您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成',
+        paste: '您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成'
     };
 
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
@@ -307,14 +306,14 @@ KISSY.add(function (S, require) {
         var editorDoc = editor.get('document')[0];
         var sel = editor.getSelection();
         var control;
-        if (( sel.getType() === KES.SELECTION_ELEMENT ) &&
-            ( control = sel.getSelectedElement() )) {
-            var range = sel.getRanges()[ 0 ];
+        if ((sel.getType() === KES.SELECTION_ELEMENT) &&
+            (control = sel.getSelectedElement())) {
+            var range = sel.getRanges()[0];
             var dummy = $(editorDoc.createTextNode(''));
             dummy.insertBefore(control);
             range.setStartBefore(dummy);
             range.setEndAfter(control);
-            sel.selectRanges([ range ]);
+            sel.selectRanges([range]);
 
             // Clear up the fix if the paste wasn't succeeded.
             setTimeout(function () {
@@ -379,9 +378,8 @@ KISSY.add(function (S, require) {
                     .replace(/^<div>/, '<p>')
                     .replace(/^<\/div>/, '</p>');
             }
-        }
-        // Opera and Firefox and enterMode !== BR.
-        else if (UA.gecko || UA.opera) {
+        } else if (UA.gecko || UA.opera) {
+            // Opera and Firefox and enterMode !== BR.
             //  bogus <br>
             if (UA.gecko) {
                 html = html.replace(/^<br><br>$/, '<br>');
@@ -420,14 +418,13 @@ KISSY.add(function (S, require) {
     }
 
     var lang = {
-        'copy': '复制',
-        'paste': '粘贴',
-        'cut': '剪切'
+        copy: '复制',
+        paste: '粘贴',
+        cut: '剪切'
     };
 
     return {
         init: function (editor) {
-
             var currentPaste;
 
             editor.docReady(function () {
@@ -457,9 +454,9 @@ KISSY.add(function (S, require) {
             }
 
             var clipboardCommands = {
-                'copy': 1,
-                'cut': 1,
-                'paste': 1
+                copy: 1,
+                cut: 1,
+                paste: 1
             };
             var clipboardCommandsList = ['copy', 'cut', 'paste'];
 

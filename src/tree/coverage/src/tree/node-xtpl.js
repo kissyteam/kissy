@@ -395,11 +395,11 @@ if (! _$jscoverage['/tree/node-xtpl.js'].branchData) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['161'] = [];
   _$jscoverage['/tree/node-xtpl.js'].branchData['161'][1] = new BranchData();
 }
-_$jscoverage['/tree/node-xtpl.js'].branchData['161'][1].init(6710, 37, 'commandRet33 && commandRet33.isBuffer');
+_$jscoverage['/tree/node-xtpl.js'].branchData['161'][1].init(6704, 37, 'commandRet33 && commandRet33.isBuffer');
 function visit36_161_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['145'][1].init(6025, 37, 'commandRet29 && commandRet29.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['145'][1].init(6019, 37, 'commandRet29 && commandRet29.isBuffer');
 function visit35_145_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['145'][1].ranCondition(result);
   return result;
@@ -660,7 +660,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/tree/node-xtpl.js'].lineData[141]++;
     require("component/extension/content-xtpl");
     _$jscoverage['/tree/node-xtpl.js'].lineData[142]++;
-    option27.params[0] = moduleWrap.resolveByName(option27.params[0]);
+    option27.params[0] = moduleWrap.resolve(option27.params[0]);
   }
   _$jscoverage['/tree/node-xtpl.js'].lineData[144]++;
   var commandRet29 = includeCommand.call(engine, scope, option27, buffer, 18, payload);

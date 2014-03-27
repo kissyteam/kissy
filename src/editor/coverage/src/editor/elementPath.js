@@ -253,15 +253,15 @@ if (! _$jscoverage['/editor/elementPath.js']) {
   _$jscoverage['/editor/elementPath.js'].lineData[86] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[89] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[90] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[93] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[92] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[97] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[98] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[99] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[100] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[103] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[102] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[105] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[106] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[107] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[108] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[111] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[110] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[121] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[122] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[124] = 0;
@@ -275,12 +275,12 @@ if (! _$jscoverage['/editor/elementPath.js']) {
   _$jscoverage['/editor/elementPath.js'].lineData[140] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[141] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[144] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[147] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[148] = 0;
   _$jscoverage['/editor/elementPath.js'].lineData[149] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[151] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[154] = 0;
-  _$jscoverage['/editor/elementPath.js'].lineData[156] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[150] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[152] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[155] = 0;
+  _$jscoverage['/editor/elementPath.js'].lineData[157] = 0;
 }
 if (! _$jscoverage['/editor/elementPath.js'].functionData) {
   _$jscoverage['/editor/elementPath.js'].functionData = [];
@@ -312,8 +312,8 @@ if (! _$jscoverage['/editor/elementPath.js'].branchData) {
   _$jscoverage['/editor/elementPath.js'].branchData['89'][1] = new BranchData();
   _$jscoverage['/editor/elementPath.js'].branchData['89'][2] = new BranchData();
   _$jscoverage['/editor/elementPath.js'].branchData['89'][3] = new BranchData();
-  _$jscoverage['/editor/elementPath.js'].branchData['99'] = [];
-  _$jscoverage['/editor/elementPath.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/editor/elementPath.js'].branchData['98'] = [];
+  _$jscoverage['/editor/elementPath.js'].branchData['98'][1] = new BranchData();
   _$jscoverage['/editor/elementPath.js'].branchData['122'] = [];
   _$jscoverage['/editor/elementPath.js'].branchData['122'][1] = new BranchData();
   _$jscoverage['/editor/elementPath.js'].branchData['124'] = [];
@@ -327,12 +327,12 @@ if (! _$jscoverage['/editor/elementPath.js'].branchData) {
   _$jscoverage['/editor/elementPath.js'].branchData['139'][1] = new BranchData();
   _$jscoverage['/editor/elementPath.js'].branchData['140'] = [];
   _$jscoverage['/editor/elementPath.js'].branchData['140'][1] = new BranchData();
-  _$jscoverage['/editor/elementPath.js'].branchData['148'] = [];
-  _$jscoverage['/editor/elementPath.js'].branchData['148'][1] = new BranchData();
+  _$jscoverage['/editor/elementPath.js'].branchData['149'] = [];
+  _$jscoverage['/editor/elementPath.js'].branchData['149'][1] = new BranchData();
 }
-_$jscoverage['/editor/elementPath.js'].branchData['148'][1].init(84, 19, 'i < elements.length');
-function visit295_148_1(result) {
-  _$jscoverage['/editor/elementPath.js'].branchData['148'][1].ranCondition(result);
+_$jscoverage['/editor/elementPath.js'].branchData['149'][1].init(84, 19, 'i < elements.length');
+function visit295_149_1(result) {
+  _$jscoverage['/editor/elementPath.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/elementPath.js'].branchData['140'][1].init(21, 36, 'elements[i].nodeName() in tagNames');
 function visit294_140_1(result) {
@@ -362,9 +362,9 @@ function visit289_124_1(result) {
 function visit288_122_1(result) {
   _$jscoverage['/editor/elementPath.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/elementPath.js'].branchData['99'][1].init(876, 22, 'elementName === \'body\'');
-function visit287_99_1(result) {
-  _$jscoverage['/editor/elementPath.js'].branchData['99'][1].ranCondition(result);
+}_$jscoverage['/editor/elementPath.js'].branchData['98'][1].init(853, 22, 'elementName === \'body\'');
+function visit287_98_1(result) {
+  _$jscoverage['/editor/elementPath.js'].branchData['98'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/elementPath.js'].branchData['89'][3].init(194, 21, 'elementName === \'div\'');
 function visit286_89_3(result) {
@@ -421,29 +421,29 @@ KISSY.add(function(S, require) {
   require('./dom');
   _$jscoverage['/editor/elementPath.js'].lineData[15]++;
   var Dom = S.DOM, dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null, pathBlockElements = {
-  'address': 1, 
-  'blockquote': 1, 
-  'dl': 1, 
-  'h1': 1, 
-  'h2': 1, 
-  'h3': 1, 
-  'h4': 1, 
-  'h5': 1, 
-  'h6': 1, 
-  'p': 1, 
-  'pre': 1, 
-  'li': 1, 
-  'dt': 1, 
-  'dd': 1}, pathBlockLimitElements = {
-  'body': 1, 
-  'div': 1, 
-  'table': 1, 
-  'tbody': 1, 
-  'tr': 1, 
-  'td': 1, 
-  'th': 1, 
-  'caption': 1, 
-  'form': 1}, checkHasBlock = function(element) {
+  address: 1, 
+  blockquote: 1, 
+  dl: 1, 
+  h1: 1, 
+  h2: 1, 
+  h3: 1, 
+  h4: 1, 
+  h5: 1, 
+  h6: 1, 
+  p: 1, 
+  pre: 1, 
+  li: 1, 
+  dt: 1, 
+  dd: 1}, pathBlockLimitElements = {
+  body: 1, 
+  div: 1, 
+  table: 1, 
+  tbody: 1, 
+  tr: 1, 
+  td: 1, 
+  th: 1, 
+  caption: 1, 
+  form: 1}, checkHasBlock = function(element) {
   _$jscoverage['/editor/elementPath.js'].functionData[1]++;
   _$jscoverage['/editor/elementPath.js'].lineData[52]++;
   var childNodes = element[0].childNodes;
@@ -490,30 +490,30 @@ KISSY.add(function(S, require) {
               _$jscoverage['/editor/elementPath.js'].lineData[90]++;
               block = e;
             } else {
-              _$jscoverage['/editor/elementPath.js'].lineData[93]++;
+              _$jscoverage['/editor/elementPath.js'].lineData[92]++;
               blockLimit = e;
             }
           }
         }
-        _$jscoverage['/editor/elementPath.js'].lineData[98]++;
+        _$jscoverage['/editor/elementPath.js'].lineData[97]++;
         elements.push(e);
-        _$jscoverage['/editor/elementPath.js'].lineData[99]++;
-        if (visit287_99_1(elementName === 'body')) {
-          _$jscoverage['/editor/elementPath.js'].lineData[100]++;
+        _$jscoverage['/editor/elementPath.js'].lineData[98]++;
+        if (visit287_98_1(elementName === 'body')) {
+          _$jscoverage['/editor/elementPath.js'].lineData[99]++;
           break;
         }
       }
-      _$jscoverage['/editor/elementPath.js'].lineData[103]++;
+      _$jscoverage['/editor/elementPath.js'].lineData[102]++;
       e = e.parent();
     }
-    _$jscoverage['/editor/elementPath.js'].lineData[106]++;
+    _$jscoverage['/editor/elementPath.js'].lineData[105]++;
     self.block = block;
-    _$jscoverage['/editor/elementPath.js'].lineData[107]++;
+    _$jscoverage['/editor/elementPath.js'].lineData[106]++;
     self.blockLimit = blockLimit;
-    _$jscoverage['/editor/elementPath.js'].lineData[108]++;
+    _$jscoverage['/editor/elementPath.js'].lineData[107]++;
     self.elements = elements;
   }
-  _$jscoverage['/editor/elementPath.js'].lineData[111]++;
+  _$jscoverage['/editor/elementPath.js'].lineData[110]++;
   ElementPath.prototype = {
   constructor: ElementPath, 
   compare: function(otherPath) {
@@ -555,18 +555,18 @@ KISSY.add(function(S, require) {
 }, 
   toString: function() {
   _$jscoverage['/editor/elementPath.js'].functionData[5]++;
-  _$jscoverage['/editor/elementPath.js'].lineData[147]++;
-  var elements = this.elements, i, elNames = [];
   _$jscoverage['/editor/elementPath.js'].lineData[148]++;
-  for (i = 0; visit295_148_1(i < elements.length); i++) {
-    _$jscoverage['/editor/elementPath.js'].lineData[149]++;
+  var elements = this.elements, i, elNames = [];
+  _$jscoverage['/editor/elementPath.js'].lineData[149]++;
+  for (i = 0; visit295_149_1(i < elements.length); i++) {
+    _$jscoverage['/editor/elementPath.js'].lineData[150]++;
     elNames.push(elements[i].nodeName());
   }
-  _$jscoverage['/editor/elementPath.js'].lineData[151]++;
+  _$jscoverage['/editor/elementPath.js'].lineData[152]++;
   return elNames.toString();
 }};
-  _$jscoverage['/editor/elementPath.js'].lineData[154]++;
+  _$jscoverage['/editor/elementPath.js'].lineData[155]++;
   Editor.ElementPath = ElementPath;
-  _$jscoverage['/editor/elementPath.js'].lineData[156]++;
+  _$jscoverage['/editor/elementPath.js'].lineData[157]++;
   return ElementPath;
 });

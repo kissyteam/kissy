@@ -287,34 +287,34 @@ if (! _$jscoverage['/menu/submenu.js']) {
   _$jscoverage['/menu/submenu.js'].lineData[146] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[147] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[148] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[154] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[156] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[157] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[158] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[160] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[162] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[164] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[166] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[168] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[169] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[175] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[178] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[182] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[167] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[173] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[176] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[180] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[184] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[186] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[188] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[189] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[187] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[220] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[221] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[222] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[223] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[224] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[225] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[227] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[230] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[231] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[245] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[246] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[250] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[228] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[229] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[243] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[244] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[248] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[256] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[257] = 0;
   _$jscoverage['/menu/submenu.js'].lineData[258] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[259] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[260] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[263] = 0;
-  _$jscoverage['/menu/submenu.js'].lineData[264] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[261] = 0;
+  _$jscoverage['/menu/submenu.js'].lineData[262] = 0;
 }
 if (! _$jscoverage['/menu/submenu.js'].functionData) {
   _$jscoverage['/menu/submenu.js'].functionData = [];
@@ -360,42 +360,42 @@ if (! _$jscoverage['/menu/submenu.js'].branchData) {
   _$jscoverage['/menu/submenu.js'].branchData['142'][1] = new BranchData();
   _$jscoverage['/menu/submenu.js'].branchData['144'] = [];
   _$jscoverage['/menu/submenu.js'].branchData['144'][1] = new BranchData();
-  _$jscoverage['/menu/submenu.js'].branchData['156'] = [];
-  _$jscoverage['/menu/submenu.js'].branchData['156'][1] = new BranchData();
-  _$jscoverage['/menu/submenu.js'].branchData['162'] = [];
-  _$jscoverage['/menu/submenu.js'].branchData['162'][1] = new BranchData();
-  _$jscoverage['/menu/submenu.js'].branchData['166'] = [];
-  _$jscoverage['/menu/submenu.js'].branchData['166'][1] = new BranchData();
-  _$jscoverage['/menu/submenu.js'].branchData['222'] = [];
-  _$jscoverage['/menu/submenu.js'].branchData['222'][1] = new BranchData();
-  _$jscoverage['/menu/submenu.js'].branchData['223'] = [];
-  _$jscoverage['/menu/submenu.js'].branchData['223'][1] = new BranchData();
-  _$jscoverage['/menu/submenu.js'].branchData['230'] = [];
-  _$jscoverage['/menu/submenu.js'].branchData['230'][1] = new BranchData();
+  _$jscoverage['/menu/submenu.js'].branchData['154'] = [];
+  _$jscoverage['/menu/submenu.js'].branchData['154'][1] = new BranchData();
+  _$jscoverage['/menu/submenu.js'].branchData['160'] = [];
+  _$jscoverage['/menu/submenu.js'].branchData['160'][1] = new BranchData();
+  _$jscoverage['/menu/submenu.js'].branchData['164'] = [];
+  _$jscoverage['/menu/submenu.js'].branchData['164'][1] = new BranchData();
+  _$jscoverage['/menu/submenu.js'].branchData['220'] = [];
+  _$jscoverage['/menu/submenu.js'].branchData['220'][1] = new BranchData();
+  _$jscoverage['/menu/submenu.js'].branchData['221'] = [];
+  _$jscoverage['/menu/submenu.js'].branchData['221'][1] = new BranchData();
+  _$jscoverage['/menu/submenu.js'].branchData['228'] = [];
+  _$jscoverage['/menu/submenu.js'].branchData['228'][1] = new BranchData();
 }
-_$jscoverage['/menu/submenu.js'].branchData['230'][1].init(29, 11, 'm.isControl');
-function visit68_230_1(result) {
-  _$jscoverage['/menu/submenu.js'].branchData['230'][1].ranCondition(result);
+_$jscoverage['/menu/submenu.js'].branchData['228'][1].init(29, 11, 'm.isControl');
+function visit68_228_1(result) {
+  _$jscoverage['/menu/submenu.js'].branchData['228'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/submenu.js'].branchData['223'][1].init(40, 23, 'v.xclass || \'popupmenu\'');
-function visit67_223_1(result) {
-  _$jscoverage['/menu/submenu.js'].branchData['223'][1].ranCondition(result);
+}_$jscoverage['/menu/submenu.js'].branchData['221'][1].init(40, 23, 'v.xclass || \'popupmenu\'');
+function visit67_221_1(result) {
+  _$jscoverage['/menu/submenu.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/submenu.js'].branchData['222'][1].init(29, 12, '!v.isControl');
-function visit66_222_1(result) {
-  _$jscoverage['/menu/submenu.js'].branchData['222'][1].ranCondition(result);
+}_$jscoverage['/menu/submenu.js'].branchData['220'][1].init(29, 12, '!v.isControl');
+function visit66_220_1(result) {
+  _$jscoverage['/menu/submenu.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/submenu.js'].branchData['166'][1].init(196, 24, 'keyCode === KeyCode.LEFT');
-function visit65_166_1(result) {
-  _$jscoverage['/menu/submenu.js'].branchData['166'][1].ranCondition(result);
+}_$jscoverage['/menu/submenu.js'].branchData['164'][1].init(196, 24, 'keyCode === KeyCode.LEFT');
+function visit65_164_1(result) {
+  _$jscoverage['/menu/submenu.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/submenu.js'].branchData['162'][1].init(1110, 30, '!menu.handleKeyDownInternal(e)');
-function visit64_162_1(result) {
-  _$jscoverage['/menu/submenu.js'].branchData['162'][1].ranCondition(result);
+}_$jscoverage['/menu/submenu.js'].branchData['160'][1].init(1074, 30, '!menu.handleKeyDownInternal(e)');
+function visit64_160_1(result) {
+  _$jscoverage['/menu/submenu.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/submenu.js'].branchData['156'][1].init(589, 25, 'keyCode === KeyCode.ENTER');
-function visit63_156_1(result) {
-  _$jscoverage['/menu/submenu.js'].branchData['156'][1].ranCondition(result);
+}_$jscoverage['/menu/submenu.js'].branchData['154'][1].init(531, 25, 'keyCode === KeyCode.ENTER');
+function visit63_154_1(result) {
+  _$jscoverage['/menu/submenu.js'].branchData['154'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/submenu.js'].branchData['144'][1].init(54, 25, 'keyCode === KeyCode.RIGHT');
 function visit62_144_1(result) {
@@ -610,47 +610,47 @@ KISSY.add(function(S, require) {
   fromKeyboard: 1}});
       }
     } else {
-      _$jscoverage['/menu/submenu.js'].lineData[156]++;
-      if (visit63_156_1(keyCode === KeyCode.ENTER)) {
-        _$jscoverage['/menu/submenu.js'].lineData[157]++;
+      _$jscoverage['/menu/submenu.js'].lineData[154]++;
+      if (visit63_154_1(keyCode === KeyCode.ENTER)) {
+        _$jscoverage['/menu/submenu.js'].lineData[156]++;
         return self.handleClickInternal(e);
       } else {
-        _$jscoverage['/menu/submenu.js'].lineData[160]++;
+        _$jscoverage['/menu/submenu.js'].lineData[158]++;
         return undefined;
       }
     }
   } else {
-    _$jscoverage['/menu/submenu.js'].lineData[162]++;
-    if (visit64_162_1(!menu.handleKeyDownInternal(e))) {
-      _$jscoverage['/menu/submenu.js'].lineData[166]++;
-      if (visit65_166_1(keyCode === KeyCode.LEFT)) {
-        _$jscoverage['/menu/submenu.js'].lineData[168]++;
+    _$jscoverage['/menu/submenu.js'].lineData[160]++;
+    if (visit64_160_1(!menu.handleKeyDownInternal(e))) {
+      _$jscoverage['/menu/submenu.js'].lineData[164]++;
+      if (visit65_164_1(keyCode === KeyCode.LEFT)) {
+        _$jscoverage['/menu/submenu.js'].lineData[166]++;
         self.set('highlighted', false);
-        _$jscoverage['/menu/submenu.js'].lineData[169]++;
+        _$jscoverage['/menu/submenu.js'].lineData[167]++;
         self.set('highlighted', true, {
   data: {
   fromKeyboard: 1}});
       } else {
-        _$jscoverage['/menu/submenu.js'].lineData[175]++;
+        _$jscoverage['/menu/submenu.js'].lineData[173]++;
         return undefined;
       }
     }
   }
-  _$jscoverage['/menu/submenu.js'].lineData[178]++;
+  _$jscoverage['/menu/submenu.js'].lineData[176]++;
   return true;
 }, 
   containsElement: function(element) {
   _$jscoverage['/menu/submenu.js'].functionData[11]++;
-  _$jscoverage['/menu/submenu.js'].lineData[182]++;
+  _$jscoverage['/menu/submenu.js'].lineData[180]++;
   return this.get('menu').containsElement(element);
 }, 
   destructor: function() {
   _$jscoverage['/menu/submenu.js'].functionData[12]++;
-  _$jscoverage['/menu/submenu.js'].lineData[186]++;
+  _$jscoverage['/menu/submenu.js'].lineData[184]++;
   var self = this, menu = self.get('menu');
-  _$jscoverage['/menu/submenu.js'].lineData[188]++;
+  _$jscoverage['/menu/submenu.js'].lineData[186]++;
   self.clearSubMenuTimers();
-  _$jscoverage['/menu/submenu.js'].lineData[189]++;
+  _$jscoverage['/menu/submenu.js'].lineData[187]++;
   menu.destroy();
 }}, {
   ATTRS: {
@@ -660,52 +660,52 @@ KISSY.add(function(S, require) {
   value: {}, 
   getter: function(v) {
   _$jscoverage['/menu/submenu.js'].functionData[13]++;
-  _$jscoverage['/menu/submenu.js'].lineData[222]++;
-  if (visit66_222_1(!v.isControl)) {
-    _$jscoverage['/menu/submenu.js'].lineData[223]++;
-    v.xclass = visit67_223_1(v.xclass || 'popupmenu');
-    _$jscoverage['/menu/submenu.js'].lineData[224]++;
+  _$jscoverage['/menu/submenu.js'].lineData[220]++;
+  if (visit66_220_1(!v.isControl)) {
+    _$jscoverage['/menu/submenu.js'].lineData[221]++;
+    v.xclass = visit67_221_1(v.xclass || 'popupmenu');
+    _$jscoverage['/menu/submenu.js'].lineData[222]++;
     v = this.createComponent(v);
-    _$jscoverage['/menu/submenu.js'].lineData[225]++;
+    _$jscoverage['/menu/submenu.js'].lineData[223]++;
     this.setInternal('menu', v);
   }
-  _$jscoverage['/menu/submenu.js'].lineData[227]++;
+  _$jscoverage['/menu/submenu.js'].lineData[225]++;
   return v;
 }, 
   setter: function(m) {
   _$jscoverage['/menu/submenu.js'].functionData[14]++;
-  _$jscoverage['/menu/submenu.js'].lineData[230]++;
-  if (visit68_230_1(m.isControl)) {
-    _$jscoverage['/menu/submenu.js'].lineData[231]++;
+  _$jscoverage['/menu/submenu.js'].lineData[228]++;
+  if (visit68_228_1(m.isControl)) {
+    _$jscoverage['/menu/submenu.js'].lineData[229]++;
     m.setInternal('parent', this);
   }
 }}, 
   xrender: {
   value: SubMenuRender}}, 
   xclass: 'submenu'});
-  _$jscoverage['/menu/submenu.js'].lineData[245]++;
+  _$jscoverage['/menu/submenu.js'].lineData[243]++;
   function showMenu() {
     _$jscoverage['/menu/submenu.js'].functionData[15]++;
-    _$jscoverage['/menu/submenu.js'].lineData[246]++;
+    _$jscoverage['/menu/submenu.js'].lineData[244]++;
     var self = this, menu = self.get('menu');
-    _$jscoverage['/menu/submenu.js'].lineData[250]++;
+    _$jscoverage['/menu/submenu.js'].lineData[248]++;
     var align = {
   node: this.$el, 
   points: ['tr', 'tl'], 
   overflow: {
   adjustX: 1, 
   adjustY: 1}};
-    _$jscoverage['/menu/submenu.js'].lineData[258]++;
+    _$jscoverage['/menu/submenu.js'].lineData[256]++;
     S.mix(menu.get('align'), align, false);
-    _$jscoverage['/menu/submenu.js'].lineData[259]++;
+    _$jscoverage['/menu/submenu.js'].lineData[257]++;
     menu.show();
-    _$jscoverage['/menu/submenu.js'].lineData[260]++;
+    _$jscoverage['/menu/submenu.js'].lineData[258]++;
     self.el.setAttribute('aria-haspopup', menu.get('el').attr('id'));
   }
-  _$jscoverage['/menu/submenu.js'].lineData[263]++;
+  _$jscoverage['/menu/submenu.js'].lineData[261]++;
   function hideMenu() {
     _$jscoverage['/menu/submenu.js'].functionData[16]++;
-    _$jscoverage['/menu/submenu.js'].lineData[264]++;
+    _$jscoverage['/menu/submenu.js'].lineData[262]++;
     this.get('menu').hide();
   }
 });

@@ -139,7 +139,7 @@ KISSY.add(function (S, require, exports, module) {
             option27.params = params28;
             if (moduleWrap) {
                 require("component/extension/content-xtpl");
-                option27.params[0] = moduleWrap.resolveByName(option27.params[0]);
+                option27.params[0] = moduleWrap.resolve(option27.params[0]);
             }
             var commandRet29 = includeCommand.call(engine, scope, option27, buffer, 18, payload);
             if (commandRet29 && commandRet29.isBuffer) {

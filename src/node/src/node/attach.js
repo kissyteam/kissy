@@ -79,17 +79,17 @@ KISSY.add(function (S, require) {
     // if set return this else if get return true value ,no nodelist transform
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
-            'attr': 1,
-            'text': 0,
-            'css': 1,
-            'style': 1,
-            'val': 0,
-            'prop': 1,
-            'offset': 0,
-            'html': 0,
-            'outerHTML': 0,
-            'outerHtml': 0,
-            'data': 1
+            attr: 1,
+            text: 0,
+            css: 1,
+            style: 1,
+            val: 0,
+            prop: 1,
+            offset: 0,
+            html: 0,
+            outerHTML: 0,
+            outerHtml: 0,
+            data: 1
         },
     // Event 添加到 NP 上的方法
         EVENT_INCLUDES_SELF = [
@@ -119,8 +119,7 @@ KISSY.add(function (S, require) {
         var ret = Dom[fn].apply(Dom, args);
         if (ret === undefined) {
             return self;
-        }
-        else if (ret === null) {
+        } else if (ret === null) {
             return null;
         }
         return new NodeList(ret);

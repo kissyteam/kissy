@@ -1,11 +1,10 @@
 <project name="editor.build" default="build-all" basedir=".">
-
     <property name="component.name" value="editor"/>
 
     <import file="../common.xml"/>
 
     <target name="merge-editor-dependency">
-        <concat destfile="${component.src.dir}/editor/plugin-meta.js"
+        <concat destfile="${component.src.dir}/editor/modules.js"
                 encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
                 /*jshint indent:false, unused:false*/
@@ -24,13 +23,4 @@
     </target>
 
     <target name="before-concat" depends="merge-editor-dependency"/>
-
-    <target name="build-all">
-        <subant target="" failonerror="true" inheritall="false">
-            <fileset dir="./sub-modules" includes="**/build.xml"/>
-        </subant>
-        <subant target="build" failonerror="true"
-                buildpath="."
-                inheritall="false"/>
-    </target>
 </project>

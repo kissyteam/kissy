@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     // if combined into loader
-    var Path = require ? require('path') : S.Path;
+    var Path = require('path');
     var logger = S.getLogger('s/uri');
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
@@ -661,8 +661,6 @@ KISSY.add(function (S, require) {
         });
         return ret;
     };
-
-    S.Uri = Uri;
 
     return Uri;
 });

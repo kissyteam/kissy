@@ -3,8 +3,8 @@
  * z-index management
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Editor=require('./base');
+KISSY.add(function (S, require) {
+    var Editor = require('./base');
     /**
      * z-index manager
      * @enum {number} KISSY.Editor.ZIndexManager

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:01
+build time: Mar 27 21:59
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -30,15 +30,14 @@ KISSY.add("overlay/extension/loading", ["node"], function(S, require) {
     }
     self._loadingExtEl.show()
   }, unloading:function() {
-    var lel = this._loadingExtEl;
-    if(lel) {
-      lel.hide()
+    if(this._loadingExtEl) {
+      this._loadingExtEl.hide()
     }
   }};
   return Loading
 });
-KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
-  var UA = S.UA, Node = require("node"), ie6 = UA.ie === 6, $ = Node.all;
+KISSY.add("overlay/extension/mask", ["ua", "node"], function(S, require) {
+  var UA = require("ua"), Node = require("node"), ie6 = UA.ie === 6, $ = Node.all;
   function docWidth() {
     return ie6 ? "expression(KISSY.DOM.docWidth())" : "100%"
   }
@@ -318,7 +317,7 @@ KISSY.add("overlay/dialog-xtpl", ["./overlay-xtpl"], function(S, require, export
     option0.params = params1;
     if(moduleWrap) {
       require("./overlay-xtpl");
-      option0.params[0] = moduleWrap.resolveByName(option0.params[0])
+      option0.params[0] = moduleWrap.resolve(option0.params[0])
     }
     var commandRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);
     if(commandRet2 && commandRet2.isBuffer) {

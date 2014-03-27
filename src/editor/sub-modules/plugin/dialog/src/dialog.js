@@ -32,8 +32,8 @@ KISSY.add(function (S, require) {
             self.center();
             var y = self.get('y');
             //居中有点偏下
-            if (y - S.DOM.scrollTop() > 200) {
-                y = S.DOM.scrollTop() + 200;
+            if (y - S.require('dom').scrollTop() > 200) {
+                y = S.require('dom').scrollTop() + 200;
                 self.set('y', y);
             }
             self.callSuper();

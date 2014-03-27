@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
     //tryThese = Editor.Utils.tryThese,
         KES = Editor.SelectionType,
         KER = Editor.RangeType,
@@ -51,8 +51,8 @@ KISSY.add(function (S, require) {
         if (OLD_IE) {
             try {
                 var range = self.getNative().createRange();
-                if (!range || ( range.item && range.item(0).ownerDocument !== document ) ||
-                    ( range.parentElement && range.parentElement().ownerDocument !== document )) {
+                if (!range || (range.item && range.item(0).ownerDocument !== document) ||
+                    (range.parentElement && range.parentElement().ownerDocument !== document)) {
                     self.isInvalid = TRUE;
                 }
             }
@@ -65,26 +65,26 @@ KISSY.add(function (S, require) {
     }
 
     var styleObjectElements = {
-        'img': 1,
-        'hr': 1,
-        'li': 1,
-        'table': 1,
-        'tr': 1,
-        'td': 1,
-        'th': 1,
-        'embed': 1,
-        'object': 1,
-        'ol': 1,
-        'ul': 1,
-        'a': 1,
-        'input': 1,
-        'form': 1,
-        'select': 1,
-        'textarea': 1,
-        'button': 1,
-        'fieldset': 1,
-        'thead': 1,
-        'tfoot': 1
+        img: 1,
+        hr: 1,
+        li: 1,
+        table: 1,
+        tr: 1,
+        td: 1,
+        th: 1,
+        embed: 1,
+        object: 1,
+        ol: 1,
+        ul: 1,
+        a: 1,
+        input: 1,
+        form: 1,
+        select: 1,
+        textarea: 1,
+        button: 1,
+        fieldset: 1,
+        thead: 1,
+        tfoot: 1
     };
 
     S.augment(KESelection, {
@@ -99,12 +99,12 @@ KISSY.add(function (S, require) {
             function () {
                 var self = this,
                     cache = self._.cache;
-                return cache.nativeSel || ( cache.nativeSel = Dom.getWindow(self.document).getSelection() );
+                return cache.nativeSel || (cache.nativeSel = Dom.getWindow(self.document).getSelection());
             }
             :
             function () {
                 var self = this, cache = self._.cache;
-                return cache.nativeSel || ( cache.nativeSel = self.document.selection );
+                return cache.nativeSel || (cache.nativeSel = self.document.selection);
             },
 
         /**
@@ -122,8 +122,8 @@ KISSY.add(function (S, require) {
          *         SELECTION_ELEMENT.
          *
          *
-         *      if ( editor.getSelection().<b>getType()</b> === SELECTION_TEXT )
-         *          alert( 'Text is selected' );
+         *      if (editor.getSelection().<b>getType()</b> === SELECTION_TEXT)
+         *          alert('Text is selected');
          */
         getType: !OLD_IE ?
             function () {
@@ -137,8 +137,7 @@ KISSY.add(function (S, require) {
 
                 if (!sel) {
                     type = KES.SELECTION_NONE;
-                }
-                else if (sel.rangeCount === 1) {
+                } else if (sel.rangeCount === 1) {
                     // Check if the actual selection is a control (IMG,
                     // TABLE, HR, etc...).
 
@@ -220,14 +219,12 @@ KISSY.add(function (S, require) {
                             //中间有其他标签
                             if (comparisonStart > 0) {
                                 break;
-                            }
-                            // When selection stay at the side of certain self-closing elements, e.g. BR,
-                            // our comparison will never shows an equality. (#4824)
-                            else if (!comparisonStart || comparisonEnd === 1 && comparisonStart === -1) {
-                                return { container: parent, offset: i };
-                            }
-                            else if (!comparisonEnd) {
-                                return { container: parent, offset: i + 1 };
+                            } else if (!comparisonStart || comparisonEnd === 1 && comparisonStart === -1) {
+                                // When selection stay at the side of certain self-closing elements, e.g. BR,
+                                // our comparison will never shows an equality. (#4824)
+                                return {container: parent, offset: i};
+                            } else if (!comparisonEnd) {
+                                return {container: parent, offset: i + 1};
                             }
 
                             testRange = NULL;
@@ -255,20 +252,17 @@ KISSY.add(function (S, require) {
                         {
                             distance -= siblings[ --i ].nodeValue.length;
                         }
-                    }
+                    } catch (e) {
                         // Measurement in IE could be somtimes wrong because of <select> element. (#4611)
-                    catch (e) {
                         distance = 0;
                     }
-
 
                     if (distance === 0) {
                         return {
                             container: parent,
                             offset: i
                         };
-                    }
-                    else {
+                    } else {
                         return {
                             container: siblings[ i ],
                             offset: -distance
@@ -301,7 +295,7 @@ KISSY.add(function (S, require) {
                         range.setStart(new Node(boundaryInfo.container), boundaryInfo.offset);
                         boundaryInfo = getBoundaryInformation(nativeRange);
                         range.setEnd(new Node(boundaryInfo.container), boundaryInfo.offset);
-                        cache.ranges = [ range ];
+                        cache.ranges = [range];
                         return [range];
                     } else if (type === KES.SELECTION_ELEMENT) {
                         var retval = cache.ranges = [];
@@ -365,7 +359,7 @@ KISSY.add(function (S, require) {
          *
          *
          *      var element = editor.getSelection().<b>getStartElement()</b>;
-         *          alert( element.nodeName() );
+         *          alert(element.nodeName());
          */
         getStartElement: function () {
             var self = this, cache = self._.cache;
@@ -390,13 +384,13 @@ KISSY.add(function (S, require) {
 
                             // Decrease the range content to exclude particial
                             // selected node on the start which doesn't have
-                            // visual impact. ( #3231 )
+                            // visual impact.
                             while (TRUE) {
                                 var startContainer = range.startContainer,
                                     startOffset = range.startOffset;
                                 // Limit the fix only to non-block elements.(#3950)
-                                if (startOffset === ( startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ?
-                                    startContainer[0].childNodes.length : startContainer[0].nodeValue.length ) && !startContainer._4eIsBlockBoundary()) {
+                                if (startOffset === (startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ?
+                                    startContainer[0].childNodes.length : startContainer[0].nodeValue.length) && !startContainer._4eIsBlockBoundary()) {
                                     range.setStartAfter(startContainer);
                                 } else {
                                     break;
@@ -428,8 +422,7 @@ KISSY.add(function (S, require) {
                         range = sel.createRange();
                         range.collapse(TRUE);
                         node = new Node(range.parentElement());
-                    }
-                    else {
+                    } else {
                         node = sel.anchorNode;
                         if (node && node.nodeType !== Dom.NodeType.ELEMENT_NODE) {
                             node = node.parentNode;
@@ -452,7 +445,7 @@ KISSY.add(function (S, require) {
          *
          *
          *      var element = editor.getSelection().<b>getSelectedElement()</b>;
-         *      alert( element.nodeName() );
+         *      alert(element.nodeName());
          */
         getSelectedElement: function () {
             var self = this,
@@ -483,11 +476,11 @@ KISSY.add(function (S, require) {
                     // shrink 再检查
                     // <div><span>^<img/>^</span></div>
                     for (var i = 2;
-                         i && !(( enclosed = range.getEnclosedNode() ) &&
-                             ( enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE ) &&
+                         i && !((enclosed = range.getEnclosedNode()) &&
+                             (enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE) &&
                              // 某些值得这么多的元素？？
                              styleObjectElements[ enclosed.nodeName() ] &&
-                             ( selected = enclosed ));
+                             (selected = enclosed));
                          i--) {
                         // Then check any deep wrapped element
                         // e.g. [<b><i><img /></i></b>]
@@ -506,7 +499,6 @@ KISSY.add(function (S, require) {
             cache.selectedElement = node;
             return node;
         },
-
 
         reset: function () {
             this._.cache = {};
@@ -563,8 +555,7 @@ KISSY.add(function (S, require) {
                 }
 
                 self.reset();
-            }
-            else {
+            } else {
                 var sel = self.getNative();
                 if (!sel) {
                     return;
@@ -580,7 +571,7 @@ KISSY.add(function (S, require) {
                     // will not be visible.
                     // opera move out of this element
                     if (range.collapsed &&
-                        (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA.webkit) &&
+                        ((UA.gecko && UA.gecko < 1.0900) || UA.opera || UA.webkit) &&
                         startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(
@@ -691,8 +682,12 @@ KISSY.add(function (S, require) {
         }
     });
 
-
-    var nonCells = { 'table': 1, 'tbody': 1, 'tr': 1 }, notWhitespaces = Walker.whitespaces(TRUE),
+    var nonCells = {
+            table: 1,
+            tbody: 1,
+            tr: 1
+        },
+        notWhitespaces = Walker.whitespaces(TRUE),
         fillerTextRegex = /\ufeff|\u00a0/;
     KERange.prototype.select =
         !OLD_IE ? function () {
@@ -710,7 +705,6 @@ KISSY.add(function (S, require) {
                 self.endOffset++;
             }
 
-
             var nativeRange = self.document.createRange();
             nativeRange.setStart(startContainer[0], self.startOffset);
 
@@ -723,9 +717,8 @@ KISSY.add(function (S, require) {
                 if (e.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0) {
                     self.collapse(TRUE);
                     nativeRange.setEnd(self.endContainer[0], self.endOffset);
-                }
-                else {
-                    throw( e );
+                } else {
+                    throw(e);
                 }
             }
 
@@ -784,8 +777,7 @@ KISSY.add(function (S, require) {
                     // Move the end boundary of the main range to match the tool range.
                     ieRange.setEndPoint('EndToEnd', ieRangeEnd);
                     ieRange.moveEnd('character', -1);
-                }
-                else {
+                } else {
                     // The isStartMarkerAlone logic comes from V2. It guarantees that the lines
                     // will expand and that the cursor will be blinking on the right place.
                     // Actually, we are using this flag just to avoid using this hack in all
@@ -795,9 +787,9 @@ KISSY.add(function (S, require) {
                         next = next.nextSibling;
                     }
                     isStartMarkerAlone = (
-                        !( next && next.nodeValue && next.nodeValue.match(fillerTextRegex) ) &&
+                        !(next && next.nodeValue && next.nodeValue.match(fillerTextRegex)) &&
                             // already a filler there?
-                            ( forceExpand || !startNode[0].previousSibling ||
+                            (forceExpand || !startNode[0].previousSibling ||
                                 (
                                     startNode[0].previousSibling &&
                                         Dom.nodeName(startNode[0].previousSibling) === 'br'
@@ -847,10 +839,9 @@ KISSY.add(function (S, require) {
                 }
             };
 
-
     function getSelection(doc) {
         var sel = new KESelection(doc);
-        return ( !sel || sel.isInvalid ) ? NULL : sel;
+        return (!sel || sel.isInvalid) ? NULL : sel;
     }
 
     KESelection.getSelection = getSelection;

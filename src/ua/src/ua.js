@@ -2,7 +2,7 @@
  * @ignore
  * ua
  */
-KISSY.add(function (S, require, module, exports, undefined) {
+KISSY.add(function (S, require, exports, module, undefined) {
     require('util');
 
     /*global process*/

@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         UA = S.UA,
 
         /**
@@ -224,8 +224,7 @@ KISSY.add(function (S, require) {
                     } else {
                         if (r.destroy) {
                             r.destroy();
-                        }
-                        else if (r.remove) {
+                        } else if (r.remove) {
                             r.remove();
                         }
                     }

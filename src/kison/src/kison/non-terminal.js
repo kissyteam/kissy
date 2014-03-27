@@ -10,18 +10,18 @@ KISSY.add(function (S, require) {
      * @class KISSY.Kison.NonTerminal
      */
     return Base.extend({}, {
-        ATTRS:{
-            productions:{
-                value:[]
+        ATTRS: {
+            productions: {
+                value: []
             },
-            firsts:{
-                value:{}
+            firsts: {
+                value: {}
             },
-            symbol:{
+            symbol: {
 
             },
-            nullable:{
-                value:false
+            nullable: {
+                value: false
             }
         }
     });

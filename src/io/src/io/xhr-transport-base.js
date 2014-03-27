@@ -253,7 +253,7 @@ KISSY.add(function (S, require) {
                         xml = nativeXhr.responseXML;
 
                         // Construct response list
-                        if (xml && xml.documentElement /* #4958 */) {
+                        if (xml && xml.documentElement) {
                             io.responseXML = xml;
                         }
 
@@ -305,7 +305,7 @@ KISSY.add(function (S, require) {
                 }, 0);
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    io._ioReady(-1, e);
+                    io._ioReady(0 - 1, e);
                 }
             }
         }

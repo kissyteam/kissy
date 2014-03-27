@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var HtmlParser = require('html-parser');
 
     var Node = S.Node,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
 

@@ -259,27 +259,27 @@ if (! _$jscoverage['/io/xdr-flash-transport.js']) {
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[89] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[92] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[94] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[95] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[96] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[98] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[99] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[103] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[104] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[108] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[110] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[101] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[102] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[106] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[107] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[111] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[117] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[118] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[113] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[114] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[120] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[121] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[123] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[127] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[128] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[136] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[137] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[138] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[124] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[126] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[130] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[131] = 0;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[139] = 0;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[143] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[140] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[141] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[142] = 0;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[146] = 0;
 }
 if (! _$jscoverage['/io/xdr-flash-transport.js'].functionData) {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData = [];
@@ -312,24 +312,24 @@ if (! _$jscoverage['/io/xdr-flash-transport.js'].branchData) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][2] = new BranchData();
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['88'] = [];
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['106'] = [];
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['110'] = [];
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['138'] = [];
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['138'][1] = new BranchData();
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['109'] = [];
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['113'] = [];
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['113'][1] = new BranchData();
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['141'] = [];
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1] = new BranchData();
 }
-_$jscoverage['/io/xdr-flash-transport.js'].branchData['138'][1].init(44, 3, 'xhr');
-function visit132_138_1(result) {
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['138'][1].ranCondition(result);
+_$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1].init(44, 3, 'xhr');
+function visit132_141_1(result) {
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['110'][1].init(1016, 3, 'ret');
-function visit131_110_1(result) {
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['110'][1].ranCondition(result);
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['113'][1].init(1084, 3, 'ret');
+function visit131_113_1(result) {
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['106'][1].init(101, 17, 'c.statusText || e');
-function visit130_106_1(result) {
-  _$jscoverage['/io/xdr-flash-transport.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['109'][1].init(101, 17, 'c.statusText || e');
+function visit130_109_1(result) {
+  _$jscoverage['/io/xdr-flash-transport.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['88'][1].init(254, 36, 'c && (responseText = c.responseText)');
 function visit129_88_1(result) {
@@ -448,64 +448,64 @@ KISSY.add(function(S, require) {
       ret = {
   status: 200, 
   statusText: 'success'};
-      _$jscoverage['/io/xdr-flash-transport.js'].lineData[95]++;
-      delete maps[id];
-      _$jscoverage['/io/xdr-flash-transport.js'].lineData[96]++;
-      break;
-    case 'abort':
       _$jscoverage['/io/xdr-flash-transport.js'].lineData[98]++;
       delete maps[id];
       _$jscoverage['/io/xdr-flash-transport.js'].lineData[99]++;
       break;
+    case 'abort':
+      _$jscoverage['/io/xdr-flash-transport.js'].lineData[101]++;
+      delete maps[id];
+      _$jscoverage['/io/xdr-flash-transport.js'].lineData[102]++;
+      break;
     case 'timeout':
     case 'transport error':
     case 'failure':
-      _$jscoverage['/io/xdr-flash-transport.js'].lineData[103]++;
+      _$jscoverage['/io/xdr-flash-transport.js'].lineData[106]++;
       delete maps[id];
-      _$jscoverage['/io/xdr-flash-transport.js'].lineData[104]++;
+      _$jscoverage['/io/xdr-flash-transport.js'].lineData[107]++;
       ret = {
   status: 'status' in c ? c.status : 500, 
-  statusText: visit130_106_1(c.statusText || e)};
-      _$jscoverage['/io/xdr-flash-transport.js'].lineData[108]++;
+  statusText: visit130_109_1(c.statusText || e)};
+      _$jscoverage['/io/xdr-flash-transport.js'].lineData[111]++;
       break;
   }
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[110]++;
-  if (visit131_110_1(ret)) {
-    _$jscoverage['/io/xdr-flash-transport.js'].lineData[111]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[113]++;
+  if (visit131_113_1(ret)) {
+    _$jscoverage['/io/xdr-flash-transport.js'].lineData[114]++;
     io._ioReady(ret.status, ret.statusText);
   }
 }});
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[117]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[120]++;
   IO.applyTo = function(_, cmd, args) {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[7]++;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[118]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[121]++;
   var cmds = cmd.split('.').slice(1), func = IO;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[120]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[123]++;
   S.each(cmds, function(c) {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[8]++;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[121]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[124]++;
   func = func[c];
 });
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[123]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[126]++;
   func.apply(null, args);
 };
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[127]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[130]++;
   IO.xdrReady = function() {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[9]++;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[128]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[131]++;
   flash = doc.getElementById(ID);
 };
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[136]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[139]++;
   IO.xdrResponse = function(e, o) {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[10]++;
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[137]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[140]++;
   var xhr = maps[o.uid];
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[138]++;
-  if (visit132_138_1(xhr)) {
-    _$jscoverage['/io/xdr-flash-transport.js'].lineData[139]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[141]++;
+  if (visit132_141_1(xhr)) {
+    _$jscoverage['/io/xdr-flash-transport.js'].lineData[142]++;
     xhr._xdrResponse(e, o);
   }
 };
-  _$jscoverage['/io/xdr-flash-transport.js'].lineData[143]++;
+  _$jscoverage['/io/xdr-flash-transport.js'].lineData[146]++;
   return XdrFlashTransport;
 });

@@ -9,7 +9,6 @@ KISSY.add(function (S, require) {
     var CLS = 'top bottom left right';
 
     return Container.getDefaultRender().extend({
-
         beforeCreateDom: function (renderData) {
             renderData.elCls
                 .push(this.getBaseCssClass(this.control.get('barOrientation')));
@@ -20,13 +19,12 @@ KISSY.add(function (S, require) {
             control.get('bar').set('changeType', control.get('changeType'));
         },
 
-        '_onSetBarOrientation': function (v) {
+        _onSetBarOrientation: function (v) {
             var self = this,
                 el = self.$el;
             el.removeClass(self.getBaseCssClass(CLS))
                 .addClass(self.getBaseCssClass(v));
         }
-
     }, {
         name: 'TabsRender',
         HTML_PARSER: {

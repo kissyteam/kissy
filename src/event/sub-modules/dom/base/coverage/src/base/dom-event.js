@@ -328,17 +328,17 @@ if (! _$jscoverage['/base/dom-event.js']) {
   _$jscoverage['/base/dom-event.js'].lineData[293] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[299] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[314] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[326] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[325] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[327] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[328] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[329] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[330] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[331] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[332] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[335] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[334] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[336] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[337] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[338] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[339] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[343] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[349] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[342] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[348] = 0;
 }
 if (! _$jscoverage['/base/dom-event.js'].functionData) {
   _$jscoverage['/base/dom-event.js'].functionData = [];
@@ -409,23 +409,23 @@ if (! _$jscoverage['/base/dom-event.js'].branchData) {
   _$jscoverage['/base/dom-event.js'].branchData['292'][1] = new BranchData();
   _$jscoverage['/base/dom-event.js'].branchData['292'][2] = new BranchData();
   _$jscoverage['/base/dom-event.js'].branchData['292'][3] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['328'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['328'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['332'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['332'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['332'][2] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['327'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['327'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['331'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['331'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['331'][2] = new BranchData();
 }
-_$jscoverage['/base/dom-event.js'].branchData['332'][2].init(300, 36, 'srcData === DomEventUtils.data(dest)');
-function visit28_332_2(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['332'][2].ranCondition(result);
+_$jscoverage['/base/dom-event.js'].branchData['331'][2].init(300, 36, 'srcData === DomEventUtils.data(dest)');
+function visit28_331_2(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['331'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['332'][1].init(289, 47, 'srcData && srcData === DomEventUtils.data(dest)');
-function visit27_332_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['332'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['331'][1].init(289, 47, 'srcData && srcData === DomEventUtils.data(dest)');
+function visit27_331_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['331'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['328'][1].init(97, 83, '!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))');
-function visit26_328_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['328'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['327'][1].init(97, 83, '!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))');
+function visit26_327_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['327'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/dom-event.js'].branchData['292'][3].init(124, 15, 'r !== undefined');
 function visit25_292_3(result) {
@@ -789,33 +789,33 @@ KISSY.add(function(S, require) {
 }, 
   clone: function(src, dest) {
   _$jscoverage['/base/dom-event.js'].functionData[14]++;
-  _$jscoverage['/base/dom-event.js'].lineData[326]++;
+  _$jscoverage['/base/dom-event.js'].lineData[325]++;
   var domEventObservablesHolder, domEventObservables;
-  _$jscoverage['/base/dom-event.js'].lineData[328]++;
-  if (visit26_328_1(!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src)))) {
-    _$jscoverage['/base/dom-event.js'].lineData[329]++;
+  _$jscoverage['/base/dom-event.js'].lineData[327]++;
+  if (visit26_327_1(!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src)))) {
+    _$jscoverage['/base/dom-event.js'].lineData[328]++;
     return;
   }
-  _$jscoverage['/base/dom-event.js'].lineData[331]++;
+  _$jscoverage['/base/dom-event.js'].lineData[330]++;
   var srcData = DomEventUtils.data(src);
-  _$jscoverage['/base/dom-event.js'].lineData[332]++;
-  if (visit27_332_1(srcData && visit28_332_2(srcData === DomEventUtils.data(dest)))) {
-    _$jscoverage['/base/dom-event.js'].lineData[335]++;
+  _$jscoverage['/base/dom-event.js'].lineData[331]++;
+  if (visit27_331_1(srcData && visit28_331_2(srcData === DomEventUtils.data(dest)))) {
+    _$jscoverage['/base/dom-event.js'].lineData[334]++;
     DomEventUtils.removeData(dest);
   }
-  _$jscoverage['/base/dom-event.js'].lineData[337]++;
+  _$jscoverage['/base/dom-event.js'].lineData[336]++;
   domEventObservables = domEventObservablesHolder.observables;
-  _$jscoverage['/base/dom-event.js'].lineData[338]++;
+  _$jscoverage['/base/dom-event.js'].lineData[337]++;
   S.each(domEventObservables, function(customEvent, type) {
   _$jscoverage['/base/dom-event.js'].functionData[15]++;
-  _$jscoverage['/base/dom-event.js'].lineData[339]++;
+  _$jscoverage['/base/dom-event.js'].lineData[338]++;
   S.each(customEvent.observers, function(observer) {
   _$jscoverage['/base/dom-event.js'].functionData[16]++;
-  _$jscoverage['/base/dom-event.js'].lineData[343]++;
+  _$jscoverage['/base/dom-event.js'].lineData[342]++;
   addInternal(dest, type, observer);
 });
 });
 }};
-  _$jscoverage['/base/dom-event.js'].lineData[349]++;
+  _$jscoverage['/base/dom-event.js'].lineData[348]++;
   return DomEvent;
 });

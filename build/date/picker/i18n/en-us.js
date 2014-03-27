@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 16:51
+build time: Mar 27 21:46
 */
 /**
  * i18n resources for date-picker
@@ -11,9 +11,9 @@ build time: Mar 25 16:51
 KISSY.add('date/picker/i18n/en-us', {
     today: 'Today',
     clear: 'Clear',
-    previousMonth:'Previous month (PageUp)',
-    nextMonth:'Next month (PageDown)',
-    monthSelect:'Choose a month',
+    previousMonth: 'Previous month (PageUp)',
+    nextMonth: 'Next month (PageDown)',
+    monthSelect: 'Choose a month',
     yearSelect: 'Choose a year',
     decadeSelect: 'Choose a decade',
     yearFormat: 'yyyy',

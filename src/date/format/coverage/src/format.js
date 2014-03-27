@@ -908,7 +908,7 @@ function visit69_488_1(result) {
 function visit68_482_1(result) {
   _$jscoverage['/format.js'].branchData['482'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['471'][1].init(409, 8, 'isNaN(n)');
+}_$jscoverage['/format.js'].branchData['471'][1].init(408, 8, 'isNaN(n)');
 function visit67_471_1(result) {
   _$jscoverage['/format.js'].branchData['471'][1].ranCondition(result);
   return result;
@@ -920,7 +920,7 @@ function visit66_464_1(result) {
 function visit65_460_1(result) {
   _$jscoverage['/format.js'].branchData['460'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['459'][1].init(44, 9, 'obeyCount');
+}_$jscoverage['/format.js'].branchData['459'][1].init(43, 9, 'obeyCount');
 function visit64_459_1(result) {
   _$jscoverage['/format.js'].branchData['459'][1].ranCondition(result);
   return result;
@@ -1926,7 +1926,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/format.js'].lineData[723]++;
   return this.getDateTimeInstance(DateTimeStyle.SHORT, DateTimeStyle.SHORT, locale, timeZoneOffset);
 }, 
-  'getDateInstance': function(dateStyle, locale, timeZoneOffset) {
+  getDateInstance: function(dateStyle, locale, timeZoneOffset) {
   _$jscoverage['/format.js'].functionData[15]++;
   _$jscoverage['/format.js'].lineData[735]++;
   return this.getDateTimeInstance(dateStyle, undefined, locale, timeZoneOffset);
@@ -1967,7 +1967,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/format.js'].lineData[768]++;
   return new DateTimeFormat(pattern, locale, timeZoneOffset);
 }, 
-  'getTimeInstance': function(timeStyle, locale, timeZoneOffset) {
+  getTimeInstance: function(timeStyle, locale, timeZoneOffset) {
   _$jscoverage['/format.js'].functionData[17]++;
   _$jscoverage['/format.js'].lineData[780]++;
   return this.getDateTimeInstance(undefined, timeStyle, locale, timeZoneOffset);

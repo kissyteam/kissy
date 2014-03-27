@@ -248,10 +248,10 @@ KISSY.add(function (S, require) {
          * @param filter
          */
         writeHtml: function (writer, filter) {
-            var el = this,
+            var self = this,
                 tmp,
                 attrName,
-                tagName = el.tagName;
+                tagName = self.tagName;
 
             // special treat for doctype
             if (tagName === '!doctype') {
@@ -259,8 +259,8 @@ KISSY.add(function (S, require) {
                 return;
             }
 
-            el.__filter = filter;
-            el.isChildrenFiltered = 0;
+            self.__filter = filter;
+            self.isChildrenFiltered = 0;
 
             // process its open tag
             if (filter) {
@@ -269,9 +269,9 @@ KISSY.add(function (S, require) {
                     return;
                 }
 
-                el.tagName = tagName;
+                self.tagName = tagName;
 
-                tmp = filter.onTag(el);
+                tmp = filter.onTag(self);
 
                 if (tmp === false) {
                     return;
@@ -279,50 +279,50 @@ KISSY.add(function (S, require) {
 
                 // replaced
                 if (tmp) {
-                    el = tmp;
+                    self = tmp;
                 }
 
                 // replaced by other type of node
-                if (el.nodeType !== 1) {
-                    el.writeHtml(writer, filter);
+                if (self.nodeType !== 1) {
+                    self.writeHtml(writer, filter);
                     return;
                 }
 
                 // preserve children but delete itself
-                if (!el.tagName) {
-                    el._writeChildrenHTML(writer);
+                if (!self.tagName) {
+                    self._writeChildrenHTML(writer);
                     return;
                 }
             }
 
-            writer.openTag(el);
+            writer.openTag(self);
 
             // process its attributes
-            var attributes = el.attributes;
+            var attributes = self.attributes;
             for (var i = 0; i < attributes.length; i++) {
                 var attr = attributes[i];
                 attrName = attr.name;
                 if (filter) {
                     // filtered directly by name
-                    if (!(attrName = filter.onAttributeName(attrName, el))) {
+                    if (!(attrName = filter.onAttributeName(attrName, self))) {
                         continue;
                     }
                     attr.name = attrName;
                     // filtered by value and node
-                    if (filter.onAttribute(attr, el) === false) {
+                    if (filter.onAttribute(attr, self) === false) {
                         continue;
                     }
                 }
-                writer.attribute(attr, el);
+                writer.attribute(attr, self);
             }
 
             // close its open tag
-            writer.openTagClose(el);
+            writer.openTagClose(self);
 
-            if (!el.isSelfClosed) {
-                el._writeChildrenHTML(writer);
+            if (!self.isSelfClosed) {
+                self._writeChildrenHTML(writer);
                 // process its close tag
-                writer.closeTag(el);
+                writer.closeTag(self);
             }
         },
 

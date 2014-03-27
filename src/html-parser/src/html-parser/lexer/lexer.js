@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Cursor = require('./cursor');
+    var NEGATIVE_1 = 0 - 1;
     var Page = require('./page');
     var TextNode = require('../nodes/text');
     var CData = require('../nodes/cdata');
@@ -44,11 +45,10 @@ KISSY.add(function (S, require) {
          * @returns {KISSY.HtmlParse.Node}
          */
         nextNode: function (quoteSmart) {
-            var start ,
-                ch,
-                ret,
-                cursor = this.cursor,
-                page = this.page;
+            var self = this,
+                start, ch, ret,
+                cursor = self.cursor,
+                page = self.page;
 
             start = cursor.position;
             ch = page.getChar(cursor);
@@ -60,41 +60,41 @@ KISSY.add(function (S, require) {
                 case '<':
                     ch = page.getChar(cursor);
                     if (ch === -1) {
-                        ret = this.makeString(start, cursor.position);
+                        ret = self.makeString(start, cursor.position);
                     } else if (ch === '/' || Utils.isLetter(ch)) {
                         page.ungetChar(cursor);
-                        ret = this.parseTag(start);
+                        ret = self.parseTag(start);
                     } else if ('!' === ch || '?' === ch) {
                         ch = page.getChar(cursor);
                         if (ch === -1) {
-                            ret = this.makeString(start, cursor.position);
+                            ret = self.makeString(start, cursor.position);
                         } else {
                             if ('>' === ch) {
-                                ret = this.makeComment(start, cursor.position);
+                                ret = self.makeComment(start, cursor.position);
                             } else {
                                 page.ungetChar(cursor); // remark/tag need this char
                                 if ('-' === ch) {
-                                    ret = this.parseComment(start, quoteSmart);
+                                    ret = self.parseComment(start, quoteSmart);
                                 } else {
                                     // <!DOCTYPE html>
                                     // <?xml:namespace>
                                     page.ungetChar(cursor); // tag needs prior one too
-                                    ret = this.parseTag(start);
+                                    ret = self.parseTag(start);
                                 }
                             }
                         }
                     } else {
                         page.ungetChar(cursor); // see bug #1547354 <<tag> parsed as text
-                        ret = this.parseString(start, quoteSmart);
+                        ret = self.parseString(start, quoteSmart);
                     }
                     break;
                 default:
                     page.ungetChar(cursor); // string needs to see leading fore slash
-                    ret = this.parseString(start, quoteSmart);
+                    ret = self.parseString(start, quoteSmart);
                     break;
             }
 
-            return (ret);
+            return ret;
         },
 
         makeComment: function (start, end) {
@@ -107,12 +107,11 @@ KISSY.add(function (S, require) {
                     return (this.makeString(start, end));
                 }
                 ret = this.nodeFactory.createCommentNode(this.page, start, end);
-            }
-            else {
+            } else {
                 ret = null;
             }
 
-            return (ret);
+            return ret;
         },
 
         makeString: function (start, end) {
@@ -144,8 +143,7 @@ KISSY.add(function (S, require) {
                     return (this.makeString(start, end));
                 }
                 ret = this.nodeFactory.createTagNode(this.page, start, end, attributes);
-            }
-            else {
+            } else {
                 ret = null;
             }
             return ret;
@@ -225,9 +223,8 @@ KISSY.add(function (S, require) {
                                 if (ch === '/' || Utils.isValidAttributeNameStartChar(ch)) {
                                     state = 1;
                                 }
-                            }
-                            // <img />
-                            else if (ch === '/' || Utils.isValidAttributeNameStartChar(ch)) {
+                            } else if (ch === '/' || Utils.isValidAttributeNameStartChar(ch)) {
+                                // <img />
                                 state = 1;
                             }
                         }
@@ -235,7 +232,7 @@ KISSY.add(function (S, require) {
 
                     case 1:
                         // within attribute name
-                        if ((-1 === ch) || ('>' === ch) || ('<' === ch)) {
+                        if ((NEGATIVE_1 === ch) || ('>' === ch) || ('<' === ch)) {
                             if ('<' === ch) {
                                 // don't consume the opening angle
                                 page.ungetChar(cursor);
@@ -243,20 +240,18 @@ KISSY.add(function (S, require) {
                             }
                             this.standalone(attributes, bookmarks);
                             done = true;
-                        }
-                        else if (Utils.isWhitespace(ch)) {
+                        } else if (Utils.isWhitespace(ch)) {
                             // whitespaces might be followed by next attribute or an equal sign
                             // see Bug #891058 Bug in lexer.
                             bookmarks[6] = bookmarks[2]; // setting the bookmark[0] is done in state 6 if applicable
                             state = 6;
-                        }
-                        else if ('=' === ch) {
+                        } else if ('=' === ch) {
                             state = 2;
                         }
                         break;
 
                     case 2: // equals hit
-                        if ((-1 === ch) || ('>' === ch)) {
+                        if ((NEGATIVE_1 === ch) || ('>' === ch)) {
                             this.standalone(attributes, bookmarks);
                             done = true;
                         } else if ('\'' === ch) {
@@ -272,7 +267,7 @@ KISSY.add(function (S, require) {
                         }
                         break;
                     case 3: // within naked attribute value
-                        if ((-1 === ch) || ('>' === ch)) {
+                        if ((NEGATIVE_1 === ch) || ('>' === ch)) {
                             this.naked(attributes, bookmarks);
                             done = true;
                         } else if (Utils.isWhitespace(ch)) {
@@ -282,22 +277,20 @@ KISSY.add(function (S, require) {
                         }
                         break;
                     case 4: // within single quoted attribute value
-                        if (-1 === ch) {
+                        if (NEGATIVE_1 === ch) {
                             this.singleQuote(attributes, bookmarks);
                             done = true; // complain?
-                        }
-                        else if ('\'' === ch) {
+                        } else if ('\'' === ch) {
                             this.singleQuote(attributes, bookmarks);
                             bookmarks[0] = bookmarks[5] + 1;
                             state = 0;
                         }
                         break;
                     case 5: // within double quoted attribute value
-                        if (-1 === ch) {
+                        if (NEGATIVE_1 === ch) {
                             this.doubleQuote(attributes, bookmarks);
                             done = true; // complain?
-                        }
-                        else if ('"' === ch) {
+                        } else if ('"' === ch) {
                             this.doubleQuote(attributes, bookmarks);
                             bookmarks[0] = bookmarks[6] + 1;
                             state = 0;
@@ -308,7 +301,7 @@ KISSY.add(function (S, require) {
                     // See Bug # 891058 Bug in lexer.
                     case 6: // undecided for state 0 or 2
                         // we have read white spaces after an attribute name
-                        if (-1 === ch) {
+                        if (NEGATIVE_1 === ch) {
                             // same as last else clause
                             this.standalone(attributes, bookmarks);
                             bookmarks[0] = bookmarks[6];
@@ -360,15 +353,14 @@ KISSY.add(function (S, require) {
             state = 0;
             while (!done) {
                 ch = page.getChar(cursor);
-                if (-1 === ch) {
+                if (NEGATIVE_1 === ch) {
                     done = true;
-                }
-                else {
+                } else {
                     switch (state) {
                         case 0: // prior to the first open delimiter
                             if ('>' === ch) {
                                 done = true;
-                            }else if ('-' === ch) {
+                            } else if ('-' === ch) {
                                 state = 1;
                             } else {
                                 return this.parseString(start, quoteSmart);
@@ -378,41 +370,36 @@ KISSY.add(function (S, require) {
                             if ('-' === ch) {
                                 // handle <!--> because netscape does
                                 ch = page.getChar(cursor);
-                                if (-1 === ch) {
+                                if (NEGATIVE_1 === ch) {
                                     done = true;
-                                }
-                                else if ('>' === ch) {
+                                } else if ('>' === ch) {
                                     done = true;
-                                }
-                                else {
+                                } else {
                                     page.ungetChar(cursor);
                                     state = 2;
                                 }
-                            }
-                            else {
+                            } else {
                                 return this.parseString(start, quoteSmart);
                             }
                             break;
                         case 2: // prior to the first closing delimiter
                             if ('-' === ch) {
                                 state = 3;
-                            }
-                            else if (-1 === ch) {
+                            } else if (NEGATIVE_1 === ch) {
                                 return this.parseString(start, quoteSmart); // no terminator
                             }
                             break;
                         case 3: // prior to the second closing delimiter
                             if ('-' === ch) {
                                 state = 4;
-                            }
-                            else {
+                            } else {
                                 state = 2;
                             }
                             break;
                         case 4: // prior to the terminating >
                             if ('>' === ch) {
                                 done = true;
-                            } else if(!Utils.isWhitespace(ch)){
+                            } else if (!Utils.isWhitespace(ch)) {
                                 // HtmlParser should not terminate a comment with --->
                                 // should maybe issue a warning mentioning STRICT_REMARKS
                                 state = 2;
@@ -442,62 +429,50 @@ KISSY.add(function (S, require) {
 
             while (!done) {
                 ch = page.getChar(cursor);
-                if (-1 === ch) {
+                if (NEGATIVE_1 === ch) {
                     done = 1;
-                }
-                else if (quoteSmart && (0 === quote) && (('"' === ch) || ('\'' === ch))) {
+                } else if (quoteSmart && (0 === quote) && (('"' === ch) || ('\'' === ch))) {
                     quote = ch; // enter quoted state
-                }
-                // patch from Gernot Fricke to handle escaped closing quote
-                else if (quoteSmart && (0 !== quote) && ('\\' === ch)) {
+                } else if (quoteSmart && (0 !== quote) && ('\\' === ch)) {
+                    // handle escaped closing quote
                     ch = page.getChar(cursor); // try to consume escape
-                    if ((-1 !== ch)&& ('\\' !== ch) &&// escaped backslash
+                    if ((NEGATIVE_1 !== ch) && ('\\' !== ch) &&// escaped backslash
                         (ch !== quote)) // escaped quote character
                     {
                         // ( reflects ['] or [']  whichever opened the quotation)
                         page.ungetChar(cursor); // unconsume char if char not an escape
                     }
-                }
-                else if (quoteSmart && (ch === quote)) {
+                } else if (quoteSmart && (ch === quote)) {
                     quote = 0; // exit quoted state
-                }
-                else if (quoteSmart && (0 === quote) && (ch === '/')) {
+                } else if (quoteSmart && (0 === quote) && (ch === '/')) {
                     // handle multiline and double slash comments (with a quote)
                     // in script like:
                     // I can't handle single quotations.
                     ch = page.getChar(cursor);
-                    if (-1 === ch) {
+                    if (NEGATIVE_1 === ch) {
                         done = 1;
-                    }
-                    else if ('/' === ch) {
+                    } else if ('/' === ch) {
                         do {
                             ch = page.getChar(cursor);
-                        } while ((-1 !== ch) && ('\n' !== ch));
-                    }
-                    else if ('*' === ch) {
-                        do
-                        {
+                        } while ((NEGATIVE_1 !== ch) && ('\n' !== ch));
+                    } else if ('*' === ch) {
+                        do {
                             do {
                                 ch = page.getChar(cursor);
-                            } while ((-1 !== ch) && ('*' !== ch));
+                            } while ((NEGATIVE_1 !== ch) && ('*' !== ch));
                             ch = page.getChar(cursor);
                             if (ch === '*') {
                                 page.ungetChar(cursor);
                             }
-                        }
-                        while ((-1 !== ch) && ('/' !== ch));
-                    }
-                    else {
+                        } while ((NEGATIVE_1 !== ch) && ('/' !== ch));
+                    } else {
                         page.ungetChar(cursor);
                     }
-                }
-                else if ((0 === quote) && ('<' === ch)) {
+                } else if ((0 === quote) && ('<' === ch)) {
                     ch = page.getChar(cursor);
-                    if (-1 === ch) {
+                    if (NEGATIVE_1 === ch) {
                         done = 1;
-                    }
-                    // the order of these tests might be optimized for speed:
-                    else if ('/' === ch ||
+                    } else if ('/' === ch ||
                         Utils.isLetter(ch) ||
                         '!' === ch ||
                         // <?xml:namespace
@@ -505,8 +480,7 @@ KISSY.add(function (S, require) {
                         done = 1;
                         page.ungetChar(cursor);
                         page.ungetChar(cursor);
-                    }
-                    else {
+                    } else {
                         // it's not a tag, so keep going, but check for quotes
                         page.ungetChar(cursor);
                     }
@@ -571,7 +545,7 @@ KISSY.add(function (S, require) {
                                 if (quoteSmart) {
                                     if ('' !== quote) {
                                         ch = mPage.getChar(mCursor); // try to consume escaped character
-                                        if (-1 === ch) {
+                                        if (NEGATIVE_1 === ch) {
                                             done = true;
                                         } else if ((ch !== '\\') && (ch !== quote)) {
                                             // unconsume char if character was not an escapable char.
@@ -585,24 +559,21 @@ KISSY.add(function (S, require) {
                                     if ('' === quote) {
                                         // handle multiline and double slash comments (with a quote)
                                         ch = mPage.getChar(mCursor);
-                                        if (-1 === ch) {
+                                        if (NEGATIVE_1 === ch) {
                                             done = true;
                                         } else if ('/' === ch) {
                                             comment = true;
                                         } else if ('*' === ch) {
                                             do {
-                                                do
-                                                {
+                                                do {
                                                     ch = mPage.getChar(mCursor);
-                                                }
-                                                while ((-1 !== ch) && ('*' !== ch));
+                                                } while ((NEGATIVE_1 !== ch) && ('*' !== ch));
                                                 ch = mPage.getChar(mCursor);
                                                 if (ch === '*') {
                                                     mPage.ungetChar(mCursor);
                                                 }
-                                            } while ((-1 !== ch) && ('/' !== ch));
-                                        }
-                                        else {
+                                            } while ((NEGATIVE_1 !== ch) && ('/' !== ch));
+                                        } else {
                                             mPage.ungetChar(mCursor);
                                         }
                                     }
@@ -616,8 +587,7 @@ KISSY.add(function (S, require) {
                                     if ('' === quote) {
                                         state = 1;
                                     }
-                                }
-                                else {
+                                } else {
                                     state = 1;
                                 }
                                 break;
@@ -655,19 +625,18 @@ KISSY.add(function (S, require) {
                                 break;
                             case '!':
                                 ch = mPage.getChar(mCursor);
-                                if (-1 === ch) {
+                                if (NEGATIVE_1 === ch) {
                                     done = true;
                                 } else if ('-' === ch) {
                                     ch = mPage.getChar(mCursor);
-                                    if (-1 === ch) {
+                                    if (NEGATIVE_1 === ch) {
                                         done = true;
                                     } else if ('-' === ch) {
                                         state = 3;
                                     } else {
                                         state = 0;
                                     }
-                                }
-                                else{
+                                } else {
                                     state = 0;
                                 }
                                 break;
@@ -678,7 +647,7 @@ KISSY.add(function (S, require) {
                         break;
                     case 2: // </
                         comment = false;
-                        if (-1 === ch) {
+                        if (NEGATIVE_1 === ch) {
                             done = true;
                         } else if (Utils.isLetter(ch)) {
                             // 严格 parser 遇到 </x lexer 立即结束
@@ -694,15 +663,15 @@ KISSY.add(function (S, require) {
                         break;
                     case 3: // <!
                         comment = false;
-                        if (-1 === ch) {
+                        if (NEGATIVE_1 === ch) {
                             done = true;
                         } else if ('-' === ch) {
                             ch = mPage.getChar(mCursor);
-                            if (-1 === ch) {
+                            if (NEGATIVE_1 === ch) {
                                 done = true;
                             } else if ('-' === ch) {
                                 ch = mPage.getChar(mCursor);
-                                if (-1 === ch) {
+                                if (NEGATIVE_1 === ch) {
                                     done = true;
                                 } else if ('>' === ch) {
                                     // <!----> <!-->
@@ -749,7 +718,6 @@ KISSY.add(function (S, require) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), '=', page.getText(bookmarks[5] + 1, bookmarks[6]), '"'));
         },
-
 
         /**
          * Generate a standalone attribute

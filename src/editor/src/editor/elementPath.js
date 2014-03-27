@@ -12,40 +12,40 @@ KISSY.add(function (S, require) {
     var Editor = require('./base');
     require('./dom');
 
-    var Dom = S.DOM,
+    var Dom = S.require('dom'),
         dtd = Editor.XHTML_DTD,
         TRUE = true,
         FALSE = false,
         NULL = null,
     // Elements that may be considered the "Block boundary" in an element path.
         pathBlockElements = {
-            'address': 1,
-            'blockquote': 1,
-            'dl': 1,
-            'h1': 1,
-            'h2': 1,
-            'h3': 1,
-            'h4': 1,
-            'h5': 1,
-            'h6': 1,
-            'p': 1,
-            'pre': 1,
-            'li': 1,
-            'dt': 1,
-            'dd': 1
+            address: 1,
+            blockquote: 1,
+            dl: 1,
+            h1: 1,
+            h2: 1,
+            h3: 1,
+            h4: 1,
+            h5: 1,
+            h6: 1,
+            p: 1,
+            pre: 1,
+            li: 1,
+            dt: 1,
+            dd: 1
         },
     // Elements that may be considered the "Block limit" in an element path.
     // 特别注意：不带 p 元素
         pathBlockLimitElements = {
-            'body': 1,
-            'div': 1,
-            'table': 1,
-            'tbody': 1,
-            'tr': 1,
-            'td': 1,
-            'th': 1,
-            'caption': 1,
-            'form': 1
+            body: 1,
+            div: 1,
+            table: 1,
+            tbody: 1,
+            tr: 1,
+            td: 1,
+            th: 1,
+            caption: 1,
+            form: 1
         },
     // Check if an element contains any block element.
         checkHasBlock = function (element) {
@@ -88,8 +88,7 @@ KISSY.add(function (S, require) {
                         // and if it doesn't contain other blocks.
                         if (!block && elementName === 'div' && !checkHasBlock(e)){
                             block = e;
-                        }
-                        else{
+                        } else {
                             blockLimit = e;
                         }
                     }
@@ -110,6 +109,7 @@ KISSY.add(function (S, require) {
 
     ElementPath.prototype = {
         constructor: ElementPath,
+
         /**
          * Compares this element path with another one.
          * @param otherPath ElementPath The elementPath object to be
@@ -143,6 +143,7 @@ KISSY.add(function (S, require) {
             }
             return NULL;
         },
+
         toString: function () {
             var elements = this.elements, i, elNames = [];
             for (i = 0; i < elements.length; i++) {

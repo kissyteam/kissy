@@ -647,7 +647,7 @@ function visit8_134_1(result) {
 function visit7_131_1(result) {
   _$jscoverage['/selector/parser.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/selector/parser.js'].branchData['125'][1].init(513, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
+}_$jscoverage['/selector/parser.js'].branchData['125'][1].init(516, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
 function visit6_125_1(result) {
   _$jscoverage['/selector/parser.js'].branchData['125'][1].ranCondition(result);
   return result;
@@ -773,7 +773,7 @@ KISSY.add(function(_, undefined) {
   _$jscoverage['/selector/parser.js'].lineData[122]++;
   matched = matched.slice(0, matched.length - match.length);
   _$jscoverage['/selector/parser.js'].lineData[123]++;
-  var past = (visit5_123_1(matched.length > DEBUG_CONTEXT_LIMIT) ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
+  var past = (visit5_123_1(matched.length > DEBUG_CONTEXT_LIMIT) ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
   _$jscoverage['/selector/parser.js'].lineData[125]++;
   next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit6_125_1(next.length > DEBUG_CONTEXT_LIMIT) ? "..." : "");
   _$jscoverage['/selector/parser.js'].lineData[126]++;

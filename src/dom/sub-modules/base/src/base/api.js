@@ -181,10 +181,7 @@ KISSY.add(function (S, require) {
             _RE_NUM_NO_PX: new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i')
         };
 
-    S.mix(Dom, NodeType);
-
     return Dom;
-
 });
 
 /*

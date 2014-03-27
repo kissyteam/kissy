@@ -86,7 +86,7 @@ KISSY.add(function (S, require) {
          * Whether current stylesheet is enabled.
          * @return {Boolean}
          */
-        'isEnabled': function () {
+        isEnabled: function () {
             return !this.sheet.disabled;
         },
 

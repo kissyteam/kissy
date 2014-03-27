@@ -3,7 +3,7 @@
  * dom
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./base/api');
 
     require('./base/attr');
@@ -16,12 +16,8 @@ KISSY.add(function (S,require) {
     require('./base/selector');
     require('./base/traversal');
 
-    S.mix(S, {
-        // compatibility
-        DOM: Dom,
-        get: Dom.get,
-        query: Dom.query
-    });
+    // bad! compatibility
+    S.DOM = Dom;
 
     return Dom;
 });

@@ -255,10 +255,10 @@ if (! _$jscoverage['/editor/focusManager.js']) {
   _$jscoverage['/editor/focusManager.js'].lineData[74] = 0;
   _$jscoverage['/editor/focusManager.js'].lineData[81] = 0;
   _$jscoverage['/editor/focusManager.js'].lineData[83] = 0;
+  _$jscoverage['/editor/focusManager.js'].lineData[90] = 0;
   _$jscoverage['/editor/focusManager.js'].lineData[91] = 0;
   _$jscoverage['/editor/focusManager.js'].lineData[92] = 0;
-  _$jscoverage['/editor/focusManager.js'].lineData[93] = 0;
-  _$jscoverage['/editor/focusManager.js'].lineData[96] = 0;
+  _$jscoverage['/editor/focusManager.js'].lineData[95] = 0;
 }
 if (! _$jscoverage['/editor/focusManager.js'].functionData) {
   _$jscoverage['/editor/focusManager.js'].functionData = [];
@@ -281,11 +281,11 @@ if (! _$jscoverage['/editor/focusManager.js'].branchData) {
   _$jscoverage['/editor/focusManager.js'].branchData['25'] = [];
   _$jscoverage['/editor/focusManager.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/editor/focusManager.js'].branchData['25'][1].init(110, 5, 'timer');
+_$jscoverage['/editor/focusManager.js'].branchData['25'][1].init(106, 5, 'timer');
 function visit337_25_1(result) {
   _$jscoverage['/editor/focusManager.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/focusManager.js'].branchData['13'][1].init(111, 5, 'timer');
+}_$jscoverage['/editor/focusManager.js'].branchData['13'][1].init(105, 5, 'timer');
 function visit336_13_1(result) {
   _$jscoverage['/editor/focusManager.js'].branchData['13'][1].ranCondition(result);
   return result;
@@ -298,11 +298,11 @@ KISSY.add(function(S, require) {
   function focus() {
     _$jscoverage['/editor/focusManager.js'].functionData[1]++;
     _$jscoverage['/editor/focusManager.js'].lineData[10]++;
-    var editor = this;
+    var self = this;
     _$jscoverage['/editor/focusManager.js'].lineData[11]++;
-    editor.__iframeFocus = TRUE;
+    self.__iframeFocus = TRUE;
     _$jscoverage['/editor/focusManager.js'].lineData[12]++;
-    currentInstance = editor;
+    currentInstance = self;
     _$jscoverage['/editor/focusManager.js'].lineData[13]++;
     if (visit336_13_1(timer)) {
       _$jscoverage['/editor/focusManager.js'].lineData[14]++;
@@ -312,16 +312,16 @@ KISSY.add(function(S, require) {
     timer = setTimeout(function() {
   _$jscoverage['/editor/focusManager.js'].functionData[2]++;
   _$jscoverage['/editor/focusManager.js'].lineData[17]++;
-  editor.fire('focus');
+  self.fire('focus');
 }, 30);
   }
   _$jscoverage['/editor/focusManager.js'].lineData[21]++;
   function blur() {
     _$jscoverage['/editor/focusManager.js'].functionData[3]++;
     _$jscoverage['/editor/focusManager.js'].lineData[22]++;
-    var editor = this;
+    var self = this;
     _$jscoverage['/editor/focusManager.js'].lineData[23]++;
-    editor.__iframeFocus = FALSE;
+    self.__iframeFocus = FALSE;
     _$jscoverage['/editor/focusManager.js'].lineData[24]++;
     currentInstance = NULL;
     _$jscoverage['/editor/focusManager.js'].lineData[25]++;
@@ -333,7 +333,7 @@ KISSY.add(function(S, require) {
     timer = setTimeout(function() {
   _$jscoverage['/editor/focusManager.js'].functionData[4]++;
   _$jscoverage['/editor/focusManager.js'].lineData[33]++;
-  editor.fire('blur');
+  self.fire('blur');
 }, 30);
   }
   _$jscoverage['/editor/focusManager.js'].lineData[37]++;
@@ -367,14 +367,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/focusManager.js'].lineData[83]++;
   editor.get('window').detach('focus', focus, editor).detach('blur', blur, editor);
 }}, TRUE = true, FALSE = false, NULL = null;
-  _$jscoverage['/editor/focusManager.js'].lineData[91]++;
+  _$jscoverage['/editor/focusManager.js'].lineData[90]++;
   Editor.focusManager = focusManager;
-  _$jscoverage['/editor/focusManager.js'].lineData[92]++;
+  _$jscoverage['/editor/focusManager.js'].lineData[91]++;
   Editor.getInstances = function() {
   _$jscoverage['/editor/focusManager.js'].functionData[10]++;
-  _$jscoverage['/editor/focusManager.js'].lineData[93]++;
+  _$jscoverage['/editor/focusManager.js'].lineData[92]++;
   return INSTANCES;
 };
-  _$jscoverage['/editor/focusManager.js'].lineData[96]++;
+  _$jscoverage['/editor/focusManager.js'].lineData[95]++;
   return focusManager;
 });

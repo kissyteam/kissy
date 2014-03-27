@@ -692,7 +692,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dent-cmd.js'].lineData[14]++;
   var listNodeNames = {
   ol: 1, 
-  ul: 1}, Walker = Editor.Walker, Dom = S.DOM, Node = S.Node, UA = S.UA, isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = 'margin-left', INDENT_OFFSET = 40, INDENT_UNIT = 'px', isNotBookmark = Walker.bookmark(false, true);
+  ul: 1}, Walker = Editor.Walker, Dom = S.require('dom'), Node = S.Node, UA = S.UA, isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = 'margin-left', INDENT_OFFSET = 40, INDENT_UNIT = 'px', isNotBookmark = Walker.bookmark(false, true);
   _$jscoverage['/dent-cmd.js'].lineData[25]++;
   function isListItem(node) {
     _$jscoverage['/dent-cmd.js'].functionData[1]++;

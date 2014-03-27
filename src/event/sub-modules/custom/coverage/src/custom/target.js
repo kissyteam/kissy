@@ -418,11 +418,11 @@ function visit42_79_1(result) {
 function visit41_77_1(result) {
   _$jscoverage['/custom/target.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['55'][1].init(226, 22, '!customEvent && create');
+}_$jscoverage['/custom/target.js'].branchData['55'][1].init(222, 22, '!customEvent && create');
 function visit40_55_1(result) {
   _$jscoverage['/custom/target.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['54'][1].init(154, 54, 'customEventObservables && customEventObservables[type]');
+}_$jscoverage['/custom/target.js'].branchData['54'][1].init(150, 54, 'customEventObservables && customEventObservables[type]');
 function visit39_54_1(result) {
   _$jscoverage['/custom/target.js'].branchData['54'][1].ranCondition(result);
   return result;
@@ -443,14 +443,14 @@ KISSY.add(function(S, require) {
   getCustomEventObservable: function(type, create) {
   _$jscoverage['/custom/target.js'].functionData[1]++;
   _$jscoverage['/custom/target.js'].lineData[51]++;
-  var target = this, customEvent, customEventObservables = target.getCustomEvents();
+  var self = this, customEvent, customEventObservables = self.getCustomEvents();
   _$jscoverage['/custom/target.js'].lineData[54]++;
   customEvent = visit39_54_1(customEventObservables && customEventObservables[type]);
   _$jscoverage['/custom/target.js'].lineData[55]++;
   if (visit40_55_1(!customEvent && create)) {
     _$jscoverage['/custom/target.js'].lineData[56]++;
     customEvent = customEventObservables[type] = new CustomEventObservable({
-  currentTarget: target, 
+  currentTarget: self, 
   type: type});
   }
   _$jscoverage['/custom/target.js'].lineData[61]++;

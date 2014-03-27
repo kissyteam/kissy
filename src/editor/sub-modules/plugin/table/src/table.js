@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
     require('./contextmenu');
     require('./button');
     var UA = S.UA,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         Node = S.Node,
         tableRules = ['tr', 'th', 'td', 'tbody', 'table'],
         cellNodeRegex = /^(?:td|th)$/;

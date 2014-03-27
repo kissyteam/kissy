@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:01
+build time: Mar 27 22:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -178,8 +178,9 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
   }
   return Control.getDefaultRender().extend(methods, {ATTRS:{contentTpl:{value:ScrollBarTpl}}})
 });
-KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", "./render", "event/gesture/drag"], function(S, require) {
+KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "ua", "component/control", "./render", "event/gesture/drag"], function(S, require) {
   var Node = require("node");
+  var UA = require("ua");
   var Control = require("component/control");
   var ScrollBarRender = require("./render");
   var DragType = require("event/gesture/drag");
@@ -200,18 +201,18 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
     scrollView.scrollToWithBounds(scrollCfg)
   }
   function onScrollViewReflow() {
-    var control = this, scrollView = control.scrollView, trackEl = control.trackEl, scrollWHProperty = control.scrollWHProperty, whProperty = control.whProperty, clientWHProperty = control.clientWHProperty, dragWHProperty = control.dragWHProperty, ratio, trackElSize, barSize;
-    if(scrollView.allowScroll[control.scrollType]) {
-      control.scrollLength = scrollView[scrollWHProperty];
-      trackElSize = control.trackElSize = whProperty === "width" ? trackEl.offsetWidth : trackEl.offsetHeight;
-      ratio = scrollView[clientWHProperty] / control.scrollLength;
+    var self = this, scrollView = self.scrollView, trackEl = self.trackEl, scrollWHProperty = self.scrollWHProperty, whProperty = self.whProperty, clientWHProperty = self.clientWHProperty, dragWHProperty = self.dragWHProperty, ratio, trackElSize, barSize;
+    if(scrollView.allowScroll[self.scrollType]) {
+      self.scrollLength = scrollView[scrollWHProperty];
+      trackElSize = self.trackElSize = whProperty === "width" ? trackEl.offsetWidth : trackEl.offsetHeight;
+      ratio = scrollView[clientWHProperty] / self.scrollLength;
       barSize = ratio * trackElSize;
-      control.set(dragWHProperty, barSize);
-      control.barSize = barSize;
-      syncOnScroll(control);
-      control.set("visible", true)
+      self.set(dragWHProperty, barSize);
+      self.barSize = barSize;
+      syncOnScroll(self);
+      self.set("visible", true)
     }else {
-      control.set("visible", false)
+      self.set("visible", false)
     }
   }
   function onScrollViewDisabled(e) {
@@ -327,7 +328,7 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
   }, destructor:function() {
     this.scrollView.detach(SCROLLBAR_EVENT_NS);
     clearHideTimer(this)
-  }}, {ATTRS:{minLength:{value:MIN_BAR_LENGTH}, scrollView:{}, axis:{view:1}, autoHide:{value:S.UA.ios}, visible:{valueFn:function() {
+  }}, {ATTRS:{minLength:{value:MIN_BAR_LENGTH}, scrollView:{}, axis:{view:1}, autoHide:{value:UA.ios}, visible:{valueFn:function() {
     return!this.get("autoHide")
   }}, hideDelay:{value:0.1}, dragWidth:{setter:function(v) {
     var minLength = this.get("minLength");

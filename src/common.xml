@@ -372,6 +372,7 @@
     create-build.dir,
     tpl2mod,
     jshint,
+    jscs,
     js-cover-gen,
     before-concat,
     concat,concat-css,
@@ -384,6 +385,20 @@
     fix-cr-lf,
     clear,
     build-node">
+    </target>
+
+    <target name="build-all" depends="check-src">
+        <subant target="" failonerror="true" inheritall="false">
+            <fileset dir="./sub-modules" includes="**/build.xml"/>
+        </subant>
+        <ac:if>
+            <ac:isset property="component.src.dir.exists"/>
+            <ac:then>
+                <subant target="build" failonerror="true"
+                        buildpath="."
+                        inheritall="false"/>
+            </ac:then>
+        </ac:if>
     </target>
 
     <target name="clean">

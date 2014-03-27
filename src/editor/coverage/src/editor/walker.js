@@ -261,83 +261,83 @@ if (! _$jscoverage['/editor/walker.js']) {
   _$jscoverage['/editor/walker.js'].lineData[94] = 0;
   _$jscoverage['/editor/walker.js'].lineData[95] = 0;
   _$jscoverage['/editor/walker.js'].lineData[97] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[101] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[100] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[103] = 0;
   _$jscoverage['/editor/walker.js'].lineData[104] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[105] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[108] = 0;
   _$jscoverage['/editor/walker.js'].lineData[109] = 0;
   _$jscoverage['/editor/walker.js'].lineData[110] = 0;
   _$jscoverage['/editor/walker.js'].lineData[111] = 0;
   _$jscoverage['/editor/walker.js'].lineData[112] = 0;
   _$jscoverage['/editor/walker.js'].lineData[113] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[114] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[117] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[122] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[116] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[120] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[121] = 0;
   _$jscoverage['/editor/walker.js'].lineData[123] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[124] = 0;
   _$jscoverage['/editor/walker.js'].lineData[125] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[126] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[127] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[130] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[128] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[134] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[135] = 0;
   _$jscoverage['/editor/walker.js'].lineData[136] = 0;
   _$jscoverage['/editor/walker.js'].lineData[137] = 0;
   _$jscoverage['/editor/walker.js'].lineData[138] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[139] = 0;
   _$jscoverage['/editor/walker.js'].lineData[140] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[142] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[141] = 0;
   _$jscoverage['/editor/walker.js'].lineData[143] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[145] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[146] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[147] = 0;
   _$jscoverage['/editor/walker.js'].lineData[148] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[149] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[150] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[153] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[151] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[152] = 0;
   _$jscoverage['/editor/walker.js'].lineData[154] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[156] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[155] = 0;
   _$jscoverage['/editor/walker.js'].lineData[157] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[159] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[167] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[168] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[178] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[189] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[165] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[166] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[176] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[187] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[190] = 0;
   _$jscoverage['/editor/walker.js'].lineData[193] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[197] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[203] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[212] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[221] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[230] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[241] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[251] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[199] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[208] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[217] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[226] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[237] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[247] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[257] = 0;
   _$jscoverage['/editor/walker.js'].lineData[261] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[265] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[266] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[275] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[282] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[283] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[262] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[270] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[277] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[278] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[293] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[294] = 0;
   _$jscoverage['/editor/walker.js'].lineData[298] = 0;
   _$jscoverage['/editor/walker.js'].lineData[299] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[303] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[304] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[306] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[310] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[313] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[322] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[323] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[324] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[332] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[333] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[339] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[301] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[305] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[308] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[317] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[318] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[319] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[327] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[328] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[334] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[336] = 0;
   _$jscoverage['/editor/walker.js'].lineData[341] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[345] = 0;
   _$jscoverage['/editor/walker.js'].lineData[346] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[350] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[351] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[358] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[353] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[355] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[356] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[359] = 0;
   _$jscoverage['/editor/walker.js'].lineData[360] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[361] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[364] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[362] = 0;
   _$jscoverage['/editor/walker.js'].lineData[365] = 0;
   _$jscoverage['/editor/walker.js'].lineData[367] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[370] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[372] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[376] = 0;
-  _$jscoverage['/editor/walker.js'].lineData[378] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[371] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[373] = 0;
 }
 if (! _$jscoverage['/editor/walker.js'].functionData) {
   _$jscoverage['/editor/walker.js'].functionData = [];
@@ -403,230 +403,230 @@ if (! _$jscoverage['/editor/walker.js'].branchData) {
   _$jscoverage['/editor/walker.js'].branchData['92'][1] = new BranchData();
   _$jscoverage['/editor/walker.js'].branchData['94'] = [];
   _$jscoverage['/editor/walker.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['104'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['104'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['109'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['109'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['111'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['111'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['113'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['113'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['117'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['125'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['125'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['126'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['126'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['130'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['103'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['103'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['108'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['108'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['110'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['110'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['112'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['116'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['123'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['123'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['124'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['128'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['128'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['134'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['134'][1] = new BranchData();
   _$jscoverage['/editor/walker.js'].branchData['136'] = [];
   _$jscoverage['/editor/walker.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['138'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['138'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['139'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['139'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['142'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['230'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['230'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['241'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['241'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['283'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['283'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['283'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['299'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['299'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['299'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['306'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['306'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['306'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['307'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['307'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['310'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['310'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['323'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['323'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['323'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['339'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['339'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['340'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['340'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['340'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['351'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['351'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['352'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['352'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['353'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['353'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['353'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['354'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['354'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['362'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['362'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['364'] = [];
-  _$jscoverage['/editor/walker.js'].branchData['364'][1] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['364'][2] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['364'][3] = new BranchData();
-  _$jscoverage['/editor/walker.js'].branchData['364'][4] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['136'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['137'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['140'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['140'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['226'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['226'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['237'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['237'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['278'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['278'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['278'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['294'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['294'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['294'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['301'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['301'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['301'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['302'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['302'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['305'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['305'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['318'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['318'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['318'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['334'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['334'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['335'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['335'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['335'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['346'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['346'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['347'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['347'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['348'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['348'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['348'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['349'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['349'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['357'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['357'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['359'] = [];
+  _$jscoverage['/editor/walker.js'].branchData['359'][1] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['359'][2] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['359'][3] = new BranchData();
+  _$jscoverage['/editor/walker.js'].branchData['359'][4] = new BranchData();
 }
-_$jscoverage['/editor/walker.js'].branchData['364'][4].init(239, 22, 'tail[0].nodeType === 3');
-function visit1139_364_4(result) {
-  _$jscoverage['/editor/walker.js'].branchData['364'][4].ranCondition(result);
+_$jscoverage['/editor/walker.js'].branchData['359'][4].init(238, 22, 'tail[0].nodeType === 3');
+function visit1139_359_4(result) {
+  _$jscoverage['/editor/walker.js'].branchData['359'][4].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['364'][3].init(239, 57, 'tail[0].nodeType === 3 && tailNbspRegex.test(tail.text())');
-function visit1138_364_3(result) {
-  _$jscoverage['/editor/walker.js'].branchData['364'][3].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['359'][3].init(238, 57, 'tail[0].nodeType === 3 && tailNbspRegex.test(tail.text())');
+function visit1138_359_3(result) {
+  _$jscoverage['/editor/walker.js'].branchData['359'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['364'][2].init(212, 24, 'tail.nodeName() === \'br\'');
-function visit1137_364_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['364'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['359'][2].init(211, 24, 'tail.nodeName() === \'br\'');
+function visit1137_359_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['359'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['364'][1].init(193, 105, 'tail && (!UA.ie ? tail.nodeName() === \'br\' : tail[0].nodeType === 3 && tailNbspRegex.test(tail.text()))');
-function visit1136_364_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['364'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['359'][1].init(193, 103, 'tail && (!UA.ie ? tail.nodeName() === \'br\' : tail[0].nodeType === 3 && tailNbspRegex.test(tail.text()))');
+function visit1136_359_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['359'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['362'][1].init(70, 23, 'tail && toSkip(tail[0])');
-function visit1135_362_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['362'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['357'][1].init(70, 23, 'tail && toSkip(tail[0])');
+function visit1135_357_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['357'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['354'][1].init(42, 46, 'name in dtd.$inline && !(name in dtd.$empty)');
-function visit1134_354_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['354'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['349'][1].init(42, 44, 'name in dtd.$inline && !(name in dtd.$empty)');
+function visit1134_349_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['349'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['353'][2].init(141, 19, 'node.nodeType === 1');
-function visit1133_353_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['353'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['348'][2].init(141, 19, 'node.nodeType === 1');
+function visit1133_348_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['348'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['353'][1].init(38, 89, 'node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)');
-function visit1132_353_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['353'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['348'][1].init(38, 87, 'node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)');
+function visit1132_348_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['348'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['352'][1].init(35, 128, 'isWhitespaces(node) || node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)');
-function visit1131_352_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['352'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['347'][1].init(35, 126, 'isWhitespaces(node) || node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)');
+function visit1131_347_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['347'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['351'][1].init(63, 164, 'isBookmark(node) || isWhitespaces(node) || node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)');
-function visit1130_351_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['351'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['346'][1].init(63, 162, 'isBookmark(node) || isWhitespaces(node) || node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)');
+function visit1130_346_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['346'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['340'][2].init(59, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit1129_340_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['340'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['335'][2].init(59, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit1129_335_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['335'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['340'][1].init(39, 65, 'node.nodeType === Dom.NodeType.ELEMENT_NODE && !node.offsetHeight');
-function visit1128_340_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['340'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['335'][1].init(39, 65, 'node.nodeType === Dom.NodeType.ELEMENT_NODE && !node.offsetHeight');
+function visit1128_335_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['335'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['339'][1].init(373, 105, 'whitespace(node) || node.nodeType === Dom.NodeType.ELEMENT_NODE && !node.offsetHeight');
-function visit1127_339_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['339'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['334'][1].init(373, 105, 'whitespace(node) || node.nodeType === Dom.NodeType.ELEMENT_NODE && !node.offsetHeight');
+function visit1127_334_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['334'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['323'][2].init(36, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
-function visit1126_323_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['323'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['318'][2].init(36, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
+function visit1126_318_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['318'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['323'][1].init(36, 67, 'node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue)');
-function visit1125_323_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['323'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['318'][1].init(36, 67, 'node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue)');
+function visit1125_318_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['318'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['310'][1].init(355, 34, 'isBookmark || isBookmarkNode(node)');
-function visit1124_310_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['310'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['305'][1].init(351, 34, 'isBookmark || isBookmarkNode(node)');
+function visit1124_305_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['305'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['307'][1].init(65, 72, '(parent = node.parentNode) && isBookmarkNode(parent)');
-function visit1123_307_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['307'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['302'][1].init(64, 71, '(parent = node.parentNode) && isBookmarkNode(parent)');
+function visit1123_302_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['302'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['306'][2].init(120, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
-function visit1122_306_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['306'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['301'][2].init(119, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
+function visit1122_301_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['301'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['306'][1].init(120, 138, 'node.nodeType === Dom.NodeType.TEXT_NODE && (parent = node.parentNode) && isBookmarkNode(parent)');
-function visit1121_306_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['306'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['301'][1].init(119, 136, 'node.nodeType === Dom.NodeType.TEXT_NODE && (parent = node.parentNode) && isBookmarkNode(parent)');
+function visit1121_301_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['301'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['299'][2].init(25, 29, 'Dom.nodeName(node) === \'span\'');
-function visit1120_299_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['299'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['294'][2].init(25, 29, 'Dom.nodeName(node) === \'span\'');
+function visit1120_294_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['294'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['299'][1].init(25, 83, 'Dom.nodeName(node) === \'span\' && Dom.attr(node, \'_ke_bookmark\')');
-function visit1119_299_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['299'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['294'][1].init(25, 83, 'Dom.nodeName(node) === \'span\' && Dom.attr(node, \'_ke_bookmark\')');
+function visit1119_294_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['283'][2].init(26, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit1118_283_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['283'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['278'][2].init(26, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit1118_278_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['278'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['283'][1].init(26, 112, 'node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom._4eIsBlockBoundary(node, customNodeNames)');
-function visit1117_283_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['283'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['278'][1].init(26, 112, 'node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom._4eIsBlockBoundary(node, customNodeNames)');
+function visit1117_278_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['278'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['241'][1].init(76, 40, 'iterate.call(this, TRUE, TRUE) !== FALSE');
-function visit1116_241_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['241'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['237'][1].init(76, 40, 'iterate.call(this, TRUE, TRUE) !== FALSE');
+function visit1116_237_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['230'][1].init(20, 41, 'iterate.call(this, FALSE, TRUE) !== FALSE');
-function visit1115_230_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['230'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['226'][1].init(20, 41, 'iterate.call(this, FALSE, TRUE) !== FALSE');
+function visit1115_226_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['226'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['142'][1].init(226, 38, 'breakOnFalseRetFalse && self.evaluator');
-function visit1114_142_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['140'][1].init(226, 38, 'breakOnFalseRetFalse && self.evaluator');
+function visit1114_140_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['139'][1].init(21, 21, '!breakOnFalseRetFalse');
-function visit1113_139_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['139'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['137'][1].init(21, 21, '!breakOnFalseRetFalse');
+function visit1113_137_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['138'][2].init(69, 33, 'self.evaluator(node[0]) !== FALSE');
-function visit1112_138_2(result) {
-  _$jscoverage['/editor/walker.js'].branchData['138'][2].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['136'][2].init(69, 33, 'self.evaluator(node[0]) !== FALSE');
+function visit1112_136_2(result) {
+  _$jscoverage['/editor/walker.js'].branchData['136'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['138'][1].init(50, 52, '!self.evaluator || self.evaluator(node[0]) !== FALSE');
-function visit1111_138_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['138'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/walker.js'].branchData['136'][1].init(4054, 19, 'node && !self._.end');
-function visit1110_136_1(result) {
+}_$jscoverage['/editor/walker.js'].branchData['136'][1].init(50, 52, '!self.evaluator || self.evaluator(node[0]) !== FALSE');
+function visit1111_136_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['130'][1].init(30, 43, 'guard(range.startContainer, TRUE) === FALSE');
-function visit1109_130_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['130'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['134'][1].init(4026, 19, 'node && !self._.end');
+function visit1110_134_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['126'][1].init(25, 24, 'guard(node[0]) === FALSE');
-function visit1108_126_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['128'][1].init(29, 43, 'guard(range.startContainer, TRUE) === FALSE');
+function visit1109_128_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['125'][1].init(139, 11, 'node.length');
-function visit1107_125_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['125'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['124'][1].init(25, 24, 'guard(node[0]) === FALSE');
+function visit1108_124_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['117'][1].init(30, 27, 'guard(node, TRUE) === FALSE');
-function visit1106_117_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['123'][1].init(139, 11, 'node.length');
+function visit1107_123_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['113'][1].init(103, 24, 'guard(node[0]) === FALSE');
-function visit1105_113_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['113'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['116'][1].init(29, 27, 'guard(node, TRUE) === FALSE');
+function visit1106_116_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['111'][1].init(64, 19, 'range.endOffset > 0');
-function visit1104_111_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['111'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['112'][1].init(103, 24, 'guard(node[0]) === FALSE');
+function visit1105_112_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['109'][1].init(68, 3, 'rtl');
-function visit1103_109_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['109'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['110'][1].init(64, 19, 'range.endOffset > 0');
+function visit1104_110_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['104'][1].init(2849, 12, 'self.current');
-function visit1102_104_1(result) {
-  _$jscoverage['/editor/walker.js'].branchData['104'][1].ranCondition(result);
+}_$jscoverage['/editor/walker.js'].branchData['108'][1].init(68, 3, 'rtl');
+function visit1103_108_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['108'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/walker.js'].branchData['103'][1].init(2837, 12, 'self.current');
+function visit1102_103_1(result) {
+  _$jscoverage['/editor/walker.js'].branchData['103'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/walker.js'].branchData['94'][1].init(21, 36, 'stopGuard(node, movingOut) === FALSE');
 function visit1101_94_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['92'][1].init(2530, 9, 'userGuard');
+}_$jscoverage['/editor/walker.js'].branchData['92'][1].init(2526, 9, 'userGuard');
 function visit1100_92_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['92'][1].ranCondition(result);
   return result;
@@ -650,19 +650,19 @@ function visit1096_78_2(result) {
 function visit1095_78_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['73'][3].init(70, 21, 'range.startOffset > 0');
+}_$jscoverage['/editor/walker.js'].branchData['73'][3].init(69, 21, 'range.startOffset > 0');
 function visit1094_73_3(result) {
   _$jscoverage['/editor/walker.js'].branchData['73'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['73'][2].init(70, 89, '(range.startOffset > 0) && limitRTL.childNodes[range.startOffset - 1]');
+}_$jscoverage['/editor/walker.js'].branchData['73'][2].init(69, 88, '(range.startOffset > 0) && limitRTL.childNodes[range.startOffset - 1]');
 function visit1093_73_2(result) {
   _$jscoverage['/editor/walker.js'].branchData['73'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['73'][1].init(70, 97, '(range.startOffset > 0) && limitRTL.childNodes[range.startOffset - 1] || null');
+}_$jscoverage['/editor/walker.js'].branchData['73'][1].init(69, 96, '(range.startOffset > 0) && limitRTL.childNodes[range.startOffset - 1] || null');
 function visit1092_73_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['70'][1].init(1607, 23, 'rtl && !self._.guardRTL');
+}_$jscoverage['/editor/walker.js'].branchData['70'][1].init(1605, 23, 'rtl && !self._.guardRTL');
 function visit1091_70_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['70'][1].ranCondition(result);
   return result;
@@ -686,7 +686,7 @@ function visit1087_59_2(result) {
 function visit1086_59_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['52'][1].init(883, 24, '!rtl && !self._.guardLTR');
+}_$jscoverage['/editor/walker.js'].branchData['52'][1].init(881, 24, '!rtl && !self._.guardLTR');
 function visit1085_52_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['52'][1].ranCondition(result);
   return result;
@@ -694,7 +694,7 @@ function visit1085_52_1(result) {
 function visit1084_45_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['37'][1].init(439, 13, '!self._.start');
+}_$jscoverage['/editor/walker.js'].branchData['37'][1].init(437, 13, '!self._.start');
 function visit1083_37_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['37'][1].ranCondition(result);
   return result;
@@ -783,236 +783,236 @@ KISSY.add(function(S, require) {
   return userGuard(node, movingOut);
 };
     } else {
-      _$jscoverage['/editor/walker.js'].lineData[101]++;
+      _$jscoverage['/editor/walker.js'].lineData[100]++;
       guard = stopGuard;
     }
-    _$jscoverage['/editor/walker.js'].lineData[104]++;
-    if (visit1102_104_1(self.current)) {
-      _$jscoverage['/editor/walker.js'].lineData[105]++;
+    _$jscoverage['/editor/walker.js'].lineData[103]++;
+    if (visit1102_103_1(self.current)) {
+      _$jscoverage['/editor/walker.js'].lineData[104]++;
       node = this.current[getSourceNodeFn](FALSE, type, guard);
     } else {
-      _$jscoverage['/editor/walker.js'].lineData[109]++;
-      if (visit1103_109_1(rtl)) {
-        _$jscoverage['/editor/walker.js'].lineData[110]++;
+      _$jscoverage['/editor/walker.js'].lineData[108]++;
+      if (visit1103_108_1(rtl)) {
+        _$jscoverage['/editor/walker.js'].lineData[109]++;
         node = range.endContainer;
-        _$jscoverage['/editor/walker.js'].lineData[111]++;
-        if (visit1104_111_1(range.endOffset > 0)) {
-          _$jscoverage['/editor/walker.js'].lineData[112]++;
+        _$jscoverage['/editor/walker.js'].lineData[110]++;
+        if (visit1104_110_1(range.endOffset > 0)) {
+          _$jscoverage['/editor/walker.js'].lineData[111]++;
           node = new Node(node[0].childNodes[range.endOffset - 1]);
-          _$jscoverage['/editor/walker.js'].lineData[113]++;
-          if (visit1105_113_1(guard(node[0]) === FALSE)) {
-            _$jscoverage['/editor/walker.js'].lineData[114]++;
+          _$jscoverage['/editor/walker.js'].lineData[112]++;
+          if (visit1105_112_1(guard(node[0]) === FALSE)) {
+            _$jscoverage['/editor/walker.js'].lineData[113]++;
             node = NULL;
           }
         } else {
-          _$jscoverage['/editor/walker.js'].lineData[117]++;
-          node = (visit1106_117_1(guard(node, TRUE) === FALSE)) ? NULL : node._4ePreviousSourceNode(TRUE, type, guard, undefined);
+          _$jscoverage['/editor/walker.js'].lineData[116]++;
+          node = (visit1106_116_1(guard(node, TRUE) === FALSE)) ? NULL : node._4ePreviousSourceNode(TRUE, type, guard, undefined);
         }
       } else {
-        _$jscoverage['/editor/walker.js'].lineData[122]++;
+        _$jscoverage['/editor/walker.js'].lineData[120]++;
         node = range.startContainer;
-        _$jscoverage['/editor/walker.js'].lineData[123]++;
+        _$jscoverage['/editor/walker.js'].lineData[121]++;
         node = new Node(node[0].childNodes[range.startOffset]);
-        _$jscoverage['/editor/walker.js'].lineData[125]++;
-        if (visit1107_125_1(node.length)) {
-          _$jscoverage['/editor/walker.js'].lineData[126]++;
-          if (visit1108_126_1(guard(node[0]) === FALSE)) {
-            _$jscoverage['/editor/walker.js'].lineData[127]++;
+        _$jscoverage['/editor/walker.js'].lineData[123]++;
+        if (visit1107_123_1(node.length)) {
+          _$jscoverage['/editor/walker.js'].lineData[124]++;
+          if (visit1108_124_1(guard(node[0]) === FALSE)) {
+            _$jscoverage['/editor/walker.js'].lineData[125]++;
             node = NULL;
           }
         } else {
-          _$jscoverage['/editor/walker.js'].lineData[130]++;
-          node = (visit1109_130_1(guard(range.startContainer, TRUE) === FALSE)) ? NULL : range.startContainer._4eNextSourceNode(TRUE, type, guard, undefined);
+          _$jscoverage['/editor/walker.js'].lineData[128]++;
+          node = (visit1109_128_1(guard(range.startContainer, TRUE) === FALSE)) ? NULL : range.startContainer._4eNextSourceNode(TRUE, type, guard, undefined);
         }
       }
     }
-    _$jscoverage['/editor/walker.js'].lineData[136]++;
-    while (visit1110_136_1(node && !self._.end)) {
-      _$jscoverage['/editor/walker.js'].lineData[137]++;
+    _$jscoverage['/editor/walker.js'].lineData[134]++;
+    while (visit1110_134_1(node && !self._.end)) {
+      _$jscoverage['/editor/walker.js'].lineData[135]++;
       self.current = node;
-      _$jscoverage['/editor/walker.js'].lineData[138]++;
-      if (visit1111_138_1(!self.evaluator || visit1112_138_2(self.evaluator(node[0]) !== FALSE))) {
-        _$jscoverage['/editor/walker.js'].lineData[139]++;
-        if (visit1113_139_1(!breakOnFalseRetFalse)) {
-          _$jscoverage['/editor/walker.js'].lineData[140]++;
+      _$jscoverage['/editor/walker.js'].lineData[136]++;
+      if (visit1111_136_1(!self.evaluator || visit1112_136_2(self.evaluator(node[0]) !== FALSE))) {
+        _$jscoverage['/editor/walker.js'].lineData[137]++;
+        if (visit1113_137_1(!breakOnFalseRetFalse)) {
+          _$jscoverage['/editor/walker.js'].lineData[138]++;
           return node;
         }
       } else {
-        _$jscoverage['/editor/walker.js'].lineData[142]++;
-        if (visit1114_142_1(breakOnFalseRetFalse && self.evaluator)) {
-          _$jscoverage['/editor/walker.js'].lineData[143]++;
+        _$jscoverage['/editor/walker.js'].lineData[140]++;
+        if (visit1114_140_1(breakOnFalseRetFalse && self.evaluator)) {
+          _$jscoverage['/editor/walker.js'].lineData[141]++;
           return FALSE;
         }
       }
-      _$jscoverage['/editor/walker.js'].lineData[145]++;
+      _$jscoverage['/editor/walker.js'].lineData[143]++;
       node = node[getSourceNodeFn](FALSE, type, guard);
     }
-    _$jscoverage['/editor/walker.js'].lineData[148]++;
+    _$jscoverage['/editor/walker.js'].lineData[146]++;
     self.end();
-    _$jscoverage['/editor/walker.js'].lineData[149]++;
+    _$jscoverage['/editor/walker.js'].lineData[147]++;
     self.current = NULL;
-    _$jscoverage['/editor/walker.js'].lineData[150]++;
+    _$jscoverage['/editor/walker.js'].lineData[148]++;
     return NULL;
   }
-  _$jscoverage['/editor/walker.js'].lineData[153]++;
+  _$jscoverage['/editor/walker.js'].lineData[151]++;
   function iterateToLast(rtl) {
     _$jscoverage['/editor/walker.js'].functionData[5]++;
-    _$jscoverage['/editor/walker.js'].lineData[154]++;
+    _$jscoverage['/editor/walker.js'].lineData[152]++;
     var node, last = NULL;
-    _$jscoverage['/editor/walker.js'].lineData[156]++;
+    _$jscoverage['/editor/walker.js'].lineData[154]++;
     while ((node = iterate.call(this, rtl))) {
-      _$jscoverage['/editor/walker.js'].lineData[157]++;
+      _$jscoverage['/editor/walker.js'].lineData[155]++;
       last = node;
     }
-    _$jscoverage['/editor/walker.js'].lineData[159]++;
+    _$jscoverage['/editor/walker.js'].lineData[157]++;
     return last;
   }
-  _$jscoverage['/editor/walker.js'].lineData[167]++;
+  _$jscoverage['/editor/walker.js'].lineData[165]++;
   function Walker(range) {
     _$jscoverage['/editor/walker.js'].functionData[6]++;
-    _$jscoverage['/editor/walker.js'].lineData[168]++;
+    _$jscoverage['/editor/walker.js'].lineData[166]++;
     this.range = range;
-    _$jscoverage['/editor/walker.js'].lineData[178]++;
+    _$jscoverage['/editor/walker.js'].lineData[176]++;
     this.evaluator = NULL;
-    _$jscoverage['/editor/walker.js'].lineData[189]++;
+    _$jscoverage['/editor/walker.js'].lineData[187]++;
     this.guard = NULL;
-    _$jscoverage['/editor/walker.js'].lineData[193]++;
+    _$jscoverage['/editor/walker.js'].lineData[190]++;
     this._ = {};
   }
-  _$jscoverage['/editor/walker.js'].lineData[197]++;
+  _$jscoverage['/editor/walker.js'].lineData[193]++;
   S.augment(Walker, {
   end: function() {
   _$jscoverage['/editor/walker.js'].functionData[7]++;
-  _$jscoverage['/editor/walker.js'].lineData[203]++;
+  _$jscoverage['/editor/walker.js'].lineData[199]++;
   this._.end = 1;
 }, 
   next: function() {
   _$jscoverage['/editor/walker.js'].functionData[8]++;
-  _$jscoverage['/editor/walker.js'].lineData[212]++;
+  _$jscoverage['/editor/walker.js'].lineData[208]++;
   return iterate.call(this);
 }, 
   previous: function() {
   _$jscoverage['/editor/walker.js'].functionData[9]++;
-  _$jscoverage['/editor/walker.js'].lineData[221]++;
+  _$jscoverage['/editor/walker.js'].lineData[217]++;
   return iterate.call(this, TRUE);
 }, 
   checkForward: function() {
   _$jscoverage['/editor/walker.js'].functionData[10]++;
-  _$jscoverage['/editor/walker.js'].lineData[230]++;
-  return visit1115_230_1(iterate.call(this, FALSE, TRUE) !== FALSE);
+  _$jscoverage['/editor/walker.js'].lineData[226]++;
+  return visit1115_226_1(iterate.call(this, FALSE, TRUE) !== FALSE);
 }, 
   checkBackward: function() {
   _$jscoverage['/editor/walker.js'].functionData[11]++;
-  _$jscoverage['/editor/walker.js'].lineData[241]++;
-  return visit1116_241_1(iterate.call(this, TRUE, TRUE) !== FALSE);
+  _$jscoverage['/editor/walker.js'].lineData[237]++;
+  return visit1116_237_1(iterate.call(this, TRUE, TRUE) !== FALSE);
 }, 
   lastForward: function() {
   _$jscoverage['/editor/walker.js'].functionData[12]++;
-  _$jscoverage['/editor/walker.js'].lineData[251]++;
+  _$jscoverage['/editor/walker.js'].lineData[247]++;
   return iterateToLast.call(this);
 }, 
   lastBackward: function() {
   _$jscoverage['/editor/walker.js'].functionData[13]++;
-  _$jscoverage['/editor/walker.js'].lineData[261]++;
+  _$jscoverage['/editor/walker.js'].lineData[257]++;
   return iterateToLast.call(this, TRUE);
 }, 
   reset: function() {
   _$jscoverage['/editor/walker.js'].functionData[14]++;
-  _$jscoverage['/editor/walker.js'].lineData[265]++;
+  _$jscoverage['/editor/walker.js'].lineData[261]++;
   delete this.current;
-  _$jscoverage['/editor/walker.js'].lineData[266]++;
+  _$jscoverage['/editor/walker.js'].lineData[262]++;
   this._ = {};
 }, 
   _iterator: iterate});
-  _$jscoverage['/editor/walker.js'].lineData[275]++;
+  _$jscoverage['/editor/walker.js'].lineData[270]++;
   S.mix(Walker, {
   blockBoundary: function(customNodeNames) {
   _$jscoverage['/editor/walker.js'].functionData[15]++;
-  _$jscoverage['/editor/walker.js'].lineData[282]++;
+  _$jscoverage['/editor/walker.js'].lineData[277]++;
   return function(node) {
   _$jscoverage['/editor/walker.js'].functionData[16]++;
-  _$jscoverage['/editor/walker.js'].lineData[283]++;
-  return !(visit1117_283_1(visit1118_283_2(node.nodeType === Dom.NodeType.ELEMENT_NODE) && Dom._4eIsBlockBoundary(node, customNodeNames)));
+  _$jscoverage['/editor/walker.js'].lineData[278]++;
+  return !(visit1117_278_1(visit1118_278_2(node.nodeType === Dom.NodeType.ELEMENT_NODE) && Dom._4eIsBlockBoundary(node, customNodeNames)));
 };
 }, 
   bookmark: function(contentOnly, isReject) {
   _$jscoverage['/editor/walker.js'].functionData[17]++;
-  _$jscoverage['/editor/walker.js'].lineData[298]++;
+  _$jscoverage['/editor/walker.js'].lineData[293]++;
   function isBookmarkNode(node) {
     _$jscoverage['/editor/walker.js'].functionData[18]++;
-    _$jscoverage['/editor/walker.js'].lineData[299]++;
-    return visit1119_299_1(visit1120_299_2(Dom.nodeName(node) === 'span') && Dom.attr(node, '_ke_bookmark'));
+    _$jscoverage['/editor/walker.js'].lineData[294]++;
+    return visit1119_294_1(visit1120_294_2(Dom.nodeName(node) === 'span') && Dom.attr(node, '_ke_bookmark'));
   }
-  _$jscoverage['/editor/walker.js'].lineData[303]++;
+  _$jscoverage['/editor/walker.js'].lineData[298]++;
   return function(node) {
   _$jscoverage['/editor/walker.js'].functionData[19]++;
-  _$jscoverage['/editor/walker.js'].lineData[304]++;
+  _$jscoverage['/editor/walker.js'].lineData[299]++;
   var isBookmark, parent;
-  _$jscoverage['/editor/walker.js'].lineData[306]++;
-  isBookmark = (visit1121_306_1(visit1122_306_2(node.nodeType === Dom.NodeType.TEXT_NODE) && visit1123_307_1((parent = node.parentNode) && isBookmarkNode(parent))));
-  _$jscoverage['/editor/walker.js'].lineData[310]++;
-  isBookmark = contentOnly ? isBookmark : visit1124_310_1(isBookmark || isBookmarkNode(node));
-  _$jscoverage['/editor/walker.js'].lineData[313]++;
+  _$jscoverage['/editor/walker.js'].lineData[301]++;
+  isBookmark = (visit1121_301_1(visit1122_301_2(node.nodeType === Dom.NodeType.TEXT_NODE) && visit1123_302_1((parent = node.parentNode) && isBookmarkNode(parent))));
+  _$jscoverage['/editor/walker.js'].lineData[305]++;
+  isBookmark = contentOnly ? isBookmark : visit1124_305_1(isBookmark || isBookmarkNode(node));
+  _$jscoverage['/editor/walker.js'].lineData[308]++;
   return !!(isReject ^ isBookmark);
 };
 }, 
   whitespaces: function(isReject) {
   _$jscoverage['/editor/walker.js'].functionData[20]++;
-  _$jscoverage['/editor/walker.js'].lineData[322]++;
+  _$jscoverage['/editor/walker.js'].lineData[317]++;
   return function(node) {
   _$jscoverage['/editor/walker.js'].functionData[21]++;
-  _$jscoverage['/editor/walker.js'].lineData[323]++;
-  var isWhitespace = visit1125_323_1(visit1126_323_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue));
-  _$jscoverage['/editor/walker.js'].lineData[324]++;
+  _$jscoverage['/editor/walker.js'].lineData[318]++;
+  var isWhitespace = visit1125_318_1(visit1126_318_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue));
+  _$jscoverage['/editor/walker.js'].lineData[319]++;
   return !!(isReject ^ isWhitespace);
 };
 }, 
   invisible: function(isReject) {
   _$jscoverage['/editor/walker.js'].functionData[22]++;
-  _$jscoverage['/editor/walker.js'].lineData[332]++;
+  _$jscoverage['/editor/walker.js'].lineData[327]++;
   var whitespace = Walker.whitespaces();
-  _$jscoverage['/editor/walker.js'].lineData[333]++;
+  _$jscoverage['/editor/walker.js'].lineData[328]++;
   return function(node) {
   _$jscoverage['/editor/walker.js'].functionData[23]++;
-  _$jscoverage['/editor/walker.js'].lineData[339]++;
-  var isInvisible = visit1127_339_1(whitespace(node) || visit1128_340_1(visit1129_340_2(node.nodeType === Dom.NodeType.ELEMENT_NODE) && !node.offsetHeight));
-  _$jscoverage['/editor/walker.js'].lineData[341]++;
+  _$jscoverage['/editor/walker.js'].lineData[334]++;
+  var isInvisible = visit1127_334_1(whitespace(node) || visit1128_335_1(visit1129_335_2(node.nodeType === Dom.NodeType.ELEMENT_NODE) && !node.offsetHeight));
+  _$jscoverage['/editor/walker.js'].lineData[336]++;
   return !!(isReject ^ isInvisible);
 };
 }});
-  _$jscoverage['/editor/walker.js'].lineData[346]++;
+  _$jscoverage['/editor/walker.js'].lineData[341]++;
   var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/, isWhitespaces = Walker.whitespaces(), isBookmark = Walker.bookmark(), toSkip = function(node) {
   _$jscoverage['/editor/walker.js'].functionData[24]++;
-  _$jscoverage['/editor/walker.js'].lineData[350]++;
+  _$jscoverage['/editor/walker.js'].lineData[345]++;
   var name = Dom.nodeName(node);
-  _$jscoverage['/editor/walker.js'].lineData[351]++;
-  return visit1130_351_1(isBookmark(node) || visit1131_352_1(isWhitespaces(node) || visit1132_353_1(visit1133_353_2(node.nodeType === 1) && visit1134_354_1(name in dtd.$inline && !(name in dtd.$empty)))));
+  _$jscoverage['/editor/walker.js'].lineData[346]++;
+  return visit1130_346_1(isBookmark(node) || visit1131_347_1(isWhitespaces(node) || visit1132_348_1(visit1133_348_2(node.nodeType === 1) && visit1134_349_1(name in dtd.$inline && !(name in dtd.$empty)))));
 };
-  _$jscoverage['/editor/walker.js'].lineData[358]++;
+  _$jscoverage['/editor/walker.js'].lineData[353]++;
   function getBogus(tail) {
     _$jscoverage['/editor/walker.js'].functionData[25]++;
-    _$jscoverage['/editor/walker.js'].lineData[360]++;
+    _$jscoverage['/editor/walker.js'].lineData[355]++;
     do {
-      _$jscoverage['/editor/walker.js'].lineData[361]++;
+      _$jscoverage['/editor/walker.js'].lineData[356]++;
       tail = tail._4ePreviousSourceNode();
-    } while (visit1135_362_1(tail && toSkip(tail[0])));
-    _$jscoverage['/editor/walker.js'].lineData[364]++;
-    if (visit1136_364_1(tail && (!UA.ie ? visit1137_364_2(tail.nodeName() === 'br') : visit1138_364_3(visit1139_364_4(tail[0].nodeType === 3) && tailNbspRegex.test(tail.text()))))) {
-      _$jscoverage['/editor/walker.js'].lineData[365]++;
+    } while (visit1135_357_1(tail && toSkip(tail[0])));
+    _$jscoverage['/editor/walker.js'].lineData[359]++;
+    if (visit1136_359_1(tail && (!UA.ie ? visit1137_359_2(tail.nodeName() === 'br') : visit1138_359_3(visit1139_359_4(tail[0].nodeType === 3) && tailNbspRegex.test(tail.text()))))) {
+      _$jscoverage['/editor/walker.js'].lineData[360]++;
       return tail[0];
     }
-    _$jscoverage['/editor/walker.js'].lineData[367]++;
+    _$jscoverage['/editor/walker.js'].lineData[362]++;
     return false;
   }
-  _$jscoverage['/editor/walker.js'].lineData[370]++;
+  _$jscoverage['/editor/walker.js'].lineData[365]++;
   Editor.Utils.injectDom({
   _4eGetBogus: function(el) {
   _$jscoverage['/editor/walker.js'].functionData[26]++;
-  _$jscoverage['/editor/walker.js'].lineData[372]++;
+  _$jscoverage['/editor/walker.js'].lineData[367]++;
   return getBogus(new Node(el));
 }});
-  _$jscoverage['/editor/walker.js'].lineData[376]++;
+  _$jscoverage['/editor/walker.js'].lineData[371]++;
   Editor.Walker = Walker;
-  _$jscoverage['/editor/walker.js'].lineData[378]++;
+  _$jscoverage['/editor/walker.js'].lineData[373]++;
   return Walker;
 });

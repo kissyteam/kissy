@@ -308,7 +308,7 @@ if (! _$jscoverage['/html-parser/writer/beautify.js']) {
   _$jscoverage['/html-parser/writer/beautify.js'].lineData[195] = 0;
   _$jscoverage['/html-parser/writer/beautify.js'].lineData[196] = 0;
   _$jscoverage['/html-parser/writer/beautify.js'].lineData[198] = 0;
-  _$jscoverage['/html-parser/writer/beautify.js'].lineData[203] = 0;
+  _$jscoverage['/html-parser/writer/beautify.js'].lineData[202] = 0;
 }
 if (! _$jscoverage['/html-parser/writer/beautify.js'].functionData) {
   _$jscoverage['/html-parser/writer/beautify.js'].functionData = [];
@@ -494,9 +494,9 @@ KISSY.add(function(S, require) {
     self.rules = {};
     _$jscoverage['/html-parser/writer/beautify.js'].lineData[24]++;
     var beauty = S.merge(dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent, {
-  'select': 1, 
-  'script': 1, 
-  'style': 1});
+  select: 1, 
+  script: 1, 
+  style: 1});
     _$jscoverage['/html-parser/writer/beautify.js'].lineData[35]++;
     for (var e in beauty) {
       _$jscoverage['/html-parser/writer/beautify.js'].lineData[37]++;
@@ -699,6 +699,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/writer/beautify.js'].lineData[198]++;
   this.append(S.trim(text));
 }});
-  _$jscoverage['/html-parser/writer/beautify.js'].lineData[203]++;
+  _$jscoverage['/html-parser/writer/beautify.js'].lineData[202]++;
   return BeautifyWriter;
 });

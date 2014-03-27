@@ -8,13 +8,12 @@ KISSY.add(function (S, undefined) {
     var logger = S.getLogger('s/util');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
-        host= S.Env.host,
+        host = S.Env.host,
         TRUE = true,
         EMPTY = '',
         toString = ({}).toString,
         Obj = Object,
         objectCreate = Obj.create;
-
 
     // error in native ie678, not in simulated ie9
     var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),

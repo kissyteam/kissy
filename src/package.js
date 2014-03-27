@@ -7,7 +7,7 @@ var SERVER_CONFIG = {
     "codeDir": "/home/admin/cai/www/dev.kissyui.com/kissy",
     "docsDir": "/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
 };
-KISSY.config('tag', KISSY.now());
+KISSY.config('tag', +new Date());
 var loc = location;
 if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
     KISSY.config('packages', {

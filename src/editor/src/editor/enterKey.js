@@ -37,9 +37,8 @@ KISSY.add(function (S, require) {
                 block = path.block;
             //只有两层？
             if (block &&
-                ( block.nodeName() === 'li' || block.parent().nodeName() === 'li' )
-
-                ) {
+                (block.nodeName() === 'li' ||
+                    block.parent().nodeName() === 'li')) {
                 if (editor.hasCommand('outdent')) {
                     editor.execCommand('save');
                     editor.execCommand('outdent');
@@ -77,8 +76,7 @@ KISSY.add(function (S, require) {
                 nextBlock._4eBreakParent(node);
                 nextBlock._4eMove(nextBlock.next(), true);
             }
-        }
-        else if (previousBlock && ( node = previousBlock.parent() ) && node.nodeName() === 'li') {
+        } else if (previousBlock && (node = previousBlock.parent()) && node.nodeName() === 'li') {
             previousBlock._4eBreakParent(node);
             range.moveToElementEditablePosition(previousBlock.next());
             previousBlock._4eMove(previousBlock.prev());
@@ -94,7 +92,7 @@ KISSY.add(function (S, require) {
             // child, we'll need to append a filler (<br>/NBSP) or the list item
             // wouldn't be editable. (#1420)
             if (nextBlock.nodeName() === 'li' &&
-                ( node = nextBlock.first(Walker.invisible(true)) ) &&
+                (node = nextBlock.first(Walker.invisible(true))) &&
                 S.inArray(node.nodeName(), ['ul', 'ol'])){
                 (OLD_IE ? new Node(doc.createTextNode('\xa0')) :
                     new Node(doc.createElement('br'))).insertBefore(node);
@@ -104,10 +102,7 @@ KISSY.add(function (S, require) {
             if (nextBlock){
                 range.moveToElementEditablePosition(nextBlock);
             }
-        }
-        else {
-           
-
+        } else {
             if (previousBlock) {
                 // Do not enter this block if it's a header tag, or we are in
                 // a Shift+Enter (#77). Create a new block element instead
@@ -116,8 +111,7 @@ KISSY.add(function (S, require) {
                     // Otherwise, duplicate the previous block.
                     newBlock = previousBlock.clone();
                 }
-            }
-            else if (nextBlock){
+            } else if (nextBlock){
                 newBlock = nextBlock.clone();
             }
 
@@ -157,7 +151,7 @@ KISSY.add(function (S, require) {
             // The previousBlock check has been included because it may be
             // empty if we have fixed a block-less space (like ENTER into an
             // empty table cell).
-            if (OLD_IE && isStartOfBlock && ( !isEndOfBlock || !previousBlock[0].childNodes.length )) {
+            if (OLD_IE && isStartOfBlock && (!isEndOfBlock || !previousBlock[0].childNodes.length)) {
                 // Move the selection to the new block.
                 range.moveToElementEditablePosition(isEndOfBlock ? previousBlock : newBlock);
                 range.select();
@@ -183,8 +177,7 @@ KISSY.add(function (S, require) {
                     onlyScrollIfNeeded: true
                 });
                 range.deleteContents();
-            }
-            else {
+            } else {
                 // We may use the above scroll logic for the new block case
                 // too, but it gives some weird result with Opera.
                 newBlock.scrollIntoView(undefined, {

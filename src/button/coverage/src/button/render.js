@@ -287,12 +287,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/button/render.js'].lineData[24]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }, 
-  '_onSetTooltip': function(title) {
+  _onSetTooltip: function(title) {
   _$jscoverage['/button/render.js'].functionData[3]++;
   _$jscoverage['/button/render.js'].lineData[27]++;
   this.el.setAttribute('title', title);
 }, 
-  '_onSetDescribedby': function(describedby) {
+  _onSetDescribedby: function(describedby) {
   _$jscoverage['/button/render.js'].functionData[4]++;
   _$jscoverage['/button/render.js'].lineData[30]++;
   this.el.setAttribute('aria-describedby', describedby);

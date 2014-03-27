@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var FlashDialog = require('../flash/dialog');
     var MenuButton = require('../menubutton');
-    var Dom = S.DOM,
+    var Dom = S.require('dom'),
         Node = S.Node,
         Utils = Editor.Utils,
         loading = Utils.debugUrl('theme/tao-loading.gif'),

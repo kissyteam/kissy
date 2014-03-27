@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:45
+build time: Mar 27 22:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,7 +9,7 @@ build time: Mar 25 17:45
  ua
 */
 
-KISSY.add("ua", ["util"], function(S, require, module, exports, undefined) {
+KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
   require("util");
   var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || "";
   function numberify(s) {
@@ -175,7 +175,7 @@ KISSY.add("ua", ["util"], function(S, require, module, exports, undefined) {
         className += " ks-" + key
       }
     });
-    if(S.trim(className)) {
+    if(className) {
       documentElement.className = S.trim(documentElement.className + className)
     }
   }

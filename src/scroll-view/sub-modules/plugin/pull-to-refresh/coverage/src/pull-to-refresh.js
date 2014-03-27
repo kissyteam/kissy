@@ -316,15 +316,15 @@ function visit7_78_1(result) {
 function visit6_68_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['49'][1].init(141, 18, '-b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['49'][1].init(141, 21, '0 - b > self.elHeight');
 function visit5_49_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['40'][1].init(170, 5, 'b < 0');
+}_$jscoverage['/pull-to-refresh.js'].branchData['40'][1].init(173, 5, 'b < 0');
 function visit4_40_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['38'][1].init(76, 18, '-b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['38'][1].init(76, 21, '0 - b > self.elHeight');
 function visit3_38_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['38'][1].ranCondition(result);
   return result;
@@ -371,7 +371,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[36]++;
   var self = this, b = e.newVal;
   _$jscoverage['/pull-to-refresh.js'].lineData[38]++;
-  if (visit3_38_1(-b > self.elHeight)) {
+  if (visit3_38_1(0 - b > self.elHeight)) {
     _$jscoverage['/pull-to-refresh.js'].lineData[39]++;
     self.set('state', 'releasing');
   } else {
@@ -391,7 +391,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[48]++;
   var b = scrollView.get('scrollTop');
   _$jscoverage['/pull-to-refresh.js'].lineData[49]++;
-  if (visit5_49_1(-b > self.elHeight)) {
+  if (visit5_49_1(0 - b > self.elHeight)) {
     _$jscoverage['/pull-to-refresh.js'].lineData[50]++;
     scrollView.minScroll.top = -self.elHeight;
     _$jscoverage['/pull-to-refresh.js'].lineData[51]++;

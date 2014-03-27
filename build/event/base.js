@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:00
+build time: Mar 27 21:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -117,9 +117,9 @@ KISSY.add("event/base/observer", [], function(S, undefined) {
     S.mix(this, cfg)
   }
   Observer.prototype = {constructor:Observer, equals:function(s2) {
-    var s1 = this;
-    return!!S.reduce(s1.keys, function(v, k) {
-      return v && s1[k] === s2[k]
+    var self = this;
+    return!!S.reduce(self.keys, function(v, k) {
+      return v && self[k] === s2[k]
     }, 1)
   }, simpleNotify:function(event, ce) {
     var ret, self = this;

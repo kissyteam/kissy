@@ -23,10 +23,9 @@ describe('support system.ondemand', function () {
         KISSY.config('modules', {
             'p-c/b': {
                 requires: ['./c'],
-                path: '/kissy/src/loader/tests/specs/system-ondemand/a.js'
+                url: '/kissy/src/loader/tests/specs/system-ondemand/a.js'
             }
         });
-
 
         var ret = 0;
 

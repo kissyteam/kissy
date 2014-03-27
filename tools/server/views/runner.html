@@ -65,11 +65,16 @@
     <h1 style="text-align: center">{{component}} test cases</h1>
     {{{html}}}
     <script>
+    window.xxx = (function(){
+        function endsWith(str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) === ind;
+        }
         var tests=['specs/'], S=KISSY;
         S.config('packages',{
             specs:{
                 debug:1,
-                base: S.endsWith(location.href.replace(/\?.+$/,''),
+                base: endsWith(location.href.replace(/\?.+$/,''),
                         'runner')?'./':'../'
             },
             src:{
@@ -91,5 +96,6 @@
         S.use(tests, function () {
             jasmine.getEnv().execute();
         });
+    })();
     </script>
 {{/block}}

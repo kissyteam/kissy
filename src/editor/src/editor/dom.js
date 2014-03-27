@@ -15,38 +15,38 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         xhtmlDtd = Editor.XHTML_DTD,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         NodeType = Dom.NodeType,
         UA = S.UA,
         REMOVE_EMPTY = {
-            'a': 1,
-            'abbr': 1,
-            'acronym': 1,
-            'address': 1,
-            'b': 1,
-            'bdo': 1,
-            'big': 1,
-            'cite': 1,
-            'code': 1,
-            'del': 1,
-            'dfn': 1,
-            'em': 1,
-            'font': 1,
-            'i': 1,
-            'ins': 1,
-            'label': 1,
-            'kbd': 1,
-            'q': 1,
-            's': 1,
-            'samp': 1,
-            'small': 1,
-            'span': 1,
-            'strike': 1,
-            'strong': 1,
-            'sub': 1,
-            'sup': 1,
-            'tt': 1,
-            'u': 1,
+            a: 1,
+            abbr: 1,
+            acronym: 1,
+            address: 1,
+            b: 1,
+            bdo: 1,
+            big: 1,
+            cite: 1,
+            code: 1,
+            del: 1,
+            dfn: 1,
+            em: 1,
+            font: 1,
+            i: 1,
+            ins: 1,
+            label: 1,
+            kbd: 1,
+            q: 1,
+            s: 1,
+            samp: 1,
+            small: 1,
+            span: 1,
+            strike: 1,
+            strong: 1,
+            sub: 1,
+            sup: 1,
+            tt: 1,
+            u: 1,
             'var': 1
         };
     /**
@@ -70,9 +70,9 @@ KISSY.add(function (S, require) {
      name is hr, br (when enterMode is br only) is a block boundary.
      */
     var blockBoundaryDisplayMatch = {
-            'block': 1,
+            block: 1,
             'list-item': 1,
-            'table': 1,
+            table: 1,
             'table-row-group': 1,
             'table-header-group': 1,
             'table-footer-group': 1,
@@ -82,7 +82,7 @@ KISSY.add(function (S, require) {
             'table-cell': 1,
             'table-caption': 1
         },
-        blockBoundaryNodeNameMatch = { 'hr': 1 },
+        blockBoundaryNodeNameMatch = {hr: 1},
         normalElDom = function (el) {
             return el && (el[0] || el);
         },
@@ -129,7 +129,6 @@ KISSY.add(function (S, require) {
                 return -1;
             },
 
-
             // 把 thisElement 移到 target 的前面或后面
             _4eMove: function (thisElement, target, toStart) {
                 target = normalElDom(target);
@@ -139,7 +138,6 @@ KISSY.add(function (S, require) {
                     target.appendChild(thisElement);
                 }
             },
-
 
             // 两个元素是否名称和属性都相同
             _4eIsIdentical: function (thisElement, otherElement) {
@@ -286,7 +284,6 @@ KISSY.add(function (S, require) {
                 return ret;
             },
 
-
             // 得到该节点的所有附近节点集合（包括自身）
             _4eParents: function (node, closerFirst) {
                 var parents = [];
@@ -296,7 +293,6 @@ KISSY.add(function (S, require) {
                 } while ((node = node.parentNode));
                 return parents;
             },
-
 
             // 得到该节点在前序遍历下的下一个节点
             _4eNextSourceNode: function (el, startFromSibling, nodeType, guard) {
@@ -308,7 +304,7 @@ KISSY.add(function (S, require) {
                     };
                 }
 
-                var node = !startFromSibling && el.firstChild ,
+                var node = !startFromSibling && el.firstChild,
                     parent = el;
 
                 // Guarding when we're skipping the current element( no children or 'startFromSibling' ).
@@ -321,7 +317,7 @@ KISSY.add(function (S, require) {
                     node = el.nextSibling;
                 }
 
-                while (!node && ( parent = parent.parentNode)) {
+                while (!node && (parent = parent.parentNode)) {
                     // The guard check sends the 'TRUE' parameter to indicate that
                     // we are moving 'out' of the element.
                     if (guard && guard(parent, TRUE) === FALSE) {
@@ -345,7 +341,6 @@ KISSY.add(function (S, require) {
                 return node;
             },
 
-
             // 得到该节点在从右向左前序遍历下的下一个节点( rtl 情况)
             _4ePreviousSourceNode: function (el, startFromSibling, nodeType, guard) {
                 if (guard && !guard.call) {
@@ -368,7 +363,7 @@ KISSY.add(function (S, require) {
                     node = el.previousSibling;
                 }
 
-                while (!node && ( parent = parent.parentNode )) {
+                while (!node && (parent = parent.parentNode)) {
                     // The guard check sends the 'TRUE' parameter to indicate that
                     // we are moving 'out' of the element.
                     if (guard && guard(parent, TRUE) === FALSE) {
@@ -391,7 +386,6 @@ KISSY.add(function (S, require) {
 
                 return node;
             },
-
 
             // 得到两个节点的公共祖先节点
             _4eCommonAncestor: function (el, node) {
@@ -479,9 +473,9 @@ KISSY.add(function (S, require) {
                     }
 
                     if ('sourceIndex' in el) {
-                        return ( el.sourceIndex < 0 || $other.sourceIndex < 0 ) ?
+                        return (el.sourceIndex < 0 || $other.sourceIndex < 0) ?
                             KEP.POSITION_DISCONNECTED :
-                            ( el.sourceIndex < $other.sourceIndex ) ?
+                            (el.sourceIndex < $other.sourceIndex) ?
                                 KEP.POSITION_PRECEDING :
                                 KEP.POSITION_FOLLOWING;
                     }
@@ -502,11 +496,10 @@ KISSY.add(function (S, require) {
                 }
 
                 // Determinate contains/contained relationship.
-                return ( addressOfThis.length < addressOfOther.length ) ?
+                return (addressOfThis.length < addressOfOther.length) ?
                     KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING :
                     KEP.POSITION_IS_CONTAINED + KEP.POSITION_FOLLOWING;
             },
-
 
             // 得到元素及其所有祖先元素在其兄弟节点中的序号。
             _4eAddress: function (el, normalized) {
@@ -521,7 +514,6 @@ KISSY.add(function (S, require) {
 
                 return address;
             },
-
 
             // 删除一个元素
             _4eRemove: function (el, preserveChildren) {
@@ -538,13 +530,11 @@ KISSY.add(function (S, require) {
                 return el;
             },
 
-
             // 清除左右空的字符串节点
             _4eTrim: function (el) {
                 Dom._4eLtrim(el);
                 Dom._4eRtrim(el);
             },
-
 
             // 清除左边空的字符串节点
             _4eLtrim: function (el) {
@@ -557,8 +547,7 @@ KISSY.add(function (S, require) {
                         if (!trimmed) {
                             el.removeChild(child);
                             continue;
-                        }
-                        else if (trimmed.length < originalLength) {
+                        } else if (trimmed.length < originalLength) {
                             Dom._4eSplitText(child, originalLength - trimmed.length);
                             // IE BUG: child.remove() may raise JavaScript errors here. (#81)
                             el.removeChild(el.firstChild);
@@ -567,7 +556,6 @@ KISSY.add(function (S, require) {
                     break;
                 }
             },
-
 
             // 清除右边空的字符串节点
             _4eRtrim: function (el) {
@@ -599,7 +587,6 @@ KISSY.add(function (S, require) {
                 }
             },
 
-
             // 将一个 bogus 元素添加到元素末尾
             _4eAppendBogus: function (el) {
                 var lastChild = el.lastChild, bogus;
@@ -627,14 +614,13 @@ KISSY.add(function (S, require) {
             _4eSetMarker: function (element, database, name, value) {
                 element = normalEl(element);
                 var id = element.data('list_marker_id') ||
-                        ( element.data('list_marker_id', S.guid()).data('list_marker_id')),
+                        (element.data('list_marker_id', S.guid()).data('list_marker_id')),
                     markerNames = element.data('list_marker_names') ||
-                        ( element.data('list_marker_names', {}).data('list_marker_names'));
+                        (element.data('list_marker_names', {}).data('list_marker_names'));
                 database[id] = element;
                 markerNames[name] = 1;
                 return element.data(name, value);
             },
-
 
             // 清除元素设置的自定义 data 值。
             _4eClearMarkers: function (element, database, removeFromDatabase) {
@@ -650,7 +636,6 @@ KISSY.add(function (S, require) {
                     delete database[id];
                 }
             },
-
 
             // 把属性从 target 复制到 el 上.
             _4eCopyAttributes: function (el, target, skipAttributes) {
@@ -670,12 +655,11 @@ KISSY.add(function (S, require) {
                         continue;
                     }
 
-                    if (attrName === 'checked' && ( attrValue = Dom.attr(el, attrName) )) {
+                    if (attrName === 'checked' && (attrValue = Dom.attr(el, attrName))) {
                         target.attr(attrName, attrValue);
-                    }
-                    // IE BUG: value attribute is never specified even if it exists.
-                    else if (attribute.specified ||
-                        ( UA.ie && attribute.value && attrName === 'value' )) {
+                    } else if (attribute.specified ||
+                        (UA.ie && attribute.value && attrName === 'value')) {
+                        // IE BUG: value attribute is never specified even if it exists.
                         attrValue = Dom.attr(el, attrName);
                         if (attrValue === NULL) {
                             attrValue = attribute.nodeValue;
@@ -695,7 +679,7 @@ KISSY.add(function (S, require) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = Dom.nodeName(el),
                     dtd = !xhtmlDtd.$nonEditable[ name ] &&
-                        ( xhtmlDtd[ name ] || xhtmlDtd.span );
+                        (xhtmlDtd[ name ] || xhtmlDtd.span);
                 // In the DTD # === text node.
                 return dtd && dtd['#text'];
             },

@@ -606,7 +606,7 @@ function visit15_134_1(result) {
 function visit14_131_1(result) {
   _$jscoverage['/json/parser.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['125'][1].init(513, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
+}_$jscoverage['/json/parser.js'].branchData['125'][1].init(516, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
 function visit13_125_1(result) {
   _$jscoverage['/json/parser.js'].branchData['125'][1].ranCondition(result);
   return result;
@@ -732,7 +732,7 @@ KISSY.add(function(_, undefined) {
   _$jscoverage['/json/parser.js'].lineData[122]++;
   matched = matched.slice(0, matched.length - match.length);
   _$jscoverage['/json/parser.js'].lineData[123]++;
-  var past = (visit12_123_1(matched.length > DEBUG_CONTEXT_LIMIT) ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
+  var past = (visit12_123_1(matched.length > DEBUG_CONTEXT_LIMIT) ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
   _$jscoverage['/json/parser.js'].lineData[125]++;
   next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit13_125_1(next.length > DEBUG_CONTEXT_LIMIT) ? "..." : "");
   _$jscoverage['/json/parser.js'].lineData[126]++;

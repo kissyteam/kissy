@@ -381,7 +381,7 @@ function visit76_120_2(result) {
 function visit75_120_1(result) {
   _$jscoverage['/ie/style.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3891, 11, 'UA.ie === 8');
+}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3889, 11, 'UA.ie === 8');
 function visit74_105_1(result) {
   _$jscoverage['/ie/style.js'].branchData['105'][1].ranCondition(result);
   return result;

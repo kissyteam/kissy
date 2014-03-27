@@ -11,24 +11,24 @@ KISSY.add(function (S, require) {
 
     Special.submit = {
         setup: function () {
-            var el = this;
+            var self = this;
             // form use native
-            if (getNodeName(el) === 'form') {
+            if (getNodeName(self) === 'form') {
                 return false;
             }
             // lazy add submit for inside forms
             // note event order : click/keypress -> submit
             // key point : find the forms
-            DomEvent.on(el, 'click keypress', detector);
+            DomEvent.on(self, 'click keypress', detector);
         },
         tearDown: function () {
-            var el = this;
+            var self = this;
             // form use native
-            if (getNodeName(el) === 'form') {
+            if (getNodeName(self) === 'form') {
                 return false;
             }
-            DomEvent.remove(el, 'click keypress', detector);
-            Dom.query('form', el).each(function (form) {
+            DomEvent.remove(self, 'click keypress', detector);
+            Dom.query('form', self).each(function (form) {
                 if (form.__submitFix) {
                     form.__submitFix = 0;
                     DomEvent.remove(form, 'submit', {
@@ -55,15 +55,15 @@ KISSY.add(function (S, require) {
     }
 
     function submitBubble(e) {
-        var form = this;
-        if (form.parentNode &&
+        var self = this;
+        if (self.parentNode &&
             // it is stopped by user callback
             !e.isPropagationStopped() &&
             // it is not fired manually
             !e.synthetic) {
             // simulated bubble for submit
             // fire from parentNode. if form.on('submit') , this logic is never run!
-            DomEvent.fire(form.parentNode, 'submit', e);
+            DomEvent.fire(self.parentNode, 'submit', e);
         }
     }
 });

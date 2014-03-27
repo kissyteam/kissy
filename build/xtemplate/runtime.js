@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:46
+build time: Mar 27 22:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -63,10 +63,10 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
     }
     return undefined
   }, resolve:function(name, depth) {
-    var scope = this;
+    var self = this;
     if(!depth && typeof name !== "string" && name.length === 1) {
-      if(scope.has(name[0])) {
-        return scope.get(name[0])
+      if(self.has(name[0])) {
+        return self.get(name[0])
       }
     }
     var parts = name;
@@ -74,6 +74,7 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
       parts = name.split(".")
     }
     var len, i, v, p, valid;
+    var scope = self;
     if(parts[0] === "root") {
       parts.shift();
       scope = scope.root

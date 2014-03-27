@@ -286,76 +286,76 @@ if (! _$jscoverage['/dd/ddm.js']) {
   _$jscoverage['/dd/ddm.js'].lineData[156] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[157] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[160] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[168] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[167] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[170] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[171] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[172] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[181] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[180] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[182] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[183] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[184] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[185] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[186] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[187] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[188] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[189] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[190] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[191] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[263] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[265] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[283] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[285] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[289] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[292] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[262] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[264] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[282] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[284] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[288] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[291] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[294] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[295] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[296] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[297] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[298] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[299] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[306] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[308] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[305] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[307] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[309] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[310] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[311] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[312] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[313] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[314] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[316] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[315] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[319] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[320] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[321] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[324] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[325] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[326] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[327] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[328] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[329] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[330] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[334] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[335] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[336] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[337] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[338] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[339] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[340] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[344] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[345] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[346] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[347] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[348] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[349] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[351] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[350] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[358] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[359] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[360] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[365] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[366] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[367] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[368] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[370] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[369] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[372] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[373] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[374] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[378] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[377] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[385] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[386] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[387] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[389] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[390] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[391] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[392] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[393] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[396] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[397] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[398] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[399] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[400] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[401] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[402] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[404] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[403] = 0;
 }
 if (! _$jscoverage['/dd/ddm.js'].functionData) {
   _$jscoverage['/dd/ddm.js'].functionData = [];
@@ -421,34 +421,37 @@ if (! _$jscoverage['/dd/ddm.js'].branchData) {
   _$jscoverage['/dd/ddm.js'].branchData['155'][1] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['156'] = [];
   _$jscoverage['/dd/ddm.js'].branchData['156'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['171'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['171'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['183'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['183'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['187'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['187'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['279'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['279'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['285'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['285'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['298'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['298'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['310'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['310'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['313'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['313'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['320'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['320'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['328'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['328'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['338'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['338'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['347'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['347'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['353'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['353'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['355'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['355'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['170'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['170'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['182'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['182'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['186'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['186'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['278'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['278'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['284'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['284'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['297'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['297'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['309'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['309'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['312'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['312'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['319'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['319'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['327'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['327'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['337'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['337'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['346'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['346'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['352'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['352'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['354'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['354'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['359'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['359'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['359'][2] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['360'] = [];
   _$jscoverage['/dd/ddm.js'].branchData['360'][1] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['360'][2] = new BranchData();
@@ -457,115 +460,112 @@ if (! _$jscoverage['/dd/ddm.js'].branchData) {
   _$jscoverage['/dd/ddm.js'].branchData['361'][2] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['362'] = [];
   _$jscoverage['/dd/ddm.js'].branchData['362'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['362'][2] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['363'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['363'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['367'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['367'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['367'][2] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['367'][3] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['391'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['391'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['366'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['366'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['366'][2] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['366'][3] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['390'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['390'][1] = new BranchData();
 }
-_$jscoverage['/dd/ddm.js'].branchData['391'][1].init(13, 4, 'node');
-function visit44_391_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['391'][1].ranCondition(result);
+_$jscoverage['/dd/ddm.js'].branchData['390'][1].init(13, 4, 'node');
+function visit44_390_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['390'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['367'][3].init(44, 27, 'region.left >= region.right');
-function visit43_367_3(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['367'][3].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['366'][3].init(44, 27, 'region.left >= region.right');
+function visit43_366_3(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['366'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['367'][2].init(13, 27, 'region.top >= region.bottom');
-function visit42_367_2(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['367'][2].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['366'][2].init(13, 27, 'region.top >= region.bottom');
+function visit42_366_2(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['366'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['367'][1].init(13, 58, 'region.top >= region.bottom || region.left >= region.right');
-function visit41_367_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['367'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['366'][1].init(13, 58, 'region.top >= region.bottom || region.left >= region.right');
+function visit41_366_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['366'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['363'][1].init(40, 28, 'region.bottom >= pointer.top');
-function visit40_363_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['363'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/ddm.js'].branchData['362'][2].init(106, 25, 'region.top <= pointer.top');
-function visit39_362_2(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['362'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/ddm.js'].branchData['362'][1].init(43, 69, 'region.top <= pointer.top && region.bottom >= pointer.top');
-function visit38_362_1(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['362'][1].init(40, 28, 'region.bottom >= pointer.top');
+function visit40_362_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['362'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['361'][2].init(61, 28, 'region.right >= pointer.left');
-function visit37_361_2(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['361'][2].init(106, 25, 'region.top <= pointer.top');
+function visit39_361_2(result) {
   _$jscoverage['/dd/ddm.js'].branchData['361'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['361'][1].init(42, 113, 'region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
-function visit36_361_1(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['361'][1].init(43, 69, 'region.top <= pointer.top && region.bottom >= pointer.top');
+function visit38_361_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['361'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['360'][2].init(16, 27, 'region.left <= pointer.left');
-function visit35_360_2(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['360'][2].init(61, 28, 'region.right >= pointer.left');
+function visit37_360_2(result) {
   _$jscoverage['/dd/ddm.js'].branchData['360'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['360'][1].init(16, 156, 'region.left <= pointer.left && region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
-function visit34_360_1(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['360'][1].init(42, 113, 'region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
+function visit36_360_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['360'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['355'][1].init(173, 43, 'node.__ddCachedHeight || node.outerHeight()');
-function visit33_355_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['355'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['359'][2].init(16, 27, 'region.left <= pointer.left');
+function visit35_359_2(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['359'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['353'][1].init(66, 41, 'node.__ddCachedWidth || node.outerWidth()');
-function visit32_353_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['353'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['359'][1].init(16, 156, 'region.left <= pointer.left && region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
+function visit34_359_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['359'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['347'][1].init(49, 21, '!node.__ddCachedWidth');
-function visit31_347_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['347'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['354'][1].init(173, 43, 'node.__ddCachedHeight || node.outerHeight()');
+function visit33_354_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['354'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['338'][1].init(96, 12, 'drops.length');
-function visit30_338_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['338'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['352'][1].init(66, 41, 'node.__ddCachedWidth || node.outerWidth()');
+function visit32_352_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['352'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['328'][1].init(96, 12, 'drops.length');
-function visit29_328_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['328'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['346'][1].init(49, 21, '!node.__ddCachedWidth');
+function visit31_346_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['346'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['320'][1].init(408, 3, 'ie6');
-function visit28_320_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['320'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['337'][1].init(96, 12, 'drops.length');
+function visit30_337_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['337'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['313'][1].init(235, 14, 'cur === \'auto\'');
-function visit27_313_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['313'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['327'][1].init(96, 12, 'drops.length');
+function visit29_327_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['327'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['310'][1].init(171, 2, 'ah');
-function visit26_310_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['310'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['319'][1].init(408, 3, 'ie6');
+function visit28_319_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['319'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['298'][1].init(63, 62, '(activeDrag = self.get(\'activeDrag\')) && activeDrag.get(\'shim\')');
-function visit25_298_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['298'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['312'][1].init(235, 14, 'cur === \'auto\'');
+function visit27_312_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['312'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['285'][1].init(680, 3, 'ie6');
-function visit24_285_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['285'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['309'][1].init(171, 2, 'ah');
+function visit26_309_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['279'][1].init(460, 31, 'doc.body || doc.documentElement');
-function visit23_279_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['279'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['297'][1].init(63, 62, '(activeDrag = self.get(\'activeDrag\')) && activeDrag.get(\'shim\')');
+function visit25_297_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['297'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['187'][1].init(212, 10, 'activeDrop');
-function visit22_187_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['187'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['284'][1].init(680, 3, 'ie6');
+function visit24_284_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['284'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['183'][1].init(99, 10, 'self._shim');
-function visit21_183_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['183'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['278'][1].init(460, 31, 'doc.body || doc.documentElement');
+function visit23_278_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['278'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['171'][1].init(179, 20, 'self.__needDropCheck');
-function visit20_171_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['171'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['186'][1].init(212, 10, 'activeDrop');
+function visit22_186_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['186'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dd/ddm.js'].branchData['182'][1].init(99, 10, 'self._shim');
+function visit21_182_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['182'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dd/ddm.js'].branchData['170'][1].init(179, 20, 'self.__needDropCheck');
+function visit20_170_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/ddm.js'].branchData['156'][1].init(21, 22, 'oldDrop !== activeDrop');
 function visit19_156_1(result) {
@@ -798,33 +798,33 @@ KISSY.add(function(S, require) {
 }, 
   move: function(ev, activeDrag) {
   _$jscoverage['/dd/ddm.js'].functionData[7]++;
-  _$jscoverage['/dd/ddm.js'].lineData[168]++;
+  _$jscoverage['/dd/ddm.js'].lineData[167]++;
   var self = this;
-  _$jscoverage['/dd/ddm.js'].lineData[171]++;
-  if (visit20_171_1(self.__needDropCheck)) {
-    _$jscoverage['/dd/ddm.js'].lineData[172]++;
+  _$jscoverage['/dd/ddm.js'].lineData[170]++;
+  if (visit20_170_1(self.__needDropCheck)) {
+    _$jscoverage['/dd/ddm.js'].lineData[171]++;
     self._notifyDropsMove(ev, activeDrag);
   }
 }, 
   end: function(e) {
   _$jscoverage['/dd/ddm.js'].functionData[8]++;
-  _$jscoverage['/dd/ddm.js'].lineData[181]++;
+  _$jscoverage['/dd/ddm.js'].lineData[180]++;
   var self = this, activeDrop = self.get('activeDrop');
-  _$jscoverage['/dd/ddm.js'].lineData[183]++;
-  if (visit21_183_1(self._shim)) {
-    _$jscoverage['/dd/ddm.js'].lineData[184]++;
+  _$jscoverage['/dd/ddm.js'].lineData[182]++;
+  if (visit21_182_1(self._shim)) {
+    _$jscoverage['/dd/ddm.js'].lineData[183]++;
     self._shim.hide();
   }
-  _$jscoverage['/dd/ddm.js'].lineData[186]++;
+  _$jscoverage['/dd/ddm.js'].lineData[185]++;
   _deActiveDrops(self);
-  _$jscoverage['/dd/ddm.js'].lineData[187]++;
-  if (visit22_187_1(activeDrop)) {
-    _$jscoverage['/dd/ddm.js'].lineData[188]++;
+  _$jscoverage['/dd/ddm.js'].lineData[186]++;
+  if (visit22_186_1(activeDrop)) {
+    _$jscoverage['/dd/ddm.js'].lineData[187]++;
     activeDrop._end(e);
   }
-  _$jscoverage['/dd/ddm.js'].lineData[190]++;
+  _$jscoverage['/dd/ddm.js'].lineData[189]++;
   self.setInternal('activeDrop', null);
-  _$jscoverage['/dd/ddm.js'].lineData[191]++;
+  _$jscoverage['/dd/ddm.js'].lineData[190]++;
   self.setInternal('activeDrag', null);
 }}, {
   ATTRS: {
@@ -836,170 +836,170 @@ KISSY.add(function(S, require) {
   value: []}, 
   validDrops: {
   value: []}}});
-  _$jscoverage['/dd/ddm.js'].lineData[263]++;
+  _$jscoverage['/dd/ddm.js'].lineData[262]++;
   var activeShim = function(self) {
   _$jscoverage['/dd/ddm.js'].functionData[9]++;
-  _$jscoverage['/dd/ddm.js'].lineData[265]++;
-  self._shim = $('<div ' + 'style="' + 'background-color:red;' + 'position:' + (ie6 ? 'absolute' : 'fixed') + ';' + 'left:0;' + 'width:100%;' + 'height:100%;' + 'top:0;' + 'cursor:' + self.get('dragCursor') + ';' + 'z-index:' + SHIM_Z_INDEX + ';' + '"><' + '/div>').prependTo(visit23_279_1(doc.body || doc.documentElement)).css('opacity', 0);
-  _$jscoverage['/dd/ddm.js'].lineData[283]++;
+  _$jscoverage['/dd/ddm.js'].lineData[264]++;
+  self._shim = $('<div ' + 'style="' + 'background-color:red;' + 'position:' + (ie6 ? 'absolute' : 'fixed') + ';' + 'left:0;' + 'width:100%;' + 'height:100%;' + 'top:0;' + 'cursor:' + self.get('dragCursor') + ';' + 'z-index:' + SHIM_Z_INDEX + ';' + '"><' + '/div>').prependTo(visit23_278_1(doc.body || doc.documentElement)).css('opacity', 0);
+  _$jscoverage['/dd/ddm.js'].lineData[282]++;
   activeShim = showShim;
-  _$jscoverage['/dd/ddm.js'].lineData[285]++;
-  if (visit24_285_1(ie6)) {
-    _$jscoverage['/dd/ddm.js'].lineData[289]++;
+  _$jscoverage['/dd/ddm.js'].lineData[284]++;
+  if (visit24_284_1(ie6)) {
+    _$jscoverage['/dd/ddm.js'].lineData[288]++;
     $win.on('resize scroll', adjustShimSize, self);
   }
-  _$jscoverage['/dd/ddm.js'].lineData[292]++;
+  _$jscoverage['/dd/ddm.js'].lineData[291]++;
   showShim(self);
 };
-  _$jscoverage['/dd/ddm.js'].lineData[295]++;
+  _$jscoverage['/dd/ddm.js'].lineData[294]++;
   var adjustShimSize = S.throttle(function() {
   _$jscoverage['/dd/ddm.js'].functionData[10]++;
-  _$jscoverage['/dd/ddm.js'].lineData[296]++;
+  _$jscoverage['/dd/ddm.js'].lineData[295]++;
   var self = this, activeDrag;
-  _$jscoverage['/dd/ddm.js'].lineData[298]++;
-  if (visit25_298_1((activeDrag = self.get('activeDrag')) && activeDrag.get('shim'))) {
-    _$jscoverage['/dd/ddm.js'].lineData[299]++;
+  _$jscoverage['/dd/ddm.js'].lineData[297]++;
+  if (visit25_297_1((activeDrag = self.get('activeDrag')) && activeDrag.get('shim'))) {
+    _$jscoverage['/dd/ddm.js'].lineData[298]++;
     self._shim.css({
   width: $doc.width(), 
   height: $doc.height()});
   }
 }, MOVE_DELAY);
-  _$jscoverage['/dd/ddm.js'].lineData[306]++;
+  _$jscoverage['/dd/ddm.js'].lineData[305]++;
   function showShim(self) {
     _$jscoverage['/dd/ddm.js'].functionData[11]++;
-    _$jscoverage['/dd/ddm.js'].lineData[308]++;
+    _$jscoverage['/dd/ddm.js'].lineData[307]++;
     var ah = self.get('activeDrag').get('activeHandler'), cur = 'auto';
-    _$jscoverage['/dd/ddm.js'].lineData[310]++;
-    if (visit26_310_1(ah)) {
-      _$jscoverage['/dd/ddm.js'].lineData[311]++;
+    _$jscoverage['/dd/ddm.js'].lineData[309]++;
+    if (visit26_309_1(ah)) {
+      _$jscoverage['/dd/ddm.js'].lineData[310]++;
       cur = ah.css('cursor');
     }
-    _$jscoverage['/dd/ddm.js'].lineData[313]++;
-    if (visit27_313_1(cur === 'auto')) {
-      _$jscoverage['/dd/ddm.js'].lineData[314]++;
+    _$jscoverage['/dd/ddm.js'].lineData[312]++;
+    if (visit27_312_1(cur === 'auto')) {
+      _$jscoverage['/dd/ddm.js'].lineData[313]++;
       cur = self.get('dragCursor');
     }
-    _$jscoverage['/dd/ddm.js'].lineData[316]++;
+    _$jscoverage['/dd/ddm.js'].lineData[315]++;
     self._shim.css({
   cursor: cur, 
   display: 'block'});
-    _$jscoverage['/dd/ddm.js'].lineData[320]++;
-    if (visit28_320_1(ie6)) {
-      _$jscoverage['/dd/ddm.js'].lineData[321]++;
+    _$jscoverage['/dd/ddm.js'].lineData[319]++;
+    if (visit28_319_1(ie6)) {
+      _$jscoverage['/dd/ddm.js'].lineData[320]++;
       adjustShimSize.call(self);
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[325]++;
+  _$jscoverage['/dd/ddm.js'].lineData[324]++;
   function _activeDrops(self) {
     _$jscoverage['/dd/ddm.js'].functionData[12]++;
-    _$jscoverage['/dd/ddm.js'].lineData[326]++;
+    _$jscoverage['/dd/ddm.js'].lineData[325]++;
     var drops = self.get('drops');
-    _$jscoverage['/dd/ddm.js'].lineData[327]++;
+    _$jscoverage['/dd/ddm.js'].lineData[326]++;
     self.setInternal('validDrops', []);
-    _$jscoverage['/dd/ddm.js'].lineData[328]++;
-    if (visit29_328_1(drops.length)) {
-      _$jscoverage['/dd/ddm.js'].lineData[329]++;
+    _$jscoverage['/dd/ddm.js'].lineData[327]++;
+    if (visit29_327_1(drops.length)) {
+      _$jscoverage['/dd/ddm.js'].lineData[328]++;
       S.each(drops, function(d) {
   _$jscoverage['/dd/ddm.js'].functionData[13]++;
-  _$jscoverage['/dd/ddm.js'].lineData[330]++;
+  _$jscoverage['/dd/ddm.js'].lineData[329]++;
   d._active();
 });
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[335]++;
+  _$jscoverage['/dd/ddm.js'].lineData[334]++;
   function _deActiveDrops(self) {
     _$jscoverage['/dd/ddm.js'].functionData[14]++;
-    _$jscoverage['/dd/ddm.js'].lineData[336]++;
+    _$jscoverage['/dd/ddm.js'].lineData[335]++;
     var drops = self.get('drops');
-    _$jscoverage['/dd/ddm.js'].lineData[337]++;
+    _$jscoverage['/dd/ddm.js'].lineData[336]++;
     self.setInternal('validDrops', []);
-    _$jscoverage['/dd/ddm.js'].lineData[338]++;
-    if (visit30_338_1(drops.length)) {
-      _$jscoverage['/dd/ddm.js'].lineData[339]++;
+    _$jscoverage['/dd/ddm.js'].lineData[337]++;
+    if (visit30_337_1(drops.length)) {
+      _$jscoverage['/dd/ddm.js'].lineData[338]++;
       S.each(drops, function(d) {
   _$jscoverage['/dd/ddm.js'].functionData[15]++;
-  _$jscoverage['/dd/ddm.js'].lineData[340]++;
+  _$jscoverage['/dd/ddm.js'].lineData[339]++;
   d._deActive();
 });
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[345]++;
+  _$jscoverage['/dd/ddm.js'].lineData[344]++;
   function region(node) {
     _$jscoverage['/dd/ddm.js'].functionData[16]++;
-    _$jscoverage['/dd/ddm.js'].lineData[346]++;
+    _$jscoverage['/dd/ddm.js'].lineData[345]++;
     var offset = node.offset();
-    _$jscoverage['/dd/ddm.js'].lineData[347]++;
-    if (visit31_347_1(!node.__ddCachedWidth)) {
-      _$jscoverage['/dd/ddm.js'].lineData[348]++;
+    _$jscoverage['/dd/ddm.js'].lineData[346]++;
+    if (visit31_346_1(!node.__ddCachedWidth)) {
+      _$jscoverage['/dd/ddm.js'].lineData[347]++;
       logger.debug('no cache in dd!');
-      _$jscoverage['/dd/ddm.js'].lineData[349]++;
+      _$jscoverage['/dd/ddm.js'].lineData[348]++;
       logger.debug(node[0]);
     }
-    _$jscoverage['/dd/ddm.js'].lineData[351]++;
+    _$jscoverage['/dd/ddm.js'].lineData[350]++;
     return {
   left: offset.left, 
-  right: offset.left + (visit32_353_1(node.__ddCachedWidth || node.outerWidth())), 
+  right: offset.left + (visit32_352_1(node.__ddCachedWidth || node.outerWidth())), 
   top: offset.top, 
-  bottom: offset.top + (visit33_355_1(node.__ddCachedHeight || node.outerHeight()))};
+  bottom: offset.top + (visit33_354_1(node.__ddCachedHeight || node.outerHeight()))};
   }
-  _$jscoverage['/dd/ddm.js'].lineData[359]++;
+  _$jscoverage['/dd/ddm.js'].lineData[358]++;
   function inRegion(region, pointer) {
     _$jscoverage['/dd/ddm.js'].functionData[17]++;
-    _$jscoverage['/dd/ddm.js'].lineData[360]++;
-    return visit34_360_1(visit35_360_2(region.left <= pointer.left) && visit36_361_1(visit37_361_2(region.right >= pointer.left) && visit38_362_1(visit39_362_2(region.top <= pointer.top) && visit40_363_1(region.bottom >= pointer.top))));
+    _$jscoverage['/dd/ddm.js'].lineData[359]++;
+    return visit34_359_1(visit35_359_2(region.left <= pointer.left) && visit36_360_1(visit37_360_2(region.right >= pointer.left) && visit38_361_1(visit39_361_2(region.top <= pointer.top) && visit40_362_1(region.bottom >= pointer.top))));
   }
-  _$jscoverage['/dd/ddm.js'].lineData[366]++;
+  _$jscoverage['/dd/ddm.js'].lineData[365]++;
   function area(region) {
     _$jscoverage['/dd/ddm.js'].functionData[18]++;
-    _$jscoverage['/dd/ddm.js'].lineData[367]++;
-    if (visit41_367_1(visit42_367_2(region.top >= region.bottom) || visit43_367_3(region.left >= region.right))) {
-      _$jscoverage['/dd/ddm.js'].lineData[368]++;
+    _$jscoverage['/dd/ddm.js'].lineData[366]++;
+    if (visit41_366_1(visit42_366_2(region.top >= region.bottom) || visit43_366_3(region.left >= region.right))) {
+      _$jscoverage['/dd/ddm.js'].lineData[367]++;
       return 0;
     }
-    _$jscoverage['/dd/ddm.js'].lineData[370]++;
+    _$jscoverage['/dd/ddm.js'].lineData[369]++;
     return (region.right - region.left) * (region.bottom - region.top);
   }
-  _$jscoverage['/dd/ddm.js'].lineData[373]++;
+  _$jscoverage['/dd/ddm.js'].lineData[372]++;
   function intersect(r1, r2) {
     _$jscoverage['/dd/ddm.js'].functionData[19]++;
-    _$jscoverage['/dd/ddm.js'].lineData[374]++;
+    _$jscoverage['/dd/ddm.js'].lineData[373]++;
     var t = Math.max(r1.top, r2.top), r = Math.min(r1.right, r2.right), b = Math.min(r1.bottom, r2.bottom), l = Math.max(r1.left, r2.left);
-    _$jscoverage['/dd/ddm.js'].lineData[378]++;
+    _$jscoverage['/dd/ddm.js'].lineData[377]++;
     return {
   left: l, 
   right: r, 
   top: t, 
   bottom: b};
   }
-  _$jscoverage['/dd/ddm.js'].lineData[386]++;
+  _$jscoverage['/dd/ddm.js'].lineData[385]++;
   function inNodeByPointer(node, point) {
     _$jscoverage['/dd/ddm.js'].functionData[20]++;
-    _$jscoverage['/dd/ddm.js'].lineData[387]++;
+    _$jscoverage['/dd/ddm.js'].lineData[386]++;
     return inRegion(region(node), point);
   }
-  _$jscoverage['/dd/ddm.js'].lineData[390]++;
+  _$jscoverage['/dd/ddm.js'].lineData[389]++;
   function cacheWH(node) {
     _$jscoverage['/dd/ddm.js'].functionData[21]++;
-    _$jscoverage['/dd/ddm.js'].lineData[391]++;
-    if (visit44_391_1(node)) {
-      _$jscoverage['/dd/ddm.js'].lineData[392]++;
+    _$jscoverage['/dd/ddm.js'].lineData[390]++;
+    if (visit44_390_1(node)) {
+      _$jscoverage['/dd/ddm.js'].lineData[391]++;
       node.__ddCachedWidth = node.outerWidth();
-      _$jscoverage['/dd/ddm.js'].lineData[393]++;
+      _$jscoverage['/dd/ddm.js'].lineData[392]++;
       node.__ddCachedHeight = node.outerHeight();
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[397]++;
+  _$jscoverage['/dd/ddm.js'].lineData[396]++;
   var DDM = new DDManger();
-  _$jscoverage['/dd/ddm.js'].lineData[398]++;
+  _$jscoverage['/dd/ddm.js'].lineData[397]++;
   DDM.inRegion = inRegion;
-  _$jscoverage['/dd/ddm.js'].lineData[399]++;
+  _$jscoverage['/dd/ddm.js'].lineData[398]++;
   DDM.region = region;
-  _$jscoverage['/dd/ddm.js'].lineData[400]++;
+  _$jscoverage['/dd/ddm.js'].lineData[399]++;
   DDM.area = area;
-  _$jscoverage['/dd/ddm.js'].lineData[401]++;
+  _$jscoverage['/dd/ddm.js'].lineData[400]++;
   DDM.cacheWH = cacheWH;
-  _$jscoverage['/dd/ddm.js'].lineData[402]++;
+  _$jscoverage['/dd/ddm.js'].lineData[401]++;
   DDM.PREFIX_CLS = 'ks-dd-';
-  _$jscoverage['/dd/ddm.js'].lineData[404]++;
+  _$jscoverage['/dd/ddm.js'].lineData[403]++;
   return DDM;
 });

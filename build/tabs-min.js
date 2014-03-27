@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:03
+build time: Mar 27 22:01
 */
 KISSY.add("tabs/bar-render",["toolbar"],function(c,b){return b("toolbar").getDefaultRender().extend({beforeCreateDom:function(a){a.elAttrs.role="tablist"}},{name:"TabsBarRender"})});
 KISSY.add("tabs/bar",["toolbar","./bar-render"],function(c,b){var a=b("toolbar"),d=b("./bar-render"),a=a.extend({bindUI:function(){var a=this;a.on("afterSelectedChange",function(b){b.newVal&&b.target.isTabsTab&&a.set("selectedTab",b.target)})},syncUI:function(){var a=this,b=a.get("children");c.each(b,function(b){if(b.get("selected"))return a.setInternal("selectedTab",b),!1})},handleKeyDownInternal:function(a){var b=this.get("selectedTab"),a=this.getNextItemByKeyDown(a,b);if("boolean"===typeof a)return a;

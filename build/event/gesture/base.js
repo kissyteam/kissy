@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 02:59
+build time: Mar 27 21:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,9 +13,10 @@ build time: Mar 24 02:59
  event/gesture/base
 */
 
-KISSY.add("event/gesture/base/add-event", ["dom", "event/dom/base"], function(S, require) {
+KISSY.add("event/gesture/base/add-event", ["dom", "ua", "event/dom/base"], function(S, require) {
   var Dom = require("dom");
   var eventHandleMap = {};
+  var UA = require("ua");
   var DomEvent = require("event/dom/base");
   var Special = DomEvent.Special;
   var key = S.guid("touch-handle"), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
@@ -31,7 +32,7 @@ KISSY.add("event/gesture/base/add-event", ["dom", "event/dom/base"], function(S,
   var DUP_TIMEOUT = 2500;
   var DUP_DIST = 25;
   if(Feature.isTouchEventSupported()) {
-    if(S.UA.ios) {
+    if(UA.ios) {
       gestureEndEvent = "touchend touchcancel";
       gestureStartEvent = "touchstart";
       gestureMoveEvent = "touchmove"
@@ -384,10 +385,11 @@ KISSY.add("event/gesture/base/single-touch", ["./touch"], function(S, require) {
   }});
   return SingleTouch
 });
-KISSY.add("event/gesture/base/tap", ["./add-event", "event/dom/base", "./single-touch"], function(S, require) {
+KISSY.add("event/gesture/base/tap", ["./add-event", "event/dom/base", "./single-touch", "ua"], function(S, require) {
   var addGestureEvent = require("./add-event");
   var DomEvent = require("event/dom/base");
   var SingleTouch = require("./single-touch");
+  var UA = require("ua");
   var SINGLE_TAP_EVENT = "singleTap", DOUBLE_TAP_EVENT = "doubleTap", TAP_HOLD_EVENT = "tapHold", TAP_EVENT = "tap", TAP_HOLD_DELAY = 1E3, SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
   function preventDefault(e) {
     e.preventDefault()
@@ -444,8 +446,8 @@ KISSY.add("event/gesture/base/tap", ["./add-event", "event/dom/base", "./single-
     S.mix(eventObject, {type:TAP_EVENT, which:1, pageX:lastXY.pageX, pageY:lastXY.pageY, target:target, currentTarget:target});
     eventObject.touch = touch;
     DomEvent.fire(target, TAP_EVENT, eventObject);
-    if(eventObject.isDefaultPrevented() && S.UA.mobile) {
-      if(S.UA.ios) {
+    if(eventObject.isDefaultPrevented() && UA.mobile) {
+      if(UA.ios) {
         e.preventDefault()
       }else {
         DomEvent.on(target.ownerDocument || target, "click", {fn:preventDefault, once:1})

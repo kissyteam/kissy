@@ -16,10 +16,10 @@ KISSY.add(function (S, require) {
         beforeCreateDom: function (renderData, childrenElSelectors) {
             renderData.elCls.push(renderData.prefixCls + 'scrollbar-' + renderData.axis);
             S.mix(childrenElSelectors, {
-                'dragEl': '#ks-scrollbar-drag-{id}',
-                'downBtn': '#ks-scrollbar-arrow-down-{id}',
-                'upBtn': '#ks-scrollbar-arrow-up-{id}',
-                'trackEl': '#ks-scrollbar-track-{id}'
+                dragEl: '#ks-scrollbar-drag-{id}',
+                downBtn: '#ks-scrollbar-arrow-down-{id}',
+                upBtn: '#ks-scrollbar-arrow-up-{id}',
+                trackEl: '#ks-scrollbar-track-{id}'
             });
         },
 
@@ -35,19 +35,19 @@ KISSY.add(function (S, require) {
             control.upBtn = control.$upBtn[0];
         },
 
-        '_onSetDragHeight': function (v) {
+        _onSetDragHeight: function (v) {
             this.control.dragEl.style.height = v + 'px';
         },
 
-        '_onSetDragWidth': function (v) {
+        _onSetDragWidth: function (v) {
             this.control.dragEl.style.width = v + 'px';
         },
 
-        '_onSetDragLeft': function (v) {
+        _onSetDragLeft: function (v) {
             this.control.dragEl.style.left = v + 'px';
         },
 
-        '_onSetDragTop': function (v) {
+        _onSetDragTop: function (v) {
             this.control.dragEl.style.top = v + 'px';
         }
     };

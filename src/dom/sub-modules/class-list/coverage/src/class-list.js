@@ -485,7 +485,7 @@ KISSY.add(function(S, require) {
     elem.className = S.trim(className);
   }
 }, 
-  '_toggleClass': function(elem, classNames, force) {
+  _toggleClass: function(elem, classNames, force) {
   _$jscoverage['/class-list.js'].functionData[5]++;
   _$jscoverage['/class-list.js'].lineData[76]++;
   var j, className, result, method, self = this, removed = [], added = [], cl = classNames.length;

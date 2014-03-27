@@ -27,10 +27,10 @@ KISSY.add(function (S, require) {
             dtd.$listItem,
             dtd.$tableContent, {
                 // may add unnecessary whitespaces
-                'select': 1,
+                select: 1,
                 // add unnecessary whitespaces is ok for script and style
-                'script': 1,
-                'style': 1
+                script: 1,
+                style: 1
             });
         for (var e in beauty) {
             // whether its tag/text children should indent
@@ -197,9 +197,7 @@ KISSY.add(function (S, require) {
             }
             this.append(S.trim(text));
         }
-
     });
 
     return BeautifyWriter;
-
 });

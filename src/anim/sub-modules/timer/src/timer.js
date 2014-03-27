@@ -198,6 +198,9 @@ KISSY.add(function (S, require) {
 
     S.mix(TimerAnim, AnimBase.Statics);
 
+    // bad
+    S.Anim = TimerAnim;
+
     return TimerAnim;
 });
 /*

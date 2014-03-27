@@ -19,11 +19,11 @@ KISSY.add(function (S) {
             this.root = parentScope.root;
         },
 
-        'getParent': function () {
+        getParent: function () {
             return this.parent;
         },
 
-        'getRoot': function () {
+        getRoot: function () {
             return this.root;
         },
 
@@ -85,10 +85,10 @@ KISSY.add(function (S) {
         },
 
         resolve: function (name, depth) {
-            var scope = this;
+            var self = this;
             if (!depth && typeof name !== 'string' && name.length === 1) {
-                if (scope.has(name[0])) {
-                    return scope.get(name[0]);
+                if (self.has(name[0])) {
+                    return self.get(name[0]);
                 }
             }
 
@@ -99,8 +99,9 @@ KISSY.add(function (S) {
             }
 
             var len, i, v, p, valid;
+            var scope = self;
 
-            // root keyword for root scope
+            // root keyword for root self
             if (parts[0] === 'root') {
                 parts.shift();
                 scope = scope.root;

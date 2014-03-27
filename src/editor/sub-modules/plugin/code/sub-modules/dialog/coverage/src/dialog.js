@@ -347,7 +347,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[9]++;
   var xhtmlDtd = Editor.XHTML_DTD;
   _$jscoverage['/dialog.js'].lineData[10]++;
-  var NodeType = S.DOM.NodeType;
+  var NodeType = S.require('dom').NodeType;
   _$jscoverage['/dialog.js'].lineData[11]++;
   var notWhitespaceEval = Editor.Walker.whitespaces(true);
   _$jscoverage['/dialog.js'].lineData[12]++;

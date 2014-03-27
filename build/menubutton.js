@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 27 21:59
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -31,7 +31,7 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
     option0.params = params1;
     if(moduleWrap) {
       require("component/extension/content-xtpl");
-      option0.params[0] = moduleWrap.resolveByName(option0.params[0])
+      option0.params[0] = moduleWrap.resolve(option0.params[0])
     }
     var commandRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);
     if(commandRet2 && commandRet2.isBuffer) {

@@ -773,11 +773,11 @@ function visit22_164_2(result) {
 function visit21_164_1(result) {
   _$jscoverage['/touch.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch.js'].branchData['153'][1].init(355, 11, 'value === 0');
+}_$jscoverage['/touch.js'].branchData['153'][1].init(358, 11, 'value === 0');
 function visit20_153_1(result) {
   _$jscoverage['/touch.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch.js'].branchData['142'][1].init(1181, 18, 'value <= minScroll');
+}_$jscoverage['/touch.js'].branchData['142'][1].init(1184, 18, 'value <= minScroll');
 function visit19_142_1(result) {
   _$jscoverage['/touch.js'].branchData['142'][1].ranCondition(result);
   return result;
@@ -785,15 +785,15 @@ function visit19_142_1(result) {
 function visit18_127_1(result) {
   _$jscoverage['/touch.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch.js'].branchData['125'][3].init(400, 17, 'value < maxScroll');
+}_$jscoverage['/touch.js'].branchData['125'][3].init(403, 17, 'value < maxScroll');
 function visit17_125_3(result) {
   _$jscoverage['/touch.js'].branchData['125'][3].ranCondition(result);
   return result;
-}_$jscoverage['/touch.js'].branchData['125'][2].init(379, 17, 'value > minScroll');
+}_$jscoverage['/touch.js'].branchData['125'][2].init(382, 17, 'value > minScroll');
 function visit16_125_2(result) {
   _$jscoverage['/touch.js'].branchData['125'][2].ranCondition(result);
   return result;
-}_$jscoverage['/touch.js'].branchData['125'][1].init(379, 38, 'value > minScroll && value < maxScroll');
+}_$jscoverage['/touch.js'].branchData['125'][1].init(382, 38, 'value > minScroll && value < maxScroll');
 function visit15_125_1(result) {
   _$jscoverage['/touch.js'].branchData['125'][1].ranCondition(result);
   return result;
@@ -1013,7 +1013,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/touch.js'].lineData[122]++;
     var frictionFactor = Math.exp(deltaTime * ALPHA);
     _$jscoverage['/touch.js'].lineData[124]++;
-    value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA), 10);
+    value = parseInt(startScroll + velocity * (1 - frictionFactor) / (0 - THETA), 10);
     _$jscoverage['/touch.js'].lineData[125]++;
     if (visit15_125_1(visit16_125_2(value > minScroll) && visit17_125_3(value < maxScroll))) {
       _$jscoverage['/touch.js'].lineData[127]++;
@@ -1042,7 +1042,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/touch.js'].lineData[146]++;
     deltaTime = now - bounceStartTime;
     _$jscoverage['/touch.js'].lineData[148]++;
-    var theta = (deltaTime / ACCELERATION), powTime = theta * Math.exp(-SPRING_TENSION * theta);
+    var theta = (deltaTime / ACCELERATION), powTime = theta * Math.exp(0 - SPRING_TENSION * theta);
     _$jscoverage['/touch.js'].lineData[152]++;
     value = parseInt(velocity * powTime, 10);
     _$jscoverage['/touch.js'].lineData[153]++;

@@ -1,9 +1,4 @@
 <project name="dom.build" default="build-all" basedir=".">
     <property name="component.name" value="dom"/>
     <import file="../common.xml"/>
-    <target name="build-all">
-        <subant target="" failonerror="true" inheritall="false">
-            <fileset dir="./sub-modules" includes="**/build.xml"/>
-        </subant>
-    </target>
 </project>

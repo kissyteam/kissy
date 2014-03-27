@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 16:51
+build time: Mar 27 21:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -98,7 +98,7 @@ KISSY.add("date/picker/render", ["date/format", "date/picker-xtpl", "component/c
     var day = month1.getDayOfWeek();
     var lastMonthDiffDay = (day + 7 - value.getFirstDayOfWeek()) % 7;
     var lastMonth1 = month1.clone();
-    lastMonth1.addDayOfMonth(-lastMonthDiffDay);
+    lastMonth1.addDayOfMonth(0 - lastMonthDiffDay);
     var passed = 0;
     for(i = 0;i < DATE_ROW_COUNT;i++) {
       for(j = 0;j < DATE_COL_COUNT;j++) {

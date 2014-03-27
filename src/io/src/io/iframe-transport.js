@@ -154,7 +154,7 @@ KISSY.add(function (S, require) {
             }
         },
 
-        _callback: function (event/*, abort*/) {
+        _callback: function (event) {
             var self = this,
                 form = self.form,
                 io = self.io,
@@ -214,9 +214,8 @@ KISSY.add(function (S, require) {
                      */
                     if (iframeDoc && iframeDoc.XMLDocument) {
                         io.responseXML = iframeDoc.XMLDocument;
-                    }
-                    // ie9 firefox chrome
-                    else {
+                    } else {
+                        // ie9 firefox chrome
                         io.responseXML = iframeDoc;
                     }
                     if (iframeDoc) {

@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Node,Event, DD, Proxy) {
     var Draggable = DD.Draggable,
-        Dom = S.DOM;
+        Dom = S.require('dom');
     var ie = S.UA.ieMode;
 
     // ie9 ie11 buggy in simulating mousemove

@@ -416,7 +416,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/gregorian/utils.js'].lineData[64]++;
   S.mix(Utils, {
-  'isLeapYear': function(year) {
+  isLeapYear: function(year) {
   _$jscoverage['/gregorian/utils.js'].functionData[4]++;
   _$jscoverage['/gregorian/utils.js'].lineData[66]++;
   if (visit6_66_1((year & 3) !== 0)) {

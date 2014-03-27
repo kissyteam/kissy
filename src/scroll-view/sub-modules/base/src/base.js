@@ -31,8 +31,8 @@ KISSY.add(function (S, require) {
     }
 
     function reflow(v, e) {
-        var control = this,
-            $contentEl = control.$contentEl;
+        var self = this,
+            $contentEl = self.$contentEl;
         // consider pull to refresh
         // refresh label will be prepended to el
         // contentEl must be absolute
@@ -55,12 +55,12 @@ KISSY.add(function (S, require) {
             return;
         }
 
-        control.scrollHeight = scrollHeight;
-        control.scrollWidth = scrollWidth;
-        control.clientHeight = clientHeight;
-        control.clientWidth = clientWidth;
+        self.scrollHeight = scrollHeight;
+        self.scrollWidth = scrollWidth;
+        self.clientHeight = clientHeight;
+        self.clientWidth = clientWidth;
 
-        allowScroll = control.allowScroll = {};
+        allowScroll = self.allowScroll = {};
 
         if (scrollHeight > clientHeight) {
             allowScroll.top = 1;
@@ -69,7 +69,7 @@ KISSY.add(function (S, require) {
             allowScroll.left = 1;
         }
 
-        control.minScroll = {
+        self.minScroll = {
             left: 0,
             top: 0
         };
@@ -77,24 +77,24 @@ KISSY.add(function (S, require) {
         var maxScrollLeft,
             maxScrollTop;
 
-        control.maxScroll = {
+        self.maxScroll = {
             left: maxScrollLeft = scrollWidth - clientWidth,
             top: maxScrollTop = scrollHeight - clientHeight
         };
 
-        delete control.scrollStep;
+        delete self.scrollStep;
 
-        var snap = control.get('snap'),
-            scrollLeft = control.get('scrollLeft'),
-            scrollTop = control.get('scrollTop');
+        var snap = self.get('snap'),
+            scrollLeft = self.get('scrollLeft'),
+            scrollTop = self.get('scrollTop');
 
         if (snap) {
             var elOffset = $contentEl.offset();
-            var pages = control.pages = typeof snap === 'string' ?
+            var pages = self.pages = typeof snap === 'string' ?
                     $contentEl.all(snap) :
                     $contentEl.children(),
-                pageIndex = control.get('pageIndex'),
-                pagesOffset = control.pagesOffset = [];
+                pageIndex = self.get('pageIndex'),
+                pagesOffset = self.pagesOffset = [];
             pages.each(function (p, i) {
                 var offset = p.offset(),
                     left = offset.left - elOffset.left,
@@ -108,18 +108,18 @@ KISSY.add(function (S, require) {
                 }
             });
             if (pageIndex) {
-                control.scrollToPage(pageIndex);
+                self.scrollToPage(pageIndex);
                 return;
             }
         }
 
         // in case content is reduces
-        control.scrollToWithBounds({
+        self.scrollToWithBounds({
             left: scrollLeft,
             top: scrollTop
         });
 
-        control.fire('reflow', v);
+        self.fire('reflow', v);
     }
 
     /**
@@ -143,9 +143,9 @@ KISSY.add(function (S, require) {
         },
 
         sync: function () {
-            var control = this,
-                el = control.el,
-                contentEl = control.contentEl;
+            var self = this,
+                el = self.el,
+                contentEl = self.contentEl;
             // consider pull to refresh
             // refresh label will be prepended to el
             // contentEl must be absolute
@@ -158,11 +158,11 @@ KISSY.add(function (S, require) {
             var clientHeight = el.clientHeight,
                 clientWidth = el.clientWidth;
 
-            control.set('dimension', {
-                'scrollHeight': scrollHeight,
-                'scrollWidth': scrollWidth,
-                'clientWidth': clientWidth,
-                'clientHeight': clientHeight
+            self.set('dimension', {
+                scrollHeight: scrollHeight,
+                scrollWidth: scrollWidth,
+                clientWidth: clientWidth,
+                clientHeight: clientHeight
             });
         },
 
@@ -221,18 +221,18 @@ KISSY.add(function (S, require) {
         },
 
         getScrollStep: function () {
-            var control = this;
-            if (control.scrollStep) {
-                return control.scrollStep;
+            var self = this;
+            if (self.scrollStep) {
+                return self.scrollStep;
             }
             var elDoc = $(this.get('el')[0].ownerDocument);
-            var clientHeight = control.clientHeight;
-            var clientWidth = control.clientWidth;
-            control.scrollStep = {
+            var clientHeight = self.clientHeight;
+            var clientWidth = self.clientWidth;
+            self.scrollStep = {
                 top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
                 left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)
             };
-            return control.scrollStep;
+            return self.scrollStep;
         },
 
         handleMouseWheel: function (e) {
@@ -283,7 +283,7 @@ KISSY.add(function (S, require) {
             });
         },
 
-        '_uiSetPageIndex': function (v) {
+        _uiSetPageIndex: function (v) {
             this.scrollToPage(v);
         },
 

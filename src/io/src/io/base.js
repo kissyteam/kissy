@@ -340,7 +340,6 @@ KISSY.add(function (S, require) {
             transport: null
         });
 
-
         var TransportConstructor,
             transport;
 
@@ -378,19 +377,18 @@ KISSY.add(function (S, require) {
         self.setRequestHeader(
             'Accept',
             dataType && accepts[dataType] ?
-                accepts[ dataType ] + (dataType === '*' ? '' : ', */*; q=0.01'  ) :
-                accepts[ '*' ]
+                accepts[dataType] + (dataType === '*' ? '' : ', */*; q=0.01') :
+                accepts['*']
         );
 
         // Check for headers option
         for (i in headers) {
-            self.setRequestHeader(i, headers[ i ]);
+            self.setRequestHeader(i, headers[i]);
         }
-
 
         // allow setup native listener
         // such as xhr.upload.addEventListener('progress', function (ev) {})
-        if (c.beforeSend && ( c.beforeSend.call(context, self, c) === false)) {
+        if (c.beforeSend && (c.beforeSend.call(context, self, c) === false)) {
             return self;
         }
 
@@ -429,7 +427,7 @@ KISSY.add(function (S, require) {
                 setTimeout(function () {
                     throw e;
                 }, 0);
-                self._ioReady(-1, e.message);
+                self._ioReady(0 - 1, e.message);
                 // Simply rethrow otherwise
             } else {
                 S.error(e);
@@ -466,7 +464,7 @@ KISSY.add(function (S, require) {
          * @member KISSY.IO
          * @static
          */
-        'setupTransport': function (name, fn) {
+        setupTransport: function (name, fn) {
             transports[name] = fn;
         },
         /**
@@ -474,7 +472,7 @@ KISSY.add(function (S, require) {
          * @member KISSY.IO
          * @static
          */
-        'getTransport': function (name) {
+        getTransport: function (name) {
             return transports[name];
         },
         /**
@@ -492,11 +490,9 @@ KISSY.add(function (S, require) {
 });
 
 /*
-
  // !TODO
  // 去除 event/custom 依赖，用户不载入就不能监听
  // 载入后通过 custom.on(IO,type) 监听
-
 
  2012-08-16
  - transform IO to class, remove XhrObject class.
@@ -513,5 +509,4 @@ KISSY.add(function (S, require) {
 
  2011 yiminghe@gmail.com
  - 借鉴 jquery，优化减少闭包使用
-
  */

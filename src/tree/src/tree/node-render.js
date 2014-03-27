@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
                 'aria-expanded': renderData.expanded ? 'true' : 'false',
                 'aria-selected': renderData.selected ? 'true' : 'false',
                 'aria-level': renderData.depth,
-                'title': renderData.tooltip
+                title: renderData.tooltip
             });
             S.mix(childrenElSelectors, {
                 expandIconEl: '#ks-tree-node-expand-icon-{id}',
@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
             iconEl[0].className = self.getBaseCssClasses(iconElCss);
             expandIconEl[0].className = self.getBaseCssClasses(
                 S.substitute(expandElCss, {
-                    't': isNodeSingleOrLast ? 'l' : 't'
+                    t: isNodeSingleOrLast ? 'l' : 't'
                 })
             );
             childrenEl[0].className =
@@ -102,7 +102,7 @@ KISSY.add(function (S, require) {
             self.el.setAttribute('aria-selected', v);
         },
 
-        '_onSetDepth': function (v) {
+        _onSetDepth: function (v) {
             this.el.setAttribute('aria-level', v);
         },
 

@@ -1,6 +1,6 @@
 KISSY.add(function (S, AlignExtension, Control) {
     /*jshint quotmark:false*/
-    var Dom = S.DOM;
+    var Dom = S.require('dom');
     var $ = S.all;
 
     var AlignControl = Control.extend([AlignExtension]);

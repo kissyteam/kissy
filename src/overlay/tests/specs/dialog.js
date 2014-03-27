@@ -5,7 +5,7 @@
 /*jshint quotmark:false*/
 KISSY.add(
     function (S, Event, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
-        var Dom = S.DOM, $ = Node.all;
+        var Dom = S.require('dom'), $ = Node.all;
         var Dialog = Overlay.Dialog;
         var ie = S.UA.ieMode;
 

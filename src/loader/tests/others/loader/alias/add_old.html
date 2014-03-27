@@ -1,7 +1,7 @@
 <script  src="/kissy/build/loader.js"></script>
 <script >
     KISSY.add("ss", function (S) {
-        return S.DOM;
+        return S.require('dom');
     }, {requires:['node']});
     KISSY.use("ss", function (S, runtime) {
         S.log(arguments.length);

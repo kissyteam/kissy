@@ -359,13 +359,12 @@ KISSY.add(function (S, require, exports) {
                         S.error('router: location path must be same with urlRoot!');
                     }
                 }
-            }
-            // http://x.com/x/y
-            // =>
-            // http://x.com/#!/x/y
-            // =>
-            // refresh page without add history entry
-            else if (!utils.equalsIgnoreSlash(locPath, urlRoot)) {
+            } else if (!utils.equalsIgnoreSlash(locPath, urlRoot)) {
+                // http://x.com/x/y
+                // =>
+                // http://x.com/#!/x/y
+                // =>
+                // refresh page without add history entry
                 location.replace(utils.addEndSlash(urlRoot) + '#!' + hash);
                 return undefined;
             } else {

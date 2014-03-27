@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:01
+build time: Mar 27 22:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -24,7 +24,7 @@ KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
     self.elHeight = $el.height()
   }, _onScrollMove:function(e) {
     var self = this, b = e.newVal;
-    if(-b > self.elHeight) {
+    if(0 - b > self.elHeight) {
       self.set("state", "releasing")
     }else {
       if(b < 0) {
@@ -35,7 +35,7 @@ KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
     var self = this;
     var scrollView = self.scrollView;
     var b = scrollView.get("scrollTop");
-    if(-b > self.elHeight) {
+    if(0 - b > self.elHeight) {
       scrollView.minScroll.top = -self.elHeight;
       var loadFn = self.get("loadFn");
       self.set("state", "loading");

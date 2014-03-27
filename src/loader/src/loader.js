@@ -7,6 +7,7 @@
     var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
+        mods = Env.mods = {},
         Utils = Loader.Utils,
         processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
@@ -154,13 +155,16 @@
          * @return {*} exports of specified module
          */
         require: function (moduleName, refName) {
+            moduleName = Utils.normalizePath(refName, moduleName);
+            // cache module read
+            if (mods[moduleName] && mods[moduleName].status === Loader.Status.ATTACHED) {
+                return mods[moduleName].exports;
+            }
             var moduleNames = Utils.normalizeModNames([moduleName], refName);
             Utils.attachModsRecursively(moduleNames);
             return Utils.getModules(moduleNames)[1];
         }
     });
-
-    Env.mods = {}; // all added mods
 })(KISSY);
 
 /*

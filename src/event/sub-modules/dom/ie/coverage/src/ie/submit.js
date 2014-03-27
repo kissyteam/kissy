@@ -288,7 +288,7 @@ _$jscoverage['/ie/submit.js'].branchData['61'][1].init(76, 93, '!e.isPropagation
 function visit22_61_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['59'][1].init(38, 170, 'form.parentNode && !e.isPropagationStopped() && !e.synthetic');
+}_$jscoverage['/ie/submit.js'].branchData['59'][1].init(38, 170, 'self.parentNode && !e.isPropagationStopped() && !e.synthetic');
 function visit21_59_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['59'][1].ranCondition(result);
   return result;
@@ -312,11 +312,11 @@ function visit17_46_1(result) {
 function visit16_32_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['27'][1].init(75, 26, 'getNodeName(el) === \'form\'');
+}_$jscoverage['/ie/submit.js'].branchData['27'][1].init(77, 28, 'getNodeName(self) === \'form\'');
 function visit15_27_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['16'][1].init(75, 26, 'getNodeName(el) === \'form\'');
+}_$jscoverage['/ie/submit.js'].branchData['16'][1].init(77, 28, 'getNodeName(self) === \'form\'');
 function visit14_16_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['16'][1].ranCondition(result);
   return result;
@@ -334,28 +334,28 @@ KISSY.add(function(S, require) {
   setup: function() {
   _$jscoverage['/ie/submit.js'].functionData[1]++;
   _$jscoverage['/ie/submit.js'].lineData[14]++;
-  var el = this;
+  var self = this;
   _$jscoverage['/ie/submit.js'].lineData[16]++;
-  if (visit14_16_1(getNodeName(el) === 'form')) {
+  if (visit14_16_1(getNodeName(self) === 'form')) {
     _$jscoverage['/ie/submit.js'].lineData[17]++;
     return false;
   }
   _$jscoverage['/ie/submit.js'].lineData[22]++;
-  DomEvent.on(el, 'click keypress', detector);
+  DomEvent.on(self, 'click keypress', detector);
 }, 
   tearDown: function() {
   _$jscoverage['/ie/submit.js'].functionData[2]++;
   _$jscoverage['/ie/submit.js'].lineData[25]++;
-  var el = this;
+  var self = this;
   _$jscoverage['/ie/submit.js'].lineData[27]++;
-  if (visit15_27_1(getNodeName(el) === 'form')) {
+  if (visit15_27_1(getNodeName(self) === 'form')) {
     _$jscoverage['/ie/submit.js'].lineData[28]++;
     return false;
   }
   _$jscoverage['/ie/submit.js'].lineData[30]++;
-  DomEvent.remove(el, 'click keypress', detector);
+  DomEvent.remove(self, 'click keypress', detector);
   _$jscoverage['/ie/submit.js'].lineData[31]++;
-  Dom.query('form', el).each(function(form) {
+  Dom.query('form', self).each(function(form) {
   _$jscoverage['/ie/submit.js'].functionData[3]++;
   _$jscoverage['/ie/submit.js'].lineData[32]++;
   if (visit16_32_1(form.__submitFix)) {
@@ -387,11 +387,11 @@ KISSY.add(function(S, require) {
   function submitBubble(e) {
     _$jscoverage['/ie/submit.js'].functionData[5]++;
     _$jscoverage['/ie/submit.js'].lineData[58]++;
-    var form = this;
+    var self = this;
     _$jscoverage['/ie/submit.js'].lineData[59]++;
-    if (visit21_59_1(form.parentNode && visit22_61_1(!e.isPropagationStopped() && !e.synthetic))) {
+    if (visit21_59_1(self.parentNode && visit22_61_1(!e.isPropagationStopped() && !e.synthetic))) {
       _$jscoverage['/ie/submit.js'].lineData[66]++;
-      DomEvent.fire(form.parentNode, 'submit', e);
+      DomEvent.fire(self.parentNode, 'submit', e);
     }
   }
 });

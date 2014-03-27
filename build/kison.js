@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 27 21:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -273,7 +273,7 @@ KISSY.add("kison/lexer", ["./utils"], function(S, require) {
   }, showDebugInfo:function() {
     var self = this, DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT, matched = self.matched, match = self.match, input = self.input;
     matched = matched.slice(0, matched.length - match.length);
-    var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
+    var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
     next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
     return past + next + "\n" + (new Array(past.length + 1)).join("-") + "^"
   }, mapSymbol:function(t) {

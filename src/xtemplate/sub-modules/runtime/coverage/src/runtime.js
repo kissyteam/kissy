@@ -605,7 +605,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/runtime.js'].lineData[76]++;
   var utils = {
-  'callCommand': callCommand};
+  callCommand: callCommand};
   _$jscoverage['/runtime.js'].lineData[91]++;
   function XTemplateRuntime(tpl, config) {
     _$jscoverage['/runtime.js'].functionData[5]++;
@@ -661,7 +661,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime.js'].lineData[153]++;
   return engine;
 }, 
-  'removeCommand': function(commandName) {
+  removeCommand: function(commandName) {
   _$jscoverage['/runtime.js'].functionData[9]++;
   _$jscoverage['/runtime.js'].lineData[161]++;
   var config = this.config;

@@ -8,8 +8,8 @@ KISSY.add(function (S, require) {
     var Special = require('./special');
 
     S.each([
-        { name: 'mouseenter', fix: 'mouseover' },
-        { name: 'mouseleave', fix: 'mouseout' }
+        {name: 'mouseenter', fix: 'mouseover'},
+        {name: 'mouseleave', fix: 'mouseout'}
     ], function (o) {
         Special[o.name] = {
             // fix #75

@@ -6,7 +6,7 @@
 KISSY.add(function (S) {
     var listNodeNames = {ol: 1, ul: 1},
         Node = S.Node,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         NodeType = Dom.NodeType,
         UA = S.UA,
         list = {

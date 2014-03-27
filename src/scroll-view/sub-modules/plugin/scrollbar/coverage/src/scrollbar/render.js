@@ -277,7 +277,7 @@ if (! _$jscoverage['/scrollbar/render.js'].branchData) {
   _$jscoverage['/scrollbar/render.js'].branchData['55'] = [];
   _$jscoverage['/scrollbar/render.js'].branchData['55'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar/render.js'].branchData['55'][1].init(1839, 11, 'supportCss3');
+_$jscoverage['/scrollbar/render.js'].branchData['55'][1].init(1823, 11, 'supportCss3');
 function visit21_55_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['55'][1].ranCondition(result);
   return result;
@@ -304,10 +304,10 @@ KISSY.add(function(S, require) {
   renderData.elCls.push(renderData.prefixCls + 'scrollbar-' + renderData.axis);
   _$jscoverage['/scrollbar/render.js'].lineData[18]++;
   S.mix(childrenElSelectors, {
-  'dragEl': '#ks-scrollbar-drag-{id}', 
-  'downBtn': '#ks-scrollbar-arrow-down-{id}', 
-  'upBtn': '#ks-scrollbar-arrow-up-{id}', 
-  'trackEl': '#ks-scrollbar-track-{id}'});
+  dragEl: '#ks-scrollbar-drag-{id}', 
+  downBtn: '#ks-scrollbar-arrow-down-{id}', 
+  upBtn: '#ks-scrollbar-arrow-up-{id}', 
+  trackEl: '#ks-scrollbar-track-{id}'});
 }, 
   createDom: function() {
   _$jscoverage['/scrollbar/render.js'].functionData[2]++;
@@ -330,22 +330,22 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/render.js'].lineData[35]++;
   control.upBtn = control.$upBtn[0];
 }, 
-  '_onSetDragHeight': function(v) {
+  _onSetDragHeight: function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[3]++;
   _$jscoverage['/scrollbar/render.js'].lineData[39]++;
   this.control.dragEl.style.height = v + 'px';
 }, 
-  '_onSetDragWidth': function(v) {
+  _onSetDragWidth: function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[4]++;
   _$jscoverage['/scrollbar/render.js'].lineData[43]++;
   this.control.dragEl.style.width = v + 'px';
 }, 
-  '_onSetDragLeft': function(v) {
+  _onSetDragLeft: function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[5]++;
   _$jscoverage['/scrollbar/render.js'].lineData[47]++;
   this.control.dragEl.style.left = v + 'px';
 }, 
-  '_onSetDragTop': function(v) {
+  _onSetDragTop: function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[6]++;
   _$jscoverage['/scrollbar/render.js'].lineData[51]++;
   this.control.dragEl.style.top = v + 'px';

@@ -266,7 +266,7 @@ if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData['71'] = [];
   _$jscoverage['/base/render.js'].branchData['71'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['71'][1].init(2296, 11, 'supportCss3');
+_$jscoverage['/base/render.js'].branchData['71'][1].init(2284, 11, 'supportCss3');
 function visit1_71_1(result) {
   _$jscoverage['/base/render.js'].branchData['71'][1].ranCondition(result);
   return result;
@@ -295,17 +295,17 @@ KISSY.add(function(S, require) {
   var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
   _$jscoverage['/base/render.js'].lineData[54]++;
   control.set('dimension', {
-  'scrollHeight': scrollHeight, 
-  'scrollWidth': scrollWidth, 
-  'clientWidth': clientWidth, 
-  'clientHeight': clientHeight});
+  scrollHeight: scrollHeight, 
+  scrollWidth: scrollWidth, 
+  clientWidth: clientWidth, 
+  clientHeight: clientHeight});
 }, 
-  '_onSetScrollLeft': function(v) {
+  _onSetScrollLeft: function(v) {
   _$jscoverage['/base/render.js'].functionData[2]++;
   _$jscoverage['/base/render.js'].lineData[63]++;
   this.control.contentEl.style.left = -v + 'px';
 }, 
-  '_onSetScrollTop': function(v) {
+  _onSetScrollTop: function(v) {
   _$jscoverage['/base/render.js'].functionData[3]++;
   _$jscoverage['/base/render.js'].lineData[67]++;
   this.control.contentEl.style.top = -v + 'px';
@@ -320,7 +320,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[75]++;
   var control = this.control;
   _$jscoverage['/base/render.js'].lineData[76]++;
-  control.contentEl.style[transformProperty] = 'translateX(' + floor(-v) + 'px)' + ' translateY(' + floor(-control.get('scrollTop')) + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
+  control.contentEl.style[transformProperty] = 'translateX(' + floor(0 - v) + 'px)' + ' translateY(' + floor(0 - control.get('scrollTop')) + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
 };
     _$jscoverage['/base/render.js'].lineData[81]++;
     methods._onSetScrollTop = function(v) {
@@ -328,7 +328,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[82]++;
   var control = this.control;
   _$jscoverage['/base/render.js'].lineData[83]++;
-  control.contentEl.style[transformProperty] = 'translateX(' + floor(-control.get('scrollLeft')) + 'px)' + ' translateY(' + floor(-v) + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
+  control.contentEl.style[transformProperty] = 'translateX(' + floor(0 - control.get('scrollLeft')) + 'px)' + ' translateY(' + floor(0 - v) + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
 };
   }
   _$jscoverage['/base/render.js'].lineData[89]++;

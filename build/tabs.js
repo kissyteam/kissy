@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:03
+build time: Mar 27 22:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -34,10 +34,10 @@ KISSY.add("tabs/bar", ["toolbar", "./bar-render"], function(S, require) {
       }
     })
   }, syncUI:function() {
-    var bar = this, children = bar.get("children");
+    var self = this, children = self.get("children");
     S.each(children, function(c) {
       if(c.get("selected")) {
-        bar.setInternal("selectedTab", c);
+        self.setInternal("selectedTab", c);
         return false
       }
       return undefined
@@ -223,7 +223,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     }
     return self
   }, removeItemAt:function(index, destroy) {
-    var tabs = this, bar = tabs.get("bar"), barCs = bar.get("children"), tab = bar.getChildAt(index), body = tabs.get("body");
+    var self = this, bar = self.get("bar"), barCs = bar.get("children"), tab = bar.getChildAt(index), body = self.get("body");
     if(tab.get("selected")) {
       if(barCs.length === 1) {
         bar.set("selectedTab", null)
@@ -237,7 +237,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     }
     bar.removeChild(bar.getChildAt(index), destroy);
     body.removeChild(body.getChildAt(index), destroy);
-    return tabs
+    return self
   }, removeItemByTab:function(tab, destroy) {
     var index = S.indexOf(tab, this.get("bar").get("children"));
     return this.removeItemAt(index, destroy)
@@ -245,7 +245,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     var index = S.indexOf(panel, this.get("body").get("children"));
     return this.removeItemAt(index, destroy)
   }, getSelectedTab:function() {
-    var tabs = this, bar = tabs.get("bar"), child = null;
+    var self = this, bar = self.get("bar"), child = null;
     S.each(bar.get("children"), function(c) {
       if(c.get("selected")) {
         child = c;
@@ -255,7 +255,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     });
     return child
   }, getSelectedPanel:function() {
-    var tabs = this, body = tabs.get("body"), child = null;
+    var self = this, body = self.get("body"), child = null;
     S.each(body.get("children"), function(c) {
       if(c.get("selected")) {
         child = c;
@@ -273,14 +273,14 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
   }, getPanelAt:function(index) {
     return this.get("body").get("children")[index]
   }, setSelectedTab:function(tab) {
-    var tabs = this, bar = tabs.get("bar"), body = tabs.get("body");
+    var self = this, bar = self.get("bar"), body = self.get("body");
     bar.set("selectedTab", tab);
     body.set("selectedPanelIndex", S.indexOf(tab, bar.get("children")));
     return this
   }, setSelectedPanel:function(panel) {
-    var tabs = this, bar = tabs.get("bar"), body = tabs.get("body"), selectedPanelIndex = S.indexOf(panel, body.get("children"));
+    var self = this, bar = self.get("bar"), body = self.get("body"), selectedPanelIndex = S.indexOf(panel, body.get("children"));
     body.set("selectedPanelIndex", selectedPanelIndex);
-    bar.set("selectedTab", tabs.getTabAt(selectedPanelIndex));
+    bar.set("selectedTab", self.getTabAt(selectedPanelIndex));
     return this
   }, bindUI:function() {
     this.on("afterSelectedTabChange", function(e) {

@@ -19,7 +19,7 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(Text, Node, {
-        writeHtml:function (writer, filter) {
+        writeHtml: function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onText(this)) !== false) {
                 if (ret) {
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
                 writer.text(this.toHtml());
             }
         },
-        toHtml:function () {
+        toHtml: function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {

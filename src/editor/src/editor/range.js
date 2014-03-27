@@ -37,24 +37,24 @@ KISSY.add(function (S, require) {
         NULL = null,
         KER = Editor.RangeType,
         KEP = Editor.PositionType,
-        Dom = S.DOM,
+        Dom = S.require('dom'),
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
         $ = Node.all,
         UN_REMOVABLE = {
-            'td': 1
+            td: 1
         },
         EMPTY = {
-            'area': 1,
-            'base': 1,
-            'br': 1,
-            'col': 1,
-            'hr': 1,
-            'img': 1,
-            'input': 1,
-            'link': 1,
-            'meta': 1,
-            'param': 1
+            area: 1,
+            base: 1,
+            br: 1,
+            col: 1,
+            hr: 1,
+            img: 1,
+            input: 1,
+            link: 1,
+            meta: 1,
+            param: 1
         };
 
     var isWhitespace = new Walker.whitespaces(),
@@ -63,31 +63,31 @@ KISSY.add(function (S, require) {
         isNotBookmarks = Walker.bookmark(false, true);
 
     var inlineChildReqElements = {
-        'abbr': 1,
-        'acronym': 1,
-        'b': 1,
-        'bdo': 1,
-        'big': 1,
-        'cite': 1,
-        'code': 1,
-        'del': 1,
-        'dfn': 1,
-        'em': 1,
-        'font': 1,
-        'i': 1,
-        'ins': 1,
-        'label': 1,
-        'kbd': 1,
-        'q': 1,
-        'samp': 1,
-        'small': 1,
-        'span': 1,
-        'strike': 1,
-        'strong': 1,
-        'sub': 1,
-        'sup': 1,
-        'tt': 1,
-        'u': 1,
+        abbr: 1,
+        acronym: 1,
+        b: 1,
+        bdo: 1,
+        big: 1,
+        cite: 1,
+        code: 1,
+        del: 1,
+        dfn: 1,
+        em: 1,
+        font: 1,
+        i: 1,
+        ins: 1,
+        label: 1,
+        kbd: 1,
+        q: 1,
+        samp: 1,
+        small: 1,
+        span: 1,
+        strike: 1,
+        strong: 1,
+        sub: 1,
+        sup: 1,
+        tt: 1,
+        u: 1,
         'var': 1
     };
 
@@ -142,7 +142,6 @@ KISSY.add(function (S, require) {
         };
     }
 
-
     /*
      Extract html content within range.
      0 : delete
@@ -173,7 +172,6 @@ KISSY.add(function (S, require) {
         // 将 bookmark 包含在选区内
         self.optimizeBookmark();
 
-
         // endNode -> end guard , not included in range
 
         // For text containers, we must simply split the node and point to the
@@ -189,9 +187,7 @@ KISSY.add(function (S, require) {
                 // If the offset points after the last node.
                 if (endOffset >= endNode[0].childNodes.length) {
                     // Let's create a temporary node and mark it for removal.
-                    endNode = new Node(
-                        endNode[0].appendChild(doc.createTextNode(''))
-                    );
+                    endNode = new Node(endNode[0].appendChild(doc.createTextNode('')));
                     removeEndNode = TRUE;
                 } else {
                     endNode = new Node(endNode[0].childNodes[endOffset]);
@@ -218,16 +214,13 @@ KISSY.add(function (S, require) {
                 startNode.prepend(t);
                 startNode = t;
                 removeStartNode = TRUE;
-            }
-            else if (startOffset >= startNode[0].childNodes.length) {
+            } else if (startOffset >= startNode[0].childNodes.length) {
                 // Let's create a temporary node and mark it for removal.
                 startNode = new Node(startNode[0]
                     .appendChild(doc.createTextNode('')));
                 removeStartNode = TRUE;
             } else {
-                startNode = new Node(
-                    startNode[0].childNodes[startOffset].previousSibling
-                );
+                startNode = new Node(startNode[0].childNodes[startOffset].previousSibling);
             }
         }
 
@@ -243,7 +236,6 @@ KISSY.add(function (S, require) {
         endParents.each(function (n, i) {
             endParents[i] = n;
         });
-
 
         // Compare them, to find the top most siblings.
         var i, topStart, topEnd;
@@ -346,11 +338,9 @@ KISSY.add(function (S, require) {
             }
 
             // The processing of siblings may have already been done by the parent.
-            if (
-                !startParents[ k ] ||
+            if (!startParents[ k ] ||
                     // 前面 startParents 循环已经处理过了
-                    !levelStartNode._4eSameLevel(startParents[ k ])
-                ) {
+                    !levelStartNode._4eSameLevel(startParents[ k ])) {
                 currentNode = levelStartNode[0].previousSibling;
                 while (currentNode) {
                     // Cache the next sibling.
@@ -410,12 +400,8 @@ KISSY.add(function (S, require) {
             // If a node has been partially selected, collapse the range between
             // topStart and topEnd. Otherwise, simply collapse it to the start.
             // (W3C specs).
-            if (
-                topStart && topEnd &&
-                    (
-                        !startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)
-                        )
-                ) {
+            if (topStart && topEnd &&
+                    (!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd))) {
                 var startIndex = topStart._4eIndex();
 
                 // If the start node is to be removed, we must correct the
@@ -447,13 +433,11 @@ KISSY.add(function (S, require) {
     }
 
     function updateCollapsed(self) {
-        self.collapsed = (
-            self.startContainer &&
+        self.collapsed = (self.startContainer &&
                 self.endContainer &&
                 self.startContainer[0] === self.endContainer[0] &&
-                self.startOffset === self.endOffset );
+                self.startOffset === self.endOffset);
     }
-
 
     /**
      * Range implementation across browsers.
@@ -471,7 +455,6 @@ KISSY.add(function (S, require) {
     }
 
     S.augment(KERange, {
-
         /**
          * Range string representation.
          */
@@ -833,8 +816,8 @@ KISSY.add(function (S, require) {
                     walker = new Walker(walkerRange);
 
                     walker.evaluator = function (node) {
-                        return node.nodeType === ( mode === KER.SHRINK_ELEMENT ?
-                            Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE );
+                        return node.nodeType === (mode === KER.SHRINK_ELEMENT ?
+                            Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE);
                     };
 
                     walker.guard = function (node, movingOut) {
@@ -915,7 +898,7 @@ KISSY.add(function (S, require) {
 
                 // Normalize the start.
                 while (startContainer[0].nodeType === Dom.NodeType.TEXT_NODE &&
-                    ( previous = startContainer.prev(undefined, 1) ) &&
+                    (previous = startContainer.prev(undefined, 1)) &&
                     previous[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     startContainer = previous;
                     startOffset += previous[0].nodeValue.length;
@@ -940,7 +923,7 @@ KISSY.add(function (S, require) {
 
                     // Normalize the end.
                     while (endContainer[0].nodeType === Dom.NodeType.TEXT_NODE &&
-                        ( previous = endContainer.prev(undefined, 1) ) &&
+                        (previous = endContainer.prev(undefined, 1)) &&
                         previous[0].nodeType === Dom.NodeType.TEXT_NODE) {
                         endContainer = previous;
                         endOffset += previous[0].nodeValue.length;
@@ -1037,7 +1020,7 @@ KISSY.add(function (S, require) {
                 startOffset = self.startOffset,
                 collapsed = self.collapsed;
 
-            if (( !ignoreStart || collapsed ) &&
+            if ((!ignoreStart || collapsed) &&
                 startContainer[0] &&
                 startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                 // If the offset is zero, we just insert the new node before
@@ -1045,16 +1028,14 @@ KISSY.add(function (S, require) {
                 if (!startOffset) {
                     startOffset = startContainer._4eIndex();
                     startContainer = startContainer.parent();
-                }
-                // If the offset is at the end, we'll insert it after the text
-                // node.
-                else if (startOffset >= startContainer[0].nodeValue.length) {
+                } else if (startOffset >= startContainer[0].nodeValue.length) {
+                    // If the offset is at the end, we'll insert it after the text
+                    // node.
                     startOffset = startContainer._4eIndex() + 1;
                     startContainer = startContainer.parent();
-                }
-                // In other case, we split the text node and insert the new
-                // node at the split point.
-                else {
+                } else {
+                    // In other case, we split the text node and insert the new
+                    // node at the split point.
                     var nextText = startContainer._4eSplitText(startOffset);
 
                     startOffset = startContainer._4eIndex() + 1;
@@ -1079,23 +1060,21 @@ KISSY.add(function (S, require) {
             var endContainer = self.endContainer,
                 endOffset = self.endOffset;
 
-            if (!( ignoreEnd || collapsed ) &&
+            if (!(ignoreEnd || collapsed) &&
                 endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                 // If the offset is zero, we just insert the new node before
                 // the start.
                 if (!endOffset) {
                     endOffset = endContainer._4eIndex();
                     endContainer = endContainer.parent();
-                }
-                // If the offset is at the end, we'll insert it after the text
-                // node.
-                else if (endOffset >= endContainer[0].nodeValue.length) {
+                } else if (endOffset >= endContainer[0].nodeValue.length) {
+                    // If the offset is at the end, we'll insert it after the text
+                    // node.
                     endOffset = endContainer._4eIndex() + 1;
                     endContainer = endContainer.parent();
-                }
-                // In other case, we split the text node and insert the new
-                // node at the split point.
-                else {
+                } else {
+                    // In other case, we split the text node and insert the new
+                    // node at the split point.
                     endContainer._4eSplitText(endOffset);
 
                     endOffset = endContainer._4eIndex() + 1;
@@ -1323,8 +1302,8 @@ KISSY.add(function (S, require) {
                             blockBoundary, // The node on which the enlarging should stop.
                             tailBr, //
                             defaultGuard = Walker.blockBoundary(
-                                ( unit === KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                                { br: 1 } : NULL),
+                                (unit === KER.ENLARGE_LIST_ITEM_CONTENTS) ?
+                                {br: 1} : NULL),
                         // Record the encountered 'blockBoundary' for later use.
                             boundaryGuard = function (node) {
                                 var retVal = defaultGuard(node);
@@ -1361,7 +1340,7 @@ KISSY.add(function (S, require) {
                                 // <p> <span>123^456</span> </p>
                                 // =>
                                 // <p> ^<span>123456</span>$ </p>
-                                ( !enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                                (!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable)) ?
                                 KER.POSITION_AFTER_START :
                                 KER.POSITION_AFTER_END);
 
@@ -1372,7 +1351,7 @@ KISSY.add(function (S, require) {
                         walker = new Walker(walkerRange);
 
                         // tailBrGuard only used for on range end.
-                        walker.guard = ( unit === KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                        walker.guard = (unit === KER.ENLARGE_LIST_ITEM_CONTENTS) ?
                             tailBrGuard : boundaryGuard;
                         blockBoundary = NULL;
                         // End the range right before the block boundary node.
@@ -1386,7 +1365,7 @@ KISSY.add(function (S, require) {
                         // the document position of it with 'enlargeable' node.
                         self.setEndAt(
                             blockBoundary,
-                            ( !enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                            (!enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable)) ?
                                 KER.POSITION_BEFORE_END :
                                 KER.POSITION_BEFORE_START);
                         // We must include the <br> at the end of range if there's
@@ -1555,7 +1534,10 @@ KISSY.add(function (S, require) {
                 startNode = endNode;
             }
 
-            return { startNode: startNode, endNode: endNode };
+            return {
+                startNode: startNode,
+                endNode: endNode
+            };
         },
 
         /**
@@ -1625,13 +1607,11 @@ KISSY.add(function (S, require) {
                     elementPath = new ElementPath(self.startContainer);
                     self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
                     endBlock = NULL;
-                }
-                else if (isStartOfBlock) {
+                } else if (isStartOfBlock) {
                     elementPath = new ElementPath(self.startContainer);
                     self.moveToPosition(startBlock, KER.POSITION_BEFORE_START);
                     startBlock = NULL;
-                }
-                else {
+                } else {
                     endBlock = self.splitElement(startBlock);
                     // In Gecko, the last child node must be a bogus <br>.
                     // Note: bogus <br> added under <ul> or <ol> would cause
@@ -1753,7 +1733,7 @@ KISSY.add(function (S, require) {
             self.deleteContents();
             if (isBlock) {
                 current = self.getCommonAncestor(FALSE, TRUE);
-                while (( tmpDtd = dtd[ current.nodeName() ] ) && !( tmpDtd && tmpDtd [ elementName ] )) {
+                while ((tmpDtd = dtd[ current.nodeName() ]) && !(tmpDtd && tmpDtd [ elementName ])) {
                     var parent = current.parent();
                     // If we're in an empty block which indicate a new paragraph,
                     // simply replace it with the inserting block.(#3664)

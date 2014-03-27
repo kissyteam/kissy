@@ -232,35 +232,35 @@ if (! _$jscoverage['/manager.js']) {
   _$jscoverage['/manager.js'].lineData[6] = 0;
   _$jscoverage['/manager.js'].lineData[8] = 0;
   _$jscoverage['/manager.js'].lineData[25] = 0;
-  _$jscoverage['/manager.js'].lineData[35] = 0;
-  _$jscoverage['/manager.js'].lineData[43] = 0;
-  _$jscoverage['/manager.js'].lineData[52] = 0;
-  _$jscoverage['/manager.js'].lineData[75] = 0;
+  _$jscoverage['/manager.js'].lineData[34] = 0;
+  _$jscoverage['/manager.js'].lineData[42] = 0;
+  _$jscoverage['/manager.js'].lineData[51] = 0;
+  _$jscoverage['/manager.js'].lineData[74] = 0;
+  _$jscoverage['/manager.js'].lineData[76] = 0;
   _$jscoverage['/manager.js'].lineData[77] = 0;
   _$jscoverage['/manager.js'].lineData[78] = 0;
   _$jscoverage['/manager.js'].lineData[79] = 0;
-  _$jscoverage['/manager.js'].lineData[80] = 0;
+  _$jscoverage['/manager.js'].lineData[81] = 0;
   _$jscoverage['/manager.js'].lineData[82] = 0;
   _$jscoverage['/manager.js'].lineData[83] = 0;
   _$jscoverage['/manager.js'].lineData[84] = 0;
-  _$jscoverage['/manager.js'].lineData[85] = 0;
+  _$jscoverage['/manager.js'].lineData[88] = 0;
   _$jscoverage['/manager.js'].lineData[89] = 0;
   _$jscoverage['/manager.js'].lineData[90] = 0;
   _$jscoverage['/manager.js'].lineData[91] = 0;
-  _$jscoverage['/manager.js'].lineData[92] = 0;
-  _$jscoverage['/manager.js'].lineData[94] = 0;
+  _$jscoverage['/manager.js'].lineData[93] = 0;
+  _$jscoverage['/manager.js'].lineData[95] = 0;
   _$jscoverage['/manager.js'].lineData[96] = 0;
-  _$jscoverage['/manager.js'].lineData[97] = 0;
-  _$jscoverage['/manager.js'].lineData[100] = 0;
-  _$jscoverage['/manager.js'].lineData[109] = 0;
+  _$jscoverage['/manager.js'].lineData[99] = 0;
+  _$jscoverage['/manager.js'].lineData[108] = 0;
+  _$jscoverage['/manager.js'].lineData[114] = 0;
   _$jscoverage['/manager.js'].lineData[115] = 0;
   _$jscoverage['/manager.js'].lineData[116] = 0;
   _$jscoverage['/manager.js'].lineData[117] = 0;
   _$jscoverage['/manager.js'].lineData[118] = 0;
-  _$jscoverage['/manager.js'].lineData[119] = 0;
-  _$jscoverage['/manager.js'].lineData[122] = 0;
-  _$jscoverage['/manager.js'].lineData[131] = 0;
-  _$jscoverage['/manager.js'].lineData[138] = 0;
+  _$jscoverage['/manager.js'].lineData[121] = 0;
+  _$jscoverage['/manager.js'].lineData[130] = 0;
+  _$jscoverage['/manager.js'].lineData[137] = 0;
 }
 if (! _$jscoverage['/manager.js'].functionData) {
   _$jscoverage['/manager.js'].functionData = [];
@@ -274,71 +274,71 @@ if (! _$jscoverage['/manager.js'].functionData) {
 }
 if (! _$jscoverage['/manager.js'].branchData) {
   _$jscoverage['/manager.js'].branchData = {};
+  _$jscoverage['/manager.js'].branchData['76'] = [];
+  _$jscoverage['/manager.js'].branchData['76'][1] = new BranchData();
   _$jscoverage['/manager.js'].branchData['77'] = [];
   _$jscoverage['/manager.js'].branchData['77'][1] = new BranchData();
   _$jscoverage['/manager.js'].branchData['78'] = [];
   _$jscoverage['/manager.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['79'] = [];
-  _$jscoverage['/manager.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['82'] = [];
-  _$jscoverage['/manager.js'].branchData['82'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['84'] = [];
-  _$jscoverage['/manager.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['89'] = [];
-  _$jscoverage['/manager.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['91'] = [];
-  _$jscoverage['/manager.js'].branchData['91'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['96'] = [];
-  _$jscoverage['/manager.js'].branchData['96'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['115'] = [];
-  _$jscoverage['/manager.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['117'] = [];
-  _$jscoverage['/manager.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/manager.js'].branchData['117'][2] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['81'] = [];
+  _$jscoverage['/manager.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['83'] = [];
+  _$jscoverage['/manager.js'].branchData['83'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['88'] = [];
+  _$jscoverage['/manager.js'].branchData['88'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['90'] = [];
+  _$jscoverage['/manager.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['95'] = [];
+  _$jscoverage['/manager.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['114'] = [];
+  _$jscoverage['/manager.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['116'] = [];
+  _$jscoverage['/manager.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/manager.js'].branchData['116'][2] = new BranchData();
 }
-_$jscoverage['/manager.js'].branchData['117'][2].init(63, 21, '(t = uic.priority) > p');
-function visit11_117_2(result) {
-  _$jscoverage['/manager.js'].branchData['117'][2].ranCondition(result);
+_$jscoverage['/manager.js'].branchData['116'][2].init(63, 21, '(t = uic.priority) > p');
+function visit11_116_2(result) {
+  _$jscoverage['/manager.js'].branchData['116'][2].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['117'][1].init(55, 29, 'uic && (t = uic.priority) > p');
-function visit10_117_1(result) {
-  _$jscoverage['/manager.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['116'][1].init(55, 29, 'uic && (t = uic.priority) > p');
+function visit10_116_1(result) {
+  _$jscoverage['/manager.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['115'][1].init(181, 13, 'i < cs.length');
-function visit9_115_1(result) {
-  _$jscoverage['/manager.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['114'][1].init(181, 13, 'i < cs.length');
+function visit9_114_1(result) {
+  _$jscoverage['/manager.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['96'][1].init(924, 29, 'component.isControl && parent');
-function visit8_96_1(result) {
-  _$jscoverage['/manager.js'].branchData['96'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['95'][1].init(924, 29, 'component.isControl && parent');
+function visit8_95_1(result) {
+  _$jscoverage['/manager.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['91'][1].init(104, 17, '!ChildConstructor');
-function visit7_91_1(result) {
-  _$jscoverage['/manager.js'].branchData['91'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['90'][1].init(104, 17, '!ChildConstructor');
+function visit7_90_1(result) {
+  _$jscoverage['/manager.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['89'][1].init(538, 51, '!component.isControl && (xclass = component.xclass)');
-function visit6_89_1(result) {
-  _$jscoverage['/manager.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['88'][1].init(538, 51, '!component.isControl && (xclass = component.xclass)');
+function visit6_88_1(result) {
+  _$jscoverage['/manager.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['84'][1].init(96, 15, 'component.xtype');
-function visit5_84_1(result) {
-  _$jscoverage['/manager.js'].branchData['84'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['83'][1].init(96, 15, 'component.xtype');
+function visit5_83_1(result) {
+  _$jscoverage['/manager.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['82'][1].init(166, 43, '!component.xclass && component.prefixXClass');
-function visit4_82_1(result) {
-  _$jscoverage['/manager.js'].branchData['82'][1].ranCondition(result);
+}_$jscoverage['/manager.js'].branchData['81'][1].init(166, 43, '!component.xclass && component.prefixXClass');
+function visit4_81_1(result) {
+  _$jscoverage['/manager.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['79'][1].init(25, 20, '!component.prefixCls');
-function visit3_79_1(result) {
-  _$jscoverage['/manager.js'].branchData['79'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/manager.js'].branchData['78'][1].init(21, 30, '!component.isControl && parent');
-function visit2_78_1(result) {
+}_$jscoverage['/manager.js'].branchData['78'][1].init(25, 20, '!component.prefixCls');
+function visit3_78_1(result) {
   _$jscoverage['/manager.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/manager.js'].branchData['77'][1].init(75, 9, 'component');
-function visit1_77_1(result) {
+}_$jscoverage['/manager.js'].branchData['77'][1].init(21, 30, '!component.isControl && parent');
+function visit2_77_1(result) {
   _$jscoverage['/manager.js'].branchData['77'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/manager.js'].branchData['76'][1].init(75, 9, 'component');
+function visit1_76_1(result) {
+  _$jscoverage['/manager.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/manager.js'].lineData[6]++;
 KISSY.add(function(S) {
@@ -350,90 +350,90 @@ KISSY.add(function(S) {
   __instances: componentInstances, 
   addComponent: function(id, component) {
   _$jscoverage['/manager.js'].functionData[1]++;
-  _$jscoverage['/manager.js'].lineData[35]++;
+  _$jscoverage['/manager.js'].lineData[34]++;
   componentInstances[id] = component;
 }, 
   removeComponent: function(id) {
   _$jscoverage['/manager.js'].functionData[2]++;
-  _$jscoverage['/manager.js'].lineData[43]++;
+  _$jscoverage['/manager.js'].lineData[42]++;
   delete componentInstances[id];
 }, 
-  'getComponent': function(id) {
+  getComponent: function(id) {
   _$jscoverage['/manager.js'].functionData[3]++;
-  _$jscoverage['/manager.js'].lineData[52]++;
+  _$jscoverage['/manager.js'].lineData[51]++;
   return componentInstances[id];
 }, 
-  'createComponent': function(component, parent) {
+  createComponent: function(component, parent) {
   _$jscoverage['/manager.js'].functionData[4]++;
-  _$jscoverage['/manager.js'].lineData[75]++;
+  _$jscoverage['/manager.js'].lineData[74]++;
   var ChildConstructor, xclass;
-  _$jscoverage['/manager.js'].lineData[77]++;
-  if (visit1_77_1(component)) {
-    _$jscoverage['/manager.js'].lineData[78]++;
-    if (visit2_78_1(!component.isControl && parent)) {
-      _$jscoverage['/manager.js'].lineData[79]++;
-      if (visit3_79_1(!component.prefixCls)) {
-        _$jscoverage['/manager.js'].lineData[80]++;
+  _$jscoverage['/manager.js'].lineData[76]++;
+  if (visit1_76_1(component)) {
+    _$jscoverage['/manager.js'].lineData[77]++;
+    if (visit2_77_1(!component.isControl && parent)) {
+      _$jscoverage['/manager.js'].lineData[78]++;
+      if (visit3_78_1(!component.prefixCls)) {
+        _$jscoverage['/manager.js'].lineData[79]++;
         component.prefixCls = parent.get('prefixCls');
       }
-      _$jscoverage['/manager.js'].lineData[82]++;
-      if (visit4_82_1(!component.xclass && component.prefixXClass)) {
-        _$jscoverage['/manager.js'].lineData[83]++;
+      _$jscoverage['/manager.js'].lineData[81]++;
+      if (visit4_81_1(!component.xclass && component.prefixXClass)) {
+        _$jscoverage['/manager.js'].lineData[82]++;
         component.xclass = component.prefixXClass;
-        _$jscoverage['/manager.js'].lineData[84]++;
-        if (visit5_84_1(component.xtype)) {
-          _$jscoverage['/manager.js'].lineData[85]++;
+        _$jscoverage['/manager.js'].lineData[83]++;
+        if (visit5_83_1(component.xtype)) {
+          _$jscoverage['/manager.js'].lineData[84]++;
           component.xclass += '-' + component.xtype;
         }
       }
     }
-    _$jscoverage['/manager.js'].lineData[89]++;
-    if (visit6_89_1(!component.isControl && (xclass = component.xclass))) {
-      _$jscoverage['/manager.js'].lineData[90]++;
+    _$jscoverage['/manager.js'].lineData[88]++;
+    if (visit6_88_1(!component.isControl && (xclass = component.xclass))) {
+      _$jscoverage['/manager.js'].lineData[89]++;
       ChildConstructor = Manager.getConstructorByXClass(xclass);
-      _$jscoverage['/manager.js'].lineData[91]++;
-      if (visit7_91_1(!ChildConstructor)) {
-        _$jscoverage['/manager.js'].lineData[92]++;
+      _$jscoverage['/manager.js'].lineData[90]++;
+      if (visit7_90_1(!ChildConstructor)) {
+        _$jscoverage['/manager.js'].lineData[91]++;
         S.error('can not find class by xclass desc : ' + xclass);
       }
-      _$jscoverage['/manager.js'].lineData[94]++;
+      _$jscoverage['/manager.js'].lineData[93]++;
       component = new ChildConstructor(component);
     }
-    _$jscoverage['/manager.js'].lineData[96]++;
-    if (visit8_96_1(component.isControl && parent)) {
-      _$jscoverage['/manager.js'].lineData[97]++;
+    _$jscoverage['/manager.js'].lineData[95]++;
+    if (visit8_95_1(component.isControl && parent)) {
+      _$jscoverage['/manager.js'].lineData[96]++;
       component.setInternal('parent', parent);
     }
   }
-  _$jscoverage['/manager.js'].lineData[100]++;
+  _$jscoverage['/manager.js'].lineData[99]++;
   return component;
 }, 
   getConstructorByXClass: function(classNames) {
   _$jscoverage['/manager.js'].functionData[5]++;
-  _$jscoverage['/manager.js'].lineData[109]++;
+  _$jscoverage['/manager.js'].lineData[108]++;
   var cs = classNames.split(/\s+/), p = -1, t, i, uic, ui = null;
-  _$jscoverage['/manager.js'].lineData[115]++;
-  for (i = 0; visit9_115_1(i < cs.length); i++) {
-    _$jscoverage['/manager.js'].lineData[116]++;
+  _$jscoverage['/manager.js'].lineData[114]++;
+  for (i = 0; visit9_114_1(i < cs.length); i++) {
+    _$jscoverage['/manager.js'].lineData[115]++;
     uic = uis[cs[i]];
-    _$jscoverage['/manager.js'].lineData[117]++;
-    if (visit10_117_1(uic && visit11_117_2((t = uic.priority) > p))) {
-      _$jscoverage['/manager.js'].lineData[118]++;
+    _$jscoverage['/manager.js'].lineData[116]++;
+    if (visit10_116_1(uic && visit11_116_2((t = uic.priority) > p))) {
+      _$jscoverage['/manager.js'].lineData[117]++;
       p = t;
-      _$jscoverage['/manager.js'].lineData[119]++;
+      _$jscoverage['/manager.js'].lineData[118]++;
       ui = uic.constructor;
     }
   }
-  _$jscoverage['/manager.js'].lineData[122]++;
+  _$jscoverage['/manager.js'].lineData[121]++;
   return ui;
 }, 
   setConstructorByXClass: function(className, ComponentConstructor) {
   _$jscoverage['/manager.js'].functionData[6]++;
-  _$jscoverage['/manager.js'].lineData[131]++;
+  _$jscoverage['/manager.js'].lineData[130]++;
   uis[className] = {
   constructor: ComponentConstructor, 
   priority: basePriority++};
 }};
-  _$jscoverage['/manager.js'].lineData[138]++;
+  _$jscoverage['/manager.js'].lineData[137]++;
   return Manager;
 });

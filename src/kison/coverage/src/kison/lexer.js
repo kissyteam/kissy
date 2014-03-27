@@ -765,7 +765,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/kison/lexer.js'].lineData[189]++;
   matched = matched.slice(0, matched.length - match.length);
   _$jscoverage['/kison/lexer.js'].lineData[190]++;
-  var past = (visit108_190_1(matched.length > DEBUG_CONTEXT_LIMIT) ? '...' : '') + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '), next = match + input;
+  var past = (visit108_190_1(matched.length > DEBUG_CONTEXT_LIMIT) ? '...' : '') + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '), next = match + input;
   _$jscoverage['/kison/lexer.js'].lineData[193]++;
   next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit109_194_1(next.length > DEBUG_CONTEXT_LIMIT) ? '...' : '');
   _$jscoverage['/kison/lexer.js'].lineData[195]++;

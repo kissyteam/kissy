@@ -18,7 +18,6 @@ KISSY.add(function (S, require) {
      * @member KISSY.NodeList
      */
 
-
     /**
      * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
      * @param {KISSY.NodeList} newNodes Nodes to be inserted
@@ -26,7 +25,6 @@ KISSY.add(function (S, require) {
      * @method prepend
      * @member KISSY.NodeList
      */
-
 
         // append(node ,parent): reverse param order
         // appendTo(parent,node): normal

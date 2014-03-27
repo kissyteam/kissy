@@ -125,7 +125,6 @@ KISSY.add(function (S, require) {
              * @property checked
              */
 
-
             /**
              * Whether the menu item is selected.
              * @type {Boolean}

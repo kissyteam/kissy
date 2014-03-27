@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:00
+build time: Mar 27 21:56
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -21,7 +21,7 @@ build time: Mar 25 17:00
  editor/enterKey
  editor/htmlDataProcessor
  editor/selectionFix
- editor/plugin-meta
+ editor/modules
  editor/styles
  editor/domIterator
  editor/z-index-manager
@@ -297,25 +297,25 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
 KISSY.add("editor/focusManager", ["./base"], function(S, require) {
   var Editor = require("./base");
   function focus() {
-    var editor = this;
-    editor.__iframeFocus = TRUE;
-    currentInstance = editor;
+    var self = this;
+    self.__iframeFocus = TRUE;
+    currentInstance = self;
     if(timer) {
       clearTimeout(timer)
     }
     timer = setTimeout(function() {
-      editor.fire("focus")
+      self.fire("focus")
     }, 30)
   }
   function blur() {
-    var editor = this;
-    editor.__iframeFocus = FALSE;
+    var self = this;
+    self.__iframeFocus = FALSE;
     currentInstance = NULL;
     if(timer) {
       clearTimeout(timer)
     }
     timer = setTimeout(function() {
-      editor.fire("blur")
+      self.fire("blur")
     }, 30)
   }
   var INSTANCES = {}, timer, currentInstance, focusManager = {currentInstance:function() {
@@ -3196,7 +3196,7 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "node"], function(S, 
     monitorSelectionChange(editor)
   }}
 });
-KISSY.add("editor/plugin-meta", [], function() {
+KISSY.add("editor/modules", [], function() {
   (function(config, Feature, UA) {
     config({"editor/plugin/back-color":{requires:["editor/plugin/color/btn", "editor/plugin/back-color/cmd"]}});
     config({"editor/plugin/back-color/cmd":{requires:["editor/plugin/color/cmd"]}});
@@ -3504,9 +3504,9 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
   }
   function toPre(block, newBlock) {
     var preHTML = block.html();
-    preHTML = replace(preHTML, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, "");
-    preHTML = preHTML.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, "$1");
-    preHTML = preHTML.replace(/([ \t\n\r]+|&nbsp;)/g, " ");
+    preHTML = replace(preHTML, /(?:^[\t\n\r]+)|(?:[\t\n\r]+$)/g, "");
+    preHTML = preHTML.replace(/[\t\r\n]*(<br[^>]*>)[\t\r\n]*/gi, "$1");
+    preHTML = preHTML.replace(/([\t\n\r]+|&nbsp;)/g, " ");
     preHTML = preHTML.replace(/<br\b[^>]*>/gi, "\n");
     if(UA.ie) {
       var temp = block[0].ownerDocument.createElement("div");
@@ -3563,9 +3563,9 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     for(var i = 0;i < preHTMLs.length;i++) {
       var blockHTML = preHTMLs[i];
       blockHTML = blockHTML.replace(/(\r\n|\r)/g, "\n");
-      blockHTML = replace(blockHTML, /^[ \t]*\n/, "");
+      blockHTML = replace(blockHTML, /^[\t]*\n/, "");
       blockHTML = replace(blockHTML, /\n$/, "");
-      blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function(match, offset) {
+      blockHTML = replace(blockHTML, /^[\t]+|[\t]+$/g, function(match, offset) {
         if(match.length === 1) {
           return"&nbsp;"
         }else {
@@ -3577,7 +3577,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         }
       });
       blockHTML = blockHTML.replace(/\n/g, "<br>");
-      blockHTML = blockHTML.replace(/[ \t]{2,}/g, function(match) {
+      blockHTML = blockHTML.replace(/[\t]{2,}/g, function(match) {
         return(new Array(match.length)).join("&nbsp;") + " "
       });
       var newBlockClone = newBlock.clone();
@@ -3751,7 +3751,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         }
       }
     }else {
-      var endNode = bookmark.endNode, me = this;
+      var endNode = bookmark.endNode, self = this;
       var breakNodes = function() {
         var startPath = new ElementPath(startNode.parent()), endPath = new ElementPath(endNode.parent()), breakStart = NULL, element, breakEnd = NULL;
         for(var i = 0;i < startPath.elements.length;i++) {
@@ -3759,7 +3759,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           if(element === startPath.block || element === startPath.blockLimit) {
             break
           }
-          if(me.checkElementRemovable(element)) {
+          if(self.checkElementRemovable(element)) {
             breakStart = element
           }
         }
@@ -3768,7 +3768,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           if(element === endPath.block || element === endPath.blockLimit) {
             break
           }
-          if(me.checkElementRemovable(element)) {
+          if(self.checkElementRemovable(element)) {
             breakEnd = element
           }
         }
@@ -4035,7 +4035,8 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
       var includeNode = currentNode[0].nodeType !== Dom.NodeType.ELEMENT_NODE, continueFromSibling = FALSE;
       if(!includeNode) {
         var nodeName = currentNode.nodeName();
-        if(currentNode._4eIsBlockBoundary(self.forceBrBreak && {br:1})) {
+        var forceBrBreak = self.forceBrBreak && {br:1};
+        if(currentNode._4eIsBlockBoundary(forceBrBreak)) {
           if(nodeName === "br") {
             includeNode = TRUE
           }else {
@@ -4176,7 +4177,7 @@ KISSY.add("editor/z-index-manager", ["./base"], function(S, require) {
   };
   return ZIndexManager
 });
-KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor/utils", "editor/focusManager", "editor/clipboard", "editor/enterKey", "editor/htmlDataProcessor", "editor/selectionFix", "editor/plugin-meta", "editor/styles", "editor/domIterator", "editor/z-index-manager"], function(S, require, exports, module) {
+KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor/utils", "editor/focusManager", "editor/clipboard", "editor/enterKey", "editor/htmlDataProcessor", "editor/selectionFix", "editor/modules", "editor/styles", "editor/domIterator", "editor/z-index-manager"], function(S, require, exports, module) {
   var Node = require("node");
   var iframeContentTpl = require("editor/iframe-content-tpl");
   var Editor = require("editor/base");
@@ -4186,7 +4187,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
   var enterKey = require("editor/enterKey");
   var htmlDataProcessor = require("editor/htmlDataProcessor");
   var selectionFix = require("editor/selectionFix");
-  require("editor/plugin-meta");
+  require("editor/modules");
   require("editor/styles");
   require("editor/domIterator");
   require("editor/z-index-manager");

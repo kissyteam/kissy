@@ -7,7 +7,7 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S, require, module) {
+KISSY.add(function (S, require, exports, module) {
     var merge = S.merge,
         A = {isindex: 1, fieldset: 1},
         B = {input: 1, button: 1, select: 1, textarea: 1, label: 1},
@@ -310,7 +310,7 @@ KISSY.add(function (S, require, module) {
             sup: 1,
             tt: 1,
             u: 1,
-            var: 1
+            'var': 1
         },
 
         /**
@@ -640,7 +640,7 @@ KISSY.add(function (S, require, module) {
          * List of elements used inside the var element
          * @type {Object}
          */
-        var: L,
+        'var': L,
         /**
          * List of elements used inside the div element
          * @type {Object}
@@ -807,13 +807,17 @@ KISSY.add(function (S, require, module) {
 
     var i,
         html5Tags = [
-            article, figure, nav,
-            aside, section, footer
+            'article',
+            'figure',
+            'nav',
+            'aside',
+            'section',
+            'footer'
         ];
 
     for (var p in dtd) {
         for (var p2 in dtd[p]) {
-            if (p2 === div) {
+            if (p2 === 'div') {
                 for (i = 0; i < html5Tags.length; i++) {
                     dtd[p][html5Tags[i]] = dtd[p][p2];
                 }

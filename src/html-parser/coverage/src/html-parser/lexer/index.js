@@ -255,19 +255,19 @@ if (! _$jscoverage['/html-parser/lexer/index.js']) {
   _$jscoverage['/html-parser/lexer/index.js'].lineData[61] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[62] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[63] = 0;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[64] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[65] = 0;
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[66] = 0;
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[69] = 0;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[68] = 0;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[71] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[72] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[73] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[74] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[75] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[76] = 0;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[77] = 0;
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[79] = 0;
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[80] = 0;
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[83] = 0;
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[86] = 0;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[78] = 0;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[81] = 0;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[84] = 0;
 }
 if (! _$jscoverage['/html-parser/lexer/index.js'].functionData) {
   _$jscoverage['/html-parser/lexer/index.js'].functionData = [];
@@ -296,30 +296,30 @@ if (! _$jscoverage['/html-parser/lexer/index.js'].branchData) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['60'][1] = new BranchData();
   _$jscoverage['/html-parser/lexer/index.js'].branchData['62'] = [];
   _$jscoverage['/html-parser/lexer/index.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['65'] = [];
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['74'] = [];
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['76'] = [];
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['79'] = [];
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['64'] = [];
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['73'] = [];
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['75'] = [];
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['77'] = [];
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['77'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1].init(151, 21, 'iPosition > cPosition');
-function visit15_79_1(result) {
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1].ranCondition(result);
+_$jscoverage['/html-parser/lexer/index.js'].branchData['77'][1].init(139, 21, 'iPosition > cPosition');
+function visit15_77_1(result) {
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['76'][1].init(61, 23, 'iPosition === cPosition');
-function visit14_76_1(result) {
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['75'][1].init(61, 23, 'iPosition === cPosition');
+function visit14_75_1(result) {
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['74'][1].init(61, 13, 'i < cs.length');
-function visit13_74_1(result) {
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['74'][1].ranCondition(result);
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['73'][1].init(61, 13, 'i < cs.length');
+function visit13_73_1(result) {
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['65'][1].init(150, 21, 'iPosition < cPosition');
-function visit12_65_1(result) {
-  _$jscoverage['/html-parser/lexer/index.js'].branchData['65'][1].ranCondition(result);
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['64'][1].init(138, 21, 'iPosition < cPosition');
+function visit12_64_1(result) {
+  _$jscoverage['/html-parser/lexer/index.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/index.js'].branchData['62'][1].init(61, 23, 'iPosition === cPosition');
 function visit11_62_1(result) {
@@ -424,40 +424,40 @@ KISSY.add(function() {
         _$jscoverage['/html-parser/lexer/index.js'].lineData[63]++;
         return i;
       } else {
-        _$jscoverage['/html-parser/lexer/index.js'].lineData[65]++;
-        if (visit12_65_1(iPosition < cPosition)) {
-          _$jscoverage['/html-parser/lexer/index.js'].lineData[66]++;
+        _$jscoverage['/html-parser/lexer/index.js'].lineData[64]++;
+        if (visit12_64_1(iPosition < cPosition)) {
+          _$jscoverage['/html-parser/lexer/index.js'].lineData[65]++;
           return -1;
         }
       }
     }
-    _$jscoverage['/html-parser/lexer/index.js'].lineData[69]++;
+    _$jscoverage['/html-parser/lexer/index.js'].lineData[68]++;
     return -1;
   }
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[72]++;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[71]++;
   function indexOfCursorForInsert(cs, c) {
     _$jscoverage['/html-parser/lexer/index.js'].functionData[7]++;
-    _$jscoverage['/html-parser/lexer/index.js'].lineData[73]++;
+    _$jscoverage['/html-parser/lexer/index.js'].lineData[72]++;
     var cPosition = c.position;
-    _$jscoverage['/html-parser/lexer/index.js'].lineData[74]++;
-    for (var i = 0; visit13_74_1(i < cs.length); i++) {
-      _$jscoverage['/html-parser/lexer/index.js'].lineData[75]++;
+    _$jscoverage['/html-parser/lexer/index.js'].lineData[73]++;
+    for (var i = 0; visit13_73_1(i < cs.length); i++) {
+      _$jscoverage['/html-parser/lexer/index.js'].lineData[74]++;
       var iPosition = cs[i].position;
-      _$jscoverage['/html-parser/lexer/index.js'].lineData[76]++;
-      if (visit14_76_1(iPosition === cPosition)) {
-        _$jscoverage['/html-parser/lexer/index.js'].lineData[77]++;
+      _$jscoverage['/html-parser/lexer/index.js'].lineData[75]++;
+      if (visit14_75_1(iPosition === cPosition)) {
+        _$jscoverage['/html-parser/lexer/index.js'].lineData[76]++;
         return -1;
       } else {
-        _$jscoverage['/html-parser/lexer/index.js'].lineData[79]++;
-        if (visit15_79_1(iPosition > cPosition)) {
-          _$jscoverage['/html-parser/lexer/index.js'].lineData[80]++;
+        _$jscoverage['/html-parser/lexer/index.js'].lineData[77]++;
+        if (visit15_77_1(iPosition > cPosition)) {
+          _$jscoverage['/html-parser/lexer/index.js'].lineData[78]++;
           return i;
         }
       }
     }
-    _$jscoverage['/html-parser/lexer/index.js'].lineData[83]++;
+    _$jscoverage['/html-parser/lexer/index.js'].lineData[81]++;
     return i;
   }
-  _$jscoverage['/html-parser/lexer/index.js'].lineData[86]++;
+  _$jscoverage['/html-parser/lexer/index.js'].lineData[84]++;
   return Index;
 });

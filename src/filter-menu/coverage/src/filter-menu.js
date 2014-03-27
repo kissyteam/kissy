@@ -246,50 +246,50 @@ if (! _$jscoverage['/filter-menu.js']) {
   _$jscoverage['/filter-menu.js'].lineData[43] = 0;
   _$jscoverage['/filter-menu.js'].lineData[46] = 0;
   _$jscoverage['/filter-menu.js'].lineData[47] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[48] = 0;
   _$jscoverage['/filter-menu.js'].lineData[52] = 0;
   _$jscoverage['/filter-menu.js'].lineData[53] = 0;
   _$jscoverage['/filter-menu.js'].lineData[54] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[55] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[62] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[70] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[76] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[61] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[69] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[75] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[77] = 0;
   _$jscoverage['/filter-menu.js'].lineData[78] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[79] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[82] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[86] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[81] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[85] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[87] = 0;
   _$jscoverage['/filter-menu.js'].lineData[88] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[89] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[93] = 0;
   _$jscoverage['/filter-menu.js'].lineData[94] = 0;
   _$jscoverage['/filter-menu.js'].lineData[95] = 0;
   _$jscoverage['/filter-menu.js'].lineData[96] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[97] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[98] = 0;
   _$jscoverage['/filter-menu.js'].lineData[99] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[100] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[102] = 0;
   _$jscoverage['/filter-menu.js'].lineData[103] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[104] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[106] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[108] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[105] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[107] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[110] = 0;
   _$jscoverage['/filter-menu.js'].lineData[111] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[112] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[118] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[120] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[122] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[125] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[129] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[117] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[119] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[121] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[124] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[128] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[132] = 0;
   _$jscoverage['/filter-menu.js'].lineData[133] = 0;
   _$jscoverage['/filter-menu.js'].lineData[134] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[135] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[138] = 0;
   _$jscoverage['/filter-menu.js'].lineData[139] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[140] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[142] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[145] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[141] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[144] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[146] = 0;
   _$jscoverage['/filter-menu.js'].lineData[147] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[148] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[153] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[152] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[162] = 0;
   _$jscoverage['/filter-menu.js'].lineData[163] = 0;
   _$jscoverage['/filter-menu.js'].lineData[164] = 0;
   _$jscoverage['/filter-menu.js'].lineData[165] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[166] = 0;
 }
 if (! _$jscoverage['/filter-menu.js'].functionData) {
   _$jscoverage['/filter-menu.js'].functionData = [];
@@ -309,105 +309,105 @@ if (! _$jscoverage['/filter-menu.js'].branchData) {
   _$jscoverage['/filter-menu.js'].branchData['42'][1] = new BranchData();
   _$jscoverage['/filter-menu.js'].branchData['46'] = [];
   _$jscoverage['/filter-menu.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['52'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['52'][2] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['54'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['78'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['88'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['94'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['96'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['96'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['101'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['103'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['103'][2] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['103'][3] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['48'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['48'][2] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['53'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['77'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['87'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['93'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['93'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['95'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['100'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['102'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['102'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['102'][2] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['102'][3] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['110'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['110'][1] = new BranchData();
   _$jscoverage['/filter-menu.js'].branchData['111'] = [];
   _$jscoverage['/filter-menu.js'].branchData['111'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['112'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['112'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['122'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['122'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['130'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['130'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['135'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['135'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['142'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['142'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['121'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['129'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['129'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['134'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['134'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['141'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['141'][1] = new BranchData();
 }
-_$jscoverage['/filter-menu.js'].branchData['142'][1].init(29, 25, 'content.indexOf(str) > -1');
-function visit27_142_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['142'][1].ranCondition(result);
+_$jscoverage['/filter-menu.js'].branchData['141'][1].init(29, 25, 'content.indexOf(str) > -1');
+function visit27_141_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['135'][1].init(77, 4, '!str');
-function visit26_135_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['135'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['134'][1].init(77, 4, '!str');
+function visit26_134_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['130'][1].init(65, 44, 'str && new RegExp(S.escapeRegExp(str), \'ig\')');
-function visit25_130_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['130'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['129'][1].init(65, 44, 'str && new RegExp(S.escapeRegExp(str), \'ig\')');
+function visit25_129_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['122'][1].init(1788, 46, 'oldEnteredItems.length !== enteredItems.length');
-function visit24_122_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['122'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['121'][1].init(1788, 46, 'oldEnteredItems.length !== enteredItems.length');
+function visit24_121_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['112'][1].init(35, 14, 'match[2] || \'\'');
-function visit23_112_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['112'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/filter-menu.js'].branchData['111'][1].init(78, 5, 'match');
-function visit22_111_1(result) {
+}_$jscoverage['/filter-menu.js'].branchData['111'][1].init(35, 14, 'match[2] || \'\'');
+function visit23_111_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['103'][3].init(379, 30, 'content.indexOf(lastWord) > -1');
-function visit21_103_3(result) {
-  _$jscoverage['/filter-menu.js'].branchData['103'][3].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['110'][1].init(78, 5, 'match');
+function visit22_110_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['103'][2].init(379, 42, 'content.indexOf(lastWord) > -1 && lastWord');
-function visit20_103_2(result) {
-  _$jscoverage['/filter-menu.js'].branchData['103'][2].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['102'][3].init(379, 30, 'content.indexOf(lastWord) > -1');
+function visit21_102_3(result) {
+  _$jscoverage['/filter-menu.js'].branchData['102'][3].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['103'][1].init(368, 53, 'content && content.indexOf(lastWord) > -1 && lastWord');
-function visit19_103_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['102'][2].init(379, 42, 'content.indexOf(lastWord) > -1 && lastWord');
+function visit20_102_2(result) {
+  _$jscoverage['/filter-menu.js'].branchData['102'][2].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['101'][1].init(81, 27, 'item && item.get(\'content\')');
-function visit18_101_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['102'][1].init(368, 53, 'content && content.indexOf(lastWord) > -1 && lastWord');
+function visit19_102_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['96'][1].init(72, 5, 'match');
-function visit17_96_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['96'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['100'][1].init(81, 27, 'item && item.get(\'content\')');
+function visit18_100_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['94'][1].init(507, 22, '/[,\\uff0c]$/.test(str)');
-function visit16_94_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['95'][1].init(72, 5, 'match');
+function visit17_95_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['88'][1].init(316, 5, 'match');
-function visit15_88_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['88'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['93'][1].init(507, 22, '/[,\\uff0c]$/.test(str)');
+function visit16_93_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['78'][1].init(327, 25, 'self.get(\'allowMultiple\')');
-function visit14_78_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['78'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['87'][1].init(316, 5, 'match');
+function visit15_87_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['54'][1].init(102, 15, 'highlightedItem');
-function visit13_54_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['77'][1].init(327, 25, 'self.get(\'allowMultiple\')');
+function visit14_77_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['52'][2].init(696, 51, '!highlightedItem || !highlightedItem.get(\'visible\')');
-function visit12_52_2(result) {
-  _$jscoverage['/filter-menu.js'].branchData['52'][2].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['53'][1].init(214, 15, 'highlightedItem');
+function visit13_53_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu.js'].branchData['52'][1].init(688, 60, 'str && (!highlightedItem || !highlightedItem.get(\'visible\'))');
-function visit11_52_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['52'][1].ranCondition(result);
+}_$jscoverage['/filter-menu.js'].branchData['48'][2].init(580, 51, '!highlightedItem || !highlightedItem.get(\'visible\')');
+function visit12_48_2(result) {
+  _$jscoverage['/filter-menu.js'].branchData['48'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/filter-menu.js'].branchData['48'][1].init(572, 60, 'str && (!highlightedItem || !highlightedItem.get(\'visible\'))');
+function visit11_48_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['46'][1].init(454, 23, '!str && highlightedItem');
 function visit10_46_1(result) {
@@ -462,107 +462,107 @@ KISSY.add(function(S, require) {
     _$jscoverage['/filter-menu.js'].lineData[47]++;
     highlightedItem.set('highlighted', false);
   } else {
-    _$jscoverage['/filter-menu.js'].lineData[52]++;
-    if (visit11_52_1(str && (visit12_52_2(!highlightedItem || !highlightedItem.get('visible'))))) {
-      _$jscoverage['/filter-menu.js'].lineData[53]++;
+    _$jscoverage['/filter-menu.js'].lineData[48]++;
+    if (visit11_48_1(str && (visit12_48_2(!highlightedItem || !highlightedItem.get('visible'))))) {
+      _$jscoverage['/filter-menu.js'].lineData[52]++;
       highlightedItem = self._getNextEnabledHighlighted(0, 1);
-      _$jscoverage['/filter-menu.js'].lineData[54]++;
-      if (visit13_54_1(highlightedItem)) {
-        _$jscoverage['/filter-menu.js'].lineData[55]++;
+      _$jscoverage['/filter-menu.js'].lineData[53]++;
+      if (visit13_53_1(highlightedItem)) {
+        _$jscoverage['/filter-menu.js'].lineData[54]++;
         highlightedItem.set('highlighted', true);
       }
     }
   }
 }, 
-  '_onSetFilterStr': function(v) {
+  _onSetFilterStr: function(v) {
   _$jscoverage['/filter-menu.js'].functionData[4]++;
-  _$jscoverage['/filter-menu.js'].lineData[62]++;
+  _$jscoverage['/filter-menu.js'].lineData[61]++;
   this.filterItems(v);
 }, 
   filterItems: function(str) {
   _$jscoverage['/filter-menu.js'].functionData[5]++;
-  _$jscoverage['/filter-menu.js'].lineData[70]++;
+  _$jscoverage['/filter-menu.js'].lineData[69]++;
   var self = this, prefixCls = self.get('prefixCls'), _placeholderEl = self.get('placeholderEl'), filterInput = self.get('filterInput');
-  _$jscoverage['/filter-menu.js'].lineData[76]++;
+  _$jscoverage['/filter-menu.js'].lineData[75]++;
   _placeholderEl[str ? 'hide' : 'show']();
-  _$jscoverage['/filter-menu.js'].lineData[78]++;
-  if (visit14_78_1(self.get('allowMultiple'))) {
-    _$jscoverage['/filter-menu.js'].lineData[79]++;
+  _$jscoverage['/filter-menu.js'].lineData[77]++;
+  if (visit14_77_1(self.get('allowMultiple'))) {
+    _$jscoverage['/filter-menu.js'].lineData[78]++;
     var enteredItems = [], lastWord;
-    _$jscoverage['/filter-menu.js'].lineData[82]++;
+    _$jscoverage['/filter-menu.js'].lineData[81]++;
     var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
-    _$jscoverage['/filter-menu.js'].lineData[86]++;
+    _$jscoverage['/filter-menu.js'].lineData[85]++;
     var items = [];
-    _$jscoverage['/filter-menu.js'].lineData[88]++;
-    if (visit15_88_1(match)) {
-      _$jscoverage['/filter-menu.js'].lineData[89]++;
+    _$jscoverage['/filter-menu.js'].lineData[87]++;
+    if (visit15_87_1(match)) {
+      _$jscoverage['/filter-menu.js'].lineData[88]++;
       items = match[1].split(/[,\uff0c]/);
     }
-    _$jscoverage['/filter-menu.js'].lineData[94]++;
-    if (visit16_94_1(/[,\uff0c]$/.test(str))) {
-      _$jscoverage['/filter-menu.js'].lineData[95]++;
+    _$jscoverage['/filter-menu.js'].lineData[93]++;
+    if (visit16_93_1(/[,\uff0c]$/.test(str))) {
+      _$jscoverage['/filter-menu.js'].lineData[94]++;
       enteredItems = [];
-      _$jscoverage['/filter-menu.js'].lineData[96]++;
-      if (visit17_96_1(match)) {
-        _$jscoverage['/filter-menu.js'].lineData[97]++;
+      _$jscoverage['/filter-menu.js'].lineData[95]++;
+      if (visit17_95_1(match)) {
+        _$jscoverage['/filter-menu.js'].lineData[96]++;
         enteredItems = items;
-        _$jscoverage['/filter-menu.js'].lineData[99]++;
+        _$jscoverage['/filter-menu.js'].lineData[98]++;
         lastWord = items[items.length - 1];
-        _$jscoverage['/filter-menu.js'].lineData[100]++;
-        var item = self.get('highlightedItem'), content = visit18_101_1(item && item.get('content'));
-        _$jscoverage['/filter-menu.js'].lineData[103]++;
-        if (visit19_103_1(content && visit20_103_2(visit21_103_3(content.indexOf(lastWord) > -1) && lastWord))) {
-          _$jscoverage['/filter-menu.js'].lineData[104]++;
+        _$jscoverage['/filter-menu.js'].lineData[99]++;
+        var item = self.get('highlightedItem'), content = visit18_100_1(item && item.get('content'));
+        _$jscoverage['/filter-menu.js'].lineData[102]++;
+        if (visit19_102_1(content && visit20_102_2(visit21_102_3(content.indexOf(lastWord) > -1) && lastWord))) {
+          _$jscoverage['/filter-menu.js'].lineData[103]++;
           enteredItems[enteredItems.length - 1] = content;
         }
-        _$jscoverage['/filter-menu.js'].lineData[106]++;
+        _$jscoverage['/filter-menu.js'].lineData[105]++;
         filterInput.val(enteredItems.join(',') + ',');
       }
-      _$jscoverage['/filter-menu.js'].lineData[108]++;
+      _$jscoverage['/filter-menu.js'].lineData[107]++;
       str = '';
     } else {
-      _$jscoverage['/filter-menu.js'].lineData[111]++;
-      if (visit22_111_1(match)) {
-        _$jscoverage['/filter-menu.js'].lineData[112]++;
-        str = visit23_112_1(match[2] || '');
+      _$jscoverage['/filter-menu.js'].lineData[110]++;
+      if (visit22_110_1(match)) {
+        _$jscoverage['/filter-menu.js'].lineData[111]++;
+        str = visit23_111_1(match[2] || '');
       }
-      _$jscoverage['/filter-menu.js'].lineData[118]++;
+      _$jscoverage['/filter-menu.js'].lineData[117]++;
       enteredItems = items;
     }
-    _$jscoverage['/filter-menu.js'].lineData[120]++;
+    _$jscoverage['/filter-menu.js'].lineData[119]++;
     var oldEnteredItems = self.get('enteredItems');
-    _$jscoverage['/filter-menu.js'].lineData[122]++;
-    if (visit24_122_1(oldEnteredItems.length !== enteredItems.length)) {
-      _$jscoverage['/filter-menu.js'].lineData[125]++;
+    _$jscoverage['/filter-menu.js'].lineData[121]++;
+    if (visit24_121_1(oldEnteredItems.length !== enteredItems.length)) {
+      _$jscoverage['/filter-menu.js'].lineData[124]++;
       self.set('enteredItems', enteredItems);
     }
   }
-  _$jscoverage['/filter-menu.js'].lineData[129]++;
-  var children = self.get('children'), strExp = visit25_130_1(str && new RegExp(S.escapeRegExp(str), 'ig'));
-  _$jscoverage['/filter-menu.js'].lineData[133]++;
+  _$jscoverage['/filter-menu.js'].lineData[128]++;
+  var children = self.get('children'), strExp = visit25_129_1(str && new RegExp(S.escapeRegExp(str), 'ig'));
+  _$jscoverage['/filter-menu.js'].lineData[132]++;
   S.each(children, function(c) {
   _$jscoverage['/filter-menu.js'].functionData[6]++;
-  _$jscoverage['/filter-menu.js'].lineData[134]++;
+  _$jscoverage['/filter-menu.js'].lineData[133]++;
   var content = c.get('content');
-  _$jscoverage['/filter-menu.js'].lineData[135]++;
-  if (visit26_135_1(!str)) {
-    _$jscoverage['/filter-menu.js'].lineData[139]++;
+  _$jscoverage['/filter-menu.js'].lineData[134]++;
+  if (visit26_134_1(!str)) {
+    _$jscoverage['/filter-menu.js'].lineData[138]++;
     c.get('el').html(content);
-    _$jscoverage['/filter-menu.js'].lineData[140]++;
+    _$jscoverage['/filter-menu.js'].lineData[139]++;
     c.set('visible', true);
   } else {
-    _$jscoverage['/filter-menu.js'].lineData[142]++;
-    if (visit27_142_1(content.indexOf(str) > -1)) {
-      _$jscoverage['/filter-menu.js'].lineData[145]++;
+    _$jscoverage['/filter-menu.js'].lineData[141]++;
+    if (visit27_141_1(content.indexOf(str) > -1)) {
+      _$jscoverage['/filter-menu.js'].lineData[144]++;
       c.set('visible', true);
-      _$jscoverage['/filter-menu.js'].lineData[147]++;
+      _$jscoverage['/filter-menu.js'].lineData[146]++;
       c.get('el').html(content.replace(strExp, function(m) {
   _$jscoverage['/filter-menu.js'].functionData[7]++;
-  _$jscoverage['/filter-menu.js'].lineData[148]++;
+  _$jscoverage['/filter-menu.js'].lineData[147]++;
   return '<span class="' + prefixCls + HIT_CLS + '">' + m + '<' + '/span>';
 }));
     } else {
-      _$jscoverage['/filter-menu.js'].lineData[153]++;
+      _$jscoverage['/filter-menu.js'].lineData[152]++;
       c.set('visible', false);
     }
   }
@@ -570,13 +570,13 @@ KISSY.add(function(S, require) {
 }, 
   reset: function() {
   _$jscoverage['/filter-menu.js'].functionData[8]++;
-  _$jscoverage['/filter-menu.js'].lineData[163]++;
+  _$jscoverage['/filter-menu.js'].lineData[162]++;
   var self = this;
-  _$jscoverage['/filter-menu.js'].lineData[164]++;
+  _$jscoverage['/filter-menu.js'].lineData[163]++;
   self.set('filterStr', '');
-  _$jscoverage['/filter-menu.js'].lineData[165]++;
+  _$jscoverage['/filter-menu.js'].lineData[164]++;
   self.set('enteredItems', []);
-  _$jscoverage['/filter-menu.js'].lineData[166]++;
+  _$jscoverage['/filter-menu.js'].lineData[165]++;
   self.get('filterInput').val('');
 }}, {
   ATTRS: {

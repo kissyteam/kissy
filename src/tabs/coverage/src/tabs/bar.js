@@ -338,14 +338,14 @@ KISSY.add(function(S, require) {
   syncUI: function() {
   _$jscoverage['/tabs/bar.js'].functionData[3]++;
   _$jscoverage['/tabs/bar.js'].lineData[25]++;
-  var bar = this, children = bar.get('children');
+  var self = this, children = self.get('children');
   _$jscoverage['/tabs/bar.js'].lineData[27]++;
   S.each(children, function(c) {
   _$jscoverage['/tabs/bar.js'].functionData[4]++;
   _$jscoverage['/tabs/bar.js'].lineData[28]++;
   if (visit2_28_1(c.get('selected'))) {
     _$jscoverage['/tabs/bar.js'].lineData[29]++;
-    bar.setInternal('selectedTab', c);
+    self.setInternal('selectedTab', c);
     _$jscoverage['/tabs/bar.js'].lineData[30]++;
     return false;
   }

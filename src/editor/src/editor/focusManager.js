@@ -7,20 +7,20 @@ KISSY.add(function (S, require) {
     var Editor = require('./base');
 
     function focus() {
-        var editor = this;
-        editor.__iframeFocus = TRUE;
-        currentInstance = editor;
+        var self = this;
+        self.__iframeFocus = TRUE;
+        currentInstance = self;
         if (timer) {
             clearTimeout(timer);
         }
         timer = setTimeout(function () {
-            editor.fire('focus');
+            self.fire('focus');
         }, 30);
     }
 
     function blur() {
-        var editor = this;
-        editor.__iframeFocus = FALSE;
+        var self = this;
+        self.__iframeFocus = FALSE;
         currentInstance = NULL;
         if (timer) {
             clearTimeout(timer);
@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
          avoid subsequent blur/focus effects.
          */
         timer = setTimeout(function () {
-            editor.fire('blur');
+            self.fire('blur');
         }, 30);
     }
 
@@ -86,7 +86,6 @@ KISSY.add(function (S, require) {
         TRUE = true,
         FALSE = false,
         NULL = null;
-
 
     Editor.focusManager = focusManager;
     Editor.getInstances = function () {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 16:52
+build time: Mar 27 21:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -50,7 +50,7 @@ KISSY.add("dom/selector/parser", [], function(_, undefined) {
   }, showDebugInfo:function() {
     var self = this, DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT, matched = self.matched, match = self.match, input = self.input;
     matched = matched.slice(0, matched.length - match.length);
-    var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
+    var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
     next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
     return past + next + "\n" + (new Array(past.length + 1)).join("-") + "^"
   }, mapSymbol:function(t) {
@@ -492,7 +492,7 @@ KISSY.add("dom/selector", ["./selector/parser", "dom/basic"], function(S, requir
     var nodeName = el.nodeName.toLowerCase();
     return nodeName === "input" && el.checked || nodeName === "option" && el.selected
   }};
-  var attribExpr = {"~=":function(elValue, value) {
+  var attributeExpr = {"~=":function(elValue, value) {
     if(!value || value.indexOf(" ") > -1) {
       return 0
     }
@@ -524,7 +524,7 @@ KISSY.add("dom/selector", ["./selector/parser", "dom/basic"], function(S, requir
         if(elValue === undefined) {
           return 0
         }
-        var matchFn = attribExpr[match];
+        var matchFn = attributeExpr[match];
         if(matchFn) {
           return matchFn(elValue + "", value.value + "")
         }

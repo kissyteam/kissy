@@ -372,7 +372,7 @@ KISSY.add(function(S, require) {
   'aria-expanded': renderData.expanded ? 'true' : 'false', 
   'aria-selected': renderData.selected ? 'true' : 'false', 
   'aria-level': renderData.depth, 
-  'title': renderData.tooltip});
+  title: renderData.tooltip});
   _$jscoverage['/tree/node-render.js'].lineData[48]++;
   S.mix(childrenElSelectors, {
   expandIconEl: '#ks-tree-node-expand-icon-{id}', 
@@ -411,7 +411,7 @@ KISSY.add(function(S, require) {
   iconEl[0].className = self.getBaseCssClasses(iconElCss);
   _$jscoverage['/tree/node-render.js'].lineData[81]++;
   expandIconEl[0].className = self.getBaseCssClasses(S.substitute(expandElCss, {
-  't': isNodeSingleOrLast ? 'l' : 't'}));
+  t: isNodeSingleOrLast ? 'l' : 't'}));
   _$jscoverage['/tree/node-render.js'].lineData[86]++;
   childrenEl[0].className = self.getBaseCssClasses((isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS));
 }, 
@@ -433,7 +433,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/node-render.js'].lineData[102]++;
   self.el.setAttribute('aria-selected', v);
 }, 
-  '_onSetDepth': function(v) {
+  _onSetDepth: function(v) {
   _$jscoverage['/tree/node-render.js'].functionData[5]++;
   _$jscoverage['/tree/node-render.js'].lineData[106]++;
   this.el.setAttribute('aria-level', v);

@@ -233,6 +233,7 @@ if (! _$jscoverage['/base/tap.js']) {
   _$jscoverage['/base/tap.js'].lineData[7] = 0;
   _$jscoverage['/base/tap.js'].lineData[8] = 0;
   _$jscoverage['/base/tap.js'].lineData[9] = 0;
+  _$jscoverage['/base/tap.js'].lineData[10] = 0;
   _$jscoverage['/base/tap.js'].lineData[11] = 0;
   _$jscoverage['/base/tap.js'].lineData[21] = 0;
   _$jscoverage['/base/tap.js'].lineData[22] = 0;
@@ -341,7 +342,7 @@ if (! _$jscoverage['/base/tap.js'].branchData) {
   _$jscoverage['/base/tap.js'].branchData['157'] = [];
   _$jscoverage['/base/tap.js'].branchData['157'][1] = new BranchData();
 }
-_$jscoverage['/base/tap.js'].branchData['157'][1].init(2354, 27, 'duration > SINGLE_TAP_DELAY');
+_$jscoverage['/base/tap.js'].branchData['157'][1].init(2350, 27, 'duration > SINGLE_TAP_DELAY');
 function visit80_157_1(result) {
   _$jscoverage['/base/tap.js'].branchData['157'][1].ranCondition(result);
   return result;
@@ -349,7 +350,7 @@ function visit80_157_1(result) {
 function visit79_139_1(result) {
   _$jscoverage['/base/tap.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/tap.js'].branchData['135'][1].init(1505, 11, 'lastEndTime');
+}_$jscoverage['/base/tap.js'].branchData['135'][1].init(1501, 11, 'lastEndTime');
 function visit78_135_1(result) {
   _$jscoverage['/base/tap.js'].branchData['135'][1].ranCondition(result);
   return result;
@@ -357,11 +358,11 @@ function visit78_135_1(result) {
 function visit77_122_1(result) {
   _$jscoverage['/base/tap.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/tap.js'].branchData['119'][1].init(21, 8, 'S.UA.ios');
+}_$jscoverage['/base/tap.js'].branchData['119'][1].init(21, 6, 'UA.ios');
 function visit76_119_1(result) {
   _$jscoverage['/base/tap.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/tap.js'].branchData['118'][1].init(911, 47, 'eventObject.isDefaultPrevented() && S.UA.mobile');
+}_$jscoverage['/base/tap.js'].branchData['118'][1].init(911, 45, 'eventObject.isDefaultPrevented() && UA.mobile');
 function visit75_118_1(result) {
   _$jscoverage['/base/tap.js'].branchData['118'][1].ranCondition(result);
   return result;
@@ -410,6 +411,8 @@ KISSY.add(function(S, require) {
   var DomEvent = require('event/dom/base');
   _$jscoverage['/base/tap.js'].lineData[9]++;
   var SingleTouch = require('./single-touch');
+  _$jscoverage['/base/tap.js'].lineData[10]++;
+  var UA = require('ua');
   _$jscoverage['/base/tap.js'].lineData[11]++;
   var SINGLE_TAP_EVENT = 'singleTap', DOUBLE_TAP_EVENT = 'doubleTap', TAP_HOLD_EVENT = 'tapHold', TAP_EVENT = 'tap', TAP_HOLD_DELAY = 1000, SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
   _$jscoverage['/base/tap.js'].lineData[21]++;
@@ -530,9 +533,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/tap.js'].lineData[115]++;
   DomEvent.fire(target, TAP_EVENT, eventObject);
   _$jscoverage['/base/tap.js'].lineData[118]++;
-  if (visit75_118_1(eventObject.isDefaultPrevented() && S.UA.mobile)) {
+  if (visit75_118_1(eventObject.isDefaultPrevented() && UA.mobile)) {
     _$jscoverage['/base/tap.js'].lineData[119]++;
-    if (visit76_119_1(S.UA.ios)) {
+    if (visit76_119_1(UA.ios)) {
       _$jscoverage['/base/tap.js'].lineData[120]++;
       e.preventDefault();
     } else {

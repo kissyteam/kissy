@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:46
+build time: Mar 27 21:44
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -185,16 +185,16 @@ KISSY.add("attribute", ["event/custom"], function(S, require) {
     })
   }
   function addMembers(px) {
-    var SubClass = this;
-    wrapProtoForSuper(px, SubClass);
-    S.mix(SubClass.prototype, px)
+    var self = this;
+    wrapProtoForSuper(px, self);
+    S.mix(self.prototype, px)
   }
   Attribute.extend = function extend(px, sx) {
-    var SubClass, SuperClass = this;
+    var SubClass, self = this;
     sx = S.merge(sx);
     px = S.merge(px);
     var hooks, sxHooks = sx.__hooks__;
-    if(hooks = SuperClass.__hooks__) {
+    if(hooks = self.__hooks__) {
       sxHooks = sx.__hooks__ = sx.__hooks__ || {};
       S.mix(sxHooks, hooks, false)
     }
@@ -214,11 +214,11 @@ KISSY.add("attribute", ["event/custom"], function(S, require) {
     SubClass.__hooks__ = sxHooks;
     wrapProtoForSuper(px, SubClass);
     var inheritedStatics, sxInheritedStatics = sx.inheritedStatics;
-    if(inheritedStatics = SuperClass.inheritedStatics) {
+    if(inheritedStatics = self.inheritedStatics) {
       sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
       S.mix(sxInheritedStatics, inheritedStatics, false)
     }
-    S.extend(SubClass, SuperClass, px, sx);
+    S.extend(SubClass, self, px, sx);
     if(sxInheritedStatics) {
       S.mix(SubClass, sxInheritedStatics)
     }

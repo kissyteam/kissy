@@ -13,7 +13,7 @@ KISSY.add(function (S, require, exports, module) {
     var enterKey = require('editor/enterKey');
     var htmlDataProcessor = require('editor/htmlDataProcessor');
     var selectionFix = require('editor/selectionFix');
-    require('editor/plugin-meta');
+    require('editor/modules');
     require('editor/styles');
     require('editor/domIterator');
     require('editor/z-index-manager');
@@ -39,7 +39,7 @@ KISSY.add(function (S, require, exports, module) {
             ' allowTransparency="true" ' +
             ' {iframeSrc} ' +
             '>' +
-            '</iframe>' ,
+            '</iframe>',
         EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
 
     Editor.Mode = {
@@ -84,9 +84,8 @@ KISSY.add(function (S, require, exports, module) {
                 // 是否自动focus
                 if (self.get('focused')) {
                     self.focus();
-                }
-                //否则清空选择区域
-                else {
+                } else {
+                    //否则清空选择区域
                     var sel = self.getSelection();
                     if (sel) {
                         sel.removeAllRanges();
@@ -104,7 +103,6 @@ KISSY.add(function (S, require, exports, module) {
                 self.$el.addClass(prefixCls + 'editor-focused');
             });
         },
-
 
         // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
         _onSetHeight: function (v) {
@@ -232,8 +230,8 @@ KISSY.add(function (S, require, exports, module) {
             d.show(args);
             self.fire('dialogShow', {
                 dialog: d.dialog,
-                'pluginDialog': d,
-                'dialogName': name
+                pluginDialog: d,
+                dialogName: name
             });
         },
 
@@ -285,7 +283,7 @@ KISSY.add(function (S, require, exports, module) {
             return this.execCommand(Utils.getQueryCmd(name));
         },
 
-        'setData': function (data) {
+        setData: function (data) {
             var self = this,
                 htmlDataProcessor,
                 afterData = data;
@@ -370,7 +368,7 @@ KISSY.add(function (S, require, exports, module) {
          * @member KISSY.Editor
          * @return {String}
          */
-        'getSelectedHtml': function () {
+        getSelectedHtml: function () {
             var self = this,
                 range = self.getSelection().getRanges()[0],
                 contents,
@@ -573,7 +571,7 @@ KISSY.add(function (S, require, exports, module) {
             var clone,
                 elementName = element.nodeName(),
                 xhtmlDtd = Editor.XHTML_DTD,
-                isBlock = xhtmlDtd.$block[ elementName ],
+                isBlock = xhtmlDtd.$block[elementName],
                 KER = Editor.RangeType,
                 selection = self.getSelection(),
                 ranges = selection && selection.getRanges(),
@@ -591,7 +589,7 @@ KISSY.add(function (S, require, exports, module) {
             self.execCommand('save');
 
             for (i = ranges.length - 1; i >= 0; i--) {
-                range = ranges[ i ];
+                range = ranges[i];
                 // Remove the original contents.
 
                 clone = !i && element || element.clone(TRUE);
@@ -617,12 +615,12 @@ KISSY.add(function (S, require, exports, module) {
                     next.nodeName();
                 // Check if it's a block element that accepts text.
                 if (nextName &&
-                    xhtmlDtd.$block[ nextName ] &&
-                    xhtmlDtd[ nextName ]['#text']) {
+                    xhtmlDtd.$block[nextName] &&
+                    xhtmlDtd[nextName]['#text']) {
                     range.moveToElementEditablePosition(next);
                 }
             }
-            selection.selectRanges([ range ]);
+            selection.selectRanges([range]);
             self.focus();
             // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
             // only tag can scroll
@@ -795,11 +793,9 @@ KISSY.add(function (S, require, exports, module) {
                 // Prefer 'contentEditable' instead of 'designMode'. (#3593)
                 if (UA.gecko || UA.opera) {
                     body.contentEditable = TRUE;
-                }
-                else if (UA.webkit) {
+                } else if (UA.webkit) {
                     body.parentNode.contentEditable = TRUE;
-                }
-                else {
+                } else {
                     doc.designMode = 'on';
                 }
             }, 0);
@@ -862,7 +858,6 @@ KISSY.add(function (S, require, exports, module) {
             }
         }, 0);
 
-
         setTimeout(function () {
             self.__docReady = 1;
             self.fire('docReady');
@@ -876,8 +871,7 @@ KISSY.add(function (S, require, exports, module) {
                 try {
                     doc.execCommand('enableObjectResizing', FALSE, !disableObjectResizing);
                     doc.execCommand('enableInlineTableEditing', FALSE, !disableInlineTableEditing);
-                }
-                catch (e) {
+                } catch (e) {
                     // 只能ie能用？，目前只有 firefox,ie 支持图片缩放
                     // For browsers which don't support the above methods,
                     // we can use the the resize event or resizestart for IE (#4208)
@@ -982,8 +976,7 @@ KISSY.add(function (S, require, exports, module) {
              */
             if (UA.gecko) {
                 blinkCursor(doc, FALSE);
-            }
-            else if (UA.opera) {
+            } else if (UA.opera) {
                 doc.body.focus();
             }
             // focus 后强制刷新自己状态
@@ -1010,7 +1003,7 @@ KISSY.add(function (S, require, exports, module) {
             $doc.on('keydown', function (evt) {
                 var keyCode = evt.keyCode;
                 // Backspace OR Delete.
-                if (keyCode in { 8: 1, 46: 1 }) {
+                if (keyCode in {8: 1, 46: 1}) {
                     var sel = self.getSelection(),
                         control = sel.getSelectedElement();
                     if (control) {
@@ -1018,10 +1011,10 @@ KISSY.add(function (S, require, exports, module) {
                         self.execCommand('save');
                         // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
                         // break up the selection, safely manage it here. (#4795)
-                        var bookmark = sel.getRanges()[ 0 ].createBookmark();
+                        var bookmark = sel.getRanges()[0].createBookmark();
                         // Remove the control manually.
                         control.remove();
-                        sel.selectBookmarks([ bookmark ]);
+                        sel.selectBookmarks([bookmark]);
                         self.execCommand('save');
                         evt.preventDefault();
                     }
@@ -1032,7 +1025,7 @@ KISSY.add(function (S, require, exports, module) {
             // with standard doctype, manually fix it. (#4736)
             // ie8 主窗口滚动？？
             if (doc.compatMode === 'CSS1Compat') {
-                var pageUpDownKeys = { 33: 1, 34: 1 };
+                var pageUpDownKeys = {33: 1, 34: 1};
                 $doc.on('keydown', function (evt) {
                     if (evt.keyCode in pageUpDownKeys) {
                         setTimeout(function () {
@@ -1053,7 +1046,6 @@ KISSY.add(function (S, require, exports, module) {
             });
         }
 
-
         if (UA.gecko) {
             $doc.on('dragstart', function (ev) {
                 var control = new Node(ev.target);
@@ -1066,7 +1058,6 @@ KISSY.add(function (S, require, exports, module) {
         //注意：必须放在这个位置，等iframe加载好再开始运行
         //加入焦点管理，和其他实例联系起来
         focusManager.add(self);
-
     }
 
     function prepareIFrameHTML(id, customStyle, customLink, data) {
@@ -1100,7 +1091,7 @@ KISSY.add(function (S, require, exports, module) {
                 ('<script id="ke_active_script">' +
                     // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
                     // 否则下面的 parent.KISSY.Editor._initIframe 不能执行
-                    ( $(window).isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
+                    ($(window).isCustomDomain() ? ('document.domain="' + document.domain + '";') : '') +
                     'parent.KISSY.require(\'editor\')._initIframe("' + id + '");' +
                     '</script>') :
                 ''

@@ -4,7 +4,8 @@
  * Note: Only posix mode.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    require('util');
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
@@ -58,7 +59,7 @@ KISSY.add(function (S) {
      * @class KISSY.Path
      * @singleton
      */
-    var Path = S.Path = {
+    var Path = {
         /**
          * resolve([from ...], to)
          * @return {String} Resolved path.

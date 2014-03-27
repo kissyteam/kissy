@@ -11,7 +11,6 @@ KISSY.add(function (S, require) {
     var Panel = require('tabs/panel');
     var Render = require('tabs/render');
 
-
     function setBar(children, barOrientation, bar) {
         children[BarIndexMap[barOrientation]] = bar;
     }
@@ -76,7 +75,6 @@ KISSY.add(function (S, require) {
             }
         },
 
-
         /**
          * add one item to tabs
          * @param {Object} item item description
@@ -127,17 +125,17 @@ KISSY.add(function (S, require) {
          * @chainable
          */
         removeItemAt: function (index, destroy) {
-            var tabs = this,
+            var self = this,
                 bar = /**
                  @ignore
                  @type KISSY.Component.Control
-                 */tabs.get('bar'),
+                 */self.get('bar'),
                 barCs = bar.get('children'),
                 tab = bar.getChildAt(index),
                 body = /**
                  @ignore
                  @type KISSY.Component.Control
-                 */tabs.get('body');
+                 */self.get('body');
             if (tab.get('selected')) {
                 if (barCs.length === 1) {
                     bar.set('selectedTab', null);
@@ -149,7 +147,7 @@ KISSY.add(function (S, require) {
             }
             bar.removeChild(bar.getChildAt(index), destroy);
             body.removeChild(body.getChildAt(index), destroy);
-            return tabs;
+            return self;
         },
 
         /**
@@ -158,7 +156,7 @@ KISSY.add(function (S, require) {
          * @param {Boolean} destroy whether destroy specified tab and panel
          * @chainable
          */
-        'removeItemByTab': function (tab, destroy) {
+        removeItemByTab: function (tab, destroy) {
             var index = S.indexOf(tab, this.get('bar').get('children'));
             return this.removeItemAt(index, destroy);
         },
@@ -169,7 +167,7 @@ KISSY.add(function (S, require) {
          * @param {Boolean} destroy whether destroy specified tab and panel
          * @chainable
          */
-        'removeItemByPanel': function (panel, destroy) {
+        removeItemByPanel: function (panel, destroy) {
             var index = S.indexOf(panel, this.get('body').get('children'));
             return this.removeItemAt(index, destroy);
         },
@@ -179,8 +177,8 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Tabs.Tab}
          */
         getSelectedTab: function () {
-            var tabs = this,
-                bar = tabs.get('bar'),
+            var self = this,
+                bar = self.get('bar'),
                 child = null;
 
             S.each(bar.get('children'), function (c) {
@@ -199,8 +197,8 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Tabs.Tab}
          */
         getSelectedPanel: function () {
-            var tabs = this,
-                body = tabs.get('body'),
+            var self = this,
+                body = self.get('body'),
                 child = null;
 
             S.each(body.get('children'), function (c) {
@@ -240,7 +238,7 @@ KISSY.add(function (S, require) {
         /**
          * @ignore
          */
-        'getPanelAt': function (index) {
+        getPanelAt: function (index) {
             return this.get('body').get('children')[index];
         },
 
@@ -250,9 +248,9 @@ KISSY.add(function (S, require) {
          * @chainable
          */
         setSelectedTab: function (tab) {
-            var tabs = this,
-                bar = tabs.get('bar'),
-                body = tabs.get('body');
+            var self = this,
+                bar = self.get('bar'),
+                body = self.get('body');
             bar.set('selectedTab', tab);
             body.set('selectedPanelIndex', S.indexOf(tab, bar.get('children')));
             return this;
@@ -263,13 +261,13 @@ KISSY.add(function (S, require) {
          * @param {KISSY.Tabs.Panel} panel
          * @chainable
          */
-        'setSelectedPanel': function (panel) {
-            var tabs = this,
-                bar = tabs.get('bar'),
-                body = tabs.get('body'),
+        setSelectedPanel: function (panel) {
+            var self = this,
+                bar = self.get('bar'),
+                body = self.get('body'),
                 selectedPanelIndex = S.indexOf(panel, body.get('children'));
             body.set('selectedPanelIndex', selectedPanelIndex);
-            bar.set('selectedTab', tabs.getTabAt(selectedPanelIndex));
+            bar.set('selectedTab', self.getTabAt(selectedPanelIndex));
             return this;
         },
 
@@ -289,7 +287,6 @@ KISSY.add(function (S, require) {
              * @param {KISSY.Tabs.Tab} e.newVal selected tab
              */
 
-
             /**
              * fired before selected tab is changed
              * @event beforeSelectedTabChange
@@ -300,7 +297,6 @@ KISSY.add(function (S, require) {
         }
     }, {
         ATTRS: {
-
             /**
              *  tabs config, eg: {title:'',content:''}
              * @cfg {Object} item

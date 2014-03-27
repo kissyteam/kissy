@@ -319,7 +319,7 @@ if (! _$jscoverage['/filter-menu/render-xtpl.js'].branchData) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['86'] = [];
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['86'][1] = new BranchData();
 }
-_$jscoverage['/filter-menu/render-xtpl.js'].branchData['86'][1].init(3760, 37, 'commandRet15 && commandRet15.isBuffer');
+_$jscoverage['/filter-menu/render-xtpl.js'].branchData['86'][1].init(3754, 37, 'commandRet15 && commandRet15.isBuffer');
 function visit8_86_1(result) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['86'][1].ranCondition(result);
   return result;
@@ -476,7 +476,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/filter-menu/render-xtpl.js'].lineData[82]++;
     require("component/extension/content-xtpl");
     _$jscoverage['/filter-menu/render-xtpl.js'].lineData[83]++;
-    option13.params[0] = moduleWrap.resolveByName(option13.params[0]);
+    option13.params[0] = moduleWrap.resolve(option13.params[0]);
   }
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[85]++;
   var commandRet15 = includeCommand.call(engine, scope, option13, buffer, 11, payload);

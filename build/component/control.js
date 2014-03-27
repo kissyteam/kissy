@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:47
+build time: Mar 27 21:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -166,11 +166,11 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
     return v
   }
   function applyParser(srcNode, parser, control) {
-    var view = this, p, v, ret;
+    var self = this, p, v, ret;
     for(p in parser) {
       v = parser[p];
       if(typeof v === "function") {
-        ret = v.call(view, srcNode);
+        ret = v.call(self, srcNode);
         if(ret !== undefined) {
           control.setInternal(p, ret)
         }
@@ -395,8 +395,8 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
   }, _onSetZIndex:function(x) {
     this.$el.css("z-index", x)
   }}, {__hooks__:{createDom:__getHook("__createDom"), renderUI:__getHook("__renderUI"), bindUI:__getHook("__bindUI"), syncUI:__getHook("__syncUI"), decorateDom:__getHook("__decorateDom"), beforeCreateDom:__getHook("__beforeCreateDom")}, extend:function extend(extensions, px, sx) {
-    var SuperClass = this, NewClass, parsers = {};
-    NewClass = Base.extend.apply(SuperClass, arguments);
+    var self = this, NewClass, parsers = {};
+    NewClass = Base.extend.apply(self, arguments);
     NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
     if(S.isArray(extensions)) {
       S.each(extensions.concat(NewClass), function(ext) {
@@ -408,7 +408,7 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
       });
       NewClass[HTML_PARSER] = parsers
     }
-    S.mix(NewClass[HTML_PARSER], SuperClass[HTML_PARSER], false);
+    S.mix(NewClass[HTML_PARSER], self[HTML_PARSER], false);
     NewClass.extend = extend;
     return NewClass
   }, ATTRS:{control:{setter:function(v) {
@@ -642,20 +642,20 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     this.view = v
   }}}});
   function getDefaultRender() {
-    var attrs, constructor = this;
+    var attrs, self = this;
     do {
-      attrs = constructor.ATTRS;
-      constructor = constructor.superclass
+      attrs = self.ATTRS;
+      self = self.superclass
     }while(!attrs || !attrs.xrender);
     return attrs.xrender.value
   }
   Control.getDefaultRender = getDefaultRender;
   Control.extend = function extend(extensions, px, sx) {
-    var args = S.makeArray(arguments), baseClass = this, xclass, newClass, argsLen = args.length, last = args[argsLen - 1];
+    var args = S.makeArray(arguments), self = this, xclass, newClass, argsLen = args.length, last = args[argsLen - 1];
     if(last && (xclass = last.xclass)) {
       last.name = xclass
     }
-    newClass = ControlProcess.extend.apply(baseClass, args);
+    newClass = ControlProcess.extend.apply(self, args);
     if(xclass) {
       Manager.setConstructorByXClass(xclass, newClass)
     }

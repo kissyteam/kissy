@@ -301,7 +301,7 @@ KISSY.add(function(S) {
   _$jscoverage['/json/quote.js'].lineData[30]++;
   if (visit44_30_1(!(v = CONTROL_MAP[m]))) {
     _$jscoverage['/json/quote.js'].lineData[31]++;
-    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(-4);
+    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(0 - 4);
   }
   _$jscoverage['/json/quote.js'].lineData[33]++;
   return v;

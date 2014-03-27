@@ -235,220 +235,221 @@ if (! _$jscoverage['/base/add-event.js']) {
   _$jscoverage['/base/add-event.js'].lineData[9] = 0;
   _$jscoverage['/base/add-event.js'].lineData[10] = 0;
   _$jscoverage['/base/add-event.js'].lineData[11] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[17] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[12] = 0;
   _$jscoverage['/base/add-event.js'].lineData[18] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[21] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[19] = 0;
   _$jscoverage['/base/add-event.js'].lineData[22] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[25] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[23] = 0;
   _$jscoverage['/base/add-event.js'].lineData[26] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[30] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[32] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[34] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[27] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[31] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[33] = 0;
   _$jscoverage['/base/add-event.js'].lineData[35] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[37] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[36] = 0;
   _$jscoverage['/base/add-event.js'].lineData[38] = 0;
   _$jscoverage['/base/add-event.js'].lineData[39] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[41] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[43] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[40] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[42] = 0;
   _$jscoverage['/base/add-event.js'].lineData[44] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[46] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[49] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[45] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[47] = 0;
   _$jscoverage['/base/add-event.js'].lineData[50] = 0;
   _$jscoverage['/base/add-event.js'].lineData[51] = 0;
   _$jscoverage['/base/add-event.js'].lineData[52] = 0;
   _$jscoverage['/base/add-event.js'].lineData[53] = 0;
   _$jscoverage['/base/add-event.js'].lineData[54] = 0;
   _$jscoverage['/base/add-event.js'].lineData[55] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[57] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[56] = 0;
   _$jscoverage['/base/add-event.js'].lineData[58] = 0;
   _$jscoverage['/base/add-event.js'].lineData[59] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[62] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[60] = 0;
   _$jscoverage['/base/add-event.js'].lineData[63] = 0;
   _$jscoverage['/base/add-event.js'].lineData[64] = 0;
   _$jscoverage['/base/add-event.js'].lineData[65] = 0;
   _$jscoverage['/base/add-event.js'].lineData[66] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[68] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[70] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[73] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[81] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[83] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[85] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[67] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[69] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[71] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[74] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[82] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[84] = 0;
   _$jscoverage['/base/add-event.js'].lineData[86] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[88] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[92] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[87] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[89] = 0;
   _$jscoverage['/base/add-event.js'].lineData[93] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[97] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[102] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[94] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[98] = 0;
   _$jscoverage['/base/add-event.js'].lineData[103] = 0;
   _$jscoverage['/base/add-event.js'].lineData[104] = 0;
   _$jscoverage['/base/add-event.js'].lineData[105] = 0;
   _$jscoverage['/base/add-event.js'].lineData[106] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[112] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[117] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[107] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[113] = 0;
   _$jscoverage['/base/add-event.js'].lineData[118] = 0;
   _$jscoverage['/base/add-event.js'].lineData[119] = 0;
   _$jscoverage['/base/add-event.js'].lineData[120] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[126] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[130] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[121] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[127] = 0;
   _$jscoverage['/base/add-event.js'].lineData[131] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[136] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[132] = 0;
   _$jscoverage['/base/add-event.js'].lineData[137] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[143] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[138] = 0;
   _$jscoverage['/base/add-event.js'].lineData[144] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[146] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[148] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[145] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[147] = 0;
   _$jscoverage['/base/add-event.js'].lineData[149] = 0;
   _$jscoverage['/base/add-event.js'].lineData[150] = 0;
   _$jscoverage['/base/add-event.js'].lineData[151] = 0;
   _$jscoverage['/base/add-event.js'].lineData[152] = 0;
   _$jscoverage['/base/add-event.js'].lineData[153] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[161] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[154] = 0;
   _$jscoverage['/base/add-event.js'].lineData[162] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[164] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[166] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[168] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[163] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[165] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[167] = 0;
   _$jscoverage['/base/add-event.js'].lineData[169] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[172] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[176] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[180] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[170] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[173] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[177] = 0;
   _$jscoverage['/base/add-event.js'].lineData[181] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[184] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[186] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[182] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[185] = 0;
   _$jscoverage['/base/add-event.js'].lineData[187] = 0;
   _$jscoverage['/base/add-event.js'].lineData[188] = 0;
   _$jscoverage['/base/add-event.js'].lineData[189] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[191] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[193] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[190] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[192] = 0;
   _$jscoverage['/base/add-event.js'].lineData[194] = 0;
   _$jscoverage['/base/add-event.js'].lineData[195] = 0;
   _$jscoverage['/base/add-event.js'].lineData[196] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[198] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[197] = 0;
   _$jscoverage['/base/add-event.js'].lineData[199] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[201] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[200] = 0;
   _$jscoverage['/base/add-event.js'].lineData[202] = 0;
   _$jscoverage['/base/add-event.js'].lineData[203] = 0;
   _$jscoverage['/base/add-event.js'].lineData[204] = 0;
   _$jscoverage['/base/add-event.js'].lineData[205] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[209] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[213] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[206] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[210] = 0;
   _$jscoverage['/base/add-event.js'].lineData[214] = 0;
   _$jscoverage['/base/add-event.js'].lineData[215] = 0;
   _$jscoverage['/base/add-event.js'].lineData[216] = 0;
   _$jscoverage['/base/add-event.js'].lineData[217] = 0;
   _$jscoverage['/base/add-event.js'].lineData[218] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[220] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[219] = 0;
   _$jscoverage['/base/add-event.js'].lineData[221] = 0;
   _$jscoverage['/base/add-event.js'].lineData[222] = 0;
   _$jscoverage['/base/add-event.js'].lineData[223] = 0;
   _$jscoverage['/base/add-event.js'].lineData[224] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[227] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[230] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[225] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[228] = 0;
   _$jscoverage['/base/add-event.js'].lineData[231] = 0;
   _$jscoverage['/base/add-event.js'].lineData[232] = 0;
   _$jscoverage['/base/add-event.js'].lineData[233] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[236] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[240] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[242] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[234] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[237] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[241] = 0;
   _$jscoverage['/base/add-event.js'].lineData[243] = 0;
   _$jscoverage['/base/add-event.js'].lineData[244] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[246] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[245] = 0;
   _$jscoverage['/base/add-event.js'].lineData[247] = 0;
   _$jscoverage['/base/add-event.js'].lineData[248] = 0;
   _$jscoverage['/base/add-event.js'].lineData[249] = 0;
   _$jscoverage['/base/add-event.js'].lineData[250] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[253] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[257] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[259] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[251] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[254] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[258] = 0;
   _$jscoverage['/base/add-event.js'].lineData[260] = 0;
   _$jscoverage['/base/add-event.js'].lineData[261] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[265] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[262] = 0;
   _$jscoverage['/base/add-event.js'].lineData[266] = 0;
   _$jscoverage['/base/add-event.js'].lineData[267] = 0;
   _$jscoverage['/base/add-event.js'].lineData[268] = 0;
   _$jscoverage['/base/add-event.js'].lineData[269] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[271] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[270] = 0;
   _$jscoverage['/base/add-event.js'].lineData[272] = 0;
   _$jscoverage['/base/add-event.js'].lineData[273] = 0;
   _$jscoverage['/base/add-event.js'].lineData[274] = 0;
   _$jscoverage['/base/add-event.js'].lineData[275] = 0;
   _$jscoverage['/base/add-event.js'].lineData[276] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[282] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[287] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[277] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[283] = 0;
   _$jscoverage['/base/add-event.js'].lineData[288] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[290] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[289] = 0;
   _$jscoverage['/base/add-event.js'].lineData[291] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[293] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[292] = 0;
   _$jscoverage['/base/add-event.js'].lineData[294] = 0;
   _$jscoverage['/base/add-event.js'].lineData[295] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[297] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[300] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[296] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[298] = 0;
   _$jscoverage['/base/add-event.js'].lineData[301] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[304] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[302] = 0;
   _$jscoverage['/base/add-event.js'].lineData[305] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[307] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[306] = 0;
   _$jscoverage['/base/add-event.js'].lineData[308] = 0;
   _$jscoverage['/base/add-event.js'].lineData[309] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[314] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[310] = 0;
   _$jscoverage['/base/add-event.js'].lineData[315] = 0;
   _$jscoverage['/base/add-event.js'].lineData[316] = 0;
   _$jscoverage['/base/add-event.js'].lineData[317] = 0;
   _$jscoverage['/base/add-event.js'].lineData[318] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[324] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[327] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[319] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[325] = 0;
   _$jscoverage['/base/add-event.js'].lineData[328] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[330] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[329] = 0;
   _$jscoverage['/base/add-event.js'].lineData[331] = 0;
   _$jscoverage['/base/add-event.js'].lineData[332] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[340] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[333] = 0;
   _$jscoverage['/base/add-event.js'].lineData[341] = 0;
   _$jscoverage['/base/add-event.js'].lineData[342] = 0;
   _$jscoverage['/base/add-event.js'].lineData[343] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[348] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[344] = 0;
   _$jscoverage['/base/add-event.js'].lineData[349] = 0;
   _$jscoverage['/base/add-event.js'].lineData[350] = 0;
   _$jscoverage['/base/add-event.js'].lineData[351] = 0;
   _$jscoverage['/base/add-event.js'].lineData[352] = 0;
   _$jscoverage['/base/add-event.js'].lineData[353] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[359] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[361] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[354] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[360] = 0;
   _$jscoverage['/base/add-event.js'].lineData[362] = 0;
   _$jscoverage['/base/add-event.js'].lineData[363] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[367] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[364] = 0;
   _$jscoverage['/base/add-event.js'].lineData[368] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[371] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[369] = 0;
   _$jscoverage['/base/add-event.js'].lineData[372] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[375] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[373] = 0;
   _$jscoverage['/base/add-event.js'].lineData[376] = 0;
   _$jscoverage['/base/add-event.js'].lineData[377] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[380] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[378] = 0;
   _$jscoverage['/base/add-event.js'].lineData[381] = 0;
   _$jscoverage['/base/add-event.js'].lineData[382] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[385] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[383] = 0;
   _$jscoverage['/base/add-event.js'].lineData[386] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[388] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[387] = 0;
   _$jscoverage['/base/add-event.js'].lineData[389] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[391] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[390] = 0;
   _$jscoverage['/base/add-event.js'].lineData[392] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[396] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[393] = 0;
   _$jscoverage['/base/add-event.js'].lineData[397] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[399] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[398] = 0;
   _$jscoverage['/base/add-event.js'].lineData[400] = 0;
   _$jscoverage['/base/add-event.js'].lineData[401] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[403] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[402] = 0;
   _$jscoverage['/base/add-event.js'].lineData[404] = 0;
   _$jscoverage['/base/add-event.js'].lineData[405] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[410] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[406] = 0;
   _$jscoverage['/base/add-event.js'].lineData[411] = 0;
   _$jscoverage['/base/add-event.js'].lineData[412] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[414] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[413] = 0;
   _$jscoverage['/base/add-event.js'].lineData[415] = 0;
   _$jscoverage['/base/add-event.js'].lineData[416] = 0;
   _$jscoverage['/base/add-event.js'].lineData[417] = 0;
   _$jscoverage['/base/add-event.js'].lineData[418] = 0;
   _$jscoverage['/base/add-event.js'].lineData[419] = 0;
   _$jscoverage['/base/add-event.js'].lineData[420] = 0;
-  _$jscoverage['/base/add-event.js'].lineData[422] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[421] = 0;
   _$jscoverage['/base/add-event.js'].lineData[423] = 0;
+  _$jscoverage['/base/add-event.js'].lineData[424] = 0;
 }
 if (! _$jscoverage['/base/add-event.js'].functionData) {
   _$jscoverage['/base/add-event.js'].functionData = [];
@@ -489,387 +490,387 @@ if (! _$jscoverage['/base/add-event.js'].functionData) {
 }
 if (! _$jscoverage['/base/add-event.js'].branchData) {
   _$jscoverage['/base/add-event.js'].branchData = {};
-  _$jscoverage['/base/add-event.js'].branchData['26'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['34'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['27'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['27'][1] = new BranchData();
   _$jscoverage['/base/add-event.js'].branchData['35'] = [];
   _$jscoverage['/base/add-event.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['46'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['52'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['85'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['85'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['102'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['102'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['104'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['104'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['117'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['119'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['119'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['126'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['126'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['130'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['130'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['136'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['146'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['152'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['152'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['164'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['164'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['164'][2] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['168'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['168'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['168'][2] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['168'][3] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['181'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['181'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['181'][2] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['181'][3] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['186'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['186'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['188'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['188'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['193'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['193'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['193'][2] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['198'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['198'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['213'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['213'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['216'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['216'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['36'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['47'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['53'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['86'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['86'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['103'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['103'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['105'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['105'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['118'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['120'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['127'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['127'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['131'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['131'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['137'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['147'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['153'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['153'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['165'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['165'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['165'][2] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['169'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['169'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['169'][2] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['169'][3] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['182'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['182'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['182'][2] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['182'][3] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['187'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['187'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['189'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['189'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['194'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['194'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['194'][2] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['199'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['214'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['214'][1] = new BranchData();
   _$jscoverage['/base/add-event.js'].branchData['217'] = [];
   _$jscoverage['/base/add-event.js'].branchData['217'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['221'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['221'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['223'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['223'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['230'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['230'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['242'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['242'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['218'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['218'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['222'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['222'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['224'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['224'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['231'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['231'][1] = new BranchData();
   _$jscoverage['/base/add-event.js'].branchData['243'] = [];
   _$jscoverage['/base/add-event.js'].branchData['243'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['247'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['247'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['249'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['249'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['259'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['259'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['244'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['244'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['248'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['248'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['250'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['250'][1] = new BranchData();
   _$jscoverage['/base/add-event.js'].branchData['260'] = [];
   _$jscoverage['/base/add-event.js'].branchData['260'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['266'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['266'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['271'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['271'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['273'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['273'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['275'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['275'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['290'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['290'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['293'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['293'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['295'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['295'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['300'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['300'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['300'][2] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['304'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['304'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['308'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['308'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['308'][2] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['308'][3] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['314'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['314'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['316'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['316'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['327'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['327'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['349'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['349'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['351'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['351'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['388'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['388'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['391'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['391'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['399'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['399'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['261'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['261'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['267'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['267'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['272'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['272'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['274'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['274'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['276'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['276'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['291'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['291'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['294'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['294'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['296'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['296'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['301'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['301'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['301'][2] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['305'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['305'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['309'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['309'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['309'][2] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['309'][3] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['315'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['315'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['317'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['317'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['328'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['328'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['350'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['350'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['352'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['352'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['389'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['389'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['392'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['392'][1] = new BranchData();
   _$jscoverage['/base/add-event.js'].branchData['400'] = [];
   _$jscoverage['/base/add-event.js'].branchData['400'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['403'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['403'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['411'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['411'][1] = new BranchData();
-  _$jscoverage['/base/add-event.js'].branchData['420'] = [];
-  _$jscoverage['/base/add-event.js'].branchData['420'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['401'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['401'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['404'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['404'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['412'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['412'][1] = new BranchData();
+  _$jscoverage['/base/add-event.js'].branchData['421'] = [];
+  _$jscoverage['/base/add-event.js'].branchData['421'][1] = new BranchData();
 }
-_$jscoverage['/base/add-event.js'].branchData['420'][1].init(303, 19, 'config.order || 100');
-function visit65_420_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['420'][1].ranCondition(result);
+_$jscoverage['/base/add-event.js'].branchData['421'][1].init(303, 19, 'config.order || 100');
+function visit65_421_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['411'][1].init(13, 26, 'typeof events === \'string\'');
-function visit64_411_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['411'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['412'][1].init(13, 26, 'typeof events === \'string\'');
+function visit64_412_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['412'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['403'][1].init(105, 27, '!handle.eventHandles.length');
-function visit63_403_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['403'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['404'][1].init(105, 27, '!handle.eventHandles.length');
+function visit63_404_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['404'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['400'][1].init(17, 5, 'event');
-function visit62_400_1(result) {
+}_$jscoverage['/base/add-event.js'].branchData['401'][1].init(17, 5, 'event');
+function visit62_401_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['401'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/add-event.js'].branchData['400'][1].init(93, 6, 'handle');
+function visit61_400_1(result) {
   _$jscoverage['/base/add-event.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['399'][1].init(93, 6, 'handle');
-function visit61_399_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['399'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['392'][1].init(193, 5, 'event');
+function visit60_392_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['392'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['391'][1].init(193, 5, 'event');
-function visit60_391_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['391'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['389'][1].init(93, 7, '!handle');
+function visit59_389_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['388'][1].init(93, 7, '!handle');
-function visit59_388_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['388'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['352'][1].init(66, 26, '!eventHandles[event].count');
+function visit58_352_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['352'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['351'][1].init(66, 26, '!eventHandles[event].count');
-function visit58_351_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['351'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['350'][1].init(67, 19, 'eventHandles[event]');
+function visit57_350_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['350'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['349'][1].init(67, 19, 'eventHandles[event]');
-function visit57_349_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['349'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['328'][1].init(151, 19, 'eventHandles[event]');
+function visit56_328_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['328'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['327'][1].init(151, 19, 'eventHandles[event]');
-function visit56_327_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['327'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['317'][1].init(58, 15, 'eventHandles[e]');
+function visit55_317_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['317'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['316'][1].init(58, 15, 'eventHandles[e]');
-function visit55_316_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['316'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['315'][1].init(1212, 5, 'i < l');
+function visit54_315_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['314'][1].init(1212, 5, 'i < l');
-function visit54_314_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['314'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['309'][3].init(487, 26, 'h[method](event) === false');
+function visit53_309_3(result) {
+  _$jscoverage['/base/add-event.js'].branchData['309'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['308'][3].init(487, 26, 'h[method](event) === false');
-function visit53_308_3(result) {
-  _$jscoverage['/base/add-event.js'].branchData['308'][3].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['309'][2].init(474, 39, 'h[method] && h[method](event) === false');
+function visit52_309_2(result) {
+  _$jscoverage['/base/add-event.js'].branchData['309'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['308'][2].init(474, 39, 'h[method] && h[method](event) === false');
-function visit52_308_2(result) {
-  _$jscoverage['/base/add-event.js'].branchData['308'][2].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['309'][1].init(460, 53, 'h.isActive && h[method] && h[method](event) === false');
+function visit51_309_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['308'][1].init(460, 53, 'h.isActive && h[method] && h[method](event) === false');
-function visit51_308_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['308'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['305'][1].init(328, 11, 'h.processed');
+function visit50_305_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['305'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['304'][1].init(328, 11, 'h.processed');
-function visit50_304_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['304'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['301'][2].init(206, 37, 'gestureType !== h.requiredGestureType');
+function visit49_301_2(result) {
+  _$jscoverage['/base/add-event.js'].branchData['301'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['300'][2].init(206, 37, 'gestureType !== h.requiredGestureType');
-function visit49_300_2(result) {
-  _$jscoverage['/base/add-event.js'].branchData['300'][2].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['301'][1].init(181, 62, 'h.requiredGestureType && gestureType !== h.requiredGestureType');
+function visit48_301_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['301'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['300'][1].init(181, 62, 'h.requiredGestureType && gestureType !== h.requiredGestureType');
-function visit48_300_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['300'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['296'][1].init(57, 15, 'eventHandles[e]');
+function visit47_296_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['295'][1].init(57, 15, 'eventHandles[e]');
-function visit47_295_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['295'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['294'][1].init(464, 5, 'i < l');
+function visit46_294_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['293'][1].init(464, 5, 'i < l');
-function visit46_293_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['293'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['291'][1].init(342, 28, '!event.changedTouches.length');
+function visit45_291_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['290'][1].init(342, 28, '!event.changedTouches.length');
-function visit45_290_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['290'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['276'][1].init(76, 20, '!self.touches.length');
+function visit44_276_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['276'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['275'][1].init(76, 20, '!self.touches.length');
-function visit44_275_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['275'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['274'][1].init(610, 20, 'isPointerEvent(type)');
+function visit43_274_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['273'][1].init(610, 20, 'isPointerEvent(type)');
-function visit43_273_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['273'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['272'][1].init(529, 18, 'isMouseEvent(type)');
+function visit42_272_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['271'][1].init(529, 18, 'isMouseEvent(type)');
-function visit42_271_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['271'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['267'][1].init(296, 18, 'isTouchEvent(type)');
+function visit41_267_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['267'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['266'][1].init(296, 18, 'isTouchEvent(type)');
-function visit41_266_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['266'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['261'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
+function visit40_261_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['260'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
-function visit40_260_1(result) {
+}_$jscoverage['/base/add-event.js'].branchData['260'][1].init(81, 18, 'isMouseEvent(type)');
+function visit39_260_1(result) {
   _$jscoverage['/base/add-event.js'].branchData['260'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['259'][1].init(81, 18, 'isMouseEvent(type)');
-function visit39_259_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['259'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['250'][1].init(376, 19, '!isTouchEvent(type)');
+function visit38_250_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['249'][1].init(376, 19, '!isTouchEvent(type)');
-function visit38_249_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['249'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['248'][1].init(273, 20, 'isPointerEvent(type)');
+function visit37_248_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['247'][1].init(273, 20, 'isPointerEvent(type)');
-function visit37_247_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['247'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['244'][1].init(21, 36, 'self.isEventSimulatedFromTouch(type)');
+function visit36_244_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['244'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['243'][1].init(21, 36, 'self.isEventSimulatedFromTouch(type)');
-function visit36_243_1(result) {
+}_$jscoverage['/base/add-event.js'].branchData['243'][1].init(81, 18, 'isMouseEvent(type)');
+function visit35_243_1(result) {
   _$jscoverage['/base/add-event.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['242'][1].init(81, 18, 'isMouseEvent(type)');
-function visit35_242_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['242'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['231'][1].init(884, 5, 'i < l');
+function visit34_231_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['230'][1].init(884, 5, 'i < l');
-function visit34_230_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['230'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['224'][1].init(73, 25, 'self.touches.length === 1');
+function visit33_224_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['223'][1].init(73, 25, 'self.touches.length === 1');
-function visit33_223_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['223'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['222'][1].init(493, 20, 'isPointerEvent(type)');
+function visit32_222_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['221'][1].init(493, 20, 'isPointerEvent(type)');
-function visit32_221_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['221'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['218'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
+function visit31_218_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['217'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
-function visit31_217_1(result) {
+}_$jscoverage['/base/add-event.js'].branchData['217'][1].init(300, 18, 'isMouseEvent(type)');
+function visit30_217_1(result) {
   _$jscoverage['/base/add-event.js'].branchData['217'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['216'][1].init(300, 18, 'isMouseEvent(type)');
-function visit30_216_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['216'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['214'][1].init(153, 18, 'isTouchEvent(type)');
+function visit29_214_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['213'][1].init(153, 18, 'isTouchEvent(type)');
-function visit29_213_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['213'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['199'][1].init(856, 10, 'touchEvent');
+function visit28_199_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['198'][1].init(856, 10, 'touchEvent');
-function visit28_198_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['198'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['194'][2].init(679, 22, 'touchList.length === 1');
+function visit27_194_2(result) {
+  _$jscoverage['/base/add-event.js'].branchData['194'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['193'][2].init(679, 22, 'touchList.length === 1');
-function visit27_193_2(result) {
-  _$jscoverage['/base/add-event.js'].branchData['193'][2].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['194'][1].init(666, 35, 'touchList && touchList.length === 1');
+function visit26_194_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['193'][1].init(666, 35, 'touchList && touchList.length === 1');
-function visit26_193_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['193'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['189'][1].init(138, 18, 'isMouseEvent(type)');
+function visit25_189_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['188'][1].init(138, 18, 'isMouseEvent(type)');
-function visit25_188_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['188'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['187'][1].init(21, 20, 'isPointerEvent(type)');
+function visit24_187_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['186'][1].init(21, 20, 'isPointerEvent(type)');
-function visit24_186_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['186'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['182'][3].init(53, 22, 'type === \'touchcancel\'');
+function visit23_182_3(result) {
+  _$jscoverage['/base/add-event.js'].branchData['182'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['181'][3].init(53, 22, 'type === \'touchcancel\'');
-function visit23_181_3(result) {
-  _$jscoverage['/base/add-event.js'].branchData['181'][3].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['182'][2].init(30, 19, 'type === \'touchend\'');
+function visit22_182_2(result) {
+  _$jscoverage['/base/add-event.js'].branchData['182'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['181'][2].init(30, 19, 'type === \'touchend\'');
-function visit22_181_2(result) {
-  _$jscoverage['/base/add-event.js'].branchData['181'][2].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['182'][1].init(30, 45, 'type === \'touchend\' || type === \'touchcancel\'');
+function visit21_182_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['181'][1].init(30, 45, 'type === \'touchend\' || type === \'touchcancel\'');
-function visit21_181_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['181'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['169'][3].init(211, 14, 'dy <= DUP_DIST');
+function visit20_169_3(result) {
+  _$jscoverage['/base/add-event.js'].branchData['169'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['168'][3].init(211, 14, 'dy <= DUP_DIST');
-function visit20_168_3(result) {
-  _$jscoverage['/base/add-event.js'].branchData['168'][3].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['169'][2].init(193, 14, 'dx <= DUP_DIST');
+function visit19_169_2(result) {
+  _$jscoverage['/base/add-event.js'].branchData['169'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['168'][2].init(193, 14, 'dx <= DUP_DIST');
-function visit19_168_2(result) {
-  _$jscoverage['/base/add-event.js'].branchData['168'][2].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['169'][1].init(193, 32, 'dx <= DUP_DIST && dy <= DUP_DIST');
+function visit18_169_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['168'][1].init(193, 32, 'dx <= DUP_DIST && dy <= DUP_DIST');
-function visit18_168_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['168'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['165'][2].init(162, 5, 'i < l');
+function visit17_165_2(result) {
+  _$jscoverage['/base/add-event.js'].branchData['165'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['164'][2].init(162, 5, 'i < l');
-function visit17_164_2(result) {
-  _$jscoverage['/base/add-event.js'].branchData['164'][2].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['165'][1].init(162, 21, 'i < l && (t = lts[i])');
+function visit16_165_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['164'][1].init(162, 21, 'i < l && (t = lts[i])');
-function visit16_164_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['164'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['153'][1].init(70, 6, 'i > -1');
+function visit15_153_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['152'][1].init(70, 6, 'i > -1');
-function visit15_152_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['152'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['147'][1].init(165, 22, 'this.isPrimaryTouch(t)');
+function visit14_147_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['146'][1].init(165, 22, 'this.isPrimaryTouch(t)');
-function visit14_146_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['137'][1].init(17, 28, 'this.isPrimaryTouch(inTouch)');
+function visit13_137_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['136'][1].init(17, 28, 'this.isPrimaryTouch(inTouch)');
-function visit13_136_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['136'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['131'][1].init(17, 24, 'this.firstTouch === null');
+function visit12_131_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['130'][1].init(17, 24, 'this.firstTouch === null');
-function visit12_130_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['130'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['127'][1].init(20, 38, 'this.firstTouch === inTouch.identifier');
+function visit11_127_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['126'][1].init(20, 38, 'this.firstTouch === inTouch.identifier');
-function visit11_126_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['120'][1].init(57, 29, 'touch.pointerId === pointerId');
+function visit10_120_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['119'][1].init(57, 29, 'touch.pointerId === pointerId');
-function visit10_119_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['119'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['118'][1].init(195, 5, 'i < l');
+function visit9_118_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['117'][1].init(195, 5, 'i < l');
-function visit9_117_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['105'][1].init(57, 29, 'touch.pointerId === pointerId');
+function visit8_105_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['104'][1].init(57, 29, 'touch.pointerId === pointerId');
-function visit8_104_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['104'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['103'][1].init(195, 5, 'i < l');
+function visit7_103_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['102'][1].init(195, 5, 'i < l');
-function visit7_102_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['102'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['86'][1].init(219, 33, '!isPointerEvent(gestureMoveEvent)');
+function visit6_86_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['85'][1].init(219, 33, '!isPointerEvent(gestureMoveEvent)');
-function visit6_85_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['85'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['53'][1].init(1584, 30, 'Feature.isMsPointerSupported()');
+function visit5_53_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['52'][1].init(1558, 30, 'Feature.isMsPointerSupported()');
-function visit5_52_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['52'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['47'][1].init(1306, 28, 'Feature.isPointerSupported()');
+function visit4_47_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['46'][1].init(1280, 28, 'Feature.isPointerSupported()');
-function visit4_46_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['36'][1].init(13, 6, 'UA.ios');
+function visit3_36_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['35'][1].init(13, 8, 'S.UA.ios');
-function visit3_35_1(result) {
+}_$jscoverage['/base/add-event.js'].branchData['35'][1].init(809, 31, 'Feature.isTouchEventSupported()');
+function visit2_35_1(result) {
   _$jscoverage['/base/add-event.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/add-event.js'].branchData['34'][1].init(781, 31, 'Feature.isTouchEventSupported()');
-function visit2_34_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['34'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/add-event.js'].branchData['26'][1].init(16, 64, 'S.startsWith(type, \'MSPointer\') || S.startsWith(type, \'pointer\')');
-function visit1_26_1(result) {
-  _$jscoverage['/base/add-event.js'].branchData['26'][1].ranCondition(result);
+}_$jscoverage['/base/add-event.js'].branchData['27'][1].init(16, 64, 'S.startsWith(type, \'MSPointer\') || S.startsWith(type, \'pointer\')');
+function visit1_27_1(result) {
+  _$jscoverage['/base/add-event.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/add-event.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -879,196 +880,198 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/add-event.js'].lineData[8]++;
   var eventHandleMap = {};
   _$jscoverage['/base/add-event.js'].lineData[9]++;
-  var DomEvent = require('event/dom/base');
+  var UA = require('ua');
   _$jscoverage['/base/add-event.js'].lineData[10]++;
-  var Special = DomEvent.Special;
+  var DomEvent = require('event/dom/base');
   _$jscoverage['/base/add-event.js'].lineData[11]++;
+  var Special = DomEvent.Special;
+  _$jscoverage['/base/add-event.js'].lineData[12]++;
   var key = S.guid('touch-handle'), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
-  _$jscoverage['/base/add-event.js'].lineData[17]++;
+  _$jscoverage['/base/add-event.js'].lineData[18]++;
   function isTouchEvent(type) {
     _$jscoverage['/base/add-event.js'].functionData[1]++;
-    _$jscoverage['/base/add-event.js'].lineData[18]++;
+    _$jscoverage['/base/add-event.js'].lineData[19]++;
     return S.startsWith(type, 'touch');
   }
-  _$jscoverage['/base/add-event.js'].lineData[21]++;
+  _$jscoverage['/base/add-event.js'].lineData[22]++;
   function isMouseEvent(type) {
     _$jscoverage['/base/add-event.js'].functionData[2]++;
-    _$jscoverage['/base/add-event.js'].lineData[22]++;
+    _$jscoverage['/base/add-event.js'].lineData[23]++;
     return S.startsWith(type, 'mouse');
   }
-  _$jscoverage['/base/add-event.js'].lineData[25]++;
+  _$jscoverage['/base/add-event.js'].lineData[26]++;
   function isPointerEvent(type) {
     _$jscoverage['/base/add-event.js'].functionData[3]++;
-    _$jscoverage['/base/add-event.js'].lineData[26]++;
-    return visit1_26_1(S.startsWith(type, 'MSPointer') || S.startsWith(type, 'pointer'));
+    _$jscoverage['/base/add-event.js'].lineData[27]++;
+    return visit1_27_1(S.startsWith(type, 'MSPointer') || S.startsWith(type, 'pointer'));
   }
-  _$jscoverage['/base/add-event.js'].lineData[30]++;
+  _$jscoverage['/base/add-event.js'].lineData[31]++;
   var DUP_TIMEOUT = 2500;
-  _$jscoverage['/base/add-event.js'].lineData[32]++;
+  _$jscoverage['/base/add-event.js'].lineData[33]++;
   var DUP_DIST = 25;
-  _$jscoverage['/base/add-event.js'].lineData[34]++;
-  if (visit2_34_1(Feature.isTouchEventSupported())) {
-    _$jscoverage['/base/add-event.js'].lineData[35]++;
-    if (visit3_35_1(S.UA.ios)) {
-      _$jscoverage['/base/add-event.js'].lineData[37]++;
-      gestureEndEvent = 'touchend touchcancel';
+  _$jscoverage['/base/add-event.js'].lineData[35]++;
+  if (visit2_35_1(Feature.isTouchEventSupported())) {
+    _$jscoverage['/base/add-event.js'].lineData[36]++;
+    if (visit3_36_1(UA.ios)) {
       _$jscoverage['/base/add-event.js'].lineData[38]++;
-      gestureStartEvent = 'touchstart';
+      gestureEndEvent = 'touchend touchcancel';
       _$jscoverage['/base/add-event.js'].lineData[39]++;
+      gestureStartEvent = 'touchstart';
+      _$jscoverage['/base/add-event.js'].lineData[40]++;
       gestureMoveEvent = 'touchmove';
     } else {
-      _$jscoverage['/base/add-event.js'].lineData[41]++;
+      _$jscoverage['/base/add-event.js'].lineData[42]++;
       gestureEndEvent = 'touchend touchcancel mouseup';
-      _$jscoverage['/base/add-event.js'].lineData[43]++;
-      gestureStartEvent = 'touchstart mousedown';
       _$jscoverage['/base/add-event.js'].lineData[44]++;
+      gestureStartEvent = 'touchstart mousedown';
+      _$jscoverage['/base/add-event.js'].lineData[45]++;
       gestureMoveEvent = 'touchmove mousemove';
     }
   } else {
-    _$jscoverage['/base/add-event.js'].lineData[46]++;
-    if (visit4_46_1(Feature.isPointerSupported())) {
-      _$jscoverage['/base/add-event.js'].lineData[49]++;
-      gestureStartEvent = 'pointerdown';
+    _$jscoverage['/base/add-event.js'].lineData[47]++;
+    if (visit4_47_1(Feature.isPointerSupported())) {
       _$jscoverage['/base/add-event.js'].lineData[50]++;
-      gestureMoveEvent = 'pointermove';
+      gestureStartEvent = 'pointerdown';
       _$jscoverage['/base/add-event.js'].lineData[51]++;
+      gestureMoveEvent = 'pointermove';
+      _$jscoverage['/base/add-event.js'].lineData[52]++;
       gestureEndEvent = 'pointerup pointercancel';
     } else {
-      _$jscoverage['/base/add-event.js'].lineData[52]++;
-      if (visit5_52_1(Feature.isMsPointerSupported())) {
-        _$jscoverage['/base/add-event.js'].lineData[53]++;
-        gestureStartEvent = 'MSPointerDown';
+      _$jscoverage['/base/add-event.js'].lineData[53]++;
+      if (visit5_53_1(Feature.isMsPointerSupported())) {
         _$jscoverage['/base/add-event.js'].lineData[54]++;
-        gestureMoveEvent = 'MSPointerMove';
+        gestureStartEvent = 'MSPointerDown';
         _$jscoverage['/base/add-event.js'].lineData[55]++;
+        gestureMoveEvent = 'MSPointerMove';
+        _$jscoverage['/base/add-event.js'].lineData[56]++;
         gestureEndEvent = 'MSPointerUp MSPointerCancel';
       } else {
-        _$jscoverage['/base/add-event.js'].lineData[57]++;
-        gestureStartEvent = 'mousedown';
         _$jscoverage['/base/add-event.js'].lineData[58]++;
-        gestureMoveEvent = 'mousemove';
+        gestureStartEvent = 'mousedown';
         _$jscoverage['/base/add-event.js'].lineData[59]++;
+        gestureMoveEvent = 'mousemove';
+        _$jscoverage['/base/add-event.js'].lineData[60]++;
         gestureEndEvent = 'mouseup';
       }
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[62]++;
+  _$jscoverage['/base/add-event.js'].lineData[63]++;
   function DocumentHandler(doc) {
     _$jscoverage['/base/add-event.js'].functionData[4]++;
-    _$jscoverage['/base/add-event.js'].lineData[63]++;
-    var self = this;
     _$jscoverage['/base/add-event.js'].lineData[64]++;
-    self.doc = doc;
+    var self = this;
     _$jscoverage['/base/add-event.js'].lineData[65]++;
-    self.eventHandles = [];
+    self.doc = doc;
     _$jscoverage['/base/add-event.js'].lineData[66]++;
+    self.eventHandles = [];
+    _$jscoverage['/base/add-event.js'].lineData[67]++;
     self.init();
-    _$jscoverage['/base/add-event.js'].lineData[68]++;
+    _$jscoverage['/base/add-event.js'].lineData[69]++;
     self.touches = [];
-    _$jscoverage['/base/add-event.js'].lineData[70]++;
+    _$jscoverage['/base/add-event.js'].lineData[71]++;
     self.inTouch = 0;
   }
-  _$jscoverage['/base/add-event.js'].lineData[73]++;
+  _$jscoverage['/base/add-event.js'].lineData[74]++;
   DocumentHandler.prototype = {
   constructor: DocumentHandler, 
   lastTouches: [], 
   firstTouch: null, 
   init: function() {
   _$jscoverage['/base/add-event.js'].functionData[5]++;
-  _$jscoverage['/base/add-event.js'].lineData[81]++;
+  _$jscoverage['/base/add-event.js'].lineData[82]++;
   var self = this, doc = self.doc;
-  _$jscoverage['/base/add-event.js'].lineData[83]++;
+  _$jscoverage['/base/add-event.js'].lineData[84]++;
   DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);
-  _$jscoverage['/base/add-event.js'].lineData[85]++;
-  if (visit6_85_1(!isPointerEvent(gestureMoveEvent))) {
-    _$jscoverage['/base/add-event.js'].lineData[86]++;
+  _$jscoverage['/base/add-event.js'].lineData[86]++;
+  if (visit6_86_1(!isPointerEvent(gestureMoveEvent))) {
+    _$jscoverage['/base/add-event.js'].lineData[87]++;
     DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
   }
-  _$jscoverage['/base/add-event.js'].lineData[88]++;
+  _$jscoverage['/base/add-event.js'].lineData[89]++;
   DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self);
 }, 
   addTouch: function(originalEvent) {
   _$jscoverage['/base/add-event.js'].functionData[6]++;
-  _$jscoverage['/base/add-event.js'].lineData[92]++;
-  originalEvent.identifier = originalEvent.pointerId;
   _$jscoverage['/base/add-event.js'].lineData[93]++;
+  originalEvent.identifier = originalEvent.pointerId;
+  _$jscoverage['/base/add-event.js'].lineData[94]++;
   this.touches.push(originalEvent);
 }, 
   removeTouch: function(originalEvent) {
   _$jscoverage['/base/add-event.js'].functionData[7]++;
-  _$jscoverage['/base/add-event.js'].lineData[97]++;
+  _$jscoverage['/base/add-event.js'].lineData[98]++;
   var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
-  _$jscoverage['/base/add-event.js'].lineData[102]++;
-  for (; visit7_102_1(i < l); i++) {
-    _$jscoverage['/base/add-event.js'].lineData[103]++;
-    touch = touches[i];
+  _$jscoverage['/base/add-event.js'].lineData[103]++;
+  for (; visit7_103_1(i < l); i++) {
     _$jscoverage['/base/add-event.js'].lineData[104]++;
-    if (visit8_104_1(touch.pointerId === pointerId)) {
-      _$jscoverage['/base/add-event.js'].lineData[105]++;
-      touches.splice(i, 1);
+    touch = touches[i];
+    _$jscoverage['/base/add-event.js'].lineData[105]++;
+    if (visit8_105_1(touch.pointerId === pointerId)) {
       _$jscoverage['/base/add-event.js'].lineData[106]++;
+      touches.splice(i, 1);
+      _$jscoverage['/base/add-event.js'].lineData[107]++;
       break;
     }
   }
 }, 
   updateTouch: function(originalEvent) {
   _$jscoverage['/base/add-event.js'].functionData[8]++;
-  _$jscoverage['/base/add-event.js'].lineData[112]++;
+  _$jscoverage['/base/add-event.js'].lineData[113]++;
   var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
-  _$jscoverage['/base/add-event.js'].lineData[117]++;
-  for (; visit9_117_1(i < l); i++) {
-    _$jscoverage['/base/add-event.js'].lineData[118]++;
-    touch = touches[i];
+  _$jscoverage['/base/add-event.js'].lineData[118]++;
+  for (; visit9_118_1(i < l); i++) {
     _$jscoverage['/base/add-event.js'].lineData[119]++;
-    if (visit10_119_1(touch.pointerId === pointerId)) {
-      _$jscoverage['/base/add-event.js'].lineData[120]++;
+    touch = touches[i];
+    _$jscoverage['/base/add-event.js'].lineData[120]++;
+    if (visit10_120_1(touch.pointerId === pointerId)) {
+      _$jscoverage['/base/add-event.js'].lineData[121]++;
       touches[i] = originalEvent;
     }
   }
 }, 
   isPrimaryTouch: function(inTouch) {
   _$jscoverage['/base/add-event.js'].functionData[9]++;
-  _$jscoverage['/base/add-event.js'].lineData[126]++;
-  return visit11_126_1(this.firstTouch === inTouch.identifier);
+  _$jscoverage['/base/add-event.js'].lineData[127]++;
+  return visit11_127_1(this.firstTouch === inTouch.identifier);
 }, 
   setPrimaryTouch: function(inTouch) {
   _$jscoverage['/base/add-event.js'].functionData[10]++;
-  _$jscoverage['/base/add-event.js'].lineData[130]++;
-  if (visit12_130_1(this.firstTouch === null)) {
-    _$jscoverage['/base/add-event.js'].lineData[131]++;
+  _$jscoverage['/base/add-event.js'].lineData[131]++;
+  if (visit12_131_1(this.firstTouch === null)) {
+    _$jscoverage['/base/add-event.js'].lineData[132]++;
     this.firstTouch = inTouch.identifier;
   }
 }, 
   removePrimaryTouch: function(inTouch) {
   _$jscoverage['/base/add-event.js'].functionData[11]++;
-  _$jscoverage['/base/add-event.js'].lineData[136]++;
-  if (visit13_136_1(this.isPrimaryTouch(inTouch))) {
-    _$jscoverage['/base/add-event.js'].lineData[137]++;
+  _$jscoverage['/base/add-event.js'].lineData[137]++;
+  if (visit13_137_1(this.isPrimaryTouch(inTouch))) {
+    _$jscoverage['/base/add-event.js'].lineData[138]++;
     this.firstTouch = null;
   }
 }, 
   dupMouse: function(inEvent) {
   _$jscoverage['/base/add-event.js'].functionData[12]++;
-  _$jscoverage['/base/add-event.js'].lineData[143]++;
-  var lts = this.lastTouches;
   _$jscoverage['/base/add-event.js'].lineData[144]++;
+  var lts = this.lastTouches;
+  _$jscoverage['/base/add-event.js'].lineData[145]++;
   var t = inEvent.changedTouches[0];
-  _$jscoverage['/base/add-event.js'].lineData[146]++;
-  if (visit14_146_1(this.isPrimaryTouch(t))) {
-    _$jscoverage['/base/add-event.js'].lineData[148]++;
+  _$jscoverage['/base/add-event.js'].lineData[147]++;
+  if (visit14_147_1(this.isPrimaryTouch(t))) {
+    _$jscoverage['/base/add-event.js'].lineData[149]++;
     var lt = {
   x: t.clientX, 
   y: t.clientY};
-    _$jscoverage['/base/add-event.js'].lineData[149]++;
-    lts.push(lt);
     _$jscoverage['/base/add-event.js'].lineData[150]++;
+    lts.push(lt);
+    _$jscoverage['/base/add-event.js'].lineData[151]++;
     setTimeout(function() {
   _$jscoverage['/base/add-event.js'].functionData[13]++;
-  _$jscoverage['/base/add-event.js'].lineData[151]++;
-  var i = lts.indexOf(lt);
   _$jscoverage['/base/add-event.js'].lineData[152]++;
-  if (visit15_152_1(i > -1)) {
-    _$jscoverage['/base/add-event.js'].lineData[153]++;
+  var i = lts.indexOf(lt);
+  _$jscoverage['/base/add-event.js'].lineData[153]++;
+  if (visit15_153_1(i > -1)) {
+    _$jscoverage['/base/add-event.js'].lineData[154]++;
     lts.splice(i, 1);
   }
 }, DUP_TIMEOUT);
@@ -1076,187 +1079,187 @@ KISSY.add(function(S, require) {
 }, 
   isEventSimulatedFromTouch: function(inEvent) {
   _$jscoverage['/base/add-event.js'].functionData[14]++;
-  _$jscoverage['/base/add-event.js'].lineData[161]++;
-  var lts = this.lastTouches;
   _$jscoverage['/base/add-event.js'].lineData[162]++;
+  var lts = this.lastTouches;
+  _$jscoverage['/base/add-event.js'].lineData[163]++;
   var x = inEvent.clientX, y = inEvent.clientY;
-  _$jscoverage['/base/add-event.js'].lineData[164]++;
-  for (var i = 0, l = lts.length, t; visit16_164_1(visit17_164_2(i < l) && (t = lts[i])); i++) {
-    _$jscoverage['/base/add-event.js'].lineData[166]++;
+  _$jscoverage['/base/add-event.js'].lineData[165]++;
+  for (var i = 0, l = lts.length, t; visit16_165_1(visit17_165_2(i < l) && (t = lts[i])); i++) {
+    _$jscoverage['/base/add-event.js'].lineData[167]++;
     var dx = Math.abs(x - t.x), dy = Math.abs(y - t.y);
-    _$jscoverage['/base/add-event.js'].lineData[168]++;
-    if (visit18_168_1(visit19_168_2(dx <= DUP_DIST) && visit20_168_3(dy <= DUP_DIST))) {
-      _$jscoverage['/base/add-event.js'].lineData[169]++;
+    _$jscoverage['/base/add-event.js'].lineData[169]++;
+    if (visit18_169_1(visit19_169_2(dx <= DUP_DIST) && visit20_169_3(dy <= DUP_DIST))) {
+      _$jscoverage['/base/add-event.js'].lineData[170]++;
       return true;
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[172]++;
+  _$jscoverage['/base/add-event.js'].lineData[173]++;
   return 0;
 }, 
   normalize: function(e) {
   _$jscoverage['/base/add-event.js'].functionData[15]++;
-  _$jscoverage['/base/add-event.js'].lineData[176]++;
+  _$jscoverage['/base/add-event.js'].lineData[177]++;
   var type = e.type, notUp, touchEvent, touchList;
-  _$jscoverage['/base/add-event.js'].lineData[180]++;
+  _$jscoverage['/base/add-event.js'].lineData[181]++;
   if ((touchEvent = isTouchEvent(type))) {
-    _$jscoverage['/base/add-event.js'].lineData[181]++;
-    touchList = (visit21_181_1(visit22_181_2(type === 'touchend') || visit23_181_3(type === 'touchcancel'))) ? e.changedTouches : e.touches;
-    _$jscoverage['/base/add-event.js'].lineData[184]++;
+    _$jscoverage['/base/add-event.js'].lineData[182]++;
+    touchList = (visit21_182_1(visit22_182_2(type === 'touchend') || visit23_182_3(type === 'touchcancel'))) ? e.changedTouches : e.touches;
+    _$jscoverage['/base/add-event.js'].lineData[185]++;
     e.gestureType = 'touch';
   } else {
-    _$jscoverage['/base/add-event.js'].lineData[186]++;
-    if (visit24_186_1(isPointerEvent(type))) {
-      _$jscoverage['/base/add-event.js'].lineData[187]++;
+    _$jscoverage['/base/add-event.js'].lineData[187]++;
+    if (visit24_187_1(isPointerEvent(type))) {
+      _$jscoverage['/base/add-event.js'].lineData[188]++;
       e.gestureType = e.originalEvent.pointerType;
     } else {
-      _$jscoverage['/base/add-event.js'].lineData[188]++;
-      if (visit25_188_1(isMouseEvent(type))) {
-        _$jscoverage['/base/add-event.js'].lineData[189]++;
+      _$jscoverage['/base/add-event.js'].lineData[189]++;
+      if (visit25_189_1(isMouseEvent(type))) {
+        _$jscoverage['/base/add-event.js'].lineData[190]++;
         e.gestureType = 'mouse';
       }
     }
-    _$jscoverage['/base/add-event.js'].lineData[191]++;
+    _$jscoverage['/base/add-event.js'].lineData[192]++;
     touchList = this.touches;
   }
-  _$jscoverage['/base/add-event.js'].lineData[193]++;
-  if (visit26_193_1(touchList && visit27_193_2(touchList.length === 1))) {
-    _$jscoverage['/base/add-event.js'].lineData[194]++;
-    e.which = 1;
+  _$jscoverage['/base/add-event.js'].lineData[194]++;
+  if (visit26_194_1(touchList && visit27_194_2(touchList.length === 1))) {
     _$jscoverage['/base/add-event.js'].lineData[195]++;
-    e.pageX = touchList[0].pageX;
+    e.which = 1;
     _$jscoverage['/base/add-event.js'].lineData[196]++;
+    e.pageX = touchList[0].pageX;
+    _$jscoverage['/base/add-event.js'].lineData[197]++;
     e.pageY = touchList[0].pageY;
   }
-  _$jscoverage['/base/add-event.js'].lineData[198]++;
-  if (visit28_198_1(touchEvent)) {
-    _$jscoverage['/base/add-event.js'].lineData[199]++;
+  _$jscoverage['/base/add-event.js'].lineData[199]++;
+  if (visit28_199_1(touchEvent)) {
+    _$jscoverage['/base/add-event.js'].lineData[200]++;
     return e;
   }
-  _$jscoverage['/base/add-event.js'].lineData[201]++;
-  notUp = !type.match(/(up|cancel)$/i);
   _$jscoverage['/base/add-event.js'].lineData[202]++;
-  e.touches = notUp ? touchList : [];
+  notUp = !type.match(/(up|cancel)$/i);
   _$jscoverage['/base/add-event.js'].lineData[203]++;
-  e.targetTouches = notUp ? touchList : [];
+  e.touches = notUp ? touchList : [];
   _$jscoverage['/base/add-event.js'].lineData[204]++;
-  e.changedTouches = touchList;
+  e.targetTouches = notUp ? touchList : [];
   _$jscoverage['/base/add-event.js'].lineData[205]++;
+  e.changedTouches = touchList;
+  _$jscoverage['/base/add-event.js'].lineData[206]++;
   return e;
 }, 
   onTouchStart: function(event) {
   _$jscoverage['/base/add-event.js'].functionData[16]++;
-  _$jscoverage['/base/add-event.js'].lineData[209]++;
+  _$jscoverage['/base/add-event.js'].lineData[210]++;
   var e, h, self = this, type = event.type, eventHandles = self.eventHandles;
-  _$jscoverage['/base/add-event.js'].lineData[213]++;
-  if (visit29_213_1(isTouchEvent(type))) {
-    _$jscoverage['/base/add-event.js'].lineData[214]++;
-    self.setPrimaryTouch(event.changedTouches[0]);
+  _$jscoverage['/base/add-event.js'].lineData[214]++;
+  if (visit29_214_1(isTouchEvent(type))) {
     _$jscoverage['/base/add-event.js'].lineData[215]++;
+    self.setPrimaryTouch(event.changedTouches[0]);
+    _$jscoverage['/base/add-event.js'].lineData[216]++;
     self.dupMouse(event);
   } else {
-    _$jscoverage['/base/add-event.js'].lineData[216]++;
-    if (visit30_216_1(isMouseEvent(type))) {
-      _$jscoverage['/base/add-event.js'].lineData[217]++;
-      if (visit31_217_1(self.isEventSimulatedFromTouch(event))) {
-        _$jscoverage['/base/add-event.js'].lineData[218]++;
+    _$jscoverage['/base/add-event.js'].lineData[217]++;
+    if (visit30_217_1(isMouseEvent(type))) {
+      _$jscoverage['/base/add-event.js'].lineData[218]++;
+      if (visit31_218_1(self.isEventSimulatedFromTouch(event))) {
+        _$jscoverage['/base/add-event.js'].lineData[219]++;
         return;
       }
-      _$jscoverage['/base/add-event.js'].lineData[220]++;
+      _$jscoverage['/base/add-event.js'].lineData[221]++;
       self.touches = [event];
     } else {
-      _$jscoverage['/base/add-event.js'].lineData[221]++;
-      if (visit32_221_1(isPointerEvent(type))) {
-        _$jscoverage['/base/add-event.js'].lineData[222]++;
-        self.addTouch(event.originalEvent);
+      _$jscoverage['/base/add-event.js'].lineData[222]++;
+      if (visit32_222_1(isPointerEvent(type))) {
         _$jscoverage['/base/add-event.js'].lineData[223]++;
-        if (visit33_223_1(self.touches.length === 1)) {
-          _$jscoverage['/base/add-event.js'].lineData[224]++;
+        self.addTouch(event.originalEvent);
+        _$jscoverage['/base/add-event.js'].lineData[224]++;
+        if (visit33_224_1(self.touches.length === 1)) {
+          _$jscoverage['/base/add-event.js'].lineData[225]++;
           DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self);
         }
       } else {
-        _$jscoverage['/base/add-event.js'].lineData[227]++;
+        _$jscoverage['/base/add-event.js'].lineData[228]++;
         throw new Error('unrecognized touch event: ' + event.type);
       }
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[230]++;
-  for (var i = 0, l = eventHandles.length; visit34_230_1(i < l); i++) {
-    _$jscoverage['/base/add-event.js'].lineData[231]++;
-    e = eventHandles[i];
+  _$jscoverage['/base/add-event.js'].lineData[231]++;
+  for (var i = 0, l = eventHandles.length; visit34_231_1(i < l); i++) {
     _$jscoverage['/base/add-event.js'].lineData[232]++;
-    h = eventHandles[e].handle;
+    e = eventHandles[i];
     _$jscoverage['/base/add-event.js'].lineData[233]++;
+    h = eventHandles[e].handle;
+    _$jscoverage['/base/add-event.js'].lineData[234]++;
     h.isActive = 1;
   }
-  _$jscoverage['/base/add-event.js'].lineData[236]++;
+  _$jscoverage['/base/add-event.js'].lineData[237]++;
   self.callEventHandle('onTouchStart', event);
 }, 
   onTouchMove: function(event) {
   _$jscoverage['/base/add-event.js'].functionData[17]++;
-  _$jscoverage['/base/add-event.js'].lineData[240]++;
+  _$jscoverage['/base/add-event.js'].lineData[241]++;
   var self = this, type = event.type;
-  _$jscoverage['/base/add-event.js'].lineData[242]++;
-  if (visit35_242_1(isMouseEvent(type))) {
-    _$jscoverage['/base/add-event.js'].lineData[243]++;
-    if (visit36_243_1(self.isEventSimulatedFromTouch(type))) {
-      _$jscoverage['/base/add-event.js'].lineData[244]++;
+  _$jscoverage['/base/add-event.js'].lineData[243]++;
+  if (visit35_243_1(isMouseEvent(type))) {
+    _$jscoverage['/base/add-event.js'].lineData[244]++;
+    if (visit36_244_1(self.isEventSimulatedFromTouch(type))) {
+      _$jscoverage['/base/add-event.js'].lineData[245]++;
       return;
     }
-    _$jscoverage['/base/add-event.js'].lineData[246]++;
+    _$jscoverage['/base/add-event.js'].lineData[247]++;
     self.touches = [event];
   } else {
-    _$jscoverage['/base/add-event.js'].lineData[247]++;
-    if (visit37_247_1(isPointerEvent(type))) {
-      _$jscoverage['/base/add-event.js'].lineData[248]++;
+    _$jscoverage['/base/add-event.js'].lineData[248]++;
+    if (visit37_248_1(isPointerEvent(type))) {
+      _$jscoverage['/base/add-event.js'].lineData[249]++;
       self.updateTouch(event.originalEvent);
     } else {
-      _$jscoverage['/base/add-event.js'].lineData[249]++;
-      if (visit38_249_1(!isTouchEvent(type))) {
-        _$jscoverage['/base/add-event.js'].lineData[250]++;
+      _$jscoverage['/base/add-event.js'].lineData[250]++;
+      if (visit38_250_1(!isTouchEvent(type))) {
+        _$jscoverage['/base/add-event.js'].lineData[251]++;
         throw new Error('unrecognized touch event: ' + event.type);
       }
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[253]++;
+  _$jscoverage['/base/add-event.js'].lineData[254]++;
   self.callEventHandle('onTouchMove', event);
 }, 
   onTouchEnd: function(event) {
   _$jscoverage['/base/add-event.js'].functionData[18]++;
-  _$jscoverage['/base/add-event.js'].lineData[257]++;
+  _$jscoverage['/base/add-event.js'].lineData[258]++;
   var self = this, type = event.type;
-  _$jscoverage['/base/add-event.js'].lineData[259]++;
-  if (visit39_259_1(isMouseEvent(type))) {
-    _$jscoverage['/base/add-event.js'].lineData[260]++;
-    if (visit40_260_1(self.isEventSimulatedFromTouch(event))) {
-      _$jscoverage['/base/add-event.js'].lineData[261]++;
+  _$jscoverage['/base/add-event.js'].lineData[260]++;
+  if (visit39_260_1(isMouseEvent(type))) {
+    _$jscoverage['/base/add-event.js'].lineData[261]++;
+    if (visit40_261_1(self.isEventSimulatedFromTouch(event))) {
+      _$jscoverage['/base/add-event.js'].lineData[262]++;
       return;
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[265]++;
-  self.callEventHandle('onTouchEnd', event);
   _$jscoverage['/base/add-event.js'].lineData[266]++;
-  if (visit41_266_1(isTouchEvent(type))) {
-    _$jscoverage['/base/add-event.js'].lineData[267]++;
-    self.dupMouse(event);
+  self.callEventHandle('onTouchEnd', event);
+  _$jscoverage['/base/add-event.js'].lineData[267]++;
+  if (visit41_267_1(isTouchEvent(type))) {
     _$jscoverage['/base/add-event.js'].lineData[268]++;
+    self.dupMouse(event);
+    _$jscoverage['/base/add-event.js'].lineData[269]++;
     S.makeArray(event.changedTouches).forEach(function(touch) {
   _$jscoverage['/base/add-event.js'].functionData[19]++;
-  _$jscoverage['/base/add-event.js'].lineData[269]++;
+  _$jscoverage['/base/add-event.js'].lineData[270]++;
   self.removePrimaryTouch(touch);
 });
   } else {
-    _$jscoverage['/base/add-event.js'].lineData[271]++;
-    if (visit42_271_1(isMouseEvent(type))) {
-      _$jscoverage['/base/add-event.js'].lineData[272]++;
+    _$jscoverage['/base/add-event.js'].lineData[272]++;
+    if (visit42_272_1(isMouseEvent(type))) {
+      _$jscoverage['/base/add-event.js'].lineData[273]++;
       self.touches = [];
     } else {
-      _$jscoverage['/base/add-event.js'].lineData[273]++;
-      if (visit43_273_1(isPointerEvent(type))) {
-        _$jscoverage['/base/add-event.js'].lineData[274]++;
-        self.removeTouch(event.originalEvent);
+      _$jscoverage['/base/add-event.js'].lineData[274]++;
+      if (visit43_274_1(isPointerEvent(type))) {
         _$jscoverage['/base/add-event.js'].lineData[275]++;
-        if (visit44_275_1(!self.touches.length)) {
-          _$jscoverage['/base/add-event.js'].lineData[276]++;
+        self.removeTouch(event.originalEvent);
+        _$jscoverage['/base/add-event.js'].lineData[276]++;
+        if (visit44_276_1(!self.touches.length)) {
+          _$jscoverage['/base/add-event.js'].lineData[277]++;
           DomEvent.detach(self.doc, gestureMoveEvent, self.onTouchMove, self);
         }
       }
@@ -1265,71 +1268,71 @@ KISSY.add(function(S, require) {
 }, 
   callEventHandle: function(method, event) {
   _$jscoverage['/base/add-event.js'].functionData[20]++;
-  _$jscoverage['/base/add-event.js'].lineData[282]++;
+  _$jscoverage['/base/add-event.js'].lineData[283]++;
   var self = this, eventHandles = self.eventHandles, handleArray = eventHandles.concat(), e, h;
-  _$jscoverage['/base/add-event.js'].lineData[287]++;
-  event = self.normalize(event);
   _$jscoverage['/base/add-event.js'].lineData[288]++;
+  event = self.normalize(event);
+  _$jscoverage['/base/add-event.js'].lineData[289]++;
   var gestureType = event.gestureType;
-  _$jscoverage['/base/add-event.js'].lineData[290]++;
-  if (visit45_290_1(!event.changedTouches.length)) {
-    _$jscoverage['/base/add-event.js'].lineData[291]++;
+  _$jscoverage['/base/add-event.js'].lineData[291]++;
+  if (visit45_291_1(!event.changedTouches.length)) {
+    _$jscoverage['/base/add-event.js'].lineData[292]++;
     return;
   }
-  _$jscoverage['/base/add-event.js'].lineData[293]++;
-  for (var i = 0, l = handleArray.length; visit46_293_1(i < l); i++) {
-    _$jscoverage['/base/add-event.js'].lineData[294]++;
-    e = handleArray[i];
+  _$jscoverage['/base/add-event.js'].lineData[294]++;
+  for (var i = 0, l = handleArray.length; visit46_294_1(i < l); i++) {
     _$jscoverage['/base/add-event.js'].lineData[295]++;
-    if (visit47_295_1(eventHandles[e])) {
-      _$jscoverage['/base/add-event.js'].lineData[297]++;
+    e = handleArray[i];
+    _$jscoverage['/base/add-event.js'].lineData[296]++;
+    if (visit47_296_1(eventHandles[e])) {
+      _$jscoverage['/base/add-event.js'].lineData[298]++;
       h = eventHandles[e].handle;
-      _$jscoverage['/base/add-event.js'].lineData[300]++;
-      if (visit48_300_1(h.requiredGestureType && visit49_300_2(gestureType !== h.requiredGestureType))) {
-        _$jscoverage['/base/add-event.js'].lineData[301]++;
+      _$jscoverage['/base/add-event.js'].lineData[301]++;
+      if (visit48_301_1(h.requiredGestureType && visit49_301_2(gestureType !== h.requiredGestureType))) {
+        _$jscoverage['/base/add-event.js'].lineData[302]++;
         continue;
       }
-      _$jscoverage['/base/add-event.js'].lineData[304]++;
-      if (visit50_304_1(h.processed)) {
-        _$jscoverage['/base/add-event.js'].lineData[305]++;
+      _$jscoverage['/base/add-event.js'].lineData[305]++;
+      if (visit50_305_1(h.processed)) {
+        _$jscoverage['/base/add-event.js'].lineData[306]++;
         continue;
       }
-      _$jscoverage['/base/add-event.js'].lineData[307]++;
-      h.processed = 1;
       _$jscoverage['/base/add-event.js'].lineData[308]++;
-      if (visit51_308_1(h.isActive && visit52_308_2(h[method] && visit53_308_3(h[method](event) === false)))) {
-        _$jscoverage['/base/add-event.js'].lineData[309]++;
+      h.processed = 1;
+      _$jscoverage['/base/add-event.js'].lineData[309]++;
+      if (visit51_309_1(h.isActive && visit52_309_2(h[method] && visit53_309_3(h[method](event) === false)))) {
+        _$jscoverage['/base/add-event.js'].lineData[310]++;
         h.isActive = 0;
       }
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[314]++;
-  for (i = 0 , l = handleArray.length; visit54_314_1(i < l); i++) {
-    _$jscoverage['/base/add-event.js'].lineData[315]++;
-    e = eventHandles[i];
+  _$jscoverage['/base/add-event.js'].lineData[315]++;
+  for (i = 0 , l = handleArray.length; visit54_315_1(i < l); i++) {
     _$jscoverage['/base/add-event.js'].lineData[316]++;
-    if (visit55_316_1(eventHandles[e])) {
-      _$jscoverage['/base/add-event.js'].lineData[317]++;
-      h = eventHandles[e].handle;
+    e = eventHandles[i];
+    _$jscoverage['/base/add-event.js'].lineData[317]++;
+    if (visit55_317_1(eventHandles[e])) {
       _$jscoverage['/base/add-event.js'].lineData[318]++;
+      h = eventHandles[e].handle;
+      _$jscoverage['/base/add-event.js'].lineData[319]++;
       h.processed = 0;
     }
   }
 }, 
   addEventHandle: function(event) {
   _$jscoverage['/base/add-event.js'].functionData[21]++;
-  _$jscoverage['/base/add-event.js'].lineData[324]++;
+  _$jscoverage['/base/add-event.js'].lineData[325]++;
   var self = this, eventHandles = self.eventHandles, handle = eventHandleMap[event].handle;
-  _$jscoverage['/base/add-event.js'].lineData[327]++;
-  if (visit56_327_1(eventHandles[event])) {
-    _$jscoverage['/base/add-event.js'].lineData[328]++;
+  _$jscoverage['/base/add-event.js'].lineData[328]++;
+  if (visit56_328_1(eventHandles[event])) {
+    _$jscoverage['/base/add-event.js'].lineData[329]++;
     eventHandles[event].count++;
   } else {
-    _$jscoverage['/base/add-event.js'].lineData[330]++;
-    eventHandles.push(event);
     _$jscoverage['/base/add-event.js'].lineData[331]++;
-    self.sortEventHandles();
+    eventHandles.push(event);
     _$jscoverage['/base/add-event.js'].lineData[332]++;
+    self.sortEventHandles();
+    _$jscoverage['/base/add-event.js'].lineData[333]++;
     eventHandles[event] = {
   count: 1, 
   handle: handle};
@@ -1337,136 +1340,136 @@ KISSY.add(function(S, require) {
 }, 
   sortEventHandles: function() {
   _$jscoverage['/base/add-event.js'].functionData[22]++;
-  _$jscoverage['/base/add-event.js'].lineData[340]++;
+  _$jscoverage['/base/add-event.js'].lineData[341]++;
   this.eventHandles.sort(function(e1, e2) {
   _$jscoverage['/base/add-event.js'].functionData[23]++;
-  _$jscoverage['/base/add-event.js'].lineData[341]++;
-  var e1Config = eventHandleMap[e1];
   _$jscoverage['/base/add-event.js'].lineData[342]++;
-  var e2Config = eventHandleMap[e2];
+  var e1Config = eventHandleMap[e1];
   _$jscoverage['/base/add-event.js'].lineData[343]++;
+  var e2Config = eventHandleMap[e2];
+  _$jscoverage['/base/add-event.js'].lineData[344]++;
   return e1Config.order - e2Config.order;
 });
 }, 
-  'removeEventHandle': function(event) {
+  removeEventHandle: function(event) {
   _$jscoverage['/base/add-event.js'].functionData[24]++;
-  _$jscoverage['/base/add-event.js'].lineData[348]++;
-  var eventHandles = this.eventHandles;
   _$jscoverage['/base/add-event.js'].lineData[349]++;
-  if (visit57_349_1(eventHandles[event])) {
-    _$jscoverage['/base/add-event.js'].lineData[350]++;
-    eventHandles[event].count--;
+  var eventHandles = this.eventHandles;
+  _$jscoverage['/base/add-event.js'].lineData[350]++;
+  if (visit57_350_1(eventHandles[event])) {
     _$jscoverage['/base/add-event.js'].lineData[351]++;
-    if (visit58_351_1(!eventHandles[event].count)) {
-      _$jscoverage['/base/add-event.js'].lineData[352]++;
-      eventHandles.splice(S.indexOf(event, eventHandles), 1);
+    eventHandles[event].count--;
+    _$jscoverage['/base/add-event.js'].lineData[352]++;
+    if (visit58_352_1(!eventHandles[event].count)) {
       _$jscoverage['/base/add-event.js'].lineData[353]++;
+      eventHandles.splice(S.indexOf(event, eventHandles), 1);
+      _$jscoverage['/base/add-event.js'].lineData[354]++;
       delete eventHandles[event];
     }
   }
 }, 
   destroy: function() {
   _$jscoverage['/base/add-event.js'].functionData[25]++;
-  _$jscoverage['/base/add-event.js'].lineData[359]++;
+  _$jscoverage['/base/add-event.js'].lineData[360]++;
   var self = this, doc = self.doc;
-  _$jscoverage['/base/add-event.js'].lineData[361]++;
-  DomEvent.detach(doc, gestureStartEvent, self.onTouchStart, self);
   _$jscoverage['/base/add-event.js'].lineData[362]++;
-  DomEvent.detach(doc, gestureMoveEvent, self.onTouchMove, self);
+  DomEvent.detach(doc, gestureStartEvent, self.onTouchStart, self);
   _$jscoverage['/base/add-event.js'].lineData[363]++;
+  DomEvent.detach(doc, gestureMoveEvent, self.onTouchMove, self);
+  _$jscoverage['/base/add-event.js'].lineData[364]++;
   DomEvent.detach(doc, gestureEndEvent, self.onTouchEnd, self);
 }};
-  _$jscoverage['/base/add-event.js'].lineData[367]++;
+  _$jscoverage['/base/add-event.js'].lineData[368]++;
   function setup(event) {
     _$jscoverage['/base/add-event.js'].functionData[26]++;
-    _$jscoverage['/base/add-event.js'].lineData[368]++;
+    _$jscoverage['/base/add-event.js'].lineData[369]++;
     addDocumentHandle(this, event);
   }
-  _$jscoverage['/base/add-event.js'].lineData[371]++;
+  _$jscoverage['/base/add-event.js'].lineData[372]++;
   function tearDown(event) {
     _$jscoverage['/base/add-event.js'].functionData[27]++;
-    _$jscoverage['/base/add-event.js'].lineData[372]++;
+    _$jscoverage['/base/add-event.js'].lineData[373]++;
     removeDocumentHandle(this, event);
   }
-  _$jscoverage['/base/add-event.js'].lineData[375]++;
+  _$jscoverage['/base/add-event.js'].lineData[376]++;
   function setupExtra(event) {
     _$jscoverage['/base/add-event.js'].functionData[28]++;
-    _$jscoverage['/base/add-event.js'].lineData[376]++;
-    setup.call(this, event);
     _$jscoverage['/base/add-event.js'].lineData[377]++;
+    setup.call(this, event);
+    _$jscoverage['/base/add-event.js'].lineData[378]++;
     eventHandleMap[event].setup.apply(this, arguments);
   }
-  _$jscoverage['/base/add-event.js'].lineData[380]++;
+  _$jscoverage['/base/add-event.js'].lineData[381]++;
   function tearDownExtra(event) {
     _$jscoverage['/base/add-event.js'].functionData[29]++;
-    _$jscoverage['/base/add-event.js'].lineData[381]++;
-    tearDown.call(this, event);
     _$jscoverage['/base/add-event.js'].lineData[382]++;
+    tearDown.call(this, event);
+    _$jscoverage['/base/add-event.js'].lineData[383]++;
     eventHandleMap[event].tearDown.apply(this, arguments);
   }
-  _$jscoverage['/base/add-event.js'].lineData[385]++;
+  _$jscoverage['/base/add-event.js'].lineData[386]++;
   function addDocumentHandle(el, event) {
     _$jscoverage['/base/add-event.js'].functionData[30]++;
-    _$jscoverage['/base/add-event.js'].lineData[386]++;
+    _$jscoverage['/base/add-event.js'].lineData[387]++;
     var doc = Dom.getDocument(el), handle = Dom.data(doc, key);
-    _$jscoverage['/base/add-event.js'].lineData[388]++;
-    if (visit59_388_1(!handle)) {
-      _$jscoverage['/base/add-event.js'].lineData[389]++;
+    _$jscoverage['/base/add-event.js'].lineData[389]++;
+    if (visit59_389_1(!handle)) {
+      _$jscoverage['/base/add-event.js'].lineData[390]++;
       Dom.data(doc, key, handle = new DocumentHandler(doc));
     }
-    _$jscoverage['/base/add-event.js'].lineData[391]++;
-    if (visit60_391_1(event)) {
-      _$jscoverage['/base/add-event.js'].lineData[392]++;
+    _$jscoverage['/base/add-event.js'].lineData[392]++;
+    if (visit60_392_1(event)) {
+      _$jscoverage['/base/add-event.js'].lineData[393]++;
       handle.addEventHandle(event);
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[396]++;
+  _$jscoverage['/base/add-event.js'].lineData[397]++;
   function removeDocumentHandle(el, event) {
     _$jscoverage['/base/add-event.js'].functionData[31]++;
-    _$jscoverage['/base/add-event.js'].lineData[397]++;
+    _$jscoverage['/base/add-event.js'].lineData[398]++;
     var doc = Dom.getDocument(el), handle = Dom.data(doc, key);
-    _$jscoverage['/base/add-event.js'].lineData[399]++;
-    if (visit61_399_1(handle)) {
-      _$jscoverage['/base/add-event.js'].lineData[400]++;
-      if (visit62_400_1(event)) {
-        _$jscoverage['/base/add-event.js'].lineData[401]++;
+    _$jscoverage['/base/add-event.js'].lineData[400]++;
+    if (visit61_400_1(handle)) {
+      _$jscoverage['/base/add-event.js'].lineData[401]++;
+      if (visit62_401_1(event)) {
+        _$jscoverage['/base/add-event.js'].lineData[402]++;
         handle.removeEventHandle(event);
       }
-      _$jscoverage['/base/add-event.js'].lineData[403]++;
-      if (visit63_403_1(!handle.eventHandles.length)) {
-        _$jscoverage['/base/add-event.js'].lineData[404]++;
-        handle.destroy();
+      _$jscoverage['/base/add-event.js'].lineData[404]++;
+      if (visit63_404_1(!handle.eventHandles.length)) {
         _$jscoverage['/base/add-event.js'].lineData[405]++;
+        handle.destroy();
+        _$jscoverage['/base/add-event.js'].lineData[406]++;
         Dom.removeData(doc, key);
       }
     }
   }
-  _$jscoverage['/base/add-event.js'].lineData[410]++;
+  _$jscoverage['/base/add-event.js'].lineData[411]++;
   return function(events, config) {
   _$jscoverage['/base/add-event.js'].functionData[32]++;
-  _$jscoverage['/base/add-event.js'].lineData[411]++;
-  if (visit64_411_1(typeof events === 'string')) {
-    _$jscoverage['/base/add-event.js'].lineData[412]++;
+  _$jscoverage['/base/add-event.js'].lineData[412]++;
+  if (visit64_412_1(typeof events === 'string')) {
+    _$jscoverage['/base/add-event.js'].lineData[413]++;
     events = [events];
   }
-  _$jscoverage['/base/add-event.js'].lineData[414]++;
+  _$jscoverage['/base/add-event.js'].lineData[415]++;
   S.each(events, function(event) {
   _$jscoverage['/base/add-event.js'].functionData[33]++;
-  _$jscoverage['/base/add-event.js'].lineData[415]++;
-  var specialEvent = {};
   _$jscoverage['/base/add-event.js'].lineData[416]++;
-  specialEvent.setup = config.setup ? setupExtra : setup;
+  var specialEvent = {};
   _$jscoverage['/base/add-event.js'].lineData[417]++;
-  specialEvent.tearDown = config.tearDown ? tearDownExtra : tearDown;
+  specialEvent.setup = config.setup ? setupExtra : setup;
   _$jscoverage['/base/add-event.js'].lineData[418]++;
-  specialEvent.add = config.add;
+  specialEvent.tearDown = config.tearDown ? tearDownExtra : tearDown;
   _$jscoverage['/base/add-event.js'].lineData[419]++;
-  specialEvent.remove = config.remove;
+  specialEvent.add = config.add;
   _$jscoverage['/base/add-event.js'].lineData[420]++;
-  config.order = visit65_420_1(config.order || 100);
-  _$jscoverage['/base/add-event.js'].lineData[422]++;
-  eventHandleMap[event] = config;
+  specialEvent.remove = config.remove;
+  _$jscoverage['/base/add-event.js'].lineData[421]++;
+  config.order = visit65_421_1(config.order || 100);
   _$jscoverage['/base/add-event.js'].lineData[423]++;
+  eventHandleMap[event] = config;
+  _$jscoverage['/base/add-event.js'].lineData[424]++;
   Special[event] = specialEvent;
 });
 };

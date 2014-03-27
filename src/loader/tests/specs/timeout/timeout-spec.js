@@ -22,7 +22,7 @@ describe('timeout', function () {
         S.config({
             modules: {
                 'timeout/use': {
-                    path: 'http://' + location.host +
+                    url: 'http://' + location.host +
                         '/kissy/src/loader/tests/specs/timeout/use.jss?' + S.Loader.Utils.now()
                 }
             }
@@ -62,7 +62,7 @@ describe('timeout', function () {
             },
             modules: {
                 'timeout/r2': {
-                    path: 'http://' + location.host +
+                    url: 'http://' + location.host +
                         '/kissy/src/loader/tests/specs/timeout/r2.jss?' + S.Loader.Utils.now()
                 }
             }

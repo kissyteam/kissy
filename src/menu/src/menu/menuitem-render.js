@@ -22,7 +22,7 @@ KISSY.add(function (S, require) {
 
         containsElement: function (element) {
             var $el = this.$el;
-            return $el && ( $el[0] === element || $el.contains(element));
+            return $el && ($el[0] === element || $el.contains(element));
         }
     }, {
         HTML_PARSER: {

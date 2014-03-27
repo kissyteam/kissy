@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 27 21:59
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -153,12 +153,12 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
     }
   }
   function onViewAnimEnd() {
-    var view = this;
-    clearAnimCss(view);
-    if(view.get("navigationView").get("activeView") === view) {
-      view.show()
+    var self = this;
+    clearAnimCss(self);
+    if(self.get("navigationView").get("activeView") === self) {
+      self.show()
     }else {
-      view.hide()
+      self.hide()
     }
   }
   function createView(self, config) {
