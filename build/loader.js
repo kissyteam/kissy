@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:00
+build time: Mar 28 02:10
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140327220031' will replace with current timestamp when compressing.
+         * NOTICE: '20140328021050' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140327220031',
+        __BUILD_TIME: '20140328021050',
 
         /**
          * KISSY Environment.
@@ -323,12 +323,10 @@ var KISSY = (function (undefined) {
         LOADING: 1,
         /** loaded */
         LOADED: 2,
-        /**dependencies are loaded or attached*/
-        READY_TO_ATTACH: 3,
         /** attaching */
-        ATTACHING: 4,
+        ATTACHING: 3,
         /** attached */
-        ATTACHED: 5
+        ATTACHED: 4
     };
 })(KISSY);/**
  * @ignore
@@ -339,14 +337,10 @@ var KISSY = (function (undefined) {
     var Loader = S.Loader,
         Env = S.Env,
         host = Env.host,
-        TRUE = !0,
-        FALSE = !1,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
-        READY_TO_ATTACH = data.READY_TO_ATTACH,
         LOADED = data.LOADED,
         ATTACHING = data.ATTACHING,
-        ERROR = data.ERROR,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -416,12 +410,6 @@ var KISSY = (function (undefined) {
             return numberify(v);
         }
         return undefined;
-    }
-
-    function bind(fn, context) {
-        return function () {
-            return fn.apply(context, arguments);
-        };
     }
 
     var m,
@@ -613,8 +601,8 @@ var KISSY = (function (undefined) {
 
             Utils.each(modNames, function (modName) {
                 module = runtimeMods[modName];
-                if (!module || module.getType() !== 'css') {
-                    unalias = Utils.unalias(modName);
+                if (module && module.getType() !== 'css') {
+                    unalias = module.getNormalizedAlias();
                     allOk = true;
                     for (var i = 0; allOk && i < unalias.length; i++) {
                         m = runtimeMods[unalias[i]];
@@ -644,75 +632,6 @@ var KISSY = (function (undefined) {
             for (i = 0; i < l; i++) {
                 Utils.attachModRecursively(modNames[i]);
             }
-        },
-
-        checkModsLoadRecursively: function (modNames, stack, errorList, cache) {
-            // for debug. prevent circular dependency
-            stack = stack || [];
-            // for efficiency. avoid duplicate non-attach check
-            cache = cache || {};
-            var i,
-                s = 1,
-                l = modNames.length,
-                stackDepth = stack.length;
-            for (i = 0; i < l; i++) {
-                if (!s) {
-                    return !!s;
-                }
-                s = Utils.checkModLoadRecursively(modNames[i], stack, errorList, cache);
-                stack.length = stackDepth;
-            }
-            return !!s;
-        },
-
-        checkModLoadRecursively: function (modName, stack, errorList, cache) {
-            var mods = Env.mods,
-                status,
-                m = mods[modName];
-            if (modName in cache) {
-                return cache[modName];
-            }
-            if (!m) {
-                cache[modName] = FALSE;
-                return FALSE;
-            }
-            status = m.status;
-            if (status === ERROR) {
-                errorList.push(m);
-                cache[modName] = FALSE;
-                return FALSE;
-            }
-            if (status >= READY_TO_ATTACH) {
-                cache[modName] = TRUE;
-                return TRUE;
-            }
-            if (status !== LOADED) {
-                cache[modName] = FALSE;
-                return FALSE;
-            }
-            if ('@DEBUG@') {
-                if (stack[modName]) {
-                    S.log('find cyclic dependency between mods: ' + stack, 'warn');
-                } else {
-                    stack.push(modName);
-                }
-            }
-            if (stack[modName]) {
-                cache[modName] = TRUE;
-                return TRUE;
-            } else {
-                // tracking module name
-                stack[modName] = 1;
-            }
-
-            if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(), stack, errorList, cache)) {
-                m.status = READY_TO_ATTACH;
-                cache[modName] = TRUE;
-                return TRUE;
-            }
-
-            cache[modName] = FALSE;
-            return FALSE;
         },
 
         /**
@@ -749,16 +668,12 @@ var KISSY = (function (undefined) {
             if (typeof factory === 'function') {
                 // compatible and efficiency
                 // KISSY.add(function(S,undefined){})
-                var require;
-                if (module.requires && module.requires.length && module.cjs) {
-                    require = bind(module.require, module);
-                }
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [S, require, module.exports, module] :
+                    (module.cjs ? [S, module.require, module.exports, module] :
                         Utils.getModules(module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
@@ -798,34 +713,11 @@ var KISSY = (function (undefined) {
             return Utils.unalias(Utils.normalizeModNamesWithAlias(modNames, refModName));
         },
 
-        /**
-         * unalias module name.
-         * @param {String|String[]} names moduleNames
-         * @return {String[]} unalias module names
-         */
-        unalias: function (names) {
-            var ret = [].concat(names),
-                i,
-                m,
-                alias,
-                ok = 0,
-                j;
-            while (!ok) {
-                ok = 1;
-                for (i = ret.length - 1; i >= 0; i--) {
-                    if ((m = Utils.createModuleInfo(ret[i])) && ((alias = m.getAlias()) !== undefined)) {
-                        ok = 0;
-                        if (typeof alias === 'string') {
-                            alias = [alias];
-                        }
-                        for (j = alias.length - 1; j >= 0; j--) {
-                            if (!alias[j]) {
-                                alias.splice(j, 1);
-                            }
-                        }
-                        ret.splice.apply(ret, [i, 1].concat(addIndexAndRemoveJsExt(alias)));
-                    }
-                }
+        unalias: function (modNames) {
+            var ret = [];
+            for (var i = 0; i < modNames.length; i++) {
+                var mod = Utils.createModuleInfo(modNames[i]);
+                ret.push.apply(ret, mod.getNormalizedAlias());
             }
             return ret;
         },
@@ -1134,6 +1026,10 @@ var KISSY = (function (undefined) {
         self.cjs = 1;
         mix(self, cfg);
         self.waits = {};
+
+        self.require = function (moduleName) {
+            return S.require(moduleName, self.name);
+        };
     }
 
     Module.prototype = {
@@ -1141,29 +1037,9 @@ var KISSY = (function (undefined) {
 
         constructor: Module,
 
-        /**
-         * resolve module by name.
-         * @param {String|String[]} relativeName relative module's name
-         * @param {Function|Object} fn KISSY.use callback
-         * @returns {String} resolved module name
-         */
-        use: function (relativeName, fn) {
-            relativeName = Utils.getModNamesAsArray(relativeName);
-            return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
-        },
-
         // use by xtemplate include
         resolve: function (relativeName) {
             return Utils.normalizePath(this.name, relativeName);
-        },
-
-        /**
-         * require other modules from current modules
-         * @param {String} moduleName name of module to be required
-         * @returns {*} required module exports
-         */
-        require: function (moduleName) {
-            return S.require(moduleName, this.name);
         },
 
         add: function (loader) {
@@ -1209,16 +1085,46 @@ var KISSY = (function (undefined) {
                 aliasFn,
                 packageInfo,
                 alias = self.alias;
-            if (!('alias' in self)) {
-                packageInfo = self.getPackage();
-                if (packageInfo.alias) {
-                    alias = packageInfo.alias(name);
-                }
-                if (!alias && (aliasFn = Config.alias)) {
-                    alias = aliasFn(name);
+            if (alias) {
+                return alias;
+            }
+            packageInfo = self.getPackage();
+            if (packageInfo.alias) {
+                alias = packageInfo.alias(name);
+            }
+            if (!alias && (aliasFn = Config.alias)) {
+                alias = aliasFn(name);
+            }
+            alias = self.alias = alias || [];
+            return alias;
+        },
+
+        getNormalizedAlias: function () {
+            var self = this;
+            if (self.normalizedAlias) {
+                return self.normalizedAlias;
+            }
+            var alias = self.getAlias();
+            if (typeof alias === 'string') {
+                alias = [alias];
+            }
+            var ret = [];
+            for (var i = 0, l = alias.length; i < l; i++) {
+                if (alias[i]) {
+                    var mod = Utils.createModuleInfo(alias[i]);
+                    var normalAlias = mod.getNormalizedAlias();
+                    if (normalAlias) {
+                        ret.push.apply(ret, normalAlias);
+                    } else {
+                        ret.push(alias[i]);
+                    }
                 }
             }
-            return alias;
+            if (!ret.length) {
+                ret.push(self.name);
+            }
+            self.normalizedAlias = ret;
+            return ret;
         },
 
         /**
@@ -1776,7 +1682,6 @@ var KISSY = (function (undefined) {
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
-        READY_TO_ATTACH = Status.READY_TO_ATTACH,
         ERROR = Status.ERROR,
         oldIE = Utils.ie < 10;
 
@@ -1839,7 +1744,6 @@ var KISSY = (function (undefined) {
      */
     function ComboLoader(callback) {
         this.callback = callback;
-        this.waitMods = {};
         this.head = this.tail = undefined;
         this.id = 'loader' + (++loaderId);
     }
@@ -1977,12 +1881,10 @@ var KISSY = (function (undefined) {
         /**
          * load modules asynchronously
          */
-        use: function (normalizedModNames) {
+        use: function (allMods) {
             var self = this,
-                allMods, comboUrls,
+                comboUrls,
                 timeout = Config.timeout;
-
-            allMods = self.calculate(normalizedModNames);
 
             comboUrls = self.getComboUrls(allMods);
 
@@ -2042,37 +1944,64 @@ var KISSY = (function (undefined) {
         /**
          * calculate dependency
          */
-        calculate: function (modNames, cache, ret) {
-            var i, m, mod, modStatus,
-                self = this;
+        calculate: function (modNames, errorList, stack, cache, ret) {
+            if (!modNames.length) {
+                return [];
+            }
 
+            var i, m, mod, modStatus,
+                stackDepth,
+                self = this;
+            if ('@DEBUG@') {
+                stack = stack || [];
+            }
             ret = ret || [];
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
             cache = cache || {};
-
+            if ('@DEBUG@') {
+                stackDepth = stack.length;
+            }
             for (i = 0; i < modNames.length; i++) {
                 m = modNames[i];
                 if (cache[m]) {
                     continue;
                 }
-                cache[m] = 1;
                 mod = Utils.createModuleInfo(m);
                 modStatus = mod.status;
-                if (modStatus >= READY_TO_ATTACH) {
+                if (modStatus === Status.ERROR) {
+                    errorList.push(mod);
+                    cache[m] = 1;
                     continue;
                 }
-                if (modStatus !== LOADED) {
-                    if (!mod.contains(self)) {
-                        if (modStatus !== LOADING) {
-                            mod.status = LOADING;
-                            ret.push(mod);
-                        }
-                        mod.add(self);
-                        self.wait(mod);
+                if (modStatus > LOADED) {
+                    cache[m] = 1;
+                    continue;
+                } else if (modStatus !== LOADED && !mod.contains(self)) {
+                    if (modStatus !== LOADING) {
+                        mod.status = LOADING;
+                        ret.push(mod);
+                    }
+                    mod.add(self);
+                    self.wait(mod);
+                }
+
+                if ('@DEBUG@' && stack.indexOf) {
+                    if (stack.indexOf(m) !== -1) {
+                        S.log('find cyclic dependency between mods: ' + stack, 'warn');
+                        cache[m] = 1;
+                        continue;
+                    } else {
+                        stack.push(m);
                     }
                 }
-                self.calculate(mod.getNormalizedRequires(), cache, ret);
+
+                self.calculate(mod.getNormalizedRequires(), errorList, stack, cache, ret);
+                cache[m] = 1;
+            }
+
+            if ('@DEBUG@') {
+                stack.length = stackDepth;
             }
 
             return ret;
@@ -2276,6 +2205,10 @@ var KISSY = (function (undefined) {
             callback();
         },
 
+        isCompleteLoading: function () {
+            return !this.head;
+        },
+
         wait: function (mod) {
             var self = this;
             if (!self.head) {
@@ -2321,7 +2254,7 @@ var KISSY = (function (undefined) {
  * mix loader into KISSY and infer KISSY baseUrl if not set
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
     var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
@@ -2392,38 +2325,21 @@ var KISSY = (function (undefined) {
 
             normalizedModNames = Utils.unalias(modNames);
 
+            var unloadedModNames = normalizedModNames;
+
             function loadReady() {
                 ++tryCount;
                 var errorList = [],
-                    start,
-                    ret;
+                    start;
 
                 if ('@DEBUG@') {
                     start = +new Date();
                 }
 
-                ret = Utils.checkModsLoadRecursively(normalizedModNames, undefined, errorList);
+                var unloadedMods = loader.calculate(unloadedModNames, errorList);
+                var unloadModsLen = unloadedMods.length;
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
-                if (ret) {
-                    Utils.attachModsRecursively(normalizedModNames);
-                    if (success) {
-                        if (sync) {
-                            try {
-                                finalSuccess();
-                            } catch (e) {
-                                S.log(e.stack || e, 'error');
-                                /*jshint loopfunc:true*/
-                                setTimeout(function () {
-                                    throw e;
-                                }, 0);
-                            }
-
-                        } else {
-                            // standalone error trace
-                            processImmediate(finalSuccess);
-                        }
-                    }
-                } else if (errorList.length) {
+                if (errorList.length) {
                     if (error) {
                         if (sync) {
                             try {
@@ -2443,10 +2359,37 @@ var KISSY = (function (undefined) {
                     }
                     S.log(errorList, 'error');
                     S.log('loader: load above modules error', 'error');
+                } else if (loader.isCompleteLoading()) {
+                    Utils.attachModsRecursively(normalizedModNames);
+                    if (success) {
+                        if (sync) {
+                            try {
+                                finalSuccess();
+                            } catch (e) {
+                                S.log(e.stack || e, 'error');
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+
+                        } else {
+                            // standalone error trace
+                            processImmediate(finalSuccess);
+                        }
+                    }
                 } else {
-                    logger.debug(tryCount + ' reload ' + modNames);
+                    sync = true;
+                    // in case all of its required mods is loading by other loaders
                     loader.callback = loadReady;
-                    loader.use(normalizedModNames);
+                    if (unloadModsLen) {
+                        logger.debug(tryCount + ' reload ');
+                        unloadedModNames = [];
+                        for (var i = 0; i < unloadModsLen; i++) {
+                            unloadedModNames.push(unloadedMods[i].name);
+                        }
+                        loader.use(unloadedMods);
+                    }
                 }
             }
 
@@ -2455,13 +2398,7 @@ var KISSY = (function (undefined) {
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
-            if (sync) {
-                loader.flush();
-            } else {
-                processImmediate(function () {
-                    loader.flush();
-                });
-            }
+            loadReady();
             return S;
         },
 
@@ -2507,7 +2444,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140327220031';
+    var TIMESTAMP = '20140328021050';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

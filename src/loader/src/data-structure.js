@@ -121,6 +121,10 @@
         self.cjs = 1;
         mix(self, cfg);
         self.waits = {};
+
+        self.require = function (moduleName) {
+            return S.require(moduleName, self.name);
+        };
     }
 
     Module.prototype = {
@@ -128,29 +132,9 @@
 
         constructor: Module,
 
-        /**
-         * resolve module by name.
-         * @param {String|String[]} relativeName relative module's name
-         * @param {Function|Object} fn KISSY.use callback
-         * @returns {String} resolved module name
-         */
-        use: function (relativeName, fn) {
-            relativeName = Utils.getModNamesAsArray(relativeName);
-            return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
-        },
-
         // use by xtemplate include
         resolve: function (relativeName) {
             return Utils.normalizePath(this.name, relativeName);
-        },
-
-        /**
-         * require other modules from current modules
-         * @param {String} moduleName name of module to be required
-         * @returns {*} required module exports
-         */
-        require: function (moduleName) {
-            return S.require(moduleName, this.name);
         },
 
         add: function (loader) {
@@ -196,16 +180,46 @@
                 aliasFn,
                 packageInfo,
                 alias = self.alias;
-            if (!('alias' in self)) {
-                packageInfo = self.getPackage();
-                if (packageInfo.alias) {
-                    alias = packageInfo.alias(name);
-                }
-                if (!alias && (aliasFn = Config.alias)) {
-                    alias = aliasFn(name);
+            if (alias) {
+                return alias;
+            }
+            packageInfo = self.getPackage();
+            if (packageInfo.alias) {
+                alias = packageInfo.alias(name);
+            }
+            if (!alias && (aliasFn = Config.alias)) {
+                alias = aliasFn(name);
+            }
+            alias = self.alias = alias || [];
+            return alias;
+        },
+
+        getNormalizedAlias: function () {
+            var self = this;
+            if (self.normalizedAlias) {
+                return self.normalizedAlias;
+            }
+            var alias = self.getAlias();
+            if (typeof alias === 'string') {
+                alias = [alias];
+            }
+            var ret = [];
+            for (var i = 0, l = alias.length; i < l; i++) {
+                if (alias[i]) {
+                    var mod = Utils.createModuleInfo(alias[i]);
+                    var normalAlias = mod.getNormalizedAlias();
+                    if (normalAlias) {
+                        ret.push.apply(ret, normalAlias);
+                    } else {
+                        ret.push(alias[i]);
+                    }
                 }
             }
-            return alias;
+            if (!ret.length) {
+                ret.push(self.name);
+            }
+            self.normalizedAlias = ret;
+            return ret;
         },
 
         /**

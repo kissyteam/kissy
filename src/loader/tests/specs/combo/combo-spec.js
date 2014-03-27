@@ -275,7 +275,6 @@ describe("ComboLoader", function () {
     });
 
     it("should works for multiple use at the same time", function () {
-
         waits(10);
         runs(function () {
             S.config({
@@ -306,7 +305,7 @@ describe("ComboLoader", function () {
             });
 
             S.use('tests2/a', function (S, a) {
-                expect(a).toBe(7);
+                expect(a+1).toBe(8);
                 ret++;
             });
 

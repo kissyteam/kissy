@@ -3,7 +3,7 @@
  * mix loader into KISSY and infer KISSY baseUrl if not set
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
     var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
@@ -74,38 +74,21 @@
 
             normalizedModNames = Utils.unalias(modNames);
 
+            var unloadedModNames = normalizedModNames;
+
             function loadReady() {
                 ++tryCount;
                 var errorList = [],
-                    start,
-                    ret;
+                    start;
 
                 if ('@DEBUG@') {
                     start = +new Date();
                 }
 
-                ret = Utils.checkModsLoadRecursively(normalizedModNames, undefined, errorList);
+                var unloadedMods = loader.calculate(unloadedModNames, errorList);
+                var unloadModsLen = unloadedMods.length;
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
-                if (ret) {
-                    Utils.attachModsRecursively(normalizedModNames);
-                    if (success) {
-                        if (sync) {
-                            try {
-                                finalSuccess();
-                            } catch (e) {
-                                S.log(e.stack || e, 'error');
-                                /*jshint loopfunc:true*/
-                                setTimeout(function () {
-                                    throw e;
-                                }, 0);
-                            }
-
-                        } else {
-                            // standalone error trace
-                            processImmediate(finalSuccess);
-                        }
-                    }
-                } else if (errorList.length) {
+                if (errorList.length) {
                     if (error) {
                         if (sync) {
                             try {
@@ -125,10 +108,37 @@
                     }
                     S.log(errorList, 'error');
                     S.log('loader: load above modules error', 'error');
+                } else if (loader.isCompleteLoading()) {
+                    Utils.attachModsRecursively(normalizedModNames);
+                    if (success) {
+                        if (sync) {
+                            try {
+                                finalSuccess();
+                            } catch (e) {
+                                S.log(e.stack || e, 'error');
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+
+                        } else {
+                            // standalone error trace
+                            processImmediate(finalSuccess);
+                        }
+                    }
                 } else {
-                    logger.debug(tryCount + ' reload ' + modNames);
+                    sync = true;
+                    // in case all of its required mods is loading by other loaders
                     loader.callback = loadReady;
-                    loader.use(normalizedModNames);
+                    if (unloadModsLen) {
+                        logger.debug(tryCount + ' reload ');
+                        unloadedModNames = [];
+                        for (var i = 0; i < unloadModsLen; i++) {
+                            unloadedModNames.push(unloadedMods[i].name);
+                        }
+                        loader.use(unloadedMods);
+                    }
                 }
             }
 
@@ -137,13 +147,7 @@
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
-            if (sync) {
-                loader.flush();
-            } else {
-                processImmediate(function () {
-                    loader.flush();
-                });
-            }
+            loadReady();
             return S;
         },
 

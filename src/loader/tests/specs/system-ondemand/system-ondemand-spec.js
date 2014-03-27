@@ -43,6 +43,7 @@ describe('support system.ondemand', function () {
         });
 
         waitsFor(function () {
+            console.log(ret);
             return ret === 2;
         });
 

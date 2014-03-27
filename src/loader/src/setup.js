@@ -19,11 +19,9 @@
         LOADING: 1,
         /** loaded */
         LOADED: 2,
-        /**dependencies are loaded or attached*/
-        READY_TO_ATTACH: 3,
         /** attaching */
-        ATTACHING: 4,
+        ATTACHING: 3,
         /** attached */
-        ATTACHED: 5
+        ATTACHED: 4
     };
 })(KISSY);

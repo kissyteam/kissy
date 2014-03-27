@@ -15,7 +15,6 @@
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
-        READY_TO_ATTACH = Status.READY_TO_ATTACH,
         ERROR = Status.ERROR,
         oldIE = Utils.ie < 10;
 
@@ -78,7 +77,6 @@
      */
     function ComboLoader(callback) {
         this.callback = callback;
-        this.waitMods = {};
         this.head = this.tail = undefined;
         this.id = 'loader' + (++loaderId);
     }
@@ -216,12 +214,10 @@
         /**
          * load modules asynchronously
          */
-        use: function (normalizedModNames) {
+        use: function (allMods) {
             var self = this,
-                allMods, comboUrls,
+                comboUrls,
                 timeout = Config.timeout;
-
-            allMods = self.calculate(normalizedModNames);
 
             comboUrls = self.getComboUrls(allMods);
 
@@ -281,37 +277,64 @@
         /**
          * calculate dependency
          */
-        calculate: function (modNames, cache, ret) {
-            var i, m, mod, modStatus,
-                self = this;
+        calculate: function (modNames, errorList, stack, cache, ret) {
+            if (!modNames.length) {
+                return [];
+            }
 
+            var i, m, mod, modStatus,
+                stackDepth,
+                self = this;
+            if ('@DEBUG@') {
+                stack = stack || [];
+            }
             ret = ret || [];
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
             cache = cache || {};
-
+            if ('@DEBUG@') {
+                stackDepth = stack.length;
+            }
             for (i = 0; i < modNames.length; i++) {
                 m = modNames[i];
                 if (cache[m]) {
                     continue;
                 }
-                cache[m] = 1;
                 mod = Utils.createModuleInfo(m);
                 modStatus = mod.status;
-                if (modStatus >= READY_TO_ATTACH) {
+                if (modStatus === Status.ERROR) {
+                    errorList.push(mod);
+                    cache[m] = 1;
                     continue;
                 }
-                if (modStatus !== LOADED) {
-                    if (!mod.contains(self)) {
-                        if (modStatus !== LOADING) {
-                            mod.status = LOADING;
-                            ret.push(mod);
-                        }
-                        mod.add(self);
-                        self.wait(mod);
+                if (modStatus > LOADED) {
+                    cache[m] = 1;
+                    continue;
+                } else if (modStatus !== LOADED && !mod.contains(self)) {
+                    if (modStatus !== LOADING) {
+                        mod.status = LOADING;
+                        ret.push(mod);
+                    }
+                    mod.add(self);
+                    self.wait(mod);
+                }
+
+                if ('@DEBUG@' && stack.indexOf) {
+                    if (stack.indexOf(m) !== -1) {
+                        S.log('find cyclic dependency between mods: ' + stack, 'warn');
+                        cache[m] = 1;
+                        continue;
+                    } else {
+                        stack.push(m);
                     }
                 }
-                self.calculate(mod.getNormalizedRequires(), cache, ret);
+
+                self.calculate(mod.getNormalizedRequires(), errorList, stack, cache, ret);
+                cache[m] = 1;
+            }
+
+            if ('@DEBUG@') {
+                stack.length = stackDepth;
             }
 
             return ret;
@@ -513,6 +536,10 @@
             }
             self.callback = null;
             callback();
+        },
+
+        isCompleteLoading: function () {
+            return !this.head;
         },
 
         wait: function (mod) {

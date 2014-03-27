@@ -1,5 +1,5 @@
 var run = function (combine) {
-    describe('loader should report error' + (combine ? 'at combo mode' : ''), function () {
+    describe('loader should report error ' + (combine ? 'at combo mode' : ''), function () {
         var S = KISSY;
 
         beforeEach(function () {
@@ -66,9 +66,13 @@ var run = function (combine) {
                 expect(success1.length).toBe(2);
                 expect(error1).toBeUndefined();
                 expect(success2).toBeUndefined();
-                expect(error2.length).toBe(1);
+                expect(error2.length).toBe(combine ? 2 : 1);
                 expect(error2[0].name).toBe(combine ? 'report/s3' : 'report/s4');
                 expect(error2[0].status).toBe(S.Loader.Status.ERROR);
+                if (combine) {
+                    expect(error2[1].name).toBe('report/s4');
+                    expect(error2[1].status).toBe(S.Loader.Status.ERROR);
+                }
             });
 
         });

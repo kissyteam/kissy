@@ -480,7 +480,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[171]++;
   config({
   'event/dom/base': {
-  requires: ['event/base', 'dom']}});
+  requires: ['event/base', 'dom', 'ua']}});
   _$jscoverage['/modules.js'].lineData[175]++;
   config({
   'event/dom/focusin': {
@@ -488,7 +488,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[179]++;
   config({
   'event/dom/hashchange': {
-  requires: ['event/dom/base', 'dom']}});
+  requires: ['event/dom/base', 'dom', 'uri', 'ua']}});
   _$jscoverage['/modules.js'].lineData[183]++;
   config({
   'event/dom/ie': {
@@ -500,7 +500,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[191]++;
   config({
   'event/gesture/base': {
-  requires: ['event/dom/base', 'dom']}});
+  requires: ['event/dom/base', 'dom', 'ua']}});
   _$jscoverage['/modules.js'].lineData[195]++;
   config({
   'event/gesture/drag': {
@@ -524,7 +524,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[215]++;
   config({
   io: {
-  requires: ['dom', 'event/custom', 'promise', 'event/dom']}});
+  requires: ['dom', 'event/custom', 'promise', 'uri', 'ua', 'event/dom']}});
   _$jscoverage['/modules.js'].lineData[219]++;
   config({
   menu: {
@@ -548,7 +548,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[239]++;
   config({
   overlay: {
-  requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'component/extension/content-render']}});
+  requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'ua', 'component/extension/content-render']}});
   _$jscoverage['/modules.js'].lineData[243]++;
   config({
   resizable: {
@@ -576,7 +576,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[267]++;
   config({
   'scroll-view/plugin/scrollbar': {
-  requires: ['base', 'node', 'component/control', 'event/gesture/drag']}});
+  requires: ['base', 'node', 'ua', 'component/control', 'event/gesture/drag']}});
   _$jscoverage['/modules.js'].lineData[271]++;
   config({
   'scroll-view/touch': {
@@ -608,7 +608,7 @@ function visit11_112_1(result) {
   _$jscoverage['/modules.js'].lineData[299]++;
   config({
   tree: {
-  requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children']}});
+  requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children', 'ua']}});
   _$jscoverage['/modules.js'].lineData[303]++;
   config({
   ua: {

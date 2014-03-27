@@ -7,14 +7,10 @@
     var Loader = S.Loader,
         Env = S.Env,
         host = Env.host,
-        TRUE = !0,
-        FALSE = !1,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
-        READY_TO_ATTACH = data.READY_TO_ATTACH,
         LOADED = data.LOADED,
         ATTACHING = data.ATTACHING,
-        ERROR = data.ERROR,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -84,12 +80,6 @@
             return numberify(v);
         }
         return undefined;
-    }
-
-    function bind(fn, context) {
-        return function () {
-            return fn.apply(context, arguments);
-        };
     }
 
     var m,
@@ -281,8 +271,8 @@
 
             Utils.each(modNames, function (modName) {
                 module = runtimeMods[modName];
-                if (!module || module.getType() !== 'css') {
-                    unalias = Utils.unalias(modName);
+                if (module && module.getType() !== 'css') {
+                    unalias = module.getNormalizedAlias();
                     allOk = true;
                     for (var i = 0; allOk && i < unalias.length; i++) {
                         m = runtimeMods[unalias[i]];
@@ -312,75 +302,6 @@
             for (i = 0; i < l; i++) {
                 Utils.attachModRecursively(modNames[i]);
             }
-        },
-
-        checkModsLoadRecursively: function (modNames, stack, errorList, cache) {
-            // for debug. prevent circular dependency
-            stack = stack || [];
-            // for efficiency. avoid duplicate non-attach check
-            cache = cache || {};
-            var i,
-                s = 1,
-                l = modNames.length,
-                stackDepth = stack.length;
-            for (i = 0; i < l; i++) {
-                if (!s) {
-                    return !!s;
-                }
-                s = Utils.checkModLoadRecursively(modNames[i], stack, errorList, cache);
-                stack.length = stackDepth;
-            }
-            return !!s;
-        },
-
-        checkModLoadRecursively: function (modName, stack, errorList, cache) {
-            var mods = Env.mods,
-                status,
-                m = mods[modName];
-            if (modName in cache) {
-                return cache[modName];
-            }
-            if (!m) {
-                cache[modName] = FALSE;
-                return FALSE;
-            }
-            status = m.status;
-            if (status === ERROR) {
-                errorList.push(m);
-                cache[modName] = FALSE;
-                return FALSE;
-            }
-            if (status >= READY_TO_ATTACH) {
-                cache[modName] = TRUE;
-                return TRUE;
-            }
-            if (status !== LOADED) {
-                cache[modName] = FALSE;
-                return FALSE;
-            }
-            if ('@DEBUG@') {
-                if (stack[modName]) {
-                    S.log('find cyclic dependency between mods: ' + stack, 'warn');
-                } else {
-                    stack.push(modName);
-                }
-            }
-            if (stack[modName]) {
-                cache[modName] = TRUE;
-                return TRUE;
-            } else {
-                // tracking module name
-                stack[modName] = 1;
-            }
-
-            if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(), stack, errorList, cache)) {
-                m.status = READY_TO_ATTACH;
-                cache[modName] = TRUE;
-                return TRUE;
-            }
-
-            cache[modName] = FALSE;
-            return FALSE;
         },
 
         /**
@@ -417,16 +338,12 @@
             if (typeof factory === 'function') {
                 // compatible and efficiency
                 // KISSY.add(function(S,undefined){})
-                var require;
-                if (module.requires && module.requires.length && module.cjs) {
-                    require = bind(module.require, module);
-                }
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [S, require, module.exports, module] :
+                    (module.cjs ? [S, module.require, module.exports, module] :
                         Utils.getModules(module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
@@ -466,34 +383,11 @@
             return Utils.unalias(Utils.normalizeModNamesWithAlias(modNames, refModName));
         },
 
-        /**
-         * unalias module name.
-         * @param {String|String[]} names moduleNames
-         * @return {String[]} unalias module names
-         */
-        unalias: function (names) {
-            var ret = [].concat(names),
-                i,
-                m,
-                alias,
-                ok = 0,
-                j;
-            while (!ok) {
-                ok = 1;
-                for (i = ret.length - 1; i >= 0; i--) {
-                    if ((m = Utils.createModuleInfo(ret[i])) && ((alias = m.getAlias()) !== undefined)) {
-                        ok = 0;
-                        if (typeof alias === 'string') {
-                            alias = [alias];
-                        }
-                        for (j = alias.length - 1; j >= 0; j--) {
-                            if (!alias[j]) {
-                                alias.splice(j, 1);
-                            }
-                        }
-                        ret.splice.apply(ret, [i, 1].concat(addIndexAndRemoveJsExt(alias)));
-                    }
-                }
+        unalias: function (modNames) {
+            var ret = [];
+            for (var i = 0; i < modNames.length; i++) {
+                var mod = Utils.createModuleInfo(modNames[i]);
+                ret.push.apply(ret, mod.getNormalizedAlias());
             }
             return ret;
         },
