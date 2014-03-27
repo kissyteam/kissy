@@ -341,9 +341,13 @@
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
+                var requires = module.requires;
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [S, module.require, module.exports, module] :
+                    (module.cjs ? [S,
+                        requires && requires.length ? module.require : undefined,
+                        module.exports,
+                        module] :
                         Utils.getModules(module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 28 02:10
+build time: Mar 28 03:04
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140328021050' will replace with current timestamp when compressing.
+         * NOTICE: '20140328030413' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140328021050',
+        __BUILD_TIME: '20140328030413',
 
         /**
          * KISSY Environment.
@@ -671,9 +671,13 @@ var KISSY = (function (undefined) {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
+                var requires = module.requires;
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [S, module.require, module.exports, module] :
+                    (module.cjs ? [S,
+                        requires && requires.length ? module.require : undefined,
+                        module.exports,
+                        module] :
                         Utils.getModules(module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
@@ -2444,7 +2448,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140328021050';
+    var TIMESTAMP = '20140328030413';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

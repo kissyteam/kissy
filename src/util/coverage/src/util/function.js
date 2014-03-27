@@ -327,63 +327,63 @@ if (! _$jscoverage['/util/function.js'].branchData) {
   _$jscoverage['/util/function.js'].branchData['172'] = [];
   _$jscoverage['/util/function.js'].branchData['172'][1] = new BranchData();
 }
-_$jscoverage['/util/function.js'].branchData['172'][1].init(21, 11, 'bufferTimer');
+_$jscoverage['/util/function.js'].branchData['172'][1].init(22, 11, 'bufferTimer');
 function visit76_172_1(result) {
   _$jscoverage['/util/function.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['168'][1].init(76, 15, 'context || this');
+}_$jscoverage['/util/function.js'].branchData['168'][1].init(78, 15, 'context || this');
 function visit75_168_1(result) {
   _$jscoverage['/util/function.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['161'][1].init(30, 15, 'context || this');
+}_$jscoverage['/util/function.js'].branchData['161'][1].init(31, 15, 'context || this');
 function visit74_161_1(result) {
   _$jscoverage['/util/function.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['159'][1].init(46, 9, 'ms === -1');
+}_$jscoverage['/util/function.js'].branchData['159'][1].init(49, 9, 'ms === -1');
 function visit73_159_1(result) {
   _$jscoverage['/util/function.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['157'][1].init(18, 9, 'ms || 150');
+}_$jscoverage['/util/function.js'].branchData['157'][1].init(19, 9, 'ms || 150');
 function visit72_157_1(result) {
   _$jscoverage['/util/function.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['143'][1].init(62, 15, 'context || this');
+}_$jscoverage['/util/function.js'].branchData['143'][1].init(64, 15, 'context || this');
 function visit71_143_1(result) {
   _$jscoverage['/util/function.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['141'][1].init(56, 15, 'now - last > ms');
+}_$jscoverage['/util/function.js'].branchData['141'][1].init(58, 15, 'now - last > ms');
 function visit70_141_1(result) {
   _$jscoverage['/util/function.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['133'][1].init(30, 15, 'context || this');
+}_$jscoverage['/util/function.js'].branchData['133'][1].init(31, 15, 'context || this');
 function visit69_133_1(result) {
   _$jscoverage['/util/function.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['131'][1].init(46, 9, 'ms === -1');
+}_$jscoverage['/util/function.js'].branchData['131'][1].init(49, 9, 'ms === -1');
 function visit68_131_1(result) {
   _$jscoverage['/util/function.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['129'][1].init(18, 9, 'ms || 150');
+}_$jscoverage['/util/function.js'].branchData['129'][1].init(19, 9, 'ms || 150');
 function visit67_129_1(result) {
   _$jscoverage['/util/function.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['110'][1].init(25, 13, 'this.interval');
+}_$jscoverage['/util/function.js'].branchData['110'][1].init(26, 13, 'this.interval');
 function visit66_110_1(result) {
   _$jscoverage['/util/function.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['96'][1].init(239, 2, '!m');
+}_$jscoverage['/util/function.js'].branchData['96'][1].init(250, 2, '!m');
 function visit65_96_1(result) {
   _$jscoverage['/util/function.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['92'][1].init(149, 22, 'typeof fn === \'string\'');
+}_$jscoverage['/util/function.js'].branchData['92'][1].init(156, 22, 'typeof fn === \'string\'');
 function visit64_92_1(result) {
   _$jscoverage['/util/function.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['86'][1].init(20, 9, 'when || 0');
+}_$jscoverage['/util/function.js'].branchData['86'][1].init(21, 9, 'when || 0');
 function visit63_86_1(result) {
   _$jscoverage['/util/function.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['20'][1].init(101, 11, 'obj || this');
+}_$jscoverage['/util/function.js'].branchData['20'][1].init(103, 11, 'obj || this');
 function visit62_20_1(result) {
   _$jscoverage['/util/function.js'].branchData['20'][1].ranCondition(result);
   return result;
