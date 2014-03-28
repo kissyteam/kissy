@@ -729,11 +729,11 @@ function visit160_292_1(result) {
 function visit159_291_1(result) {
   _$jscoverage['/base/create.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/create.js'].branchData['282'][2].init(45, 42, 'el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE');
+}_$jscoverage['/base/create.js'].branchData['282'][2].init(45, 47, 'el.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE');
 function visit158_282_2(result) {
   _$jscoverage['/base/create.js'].branchData['282'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/create.js'].branchData['282'][1].init(25, 62, 'supportOuterHTML && el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE');
+}_$jscoverage['/base/create.js'].branchData['282'][1].init(25, 67, 'supportOuterHTML && el.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE');
 function visit157_282_1(result) {
   _$jscoverage['/base/create.js'].branchData['282'][1].ranCondition(result);
   return result;
@@ -1198,7 +1198,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[281]++;
   if (visit156_281_1(htmlString === undefined)) {
     _$jscoverage['/base/create.js'].lineData[282]++;
-    if (visit157_282_1(supportOuterHTML && visit158_282_2(el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE))) {
+    if (visit157_282_1(supportOuterHTML && visit158_282_2(el.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE))) {
       _$jscoverage['/base/create.js'].lineData[283]++;
       return el.outerHTML;
     } else {

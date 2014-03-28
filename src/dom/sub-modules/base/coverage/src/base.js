@@ -240,8 +240,8 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[15] = 0;
   _$jscoverage['/base.js'].lineData[16] = 0;
   _$jscoverage['/base.js'].lineData[17] = 0;
-  _$jscoverage['/base.js'].lineData[19] = 0;
-  _$jscoverage['/base.js'].lineData[26] = 0;
+  _$jscoverage['/base.js'].lineData[20] = 0;
+  _$jscoverage['/base.js'].lineData[22] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -273,11 +273,8 @@ KISSY.add(function(S, require) {
   require('./base/selector');
   _$jscoverage['/base.js'].lineData[17]++;
   require('./base/traversal');
-  _$jscoverage['/base.js'].lineData[19]++;
-  S.mix(S, {
-  DOM: Dom, 
-  get: Dom.get, 
-  query: Dom.query});
-  _$jscoverage['/base.js'].lineData[26]++;
+  _$jscoverage['/base.js'].lineData[20]++;
+  S.DOM = Dom;
+  _$jscoverage['/base.js'].lineData[22]++;
   return Dom;
 });

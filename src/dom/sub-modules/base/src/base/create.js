@@ -279,7 +279,7 @@ KISSY.add(function (S, require) {
                 }
                 // getter
                 if (htmlString === undefined) {
-                    if (supportOuterHTML && el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE) {
+                    if (supportOuterHTML && el.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE) {
                         return el.outerHTML;
                     } else {
                         holder = getHolderDiv(el.ownerDocument);

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:47
+build time: Mar 28 16:25
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -63,7 +63,6 @@ KISSY.add("dom/base/api", ["ua"], function(S, require) {
     }
     return nodeName
   }, _RE_NUM_NO_PX:new RegExp("^(" + RE_NUM + ")(?!px)[a-z%]+$", "i")};
-  S.mix(Dom, NodeType);
   return Dom
 });
 KISSY.add("dom/base/attr", ["./api"], function(S, require) {
@@ -561,7 +560,7 @@ KISSY.add("dom/base/create", ["./api", "ua"], function(S, require) {
       return null
     }
     if(htmlString === undefined) {
-      if(supportOuterHTML && el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE) {
+      if(supportOuterHTML && el.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE) {
         return el.outerHTML
       }else {
         holder = getHolderDiv(el.ownerDocument);
@@ -2022,7 +2021,7 @@ KISSY.add("dom/base", ["./base/api", "./base/attr", "./base/class", "./base/crea
   require("./base/style");
   require("./base/selector");
   require("./base/traversal");
-  S.mix(S, {DOM:Dom, get:Dom.get, query:Dom.query});
+  S.DOM = Dom;
   return Dom
 });
 

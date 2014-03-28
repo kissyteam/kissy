@@ -261,7 +261,6 @@ if (! _$jscoverage['/base/api.js']) {
   _$jscoverage['/base/api.js'].lineData[175] = 0;
   _$jscoverage['/base/api.js'].lineData[178] = 0;
   _$jscoverage['/base/api.js'].lineData[184] = 0;
-  _$jscoverage['/base/api.js'].lineData[186] = 0;
 }
 if (! _$jscoverage['/base/api.js'].functionData) {
   _$jscoverage['/base/api.js'].functionData = [];
@@ -489,7 +488,5 @@ KISSY.add(function(S, require) {
 }, 
   _RE_NUM_NO_PX: new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i')};
   _$jscoverage['/base/api.js'].lineData[184]++;
-  S.mix(Dom, NodeType);
-  _$jscoverage['/base/api.js'].lineData[186]++;
   return Dom;
 });
