@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:59
+build time: Mar 28 13:42
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -306,7 +306,9 @@ KISSY.add("node", ["node/base", "node/attach", "node/override", "node/anim"], fu
   require("node/attach");
   require("node/override");
   require("node/anim");
-  S.mix(S, {Node:Node, NodeList:Node, one:Node.one, all:Node.all});
+  S.Node = Node;
+  S.all = Node.all;
+  S.one = Node.one;
   return Node
 });
 

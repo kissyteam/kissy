@@ -304,12 +304,7 @@
          * @return {KISSY.Loader.Module[]}
          */
         getRequiredMods: function () {
-            var self = this;
-            var mods = [];
-            Utils.each(self.getNormalizedRequires(), function (r, i) {
-                mods[i] = Utils.createModuleInfo(r);
-            });
-            return mods;
+            return Utils.createModulesInfo(this.getNormalizedRequires());
         },
 
         /**

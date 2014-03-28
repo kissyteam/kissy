@@ -52,15 +52,11 @@
         if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
-            S.use(pluginName, {
-                sync: true,
-                success: function (S, Plugin) {
-                    if (Plugin.alias) {
-                        //noinspection JSReferencingMutableVariableFromClosure
-                        name = Plugin.alias(S, name, pluginName);
-                    }
-                }
-            });
+            var Plugin = S.require(pluginName);
+            if (Plugin.alias) {
+                //noinspection JSReferencingMutableVariableFromClosure
+                name = Plugin.alias(S, name, pluginName);
+            }
         }
         return name;
     }

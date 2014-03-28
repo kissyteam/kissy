@@ -12,6 +12,8 @@ KISSY.add(function (S, require) {
 
     // bad! compatibility
     S.Node = Node;
+    S.all = Node.all;
+    S.one = Node.one;
 
     return Node;
 });
