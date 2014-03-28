@@ -417,7 +417,6 @@ if (! _$jscoverage['/uri.js']) {
   _$jscoverage['/uri.js'].lineData[660] = 0;
   _$jscoverage['/uri.js'].lineData[662] = 0;
   _$jscoverage['/uri.js'].lineData[665] = 0;
-  _$jscoverage['/uri.js'].lineData[667] = 0;
 }
 if (! _$jscoverage['/uri.js'].functionData) {
   _$jscoverage['/uri.js'].functionData = [];
@@ -687,7 +686,7 @@ function visit1_79_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/uri.js'].functionData[0]++;
   _$jscoverage['/uri.js'].lineData[8]++;
-  var Path = require ? require('path') : S.Path;
+  var Path = require('path');
   _$jscoverage['/uri.js'].lineData[9]++;
   var logger = S.getLogger('s/uri');
   _$jscoverage['/uri.js'].lineData[10]++;
@@ -1235,7 +1234,5 @@ KISSY.add(function(S, require) {
   return ret;
 };
   _$jscoverage['/uri.js'].lineData[665]++;
-  S.Uri = Uri;
-  _$jscoverage['/uri.js'].lineData[667]++;
   return Uri;
 });
