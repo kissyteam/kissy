@@ -7,8 +7,7 @@ KISSY.add(function (S, HtmlParser, UA) {
     /*global requireNode*/
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
-            path = S.config('packages').src.uri
-                .resolve('../../' + path).getPath();
+            path = S.config('packages').src.base + '../../' + path;
             var fs = requireNode('fs');
             callback(fs.readFileSync(path, 'utf-8'));
         } else {

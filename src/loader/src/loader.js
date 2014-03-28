@@ -9,7 +9,6 @@
         Env = S.Env,
         mods = Env.mods = {},
         Utils = Loader.Utils,
-        processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
 
     Utils.mix(S, {
@@ -52,22 +51,14 @@
             var normalizedModNames,
                 loader,
                 error,
-                sync,
-                tryCount = 0,
-                finalSuccess;
+                tryCount = 0;
 
             if (typeof success === 'object') {
-                //noinspection JSUnresolvedVariable
-                sync = success.sync;
                 //noinspection JSUnresolvedVariable
                 error = success.error;
                 //noinspection JSUnresolvedVariable
                 success = success.success;
             }
-
-            finalSuccess = function () {
-                success.apply(S, Utils.getModules(modNames));
-            };
 
             modNames = Utils.getModNamesAsArray(modNames);
             modNames = Utils.normalizeModNamesWithAlias(modNames);
@@ -90,20 +81,14 @@
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
                 if (errorList.length) {
                     if (error) {
-                        if (sync) {
-                            try {
-                                error.apply(S, errorList);
-                            } catch (e) {
-                                S.log(e.stack || e, 'error');
-                                /*jshint loopfunc:true*/
-                                setTimeout(function () {
-                                    throw e;
-                                }, 0);
-                            }
-                        } else {
-                            processImmediate(function () {
-                                error.apply(S, errorList);
-                            });
+                        try {
+                            error.apply(S, errorList);
+                        } catch (e) {
+                            S.log(e.stack || e, 'error');
+                            /*jshint loopfunc:true*/
+                            setTimeout(function () {
+                                throw e;
+                            }, 0);
                         }
                     }
                     S.log(errorList, 'error');
@@ -111,24 +96,17 @@
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModsRecursively(normalizedModNames);
                     if (success) {
-                        if (sync) {
-                            try {
-                                finalSuccess();
-                            } catch (e) {
-                                S.log(e.stack || e, 'error');
-                                /*jshint loopfunc:true*/
-                                setTimeout(function () {
-                                    throw e;
-                                }, 0);
-                            }
-
-                        } else {
-                            // standalone error trace
-                            processImmediate(finalSuccess);
+                        try {
+                            success.apply(S, Utils.getModules(modNames));
+                        } catch (e) {
+                            S.log(e.stack || e, 'error');
+                            /*jshint loopfunc:true*/
+                            setTimeout(function () {
+                                throw e;
+                            }, 0);
                         }
                     }
                 } else {
-                    sync = true;
                     // in case all of its required mods is loading by other loaders
                     loader.callback = loadReady;
                     if (unloadModsLen) {

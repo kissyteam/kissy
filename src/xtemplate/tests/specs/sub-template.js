@@ -122,9 +122,7 @@ KISSY.add(function (S, require) {
             var path;
 
             if (S.UA.nodejs) {
-                path = S.config('packages').src.uri
-                    .resolve('../src/xtemplate/tests/specs/')
-                    .getPath();
+                path = S.config('packages').src.base + 'xtemplate/tests/specs/';
 
                 S.config('packages', {
                     xtpls: {

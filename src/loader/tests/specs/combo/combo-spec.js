@@ -70,7 +70,6 @@ describe("ComboLoader", function () {
 
     it("should works simply", function () {
         var ret = 0;
-        var ret2 = 0;
 
         S.config({
             packages: [
@@ -97,10 +96,7 @@ describe("ComboLoader", function () {
             S.use('tests3/b', function () {
                 a = 1;
             });
-            setTimeout(function () {
-                ret = a;
-            }, 108);
-            ret2 = a;
+            ret = a;
         });
 
         waitsFor(function () {
@@ -109,8 +105,6 @@ describe("ComboLoader", function () {
 
         runs(function () {
             expect(ret).toBe(1);
-            // always async
-            expect(ret2).toBe(2444);
         });
     });
 

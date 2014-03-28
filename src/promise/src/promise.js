@@ -6,7 +6,6 @@
 KISSY.add(function (S) {
     var logger = S.getLogger('s/promise');
     var PROMISE_VALUE = '__promise_value',
-        processImmediate = S.setImmediate,
         PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
         PROMISE_PENDINGS = '__promise_pendings';
 
@@ -26,9 +25,7 @@ KISSY.add(function (S) {
         // simply call rejected
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
-            processImmediate(function () {
-                rejected.call(promise, promise[PROMISE_VALUE]);
-            });
+            rejected.call(promise, promise[PROMISE_VALUE]);
         } else {
             var v = promise[PROMISE_VALUE],
                 pendings = promise[PROMISE_PENDINGS];
@@ -50,9 +47,7 @@ KISSY.add(function (S) {
                 // need return user's return value
                 // if return promise then forward
                 if (fulfilled) {
-                    processImmediate(function () {
-                        fulfilled.call(promise, v);
-                    });
+                    fulfilled.call(promise, v);
                 }
             }
         }
@@ -116,9 +111,7 @@ KISSY.add(function (S) {
          */
         notify: function (message) {
             S.each(this.promise[PROMISE_PROGRESS_LISTENERS], function (listener) {
-                processImmediate(function () {
-                    listener(message);
-                });
+                listener(message);
             });
         }
     };

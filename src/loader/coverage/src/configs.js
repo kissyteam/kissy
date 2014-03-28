@@ -300,9 +300,11 @@ if (! _$jscoverage['/configs.js']) {
   _$jscoverage['/configs.js'].lineData[134] = 0;
   _$jscoverage['/configs.js'].lineData[136] = 0;
   _$jscoverage['/configs.js'].lineData[137] = 0;
-  _$jscoverage['/configs.js'].lineData[138] = 0;
+  _$jscoverage['/configs.js'].lineData[139] = 0;
   _$jscoverage['/configs.js'].lineData[140] = 0;
+  _$jscoverage['/configs.js'].lineData[141] = 0;
   _$jscoverage['/configs.js'].lineData[143] = 0;
+  _$jscoverage['/configs.js'].lineData[146] = 0;
 }
 if (! _$jscoverage['/configs.js'].functionData) {
   _$jscoverage['/configs.js'].functionData = [];
@@ -363,25 +365,31 @@ if (! _$jscoverage['/configs.js'].branchData) {
   _$jscoverage['/configs.js'].branchData['122'][1] = new BranchData();
   _$jscoverage['/configs.js'].branchData['133'] = [];
   _$jscoverage['/configs.js'].branchData['133'][1] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['133'][2] = new BranchData();
   _$jscoverage['/configs.js'].branchData['136'] = [];
   _$jscoverage['/configs.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['137'] = [];
-  _$jscoverage['/configs.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['136'][2] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['139'] = [];
+  _$jscoverage['/configs.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['140'] = [];
+  _$jscoverage['/configs.js'].branchData['140'][1] = new BranchData();
 }
-_$jscoverage['/configs.js'].branchData['137'][1].init(17, 22, 'base.charAt(0) === \'/\'');
-function visit104_137_1(result) {
-  _$jscoverage['/configs.js'].branchData['137'][1].ranCondition(result);
+_$jscoverage['/configs.js'].branchData['140'][1].init(17, 22, 'base.charAt(0) === \'/\'');
+function visit105_140_1(result) {
+  _$jscoverage['/configs.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['136'][1].init(115, 12, 'locationPath');
-function visit103_136_1(result) {
+}_$jscoverage['/configs.js'].branchData['139'][1].init(211, 12, 'locationPath');
+function visit104_139_1(result) {
+  _$jscoverage['/configs.js'].branchData['139'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/configs.js'].branchData['136'][2].init(124, 36, 'base.charAt(base.length - 1) !== \'/\'');
+function visit103_136_2(result) {
+  _$jscoverage['/configs.js'].branchData['136'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/configs.js'].branchData['136'][1].init(109, 51, 'isDirectory && base.charAt(base.length - 1) !== \'/\'');
+function visit102_136_1(result) {
   _$jscoverage['/configs.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['133'][2].init(28, 36, 'base.charAt(base.length - 1) !== \'/\'');
-function visit102_133_2(result) {
-  _$jscoverage['/configs.js'].branchData['133'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/configs.js'].branchData['133'][1].init(13, 51, 'isDirectory && base.charAt(base.length - 1) !== \'/\'');
+}_$jscoverage['/configs.js'].branchData['133'][1].init(13, 25, 'base.indexOf(\'\\\\\') !== -1');
 function visit101_133_1(result) {
   _$jscoverage['/configs.js'].branchData['133'][1].ranCondition(result);
   return result;
@@ -644,22 +652,27 @@ function visit80_16_1(result) {
   function normalizePath(base, isDirectory) {
     _$jscoverage['/configs.js'].functionData[9]++;
     _$jscoverage['/configs.js'].lineData[133]++;
-    if (visit101_133_1(isDirectory && visit102_133_2(base.charAt(base.length - 1) !== '/'))) {
+    if (visit101_133_1(base.indexOf('\\') !== -1)) {
       _$jscoverage['/configs.js'].lineData[134]++;
-      base += '/';
+      base = base.replace(/\\/g, '/');
     }
     _$jscoverage['/configs.js'].lineData[136]++;
-    if (visit103_136_1(locationPath)) {
+    if (visit102_136_1(isDirectory && visit103_136_2(base.charAt(base.length - 1) !== '/'))) {
       _$jscoverage['/configs.js'].lineData[137]++;
-      if (visit104_137_1(base.charAt(0) === '/')) {
-        _$jscoverage['/configs.js'].lineData[138]++;
+      base += '/';
+    }
+    _$jscoverage['/configs.js'].lineData[139]++;
+    if (visit104_139_1(locationPath)) {
+      _$jscoverage['/configs.js'].lineData[140]++;
+      if (visit105_140_1(base.charAt(0) === '/')) {
+        _$jscoverage['/configs.js'].lineData[141]++;
         base = location.protocol + '//' + location.host + base;
       } else {
-        _$jscoverage['/configs.js'].lineData[140]++;
+        _$jscoverage['/configs.js'].lineData[143]++;
         base = Utils.normalizePath(locationPath, base);
       }
     }
-    _$jscoverage['/configs.js'].lineData[143]++;
+    _$jscoverage['/configs.js'].lineData[146]++;
     return base;
   }
 })(KISSY);

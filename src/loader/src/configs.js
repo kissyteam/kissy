@@ -130,6 +130,9 @@
     };
 
     function normalizePath(base, isDirectory) {
+        if (base.indexOf('\\') !== -1) {
+            base = base.replace(/\\/g, '/');
+        }
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }

@@ -16,7 +16,6 @@
             <path location="${component.src.dir}/kissy.js"/>
             <path location="${component.src.dir}/setup.js"/>
             <path location="${component.src.dir}/utils.js"/>
-            <path location="${component.src.dir}/set-immediate.js"/>
             <path location="${component.src.dir}/data-structure.js"/>
             <path location="${component.src.dir}/css-onload.js"/>
             <path location="${component.src.dir}/get-script.js"/>

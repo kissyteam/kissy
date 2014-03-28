@@ -7,6 +7,7 @@
 (function (S) {
     /*global require*/
     var fs = require('fs'),
+        Utils = S.Loader.Utils,
         vm = require('vm');
 
     S.getScript = function (url, success, charset) {
@@ -34,7 +35,11 @@
             //noinspection JSUnresolvedFunction
             // use path, or else use url will error in nodejs debug mode
             var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
-            factory(S, require);
+
+            factory(S, function (moduleName) {
+                return require(Utils.normalizePath(url, moduleName));
+            });
+
             if (success) {
                 success();
             }

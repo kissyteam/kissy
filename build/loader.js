@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 28 03:04
+build time: Mar 28 12:58
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140328030413' will replace with current timestamp when compressing.
+         * NOTICE: '20140328125805' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140328030413',
+        __BUILD_TIME: '20140328125805',
 
         /**
          * KISSY Environment.
@@ -825,88 +825,6 @@ var KISSY = (function (undefined) {
         }
         return  m[1];
     }
-})(KISSY);/*
- setImmediate polyfill inspired by Q
- @author yiminghe@gmail.com
- */
-(function (S) {
-    /*global setImmediate*/
-    /*global process */
-    /*global MessageChannel */
-
-    var queue = [];
-
-    var flushing = 0;
-
-    function flush() {
-        var i = 0, item;
-        while ((item = queue[i++])) {
-            try {
-                item();
-            } catch (e) {
-                S.log(e.stack || e, 'error');
-                /*jshint loopfunc:true*/
-                setTimeout(function () {
-                    throw e;
-                }, 0);
-            }
-        }
-        if (i > 1) {
-            queue = [];
-        }
-        flushing = 0;
-    }
-
-    /*
-     setImmediate for loader and promise
-     @param {Function} fn async function to call
-     @private
-     */
-    S.setImmediate = function (fn) {
-        queue.push(fn);
-        if (!flushing) {
-            flushing = 1;
-            requestFlush();
-        }
-    };
-
-    var requestFlush;
-    if (typeof setImmediate === 'function') {
-        requestFlush = function () {
-
-            setImmediate(flush);
-        };
-    } else if (typeof process !== 'undefined' && typeof  process.nextTick === 'function') {
-        requestFlush = function () {
-            process.nextTick(flush);
-        };
-    } else if (typeof MessageChannel !== 'undefined') {
-        // modern browsers
-        // http://msdn.microsoft.com/en-us/library/windows/apps/hh441303.aspx
-        var channel = new MessageChannel();
-        // At least Safari Version 6.0.5 (8536.30.1) intermittently cannot create
-        // working message ports the first time a page loads.
-        channel.port1.onmessage = function () {
-            requestFlush = realRequestFlush;
-            channel.port1.onmessage = flush;
-            flush();
-        };
-        var realRequestFlush = function () {
-            // Opera requires us to provide a message payload, regardless of
-            // whether we use it.
-            channel.port2.postMessage(0);
-        };
-        requestFlush = function () {
-            setTimeout(flush, 0);
-            realRequestFlush();
-        };
-
-    } else {
-        // old browsers
-        requestFlush = function () {
-            setTimeout(flush, 0);
-        };
-    }
 })(KISSY);/**
  * @ignore
  * setup data structure for kissy loader
@@ -1656,6 +1574,9 @@ var KISSY = (function (undefined) {
     };
 
     function normalizePath(base, isDirectory) {
+        if (base.indexOf('\\') !== -1) {
+            base = base.replace(/\\/g, '/');
+        }
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
@@ -2264,7 +2185,6 @@ var KISSY = (function (undefined) {
         Env = S.Env,
         mods = Env.mods = {},
         Utils = Loader.Utils,
-        processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
 
     Utils.mix(S, {
@@ -2307,22 +2227,14 @@ var KISSY = (function (undefined) {
             var normalizedModNames,
                 loader,
                 error,
-                sync,
-                tryCount = 0,
-                finalSuccess;
+                tryCount = 0;
 
             if (typeof success === 'object') {
-                //noinspection JSUnresolvedVariable
-                sync = success.sync;
                 //noinspection JSUnresolvedVariable
                 error = success.error;
                 //noinspection JSUnresolvedVariable
                 success = success.success;
             }
-
-            finalSuccess = function () {
-                success.apply(S, Utils.getModules(modNames));
-            };
 
             modNames = Utils.getModNamesAsArray(modNames);
             modNames = Utils.normalizeModNamesWithAlias(modNames);
@@ -2345,20 +2257,14 @@ var KISSY = (function (undefined) {
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
                 if (errorList.length) {
                     if (error) {
-                        if (sync) {
-                            try {
-                                error.apply(S, errorList);
-                            } catch (e) {
-                                S.log(e.stack || e, 'error');
-                                /*jshint loopfunc:true*/
-                                setTimeout(function () {
-                                    throw e;
-                                }, 0);
-                            }
-                        } else {
-                            processImmediate(function () {
-                                error.apply(S, errorList);
-                            });
+                        try {
+                            error.apply(S, errorList);
+                        } catch (e) {
+                            S.log(e.stack || e, 'error');
+                            /*jshint loopfunc:true*/
+                            setTimeout(function () {
+                                throw e;
+                            }, 0);
                         }
                     }
                     S.log(errorList, 'error');
@@ -2366,24 +2272,17 @@ var KISSY = (function (undefined) {
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModsRecursively(normalizedModNames);
                     if (success) {
-                        if (sync) {
-                            try {
-                                finalSuccess();
-                            } catch (e) {
-                                S.log(e.stack || e, 'error');
-                                /*jshint loopfunc:true*/
-                                setTimeout(function () {
-                                    throw e;
-                                }, 0);
-                            }
-
-                        } else {
-                            // standalone error trace
-                            processImmediate(finalSuccess);
+                        try {
+                            success.apply(S, Utils.getModules(modNames));
+                        } catch (e) {
+                            S.log(e.stack || e, 'error');
+                            /*jshint loopfunc:true*/
+                            setTimeout(function () {
+                                throw e;
+                            }, 0);
                         }
                     }
                 } else {
-                    sync = true;
                     // in case all of its required mods is loading by other loaders
                     loader.callback = loadReady;
                     if (unloadModsLen) {
@@ -2448,7 +2347,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140328030413';
+    var TIMESTAMP = '20140328125805';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
