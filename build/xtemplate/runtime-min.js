@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:02
+build time: Mar 31 19:32
 */
 KISSY.add("xtemplate/runtime/scope",[],function(m){function k(b,a){this.data=b||{};this.affix=a;this.root=this}k.prototype={isScope:1,setParent:function(b){this.parent=b;this.root=b.root},getParent:function(){return this.parent},getRoot:function(){return this.root},set:function(b,a){this.affix||(this.affix={});this.affix[b]=a},setData:function(b){this.data=b},getData:function(){return this.data},mix:function(b){this.affix||(this.affix={});m.mix(this.affix,b)},has:function(b){var a=this.data,g=this.affix;
 return"this"===b||g&&b in g?!0:"object"===typeof a&&b in a},get:function(b){var a=this.data,g=this.affix;if("this"===b)return this.data;if(g&&b in g)return g[b];if("object"===typeof a&&b in a)return a[b]},resolve:function(b,a){if(!a&&"string"!==typeof b&&1===b.length&&this.has(b[0]))return this.get(b[0]);var g=b;"string"===typeof b&&(g=b.split("."));var c,i,d,e,j,f=this;if("root"===g[0])g.shift(),f=f.root;else if(a)for(;f&&a--;)f=f.parent;var l=0;for(c=g.length;f;){j=1;d=f;for(i=0;i<c;i++)if(e=g[i],

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:18
+build time: Mar 31 19:15
 */
 KISSY.add("combobox/multi-word/cursor",["node"],function(p,f){function k(b){var a=i;a||(a=g(n));"textarea"===""+b[0].type.toLowerCase()?a.css("width",b.css("width")):a.css("width",9999);p.each(o,function(c){a.css(c,b.css(c))});i||a.insertBefore(b[0].ownerDocument.body.firstChild);return i=a}var g=f("node").all,n='<div style="z-index:-9999;overflow:hidden;position: fixed;left:-9999px;top:-9999px;opacity:0;white-space:pre-wrap;word-wrap:break-word;"></div>',i,o="paddingLeft,paddingTop,paddingBottom,paddingRight,marginLeft,marginTop,marginBottom,marginRight,borderLeftStyle,borderTopStyle,borderBottomStyle,borderRightStyle,borderLeftWidth,borderTopWidth,borderBottomWidth,borderRightWidth,line-height,outline,height,fontFamily,fontSize,fontWeight,fontVariant,fontStyle".split(",");
 return function(b){var a=g(b),b=a[0],c=b.ownerDocument,h=g(c),d=b.scrollTop,e=b.scrollLeft;if(c.selection)return b=c.selection.createRange(),{left:b.boundingLeft+e+h.scrollLeft(),top:b.boundingTop+d+b.boundingHeight+h.scrollTop()};h=a.offset();if("textarea"!==b.type)return h.top+=b.offsetHeight,h;c=k(a);a=b.selectionStart;c.html(p.escapeHtml(b.value.substring(0,a-1))+"<span>x</span>");c.offset(h);h=c.last();b=h.offset();b.top+=h.height();0<a&&(b.left+=h.width());b.top-=d;b.left-=e;return b}});

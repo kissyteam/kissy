@@ -1313,7 +1313,7 @@ KISSY.add(function(S, require) {
   SELECTION_TEXT: 2, 
   SELECTION_ELEMENT: 3};
   _$jscoverage['/editor/selection.js'].lineData[24]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'), KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
   _$jscoverage['/editor/selection.js'].lineData[40]++;
   function KESelection(document) {
     _$jscoverage['/editor/selection.js'].functionData[1]++;

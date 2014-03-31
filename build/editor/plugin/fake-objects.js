@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:49
+build time: Mar 31 19:20
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Mar 27 21:49
 KISSY.add("editor/plugin/fake-objects", ["editor", "html-parser"], function(S, require) {
   var Editor = require("editor");
   var HtmlParser = require("html-parser");
-  var Node = S.Node, Dom = S.DOM, Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl("theme/spacer.gif");
+  var Node = S.Node, Dom = S.require("dom"), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl("theme/spacer.gif");
   Editor.addMembers({createFakeElement:function(realElement, className, realElementType, isResizable, outerHTML, attrs) {
     var style = realElement.attr("style") || "";
     if(realElement.attr("width")) {

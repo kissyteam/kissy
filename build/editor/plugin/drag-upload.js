@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:49
+build time: Mar 31 19:20
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Mar 27 21:49
 KISSY.add("editor/plugin/drag-upload", ["editor", "event"], function(S, require) {
   var Editor = require("editor");
   var Event = require("event");
-  var Node = S.Node, Utils = Editor.Utils, Dom = S.DOM;
+  var Node = S.Node, Utils = Editor.Utils, Dom = S.require("dom");
   function dragUpload(config) {
     this.config = config || {}
   }

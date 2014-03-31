@@ -1439,7 +1439,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/dom.js'].lineData[13]++;
   var Utils = require('./utils');
   _$jscoverage['/editor/dom.js'].lineData[14]++;
-  var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = S.DOM, NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {
+  var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = S.require('dom'), NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {
   a: 1, 
   abbr: 1, 
   acronym: 1, 

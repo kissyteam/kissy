@@ -1,0 +1,3 @@
+{
+    "editor/plugin/maximize": ["editor/plugin/maximize/cmd", "editor/plugin/button"]
+}

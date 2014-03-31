@@ -2116,7 +2116,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/styles.js'].lineData[15]++;
   var ElementPath = require('./elementPath');
   _$jscoverage['/editor/styles.js'].lineData[17]++;
-  var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = S.DOM, KER = Editor.RangeType, KEP = Editor.PositionType, KEST, UA = S.UA, blockElements = {
+  var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = S.require('dom'), KER = Editor.RangeType, KEP = Editor.PositionType, KEST, UA = S.UA, blockElements = {
   address: 1, 
   div: 1, 
   h1: 1, 

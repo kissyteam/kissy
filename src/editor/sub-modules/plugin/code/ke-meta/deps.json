@@ -1,0 +1,3 @@
+{
+    "editor/plugin/code": ["editor", "editor/plugin/button", "editor/plugin/dialog-loader"]
+}

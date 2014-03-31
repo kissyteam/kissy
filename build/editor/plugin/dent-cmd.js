@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:49
+build time: Mar 31 19:20
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Mar 27 21:49
 KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, require) {
   var Editor = require("editor");
   var ListUtils = require("./list-utils");
-  var listNodeNames = {ol:1, ul:1}, Walker = Editor.Walker, Dom = S.DOM, Node = S.Node, UA = S.UA, isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = "margin-left", INDENT_OFFSET = 40, INDENT_UNIT = "px", isNotBookmark = Walker.bookmark(false, true);
+  var listNodeNames = {ol:1, ul:1}, Walker = Editor.Walker, Dom = S.require("dom"), Node = S.Node, UA = S.UA, isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = "margin-left", INDENT_OFFSET = 40, INDENT_UNIT = "px", isNotBookmark = Walker.bookmark(false, true);
   function isListItem(node) {
     return node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) === "li"
   }

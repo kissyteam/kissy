@@ -1,0 +1,3 @@
+{
+    io: ["dom", "event/custom", "promise", "uri", "ua", "event/dom"]
+}

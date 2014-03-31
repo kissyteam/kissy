@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:49
+build time: Mar 31 19:20
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Mar 27 21:49
 KISSY.add("editor/plugin/color/dialog", ["editor", "../dialog"], function(S, require) {
   var Editor = require("editor");
   var Dialog4E = require("../dialog");
-  var map = S.map, Dom = S.DOM;
+  var map = S.map, Dom = S.require("dom");
   function getData(color) {
     if(S.isArray(color)) {
       return color

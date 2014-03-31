@@ -1,0 +1,3 @@
+{
+    "component/extension/delegate-children": ["node", "component/manager", "ua"]
+}

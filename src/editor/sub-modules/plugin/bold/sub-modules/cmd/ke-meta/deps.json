@@ -1,0 +1,3 @@
+{
+    "editor/plugin/bold/cmd": ["editor", "editor/plugin/font/cmd"]
+}

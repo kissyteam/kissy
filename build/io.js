@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:58
+build time: Mar 31 19:29
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -978,7 +978,7 @@ KISSY.add("io", ["io/form-serializer", "io/base", "io/xhr-transport", "io/script
     }
     return IO({url:url, type:"post", dataType:dataType, form:form, data:data, success:callback})
   }});
-  S.mix(S, {io:IO, jsonp:IO.jsonp});
+  S.IO = IO;
   return IO
 });
 

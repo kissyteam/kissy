@@ -234,7 +234,8 @@ if (! _$jscoverage['/event.js']) {
   _$jscoverage['/event.js'].lineData[9] = 0;
   _$jscoverage['/event.js'].lineData[10] = 0;
   _$jscoverage['/event.js'].lineData[18] = 0;
-  _$jscoverage['/event.js'].lineData[26] = 0;
+  _$jscoverage['/event.js'].lineData[24] = 0;
+  _$jscoverage['/event.js'].lineData[25] = 0;
 }
 if (! _$jscoverage['/event.js'].functionData) {
   _$jscoverage['/event.js'].functionData = [];
@@ -253,12 +254,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/event.js'].lineData[10]++;
   var Gesture = require('event/gesture');
   _$jscoverage['/event.js'].lineData[18]++;
-  S.Event = S.merge(DomEvent, {
-  DomEvent: DomEvent, 
+  var Event = S.merge(DomEvent, {
   Target: CustomEvent.Target, 
   global: CustomEvent.global, 
-  Gesture: Gesture.Enumeration, 
-  CustomEvent: CustomEvent});
-  _$jscoverage['/event.js'].lineData[26]++;
-  return S.Event;
+  Gesture: Gesture.Enumeration});
+  _$jscoverage['/event.js'].lineData[24]++;
+  S.Event = Event;
+  _$jscoverage['/event.js'].lineData[25]++;
+  return Event;
 });

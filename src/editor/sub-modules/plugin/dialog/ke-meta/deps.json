@@ -1,0 +1,3 @@
+{
+    "editor/plugin/dialog": ["editor", "overlay", "editor/plugin/focus-fix", "dd/plugin/constrain", "component/plugin/drag"]
+}

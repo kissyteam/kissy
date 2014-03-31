@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:01
+build time: Mar 31 19:32
 */
 KISSY.add("tree/node-xtpl",["component/extension/content-xtpl"],function(i,h,f,k){i=function(c,a,b,o,l){var e=this,g,f=e.nativeCommands,d=e.utils;if("1.50"!==a.version)throw Error("current xtemplate file("+e.name+")(v1.50) need to be recompiled using current kissy(v"+a.version+")!");"undefined"!==typeof k&&k.kissy&&(g=k);var i=d.callCommand,a=f["if"],f=f.include;b.write('<div id="ks-tree-node-row-');d=c.resolve(["id"]);b.write(d,!0);b.write('"\n     class="');var d={escape:1},j=[];j.push("row");d.params=
 j;if((d=i(e,c,d,b,"getBaseCssClasses",2))&&d.isBuffer)b=d,d=l;b.write(d,!0);b.write("\n     ");var d={escape:1},j=[],m=c.resolve(["selected"]);j.push(m);d.params=j;d.fn=function(n,a){a.write("\n        ");var b={escape:1},d=[];d.push("selected");b.params=d;if((b=i(e,n,b,a,"getBaseCssClasses",4))&&b.isBuffer)a=b,b=l;a.write(b,!0);a.write("\n     ");return a};b=a.call(e,c,d,b,3,o);b.write('\n     ">\n    <div id="ks-tree-node-expand-icon-');d=c.resolve(["id"]);b.write(d,!0);b.write('"\n         class="');

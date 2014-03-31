@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:53
+build time: Mar 31 19:23
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Mar 27 21:53
 KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(S, require) {
   var Editor = require("editor");
   var ListUtils = require("../list-utils");
-  var insertUnorderedList = "insertUnorderedList", insertOrderedList = "insertOrderedList", listNodeNames = {ol:insertOrderedList, ul:insertUnorderedList}, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = S.DOM, headerTagRegex = /^h[1-6]$/;
+  var insertUnorderedList = "insertUnorderedList", insertOrderedList = "insertOrderedList", listNodeNames = {ol:insertOrderedList, ul:insertUnorderedList}, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = S.require("dom"), headerTagRegex = /^h[1-6]$/;
   function ListCommand(type) {
     this.type = type
   }

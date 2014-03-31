@@ -532,7 +532,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/utils.js'].lineData[8]++;
   var Editor = require('./base');
   _$jscoverage['/editor/utils.js'].lineData[9]++;
-  var TRUE = true, FALSE = false, NULL = null, Dom = S.DOM, UA = S.UA, Utils = {
+  var TRUE = true, FALSE = false, NULL = null, Dom = S.require('dom'), UA = S.UA, Utils = {
   debugUrl: function(url) {
   _$jscoverage['/editor/utils.js'].functionData[1]++;
   _$jscoverage['/editor/utils.js'].lineData[22]++;

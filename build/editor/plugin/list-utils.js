@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:53
+build time: Mar 31 19:23
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -10,7 +10,7 @@ build time: Mar 27 21:53
 */
 
 KISSY.add("editor/plugin/list-utils", [], function(S) {
-  var listNodeNames = {ol:1, ul:1}, Node = S.Node, Dom = S.DOM, NodeType = Dom.NodeType, UA = S.UA, list = {listToArray:function(listNode, database, baseArray, baseIndentLevel, grandparentNode) {
+  var listNodeNames = {ol:1, ul:1}, Node = S.Node, Dom = S.require("dom"), NodeType = Dom.NodeType, UA = S.UA, list = {listToArray:function(listNode, database, baseArray, baseIndentLevel, grandparentNode) {
     if(!listNodeNames[listNode.nodeName()]) {
       return[]
     }

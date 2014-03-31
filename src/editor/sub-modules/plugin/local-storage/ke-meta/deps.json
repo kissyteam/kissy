@@ -1,0 +1,3 @@
+{
+    "editor/plugin/local-storage": ["editor", "overlay", "editor/plugin/flash-bridge"]
+}

@@ -177,7 +177,6 @@
         getAlias: function () {
             var self = this,
                 name = self.name,
-                aliasFn,
                 packageInfo,
                 alias = self.alias;
             if (alias) {
@@ -186,9 +185,6 @@
             packageInfo = self.getPackage();
             if (packageInfo.alias) {
                 alias = packageInfo.alias(name);
-            }
-            if (!alias && (aliasFn = Config.alias)) {
-                alias = aliasFn(name);
             }
             alias = self.alias = alias || [];
             return alias;

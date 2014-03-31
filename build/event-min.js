@@ -1,6 +1,6 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:58
+build time: Mar 31 19:28
 */
-KISSY.add("event",["event/dom","event/custom","event/gesture"],function(a,b){var d=b("event/dom"),c=b("event/custom"),e=b("event/gesture");a.Event=a.merge(d,{DomEvent:d,Target:c.Target,global:c.global,Gesture:e.Enumeration,CustomEvent:c});return a.Event});
+KISSY.add("event",["event/dom","event/custom","event/gesture"],function(c,a){var b=a("event/dom"),d=a("event/custom"),e=a("event/gesture"),b=c.merge(b,{Target:d.Target,global:d.global,Gesture:e.Enumeration});return c.Event=b});

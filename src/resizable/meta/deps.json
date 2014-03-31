@@ -1,0 +1,3 @@
+{
+    resizable: ["node", "base", "dd"]
+}

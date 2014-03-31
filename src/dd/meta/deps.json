@@ -1,0 +1,3 @@
+{
+    dd: ["node", "base", "ua", "event/gesture/drag"]
+}

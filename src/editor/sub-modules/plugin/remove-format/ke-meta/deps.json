@@ -1,0 +1,3 @@
+{
+    "editor/plugin/remove-format": ["editor", "editor/plugin/button", "editor/plugin/remove-format/cmd"]
+}

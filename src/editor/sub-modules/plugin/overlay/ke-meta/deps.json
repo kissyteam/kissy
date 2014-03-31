@@ -1,0 +1,3 @@
+{
+    "editor/plugin/overlay": ["editor", "overlay", "editor/plugin/focus-fix"]
+}

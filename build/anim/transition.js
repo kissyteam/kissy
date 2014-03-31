@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:16
+build time: Mar 31 19:15
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -116,6 +116,7 @@ KISSY.add("anim/transition", ["dom", "./base"], function(S, require) {
     Dom.css(node, propsCss)
   }});
   S.mix(TransitionAnim, AnimBase.Statics);
+  S.Anim = TransitionAnim;
   return TransitionAnim
 });
 

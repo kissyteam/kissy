@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:48
+build time: Mar 31 19:19
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/code/dialog", ["editor", "menubutton", "../dialog"], fu
   var Editor = require("editor");
   var MenuButton = require("menubutton");
   var xhtmlDtd = Editor.XHTML_DTD;
-  var NodeType = S.DOM.NodeType;
+  var NodeType = S.require("dom").NodeType;
   var notWhitespaceEval = Editor.Walker.whitespaces(true);
   var Dialog4E = require("../dialog");
   var codeTypes = [["ActionScript3", "as3"], ["Bash/Shell", "bash"], ["C/C++", "cpp"], ["Css", "css"], ["CodeFunction", "cf"], ["C#", "c#"], ["Delphi", "delphi"], ["Diff", "diff"], ["Erlang", "erlang"], ["Groovy", "groovy"], ["HTML", "html"], ["Java", "java"], ["JavaFx", "jfx"], ["Javascript", "js"], ["Perl", "pl"], ["Php", "php"], ["Plain Text", "plain"], ["PowerShell", "ps"], ["Python", "python"], ["Ruby", "ruby"], ["Scala", "scala"], ["Sql", "sql"], ["Vb", "vb"], ["Xml", "xml"]], bodyTpl = '<div class="{prefixCls}code-wrap">' + 

@@ -72,7 +72,7 @@ build example for kissy loader
                     <arg value="-outputEncoding"/>
                     <arg value="utf-8"/>
                     <arg value="-output"/>
-                    <arg value="${assets.dir}/deps.js"/>
+                    <arg value="${assets.dir}/deps.json"/>
                     <classpath>
                         <pathelement path="${module.compiler}"/>
                         <pathelement path="${java.class.path}"/>

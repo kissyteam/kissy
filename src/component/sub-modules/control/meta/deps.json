@@ -1,0 +1,3 @@
+{
+    "component/control": ["node", "base", "component/manager", "xtemplate/runtime", "ua"]
+}

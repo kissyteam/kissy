@@ -1,0 +1,3 @@
+{
+    tree: ["node", "component/container", "component/extension/content-xtpl", "component/extension/content-render", "component/extension/delegate-children", "ua"]
+}

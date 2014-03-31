@@ -37,19 +37,11 @@
     <target name="build" depends="pre-build,common.build.build"/>
 
     <target name="merge-dependency">
-        <concat destfile="${component.src.dir}/modules.js" encoding="${charset}" outputencoding="${charset}">
-            <header filtering="no" trimleading="yes">
-                /*jshint indent:false*/
-                (function (config, Feature, UA) {
-            </header>
-            <fileset dir="${kissy.src.dir}" includes="**/meta/*.js"
-                     excludes="seed/**/*"/>
-            <footer>
-                })(function (c) {
-                KISSY.config('modules', c);
-                },KISSY.Feature, KISSY.UA);
-            </footer>
-        </concat>
+        <exec executable="node" failonerror="true">
+            <arg value="${tools.dir}/gen-meta/gen-meta"/>
+            <arg value="--output"/>
+            <arg value="${component.src.dir}/modules.js"/>
+        </exec>
     </target>
 
     <target name="concat" depends="merge-dependency">

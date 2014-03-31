@@ -4,22 +4,16 @@
     <import file="../common.xml"/>
 
     <target name="merge-editor-dependency">
-        <concat destfile="${component.src.dir}/editor/modules.js"
-                encoding="${charset}" outputencoding="${charset}">
-            <header filtering="no" trimleading="yes">
-                /*jshint indent:false, unused:false*/
-                KISSY.add(function(){
-                (function(config,Feature,UA){
-            </header>
-            <fileset dir="${kissy.src.dir}/editor/sub-modules/plugin/"
-                     includes="**/ke-meta/*.js"/>
-            <footer>
-                })(function(c){
-                KISSY.config('modules', c);
-                },KISSY.Feature,KISSY.UA);
-                });
-            </footer>
-        </concat>
+        <exec executable="node" failonerror="true">
+            <arg value="${tools.dir}/gen-meta/gen-meta"/>
+            <arg value="--dir"/>
+            <arg value="${kissy.src.dir}/editor/sub-modules/plugin/"/>
+            <arg value="--module"/>
+            <arg value="--suffix"/>
+            <arg value="/ke-meta"/>
+            <arg value="--output"/>
+            <arg value="${component.src.dir}/editor/modules.js"/>
+        </exec>
     </target>
 
     <target name="before-concat" depends="merge-editor-dependency"/>

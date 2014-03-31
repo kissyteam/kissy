@@ -1,0 +1,3 @@
+{
+    "editor/plugin/indent": ["editor", "editor/plugin/indent/cmd", "editor/plugin/button"]
+}

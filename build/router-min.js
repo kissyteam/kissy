@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:00
+build time: Mar 31 19:30
 */
 KISSY.add("router/utils",["event/dom","uri"],function(e,c){function a(b){return b.replace(/__ks-vid=.+$/,"")}function m(b){var a;return(a=b.match(/__ks-vid=(.+)$/))?parseInt(a[1],10):0}var i=c("event/dom"),g=c("uri");return{endWithSlash:function(b){return e.endsWith(b,"/")},startWithSlash:function(b){return e.startsWith(b,"/")},removeEndSlash:function(b){this.endWithSlash(b)&&(b=b.substring(0,b.length-1));return b},removeStartSlash:function(b){this.startWithSlash(b)&&(b=b.substring(1));return b},
 addEndSlash:function(b){return this.removeEndSlash(b)+"/"},addStartSlash:function(b){return b?"/"+this.removeStartSlash(b):b},getFullPath:function(b,a){return location.protocol+"//"+location.host+this.removeEndSlash(a)+this.addStartSlash(b)},equalsIgnoreSlash:function(b,a){b=this.removeEndSlash(b);a=this.removeEndSlash(a);return b===a},getHash:function(b){return a(b.getFragment().replace(/^!/,"")).replace(i.REPLACE_HISTORY,"")},removeVid:a,hasVid:function(b){return-1!==b.indexOf("__ks-vid=")},addVid:function(b,

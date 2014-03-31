@@ -840,7 +840,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selectionFix.js'].lineData[13]++;
   var Node = require('node');
   _$jscoverage['/editor/selectionFix.js'].lineData[15]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'), KES = Editor.SelectionType;
   _$jscoverage['/editor/selectionFix.js'].lineData[26]++;
   function fixCursorForIE(editor) {
     _$jscoverage['/editor/selectionFix.js'].functionData[1]++;

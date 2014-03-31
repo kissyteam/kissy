@@ -34,7 +34,7 @@ build example for kissy loader
             <arg value="${build.dir}"/>
 
             <arg value="-output"/>
-            <arg value="${build.dir}/deps.js"/>
+            <arg value="${build.dir}/deps.json"/>
 
             <arg value="-fixModuleName"/>
             <!--自动 combo 需要补全文件名-->

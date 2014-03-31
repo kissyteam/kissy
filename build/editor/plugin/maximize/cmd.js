@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:53
+build time: Mar 31 19:24
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Mar 27 21:53
 KISSY.add("editor/plugin/maximize/cmd", ["editor", "event"], function(S, require) {
   var Editor = require("editor");
   var Event = require("event");
-  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = S.DOM, iframe, MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding", init = function() {
+  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = S.require("dom"), iframe, MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding", init = function() {
     if(!iframe) {
       iframe = (new Node("<" + "iframe " + ' style="' + "position:absolute;" + "top:-9999px;" + "left:-9999px;" + '"' + ' frameborder="0">')).prependTo(doc.body, undefined)
     }

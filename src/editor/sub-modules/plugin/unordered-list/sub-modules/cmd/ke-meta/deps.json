@@ -1,0 +1,3 @@
+{
+    "editor/plugin/unordered-list/cmd": ["editor", "editor/plugin/list-utils/cmd"]
+}

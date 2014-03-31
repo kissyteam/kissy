@@ -1,0 +1,3 @@
+{
+    "xtemplate/compiler": ["util", "xtemplate/runtime"]
+}

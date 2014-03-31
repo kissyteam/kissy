@@ -1,0 +1,3 @@
+{
+    "editor/plugin/draft": ["editor", "json", "event", "editor/plugin/local-storage", "overlay", "editor/plugin/menubutton"]
+}

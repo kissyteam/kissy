@@ -1,0 +1,3 @@
+{
+    "dom/ie": ["dom/base", "ua"]
+}

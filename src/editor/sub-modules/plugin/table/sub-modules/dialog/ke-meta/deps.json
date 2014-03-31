@@ -1,0 +1,3 @@
+{
+    "editor/plugin/table/dialog": ["editor", "editor/plugin/dialog", "editor/plugin/menubutton"]
+}

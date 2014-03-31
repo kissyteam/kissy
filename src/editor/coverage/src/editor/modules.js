@@ -229,473 +229,106 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/modules.js']) {
   _$jscoverage['/editor/modules.js'] = {};
   _$jscoverage['/editor/modules.js'].lineData = [];
+  _$jscoverage['/editor/modules.js'].lineData[2] = 0;
   _$jscoverage['/editor/modules.js'].lineData[3] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[4] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[6] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[10] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[14] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[18] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[22] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[26] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[30] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[34] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[38] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[42] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[46] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[50] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[54] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[58] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[62] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[66] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[70] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[74] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[78] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[82] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[86] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[90] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[94] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[98] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[102] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[106] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[110] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[114] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[118] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[122] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[126] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[130] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[134] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[138] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[142] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[146] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[150] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[154] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[158] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[162] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[166] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[170] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[174] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[178] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[182] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[186] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[190] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[194] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[198] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[202] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[206] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[210] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[214] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[218] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[222] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[226] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[230] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[234] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[238] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[242] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[246] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[250] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[254] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[258] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[262] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[266] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[270] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[274] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[278] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[282] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[286] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[290] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[294] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[298] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[302] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[306] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[310] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[314] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[318] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[322] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[326] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[330] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[334] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[338] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[342] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[346] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[350] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[354] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[358] = 0;
-  _$jscoverage['/editor/modules.js'].lineData[363] = 0;
 }
 if (! _$jscoverage['/editor/modules.js'].functionData) {
   _$jscoverage['/editor/modules.js'].functionData = [];
   _$jscoverage['/editor/modules.js'].functionData[0] = 0;
-  _$jscoverage['/editor/modules.js'].functionData[1] = 0;
-  _$jscoverage['/editor/modules.js'].functionData[2] = 0;
 }
 if (! _$jscoverage['/editor/modules.js'].branchData) {
   _$jscoverage['/editor/modules.js'].branchData = {};
 }
-_$jscoverage['/editor/modules.js'].lineData[3]++;
-KISSY.add(function() {
+_$jscoverage['/editor/modules.js'].lineData[2]++;
+(function(S) {
   _$jscoverage['/editor/modules.js'].functionData[0]++;
-  _$jscoverage['/editor/modules.js'].lineData[4]++;
-  (function(config, Feature, UA) {
-  _$jscoverage['/editor/modules.js'].functionData[1]++;
-  _$jscoverage['/editor/modules.js'].lineData[6]++;
-  config({
-  'editor/plugin/back-color': {
-  requires: ['editor/plugin/color/btn', 'editor/plugin/back-color/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[10]++;
-  config({
-  'editor/plugin/back-color/cmd': {
-  requires: ['editor/plugin/color/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[14]++;
-  config({
-  'editor/plugin/bold': {
-  requires: ['editor/plugin/font/ui', 'editor/plugin/bold/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[18]++;
-  config({
-  'editor/plugin/bold/cmd': {
-  requires: ['editor', 'editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[22]++;
-  config({
-  'editor/plugin/bubble': {
-  requires: ['overlay', 'editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[26]++;
-  config({
-  'editor/plugin/button': {
-  requires: ['editor', 'button']}});
-  _$jscoverage['/editor/modules.js'].lineData[30]++;
-  config({
-  'editor/plugin/checkbox-source-area': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[34]++;
-  config({
-  'editor/plugin/code': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/dialog-loader']}});
-  _$jscoverage['/editor/modules.js'].lineData[38]++;
-  config({
-  'editor/plugin/code/dialog': {
-  requires: ['editor', 'menubutton', 'editor/plugin/dialog']}});
-  _$jscoverage['/editor/modules.js'].lineData[42]++;
-  config({
-  'editor/plugin/color/btn': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/overlay', 'editor/plugin/dialog-loader']}});
-  _$jscoverage['/editor/modules.js'].lineData[46]++;
-  config({
-  'editor/plugin/color/cmd': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[50]++;
-  config({
-  'editor/plugin/color/dialog': {
-  requires: ['editor', 'editor/plugin/dialog']}});
-  _$jscoverage['/editor/modules.js'].lineData[54]++;
-  config({
-  'editor/plugin/contextmenu': {
-  requires: ['editor', 'menu', 'editor/plugin/focus-fix', 'event']}});
-  _$jscoverage['/editor/modules.js'].lineData[58]++;
-  config({
-  'editor/plugin/dent-cmd': {
-  requires: ['editor', 'editor/plugin/list-utils']}});
-  _$jscoverage['/editor/modules.js'].lineData[62]++;
-  config({
-  'editor/plugin/dialog-loader': {
-  requires: ['editor', 'overlay']}});
-  _$jscoverage['/editor/modules.js'].lineData[66]++;
-  config({
-  'editor/plugin/dialog': {
-  requires: ['editor', 'overlay', 'editor/plugin/focus-fix', 'dd/plugin/constrain', 'component/plugin/drag']}});
-  _$jscoverage['/editor/modules.js'].lineData[70]++;
-  config({
-  'editor/plugin/draft': {
-  requires: ['editor', 'json', 'event', 'editor/plugin/local-storage', 'overlay', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[74]++;
-  config({
-  'editor/plugin/drag-upload': {
-  requires: ['editor', 'event']}});
-  _$jscoverage['/editor/modules.js'].lineData[78]++;
-  config({
-  'editor/plugin/element-path': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[82]++;
-  config({
-  'editor/plugin/fake-objects': {
-  requires: ['editor', 'html-parser']}});
-  _$jscoverage['/editor/modules.js'].lineData[86]++;
-  config({
-  'editor/plugin/flash-bridge': {
-  requires: ['editor', 'swf', 'event']}});
-  _$jscoverage['/editor/modules.js'].lineData[90]++;
-  config({
-  'editor/plugin/flash-common/base-class': {
-  requires: ['editor/plugin/flash-common/utils', 'base', 'editor', 'editor/plugin/dialog-loader', 'editor/plugin/bubble', 'editor/plugin/contextmenu']}});
-  _$jscoverage['/editor/modules.js'].lineData[94]++;
-  config({
-  'editor/plugin/flash-common/utils': {
-  requires: ['swf']}});
-  _$jscoverage['/editor/modules.js'].lineData[98]++;
-  config({
-  'editor/plugin/flash': {
-  requires: ['editor', 'editor/plugin/flash-common/base-class', 'editor/plugin/flash-common/utils', 'editor/plugin/fake-objects', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[102]++;
-  config({
-  'editor/plugin/flash/dialog': {
-  requires: ['editor', 'editor/plugin/flash-common/utils', 'editor/plugin/dialog', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[106]++;
-  config({
-  'editor/plugin/focus-fix': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[110]++;
-  config({
-  'editor/plugin/font-family': {
-  requires: ['editor', 'editor/plugin/font/ui', 'editor/plugin/font-family/cmd', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[114]++;
-  config({
-  'editor/plugin/font-family/cmd': {
-  requires: ['editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[118]++;
-  config({
-  'editor/plugin/font-size': {
-  requires: ['editor', 'editor/plugin/font/ui', 'editor/plugin/font-size/cmd', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[122]++;
-  config({
-  'editor/plugin/font-size/cmd': {
-  requires: ['editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[126]++;
-  config({
-  'editor/plugin/font/cmd': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[130]++;
-  config({
-  'editor/plugin/font/ui': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[134]++;
-  config({
-  'editor/plugin/fore-color': {
-  requires: ['editor/plugin/color/btn', 'editor/plugin/fore-color/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[138]++;
-  config({
-  'editor/plugin/fore-color/cmd': {
-  requires: ['editor/plugin/color/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[142]++;
-  config({
-  'editor/plugin/heading': {
-  requires: ['editor/plugin/menubutton', 'editor', 'editor/plugin/heading/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[146]++;
-  config({
-  'editor/plugin/heading/cmd': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[150]++;
-  config({
-  'editor/plugin/image': {
-  requires: ['editor/plugin/button', 'editor', 'editor/plugin/bubble', 'editor/plugin/contextmenu', 'editor/plugin/dialog-loader']}});
-  _$jscoverage['/editor/modules.js'].lineData[154]++;
-  config({
-  'editor/plugin/image/dialog': {
-  requires: ['editor', 'io', 'editor/plugin/dialog', 'tabs', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[158]++;
-  config({
-  'editor/plugin/indent': {
-  requires: ['editor', 'editor/plugin/indent/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[162]++;
-  config({
-  'editor/plugin/indent/cmd': {
-  requires: ['editor/plugin/dent-cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[166]++;
-  config({
-  'editor/plugin/italic': {
-  requires: ['editor/plugin/font/ui', 'editor/plugin/italic/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[170]++;
-  config({
-  'editor/plugin/italic/cmd': {
-  requires: ['editor', 'editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[174]++;
-  config({
-  'editor/plugin/justify-center': {
-  requires: ['editor', 'editor/plugin/justify-center/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[178]++;
-  config({
-  'editor/plugin/justify-center/cmd': {
-  requires: ['editor/plugin/justify-cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[182]++;
-  config({
-  'editor/plugin/justify-cmd': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[186]++;
-  config({
-  'editor/plugin/justify-left': {
-  requires: ['editor', 'editor/plugin/justify-left/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[190]++;
-  config({
-  'editor/plugin/justify-left/cmd': {
-  requires: ['editor/plugin/justify-cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[194]++;
-  config({
-  'editor/plugin/justify-right': {
-  requires: ['editor', 'editor/plugin/justify-right/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[198]++;
-  config({
-  'editor/plugin/justify-right/cmd': {
-  requires: ['editor/plugin/justify-cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[202]++;
-  config({
-  'editor/plugin/link': {
-  requires: ['editor/plugin/button', 'editor/plugin/bubble', 'editor', 'editor/plugin/link/utils', 'editor/plugin/dialog-loader']}});
-  _$jscoverage['/editor/modules.js'].lineData[206]++;
-  config({
-  'editor/plugin/link/dialog': {
-  requires: ['editor', 'editor/plugin/dialog', 'editor/plugin/link/utils']}});
-  _$jscoverage['/editor/modules.js'].lineData[210]++;
-  config({
-  'editor/plugin/link/utils': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[214]++;
-  config({
-  'editor/plugin/list-utils': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[218]++;
-  config({
-  'editor/plugin/list-utils/btn': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[222]++;
-  config({
-  'editor/plugin/list-utils/cmd': {
-  requires: ['editor', 'editor/plugin/list-utils']}});
-  _$jscoverage['/editor/modules.js'].lineData[226]++;
-  config({
-  'editor/plugin/local-storage': {
-  requires: ['editor', 'overlay', 'editor/plugin/flash-bridge']}});
-  _$jscoverage['/editor/modules.js'].lineData[230]++;
-  config({
-  'editor/plugin/maximize': {
-  requires: ['editor/plugin/maximize/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[234]++;
-  config({
-  'editor/plugin/maximize/cmd': {
-  requires: ['editor', 'event']}});
-  _$jscoverage['/editor/modules.js'].lineData[238]++;
-  config({
-  'editor/plugin/menubutton': {
-  requires: ['editor', 'menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[242]++;
-  config({
-  'editor/plugin/ordered-list': {
-  requires: ['editor/plugin/list-utils/btn', 'editor/plugin/ordered-list/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[246]++;
-  config({
-  'editor/plugin/ordered-list/cmd': {
-  requires: ['editor', 'editor/plugin/list-utils/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[250]++;
-  config({
-  'editor/plugin/outdent': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/outdent/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[254]++;
-  config({
-  'editor/plugin/outdent/cmd': {
-  requires: ['editor', 'editor/plugin/dent-cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[258]++;
-  config({
-  'editor/plugin/overlay': {
-  requires: ['editor', 'overlay', 'editor/plugin/focus-fix']}});
-  _$jscoverage['/editor/modules.js'].lineData[262]++;
-  config({
-  'editor/plugin/page-break': {
-  requires: ['editor', 'editor/plugin/fake-objects', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[266]++;
-  config({
-  'editor/plugin/preview': {
-  requires: ['editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[270]++;
-  config({
-  'editor/plugin/progressbar': {
-  requires: ['base']}});
-  _$jscoverage['/editor/modules.js'].lineData[274]++;
-  config({
-  'editor/plugin/remove-format': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/remove-format/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[278]++;
-  config({
-  'editor/plugin/remove-format/cmd': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[282]++;
-  config({
-  'editor/plugin/resize': {
-  requires: ['dd']}});
-  _$jscoverage['/editor/modules.js'].lineData[286]++;
-  config({
-  'editor/plugin/separator': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[290]++;
-  config({
-  'editor/plugin/smiley': {
-  requires: ['editor', 'editor/plugin/overlay', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[294]++;
-  config({
-  'editor/plugin/source-area': {
-  requires: ['editor', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[298]++;
-  config({
-  'editor/plugin/strike-through': {
-  requires: ['editor/plugin/font/ui', 'editor/plugin/strike-through/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[302]++;
-  config({
-  'editor/plugin/strike-through/cmd': {
-  requires: ['editor', 'editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[306]++;
-  config({
-  'editor/plugin/table': {
-  requires: ['editor', 'editor/plugin/dialog-loader', 'editor/plugin/contextmenu', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[310]++;
-  config({
-  'editor/plugin/table/dialog': {
-  requires: ['editor', 'editor/plugin/dialog', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[314]++;
-  config({
-  'editor/plugin/underline': {
-  requires: ['editor/plugin/font/ui', 'editor/plugin/underline/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[318]++;
-  config({
-  'editor/plugin/underline/cmd': {
-  requires: ['editor', 'editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[322]++;
-  config({
-  'editor/plugin/undo': {
-  requires: ['editor', 'editor/plugin/undo/btn', 'editor/plugin/undo/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[326]++;
-  config({
-  'editor/plugin/undo/btn': {
-  requires: ['editor/plugin/button', 'editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[330]++;
-  config({
-  'editor/plugin/undo/cmd': {
-  requires: ['editor']}});
-  _$jscoverage['/editor/modules.js'].lineData[334]++;
-  config({
-  'editor/plugin/unordered-list': {
-  requires: ['editor/plugin/list-utils/btn', 'editor/plugin/unordered-list/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[338]++;
-  config({
-  'editor/plugin/unordered-list/cmd': {
-  requires: ['editor', 'editor/plugin/list-utils/cmd']}});
-  _$jscoverage['/editor/modules.js'].lineData[342]++;
-  config({
-  'editor/plugin/video': {
-  requires: ['editor', 'editor/plugin/flash-common/utils', 'editor/plugin/flash-common/base-class', 'editor/plugin/fake-objects', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[346]++;
-  config({
-  'editor/plugin/video/dialog': {
-  requires: ['editor', 'io', 'editor/plugin/flash/dialog', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/modules.js'].lineData[350]++;
-  config({
-  'editor/plugin/word-filter': {
-  requires: ['html-parser']}});
-  _$jscoverage['/editor/modules.js'].lineData[354]++;
-  config({
-  'editor/plugin/xiami-music': {
-  requires: ['editor', 'editor/plugin/flash-common/base-class', 'editor/plugin/flash-common/utils', 'editor/plugin/fake-objects', 'editor/plugin/button']}});
-  _$jscoverage['/editor/modules.js'].lineData[358]++;
-  config({
-  'editor/plugin/xiami-music/dialog': {
-  requires: ['editor', 'editor/plugin/flash/dialog', 'editor/plugin/menubutton']}});
-})(function(c) {
-  _$jscoverage['/editor/modules.js'].functionData[2]++;
-  _$jscoverage['/editor/modules.js'].lineData[363]++;
-  KISSY.config('modules', c);
-}, KISSY.Feature, KISSY.UA);
-});
+  _$jscoverage['/editor/modules.js'].lineData[3]++;
+  S.config("requires", {
+  "editor/plugin/back-color": ["editor/plugin/color/btn", "editor/plugin/back-color/cmd"], 
+  "editor/plugin/back-color/cmd": ["editor/plugin/color/cmd"], 
+  "editor/plugin/bold": ["editor/plugin/font/ui", "editor/plugin/bold/cmd"], 
+  "editor/plugin/bold/cmd": ["editor/plugin/font/cmd"], 
+  "editor/plugin/bubble": ["overlay", "editor"], 
+  "editor/plugin/button": ["editor", "button"], 
+  "editor/plugin/checkbox-source-area": ["editor"], 
+  "editor/plugin/code": ["editor/plugin/button", "editor/plugin/dialog-loader"], 
+  "editor/plugin/code/dialog": ["menubutton", "editor/plugin/dialog"], 
+  "editor/plugin/color/btn": ["editor/plugin/button", "editor/plugin/overlay", "editor/plugin/dialog-loader"], 
+  "editor/plugin/color/cmd": ["editor"], 
+  "editor/plugin/color/dialog": ["editor/plugin/dialog"], 
+  "editor/plugin/contextmenu": ["menu", "editor/plugin/focus-fix", "event"], 
+  "editor/plugin/dent-cmd": ["editor", "editor/plugin/list-utils"], 
+  "editor/plugin/dialog": ["overlay", "editor/plugin/focus-fix", "dd/plugin/constrain", "component/plugin/drag"], 
+  "editor/plugin/dialog-loader": ["editor", "overlay"], 
+  "editor/plugin/draft": ["json", "editor/plugin/local-storage", "editor/plugin/menubutton"], 
+  "editor/plugin/drag-upload": ["editor", "event"], 
+  "editor/plugin/element-path": ["editor"], 
+  "editor/plugin/fake-objects": ["editor", "html-parser"], 
+  "editor/plugin/flash": ["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], 
+  "editor/plugin/flash/dialog": ["editor/plugin/flash-common/utils", "editor/plugin/dialog", "editor/plugin/menubutton"], 
+  "editor/plugin/flash-bridge": ["editor", "swf", "event"], 
+  "editor/plugin/flash-common/base-class": ["editor/plugin/flash-common/utils", "base", "editor/plugin/dialog-loader", "editor/plugin/bubble", "editor/plugin/contextmenu"], 
+  "editor/plugin/flash-common/utils": ["swf"], 
+  "editor/plugin/focus-fix": ["editor"], 
+  "editor/plugin/font/cmd": ["editor"], 
+  "editor/plugin/font/ui": ["editor/plugin/button", "editor/plugin/menubutton"], 
+  "editor/plugin/font-family": ["editor/plugin/font/ui", "editor/plugin/font-family/cmd"], 
+  "editor/plugin/font-family/cmd": ["editor/plugin/font/cmd"], 
+  "editor/plugin/font-size": ["editor/plugin/font/ui", "editor/plugin/font-size/cmd"], 
+  "editor/plugin/font-size/cmd": ["editor/plugin/font/cmd"], 
+  "editor/plugin/fore-color": ["editor/plugin/color/btn", "editor/plugin/fore-color/cmd"], 
+  "editor/plugin/fore-color/cmd": ["editor/plugin/color/cmd"], 
+  "editor/plugin/heading": ["editor/plugin/menubutton", "editor/plugin/heading/cmd"], 
+  "editor/plugin/heading/cmd": ["editor"], 
+  "editor/plugin/image": ["editor/plugin/button", "editor/plugin/bubble", "editor/plugin/contextmenu", "editor/plugin/dialog-loader"], 
+  "editor/plugin/image/dialog": ["io", "editor/plugin/dialog", "tabs", "editor/plugin/menubutton"], 
+  "editor/plugin/indent": ["editor/plugin/indent/cmd", "editor/plugin/button"], 
+  "editor/plugin/indent/cmd": ["editor/plugin/dent-cmd"], 
+  "editor/plugin/italic": ["editor/plugin/font/ui", "editor/plugin/italic/cmd"], 
+  "editor/plugin/italic/cmd": ["editor/plugin/font/cmd"], 
+  "editor/plugin/justify-center": ["editor/plugin/justify-center/cmd", "editor/plugin/button"], 
+  "editor/plugin/justify-center/cmd": ["editor/plugin/justify-cmd"], 
+  "editor/plugin/justify-cmd": ["editor"], 
+  "editor/plugin/justify-left": ["editor/plugin/justify-left/cmd", "editor/plugin/button"], 
+  "editor/plugin/justify-left/cmd": ["editor/plugin/justify-cmd"], 
+  "editor/plugin/justify-right": ["editor/plugin/justify-right/cmd", "editor/plugin/button"], 
+  "editor/plugin/justify-right/cmd": ["editor/plugin/justify-cmd"], 
+  "editor/plugin/link": ["editor/plugin/button", "editor/plugin/bubble", "editor/plugin/link/utils", "editor/plugin/dialog-loader"], 
+  "editor/plugin/link/dialog": ["editor/plugin/dialog", "editor/plugin/link/utils"], 
+  "editor/plugin/link/utils": ["editor"], 
+  "editor/plugin/list-utils/btn": ["editor/plugin/button", "editor/plugin/menubutton"], 
+  "editor/plugin/list-utils/cmd": ["editor", "editor/plugin/list-utils"], 
+  "editor/plugin/local-storage": ["overlay", "editor/plugin/flash-bridge"], 
+  "editor/plugin/maximize": ["editor/plugin/maximize/cmd", "editor/plugin/button"], 
+  "editor/plugin/maximize/cmd": ["editor", "event"], 
+  "editor/plugin/menubutton": ["editor", "menubutton"], 
+  "editor/plugin/ordered-list": ["editor/plugin/list-utils/btn", "editor/plugin/ordered-list/cmd"], 
+  "editor/plugin/ordered-list/cmd": ["editor/plugin/list-utils/cmd"], 
+  "editor/plugin/outdent": ["editor/plugin/button", "editor/plugin/outdent/cmd"], 
+  "editor/plugin/outdent/cmd": ["editor/plugin/dent-cmd"], 
+  "editor/plugin/overlay": ["overlay", "editor/plugin/focus-fix"], 
+  "editor/plugin/page-break": ["editor/plugin/fake-objects", "editor/plugin/button"], 
+  "editor/plugin/preview": ["editor/plugin/button"], 
+  "editor/plugin/progressbar": ["base"], 
+  "editor/plugin/remove-format": ["editor/plugin/button", "editor/plugin/remove-format/cmd"], 
+  "editor/plugin/remove-format/cmd": ["editor"], 
+  "editor/plugin/resize": ["dd"], 
+  "editor/plugin/smiley": ["editor/plugin/overlay", "editor/plugin/button"], 
+  "editor/plugin/source-area": ["editor/plugin/button"], 
+  "editor/plugin/strike-through": ["editor/plugin/font/ui", "editor/plugin/strike-through/cmd"], 
+  "editor/plugin/strike-through/cmd": ["editor/plugin/font/cmd"], 
+  "editor/plugin/table": ["editor/plugin/dialog-loader", "editor/plugin/contextmenu", "editor/plugin/button"], 
+  "editor/plugin/table/dialog": ["editor/plugin/dialog", "editor/plugin/menubutton"], 
+  "editor/plugin/underline": ["editor/plugin/font/ui", "editor/plugin/underline/cmd"], 
+  "editor/plugin/underline/cmd": ["editor/plugin/font/cmd"], 
+  "editor/plugin/undo": ["editor/plugin/undo/btn", "editor/plugin/undo/cmd"], 
+  "editor/plugin/undo/btn": ["editor/plugin/button"], 
+  "editor/plugin/undo/cmd": ["editor"], 
+  "editor/plugin/unordered-list": ["editor/plugin/list-utils/btn", "editor/plugin/unordered-list/cmd"], 
+  "editor/plugin/unordered-list/cmd": ["editor/plugin/list-utils/cmd"], 
+  "editor/plugin/video": ["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], 
+  "editor/plugin/video/dialog": ["io", "editor/plugin/flash/dialog"], 
+  "editor/plugin/word-filter": ["html-parser"], 
+  "editor/plugin/xiami-music": ["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], 
+  "editor/plugin/xiami-music/dialog": ["editor/plugin/flash/dialog"]});
+})(KISSY);

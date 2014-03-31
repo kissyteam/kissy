@@ -1,0 +1,3 @@
+{
+    "editor/plugin/italic/cmd": ["editor", "editor/plugin/font/cmd"]
+}

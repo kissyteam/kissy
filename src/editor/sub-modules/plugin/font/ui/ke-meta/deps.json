@@ -1,0 +1,3 @@
+{
+    "editor/plugin/font/ui": ["editor", "editor/plugin/button", "editor/plugin/menubutton"]
+}

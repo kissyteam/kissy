@@ -69,6 +69,10 @@
         corePackage.reset(cfg);
     };
 
+    configFns.requires = shortcut('requires');
+
+    configFns.alias = shortcut('alias');
+
     configFns.packages = function (config) {
         var Config = this.Config,
             ps = Config.packages = Config.packages || {};
@@ -128,6 +132,17 @@
 
         return undefined;
     };
+
+    function shortcut(attr) {
+        return function (config) {
+            var newCfg = {};
+            for (var name in config) {
+                newCfg[name] = {};
+                newCfg[name][attr] = config[name];
+            }
+            S.config('modules', newCfg);
+        };
+    }
 
     function normalizePath(base, isDirectory) {
         if (base.indexOf('\\') !== -1) {

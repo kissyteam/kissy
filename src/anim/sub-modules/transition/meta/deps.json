@@ -1,0 +1,3 @@
+{
+    "anim/transition": ["dom", "anim/base"]
+}

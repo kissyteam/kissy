@@ -1,0 +1,3 @@
+{
+    toolbar: ["component/container", "component/extension/delegate-children", "node"]
+}

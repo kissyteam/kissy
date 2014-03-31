@@ -1,0 +1,3 @@
+{
+    "scroll-view/base": ["node", "anim/timer", "component/container", "component/extension/content-render"]
+}

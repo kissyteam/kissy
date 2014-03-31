@@ -2383,7 +2383,7 @@ KISSY.add(function(S, require) {
   SHRINK_ELEMENT: 1, 
   SHRINK_TEXT: 2};
   _$jscoverage['/editor/range.js'].lineData[35]++;
-  var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.DOM, UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {
+  var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.require('dom'), UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {
   td: 1}, EMPTY = {
   area: 1, 
   base: 1, 

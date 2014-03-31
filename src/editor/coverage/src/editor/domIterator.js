@@ -776,7 +776,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/domIterator.js'].lineData[15]++;
   var ElementPath = require('./elementPath');
   _$jscoverage['/editor/domIterator.js'].lineData[16]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, KER = Editor.RangeType, Dom = S.DOM;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, KER = Editor.RangeType, Dom = S.require('dom');
   _$jscoverage['/editor/domIterator.js'].lineData[29]++;
   function Iterator(range) {
     _$jscoverage['/editor/domIterator.js'].functionData[1]++;

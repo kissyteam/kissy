@@ -1,0 +1,3 @@
+{
+    "editor/plugin/font-size": ["editor", "editor/plugin/font/ui", "editor/plugin/font-size/cmd", "editor/plugin/menubutton"]
+}

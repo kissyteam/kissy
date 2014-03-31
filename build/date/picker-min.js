@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:46
+build time: Mar 31 19:17
 */
 KISSY.add("date/picker/render",["date/format","date/picker-xtpl","component/control"],function(i,g){function k(a){return"ks-date-picker-date-"+a.getYear()+"-"+a.getMonth()+"-"+a.getDayOfMonth()}function l(a,j){return a.getYear()===j.getYear()&&a.getMonth()===j.getMonth()&&a.getDayOfMonth()===j.getDayOfMonth()}function d(){return this.config.view.renderDates()}var c=g("date/format"),a=g("date/picker-xtpl");return g("component/control").getDefaultRender().extend({getMonthYearLabel:function(){var a=
 this.control,j=a.get("locale"),a=a.get("value"),h=a.getLocale();return(new c(j.monthYearFormat,h)).format(a)},getTodayTimeLabel:function(){var a=this.control,j=a.get("locale"),h=a.get("value"),a=h.getLocale(),h=h.clone();h.setTime(i.now());return(new c(j.dateFormat,a)).format(h)},beforeCreateDom:function(a,j,h){var c=this.control,b=c.get("locale"),e=c.get("value"),c=e.getLocale();i.mix(j,{monthSelectEl:"#ks-date-picker-month-select-{id}",monthSelectContentEl:"#ks-date-picker-month-select-content-{id}",

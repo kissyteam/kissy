@@ -1,0 +1,3 @@
+{
+    "editor/plugin/outdent/cmd": ["editor", "editor/plugin/dent-cmd"]
+}

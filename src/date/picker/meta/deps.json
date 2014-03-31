@@ -1,0 +1,3 @@
+{
+    "date/picker": ["node", "date/gregorian", "i18n!date/picker", "component/control", "date/format", "date/picker-xtpl"]
+}

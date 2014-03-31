@@ -1,0 +1,3 @@
+{
+    "component/extension/content-render": ["component/extension/content-xtpl"]
+}

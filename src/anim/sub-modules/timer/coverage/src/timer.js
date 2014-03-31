@@ -319,7 +319,8 @@ if (! _$jscoverage['/timer.js']) {
   _$jscoverage['/timer.js'].lineData[194] = 0;
   _$jscoverage['/timer.js'].lineData[197] = 0;
   _$jscoverage['/timer.js'].lineData[199] = 0;
-  _$jscoverage['/timer.js'].lineData[201] = 0;
+  _$jscoverage['/timer.js'].lineData[202] = 0;
+  _$jscoverage['/timer.js'].lineData[204] = 0;
 }
 if (! _$jscoverage['/timer.js'].functionData) {
   _$jscoverage['/timer.js'].functionData = [];
@@ -669,6 +670,8 @@ KISSY.add(function(S, require) {
   TimerAnim.Fx = Fx;
   _$jscoverage['/timer.js'].lineData[199]++;
   S.mix(TimerAnim, AnimBase.Statics);
-  _$jscoverage['/timer.js'].lineData[201]++;
+  _$jscoverage['/timer.js'].lineData[202]++;
+  S.Anim = TimerAnim;
+  _$jscoverage['/timer.js'].lineData[204]++;
   return TimerAnim;
 });

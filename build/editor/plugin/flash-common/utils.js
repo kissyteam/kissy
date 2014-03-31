@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:50
+build time: Mar 31 19:21
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Mar 27 21:50
 
 KISSY.add("editor/plugin/flash-common/utils", ["swf"], function(S, require) {
   var SWF = require("swf");
-  var Dom = S.DOM, flashUtils = {insertFlash:function(editor, src, attrs, _cls, _type) {
+  var Dom = S.require("dom"), flashUtils = {insertFlash:function(editor, src, attrs, _cls, _type) {
     var nodeInfo = flashUtils.createSWF({src:src, attrs:attrs, document:editor.get("document")[0]}), real = nodeInfo.el, substitute = editor.createFakeElement(real, _cls || "ke_flash", _type || "flash", true, nodeInfo.html, attrs);
     editor.insertElement(substitute);
     return substitute

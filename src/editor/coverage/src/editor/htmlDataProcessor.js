@@ -599,15 +599,15 @@ function visit345_87_1(result) {
 function visit344_82_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][3].init(78, 43, 'child.nodeType === S.DOM.NodeType.TEXT_NODE');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][3].init(78, 54, 'child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE');
 function visit343_32_3(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][2].init(78, 63, 'child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][2].init(78, 74, 'child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE && !child.nodeValue');
 function visit342_32_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][1].init(76, 66, '!(child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][1].init(76, 77, '!(child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE && !child.nodeValue)');
 function visit341_32_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][1].ranCondition(result);
   return result;
@@ -652,7 +652,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/htmlDataProcessor.js'].lineData[31]++;
         child = childNodes[i];
         _$jscoverage['/editor/htmlDataProcessor.js'].lineData[32]++;
-        if (visit341_32_1(!(visit342_32_2(visit343_32_3(child.nodeType === S.DOM.NodeType.TEXT_NODE) && !child.nodeValue)))) {
+        if (visit341_32_1(!(visit342_32_2(visit343_32_3(child.nodeType === S.require('dom').NodeType.TEXT_NODE) && !child.nodeValue)))) {
           _$jscoverage['/editor/htmlDataProcessor.js'].lineData[33]++;
           allEmpty = 0;
           _$jscoverage['/editor/htmlDataProcessor.js'].lineData[34]++;

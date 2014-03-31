@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:55
+build time: Mar 31 19:25
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
   var DialogLoader = require("./dialog-loader");
   require("./contextmenu");
   require("./button");
-  var UA = S.UA, Dom = S.DOM, Node = S.Node, tableRules = ["tr", "th", "td", "tbody", "table"], cellNodeRegex = /^(?:td|th)$/;
+  var UA = S.UA, Dom = S.require("dom"), Node = S.Node, tableRules = ["tr", "th", "td", "tbody", "table"], cellNodeRegex = /^(?:td|th)$/;
   function getSelectedCells(selection) {
     var bookmarks = selection.createBookmarks(), ranges = selection.getRanges(), retval = [], database = {};
     function moveOutOfCellGuard(node) {

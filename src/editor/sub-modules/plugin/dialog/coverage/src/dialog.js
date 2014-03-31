@@ -258,7 +258,7 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData['35'] = [];
   _$jscoverage['/dialog.js'].branchData['35'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['35'][1].init(155, 27, 'y - S.require('dom').scrollTop() > 200');
+_$jscoverage['/dialog.js'].branchData['35'][1].init(155, 38, 'y - S.require(\'dom\').scrollTop() > 200');
 function visit1_35_1(result) {
   _$jscoverage['/dialog.js'].branchData['35'][1].ranCondition(result);
   return result;

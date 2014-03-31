@@ -116,7 +116,7 @@
                     <arg value="${component.src.dir.tmp}/${component.basename}-pkg.js"/>
 
                     <arg value="-outputDependency"/>
-                    <arg value="${component.meta.dir}/deps.js"/>
+                    <arg value="${component.meta.dir}/deps.json"/>
 
                     <classpath>
                         <pathelement path="${module-compiler}"/>

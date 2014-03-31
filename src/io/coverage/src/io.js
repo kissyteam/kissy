@@ -262,8 +262,8 @@ if (! _$jscoverage['/io.js']) {
   _$jscoverage['/io.js'].lineData[148] = 0;
   _$jscoverage['/io.js'].lineData[149] = 0;
   _$jscoverage['/io.js'].lineData[151] = 0;
-  _$jscoverage['/io.js'].lineData[162] = 0;
-  _$jscoverage['/io.js'].lineData[167] = 0;
+  _$jscoverage['/io.js'].lineData[163] = 0;
+  _$jscoverage['/io.js'].lineData[165] = 0;
 }
 if (! _$jscoverage['/io.js'].functionData) {
   _$jscoverage['/io.js'].functionData = [];
@@ -413,10 +413,8 @@ KISSY.add(function(S, require) {
   data: data, 
   success: callback});
 }});
-  _$jscoverage['/io.js'].lineData[162]++;
-  S.mix(S, {
-  io: IO, 
-  jsonp: IO.jsonp});
-  _$jscoverage['/io.js'].lineData[167]++;
+  _$jscoverage['/io.js'].lineData[163]++;
+  S.IO = IO;
+  _$jscoverage['/io.js'].lineData[165]++;
   return IO;
 });

@@ -306,7 +306,8 @@ if (! _$jscoverage['/transition.js']) {
   _$jscoverage['/transition.js'].lineData[161] = 0;
   _$jscoverage['/transition.js'].lineData[162] = 0;
   _$jscoverage['/transition.js'].lineData[166] = 0;
-  _$jscoverage['/transition.js'].lineData[168] = 0;
+  _$jscoverage['/transition.js'].lineData[169] = 0;
+  _$jscoverage['/transition.js'].lineData[171] = 0;
 }
 if (! _$jscoverage['/transition.js'].functionData) {
   _$jscoverage['/transition.js'].functionData = [];
@@ -609,6 +610,8 @@ KISSY.add(function(S, require) {
 }});
   _$jscoverage['/transition.js'].lineData[166]++;
   S.mix(TransitionAnim, AnimBase.Statics);
-  _$jscoverage['/transition.js'].lineData[168]++;
+  _$jscoverage['/transition.js'].lineData[169]++;
+  S.Anim = TransitionAnim;
+  _$jscoverage['/transition.js'].lineData[171]++;
   return TransitionAnim;
 });

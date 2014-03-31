@@ -1,0 +1,3 @@
+{
+    "anim/base": ["dom", "ua", "promise"]
+}

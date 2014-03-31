@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:55
+build time: Mar 31 19:25
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/table/dialog", ["editor", "../dialog", "../menubutton"]
   var Dialog4E = require("../dialog");
   var MenuButton = require("../menubutton");
   var OLD_IE = S.UA.ieMode < 11;
-  var Node = S.Node, Dom = S.DOM, trim = S.trim, showBorderClassName = "ke_show_border", collapseTableClass = "k-e-collapse-table", IN_SIZE = 6, alignStyle = "margin:0 5px 0 0;", TABLE_HTML = '<div style="padding:20px 20px 10px 20px;">' + '<table class="{prefixCls}editor-table-config" style="width:100%">' + "<tr>" + "<td>" + "<label>\u884c\u6570\uff1a " + "<input " + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u884c\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + ' value="2" ' + ' class="{prefixCls}editor-table-rows {prefixCls}editor-table-create-only {prefixCls}editor-input" ' + 
+  var Node = S.Node, Dom = S.require("dom"), trim = S.trim, showBorderClassName = "ke_show_border", collapseTableClass = "k-e-collapse-table", IN_SIZE = 6, alignStyle = "margin:0 5px 0 0;", TABLE_HTML = '<div style="padding:20px 20px 10px 20px;">' + '<table class="{prefixCls}editor-table-config" style="width:100%">' + "<tr>" + "<td>" + "<label>\u884c\u6570\uff1a " + "<input " + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u884c\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + ' value="2" ' + ' class="{prefixCls}editor-table-rows {prefixCls}editor-table-create-only {prefixCls}editor-input" ' + 
   'style="' + alignStyle + '"' + ' size="' + IN_SIZE + '"' + " />" + "</label>" + "</td>" + "<td>" + "<label>\u5bbd&nbsp;&nbsp;&nbsp;\u5ea6\uff1a " + "</label> " + "<input " + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u5bbd\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 'value="200" ' + 'style="' + alignStyle + '" ' + 'class="{prefixCls}editor-table-width {prefixCls}editor-input" ' + 'size="' + IN_SIZE + '"/>' + '<select class="{prefixCls}editor-table-width-unit" title="\u5bbd\u5ea6\u5355\u4f4d">' + 
   '<option value="px">\u50cf\u7d20</option>' + '<option value="%">\u767e\u5206\u6bd4</option>' + "</select>" + "</td>" + "</tr>" + "<tr>" + "<td>" + "<label>\u5217\u6570\uff1a " + "<input " + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u5217\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 'class="{prefixCls}editor-table-cols {prefixCls}editor-table-create-only {prefixCls}editor-input" ' + 'style="' + alignStyle + '"' + 'value="3" ' + 'size="' + IN_SIZE + '"/>' + "</label>" + "</td>" + "<td>" + 
   "<label>" + "\u9ad8&nbsp;&nbsp;&nbsp;\u5ea6\uff1a " + "</label>" + "<input " + ' data-verify="^((?!0$)\\d+)?$" ' + ' data-warning="\u9ad8\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 'value="" ' + 'style="' + alignStyle + '"' + 'class="{prefixCls}editor-table-height {prefixCls}editor-input" ' + 'size="' + IN_SIZE + '"/>' + " &nbsp;\u50cf\u7d20" + "</td>" + "</tr>" + "<tr>" + "<td>" + "<label>\u5bf9\u9f50\uff1a </label>" + '<select class="{prefixCls}editor-table-align" title="\u5bf9\u9f50">' + 

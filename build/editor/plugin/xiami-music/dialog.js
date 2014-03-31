@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:56
+build time: Mar 31 19:27
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", ["editor", "../flash/dialog", "../
   var Editor = require("editor");
   var FlashDialog = require("../flash/dialog");
   var MenuButton = require("../menubutton");
-  var Dom = S.DOM, Node = S.Node, Utils = Editor.Utils, loading = Utils.debugUrl("theme/tao-loading.gif"), XIAMI_URL = "http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}", CLS_XIAMI = "ke_xiami", TYPE_XIAMI = "xiami-music", BTIP = "\u641c \u7d22", TIP = "\u8f93\u5165\u6b4c\u66f2\u540d\u3001\u4e13\u8f91\u540d\u3001\u827a\u4eba\u540d";
+  var Dom = S.require("dom"), Node = S.Node, Utils = Editor.Utils, loading = Utils.debugUrl("theme/tao-loading.gif"), XIAMI_URL = "http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}", CLS_XIAMI = "ke_xiami", TYPE_XIAMI = "xiami-music", BTIP = "\u641c \u7d22", TIP = "\u8f93\u5165\u6b4c\u66f2\u540d\u3001\u4e13\u8f91\u540d\u3001\u827a\u4eba\u540d";
   function limit(str, l) {
     if(str.length > l) {
       str = str.substring(0, l) + "..."

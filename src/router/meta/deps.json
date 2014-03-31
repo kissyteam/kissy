@@ -1,0 +1,3 @@
+{
+    router: ["event/dom", "uri", "event/custom"]
+}

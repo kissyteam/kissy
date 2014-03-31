@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:00
+build time: Mar 31 19:30
 */
 KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl",[],function(g,h,j,k){g=function(c,d,b,a,i){a=this.utils;if("1.50"!==d.version)throw Error("current xtemplate file("+this.name+")(v1.50) need to be recompiled using current kissy(v"+d.version+")!");d=a.callCommand;b.write('<div id="ks-scrollbar-arrow-up-');a=c.resolve(["id"]);b.write(a,!0);b.write('"\n        class="');var a={escape:1},e=[],f=c.resolve(["axis"]);e.push(f+"-arrow-up");a.params=e;if((a=d(this,c,a,b,"getBaseCssClasses",2))&&a.isBuffer)b=
 a,a=i;b.write(a,!0);b.write('">\n    <a href="javascript:void(\'up\')">up</a>\n</div>\n<div id="ks-scrollbar-arrow-down-');a=c.resolve(["id"]);b.write(a,!0);b.write('"\n        class="');a={escape:1};e=[];f=c.resolve(["axis"]);e.push(f+"-arrow-down");a.params=e;if((a=d(this,c,a,b,"getBaseCssClasses",6))&&a.isBuffer)b=a,a=i;b.write(a,!0);b.write('">\n    <a href="javascript:void(\'down\')">down</a>\n</div>\n<div id="ks-scrollbar-track-');a=c.resolve(["id"]);b.write(a,!0);b.write('"\n     class="');

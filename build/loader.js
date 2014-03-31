@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 28 13:34
+build time: Mar 31 21:42
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140328133429' will replace with current timestamp when compressing.
+         * NOTICE: '20140331214227' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140328133429',
+        __BUILD_TIME: '20140331214227',
 
         /**
          * KISSY Environment.
@@ -1000,7 +1000,6 @@ var KISSY = (function (undefined) {
         getAlias: function () {
             var self = this,
                 name = self.name,
-                aliasFn,
                 packageInfo,
                 alias = self.alias;
             if (alias) {
@@ -1009,9 +1008,6 @@ var KISSY = (function (undefined) {
             packageInfo = self.getPackage();
             if (packageInfo.alias) {
                 alias = packageInfo.alias(name);
-            }
-            if (!alias && (aliasFn = Config.alias)) {
-                alias = aliasFn(name);
             }
             alias = self.alias = alias || [];
             return alias;
@@ -1127,12 +1123,7 @@ var KISSY = (function (undefined) {
          * @return {KISSY.Loader.Module[]}
          */
         getRequiredMods: function () {
-            var self = this;
-            var mods = [];
-            Utils.each(self.getNormalizedRequires(), function (r, i) {
-                mods[i] = Utils.createModuleInfo(r);
-            });
-            return mods;
+            return Utils.createModulesInfo(this.getNormalizedRequires());
         },
 
         /**
@@ -1509,6 +1500,10 @@ var KISSY = (function (undefined) {
         corePackage.reset(cfg);
     };
 
+    configFns.requires = shortcut('requires');
+
+    configFns.alias = shortcut('alias');
+
     configFns.packages = function (config) {
         var Config = this.Config,
             ps = Config.packages = Config.packages || {};
@@ -1568,6 +1563,17 @@ var KISSY = (function (undefined) {
 
         return undefined;
     };
+
+    function shortcut(attr) {
+        return function (config) {
+            var newCfg = {};
+            for (var name in config) {
+                newCfg[name] = {};
+                newCfg[name][attr] = config[name];
+            }
+            S.config('modules', newCfg);
+        };
+    }
 
     function normalizePath(base, isDirectory) {
         if (base.indexOf('\\') !== -1) {
@@ -2343,7 +2349,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140328133429';
+    var TIMESTAMP = '20140331214227';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

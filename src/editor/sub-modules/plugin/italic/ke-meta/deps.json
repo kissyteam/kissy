@@ -1,0 +1,3 @@
+{
+    "editor/plugin/italic": ["editor/plugin/font/ui", "editor/plugin/italic/cmd", "editor/plugin/button"]
+}

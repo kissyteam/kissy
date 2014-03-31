@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:56
+build time: Mar 31 21:44
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -128,7 +128,7 @@ KISSY.add("editor/base", ["html-parser", "component/control", "./render"], funct
 KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
   var Node = require("node");
   var Editor = require("./base");
-  var TRUE = true, FALSE = false, NULL = null, Dom = S.DOM, UA = S.UA, Utils = {debugUrl:function(url) {
+  var TRUE = true, FALSE = false, NULL = null, Dom = S.require("dom"), UA = S.UA, Utils = {debugUrl:function(url) {
     var Config = S.Config;
     if(!Config.debug) {
       url = url.replace(/\.(js|css)/i, "-min.$1")
@@ -341,7 +341,7 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
   var Node = require("node");
   var Editor = require("./base");
   var Utils = require("./utils");
-  var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = S.DOM, NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {a:1, abbr:1, acronym:1, address:1, b:1, bdo:1, big:1, cite:1, code:1, del:1, dfn:1, em:1, font:1, i:1, ins:1, label:1, kbd:1, q:1, s:1, samp:1, small:1, span:1, strike:1, strong:1, sub:1, sup:1, tt:1, u:1, "var":1};
+  var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = S.require("dom"), NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {a:1, abbr:1, acronym:1, address:1, b:1, bdo:1, big:1, cite:1, code:1, del:1, dfn:1, em:1, font:1, i:1, ins:1, label:1, kbd:1, q:1, s:1, samp:1, small:1, span:1, strike:1, strong:1, sub:1, sup:1, tt:1, u:1, "var":1};
   Editor.PositionType = {POSITION_IDENTICAL:0, POSITION_DISCONNECTED:1, POSITION_FOLLOWING:2, POSITION_PRECEDING:4, POSITION_IS_CONTAINED:8, POSITION_CONTAINS:16};
   var KEP = Editor.PositionType;
   var blockBoundaryDisplayMatch = {block:1, "list-item":1, table:1, "table-row-group":1, "table-header-group":1, "table-footer-group":1, "table-row":1, "table-column-group":1, "table-column":1, "table-cell":1, "table-caption":1}, blockBoundaryNodeNameMatch = {hr:1}, normalElDom = function(el) {
@@ -753,7 +753,7 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
 });
 KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
   var Editor = require("./base");
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, dtd = Editor.XHTML_DTD, Node = require("node");
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require("dom"), dtd = Editor.XHTML_DTD, Node = require("node");
   function iterate(rtl, breakOnFalseRetFalse) {
     var self = this;
     if(self._.end) {
@@ -919,7 +919,7 @@ KISSY.add("editor/elementPath", ["node", "./base", "./dom"], function(S, require
   require("node");
   var Editor = require("./base");
   require("./dom");
-  var Dom = S.DOM, dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null, pathBlockElements = {address:1, blockquote:1, dl:1, h1:1, h2:1, h3:1, h4:1, h5:1, h6:1, p:1, pre:1, li:1, dt:1, dd:1}, pathBlockLimitElements = {body:1, div:1, table:1, tbody:1, tr:1, td:1, th:1, caption:1, form:1}, checkHasBlock = function(element) {
+  var Dom = S.require("dom"), dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null, pathBlockElements = {address:1, blockquote:1, dl:1, h1:1, h2:1, h3:1, h4:1, h5:1, h6:1, p:1, pre:1, li:1, dt:1, dd:1}, pathBlockLimitElements = {body:1, div:1, table:1, tbody:1, tr:1, td:1, th:1, caption:1, form:1}, checkHasBlock = function(element) {
     var childNodes = element[0].childNodes;
     for(var i = 0, count = childNodes.length;i < count;i++) {
       var child = childNodes[i];
@@ -998,7 +998,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
   var Editor = require("./base");
   var ElementPath = require("./elementPath");
   Editor.RangeType = {POSITION_AFTER_START:1, POSITION_BEFORE_END:2, POSITION_BEFORE_START:3, POSITION_AFTER_END:4, ENLARGE_ELEMENT:1, ENLARGE_BLOCK_CONTENTS:2, ENLARGE_LIST_ITEM_CONTENTS:3, START:1, END:2, SHRINK_ELEMENT:1, SHRINK_TEXT:2};
-  var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.DOM, UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {td:1}, EMPTY = {area:1, base:1, br:1, col:1, hr:1, img:1, input:1, link:1, meta:1, param:1};
+  var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.require("dom"), UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {td:1}, EMPTY = {area:1, base:1, br:1, col:1, hr:1, img:1, input:1, link:1, meta:1, param:1};
   var isWhitespace = new Walker.whitespaces, isBookmark = new Walker.bookmark, isNotWhitespaces = Walker.whitespaces(TRUE), isNotBookmarks = Walker.bookmark(false, true);
   var inlineChildReqElements = {abbr:1, acronym:1, b:1, bdo:1, big:1, cite:1, code:1, del:1, dfn:1, em:1, font:1, i:1, ins:1, label:1, kbd:1, q:1, samp:1, small:1, span:1, strike:1, strong:1, sub:1, sup:1, tt:1, u:1, "var":1};
   function elementBoundaryEval(node) {
@@ -1865,7 +1865,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
   var KERange = require("./range");
   var Editor = require("./base");
   Editor.SelectionType = {SELECTION_NONE:1, SELECTION_TEXT:2, SELECTION_ELEMENT:3};
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require("dom"), KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
   function KESelection(document) {
     var self = this;
     self.document = document;
@@ -2764,7 +2764,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
         allEmpty = 1;
         for(i = 0;i < l;i++) {
           child = childNodes[i];
-          if(!(child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue)) {
+          if(!(child.nodeType === S.require("dom").NodeType.TEXT_NODE && !child.nodeValue)) {
             allEmpty = 0;
             break
           }
@@ -2957,7 +2957,7 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "node"], function(S, 
   var Editor = require("./base");
   require("./selection");
   var Node = require("node");
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require("dom"), KES = Editor.SelectionType;
   function fixCursorForIE(editor) {
     var started, win = editor.get("window")[0], $doc = editor.get("document"), doc = $doc[0], startRng;
     function rngFromPoint(x, y) {
@@ -3196,100 +3196,19 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "node"], function(S, 
     monitorSelectionChange(editor)
   }}
 });
-KISSY.add("editor/modules", [], function() {
-  (function(config, Feature, UA) {
-    config({"editor/plugin/back-color":{requires:["editor/plugin/color/btn", "editor/plugin/back-color/cmd"]}});
-    config({"editor/plugin/back-color/cmd":{requires:["editor/plugin/color/cmd"]}});
-    config({"editor/plugin/bold":{requires:["editor/plugin/font/ui", "editor/plugin/bold/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/bold/cmd":{requires:["editor", "editor/plugin/font/cmd"]}});
-    config({"editor/plugin/bubble":{requires:["overlay", "editor"]}});
-    config({"editor/plugin/button":{requires:["editor", "button"]}});
-    config({"editor/plugin/checkbox-source-area":{requires:["editor"]}});
-    config({"editor/plugin/code":{requires:["editor", "editor/plugin/button", "editor/plugin/dialog-loader"]}});
-    config({"editor/plugin/code/dialog":{requires:["editor", "menubutton", "editor/plugin/dialog"]}});
-    config({"editor/plugin/color/btn":{requires:["editor", "editor/plugin/button", "editor/plugin/overlay", "editor/plugin/dialog-loader"]}});
-    config({"editor/plugin/color/cmd":{requires:["editor"]}});
-    config({"editor/plugin/color/dialog":{requires:["editor", "editor/plugin/dialog"]}});
-    config({"editor/plugin/contextmenu":{requires:["editor", "menu", "editor/plugin/focus-fix", "event"]}});
-    config({"editor/plugin/dent-cmd":{requires:["editor", "editor/plugin/list-utils"]}});
-    config({"editor/plugin/dialog-loader":{requires:["editor", "overlay"]}});
-    config({"editor/plugin/dialog":{requires:["editor", "overlay", "editor/plugin/focus-fix", "dd/plugin/constrain", "component/plugin/drag"]}});
-    config({"editor/plugin/draft":{requires:["editor", "json", "event", "editor/plugin/local-storage", "overlay", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/drag-upload":{requires:["editor", "event"]}});
-    config({"editor/plugin/element-path":{requires:["editor"]}});
-    config({"editor/plugin/fake-objects":{requires:["editor", "html-parser"]}});
-    config({"editor/plugin/flash-bridge":{requires:["editor", "swf", "event"]}});
-    config({"editor/plugin/flash-common/base-class":{requires:["editor/plugin/flash-common/utils", "base", "editor", "editor/plugin/dialog-loader", "editor/plugin/bubble", "editor/plugin/contextmenu"]}});
-    config({"editor/plugin/flash-common/utils":{requires:["swf"]}});
-    config({"editor/plugin/flash":{requires:["editor", "editor/plugin/flash-common/base-class", "editor/plugin/flash-common/utils", "editor/plugin/fake-objects", "editor/plugin/button"]}});
-    config({"editor/plugin/flash/dialog":{requires:["editor", "editor/plugin/flash-common/utils", "editor/plugin/dialog", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/focus-fix":{requires:["editor"]}});
-    config({"editor/plugin/font-family":{requires:["editor", "editor/plugin/font/ui", "editor/plugin/font-family/cmd", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/font-family/cmd":{requires:["editor/plugin/font/cmd"]}});
-    config({"editor/plugin/font-size":{requires:["editor", "editor/plugin/font/ui", "editor/plugin/font-size/cmd", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/font-size/cmd":{requires:["editor/plugin/font/cmd"]}});
-    config({"editor/plugin/font/cmd":{requires:["editor"]}});
-    config({"editor/plugin/font/ui":{requires:["editor", "editor/plugin/button", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/fore-color":{requires:["editor/plugin/color/btn", "editor/plugin/fore-color/cmd"]}});
-    config({"editor/plugin/fore-color/cmd":{requires:["editor/plugin/color/cmd"]}});
-    config({"editor/plugin/heading":{requires:["editor/plugin/menubutton", "editor", "editor/plugin/heading/cmd"]}});
-    config({"editor/plugin/heading/cmd":{requires:["editor"]}});
-    config({"editor/plugin/image":{requires:["editor/plugin/button", "editor", "editor/plugin/bubble", "editor/plugin/contextmenu", "editor/plugin/dialog-loader"]}});
-    config({"editor/plugin/image/dialog":{requires:["editor", "io", "editor/plugin/dialog", "tabs", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/indent":{requires:["editor", "editor/plugin/indent/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/indent/cmd":{requires:["editor/plugin/dent-cmd"]}});
-    config({"editor/plugin/italic":{requires:["editor/plugin/font/ui", "editor/plugin/italic/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/italic/cmd":{requires:["editor", "editor/plugin/font/cmd"]}});
-    config({"editor/plugin/justify-center":{requires:["editor", "editor/plugin/justify-center/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/justify-center/cmd":{requires:["editor/plugin/justify-cmd"]}});
-    config({"editor/plugin/justify-cmd":{requires:["editor"]}});
-    config({"editor/plugin/justify-left":{requires:["editor", "editor/plugin/justify-left/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/justify-left/cmd":{requires:["editor/plugin/justify-cmd"]}});
-    config({"editor/plugin/justify-right":{requires:["editor", "editor/plugin/justify-right/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/justify-right/cmd":{requires:["editor/plugin/justify-cmd"]}});
-    config({"editor/plugin/link":{requires:["editor/plugin/button", "editor/plugin/bubble", "editor", "editor/plugin/link/utils", "editor/plugin/dialog-loader"]}});
-    config({"editor/plugin/link/dialog":{requires:["editor", "editor/plugin/dialog", "editor/plugin/link/utils"]}});
-    config({"editor/plugin/link/utils":{requires:["editor"]}});
-    config({"editor/plugin/list-utils":{requires:["editor"]}});
-    config({"editor/plugin/list-utils/btn":{requires:["editor", "editor/plugin/button", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/list-utils/cmd":{requires:["editor", "editor/plugin/list-utils"]}});
-    config({"editor/plugin/local-storage":{requires:["editor", "overlay", "editor/plugin/flash-bridge"]}});
-    config({"editor/plugin/maximize":{requires:["editor/plugin/maximize/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/maximize/cmd":{requires:["editor", "event"]}});
-    config({"editor/plugin/menubutton":{requires:["editor", "menubutton"]}});
-    config({"editor/plugin/ordered-list":{requires:["editor/plugin/list-utils/btn", "editor/plugin/ordered-list/cmd"]}});
-    config({"editor/plugin/ordered-list/cmd":{requires:["editor", "editor/plugin/list-utils/cmd"]}});
-    config({"editor/plugin/outdent":{requires:["editor", "editor/plugin/button", "editor/plugin/outdent/cmd"]}});
-    config({"editor/plugin/outdent/cmd":{requires:["editor", "editor/plugin/dent-cmd"]}});
-    config({"editor/plugin/overlay":{requires:["editor", "overlay", "editor/plugin/focus-fix"]}});
-    config({"editor/plugin/page-break":{requires:["editor", "editor/plugin/fake-objects", "editor/plugin/button"]}});
-    config({"editor/plugin/preview":{requires:["editor/plugin/button"]}});
-    config({"editor/plugin/progressbar":{requires:["base"]}});
-    config({"editor/plugin/remove-format":{requires:["editor", "editor/plugin/button", "editor/plugin/remove-format/cmd"]}});
-    config({"editor/plugin/remove-format/cmd":{requires:["editor"]}});
-    config({"editor/plugin/resize":{requires:["dd"]}});
-    config({"editor/plugin/separator":{requires:["editor"]}});
-    config({"editor/plugin/smiley":{requires:["editor", "editor/plugin/overlay", "editor/plugin/button"]}});
-    config({"editor/plugin/source-area":{requires:["editor", "editor/plugin/button"]}});
-    config({"editor/plugin/strike-through":{requires:["editor/plugin/font/ui", "editor/plugin/strike-through/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/strike-through/cmd":{requires:["editor", "editor/plugin/font/cmd"]}});
-    config({"editor/plugin/table":{requires:["editor", "editor/plugin/dialog-loader", "editor/plugin/contextmenu", "editor/plugin/button"]}});
-    config({"editor/plugin/table/dialog":{requires:["editor", "editor/plugin/dialog", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/underline":{requires:["editor/plugin/font/ui", "editor/plugin/underline/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/underline/cmd":{requires:["editor", "editor/plugin/font/cmd"]}});
-    config({"editor/plugin/undo":{requires:["editor", "editor/plugin/undo/btn", "editor/plugin/undo/cmd", "editor/plugin/button"]}});
-    config({"editor/plugin/undo/btn":{requires:["editor/plugin/button", "editor"]}});
-    config({"editor/plugin/undo/cmd":{requires:["editor"]}});
-    config({"editor/plugin/unordered-list":{requires:["editor/plugin/list-utils/btn", "editor/plugin/unordered-list/cmd"]}});
-    config({"editor/plugin/unordered-list/cmd":{requires:["editor", "editor/plugin/list-utils/cmd"]}});
-    config({"editor/plugin/video":{requires:["editor", "editor/plugin/flash-common/utils", "editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"]}});
-    config({"editor/plugin/video/dialog":{requires:["editor", "io", "editor/plugin/flash/dialog", "editor/plugin/menubutton"]}});
-    config({"editor/plugin/word-filter":{requires:["html-parser"]}});
-    config({"editor/plugin/xiami-music":{requires:["editor", "editor/plugin/flash-common/base-class", "editor/plugin/flash-common/utils", "editor/plugin/fake-objects", "editor/plugin/button"]}});
-    config({"editor/plugin/xiami-music/dialog":{requires:["editor", "editor/plugin/flash/dialog", "editor/plugin/menubutton"]}})
-  })(function(c) {
-    KISSY.config("modules", c)
-  }, KISSY.Feature, KISSY.UA)
+KISSY.add("editor/modules", [], function(S) {
+  S.config("requires", {"editor/plugin/back-color":["editor/plugin/color/btn", "editor/plugin/back-color/cmd"], "editor/plugin/back-color/cmd":["editor/plugin/color/cmd"], "editor/plugin/bold":["editor/plugin/font/ui", "editor/plugin/bold/cmd"], "editor/plugin/bold/cmd":["editor/plugin/font/cmd"], "editor/plugin/bubble":["overlay", "editor"], "editor/plugin/button":["editor", "button"], "editor/plugin/checkbox-source-area":["editor"], "editor/plugin/code":["editor/plugin/button", "editor/plugin/dialog-loader"], 
+  "editor/plugin/code/dialog":["menubutton", "editor/plugin/dialog"], "editor/plugin/color/btn":["editor/plugin/button", "editor/plugin/overlay", "editor/plugin/dialog-loader"], "editor/plugin/color/cmd":["editor"], "editor/plugin/color/dialog":["editor/plugin/dialog"], "editor/plugin/contextmenu":["menu", "editor/plugin/focus-fix", "event"], "editor/plugin/dent-cmd":["editor", "editor/plugin/list-utils"], "editor/plugin/dialog":["overlay", "editor/plugin/focus-fix", "dd/plugin/constrain", "component/plugin/drag"], 
+  "editor/plugin/dialog-loader":["editor", "overlay"], "editor/plugin/draft":["json", "editor/plugin/local-storage", "editor/plugin/menubutton"], "editor/plugin/drag-upload":["editor", "event"], "editor/plugin/element-path":["editor"], "editor/plugin/fake-objects":["editor", "html-parser"], "editor/plugin/flash":["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], "editor/plugin/flash/dialog":["editor/plugin/flash-common/utils", "editor/plugin/dialog", 
+  "editor/plugin/menubutton"], "editor/plugin/flash-bridge":["editor", "swf", "event"], "editor/plugin/flash-common/base-class":["editor/plugin/flash-common/utils", "base", "editor/plugin/dialog-loader", "editor/plugin/bubble", "editor/plugin/contextmenu"], "editor/plugin/flash-common/utils":["swf"], "editor/plugin/focus-fix":["editor"], "editor/plugin/font/cmd":["editor"], "editor/plugin/font/ui":["editor/plugin/button", "editor/plugin/menubutton"], "editor/plugin/font-family":["editor/plugin/font/ui", 
+  "editor/plugin/font-family/cmd"], "editor/plugin/font-family/cmd":["editor/plugin/font/cmd"], "editor/plugin/font-size":["editor/plugin/font/ui", "editor/plugin/font-size/cmd"], "editor/plugin/font-size/cmd":["editor/plugin/font/cmd"], "editor/plugin/fore-color":["editor/plugin/color/btn", "editor/plugin/fore-color/cmd"], "editor/plugin/fore-color/cmd":["editor/plugin/color/cmd"], "editor/plugin/heading":["editor/plugin/menubutton", "editor/plugin/heading/cmd"], "editor/plugin/heading/cmd":["editor"], 
+  "editor/plugin/image":["editor/plugin/button", "editor/plugin/bubble", "editor/plugin/contextmenu", "editor/plugin/dialog-loader"], "editor/plugin/image/dialog":["io", "editor/plugin/dialog", "tabs", "editor/plugin/menubutton"], "editor/plugin/indent":["editor/plugin/indent/cmd", "editor/plugin/button"], "editor/plugin/indent/cmd":["editor/plugin/dent-cmd"], "editor/plugin/italic":["editor/plugin/font/ui", "editor/plugin/italic/cmd"], "editor/plugin/italic/cmd":["editor/plugin/font/cmd"], "editor/plugin/justify-center":["editor/plugin/justify-center/cmd", 
+  "editor/plugin/button"], "editor/plugin/justify-center/cmd":["editor/plugin/justify-cmd"], "editor/plugin/justify-cmd":["editor"], "editor/plugin/justify-left":["editor/plugin/justify-left/cmd", "editor/plugin/button"], "editor/plugin/justify-left/cmd":["editor/plugin/justify-cmd"], "editor/plugin/justify-right":["editor/plugin/justify-right/cmd", "editor/plugin/button"], "editor/plugin/justify-right/cmd":["editor/plugin/justify-cmd"], "editor/plugin/link":["editor/plugin/button", "editor/plugin/bubble", 
+  "editor/plugin/link/utils", "editor/plugin/dialog-loader"], "editor/plugin/link/dialog":["editor/plugin/dialog", "editor/plugin/link/utils"], "editor/plugin/link/utils":["editor"], "editor/plugin/list-utils/btn":["editor/plugin/button", "editor/plugin/menubutton"], "editor/plugin/list-utils/cmd":["editor", "editor/plugin/list-utils"], "editor/plugin/local-storage":["overlay", "editor/plugin/flash-bridge"], "editor/plugin/maximize":["editor/plugin/maximize/cmd", "editor/plugin/button"], "editor/plugin/maximize/cmd":["editor", 
+  "event"], "editor/plugin/menubutton":["editor", "menubutton"], "editor/plugin/ordered-list":["editor/plugin/list-utils/btn", "editor/plugin/ordered-list/cmd"], "editor/plugin/ordered-list/cmd":["editor/plugin/list-utils/cmd"], "editor/plugin/outdent":["editor/plugin/button", "editor/plugin/outdent/cmd"], "editor/plugin/outdent/cmd":["editor/plugin/dent-cmd"], "editor/plugin/overlay":["overlay", "editor/plugin/focus-fix"], "editor/plugin/page-break":["editor/plugin/fake-objects", "editor/plugin/button"], 
+  "editor/plugin/preview":["editor/plugin/button"], "editor/plugin/progressbar":["base"], "editor/plugin/remove-format":["editor/plugin/button", "editor/plugin/remove-format/cmd"], "editor/plugin/remove-format/cmd":["editor"], "editor/plugin/resize":["dd"], "editor/plugin/smiley":["editor/plugin/overlay", "editor/plugin/button"], "editor/plugin/source-area":["editor/plugin/button"], "editor/plugin/strike-through":["editor/plugin/font/ui", "editor/plugin/strike-through/cmd"], "editor/plugin/strike-through/cmd":["editor/plugin/font/cmd"], 
+  "editor/plugin/table":["editor/plugin/dialog-loader", "editor/plugin/contextmenu", "editor/plugin/button"], "editor/plugin/table/dialog":["editor/plugin/dialog", "editor/plugin/menubutton"], "editor/plugin/underline":["editor/plugin/font/ui", "editor/plugin/underline/cmd"], "editor/plugin/underline/cmd":["editor/plugin/font/cmd"], "editor/plugin/undo":["editor/plugin/undo/btn", "editor/plugin/undo/cmd"], "editor/plugin/undo/btn":["editor/plugin/button"], "editor/plugin/undo/cmd":["editor"], "editor/plugin/unordered-list":["editor/plugin/list-utils/btn", 
+  "editor/plugin/unordered-list/cmd"], "editor/plugin/unordered-list/cmd":["editor/plugin/list-utils/cmd"], "editor/plugin/video":["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], "editor/plugin/video/dialog":["io", "editor/plugin/flash/dialog"], "editor/plugin/word-filter":["html-parser"], "editor/plugin/xiami-music":["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], "editor/plugin/xiami-music/dialog":["editor/plugin/flash/dialog"]})
 });
 KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./elementPath"], function(S, require) {
   var Node = require("node");
@@ -3297,7 +3216,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
   var KERange = require("./range");
   var Editor = require("./base");
   var ElementPath = require("./elementPath");
-  var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = S.DOM, KER = Editor.RangeType, KEP = Editor.PositionType, KEST, UA = S.UA, blockElements = {address:1, div:1, h1:1, h2:1, h3:1, h4:1, h5:1, h6:1, p:1, pre:1}, DTD = Editor.XHTML_DTD, objectElements = {embed:1, hr:1, img:1, li:1, object:1, ol:1, table:1, td:1, tr:1, th:1, ul:1, dl:1, dt:1, dd:1, form:1}, semicolonFixRegex = /\s*(?:;\s*|$)/g, varRegex = /#\((.+?)\)/g;
+  var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = S.require("dom"), KER = Editor.RangeType, KEP = Editor.PositionType, KEST, UA = S.UA, blockElements = {address:1, div:1, h1:1, h2:1, h3:1, h4:1, h5:1, h6:1, p:1, pre:1}, DTD = Editor.XHTML_DTD, objectElements = {embed:1, hr:1, img:1, li:1, object:1, ol:1, table:1, td:1, tr:1, th:1, ul:1, dl:1, dt:1, dd:1, form:1}, semicolonFixRegex = /\s*(?:;\s*|$)/g, varRegex = /#\((.+?)\)/g;
   Editor.StyleType = KEST = {STYLE_BLOCK:1, STYLE_INLINE:2, STYLE_OBJECT:3};
   function notBookmark(node) {
     return!Dom.attr(node, "_ke_bookmark")
@@ -3983,7 +3902,7 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
   var KERange = require("./range");
   var Editor = require("./base");
   var ElementPath = require("./elementPath");
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, KER = Editor.RangeType, Dom = S.DOM;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, KER = Editor.RangeType, Dom = S.require("dom");
   function Iterator(range) {
     if(arguments.length < 1) {
       return

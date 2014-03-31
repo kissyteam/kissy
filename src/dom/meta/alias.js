@@ -1,15 +1,11 @@
-config({
-    'dom/basic': {
-        alias: [
-            'dom/base',
-            UA.ieMode < 9 ? 'dom/ie' : '',
-            Feature.isClassListSupported() ? '' : 'dom/class-list'
-        ]
-    },
-    dom: {
-        alias: [
-            'dom/basic',
-            !Feature.isQuerySelectorSupported() ? 'dom/selector' : ''
-        ]
-    }
+alias({
+    'dom/basic': [
+        'dom/base',
+        UA.ieMode < 9 ? 'dom/ie' : '',
+        Feature.isClassListSupported() ? '' : 'dom/class-list'
+    ],
+    dom: [
+        'dom/basic',
+        Feature.isQuerySelectorSupported() ? '' : 'dom/selector'
+    ]
 });

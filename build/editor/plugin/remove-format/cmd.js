@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:54
+build time: Mar 31 19:25
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Mar 27 21:54
 
 KISSY.add("editor/plugin/remove-format/cmd", ["editor"], function(S, require) {
   var Editor = require("editor");
-  var KER = Editor.RangeType, ElementPath = Editor.ElementPath, Dom = S.DOM, removeFormatTags = "b,big,code,del,dfn,em,font,i,ins,kbd," + "q,samp,small,span,strike,strong,sub,sup,tt,u,var,s", removeFormatAttributes = ("class,style,lang,width,height," + "align,hspace,valign").split(/,/), tagsRegex = new RegExp("^(?:" + removeFormatTags.replace(/,/g, "|") + ")$", "i");
+  var KER = Editor.RangeType, ElementPath = Editor.ElementPath, Dom = S.require("dom"), removeFormatTags = "b,big,code,del,dfn,em,font,i,ins,kbd," + "q,samp,small,span,strike,strong,sub,sup,tt,u,var,s", removeFormatAttributes = ("class,style,lang,width,height," + "align,hspace,valign").split(/,/), tagsRegex = new RegExp("^(?:" + removeFormatTags.replace(/,/g, "|") + ")$", "i");
   function removeAttrs(el, attrs) {
     for(var i = 0;i < attrs.length;i++) {
       el.removeAttr(attrs[i])

@@ -1,0 +1,3 @@
+{
+    "scroll-view/plugin/scrollbar": ["base", "node", "ua", "component/control", "event/gesture/drag"]
+}

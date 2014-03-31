@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 22:16
+build time: Mar 31 19:14
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -606,6 +606,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
   TimerAnim.Easing = Easing;
   TimerAnim.Fx = Fx;
   S.mix(TimerAnim, AnimBase.Statics);
+  S.Anim = TimerAnim;
   return TimerAnim
 });
 

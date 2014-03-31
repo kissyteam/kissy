@@ -1,0 +1,3 @@
+{
+    "editor/plugin/smiley": ["editor", "editor/plugin/overlay", "editor/plugin/button"]
+}

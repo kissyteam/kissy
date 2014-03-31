@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:58
+build time: Mar 31 19:28
 */
 KISSY.add("filter-menu/render-xtpl",["component/extension/content-xtpl"],function(h,g,k,i){h=function(a,d,b,h,e){var f,l=this.nativeCommands,c=this.utils;if("1.50"!==d.version)throw Error("current xtemplate file("+this.name+")(v1.50) need to be recompiled using current kissy(v"+d.version+")!");"undefined"!==typeof i&&i.kissy&&(f=i);d=c.callCommand;l=l.include;b.write('<div id="ks-filter-menu-input-wrap-');c=a.resolve(["id"]);b.write(c,!0);b.write('"\n     class="');var c={escape:1},j=[];j.push("input-wrap");
 c.params=j;if((c=d(this,a,c,b,"getBaseCssClasses",2))&&c.isBuffer)b=c,c=e;b.write(c,!0);b.write('">\n    <div id="ks-filter-menu-placeholder-');c=a.resolve(["id"]);b.write(c,!0);b.write('"\n         class="');c={escape:1};j=[];j.push("placeholder");c.params=j;if((c=d(this,a,c,b,"getBaseCssClasses",4))&&c.isBuffer)b=c,c=e;b.write(c,!0);b.write('">\n        ');c=a.resolve(["placeholder"]);b.write(c,!0);b.write('\n    </div>\n    <input id="ks-filter-menu-input-');c=a.resolve(["id"]);b.write(c,!0);b.write('"\n           class="');

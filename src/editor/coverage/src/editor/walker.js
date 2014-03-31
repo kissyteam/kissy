@@ -708,7 +708,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/walker.js'].lineData[12]++;
   var Editor = require('./base');
   _$jscoverage['/editor/walker.js'].lineData[14]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, dtd = Editor.XHTML_DTD, Node = require('node');
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'), dtd = Editor.XHTML_DTD, Node = require('node');
   _$jscoverage['/editor/walker.js'].lineData[22]++;
   function iterate(rtl, breakOnFalseRetFalse) {
     _$jscoverage['/editor/walker.js'].functionData[1]++;

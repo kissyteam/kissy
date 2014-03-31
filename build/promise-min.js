@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 28 12:58
+build time: Mar 31 19:30
 */
 KISSY.add("promise",[],function(m){function n(a){"undefined"!==typeof console&&console.error&&console.error(a)}function o(a,b,d){if(a instanceof e)d.call(a,a[h]);else{var k=a[h],c=a[j];void 0===c&&(c=a[j]=[]);c?c.push([b,d]):p(k)?o(k,b,d):b&&b.call(a,k)}}function f(a){if(!(this instanceof f))return new f(a);this.promise=a||new c;this.promise.defer=this}function p(a){return a&&a instanceof c}function t(a,b){return function(){return a.apply(b,arguments)}}function c(a){if("function"===typeof a){var b=
 new f(this),d=t(b.resolve,b),b=t(b.reject,b);try{a(d,b)}catch(c){n(c.stack||c),b(c)}}}function e(a){if(a instanceof e)return a;this[h]=a;this[j]=!1;this[l]=!1;return this}function g(a,b,d){function k(a){try{return b?b.call(this,a):a}catch(d){return n(d.stack||d),new e(d)}}function g(a){try{return d?d.call(this,a):new e(a)}catch(b){return n(b.stack||b),new e(b)}}function u(a){i||a instanceof c||(i=1,q.resolve(k.call(this,a)))}var q=new f,i=0;a instanceof c?o(a,u,function(a){i||(i=1,q.resolve(g.call(this,

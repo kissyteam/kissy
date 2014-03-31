@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 27 21:49
+build time: Mar 31 19:20
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -23,8 +23,8 @@ KISSY.add("editor/plugin/dialog", ["editor", "overlay", "./focus-fix", "dd/plugi
     var self = this;
     self.center();
     var y = self.get("y");
-    if(y - S.DOM.scrollTop() > 200) {
-      y = S.DOM.scrollTop() + 200;
+    if(y - S.require("dom").scrollTop() > 200) {
+      y = S.require("dom").scrollTop() + 200;
       self.set("y", y)
     }
     self.callSuper()

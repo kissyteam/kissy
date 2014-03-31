@@ -1,0 +1,3 @@
+{
+    "editor/plugin/page-break": ["editor", "editor/plugin/fake-objects", "editor/plugin/button"]
+}
