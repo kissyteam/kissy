@@ -9,23 +9,25 @@ describe('kissy', function () {
             }
         });
 
-        it('S.setImmediate works', function () {
-            var order = [];
-            S.setImmediate(function () {
-                order.push(2);
+        if (0) {
+            it('S.setImmediate works', function () {
+                var order = [];
                 S.setImmediate(function () {
-                    order.push(4);
+                    order.push(2);
+                    S.setImmediate(function () {
+                        order.push(4);
+                    });
+                });
+                S.setImmediate(function () {
+                    order.push(3);
+                });
+                order.push(1);
+                waits(100);
+                runs(function () {
+                    expect(order).toEqual([1, 2, 3, 4]);
                 });
             });
-            S.setImmediate(function () {
-                order.push(3);
-            });
-            order.push(1);
-            waits(100);
-            runs(function () {
-                expect(order).toEqual([1, 2, 3, 4]);
-            });
-        });
+        }
     });
     describe('S.getLogger', function () {
         var S = KISSY;
