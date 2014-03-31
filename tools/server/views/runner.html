@@ -47,7 +47,7 @@
                     lastPart=lastPart.slice(lastSlashIndex+1);
                 }
                 var packages=KISSY.config('packages');
-                packages[component].uri= packages[component].uri.resolve('../../coverage/src/'+lastPart+'/');
+                packages[component].base = KISSY.Loader.Utils.normalizePath(packages[component].base,('../../coverage/src/'+lastPart+'/'));
             }
         })();
     </script>
