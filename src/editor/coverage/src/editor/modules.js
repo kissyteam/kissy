@@ -240,7 +240,7 @@ if (! _$jscoverage['/editor/modules.js'].branchData) {
   _$jscoverage['/editor/modules.js'].branchData = {};
 }
 _$jscoverage['/editor/modules.js'].lineData[2]++;
-(function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/editor/modules.js'].functionData[0]++;
   _$jscoverage['/editor/modules.js'].lineData[3]++;
   S.config("requires", {
@@ -331,4 +331,4 @@ _$jscoverage['/editor/modules.js'].lineData[2]++;
   "editor/plugin/word-filter": ["html-parser"], 
   "editor/plugin/xiami-music": ["editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"], 
   "editor/plugin/xiami-music/dialog": ["editor/plugin/flash/dialog"]});
-})(KISSY);
+});

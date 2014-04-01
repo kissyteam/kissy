@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:44
+build time: Apr 1 11:05
 */
 KISSY.add("editor/iframe-content-tpl",[],'<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');
 KISSY.add("editor/render-xtpl",[],function(f,l,x,v){f=function(f,l,q,c){var j=this.nativeCommands;if("1.50"!==l.version)throw Error("current xtemplate file("+this.name+")(v1.50) need to be recompiled using current kissy(v"+l.version+")!");l=j.each;j=j["if"];q.write('<div class="');var s=f.resolve(["prefixCls"]);q.write(s,!0);q.write('editor-tools"\n     id="ks-editor-tools-');s=f.resolve(["id"]);q.write(s,!0);q.write('">\n\n</div>\n\n<\!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01\n--\>\n\n<div class="');
