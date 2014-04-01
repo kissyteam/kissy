@@ -6,6 +6,72 @@
 KISSY.add(function (S, require) {
     var Overlay = require('./control');
 
+    function bindTriggerMouse() {
+        var self = this,
+            trigger = self.get('trigger'),
+            timer;
+
+        self.__mouseEnterPopup = function (ev) {
+            clearHiddenTimer.call(self);
+            timer = S.later(function () {
+                showing.call(self, ev);
+                timer = undefined;
+            }, self.get('mouseDelay') * 1000);
+        };
+
+        trigger.on('mouseenter', self.__mouseEnterPopup);
+
+        self._mouseLeavePopup = function () {
+            if (timer) {
+                timer.cancel();
+                timer = undefined;
+            }
+            setHiddenTimer.call(self);
+        };
+
+        trigger.on('mouseleave', self._mouseLeavePopup);
+    }
+
+    function setHiddenTimer() {
+        var self = this;
+        self._hiddenTimer = S.later(function () {
+            hiding.call(self);
+        }, self.get('mouseDelay') * 1000);
+    }
+
+    function clearHiddenTimer() {
+        var self = this;
+        if (self._hiddenTimer) {
+            self._hiddenTimer.cancel();
+            self._hiddenTimer = undefined;
+        }
+    }
+
+    function bindTriggerClick() {
+        var self = this;
+        self.__clickPopup = function (ev) {
+            ev.preventDefault();
+            if (self.get('toggle')) {
+                (self.get('visible') ? hiding : showing).call(self, ev);
+            } else {
+                showing.call(self, ev);
+            }
+        };
+
+        self.get('trigger').on('click', self.__clickPopup);
+    }
+
+    function showing(ev) {
+        var self = this;
+        self.set('currentTrigger', S.one(ev.target));
+        self.show();
+    }
+
+    function hiding() {
+        this.set('currentTrigger', undefined);
+        this.hide();
+    }
+
     /**
      * @class KISSY.Overlay.Popup
      * KISSY Popup Component.
@@ -19,87 +85,22 @@ KISSY.add(function (S, require) {
                 trigger = self.get('trigger');
             if (trigger) {
                 if (self.get('triggerType') === 'mouse') {
-                    self._bindTriggerMouse();
-                    self.on('afterRenderUI', function () {
-                        self._bindContainerMouse();
-                    });
+                    bindTriggerMouse.call(self);
                 } else {
-                    self._bindTriggerClick();
+                    bindTriggerClick.call(self);
                 }
             }
         },
 
-        _bindTriggerMouse: function () {
+        bindUI: function () {
             var self = this,
-                trigger = self.get('trigger'),
-                timer;
-
-            self.__mouseEnterPopup = function (ev) {
-                self._clearHiddenTimer();
-                timer = S.later(function () {
-                    self._showing(ev);
-                    timer = undefined;
-                }, self.get('mouseDelay') * 1000);
-            };
-
-            trigger.on('mouseenter', self.__mouseEnterPopup);
-
-            self._mouseLeavePopup = function () {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+                trigger = self.get('trigger');
+            if (trigger) {
+                if (self.get('triggerType') === 'mouse') {
+                    self.$el.on('mouseleave', setHiddenTimer, self)
+                        .on('mouseenter', clearHiddenTimer, self);
                 }
-                self._setHiddenTimer();
-            };
-
-            trigger.on('mouseleave', self._mouseLeavePopup);
-        },
-
-        _bindContainerMouse: function () {
-            var self = this;
-            self.$el
-                .on('mouseleave', self._setHiddenTimer, self)
-                .on('mouseenter', self._clearHiddenTimer, self);
-        },
-
-        _setHiddenTimer: function () {
-            var self = this;
-            self._hiddenTimer = S.later(function () {
-                self._hiding();
-            }, self.get('mouseDelay') * 1000);
-        },
-
-        _clearHiddenTimer: function () {
-            var self = this;
-            if (self._hiddenTimer) {
-                self._hiddenTimer.cancel();
-                self._hiddenTimer = undefined;
             }
-        },
-
-        _bindTriggerClick: function () {
-            var self = this;
-            self.__clickPopup = function (ev) {
-                ev.preventDefault();
-                if (self.get('toggle')) {
-                    self[self.get('visible') ? '_hiding' : '_showing'](ev);
-                } else {
-                    self._showing(ev);
-                }
-            };
-
-            self.get('trigger').on('click', self.__clickPopup);
-        },
-
-        _showing: function (ev) {
-            var self = this;
-            self.set('currentTrigger', S.one(ev.target));
-            self.show();
-        },
-
-        _hiding: function () {
-            this.set('currentTrigger', undefined);
-            this.hide();
         },
 
         destructor: function () {
@@ -119,8 +120,10 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            $el.detach('mouseleave', self._setHiddenTimer, self)
-                .detach('mouseenter', self._clearHiddenTimer, self);
+            if ($el) {
+                $el.detach('mouseleave', setHiddenTimer, self)
+                    .detach('mouseenter', clearHiddenTimer, self);
+            }
 
         }
     }, {

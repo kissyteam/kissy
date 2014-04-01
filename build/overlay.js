@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:30
+build time: Apr 1 17:35
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -544,24 +544,12 @@ KISSY.add("overlay/dialog", ["./control", "./dialog-render", "node"], function(S
 });
 KISSY.add("overlay/popup", ["./control"], function(S, require) {
   var Overlay = require("./control");
-  return Overlay.extend({initializer:function() {
-    var self = this, trigger = self.get("trigger");
-    if(trigger) {
-      if(self.get("triggerType") === "mouse") {
-        self._bindTriggerMouse();
-        self.on("afterRenderUI", function() {
-          self._bindContainerMouse()
-        })
-      }else {
-        self._bindTriggerClick()
-      }
-    }
-  }, _bindTriggerMouse:function() {
+  function bindTriggerMouse() {
     var self = this, trigger = self.get("trigger"), timer;
     self.__mouseEnterPopup = function(ev) {
-      self._clearHiddenTimer();
+      clearHiddenTimer.call(self);
       timer = S.later(function() {
-        self._showing(ev);
+        showing.call(self, ev);
         timer = undefined
       }, self.get("mouseDelay") * 1E3)
     };
@@ -571,41 +559,60 @@ KISSY.add("overlay/popup", ["./control"], function(S, require) {
         timer.cancel();
         timer = undefined
       }
-      self._setHiddenTimer()
+      setHiddenTimer.call(self)
     };
     trigger.on("mouseleave", self._mouseLeavePopup)
-  }, _bindContainerMouse:function() {
-    var self = this;
-    self.$el.on("mouseleave", self._setHiddenTimer, self).on("mouseenter", self._clearHiddenTimer, self)
-  }, _setHiddenTimer:function() {
+  }
+  function setHiddenTimer() {
     var self = this;
     self._hiddenTimer = S.later(function() {
-      self._hiding()
+      hiding.call(self)
     }, self.get("mouseDelay") * 1E3)
-  }, _clearHiddenTimer:function() {
+  }
+  function clearHiddenTimer() {
     var self = this;
     if(self._hiddenTimer) {
       self._hiddenTimer.cancel();
       self._hiddenTimer = undefined
     }
-  }, _bindTriggerClick:function() {
+  }
+  function bindTriggerClick() {
     var self = this;
     self.__clickPopup = function(ev) {
       ev.preventDefault();
       if(self.get("toggle")) {
-        self[self.get("visible") ? "_hiding" : "_showing"](ev)
+        (self.get("visible") ? hiding : showing).call(self, ev)
       }else {
-        self._showing(ev)
+        showing.call(self, ev)
       }
     };
     self.get("trigger").on("click", self.__clickPopup)
-  }, _showing:function(ev) {
+  }
+  function showing(ev) {
     var self = this;
     self.set("currentTrigger", S.one(ev.target));
     self.show()
-  }, _hiding:function() {
+  }
+  function hiding() {
     this.set("currentTrigger", undefined);
     this.hide()
+  }
+  return Overlay.extend({initializer:function() {
+    var self = this, trigger = self.get("trigger");
+    if(trigger) {
+      if(self.get("triggerType") === "mouse") {
+        bindTriggerMouse.call(self)
+      }else {
+        bindTriggerClick.call(self)
+      }
+    }
+  }, bindUI:function() {
+    var self = this, trigger = self.get("trigger");
+    if(trigger) {
+      if(self.get("triggerType") === "mouse") {
+        self.$el.on("mouseleave", setHiddenTimer, self).on("mouseenter", clearHiddenTimer, self)
+      }
+    }
   }, destructor:function() {
     var self = this, $el = self.$el, t = self.get("trigger");
     if(t) {
@@ -619,7 +626,9 @@ KISSY.add("overlay/popup", ["./control"], function(S, require) {
         t.detach("mouseleave", self._mouseLeavePopup)
       }
     }
-    $el.detach("mouseleave", self._setHiddenTimer, self).detach("mouseenter", self._clearHiddenTimer, self)
+    if($el) {
+      $el.detach("mouseleave", setHiddenTimer, self).detach("mouseenter", clearHiddenTimer, self)
+    }
   }}, {ATTRS:{trigger:{setter:function(v) {
     return S.all(v)
   }}, triggerType:{value:"click"}, currentTrigger:{}, mouseDelay:{value:0.1}, toggle:{value:false}}, xclass:"popup"})
