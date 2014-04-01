@@ -14,7 +14,9 @@ jasmine.KissyReoport = (function () {
         };
     }
 
-    var S = KISSY;
+    var isArray = Array.isArray || function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    };
 
     var ua = window.navigator.userAgent;
 
@@ -79,6 +81,84 @@ jasmine.KissyReoport = (function () {
     }
 
     var DEFAULT_COV_OUT = 'N/A';
+
+    var SEP = '&',
+        EQ = '=';
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return TRUE.
+        return val == null || (t !== 'object' && t !== 'function');
+    }
+
+    function param(o, sep, eq, serializeArray) {
+        sep = sep || SEP;
+        eq = eq || EQ;
+        if (serializeArray === undefined) {
+            serializeArray = 1;
+        }
+        var buf = [], key, i, v, len, val,
+            encode = encodeURIComponent;
+        for (key in o) {
+
+            val = o[key];
+            key = encode(key);
+
+            // val is valid non-array value
+            if (isValidParamValue(val)) {
+                buf.push(key);
+                if (val !== undefined) {
+                    buf.push(eq, encode(val + ''));
+                }
+                buf.push(sep);
+            } else if (isArray(val) && val.length) {
+                // val is not empty array
+                for (i = 0, len = val.length; i < len; ++i) {
+                    v = val[i];
+                    if (isValidParamValue(v)) {
+                        buf.push(key, (serializeArray ? encode('[]') : ''));
+                        if (v !== undefined) {
+                            buf.push(eq, encode(v + ''));
+                        }
+                        buf.push(sep);
+                    }
+                }
+            }
+            // ignore other cases, including empty array, Function, RegExp, Date etc.
+
+        }
+        buf.pop();
+        return buf.join('');
+    }
+
+    function each(obj, fn) {
+        var i = 0,
+            myKeys, l;
+        if (isArray(obj)) {
+            l = obj.length;
+            for (; i < l; i++) {
+                if (fn(obj[i], i, obj) === false) {
+                    break;
+                }
+            }
+        } else {
+            myKeys = keys(obj);
+            l = myKeys.length;
+            for (; i < l; i++) {
+                if (fn(obj[myKeys[i]], myKeys[i], obj) === false) {
+                    break;
+                }
+            }
+        }
+    }
+
+    function keys(obj) {
+        var ret = [];
+        for (var key in obj) {
+            ret.push(key);
+        }
+        return ret;
+    }
 
     function printCoverageInfo() {
         var totals = {
@@ -199,7 +279,7 @@ jasmine.KissyReoport = (function () {
         outputTh(['File', 'Coverage', 'Branch', 'Function']);
         outputTr(['Total: ' + totals.files, parseInt(totals.executed * 100 / totals.statements, 10),
             parseInt(totals.branches_covered * 100 / totals.branches, 10), parseInt(totals.functions_covered * 100 / totals.functions, 10)]);
-        S.each(printInfo, function (info) {
+        each(printInfo, function (info) {
             outputTr([info.file, info.percentage, info.percentageBranch, info.percentageFn]);
         });
         console.log(new Array(116).join('-'));
@@ -265,7 +345,7 @@ jasmine.KissyReoport = (function () {
                     next(runner.results().failedCount);
                 }
             };
-            request.send(S.param({
+            request.send(param({
                 report: json,
                 component: this.component,
                 path: location.pathname

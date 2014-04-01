@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:29
+build time: Apr 1 12:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -204,8 +204,8 @@ KISSY.add("node/override", ["dom", "./base", "./attach"], function(S, require) {
   S.each(["append", "prepend", "before", "after"], function(insertType) {
     NLP[insertType] = function(html) {
       var newNode = html, self = this;
-      if(typeof newNode === "string") {
-        newNode = Dom.create(newNode)
+      if(typeof newNode !== "object") {
+        newNode = Dom.create(newNode + "")
       }
       if(newNode) {
         Dom[insertType](newNode, self)

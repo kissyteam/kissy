@@ -32,8 +32,8 @@ KISSY.add(function (S, require) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
             // create
-            if (typeof newNode === 'string') {
-                newNode = Dom.create(newNode);
+            if (typeof newNode !== 'object') {
+                newNode = Dom.create(newNode + '');
             }
             if (newNode) {
                 Dom[insertType](newNode, self);

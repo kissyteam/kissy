@@ -82,7 +82,6 @@ KISSY.add(function (S, require) {
             expect(n.hasAttr("test")).toBe(true);
         });
 
-
         it("should invoke dom method correctly on nodelist", function () {
             var nl = S.all(".test-div");
 
@@ -97,6 +96,13 @@ KISSY.add(function (S, require) {
             });
         });
 
+        it('append can allow number', function () {
+            var div = $('<div></div>');
+            div.appendTo(document.body);
+            div.append(1);
+            expect(div.html()).toBe('1');
+            div.remove();
+        });
 
         it("should invoke method on window or document correctly", function () {
             var win = S.one(window), doc = S.one(document);
@@ -121,7 +127,6 @@ KISSY.add(function (S, require) {
 
             expect(Dom.get("#testDiv5")).not.toBe(null);
         });
-
 
         it("should append/prepend correctly on nodelist", function () {
             var body = S.one(document.body);
@@ -164,7 +169,6 @@ KISSY.add(function (S, require) {
                 expect(lasts.item(i).prev().equals(pres.item(i))).toBe(true);
             }
         });
-
 
         it("should insertBefore/insertAfter correctly", function () {
             var testDivs = S.all(".test-div");
@@ -217,7 +221,6 @@ KISSY.add(function (S, require) {
             Dom.remove([foo, foo2]);
             $("." + wrapperCls).remove();
         });
-
 
         it("one/all should select nodes ", function () {
             var body = S.one(document.body);
@@ -311,7 +314,6 @@ KISSY.add(function (S, require) {
 
         });
 
-
         it("should return value or chains correctly", function () {
             var n = new Node("<div>test return</div>").appendTo(document.body);
 
@@ -337,7 +339,6 @@ KISSY.add(function (S, require) {
             expect(n.css("xx")).toBe('');
 
         });
-
 
         it("should end correctly", function () {
             var html = $("<div id='end1'><div class='end2'></div><div class='end3'></div></div>").appendTo('body');
