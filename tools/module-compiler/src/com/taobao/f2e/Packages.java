@@ -11,7 +11,6 @@ import java.util.Map;
  * @author yiminghe@gmail.com
  */
 public class Packages {
-
     private Map<String, Package> packages;
 
     private static HashMap<String, Module> moduleCache = new HashMap<String, Module>();
@@ -56,7 +55,7 @@ public class Packages {
                     continue;
                 }
                 Package p = new Package();
-                p.setPath(path);
+                p.setBase(path);
                 p.setName(name);
                 ps.put(name, p);
             }
@@ -77,7 +76,7 @@ public class Packages {
             }
             File d = new File(base);
             Package p = new Package();
-            p.setPath(d.getAbsolutePath());
+            p.setBase(d.getAbsolutePath());
             if (name.length() == 0) {
                 name = d.getName();
             }
@@ -134,12 +133,12 @@ public class Packages {
 
         for (String pName : packages.keySet()) {
             Package p = packages.get(pName);
-            if(packageNameAlone=isPackageNameAlone(p.getPath(),path)){
+            if(packageNameAlone=isPackageNameAlone(p.getBase(),path)){
                 f=p;
                 fName=f.getName();
                 break;
             }
-            else if (path.startsWith(p.getPath()) && p.getName().length() > fName.length()) {
+            else if (path.startsWith(p.getBase()) && p.getName().length() > fName.length()) {
                 f = p;
                 fName = f.getName();
             }
@@ -153,7 +152,7 @@ public class Packages {
             return getModuleFromName(fName);
         }
 
-        String extName = path.substring(f.getPath().length());
+        String extName = path.substring(f.getBase().length());
         extName = extName.substring(0, extName.length() - 3);
 
         if (extName.length() != 0 && fName.length() != 0) {

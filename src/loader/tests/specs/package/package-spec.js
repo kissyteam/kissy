@@ -15,13 +15,12 @@ var run = function (combine) {
             var mods = KISSY.Env.mods;
             KISSY.config({
                 debug: false,
-                packages: [
-                    {
+                packages: {
+                    t:{
                         debug: true,
-                        name: 't',
-                        path: '/kissy/src/loader/tests/specs/package/'
+                        base: '/kissy/src/loader/tests/specs/package/t'
                     }
-                ]
+                }
             });
             var ok1;
 
@@ -47,12 +46,11 @@ var run = function (combine) {
 
         it('allows use package directly', function () {
             S.config({
-                packages: [
-                    {
-                        name: 't',
-                        path: '/kissy/src/loader/tests/specs/package/'
+                packages: {
+                    t:{
+                        base: '/kissy/src/loader/tests/specs/package/t'
                     }
-                ]
+                }
             });
 
             var ok = 0;

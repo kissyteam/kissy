@@ -14,9 +14,7 @@ describe('support system.ondemand', function () {
     it('provide similar functionality', function () {
         KISSY.config('packages', {
             'p-c': {
-                base: '/kissy/src/loader/tests/specs/system-ondemand/',
-                //combine: true,
-                ignorePackageNameInUri: true
+                base: '/kissy/src/loader/tests/specs/system-ondemand/'
             }
         });
 

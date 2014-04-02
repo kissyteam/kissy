@@ -180,7 +180,7 @@ public class ExtractDependency {
 
         for (String pName : ps.keySet()) {
             Package p = ps.get(pName);
-            File packageFolder = new File(p.getPath());
+            File packageFolder = new File(p.getBase());
             Collection<File> files = new ArrayList<File>();
             if (packageFolder.isDirectory()) {
                 files = org.apache.commons.io.FileUtils.listFiles(
@@ -188,7 +188,7 @@ public class ExtractDependency {
                         new String[]{"js"},
                         true);
             }
-            String file = p.getPath().substring(0, p.getPath().length() - 1) +
+            String file = p.getBase().substring(0, p.getBase().length() - 1) +
                     ".js";
             File js = new File(file);
             if (js.exists()) {

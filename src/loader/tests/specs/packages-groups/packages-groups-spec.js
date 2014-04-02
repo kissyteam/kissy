@@ -20,14 +20,14 @@ describe("modules and groups", function () {
             packages: {
                 "pkg-a": {
                     group: "my",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-a"
                 },
                 "pkg-b": {
                     group: "my",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-b"
                 },
                 "pkg-c": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-c"
                 }
             },
             modules: {
@@ -52,14 +52,14 @@ describe("modules and groups", function () {
             packages: {
                 "pkg-a": {
                     group: "my",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-a"
                 },
                 "pkg-b": {
                     group: "my",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-b"
                 },
                 "pkg-c": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-c"
                 }
             },
             modules: {
@@ -87,11 +87,11 @@ describe("modules and groups", function () {
             packages: {
                 "pkg-a": {
                     group: "my",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-a"
                 },
                 "test": {
                     group: "my",
-                    base: "http://g.tbcdn.cn"
+                    base: "http://g.tbcdn.cn/test"
                 }
             },
             modules: {
@@ -117,12 +117,12 @@ describe("modules and groups", function () {
                 "pkg-a": {
                     group: "my",
                     charset: "utf-8",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-a"
                 },
                 "pkg-b": {
                     group: "my",
                     charset: "gbk",
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-b"
                 }
             },
             modules: {
@@ -147,13 +147,13 @@ describe("modules and groups", function () {
             group: 'my',
             packages: {
                 "pkg-a": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-a"
                 },
                 "pkg-b": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-b"
                 },
                 "pkg-c": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-c"
                 }
             },
             modules: {
@@ -190,13 +190,13 @@ describe("modules and groups", function () {
             group: 'my',
             packages: {
                 "pkg-a": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-a"
                 },
                 "pkg-b": {
-                    base: url
+                    base: url+'/pkg-b'
                 },
                 "pkg-c": {
-                    base: "../specs/packages-groups"
+                    base: "../specs/packages-groups/pkg-c"
                 }
             },
             modules: {

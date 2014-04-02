@@ -1,34 +1,43 @@
 var XTemplate = require('../lib/xtemplate');
-var S = require('../lib/seed');
 var cwd = process.cwd();
-S.config('packages', {
-    nodejsXtemplate: {
-        ignorePackageNameInUri: 1,
-        base: cwd + '/src/xtemplate/tests/specs/xtpls/'
-    }
-});
 
 describe('xtemplate on nodejs', function () {
+    var base = cwd + '/src/xtemplate/tests/specs/xtpls/';
     it('can load from file', function () {
-        var xtemplate = XTemplate.loadFromModuleName('nodejsXtemplate/a-xtpl');
-
-        expect(xtemplate.render({
-            a: 1,
-            d: 3,
-            b: {
-                c: 2
-            }
-        })).toBe('123');
+        var ret = 0;
+        XTemplate.load(base + 'a-xtpl.html', function (err, xtemplate) {
+            xtemplate.render({
+                a: 1,
+                d: 3,
+                b: {
+                    c: 2
+                }
+            }, function (err, content) {
+                ret = 1;
+                expect(content).toBe('123');
+            });
+        });
+        waitsFor(function () {
+            return ret;
+        });
     });
 
     it('custom command works', function () {
-        var xtemplate = XTemplate.loadFromModuleName('nodejsXtemplate/custom-command-xtpl', {
+        var ret = 0;
+        XTemplate.load(base + 'custom-command-xtpl.html', {
             commands: {
                 command: function () {
                     return 'yiminghe';
                 }
             }
+        }, function (err, xtemplate) {
+            xtemplate.render({}, function (err, content) {
+                ret = 1;
+                expect(content).toBe('i am yiminghe!');
+            });
         });
-        expect(xtemplate.render()).toBe('i am yiminghe!');
+        waitsFor(function () {
+            return ret;
+        });
     });
 });

@@ -97,13 +97,12 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.config({
-        packages: [
-            {
-                name: 'demo',
+        packages: {
+            'demo':{
                 tag: '201111211221',
-                path: '../'
+                base: '../demo'
             }
-        ]
+        }
     });
     KISSY.use("demo/main-html5");
 </script>

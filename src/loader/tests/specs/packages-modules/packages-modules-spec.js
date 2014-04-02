@@ -32,7 +32,7 @@ describe('modules and packages', function () {
 
         KISSY.config('packages', {
             x: {
-                base: '../specs/packages-modules'
+                base: '../specs/packages-modules/x'
             }
         });
 
@@ -54,10 +54,10 @@ describe('modules and packages', function () {
         KISSY.config({
             packages: {
                 y: {
-                    base: '../specs/packages-modules'
+                    base: '../specs/packages-modules/y'
                 },
                 z: {
-                    base: '../specs/packages-modules'
+                    base: '../specs/packages-modules/z'
                 }
             }
         });

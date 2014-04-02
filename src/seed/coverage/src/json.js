@@ -276,49 +276,49 @@ if (! _$jscoverage['/json.js'].branchData) {
   _$jscoverage['/json.js'].branchData['42'][1] = new BranchData();
 }
 _$jscoverage['/json.js'].branchData['42'][1].init(59, 177, 'INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, \'@\').replace(INVALID_TOKENS_REG, \']\').replace(INVALID_BRACES_REG, \'\'))');
-function visit10_42_1(result) {
+function visit8_42_1(result) {
   _$jscoverage['/json.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['40'][1].init(84, 4, 'data');
-function visit9_40_1(result) {
+function visit7_40_1(result) {
   _$jscoverage['/json.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['37'][1].init(93, 24, 'typeof data === \'string\'');
-function visit8_37_1(result) {
+function visit6_37_1(result) {
   _$jscoverage['/json.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['34'][1].init(17, 13, 'data === null');
-function visit7_34_1(result) {
+function visit5_34_1(result) {
   _$jscoverage['/json.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['18'][1].init(281, 10, 'nativeJson');
-function visit6_18_1(result) {
+function visit4_18_1(result) {
   _$jscoverage['/json.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['14'][1].init(222, 13, 'UA.ieMode < 9');
-function visit5_14_1(result) {
+function visit3_14_1(result) {
   _$jscoverage['/json.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['11'][2].init(117, 26, 'typeof global === \'object\'');
-function visit4_11_2(result) {
+function visit2_11_2(result) {
   _$jscoverage['/json.js'].branchData['11'][2].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].branchData['11'][1].init(104, 39, 'UA.nodejs && typeof global === \'object\'');
-function visit3_11_1(result) {
+function visit1_11_1(result) {
   _$jscoverage['/json.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].lineData[6]++;
 (function(S) {
   _$jscoverage['/json.js'].functionData[0]++;
   _$jscoverage['/json.js'].lineData[7]++;
-  var UA = S.UA, Env = S.Env, win = Env.host, nativeJson = ((visit3_11_1(UA.nodejs && visit4_11_2(typeof global === 'object'))) ? global : win).JSON;
+  var UA = S.UA, Env = S.Env, win = Env.host, nativeJson = ((visit1_11_1(UA.nodejs && visit2_11_2(typeof global === 'object'))) ? global : win).JSON;
   _$jscoverage['/json.js'].lineData[14]++;
-  if (visit5_14_1(UA.ieMode < 9)) {
+  if (visit3_14_1(UA.ieMode < 9)) {
     _$jscoverage['/json.js'].lineData[15]++;
     nativeJson = null;
   }
   _$jscoverage['/json.js'].lineData[18]++;
-  if (visit6_18_1(nativeJson)) {
+  if (visit4_18_1(nativeJson)) {
     _$jscoverage['/json.js'].lineData[19]++;
     S.add('json', function() {
   _$jscoverage['/json.js'].functionData[1]++;
@@ -340,18 +340,18 @@ function visit3_11_1(result) {
     S.parseJson = function(data) {
   _$jscoverage['/json.js'].functionData[3]++;
   _$jscoverage['/json.js'].lineData[34]++;
-  if (visit7_34_1(data === null)) {
+  if (visit5_34_1(data === null)) {
     _$jscoverage['/json.js'].lineData[35]++;
     return data;
   }
   _$jscoverage['/json.js'].lineData[37]++;
-  if (visit8_37_1(typeof data === 'string')) {
+  if (visit6_37_1(typeof data === 'string')) {
     _$jscoverage['/json.js'].lineData[39]++;
     data = S.trim(data);
     _$jscoverage['/json.js'].lineData[40]++;
-    if (visit9_40_1(data)) {
+    if (visit7_40_1(data)) {
       _$jscoverage['/json.js'].lineData[42]++;
-      if (visit10_42_1(INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@').replace(INVALID_TOKENS_REG, ']').replace(INVALID_BRACES_REG, '')))) {
+      if (visit8_42_1(INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@').replace(INVALID_TOKENS_REG, ']').replace(INVALID_BRACES_REG, '')))) {
         _$jscoverage['/json.js'].lineData[46]++;
         return (new Function('return ' + data))();
       }

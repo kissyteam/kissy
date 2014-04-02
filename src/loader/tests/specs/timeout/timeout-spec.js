@@ -57,7 +57,7 @@ describe('timeout', function () {
             packages: {
                 timeout: {
                     base: 'http://' + location.host +
-                        '/kissy/src/loader/tests/specs/'
+                        '/kissy/src/loader/tests/specs/timeout'
                 }
             },
             modules: {

@@ -18,7 +18,7 @@ describe('it support commonjs require', function () {
         var S = KISSY;
         S.config('packages', {
             cjs: {
-                base: '/kissy/src/loader/tests/specs'
+                base: '/kissy/src/loader/tests/specs/cjs'
             }
         });
         var ret;
@@ -37,7 +37,7 @@ describe('it support commonjs require', function () {
         var S = KISSY;
         S.config('packages', {
             amd: {
-                base: '/kissy/src/loader/tests/specs/cjs'
+                base: '/kissy/src/loader/tests/specs/cjs/amd'
             }
         });
         var ret;

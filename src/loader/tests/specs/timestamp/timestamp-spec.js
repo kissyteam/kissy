@@ -17,7 +17,7 @@ describe("timestamp for individual module works", function () {
             packages: {
                 'timestamp': {
                     tag: 'a',
-                    path: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {
@@ -77,7 +77,7 @@ describe("timestamp for individual module works", function () {
             packages: {
                 'timestamp': {
                     tag: 'a',
-                    path: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {

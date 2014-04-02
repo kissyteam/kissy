@@ -229,53 +229,13 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'] = {};
   _$jscoverage['/base.js'].lineData = [];
-  _$jscoverage['/base.js'].lineData[6] = 0;
-  _$jscoverage['/base.js'].lineData[8] = 0;
-  _$jscoverage['/base.js'].lineData[16] = 0;
-  _$jscoverage['/base.js'].lineData[17] = 0;
-  _$jscoverage['/base.js'].lineData[19] = 0;
-  _$jscoverage['/base.js'].lineData[31] = 0;
+  _$jscoverage['/base.js'].lineData[1] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
-  _$jscoverage['/base.js'].functionData[0] = 0;
 }
 if (! _$jscoverage['/base.js'].branchData) {
   _$jscoverage['/base.js'].branchData = {};
-  _$jscoverage['/base.js'].branchData['16'] = [];
-  _$jscoverage['/base.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['17'] = [];
-  _$jscoverage['/base.js'].branchData['17'][1] = new BranchData();
 }
-_$jscoverage['/base.js'].branchData['17'][1].init(22, 29, 'location.protocol === \'https\'');
-function visit2_17_1(result) {
-  _$jscoverage['/base.js'].branchData['17'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base.js'].branchData['16'][1].init(145, 31, 'typeof location !== \'undefined\'');
-function visit1_16_1(result) {
-  _$jscoverage['/base.js'].branchData['16'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base.js'].lineData[6]++;
-(function(S) {
-  _$jscoverage['/base.js'].functionData[0]++;
-  _$jscoverage['/base.js'].lineData[8]++;
-  S.config({
-  modules: {
-  ajax: {
-  alias: 'io'}}});
-  _$jscoverage['/base.js'].lineData[16]++;
-  if (visit1_16_1(typeof location !== 'undefined')) {
-    _$jscoverage['/base.js'].lineData[17]++;
-    var prefix = visit2_17_1(location.protocol === 'https') ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
-    _$jscoverage['/base.js'].lineData[19]++;
-    S.config({
-  packages: {
-  gallery: {
-  base: prefix}, 
-  mobile: {
-  base: prefix}}});
-  }
-  _$jscoverage['/base.js'].lineData[31]++;
-  S.use('ua,feature,util', {
-  sync: true});
-})(KISSY);
+_$jscoverage['/base.js'].lineData[1]++;
+KISSY.use('ua, util');

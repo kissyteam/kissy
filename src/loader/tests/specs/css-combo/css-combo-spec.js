@@ -18,7 +18,7 @@ describe("css-combo", function () {
         KISSY.config({
             packages: {
                 x: {
-                    base: window.specsPath || "../specs/css-combo/"
+                    base: window.specsPath || "../specs/css-combo/x"
                 }
             },
             modules: {
@@ -65,7 +65,7 @@ describe("css-combo", function () {
             packages: {
                 x: {
                     tag: S.Loader.Utils.now(),
-                    base: window.specsPath || "../specs/css-combo/"
+                    base: window.specsPath || "../specs/css-combo/x"
                 }
             },
             modules: {

@@ -25,7 +25,7 @@ describe("timestamp for individual module works in combine mode", function () {
             packages: {
                 'timestamp': {
                     tag: 'a',
-                    base: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {
@@ -62,7 +62,7 @@ describe("timestamp for individual module works in combine mode", function () {
             packages: {
                 'timestamp': {
                     tag: 'a',
-                    base: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {
@@ -103,7 +103,7 @@ describe("timestamp for individual module works in combine mode", function () {
                 'timestamp': {
                     combine: false,
                     tag: 'a',
-                    base: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {
@@ -145,7 +145,7 @@ describe("timestamp for individual module works in combine mode", function () {
                 'timestamp': {
                     combine: false,
                     tag: 'a',
-                    base: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {

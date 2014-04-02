@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:42
+build time: Apr 2 18:21
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140331214227' will replace with current timestamp when compressing.
+         * NOTICE: '20140402182149' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140331214227',
+        __BUILD_TIME: '20140402182149',
 
         /**
          * KISSY Environment.
@@ -116,7 +116,6 @@ var KISSY = (function (undefined) {
          * @param {String} configName.packages.tag  Timestamp for this package's module file.
          * @param {String} configName.packages.debug Whether force debug mode for current package.
          * @param {String} configName.packages.combine Whether allow combine for current package modules.
-         * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
          * can only be used in production mode.
          * @param [configValue] config value.
          *
@@ -1487,7 +1486,7 @@ var KISSY = (function (undefined) {
     };
 
     configFns.core = function (cfg) {
-        var base = cfg.base || cfg.path;
+        var base = cfg.base;
         var corePackage = Config.corePackage;
         if (base) {
             cfg.base = normalizePath(base, true);
@@ -1513,9 +1512,6 @@ var KISSY = (function (undefined) {
                 var name = cfg.name = cfg.name || key;
                 var base = cfg.base || cfg.path;
                 if (base) {
-                    if (!cfg.ignorePackageNameInUri) {
-                        base += (base.charAt(base.length - 1) !== '/' ? '/' : '') + name;
-                    }
                     cfg.base = normalizePath(base, true);
                 }
                 if (ps[name]) {
@@ -2349,7 +2345,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140331214227';
+    var TIMESTAMP = '20140402182149';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

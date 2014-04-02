@@ -18,13 +18,12 @@
             });
             it("should load and attach custom mods correctly", function () {
                 KISSY.config({
-                    packages: [
-                        {
-                            name: "1.2", //包名
+                    packages: {
+                        "1.2": {
                             tag: S.Loader.Utils.now(),
-                            path: d //包对应路径，相对路径指相对于当前页面路径
+                            base: d + '/1.2' //包对应路径，相对路径指相对于当前页面路径
                         }
-                    ]
+                    }
                 });
 
                 $(document.body).append("<div id='k11x'/>");

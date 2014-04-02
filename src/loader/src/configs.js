@@ -56,7 +56,7 @@
     };
 
     configFns.core = function (cfg) {
-        var base = cfg.base || cfg.path;
+        var base = cfg.base;
         var corePackage = Config.corePackage;
         if (base) {
             cfg.base = normalizePath(base, true);
@@ -82,9 +82,6 @@
                 var name = cfg.name = cfg.name || key;
                 var base = cfg.base || cfg.path;
                 if (base) {
-                    if (!cfg.ignorePackageNameInUri) {
-                        base += (base.charAt(base.length - 1) !== '/' ? '/' : '') + name;
-                    }
                     cfg.base = normalizePath(base, true);
                 }
                 if (ps[name]) {

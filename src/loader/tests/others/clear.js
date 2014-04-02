@@ -4,13 +4,6 @@ KISSY.clearLoader = function () {
         modules = Env.mods,
         m;
 
-    var ignore = {
-        empty: 1,
-        uri: 1,
-        ua: 1,
-        path: 1
-    };
-
     self.config({
         alias: false,
         tag: false,
@@ -20,8 +13,6 @@ KISSY.clearLoader = function () {
     });
 
     for (m in modules) {
-        if (!ignore[m]) {
-            delete modules[m];
-        }
+        delete modules[m];
     }
 };

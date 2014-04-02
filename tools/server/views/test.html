@@ -16,7 +16,7 @@
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) === ind;
         }
-        var S = KISSY,onlySrc=location.href.indexOf('onlySrc')!=-1;
+        var onlySrc = location.href.indexOf('onlySrc') !== -1;
         var t;
         {{#each (tests)}}
         t='{{{this}}}';

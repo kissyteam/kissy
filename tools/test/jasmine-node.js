@@ -37,7 +37,7 @@ var cwd = process.cwd();
 
 S.config('packages', {
     src: {
-        base: cwd
+        base: cwd + '/src'
     }
 });
 

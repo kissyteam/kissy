@@ -17,13 +17,12 @@ describe("ComboLoader", function () {
 
         S.config({
             combine: false,
-            packages: [
-                {
-                    name: 'tests3',
+            packages: {
+                tests3: {
                     combine: true,
-                    path: '/kissy/src/loader/tests/specs/combo/'
+                    base: '/kissy/src/loader/tests/specs/combo/tests3'
                 }
-            ]
+            }
         });
 
         S.config('modules', {
@@ -50,13 +49,12 @@ describe("ComboLoader", function () {
 
     it('can combine combo and non combo', function () {
         S.config({
-            packages: [
-                {
-                    name: 'no-combo',
+            packages: {
+                'no-combo': {
                     combine: false,
-                    path: '/kissy/src/loader/tests/specs/combo/'
+                    base: '/kissy/src/loader/tests/specs/combo/no-combo'
                 }
-            ]
+            }
         });
         var r;
         S.use('no-combo/a', function (S, a) {
@@ -72,12 +70,12 @@ describe("ComboLoader", function () {
         var ret = 0;
 
         S.config({
-            packages: [
-                {
-                    name: 'tests3',
-                    path: '/kissy/src/loader/tests/specs/combo/'
+            packages: {
+                tests3: {
+                    base: '/kissy/src/loader/tests/specs/combo/tests3'
                 }
-            ]
+
+            }
         });
 
         S.config('modules', {
@@ -211,12 +209,12 @@ describe("ComboLoader", function () {
         waits(10);
         runs(function () {
             S.config({
-                packages: [
-                    {
-                        name: 'tests',
-                        path: '/kissy/src/loader/tests/specs/combo/'
+                packages: {
+                    tests: {
+                        base: '/kissy/src/loader/tests/specs/combo/tests'
                     }
-                ]
+
+                }
             });
             S.config('modules', {
                 "tests/a": {
@@ -239,12 +237,12 @@ describe("ComboLoader", function () {
             // remote fetch
             S.clearLoader();
             S.config({
-                packages: [
-                    {
-                        name: 'tests',
-                        path: '/kissy/src/loader/tests/specs/combo/'
+                packages: {
+                    tests: {
+                        base: '/kissy/src/loader/tests/specs/combo/tests'
                     }
-                ]
+
+                }
             });
             S.config('modules', {
                 "tests/a": {
@@ -272,12 +270,12 @@ describe("ComboLoader", function () {
         waits(10);
         runs(function () {
             S.config({
-                packages: [
-                    {
-                        name: 'tests2',
-                        path: '/kissy/src/loader/tests/specs/combo/'
+                packages: {
+                    tests2: {
+                        base: '/kissy/src/loader/tests/specs/combo/tests2'
                     }
-                ]
+
+                }
             });
             S.config('modules', {
                 "tests2/a": {
@@ -299,7 +297,7 @@ describe("ComboLoader", function () {
             });
 
             S.use('tests2/a', function (S, a) {
-                expect(a+1).toBe(8);
+                expect(a + 1).toBe(8);
                 ret++;
             });
 
@@ -319,7 +317,7 @@ describe("ComboLoader", function () {
             packages: {
                 'timestamp': {
                     combine: false,
-                    base: '/kissy/src/loader/tests/specs/'
+                    base: '/kissy/src/loader/tests/specs/timestamp'
                 }
             },
             modules: {
@@ -335,7 +333,7 @@ describe("ComboLoader", function () {
         runs(function () {
             var loader = new S.Loader.ComboLoader();
 
-            var allMods =loader.calculate((["timestamp/y"]));
+            var allMods = loader.calculate((["timestamp/y"]));
 
             var comboUrls = loader.getComboUrls(allMods);
 
@@ -349,14 +347,12 @@ describe("ComboLoader", function () {
 
 
     it("should load mod not config", function () {
-
         S.config({
-            packages: [
-                {
-                    name: 'tests4',
-                    path: '/kissy/src/loader/tests/specs/combo/'
+            packages: {
+                tests4: {
+                    base: '/kissy/src/loader/tests/specs/combo/tests4'
                 }
-            ]
+            }
         });
 
         var ret = 0;
@@ -373,12 +369,11 @@ describe("ComboLoader", function () {
     it("can use after another use", function () {
 
         S.config({
-            packages: [
-                {
-                    name: 'test5',
-                    path: '/kissy/src/loader/tests/specs/combo/'
+            packages: {
+                test5:{
+                    base: '/kissy/src/loader/tests/specs/combo/test5'
                 }
-            ]
+            }
         });
 
         S.config('modules', {

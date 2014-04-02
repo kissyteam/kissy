@@ -6,7 +6,6 @@ package com.taobao.f2e;
  * @author yiminghe@gmai.com
  */
 public class Package {
-    // default to ignorePackageNameInUri true
     private String name;
     private String path;
 
@@ -18,11 +17,11 @@ public class Package {
         this.name = name;
     }
 
-    public String getPath() {
+    public String getBase() {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setBase(String path) {
         path = FileUtils.escapePath(path).trim();
         if (!path.endsWith("/")) {
             path += "/";

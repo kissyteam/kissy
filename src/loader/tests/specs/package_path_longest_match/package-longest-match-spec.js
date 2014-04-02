@@ -13,16 +13,14 @@ describe("loader package", function () {
         var debug = S.Config.debug;
         S.Config.debug = true;
         S.config({
-            packages: [
-                {
-                    name: "test",
-                    path: "/kissy/src/loader/tests/specs/package_path_longest_match/"
+            packages: {
+                test: {
+                    base: "/kissy/src/loader/tests/specs/package_path_longest_match/test"
                 },
-                {
-                    name: "test2",
-                    path: "/kissy/src/loader/tests/specs/package_path_longest_match/test/"
+                test2: {
+                    base: "/kissy/src/loader/tests/specs/package_path_longest_match/test/test2"
                 }
-            ]
+            }
         });
 
         var ret = 0;
@@ -42,16 +40,14 @@ describe("loader package", function () {
 
     it('match by slash', function () {
         S.config({
-            packages: [
-                {
-                    name: "com",
-                    path: "/kissy/src/loader/tests/specs/package_path_longest_match/"
+            packages: {
+                com: {
+                    base: "/kissy/src/loader/tests/specs/package_path_longest_match/com"
                 },
-                {
-                    name: "com/c",
-                    path: "/kissy/src/loader/tests/specs/package_path_longest_match/"
+                "com/c": {
+                    base: "/kissy/src/loader/tests/specs/package_path_longest_match/com/c"
                 }
-            ]
+            }
         });
 
         var m1 = new Loader.Module({

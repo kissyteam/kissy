@@ -96,9 +96,17 @@ KISSY.add(function (S, require) {
                 code = ['/*jslint quotmark: false*/'],
                 stateMap;
 
+            var genPrototype = S.mix({}, Lexer.prototype, true, function (name, val) {
+                if (name.match(/^(?:genCode|constructor|mapState|genShortId)$/)) {
+                    return undefined;
+                }
+                return val;
+            });
+
             if (compressSymbol) {
                 self.symbolMap = {};
                 self.mapSymbol(STATIC.END_TAG);
+                genPrototype.mapSymbol = mapSymbolForCodeGen;
             }
 
             if (compressState) {
@@ -106,15 +114,6 @@ KISSY.add(function (S, require) {
             }
 
             code.push('var Lexer = ' + Lexer.toString() + ';');
-
-            var genPrototype = S.mix({}, Lexer.prototype, true, function (name, val) {
-                if (name.match(/^(?:genCode|constructor|mapState|genShortId|getStateStack)$/)) {
-                    return undefined;
-                }
-                return val;
-            });
-
-            genPrototype.mapSymbol = mapSymbolForCodeGen;
 
             code.push('Lexer.prototype= ' + serializeObject(genPrototype) + ';');
 
@@ -188,10 +187,6 @@ KISSY.add(function (S, require) {
 
         popState: function () {
             return this.stateStack.pop();
-        },
-
-        getStateStack: function () {
-            return this.stateStack;
         },
 
         showDebugInfo: function () {

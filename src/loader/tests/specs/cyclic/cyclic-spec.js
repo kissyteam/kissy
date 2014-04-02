@@ -4,8 +4,8 @@
  */
 /*jshint quotmark:false*/
 (function () {
-    var run=function(combine){
-        describe("loader-cyclic "+ (combine ? 'at combo mode' : ''), function () {
+    var run = function (combine) {
+        describe("loader-cyclic " + (combine ? 'at combo mode' : ''), function () {
             beforeEach(function () {
                 KISSY.config('combine', !!combine);
             });
@@ -15,12 +15,12 @@
             });
             it("can load cyclic dependency", function () {
                 KISSY.config({
-                    packages: [
-                        {
+                    packages: {
+                        cyclic: {
                             name: "cyclic",
-                            path: "/kissy/src/loader/tests/specs/"
+                            base: "/kissy/src/loader/tests/specs/cyclic"
                         }
-                    ]
+                    }
                 });
 
                 var ret;

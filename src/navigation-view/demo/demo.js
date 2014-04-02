@@ -1,7 +1,6 @@
 KISSY.config('packages', {
     demo: {
-        base: '/kissy/src/navigation-view/demo',
-        ignorePackageNameInUri: 1
+        base: '/kissy/src/navigation-view/demo'
     }
 });
 

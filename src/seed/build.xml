@@ -53,6 +53,7 @@
             <path location="${kissy.build.dir}/feature.js"/>
             <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
+            <path location="${component.src.dir}/web.js"/>
             <path location="${component.src.dir}/modules.js"/>
         </concat>
 
@@ -62,7 +63,6 @@
             <path location="${kissy.lib.dir}/loader.js"/>
             <path location="${kissy.build.dir}/util.js"/>
             <path location="${kissy.build.dir}/ua.js"/>
-            <path location="${kissy.build.dir}/feature.js"/>
             <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
         </concat>

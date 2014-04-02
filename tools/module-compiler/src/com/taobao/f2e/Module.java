@@ -12,9 +12,9 @@ import java.io.File;
  */
 public class Module {
     /**
-     * module 's full file path.
+     * module 's url.
      */
-    private String fullpath = null;
+    private String url = null;
 
     // valid 1
     // invalid 2
@@ -68,7 +68,7 @@ public class Module {
         if (content != null) {
             return content;
         } else {
-            return content = FileUtils.getFileContent(this.getFullpath(), encoding);
+            return content = FileUtils.getFileContent(this.getUrl(), encoding);
         }
     }
 
@@ -91,12 +91,12 @@ public class Module {
         return ModuleUtils.getRequiresFromAst(astRoot, name);
     }
 
-    public String getFullpath() {
-        if (this.fullpath != null) {
-            return this.fullpath;
+    public String getUrl() {
+        if (this.url != null) {
+            return this.url;
         }
         String extName = name.substring(pck.getName().length());
-        String path = pck.getPath();
+        String path = pck.getBase();
         // base/src/base.js
         if (extName.length() == 0) {
             path = path.substring(0, path.length() - 1);
@@ -106,7 +106,7 @@ public class Module {
         } else {
             path += extName + ".js";
         }
-        return this.fullpath = path;
+        return this.url = path;
     }
 
     public String getCode() {
@@ -133,7 +133,7 @@ public class Module {
     }
 
     public boolean exists() {
-        return new File(this.getFullpath()).exists();
+        return new File(this.getUrl()).exists();
     }
 
     public boolean isValidFormat() {

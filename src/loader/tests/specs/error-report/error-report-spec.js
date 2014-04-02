@@ -15,8 +15,7 @@ var run = function (combine) {
                 'packages': {
                     'report': {
                         base: '/kissy/src/loader/tests/specs/error-report/' +
-                            (combine ? 'combo' : 'simple'),
-                        ignorePackageNameInUri: 1
+                            (combine ? 'combo' : 'simple')
                     }
                 }
             });

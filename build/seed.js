@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:43
+build time: Apr 2 18:22
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:42
+build time: Apr 2 18:21
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140331214227' will replace with current timestamp when compressing.
+         * NOTICE: '20140402182149' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140331214227',
+        __BUILD_TIME: '20140402182149',
 
         /**
          * KISSY Environment.
@@ -121,7 +121,6 @@ var KISSY = (function (undefined) {
          * @param {String} configName.packages.tag  Timestamp for this package's module file.
          * @param {String} configName.packages.debug Whether force debug mode for current package.
          * @param {String} configName.packages.combine Whether allow combine for current package modules.
-         * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
          * can only be used in production mode.
          * @param [configValue] config value.
          *
@@ -1492,7 +1491,7 @@ var KISSY = (function (undefined) {
     };
 
     configFns.core = function (cfg) {
-        var base = cfg.base || cfg.path;
+        var base = cfg.base;
         var corePackage = Config.corePackage;
         if (base) {
             cfg.base = normalizePath(base, true);
@@ -1518,9 +1517,6 @@ var KISSY = (function (undefined) {
                 var name = cfg.name = cfg.name || key;
                 var base = cfg.base || cfg.path;
                 if (base) {
-                    if (!cfg.ignorePackageNameInUri) {
-                        base += (base.charAt(base.length - 1) !== '/' ? '/' : '') + name;
-                    }
                     cfg.base = normalizePath(base, true);
                 }
                 if (ps[name]) {
@@ -2354,7 +2350,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140331214227';
+    var TIMESTAMP = '20140402182149';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2474,7 +2470,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:42
+build time: Apr 2 18:22
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3325,7 +3321,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:42
+build time: Apr 2 18:22
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3509,7 +3505,7 @@ KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 21:42
+build time: Apr 2 18:22
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3593,39 +3589,7 @@ KISSY.add("feature", ["util", "ua"], function(S, require) {
   return S.Feature
 });
 
-/**
- * @ignore
- * Default KISSY Gallery and core alias.
- * @author yiminghe@gmail.com
- */
-(function (S) {
-    // compatibility
-    S.config({
-        modules: {
-            ajax: {
-                alias: 'io'
-            }
-        }
-    });
-
-    if (typeof location !== 'undefined') {
-        var prefix = location.protocol === 'https' ?
-            'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
-        S.config({
-            packages: {
-                gallery: {
-                    base: prefix
-                },
-                mobile: {
-                    base: prefix
-                }
-            }
-        });
-    }
-
-    S.use('ua,feature,util', {sync: true});
-})(KISSY);
-/**
+KISSY.use('ua, util');/**
  * @ignore
  * 1. export KISSY 's functionality to module system
  * 2. export light-weighted json parse
@@ -3677,7 +3641,32 @@ KISSY.add("feature", ["util", "ua"], function(S, require) {
             return S.error('Invalid Json: ' + data);
         };
     }
-})(KISSY);/*jshint indent:false, quotmark:false*/
+})(KISSY);/**
+ * @ignore
+ * Default KISSY Gallery and core alias.
+ * @author yiminghe@gmail.com
+ */
+
+KISSY.config({
+    modules: {
+        ajax: {
+            alias: 'io'
+        }
+    }
+});
+
+var prefix = location.protocol === 'https' ?
+    'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
+
+KISSY.config({
+    packages: {
+        gallery: {
+            base: prefix
+        }
+    }
+});
+
+KISSY.use('feature');/*jshint indent:false, quotmark:false*/
 (function(S){
 S.config("requires",{
     "anim/base": [

@@ -16,7 +16,7 @@ var run = function (combine) {
             KISSY.config({
                 packages: {
                     'alias-a': {
-                        base: window.ALIAS_PATH || '../specs/alias/',
+                        base: window.ALIAS_PATH || '../specs/alias/alias-a',
                         alias: function (name) {
                             return modules[name];
                         }
@@ -44,7 +44,7 @@ var run = function (combine) {
                 alias: modules,
                 packages: {
                     'alias-a': {
-                        base: window.ALIAS_PATH || '../specs/alias/'
+                        base: window.ALIAS_PATH || '../specs/alias/alias-a'
                     }
                 }
             });
@@ -64,7 +64,7 @@ var run = function (combine) {
             KISSY.config({
                 packages: {
                     'alias-a': {
-                        base: window.ALIAS_PATH || '../specs/alias/'
+                        base: window.ALIAS_PATH || '../specs/alias/alias-a'
                     }
                 },
                 modules: {

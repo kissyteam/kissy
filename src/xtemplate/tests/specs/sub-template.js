@@ -122,7 +122,7 @@ KISSY.add(function (S, require) {
             var path;
 
             if (S.UA.nodejs) {
-                path = S.config('packages').src.base + 'xtemplate/tests/specs/';
+                path = S.config('packages').src.base + 'xtemplate/tests/specs/xtpls';
 
                 S.config('packages', {
                     xtpls: {
@@ -132,7 +132,7 @@ KISSY.add(function (S, require) {
             } else {
                 KISSY.config('packages', {
                     'xtpls': {
-                        base: '/kissy/src/xtemplate/tests/specs/'
+                        base: '/kissy/src/xtemplate/tests/specs/xtpls'
                     }
                 });
             }

@@ -13,7 +13,7 @@ describe("mod with suffix", function () {
         KISSY.config({
             packages:{
                 suffix:{
-                    base:"../specs/"
+                    base:"../specs/suffix"
                 }
             }
         });

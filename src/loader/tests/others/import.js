@@ -3,7 +3,7 @@ if (location.href.indexOf('?coverage') !== -1) {
     dir = '/kissy/src/loader/coverage/src/';
 }
 var files = ['kissy.js', 'setup.js', 'utils.js',
-    'set-immediate.js', 'data-structure.js',
+    'data-structure.js',
     'css-onload.js', 'get-script.js',
     'configs.js', 'combo-loader.js',
     'loader.js', 'i18n.js', 'init.js'];

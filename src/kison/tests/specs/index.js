@@ -330,6 +330,7 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
+
                 var parser = Function.call(null, "KISSY", grammar.genCode({
                     compressSymbol: 0
                 }))(S);
@@ -348,7 +349,6 @@ KISSY.add(function (S, Kison) {
 
                 expect(log[1]).toBe('b');
             });
-
 
             it('can not parse', function () {
                 var log = [];
@@ -395,11 +395,10 @@ KISSY.add(function (S, Kison) {
 
                 expect(function () {
                     parser.parse("abb");
-                }).toThrow('lex error at line 1:\n' +
+                }).toThrow('syntax error at line 1:\n' +
                         'abb\n' +
-                        '--^');
+                        '--^\nexpect b');
             });
-
 
             it('can not parse when compress', function () {
                 var log = [];
@@ -446,12 +445,10 @@ KISSY.add(function (S, Kison) {
 
                 expect(function () {
                     parser.parse("abb");
-                }).toThrow('lex error at line 1:\n' +
+                }).toThrow('syntax error at line 1:\n' +
                         'abb\n' +
-                        '--^');
+                        '--^\nexpect b');
             });
-
-
         });
 
         it("parse ok with action", function () {
