@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:32
+build time: Apr 2 16:44
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -19,30 +19,13 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     S.mix(self, cfg);
     self.resetInput(self.input)
   };
-  Lexer.prototype = {constructor:function(cfg) {
-    var self = this;
-    self.rules = [];
-    S.mix(self, cfg);
-    self.resetInput(self.input)
-  }, resetInput:function(input, filename) {
+  Lexer.prototype = {resetInput:function(input, filename) {
     S.mix(this, {input:input, filename:filename, matched:"", stateStack:[Lexer.STATIC.INITIAL], match:"", text:"", firstLine:1, lineNumber:1, lastLine:1, firstColumn:1, lastColumn:1})
-  }, genShortId:function(field) {
-    var base = 97, max = 122, interval = max - base + 1;
-    field += "__gen";
-    var self = this;
-    if(!(field in self)) {
-      self[field] = -1
-    }
-    var index = self[field] = self[field] + 1;
-    var ret = "";
-    do {
-      ret = String.fromCharCode(base + index % interval) + ret;
-      index = Math.floor(index / interval) - 1
-    }while(index >= 0);
-    return ret
   }, getCurrentRules:function() {
     var self = this, currentState = self.stateStack[self.stateStack.length - 1], rules = [];
-    currentState = self.mapState(currentState);
+    if(self.mapState) {
+      currentState = self.mapState(currentState)
+    }
     S.each(self.rules, function(r) {
       var state = r.state || r[3];
       if(!state) {
@@ -60,20 +43,14 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     this.stateStack.push(state)
   }, popState:function() {
     return this.stateStack.pop()
-  }, getStateStack:function() {
-    return this.stateStack
   }, showDebugInfo:function() {
     var self = this, DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT, matched = self.matched, match = self.match, input = self.input;
     matched = matched.slice(0, matched.length - match.length);
     var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
     next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
     return past + next + "\n" + (new Array(past.length + 1)).join("-") + "^"
-  }, mapSymbol:function(t) {
-    var self = this, symbolMap = self.symbolMap;
-    if(!symbolMap) {
-      return t
-    }
-    return symbolMap[t] || (symbolMap[t] = self.genShortId("symbol"))
+  }, mapSymbol:function mapSymbolForCodeGen(t) {
+    return this.symbolMap[t]
   }, mapReverseSymbol:function(rs) {
     var self = this, symbolMap = self.symbolMap, i, reverseSymbolMap = self.reverseSymbolMap;
     if(!reverseSymbolMap && symbolMap) {
@@ -87,12 +64,6 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     }else {
       return rs
     }
-  }, mapState:function(s) {
-    var self = this, stateMap = self.stateMap;
-    if(!stateMap) {
-      return s
-    }
-    return stateMap[s] || (stateMap[s] = self.genShortId("state"))
   }, lex:function() {
     var self = this, input = self.input, i, rule, m, ret, lines, filename = self.filename, prefix = filename ? "in file: " + filename + " " : "", rules = self.getCurrentRules();
     self.match = self.text = "";
@@ -128,8 +99,6 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
         }
       }
     }
-    S.error(prefix + "lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
-    return undefined
   }};
   Lexer.STATIC = {INITIAL:"I", DEBUG_CONTEXT_LIMIT:20, END_TAG:"$EOF"};
   var lexer = new Lexer({rules:[[0, /^[\s\S]*?(?={{)/, function() {
@@ -152,7 +121,7 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     return"CONTENT"
   }], ["b", /^[\s\S]+/, 0], ["b", /^[\s\S]{2,}?(?:(?={{)|$)/, function popState() {
     this.popState()
-  }, ["et"]], ["c", /^{{(?:#|@|\^)/, 0, ["t"]], ["d", /^{{\//, 0, ["t"]], ["e", /^{{\s*else\s*}}/, function popState() {
+  }, ["et"]], ["c", /^{{{?(?:#|@|\^)/, 0, ["t"]], ["d", /^{{{?\//, 0, ["t"]], ["e", /^{{\s*else\s*}}/, function popState() {
     this.popState()
   }, ["t"]], [0, /^{{![\s\S]*?}}/, function popState() {
     this.popState()
@@ -169,7 +138,7 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     this.pushState("ws")
   }, ["t"]], ["ad", /^\//, function popState() {
     this.popState()
-  }, ["ws"]], ["ad", /^\./, 0, ["t"]], ["ae", /^\[/, 0, ["t"]], ["af", /^\]/, 0, ["t"]], ["ac", /^[a-zA-Z0-9_$]+/, 0, ["t"]], ["ag", /^./, 0, ["t"]]]});
+  }, ["ws"]], ["ad", /^\./, 0, ["t"]], ["ae", /^\[/, 0, ["t"]], ["af", /^\]/, 0, ["t"]], ["ac", /^[a-zA-Z0-9_$]+/, 0, ["t"]]]});
   parser.lexer = lexer;
   lexer.symbolMap = {$EOF:"a", CONTENT:"b", OPEN_BLOCK:"c", OPEN_CLOSE_BLOCK:"d", INVERSE:"e", OPEN_TPL:"f", COMMA:"g", CLOSE:"h", LPAREN:"i", RPAREN:"j", OR:"k", AND:"l", LOGIC_EQUALS:"m", LOGIC_NOT_EQUALS:"n", GE:"o", LE:"p", GT:"q", LT:"r", PLUS:"s", MINUS:"t", MULTIPLY:"u", DIVIDE:"v", MODULUS:"w", NOT:"x", STRING:"y", BOOLEAN:"z", NUMBER:"aa", EQUALS:"ab", ID:"ac", SEP:"ad", REF_START:"ae", REF_END:"af", INVALID:"ag", $START:"ah", program:"ai", statements:"aj", statement:"ak", command:"al", 
   id:"am", expression:"an", params:"ao", hash:"ap", param:"aq", ConditionalOrExpression:"ar", ConditionalAndExpression:"as", EqualityExpression:"at", RelationalExpression:"au", AdditiveExpression:"av", MultiplicativeExpression:"aw", UnaryExpression:"ax", PrimaryExpression:"ay", hashSegment:"az", idSegments:"ba"};
@@ -293,11 +262,11 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
       if(!symbol) {
         symbol = lexer.lex()
       }
-      if(!symbol) {
-        S.log(prefix + "it is not a valid input: " + input, "error");
-        return false
+      if(symbol) {
+        action = tableAction[state] && tableAction[state][symbol]
+      }else {
+        action = null
       }
-      action = tableAction[state] && tableAction[state][symbol];
       if(!action) {
         var expected = [], error;
         if(tableAction[state]) {
@@ -306,8 +275,7 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
           }
         }
         error = prefix + "syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
-        S.error(error);
-        return false
+        return S.error(error)
       }
       switch(action[GrammarConst.TYPE_INDEX]) {
         case GrammarConst.SHIFT_TYPE:
@@ -331,10 +299,8 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
           }else {
             $$ = self.$$
           }
-          if(len) {
-            stack = stack.slice(0, -1 * len * 2);
-            valueStack = valueStack.slice(0, -1 * len)
-          }
+          stack = stack.slice(0, -1 * len * 2);
+          valueStack = valueStack.slice(0, -1 * len);
           stack.push(reducedSymbol);
           valueStack.push($$);
           var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
@@ -344,7 +310,6 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
           return $$
       }
     }
-    return undefined
   };
   return parser
 });
@@ -381,12 +346,6 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
     self.program = program
   };
   ast.BlockStatement.prototype.type = "blockStatement";
-  ast.InlineCommandStatement = function(lineNumber, command, escape) {
-    this.lineNumber = lineNumber;
-    this.command = command;
-    this.escape = escape
-  };
-  ast.InlineCommandStatement.prototype.type = "inlineCommandStatement";
   ast.ExpressionStatement = function(lineNumber, expression, escape) {
     var self = this;
     self.lineNumber = lineNumber;
@@ -590,10 +549,8 @@ KISSY.add("xtemplate/compiler", ["util", "xtemplate/runtime", "./compiler/parser
   function genFunction(statements) {
     var source = [];
     source.push("function(scope, buffer) {\n");
-    if(statements) {
-      for(var i = 0, len = statements.length;i < len;i++) {
-        pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source)
-      }
+    for(var i = 0, len = statements.length;i < len;i++) {
+      pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source)
     }
     source.push("\n return buffer; }");
     return source
@@ -604,10 +561,8 @@ KISSY.add("xtemplate/compiler", ["util", "xtemplate/runtime", "./compiler/parser
     source.push('if("' + S.version + '" !== S.version){' + 'throw new Error("current xtemplate file("+engine.name+")(v' + S.version + ") " + 'need to be recompiled using current kissy(v"+ S.version+")!");' + "}");
     source.push('if (typeof module !== "undefined" && module.kissy) {' + "moduleWrap = module;" + "}");
     source.push("var " + nativeCode + ";");
-    if(statements) {
-      for(var i = 0, len = statements.length;i < len;i++) {
-        pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source)
-      }
+    for(var i = 0, len = statements.length;i < len;i++) {
+      pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source)
     }
     source.push("return buffer;");
     return{params:["scope", "S", "buffer", "payload", "undefined"], source:source}
@@ -701,9 +656,7 @@ KISSY.add("xtemplate/compiler", ["util", "xtemplate/runtime", "./compiler/parser
     code = xtplAstToJs[type](expression, escape);
     pushToArray(source, code.source);
     expressionOrVariable = code.exp;
-    if(expressionOrVariable) {
-      source.push("buffer.write(" + expressionOrVariable + "," + !!escape + ");")
-    }
+    source.push("buffer.write(" + expressionOrVariable + "," + !!escape + ");");
     return{exp:"", source:source}
   }, contentStatement:function(contentStatement) {
     return{exp:"", source:["buffer.write('" + escapeString(contentStatement.value, 0) + "');"]}
@@ -722,7 +675,9 @@ KISSY.add("xtemplate/compiler", ["util", "xtemplate/runtime", "./compiler/parser
     variableId = 0;
     return genTopFunction(root.statements)
   }, compileToFn:function(tpl, name) {
-    name = name || "xtemplate" + xtemplateId++;
+    if(!name) {
+      name = "xtemplate" + xtemplateId++
+    }
     var code = compiler.compile(tpl, name);
     var sourceURL = "sourceURL=" + name + ".js";
     return Function.apply(null, [].concat(code.params).concat(code.source.join("\n") + "\n//@ " + sourceURL + "\n//# " + sourceURL))

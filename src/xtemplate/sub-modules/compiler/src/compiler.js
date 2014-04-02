@@ -132,10 +132,8 @@ KISSY.add(function (S, require) {
     function genFunction(statements) {
         var source = [];
         source.push('function(scope, buffer) {\n');
-        if (statements) {
-            for (var i = 0, len = statements.length; i < len; i++) {
-                pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
-            }
+        for (var i = 0, len = statements.length; i < len; i++) {
+            pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
         }
         source.push('\n return buffer; }');
         return source;
@@ -157,10 +155,8 @@ KISSY.add(function (S, require) {
             'moduleWrap = module;' +
             '}');
         source.push('var ' + nativeCode + ';');
-        if (statements) {
-            for (var i = 0, len = statements.length; i < len; i++) {
-                pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
-            }
+        for (var i = 0, len = statements.length; i < len; i++) {
+            pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
         }
         source.push('return buffer;');
         return {
@@ -346,9 +342,7 @@ KISSY.add(function (S, require) {
             pushToArray(source, code.source);
             expressionOrVariable = code.exp;
 
-            if (expressionOrVariable) {
-                source.push('buffer.write(' + expressionOrVariable + ',' + !!escape + ');');
-            }
+            source.push('buffer.write(' + expressionOrVariable + ',' + !!escape + ');');
 
             return {
                 exp: '',
@@ -419,7 +413,9 @@ KISSY.add(function (S, require) {
          * @return {Function}
          */
         compileToFn: function (tpl, name) {
-            name = name || ('xtemplate' + (xtemplateId++));
+            if (!name) {
+                name = 'xtemplate' + (xtemplateId++);
+            }
             var code = compiler.compile(tpl, name);
             var sourceURL = 'sourceURL=' + name + '.js';
             // eval is not ok for eval("(function(){})") ie

@@ -57,14 +57,6 @@ KISSY.add(function (S) {
 
     ast.BlockStatement.prototype.type = 'blockStatement';
 
-    ast.InlineCommandStatement = function (lineNumber, command, escape) {
-        this.lineNumber = lineNumber;
-        this.command = command;
-        this.escape = escape;
-    };
-
-    ast.InlineCommandStatement.prototype.type = 'inlineCommandStatement';
-
     ast.ExpressionStatement = function (lineNumber, expression, escape) {
         var self = this;
         self.lineNumber = lineNumber;

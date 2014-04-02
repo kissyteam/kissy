@@ -20,12 +20,6 @@ KISSY.add(function (_, undefined) {
         self.resetInput(self.input)
     };
     Lexer.prototype = {
-        'constructor': function (cfg) {
-            var self = this;
-            self.rules = [];
-            S.mix(self, cfg);
-            self.resetInput(self.input)
-        },
         'resetInput': function (input, filename) {
             S.mix(this, {
                 input: input,
@@ -41,28 +35,13 @@ KISSY.add(function (_, undefined) {
                 lastColumn: 1
             })
         },
-        'genShortId': function (field) {
-            var base = 97,
-                max = 122,
-                interval = max - base + 1;
-            field += "__gen";
-            var self = this;
-            if (!(field in self)) {
-                self[field] = -1
-            }
-            var index = self[field] = self[field] + 1;
-            var ret = "";
-            do {
-                ret = String.fromCharCode(base + index % interval) + ret;
-                index = Math.floor(index / interval) - 1
-            } while (index >= 0);
-            return ret
-        },
         'getCurrentRules': function () {
             var self = this,
                 currentState = self.stateStack[self.stateStack.length - 1],
                 rules = [];
-            currentState = self.mapState(currentState);
+            if (self.mapState) {
+                currentState = self.mapState(currentState)
+            }
             S.each(self.rules, function (r) {
                 var state = r.state || r[3];
                 if (!state) {
@@ -83,9 +62,6 @@ KISSY.add(function (_, undefined) {
         'popState': function () {
             return this.stateStack.pop()
         },
-        'getStateStack': function () {
-            return this.stateStack
-        },
         'showDebugInfo': function () {
             var self = this,
                 DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT,
@@ -98,13 +74,8 @@ KISSY.add(function (_, undefined) {
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
             return past + next + "\n" + (new Array(past.length + 1)).join("-") + "^"
         },
-        'mapSymbol': function (t) {
-            var self = this,
-                symbolMap = self.symbolMap;
-            if (!symbolMap) {
-                return t
-            }
-            return symbolMap[t] || (symbolMap[t] = self.genShortId("symbol"))
+        'mapSymbol': function mapSymbolForCodeGen(t) {
+            return this.symbolMap[t]
         },
         'mapReverseSymbol': function (rs) {
             var self = this,
@@ -122,80 +93,52 @@ KISSY.add(function (_, undefined) {
                 return rs
             }
         },
-        'mapState': function (s) {
-            var self = this,
-                stateMap = self.stateMap;
-            if (!stateMap) {
-                return s
-            }
-            return stateMap[s] || (stateMap[s] = self.genShortId("state"))
-        },
         'lex': function () {
             var self = this,
                 input = self.input,
-                i,
-                rule,
-                m,
-                ret,
-                lines,
-                filename = self.filename,
-                prefix = filename ? ('in file: ' + filename + ' ') : '',
+                i, rule, m, ret, lines, filename = self.filename,
+                prefix = filename ? "in file: " + filename + " " : "",
                 rules = self.getCurrentRules();
-
-            self.match = self.text = '';
-
+            self.match = self.text = "";
             if (!input) {
-                return self.mapSymbol(Lexer.STATIC.END_TAG);
+                return self.mapSymbol(Lexer.STATIC.END_TAG)
             }
-
             for (i = 0; i < rules.length; i++) {
                 rule = rules[i];
                 var regexp = rule.regexp || rule[1],
                     token = rule.token || rule[0],
                     action = rule.action || rule[2] || undefined;
-                if ((m = input.match(regexp))) {
+                if (m = input.match(regexp)) {
                     lines = m[0].match(/\n.*/g);
                     if (lines) {
-                        self.lineNumber += lines.length;
+                        self.lineNumber += lines.length
                     }
                     S.mix(self, {
                         firstLine: self.lastLine,
                         lastLine: self.lineNumber + 1,
                         firstColumn: self.lastColumn,
-                        lastColumn: lines ?
-                            lines[lines.length - 1].length - 1 :
-                            self.lastColumn + m[0].length
+                        lastColumn: lines ? lines[lines.length - 1].length - 1 : self.lastColumn + m[0].length
                     });
                     var match;
-                    // for error report
                     match = self.match = m[0];
-
-                    // all matches
                     self.matches = m;
-                    // may change by user
                     self.text = match;
-                    // matched content utils now
                     self.matched += match;
                     ret = action && action.call(self);
                     if (ret === undefined) {
-                        ret = token;
+                        ret = token
                     } else {
-                        ret = self.mapSymbol(ret);
+                        ret = self.mapSymbol(ret)
                     }
                     input = input.slice(match.length);
                     self.input = input;
-
                     if (ret) {
-                        return ret;
+                        return ret
                     } else {
-                        // ignore
-                        return self.lex();
+                        return self.lex()
                     }
                 }
             }
-
-            S.error(prefix + 'lex error at line ' + self.lineNumber + ':\n' + self.showDebugInfo());
-            return undefined;
         }
     };
     Lexer.STATIC = {
@@ -239,8 +182,8 @@ KISSY.add(function (_, undefined) {
                 },
                 ['et']
             ],
-            ['c', /^{{(?:#|@|\^)/, 0, ['t']],
-            ['d', /^{{\//, 0, ['t']],
+            ['c', /^{{{?(?:#|@|\^)/, 0, ['t']],
+            ['d', /^{{{?\//, 0, ['t']],
             ['e', /^{{\s*else\s*}}/,
                 function popState() {
                     this.popState();
@@ -318,8 +261,7 @@ KISSY.add(function (_, undefined) {
             ['ad', /^\./, 0, ['t']],
             ['ae', /^\[/, 0, ['t']],
             ['af', /^\]/, 0, ['t']],
-            ['ac', /^[a-zA-Z0-9_$]+/, 0, ['t']],
-            ['ag', /^./, 0, ['t']]
+            ['ac', /^[a-zA-Z0-9_$]+/, 0, ['t']]
         ]
     });
     parser.lexer = lexer;
@@ -1872,63 +1814,43 @@ KISSY.add(function (_, undefined) {
     parser.parse = function parse(input, filename) {
         var self = this,
             lexer = self.lexer,
-            state,
-            symbol,
-            action,
-            table = self.table,
+            state, symbol, action, table = self.table,
             gotos = table.gotos,
             tableAction = table.action,
             productions = self.productions,
             valueStack = [null],
-            prefix = filename ? ('in file: ' + filename + ' ') : '',
+            prefix = filename ? "in file: " + filename + " " : "",
             stack = [0];
-
         lexer.resetInput(input, filename);
-
         while (1) {
-            // retrieve state number from top of stack
             state = stack[stack.length - 1];
-
             if (!symbol) {
-                symbol = lexer.lex();
+                symbol = lexer.lex()
             }
-
-            if (!symbol) {
-                S.log(prefix + 'it is not a valid input: ' + input, 'error');
-                return false;
+            //#JSCOVERAGE_IF
+            if (symbol) {
+                action = tableAction[state] && tableAction[state][symbol];
+            } else {
+                action = null;
             }
-
-            // read action for current state and first input
-            action = tableAction[state] && tableAction[state][symbol];
-
             if (!action) {
-                var expected = [], error;
+                var expected = [],
+                    error;
                 if (tableAction[state]) {
                     for (var symbolForState in tableAction[state]) {
-                        expected.push(self.lexer.mapReverseSymbol(symbolForState));
+                        expected.push(self.lexer.mapReverseSymbol(symbolForState))
                     }
                 }
-                error = prefix + 'syntax error at line ' + lexer.lineNumber +
-                    ':\n' + lexer.showDebugInfo() +
-                    '\n' + 'expect ' + expected.join(', ');
-                S.error(error);
-                return false;
+                error = prefix + "syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
+                return S.error(error);
             }
-
             switch (action[GrammarConst.TYPE_INDEX]) {
                 case GrammarConst.SHIFT_TYPE:
                     stack.push(symbol);
-
                     valueStack.push(lexer.text);
-
-                    // push state
                     stack.push(action[GrammarConst.TO_INDEX]);
-
-                    // allow to read more
                     symbol = null;
-
                     break;
-
                 case GrammarConst.REDUCE_TYPE:
                     var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
                         reducedSymbol = production.symbol || production[0],
@@ -1936,49 +1858,33 @@ KISSY.add(function (_, undefined) {
                         reducedRhs = production.rhs || production[1],
                         len = reducedRhs.length,
                         i = 0,
-                        ret,
-                        $$ = valueStack[valueStack.length - len]; // default to $$ = $1
-
+                        ret, $$ = valueStack[valueStack.length - len];
                     ret = undefined;
-
                     self.$$ = $$;
-
                     for (; i < len; i++) {
-                        self['$' + (len - i)] = valueStack[valueStack.length - 1 - i];
+                        self["$" + (len - i)] = valueStack[valueStack.length - 1 - i]
                     }
-
                     if (reducedAction) {
-                        ret = reducedAction.call(self);
+                        ret = reducedAction.call(self)
                     }
-
                     if (ret !== undefined) {
-                        $$ = ret;
+                        $$ = ret
                     } else {
-                        $$ = self.$$;
+                        $$ = self.$$
                     }
 
-                    if (len) {
-                        stack = stack.slice(0, -1 * len * 2);
-                        valueStack = valueStack.slice(0, -1 * len);
-                    }
+                    stack = stack.slice(0, -1 * len * 2);
+                    valueStack = valueStack.slice(0, -1 * len);
 
                     stack.push(reducedSymbol);
-
                     valueStack.push($$);
-
                     var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
-
                     stack.push(newState);
-
                     break;
-
                 case GrammarConst.ACCEPT_TYPE:
-                    return $$;
+                    return $$
             }
-
         }
-
-        return undefined;
     };
     return parser;
 });

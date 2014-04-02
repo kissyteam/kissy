@@ -339,6 +339,20 @@
             ]
         },
         {
+            "name": "xtemplate/compiler",
+            "runner": "http://dev.kissyui.com/kissy/src/xtemplate/sub-modules/compiler/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
+            "name": "xtemplate/runtime",
+            "runner": "http://dev.kissyui.com/kissy/src/xtemplate/sub-modules/runtime/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
             "name": "xtemplate",
             "runner": "http://dev.kissyui.com/kissy/src/xtemplate/tests/runner",
             "email": [

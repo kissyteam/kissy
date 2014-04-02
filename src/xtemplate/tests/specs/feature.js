@@ -15,6 +15,13 @@ KISSY.add(function (S, require) {
 
             expect(render).toBe('{{my}}');
 
+            tpl = '{{%%}}';
+
+            render = new XTemplate(tpl).render({
+                my: 1
+            });
+
+            expect(render).toBe('');
         });
 
         it('not allow empty content', function () {
@@ -128,6 +135,12 @@ KISSY.add(function (S, require) {
         it('support cache', function () {
             var tpl = '{{title}}';
             expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
+            expect(new XTemplate(tpl,{
+                cache:true
+            }).tpl).toBe(new XTemplate(tpl).tpl);
+            expect(new XTemplate(tpl,{
+                cache:false
+            }).tpl).not.toBe(new XTemplate(tpl).tpl);
         });
 
         it('support {{#if}} {{@', function () {
@@ -192,6 +205,38 @@ KISSY.add(function (S, require) {
         });
 
         describe('if', function () {
+            it('empty block works', function () {
+                var tpl = '{{#if(t !== true)}}{{else}}true{{/if}}';
+                var data = {
+                    t: true
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('true');
+            });
+
+            it('{{{if}}} is same as {{if}}', function () {
+                var tpl = '{{{#if(t !== true)}}}{{else}}true{{{/if}}}';
+                var data = {
+                    t: true
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('true');
+            });
+
+            it('support boolean', function () {
+                var tpl = '{{#if(t === true)}}true{{else}}not true{{/if}}';
+                var data = {
+                    t: true
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('true');
+                data = {
+                    t: 1
+                };
+                render = new XTemplate(tpl).render(data);
+                expect(render).toBe('not true');
+            });
+
             it('support access length attribute of array', function () {
                 var tpl = '{{arr.length}} {{#if(arr.length)}}have elements{{else}}empty{{/if}}';
                 var data = {
@@ -637,6 +682,22 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('haha "');
             });
 
+            it('support escape \' in tpl', function () {
+                var tpl = '{{{\'haha \\\'\'}}}';
+
+                var render = new XTemplate(tpl).render({});
+
+                expect(render).toBe('haha \'');
+            });
+
+            it('support escape \\\' in tpl', function () {
+                var tpl = '{{{"haha \'"}}}';
+
+                var render = new XTemplate(tpl).render({});
+                /*jshint quotmark:false*/
+                expect(render).toBe("haha '");
+            });
+
             it('does support escape " in content', function () {
                 var tpl = '"haha \\"';
 
@@ -760,7 +821,6 @@ KISSY.add(function (S, require) {
 
                 expect(render).toBe('1');
             });
-
 
             it('support param function', function () {
                 var tpl = '{{#with (title())}}{{c}}{{/with}}';

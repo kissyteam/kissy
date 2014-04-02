@@ -743,7 +743,7 @@ KISSY.add(function (S, require) {
             prefix = filename ? ('in file: ' + filename + ' ') : '',
             stack = [0];
 
-        lexer.resetInput(input, filename);
+        lexer.resetInput(input);
 
         while (1) {
             // retrieve state number from top of stack
@@ -753,16 +753,16 @@ KISSY.add(function (S, require) {
                 symbol = lexer.lex();
             }
 
-            if (!symbol) {
-                S.log(prefix + 'it is not a valid input: ' + input, 'error');
-                return false;
+            if (symbol) {
+                // read action for current state and first input
+                action = tableAction[state] && tableAction[state][symbol];
+            } else {
+                action = null;
             }
-
-            // read action for current state and first input
-            action = tableAction[state] && tableAction[state][symbol];
 
             if (!action) {
                 var expected = [], error;
+                //#JSCOVERAGE_IF
                 if (tableAction[state]) {
                     for (var symbolForState in tableAction[state]) {
                         expected.push(self.lexer.mapReverseSymbol(symbolForState));
@@ -771,8 +771,7 @@ KISSY.add(function (S, require) {
                 error = prefix + 'syntax error at line ' + lexer.lineNumber +
                     ':\n' + lexer.showDebugInfo() +
                     '\n' + 'expect ' + expected.join(', ');
-                S.error(error);
-                return false;
+                return S.error(error);
             }
 
             switch (action[GrammarConst.TYPE_INDEX]) {
@@ -817,10 +816,8 @@ KISSY.add(function (S, require) {
                         $$ = self.$$;
                     }
 
-                    if (len) {
-                        stack = stack.slice(0, -1 * len * 2);
-                        valueStack = valueStack.slice(0, -1 * len);
-                    }
+                    stack = stack.slice(0, -1 * len * 2);
+                    valueStack = valueStack.slice(0, -1 * len);
 
                     stack.push(reducedSymbol);
 
@@ -835,10 +832,7 @@ KISSY.add(function (S, require) {
                 case GrammarConst.ACCEPT_TYPE:
                     return $$;
             }
-
         }
-
-        return undefined;
     }
 
     // #-------------------- for generation end

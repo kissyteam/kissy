@@ -251,21 +251,29 @@ if (! _$jscoverage['/runtime/linked-buffer.js']) {
   _$jscoverage['/runtime/linked-buffer.js'].lineData[38] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[39] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[40] = 0;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[44] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[45] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[46] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[47] = 0;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[50] = 0;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[54] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[48] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[49] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[51] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[55] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[56] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[57] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[58] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[59] = 0;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[61] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[62] = 0;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[64] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[66] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[67] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[68] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[69] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[70] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[72] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[74] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[75] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[77] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[81] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[83] = 0;
 }
 if (! _$jscoverage['/runtime/linked-buffer.js'].functionData) {
   _$jscoverage['/runtime/linked-buffer.js'].functionData = [];
@@ -276,18 +284,31 @@ if (! _$jscoverage['/runtime/linked-buffer.js'].functionData) {
   _$jscoverage['/runtime/linked-buffer.js'].functionData[4] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].functionData[5] = 0;
   _$jscoverage['/runtime/linked-buffer.js'].functionData[6] = 0;
+  _$jscoverage['/runtime/linked-buffer.js'].functionData[7] = 0;
 }
 if (! _$jscoverage['/runtime/linked-buffer.js'].branchData) {
   _$jscoverage['/runtime/linked-buffer.js'].branchData = {};
   _$jscoverage['/runtime/linked-buffer.js'].branchData['17'] = [];
   _$jscoverage['/runtime/linked-buffer.js'].branchData['17'][1] = new BranchData();
   _$jscoverage['/runtime/linked-buffer.js'].branchData['17'][2] = new BranchData();
-  _$jscoverage['/runtime/linked-buffer.js'].branchData['56'] = [];
-  _$jscoverage['/runtime/linked-buffer.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['38'] = [];
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['46'] = [];
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['69'] = [];
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['69'][1] = new BranchData();
 }
-_$jscoverage['/runtime/linked-buffer.js'].branchData['56'][1].init(22, 14, 'fragment.ready');
-function visit31_56_1(result) {
-  _$jscoverage['/runtime/linked-buffer.js'].branchData['56'][1].ranCondition(result);
+_$jscoverage['/runtime/linked-buffer.js'].branchData['69'][1].init(22, 14, 'fragment.ready');
+function visit33_69_1(result) {
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['69'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/runtime/linked-buffer.js'].branchData['46'][1].init(48, 18, 'self.list.callback');
+function visit32_46_1(result) {
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['46'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/runtime/linked-buffer.js'].branchData['38'][1].init(66, 8, 'callback');
+function visit31_38_1(result) {
+  _$jscoverage['/runtime/linked-buffer.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/linked-buffer.js'].branchData['17'][2].init(26, 10, 'data === 0');
 function visit30_17_2(result) {
@@ -298,7 +319,7 @@ function visit29_17_1(result) {
   _$jscoverage['/runtime/linked-buffer.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/linked-buffer.js'].lineData[5]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, undefined) {
   _$jscoverage['/runtime/linked-buffer.js'].functionData[0]++;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[6]++;
   function Buffer(list) {
@@ -345,54 +366,75 @@ KISSY.add(function(S) {
   _$jscoverage['/runtime/linked-buffer.js'].lineData[33]++;
   return nextFragment;
 }, 
-  end: function(data, escape) {
+  error: function(reason) {
   _$jscoverage['/runtime/linked-buffer.js'].functionData[4]++;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[37]++;
-  this.write(data, escape);
+  var callback = this.list.callback;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[38]++;
-  this.ready = true;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[39]++;
-  this.list.flush();
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[40]++;
-  return this;
-}};
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[44]++;
-  function LinkedBuffer(callback) {
-    _$jscoverage['/runtime/linked-buffer.js'].functionData[5]++;
-    _$jscoverage['/runtime/linked-buffer.js'].lineData[45]++;
-    this.head = new Buffer(this);
-    _$jscoverage['/runtime/linked-buffer.js'].lineData[46]++;
-    this.callback = callback;
-    _$jscoverage['/runtime/linked-buffer.js'].lineData[47]++;
-    this.data = '';
+  if (visit31_38_1(callback)) {
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[39]++;
+    callback(reason, undefined);
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[40]++;
+    this.list.callback = null;
   }
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[50]++;
+}, 
+  end: function(data, escape) {
+  _$jscoverage['/runtime/linked-buffer.js'].functionData[5]++;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[45]++;
+  var self = this;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[46]++;
+  if (visit32_46_1(self.list.callback)) {
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[47]++;
+    self.write(data, escape);
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[48]++;
+    self.ready = true;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[49]++;
+    self.list.flush();
+  }
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[51]++;
+  return self;
+}};
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[55]++;
+  function LinkedBuffer(callback) {
+    _$jscoverage['/runtime/linked-buffer.js'].functionData[6]++;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[56]++;
+    var self = this;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[57]++;
+    self.head = new Buffer(self);
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[58]++;
+    self.callback = callback;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[59]++;
+    self.data = '';
+  }
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[62]++;
   LinkedBuffer.prototype = {
   constructor: LinkedBuffer, 
   flush: function() {
-  _$jscoverage['/runtime/linked-buffer.js'].functionData[6]++;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[54]++;
-  var fragment = this.head;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[55]++;
+  _$jscoverage['/runtime/linked-buffer.js'].functionData[7]++;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[66]++;
+  var self = this;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[67]++;
+  var fragment = self.head;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[68]++;
   while (fragment) {
-    _$jscoverage['/runtime/linked-buffer.js'].lineData[56]++;
-    if (visit31_56_1(fragment.ready)) {
-      _$jscoverage['/runtime/linked-buffer.js'].lineData[57]++;
-      this.data += fragment.data;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[69]++;
+    if (visit33_69_1(fragment.ready)) {
+      _$jscoverage['/runtime/linked-buffer.js'].lineData[70]++;
+      self.data += fragment.data;
     } else {
-      _$jscoverage['/runtime/linked-buffer.js'].lineData[59]++;
+      _$jscoverage['/runtime/linked-buffer.js'].lineData[72]++;
       return;
     }
-    _$jscoverage['/runtime/linked-buffer.js'].lineData[61]++;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[74]++;
     fragment = fragment.next;
-    _$jscoverage['/runtime/linked-buffer.js'].lineData[62]++;
-    this.head = fragment;
+    _$jscoverage['/runtime/linked-buffer.js'].lineData[75]++;
+    self.head = fragment;
   }
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[64]++;
-  this.callback(null, this.data);
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[77]++;
+  self.callback(null, self.data);
 }};
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[68]++;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[81]++;
   LinkedBuffer.Buffer = Buffer;
-  _$jscoverage['/runtime/linked-buffer.js'].lineData[70]++;
+  _$jscoverage['/runtime/linked-buffer.js'].lineData[83]++;
   return LinkedBuffer;
 });

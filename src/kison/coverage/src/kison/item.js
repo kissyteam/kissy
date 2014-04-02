@@ -284,31 +284,31 @@ if (! _$jscoverage['/kison/item.js'].branchData) {
   _$jscoverage['/kison/item.js'].branchData['55'][1] = new BranchData();
 }
 _$jscoverage['/kison/item.js'].branchData['55'][1].init(22, 13, '!lookAhead[l]');
-function visit90_55_1(result) {
+function visit89_55_1(result) {
   _$jscoverage['/kison/item.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].branchData['39'][1].init(22, 54, '!equals(self.get(\'lookAhead\'), other.get(\'lookAhead\'))');
-function visit89_39_1(result) {
+function visit88_39_1(result) {
   _$jscoverage['/kison/item.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].branchData['38'][1].init(289, 16, '!ignoreLookAhead');
-function visit88_38_1(result) {
+function visit87_38_1(result) {
   _$jscoverage['/kison/item.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].branchData['35'][1].init(170, 52, 'other.get(\'dotPosition\') !== self.get(\'dotPosition\')');
-function visit87_35_1(result) {
+function visit86_35_1(result) {
   _$jscoverage['/kison/item.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].branchData['32'][1].init(48, 55, '!other.get(\'production\').equals(self.get(\'production\'))');
-function visit86_32_1(result) {
+function visit85_32_1(result) {
   _$jscoverage['/kison/item.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].branchData['17'][1].init(18, 10, '!(i in s1)');
-function visit85_17_1(result) {
+function visit84_17_1(result) {
   _$jscoverage['/kison/item.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].branchData['11'][1].init(18, 10, '!(i in s2)');
-function visit84_11_1(result) {
+function visit83_11_1(result) {
   _$jscoverage['/kison/item.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].lineData[6]++;
@@ -322,7 +322,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/kison/item.js'].lineData[10]++;
     for (var i in s1) {
       _$jscoverage['/kison/item.js'].lineData[11]++;
-      if (visit84_11_1(!(i in s2))) {
+      if (visit83_11_1(!(i in s2))) {
         _$jscoverage['/kison/item.js'].lineData[12]++;
         return false;
       }
@@ -330,7 +330,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/kison/item.js'].lineData[16]++;
     for (i in s2) {
       _$jscoverage['/kison/item.js'].lineData[17]++;
-      if (visit85_17_1(!(i in s1))) {
+      if (visit84_17_1(!(i in s1))) {
         _$jscoverage['/kison/item.js'].lineData[18]++;
         return false;
       }
@@ -345,19 +345,19 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/kison/item.js'].lineData[31]++;
   var self = this;
   _$jscoverage['/kison/item.js'].lineData[32]++;
-  if (visit86_32_1(!other.get('production').equals(self.get('production')))) {
+  if (visit85_32_1(!other.get('production').equals(self.get('production')))) {
     _$jscoverage['/kison/item.js'].lineData[33]++;
     return false;
   }
   _$jscoverage['/kison/item.js'].lineData[35]++;
-  if (visit87_35_1(other.get('dotPosition') !== self.get('dotPosition'))) {
+  if (visit86_35_1(other.get('dotPosition') !== self.get('dotPosition'))) {
     _$jscoverage['/kison/item.js'].lineData[36]++;
     return false;
   }
   _$jscoverage['/kison/item.js'].lineData[38]++;
-  if (visit88_38_1(!ignoreLookAhead)) {
+  if (visit87_38_1(!ignoreLookAhead)) {
     _$jscoverage['/kison/item.js'].lineData[39]++;
-    if (visit89_39_1(!equals(self.get('lookAhead'), other.get('lookAhead')))) {
+    if (visit88_39_1(!equals(self.get('lookAhead'), other.get('lookAhead')))) {
       _$jscoverage['/kison/item.js'].lineData[40]++;
       return false;
     }
@@ -378,7 +378,7 @@ KISSY.add(function(S, require, exports, module) {
   S.each(ls, function(_, l) {
   _$jscoverage['/kison/item.js'].functionData[5]++;
   _$jscoverage['/kison/item.js'].lineData[55]++;
-  if (visit90_55_1(!lookAhead[l])) {
+  if (visit89_55_1(!lookAhead[l])) {
     _$jscoverage['/kison/item.js'].lineData[56]++;
     lookAhead[l] = 1;
     _$jscoverage['/kison/item.js'].lineData[57]++;

@@ -43,36 +43,6 @@ KISSY.add(function (_, undefined) {
 
     };
     Lexer.prototype = {
-        'constructor': function (cfg) {
-
-            var self = this;
-
-            /*
-             lex rules.
-             @type {Object[]}
-             @example
-             [
-             {
-             regexp:'\\w+',
-             state:['xx'],
-             token:'c',
-             // this => lex
-             action:function(){}
-             }
-             ]
-             */
-            self.rules = [];
-
-            S.mix(self, cfg);
-
-            /*
-             Input languages
-             @type {String}
-             */
-
-            self.resetInput(self.input);
-
-        },
         'resetInput': function (input) {
             S.mix(this, {
                 input: input,

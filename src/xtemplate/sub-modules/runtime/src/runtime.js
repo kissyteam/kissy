@@ -57,7 +57,7 @@ KISSY.add(function (S, require) {
         if (extendTplName) {
             buffer = self.include(extendTplName, scope, buffer, payload);
         }
-        return buffer;
+        return buffer.end();
     }
 
     function callCommand(engine, scope, option, buffer, name, line) {
@@ -138,19 +138,20 @@ KISSY.add(function (S, require) {
         utils: utils,
 
         /**
-         * tpl loader to load sub tpl by name
+         * get
          * @cfg {Function} loader
          * @member KISSY.XTemplate.Runtime
          */
-        load: function (subTplName) {
-            var self = this;
+        load: function (subTplName, callback) {
             var tpl = S.require(subTplName);
-            if (!tpl) {
-                S.error('template "' + subTplName + '" does not exist, need to be required or used first!');
+            if (tpl) {
+                callback(undefined, tpl);
+            } else {
+                var warning = 'template "' + subTplName + '" does not exist, ' +
+                    'better required or used first for performance!';
+                S.log(warning, 'error');
+                callback(warning, undefined);
             }
-            var engine = new self.constructor(tpl, self.config);
-            engine.name = subTplName;
-            return engine;
         },
 
         /**
@@ -176,7 +177,8 @@ KISSY.add(function (S, require) {
         },
 
         include: function (subTplName, scope, buffer, payload) {
-            var myName = this.name;
+            var self = this;
+            var myName = self.name;
             if (subTplName.charAt(0) === '.') {
                 if (!myName) {
                     var error = 'parent template does not have name' +
@@ -185,7 +187,19 @@ KISSY.add(function (S, require) {
                 }
                 subTplName = getSubNameFromParentName(myName, subTplName);
             }
-            return renderTpl(this.load(subTplName), scope, buffer, payload);
+            return buffer.async(function (newBuffer) {
+                self.load(subTplName, function (error, engine) {
+                    if (error) {
+                        newBuffer.error(error);
+                    } else {
+                        if (!(engine instanceof XTemplateRuntime)) {
+                            engine = new self.constructor(engine, self.config);
+                            engine.name = subTplName;
+                        }
+                        renderTpl(engine, scope, newBuffer, payload);
+                    }
+                });
+            });
         },
 
         /**
@@ -203,8 +217,7 @@ KISSY.add(function (S, require) {
             if (!self.name && self.tpl.TPL_NAME) {
                 self.name = self.tpl.TPL_NAME;
             }
-            renderTpl(self, new Scope(data),
-                new LinkedBuffer(callback).head).end();
+            renderTpl(self, new Scope(data), new LinkedBuffer(callback).head);
             return html;
         }
     };

@@ -5,6 +5,30 @@
 KISSY.add(function (S, require) {
     var XTemplate = require('xtemplate');
     describe('async', function () {
+        it('can report error',function(){
+            var tpl = '{{tms(1)}}3';
+            var ret = '';
+            expect(new XTemplate(tpl, {
+                commands: {
+                    'tms': function (scope, option, buffer) {
+                        return buffer.async(function (asyncBuffer) {
+                            setTimeout(function(){
+                                asyncBuffer.error('report error');
+                            },100);
+                        });
+                    }
+                }
+            }).render({}, function (error) {
+                    ret = error;
+                })).toBe('');
+            waitsFor(function () {
+                return ret;
+            });
+            runs(function () {
+                expect(ret).toBe('report error');
+            });
+        });
+
         it('works for inline command on sync mode', function () {
             var tpl = '{{tms(1)}}3';
             var ret = '';

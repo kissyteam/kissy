@@ -2,7 +2,7 @@
  * LinkedBuffer of generate content from xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, undefined) {
     function Buffer(list) {
         this.list = list;
         this.data = '';
@@ -33,35 +33,48 @@ KISSY.add(function (S) {
             return nextFragment;
         },
 
+        error: function (reason) {
+            var callback = this.list.callback;
+            if (callback) {
+                callback(reason, undefined);
+                this.list.callback = null;
+            }
+        },
+
         end: function (data, escape) {
-            this.write(data, escape);
-            this.ready = true;
-            this.list.flush();
-            return this;
+            var self = this;
+            if (self.list.callback) {
+                self.write(data, escape);
+                self.ready = true;
+                self.list.flush();
+            }
+            return self;
         }
     };
 
     function LinkedBuffer(callback) {
-        this.head = new Buffer(this);
-        this.callback = callback;
-        this.data = '';
+        var self = this;
+        self.head = new Buffer(self);
+        self.callback = callback;
+        self.data = '';
     }
 
     LinkedBuffer.prototype = {
         constructor: LinkedBuffer,
 
         flush: function () {
-            var fragment = this.head;
+            var self = this;
+            var fragment = self.head;
             while (fragment) {
                 if (fragment.ready) {
-                    this.data += fragment.data;
+                    self.data += fragment.data;
                 } else {
                     return;
                 }
                 fragment = fragment.next;
-                this.head = fragment;
+                self.head = fragment;
             }
-            this.callback(null, this.data);
+            self.callback(null, self.data);
         }
     };
 

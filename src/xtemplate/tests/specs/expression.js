@@ -6,6 +6,30 @@ KISSY.add(function (S, require) {
     var XTemplate = require('xtemplate');
 
     describe('expression', function () {
+        it('support literal', function () {
+            var tpl = '{{1}}';
+
+            var render = new XTemplate(tpl).render();
+
+            expect(render).toBe('1');
+        });
+
+        it('support (', function () {
+            var tpl = '{{3 - (1+1)}}';
+
+            var render = new XTemplate(tpl).render();
+
+            expect(render).toBe('1');
+        });
+
+        it('support modulus', function () {
+            var tpl = '{{3 % 2}}';
+
+            var render = new XTemplate(tpl).render();
+
+            expect(render).toBe('1');
+        });
+
         it('support unary expression', function () {
             var tpl = '{{#if (!n)}}1{{/if}}';
             expect(new XTemplate(tpl).render({
@@ -71,7 +95,6 @@ KISSY.add(function (S, require) {
 
         describe('relational expression', function () {
             it('support relational expression', function () {
-
                 var tpl = '{{#if( n > n2+4/2)}}' +
                     '{{n+1}}' +
                     '{{else}}' +
@@ -94,6 +117,8 @@ KISSY.add(function (S, require) {
                 var tpl5 = '{{#if (n<5)}}0{{else}}1{{/if}}';
 
                 var tpl6 = '{{#if (n>=4)}}1{{else}}0{{/if}}';
+
+                var tpl7 = '{{#if (n<=3)}}0{{else}}1{{/if}}';
 
                 var data = {
                         n: 5,
@@ -118,6 +143,8 @@ KISSY.add(function (S, require) {
                 expect(new XTemplate(tpl5).render({n: 5})).toBe('1');
 
                 expect(new XTemplate(tpl6).render({n: 4})).toBe('1');
+
+                expect(new XTemplate(tpl7).render({n: 4})).toBe('1');
             });
 
             it('support relational expression in each', function () {
