@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 17:18
+build time: Apr 3 18:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -21,10 +21,6 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
   Scope.prototype = {isScope:1, setParent:function(parentScope) {
     this.parent = parentScope;
     this.root = parentScope.root
-  }, getParent:function() {
-    return this.parent
-  }, getRoot:function() {
-    return this.root
   }, set:function(name, value) {
     if(!this.affix) {
       this.affix = {}
@@ -39,41 +35,29 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
       this.affix = {}
     }
     S.mix(this.affix, v)
-  }, has:function(name) {
-    var data = this.data;
-    var affix = this.affix;
-    if(name === "this") {
-      return true
-    }
-    if(affix && name in affix) {
-      return true
-    }
-    return typeof data === "object" && name in data
   }, get:function(name) {
     var data = this.data;
-    var affix = this.affix;
-    if(name === "this") {
-      return this.data
+    var v = data[name];
+    if(v !== undefined) {
+      return v
     }
+    var affix = this.affix;
     if(affix && name in affix) {
       return affix[name]
     }
-    if(typeof data === "object" && name in data) {
-      return data[name]
+    if(name === "this") {
+      return data
     }
-    return undefined
-  }, resolve:function(name, depth) {
+    if(name === "root") {
+      return this.root.data
+    }
+    return v
+  }, resolve:function(parts, depth) {
     var self = this;
-    if(!depth && typeof name !== "string" && name.length === 1) {
-      if(self.has(name[0])) {
-        return self.get(name[0])
-      }
+    if(!depth && parts.length === 1) {
+      return self.get(parts[0])
     }
-    var parts = name;
-    if(typeof name === "string") {
-      parts = name.split(".")
-    }
-    var len, i, v, p, valid;
+    var len, i, v;
     var scope = self;
     if(parts[0] === "root") {
       parts.shift();
@@ -85,48 +69,22 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
         }
       }
     }
-    var endScopeFind = 0;
     len = parts.length;
-    while(scope) {
-      valid = 1;
-      v = scope;
-      for(i = 0;i < len;i++) {
-        p = parts[i];
-        if(p === "this") {
-          endScopeFind = 1;
-          continue
-        }
-        if(v === scope) {
-          if(scope.has(p)) {
-            v = scope.get(p);
-            endScopeFind = 1
-          }else {
-            valid = 0;
-            break
-          }
-        }else {
-          if(v == null || typeof v !== "object" || !(p in v)) {
-            valid = 0;
-            break
-          }
-          v = v[p]
-        }
+    var part0 = parts[0];
+    do {
+      v = scope.get(part0)
+    }while(v === undefined && (scope = scope.parent));
+    if(v && scope) {
+      for(i = 1;v && i < len;i++) {
+        v = v[parts[i]]
       }
-      if(valid) {
-        if(v && v.isScope) {
-          v = v.data
-        }
-        if(typeof v === "function") {
-          v = v.call(this.data)
-        }
-        return v
+      if(typeof v === "function") {
+        v = v.call(this.data)
       }
-      if(endScopeFind) {
-        break
-      }
-      scope = scope.parent
+      return v
+    }else {
+      return undefined
     }
-    return undefined
   }};
   return Scope
 });

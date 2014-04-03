@@ -19,14 +19,6 @@ KISSY.add(function (S) {
             this.root = parentScope.root;
         },
 
-        getParent: function () {
-            return this.parent;
-        },
-
-        getRoot: function () {
-            return this.root;
-        },
-
         // keep original data unmodified
         set: function (name, value) {
             if (!this.affix) {
@@ -50,55 +42,40 @@ KISSY.add(function (S) {
             S.mix(this.affix, v);
         },
 
-        has: function (name) {
-            var data = this.data;
-            var affix = this.affix;
-            if (name === 'this') {
-                return true;
-            }
-
-            if (affix && (name in affix)) {
-                return true;
-            }
-
-            return typeof data === 'object' && (name in data);
-
-        },
-
         get: function (name) {
             var data = this.data;
-            var affix = this.affix;
 
-            if (name === 'this') {
-                return this.data;
+            var v = data[name];
+
+            if (v !== undefined) {
+                return v;
             }
+
+            var affix = this.affix;
 
             if (affix && (name in affix)) {
                 return affix[name];
             }
 
-            if (typeof data === 'object' && (name in data)) {
-                return data[name];
+            if (name === 'this') {
+                return data;
             }
 
-            return undefined;
+            if (name === 'root') {
+                return this.root.data;
+            }
+
+            return v;
         },
 
-        resolve: function (name, depth) {
+        resolve: function (parts, depth) {
             var self = this;
-            if (!depth && typeof name !== 'string' && name.length === 1) {
-                if (self.has(name[0])) {
-                    return self.get(name[0]);
-                }
+
+            if (!depth && parts.length === 1) {
+                return self.get(parts[0]);
             }
 
-            var parts = name;
-
-            if (typeof name === 'string') {
-                parts = name.split('.');
-            }
-
-            var len, i, v, p, valid;
+            var len, i, v;
             var scope = self;
 
             // root keyword for root self
@@ -111,57 +88,25 @@ KISSY.add(function (S) {
                 }
             }
 
-            var endScopeFind = 0;
-
             len = parts.length;
 
-            while (scope) {
-                valid = 1;
-                v = scope;
-                for (i = 0; i < len; i++) {
-                    p = parts[i];
-                    if (p === 'this') {
-                        endScopeFind = 1;
-                        continue;
-                    }
-                    if (v === scope) {
-                        if (scope.has(p)) {
-                            // xx.y
-                            // only find y in xx of current scope
-                            v = scope.get(p);
-                            endScopeFind = 1;
-                        } else {
-                            valid = 0;
-                            break;
-                        }
-                    } else {
-                        // may not be object at all
-                        // note array is object!
-                        if (v == null || typeof v !== 'object' || !(p in v)) {
-                            valid = 0;
-                            break;
-                        }
-                        v = v[p];
-                    }
-                }
-                if (valid) {
-                    if (v && v.isScope) {
-                        v = v.data;
-                    }
-                    // support property function return value as property value
-                    if (typeof v === 'function') {
-                        // this is current scope for mustache
-                        v = v.call(this.data);
-                    }
-                    return v;
-                }
-                if (endScopeFind) {
-                    break;
-                }
+            var part0 = parts[0];
 
-                scope = scope.parent;
+            do {
+                v = scope.get(part0);
+            } while (v === undefined && (scope = scope.parent));
+
+            if (v && scope) {
+                for (i = 1; v && i < len; i++) {
+                    v = v[parts[i]];
+                }
+                if (typeof v === 'function') {
+                    v = v.call(this.data);
+                }
+                return v;
+            } else {
+                return undefined;
             }
-            return undefined;
         }
     };
 
