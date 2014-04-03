@@ -1,0 +1,57 @@
+
+<!doctype html>
+
+<html>
+{{{include ("../control/header")}}}
+<body data-spm="6792737">
+{{{include ("../control/vData")}}}
+
+
+{{#with (renderConfig)}}
+
+{{set (path=assetsPath+assetsVersion)}}
+
+<script src="{{assetsHost}}/??kissy/k/1.4.0/seed-min.js,kissy/k/1.4.0/promise-min.js,kissy/k/1.4.0/import-style-min.js,tb/global/{{globalVersion}}/global-min.js,{{path}}/detail/alias.js,{{path}}/deps.js,{{path}}/detail/mod.js,{{path}}/detail/page/bigpipe.js?t=20130912" charset="utf-8" data-config="{combine:true}"></script>
+
+<script>
+    KISSY.config({
+        packages: {
+            detail: {
+                debug:true,
+                path: '{{assetsHost}}{{assetsPath}}{{assetsVersion}}/',
+                combine:true,//!(~location.href.indexOf("ks-debug")),
+                tag: '20130829',
+                name: 'detail',
+                charset: 'utf-8'
+            }
+        }
+    });
+    if(g_config.vdata.viewer.dt =="phone"){
+        KISSY.importStyle('detail/frame/phone,detail/footer/phone,detail/gallery/phone,detail/shop/phone,detail/sku/index,detail/maininfo/phone,detail/page/index,detail/describe/phone');
+    }else{
+        KISSY.importStyle('detail/frame/pad,detail/footer/pad,detail/gallery/pad,detail/shop/pad,detail/sku/index,detail/maininfo/pad,detail/page/index,detail/describe/pad');
+    }
+</script>
+{{/with}}
+
+<div id="J_Pages" class="pages-panel">
+    <div class="J_Pages-home pages-item-index" data-page="index">
+        {{{include ("../control/tabs")}}}
+        {{{include ("../control/footer")}}}
+    </div>
+</div>
+
+{{{include ("../control/config")}}}
+{{{include ("../control/activity")}}}
+<script>
+    KISSY.use("detail/mod", function(S,Mod){
+        Mod.add({
+            name:"detail/page/"
+        });
+        Mod.data("vdata",window["g_config"].vdata);
+        Mod.exec();
+    });
+</script>
+
+</body>
+</html>

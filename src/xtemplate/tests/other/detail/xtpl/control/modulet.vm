@@ -1,0 +1,5 @@
+##单个模块的导入
+#if ($frontModule)
+$control.setTemplate($frontModule.template).setParameter($frontModule.contextName,
+        $frontModule.data).setParameter("frontModule",$frontModule)
+#end

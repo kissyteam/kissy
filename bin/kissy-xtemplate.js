@@ -8,6 +8,7 @@ var program = require('./lib/commander');
 
 program
     .option('-p, --package-path <packagePath>', 'Set kissy package path')
+    .option('-s, --suffix [suffix]', 'Set xtemplate file suffix', '')
     .option('-e, --encoding [encoding]', 'Set xtemplate file encoding', 'utf-8')
     .option('-w, --watch', 'Watch xtemplate file change')
     .parse(process.argv);
@@ -21,7 +22,14 @@ var S = require('../lib/seed'),
     path = require('path'),
     packagePath = program.packagePath,
     encoding = program.encoding,
+    suffix = program.suffix,
     cwd = process.cwd();
+
+var suffixReg;
+
+if (suffix) {
+    suffixReg = new RegExp('\\.' + suffix + '$', 'g');
+}
 
 packagePath = path.resolve(cwd, packagePath);
 
@@ -50,7 +58,7 @@ function myJsBeautify(str) {
 function compile(tplFilePath, modulePath) {
     var tplContent = fs.readFileSync(tplFilePath, encoding);
     var moduleCode = myJsBeautify(
-        '/** Compiled By kissy-xtemplate */\n' +
+            '/** Compiled By kissy-xtemplate */\n' +
             'KISSY.add(function(S,require,exports,module){\n' +
             '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
             'var t = ' + XTemplateCompiler.compileToStr(tplContent, tplFilePath)) + ';\n' +
@@ -63,7 +71,10 @@ function compile(tplFilePath, modulePath) {
 
 function generate(filePath) {
     var modulePath;
-    if (S.endsWith(filePath, '.xtpl.html') || S.endsWith(filePath, '-xtpl.html')) {
+    if (suffix && S.endsWith(filePath, '.' + suffix)) {
+        modulePath = filePath.replace(suffixReg, '.js');
+        compile(filePath, modulePath);
+    } else if (S.endsWith(filePath, '.xtpl.html') || S.endsWith(filePath, '-xtpl.html')) {
         modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
         compile(filePath, modulePath);
     } else if (S.endsWith(filePath, '.tpl.html')) {

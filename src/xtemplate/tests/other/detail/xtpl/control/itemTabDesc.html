@@ -1,0 +1,21 @@
+<!--商品描述-->
+
+<div class="pg-description">
+    <div id="J_ItemDescribe" class="mod-describe-content">
+        <div class="J_hd"></div>
+        <div class="J_bd" id="J_Describe-bd"></div>
+    </div>
+</div>
+
+<script>
+    KISSY.use("detail/mod", function(S,Mod) {
+        var config = S.mix({
+            "panel": "#J_ItemDescribe"
+        });
+        Mod.add({
+            name:"detail/describe/",
+            data: config
+        });
+
+    });
+</script>

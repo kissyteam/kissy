@@ -1,0 +1,41 @@
+{{#if (!itemBuy.data.closed)}}
+<form id="J_FrmBid" name="bidForm" action="{{itemBuy.data.buyUrl}}" method="post">
+    <input type="hidden" value="" name="tb_token" id="J_frmTokenField" />
+    <input id="J_ireferer" type="hidden" name="item_url_refer" value="" />
+    <input type="hidden" name="item_id" value="{{itemBuy.data.itemId}}" />
+    <input type="hidden" name="item_id_num" value="{{itemBuy.data.itemId}}" />
+    <input type="hidden" name="auction_type" value="{{itemBuy.data.auctionType}}" />
+    <input type="hidden" name="from" value="item_detail" />
+    <input type="hidden" name="frm" value="" id="J_From" />
+    {{#if (itemBuy.data.limitPromotion)}}<input type="hidden"
+                                                name="detailIsLimit" value="{{itemBuy.data.limitPromotion}}" />{{/if}}
+    <input type="hidden" name="current_price" value= "{{itemBuy.data.reservePrice}}" />
+    <input type="hidden" name="activity" value="{{itemBuy.data.activity}}"/>
+    <input type="hidden" name="auto_post1" value="{{itemBuy.data.autoPostType}}" />
+    <input type="hidden" id="quantity" name="quantity" value="1"/>
+    <input type="hidden" id="skuId" name="skuId" value="" autocomplete="false"/>
+    <input type="hidden" id="skuInfo" name="skuInfo" value=""/>
+    <input type="hidden" id="J_TBuyerFrom" name="buyer_from" value="{{itemBuy.data.buyerFrom}}"/>
+    <input type="hidden" id="J_ChargeTypeId" name="chargeTypeId" value=""/>
+    {{@if (itemBuy.data.skil)}}
+    <input type="hidden" id="J_secKills" name="" value="" />
+    {{else}}
+    {{#if (itemBuy.data.tKA)}}
+    <input type="hidden" id="J_secKills" name="" value="" />
+    <input type="hidden" name="answer" value="" id="J_Answer"/>
+    <input type="hidden" name="secKillEncryptStr" value="" id="J_Sign" />
+    <input type="hidden" name="event_submit_do_buy" value="1" />
+    <input type="hidden" name="action" value="buynow/secKillBuyNowAction" />
+    {{/if}}
+    {{/if}}
+    {{#if (itemBuy.data.externalShop)}}
+    {{#if (itemBuy.data.showShoppingCartButton)}}
+    <input type="hidden" name="shop_id" value="{{itemBuy.data.shopId}}"/>
+    {{/if}}
+    {{/if}}
+    {{#if (itemBuy.data.referTg)}}<input type="hidden" name="key" value="{{itemBuy.data.key}}" />{{/if}}
+    {{#if (itemBuy.data.buytraceid)}}
+    <input type="hidden" name="buytraceid" value="{{itemBuy.data.buytraceid}}" />
+    {{/if}}
+</form>
+{{/if}}

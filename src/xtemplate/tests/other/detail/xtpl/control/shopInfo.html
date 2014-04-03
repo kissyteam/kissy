@@ -1,0 +1,34 @@
+<!--掌柜信息-->
+<div class="mod-shop" id="J_ShopInfo" data-spm="991222461">
+    {{#if (shopInfo.data.hasShop)}}
+    <div class="mod-shop-hd">
+        <h3>{{shopInfo.data.shopTitle}}</h3>
+        <p class="mod-shop-flag">
+            <span class="rank J_rank" data-rank="{{shopInfo.data.sellerScore}}"></span>
+            {{{include ("./shopIdentity")}}}
+        </p>
+    </div>
+    {{/if}}
+    {{{include ("./shopDsr")}}}
+    <div class="mod-shop-ft">
+        <ul class="mod-shop-link clearfix">
+            <li class="J_ww"><span class="J_WangWang wangwang" data-icon="small"
+                                   data-nick="{{shopInfo.data.nickForWWH5}}" data-encode="true"
+                                   data-display="inline"></span> <i class="icon-ww"></i>联系卖家</li>
+            {{#if (shopInfo.data.hasShop)}}
+            <li><a href="{{shopInfo.data.shopUrl}}"><i class="icon-shop"></i>进入店铺</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</div>
+
+<script>
+    KISSY.use("detail/mod", function(S,Mod) {
+        Mod.add({
+            name:"detail/shop/",
+            data:{
+                panel: "#J_ShopInfo"
+            }
+        });
+    });
+</script>

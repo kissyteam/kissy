@@ -1,0 +1,59 @@
+<div class="mod-shop-bd" data-spm="991222493">
+    <ul class="mod-shop-dsr J_DSR clearfix">
+        {{@if (shopDsr.data.hasDsrRecord)}}
+        <li>
+            <label title="{{#if (shopDsr.data.merchandisAvgScore)}}{{shopDsr.data.merchandisAvgScore}}分{{/if}}">
+                描述 {{shopDsr.data.merchandisAvgScore}}
+            </label>
+            {{@if (shopDsr.data.merchandisGapUp)}}
+            <i class="rate-high"></i>{{shopDsr.data.merchandisGapString}}%</li>
+            {{else}}
+                {{@if (shopDsr.data.merchandisGapBottom)}}
+                <i class="rate-low"></i>{{shopDsr.data.merchandisGapString}}%</li>
+                {{else}}
+                    {{@if (shopDsr.data.merchandisGapFair)}}
+                    <i class="rate-same"></i>持平</li>
+                    {{else}}
+                    该店铺尚未收到评价
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        <li>
+            <label title="{{#if (shopDsr.data.serviceAvgScore)}}{{{shopDsr.data.serviceAvgScore}}分{{/if}}">
+                服务 {{shopDsr.data.serviceAvgScore}}
+            </label>
+            {{@if (shopDsr.data.serviceGapUp)}}
+            <i class="rate-high"></i>{{shopDsr.data.serviceGapString}}%</li>
+            {{else}}
+                {{@if (shopDsr.data.serviceGapBottom)}}
+                <i class="rate-low"></i>{{shopDsr.data.serviceGapString}}%</li>
+                {{else}}
+                    {{@if (shopDsr.data.serviceGapFair)}}
+                    <i class="rate-same"></i>持平</li>
+                    {{else}}
+                    该店铺尚未收到评价
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        <li>
+            <label title="{{#if (shopDsr.data.consignmentAvgScore)}}{{shopDsr.data.consignmentAvgScore}}分{{/if}}">
+                物流 {{shopDsr.data.consignmentAvgScore}}
+            </label>
+            {{@if (shopDsr.data.consignmentGapUp)}}
+            <i class="rate-high"></i>{{shopDsr.data.consignmentGapString}}%</li>
+            {{else}}
+                {{@if (shopDsr.data.consignmentGapBottom)}}
+                <i class="rate-low"></i>{{shopDsr.data.consignmentGapString}}%</li>
+                {{else}}
+                    {{@if (shopDsr.data.consignmentGapFair)}}
+                    <i class="rate-same"></i>持平</li>
+                    {{else}}
+                    该店铺尚未收到评价
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        {{else}}
+        该店铺尚未收到评价
+        {{/if}}
+    </ul>
+</div>
