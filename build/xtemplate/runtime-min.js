@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 3 18:00
+build time: Apr 3 18:21
 */
 KISSY.add("xtemplate/runtime/scope",[],function(j){function h(d,e){this.data=d||{};this.affix=e;this.root=this}h.prototype={isScope:1,setParent:function(d){this.parent=d;this.root=d.root},set:function(d,e){this.affix||(this.affix={});this.affix[d]=e},setData:function(d){this.data=d},getData:function(){return this.data},mix:function(d){this.affix||(this.affix={});j.mix(this.affix,d)},get:function(d){var e=this.data,b=e[d];if(void 0!==b)return b;var a=this.affix;return a&&d in a?a[d]:"this"===d?e:"root"===
 d?this.root.data:b},resolve:function(d,e){if(!e&&1===d.length)return this.get(d[0]);var b,a,c;a=this;if("root"===d[0])d.shift(),a=a.root;else if(e)for(;a&&e--;)a=a.parent;b=d.length;var g=d[0];do c=a.get(g);while(void 0===c&&(a=a.parent));if(c&&a){for(a=1;c&&a<b;a++)c=c[d[a]];"function"===typeof c&&(c=c.call(this.data));return c}}};return h});
