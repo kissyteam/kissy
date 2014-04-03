@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 1 17:35
+build time: Apr 3 23:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -233,7 +233,7 @@ KISSY.add("overlay/extension/overlay-effect", [], function(S) {
     el.css("visibility", "hidden");
     ghost.css(from);
     self.__effectGhost = ghost;
-    ghost.animate(to, {duration:duration, easing:easing, complete:function() {
+    ghost.animate(to, {Anim:effectCfg.Anim, duration:duration, easing:easing, complete:function() {
       self.__effectGhost = null;
       ghost.remove();
       el.css("visibility", "");
@@ -254,10 +254,10 @@ KISSY.add("overlay/extension/overlay-effect", [], function(S) {
     el.stop(1, 1);
     el.css({visibility:"visible", display:show ? "none" : "block"});
     var m = effect + effects[effect][index];
-    el[m](duration, function() {
+    el[m]({duration:duration, Anim:effectCfg.Anim, complete:function() {
       el.css({display:"block", visibility:""});
       callback()
-    }, easing)
+    }, easing:easing})
   }
   function OverlayEffect() {
   }

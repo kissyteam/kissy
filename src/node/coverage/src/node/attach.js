@@ -308,23 +308,23 @@ if (! _$jscoverage['/node/attach.js'].branchData) {
   _$jscoverage['/node/attach.js'].branchData['130'][2] = new BranchData();
 }
 _$jscoverage['/node/attach.js'].branchData['130'][2].init(28, 25, 'args[index] === undefined');
-function visit16_130_2(result) {
+function visit22_130_2(result) {
   _$jscoverage['/node/attach.js'].branchData['130'][2].ranCondition(result);
   return result;
 }_$jscoverage['/node/attach.js'].branchData['130'][1].init(28, 49, 'args[index] === undefined && !S.isObject(args[0])');
-function visit15_130_1(result) {
+function visit21_130_1(result) {
   _$jscoverage['/node/attach.js'].branchData['130'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/attach.js'].branchData['122'][1].init(151, 12, 'ret === null');
-function visit14_122_1(result) {
+function visit20_122_1(result) {
   _$jscoverage['/node/attach.js'].branchData['122'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/attach.js'].branchData['120'][1].init(85, 17, 'ret === undefined');
-function visit13_120_1(result) {
+function visit19_120_1(result) {
   _$jscoverage['/node/attach.js'].branchData['120'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/attach.js'].branchData['111'][1].init(85, 17, 'ret === undefined');
-function visit12_111_1(result) {
+function visit18_111_1(result) {
   _$jscoverage['/node/attach.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/attach.js'].lineData[6]++;
@@ -359,7 +359,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/node/attach.js'].lineData[110]++;
     var ret = Dom[fn].apply(Dom, args);
     _$jscoverage['/node/attach.js'].lineData[111]++;
-    if (visit12_111_1(ret === undefined)) {
+    if (visit18_111_1(ret === undefined)) {
       _$jscoverage['/node/attach.js'].lineData[112]++;
       return self;
     }
@@ -374,12 +374,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/node/attach.js'].lineData[119]++;
     var ret = Dom[fn].apply(Dom, args);
     _$jscoverage['/node/attach.js'].lineData[120]++;
-    if (visit13_120_1(ret === undefined)) {
+    if (visit19_120_1(ret === undefined)) {
       _$jscoverage['/node/attach.js'].lineData[121]++;
       return self;
     } else {
       _$jscoverage['/node/attach.js'].lineData[122]++;
-      if (visit14_122_1(ret === null)) {
+      if (visit20_122_1(ret === null)) {
         _$jscoverage['/node/attach.js'].lineData[123]++;
         return null;
       }
@@ -391,7 +391,7 @@ KISSY.add(function(S, require) {
   function accessNormIf(fn, self, index, args) {
     _$jscoverage['/node/attach.js'].functionData[3]++;
     _$jscoverage['/node/attach.js'].lineData[130]++;
-    if (visit15_130_1(visit16_130_2(args[index] === undefined) && !S.isObject(args[0]))) {
+    if (visit21_130_1(visit22_130_2(args[index] === undefined) && !S.isObject(args[0]))) {
       _$jscoverage['/node/attach.js'].lineData[131]++;
       args.unshift(self);
       _$jscoverage['/node/attach.js'].lineData[132]++;

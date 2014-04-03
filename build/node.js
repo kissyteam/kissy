@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 1 12:04
+build time: Apr 3 23:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -17,14 +17,14 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
   var Dom = require("dom");
   var Event = require("event/dom");
   var Gesture = require("event/gesture");
-  var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isNodeList = Dom.isDomNodeList;
-  function NodeList(html, props, ownerDocument) {
+  var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList;
+  function Node(html, props, ownerDocument) {
     var self = this, domNode;
-    if(html instanceof NodeList) {
+    if(html instanceof Node) {
       return html.slice()
     }
-    if(!(self instanceof NodeList)) {
-      return new NodeList(html, props, ownerDocument)
+    if(!(self instanceof Node)) {
+      return new Node(html, props, ownerDocument)
     }
     if(!html) {
       return self
@@ -36,7 +36,7 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
           return self
         }
       }else {
-        if(S.isArray(html) || isNodeList(html)) {
+        if(S.isArray(html) || isDomNodeList(html)) {
           push.apply(self, makeArray(html));
           return self
         }else {
@@ -48,23 +48,23 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
     self.length = 1;
     return self
   }
-  NodeList.prototype = {constructor:NodeList, isNodeList:true, length:0, item:function(index) {
+  Node.prototype = {constructor:Node, isNode:true, length:0, item:function(index) {
     var self = this;
     if(typeof index === "number") {
       if(index >= self.length) {
         return null
       }else {
-        return new NodeList(self[index])
+        return new Node(self[index])
       }
     }else {
-      return new NodeList(index)
+      return new Node(index)
     }
   }, add:function(selector, context, index) {
     if(typeof context === "number") {
       index = context;
       context = undefined
     }
-    var list = NodeList.all(selector, context).getDOMNodes(), ret = new NodeList(this);
+    var list = Node.all(selector, context).getDOMNodes(), ret = new Node(this);
     if(index === undefined) {
       push.apply(ret, list)
     }else {
@@ -74,13 +74,13 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
     }
     return ret
   }, slice:function() {
-    return new NodeList(slice.apply(this, arguments))
+    return new Node(slice.apply(this, arguments))
   }, getDOMNodes:function() {
     return slice.call(this)
   }, each:function(fn, context) {
     var self = this;
     S.each(self, function(n, i) {
-      n = new NodeList(n);
+      n = new Node(n);
       return fn.call(context || n, n, i, self)
     });
     return self
@@ -90,13 +90,13 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
     var self = this;
     return self.__parent || self
   }, filter:function(filter) {
-    return new NodeList(Dom.filter(this, filter))
+    return new Node(Dom.filter(this, filter))
   }, all:function(selector) {
     var ret, self = this;
     if(self.length > 0) {
-      ret = NodeList.all(selector, self)
+      ret = Node.all(selector, self)
     }else {
-      ret = new NodeList
+      ret = new Node
     }
     ret.__parent = self;
     return ret
@@ -107,7 +107,7 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
     }
     return ret
   }};
-  S.mix(NodeList, {all:function(selector, context) {
+  S.mix(Node, {all:function(selector, context) {
     if(typeof selector === "string" && (selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, "<") && S.endsWith(selector, ">")) {
       if(context) {
         if(context.getDOMNode) {
@@ -115,18 +115,18 @@ KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, requir
         }
         context = context.ownerDocument || context
       }
-      return new NodeList(selector, undefined, context)
+      return new Node(selector, undefined, context)
     }
-    return new NodeList(Dom.query(selector, context))
+    return new Node(Dom.query(selector, context))
   }, one:function(selector, context) {
-    var all = NodeList.all(selector, context);
+    var all = Node.all(selector, context);
     return all.length ? all.slice(0, 1) : null
   }});
-  NodeList.NodeType = NodeType;
-  NodeList.KeyCode = Event.KeyCode;
-  NodeList.Gesture = Gesture.Enumeration;
-  NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
-  return NodeList
+  Node.NodeType = NodeType;
+  Node.KeyCode = Event.KeyCode;
+  Node.Gesture = Gesture.Enumeration;
+  Node.REPLACE_HISTORY = Event.REPLACE_HISTORY;
+  return Node
 });
 KISSY.add("node/attach", ["dom", "event/dom", "./base"], function(S, require) {
   var Dom = require("dom");
@@ -241,14 +241,24 @@ KISSY.add("node/anim", ["./base", "dom", "anim"], function(S, require) {
   }
   S.augment(Node, {animate:function() {
     var self = this, l = self.length, needClone = self.length > 1, originArgs = S.makeArray(arguments);
+    var cfg = originArgs[0];
+    var AnimConstructor = Anim;
+    if(cfg.to) {
+      AnimConstructor = cfg.Anim || Anim
+    }else {
+      cfg = originArgs[1];
+      if(cfg) {
+        AnimConstructor = cfg.Anim || Anim
+      }
+    }
     for(var i = 0;i < l;i++) {
       var elem = self[i];
       var args = needClone ? S.clone(originArgs) : originArgs, arg0 = args[0];
       if(arg0.to) {
         arg0.node = elem;
-        (new Anim(arg0)).run()
+        (new AnimConstructor(arg0)).run()
       }else {
-        Anim.apply(undefined, [elem].concat(args)).run()
+        AnimConstructor.apply(undefined, [elem].concat(args)).run()
       }
     }
     return self
@@ -293,8 +303,12 @@ KISSY.add("node/anim", ["./base", "dom", "anim"], function(S, require) {
       if(Dom[k] && !duration) {
         Dom[k](self)
       }else {
+        var AnimConstructor = Anim;
+        if(typeof duration === "object") {
+          AnimConstructor = duration.Anim || Anim
+        }
         S.each(self, function(elem) {
-          (new Anim(elem, v, duration, easing, complete)).run()
+          (new AnimConstructor(elem, v, duration, easing, complete)).run()
         })
       }
       return self

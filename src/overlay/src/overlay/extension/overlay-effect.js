@@ -56,6 +56,7 @@ KISSY.add(function (S) {
         self.__effectGhost = ghost;
 
         ghost.animate(to, {
+            Anim: effectCfg.Anim,
             duration: duration,
             easing: easing,
             complete: function () {
@@ -93,15 +94,20 @@ KISSY.add(function (S) {
             display: show ? 'none' : 'block'
         });
         var m = effect + effects[effect][index];
-        el[m](duration, function () {
-            el.css({
-                // need compute coordinates when show, so do not use display none for hide
-                display: 'block',
-                // restore to box-render _onSetVisible
-                visibility: ''
-            });
-            callback();
-        }, easing);
+        el[m]({
+            duration: duration,
+            Anim: effectCfg.Anim,
+            complete: function () {
+                el.css({
+                    // need compute coordinates when show, so do not use display none for hide
+                    display: 'block',
+                    // restore to box-render _onSetVisible
+                    visibility: ''
+                });
+                callback();
+            },
+            easing: easing
+        });
     }
 
     /**

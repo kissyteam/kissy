@@ -374,95 +374,95 @@ if (! _$jscoverage['/node/base.js'].branchData) {
   _$jscoverage['/node/base.js'].branchData['235'][1] = new BranchData();
 }
 _$jscoverage['/node/base.js'].branchData['235'][1].init(145, 32, 'context.ownerDocument || context');
-function visit39_235_1(result) {
+function visit45_235_1(result) {
   _$jscoverage['/node/base.js'].branchData['235'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['232'][1].init(25, 18, 'context.getDOMNode');
-function visit38_232_1(result) {
+function visit44_232_1(result) {
   _$jscoverage['/node/base.js'].branchData['232'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['231'][1].init(21, 7, 'context');
-function visit37_231_1(result) {
+function visit43_231_1(result) {
   _$jscoverage['/node/base.js'].branchData['231'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['229'][1].init(39, 72, 'S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit36_229_1(result) {
+function visit42_229_1(result) {
   _$jscoverage['/node/base.js'].branchData['229'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['228'][2].init(205, 20, 'selector.length >= 3');
-function visit35_228_2(result) {
+function visit41_228_2(result) {
   _$jscoverage['/node/base.js'].branchData['228'][2].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['228'][1].init(47, 112, 'selector.length >= 3 && S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit34_228_1(result) {
+function visit40_228_1(result) {
   _$jscoverage['/node/base.js'].branchData['228'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['227'][1].init(48, 160, '(selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit33_227_1(result) {
+function visit39_227_1(result) {
   _$jscoverage['/node/base.js'].branchData['227'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['226'][2].init(105, 28, 'typeof selector === \'string\'');
-function visit32_226_2(result) {
+function visit38_226_2(result) {
   _$jscoverage['/node/base.js'].branchData['226'][2].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['226'][1].init(105, 209, 'typeof selector === \'string\' && (selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit31_226_1(result) {
+function visit37_226_1(result) {
   _$jscoverage['/node/base.js'].branchData['226'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['206'][1].init(147, 3, 'ret');
-function visit30_206_1(result) {
+function visit36_206_1(result) {
   _$jscoverage['/node/base.js'].branchData['206'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['188'][1].init(67, 15, 'self.length > 0');
-function visit29_188_1(result) {
+function visit35_188_1(result) {
   _$jscoverage['/node/base.js'].branchData['188'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['168'][1].init(49, 21, 'self.__parent || self');
-function visit28_168_1(result) {
+function visit34_168_1(result) {
   _$jscoverage['/node/base.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['149'][1].init(69, 12, 'context || n');
-function visit27_149_1(result) {
+}_$jscoverage['/node/base.js'].branchData['149'][1].init(65, 12, 'context || n');
+function visit33_149_1(result) {
   _$jscoverage['/node/base.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['106'][1].init(260, 19, 'index === undefined');
-function visit26_106_1(result) {
+}_$jscoverage['/node/base.js'].branchData['106'][1].init(252, 19, 'index === undefined');
+function visit32_106_1(result) {
   _$jscoverage['/node/base.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['100'][1].init(17, 27, 'typeof context === \'number\'');
-function visit25_100_1(result) {
+function visit31_100_1(result) {
   _$jscoverage['/node/base.js'].branchData['100'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['82'][1].init(21, 20, 'index >= self.length');
-function visit24_82_1(result) {
+function visit30_82_1(result) {
   _$jscoverage['/node/base.js'].branchData['82'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['81'][1].init(46, 25, 'typeof index === \'number\'');
-function visit23_81_1(result) {
+function visit29_81_1(result) {
   _$jscoverage['/node/base.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['50'][1].init(767, 35, 'S.isArray(html) || isNodeList(html)');
-function visit22_50_1(result) {
+}_$jscoverage['/node/base.js'].branchData['50'][1].init(739, 38, 'S.isArray(html) || isDomNodeList(html)');
+function visit28_50_1(result) {
   _$jscoverage['/node/base.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['46'][1].init(160, 52, 'domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit21_46_1(result) {
+}_$jscoverage['/node/base.js'].branchData['46'][1].init(156, 52, 'domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
+function visit27_46_1(result) {
   _$jscoverage['/node/base.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['42'][1].init(384, 24, 'typeof html === \'string\'');
-function visit20_42_1(result) {
+}_$jscoverage['/node/base.js'].branchData['42'][1].init(360, 24, 'typeof html === \'string\'');
+function visit26_42_1(result) {
   _$jscoverage['/node/base.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['40'][1].init(330, 5, '!html');
-function visit19_40_1(result) {
+}_$jscoverage['/node/base.js'].branchData['40'][1].init(306, 5, '!html');
+function visit25_40_1(result) {
   _$jscoverage['/node/base.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['35'][1].init(144, 27, '!(self instanceof NodeList)');
-function visit18_35_1(result) {
+}_$jscoverage['/node/base.js'].branchData['35'][1].init(140, 23, '!(self instanceof Node)');
+function visit24_35_1(result) {
   _$jscoverage['/node/base.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/base.js'].branchData['31'][1].init(60, 24, 'html instanceof NodeList');
-function visit17_31_1(result) {
+}_$jscoverage['/node/base.js'].branchData['31'][1].init(60, 20, 'html instanceof Node');
+function visit23_31_1(result) {
   _$jscoverage['/node/base.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].lineData[6]++;
@@ -475,33 +475,33 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[9]++;
   var Gesture = require('event/gesture');
   _$jscoverage['/node/base.js'].lineData[10]++;
-  var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isNodeList = Dom.isDomNodeList;
+  var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList;
   _$jscoverage['/node/base.js'].lineData[27]++;
-  function NodeList(html, props, ownerDocument) {
+  function Node(html, props, ownerDocument) {
     _$jscoverage['/node/base.js'].functionData[1]++;
     _$jscoverage['/node/base.js'].lineData[28]++;
     var self = this, domNode;
     _$jscoverage['/node/base.js'].lineData[31]++;
-    if (visit17_31_1(html instanceof NodeList)) {
+    if (visit23_31_1(html instanceof Node)) {
       _$jscoverage['/node/base.js'].lineData[32]++;
       return html.slice();
     }
     _$jscoverage['/node/base.js'].lineData[35]++;
-    if (visit18_35_1(!(self instanceof NodeList))) {
+    if (visit24_35_1(!(self instanceof Node))) {
       _$jscoverage['/node/base.js'].lineData[36]++;
-      return new NodeList(html, props, ownerDocument);
+      return new Node(html, props, ownerDocument);
     }
     _$jscoverage['/node/base.js'].lineData[40]++;
-    if (visit19_40_1(!html)) {
+    if (visit25_40_1(!html)) {
       _$jscoverage['/node/base.js'].lineData[41]++;
       return self;
     } else {
       _$jscoverage['/node/base.js'].lineData[42]++;
-      if (visit20_42_1(typeof html === 'string')) {
+      if (visit26_42_1(typeof html === 'string')) {
         _$jscoverage['/node/base.js'].lineData[44]++;
         domNode = Dom.create(html, props, ownerDocument);
         _$jscoverage['/node/base.js'].lineData[46]++;
-        if (visit21_46_1(domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
+        if (visit27_46_1(domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
           _$jscoverage['/node/base.js'].lineData[47]++;
           push.apply(this, makeArray(domNode.childNodes));
           _$jscoverage['/node/base.js'].lineData[48]++;
@@ -509,7 +509,7 @@ KISSY.add(function(S, require) {
         }
       } else {
         _$jscoverage['/node/base.js'].lineData[50]++;
-        if (visit22_50_1(S.isArray(html) || isNodeList(html))) {
+        if (visit28_50_1(S.isArray(html) || isDomNodeList(html))) {
           _$jscoverage['/node/base.js'].lineData[51]++;
           push.apply(self, makeArray(html));
           _$jscoverage['/node/base.js'].lineData[52]++;
@@ -528,42 +528,42 @@ KISSY.add(function(S, require) {
     return self;
   }
   _$jscoverage['/node/base.js'].lineData[63]++;
-  NodeList.prototype = {
-  constructor: NodeList, 
-  isNodeList: true, 
+  Node.prototype = {
+  constructor: Node, 
+  isNode: true, 
   length: 0, 
   item: function(index) {
   _$jscoverage['/node/base.js'].functionData[2]++;
   _$jscoverage['/node/base.js'].lineData[80]++;
   var self = this;
   _$jscoverage['/node/base.js'].lineData[81]++;
-  if (visit23_81_1(typeof index === 'number')) {
+  if (visit29_81_1(typeof index === 'number')) {
     _$jscoverage['/node/base.js'].lineData[82]++;
-    if (visit24_82_1(index >= self.length)) {
+    if (visit30_82_1(index >= self.length)) {
       _$jscoverage['/node/base.js'].lineData[83]++;
       return null;
     } else {
       _$jscoverage['/node/base.js'].lineData[85]++;
-      return new NodeList(self[index]);
+      return new Node(self[index]);
     }
   } else {
     _$jscoverage['/node/base.js'].lineData[88]++;
-    return new NodeList(index);
+    return new Node(index);
   }
 }, 
   add: function(selector, context, index) {
   _$jscoverage['/node/base.js'].functionData[3]++;
   _$jscoverage['/node/base.js'].lineData[100]++;
-  if (visit25_100_1(typeof context === 'number')) {
+  if (visit31_100_1(typeof context === 'number')) {
     _$jscoverage['/node/base.js'].lineData[101]++;
     index = context;
     _$jscoverage['/node/base.js'].lineData[102]++;
     context = undefined;
   }
   _$jscoverage['/node/base.js'].lineData[104]++;
-  var list = NodeList.all(selector, context).getDOMNodes(), ret = new NodeList(this);
+  var list = Node.all(selector, context).getDOMNodes(), ret = new Node(this);
   _$jscoverage['/node/base.js'].lineData[106]++;
-  if (visit26_106_1(index === undefined)) {
+  if (visit32_106_1(index === undefined)) {
     _$jscoverage['/node/base.js'].lineData[107]++;
     push.apply(ret, list);
   } else {
@@ -580,7 +580,7 @@ KISSY.add(function(S, require) {
   slice: function() {
   _$jscoverage['/node/base.js'].functionData[4]++;
   _$jscoverage['/node/base.js'].lineData[125]++;
-  return new NodeList(slice.apply(this, arguments));
+  return new Node(slice.apply(this, arguments));
 }, 
   getDOMNodes: function() {
   _$jscoverage['/node/base.js'].functionData[5]++;
@@ -595,9 +595,9 @@ KISSY.add(function(S, require) {
   S.each(self, function(n, i) {
   _$jscoverage['/node/base.js'].functionData[7]++;
   _$jscoverage['/node/base.js'].lineData[148]++;
-  n = new NodeList(n);
+  n = new Node(n);
   _$jscoverage['/node/base.js'].lineData[149]++;
-  return fn.call(visit27_149_1(context || n), n, i, self);
+  return fn.call(visit33_149_1(context || n), n, i, self);
 });
   _$jscoverage['/node/base.js'].lineData[152]++;
   return self;
@@ -612,24 +612,24 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[167]++;
   var self = this;
   _$jscoverage['/node/base.js'].lineData[168]++;
-  return visit28_168_1(self.__parent || self);
+  return visit34_168_1(self.__parent || self);
 }, 
   filter: function(filter) {
   _$jscoverage['/node/base.js'].functionData[10]++;
   _$jscoverage['/node/base.js'].lineData[177]++;
-  return new NodeList(Dom.filter(this, filter));
+  return new Node(Dom.filter(this, filter));
 }, 
   all: function(selector) {
   _$jscoverage['/node/base.js'].functionData[11]++;
   _$jscoverage['/node/base.js'].lineData[186]++;
   var ret, self = this;
   _$jscoverage['/node/base.js'].lineData[188]++;
-  if (visit29_188_1(self.length > 0)) {
+  if (visit35_188_1(self.length > 0)) {
     _$jscoverage['/node/base.js'].lineData[189]++;
-    ret = NodeList.all(selector, self);
+    ret = Node.all(selector, self);
   } else {
     _$jscoverage['/node/base.js'].lineData[191]++;
-    ret = new NodeList();
+    ret = new Node();
   }
   _$jscoverage['/node/base.js'].lineData[193]++;
   ret.__parent = self;
@@ -641,7 +641,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[203]++;
   var self = this, all = self.all(selector), ret = all.length ? all.slice(0, 1) : null;
   _$jscoverage['/node/base.js'].lineData[206]++;
-  if (visit30_206_1(ret)) {
+  if (visit36_206_1(ret)) {
     _$jscoverage['/node/base.js'].lineData[207]++;
     ret.__parent = self;
   }
@@ -649,42 +649,42 @@ KISSY.add(function(S, require) {
   return ret;
 }};
   _$jscoverage['/node/base.js'].lineData[213]++;
-  S.mix(NodeList, {
+  S.mix(Node, {
   all: function(selector, context) {
   _$jscoverage['/node/base.js'].functionData[13]++;
   _$jscoverage['/node/base.js'].lineData[226]++;
-  if (visit31_226_1(visit32_226_2(typeof selector === 'string') && visit33_227_1((selector = S.trim(selector)) && visit34_228_1(visit35_228_2(selector.length >= 3) && visit36_229_1(S.startsWith(selector, '<') && S.endsWith(selector, '>')))))) {
+  if (visit37_226_1(visit38_226_2(typeof selector === 'string') && visit39_227_1((selector = S.trim(selector)) && visit40_228_1(visit41_228_2(selector.length >= 3) && visit42_229_1(S.startsWith(selector, '<') && S.endsWith(selector, '>')))))) {
     _$jscoverage['/node/base.js'].lineData[231]++;
-    if (visit37_231_1(context)) {
+    if (visit43_231_1(context)) {
       _$jscoverage['/node/base.js'].lineData[232]++;
-      if (visit38_232_1(context.getDOMNode)) {
+      if (visit44_232_1(context.getDOMNode)) {
         _$jscoverage['/node/base.js'].lineData[233]++;
         context = context[0];
       }
       _$jscoverage['/node/base.js'].lineData[235]++;
-      context = visit39_235_1(context.ownerDocument || context);
+      context = visit45_235_1(context.ownerDocument || context);
     }
     _$jscoverage['/node/base.js'].lineData[237]++;
-    return new NodeList(selector, undefined, context);
+    return new Node(selector, undefined, context);
   }
   _$jscoverage['/node/base.js'].lineData[239]++;
-  return new NodeList(Dom.query(selector, context));
+  return new Node(Dom.query(selector, context));
 }, 
   one: function(selector, context) {
   _$jscoverage['/node/base.js'].functionData[14]++;
   _$jscoverage['/node/base.js'].lineData[252]++;
-  var all = NodeList.all(selector, context);
+  var all = Node.all(selector, context);
   _$jscoverage['/node/base.js'].lineData[253]++;
   return all.length ? all.slice(0, 1) : null;
 }});
   _$jscoverage['/node/base.js'].lineData[263]++;
-  NodeList.NodeType = NodeType;
+  Node.NodeType = NodeType;
   _$jscoverage['/node/base.js'].lineData[265]++;
-  NodeList.KeyCode = Event.KeyCode;
+  Node.KeyCode = Event.KeyCode;
   _$jscoverage['/node/base.js'].lineData[267]++;
-  NodeList.Gesture = Gesture.Enumeration;
+  Node.Gesture = Gesture.Enumeration;
   _$jscoverage['/node/base.js'].lineData[269]++;
-  NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
+  Node.REPLACE_HISTORY = Event.REPLACE_HISTORY;
   _$jscoverage['/node/base.js'].lineData[271]++;
-  return NodeList;
+  return Node;
 });

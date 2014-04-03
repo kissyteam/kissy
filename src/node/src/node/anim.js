@@ -43,15 +43,26 @@ KISSY.add(function (S, require) {
                 l = self.length,
                 needClone = self.length > 1,
                 originArgs = S.makeArray(arguments);
+            var cfg = originArgs[0];
+            var AnimConstructor = Anim;
+            if (cfg.to) {
+                AnimConstructor = cfg.Anim || Anim;
+            } else {
+                cfg = originArgs[1];
+                if (cfg) {
+                    AnimConstructor = cfg.Anim || Anim;
+                }
+            }
+
             for (var i = 0; i < l; i++) {
                 var elem = self[i];
                 var args = needClone ? S.clone(originArgs) : originArgs,
                     arg0 = args[0];
                 if (arg0.to) {
                     arg0.node = elem;
-                    new Anim(arg0).run();
+                    new AnimConstructor(arg0).run();
                 } else {
-                    Anim.apply(undefined, [elem].concat(args)).run();
+                    AnimConstructor.apply(undefined, [elem].concat(args)).run();
                 }
             }
             return self;
@@ -237,8 +248,12 @@ KISSY.add(function (S, require) {
                 if (Dom[k] && !duration) {
                     Dom[k](self);
                 } else {
+                    var AnimConstructor = Anim;
+                    if (typeof duration === 'object') {
+                        AnimConstructor = duration.Anim || Anim;
+                    }
                     S.each(self, function (elem) {
-                        new Anim(elem, v, duration, easing, complete).run();
+                        new AnimConstructor(elem, v, duration, easing, complete).run();
                     });
                 }
                 return self;
