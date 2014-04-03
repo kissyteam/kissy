@@ -277,13 +277,6 @@
         },
         {
             "name": "router",
-            "runner": "http://dev.kissyui.com/kissy/src/router/tests/runner/test-middle-set-domain.jss",
-            "email": [
-                "yiminghe@gmail.com"
-            ]
-        },
-        {
-            "name": "router2",
             "runner": "http://dev.kissyui.com/kissy/src/router/tests/runner/test.jss",
             "email": [
                 "yiminghe@gmail.com"

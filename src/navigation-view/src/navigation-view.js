@@ -118,8 +118,10 @@ KISSY.add(function (S, require) {
         return null;
     }
 
-    function switchTo(navigationView, view, backward) {
+    function switchTo(navigationView, viewConfig, backward) {
         var loadingView = navigationView.loadingView;
+        var view = viewConfig.view;
+        var fromCache = viewConfig.fromCache;
 
         var oldView = navigationView.get('activeView');
 
@@ -136,8 +138,11 @@ KISSY.add(function (S, require) {
         navigationView.set('activeView', view);
 
         if (view.enter) {
-            view.enter();
+            view.enter({
+                fromCache: fromCache
+            });
         }
+
         var promise = view.promise;
         if (promise) {
             if (oldView) {
@@ -204,14 +209,18 @@ KISSY.add(function (S, require) {
 
     function createView(self, config) {
         var view = getViewInstance(self, config);
-        if (!view) {
+        var fromCache = !!view;
+        if (view) {
+            view.set(config);
+        } else {
             view = self.addChild(config);
             view.$el.on(ANIMATION_END_EVENT, onViewAnimEnd, view);
-        } else {
-            view.set(config);
         }
         view.timeStamp = S.now();
-        return view;
+        return {
+            view: view,
+            fromCache: fromCache
+        };
     }
 
     var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
@@ -241,13 +250,11 @@ KISSY.add(function (S, require) {
 
         push: function (config) {
             var self = this,
-                nextView,
                 viewStack = self.viewStack;
             config.animation = config.animation || self.get('animation');
             config.navigationView = self;
-            nextView = createView(self, config);
             viewStack.push(config);
-            switchTo(self, nextView);
+            switchTo(self, createView(self, config));
         },
 
         replace: function (config) {
@@ -259,13 +266,11 @@ KISSY.add(function (S, require) {
 
         pop: function (config) {
             var self = this,
-                nextView,
                 viewStack = self.viewStack;
             if (viewStack.length > 1) {
                 viewStack.pop();
                 config = viewStack[viewStack.length - 1];
-                nextView = createView(self, config);
-                switchTo(self, nextView, true);
+                switchTo(self, createView(self, config), true);
             }
         }
     }, {

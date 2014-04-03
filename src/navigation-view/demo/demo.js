@@ -10,11 +10,11 @@ if (location.href.indexOf('useHashChange') !== -1) {
 
 
 KISSY.use('navigation-view,' +
-    'navigation-view/bar,' +
-    'node,' +
-    'router,' +
-    'promise,' +
-    window.PAGE_VIEW,
+        'navigation-view/bar,' +
+        'node,' +
+        'router,' +
+        'promise,' +
+        window.PAGE_VIEW,
     function (S, NavigationView, Bar, Node, router, Promise, pageViewFactory) {
         var PageView = pageViewFactory();
 
@@ -153,8 +153,8 @@ KISSY.use('navigation-view,' +
         tpl += tpl;
 
         PageView.extend({
-            enter: function () {
-                S.log('enter detail');
+            enter: function (cfg) {
+                S.log('enter detail ' + (cfg.fromCache ? 'from cache!' : ''));
                 win.on('resize', this.sync, this);
                 this.sync();
             },
@@ -182,18 +182,19 @@ KISSY.use('navigation-view,' +
         });
 
         PageView.extend({
-            enter: function () {
+            enter: function (cfg) {
+                S.log('enter loading ' + (cfg.fromCache ? 'from cache!' : ''));
                 var self = this;
                 self.defer = new Promise.Defer();
                 self.promise = self.defer.promise;
                 win.on('resize', self.sync, self);
                 if (self.logic) {
-                    self.logic.enter();
+                    self.logic.enter(cfg);
                 } else {
                     S.use('demo/loading', function (S, Loading) {
                         /*jshint nonew:false*/
                         self.logic = self.logic || new Loading(self);
-                        self.logic.enter();
+                        self.logic.enter(cfg);
                     });
                 }
             },
@@ -239,8 +240,8 @@ KISSY.use('navigation-view,' +
         });
 
         PageView.extend({
-            enter: function () {
-                S.log('enter index');
+            enter: function (cfg) {
+                S.log('enter index ' + (cfg.fromCache ? 'from cache!' : ''));
                 win.on('resize', this.sync, this);
                 this.sync();
             },

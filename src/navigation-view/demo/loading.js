@@ -28,7 +28,6 @@ KISSY.add(function (S, require) {
     Loading.prototype = {
         enter: function () {
             var page = this.page;
-            S.log('enter loading');
             setTimeout(function () {
                 page.getContentEl().html(S.substitute(tpl, {
                     title: page.get('viewId')
