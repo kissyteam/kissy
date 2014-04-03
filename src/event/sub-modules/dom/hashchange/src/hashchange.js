@@ -6,15 +6,13 @@
 KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
-    var Uri = require('uri');
     var UA = require('ua'),
         urlWithoutHash,
         Special = DomEvent.Special,
         win = S.Env.host,
         doc = win.document,
-        docMode = UA.ieMode,
         REPLACE_HISTORY = '__ks_replace_history__',
-        ie = docMode || UA.ie,
+        ie = UA.ieMode,
         HASH_CHANGE = 'hashchange';
 
     DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
@@ -40,8 +38,8 @@ KISSY.add(function (S, require) {
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
             // firefox 15 => #!/home/q={'thedate':'20121010~20121010'}
             // !! :(
-            var uri = new Uri(location.href);
-            return '#' + uri.getFragment();
+            var m = location.href.match(/#.+$/);
+            return m && m[0] || '#';
         },
 
         timer,

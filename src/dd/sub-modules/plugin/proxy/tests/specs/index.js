@@ -2,9 +2,13 @@
  * @module  proxy-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Node,Event, DD, Proxy) {
-    var Draggable = DD.Draggable,
-        Dom = S.require('dom');
+KISSY.add(function (S, require) {
+    var DD = require('dd'),
+        Proxy = require('dd/plugin/proxy'),
+        Draggable = DD.Draggable,
+        Node = require('node'),
+        win = Node.all(window);
+
     var ie = S.UA.ieMode;
 
     // ie9 ie11 buggy in simulating mousemove
@@ -43,8 +47,8 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
 
             dragXy = dragNode.offset();
             jasmine.simulate(dragNode[0], 'mousedown', {
-                clientX: dragXy.left + 10 - Dom.scrollLeft(),
-                clientY: dragXy.top + 10 - Dom.scrollTop()
+                clientX: dragXy.left + 10 - win.scrollLeft(),
+                clientY: dragXy.top + 10 - win.scrollTop()
             });
 
             waits(100);
@@ -52,8 +56,8 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
             // 10px move to start
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: dragXy.left + 15 - Dom.scrollLeft(),
-                    clientY: dragXy.top + 15 - Dom.scrollTop()
+                    clientX: dragXy.left + 15 - win.scrollLeft(),
+                    clientY: dragXy.top + 15 - win.scrollTop()
                 });
             });
 
@@ -65,8 +69,8 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
 
             runs(function () {
                 jasmine.simulate(document, 'mouseup', {
-                    clientX: dragXy.left + 15 - Dom.scrollLeft(),
-                    clientY: dragXy.top + 15 - Dom.scrollTop()
+                    clientX: dragXy.left + 15 - win.scrollLeft(),
+                    clientY: dragXy.top + 15 - win.scrollTop()
                 });
             });
         });
@@ -77,6 +81,4 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
         });
 
     });
-}, {
-    requires: ['node','event', 'dd', 'dd/plugin/proxy']
 });

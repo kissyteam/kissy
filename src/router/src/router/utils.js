@@ -5,7 +5,6 @@
 KISSY.add(function (S, require) {
     var utils;
     var DomEvent = require('event/dom');
-    var Uri = require('uri');
 
     function removeVid(str) {
         return str.replace(/__ks-vid=.+$/, '');
@@ -17,6 +16,11 @@ KISSY.add(function (S, require) {
             return parseInt(m[1], 10);
         }
         return 0;
+    }
+
+    function getFragment(url) {
+        var m = url.match(/#(.+)$/);
+        return m && m[1] || '';
     }
 
     utils = {
@@ -66,7 +70,7 @@ KISSY.add(function (S, require) {
             return str1 === str2;
         },
 
-        getHash: function (uri) {
+        getHash: function (url) {
             // 不能 location.hash
             // 1.
             // http://xx.com/#yy?z=1
@@ -76,7 +80,7 @@ KISSY.add(function (S, require) {
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
             // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
             // !! :(
-            return removeVid(uri.getFragment().replace(/^!/, '')).replace(DomEvent.REPLACE_HISTORY, '');
+            return removeVid(getFragment(url).replace(/^!/, '')).replace(DomEvent.REPLACE_HISTORY, '');
         },
 
         removeVid: removeVid,
@@ -90,7 +94,7 @@ KISSY.add(function (S, require) {
         },
 
         getVidFromUrlWithHash: function (url) {
-            return getVidFromHash(new Uri(url).getFragment());
+            return getVidFromHash(getFragment(url));
         },
 
         getVidFromHash: getVidFromHash

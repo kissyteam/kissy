@@ -2,10 +2,15 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
-    var Draggable = DD.Draggable,
+KISSY.add(function (S, require) {
+    var DD = require('dd'),
+        Draggable = DD.Draggable,
         UA = S.UA,
-        $ = Node.all;
+        Node = require('node'),
+        IO = require('io'),
+        Scroll = require('dd/plugin/scroll'),
+        $ = Node.all,
+        win = $(window);
 
 
     var ie = S.UA.ieMode;
@@ -53,8 +58,8 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
 
             runs(function () {
                 jasmine.simulate(dragNode[0], 'mousedown', {
-                    clientX: dragOffset.left + 20 - Dom.scrollLeft(),
-                    clientY: dragOffset.top + 20 - Dom.scrollTop()
+                    clientX: dragOffset.left + 20 - win.scrollLeft(),
+                    clientY: dragOffset.top + 20 - win.scrollTop()
                 });
             });
 
@@ -63,8 +68,8 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
             // 10px move to start
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: dragOffset.left + 25 - Dom.scrollLeft(),
-                    clientY: dragOffset.top + 25 - Dom.scrollTop()
+                    clientX: dragOffset.left + 25 - win.scrollLeft(),
+                    clientY: dragOffset.top + 25 - win.scrollTop()
                 });
             });
 
@@ -72,16 +77,16 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
 
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: containerOffset.left + 50 - Dom.scrollLeft(),
-                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - Dom.scrollTop()
+                    clientX: containerOffset.left + 50 - win.scrollLeft(),
+                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - win.scrollTop()
                 });
             });
 
             waits(300);
             runs(function () {
                 jasmine.simulate(document, 'mouseup', {
-                    clientX: containerOffset.left + 50 - Dom.scrollLeft(),
-                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - Dom.scrollTop()
+                    clientX: containerOffset.left + 50 - win.scrollLeft(),
+                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - win.scrollTop()
                 });
             });
 
@@ -94,6 +99,4 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
             });
         });
     });
-}, {
-    requires: ['dom', 'event', 'node', 'dd', 'dd/plugin/scroll', 'io']
 });

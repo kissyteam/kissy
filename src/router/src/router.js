@@ -46,7 +46,7 @@ KISSY.add(function (S, require, exports) {
             var query = uri.query;
             return uri.getPath().substr(globalConfig.urlRoot.length) + (query.has() ? ('?' + query.toString()) : '');
         } else {
-            return utils.getHash(uri);
+            return utils.getHash(url);
         }
     }
 
@@ -392,7 +392,7 @@ KISSY.add(function (S, require, exports) {
                     triggerRoute = 0;
                     needReplaceHistory = false;
                 } else if (!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId) {
-                    setPathByHash(utils.getHash(new Uri(href)), true);
+                    setPathByHash(utils.getHash(href), true);
                     triggerRoute = 0;
                 } else if (supportHistoryPushState && utils.hasVid(href)) {
                     location.replace(href = utils.removeVid(href));

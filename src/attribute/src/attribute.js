@@ -4,6 +4,8 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
+    require('util');
+
     var CustomEvent = require('event/custom');
 
     function bind(v) {

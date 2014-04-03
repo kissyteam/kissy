@@ -3,8 +3,6 @@
  * ua
  */
 KISSY.add(function (S, require, exports, module, undefined) {
-    require('util');
-
     /*global process*/
     var win = S.Env.host,
         doc = win.document,
@@ -44,7 +42,8 @@ KISSY.add(function (S, require, exports, module, undefined) {
         var EMPTY = '',
             os,
             core = EMPTY,
-            shell = EMPTY, m,
+            shell = EMPTY,
+            m,
             IE_DETECT_RANGE = [6, 9],
             ieVersion,
             v,
@@ -372,15 +371,17 @@ KISSY.add(function (S, require, exports, module, undefined) {
         documentElement = doc && doc.documentElement,
         className = '';
     if (documentElement) {
-        S.each(browsers, function (key) {
+        for (var i = 0; i < browsers.length; i++) {
+            var key = browsers[i];
             var v = UA[key];
             if (v) {
                 className += ' ks-' + key + (parseInt(v, 10) + '');
                 className += ' ks-' + key;
             }
-        });
+        }
         if (className) {
-            documentElement.className = S.trim(documentElement.className + className);
+            documentElement.className = (documentElement.className + className)
+                .replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
         }
     }
 

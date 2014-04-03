@@ -12,10 +12,10 @@ KISSY.add(function (S, require) {
         NodeType = Dom.NodeType,
         push = AP.push,
         makeArray = S.makeArray,
-        isNodeList = Dom.isDomNodeList;
+        isDomNodeList = Dom.isDomNodeList;
 
     /**
-     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
+     * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
      *
      *
@@ -24,30 +24,30 @@ KISSY.add(function (S, require) {
      *
      * @class KISSY.NodeList
      */
-    function NodeList(html, props, ownerDocument) {
+    function Node(html, props, ownerDocument) {
         var self = this,
             domNode;
 
-        if (html instanceof NodeList) {
+        if (html instanceof Node) {
             return html.slice();
         }
 
-        if (!(self instanceof NodeList)) {
-            return new NodeList(html, props, ownerDocument);
+        if (!(self instanceof Node)) {
+            return new Node(html, props, ownerDocument);
         }
 
-        // handle NodeList(''), NodeList(null), or NodeList(undefined)
+        // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
             return self;
         } else if (typeof html === 'string') {
             // create from html
             domNode = Dom.create(html, props, ownerDocument);
-            // ('<p>1</p><p>2</p>') 转换为 NodeList
+            // ('<p>1</p><p>2</p>') 转换为 Node
             if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
                 return self;
             }
-        } else if (S.isArray(html) || isNodeList(html)) {
+        } else if (S.isArray(html) || isDomNodeList(html)) {
             push.apply(self, makeArray(html));
             return self;
         } else {
@@ -60,13 +60,13 @@ KISSY.add(function (S, require) {
         return self;
     }
 
-    NodeList.prototype = {
-        constructor: NodeList,
+    Node.prototype = {
+        constructor: Node,
 
-        isNodeList: true,
+        isNode: true,
 
         /**
-         * length of nodelist
+         * length of Node
          * @type {Number}
          */
         length: 0,
@@ -74,7 +74,7 @@ KISSY.add(function (S, require) {
         /**
          * Get one node at index
          * @param {Number} index Index position.
-         * @return {KISSY.NodeList}
+         * @return {KISSY.Node}
          */
         item: function (index) {
             var self = this;
@@ -82,27 +82,27 @@ KISSY.add(function (S, require) {
                 if (index >= self.length) {
                     return null;
                 } else {
-                    return new NodeList(self[index]);
+                    return new Node(self[index]);
                 }
             } else {
-                return new NodeList(index);
+                return new Node(index);
             }
         },
 
         /**
-         * return a new NodeList object which consists of current node list and parameter node list.
-         * @param {KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {KISSY.NodeList|Number} [context] Search context for selector
+         * return a new Node object which consists of current node list and parameter node list.
+         * @param {KISSY.Node} selector Selector string or html string or common dom node.
+         * @param {KISSY.Node|Number} [context] Search context for selector
          * @param {Number} [index] Insert position.
-         * @return {KISSY.NodeList} a new nodelist
+         * @return {KISSY.Node} a new Node
          */
         add: function (selector, context, index) {
             if (typeof context === 'number') {
                 index = context;
                 context = undefined;
             }
-            var list = NodeList.all(selector, context).getDOMNodes(),
-                ret = new NodeList(this);
+            var list = Node.all(selector, context).getDOMNodes(),
+                ret = new Node(this);
             if (index === undefined) {
                 push.apply(ret, list);
             } else {
@@ -116,13 +116,13 @@ KISSY.add(function (S, require) {
         /**
          * Get part of node list.
          * Arguments are same with Array.prototype.slice
-         * @return {KISSY.NodeList}
+         * @return {KISSY.Node}
          */
         slice: function () {
             // ie<9 : [1,2].slice(0 - 2,undefined) => []
             // ie<9 : [1,2].slice(0 - 2) => [1,2]
             // fix #85
-            return new NodeList(slice.apply(this, arguments));
+            return new Node(slice.apply(this, arguments));
         },
 
         /**
@@ -133,19 +133,19 @@ KISSY.add(function (S, require) {
         },
 
         /**
-         * Applies the given function to each Node in the NodeList.
+         * Applies the given function to each Node in the Node.
          * @param {Function} fn The function to apply. It receives 3 arguments:
          * the current node instance, the node's index,
-         * and the NodeList instance
+         * and the Node instance
          * @param [context] An optional context to
-         * apply the function with Default context is the current NodeList instance
-         * @return {KISSY.NodeList}
+         * apply the function with Default context is the current Node instance
+         * @return {KISSY.Node}
          */
         each: function (fn, context) {
             var self = this;
 
             S.each(self, function (n, i) {
-                n = new NodeList(n);
+                n = new Node(n);
                 return fn.call(context || n, n, i, self);
             });
 
@@ -161,7 +161,7 @@ KISSY.add(function (S, require) {
 
         /**
          * return last stack node list.
-         * @return {KISSY.NodeList}
+         * @return {KISSY.Node}
          */
         end: function () {
             var self = this;
@@ -169,26 +169,26 @@ KISSY.add(function (S, require) {
         },
 
         /**
-         * return new NodeList which contains only nodes which passes filter
+         * return new Node which contains only nodes which passes filter
          * @param {String|Function} filter
-         * @return {KISSY.NodeList}
+         * @return {KISSY.Node}
          */
         filter: function (filter) {
-            return new NodeList(Dom.filter(this, filter));
+            return new Node(Dom.filter(this, filter));
         },
 
         /**
          * Get node list which are descendants of current node list.
          * @param {String} selector Selector string
-         * @return {KISSY.NodeList}
+         * @return {KISSY.Node}
          */
         all: function (selector) {
             var ret,
                 self = this;
             if (self.length > 0) {
-                ret = NodeList.all(selector, self);
+                ret = Node.all(selector, self);
             } else {
-                ret = new NodeList();
+                ret = new Node();
             }
             ret.__parent = self;
             return ret;
@@ -197,7 +197,7 @@ KISSY.add(function (S, require) {
         /**
          * Get node list which match selector under current node list sub tree.
          * @param {String} selector
-         * @return {KISSY.NodeList}
+         * @return {KISSY.Node}
          */
         one: function (selector) {
             var self = this,
@@ -210,14 +210,14 @@ KISSY.add(function (S, require) {
         }
     };
 
-    S.mix(NodeList, {
+    S.mix(Node, {
         /**
          * Get node list from selector or construct new node list from html string.
          * Can also called from KISSY.all
-         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {String|KISSY.NodeList} [context] Search context for selector
-         * @return {KISSY.NodeList}
-         * @member KISSY.NodeList
+         * @param {String|KISSY.Node} selector Selector string or html string or common dom node.
+         * @param {String|KISSY.Node} [context] Search context for selector
+         * @return {KISSY.Node}
+         * @member KISSY.Node
          * @static
          */
         all: function (selector, context) {
@@ -234,47 +234,47 @@ KISSY.add(function (S, require) {
                     }
                     context = context.ownerDocument || context;
                 }
-                return new NodeList(selector, undefined, context);
+                return new Node(selector, undefined, context);
             }
-            return new NodeList(Dom.query(selector, context));
+            return new Node(Dom.query(selector, context));
         },
 
         /**
          * Get node list with length of one
          * from selector or construct new node list from html string.
-         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {String|KISSY.NodeList} [context] Search context for selector
-         * @return {KISSY.NodeList}
-         * @member KISSY.NodeList
+         * @param {String|KISSY.Node} selector Selector string or html string or common dom node.
+         * @param {String|KISSY.Node} [context] Search context for selector
+         * @return {KISSY.Node}
+         * @member KISSY.Node
          * @static
          */
         one: function (selector, context) {
-            var all = NodeList.all(selector, context);
+            var all = Node.all(selector, context);
             return all.length ? all.slice(0, 1) : null;
         }
     });
 
     /**
      * Same with {@link KISSY.DOM.NodeType}
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @property NodeType
      * @static
      */
-    NodeList.NodeType = NodeType;
+    Node.NodeType = NodeType;
 
-    NodeList.KeyCode = Event.KeyCode;
+    Node.KeyCode = Event.KeyCode;
 
-    NodeList.Gesture = Gesture.Enumeration;
+    Node.Gesture = Gesture.Enumeration;
 
-    NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
+    Node.REPLACE_HISTORY = Event.REPLACE_HISTORY;
 
-    return NodeList;
+    return Node;
 });
 
 /*
  Notes:
  2011-05-25
- - yiminghe@gmail.com：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
+ - yiminghe@gmail.com：参考 jquery，只有一个 Node 对象
 
  2010.04
  - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
@@ -282,6 +282,6 @@ KISSY.add(function (S, require) {
  性能，以易用为首。
  - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
  - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
- 直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
+ 直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 Node 里。可
  以说，技术成本会制约 api 设计。
  */

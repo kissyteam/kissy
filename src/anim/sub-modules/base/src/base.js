@@ -5,7 +5,6 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('dom'),
-        UA = require('ua'),
         Utils = require('./base/utils'),
         Q = require('./base/queue'),
         Promise = require('promise'),
@@ -185,11 +184,8 @@ KISSY.add(function (S, require) {
                     // inline element should has layout/inline-block
                     if (Dom.css(node, 'display') === 'inline' &&
                         Dom.css(node, 'float') === 'none') {
-                        if (UA.ieMode < 10) {
-                            elStyle.zoom = 1;
-                        } else {
-                            elStyle.display = 'inline-block';
-                        }
+                        elStyle.zoom = 1;
+                        elStyle.display = 'inline-block';
                     }
                 }
 

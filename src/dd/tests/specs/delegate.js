@@ -2,12 +2,18 @@
  * @module  delegate-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
-    var $ = Node.all,
+KISSY.add(function (S, require) {
+    var Node = require('node'),
+        $ = Node.all,
+        win = $(window),
+        DD = require('dd'),
+        Proxy = require('dd/plugin/proxy'),
+        IO = require('io'),
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
 
     var ie = S.UA.ieMode;
+
     if (ie === 9 || ie === 11) {
         return;
     }
@@ -85,8 +91,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
             runs(function () {
                 jasmine.simulate(c2.one('.cheader')[0], 'mousedown', {
-                    clientX: c2.offset().left + 5 - Dom.scrollLeft(),
-                    clientY: c2.offset().top + 5 - Dom.scrollTop()
+                    clientX: c2.offset().left + 5 - win.scrollLeft(),
+                    clientY: c2.offset().top + 5 - win.scrollTop()
                 });
             });
 
@@ -95,16 +101,16 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             // 10px move to start
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: c2.offset().left + 15 - Dom.scrollLeft(),
-                    clientY: c2.offset().top + 15 - Dom.scrollTop()
+                    clientX: c2.offset().left + 15 - win.scrollLeft(),
+                    clientY: c2.offset().top + 15 - win.scrollTop()
                 });
             });
 
             waits(400);
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: c1.offset().left + 5 - Dom.scrollLeft(),
-                    clientY: c1.offset().top + 5 - Dom.scrollTop()
+                    clientX: c1.offset().left + 5 - win.scrollLeft(),
+                    clientY: c1.offset().top + 5 - win.scrollTop()
                 });
             });
 
@@ -112,8 +118,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             waits(400);
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
-                    clientY: c1.offset().top + 6 - Dom.scrollTop()
+                    clientX: c1.offset().left + 6 - win.scrollLeft(),
+                    clientY: c1.offset().top + 6 - win.scrollTop()
                 });
             });
 
@@ -121,8 +127,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             waits(400);
             runs(function () {
                 jasmine.simulate(document, 'mouseup', {
-                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
-                    clientY: c1.offset().top + 6 - Dom.scrollTop()
+                    clientX: c1.offset().left + 6 - win.scrollLeft(),
+                    clientY: c1.offset().top + 6 - win.scrollTop()
                 });
             });
 
@@ -173,7 +179,6 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
 
             dragDelegate.on('dragover', function (ev) {
-                alert(1);
                 var drag = ev.drag;
                 var drop = ev.drop;
                 var dragNode = drag.get('dragNode'),
@@ -197,8 +202,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
             runs(function () {
                 jasmine.simulate(c2.one('.cheader')[0], 'mousedown', {
-                    clientX: c2.offset().left + 5 - Dom.scrollLeft(),
-                    clientY: c2.offset().top + 5 - Dom.scrollTop()
+                    clientX: c2.offset().left + 5 - win.scrollLeft(),
+                    clientY: c2.offset().top + 5 - win.scrollTop()
                 });
             });
 
@@ -207,16 +212,16 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             // 10px move to start
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: c2.offset().left + 15 - Dom.scrollLeft(),
-                    clientY: c2.offset().top + 15 - Dom.scrollTop()
+                    clientX: c2.offset().left + 15 - win.scrollLeft(),
+                    clientY: c2.offset().top + 15 - win.scrollTop()
                 });
             });
 
             waits(400);
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: c1.offset().left + 5 - Dom.scrollLeft(),
-                    clientY: c1.offset().top + 5 - Dom.scrollTop()
+                    clientX: c1.offset().left + 5 - win.scrollLeft(),
+                    clientY: c1.offset().top + 5 - win.scrollTop()
                 });
             });
 
@@ -224,8 +229,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             waits(400);
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
-                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
-                    clientY: c1.offset().top + 6 - Dom.scrollTop()
+                    clientX: c1.offset().left + 6 - win.scrollLeft(),
+                    clientY: c1.offset().top + 6 - win.scrollTop()
                 });
             });
 
@@ -233,8 +238,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             waits(400);
             runs(function () {
                 jasmine.simulate(document, 'mouseup', {
-                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
-                    clientY: c1.offset().top + 6 - Dom.scrollTop()
+                    clientX: c1.offset().left + 6 - win.scrollLeft(),
+                    clientY: c1.offset().top + 6 - win.scrollTop()
                 });
             });
 
@@ -256,8 +261,4 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
     });
 
-}, {
-    requires: ['event', 'node', 'dd', 'dom',
-        'dd/plugin/proxy',
-        'io']
 });

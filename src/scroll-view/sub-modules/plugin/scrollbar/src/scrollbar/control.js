@@ -264,7 +264,7 @@ KISSY.add(function (S, require) {
 
             /**
              * whether auto hide scrollbar after scroll end.
-             * Defaults: true for touch device, false for non-touch device.
+             * Defaults: true for ios device, false for non-touch device.
              * @cfg {Boolean} autoHide
              */
             /**
