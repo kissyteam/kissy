@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 18:22
+build time: Apr 3 19:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,8 +9,7 @@ build time: Apr 2 18:22
  ua
 */
 
-KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
-  require("util");
+KISSY.add("ua", [], function(S, require, exports, module, undefined) {
   var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || "";
   function numberify(s) {
     var c = 0;
@@ -168,15 +167,16 @@ KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
   UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
   var browsers = ["webkit", "trident", "gecko", "presto", "chrome", "safari", "firefox", "ie", "opera"], documentElement = doc && doc.documentElement, className = "";
   if(documentElement) {
-    S.each(browsers, function(key) {
+    for(var i = 0;i < browsers.length;i++) {
+      var key = browsers[i];
       var v = UA[key];
       if(v) {
         className += " ks-" + key + (parseInt(v, 10) + "");
         className += " ks-" + key
       }
-    });
+    }
     if(className) {
-      documentElement.className = S.trim(documentElement.className + className)
+      documentElement.className = (documentElement.className + className).replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
     }
   }
   return UA

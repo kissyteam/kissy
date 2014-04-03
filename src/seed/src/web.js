@@ -12,13 +12,11 @@ KISSY.config({
     }
 });
 
-var prefix = location.protocol === 'https' ?
-    'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
-
 KISSY.config({
     packages: {
         gallery: {
-            base: prefix
+            base: location.protocol === 'https' ?
+                'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'
         }
     }
 });

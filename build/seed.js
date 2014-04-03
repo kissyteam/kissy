@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 18:22
+build time: Apr 3 19:02
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 18:21
+build time: Apr 3 19:02
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140402182149' will replace with current timestamp when compressing.
+         * NOTICE: '20140403190159' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140402182149',
+        __BUILD_TIME: '20140403190159',
 
         /**
          * KISSY Environment.
@@ -2350,7 +2350,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140402182149';
+    var TIMESTAMP = '20140403190159';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2470,7 +2470,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 18:22
+build time: Apr 3 19:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3321,7 +3321,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 18:22
+build time: Apr 3 19:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3329,8 +3329,7 @@ build time: Apr 2 18:22
  ua
 */
 
-KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
-  require("util");
+KISSY.add("ua", [], function(S, require, exports, module, undefined) {
   var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || "";
   function numberify(s) {
     var c = 0;
@@ -3488,15 +3487,16 @@ KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
   UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
   var browsers = ["webkit", "trident", "gecko", "presto", "chrome", "safari", "firefox", "ie", "opera"], documentElement = doc && doc.documentElement, className = "";
   if(documentElement) {
-    S.each(browsers, function(key) {
+    for(var i = 0;i < browsers.length;i++) {
+      var key = browsers[i];
       var v = UA[key];
       if(v) {
         className += " ks-" + key + (parseInt(v, 10) + "");
         className += " ks-" + key
       }
-    });
+    }
     if(className) {
-      documentElement.className = S.trim(documentElement.className + className)
+      documentElement.className = (documentElement.className + className).replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
     }
   }
   return UA
@@ -3505,7 +3505,7 @@ KISSY.add("ua", ["util"], function(S, require, exports, module, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 2 18:22
+build time: Apr 3 19:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3655,13 +3655,11 @@ KISSY.config({
     }
 });
 
-var prefix = location.protocol === 'https' ?
-    'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
-
 KISSY.config({
     packages: {
         gallery: {
-            base: prefix
+            base: location.protocol === 'https' ?
+                'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'
         }
     }
 });
