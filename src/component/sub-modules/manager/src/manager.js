@@ -27,19 +27,17 @@ KISSY.add(function (S) {
 
         /**
          * associate id with component
-         * @param {String} id
          * @param {KISSY.Component.Control} component
          */
-        addComponent: function (id, component) {
-            componentInstances[id] = component;
+        addComponent: function (component) {
+            componentInstances[component.get('id')] = component;
         },
 
         /**
          * remove association id with component
-         * @param {String} id
          */
-        removeComponent: function (id) {
-            delete componentInstances[id];
+        removeComponent: function (component) {
+            delete componentInstances[component.get('id')];
         },
 
         /**

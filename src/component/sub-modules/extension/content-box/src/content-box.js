@@ -7,20 +7,19 @@ KISSY.add(function (S, require) {
     var ContentTpl = require('component/extension/content-xtpl');
 
     function shortcut(self) {
-        var control = self.control;
-        var contentEl = control.get('contentEl');
-        self.$contentEl = control.$contentEl = contentEl;
-        self.contentEl = control.contentEl = contentEl[0];
+        var contentEl = this.get('contentEl');
+        self.$contentEl = this.$contentEl = contentEl;
+        self.contentEl = this.contentEl = contentEl[0];
     }
 
     /**
      * content-render extension for component system
-     * @class KISSY.Component.Extension.ContentRender
+     * @class KISSY.Component.Extension.ContentBox
      */
-    function ContentRender() {
+    function ContentBox() {
     }
 
-    ContentRender.prototype = {
+    ContentBox.prototype = {
         __beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {
                 contentEl: '#ks-content-{id}'
@@ -37,21 +36,20 @@ KISSY.add(function (S, require) {
 
         getChildrenContainerEl: function () {
             // can not use $contentEl, maybe called by decorateDom method
-            return this.control.get('contentEl');
+            return this.get('contentEl');
         },
 
         _onSetContent: function (v) {
-            var control = this.control,
-                contentEl = control.$contentEl;
+            var contentEl = this.$contentEl;
             contentEl.html(v);
             // ie needs to set unselectable attribute recursively
-            if (!control.get('allowTextSelection')) {
+            if (!this.get('allowTextSelection')) {
                 contentEl.unselectable();
             }
         }
     };
 
-    S.mix(ContentRender, {
+    S.mix(ContentBox, {
         ATTRS: {
             contentTpl: {
                 value: ContentTpl
@@ -67,5 +65,5 @@ KISSY.add(function (S, require) {
         }
     });
 
-    return ContentRender;
+    return ContentBox;
 });

@@ -5,8 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node'),
-        Control = require('component/control'),
-        ButtonRender = require('button/render');
+        Control = require('component/control');
 
     var KeyCode = Node.KeyCode;
     /**
@@ -17,6 +16,18 @@ KISSY.add(function (S, require) {
     return Control.extend({
         isButton: 1,
 
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            S.mix(renderData.elAttrs, {
+                role: 'button',
+                title: renderData.tooltip,
+                'aria-describedby': renderData.describedby
+            });
+            if (renderData.checked) {
+                renderData.elCls.push(self.getBaseCssClasses('checked'));
+            }
+        },
+
         bindUI: function () {
             this.$el.on('keyup', this.handleKeyDownInternal, this);
         },
@@ -25,7 +36,7 @@ KISSY.add(function (S, require) {
             if (e.keyCode === KeyCode.ENTER &&
                 e.type === 'keydown' ||
                 e.keyCode === KeyCode.SPACE &&
-                    e.type === 'keyup') {
+                e.type === 'keyup') {
                 return this.handleClickInternal(e);
             }
             // Return true for space keypress (even though the event is handled on keyup)
@@ -42,6 +53,20 @@ KISSY.add(function (S, require) {
             }
             // button 的默认行为就是触发 click
             self.fire('click');
+        },
+
+        _onSetChecked: function (v) {
+            var self = this,
+                cls = self.getBaseCssClasses('checked');
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
+        },
+
+        _onSetTooltip: function (title) {
+            this.el.setAttribute('title', title);
+        },
+
+        _onSetDescribedby: function (describedby) {
+            this.el.setAttribute('aria-describedby', describedby);
         }
     }, {
         ATTRS: {
@@ -71,7 +96,8 @@ KISSY.add(function (S, require) {
              */
             describedby: {
                 value: '',
-                view: 1
+                view: 1,
+                sync: 0
             },
             /**
              * Tooltip for button.
@@ -87,7 +113,8 @@ KISSY.add(function (S, require) {
              */
             tooltip: {
                 value: '',
-                view: 1
+                view: 1,
+                sync: 0
             },
 
             /**
@@ -116,11 +143,8 @@ KISSY.add(function (S, require) {
              */
             checked: {
                 value: false,
-                view: 1
-            },
-
-            xrender: {
-                value: ButtonRender
+                view: 1,
+                sync: 0
             }
         },
         xclass: 'button'

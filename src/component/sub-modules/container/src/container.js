@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var ContainerRender = require('./container/render');
+    var Manager = require('component/manager');
 
     function defAddChild(e) {
         var self = this;
@@ -165,7 +165,7 @@ KISSY.add(function (S, require) {
                 cEl,
                 contentEl;
             c = children[childIndex];
-            contentEl = self.view.getChildrenContainerEl();
+            contentEl = self.getChildrenContainerEl();
             domContentEl = contentEl[0];
             elBefore = domContentEl.children[childIndex] || null;
             if (c.get('rendered')) {
@@ -239,6 +239,33 @@ KISSY.add(function (S, require) {
             return children[index] || null;
         },
 
+        // decorate child element from parent component's root element.
+        decorateDom: function () {
+            var self = this,
+                childrenContainerEl = self.getChildrenContainerEl(),
+                defaultChildCfg = self.get('defaultChildCfg'),
+                prefixCls = defaultChildCfg.prefixCls,
+                defaultChildXClass = defaultChildCfg.xclass,
+                childrenComponents = [],
+                children = childrenContainerEl.children();
+            children.each(function (c) {
+                var ChildUI = self.getComponentConstructorByNode(prefixCls, c) ||
+                    defaultChildXClass &&
+                    Manager.getConstructorByXClass(defaultChildXClass);
+                if (ChildUI) {
+                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
+                        srcNode: c
+                    })));
+                }
+            });
+            self.set('children', childrenComponents);
+        },
+
+        // Return the dom element into which child component to be rendered.
+        getChildrenContainerEl: function () {
+            return this.$el;
+        },
+
         /**
          * destroy children
          * @protected
@@ -300,10 +327,6 @@ KISSY.add(function (S, require) {
              */
             defaultChildCfg: {
                 value: {}
-            },
-
-            xrender: {
-                value: ContainerRender
             }
         },
         name: 'container'

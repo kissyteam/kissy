@@ -48,8 +48,8 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "component/extension/align": {
             "base": "/kissy/src/component/sub-modules/extension/align/src/align"
         },
-        "component/extension/content-render": {
-            "base": "/kissy/src/component/sub-modules/extension/content-render/src/content-render"
+        "component/extension/content-box": {
+            "base": "/kissy/src/component/sub-modules/extension/content-box/src/content-box"
         },
         "component/extension/content-xtpl": {
             "base": "/kissy/src/component/sub-modules/extension/content-xtpl/src/content-xtpl"

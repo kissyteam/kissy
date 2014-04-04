@@ -4,7 +4,7 @@ KISSY.add(function (S, Node, Control) {
         it('html_parser called', function () {
             var node = $('<div></div>').appendTo('body');
             var order = [];
-            var MyRender = Control.getDefaultRender().extend({}, {
+            var MyControl = Control.extend({}, {
                 HTML_PARSER: {
                     x: function () {
                         order.push(1);
@@ -14,27 +14,13 @@ KISSY.add(function (S, Node, Control) {
                     }
                 }
             });
-            var MyControl = Control.extend({}, {
-                ATTRS: {
-                    xrender: {
-                        value: MyRender
-                    }
-                }
-            });
-            var MyRender2 = MyRender.extend({}, {
+            var MyControl2 = MyControl.extend({}, {
                 HTML_PARSER: {
                     x: function () {
                         order.push(11);
                     },
                     y2: function () {
                         order.push(33);
-                    }
-                }
-            });
-            var MyControl2 = MyControl.extend({}, {
-                ATTRS: {
-                    xrender: {
-                        value: MyRender2
                     }
                 }
             });

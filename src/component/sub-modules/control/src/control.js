@@ -5,21 +5,95 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
-    var ControlProcess = require('./control/process');
     var Manager = require('component/manager');
-    var Render = require('./control/render');
+    var Base = require('base');
+    var RenderTpl = require('./control/render-xtpl');
     var UA = require('ua');
-    var ie = UA.ieMode,
-        Feature = S.Feature,
-        Gesture = Node.Gesture,
-        isTouchGestureSupported = Feature.isTouchGestureSupported();
+    var ie = UA.ieMode;
+    var Feature = S.Feature;
+    var __getHook = Base.prototype.__getHook;
+    var Gesture = Node.Gesture;
+    var startTpl = RenderTpl;
+    var endTpl = '</div>';
+    var isTouchGestureSupported = Feature.isTouchGestureSupported();
+    var noop = S.noop;
+    var XTemplateRuntime = require('xtemplate/runtime');
+    var trim = S.trim;
+    var $ = Node.all;
+    var doc = S.Env.host.document;
+    var HTML_PARSER = 'HTML_PARSER';
+
+    function normalExtras(extras) {
+        if (!extras) {
+            extras = [''];
+        }
+        if (typeof extras === 'string') {
+            extras = extras.split(/\s+/);
+        }
+        return extras;
+    }
+
+    function prefixExtra(prefixCls, componentCls, extras) {
+        var cls = '',
+            i = 0,
+            l = extras.length,
+            e,
+            prefix = prefixCls + componentCls;
+        for (; i < l; i++) {
+            e = extras[i];
+            e = e ? ('-' + e) : e;
+            cls += ' ' + prefix + e;
+        }
+        return cls;
+    }
+
+    function pxSetter(v) {
+        if (typeof v === 'number') {
+            v += 'px';
+        }
+        return v;
+    }
+
+    function applyParser(srcNode, parser) {
+        var self = this,
+            p, v, ret;
+
+        // 从 parser 中，默默设置属性，不触发事件
+        // html parser 优先，超过 js 配置值
+        for (p in parser) {
+            v = parser[p];
+            // 函数
+            if (typeof v === 'function') {
+                // html parser 放弃
+                ret = v.call(self, srcNode);
+                if (ret !== undefined) {
+                    self.setInternal(p, ret);
+                }
+            } else if (typeof v === 'string') {
+                // 单选选择器
+                self.setInternal(p, srcNode.one(v));
+            } else if (S.isArray(v) && v[0]) {
+                // 多选选择器
+                self.setInternal(p, srcNode.all(v[0]));
+            }
+        }
+    }
+
+    // scope option
+    function getBaseCssClassesCmd(_, options) {
+        return this.config.control.getBaseCssClasses(options && options.params && options.params[0]);
+    }
+
+    function getBaseCssClassCmd() {
+        return this.config.control.getBaseCssClass(arguments[1].params[0]);
+    }
 
     /**
      * Base Control class for KISSY Component.
-     * @extends KISSY.Component.Process
+     * @extends KISSY.Base
      * @class KISSY.Component.Control
      */
-    var Control = ControlProcess.extend({
+    var Control = Base.extend({
             /**
              * mark current instance as control instance.
              *
@@ -34,48 +108,122 @@ KISSY.add(function (S, require) {
              */
             isControl: true,
 
+            bindInternal: noop,
+
+            syncInternal: noop,
+
+            beforeCreateDom: function (renderData) {
+                var self = this,
+                    width,
+                    height,
+                    visible,
+                    elAttrs = self.get('elAttrs'),
+                    disabled,
+                    attrs = self.getAttrs(),
+                    a,
+                    attr,
+                    elStyle = self.get('elStyle'),
+                    zIndex,
+                    elCls = self.get('elCls');
+
+                for (a in attrs) {
+                    attr = attrs[a];
+                    if (attr.view) {
+                        renderData[a] = self.get(a);
+                    }
+                }
+
+                width = renderData.width;
+                height = renderData.height;
+                visible = renderData.visible;
+                zIndex = renderData.zIndex;
+
+                if (width) {
+                    elStyle.width = pxSetter(width);
+                }
+                if (height) {
+                    elStyle.height = pxSetter(height);
+                }
+                if (zIndex) {
+                    elStyle['z-index'] = zIndex;
+                }
+
+                if (!visible) {
+                    elCls.push(self.getBaseCssClasses('hidden'));
+                }
+
+                if ((disabled = self.get('disabled'))) {
+                    elCls.push(self.getBaseCssClasses('disabled'));
+                    elAttrs['aria-disabled'] = 'true';
+                }
+                if (self.get('highlighted')) {
+                    elCls.push(self.getBaseCssClasses('hover'));
+                }
+                if (self.get('focusable')) {
+                    // ie9 support outline
+                    if (UA.ieMode < 9) {
+                        elAttrs.hideFocus = 'true';
+                    }
+                    elAttrs.tabindex = disabled ? '-1' : '0';
+                }
+            },
+
             /**
              * Constructor(or get) view object to create ui elements.
              * @protected
              */
             createDom: function () {
-                var self = this,
-                    Render = self.get('xrender'),
-                    view = self.get('view'),
-                    id = self.get('id'),
-                    el;
+                var self = this;
+                self.beforeCreateDom(self.renderData = {},
+                    self.childrenElSelectors = {},
+                    self.renderCommands = {
+                        getBaseCssClasses: getBaseCssClassesCmd,
+                        getBaseCssClass: getBaseCssClassCmd
+                    });
                 // initialize view
                 // allow custom view instance
-                if (view) {
-                    view.set('control', self);
-                } else {
-                    self.set('view', this.view = view = new Render({
-                        control: self
-                    }));
-                }
-                view.create();
-                el = view.getKeyEventTarget();
-                if (!self.get('allowTextSelection')) {
-                    el.unselectable();
-                }
-                // after retrieve id from srcNode
-                Manager.addComponent(id, self);
+                var html = self.renderTpl(startTpl) + self.renderTpl(self.get('contentTpl')) + endTpl;
+                self.$el = $(html);
+                self.el = self.$el[0];
+                self.fillChildrenElsBySelectors();
+            },
+
+            decorateDom: function (srcNode) {
+                var self = this;
+                applyParser.call(self, srcNode, self.constructor.HTML_PARSER);
+                self.$el = srcNode;
+                self.el = srcNode[0];
             },
 
             /**
              * Call view object to render ui elements.
              * @protected
-             *
              */
             renderUI: function () {
-                this.view.renderUI();
-                // bind view before bind control
-                this.view.bindUI();
+                var self = this;
+                // after create
+                Manager.addComponent(self);
+                var el = self.getKeyEventTarget();
+                if (!self.get('allowTextSelection')) {
+                    el.unselectable();
+                }
+                // need to insert created dom into body
+                if (!self.get('srcNode')) {
+                    var render = self.get('render'),
+                        renderBefore = self.get('elBefore');
+                    if (renderBefore) {
+                        el.insertBefore(renderBefore, undefined);
+                    } else if (render) {
+                        el.appendTo(render, undefined);
+                    } else {
+                        el.appendTo(doc.body, undefined);
+                    }
+                }
             },
 
             bindUI: function () {
                 var self = this,
-                    el = self.view.getKeyEventTarget();
+                    el = self.getKeyEventTarget();
 
                 if (self.get('focusable')) {
                     // remove smart outline in ie
@@ -109,9 +257,7 @@ KISSY.add(function (S, require) {
                 }
             },
 
-            syncUI: function () {
-                this.view.syncUI();
-            },
+            syncUI: noop,
 
             /**
              * @protected
@@ -119,91 +265,144 @@ KISSY.add(function (S, require) {
             destructor: function () {
                 var self = this;
                 // remove instance from manager
-                Manager.removeComponent(self.get('id'));
-                if (self.view) {
-                    self.view.destroy();
-                } else if (self.get('srcNode')) {
-                    self.get('srcNode').remove();
+                Manager.removeComponent(self);
+                if (self.$el) {
+                    self.$el.remove();
                 }
-            },
-
-            createComponent: function (cfg, parent) {
-                return Manager.createComponent(cfg, parent || this);
-            },
-
-            _onSetFocused: function (v) {
-                var target = this.view.getKeyEventTarget()[0];
-                if (v) {
-                    try {
-                        target.focus();
-                    } catch (e) {
-                        S.log(target);
-                        S.log('focus error', 'warn');
-                    }
-                } else {
-                    // force to move focus if just this.set('focused',false);
-                    // do not changed focus if changed by other component focus
-                    if (target.ownerDocument.activeElement === target) {
-                        target.ownerDocument.body.focus();
-                    }
-                }
-            },
-
-            _onSetX: function (x) {
-                this.$el.offset({
-                    left: x
-                });
-            },
-
-            _onSetY: function (y) {
-                this.$el.offset({
-                    top: y
-                });
-            },
-
-            _onSetVisible: function (v) {
-                // do not fire event at render phrase
-                this.fire(v ? 'show' : 'hide');
             },
 
             /**
-             * show component
+             * create dom structure of this component
+             * (control will delegate to render).
              * @chainable
              */
-            show: function () {
+            create: function () {
                 var self = this;
-                self.render();
-                self.set('visible', true);
+                if (!self.get('created')) {
+                    /**
+                     * @event beforeCreateDom
+                     * fired before root node is created
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+                    self.fire('beforeCreateDom');
+                    var srcNode = self.get('srcNode');
+                    if (srcNode) {
+                        self.decorateDom(srcNode);
+                    } else {
+                        self.createDom();
+                    }
+                    self.__callPluginsMethod('pluginCreateDom');
+                    /**
+                     * @event afterCreateDom
+                     * fired when root node is created
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+                    self.fire('afterCreateDom');
+                    self.setInternal('created', true);
+                }
                 return self;
             },
 
             /**
-             * hide component
+             * Put dom structure of this component to document, bind event and sync attribute.
              * @chainable
              */
-            hide: function () {
+            render: function () {
                 var self = this;
-                self.set('visible', false);
+                // 是否已经渲染过
+                if (!self.get('rendered')) {
+                    self.create();
+
+                    /**
+                     * @event beforeRenderUI
+                     * fired when root node is ready
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+
+                    self.fire('beforeRenderUI');
+                    self.renderUI();
+                    self.__callPluginsMethod('pluginRenderUI');
+
+                    /**
+                     * @event afterRenderUI
+                     * fired after root node is rendered into dom
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+                    self.fire('afterRenderUI');
+
+                    /**
+                     * @event beforeBindUI
+                     * fired before component 's internal event is bind.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+
+                    self.fire('beforeBindUI');
+                    Control.superclass.bindInternal.call(self);
+                    self.bindUI();
+                    self.__callPluginsMethod('pluginBindUI');
+                    /**
+                     * @event afterBindUI
+                     * fired when component 's internal event is bind.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+                    self.fire('afterBindUI');
+
+                    /**
+                     * @event beforeSyncUI
+                     * fired before component 's internal state is synchronized.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+                    self.fire('beforeSyncUI');
+                    Control.superclass.syncInternal.call(self);
+                    self.syncUI();
+                    self.__callPluginsMethod('pluginSyncUI');
+                    /**
+                     * @event afterSyncUI
+                     * fired after component 's internal state is synchronized.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
+                    self.fire('afterSyncUI');
+
+                    self.setInternal('rendered', true);
+                }
                 return self;
             },
 
-            focus: function () {
-                if (this.get('focusable')) {
-                    this.set('focused', true);
+            plug: function (plugin) {
+                var self = this,
+                    p,
+                    plugins = self.get('plugins');
+                self.callSuper(plugin);
+                p = plugins[plugins.length - 1];
+                if (self.get('rendered')) {
+                    // plugin does not support decorate
+                    if (p.pluginCreateDom) {
+                        p.pluginCreateDom(self);
+                    }
+                    if (p.pluginRenderUI) {
+                        p.pluginCreateDom(self);
+                    }
+                    if (p.pluginBindUI) {
+                        p.pluginBindUI(self);
+                    }
+                    if (p.pluginSyncUI) {
+                        p.pluginSyncUI(self);
+                    }
+                } else if (self.get('created')) {
+                    if (p.pluginCreateDom) {
+                        p.pluginCreateDom(self);
+                    }
                 }
+                return self;
             },
 
-            blur: function () {
-                if (this.get('focusable')) {
-                    this.set('focused', false);
-                }
-            },
-
-            move: function (x, y) {
-                this.set({
-                    x: x,
-                    y: y
-                });
+            /**
+             * Returns the dom element which is responsible for listening keyboard events.
+             * @return {KISSY.NodeList}
+             * @ignore
+             */
+            getKeyEventTarget: function () {
+                return this.$el;
             },
 
             handleDblClick: function (ev) {
@@ -396,19 +595,284 @@ KISSY.add(function (S, require) {
                 if (self.get('focusable')) {
                     self.focus();
                 }
+            },
+
+            $: function (selector) {
+                return this.$el.all(selector);
+            },
+
+            fillChildrenElsBySelectors: function (childrenElSelectors) {
+                var self = this,
+                    el = self.$el,
+                    childName,
+                    selector;
+
+                childrenElSelectors = childrenElSelectors || self.childrenElSelectors;
+
+                for (childName in childrenElSelectors) {
+                    selector = childrenElSelectors[childName];
+                    if (typeof selector === 'function') {
+                        self.setInternal(childName, selector(el));
+                    } else {
+                        self.setInternal(childName, self.$(S.substitute(selector, self.renderData)));
+                    }
+                    delete childrenElSelectors[childName];
+                }
+            },
+
+            renderTpl: function (tpl, renderData, renderCommands) {
+                var self = this;
+                renderData = renderData || self.renderData;
+                renderCommands = renderCommands || self.renderCommands;
+                var XTemplate = self.get('XTemplate');
+                return new XTemplate(tpl, {
+                    control: self,
+                    commands: renderCommands
+                }).render(renderData);
+            },
+
+            /**
+             * Get component's constructor from KISSY Node.
+             * @param prefixCls
+             * @param {KISSY.NodeList} childNode Child component's root node.
+             */
+            getComponentConstructorByNode: function (prefixCls, childNode) {
+                var cls = childNode[0].className;
+                // 过滤掉特定前缀
+                if (cls) {
+                    cls = cls.replace(new RegExp('\\b' + prefixCls, 'ig'), '');
+                    return Manager.getConstructorByXClass(cls);
+                }
+                return null;
+            },
+
+            getComponentCssClasses: function () {
+                var self = this;
+                if (self.componentCssClasses) {
+                    return self.componentCssClasses;
+                }
+                var constructor = self.constructor,
+                    xclass,
+                    re = [];
+                while (constructor && !constructor.prototype.hasOwnProperty('isControl')) {
+                    xclass = constructor.xclass;
+                    if (xclass) {
+                        re.push(xclass);
+                    }
+                    constructor = constructor.superclass && constructor.superclass.constructor;
+                }
+                self.componentCssClasses = re;
+                return re;
+            },
+
+            /**
+             * Get all css class name to be applied to the root element of this component for given extra class names.
+             * the css class names are prefixed with component name.
+             * @param extras {String[]|String} class names without prefixCls and current component class name.
+             */
+            getBaseCssClasses: function (extras) {
+                extras = normalExtras(extras);
+                var componentCssClasses = this.getComponentCssClasses(),
+                    i = 0,
+                    cls = '',
+                    l = componentCssClasses.length,
+                    prefixCls = this.get('prefixCls');
+                for (; i < l; i++) {
+                    cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
+                }
+                return trim(cls);
+            },
+
+            /**
+             * Get full class name (with prefix) for current component
+             * @param extras {String[]|String} class names without prefixCls and current component class name.
+             * @method
+             * @return {String} class name with prefixCls and current component class name.
+             */
+            getBaseCssClass: function (extras) {
+                return trim(prefixExtra(this.get('prefixCls'),
+                    this.getComponentCssClasses()[0],
+                    normalExtras(extras)
+                ));
+            },
+
+            createComponent: function (cfg, parent) {
+                return Manager.createComponent(cfg, parent || this);
+            },
+
+            /**
+             * show component
+             * @chainable
+             */
+            show: function () {
+                var self = this;
+                self.render();
+                self.set('visible', true);
+                return self;
+            },
+
+            /**
+             * hide component
+             * @chainable
+             */
+            hide: function () {
+                var self = this;
+                self.set('visible', false);
+                return self;
+            },
+
+            focus: function () {
+                if (this.get('focusable')) {
+                    this.set('focused', true);
+                }
+            },
+
+            blur: function () {
+                if (this.get('focusable')) {
+                    this.set('focused', false);
+                }
+            },
+
+            move: function (x, y) {
+                this.set({
+                    x: x,
+                    y: y
+                });
+            },
+
+
+            _onSetWidth: function (w) {
+                this.$el.width(w);
+            },
+
+            _onSetHeight: function (h) {
+                this.$el.height(h);
+            },
+
+            _onSetContent: function (c) {
+                var el = this.$el;
+                el.html(c);
+                // ie needs to set unselectable attribute recursively
+                if (!this.get('allowTextSelection')) {
+                    el.unselectable();
+                }
+            },
+
+            _onSetVisible: function (visible) {
+                var self = this,
+                    el = self.$el,
+                    hiddenCls = self.getBaseCssClasses('hidden');
+                if (visible) {
+                    el.removeClass(hiddenCls);
+                } else {
+                    el.addClass(hiddenCls);
+                }
+                // do not fire event at render phrase
+                this.fire(visible ? 'show' : 'hide');
+            },
+
+            /**
+             * @ignore
+             */
+            _onSetHighlighted: function (v) {
+                var self = this,
+                    componentCls = self.getBaseCssClasses('hover'),
+                    el = self.$el;
+                el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+            /**
+             * @ignore
+             */
+            _onSetDisabled: function (v) {
+                var self = this,
+                    componentCls = self.getBaseCssClasses('disabled'),
+                    el = self.$el;
+                el[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr('aria-disabled', v);
+                if (self.get('focusable')) {
+                    //不能被 tab focus 到
+                    self.getKeyEventTarget().attr('tabindex', v ? -1 : 0);
+                }
+            },
+            /**
+             * @ignore
+             */
+            _onSetActive: function (v) {
+                var self = this,
+                    componentCls = self.getBaseCssClasses('active');
+                self.$el[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr('aria-pressed', !!v);
+            },
+
+            _onSetZIndex: function (x) {
+                this.$el.css('z-index', x);
+            },
+
+            _onSetFocused: function (v) {
+                var target = this.getKeyEventTarget()[0];
+                if (v) {
+                    try {
+                        target.focus();
+                    } catch (e) {
+                        S.log(target);
+                        S.log('focus error', 'warn');
+                    }
+                } else {
+                    // force to move focus if just this.set('focused',false);
+                    // do not changed focus if changed by other component focus
+                    if (target.ownerDocument.activeElement === target) {
+                        target.ownerDocument.body.focus();
+                    }
+                }
+                var self = this,
+                    el = self.$el,
+                    componentCls = self.getBaseCssClasses('focused');
+                el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+            _onSetX: function (x) {
+                this.$el.offset({
+                    left: x
+                });
+            },
+
+            _onSetY: function (y) {
+                this.$el.offset({
+                    top: y
+                });
             }
         },
         {
+            __hooks__: {
+                beforeCreateDom: __getHook('__beforeCreateDom'),
+                createDom: __getHook('__createDom'),
+                decorateDom: __getHook('__decorateDom'),
+                renderUI: __getHook('__renderUI'),
+                bindUI: __getHook('__bindUI'),
+                syncUI: __getHook('__syncUI')
+            },
+
             name: 'control',
 
-            ATTRS: {
-                id: {
-                    view: 1,
-                    valueFn: function () {
-                        return S.guid('ks-component');
+            HTML_PARSER: {
+                id: function (el) {
+                    var id = el.attr('id');
+                    if (!id) {
+                        id = S.guid('ks-component');
+                        el.attr('id', id);
                     }
+                    return id;
                 },
+                content: function (el) {
+                    return el.html();
+                },
+                disabled: function (el) {
+                    return el.hasClass(this.getBaseCssClass('disabled'));
+                }
+            },
 
+            ATTRS: {
                 /**
                  * component's html content. Note: content and srcNode can not be set both!
                  * @type {String|KISSY.NodeList}
@@ -423,6 +887,7 @@ KISSY.add(function (S, require) {
                  */
                 content: {
                     view: 1,
+                    sync: 0,
                     value: ''
                 },
 
@@ -439,7 +904,8 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 width: {
-                    view: 1
+                    view: 1,
+                    sync: 0
                 },
 
                 /**
@@ -455,7 +921,8 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 height: {
-                    view: 1
+                    view: 1,
+                    sync: 0
                 },
 
                 /**
@@ -498,33 +965,6 @@ KISSY.add(function (S, require) {
                 elAttrs: {
                     view: 1,
                     value: {}
-                },
-
-                /**
-                 * archor element where component insert before
-                 * @cfg {KISSY.NodeList} elBefore
-                 */
-                /**
-                 * @ignore
-                 */
-                elBefore: {
-                },
-
-                /**
-                 * root element of current component
-                 * @type {KISSY.NodeList}
-                 * @readonly
-                 * @property el
-                 */
-                /**
-                 * @ignore
-                 */
-                el: {
-                    setter: function (el) {
-                        // shortcut
-                        this.$el = el;
-                        this.el = el[0];
-                    }
                 },
 
                 /**
@@ -597,17 +1037,8 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 zIndex: {
-                    view: 1
-                },
-
-                /**
-                 * archor element where component append to
-                 * @cfg {KISSY.NodeList} render
-                 */
-                /**
-                 * @ignore
-                 */
-                render: {
+                    view: 1,
+                    sync: 0
                 },
 
                 /**
@@ -629,9 +1060,156 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 visible: {
+                    view: 1,
                     sync: 0,
-                    value: true,
-                    view: 1
+                    value: true
+                },
+
+
+                /**
+                 * Whether this component can be activated.
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {Boolean} activeable
+                 * @protected
+                 */
+                /**
+                 * @ignore
+                 */
+                activeable: {
+                    value: true
+                },
+
+                /**
+                 * Whether this component has focus.
+                 * @type {Boolean}
+                 * @property focused
+                 */
+                /**
+                 * Whether this component has focus on initialization.
+                 * @cfg {Boolean} focused
+                 */
+                /**
+                 * @ignore
+                 */
+                focused: {
+                },
+
+                /**
+                 * Whether this component is activated.
+                 * @type {Boolean}
+                 * @property active
+                 */
+                /**
+                 * @ignore
+                 */
+                active: {
+                    value: false
+                },
+
+                /**
+                 * Whether this component is highlighted.
+                 * @type {Boolean}
+                 * @property highlighted
+                 */
+                /**
+                 * @ignore
+                 */
+                highlighted: {
+                    view: 1,
+                    sync: 0,
+                    value: false
+                },
+
+                /**
+                 * Whether this component is disabled.
+                 * @type {Boolean}
+                 * @property disabled
+                 */
+                /**
+                 * Whether this component is disabled.
+                 * @cfg {Boolean} disabled
+                 */
+                /**
+                 * @ignore
+                 */
+                disabled: {
+                    view: 1,
+                    sync: 0,
+                    value: false
+                },
+
+                /**
+                 * Whether this component is rendered.
+                 * @type {Boolean}
+                 * @property rendered
+                 * @readonly
+                 */
+                /**
+                 * @ignore
+                 */
+                rendered: {
+                    value: false
+                },
+
+                /**
+                 * Whether this component 's dom structure is created.
+                 * @type {Boolean}
+                 * @property created
+                 * @readonly
+                 */
+                /**
+                 * @ignore
+                 */
+                created: {
+                    value: false
+                },
+
+                /**
+                 * archor element where component append to
+                 * @cfg {KISSY.NodeList} render
+                 */
+                /**
+                 * @ignore
+                 */
+                render: {
+                },
+
+                /**
+                 * component id
+                 * @cfg {String} id
+                 */
+                id: {
+                    view: 1,
+                    valueFn: function () {
+                        return S.guid('ks-component');
+                    }
+                },
+
+                /**
+                 * archor element where component insert before
+                 * @cfg {KISSY.NodeList} elBefore
+                 */
+                /**
+                 * @ignore
+                 */
+                elBefore: {
+                },
+
+                /**
+                 * root element of current component
+                 * @type {KISSY.NodeList}
+                 * @readonly
+                 * @property el
+                 */
+                /**
+                 * @ignore
+                 */
+                el: {
+                    getter: function () {
+                        return this.$el;
+                    }
                 },
 
                 /**
@@ -680,8 +1258,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 focusable: {
-                    value: true,
-                    view: 1
+                    value: true
                 },
 
                 /**
@@ -703,63 +1280,6 @@ KISSY.add(function (S, require) {
                 },
 
                 /**
-                 * Whether this component can be activated.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @cfg {Boolean} activeable
-                 * @protected
-                 */
-                /**
-                 * @ignore
-                 */
-                activeable: {
-                    value: true
-                },
-
-                /**
-                 * Whether this component has focus.
-                 * @type {Boolean}
-                 * @property focused
-                 */
-                /**
-                 * Whether this component has focus on initialization.
-                 * @cfg {Boolean} focused
-                 */
-                /**
-                 * @ignore
-                 */
-                focused: {
-                    view: 1
-                },
-
-                /**
-                 * Whether this component is activated.
-                 * @type {Boolean}
-                 * @property active
-                 */
-                /**
-                 * @ignore
-                 */
-                active: {
-                    view: 1,
-                    value: false
-                },
-
-                /**
-                 * Whether this component is highlighted.
-                 * @type {Boolean}
-                 * @property highlighted
-                 */
-                /**
-                 * @ignore
-                 */
-                highlighted: {
-                    view: 1,
-                    value: false
-                },
-
-                /**
                  * This component's prefix css class.
                  * @cfg {String} prefixCls
                  */
@@ -767,7 +1287,6 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 prefixCls: {
-                    view: 1,
                     value: S.config('component/prefixCls') || 'ks-'
                 },
                 /**
@@ -805,54 +1324,18 @@ KISSY.add(function (S, require) {
                     }
                 },
 
-                /**
-                 * Whether this component is disabled.
-                 * @type {Boolean}
-                 * @property disabled
-                 */
-                /**
-                 * Whether this component is disabled.
-                 * @cfg {Boolean} disabled
-                 */
-                /**
-                 * @ignore
-                 */
-                disabled: {
-                    view: 1,
-                    value: false
+
+                XTemplate: {
+                    value: XTemplateRuntime
                 },
 
-                /**
-                 * Render class.
-                 * @protected
-                 * @cfg {*} xrender
-                 */
-                /**
-                 * @ignore
-                 */
-                xrender: {
-                    value: Render
-                },
-
-                view: {
-                    setter: function (v) {
-                        this.view = v;
+                contentTpl: {
+                    value: function (scope, buffer) {
+                        return buffer.write(scope.get('content'));
                     }
                 }
             }
         });
-
-    function getDefaultRender() {
-        var attrs,
-            self = this;
-        do {
-            attrs = self.ATTRS;
-            self = self.superclass;
-        } while (!attrs || !attrs.xrender);
-        return attrs.xrender.value;
-    }
-
-    Control.getDefaultRender = getDefaultRender;
 
     /**
      * create a new control extend component/control, extensions and static/prototype properties/methods.
@@ -878,25 +1361,55 @@ KISSY.add(function (S, require) {
         var args = S.makeArray(arguments),
             self = this,
             xclass,
-            newClass,
             argsLen = args.length,
+            parsers = {},
             last = args[argsLen - 1];
 
         if (last && (xclass = last.xclass)) {
             last.name = xclass;
         }
 
-        newClass = ControlProcess.extend.apply(self, args);
+        var NewClass = Base.extend.apply(self, arguments);
+        NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
+        if (S.isArray(extensions)) {
+            // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+            // 主类最优先
+            S.each(extensions.concat(NewClass), function (ext) {
+                if (ext) {
+                    // 合并 HTML_PARSER 到主类
+                    S.each(ext.HTML_PARSER, function (v, name) {
+                        parsers[name] = v;
+                    });
+                }
+            });
+            NewClass[HTML_PARSER] = parsers;
+        }
+        S.mix(NewClass[HTML_PARSER], self[HTML_PARSER], false);
+        NewClass.extend = extend;
 
         if (xclass) {
-            Manager.setConstructorByXClass(xclass, newClass);
+            Manager.setConstructorByXClass(xclass, NewClass);
         }
 
-        newClass.extend = extend;
-        newClass.getDefaultRender = getDefaultRender;
-
-        return newClass;
+        return NewClass;
     };
+
+    /**
+     * Parse attribute from existing dom node.
+     * @static
+     * @protected
+     * @property HTML_PARSER
+     * @member KISSY.Component
+     *
+     * for example:
+     *     @example
+     *     Overlay.HTML_PARSER={
+     *          // el: root element of current component.
+     *          "isRed":function(el){
+     *              return el.hasClass("ks-red");
+     *          }
+     *      };
+     */
 
     return Control;
 });
