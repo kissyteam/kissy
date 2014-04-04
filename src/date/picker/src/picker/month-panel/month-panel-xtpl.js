@@ -1,15 +1,12 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, S, buffer, payload, undefined) {
+        var t = function (scope, buffer, payload, undefined) {
             var engine = this,
-                moduleWrap, nativeCommands = engine.nativeCommands,
+                nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
             if ("1.50" !== S.version) {
                 throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
-            if (typeof module !== "undefined" && module.kissy) {
-                moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
@@ -145,10 +142,8 @@ KISSY.add(function (S, require, exports, module) {
             var params31 = [];
             params31.push('date/picker/month-panel/months-xtpl');
             option30.params = params31;
-            if (moduleWrap) {
-                require("date/picker/month-panel/months-xtpl");
-                option30.params[0] = moduleWrap.resolve(option30.params[0]);
-            }
+            require("date/picker/month-panel/months-xtpl");
+            option30.params[0] = module.resolve(option30.params[0]);
             var commandRet32 = includeCommand.call(engine, scope, option30, buffer, 32, payload);
             if (commandRet32 && commandRet32.isBuffer) {
                 buffer = commandRet32;

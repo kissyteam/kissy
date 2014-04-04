@@ -282,35 +282,35 @@ if (! _$jscoverage['/menu/menuitem.js'].branchData) {
   _$jscoverage['/menu/menuitem.js'].branchData['67'][1] = new BranchData();
 }
 _$jscoverage['/menu/menuitem.js'].branchData['67'][1].init(325, 2, '!p');
-function visit41_67_1(result) {
+function visit38_67_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['67'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['65'][1].init(32, 34, '$(e).css(\'overflow\') !== \'visible\'');
-function visit40_65_1(result) {
+function visit37_65_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['60'][1].init(519, 1, 'v');
-function visit39_60_1(result) {
+function visit36_60_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['53'][1].init(25, 1, 'v');
-function visit38_53_1(result) {
+function visit35_53_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['50'][1].init(21, 20, 'self.get(\'rendered\')');
-function visit37_50_1(result) {
+function visit34_50_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['49'][2].init(94, 31, 'e && e.byPassSetHighlightedItem');
-function visit36_49_2(result) {
+function visit33_49_2(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['49'][2].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['49'][1].init(92, 34, '!(e && e.byPassSetHighlightedItem)');
-function visit35_49_1(result) {
+function visit32_49_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['36'][1].init(235, 22, 'self.get(\'selectable\')');
-function visit34_36_1(result) {
+function visit31_36_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].lineData[6]++;
@@ -334,7 +334,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem.js'].lineData[34]++;
   ev.preventDefault();
   _$jscoverage['/menu/menuitem.js'].lineData[36]++;
-  if (visit34_36_1(self.get('selectable'))) {
+  if (visit31_36_1(self.get('selectable'))) {
     _$jscoverage['/menu/menuitem.js'].lineData[37]++;
     self.set('selected', true);
   }
@@ -348,29 +348,29 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem.js'].lineData[46]++;
   var self = this, parent = self.get('parent');
   _$jscoverage['/menu/menuitem.js'].lineData[49]++;
-  if (visit35_49_1(!(visit36_49_2(e && e.byPassSetHighlightedItem)))) {
+  if (visit32_49_1(!(visit33_49_2(e && e.byPassSetHighlightedItem)))) {
     _$jscoverage['/menu/menuitem.js'].lineData[50]++;
-    if (visit37_50_1(self.get('rendered'))) {
+    if (visit34_50_1(self.get('rendered'))) {
       _$jscoverage['/menu/menuitem.js'].lineData[51]++;
       parent.set('highlightedItem', v ? self : null);
     } else {
       _$jscoverage['/menu/menuitem.js'].lineData[53]++;
-      if (visit38_53_1(v)) {
+      if (visit35_53_1(v)) {
         _$jscoverage['/menu/menuitem.js'].lineData[55]++;
         parent.set('highlightedItem', self);
       }
     }
   }
   _$jscoverage['/menu/menuitem.js'].lineData[60]++;
-  if (visit39_60_1(v)) {
+  if (visit36_60_1(v)) {
     _$jscoverage['/menu/menuitem.js'].lineData[61]++;
     var el = self.$el, p = el.parent(function(e) {
   _$jscoverage['/menu/menuitem.js'].functionData[3]++;
   _$jscoverage['/menu/menuitem.js'].lineData[65]++;
-  return visit40_65_1($(e).css('overflow') !== 'visible');
+  return visit37_65_1($(e).css('overflow') !== 'visible');
 }, parent.get('el').parent());
     _$jscoverage['/menu/menuitem.js'].lineData[67]++;
-    if (visit41_67_1(!p)) {
+    if (visit38_67_1(!p)) {
       _$jscoverage['/menu/menuitem.js'].lineData[68]++;
       return;
     }

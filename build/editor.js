@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 1 11:05
+build time: Apr 4 12:21
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -30,13 +30,10 @@ build time: Apr 1 11:05
 
 KISSY.add("editor/iframe-content-tpl", [], '<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');
 KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write('<div class="');

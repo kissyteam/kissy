@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:14
+build time: Apr 4 12:09
 */
 KISSY.add("anim/timer/easing",[],function(){function i(a){return a}function d(a,b,g,k){var e=3*a-3*g+1,c=3*g-6*a,f=3*a,h=3*b-3*k+1,i=3*k-6*b,j=3*b;return function(a){a:{for(var b=a,l,g,k=0;8>k;k++){g=((e*b+c)*b+f)*b-a;if(m(g)<o){a=b;break a}l=(3*e*b+2*c)*b+f;if(m(l)<o)break;b-=g/l}l=1;k=0;for(b=a;l>k;){g=((e*b+c)*b+f)*b-a;if(m(g)<o)break;0<g?l=b:k=b;b=(l+k)/2}a=b}return((h*a+i)*a+j)*a}}var h=Math.PI,j=Math.pow,b=Math.sin,c=parseFloat,f=/^cubic-bezier\(([^,]+),([^,]+),([^,]+),([^,]+)\)$/i,n={swing:function(a){return 0.5-
 Math.cos(a*h)/2},easeNone:i,linear:i,easeIn:function(a){return a*a},ease:d(0.25,0.1,0.25,1),"ease-in":d(0.42,0,1,1),"ease-out":d(0,0,0.58,1),"ease-in-out":d(0.42,0,0.58,1),"ease-out-in":d(0,0.42,1,0.58),toFn:function(a){var b;return(b=a.match(f))?d(c(b[1]),c(b[2]),c(b[3]),c(b[4])):n[a]||i},easeOut:function(a){return(2-a)*a},easeBoth:function(a){return 1>(a*=2)?0.5*a*a:0.5*(1- --a*(a-2))},easeInStrong:function(a){return a*a*a*a},easeOutStrong:function(a){return 1- --a*a*a*a},easeBothStrong:function(a){return 1>

@@ -231,6 +231,9 @@ if (! _$jscoverage['/touch.js']) {
   _$jscoverage['/touch.js'].lineData = [];
   _$jscoverage['/touch.js'].lineData[1] = 0;
   _$jscoverage['/touch.js'].lineData[2] = 0;
+  _$jscoverage['/touch.js'].lineData[4] = 0;
+  _$jscoverage['/touch.js'].lineData[5] = 0;
+  _$jscoverage['/touch.js'].lineData[6] = 0;
 }
 if (! _$jscoverage['/touch.js'].functionData) {
   _$jscoverage['/touch.js'].functionData = [];
@@ -243,5 +246,11 @@ _$jscoverage['/touch.js'].lineData[1]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/touch.js'].functionData[0]++;
   _$jscoverage['/touch.js'].lineData[2]++;
-  return S.merge(require('./touch/pinch'), require('./touch/rotate'), require('./touch/swipe'));
+  var TouchEnumeration = S.merge(require('./touch/pinch'), require('./touch/rotate'), require('./touch/swipe'));
+  _$jscoverage['/touch.js'].lineData[4]++;
+  var BaseGesture = require('event/gesture/base');
+  _$jscoverage['/touch.js'].lineData[5]++;
+  S.mix(BaseGesture.Enumeration, TouchEnumeration);
+  _$jscoverage['/touch.js'].lineData[6]++;
+  return TouchEnumeration;
 });

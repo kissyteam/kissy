@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:29
+build time: Apr 4 12:23
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -96,8 +96,10 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
     }
     return null
   }
-  function switchTo(navigationView, view, backward) {
+  function switchTo(navigationView, viewConfig, backward) {
     var loadingView = navigationView.loadingView;
+    var view = viewConfig.view;
+    var fromCache = viewConfig.fromCache;
     var oldView = navigationView.get("activeView");
     navigationView.fire("beforeInnerViewChange", {oldView:oldView, newView:view, backward:backward});
     if(oldView && oldView.leave) {
@@ -105,7 +107,7 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
     }
     navigationView.set("activeView", view);
     if(view.enter) {
-      view.enter()
+      view.enter({fromCache:fromCache})
     }
     var promise = view.promise;
     if(promise) {
@@ -163,14 +165,15 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
   }
   function createView(self, config) {
     var view = getViewInstance(self, config);
-    if(!view) {
+    var fromCache = !!view;
+    if(view) {
+      view.set(config)
+    }else {
       view = self.addChild(config);
       view.$el.on(ANIMATION_END_EVENT, onViewAnimEnd, view)
-    }else {
-      view.set(config)
     }
     view.timeStamp = S.now();
-    return view
+    return{view:view, fromCache:fromCache}
   }
   var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
   return Container.extend({initializer:function() {
@@ -187,23 +190,21 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
       this.loadingView.set("content", v)
     }
   }, push:function(config) {
-    var self = this, nextView, viewStack = self.viewStack;
+    var self = this, viewStack = self.viewStack;
     config.animation = config.animation || self.get("animation");
     config.navigationView = self;
-    nextView = createView(self, config);
     viewStack.push(config);
-    switchTo(self, nextView)
+    switchTo(self, createView(self, config))
   }, replace:function(config) {
     var self = this, viewStack = self.viewStack;
     S.mix(viewStack[viewStack.length - 1], config);
     self.get("activeView").set(config)
   }, pop:function(config) {
-    var self = this, nextView, viewStack = self.viewStack;
+    var self = this, viewStack = self.viewStack;
     if(viewStack.length > 1) {
       viewStack.pop();
       config = viewStack[viewStack.length - 1];
-      nextView = createView(self, config);
-      switchTo(self, nextView, true)
+      switchTo(self, createView(self, config), true)
     }
   }}, {xclass:"navigation-view", ATTRS:{animation:{value:["slide-right", "slide-left"]}, loadingHtml:{sync:0}, handleGestureEvents:{value:false}, viewCacheSize:{value:10}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleGestureEvents:false, visible:false, allowTextSelection:true}}}})
 });

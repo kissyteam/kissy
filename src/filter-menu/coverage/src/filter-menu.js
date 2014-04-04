@@ -342,79 +342,79 @@ if (! _$jscoverage['/filter-menu.js'].branchData) {
   _$jscoverage['/filter-menu.js'].branchData['141'][1] = new BranchData();
 }
 _$jscoverage['/filter-menu.js'].branchData['141'][1].init(29, 25, 'content.indexOf(str) > -1');
-function visit27_141_1(result) {
+function visit24_141_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['141'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['134'][1].init(77, 4, '!str');
-function visit26_134_1(result) {
+function visit23_134_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['134'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['129'][1].init(65, 44, 'str && new RegExp(S.escapeRegExp(str), \'ig\')');
-function visit25_129_1(result) {
+function visit22_129_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['121'][1].init(1788, 46, 'oldEnteredItems.length !== enteredItems.length');
-function visit24_121_1(result) {
+function visit21_121_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['111'][1].init(35, 14, 'match[2] || \'\'');
-function visit23_111_1(result) {
+function visit20_111_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['110'][1].init(78, 5, 'match');
-function visit22_110_1(result) {
+function visit19_110_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['102'][3].init(379, 30, 'content.indexOf(lastWord) > -1');
-function visit21_102_3(result) {
+function visit18_102_3(result) {
   _$jscoverage['/filter-menu.js'].branchData['102'][3].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['102'][2].init(379, 42, 'content.indexOf(lastWord) > -1 && lastWord');
-function visit20_102_2(result) {
+function visit17_102_2(result) {
   _$jscoverage['/filter-menu.js'].branchData['102'][2].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['102'][1].init(368, 53, 'content && content.indexOf(lastWord) > -1 && lastWord');
-function visit19_102_1(result) {
+function visit16_102_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['100'][1].init(81, 27, 'item && item.get(\'content\')');
-function visit18_100_1(result) {
+function visit15_100_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['100'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['95'][1].init(72, 5, 'match');
-function visit17_95_1(result) {
+function visit14_95_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['95'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['93'][1].init(507, 22, '/[,\\uff0c]$/.test(str)');
-function visit16_93_1(result) {
+function visit13_93_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['87'][1].init(316, 5, 'match');
-function visit15_87_1(result) {
+function visit12_87_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['77'][1].init(327, 25, 'self.get(\'allowMultiple\')');
-function visit14_77_1(result) {
+function visit11_77_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['77'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['53'][1].init(214, 15, 'highlightedItem');
-function visit13_53_1(result) {
+function visit10_53_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['48'][2].init(580, 51, '!highlightedItem || !highlightedItem.get(\'visible\')');
-function visit12_48_2(result) {
+function visit9_48_2(result) {
   _$jscoverage['/filter-menu.js'].branchData['48'][2].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['48'][1].init(572, 60, 'str && (!highlightedItem || !highlightedItem.get(\'visible\'))');
-function visit11_48_1(result) {
+function visit8_48_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['46'][1].init(454, 23, '!str && highlightedItem');
-function visit10_46_1(result) {
+function visit7_46_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['42'][1].init(335, 25, 'self.get(\'allowMultiple\')');
-function visit9_42_1(result) {
+function visit6_42_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].lineData[6]++;
@@ -453,21 +453,21 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu.js'].lineData[41]++;
   str = filterInput.val();
   _$jscoverage['/filter-menu.js'].lineData[42]++;
-  if (visit9_42_1(self.get('allowMultiple'))) {
+  if (visit6_42_1(self.get('allowMultiple'))) {
     _$jscoverage['/filter-menu.js'].lineData[43]++;
     str = str.replace(/^.+,/, '');
   }
   _$jscoverage['/filter-menu.js'].lineData[46]++;
-  if (visit10_46_1(!str && highlightedItem)) {
+  if (visit7_46_1(!str && highlightedItem)) {
     _$jscoverage['/filter-menu.js'].lineData[47]++;
     highlightedItem.set('highlighted', false);
   } else {
     _$jscoverage['/filter-menu.js'].lineData[48]++;
-    if (visit11_48_1(str && (visit12_48_2(!highlightedItem || !highlightedItem.get('visible'))))) {
+    if (visit8_48_1(str && (visit9_48_2(!highlightedItem || !highlightedItem.get('visible'))))) {
       _$jscoverage['/filter-menu.js'].lineData[52]++;
       highlightedItem = self._getNextEnabledHighlighted(0, 1);
       _$jscoverage['/filter-menu.js'].lineData[53]++;
-      if (visit13_53_1(highlightedItem)) {
+      if (visit10_53_1(highlightedItem)) {
         _$jscoverage['/filter-menu.js'].lineData[54]++;
         highlightedItem.set('highlighted', true);
       }
@@ -486,7 +486,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu.js'].lineData[75]++;
   _placeholderEl[str ? 'hide' : 'show']();
   _$jscoverage['/filter-menu.js'].lineData[77]++;
-  if (visit14_77_1(self.get('allowMultiple'))) {
+  if (visit11_77_1(self.get('allowMultiple'))) {
     _$jscoverage['/filter-menu.js'].lineData[78]++;
     var enteredItems = [], lastWord;
     _$jscoverage['/filter-menu.js'].lineData[81]++;
@@ -494,24 +494,24 @@ KISSY.add(function(S, require) {
     _$jscoverage['/filter-menu.js'].lineData[85]++;
     var items = [];
     _$jscoverage['/filter-menu.js'].lineData[87]++;
-    if (visit15_87_1(match)) {
+    if (visit12_87_1(match)) {
       _$jscoverage['/filter-menu.js'].lineData[88]++;
       items = match[1].split(/[,\uff0c]/);
     }
     _$jscoverage['/filter-menu.js'].lineData[93]++;
-    if (visit16_93_1(/[,\uff0c]$/.test(str))) {
+    if (visit13_93_1(/[,\uff0c]$/.test(str))) {
       _$jscoverage['/filter-menu.js'].lineData[94]++;
       enteredItems = [];
       _$jscoverage['/filter-menu.js'].lineData[95]++;
-      if (visit17_95_1(match)) {
+      if (visit14_95_1(match)) {
         _$jscoverage['/filter-menu.js'].lineData[96]++;
         enteredItems = items;
         _$jscoverage['/filter-menu.js'].lineData[98]++;
         lastWord = items[items.length - 1];
         _$jscoverage['/filter-menu.js'].lineData[99]++;
-        var item = self.get('highlightedItem'), content = visit18_100_1(item && item.get('content'));
+        var item = self.get('highlightedItem'), content = visit15_100_1(item && item.get('content'));
         _$jscoverage['/filter-menu.js'].lineData[102]++;
-        if (visit19_102_1(content && visit20_102_2(visit21_102_3(content.indexOf(lastWord) > -1) && lastWord))) {
+        if (visit16_102_1(content && visit17_102_2(visit18_102_3(content.indexOf(lastWord) > -1) && lastWord))) {
           _$jscoverage['/filter-menu.js'].lineData[103]++;
           enteredItems[enteredItems.length - 1] = content;
         }
@@ -522,9 +522,9 @@ KISSY.add(function(S, require) {
       str = '';
     } else {
       _$jscoverage['/filter-menu.js'].lineData[110]++;
-      if (visit22_110_1(match)) {
+      if (visit19_110_1(match)) {
         _$jscoverage['/filter-menu.js'].lineData[111]++;
-        str = visit23_111_1(match[2] || '');
+        str = visit20_111_1(match[2] || '');
       }
       _$jscoverage['/filter-menu.js'].lineData[117]++;
       enteredItems = items;
@@ -532,27 +532,27 @@ KISSY.add(function(S, require) {
     _$jscoverage['/filter-menu.js'].lineData[119]++;
     var oldEnteredItems = self.get('enteredItems');
     _$jscoverage['/filter-menu.js'].lineData[121]++;
-    if (visit24_121_1(oldEnteredItems.length !== enteredItems.length)) {
+    if (visit21_121_1(oldEnteredItems.length !== enteredItems.length)) {
       _$jscoverage['/filter-menu.js'].lineData[124]++;
       self.set('enteredItems', enteredItems);
     }
   }
   _$jscoverage['/filter-menu.js'].lineData[128]++;
-  var children = self.get('children'), strExp = visit25_129_1(str && new RegExp(S.escapeRegExp(str), 'ig'));
+  var children = self.get('children'), strExp = visit22_129_1(str && new RegExp(S.escapeRegExp(str), 'ig'));
   _$jscoverage['/filter-menu.js'].lineData[132]++;
   S.each(children, function(c) {
   _$jscoverage['/filter-menu.js'].functionData[6]++;
   _$jscoverage['/filter-menu.js'].lineData[133]++;
   var content = c.get('content');
   _$jscoverage['/filter-menu.js'].lineData[134]++;
-  if (visit26_134_1(!str)) {
+  if (visit23_134_1(!str)) {
     _$jscoverage['/filter-menu.js'].lineData[138]++;
     c.get('el').html(content);
     _$jscoverage['/filter-menu.js'].lineData[139]++;
     c.set('visible', true);
   } else {
     _$jscoverage['/filter-menu.js'].lineData[141]++;
-    if (visit27_141_1(content.indexOf(str) > -1)) {
+    if (visit24_141_1(content.indexOf(str) > -1)) {
       _$jscoverage['/filter-menu.js'].lineData[144]++;
       c.set('visible', true);
       _$jscoverage['/filter-menu.js'].lineData[146]++;

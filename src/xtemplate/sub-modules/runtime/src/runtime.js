@@ -51,7 +51,7 @@ KISSY.add(function (S, require) {
         if (tpl.TPL_NAME && !self.name) {
             self.name = tpl.TPL_NAME;
         }
-        buffer = tpl.call(self, scope, S, buffer, payload);
+        buffer = tpl.call(self, scope, buffer, payload);
         var extendTplName = payload.extendTplName;
         // if has extend statement, only parse
         if (extendTplName) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 3 23:46
+build time: Apr 4 12:24
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -112,13 +112,10 @@ KISSY.add("overlay/extension/mask", ["ua", "node"], function(S, require) {
   return Mask
 });
 KISSY.add("overlay/overlay-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write("");
@@ -301,13 +298,10 @@ KISSY.add("overlay/control", ["component/container", "component/extension/shim",
   }}, {ATTRS:{contentEl:{}, closable:{value:false, view:1}, closeBtn:{view:1}, closeAction:{value:HIDE}, focusable:{value:false}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, visible:{value:false}, xrender:{value:OverlayRender}}, xclass:"overlay"})
 });
 KISSY.add("overlay/dialog-xtpl", ["./overlay-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write("");
@@ -315,10 +309,8 @@ KISSY.add("overlay/dialog-xtpl", ["./overlay-xtpl"], function(S, require, export
     var params1 = [];
     params1.push("./overlay-xtpl");
     option0.params = params1;
-    if(moduleWrap) {
-      require("./overlay-xtpl");
-      option0.params[0] = moduleWrap.resolve(option0.params[0])
-    }
+    require("./overlay-xtpl");
+    option0.params[0] = module.resolve(option0.params[0]);
     var commandRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);
     if(commandRet2 && commandRet2.isBuffer) {
       buffer = commandRet2;

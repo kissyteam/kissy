@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:29
+build time: Apr 4 12:23
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -194,12 +194,7 @@ KISSY.add("json/parser", [], function(_, undefined) {
     S.mix(self, cfg);
     self.resetInput(self.input)
   };
-  Lexer.prototype = {constructor:function(cfg) {
-    var self = this;
-    self.rules = [];
-    S.mix(self, cfg);
-    self.resetInput(self.input)
-  }, resetInput:function(input) {
+  Lexer.prototype = {resetInput:function(input) {
     S.mix(this, {input:input, matched:"", stateStack:[Lexer.STATIC.INITIAL], match:"", text:"", firstLine:1, lineNumber:1, lastLine:1, firstColumn:1, lastColumn:1})
   }, getCurrentRules:function() {
     var self = this, currentState = self.stateStack[self.stateStack.length - 1], rules = [];

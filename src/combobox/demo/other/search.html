@@ -12,6 +12,19 @@ body {
     margin: 50px;
 }
 
+.search-del-menuitem {
+    position: relative;
+}
+
+.del {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 3px;
+    z-index: 10;
+    background-color: red;
+}
+
 a {
     color: #3e3e3e;
     font-size: 12px;
@@ -593,14 +606,17 @@ li {
 <script>
     KISSY.config('packages', {
         search: {
-            base: './'
+            base: './search'
         }
     });
     var xclass;
     if (location.search.indexOf('search') !== -1) {
         xclass = 'search-menuitem';
     }
-    KISSY.use("event,dom,combobox,search/menuitem", function (S, Event, Dom, ComboBox, SearchMenuItem) {
+    if (location.search.indexOf('del') !== -1) {
+        xclass = 'del-menuitem';
+    }
+    KISSY.use("event,dom,combobox,search/menuitem,search/del-menuitem", function (S, Event, Dom, ComboBox) {
         /*
          remote dataSource
          */
@@ -687,6 +703,11 @@ li {
 
             basicComboBox.on('afterRenderData', function () {
                 S.log('afterRenderData');
+            });
+
+            basicComboBox.on('delete', function (e) {
+                e.target.destroy();
+                // basicComboBox.sendRequest(basicComboBox.get('value'));
             });
 
             basicComboBox.on('click', function (e) {

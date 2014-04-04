@@ -139,28 +139,26 @@ KISSY.add(function (S, require) {
         return source;
     }
 
-    function genTopFunction(statements) {
+    function genTopFunction(xtplAstToJs, statements) {
         var source = [];
         source.push(
-            'var engine = this,' +
-                'moduleWrap,' +
+                'var engine = this,' +
                 'nativeCommands = engine.nativeCommands,' +
                 'utils = engine.utils;'
         );
-        source.push('if("' + S.version + '" !== S.version){' +
-            'throw new Error("current xtemplate file("+engine.name+")(v' + S.version + ') ' +
-            'need to be recompiled using current kissy(v"+ S.version+")!");' +
-            '}');
-        source.push('if (typeof module !== "undefined" && module.kissy) {' +
-            'moduleWrap = module;' +
-            '}');
+        if (xtplAstToJs.isModule) {
+            source.push('if("' + S.version + '" !== S.version){' +
+                'throw new Error("current xtemplate file("+engine.name+")(v' + S.version + ') ' +
+                'need to be recompiled using current kissy(v"+ S.version+")!");' +
+                '}');
+        }
         source.push('var ' + nativeCode + ';');
         for (var i = 0, len = statements.length; i < len; i++) {
             pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
         }
         source.push('return buffer;');
         return {
-            params: ['scope', 'S', 'buffer', 'payload', 'undefined'],
+            params: ['scope', 'buffer', 'payload', 'undefined'],
             source: source
         };
     }
@@ -205,7 +203,7 @@ KISSY.add(function (S, require) {
         };
     }
 
-    function generateCommand(command, escape, block) {
+    function generateCommand(xtplAstToJs, command, escape, block) {
         var source = [],
             commandConfigCode,
             optionName,
@@ -227,12 +225,13 @@ KISSY.add(function (S, require) {
             }
         }
 
-        // require include/extend modules
-        if (idString === 'include' || idString === 'extend') {
-            // prevent require parse...
-            source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
-                optionName + '.params[0] = moduleWrap.resolve(' + optionName + '.params[0]);' +
-                '}');
+        if (xtplAstToJs.isModule) {
+            // require include/extend modules
+            if (idString === 'include' || idString === 'extend') {
+                // prevent require parse...
+                source.push('re' + 'quire("' + command.params[0].value + '");' +
+                    optionName + '.params[0] = module.resolve(' + optionName + '.params[0]);');
+            }
         }
 
         if (!block) {
@@ -323,10 +322,12 @@ KISSY.add(function (S, require) {
             };
         },
 
-        command: generateCommand,
+        command: function (command, escape) {
+            return generateCommand(this, command, escape);
+        },
 
         blockStatement: function (block) {
-            return generateCommand(block.command, block.escape, block);
+            return generateCommand(this, block.command, block.escape, block);
         },
 
         expressionStatement: function (expressionStatement) {
@@ -377,20 +378,19 @@ KISSY.add(function (S, require) {
         /**
          * get ast of template
          * @param {String} [name] xtemplate name
-         * @param {String} tpl
+         * @param {String} tplContent
          * @return {Object}
          */
-        parse: function (tpl, name) {
-            return parser.parse(name, tpl);
-        },
+        parse: S.bind(parser.parse, parser),
         /**
          * get template function string
-         * @param {String} tpl
+         * @param {String} tplContent
          * @param {String} [name] xtemplate name
+         * @param {Boolean} [isModule] whether generated function is used in module
          * @return {String}
          */
-        compileToStr: function (tpl, name) {
-            var func = compiler.compile(tpl, name);
+        compileToStr: function (tplContent, name, isModule) {
+            var func = compiler.compile(tplContent, name, isModule);
             return 'function(' + func.params.join(',') + '){\n' +
                 func.source.join('\n') +
                 '}';
@@ -398,29 +398,30 @@ KISSY.add(function (S, require) {
         /**
          * get template function json format
          * @param {String} [name] xtemplate name
-         * @param {String} tpl
+         * @param {String} tplContent
+         * @param {Boolean} [isModule] whether generated function is used in module
          * @return {Object}
          */
-        compile: function (tpl, name) {
-            var root = compiler.parse(name, tpl);
+        compile: function (tplContent, name, isModule) {
+            var root = compiler.parse(tplContent, name);
             variableId = 0;
-            return genTopFunction(root.statements);
+            xtplAstToJs.isModule = isModule;
+            return genTopFunction(xtplAstToJs, root.statements);
         },
         /**
          * get template function
-         * @param {String} tpl
+         * @param {String} tplContent
          * @param {String} name template file name
          * @return {Function}
          */
-        compileToFn: function (tpl, name) {
+        compileToFn: function (tplContent, name) {
             if (!name) {
                 name = 'xtemplate' + (xtemplateId++);
             }
-            var code = compiler.compile(tpl, name);
+            var code = compiler.compile(tplContent, name);
             var sourceURL = 'sourceURL=' + name + '.js';
             // eval is not ok for eval("(function(){})") ie
-            return Function.apply(null, []
-                .concat(code.params)
+            return Function.apply(null, [].concat(code.params)
                 .concat(code.source.join('\n') +
                     // old chrome
                     '\n//@ ' + sourceURL +

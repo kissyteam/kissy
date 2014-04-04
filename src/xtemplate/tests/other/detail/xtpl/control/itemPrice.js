@@ -1,15 +1,12 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, S, buffer, payload, undefined) {
+        var t = function (scope, buffer, payload, undefined) {
             var engine = this,
-                moduleWrap, nativeCommands = engine.nativeCommands,
+                nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
             if ("1.50" !== S.version) {
                 throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
-            if (typeof module !== "undefined" && module.kissy) {
-                moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
@@ -244,10 +241,8 @@ KISSY.add(function (S, require, exports, module) {
                 var params49 = [];
                 params49.push('./itemCommitment');
                 option48.params = params49;
-                if (moduleWrap) {
-                    require("./itemCommitment");
-                    option48.params[0] = moduleWrap.resolve(option48.params[0]);
-                }
+                require("./itemCommitment");
+                option48.params[0] = module.resolve(option48.params[0]);
                 var commandRet50 = includeCommand.call(engine, scope, option48, buffer, 70, payload);
                 if (commandRet50 && commandRet50.isBuffer) {
                     buffer = commandRet50;
@@ -328,10 +323,8 @@ KISSY.add(function (S, require, exports, module) {
                 var params65 = [];
                 params65.push('./itemBuy');
                 option64.params = params65;
-                if (moduleWrap) {
-                    require("./itemBuy");
-                    option64.params[0] = moduleWrap.resolve(option64.params[0]);
-                }
+                require("./itemBuy");
+                option64.params[0] = module.resolve(option64.params[0]);
                 var commandRet66 = includeCommand.call(engine, scope, option64, buffer, 103, payload);
                 if (commandRet66 && commandRet66.isBuffer) {
                     buffer = commandRet66;
@@ -343,10 +336,8 @@ KISSY.add(function (S, require, exports, module) {
                 var params68 = [];
                 params68.push('./itemPriceStep');
                 option67.params = params68;
-                if (moduleWrap) {
-                    require("./itemPriceStep");
-                    option67.params[0] = moduleWrap.resolve(option67.params[0]);
-                }
+                require("./itemPriceStep");
+                option67.params[0] = module.resolve(option67.params[0]);
                 var commandRet69 = includeCommand.call(engine, scope, option67, buffer, 106, payload);
                 if (commandRet69 && commandRet69.isBuffer) {
                     buffer = commandRet69;

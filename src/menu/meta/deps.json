@@ -1,3 +1,3 @@
 {
-    menu: ["node", "component/container", "component/extension/delegate-children", "component/control", "component/extension/content-render", "component/extension/content-xtpl", "component/extension/align", "component/extension/shim"]
+    "menu": ["node", "component/container", "component/extension/delegate-children", "component/control", "component/extension/content-render", "component/extension/content-xtpl", "component/extension/align", "component/extension/shim"]
 }

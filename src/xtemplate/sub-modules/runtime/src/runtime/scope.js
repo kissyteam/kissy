@@ -45,7 +45,7 @@ KISSY.add(function (S) {
         get: function (name) {
             var data = this.data;
 
-            var v = data[name];
+            var v = data && data[name];
 
             if (v !== undefined) {
                 return v;

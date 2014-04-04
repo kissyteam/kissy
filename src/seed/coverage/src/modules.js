@@ -231,13 +231,13 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData = [];
   _$jscoverage['/modules.js'].lineData[2] = 0;
   _$jscoverage['/modules.js'].lineData[3] = 0;
+  _$jscoverage['/modules.js'].lineData[264] = 0;
   _$jscoverage['/modules.js'].lineData[265] = 0;
   _$jscoverage['/modules.js'].lineData[266] = 0;
-  _$jscoverage['/modules.js'].lineData[267] = 0;
-  _$jscoverage['/modules.js'].lineData[269] = 0;
-  _$jscoverage['/modules.js'].lineData[272] = 0;
-  _$jscoverage['/modules.js'].lineData[283] = 0;
-  _$jscoverage['/modules.js'].lineData[296] = 0;
+  _$jscoverage['/modules.js'].lineData[268] = 0;
+  _$jscoverage['/modules.js'].lineData[271] = 0;
+  _$jscoverage['/modules.js'].lineData[282] = 0;
+  _$jscoverage['/modules.js'].lineData[295] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -246,18 +246,18 @@ if (! _$jscoverage['/modules.js'].functionData) {
 }
 if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData = {};
-  _$jscoverage['/modules.js'].branchData['275'] = [];
-  _$jscoverage['/modules.js'].branchData['275'][1] = new BranchData();
-  _$jscoverage['/modules.js'].branchData['287'] = [];
-  _$jscoverage['/modules.js'].branchData['287'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['274'] = [];
+  _$jscoverage['/modules.js'].branchData['274'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['286'] = [];
+  _$jscoverage['/modules.js'].branchData['286'][1] = new BranchData();
 }
-_$jscoverage['/modules.js'].branchData['287'][1].init(109, 13, 'UA.ieMode < 9');
-function visit10_287_1(result) {
-  _$jscoverage['/modules.js'].branchData['287'][1].ranCondition(result);
+_$jscoverage['/modules.js'].branchData['286'][1].init(109, 13, 'UA.ieMode < 9');
+function visit10_286_1(result) {
+  _$jscoverage['/modules.js'].branchData['286'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['275'][1].init(31, 13, 'UA.ieMode < 9');
-function visit9_275_1(result) {
-  _$jscoverage['/modules.js'].branchData['275'][1].ranCondition(result);
+}_$jscoverage['/modules.js'].branchData['274'][1].init(31, 13, 'UA.ieMode < 9');
+function visit9_274_1(result) {
+  _$jscoverage['/modules.js'].branchData['274'][1].ranCondition(result);
   return result;
 }_$jscoverage['/modules.js'].lineData[2]++;
 (function(S) {
@@ -300,7 +300,7 @@ function visit9_275_1(result) {
   "event/custom": ["event/base"], 
   "event/dom/base": ["event/base", "dom"], 
   "event/dom/focusin": ["event/dom/base"], 
-  "event/dom/hashchange": ["event/dom/base", "uri"], 
+  "event/dom/hashchange": ["event/dom/base"], 
   "event/dom/ie": ["event/dom/base"], 
   "event/dom/input": ["event/dom/base"], 
   "event/gesture/base": ["event/dom/base"], 
@@ -335,26 +335,26 @@ function visit9_275_1(result) {
   "xtemplate": ["xtemplate/compiler"], 
   "xtemplate/compiler": ["xtemplate/runtime"], 
   "xtemplate/runtime": ["util"]});
-  _$jscoverage['/modules.js'].lineData[265]++;
+  _$jscoverage['/modules.js'].lineData[264]++;
   var Feature = S.Feature, UA = S.UA;
-  _$jscoverage['/modules.js'].lineData[266]++;
+  _$jscoverage['/modules.js'].lineData[265]++;
   function alias(cfg) {
     _$jscoverage['/modules.js'].functionData[1]++;
-    _$jscoverage['/modules.js'].lineData[267]++;
+    _$jscoverage['/modules.js'].lineData[266]++;
     S.config("alias", cfg);
   }
-  _$jscoverage['/modules.js'].lineData[269]++;
+  _$jscoverage['/modules.js'].lineData[268]++;
   alias({
   anim: Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'});
-  _$jscoverage['/modules.js'].lineData[272]++;
+  _$jscoverage['/modules.js'].lineData[271]++;
   alias({
-  'dom/basic': ['dom/base', visit9_275_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list'], 
+  'dom/basic': ['dom/base', visit9_274_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list'], 
   dom: ['dom/basic', Feature.isQuerySelectorSupported() ? '' : 'dom/selector']});
-  _$jscoverage['/modules.js'].lineData[283]++;
+  _$jscoverage['/modules.js'].lineData[282]++;
   alias({
-  'event/dom': ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit10_287_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin'], 
+  'event/dom': ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit10_286_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin'], 
   'event/gesture': ['event/gesture/base', Feature.isTouchGestureSupported() ? 'event/gesture/touch' : '']});
-  _$jscoverage['/modules.js'].lineData[296]++;
+  _$jscoverage['/modules.js'].lineData[295]++;
   alias({
   'scroll-view': Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'});
 })(KISSY);

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:14
+build time: Apr 4 12:09
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -149,8 +149,8 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
     })
   }}
 });
-KISSY.add("anim/base", ["dom", "ua", "./base/utils", "./base/queue", "promise"], function(S, require) {
-  var Dom = require("dom"), UA = require("ua"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, camelCase = S.camelCase, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
+KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], function(S, require) {
+  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, camelCase = S.camelCase, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
   var defaultConfig = {duration:1, easing:"linear"};
   function syncComplete(self) {
     var _backupProps, complete = self.config.complete;
@@ -226,11 +226,8 @@ KISSY.add("anim/base", ["dom", "ua", "./base/utils", "./base/queue", "promise"],
         S.mix(_backupProps, {overflow:elStyle.overflow, "overflow-x":elStyle.overflowX, "overflow-y":elStyle.overflowY});
         elStyle.overflow = "hidden";
         if(Dom.css(node, "display") === "inline" && Dom.css(node, "float") === "none") {
-          if(UA.ieMode < 10) {
-            elStyle.zoom = 1
-          }else {
-            elStyle.display = "inline-block"
-          }
+          elStyle.zoom = 1;
+          elStyle.display = "inline-block"
         }
       }
       var exit, hidden;

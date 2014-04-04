@@ -17,7 +17,7 @@ KISSY.add(function (S, Control,XTemplate) {
             }
         },
         ATTRS: {
-            xtemplate: {
+            XTemplate: {
                 value: XTemplate
             },
             contentTpl: {

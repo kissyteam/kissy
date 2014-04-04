@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:28
+build time: Apr 4 12:22
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -221,7 +221,10 @@ KISSY.add("event/gesture/touch/swipe", ["event/gesture/base", "event/dom/base"],
   addGestureEvent([SWIPE, SWIPING], {handle:new Swipe});
   return{SWIPE:SWIPE, SWIPING:SWIPING}
 });
-KISSY.add("event/gesture/touch", ["./touch/pinch", "./touch/rotate", "./touch/swipe"], function(S, require) {
-  return S.merge(require("./touch/pinch"), require("./touch/rotate"), require("./touch/swipe"))
+KISSY.add("event/gesture/touch", ["./touch/pinch", "./touch/rotate", "./touch/swipe", "event/gesture/base"], function(S, require) {
+  var TouchEnumeration = S.merge(require("./touch/pinch"), require("./touch/rotate"), require("./touch/swipe"));
+  var BaseGesture = require("event/gesture/base");
+  S.mix(BaseGesture.Enumeration, TouchEnumeration);
+  return TouchEnumeration
 });
 

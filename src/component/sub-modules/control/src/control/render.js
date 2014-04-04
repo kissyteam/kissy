@@ -281,7 +281,7 @@ KISSY.add(function (S, require) {
             var self = this;
             renderData = renderData || self.renderData;
             renderCommands = renderCommands || self.renderCommands;
-            var XTemplate = self.get('xtemplate');
+            var XTemplate = self.get('XTemplate');
             return new XTemplate(tpl, {
                 control: self.control,
                 view: self,
@@ -492,11 +492,11 @@ KISSY.add(function (S, require) {
                     this.control = v;
                 }
             },
-            xtemplate: {
+            XTemplate: {
                 value: XTemplateRuntime
             },
             contentTpl: {
-                value: function (scope, S, buffer) {
+                value: function (scope, buffer) {
                     return buffer.write(scope.get('content'));
                 }
             }

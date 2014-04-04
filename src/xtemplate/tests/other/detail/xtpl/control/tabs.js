@@ -1,15 +1,12 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, S, buffer, payload, undefined) {
+        var t = function (scope, buffer, payload, undefined) {
             var engine = this,
-                moduleWrap, nativeCommands = engine.nativeCommands,
+                nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
             if ("1.50" !== S.version) {
                 throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
-            if (typeof module !== "undefined" && module.kissy) {
-                moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
@@ -27,10 +24,8 @@ KISSY.add(function (S, require, exports, module) {
             var params1 = [];
             params1.push('./itemTabInfo');
             option0.params = params1;
-            if (moduleWrap) {
-                require("./itemTabInfo");
-                option0.params[0] = moduleWrap.resolve(option0.params[0]);
-            }
+            require("./itemTabInfo");
+            option0.params[0] = module.resolve(option0.params[0]);
             var commandRet2 = includeCommand.call(engine, scope, option0, buffer, 26, payload);
             if (commandRet2 && commandRet2.isBuffer) {
                 buffer = commandRet2;
@@ -42,10 +37,8 @@ KISSY.add(function (S, require, exports, module) {
             var params4 = [];
             params4.push('./itemTabDesc');
             option3.params = params4;
-            if (moduleWrap) {
-                require("./itemTabDesc");
-                option3.params[0] = moduleWrap.resolve(option3.params[0]);
-            }
+            require("./itemTabDesc");
+            option3.params[0] = module.resolve(option3.params[0]);
             var commandRet5 = includeCommand.call(engine, scope, option3, buffer, 31, payload);
             if (commandRet5 && commandRet5.isBuffer) {
                 buffer = commandRet5;
@@ -57,10 +50,8 @@ KISSY.add(function (S, require, exports, module) {
             var params7 = [];
             params7.push('./itemTabRating');
             option6.params = params7;
-            if (moduleWrap) {
-                require("./itemTabRating");
-                option6.params[0] = moduleWrap.resolve(option6.params[0]);
-            }
+            require("./itemTabRating");
+            option6.params[0] = module.resolve(option6.params[0]);
             var commandRet8 = includeCommand.call(engine, scope, option6, buffer, 38, payload);
             if (commandRet8 && commandRet8.isBuffer) {
                 buffer = commandRet8;
@@ -72,10 +63,8 @@ KISSY.add(function (S, require, exports, module) {
             var params10 = [];
             params10.push('./itemTabDealRecord');
             option9.params = params10;
-            if (moduleWrap) {
-                require("./itemTabDealRecord");
-                option9.params[0] = moduleWrap.resolve(option9.params[0]);
-            }
+            require("./itemTabDealRecord");
+            option9.params[0] = module.resolve(option9.params[0]);
             var commandRet11 = includeCommand.call(engine, scope, option9, buffer, 43, payload);
             if (commandRet11 && commandRet11.isBuffer) {
                 buffer = commandRet11;
@@ -87,10 +76,8 @@ KISSY.add(function (S, require, exports, module) {
             var params13 = [];
             params13.push('./itemTabRecommend');
             option12.params = params13;
-            if (moduleWrap) {
-                require("./itemTabRecommend");
-                option12.params[0] = moduleWrap.resolve(option12.params[0]);
-            }
+            require("./itemTabRecommend");
+            option12.params[0] = module.resolve(option12.params[0]);
             var commandRet14 = includeCommand.call(engine, scope, option12, buffer, 48, payload);
             if (commandRet14 && commandRet14.isBuffer) {
                 buffer = commandRet14;

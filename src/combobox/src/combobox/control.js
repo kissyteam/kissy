@@ -19,7 +19,7 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Component.Control
      * @class KISSY.ComboBox
      */
-    ComboBox = Control.extend([], {
+    ComboBox = Control.extend({
             initializer: function () {
                 /**
                  * fired after data is rendered into combobox menu

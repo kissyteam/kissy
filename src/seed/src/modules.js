@@ -128,8 +128,7 @@ S.config("requires",{
         "event/dom/base"
     ],
     "event/dom/hashchange": [
-        "event/dom/base",
-        "uri"
+        "event/dom/base"
     ],
     "event/dom/ie": [
         "event/dom/base"

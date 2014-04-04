@@ -61,7 +61,7 @@ function compile(tplFilePath, modulePath) {
             '/** Compiled By kissy-xtemplate */\n' +
             'KISSY.add(function(S,require,exports,module){\n' +
             '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
-            'var t = ' + XTemplateCompiler.compileToStr(tplContent, tplFilePath)) + ';\n' +
+            'var t = ' + XTemplateCompiler.compileToStr(tplContent, tplFilePath, true)) + ';\n' +
         't.TPL_NAME = module.name;\n' +
         'return t;\n' +
         '});';

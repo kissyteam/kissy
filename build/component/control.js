@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:16
+build time: Apr 4 12:10
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -76,13 +76,10 @@ KISSY.add("component/control/process", ["base"], function(S, require) {
   return ControlProcess
 });
 KISSY.add("component/control/render-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write('<div id="');
@@ -325,7 +322,7 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
     var self = this;
     renderData = renderData || self.renderData;
     renderCommands = renderCommands || self.renderCommands;
-    var XTemplate = self.get("xtemplate");
+    var XTemplate = self.get("XTemplate");
     return(new XTemplate(tpl, {control:self.control, view:self, commands:renderCommands})).render(renderData)
   }, getComponentConstructorByNode:function(prefixCls, childNode) {
     var cls = childNode[0].className;
@@ -413,7 +410,7 @@ KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./r
     return NewClass
   }, ATTRS:{control:{setter:function(v) {
     this.control = v
-  }}, xtemplate:{value:XTemplateRuntime}, contentTpl:{value:function(scope, S, buffer) {
+  }}, XTemplate:{value:XTemplateRuntime}, contentTpl:{value:function(scope, buffer) {
     return buffer.write(scope.get("content"))
   }}}, HTML_PARSER:{id:function(el) {
     var id = el[0].id;

@@ -264,19 +264,19 @@ if (! _$jscoverage['/tree/tree-manager.js'].branchData) {
   _$jscoverage['/tree/tree-manager.js'].branchData['75'][1] = new BranchData();
 }
 _$jscoverage['/tree/tree-manager.js'].branchData['75'][1].init(39, 15, 'n && ev.prevVal');
-function visit76_75_1(result) {
+function visit73_75_1(result) {
   _$jscoverage['/tree/tree-manager.js'].branchData['75'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/tree-manager.js'].branchData['65'][2].init(34, 6, 'ie < 9');
-function visit75_65_2(result) {
+function visit72_65_2(result) {
   _$jscoverage['/tree/tree-manager.js'].branchData['65'][2].ranCondition(result);
   return result;
 }_$jscoverage['/tree/tree-manager.js'].branchData['65'][1].init(28, 12, 'ie && ie < 9');
-function visit74_65_1(result) {
+function visit71_65_1(result) {
   _$jscoverage['/tree/tree-manager.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/tree-manager.js'].branchData['64'][1].init(191, 22, '!isTouchEventSupported');
-function visit73_64_1(result) {
+function visit70_64_1(result) {
   _$jscoverage['/tree/tree-manager.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/tree-manager.js'].lineData[6]++;
@@ -310,9 +310,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/tree-manager.js'].lineData[59]++;
   var self = this, prefixCls = self.get('prefixCls'), delegateCls = prefixCls + 'tree-node', events = Gesture.tap;
   _$jscoverage['/tree/tree-manager.js'].lineData[64]++;
-  if (visit73_64_1(!isTouchEventSupported)) {
+  if (visit70_64_1(!isTouchEventSupported)) {
     _$jscoverage['/tree/tree-manager.js'].lineData[65]++;
-    events += (visit74_65_1(ie && visit75_65_2(ie < 9)) ? ' dblclick ' : '');
+    events += (visit71_65_1(ie && visit72_65_2(ie < 9)) ? ' dblclick ' : '');
   }
   _$jscoverage['/tree/tree-manager.js'].lineData[68]++;
   self.$el.delegate(events, '.' + delegateCls, self.handleChildrenEvents, self);
@@ -320,7 +320,7 @@ KISSY.add(function(S, require) {
   _onSetSelectedItem: function(n, ev) {
   _$jscoverage['/tree/tree-manager.js'].functionData[3]++;
   _$jscoverage['/tree/tree-manager.js'].lineData[75]++;
-  if (visit76_75_1(n && ev.prevVal)) {
+  if (visit73_75_1(n && ev.prevVal)) {
     _$jscoverage['/tree/tree-manager.js'].lineData[76]++;
     ev.prevVal.set('selected', false, {
   data: {

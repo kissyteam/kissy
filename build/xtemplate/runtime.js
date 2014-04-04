@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Apr 3 18:21
+build time: Apr 4 12:26
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -37,7 +37,7 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
     S.mix(this.affix, v)
   }, get:function(name) {
     var data = this.data;
-    var v = data[name];
+    var v = data && data[name];
     if(v !== undefined) {
       return v
     }
@@ -355,7 +355,7 @@ KISSY.add("xtemplate/runtime", ["util", "./runtime/commands", "./runtime/scope",
     if(tpl.TPL_NAME && !self.name) {
       self.name = tpl.TPL_NAME
     }
-    buffer = tpl.call(self, scope, S, buffer, payload);
+    buffer = tpl.call(self, scope, buffer, payload);
     var extendTplName = payload.extendTplName;
     if(extendTplName) {
       buffer = self.include(extendTplName, scope, buffer, payload)

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:20
+build time: Apr 4 12:14
 */
 KISSY.add("editor/plugin/draft","editor,json,event,./local-storage,overlay,./menubutton".split(","),function(k,g){function h(a,b,c){for(a=a+"";a.length<b;)a=c+a;return a}function n(a){typeof a==="number"&&(a=new Date(a));return a instanceof Date?[a.getFullYear(),"-",h(a.getMonth()+1,2,"0"),"-",h(a.getDate(),2,"0")," ",h(a.getHours(),2,"0"),":",h(a.getMinutes(),2,"0"),":",h(a.getSeconds(),2,"0")].join(""):a}function o(a,b){this.editor=a;this.config=b;this._init()}function p(a,b){var c=new o(a,b);a.on("destroy",
 function(){c.destroy()})}function q(a){this.config=a||{}}var l=g("editor"),r=g("json"),s=g("event"),f=g("./local-storage"),t=g("overlay"),u=g("./menubutton"),i=k.Node,j=l.Utils.addRes,v=l.Utils.destroyRes;k.augment(o,{_getSaveKey:function(){var a=this.config;return a.draft&&a.draft.saveKey||"ks-editor-draft-save20110503"},_getDrafts:function(){if(!this.drafts){var a=f.getItem(this._getSaveKey()),b=[];a&&(b=f===window.localStorage?r.parse(k.urlDecode(a)):a);this.drafts=b}return this.drafts},_init:function(){var a=

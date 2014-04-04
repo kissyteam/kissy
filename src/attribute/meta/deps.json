@@ -1,3 +1,3 @@
 {
-    attribute: ["event/custom"]
+    "attribute": ["util", "event/custom"]
 }

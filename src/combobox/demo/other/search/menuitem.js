@@ -2,9 +2,9 @@ KISSY.add(function (S, Menu, Node) {
     var KeyCode = Node.KeyCode;
     return Menu.Item.extend({
         handleKeyDownInternal: function (e) {
-            if (e.keyCode == KeyCode.LEFT) {
+            if (e.keyCode === KeyCode.LEFT) {
                 S.log('left');
-            } else if (e.keyCode == KeyCode.RIGHT) {
+            } else if (e.keyCode === KeyCode.RIGHT) {
                 S.log('right');
             } else {
                 this.callSuper(e);

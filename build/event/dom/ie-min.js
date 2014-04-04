@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:28
+build time: Apr 4 12:22
 */
 KISSY.add("event/dom/ie/change",["event/dom/base","dom"],function(i,c){function d(a){a=a.type;return"checkbox"===a||"radio"===a}function f(a){if("checked"===a.originalEvent.propertyName){var b=this;b.__changed=1;b.__changeTimer&&clearTimeout(b.__changeTimer);b.__changeTimer=setTimeout(function(){b.__changed=0;b.__changeTimer=null},50)}}function b(b){this.__changed&&(this.__changed=0,a.fire(this,"change",b))}function g(b){b=b.target;h.test(b.nodeName)&&!b.__changeHandler&&(b.__changeHandler=1,a.on(b,
 "change",{fn:e,last:1}))}function e(b){if(!b.isPropagationStopped()&&!d(this)){var c;(c=this.parentNode)&&a.fire(c,"change",b)}}var a=c("event/dom/base"),j=c("dom"),h=/^(?:textarea|input|select)$/i;a.Special.change={setup:function(){if(h.test(this.nodeName))if(d(this))a.on(this,"propertychange",f),a.on(this,"click",b);else return!1;else a.on(this,"beforeactivate",g)},tearDown:function(){if(h.test(this.nodeName))if(d(this))a.remove(this,"propertychange",f),a.remove(this,"click",b);else return!1;else a.remove(this,

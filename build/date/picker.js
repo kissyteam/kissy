@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 31 19:17
+build time: Apr 4 12:12
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -194,13 +194,10 @@ KISSY.add("date/picker/render", ["date/format", "date/picker-xtpl", "component/c
   }}, {name:"date-picker-render", ATTRS:{contentTpl:{value:PickerTpl}}})
 });
 KISSY.add("date/picker/year-panel/years-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write("");
@@ -335,13 +332,10 @@ KISSY.add("date/picker/year-panel/years-xtpl", [], function(S, require, exports,
   return t
 });
 KISSY.add("date/picker/year-panel/year-panel-xtpl", ["date/picker/year-panel/years-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write('<div class="');
@@ -456,10 +450,8 @@ KISSY.add("date/picker/year-panel/year-panel-xtpl", ["date/picker/year-panel/yea
     var params32 = [];
     params32.push("date/picker/year-panel/years-xtpl");
     option31.params = params32;
-    if(moduleWrap) {
-      require("date/picker/year-panel/years-xtpl");
-      option31.params[0] = moduleWrap.resolve(option31.params[0])
-    }
+    require("date/picker/year-panel/years-xtpl");
+    option31.params[0] = module.resolve(option31.params[0]);
     var commandRet33 = includeCommand.call(engine, scope, option31, buffer, 33, payload);
     if(commandRet33 && commandRet33.isBuffer) {
       buffer = commandRet33;
@@ -517,13 +509,10 @@ KISSY.add("date/picker/year-panel/render", ["date/format", "component/control", 
   }}, {ATTRS:{contentTpl:{value:YearPanelTpl}}})
 });
 KISSY.add("date/picker/decade-panel/decades-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write("");
@@ -666,13 +655,10 @@ KISSY.add("date/picker/decade-panel/decades-xtpl", [], function(S, require, expo
   return t
 });
 KISSY.add("date/picker/decade-panel/decade-panel-xtpl", ["date/picker/decade-panel/decades-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write('<div class="');
@@ -770,10 +756,8 @@ KISSY.add("date/picker/decade-panel/decade-panel-xtpl", ["date/picker/decade-pan
     var params27 = [];
     params27.push("date/picker/decade-panel/decades-xtpl");
     option26.params = params27;
-    if(moduleWrap) {
-      require("date/picker/decade-panel/decades-xtpl");
-      option26.params[0] = moduleWrap.resolve(option26.params[0])
-    }
+    require("date/picker/decade-panel/decades-xtpl");
+    option26.params[0] = module.resolve(option26.params[0]);
     var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 24, payload);
     if(commandRet28 && commandRet28.isBuffer) {
       buffer = commandRet28;
@@ -910,13 +894,10 @@ KISSY.add("date/picker/year-panel/control", ["node", "component/control", "./ren
   }}, {xclass:"date-picker-year-panel", ATTRS:{focusable:{value:false}, value:{view:1}, decadePanel:{valueFn:setUpDecadePanel}, xrender:{value:DecadePanelRender}}})
 });
 KISSY.add("date/picker/month-panel/months-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write("");
@@ -1001,13 +982,10 @@ KISSY.add("date/picker/month-panel/months-xtpl", [], function(S, require, export
   return t
 });
 KISSY.add("date/picker/month-panel/month-panel-xtpl", ["date/picker/month-panel/months-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, buffer, payload, undefined) {
-    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, buffer, payload, undefined) {
+    var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if("1.50" !== S.version) {
       throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-    }
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
     }
     var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
     buffer.write('<div class="');
@@ -1119,10 +1097,8 @@ KISSY.add("date/picker/month-panel/month-panel-xtpl", ["date/picker/month-panel/
     var params31 = [];
     params31.push("date/picker/month-panel/months-xtpl");
     option30.params = params31;
-    if(moduleWrap) {
-      require("date/picker/month-panel/months-xtpl");
-      option30.params[0] = moduleWrap.resolve(option30.params[0])
-    }
+    require("date/picker/month-panel/months-xtpl");
+    option30.params[0] = module.resolve(option30.params[0]);
     var commandRet32 = includeCommand.call(engine, scope, option30, buffer, 32, payload);
     if(commandRet32 && commandRet32.isBuffer) {
       buffer = commandRet32;

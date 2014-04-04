@@ -1,15 +1,12 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, S, buffer, payload, undefined) {
+        var t = function (scope, buffer, payload, undefined) {
             var engine = this,
-                moduleWrap, nativeCommands = engine.nativeCommands,
+                nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
             if ("1.50" !== S.version) {
                 throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
-            if (typeof module !== "undefined" && module.kissy) {
-                moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
@@ -27,10 +24,8 @@ KISSY.add(function (S, require, exports, module) {
             var params1 = [];
             params1.push('component/extension/content-xtpl');
             option0.params = params1;
-            if (moduleWrap) {
-                require("component/extension/content-xtpl");
-                option0.params[0] = moduleWrap.resolve(option0.params[0]);
-            }
+            require("component/extension/content-xtpl");
+            option0.params[0] = module.resolve(option0.params[0]);
             var commandRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);
             if (commandRet2 && commandRet2.isBuffer) {
                 buffer = commandRet2;
