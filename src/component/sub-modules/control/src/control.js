@@ -5,14 +5,14 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
+    var MoveGesture = require('event/gesture/move');
+    var TapGesture = require('event/gesture/tap');
     var Manager = require('component/manager');
     var Base = require('base');
     var RenderTpl = require('./control/render-xtpl');
     var UA = require('ua');
-    var ie = UA.ieMode;
     var Feature = S.Feature;
     var __getHook = Base.prototype.__getHook;
-    var Gesture = Node.Gesture;
     var startTpl = RenderTpl;
     var endTpl = '</div>';
     var isTouchGestureSupported = Feature.isTouchGestureSupported();
@@ -241,19 +241,10 @@ KISSY.add(function (S, require) {
                         .on('mouseleave', self.handleMouseLeave, self)
                         .on('contextmenu', self.handleContextMenu, self);
 
-                    el.on(Gesture.start, self.handleMouseDown, self)
-                        .on(Gesture.end, self.handleMouseUp, self)
+                    el.on(MoveGesture.start, self.handleMouseDown, self)
+                        .on(MoveGesture.end, self.handleMouseUp, self)
                         // consider touch environment
-                        .on(Gesture.tap, self.handleClick, self);
-                    if (Gesture.cancel) {
-                        el.on(Gesture.cancel, self.handleMouseUp, self);
-                    }
-
-                    // click quickly only trigger click and dblclick in ie<9
-                    // others click click dblclick
-                    if (ie < 9) {
-                        el.on('dblclick', self.handleDblClick, self);
-                    }
+                        .on(TapGesture.tap, self.handleClick, self);
                 }
             },
 
@@ -1414,6 +1405,9 @@ KISSY.add(function (S, require) {
     return Control;
 });
 /*
+ yiminghe@gmail.com - 2014.04.08
+ - use event modules: event/gesture/move, event/gesture/tap
+
  yiminghe@gmail.com - 2012.10.31
  - 考虑触屏，绑定 Event.Gesture.tap 为主行为事件
  - handleMouseDown/up 对应 Gesture.start/end

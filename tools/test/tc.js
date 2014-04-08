@@ -150,17 +150,13 @@ tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?build');
 
 tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner');
-
-tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner?build');
-
 tests.push('/kissy/src/event/sub-modules/gesture/shake/tests/runner');
 
 tests.push('/kissy/src/event/sub-modules/gesture/shake/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/gesture/touch/tests/runner');
+tests.push('/kissy/src/event/sub-modules/gesture/tap/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/gesture/touch/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/gesture/tap/tests/runner?build');
 
 tests.push('/kissy/src/html-parser/tests/runner');
 

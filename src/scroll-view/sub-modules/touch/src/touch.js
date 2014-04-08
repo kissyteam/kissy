@@ -352,7 +352,7 @@ KISSY.add(function (S, require) {
 
     function onGestureStart(e) {
         var self = this;
-        if (e.gestureType === 'touch') {
+        if (self.isScrolling && e.gestureType === 'touch') {
             e.preventDefault();
         }
         // snap mode can not stop anim in the middle
@@ -396,6 +396,7 @@ KISSY.add(function (S, require) {
                 var action = v ? 'detach' : 'on';
                 var self = this;
                 self.$contentEl[action]('gestureDragStart', onDragStartHandler, self)
+                    // click
                     [action](Gesture.start, onGestureStart, self)
                     [action]('gestureDrag', onDragHandler, self)
                     [action]('gestureDragEnd', onDragEndHandler, self);

@@ -387,9 +387,6 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "editor/plugin/xiami-music/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog"
         },
-        "event": {
-            "base": "/kissy/src/event/src/event"
-        },
         "event/base": {
             "base": "/kissy/src/event/sub-modules/base/src/base"
         },
@@ -411,17 +408,32 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "event/dom/input": {
             "base": "/kissy/src/event/sub-modules/dom/input/src/input"
         },
-        "event/gesture/base": {
-            "base": "/kissy/src/event/sub-modules/gesture/base/src/base"
-        },
         "event/gesture/drag": {
             "base": "/kissy/src/event/sub-modules/gesture/drag/src/drag"
+        },
+        "event/gesture/edge-drag": {
+            "base": "/kissy/src/event/sub-modules/gesture/edge-drag/src/edge-drag"
+        },
+        "event/gesture/move": {
+            "base": "/kissy/src/event/sub-modules/gesture/move/src/move"
+        },
+        "event/gesture/pinch": {
+            "base": "/kissy/src/event/sub-modules/gesture/pinch/src/pinch"
+        },
+        "event/gesture/rotate": {
+            "base": "/kissy/src/event/sub-modules/gesture/rotate/src/rotate"
         },
         "event/gesture/shake": {
             "base": "/kissy/src/event/sub-modules/gesture/shake/src/shake"
         },
-        "event/gesture/touch": {
-            "base": "/kissy/src/event/sub-modules/gesture/touch/src/touch"
+        "event/gesture/swipe": {
+            "base": "/kissy/src/event/sub-modules/gesture/swipe/src/swipe"
+        },
+        "event/gesture/tap": {
+            "base": "/kissy/src/event/sub-modules/gesture/tap/src/tap"
+        },
+        "event/gesture/util": {
+            "base": "/kissy/src/event/sub-modules/gesture/util/src/util"
         },
         "feature": {
             "base": "/kissy/src/feature/src/feature"

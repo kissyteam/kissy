@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <script src="/kissy/build/seed.js" charset="utf-8"></script>
+    <script src="/kissy/src/package.js"></script>
+    <script src="/kissy/src/log.js"></script>
+</head>
+<body>
+
+<h1>open in ios safari test rotate event</h1>
+
+<a href="http://www.g.cn">google</a>
+<button id="detach">detach</button>
+<div id='t'
+     style='border:1px solid green;
+      -ms-touch-action:none;
+     width:200px;height:200px;margin:10px'>
+    rotate me
+</div>
+
+<a href="http://www.g.cn">google</a>
+
+<div style="height: 900px;"></div>
+<script>
+    KISSY.use('event/dom,dom,event/gesture/rotate', function (S, Event, Dom, RotateType) {
+
+        Event.on('#detach', 'click', function () {
+            Event.detach('#t');
+        });
+
+        Event.on('#t', RotateType.ROTATE_END, function (e) {
+            log(e.type + ' : ' +
+                    e.originalEvent.type + ' : ' +
+                    e.rotation + ' : ' + e.angle);
+            //S.log(e.type + ' : ' + e.rotation);
+        });
+
+        Event.on('#t', [RotateType.ROTATE, RotateType.ROTATE_START], function (e) {
+            log(e.type + ' : ' +
+                    e.rotation + ' : ' + e.angle);
+            //S.log(e.type + ' : ' + e.rotation);
+        });
+        var t = document.getElementById('t');
+        var o;
+        Event.on('#t', RotateType.ROTATE_START, function () {
+            o = parseInt(Dom.style(t, 'transform').replace(/rotate\(/, '')) || 0;
+
+        });
+        Event.on('#t', RotateType.ROTATE, function (e) {
+            Dom.css(t, 'transform', 'rotate(' + (o + parseInt(e.rotation)) % 360 + 'deg)');
+        });
+
+        alert('ok');
+    });
+</script>
+</body>
+</html>

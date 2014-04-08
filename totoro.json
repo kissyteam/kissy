@@ -178,13 +178,6 @@
             ]
         },
         {
-            "name": "event/gesture/base",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/base/tests/runner",
-            "email": [
-                "yiminghe@gmail.com"
-            ]
-        },
-        {
             "name": "event/gesture/shake",
             "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/shake/tests/runner",
             "email": [
@@ -192,8 +185,8 @@
             ]
         },
         {
-            "name": "event/gesture/touch",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/touch/tests/runner",
+            "name": "event/gesture/tap",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/tap/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]

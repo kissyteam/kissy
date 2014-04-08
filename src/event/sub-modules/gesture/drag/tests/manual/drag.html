@@ -30,26 +30,26 @@
 <div style="height: 900px;"></div>
 <div style="height: 900px;"></div>
 <script>
-    KISSY.use('dom,event,event/gesture/drag', function (S, Dom, Event, DragType) {
-        alert('ok');
+    KISSY.use('node,event/gesture/drag', function (S, Node, DragType) {
         var left = 0;
         var top = 0;
-        var t = Dom.get('#t');
-        Event.on(t, 'mousedown dragstart', function (e) {
+        var $ = Node.all;
+        var t = $('#t');
+        t.on('mousedown dragstart', function (e) {
             e.preventDefault();
         });
-        Event.on(t, DragType.DRAG_START, function (e) {
-            left = parseInt(Dom.css(t, 'left'));
-            top = parseInt(Dom.css(t, 'top'));
+        t.on(DragType.DRAG_START, function () {
+            left = parseInt(t.css('left'));
+            top = parseInt(t.css('top'));
         });
-        Event.on(t, DragType.DRAG, function (e) {
-            Dom.css(t, {
+        t.on(DragType.DRAG, function (e) {
+            t.css({
                 left: e.deltaX + left,
                 top: e.deltaY + top
             });
             e.preventDefault();
         });
-        Event.on(t, DragType.DRAG_END, function (e) {
+        t.on(DragType.DRAG_END, function (e) {
             log(e.velocityX + ' : ' + e.velocityY);
         });
     });

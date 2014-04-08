@@ -10,6 +10,7 @@ KISSY.add(function (S, require) {
         start = 5,
         enough = 20,
         shaking = 0,
+        SHAKE='shake',
         lastX, lastY, lastZ,
         max = Math.max,
         abs = Math.abs,
@@ -17,7 +18,7 @@ KISSY.add(function (S, require) {
         devicemotion = 'devicemotion',
         checkShake = S.buffer(function () {
             if (shaking) {
-                DomEvent.fireHandler(win, 'shake', {
+                DomEvent.fireHandler(win, SHAKE, {
                     accelerationIncludingGravity: {
                         x: lastX,
                         y: lastY,
@@ -73,6 +74,10 @@ KISSY.add(function (S, require) {
         lastY = y;
         lastZ = z;
     }
+
+    return {
+        SHAKE:SHAKE
+    };
 });
 /**
  * @ignore
