@@ -79,13 +79,16 @@ KISSY.add(function (S, require) {
                 top: win.pageYOffset + MIN_EDGE_DISTANCE,
                 bottom: win.pageYOffset + win.innerHeight - MIN_EDGE_DISTANCE
             };
+
+            log(direction+' : '+y+' : '+invalidRegion.bottom+' : '+self.startY);
+
             if (direction === 'right' && x > invalidRegion.left) {
                 return false;
             } else if (direction === 'left' && x < invalidRegion.right) {
                 return false;
-            } else if (direction === 'bottom' && x > invalidRegion.top) {
+            } else if (direction === 'down' && y > invalidRegion.top) {
                 return false;
-            } else if (direction === 'top' && x < invalidRegion.bottom) {
+            } else if (direction === 'up' && y < invalidRegion.bottom) {
                 return false;
             }
             self.isStarted = 1;

@@ -35,10 +35,10 @@
 
 ## Convention
 
- * KISSY 源码规范: <http://docs.kissyui.com/docs/html/tutorials/styleguide/kissy-source-style.html>
- * HTML 编码规范: <http://docs.kissyui.com/docs/html/tutorials/styleguide/html-coding-style.html>
- * CSS 编码规范: <http://docs.kissyui.com/docs/html/tutorials/styleguide/css-coding-style.html>
- * 组件开发规范: <http://docs.kissyui.com/docs/html/tutorials/workflow/dev-spec.html>
+ * KISSY 源码规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/kissy-source-style.html>
+ * HTML 编码规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/html-coding-style.html>
+ * CSS 编码规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/css-coding-style.html>
+ * 组件开发规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/workflow/dev-spec.html>
 
 ## Questions?
 

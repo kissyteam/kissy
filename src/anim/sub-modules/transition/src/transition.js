@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     var getCssVendorInfo = Feature.getCssVendorInfo;
     var transitionVendorInfo = getCssVendorInfo('transition');
     var TRANSITION = transitionVendorInfo.propertyName;
-    var DEFAULT_EASING = 'ease-in';
+    var DEFAULT_EASING = 'linear';
     var css3Anim = {
         ease: 1,
         linear: 1,
