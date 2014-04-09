@@ -4,10 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var GestureBase = require('event/gesture/base');
-    var addGestureEvent = GestureBase.addEvent;
+    var GestureUtil = require('event/gesture/util');
+    var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
-    var SingleTouch = GestureBase.SingleTouch;
+    var SingleTouch = GestureUtil.SingleTouch;
     var SWIPE = 'swipe',
         SWIPE_START = 'swipeStart',
         SWIPING = 'swiping',

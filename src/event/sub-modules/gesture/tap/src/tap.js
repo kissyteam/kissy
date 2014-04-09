@@ -4,10 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var GestureBase = require('event/gesture/base');
-    var addGestureEvent = GestureBase.addEvent;
+    var GestureUtil = require('event/gesture/util');
+    var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
-    var SingleTouch = GestureBase.SingleTouch;
+    var SingleTouch = GestureUtil.SingleTouch;
     var UA = require('ua');
     var SINGLE_TAP_EVENT = 'singleTap',
         DOUBLE_TAP_EVENT = 'doubleTap',

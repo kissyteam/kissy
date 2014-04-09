@@ -66,8 +66,8 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
 
     var transformProperty = getVendorInfo('transform').name;
     //var transformOriginProperty = transformProperty + 'Origin';
-    var tap = Node.Gesture.tap;
-    var Gesture = Node.Gesture;
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
 
     var scrollView;
     var contentEl;
@@ -197,8 +197,8 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
 
         // tap(touch down is buggy on safari ios)
         closeEl.on(tap, close);
-        contentEl.on(Gesture.singleTap, close);
-        imgEl.on(Gesture.doubleTap, function (e) {
+        contentEl.on(TapGesture.SINGLE_TAP, close);
+        imgEl.on(TapGesture.DOUBLE_TAP, function (e) {
             syncContentRegion();
             centerOffset = getCenterOffset(e);
             if (currentScale === 1) {

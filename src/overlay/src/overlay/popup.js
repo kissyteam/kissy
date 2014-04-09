@@ -34,9 +34,10 @@ KISSY.add(function (S, require) {
 
     function setHiddenTimer() {
         var self = this;
+        var delay = self.get('mouseDelay') * 1000;
         self._hiddenTimer = S.later(function () {
             hiding.call(self);
-        }, self.get('mouseDelay') * 1000);
+        }, delay);
     }
 
     function clearHiddenTimer() {

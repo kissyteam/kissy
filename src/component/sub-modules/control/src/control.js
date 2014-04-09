@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
-    var MoveGesture = require('event/gesture/move');
+    var BaseGesture = require('event/gesture/base');
     var TapGesture = require('event/gesture/tap');
     var Manager = require('component/manager');
     var Base = require('base');
@@ -203,48 +203,45 @@ KISSY.add(function (S, require) {
                 var self = this;
                 // after create
                 Manager.addComponent(self);
-                var el = self.getKeyEventTarget();
+                var $el = self.$el;
                 if (!self.get('allowTextSelection')) {
-                    el.unselectable();
+                    $el.unselectable();
                 }
                 // need to insert created dom into body
                 if (!self.get('srcNode')) {
                     var render = self.get('render'),
                         renderBefore = self.get('elBefore');
                     if (renderBefore) {
-                        el.insertBefore(renderBefore, undefined);
+                        $el.insertBefore(renderBefore, undefined);
                     } else if (render) {
-                        el.appendTo(render, undefined);
+                        $el.appendTo(render, undefined);
                     } else {
-                        el.appendTo(doc.body, undefined);
+                        $el.appendTo(doc.body, undefined);
                     }
                 }
             },
 
             bindUI: function () {
-                var self = this,
-                    el = self.getKeyEventTarget();
+                var self = this;
 
                 if (self.get('focusable')) {
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    el.on('focus', self.handleFocus, self)
+                    self.getKeyEventTarget()
+                        .on('focus', self.handleFocus, self)
                         .on('blur', self.handleBlur, self)
                         .on('keydown', self.handleKeydown, self);
                 }
 
                 if (self.get('handleGestureEvents')) {
-                    el = self.$el;
-
                     // chrome on windows8 has both mouse and touch event
-                    el.on('mouseenter', self.handleMouseEnter, self)
+                    self.$el.on('mouseenter', self.handleMouseEnter, self)
                         .on('mouseleave', self.handleMouseLeave, self)
-                        .on('contextmenu', self.handleContextMenu, self);
-
-                    el.on(MoveGesture.start, self.handleMouseDown, self)
-                        .on(MoveGesture.end, self.handleMouseUp, self)
+                        .on('contextmenu', self.handleContextMenu, self)
+                        .on(BaseGesture.START, self.handleMouseDown, self)
+                        .on(BaseGesture.END, self.handleMouseUp, self)
                         // consider touch environment
-                        .on(TapGesture.tap, self.handleClick, self);
+                        .on(TapGesture.TAP, self.handleClick, self);
                 }
             },
 
@@ -394,23 +391,6 @@ KISSY.add(function (S, require) {
              */
             getKeyEventTarget: function () {
                 return this.$el;
-            },
-
-            handleDblClick: function (ev) {
-                if (!this.get('disabled')) {
-                    this.handleDblClickInternal(ev);
-                }
-            },
-
-            /**
-             * Hack click in ie<9 by handling dblclick events.
-             * By default, this performs its associated action by calling
-             * {@link KISSY.Component.Control#handleClickInternal}.
-             * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
-             */
-            handleDblClickInternal: function (ev) {
-                this.handleClickInternal(ev);
             },
 
             handleMouseEnter: function (ev) {
@@ -796,8 +776,8 @@ KISSY.add(function (S, require) {
                     .attr('aria-pressed', !!v);
             },
 
-            _onSetZIndex: function (x) {
-                this.$el.css('z-index', x);
+            _onSetZIndex: function (v) {
+                this.$el.css('z-index', v);
             },
 
             _onSetFocused: function (v) {
@@ -1278,6 +1258,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 prefixCls: {
+                    view: 1,
                     value: S.config('component/prefixCls') || 'ks-'
                 },
                 /**
@@ -1406,7 +1387,7 @@ KISSY.add(function (S, require) {
 });
 /*
  yiminghe@gmail.com - 2014.04.08
- - use event modules: event/gesture/move, event/gesture/tap
+ - use event modules: event/gesture/base, event/gesture/tap
 
  yiminghe@gmail.com - 2012.10.31
  - 考虑触屏，绑定 Event.Gesture.tap 为主行为事件

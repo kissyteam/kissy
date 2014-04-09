@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node'),
-        Gesture = Node.Gesture,
+        BaseGesture = require('event/gesture/base'),
         DDM = require('./ddm'),
         Base = require('base'),
         DragType = require('event/gesture/drag');
@@ -239,7 +239,7 @@ KISSY.add(function (S, require) {
                 node.on(DragType.DRAG_START, onDragStart, self)
                     .on(DragType.DRAG, onDrag, self)
                     .on(DragType.DRAG_END, onDragEnd, self)
-                    .on(Gesture.start, onGestureStart, self)
+                    .on(BaseGesture.START, onGestureStart, self)
                     .on('dragstart', self._fixDragStart);
             }
         },
@@ -251,7 +251,7 @@ KISSY.add(function (S, require) {
                 node.detach(DragType.DRAG_START, onDragStart, self)
                     .detach(DragType.DRAG, onDrag, self)
                     .detach(DragType.DRAG_END, onDragEnd, self)
-                    .detach(Gesture.start, onGestureStart, self)
+                    .detach(BaseGesture.START, onGestureStart, self)
                     .detach('dragstart', self._fixDragStart);
             }
         },
@@ -298,7 +298,7 @@ KISSY.add(function (S, require) {
 
             if (ie) {
                 fixIEMouseDown();
-                $doc.on(Gesture.end, {
+                $doc.on(BaseGesture.END, {
                     fn: fixIEMouseUp,
                     once: true
                 });

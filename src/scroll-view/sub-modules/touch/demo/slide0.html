@@ -238,7 +238,7 @@
             base: '/kissy/src/scroll-view/sub-modules/plugin/scrollbar/demo/'
         }
     });
-    KISSY.use('node,slide,image-zoomer0', function (S, Node, Slide, imageZoomer) {
+    KISSY.use('node,slide,image-zoomer0,event/gesture/tap', function (S, Node, Slide, imageZoomer,TapGesture) {
         var $ = Node.all;
 
         function init(selector) {
@@ -250,7 +250,7 @@
             slide.triggers.each(function (t, i) {
                 t.html(i + 1);
             });
-            $(selector).delegate(Node.Gesture.tap, 'img', function (e) {
+            $(selector).delegate(TapGesture.TAP, 'img', function (e) {
                 imageZoomer.showImage({
                     src: e.currentTarget.src,
                     width: 1200,

@@ -4,6 +4,9 @@ KISSY.add(function (S,require) {
     var Event = require('event');
     var Color = require('color');
     var Overlay = require('overlay');
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
+    var BaseGesture= require('event/gesture/base');
 
     var $ = Node.all, Gesture = Event.Gesture;
 
@@ -36,12 +39,12 @@ KISSY.add(function (S,require) {
 
             overlay.render();
 
-            overlay.get('contentEl').delegate(Gesture.tap, ".J_Start", function () {
+            overlay.get('contentEl').delegate(tap, ".J_Start", function () {
                 overlay.hide();
                 self.reset();
             });
 
-            overlay.get('contentEl').delegate(Gesture.tap, ".J_Cancel", function () {
+            overlay.get('contentEl').delegate(tap, ".J_Cancel", function () {
                 overlay.hide();
                 self.fire("quit");
             });
@@ -106,7 +109,7 @@ KISSY.add(function (S,require) {
                     isOver();
                 };
 
-            canvas.on(Gesture.start, function (ev) {
+            canvas.on(BaseGesture.START, function (ev) {
                 ev.preventDefault();
                 var pageX = ev.changedTouches ? ev.changedTouches[0].pageX : ev.pageX,
                     pageY = ev.changedTouches ? ev.changedTouches[0].pageY : ev.pageY;

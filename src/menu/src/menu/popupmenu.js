@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var AlignExtension = require('component/extension/align');
     var Shim = require('component/extension/shim');
     var Menu = require('./control');
-    var PopupMenuRender = require('./popupmenu-render');
+    var ContentBox = require('component/extension/content-box');
 
     /**
      * Popup Menu.
@@ -17,6 +17,7 @@ KISSY.add(function (S, require) {
      * @mixins KISSY.Component.Extension.Align
      */
     return Menu.extend([
+        ContentBox,
         Shim,
         AlignExtension
     ], {
@@ -96,10 +97,6 @@ KISSY.add(function (S, require) {
 
             visible: {
                 value: false
-            },
-
-            xrender: {
-                value: PopupMenuRender
             }
         },
         xclass: 'popupmenu'

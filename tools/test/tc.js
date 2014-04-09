@@ -150,9 +150,33 @@ tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?build');
 
 tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?coverage');
 
+tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner');
+
+tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner?build');
+
+tests.push('/kissy/src/event/sub-modules/gesture/drag/tests/runner');
+
+tests.push('/kissy/src/event/sub-modules/gesture/drag/tests/runner?build');
+
+tests.push('/kissy/src/event/sub-modules/gesture/edge-drag/tests/runner');
+
+tests.push('/kissy/src/event/sub-modules/gesture/edge-drag/tests/runner?build');
+
+tests.push('/kissy/src/event/sub-modules/gesture/pinch/tests/runner');
+
+tests.push('/kissy/src/event/sub-modules/gesture/pinch/tests/runner?build');
+
+tests.push('/kissy/src/event/sub-modules/gesture/rotate/tests/runner');
+
+tests.push('/kissy/src/event/sub-modules/gesture/rotate/tests/runner?build');
+
 tests.push('/kissy/src/event/sub-modules/gesture/shake/tests/runner');
 
 tests.push('/kissy/src/event/sub-modules/gesture/shake/tests/runner?build');
+
+tests.push('/kissy/src/event/sub-modules/gesture/swipe/tests/runner');
+
+tests.push('/kissy/src/event/sub-modules/gesture/swipe/tests/runner?build');
 
 tests.push('/kissy/src/event/sub-modules/gesture/tap/tests/runner');
 

@@ -5,8 +5,13 @@
  */
 KISSY.add(function (S, require) {
     var Overlay = require('./control');
-    var DialogRender = require('./dialog-render');
     var Node = require('node');
+    var DialogTpl = require('./dialog-xtpl');
+
+    function _setStdModRenderContent(self, part, v) {
+        part = self.get(part);
+        part.html(v);
+    }
 
     /**
      * @class KISSY.Overlay.Dialog
@@ -14,6 +19,25 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Overlay
      */
     var Dialog = Overlay.extend({
+        beforeCreateDom: function (renderData) {
+            S.mix(renderData.elAttrs, {
+                role: 'dialog',
+                'aria-labelledby': 'ks-stdmod-header-' + this.get('id')
+            });
+        },
+
+        createDom: function () {
+            this.fillChildrenElsBySelectors({
+                header: '#ks-stdmod-header-{id}',
+                body: '#ks-stdmod-body-{id}',
+                footer: '#ks-stdmod-footer-{id}'
+            });
+        },
+
+        getChildrenContainerEl: function () {
+            return this.get('body');
+        },
+
         // also simplify body
         __afterCreateEffectGhost: function (ghost) {
             var self = this,
@@ -45,6 +69,7 @@ KISSY.add(function (S, require) {
         _onSetVisible: function (v, e) {
             var self = this,
                 el = self.el;
+            self.callSuper(v,e);
             if (v) {
                 self.__lastActive = el.ownerDocument.activeElement;
                 self.focus();
@@ -63,10 +88,42 @@ KISSY.add(function (S, require) {
                     // ie can not be focused if lastActive is invisible
                 }
             }
-            // prevent display none for effect
-            self.callSuper(v, e);
+        },
+
+        _onSetBodyContent: function (v) {
+            _setStdModRenderContent(this, 'body', v);
+        },
+
+        _onSetHeaderContent: function (v) {
+            _setStdModRenderContent(this, 'header', v);
+        },
+
+        _onSetFooterContent: function (v) {
+            _setStdModRenderContent(this, 'footer', v);
         }
     }, {
+        HTML_PARSER: {
+            header: function (el) {
+                return el.one('.' + this.getBaseCssClass('header'));
+            },
+            body: function (el) {
+                return el.one('.' + this.getBaseCssClass('body'));
+            },
+            footer: function (el) {
+                return el.one('.' + this.getBaseCssClass('footer'));
+            },
+            headerContent: function (el) {
+                return el.one('.' + this.getBaseCssClass('header')).html();
+            },
+            bodyContent: function (el) {
+                return el.one('.' + this.getBaseCssClass('body')).html();
+            },
+            footerContent: function (el) {
+                var footer = el.one('.' + this.getBaseCssClass('footer'));
+                return footer && footer.html();
+            }
+        },
+
         ATTRS: {
             /**
              * Header element of dialog.
@@ -78,7 +135,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             header: {
-                view: 1
             },
             /**
              * Body element of dialog.
@@ -90,7 +146,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             body: {
-                view: 1
             },
             /**
              * Footer element of dialog.
@@ -102,7 +157,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             footer: {
-                view: 1
             },
             /**
              * Key-value map of body element's style.
@@ -113,7 +167,7 @@ KISSY.add(function (S, require) {
              */
             bodyStyle: {
                 value: {},
-                view: 1
+                sync:0
             },
             /**
              * Key-value map of footer element's style.
@@ -146,6 +200,7 @@ KISSY.add(function (S, require) {
              */
             headerContent: {
                 value: '',
+                sync:0,
                 view: 1
             },
             /**
@@ -157,6 +212,7 @@ KISSY.add(function (S, require) {
              */
             bodyContent: {
                 value: '',
+                sync:0,
                 view: 1
             },
             /**
@@ -168,6 +224,7 @@ KISSY.add(function (S, require) {
              */
             footerContent: {
                 value: '',
+                sync:0,
                 view: 1
             },
 
@@ -184,10 +241,6 @@ KISSY.add(function (S, require) {
              */
             closable: {
                 value: true
-            },
-
-            xrender: {
-                value: DialogRender
             },
 
             /**
@@ -218,6 +271,10 @@ KISSY.add(function (S, require) {
              */
             escapeToClose: {
                 value: true
+            },
+
+            contentTpl: {
+                value: DialogTpl
             }
         },
         xclass: 'dialog'

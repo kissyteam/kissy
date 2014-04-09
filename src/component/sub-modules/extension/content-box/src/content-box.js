@@ -7,9 +7,9 @@ KISSY.add(function (S, require) {
     var ContentTpl = require('component/extension/content-xtpl');
 
     function shortcut(self) {
-        var contentEl = this.get('contentEl');
-        self.$contentEl = this.$contentEl = contentEl;
-        self.contentEl = this.contentEl = contentEl[0];
+        var contentEl = self.get('contentEl');
+        self.$contentEl = self.$contentEl = contentEl;
+        self.contentEl = self.contentEl = contentEl[0];
     }
 
     /**

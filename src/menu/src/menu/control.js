@@ -7,8 +7,6 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-    var MenuRender = require('./menu-render');
-
     var KeyCode = Node.KeyCode;
 
     /**
@@ -21,6 +19,15 @@ KISSY.add(function (S, require) {
         DelegateChildrenExtension
     ], {
         isMenu: 1,
+
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'menu';
+        },
+
+        bindUI: function () {
+            var self = this;
+            self.on('afterHighlightedItemChange', afterHighlightedItemChange, self);
+        },
 
         // 只能允许一个方向，这个属性只是为了记录和排他性选择
         // 只允许调用 menuItem 的 set('highlighted')
@@ -41,16 +48,11 @@ KISSY.add(function (S, require) {
         },
 
         _onSetVisible: function (v, e) {
-            this.callSuper(e);
+            this.callSuper(v,e);
             var highlightedItem;
             if (!v && (highlightedItem = this.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
             }
-        },
-
-        bindUI: function () {
-            var self = this;
-            self.on('afterHighlightedItemChange', afterHighlightedItemChange, self);
         },
 
         getRootMenu: function () {
@@ -186,12 +188,14 @@ KISSY.add(function (S, require) {
         containsElement: function (element) {
             var self = this;
 
+            var $el = self.$el;
+
             // 隐藏当然不包含了
-            if (!self.get('visible') || !self.$el) {
+            if (!self.get('visible') || !$el) {
                 return false;
             }
 
-            if (self.view.containsElement(element)) {
+            if ($el && ($el[0] === element || $el.contains(element))) {
                 return true;
             }
 
@@ -219,9 +223,6 @@ KISSY.add(function (S, require) {
              */
             highlightedItem: {
                 value: null
-            },
-            xrender: {
-                value: MenuRender
             },
 
             defaultChildCfg: {

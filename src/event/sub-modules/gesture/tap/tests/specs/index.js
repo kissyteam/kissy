@@ -1,4 +1,4 @@
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     if (!S.UA.phantomjs && S.Feature.isTouchEventSupported()) {
         require('./double-tap');
         require('./tap');

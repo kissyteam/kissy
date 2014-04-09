@@ -408,14 +408,14 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "event/dom/input": {
             "base": "/kissy/src/event/sub-modules/dom/input/src/input"
         },
+        "event/gesture/base": {
+            "base": "/kissy/src/event/sub-modules/gesture/base/src/base"
+        },
         "event/gesture/drag": {
             "base": "/kissy/src/event/sub-modules/gesture/drag/src/drag"
         },
         "event/gesture/edge-drag": {
             "base": "/kissy/src/event/sub-modules/gesture/edge-drag/src/edge-drag"
-        },
-        "event/gesture/move": {
-            "base": "/kissy/src/event/sub-modules/gesture/move/src/move"
         },
         "event/gesture/pinch": {
             "base": "/kissy/src/event/sub-modules/gesture/pinch/src/pinch"

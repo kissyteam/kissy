@@ -3,9 +3,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node=require('node');
-    var SwipeType=require('event/gesture/swipe');
-    var SWIPE=SwipeType.SWIPE;
+    if (S.UA.phantomjs || !S.Feature.isTouchEventSupported()) {
+        return;
+    }
+    var Node = require('node');
+    var SwipeType = require('event/gesture/swipe');
+    var SWIPE = SwipeType.SWIPE;
     /*jshint loopfunc:true*/
     var $ = Node.all, step = 10;
     describe('swipe', function () {

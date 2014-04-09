@@ -4,13 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-    var UA = require('ua'),
-        ie = UA.ieMode,
-        Feature = S.Feature,
-        Gesture = Node.Gesture,
-        isTouchEventSupported = Feature.isTouchEventSupported();
+    var TapGesture=require('event/gesture/tap');
 
     /**
      * Manage tree node for tree root
@@ -58,14 +53,9 @@ KISSY.add(function (S, require) {
         __bindUI: function () {
             var self = this,
                 prefixCls = self.get('prefixCls'),
-                delegateCls = prefixCls + 'tree-node',
-                events = Gesture.tap;
+                delegateCls = prefixCls + 'tree-node';
 
-            if (!isTouchEventSupported) {
-                events += (ie && ie < 9 ? ' dblclick ' : '');
-            }
-
-            self.$el.delegate(events, '.' + delegateCls,
+            self.$el.delegate(TapGesture.TAP, '.' + delegateCls,
                 self.handleChildrenEvents, self);
         },
 

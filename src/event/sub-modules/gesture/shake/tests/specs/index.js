@@ -8,9 +8,9 @@ KISSY.add(function (S, require) {
         return;
     }
 
-    var Event=require('event/dom');
-    var ShakeType=require('event/gesture/shake');
-    var SHAKE=ShakeType.SHAKE;
+    var Event = require('event/dom');
+    var ShakeType = require('event/gesture/shake');
+    var SHAKE = ShakeType.SHAKE;
 
     describe('shake', function () {
         it('fires', function () {
@@ -48,8 +48,9 @@ KISSY.add(function (S, require) {
                         accelerationIncludingGravity: accelerationIncludingGravity
                     });
                 });
-
             })(0);
+
+
 
             waits(30);
             (function () {
@@ -60,9 +61,7 @@ KISSY.add(function (S, require) {
                         accelerationIncludingGravity: accelerationIncludingGravity
                     });
                 });
-
             })(0);
-
 
             // buffer
             waits(350);

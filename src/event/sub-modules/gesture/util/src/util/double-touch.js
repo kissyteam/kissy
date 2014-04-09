@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('dom');
-    var Touch = require('event/gesture/base').Touch;
+    var Touch = require('./touch');
 
     function DoubleTouch() {
     }

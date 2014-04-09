@@ -4,18 +4,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
     var UA = require('ua');
     var Control = require('component/control');
     var ScrollBarRender = require('./render');
-
+    var BaseGesture= require('event/gesture/base');
     var DragType = require('event/gesture/drag');
 
     var MIN_BAR_LENGTH = 20;
 
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
-
-    var Gesture = Node.Gesture;
 
     function preventDefault(e) {
         e.preventDefault();
@@ -212,10 +209,10 @@ KISSY.add(function (S, require) {
                     [action](DragType.DRAG_START, onDragStartHandler, self)
                     [action](DragType.DRAG, onDragHandler, self);
                 S.each([self.$downBtn, self.$upBtn], function (b) {
-                    b[action](Gesture.start, onUpDownBtnMouseDown, self)
-                        [action](Gesture.end, onUpDownBtnMouseUp, self);
+                    b[action](BaseGesture.START, onUpDownBtnMouseDown, self)
+                        [action](BaseGesture.END, onUpDownBtnMouseUp, self);
                 });
-                self.$trackEl[action](Gesture.start, onTrackElMouseDown, self);
+                self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self);
             }
         },
 

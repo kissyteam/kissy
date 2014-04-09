@@ -3,11 +3,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node=require('node');
-    var PinchType=require('event/gesture/pinch');
-    var PINCH=PinchType.PINCH;
-    var PINCH_START=PinchType.PINCH_START;
-    var PINCH_END=PinchType.PINCH_END;
+    if (S.UA.phantomjs || !S.Feature.isTouchEventSupported()) {
+        return;
+    }
+
+    var Node = require('node');
+    var PinchType = require('event/gesture/pinch');
+    var PINCH = PinchType.PINCH;
+    var PINCH_START = PinchType.PINCH_START;
+    var PINCH_END = PinchType.PINCH_END;
     var $ = Node.all,
         step = 10;
 

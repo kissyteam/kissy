@@ -9,7 +9,8 @@ KISSY.add(function (S, require) {
         YearPanel = require('../year-panel/control'),
         MonthPanelRender = require('./render');
 
-    var tap = Node.Gesture.tap;
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
     var $ = Node.all;
 
     function goYear(self, direction) {

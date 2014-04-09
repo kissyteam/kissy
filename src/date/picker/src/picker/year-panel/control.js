@@ -8,7 +8,8 @@ KISSY.add(function (S, require) {
         Control = require('component/control'),
         DecadePanelRender = require('./render'),
         DecadePanel = require('../decade-panel/control');
-    var tap = Node.Gesture.tap;
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
     var $ = Node.all;
 
     function goYear(self, direction) {

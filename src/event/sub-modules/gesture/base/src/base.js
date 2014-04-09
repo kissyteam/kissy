@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
         END: 'gestureEnd'
     };
 
-    function addGestureBaseEvent(event, onHandler) {
+    function addBaseGestureEvent(event, onHandler) {
         var handle = {
             // always fire
             isActive: 1
@@ -29,9 +29,9 @@ KISSY.add(function (S, require) {
         });
     }
 
-    addGestureBaseEvent(BaseGesture.START, 'onTouchStart');
-    addGestureBaseEvent(BaseGesture.MOVE, 'onTouchMove');
-    addGestureBaseEvent(BaseGesture.END, 'onTouchEnd');
+    addBaseGestureEvent(BaseGesture.START, 'onTouchStart');
+    addBaseGestureEvent(BaseGesture.MOVE, 'onTouchMove');
+    addBaseGestureEvent(BaseGesture.END, 'onTouchEnd');
 
     return BaseGesture;
 });

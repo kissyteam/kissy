@@ -274,7 +274,7 @@
         }
     });
     alert(navigator.userAgent);
-    KISSY.use('node,slide,image-zoomer', function (S, Node, Slide, ImageZoomer) {
+    KISSY.use('node,slide,image-zoomer,event/gesture/tap', function (S, Node, Slide, ImageZoomer,TapGesture) {
         var $ = Node.all;
 
         var zoomer = new ImageZoomer();
@@ -293,7 +293,7 @@
                 return img.src.replace(/_540x540\.jpg/, '');
             });
 
-            $(selector).delegate(Node.Gesture.tap, 'img', function (e) {
+            $(selector).delegate(TapGesture.TAP, 'img', function (e) {
                 zoomer.set('images', urls);
                 zoomer.show($(e.currentTarget).parent(1).index());
             });

@@ -5,9 +5,9 @@
  */
 KISSY.add(function (S, require) {
     var Menu = require('menu');
-    var FilterMenuRender = require('filter-menu/render');
-
+    var FilterMenuTpl = require('./filter-menu/render-xtpl');
     var HIT_CLS = 'menuitem-hit';
+    var ContentBox = require('component/extension/content-box');
 
     /**
      * Filter Menu for KISSY.
@@ -15,7 +15,15 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Menu
      * @class KISSY.FilterMenu
      */
-    return Menu.extend({
+    return Menu.extend([ContentBox], {
+            beforeCreateDom: function (renderData, childrenElSelectors) {
+                S.mix(childrenElSelectors, {
+                    placeholderEl: '#ks-filter-menu-placeholder-{id}',
+                    filterInputWrap: '#ks-filter-menu-input-wrap-{id}',
+                    filterInput: '#ks-filter-menu-input-{id}'
+                });
+            },
+
             bindUI: function () {
                 var self = this,
                     filterInput = self.get('filterInput');
@@ -28,7 +36,7 @@ KISSY.add(function (S, require) {
                 self.callSuper(e);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
                 // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
-                self.view.getKeyEventTarget()[0].select();
+                self.getKeyEventTarget()[0].select();
             },
 
             handleFilterEvent: function () {
@@ -59,6 +67,14 @@ KISSY.add(function (S, require) {
             _onSetFilterStr: function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
+            },
+
+            _onSetPlaceholder: function (v) {
+                this.get('placeholderEl').html(v);
+            },
+
+            getKeyEventTarget: function () {
+                return this.get('filterInput');
             },
 
             /**
@@ -166,6 +182,18 @@ KISSY.add(function (S, require) {
             }
         },
         {
+            HTML_PARSER: {
+                placeholderEl: function (el) {
+                    return el.one('.' + this.getBaseCssClass('placeholder'));
+                },
+                filterInputWrap: function (el) {
+                    return el.one('.' + this.getBaseCssClass('input-wrap'));
+                },
+                filterInput: function (el) {
+                    return el.one('.' + this.getBaseCssClass('input'));
+                }
+            },
+
             ATTRS: {
                 allowTextSelection: {
                     value: true
@@ -179,7 +207,8 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 placeholder: {
-                    view: 1
+                    view: 1,
+                    sync:0
                 },
 
                 /**
@@ -212,8 +241,8 @@ KISSY.add(function (S, require) {
                     value: false
                 },
 
-                xrender: {
-                    value: FilterMenuRender
+                contentTpl: {
+                    value: FilterMenuTpl
                 }
             },
             xclass: 'filter-menu'

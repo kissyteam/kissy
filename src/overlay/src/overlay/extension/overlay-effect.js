@@ -18,7 +18,7 @@ KISSY.add(function (S) {
         return self.__afterCreateEffectGhost(ghost);
     }
 
-    function processTarget(self, show, callback) {
+    function processTarget(self, show) {
         if (self.__effectGhost) {
             self.__effectGhost.stop(1, 1);
         }
@@ -63,22 +63,20 @@ KISSY.add(function (S) {
                 self.__effectGhost = null;
                 ghost.remove();
                 el.css('visibility', '');
-                callback();
             }
         });
     }
 
-    function processEffect(self, show, callback) {
+    function processEffect(self, show) {
         var el = self.$el,
             effectCfg = self.get('effect'),
             effect = effectCfg.effect || 'none',
             target = effectCfg.target;
         if (effect === 'none' && !target) {
-            callback();
             return;
         }
         if (target) {
-            processTarget(self, show, callback);
+            processTarget(self, show);
             return;
         }
         var duration = effectCfg.duration,
@@ -104,10 +102,13 @@ KISSY.add(function (S) {
                     // restore to box-render _onSetVisible
                     visibility: ''
                 });
-                callback();
             },
             easing: easing
         });
+    }
+
+    function afterVisibleChange(e) {
+        processEffect(this, e.newVal);
     }
 
     /**
@@ -115,7 +116,6 @@ KISSY.add(function (S) {
      * @class KISSY.Overlay.Extension.Effect
      */
     function OverlayEffect() {
-
     }
 
     OverlayEffect.ATTRS = {
@@ -162,17 +162,8 @@ KISSY.add(function (S) {
             return ghost;
         },
 
-        /**
-         * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
-         * @protected
-         * @member KISSY.Overlay
-         */
-        _onSetVisible: function (v) {
-            var self = this;
-            // delay show and hide event after anim
-            processEffect(self, v, function () {
-                self.fire(v ? 'show' : 'hide');
-            });
+        __bindUI: function () {
+            this.on('afterVisibleChange', afterVisibleChange, this);
         }
     };
 

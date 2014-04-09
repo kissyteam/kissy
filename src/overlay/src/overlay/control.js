@@ -9,8 +9,9 @@ KISSY.add(function (S, require) {
     var AlignExtension = require('component/extension/align');
     var Loading = require('./extension/loading');
     var Mask = require('./extension/mask');
-    var OverlayRender = require('./overlay-render');
     var OverlayEffect = require('./extension/overlay-effect');
+    var ContentBox = require('component/extension/content-box');
+    var OverlayTpl = require('./overlay-xtpl');
     var HIDE = 'hide',
         actions = {
             hide: HIDE,
@@ -28,12 +29,19 @@ KISSY.add(function (S, require) {
      * @mixins KISSY.Overlay.Extension.Mask
      */
     return Container.extend([
+        ContentBox,
         Shim,
         Loading,
         AlignExtension,
         Mask,
         OverlayEffect
     ], {
+        createDom:function(){
+            this.fillChildrenElsBySelectors({
+                closeBtn: '#ks-overlay-close-{id}'
+            });
+        },
+
         bindUI: function () {
             var self = this,
                 closeBtn = self.get('closeBtn');
@@ -54,6 +62,11 @@ KISSY.add(function (S, require) {
             return self;
         }
     }, {
+        HTML_PARSER: {
+            closeBtn: function (el) {
+                return el.one('.' + this.getBaseCssClass('close'));
+            }
+        },
         ATTRS: {
             contentEl: {
             },
@@ -75,6 +88,7 @@ KISSY.add(function (S, require) {
              */
             closable: {
                 value: false,
+                sync:0,
                 view: 1
             },
 
@@ -88,7 +102,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             closeBtn: {
-                view: 1
             },
 
             /**
@@ -155,8 +168,8 @@ KISSY.add(function (S, require) {
                 value: false
             },
 
-            xrender: {
-                value: OverlayRender
+            contentTpl: {
+                value: OverlayTpl
             }
         },
         xclass: 'overlay'

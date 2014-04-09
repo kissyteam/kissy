@@ -5,7 +5,6 @@
  */
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var SeparatorRender = require('separator/render');
 
     /**
      * separator component for KISSY. xclass: 'separator'.
@@ -13,6 +12,9 @@ KISSY.add(function (S, require) {
      * @class KISSY.Separator
      */
     return Control.extend({
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'separator';
+        }
     }, {
         ATTRS: {
 
@@ -31,10 +33,6 @@ KISSY.add(function (S, require) {
 
             handleGestureEvents: {
                 value: false
-            },
-
-            xrender: {
-                value: SeparatorRender
             }
         },
         xclass: 'separator'

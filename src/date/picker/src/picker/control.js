@@ -10,7 +10,8 @@ KISSY.add(function (S, require) {
         Control = require('component/control'),
         PickerRender = require('./render'),
         MonthPanel = require('./month-panel/control');
-    var tap = Node.Gesture.tap;
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
     var $ = Node.all;
     var KeyCode = Node.KeyCode;
 
@@ -155,7 +156,7 @@ KISSY.add(function (S, require) {
             self.get('previousYearBtn').on(tap, prevYear, self);
             self.get('tbodyEl').delegate(
                 tap,
-                '.' + self.view.getBaseCssClass('cell'),
+                    '.' + self.view.getBaseCssClass('cell'),
                 chooseCell,
                 self
             );

@@ -5,8 +5,9 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
+    var SubMenuTpl = require('./submenu-xtpl');
     var MenuItem = require('./menuitem');
-    var SubMenuRender = require('./submenu-render');
+    var ContentBox = require('component/extension/content-box');
 
     var KeyCode = Node.KeyCode,
         MENU_DELAY = 0.15;
@@ -32,8 +33,27 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Menu.Item
      * @class KISSY.Menu.SubMenu
      */
-    return MenuItem.extend({
+    return MenuItem.extend([ContentBox], {
             isSubMenu: 1,
+
+            decorateDom: function (el) {
+                var self = this,
+                    prefixCls = self.get('prefixCls');
+                var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
+                var docBody = popupMenuEl[0].ownerDocument.body;
+                docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
+                var PopupMenuClass =
+                    this.getComponentConstructorByNode(prefixCls, popupMenuEl);
+                self.setInternal('menu', new PopupMenuClass({
+                    srcNode: popupMenuEl,
+                    prefixCls: prefixCls
+                }));
+            },
+
+            bindUI: function () {
+                var self = this;
+                self.on('afterHighlightedChange', afterHighlightedChange, self);
+            },
 
             clearShowPopupMenuTimers: function () {
                 var showTimer;
@@ -56,11 +76,6 @@ KISSY.add(function (S, require) {
                 this.clearShowPopupMenuTimers();
             },
 
-            bindUI: function () {
-                var self = this;
-                self.on('afterHighlightedChange', afterHighlightedChange, self);
-            },
-
             handleMouseLeaveInternal: function () {
                 var self = this;
                 self.set('highlighted', false, {
@@ -73,7 +88,7 @@ KISSY.add(function (S, require) {
                 if (menu.get('visible')) {
                     // 延迟 highlighted
                     self._dismissTimer = S.later(hideMenu,
-                        self.get('menuDelay') * 1000, false, self);
+                            self.get('menuDelay') * 1000, false, self);
                 }
             },
 
@@ -98,11 +113,11 @@ KISSY.add(function (S, require) {
              */
             _onSetHighlighted: function (v, e) {
                 var self = this;
+                self.callSuper(v, e);
                 // sync
                 if (!e) {
                     return;
                 }
-                self.callSuper(e);
                 if (e.fromMouse) {
                     return;
                 }
@@ -114,11 +129,11 @@ KISSY.add(function (S, require) {
             },
 
             // click ，立即显示
-            handleClickInternal: function () {
+            handleClickInternal: function (e) {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                self.callSuper();
+                self.callSuper(e);
             },
 
             /**
@@ -231,8 +246,8 @@ KISSY.add(function (S, require) {
                     }
                 },
 
-                xrender: {
-                    value: SubMenuRender
+                contentTpl: {
+                    value: SubMenuTpl
                 }
             },
             xclass: 'submenu'

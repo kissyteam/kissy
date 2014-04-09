@@ -67,7 +67,8 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
 
     var transformProperty = getVendorInfo('transform').name;
     var transformOriginProperty = transformProperty + 'Origin';
-    var tap = Node.Gesture.tap;
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
 
     var scrollView;
     var scroll;

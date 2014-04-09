@@ -8,8 +8,8 @@ KISSY.add(function (S, require) {
     var ScrollbarPlugin = require('scroll-view/plugin/scrollbar');
     var Node = require('node');
     var $ = Node.all;
-    var Gesture = Node.Gesture;
     var win = $(window);
+    var TapGesture = require('event/gesture/tap');
 
     var ZOOMER_CLASS = 'ks-image-zoomer';
     var TRIGGER_CLASS = 'ks-image-zoomer-trigger';
@@ -74,9 +74,9 @@ KISSY.add(function (S, require) {
         self.maskEl = $(MASK_HTML).prependTo(document.body);
 
         // tap(touch down is buggy on safari ios)
-        self.contentEl.on(Gesture.singleTap, close, self);
-        self.closeEl.on(Gesture.tap, close, self);
-        self.imgEl.on(Gesture.doubleTap, onDoubleTap, self);
+        self.contentEl.on(TapGesture.SINGLE_TAP, close, self);
+        self.closeEl.on(TapGesture.TAP, close, self);
+        self.imgEl.on(TapGesture.DOUBLE_TAP, onDoubleTap, self);
         win.on('resize orientationchange', onResize, self);
         updateViewport(self);
 

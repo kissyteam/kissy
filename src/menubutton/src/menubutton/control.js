@@ -6,25 +6,49 @@
 KISSY.add(function (S, require) {
     var Node = require('node');
     var Button = require('button');
-    var MenuButtonRender = require('./render');
-
+    var ContentBox = require('component/extension/content-box');
     var KeyCode = Node.KeyCode;
+    var MenuButtonTpl = require('./menubutton-xtpl');
+
     /**
      * A menu button component, consist of a button and a drop down popup menu.
      * xclass: 'menu-button'.
      * @class KISSY.MenuButton
      * @extends KISSY.Button
      */
-    return Button.extend({
+    return Button.extend([ContentBox], {
         isMenuButton: 1,
+
+        decorateDom: function (el) {
+            var self = this,
+                prefixCls = self.get('prefixCls');
+            var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
+            var docBody = popupMenuEl[0].ownerDocument.body;
+            docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
+            var PopupMenuClass =
+                this.getComponentConstructorByNode(prefixCls, popupMenuEl);
+            self.setInternal('menu', new PopupMenuClass({
+                srcNode: popupMenuEl,
+                prefixCls: prefixCls
+            }));
+        },
+
+        beforeCreateDom: function (renderData) {
+            S.mix(renderData.elAttrs, {
+                'aria-expanded': false,
+                'aria-haspopup': true
+            });
+        },
 
         _onSetCollapsed: function (v) {
             var self = this,
                 menu = self.get('menu');
+            var el = self.$el;
+            var cls = self.getBaseCssClass('open');
+            el[v ? 'removeClass' : 'addClass'](cls).attr('aria-expanded', !v);
             if (v) {
                 menu.hide();
             } else {
-                var el = self.$el;
                 if (!menu.get('visible')) {
                     // same as submenu
                     // in case menu is changed after menubutton is rendered
@@ -42,7 +66,7 @@ KISSY.add(function (S, require) {
                         var menuEl = menu.get('el');
                         var borderWidth =
                             (parseInt(menuEl.css('borderLeftWidth'), 10) || 0) +
-                                (parseInt(menuEl.css('borderRightWidth'), 10) || 0);
+                            (parseInt(menuEl.css('borderRightWidth'), 10) || 0);
                         menu.set('width', menu.get('align').node[0].offsetWidth - borderWidth);
                     }
                     menu.show();
@@ -179,6 +203,7 @@ KISSY.add(function (S, require) {
 
         // 禁用时关闭已显示菜单
         _onSetDisabled: function (v) {
+            this.callSuper(v);
             if (!v) {
                 this.set('collapsed', true);
             }
@@ -190,7 +215,6 @@ KISSY.add(function (S, require) {
 
     }, {
         ATTRS: {
-
             /**
              * Whether drop down menu is same width with button.
              * Defaults to: true.
@@ -253,12 +277,13 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             collapsed: {
-                value: false,
-                view: 1
+                value: true,
+                view: 1,
+                sync: 0
             },
 
-            xrender: {
-                value: MenuButtonRender
+            contentTpl: {
+                value: MenuButtonTpl
             }
         },
         xclass: 'menu-button'

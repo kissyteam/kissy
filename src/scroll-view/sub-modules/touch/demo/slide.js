@@ -5,6 +5,9 @@
 KISSY.add(function (S, Node, Base, ScrollView) {
     var $ = Node.all;
 
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
+
     var ACTIVE_CLASS = 'ks-scroll-view-slide-trigger-active';
 
     function buildTriggerTpl(count) {
@@ -35,7 +38,7 @@ KISSY.add(function (S, Node, Base, ScrollView) {
                 var childrenCount = self.content.children().length;
                 self.nav = $(buildTriggerTpl(childrenCount)).appendTo(srcNode);
                 self.triggers = self.nav.children();
-                self.nav.delegate(Node.Gesture.tap,
+                self.nav.delegate(tap,
                     '.ks-scroll-view-slide-trigger',
                     self._onTriggerAction, self);
                 if (self.get('triggerType') === 'mouse') {

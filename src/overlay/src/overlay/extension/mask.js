@@ -9,6 +9,9 @@ KISSY.add(function (S, require) {
         ie6 = (UA.ie === 6),
         $ = Node.all;
 
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
+
     function docWidth() {
         return  ie6 ? ('expression(KISSY.DOM.docWidth())') : '100%';
     }
@@ -18,7 +21,7 @@ KISSY.add(function (S, require) {
     }
 
     function initMask(self, hiddenCls) {
-        var maskCls = self.view.getBaseCssClasses('mask'),
+        var maskCls = self.getBaseCssClasses('mask'),
             mask = $('<div ' +
                 ' style="width:' + docWidth() + ';' +
                 'left:0;' +
@@ -96,7 +99,7 @@ KISSY.add(function (S, require) {
 
     function setMaskVisible(self, shown) {
         var maskNode = self.get('maskNode'),
-            hiddenCls = self.view.getBaseCssClasses('mask-hidden');
+            hiddenCls = self.getBaseCssClasses('mask-hidden');
         if (shown) {
             maskNode.removeClass(hiddenCls);
         } else {
@@ -148,7 +151,7 @@ KISSY.add(function (S, require) {
         __renderUI: function () {
             var self = this;
             if (self.get('mask')) {
-                self.set('maskNode', initMask(self, self.get('visible') ? '' : self.view.getBaseCssClasses('mask-hidden')));
+                self.set('maskNode', initMask(self, self.get('visible') ? '' : self.getBaseCssClasses('mask-hidden')));
             }
         },
 
@@ -159,7 +162,7 @@ KISSY.add(function (S, require) {
             if ((mask = self.get('mask'))) {
                 maskNode = self.get('maskNode');
                 if (mask.closeOnClick) {
-                    maskNode.on(Node.Gesture.tap, self.close, self);
+                    maskNode.on(tap, self.close, self);
                 }
                 self.on('afterVisibleChange', afterVisibleChange);
             }

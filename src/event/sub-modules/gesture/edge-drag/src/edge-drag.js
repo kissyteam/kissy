@@ -80,8 +80,6 @@ KISSY.add(function (S, require) {
                 bottom: win.pageYOffset + win.innerHeight - MIN_EDGE_DISTANCE
             };
 
-            log(direction+' : '+y+' : '+invalidRegion.bottom+' : '+self.startY);
-
             if (direction === 'right' && x > invalidRegion.left) {
                 return false;
             } else if (direction === 'left' && x < invalidRegion.right) {

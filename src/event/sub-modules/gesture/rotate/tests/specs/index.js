@@ -3,6 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    if (S.UA.phantomjs || !S.Feature.isTouchEventSupported()) {
+        return;
+    }
+
     var Node = require('node');
     var RotateType = require('event/gesture/rotate');
     var ROTATE = RotateType.ROTATE;

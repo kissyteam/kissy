@@ -4,12 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node'),
-        Manager = require('component/manager');
+    var Manager = require('component/manager');
 
-    var UA = require('ua'),
-        ie = UA.ieMode,
-        Gesture = Node.Gesture;
+    var BaseGesture = require('event/gesture/base');
+    var TapGesture = require('event/gesture/tap');
 
     function onRenderChild(e) {
         if (e.target === this) {
@@ -48,13 +46,13 @@ KISSY.add(function (S, require) {
                     // e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {
-                        case Gesture.start:
+                        case BaseGesture.START:
                             control.handleMouseDown(e);
                             break;
-                        case Gesture.end:
+                        case BaseGesture.END:
                             control.handleMouseUp(e);
                             break;
-                        case Gesture.tap:
+                        case TapGesture.TAP:
                             control.handleClick(e);
                             break;
                         case 'mouseenter':
@@ -66,9 +64,6 @@ KISSY.add(function (S, require) {
                         case 'contextmenu':
                             control.handleContextMenu(e);
                             break;
-                        case 'dblclick':
-                            control.handleDblClick(e);
-                            break;
                         default:
                             S.error(e.type + ' unhandled!');
                     }
@@ -78,16 +73,11 @@ KISSY.add(function (S, require) {
 
         __bindUI: function () {
             var self = this,
-                events = Gesture.start +
-                    ' ' + Gesture.end +
-                    ' ' + Gesture.tap;
+                events = BaseGesture.START +
+                    ' ' + BaseGesture.END +
+                    ' ' + TapGesture.TAP;
 
-            if (Gesture.cancel) {
-                events += ' ' + Gesture.cancel;
-            }
-
-            events += ' mouseenter mouseleave contextmenu ' +
-                (ie && ie < 9 ? 'dblclick ' : '');
+            events += ' mouseenter mouseleave contextmenu';
 
             self.$el.delegate(events, '.' + self.__childClsTag,
                 self.handleChildrenEvents, self);

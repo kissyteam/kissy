@@ -5,7 +5,6 @@
  */
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var MenuItemRender = require('./menuitem-render');
     var $ = require('node').all;
 
     /**
@@ -16,6 +15,14 @@ KISSY.add(function (S, require) {
      */
     return Control.extend({
         isMenuItem: 1,
+
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = renderData.selectable ?
+                'menuitemradio' : 'menuitem';
+            if (renderData.selected) {
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
+            }
+        },
 
         // do not set highlighted on mousedown for touch device!
         // only set active in component/control
@@ -45,7 +52,7 @@ KISSY.add(function (S, require) {
         _onSetHighlighted: function (v, e) {
             var self = this,
                 parent = self.get('parent');
-
+            self.callSuper(v, e);
             if (!(e && e.byPassSetHighlightedItem)) {
                 if (self.get('rendered')) {
                     parent.set('highlightedItem', v ? self : null);
@@ -75,15 +82,27 @@ KISSY.add(function (S, require) {
             }
         },
 
+        _onSetSelected: function (v) {
+            var self = this,
+                cls = self.getBaseCssClasses('selected');
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
+        },
+
         /**
          * Check whether this menu item contains specified element.
          * @param {KISSY.NodeList} element Element to be tested.
          * @protected
          */
         containsElement: function (element) {
-            return this.view.containsElement(element);
+            var $el = this.$el;
+            return $el && ($el[0] === element || $el.contains(element));
         }
     }, {
+        HTML_PARSER: {
+            selectable: function (el) {
+                return el.hasClass(this.getBaseCssClass('selectable'));
+            }
+        },
         ATTRS: {
             focusable: {
                 value: false
@@ -102,6 +121,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             selectable: {
+                sync: 0,
                 view: 1
             },
 
@@ -138,11 +158,8 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             selected: {
+                sync: 0,
                 view: 1
-            },
-
-            xrender: {
-                value: MenuItemRender
             }
         },
         xclass: 'menuitem'

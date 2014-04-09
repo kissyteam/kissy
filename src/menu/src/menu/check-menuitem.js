@@ -5,15 +5,26 @@
  */
 KISSY.add(function (S, require) {
     var MenuItem = require('./menuitem');
-    var CheckMenuItemRender = require('./check-menuitem-render');
+    var ContentBox = require('component/extension/content-box');
+    var CheckMenuItemTpl = require('./check-menuitem-xtpl');
 
     /**
      * @class KISSY.Menu.CheckItem
      */
-    return MenuItem.extend({
-        handleClickInternal: function () {
+    return MenuItem.extend([ContentBox], {
+        beforeCreateDom: function (renderData) {
+            if (renderData.checked) {
+                renderData.elCls.push(this.getBaseCssClasses('checked'));
+            }
+        },
+        _onSetChecked: function (v) {
+            var self = this,
+                cls = self.getBaseCssClasses('checked');
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
+        },
+        handleClickInternal: function (e) {
             var self = this;
-            self.callSuper();
+            self.callSuper(e);
             self.set('checked', !self.get('checked'));
             self.fire('click');
             return true;
@@ -28,10 +39,11 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             checked: {
-                view: 1
+                view: 1,
+                sync: 0
             },
-            xrender: {
-                value: CheckMenuItemRender
+            contentTpl: {
+                value: CheckMenuItemTpl
             }
         },
         xclass: 'check-menuitem'
