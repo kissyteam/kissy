@@ -108,7 +108,7 @@
 
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    KISSY.use('scroll-view,scroll-view/plugin/scrollbar,uri', function (S, ScrollView, ScrollbarPlugin,Uri) {
+    KISSY.use('scroll-view,scroll-view/plugin/scrollbar,uri', function (S, ScrollView, ScrollbarPlugin, Uri) {
         var $ = S.all;
         var num = new Uri(location.href).getQuery().get('num') || '41';
 
@@ -116,7 +116,7 @@
 
         var str = '';
         for (var i = 1; i < num; i++) {
-            str += '<p>line ' + i + '</p>'
+            str += '<p><a href="http://m.taobao.com">line ' + i + '</a></p>';
         }
         S.all('#thelist').html(str);
 

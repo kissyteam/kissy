@@ -5,11 +5,11 @@
  */
 KISSY.add(function (S, require) {
     var ScrollViewBase = require('./base');
-    var Node = require('node');
     var TimerAnim = require('anim/timer');
     var OUT_OF_BOUND_FACTOR = 0.5;
     var MAX_SWIPE_VELOCITY = 6;
-    var BaseGesture= require('event/gesture/base');
+    var BaseGesture = require('event/gesture/base');
+    var DragGesture = require('event/gesture/drag');
 
     function onDragScroll(self, e, scrollType) {
         if (forbidDrag(self, scrollType)) {
@@ -352,6 +352,7 @@ KISSY.add(function (S, require) {
 
     function onGestureStart(e) {
         var self = this;
+
         if (self.isScrolling && e.gestureType === 'touch') {
             e.preventDefault();
         }
@@ -366,6 +367,15 @@ KISSY.add(function (S, require) {
                 pageY: e.pageY
             });
         }
+    }
+
+    function bindUI(self){
+        var action = self.get('disabled') ? 'detach' : 'on';
+        self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)
+            // click
+            [action](BaseGesture.START, onGestureStart, self)
+            [action](DragGesture.DRAG, onDragHandler, self)
+            [action](DragGesture.DRAG_END, onDragEndHandler, self);
     }
 
     /**
@@ -392,14 +402,14 @@ KISSY.add(function (S, require) {
                 });
             },
 
+            bindUI:function(){
+                bindUI(this);
+            },
+
             _onSetDisabled: function (v) {
-                var action = v ? 'detach' : 'on';
                 var self = this;
-                self.$contentEl[action]('gestureDragStart', onDragStartHandler, self)
-                    // click
-                    [action](BaseGesture.START, onGestureStart, self)
-                    [action]('gestureDrag', onDragHandler, self)
-                    [action]('gestureDragEnd', onDragEndHandler, self);
+                self.callSuper(v);
+                bindUI(self);
             },
 
             destructor: function () {

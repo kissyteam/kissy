@@ -267,13 +267,15 @@
 <script>
     KISSY.config('packages', {
         slide: {
-            base: './'
+            base: './slide'
         },
         'image-zoomer': {
-            base: '/kissy/src/scroll-view/sub-modules/plugin/scrollbar/demo/'
+            base: '/kissy/src/scroll-view/sub-modules/plugin/scrollbar/demo/image-zoomer'
         }
     });
-    alert(navigator.userAgent);
+
+    //alert(navigator.userAgent);
+
     KISSY.use('node,slide,image-zoomer,event/gesture/tap', function (S, Node, Slide, ImageZoomer,TapGesture) {
         var $ = Node.all;
 

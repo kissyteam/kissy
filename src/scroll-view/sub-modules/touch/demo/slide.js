@@ -2,8 +2,11 @@
  * simple slide using scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Node, Base, ScrollView) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
     var $ = Node.all;
+    var Base = require('base');
+    var ScrollView = require('scroll-view');
 
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
@@ -85,6 +88,4 @@ KISSY.add(function (S, Node, Base, ScrollView) {
             }
         }
     });
-}, {
-    requires: ['node', 'base', 'scroll-view']
 });

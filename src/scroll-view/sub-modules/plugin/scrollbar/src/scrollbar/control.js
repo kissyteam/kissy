@@ -6,9 +6,9 @@
 KISSY.add(function (S, require) {
     var UA = require('ua');
     var Control = require('component/control');
-    var ScrollBarRender = require('./render');
-    var BaseGesture= require('event/gesture/base');
+    var BaseGesture = require('event/gesture/base');
     var DragType = require('event/gesture/drag');
+    var ScrollBarTpl = require('./scrollbar-xtpl');
 
     var MIN_BAR_LENGTH = 20;
 
@@ -49,7 +49,7 @@ KISSY.add(function (S, require) {
         if (scrollView.allowScroll[self.scrollType]) {
             self.scrollLength = scrollView[scrollWHProperty];
             trackElSize = self.trackElSize =
-                whProperty === 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
+                    whProperty === 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
             ratio = scrollView[clientWHProperty] / self.scrollLength;
             barSize = ratio * trackElSize;
             self.set(dragWHProperty, barSize);
@@ -176,12 +176,13 @@ KISSY.add(function (S, require) {
         }
     }
 
-    /**
-     * @class KISSY.ScrollView.ScrollBar
-     * @extend KISSY.Component.Control
-     * @private
-     */
-    return Control.extend({
+    var Feature = S.Feature;
+    var isTransform3dSupported = Feature.isTransform3dSupported();
+    var transformVendorInfo = Feature.getCssVendorInfo('transform');
+    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var supportCss3 = !!transformVendorInfo;
+
+    var methods = {
         initializer: function () {
             var self = this;
             var scrollType = self.scrollType = self.get('axis') === 'x' ? 'left' : 'top';
@@ -201,19 +202,26 @@ KISSY.add(function (S, require) {
             self.scrollView = self.get('scrollView');
         },
 
-        _onSetDisabled: function (v) {
-            var self = this;
-            var action = v ? 'detach' : 'on';
-            if (!self.get('autoHide')) {
-                self.$dragEl[action]('dragstart mousedown', preventDefault)
-                    [action](DragType.DRAG_START, onDragStartHandler, self)
-                    [action](DragType.DRAG, onDragHandler, self);
-                S.each([self.$downBtn, self.$upBtn], function (b) {
-                    b[action](BaseGesture.START, onUpDownBtnMouseDown, self)
-                        [action](BaseGesture.END, onUpDownBtnMouseUp, self);
-                });
-                self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self);
-            }
+        beforeCreateDom: function (renderData, childrenElSelectors) {
+            renderData.elCls.push(renderData.prefixCls + 'scrollbar-' + renderData.axis);
+            S.mix(childrenElSelectors, {
+                dragEl: '#ks-scrollbar-drag-{id}',
+                downBtn: '#ks-scrollbar-arrow-down-{id}',
+                upBtn: '#ks-scrollbar-arrow-up-{id}',
+                trackEl: '#ks-scrollbar-track-{id}'
+            });
+        },
+
+        createDom: function () {
+            var self=this;
+            self.$dragEl = self.get('dragEl');
+            self.$trackEl = self.get('trackEl');
+            self.$downBtn = self.get('downBtn');
+            self.$upBtn = self.get('upBtn');
+            self.dragEl = self.$dragEl[0];
+            self.trackEl = self.$trackEl[0];
+            self.downBtn = self.$downBtn[0];
+            self.upBtn = self.$upBtn[0];
         },
 
         bindUI: function () {
@@ -234,11 +242,65 @@ KISSY.add(function (S, require) {
             onScrollViewReflow.call(this);
         },
 
+        _onSetDragHeight: function (v) {
+            this.dragEl.style.height = v + 'px';
+        },
+
+        _onSetDragWidth: function (v) {
+            this.dragEl.style.width = v + 'px';
+        },
+
+        _onSetDragLeft: function (v) {
+            this.dragEl.style.left = v + 'px';
+        },
+
+        _onSetDragTop: function (v) {
+            this.dragEl.style.top = v + 'px';
+        },
+
+        _onSetDisabled: function (v) {
+            var self = this;
+            var action = v ? 'detach' : 'on';
+            if (!self.get('autoHide')) {
+                self.$dragEl[action]('dragstart mousedown', preventDefault)
+                    [action](DragType.DRAG_START, onDragStartHandler, self)
+                    [action](DragType.DRAG, onDragHandler, self);
+                S.each([self.$downBtn, self.$upBtn], function (b) {
+                    b[action](BaseGesture.START, onUpDownBtnMouseDown, self)
+                        [action](BaseGesture.END, onUpDownBtnMouseUp, self);
+                });
+                self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self);
+            }
+        },
+
         destructor: function () {
             this.scrollView.detach(SCROLLBAR_EVENT_NS);
             clearHideTimer(this);
         }
-    }, {
+    };
+
+    if (supportCss3) {
+        var transformProperty = transformVendorInfo.propertyName;
+
+        methods._onSetDragLeft = function (v) {
+            this.dragEl.style[transformProperty] = 'translateX(' + v + 'px)' +
+                ' translateY(' + this.get('dragTop') + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
+        };
+
+        methods._onSetDragTop = function (v) {
+            this.dragEl.style[transformProperty] = 'translateX(' + this.get('dragLeft') + 'px)' +
+                ' translateY(' + v + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
+        };
+    }
+
+    /**
+     * @class KISSY.ScrollView.ScrollBar
+     * @extend KISSY.Component.Control
+     * @private
+     */
+    return Control.extend(methods, {
         ATTRS: {
             /**
              * minimum scrollbar length.
@@ -337,8 +399,8 @@ KISSY.add(function (S, require) {
                 value: false
             },
 
-            xrender: {
-                value: ScrollBarRender
+            contentTpl: {
+                value: ScrollBarTpl
             }
         },
         xclass: 'scrollbar'

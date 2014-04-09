@@ -7,128 +7,20 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var TimerAnim = require('anim/timer');
     var Container = require('component/container');
-    var Render = require('./base/render');
-
+    var ContentBox = require('component/extension/content-box');
     var $ = S.all,
         KeyCode = Node.KeyCode;
+    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var Feature = S.Feature,
+//        MARKER_CLS = 'ks-scroll-view-marker',
+        transformVendorInfo = Feature.getCssVendorInfo('transform'),
+        floor = Math.floor,
+        transformProperty;
+    var isTransform3dSupported = S.Feature.isTransform3dSupported();
+    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var supportCss3 = !!transformVendorInfo;
 
-    function onElScroll() {
-        var self = this,
-            el = self.el,
-            scrollTop = el.scrollTop,
-            scrollLeft = el.scrollLeft;
-        if (scrollTop) {
-            self.set('scrollTop', scrollTop + self.get('scrollTop'));
-        }
-        if (scrollLeft) {
-            self.set('scrollLeft', scrollLeft + self.get('scrollLeft'));
-        }
-        el.scrollTop = el.scrollLeft = 0;
-    }
-
-    function frame(anim, fx) {
-        anim.scrollView.set(fx.prop, fx.val);
-    }
-
-    function reflow(v, e) {
-        var self = this,
-            $contentEl = self.$contentEl;
-        // consider pull to refresh
-        // refresh label will be prepended to el
-        // contentEl must be absolute
-        // or else
-        // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
-        // will affect pull to refresh
-        var scrollHeight = v.scrollHeight,
-            scrollWidth = v.scrollWidth;
-
-        var clientHeight = v.clientHeight,
-            allowScroll,
-            clientWidth = v.clientWidth;
-
-        var prevVal = e && e.prevVal || {};
-
-        if (prevVal.scrollHeight === scrollHeight &&
-            prevVal.scrollWidth === scrollWidth &&
-            clientHeight === prevVal.clientHeight &&
-            clientWidth === prevVal.clientWidth) {
-            return;
-        }
-
-        self.scrollHeight = scrollHeight;
-        self.scrollWidth = scrollWidth;
-        self.clientHeight = clientHeight;
-        self.clientWidth = clientWidth;
-
-        allowScroll = self.allowScroll = {};
-
-        if (scrollHeight > clientHeight) {
-            allowScroll.top = 1;
-        }
-        if (scrollWidth > clientWidth) {
-            allowScroll.left = 1;
-        }
-
-        self.minScroll = {
-            left: 0,
-            top: 0
-        };
-
-        var maxScrollLeft,
-            maxScrollTop;
-
-        self.maxScroll = {
-            left: maxScrollLeft = scrollWidth - clientWidth,
-            top: maxScrollTop = scrollHeight - clientHeight
-        };
-
-        delete self.scrollStep;
-
-        var snap = self.get('snap'),
-            scrollLeft = self.get('scrollLeft'),
-            scrollTop = self.get('scrollTop');
-
-        if (snap) {
-            var elOffset = $contentEl.offset();
-            var pages = self.pages = typeof snap === 'string' ?
-                    $contentEl.all(snap) :
-                    $contentEl.children(),
-                pageIndex = self.get('pageIndex'),
-                pagesOffset = self.pagesOffset = [];
-            pages.each(function (p, i) {
-                var offset = p.offset(),
-                    left = offset.left - elOffset.left,
-                    top = offset.top - elOffset.top;
-                if (left <= maxScrollLeft && top <= maxScrollTop) {
-                    pagesOffset[i] = {
-                        left: left,
-                        top: top,
-                        index: i
-                    };
-                }
-            });
-            if (pageIndex) {
-                self.scrollToPage(pageIndex);
-                return;
-            }
-        }
-
-        // in case content is reduces
-        self.scrollToWithBounds({
-            left: scrollLeft,
-            top: scrollTop
-        });
-
-        self.fire('reflow', v);
-    }
-
-    /**
-     * Make container scrollable.
-     * module scroll-view will be this class on non-touch device
-     * @class KISSY.ScrollView.Base
-     * @extend KISSY.Component.Container
-     */
-    return Container.extend({
+    var methods = {
         initializer: function () {
             this.scrollAnims = [];
         },
@@ -140,6 +32,10 @@ KISSY.add(function (S, require) {
                 // textarea enter cause el to scroll
                 // bug: left top scroll does not fire scroll event, because scrollTop is 0!
                 .on('scroll', onElScroll, self);
+        },
+
+        syncUI: function () {
+            this.sync();
         },
 
         sync: function () {
@@ -364,8 +260,150 @@ KISSY.add(function (S, require) {
                     self.set('scrollTop', top);
                 }
             }
+        },
+
+        _onSetScrollLeft: function (v) {
+            this.contentEl.style.left = -v + 'px';
+        },
+
+        _onSetScrollTop: function (v) {
+            this.contentEl.style.top = -v + 'px';
         }
-    }, {
+    };
+
+    if (supportCss3) {
+        transformProperty = transformVendorInfo.propertyName;
+
+        methods._onSetScrollLeft = function (v) {
+            this.contentEl.style[transformProperty] = 'translateX(' + floor(0 - v) + 'px)' +
+                ' translateY(' + floor(0 - this.get('scrollTop')) + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
+        };
+
+        methods._onSetScrollTop = function (v) {
+            this.contentEl.style[transformProperty] = 'translateX(' + floor(0 - this.get('scrollLeft')) + 'px)' +
+                ' translateY(' + floor(0 - v) + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
+        };
+    }
+
+    function onElScroll() {
+        var self = this,
+            el = self.el,
+            scrollTop = el.scrollTop,
+            scrollLeft = el.scrollLeft;
+        if (scrollTop) {
+            self.set('scrollTop', scrollTop + self.get('scrollTop'));
+        }
+        if (scrollLeft) {
+            self.set('scrollLeft', scrollLeft + self.get('scrollLeft'));
+        }
+        el.scrollTop = el.scrollLeft = 0;
+    }
+
+    function frame(anim, fx) {
+        anim.scrollView.set(fx.prop, fx.val);
+    }
+
+    function reflow(v, e) {
+        var self = this,
+            $contentEl = self.$contentEl;
+        // consider pull to refresh
+        // refresh label will be prepended to el
+        // contentEl must be absolute
+        // or else
+        // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
+        // will affect pull to refresh
+        var scrollHeight = v.scrollHeight,
+            scrollWidth = v.scrollWidth;
+
+        var clientHeight = v.clientHeight,
+            allowScroll,
+            clientWidth = v.clientWidth;
+
+        var prevVal = e && e.prevVal || {};
+
+        if (prevVal.scrollHeight === scrollHeight &&
+            prevVal.scrollWidth === scrollWidth &&
+            clientHeight === prevVal.clientHeight &&
+            clientWidth === prevVal.clientWidth) {
+            return;
+        }
+
+        self.scrollHeight = scrollHeight;
+        self.scrollWidth = scrollWidth;
+        self.clientHeight = clientHeight;
+        self.clientWidth = clientWidth;
+
+        allowScroll = self.allowScroll = {};
+
+        if (scrollHeight > clientHeight) {
+            allowScroll.top = 1;
+        }
+        if (scrollWidth > clientWidth) {
+            allowScroll.left = 1;
+        }
+
+        self.minScroll = {
+            left: 0,
+            top: 0
+        };
+
+        var maxScrollLeft,
+            maxScrollTop;
+
+        self.maxScroll = {
+            left: maxScrollLeft = scrollWidth - clientWidth,
+            top: maxScrollTop = scrollHeight - clientHeight
+        };
+
+        delete self.scrollStep;
+
+        var snap = self.get('snap'),
+            scrollLeft = self.get('scrollLeft'),
+            scrollTop = self.get('scrollTop');
+
+        if (snap) {
+            var elOffset = $contentEl.offset();
+            var pages = self.pages = typeof snap === 'string' ?
+                    $contentEl.all(snap) :
+                    $contentEl.children(),
+                pageIndex = self.get('pageIndex'),
+                pagesOffset = self.pagesOffset = [];
+            pages.each(function (p, i) {
+                var offset = p.offset(),
+                    left = offset.left - elOffset.left,
+                    top = offset.top - elOffset.top;
+                if (left <= maxScrollLeft && top <= maxScrollTop) {
+                    pagesOffset[i] = {
+                        left: left,
+                        top: top,
+                        index: i
+                    };
+                }
+            });
+            if (pageIndex) {
+                self.scrollToPage(pageIndex);
+                return;
+            }
+        }
+
+        // in case content is reduces
+        self.scrollToWithBounds({
+            left: scrollLeft,
+            top: scrollTop
+        });
+
+        self.fire('reflow', v);
+    }
+
+    /**
+     * Make container scrollable.
+     * module scroll-view will be this class on non-touch device
+     * @class KISSY.ScrollView.Base
+     * @extend KISSY.Component.Container
+     */
+    return Container.extend([ContentBox], methods, {
         ATTRS: {
             /**
              * content element of scroll view component
@@ -408,12 +446,15 @@ KISSY.add(function (S, require) {
                 // need process keydown
                 value: true
             },
+
             allowTextSelection: {
                 value: true
             },
+
             handleGestureEvents: {
                 value: false
             },
+
             /**
              * whether to allow snap effect
              * @cfg {Boolean} snap
@@ -434,9 +475,6 @@ KISSY.add(function (S, require) {
              */
             pageIndex: {
                 value: 0
-            },
-            xrender: {
-                value: Render
             }
         },
         xclass: 'scroll-view'

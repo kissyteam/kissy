@@ -1,4 +1,8 @@
-KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var $ = Node.all;
+    var ScrollView = require('scroll-view');
+    var ScrollbarPlugin = require('scroll-view/plugin/scrollbar');
     var VENDORS = [
             'Webkit',
             'Moz',
@@ -61,7 +65,6 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         };
     }
 
-    var $ = Node.all;
     var win = $(window);
 
     var transformProperty = getVendorInfo('transform').name;
@@ -297,10 +300,4 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             scrollView.sync();
         }
     };
-}, {
-    requires: [
-        'node',
-        'scroll-view',
-        'scroll-view/plugin/scrollbar'
-    ]
 });
