@@ -449,7 +449,6 @@
                     regexp: /^\s+/
                 },
                 {
-                    // ignore white space
                     state: ['t'],
                     regexp: /^,/,
                     token: 'COMMA'

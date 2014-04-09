@@ -4,6 +4,7 @@
  */
 KISSY.add(function (S, require) {
     require('./error');
+    require('./escape');
     require('./feature');
     require('./expression');
     require('./macro');
