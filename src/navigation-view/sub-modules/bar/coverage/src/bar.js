@@ -355,6 +355,14 @@ if (! _$jscoverage['/bar.js']) {
   _$jscoverage['/bar.js'].lineData[274] = 0;
   _$jscoverage['/bar.js'].lineData[275] = 0;
   _$jscoverage['/bar.js'].lineData[276] = 0;
+  _$jscoverage['/bar.js'].lineData[281] = 0;
+  _$jscoverage['/bar.js'].lineData[282] = 0;
+  _$jscoverage['/bar.js'].lineData[283] = 0;
+  _$jscoverage['/bar.js'].lineData[288] = 0;
+  _$jscoverage['/bar.js'].lineData[289] = 0;
+  _$jscoverage['/bar.js'].lineData[307] = 0;
+  _$jscoverage['/bar.js'].lineData[312] = 0;
+  _$jscoverage['/bar.js'].lineData[317] = 0;
 }
 if (! _$jscoverage['/bar.js'].functionData) {
   _$jscoverage['/bar.js'].functionData = [];
@@ -378,6 +386,11 @@ if (! _$jscoverage['/bar.js'].functionData) {
   _$jscoverage['/bar.js'].functionData[17] = 0;
   _$jscoverage['/bar.js'].functionData[18] = 0;
   _$jscoverage['/bar.js'].functionData[19] = 0;
+  _$jscoverage['/bar.js'].functionData[20] = 0;
+  _$jscoverage['/bar.js'].functionData[21] = 0;
+  _$jscoverage['/bar.js'].functionData[22] = 0;
+  _$jscoverage['/bar.js'].functionData[23] = 0;
+  _$jscoverage['/bar.js'].functionData[24] = 0;
 }
 if (! _$jscoverage['/bar.js'].branchData) {
   _$jscoverage['/bar.js'].branchData = {};
@@ -426,97 +439,109 @@ if (! _$jscoverage['/bar.js'].branchData) {
   _$jscoverage['/bar.js'].branchData['249'][1] = new BranchData();
   _$jscoverage['/bar.js'].branchData['274'] = [];
   _$jscoverage['/bar.js'].branchData['274'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['282'] = [];
+  _$jscoverage['/bar.js'].branchData['282'][1] = new BranchData();
+  _$jscoverage['/bar.js'].branchData['288'] = [];
+  _$jscoverage['/bar.js'].branchData['288'][1] = new BranchData();
 }
-_$jscoverage['/bar.js'].branchData['274'][1].init(18, 18, 'this._stack.length');
-function visit33_274_1(result) {
+_$jscoverage['/bar.js'].branchData['288'][1].init(18, 13, 'this._backBtn');
+function visit30_288_1(result) {
+  _$jscoverage['/bar.js'].branchData['288'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/bar.js'].branchData['282'][1].init(66, 7, 'titleEl');
+function visit29_282_1(result) {
+  _$jscoverage['/bar.js'].branchData['282'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/bar.js'].branchData['274'][1].init(18, 18, 'this._stack.length');
+function visit28_274_1(result) {
   _$jscoverage['/bar.js'].branchData['274'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['249'][1].init(1207, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
-function visit32_249_1(result) {
+function visit27_249_1(result) {
   _$jscoverage['/bar.js'].branchData['249'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['246'][1].init(1095, 22, 'backBtn.get(\'visible\')');
-function visit31_246_1(result) {
+function visit26_246_1(result) {
   _$jscoverage['/bar.js'].branchData['246'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['241'][1].init(872, 16, 'self.ghostBackEl');
-function visit30_241_1(result) {
+function visit25_241_1(result) {
   _$jscoverage['/bar.js'].branchData['241'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['231'][1].init(488, 16, 'self.ghostBackEl');
-function visit29_231_1(result) {
+function visit24_231_1(result) {
   _$jscoverage['/bar.js'].branchData['231'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['223'][1].init(135, 7, 'backBtn');
-function visit28_223_1(result) {
+function visit23_223_1(result) {
   _$jscoverage['/bar.js'].branchData['223'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['220'][1].init(22, 15, 'self._withTitle');
-function visit27_220_1(result) {
+function visit22_220_1(result) {
   _$jscoverage['/bar.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['219'][2].init(94, 26, 'backBtn && self._withTitle');
-function visit26_219_2(result) {
+function visit21_219_2(result) {
   _$jscoverage['/bar.js'].branchData['219'][2].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['219'][1].init(92, 29, '!(backBtn && self._withTitle)');
-function visit25_219_1(result) {
+function visit20_219_1(result) {
   _$jscoverage['/bar.js'].branchData['219'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['187'][1].init(200, 17, 'align === \'right\'');
-function visit24_187_1(result) {
+function visit19_187_1(result) {
   _$jscoverage['/bar.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['185'][1].init(90, 16, 'align === \'left\'');
-function visit23_185_1(result) {
+function visit18_185_1(result) {
   _$jscoverage['/bar.js'].branchData['185'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['184'][1].init(45, 22, 'config.align || \'left\'');
-function visit22_184_1(result) {
+function visit17_184_1(result) {
   _$jscoverage['/bar.js'].branchData['184'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['183'][1].init(163, 34, '!config.elBefore && !config.render');
-function visit21_183_1(result) {
+function visit16_183_1(result) {
   _$jscoverage['/bar.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['171'][1].init(18, 13, 'this._backBtn');
-function visit20_171_1(result) {
+function visit15_171_1(result) {
   _$jscoverage['/bar.js'].branchData['171'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['159'][1].init(133, 26, 'self.get(\'withBackButton\')');
-function visit19_159_1(result) {
+function visit14_159_1(result) {
   _$jscoverage['/bar.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['141'][1].init(54, 26, 'newView.get(\'title\') || \'\'');
-function visit18_141_1(result) {
+function visit13_141_1(result) {
   _$jscoverage['/bar.js'].branchData['141'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['140'][1].init(144, 7, 'oldView');
-function visit17_140_1(result) {
+function visit12_140_1(result) {
   _$jscoverage['/bar.js'].branchData['140'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['132'][1].init(28, 28, 'e.newView.get(\'title\') || \'\'');
-function visit16_132_1(result) {
+function visit11_132_1(result) {
   _$jscoverage['/bar.js'].branchData['132'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['91'][1].init(77, 19, 'omega !== undefined');
-function visit15_91_1(result) {
+function visit10_91_1(result) {
   _$jscoverage['/bar.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['83'][1].init(77, 19, 'omega !== undefined');
-function visit14_83_1(result) {
+function visit9_83_1(result) {
   _$jscoverage['/bar.js'].branchData['83'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['80'][1].init(1457, 7, 'reverse');
-function visit13_80_1(result) {
+function visit8_80_1(result) {
   _$jscoverage['/bar.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['76'][1].init(1365, 19, 'titleWidth > titleX');
-function visit12_76_1(result) {
+function visit7_76_1(result) {
   _$jscoverage['/bar.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].branchData['49'][1].init(533, 7, 'reverse');
-function visit11_49_1(result) {
+function visit6_49_1(result) {
   _$jscoverage['/bar.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar.js'].lineData[5]++;
@@ -525,9 +550,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[6]++;
   var Control = require('component/control');
   _$jscoverage['/bar.js'].lineData[7]++;
-  var BarRender = require('./bar/bar-render');
-  _$jscoverage['/bar.js'].lineData[8]++;
   var Button = require('button');
+  _$jscoverage['/bar.js'].lineData[8]++;
+  var tpl = require('./bar/bar-xtpl');
   _$jscoverage['/bar.js'].lineData[10]++;
   function createGhost(elem) {
     _$jscoverage['/bar.js'].functionData[1]++;
@@ -567,7 +592,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/bar.js'].lineData[39]++;
     var barElement = self.get('el'), titleElement = self.get('titleEl'), minOffset = Math.min(barElement[0].offsetWidth / 3, 200), newLeftWidth = backEl[0].offsetWidth, barWidth = barElement[0].offsetWidth, titleX = titleElement.offset().left - barElement.offset().left, titleWidth = titleElement[0].offsetWidth, oldBackWidth = backElProps.width, newOffset, oldOffset, backElAnims, titleAnims, omega, theta;
     _$jscoverage['/bar.js'].lineData[49]++;
-    if (visit11_49_1(reverse)) {
+    if (visit6_49_1(reverse)) {
       _$jscoverage['/bar.js'].lineData[50]++;
       newOffset = -oldBackWidth;
       _$jscoverage['/bar.js'].lineData[51]++;
@@ -593,16 +618,16 @@ KISSY.add(function(S, require) {
     _$jscoverage['/bar.js'].lineData[75]++;
     theta = -titleX + newLeftWidth;
     _$jscoverage['/bar.js'].lineData[76]++;
-    if (visit12_76_1(titleWidth > titleX)) {
+    if (visit7_76_1(titleWidth > titleX)) {
       _$jscoverage['/bar.js'].lineData[77]++;
       omega = -titleX - titleWidth;
     }
     _$jscoverage['/bar.js'].lineData[80]++;
-    if (visit13_80_1(reverse)) {
+    if (visit8_80_1(reverse)) {
       _$jscoverage['/bar.js'].lineData[81]++;
       oldOffset = barWidth - titleX - titleWidth;
       _$jscoverage['/bar.js'].lineData[83]++;
-      if (visit14_83_1(omega !== undefined)) {
+      if (visit9_83_1(omega !== undefined)) {
         _$jscoverage['/bar.js'].lineData[84]++;
         newOffset = omega;
       } else {
@@ -613,7 +638,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/bar.js'].lineData[89]++;
       newOffset = barWidth - titleX - titleWidth;
       _$jscoverage['/bar.js'].lineData[91]++;
-      if (visit15_91_1(omega !== undefined)) {
+      if (visit10_91_1(omega !== undefined)) {
         _$jscoverage['/bar.js'].lineData[92]++;
         oldOffset = omega;
       } else {
@@ -656,7 +681,7 @@ KISSY.add(function(S, require) {
   function afterInnerViewChange(e) {
     _$jscoverage['/bar.js'].functionData[6]++;
     _$jscoverage['/bar.js'].lineData[132]++;
-    this.set('title', visit16_132_1(e.newView.get('title') || ''));
+    this.set('title', visit11_132_1(e.newView.get('title') || ''));
   }
   _$jscoverage['/bar.js'].lineData[135]++;
   function beforeInnerViewChange(e) {
@@ -670,9 +695,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/bar.js'].lineData[139]++;
     var backward = e.backward;
     _$jscoverage['/bar.js'].lineData[140]++;
-    if (visit17_140_1(oldView)) {
+    if (visit12_140_1(oldView)) {
       _$jscoverage['/bar.js'].lineData[141]++;
-      self[backward ? 'backward' : 'forward'](visit18_141_1(newView.get('title') || ''));
+      self[backward ? 'backward' : 'forward'](visit13_141_1(newView.get('title') || ''));
     }
   }
   _$jscoverage['/bar.js'].lineData[145]++;
@@ -695,7 +720,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[158]++;
   self._buttons = {};
   _$jscoverage['/bar.js'].lineData[159]++;
-  if (visit19_159_1(self.get('withBackButton'))) {
+  if (visit14_159_1(self.get('withBackButton'))) {
     _$jscoverage['/bar.js'].lineData[160]++;
     self._backBtn = new Button({
   prefixCls: prefixCls + 'navigation-bar-', 
@@ -708,7 +733,7 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/bar.js'].functionData[10]++;
   _$jscoverage['/bar.js'].lineData[171]++;
-  if (visit20_171_1(this._backBtn)) {
+  if (visit15_171_1(this._backBtn)) {
     _$jscoverage['/bar.js'].lineData[172]++;
     this._backBtn.on('click', onBackButtonClick, this);
   }
@@ -726,16 +751,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[182]++;
   config.prefixCls = prefixCls + 'navigation-bar-';
   _$jscoverage['/bar.js'].lineData[183]++;
-  if (visit21_183_1(!config.elBefore && !config.render)) {
+  if (visit16_183_1(!config.elBefore && !config.render)) {
     _$jscoverage['/bar.js'].lineData[184]++;
-    var align = config.align = visit22_184_1(config.align || 'left');
+    var align = config.align = visit17_184_1(config.align || 'left');
     _$jscoverage['/bar.js'].lineData[185]++;
-    if (visit23_185_1(align === 'left')) {
+    if (visit18_185_1(align === 'left')) {
       _$jscoverage['/bar.js'].lineData[186]++;
       config.elBefore = self.get('centerEl');
     } else {
       _$jscoverage['/bar.js'].lineData[187]++;
-      if (visit24_187_1(align === 'right')) {
+      if (visit19_187_1(align === 'right')) {
         _$jscoverage['/bar.js'].lineData[188]++;
         config.render = self.get('contentEl');
       }
@@ -781,14 +806,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[217]++;
   var backBtn = self._backBtn;
   _$jscoverage['/bar.js'].lineData[219]++;
-  if (visit25_219_1(!(visit26_219_2(backBtn && self._withTitle)))) {
+  if (visit20_219_1(!(visit21_219_2(backBtn && self._withTitle)))) {
     _$jscoverage['/bar.js'].lineData[220]++;
-    if (visit27_220_1(self._withTitle)) {
+    if (visit22_220_1(self._withTitle)) {
       _$jscoverage['/bar.js'].lineData[221]++;
       self.get('titleEl').html(title);
     }
     _$jscoverage['/bar.js'].lineData[223]++;
-    if (visit28_223_1(backBtn)) {
+    if (visit23_223_1(backBtn)) {
       _$jscoverage['/bar.js'].lineData[224]++;
       backBtn[hasPrevious ? 'show' : 'hide']();
     }
@@ -800,7 +825,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[230]++;
   backEl.stop(true);
   _$jscoverage['/bar.js'].lineData[231]++;
-  if (visit29_231_1(self.ghostBackEl)) {
+  if (visit24_231_1(self.ghostBackEl)) {
     _$jscoverage['/bar.js'].lineData[232]++;
     self.ghostBackEl.stop(true);
   }
@@ -816,7 +841,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[240]++;
   backBtn[hasPrevious ? 'show' : 'hide']();
   _$jscoverage['/bar.js'].lineData[241]++;
-  if (visit30_241_1(self.ghostBackEl)) {
+  if (visit25_241_1(self.ghostBackEl)) {
     _$jscoverage['/bar.js'].lineData[242]++;
     self.ghostBackEl.stop(true);
   }
@@ -825,12 +850,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bar.js'].lineData[245]++;
   backEl.css(anims.back.element.from);
   _$jscoverage['/bar.js'].lineData[246]++;
-  if (visit31_246_1(backBtn.get('visible'))) {
+  if (visit26_246_1(backBtn.get('visible'))) {
     _$jscoverage['/bar.js'].lineData[247]++;
     anim(backEl, anims.back.element.to);
   }
   _$jscoverage['/bar.js'].lineData[249]++;
-  if (visit32_249_1(ghostBackEl.css('display') !== 'none')) {
+  if (visit27_249_1(ghostBackEl.css('display') !== 'none')) {
     _$jscoverage['/bar.js'].lineData[250]++;
     anim(ghostBackEl, anims.back.ghost.to, function() {
   _$jscoverage['/bar.js'].functionData[17]++;
@@ -873,33 +898,69 @@ KISSY.add(function(S, require) {
   backward: function(title) {
   _$jscoverage['/bar.js'].functionData[19]++;
   _$jscoverage['/bar.js'].lineData[274]++;
-  if (visit33_274_1(this._stack.length)) {
+  if (visit28_274_1(this._stack.length)) {
     _$jscoverage['/bar.js'].lineData[275]++;
     this._stack.pop();
     _$jscoverage['/bar.js'].lineData[276]++;
     this.go(title, this._stack.length, true);
   }
+}, 
+  _onSetTitle: function(v) {
+  _$jscoverage['/bar.js'].functionData[20]++;
+  _$jscoverage['/bar.js'].lineData[281]++;
+  var titleEl = this.get('titleEl');
+  _$jscoverage['/bar.js'].lineData[282]++;
+  if (visit29_282_1(titleEl)) {
+    _$jscoverage['/bar.js'].lineData[283]++;
+    titleEl.html(v);
+  }
+}, 
+  _onSetBackText: function(v) {
+  _$jscoverage['/bar.js'].functionData[21]++;
+  _$jscoverage['/bar.js'].lineData[288]++;
+  if (visit30_288_1(this._backBtn)) {
+    _$jscoverage['/bar.js'].lineData[289]++;
+    this._backBtn.set('content', v);
+  }
 }}, {
   xclass: 'navigation-bar', 
   ATTRS: {
+  contentTpl: {
+  value: tpl}, 
   handleGestureEvents: {
   value: false}, 
   focusable: {
   value: false}, 
-  xrender: {
-  value: BarRender}, 
-  centerEl: {}, 
-  contentEl: {}, 
-  titleEl: {}, 
+  centerEl: {
+  selector: function() {
+  _$jscoverage['/bar.js'].functionData[22]++;
+  _$jscoverage['/bar.js'].lineData[307]++;
+  return '.' + this.getBaseCssClass('center');
+}}, 
+  contentEl: {
+  selector: function() {
+  _$jscoverage['/bar.js'].functionData[23]++;
+  _$jscoverage['/bar.js'].lineData[312]++;
+  return '.' + this.getBaseCssClass('content');
+}}, 
+  titleEl: {
+  selector: function() {
+  _$jscoverage['/bar.js'].functionData[24]++;
+  _$jscoverage['/bar.js'].lineData[317]++;
+  return '.' + this.getBaseCssClass('title');
+}}, 
   title: {
   value: '', 
-  render: 1},
+  render: 1, 
+  sync: 0}, 
   withBackButton: {
   value: 1}, 
   withTitle: {
   value: 1, 
-  render: 1},
+  render: 1, 
+  sync: 0}, 
   backText: {
   value: 'Back', 
-  render: 1}}});
+  render: 1, 
+  sync: 0}}});
 });
