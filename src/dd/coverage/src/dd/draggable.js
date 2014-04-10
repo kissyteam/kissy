@@ -517,15 +517,15 @@ function visit69_378_1(result) {
 function visit68_357_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['357'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['327'][1].init(1065, 15, 'self._allowMove');
+}_$jscoverage['/dd/draggable.js'].branchData['327'][1].init(1069, 15, 'self._allowMove');
 function visit67_327_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['327'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['323'][1].init(969, 25, 'e.gestureType === \'mouse\'');
+}_$jscoverage['/dd/draggable.js'].branchData['323'][1].init(973, 25, 'e.gestureType === \'mouse\'');
 function visit66_323_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['315'][1].init(679, 16, 'self.get(\'halt\')');
+}_$jscoverage['/dd/draggable.js'].branchData['315'][1].init(683, 16, 'self.get(\'halt\')');
 function visit65_315_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['315'][1].ranCondition(result);
   return result;
@@ -577,7 +577,7 @@ function visit54_23_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].functionData[0]++;
   _$jscoverage['/dd/draggable.js'].lineData[7]++;
-  var Node = require('node'), Gesture = Node.Gesture, DDM = require('./ddm'), Base = require('base'), DragType = require('event/gesture/drag');
+  var Node = require('node'), BaseGesture = require('event/gesture/base'), DDM = require('./ddm'), Base = require('base'), DragType = require('event/gesture/drag');
   _$jscoverage['/dd/draggable.js'].lineData[13]++;
   var UA = require('ua'), $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   _$jscoverage['/dd/draggable.js'].lineData[21]++;
@@ -656,7 +656,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[238]++;
   if (visit57_238_1(node)) {
     _$jscoverage['/dd/draggable.js'].lineData[243]++;
-    node.on(DragType.DRAG_START, onDragStart, self).on(DragType.DRAG, onDrag, self).on(DragType.DRAG_END, onDragEnd, self).on(Gesture.start, onGestureStart, self).on('dragstart', self._fixDragStart);
+    node.on(DragType.DRAG_START, onDragStart, self).on(DragType.DRAG, onDrag, self).on(DragType.DRAG_END, onDragEnd, self).on(BaseGesture.START, onGestureStart, self).on('dragstart', self._fixDragStart);
   }
 }, 
   stop: function() {
@@ -666,7 +666,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[250]++;
   if (visit58_250_1(node)) {
     _$jscoverage['/dd/draggable.js'].lineData[255]++;
-    node.detach(DragType.DRAG_START, onDragStart, self).detach(DragType.DRAG, onDrag, self).detach(DragType.DRAG_END, onDragEnd, self).detach(Gesture.start, onGestureStart, self).detach('dragstart', self._fixDragStart);
+    node.detach(DragType.DRAG_START, onDragStart, self).detach(DragType.DRAG, onDrag, self).detach(DragType.DRAG_END, onDragEnd, self).detach(BaseGesture.START, onGestureStart, self).detach('dragstart', self._fixDragStart);
   }
 }, 
   _onSetDisabled: function(d) {
@@ -727,7 +727,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dd/draggable.js'].lineData[300]++;
     fixIEMouseDown();
     _$jscoverage['/dd/draggable.js'].lineData[301]++;
-    $doc.on(Gesture.end, {
+    $doc.on(BaseGesture.END, {
   fn: fixIEMouseUp, 
   once: true});
   }

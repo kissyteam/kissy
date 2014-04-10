@@ -231,12 +231,13 @@ if (! _$jscoverage['/separator.js']) {
   _$jscoverage['/separator.js'].lineData = [];
   _$jscoverage['/separator.js'].lineData[6] = 0;
   _$jscoverage['/separator.js'].lineData[7] = 0;
-  _$jscoverage['/separator.js'].lineData[8] = 0;
-  _$jscoverage['/separator.js'].lineData[15] = 0;
+  _$jscoverage['/separator.js'].lineData[14] = 0;
+  _$jscoverage['/separator.js'].lineData[16] = 0;
 }
 if (! _$jscoverage['/separator.js'].functionData) {
   _$jscoverage['/separator.js'].functionData = [];
   _$jscoverage['/separator.js'].functionData[0] = 0;
+  _$jscoverage['/separator.js'].functionData[1] = 0;
 }
 if (! _$jscoverage['/separator.js'].branchData) {
   _$jscoverage['/separator.js'].branchData = {};
@@ -246,18 +247,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/separator.js'].functionData[0]++;
   _$jscoverage['/separator.js'].lineData[7]++;
   var Control = require('component/control');
-  _$jscoverage['/separator.js'].lineData[8]++;
-  var SeparatorRender = require('separator/render');
-  _$jscoverage['/separator.js'].lineData[15]++;
-  return Control.extend({}, {
+  _$jscoverage['/separator.js'].lineData[14]++;
+  return Control.extend({
+  beforeCreateDom: function(renderData) {
+  _$jscoverage['/separator.js'].functionData[1]++;
+  _$jscoverage['/separator.js'].lineData[16]++;
+  renderData.elAttrs.role = 'separator';
+}}, {
   ATTRS: {
   focusable: {
   value: false}, 
   disabled: {
   value: true}, 
   handleGestureEvents: {
-  value: false}, 
-  xrender: {
-  value: SeparatorRender}}, 
+  value: false}}, 
   xclass: 'separator'});
 });

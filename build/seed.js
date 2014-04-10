@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 12:30
+build time: Apr 10 18:50
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 12:29
+build time: Apr 10 18:50
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140410122932' will replace with current timestamp when compressing.
+         * NOTICE: '20140410184955' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140410122932',
+        __BUILD_TIME: '20140410184955',
 
         /**
          * KISSY Environment.
@@ -2350,7 +2350,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140410122932';
+    var TIMESTAMP = '20140410184955';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2470,7 +2470,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 12:29
+build time: Apr 10 18:50
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3321,7 +3321,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 12:29
+build time: Apr 10 18:50
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3505,7 +3505,7 @@ KISSY.add("ua", [], function(S, require, exports, module, undefined) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 12:29
+build time: Apr 10 18:50
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3701,19 +3701,22 @@ S.config("requires",{
     ],
     "component/control": [
         "node",
-        "base",
+        "event/gesture/base",
+        "event/gesture/tap",
         "component/manager",
+        "base",
         "xtemplate/runtime"
     ],
     "component/extension/align": [
         "node"
     ],
-    "": [
+    "component/extension/content-box": [
         "component/extension/content-xtpl"
     ],
     "component/extension/delegate-children": [
-        "node",
-        "component/manager"
+        "component/manager",
+        "event/gesture/base",
+        "event/gesture/tap"
     ],
     "component/extension/shim": [
         "ua"
@@ -3744,6 +3747,7 @@ S.config("requires",{
     "dd": [
         "node",
         "base",
+        "event/gesture/base",
         "event/gesture/drag"
     ],
     "dd/plugin/constrain": [
@@ -3798,10 +3802,12 @@ S.config("requires",{
         "event/dom/base"
     ],
     "event/gesture/base": [
-        "event/dom/base"
+        "event/dom/base",
+        "event/gesture/util"
     ],
     "event/gesture/drag": [
-        "event/gesture/base"
+        "event/gesture/util",
+        "event/dom/base"
     ],
     "event/gesture/shake": [
         "event/dom/base"
@@ -3822,7 +3828,7 @@ S.config("requires",{
     "menu": [
         "component/container",
         "component/extension/delegate-children",
-        "",
+        "component/extension/content-box",
         "component/extension/align",
         "component/extension/shim"
     ],
@@ -3832,7 +3838,7 @@ S.config("requires",{
     ],
     "navigation-view": [
         "component/container",
-        ""
+        "component/extension/content-box"
     ],
     "node": [
         "dom",
@@ -3843,7 +3849,7 @@ S.config("requires",{
         "component/container",
         "component/extension/shim",
         "component/extension/align",
-        ""
+        "component/extension/content-box"
     ],
     "path": [
         "util"
@@ -3863,7 +3869,7 @@ S.config("requires",{
     "scroll-view/base": [
         "anim/timer",
         "component/container",
-        ""
+        "component/extension/content-box"
     ],
     "scroll-view/plugin/pull-to-refresh": [
         "base"
@@ -3873,7 +3879,8 @@ S.config("requires",{
         "event/gesture/drag"
     ],
     "scroll-view/touch": [
-        "scroll-view/base"
+        "scroll-view/base",
+        "event/gesture/drag"
     ],
     "separator": [
         "component/control"
@@ -3899,6 +3906,7 @@ S.config("requires",{
     ],
     "tree": [
         "component/container",
+        "component/extension/content-xtpl",
         "",
         "component/extension/delegate-children"
     ],

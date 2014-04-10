@@ -27,7 +27,7 @@
 
     <!--jshint all js-->
     <target name="jshint">
-        <subant target="jshint" failonerror="false" inheritall="false">
+        <subant target="jshint" failonerror="true" inheritall="false">
             <fileset dir="${kissy.src.dir}"
                      excludes="build.xml"
                      includes="**/build.xml"/>
@@ -36,7 +36,7 @@
 
     <!--jscs all js-->
     <target name="jscs">
-        <subant target="jscs" failonerror="false" inheritall="false">
+        <subant target="jscs" failonerror="true" inheritall="false">
             <fileset dir="${kissy.src.dir}"
                      excludes="build.xml"
                      includes="**/build.xml"/>

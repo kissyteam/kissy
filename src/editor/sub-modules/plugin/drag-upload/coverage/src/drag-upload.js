@@ -503,7 +503,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/drag-upload.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/drag-upload.js'].lineData[8]++;
-  var Event = require('event');
+  var Event = require('event/dom');
   _$jscoverage['/drag-upload.js'].lineData[9]++;
   var Node = S.Node, Utils = Editor.Utils, Dom = S.require('dom');
   _$jscoverage['/drag-upload.js'].lineData[13]++;

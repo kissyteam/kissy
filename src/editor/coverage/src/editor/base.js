@@ -234,10 +234,18 @@ if (! _$jscoverage['/editor/base.js']) {
   _$jscoverage['/editor/base.js'].lineData[8] = 0;
   _$jscoverage['/editor/base.js'].lineData[9] = 0;
   _$jscoverage['/editor/base.js'].lineData[15] = 0;
+  _$jscoverage['/editor/base.js'].lineData[17] = 0;
+  _$jscoverage['/editor/base.js'].lineData[41] = 0;
+  _$jscoverage['/editor/base.js'].lineData[78] = 0;
+  _$jscoverage['/editor/base.js'].lineData[88] = 0;
 }
 if (! _$jscoverage['/editor/base.js'].functionData) {
   _$jscoverage['/editor/base.js'].functionData = [];
   _$jscoverage['/editor/base.js'].functionData[0] = 0;
+  _$jscoverage['/editor/base.js'].functionData[1] = 0;
+  _$jscoverage['/editor/base.js'].functionData[2] = 0;
+  _$jscoverage['/editor/base.js'].functionData[3] = 0;
+  _$jscoverage['/editor/base.js'].functionData[4] = 0;
 }
 if (! _$jscoverage['/editor/base.js'].branchData) {
   _$jscoverage['/editor/base.js'].branchData = {};
@@ -250,34 +258,59 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/base.js'].lineData[8]++;
   var Control = require('component/control');
   _$jscoverage['/editor/base.js'].lineData[9]++;
-  var EditorRender = require('./render');
+  var RenderTpl = require('./render-xtpl');
   _$jscoverage['/editor/base.js'].lineData[15]++;
-  return Control.extend({}, {
+  return Control.extend({
+  beforeCreateDom: function(renderData) {
+  _$jscoverage['/editor/base.js'].functionData[1]++;
+  _$jscoverage['/editor/base.js'].lineData[17]++;
+  S.mix(renderData, {
+  mobile: S.UA.mobile});
+}}, {
   Config: {}, 
   XHTML_DTD: HtmlParser.DTD, 
   ATTRS: {
-  textarea: {}, 
+  contentTpl: {
+  value: RenderTpl}, 
+  height: {
+  value: 300}, 
+  textarea: {
+  selector: function() {
+  _$jscoverage['/editor/base.js'].functionData[2]++;
+  _$jscoverage['/editor/base.js'].lineData[41]++;
+  return '.' + this.getBaseCssClass('textarea');
+}}, 
   textareaAttrs: {
-  view: 1}, 
+  render: 1, 
+  sync: 0}, 
   iframe: {}, 
   window: {}, 
   document: {}, 
-  toolBarEl: {}, 
-  statusBarEl: {}, 
+  toolBarEl: {
+  selector: function() {
+  _$jscoverage['/editor/base.js'].functionData[3]++;
+  _$jscoverage['/editor/base.js'].lineData[78]++;
+  return '.' + this.getBaseCssClass('tools');
+}}, 
+  statusBarEl: {
+  selector: function() {
+  _$jscoverage['/editor/base.js'].functionData[4]++;
+  _$jscoverage['/editor/base.js'].lineData[88]++;
+  return '.' + this.getBaseCssClass('status');
+}}, 
   handleGestureEvents: {
   value: false}, 
   focusable: {
   value: false}, 
   mode: {
-  view: 1, 
+  render: 1, 
   value: 1}, 
   data: {
-  view: 1}, 
+  render: 1, 
+  sync: 0}, 
   customStyle: {
   value: ''}, 
   customLink: {
-  value: []}, 
-  xrender: {
-  value: EditorRender}}, 
+  value: []}}, 
   xclass: 'editor'});
 });

@@ -237,89 +237,86 @@ if (! _$jscoverage['/tree/node-xtpl.js']) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[11] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[22] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[23] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[24] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[25] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[27] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[31] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[32] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[34] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[35] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[37] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[38] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[39] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[40] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[41] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[42] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[43] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[45] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[46] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[48] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[49] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[50] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[51] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[52] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[53] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[54] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[55] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[56] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[57] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[58] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[60] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[61] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[62] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[63] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[65] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[66] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[64] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[67] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[68] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[69] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[70] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[71] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[72] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[73] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[74] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[75] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[76] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[77] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[78] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[79] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[80] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[81] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[82] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[83] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[84] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[86] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[87] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[88] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[89] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[90] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[91] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[92] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[93] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[94] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[95] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[96] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[97] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[98] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[99] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[100] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[101] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[102] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[103] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[104] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[105] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[106] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[107] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[108] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[109] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[110] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[111] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[113] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[112] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[114] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[115] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[116] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[117] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[118] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[119] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[120] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[123] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[121] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[124] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[125] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[126] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[127] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[128] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[129] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[131] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[130] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[132] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[133] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[134] = 0;
@@ -331,34 +328,32 @@ if (! _$jscoverage['/tree/node-xtpl.js']) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[140] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[141] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[142] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[144] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[143] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[145] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[146] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[147] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[148] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[149] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[150] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[151] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[152] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[153] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[154] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[155] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[156] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[157] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[158] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[159] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[160] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[161] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[162] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[163] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[164] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[165] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[166] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[167] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[168] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[169] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[171] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[173] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[174] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[175] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[176] = 0;
   _$jscoverage['/tree/node-xtpl.js'].lineData[177] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[179] = 0;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[180] = 0;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[178] = 0;
 }
 if (! _$jscoverage['/tree/node-xtpl.js'].functionData) {
   _$jscoverage['/tree/node-xtpl.js'].functionData = [];
@@ -372,51 +367,57 @@ if (! _$jscoverage['/tree/node-xtpl.js'].branchData) {
   _$jscoverage['/tree/node-xtpl.js'].branchData = {};
   _$jscoverage['/tree/node-xtpl.js'].branchData['8'] = [];
   _$jscoverage['/tree/node-xtpl.js'].branchData['8'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['33'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['56'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['77'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['77'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['106'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['127'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['127'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['140'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['140'][1] = new BranchData();
-  _$jscoverage['/tree/node-xtpl.js'].branchData['156'] = [];
-  _$jscoverage['/tree/node-xtpl.js'].branchData['156'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['30'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['53'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['71'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['97'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['110'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['110'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['128'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['128'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['141'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/tree/node-xtpl.js'].branchData['154'] = [];
+  _$jscoverage['/tree/node-xtpl.js'].branchData['154'][1] = new BranchData();
 }
-_$jscoverage['/tree/node-xtpl.js'].branchData['156'][1].init(6520, 37, 'commandRet33 && commandRet33.isBuffer');
-function visit33_156_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['156'][1].ranCondition(result);
+_$jscoverage['/tree/node-xtpl.js'].branchData['154'][1].init(6327, 37, 'commandRet31 && commandRet31.isBuffer');
+function visit29_154_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['140'][1].init(5835, 37, 'commandRet29 && commandRet29.isBuffer');
-function visit32_140_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['140'][1].ranCondition(result);
+}_$jscoverage['/tree/node-xtpl.js'].branchData['141'][1].init(5790, 37, 'commandRet28 && commandRet28.isBuffer');
+function visit28_141_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['127'][1].init(5196, 37, 'commandRet26 && commandRet26.isBuffer');
-function visit31_127_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['127'][1].ranCondition(result);
+}_$jscoverage['/tree/node-xtpl.js'].branchData['128'][1].init(5151, 37, 'commandRet25 && commandRet25.isBuffer');
+function visit27_128_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['106'][1].init(689, 37, 'commandRet22 && commandRet22.isBuffer');
-function visit30_106_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/tree/node-xtpl.js'].branchData['110'][1].init(1090, 37, 'commandRet22 && commandRet22.isBuffer');
+function visit26_110_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['77'][1].init(3126, 37, 'commandRet13 && commandRet13.isBuffer');
-function visit29_77_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['77'][1].ranCondition(result);
+}_$jscoverage['/tree/node-xtpl.js'].branchData['97'][1].init(525, 37, 'commandRet19 && commandRet19.isBuffer');
+function visit25_97_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['56'][1].init(372, 35, 'commandRet9 && commandRet9.isBuffer');
-function visit28_56_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/tree/node-xtpl.js'].branchData['71'][1].init(2829, 37, 'commandRet11 && commandRet11.isBuffer');
+function visit24_71_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['33'][1].init(1392, 35, 'commandRet3 && commandRet3.isBuffer');
-function visit27_33_1(result) {
-  _$jscoverage['/tree/node-xtpl.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/tree/node-xtpl.js'].branchData['53'][1].init(372, 35, 'commandRet8 && commandRet8.isBuffer');
+function visit23_53_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
-function visit26_8_1(result) {
+}_$jscoverage['/tree/node-xtpl.js'].branchData['30'][1].init(1253, 35, 'commandRet2 && commandRet2.isBuffer');
+function visit22_30_1(result) {
+  _$jscoverage['/tree/node-xtpl.js'].branchData['30'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tree/node-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
+function visit21_8_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/node-xtpl.js'].lineData[2]++;
@@ -428,281 +429,273 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/tree/node-xtpl.js'].lineData[8]++;
-  if (visit26_8_1("1.50" !== S.version)) {
+  if (visit21_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/tree/node-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/tree/node-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/tree/node-xtpl.js'].lineData[22]++;
-  buffer.write('<div id="ks-tree-node-row-');
+  buffer.write('<div class="');
   _$jscoverage['/tree/node-xtpl.js'].lineData[23]++;
-  var id0 = scope.resolve(["id"]);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[24]++;
-  buffer.write(id0, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[25]++;
-  buffer.write('"\n     class="');
+  var option0 = {
+  escape: 1};
   _$jscoverage['/tree/node-xtpl.js'].lineData[26]++;
-  var option1 = {
-  escape: 1};
+  var params1 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[27]++;
+  params1.push('row');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[28]++;
+  option0.params = params1;
   _$jscoverage['/tree/node-xtpl.js'].lineData[29]++;
-  var params2 = [];
+  var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
   _$jscoverage['/tree/node-xtpl.js'].lineData[30]++;
-  params2.push('row');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[31]++;
-  option1.params = params2;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[32]++;
-  var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[33]++;
-  if (visit27_33_1(commandRet3 && commandRet3.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[34]++;
-    buffer = commandRet3;
-    _$jscoverage['/tree/node-xtpl.js'].lineData[35]++;
-    commandRet3 = undefined;
+  if (visit22_30_1(commandRet2 && commandRet2.isBuffer)) {
+    _$jscoverage['/tree/node-xtpl.js'].lineData[31]++;
+    buffer = commandRet2;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[32]++;
+    commandRet2 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[37]++;
-  buffer.write(commandRet3, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[38]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[34]++;
+  buffer.write(commandRet2, true);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[35]++;
   buffer.write('\n     ');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[36]++;
+  var option3 = {
+  escape: 1};
   _$jscoverage['/tree/node-xtpl.js'].lineData[39]++;
-  var option4 = {
-  escape: 1};
+  var params4 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[40]++;
+  var id5 = scope.resolve(["selected"]);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[41]++;
+  params4.push(id5);
   _$jscoverage['/tree/node-xtpl.js'].lineData[42]++;
-  var params5 = [];
+  option3.params = params4;
   _$jscoverage['/tree/node-xtpl.js'].lineData[43]++;
-  var id6 = scope.resolve(["selected"]);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[44]++;
-  params5.push(id6);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[45]++;
-  option4.params = params5;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[46]++;
-  option4.fn = function(scope, buffer) {
+  option3.fn = function(scope, buffer) {
   _$jscoverage['/tree/node-xtpl.js'].functionData[2]++;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[48]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[45]++;
   buffer.write('\n        ');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[49]++;
-  var option7 = {
+  _$jscoverage['/tree/node-xtpl.js'].lineData[46]++;
+  var option6 = {
   escape: 1};
+  _$jscoverage['/tree/node-xtpl.js'].lineData[49]++;
+  var params7 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[50]++;
+  params7.push('selected');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[51]++;
+  option6.params = params7;
   _$jscoverage['/tree/node-xtpl.js'].lineData[52]++;
-  var params8 = [];
+  var commandRet8 = callCommandUtil(engine, scope, option6, buffer, "getBaseCssClasses", 3);
   _$jscoverage['/tree/node-xtpl.js'].lineData[53]++;
-  params8.push('selected');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[54]++;
-  option7.params = params8;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[55]++;
-  var commandRet9 = callCommandUtil(engine, scope, option7, buffer, "getBaseCssClasses", 4);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[56]++;
-  if (visit28_56_1(commandRet9 && commandRet9.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[57]++;
-    buffer = commandRet9;
-    _$jscoverage['/tree/node-xtpl.js'].lineData[58]++;
-    commandRet9 = undefined;
+  if (visit23_53_1(commandRet8 && commandRet8.isBuffer)) {
+    _$jscoverage['/tree/node-xtpl.js'].lineData[54]++;
+    buffer = commandRet8;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[55]++;
+    commandRet8 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[60]++;
-  buffer.write(commandRet9, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[61]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[57]++;
+  buffer.write(commandRet8, true);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[58]++;
   buffer.write('\n     ');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[63]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[60]++;
   return buffer;
 };
-  _$jscoverage['/tree/node-xtpl.js'].lineData[65]++;
-  buffer = ifCommand.call(engine, scope, option4, buffer, 3, payload);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[66]++;
-  buffer.write('\n     ">\n    <div id="ks-tree-node-expand-icon-');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[62]++;
+  buffer = ifCommand.call(engine, scope, option3, buffer, 2, payload);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[63]++;
+  buffer.write('\n     ">\n    <div class="');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[64]++;
+  var option9 = {
+  escape: 1};
   _$jscoverage['/tree/node-xtpl.js'].lineData[67]++;
-  var id10 = scope.resolve(["id"]);
+  var params10 = [];
   _$jscoverage['/tree/node-xtpl.js'].lineData[68]++;
-  buffer.write(id10, true);
+  params10.push('expand-icon');
   _$jscoverage['/tree/node-xtpl.js'].lineData[69]++;
-  buffer.write('"\n         class="');
+  option9.params = params10;
   _$jscoverage['/tree/node-xtpl.js'].lineData[70]++;
-  var option11 = {
-  escape: 1};
-  _$jscoverage['/tree/node-xtpl.js'].lineData[73]++;
-  var params12 = [];
-  _$jscoverage['/tree/node-xtpl.js'].lineData[74]++;
-  params12.push('expand-icon');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[75]++;
-  option11.params = params12;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[76]++;
-  var commandRet13 = callCommandUtil(engine, scope, option11, buffer, "getBaseCssClasses", 8);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[77]++;
-  if (visit29_77_1(commandRet13 && commandRet13.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[78]++;
-    buffer = commandRet13;
-    _$jscoverage['/tree/node-xtpl.js'].lineData[79]++;
-    commandRet13 = undefined;
+  var commandRet11 = callCommandUtil(engine, scope, option9, buffer, "getBaseCssClasses", 6);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[71]++;
+  if (visit24_71_1(commandRet11 && commandRet11.isBuffer)) {
+    _$jscoverage['/tree/node-xtpl.js'].lineData[72]++;
+    buffer = commandRet11;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[73]++;
+    commandRet11 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[81]++;
-  buffer.write(commandRet13, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[82]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[75]++;
+  buffer.write(commandRet11, true);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[76]++;
   buffer.write('">\n    </div>\n    ');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[77]++;
+  var option12 = {
+  escape: 1};
+  _$jscoverage['/tree/node-xtpl.js'].lineData[80]++;
+  var params13 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[81]++;
+  var id14 = scope.resolve(["checkable"]);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[82]++;
+  params13.push(id14);
   _$jscoverage['/tree/node-xtpl.js'].lineData[83]++;
-  var option14 = {
-  escape: 1};
-  _$jscoverage['/tree/node-xtpl.js'].lineData[86]++;
-  var params15 = [];
-  _$jscoverage['/tree/node-xtpl.js'].lineData[87]++;
-  var id16 = scope.resolve(["checkable"]);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[88]++;
-  params15.push(id16);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[89]++;
-  option14.params = params15;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[90]++;
-  option14.fn = function(scope, buffer) {
+  option12.params = params13;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[84]++;
+  option12.fn = function(scope, buffer) {
   _$jscoverage['/tree/node-xtpl.js'].functionData[3]++;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[92]++;
-  buffer.write('\n    <div id="ks-tree-node-checked-');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[93]++;
-  var id17 = scope.resolve(["id"]);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[94]++;
-  buffer.write(id17, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[95]++;
-  buffer.write('"\n         class="');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[96]++;
-  var option18 = {
+  _$jscoverage['/tree/node-xtpl.js'].lineData[86]++;
+  buffer.write('\n    <div class="');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[87]++;
+  var option15 = {
   escape: 1};
-  _$jscoverage['/tree/node-xtpl.js'].lineData[99]++;
-  var params19 = [];
-  _$jscoverage['/tree/node-xtpl.js'].lineData[100]++;
-  var exp21 = 'checked';
+  _$jscoverage['/tree/node-xtpl.js'].lineData[90]++;
+  var params16 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[91]++;
+  var exp18 = 'checked';
+  _$jscoverage['/tree/node-xtpl.js'].lineData[92]++;
+  var id17 = scope.resolve(["checkState"]);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[93]++;
+  exp18 = ('checked') + (id17);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[94]++;
+  params16.push(exp18);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[95]++;
+  option15.params = params16;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[96]++;
+  var commandRet19 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 9);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[97]++;
+  if (visit25_97_1(commandRet19 && commandRet19.isBuffer)) {
+    _$jscoverage['/tree/node-xtpl.js'].lineData[98]++;
+    buffer = commandRet19;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[99]++;
+    commandRet19 = undefined;
+  }
   _$jscoverage['/tree/node-xtpl.js'].lineData[101]++;
-  var id20 = scope.resolve(["checkState"]);
+  buffer.write(commandRet19, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[102]++;
-  exp21 = ('checked') + (id20);
+  buffer.write(' ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[103]++;
-  params19.push(exp21);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[104]++;
-  option18.params = params19;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[105]++;
-  var commandRet22 = callCommandUtil(engine, scope, option18, buffer, "getBaseCssClasses", 12);
+  var option20 = {
+  escape: 1};
   _$jscoverage['/tree/node-xtpl.js'].lineData[106]++;
-  if (visit30_106_1(commandRet22 && commandRet22.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[107]++;
+  var params21 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[107]++;
+  params21.push('checked');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[108]++;
+  option20.params = params21;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[109]++;
+  var commandRet22 = callCommandUtil(engine, scope, option20, buffer, "getBaseCssClasses", 9);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[110]++;
+  if (visit26_110_1(commandRet22 && commandRet22.isBuffer)) {
+    _$jscoverage['/tree/node-xtpl.js'].lineData[111]++;
     buffer = commandRet22;
-    _$jscoverage['/tree/node-xtpl.js'].lineData[108]++;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[112]++;
     commandRet22 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[110]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[114]++;
   buffer.write(commandRet22, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[111]++;
-  buffer.write('"></div>\n    ');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[113]++;
-  return buffer;
-};
   _$jscoverage['/tree/node-xtpl.js'].lineData[115]++;
-  buffer = ifCommand.call(engine, scope, option14, buffer, 10, payload);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[116]++;
-  buffer.write('\n    <div id="ks-tree-node-icon-');
+  buffer.write('"></div>\n    ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[117]++;
-  var id23 = scope.resolve(["id"]);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[118]++;
-  buffer.write(id23, true);
+  return buffer;
+};
   _$jscoverage['/tree/node-xtpl.js'].lineData[119]++;
-  buffer.write('"\n         class="');
+  buffer = ifCommand.call(engine, scope, option12, buffer, 8, payload);
   _$jscoverage['/tree/node-xtpl.js'].lineData[120]++;
-  var option24 = {
+  buffer.write('\n    <div class="');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[121]++;
+  var option23 = {
   escape: 1};
-  _$jscoverage['/tree/node-xtpl.js'].lineData[123]++;
-  var params25 = [];
   _$jscoverage['/tree/node-xtpl.js'].lineData[124]++;
-  params25.push('icon');
+  var params24 = [];
   _$jscoverage['/tree/node-xtpl.js'].lineData[125]++;
-  option24.params = params25;
+  params24.push('icon');
   _$jscoverage['/tree/node-xtpl.js'].lineData[126]++;
-  var commandRet26 = callCommandUtil(engine, scope, option24, buffer, "getBaseCssClasses", 15);
+  option23.params = params24;
   _$jscoverage['/tree/node-xtpl.js'].lineData[127]++;
-  if (visit31_127_1(commandRet26 && commandRet26.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[128]++;
-    buffer = commandRet26;
+  var commandRet25 = callCommandUtil(engine, scope, option23, buffer, "getBaseCssClasses", 11);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[128]++;
+  if (visit27_128_1(commandRet25 && commandRet25.isBuffer)) {
     _$jscoverage['/tree/node-xtpl.js'].lineData[129]++;
-    commandRet26 = undefined;
+    buffer = commandRet25;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[130]++;
+    commandRet25 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[131]++;
-  buffer.write(commandRet26, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[132]++;
-  buffer.write('">\n\n    </div>\n    ');
+  buffer.write(commandRet25, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[133]++;
-  var option27 = {};
+  buffer.write('">\n\n    </div>\n    ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[134]++;
-  var params28 = [];
+  var option26 = {};
   _$jscoverage['/tree/node-xtpl.js'].lineData[135]++;
-  params28.push('component/extension/content-xtpl');
+  var params27 = [];
   _$jscoverage['/tree/node-xtpl.js'].lineData[136]++;
-  option27.params = params28;
+  params27.push('component/extension/content-xtpl');
   _$jscoverage['/tree/node-xtpl.js'].lineData[137]++;
-  require("component/extension/content-xtpl");
+  option26.params = params27;
   _$jscoverage['/tree/node-xtpl.js'].lineData[138]++;
-  option27.params[0] = module.resolve(option27.params[0]);
+  require("component/extension/content-xtpl");
   _$jscoverage['/tree/node-xtpl.js'].lineData[139]++;
-  var commandRet29 = includeCommand.call(engine, scope, option27, buffer, 18, payload);
+  option26.params[0] = module.resolve(option26.params[0]);
   _$jscoverage['/tree/node-xtpl.js'].lineData[140]++;
-  if (visit32_140_1(commandRet29 && commandRet29.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[141]++;
-    buffer = commandRet29;
+  var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 14, payload);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[141]++;
+  if (visit28_141_1(commandRet28 && commandRet28.isBuffer)) {
     _$jscoverage['/tree/node-xtpl.js'].lineData[142]++;
-    commandRet29 = undefined;
+    buffer = commandRet28;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[143]++;
+    commandRet28 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[144]++;
-  buffer.write(commandRet29, false);
   _$jscoverage['/tree/node-xtpl.js'].lineData[145]++;
-  buffer.write('\n</div>\n<div id="ks-tree-node-children-');
+  buffer.write(commandRet28, false);
   _$jscoverage['/tree/node-xtpl.js'].lineData[146]++;
-  var id30 = scope.resolve(["id"]);
+  buffer.write('\n</div>\n<div class="');
   _$jscoverage['/tree/node-xtpl.js'].lineData[147]++;
-  buffer.write(id30, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[148]++;
-  buffer.write('"\n     class="');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[149]++;
-  var option31 = {
+  var option29 = {
   escape: 1};
+  _$jscoverage['/tree/node-xtpl.js'].lineData[150]++;
+  var params30 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[151]++;
+  params30.push('children');
   _$jscoverage['/tree/node-xtpl.js'].lineData[152]++;
-  var params32 = [];
+  option29.params = params30;
   _$jscoverage['/tree/node-xtpl.js'].lineData[153]++;
-  params32.push('children');
+  var commandRet31 = callCommandUtil(engine, scope, option29, buffer, "getBaseCssClasses", 16);
   _$jscoverage['/tree/node-xtpl.js'].lineData[154]++;
-  option31.params = params32;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[155]++;
-  var commandRet33 = callCommandUtil(engine, scope, option31, buffer, "getBaseCssClasses", 21);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[156]++;
-  if (visit33_156_1(commandRet33 && commandRet33.isBuffer)) {
-    _$jscoverage['/tree/node-xtpl.js'].lineData[157]++;
-    buffer = commandRet33;
-    _$jscoverage['/tree/node-xtpl.js'].lineData[158]++;
-    commandRet33 = undefined;
+  if (visit29_154_1(commandRet31 && commandRet31.isBuffer)) {
+    _$jscoverage['/tree/node-xtpl.js'].lineData[155]++;
+    buffer = commandRet31;
+    _$jscoverage['/tree/node-xtpl.js'].lineData[156]++;
+    commandRet31 = undefined;
   }
-  _$jscoverage['/tree/node-xtpl.js'].lineData[160]++;
-  buffer.write(commandRet33, true);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[161]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[158]++;
+  buffer.write(commandRet31, true);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[159]++;
   buffer.write('"\n');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[162]++;
-  var option34 = {
+  _$jscoverage['/tree/node-xtpl.js'].lineData[160]++;
+  var option32 = {
   escape: 1};
+  _$jscoverage['/tree/node-xtpl.js'].lineData[163]++;
+  var params33 = [];
+  _$jscoverage['/tree/node-xtpl.js'].lineData[164]++;
+  var id34 = scope.resolve(["expanded"]);
   _$jscoverage['/tree/node-xtpl.js'].lineData[165]++;
-  var params35 = [];
+  params33.push(!(id34));
   _$jscoverage['/tree/node-xtpl.js'].lineData[166]++;
-  var id36 = scope.resolve(["expanded"]);
+  option32.params = params33;
   _$jscoverage['/tree/node-xtpl.js'].lineData[167]++;
-  params35.push(!(id36));
-  _$jscoverage['/tree/node-xtpl.js'].lineData[168]++;
-  option34.params = params35;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[169]++;
-  option34.fn = function(scope, buffer) {
+  option32.fn = function(scope, buffer) {
   _$jscoverage['/tree/node-xtpl.js'].functionData[4]++;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[171]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[169]++;
   buffer.write('\nstyle="display:none"\n');
+  _$jscoverage['/tree/node-xtpl.js'].lineData[171]++;
+  return buffer;
+};
   _$jscoverage['/tree/node-xtpl.js'].lineData[173]++;
-  return buffer;
-};
-  _$jscoverage['/tree/node-xtpl.js'].lineData[175]++;
-  buffer = ifCommand.call(engine, scope, option34, buffer, 22, payload);
-  _$jscoverage['/tree/node-xtpl.js'].lineData[176]++;
+  buffer = ifCommand.call(engine, scope, option32, buffer, 17, payload);
+  _$jscoverage['/tree/node-xtpl.js'].lineData[174]++;
   buffer.write('\n>\n</div>');
-  _$jscoverage['/tree/node-xtpl.js'].lineData[177]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[175]++;
   return buffer;
 };
-  _$jscoverage['/tree/node-xtpl.js'].lineData[179]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[177]++;
   t.TPL_NAME = module.name;
-  _$jscoverage['/tree/node-xtpl.js'].lineData[180]++;
+  _$jscoverage['/tree/node-xtpl.js'].lineData[178]++;
   return t;
 });

@@ -404,7 +404,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[11]++;
   var DialogLoader = require('./dialog-loader');
   _$jscoverage['/image.js'].lineData[13]++;
-  var UA = S.UA, Node = KISSY.NodeList, $ = S.all, checkImg = function(node) {
+  var UA = S.UA, Node = require('node'), $ = Node.all, checkImg = function(node) {
   _$jscoverage['/image.js'].functionData[1]++;
   _$jscoverage['/image.js'].lineData[17]++;
   node = $(node);

@@ -237,31 +237,29 @@ if (! _$jscoverage['/filter-menu/render-xtpl.js']) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[11] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[22] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[23] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[24] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[25] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[27] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[31] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[32] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[34] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[35] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[37] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[38] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[39] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[40] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[41] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[42] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[43] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[45] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[46] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[47] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[48] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[49] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[50] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[51] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[53] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[54] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[52] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[55] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[56] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[57] = 0;
@@ -269,6 +267,7 @@ if (! _$jscoverage['/filter-menu/render-xtpl.js']) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[59] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[60] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[61] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[63] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[64] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[65] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[66] = 0;
@@ -276,22 +275,14 @@ if (! _$jscoverage['/filter-menu/render-xtpl.js']) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[68] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[69] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[70] = 0;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[71] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[72] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[73] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[74] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[75] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[76] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[77] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[78] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[79] = 0;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[80] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[81] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[82] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[83] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[85] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[86] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[88] = 0;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[89] = 0;
 }
 if (! _$jscoverage['/filter-menu/render-xtpl.js'].functionData) {
   _$jscoverage['/filter-menu/render-xtpl.js'].functionData = [];
@@ -302,32 +293,32 @@ if (! _$jscoverage['/filter-menu/render-xtpl.js'].branchData) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData = {};
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['8'] = [];
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['8'][1] = new BranchData();
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['33'] = [];
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['49'] = [];
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['68'] = [];
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['81'] = [];
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['30'] = [];
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'] = [];
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'] = [];
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'] = [];
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1] = new BranchData();
 }
-_$jscoverage['/filter-menu/render-xtpl.js'].branchData['81'][1].init(3570, 37, 'commandRet15 && commandRet15.isBuffer');
-function visit5_81_1(result) {
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['81'][1].ranCondition(result);
+_$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1].init(3103, 37, 'commandRet12 && commandRet12.isBuffer');
+function visit5_72_1(result) {
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['68'][1].init(2908, 37, 'commandRet12 && commandRet12.isBuffer');
-function visit4_68_1(result) {
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'][1].init(2447, 35, 'commandRet9 && commandRet9.isBuffer');
+function visit4_59_1(result) {
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['49'][1].init(2087, 35, 'commandRet7 && commandRet7.isBuffer');
-function visit3_49_1(result) {
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['49'][1].ranCondition(result);
+}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'][1].init(1784, 35, 'commandRet5 && commandRet5.isBuffer');
+function visit3_43_1(result) {
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['33'][1].init(1408, 35, 'commandRet3 && commandRet3.isBuffer');
-function visit2_33_1(result) {
-  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['30'][1].init(1260, 35, 'commandRet2 && commandRet2.isBuffer');
+function visit2_30_1(result) {
+  _$jscoverage['/filter-menu/render-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
+}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
 function visit1_8_1(result) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
@@ -340,132 +331,114 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[8]++;
-  if (visit1_8_1("1.50" !== S.version)) {
+  if (visit1_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/filter-menu/render-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[22]++;
-  buffer.write('<div id="ks-filter-menu-input-wrap-');
+  buffer.write('<div class="');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[23]++;
-  var id0 = scope.resolve(["id"]);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[24]++;
-  buffer.write(id0, true);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[25]++;
-  buffer.write('"\n     class="');
+  var option0 = {
+  escape: 1};
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[26]++;
-  var option1 = {
-  escape: 1};
+  var params1 = [];
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[27]++;
+  params1.push('input-wrap');
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[28]++;
+  option0.params = params1;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[29]++;
-  var params2 = [];
+  var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[30]++;
-  params2.push('input-wrap');
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[31]++;
-  option1.params = params2;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[32]++;
-  var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[33]++;
-  if (visit2_33_1(commandRet3 && commandRet3.isBuffer)) {
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[34]++;
-    buffer = commandRet3;
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[35]++;
-    commandRet3 = undefined;
+  if (visit2_30_1(commandRet2 && commandRet2.isBuffer)) {
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[31]++;
+    buffer = commandRet2;
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[32]++;
+    commandRet2 = undefined;
   }
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[37]++;
-  buffer.write(commandRet3, true);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[38]++;
-  buffer.write('">\n    <div id="ks-filter-menu-placeholder-');
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[34]++;
+  buffer.write(commandRet2, true);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[35]++;
+  buffer.write('">\n    <div class="');
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[36]++;
+  var option3 = {
+  escape: 1};
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[39]++;
-  var id4 = scope.resolve(["id"]);
+  var params4 = [];
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[40]++;
-  buffer.write(id4, true);
+  params4.push('placeholder');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[41]++;
-  buffer.write('"\n         class="');
+  option3.params = params4;
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[42]++;
-  var option5 = {
-  escape: 1};
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[45]++;
-  var params6 = [];
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[46]++;
-  params6.push('placeholder');
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[47]++;
-  option5.params = params6;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[48]++;
-  var commandRet7 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 4);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[49]++;
-  if (visit3_49_1(commandRet7 && commandRet7.isBuffer)) {
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[50]++;
-    buffer = commandRet7;
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[51]++;
-    commandRet7 = undefined;
+  var commandRet5 = callCommandUtil(engine, scope, option3, buffer, "getBaseCssClasses", 2);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[43]++;
+  if (visit3_43_1(commandRet5 && commandRet5.isBuffer)) {
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[44]++;
+    buffer = commandRet5;
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[45]++;
+    commandRet5 = undefined;
   }
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[53]++;
-  buffer.write(commandRet7, true);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[54]++;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[47]++;
+  buffer.write(commandRet5, true);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[48]++;
   buffer.write('">\n        ');
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[55]++;
-  var id8 = scope.resolve(["placeholder"]);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[56]++;
-  buffer.write(id8, true);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[57]++;
-  buffer.write('\n    </div>\n    <input id="ks-filter-menu-input-');
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[58]++;
-  var id9 = scope.resolve(["id"]);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[59]++;
-  buffer.write(id9, true);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[60]++;
-  buffer.write('"\n           class="');
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[61]++;
-  var option10 = {
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[49]++;
+  var id6 = scope.resolve(["placeholder"]);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[50]++;
+  buffer.write(id6, true);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[51]++;
+  buffer.write('\n    </div>\n    <input class="');
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[52]++;
+  var option7 = {
   escape: 1};
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[55]++;
+  var params8 = [];
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[56]++;
+  params8.push('input');
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[57]++;
+  option7.params = params8;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[58]++;
+  var commandRet9 = callCommandUtil(engine, scope, option7, buffer, "getBaseCssClasses", 5);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[59]++;
+  if (visit4_59_1(commandRet9 && commandRet9.isBuffer)) {
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[60]++;
+    buffer = commandRet9;
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[61]++;
+    commandRet9 = undefined;
+  }
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[63]++;
+  buffer.write(commandRet9, true);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[64]++;
-  var params11 = [];
+  buffer.write('"\n            autocomplete="off"/>\n</div>\n');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[65]++;
-  params11.push('input');
+  var option10 = {};
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[66]++;
-  option10.params = params11;
+  var params11 = [];
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[67]++;
-  var commandRet12 = callCommandUtil(engine, scope, option10, buffer, "getBaseCssClasses", 8);
+  params11.push('component/extension/content-xtpl');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[68]++;
-  if (visit4_68_1(commandRet12 && commandRet12.isBuffer)) {
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[69]++;
+  option10.params = params11;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[69]++;
+  require("component/extension/content-xtpl");
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[70]++;
+  option10.params[0] = module.resolve(option10.params[0]);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[71]++;
+  var commandRet12 = includeCommand.call(engine, scope, option10, buffer, 8, payload);
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[72]++;
+  if (visit5_72_1(commandRet12 && commandRet12.isBuffer)) {
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[73]++;
     buffer = commandRet12;
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[70]++;
+    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[74]++;
     commandRet12 = undefined;
   }
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[72]++;
-  buffer.write(commandRet12, true);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[73]++;
-  buffer.write('"\n            autocomplete="off"/>\n</div>\n');
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[74]++;
-  var option13 = {};
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[75]++;
-  var params14 = [];
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[76]++;
-  params14.push('component/extension/content-xtpl');
+  buffer.write(commandRet12, false);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[77]++;
-  option13.params = params14;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[78]++;
-  require("component/extension/content-xtpl");
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[79]++;
-  option13.params[0] = module.resolve(option13.params[0]);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[80]++;
-  var commandRet15 = includeCommand.call(engine, scope, option13, buffer, 11, payload);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[81]++;
-  if (visit5_81_1(commandRet15 && commandRet15.isBuffer)) {
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[82]++;
-    buffer = commandRet15;
-    _$jscoverage['/filter-menu/render-xtpl.js'].lineData[83]++;
-    commandRet15 = undefined;
-  }
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[85]++;
-  buffer.write(commandRet15, false);
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[86]++;
   return buffer;
 };
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[88]++;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[79]++;
   t.TPL_NAME = module.name;
-  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[89]++;
+  _$jscoverage['/filter-menu/render-xtpl.js'].lineData[80]++;
   return t;
 });

@@ -346,7 +346,7 @@ function visit39_67_1(result) {
 function visit38_54_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
+}_$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
 function visit37_8_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
@@ -359,9 +359,9 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[8]++;
-  if (visit37_8_1("1.50" !== S.version)) {
+  if (visit37_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];

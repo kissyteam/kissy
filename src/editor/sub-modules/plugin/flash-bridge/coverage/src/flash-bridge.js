@@ -361,7 +361,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/flash-bridge.js'].lineData[8]++;
   var SWF = require('swf');
   _$jscoverage['/flash-bridge.js'].lineData[9]++;
-  var Event = require('event');
+  var CustomEvent = require('event/custom');
   _$jscoverage['/flash-bridge.js'].lineData[11]++;
   var instances = {};
   _$jscoverage['/flash-bridge.js'].lineData[12]++;
@@ -373,7 +373,7 @@ KISSY.add(function(S, require) {
     this._init(cfg);
   }
   _$jscoverage['/flash-bridge.js'].lineData[18]++;
-  S.augment(FlashBridge, Event.Target, {
+  S.augment(FlashBridge, CustomEvent.Target, {
   _init: function(cfg) {
   _$jscoverage['/flash-bridge.js'].functionData[2]++;
   _$jscoverage['/flash-bridge.js'].lineData[20]++;

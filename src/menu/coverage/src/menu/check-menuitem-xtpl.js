@@ -275,16 +275,16 @@ if (! _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'] = [];
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1].init(1870, 35, 'commandRet5 && commandRet5.isBuffer');
-function visit4_43_1(result) {
+_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1].init(1872, 35, 'commandRet5 && commandRet5.isBuffer');
+function visit3_43_1(result) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['30'][1].init(1256, 35, 'commandRet2 && commandRet2.isBuffer');
-function visit3_30_1(result) {
+}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['30'][1].init(1258, 35, 'commandRet2 && commandRet2.isBuffer');
+function visit2_30_1(result) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
-function visit2_8_1(result) {
+}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
+function visit1_8_1(result) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[2]++;
@@ -296,9 +296,9 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[8]++;
-  if (visit2_8_1("1.50" !== S.version)) {
+  if (visit1_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
@@ -316,7 +316,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[29]++;
   var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[30]++;
-  if (visit3_30_1(commandRet2 && commandRet2.isBuffer)) {
+  if (visit2_30_1(commandRet2 && commandRet2.isBuffer)) {
     _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[31]++;
     buffer = commandRet2;
     _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[32]++;
@@ -341,7 +341,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[42]++;
   var commandRet5 = includeCommand.call(engine, scope, option3, buffer, 3, payload);
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[43]++;
-  if (visit4_43_1(commandRet5 && commandRet5.isBuffer)) {
+  if (visit3_43_1(commandRet5 && commandRet5.isBuffer)) {
     _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[44]++;
     buffer = commandRet5;
     _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[45]++;

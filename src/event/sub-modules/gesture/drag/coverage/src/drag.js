@@ -367,13 +367,13 @@ function visit1_28_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/drag.js'].functionData[0]++;
   _$jscoverage['/drag.js'].lineData[7]++;
-  var GestureBase = require('event/gesture/base');
+  var GestureUtil = require('event/gesture/util');
   _$jscoverage['/drag.js'].lineData[8]++;
-  var addGestureEvent = GestureBase.addEvent;
+  var addGestureEvent = GestureUtil.addEvent;
   _$jscoverage['/drag.js'].lineData[9]++;
   var DomEvent = require('event/dom/base');
   _$jscoverage['/drag.js'].lineData[10]++;
-  var SingleTouch = GestureBase.SingleTouch;
+  var SingleTouch = GestureUtil.SingleTouch;
   _$jscoverage['/drag.js'].lineData[11]++;
   var DRAG_START = 'gestureDragStart', DRAG_END = 'gestureDragEnd', DRAG = 'gestureDrag', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
   _$jscoverage['/drag.js'].lineData[16]++;

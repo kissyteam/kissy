@@ -418,7 +418,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/transition.js'].lineData[12]++;
   var TRANSITION = transitionVendorInfo.propertyName;
   _$jscoverage['/transition.js'].lineData[13]++;
-  var DEFAULT_EASING = 'ease-in';
+  var DEFAULT_EASING = 'linear';
   _$jscoverage['/transition.js'].lineData[14]++;
   var css3Anim = {
   ease: 1, 

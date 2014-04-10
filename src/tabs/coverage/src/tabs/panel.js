@@ -231,34 +231,77 @@ if (! _$jscoverage['/tabs/panel.js']) {
   _$jscoverage['/tabs/panel.js'].lineData = [];
   _$jscoverage['/tabs/panel.js'].lineData[6] = 0;
   _$jscoverage['/tabs/panel.js'].lineData[7] = 0;
-  _$jscoverage['/tabs/panel.js'].lineData[8] = 0;
-  _$jscoverage['/tabs/panel.js'].lineData[14] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[13] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[17] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[18] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[19] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[20] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[22] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[27] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[28] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[30] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[45] = 0;
 }
 if (! _$jscoverage['/tabs/panel.js'].functionData) {
   _$jscoverage['/tabs/panel.js'].functionData = [];
   _$jscoverage['/tabs/panel.js'].functionData[0] = 0;
+  _$jscoverage['/tabs/panel.js'].functionData[1] = 0;
+  _$jscoverage['/tabs/panel.js'].functionData[2] = 0;
+  _$jscoverage['/tabs/panel.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/tabs/panel.js'].branchData) {
   _$jscoverage['/tabs/panel.js'].branchData = {};
+  _$jscoverage['/tabs/panel.js'].branchData['19'] = [];
+  _$jscoverage['/tabs/panel.js'].branchData['19'][1] = new BranchData();
 }
-_$jscoverage['/tabs/panel.js'].lineData[6]++;
+_$jscoverage['/tabs/panel.js'].branchData['19'][1].init(96, 19, 'renderData.selected');
+function visit12_19_1(result) {
+  _$jscoverage['/tabs/panel.js'].branchData['19'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tabs/panel.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/tabs/panel.js'].functionData[0]++;
   _$jscoverage['/tabs/panel.js'].lineData[7]++;
   var Container = require('component/container');
-  _$jscoverage['/tabs/panel.js'].lineData[8]++;
-  var PanelRender = require('./panel-render');
-  _$jscoverage['/tabs/panel.js'].lineData[14]++;
+  _$jscoverage['/tabs/panel.js'].lineData[13]++;
   return Container.extend({
-  isTabsPanel: 1}, {
+  isTabsPanel: 1, 
+  beforeCreateDom: function(renderData) {
+  _$jscoverage['/tabs/panel.js'].functionData[1]++;
+  _$jscoverage['/tabs/panel.js'].lineData[17]++;
+  var self = this;
+  _$jscoverage['/tabs/panel.js'].lineData[18]++;
+  renderData.elAttrs.role = 'tabpanel';
+  _$jscoverage['/tabs/panel.js'].lineData[19]++;
+  if (visit12_19_1(renderData.selected)) {
+    _$jscoverage['/tabs/panel.js'].lineData[20]++;
+    renderData.elCls.push(self.getBaseCssClasses('selected'));
+  } else {
+    _$jscoverage['/tabs/panel.js'].lineData[22]++;
+    renderData.elAttrs['aria-hidden'] = false;
+  }
+}, 
+  _onSetSelected: function(v) {
+  _$jscoverage['/tabs/panel.js'].functionData[2]++;
+  _$jscoverage['/tabs/panel.js'].lineData[27]++;
+  var el = this.$el;
+  _$jscoverage['/tabs/panel.js'].lineData[28]++;
+  var selectedCls = this.getBaseCssClasses('selected');
+  _$jscoverage['/tabs/panel.js'].lineData[30]++;
+  el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-hidden', !v);
+}}, {
   ATTRS: {
   selected: {
-  view: 1}, 
+  render: 1, 
+  sync: 0, 
+  parse: function(el) {
+  _$jscoverage['/tabs/panel.js'].functionData[3]++;
+  _$jscoverage['/tabs/panel.js'].lineData[45]++;
+  return el.hasClass(this.getBaseCssClass('selected'));
+}}, 
   focusable: {
   value: false}, 
   allowTextSelection: {
-  value: true}, 
-  xrender: {
-  value: PanelRender}}, 
+  value: true}}, 
   xclass: 'tabs-panel'});
 });

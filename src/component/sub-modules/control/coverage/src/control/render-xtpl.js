@@ -310,12 +310,12 @@ if (! _$jscoverage['/control/render-xtpl.js'].branchData) {
   _$jscoverage['/control/render-xtpl.js'].branchData['30'] = [];
   _$jscoverage['/control/render-xtpl.js'].branchData['30'][1] = new BranchData();
 }
-_$jscoverage['/control/render-xtpl.js'].branchData['30'][1].init(1270, 35, 'commandRet2 && commandRet2.isBuffer');
-function visit11_30_1(result) {
+_$jscoverage['/control/render-xtpl.js'].branchData['30'][1].init(1272, 35, 'commandRet2 && commandRet2.isBuffer');
+function visit2_30_1(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
-function visit10_8_1(result) {
+}_$jscoverage['/control/render-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
+function visit1_8_1(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/render-xtpl.js'].lineData[2]++;
@@ -327,9 +327,9 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/control/render-xtpl.js'].lineData[8]++;
-  if (visit10_8_1("1.50" !== S.version)) {
+  if (visit1_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/control/render-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/control/render-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
@@ -347,7 +347,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[29]++;
   var commandRet2 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
   _$jscoverage['/control/render-xtpl.js'].lineData[30]++;
-  if (visit11_30_1(commandRet2 && commandRet2.isBuffer)) {
+  if (visit2_30_1(commandRet2 && commandRet2.isBuffer)) {
     _$jscoverage['/control/render-xtpl.js'].lineData[31]++;
     buffer = commandRet2;
     _$jscoverage['/control/render-xtpl.js'].lineData[32]++;

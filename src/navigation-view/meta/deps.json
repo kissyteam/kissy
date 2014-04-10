@@ -1,3 +1,3 @@
 {
-    "navigation-view": ["component/container", "component/control", "component/extension/content-xtpl", ""]
+    "navigation-view": ["component/container", "component/control", "component/extension/content-xtpl", "component/extension/content-box"]
 }

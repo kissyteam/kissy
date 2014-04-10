@@ -249,47 +249,48 @@ if (! _$jscoverage['/overlay/popup.js']) {
   _$jscoverage['/overlay/popup.js'].lineData[36] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[37] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[38] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[42] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[39] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[43] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[44] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[45] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[46] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[50] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[47] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[51] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[52] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[53] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[54] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[55] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[57] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[61] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[64] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[56] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[58] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[62] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[65] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[66] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[67] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[70] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[68] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[71] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[72] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[81] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[83] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[86] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[73] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[82] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[84] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[87] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[88] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[90] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[96] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[98] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[89] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[91] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[97] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[99] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[101] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[107] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[111] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[100] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[102] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[108] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[112] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[113] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[115] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[114] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[116] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[118] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[117] = 0;
   _$jscoverage['/overlay/popup.js'].lineData[119] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[123] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[125] = 0;
-  _$jscoverage['/overlay/popup.js'].lineData[140] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[120] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[124] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[126] = 0;
+  _$jscoverage['/overlay/popup.js'].lineData[141] = 0;
 }
 if (! _$jscoverage['/overlay/popup.js'].functionData) {
   _$jscoverage['/overlay/popup.js'].functionData = [];
@@ -314,75 +315,75 @@ if (! _$jscoverage['/overlay/popup.js'].branchData) {
   _$jscoverage['/overlay/popup.js'].branchData = {};
   _$jscoverage['/overlay/popup.js'].branchData['25'] = [];
   _$jscoverage['/overlay/popup.js'].branchData['25'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['44'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['44'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['54'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['86'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['86'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['45'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['55'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['55'][1] = new BranchData();
   _$jscoverage['/overlay/popup.js'].branchData['87'] = [];
   _$jscoverage['/overlay/popup.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['98'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['88'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['88'][1] = new BranchData();
   _$jscoverage['/overlay/popup.js'].branchData['99'] = [];
   _$jscoverage['/overlay/popup.js'].branchData['99'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['111'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['111'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['100'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['100'][1] = new BranchData();
   _$jscoverage['/overlay/popup.js'].branchData['112'] = [];
   _$jscoverage['/overlay/popup.js'].branchData['112'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['115'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['118'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/overlay/popup.js'].branchData['123'] = [];
-  _$jscoverage['/overlay/popup.js'].branchData['123'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['113'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['113'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['116'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['119'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['119'][1] = new BranchData();
+  _$jscoverage['/overlay/popup.js'].branchData['124'] = [];
+  _$jscoverage['/overlay/popup.js'].branchData['124'][1] = new BranchData();
 }
-_$jscoverage['/overlay/popup.js'].branchData['123'][1].init(535, 3, '$el');
-function visit52_123_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['123'][1].ranCondition(result);
+_$jscoverage['/overlay/popup.js'].branchData['124'][1].init(535, 3, '$el');
+function visit51_124_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['118'][1].init(270, 21, 'self._mouseLeavePopup');
-function visit51_118_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/overlay/popup.js'].branchData['119'][1].init(270, 21, 'self._mouseLeavePopup');
+function visit50_119_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['115'][1].init(138, 22, 'self.__mouseEnterPopup');
-function visit50_115_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/overlay/popup.js'].branchData['116'][1].init(138, 22, 'self.__mouseEnterPopup');
+function visit49_116_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['112'][1].init(21, 17, 'self.__clickPopup');
-function visit49_112_1(result) {
+}_$jscoverage['/overlay/popup.js'].branchData['113'][1].init(21, 17, 'self.__clickPopup');
+function visit48_113_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['113'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/overlay/popup.js'].branchData['112'][1].init(120, 1, 't');
+function visit47_112_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['111'][1].init(120, 1, 't');
-function visit48_111_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['111'][1].ranCondition(result);
+}_$jscoverage['/overlay/popup.js'].branchData['100'][1].init(21, 35, 'self.get(\'triggerType\') === \'mouse\'');
+function visit46_100_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['99'][1].init(21, 35, 'self.get(\'triggerType\') === \'mouse\'');
-function visit47_99_1(result) {
+}_$jscoverage['/overlay/popup.js'].branchData['99'][1].init(93, 7, 'trigger');
+function visit45_99_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['98'][1].init(93, 7, 'trigger');
-function visit46_98_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['98'][1].ranCondition(result);
+}_$jscoverage['/overlay/popup.js'].branchData['88'][1].init(21, 35, 'self.get(\'triggerType\') === \'mouse\'');
+function visit44_88_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['87'][1].init(21, 35, 'self.get(\'triggerType\') === \'mouse\'');
-function visit45_87_1(result) {
+}_$jscoverage['/overlay/popup.js'].branchData['87'][1].init(122, 7, 'trigger');
+function visit43_87_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['86'][1].init(122, 7, 'trigger');
-function visit44_86_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/overlay/popup.js'].branchData['55'][1].init(50, 18, 'self.get(\'toggle\')');
+function visit42_55_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['54'][1].init(50, 18, 'self.get(\'toggle\')');
-function visit43_54_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['54'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/overlay/popup.js'].branchData['44'][1].init(38, 17, 'self._hiddenTimer');
-function visit42_44_1(result) {
-  _$jscoverage['/overlay/popup.js'].branchData['44'][1].ranCondition(result);
+}_$jscoverage['/overlay/popup.js'].branchData['45'][1].init(38, 17, 'self._hiddenTimer');
+function visit41_45_1(result) {
+  _$jscoverage['/overlay/popup.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['25'][1].init(17, 5, 'timer');
-function visit41_25_1(result) {
+function visit40_25_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].lineData[6]++;
@@ -415,7 +416,7 @@ KISSY.add(function(S, require) {
     self._mouseLeavePopup = function() {
   _$jscoverage['/overlay/popup.js'].functionData[4]++;
   _$jscoverage['/overlay/popup.js'].lineData[25]++;
-  if (visit41_25_1(timer)) {
+  if (visit40_25_1(timer)) {
     _$jscoverage['/overlay/popup.js'].lineData[26]++;
     timer.cancel();
     _$jscoverage['/overlay/popup.js'].lineData[27]++;
@@ -433,121 +434,123 @@ KISSY.add(function(S, require) {
     _$jscoverage['/overlay/popup.js'].lineData[36]++;
     var self = this;
     _$jscoverage['/overlay/popup.js'].lineData[37]++;
+    var delay = self.get('mouseDelay') * 1000;
+    _$jscoverage['/overlay/popup.js'].lineData[38]++;
     self._hiddenTimer = S.later(function() {
   _$jscoverage['/overlay/popup.js'].functionData[6]++;
-  _$jscoverage['/overlay/popup.js'].lineData[38]++;
+  _$jscoverage['/overlay/popup.js'].lineData[39]++;
   hiding.call(self);
-}, self.get('mouseDelay') * 1000);
+}, delay);
   }
-  _$jscoverage['/overlay/popup.js'].lineData[42]++;
+  _$jscoverage['/overlay/popup.js'].lineData[43]++;
   function clearHiddenTimer() {
     _$jscoverage['/overlay/popup.js'].functionData[7]++;
-    _$jscoverage['/overlay/popup.js'].lineData[43]++;
-    var self = this;
     _$jscoverage['/overlay/popup.js'].lineData[44]++;
-    if (visit42_44_1(self._hiddenTimer)) {
-      _$jscoverage['/overlay/popup.js'].lineData[45]++;
-      self._hiddenTimer.cancel();
+    var self = this;
+    _$jscoverage['/overlay/popup.js'].lineData[45]++;
+    if (visit41_45_1(self._hiddenTimer)) {
       _$jscoverage['/overlay/popup.js'].lineData[46]++;
+      self._hiddenTimer.cancel();
+      _$jscoverage['/overlay/popup.js'].lineData[47]++;
       self._hiddenTimer = undefined;
     }
   }
-  _$jscoverage['/overlay/popup.js'].lineData[50]++;
+  _$jscoverage['/overlay/popup.js'].lineData[51]++;
   function bindTriggerClick() {
     _$jscoverage['/overlay/popup.js'].functionData[8]++;
-    _$jscoverage['/overlay/popup.js'].lineData[51]++;
-    var self = this;
     _$jscoverage['/overlay/popup.js'].lineData[52]++;
+    var self = this;
+    _$jscoverage['/overlay/popup.js'].lineData[53]++;
     self.__clickPopup = function(ev) {
   _$jscoverage['/overlay/popup.js'].functionData[9]++;
-  _$jscoverage['/overlay/popup.js'].lineData[53]++;
-  ev.preventDefault();
   _$jscoverage['/overlay/popup.js'].lineData[54]++;
-  if (visit43_54_1(self.get('toggle'))) {
-    _$jscoverage['/overlay/popup.js'].lineData[55]++;
+  ev.preventDefault();
+  _$jscoverage['/overlay/popup.js'].lineData[55]++;
+  if (visit42_55_1(self.get('toggle'))) {
+    _$jscoverage['/overlay/popup.js'].lineData[56]++;
     (self.get('visible') ? hiding : showing).call(self, ev);
   } else {
-    _$jscoverage['/overlay/popup.js'].lineData[57]++;
+    _$jscoverage['/overlay/popup.js'].lineData[58]++;
     showing.call(self, ev);
   }
 };
-    _$jscoverage['/overlay/popup.js'].lineData[61]++;
+    _$jscoverage['/overlay/popup.js'].lineData[62]++;
     self.get('trigger').on('click', self.__clickPopup);
   }
-  _$jscoverage['/overlay/popup.js'].lineData[64]++;
+  _$jscoverage['/overlay/popup.js'].lineData[65]++;
   function showing(ev) {
     _$jscoverage['/overlay/popup.js'].functionData[10]++;
-    _$jscoverage['/overlay/popup.js'].lineData[65]++;
-    var self = this;
     _$jscoverage['/overlay/popup.js'].lineData[66]++;
-    self.set('currentTrigger', S.one(ev.target));
+    var self = this;
     _$jscoverage['/overlay/popup.js'].lineData[67]++;
+    self.set('currentTrigger', S.one(ev.target));
+    _$jscoverage['/overlay/popup.js'].lineData[68]++;
     self.show();
   }
-  _$jscoverage['/overlay/popup.js'].lineData[70]++;
+  _$jscoverage['/overlay/popup.js'].lineData[71]++;
   function hiding() {
     _$jscoverage['/overlay/popup.js'].functionData[11]++;
-    _$jscoverage['/overlay/popup.js'].lineData[71]++;
-    this.set('currentTrigger', undefined);
     _$jscoverage['/overlay/popup.js'].lineData[72]++;
+    this.set('currentTrigger', undefined);
+    _$jscoverage['/overlay/popup.js'].lineData[73]++;
     this.hide();
   }
-  _$jscoverage['/overlay/popup.js'].lineData[81]++;
+  _$jscoverage['/overlay/popup.js'].lineData[82]++;
   return Overlay.extend({
   initializer: function() {
   _$jscoverage['/overlay/popup.js'].functionData[12]++;
-  _$jscoverage['/overlay/popup.js'].lineData[83]++;
+  _$jscoverage['/overlay/popup.js'].lineData[84]++;
   var self = this, trigger = self.get('trigger');
-  _$jscoverage['/overlay/popup.js'].lineData[86]++;
-  if (visit44_86_1(trigger)) {
-    _$jscoverage['/overlay/popup.js'].lineData[87]++;
-    if (visit45_87_1(self.get('triggerType') === 'mouse')) {
-      _$jscoverage['/overlay/popup.js'].lineData[88]++;
+  _$jscoverage['/overlay/popup.js'].lineData[87]++;
+  if (visit43_87_1(trigger)) {
+    _$jscoverage['/overlay/popup.js'].lineData[88]++;
+    if (visit44_88_1(self.get('triggerType') === 'mouse')) {
+      _$jscoverage['/overlay/popup.js'].lineData[89]++;
       bindTriggerMouse.call(self);
     } else {
-      _$jscoverage['/overlay/popup.js'].lineData[90]++;
+      _$jscoverage['/overlay/popup.js'].lineData[91]++;
       bindTriggerClick.call(self);
     }
   }
 }, 
   bindUI: function() {
   _$jscoverage['/overlay/popup.js'].functionData[13]++;
-  _$jscoverage['/overlay/popup.js'].lineData[96]++;
+  _$jscoverage['/overlay/popup.js'].lineData[97]++;
   var self = this, trigger = self.get('trigger');
-  _$jscoverage['/overlay/popup.js'].lineData[98]++;
-  if (visit46_98_1(trigger)) {
-    _$jscoverage['/overlay/popup.js'].lineData[99]++;
-    if (visit47_99_1(self.get('triggerType') === 'mouse')) {
-      _$jscoverage['/overlay/popup.js'].lineData[101]++;
+  _$jscoverage['/overlay/popup.js'].lineData[99]++;
+  if (visit45_99_1(trigger)) {
+    _$jscoverage['/overlay/popup.js'].lineData[100]++;
+    if (visit46_100_1(self.get('triggerType') === 'mouse')) {
+      _$jscoverage['/overlay/popup.js'].lineData[102]++;
       self.$el.on('mouseleave', setHiddenTimer, self).on('mouseenter', clearHiddenTimer, self);
     }
   }
 }, 
   destructor: function() {
   _$jscoverage['/overlay/popup.js'].functionData[14]++;
-  _$jscoverage['/overlay/popup.js'].lineData[107]++;
+  _$jscoverage['/overlay/popup.js'].lineData[108]++;
   var self = this, $el = self.$el, t = self.get('trigger');
-  _$jscoverage['/overlay/popup.js'].lineData[111]++;
-  if (visit48_111_1(t)) {
-    _$jscoverage['/overlay/popup.js'].lineData[112]++;
-    if (visit49_112_1(self.__clickPopup)) {
-      _$jscoverage['/overlay/popup.js'].lineData[113]++;
+  _$jscoverage['/overlay/popup.js'].lineData[112]++;
+  if (visit47_112_1(t)) {
+    _$jscoverage['/overlay/popup.js'].lineData[113]++;
+    if (visit48_113_1(self.__clickPopup)) {
+      _$jscoverage['/overlay/popup.js'].lineData[114]++;
       t.detach('click', self.__clickPopup);
     }
-    _$jscoverage['/overlay/popup.js'].lineData[115]++;
-    if (visit50_115_1(self.__mouseEnterPopup)) {
-      _$jscoverage['/overlay/popup.js'].lineData[116]++;
+    _$jscoverage['/overlay/popup.js'].lineData[116]++;
+    if (visit49_116_1(self.__mouseEnterPopup)) {
+      _$jscoverage['/overlay/popup.js'].lineData[117]++;
       t.detach('mouseenter', self.__mouseEnterPopup);
     }
-    _$jscoverage['/overlay/popup.js'].lineData[118]++;
-    if (visit51_118_1(self._mouseLeavePopup)) {
-      _$jscoverage['/overlay/popup.js'].lineData[119]++;
+    _$jscoverage['/overlay/popup.js'].lineData[119]++;
+    if (visit50_119_1(self._mouseLeavePopup)) {
+      _$jscoverage['/overlay/popup.js'].lineData[120]++;
       t.detach('mouseleave', self._mouseLeavePopup);
     }
   }
-  _$jscoverage['/overlay/popup.js'].lineData[123]++;
-  if (visit52_123_1($el)) {
-    _$jscoverage['/overlay/popup.js'].lineData[125]++;
+  _$jscoverage['/overlay/popup.js'].lineData[124]++;
+  if (visit51_124_1($el)) {
+    _$jscoverage['/overlay/popup.js'].lineData[126]++;
     $el.detach('mouseleave', setHiddenTimer, self).detach('mouseenter', clearHiddenTimer, self);
   }
 }}, {
@@ -555,7 +558,7 @@ KISSY.add(function(S, require) {
   trigger: {
   setter: function(v) {
   _$jscoverage['/overlay/popup.js'].functionData[15]++;
-  _$jscoverage['/overlay/popup.js'].lineData[140]++;
+  _$jscoverage['/overlay/popup.js'].lineData[141]++;
   return S.all(v);
 }}, 
   triggerType: {

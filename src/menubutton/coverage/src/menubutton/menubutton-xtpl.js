@@ -288,19 +288,19 @@ if (! _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'] = [];
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1] = new BranchData();
 }
-_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1].init(2388, 35, 'commandRet8 && commandRet8.isBuffer');
+_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1].init(2390, 35, 'commandRet8 && commandRet8.isBuffer');
 function visit31_56_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['43'][1].init(1861, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['43'][1].init(1863, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit30_43_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['30'][1].init(1345, 35, 'commandRet2 && commandRet2.isBuffer');
+}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['30'][1].init(1347, 35, 'commandRet2 && commandRet2.isBuffer');
 function visit29_30_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
+}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
 function visit28_8_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
@@ -313,9 +313,9 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[8]++;
-  if (visit28_8_1("1.50" !== S.version)) {
+  if (visit28_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];

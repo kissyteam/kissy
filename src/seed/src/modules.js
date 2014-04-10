@@ -35,19 +35,22 @@ S.config("requires",{
     ],
     "component/control": [
         "node",
-        "base",
+        "event/gesture/base",
+        "event/gesture/tap",
         "component/manager",
+        "base",
         "xtemplate/runtime"
     ],
     "component/extension/align": [
         "node"
     ],
-    "": [
+    "component/extension/content-box": [
         "component/extension/content-xtpl"
     ],
     "component/extension/delegate-children": [
-        "node",
-        "component/manager"
+        "component/manager",
+        "event/gesture/base",
+        "event/gesture/tap"
     ],
     "component/extension/shim": [
         "ua"
@@ -78,6 +81,7 @@ S.config("requires",{
     "dd": [
         "node",
         "base",
+        "event/gesture/base",
         "event/gesture/drag"
     ],
     "dd/plugin/constrain": [
@@ -132,10 +136,12 @@ S.config("requires",{
         "event/dom/base"
     ],
     "event/gesture/base": [
-        "event/dom/base"
+        "event/dom/base",
+        "event/gesture/util"
     ],
     "event/gesture/drag": [
-        "event/gesture/base"
+        "event/gesture/util",
+        "event/dom/base"
     ],
     "event/gesture/shake": [
         "event/dom/base"
@@ -156,7 +162,7 @@ S.config("requires",{
     "menu": [
         "component/container",
         "component/extension/delegate-children",
-        "",
+        "component/extension/content-box",
         "component/extension/align",
         "component/extension/shim"
     ],
@@ -166,7 +172,7 @@ S.config("requires",{
     ],
     "navigation-view": [
         "component/container",
-        ""
+        "component/extension/content-box"
     ],
     "node": [
         "dom",
@@ -177,7 +183,7 @@ S.config("requires",{
         "component/container",
         "component/extension/shim",
         "component/extension/align",
-        ""
+        "component/extension/content-box"
     ],
     "path": [
         "util"
@@ -197,7 +203,7 @@ S.config("requires",{
     "scroll-view/base": [
         "anim/timer",
         "component/container",
-        ""
+        "component/extension/content-box"
     ],
     "scroll-view/plugin/pull-to-refresh": [
         "base"
@@ -207,7 +213,8 @@ S.config("requires",{
         "event/gesture/drag"
     ],
     "scroll-view/touch": [
-        "scroll-view/base"
+        "scroll-view/base",
+        "event/gesture/drag"
     ],
     "separator": [
         "component/control"
@@ -233,6 +240,7 @@ S.config("requires",{
     ],
     "tree": [
         "component/container",
+        "component/extension/content-xtpl",
         "",
         "component/extension/delegate-children"
     ],

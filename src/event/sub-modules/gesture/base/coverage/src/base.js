@@ -232,17 +232,17 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[6] = 0;
   _$jscoverage['/base.js'].lineData[7] = 0;
   _$jscoverage['/base.js'].lineData[8] = 0;
-  _$jscoverage['/base.js'].lineData[10] = 0;
-  _$jscoverage['/base.js'].lineData[19] = 0;
-  _$jscoverage['/base.js'].lineData[20] = 0;
-  _$jscoverage['/base.js'].lineData[24] = 0;
+  _$jscoverage['/base.js'].lineData[9] = 0;
+  _$jscoverage['/base.js'].lineData[11] = 0;
+  _$jscoverage['/base.js'].lineData[17] = 0;
+  _$jscoverage['/base.js'].lineData[18] = 0;
+  _$jscoverage['/base.js'].lineData[22] = 0;
+  _$jscoverage['/base.js'].lineData[23] = 0;
   _$jscoverage['/base.js'].lineData[25] = 0;
-  _$jscoverage['/base.js'].lineData[27] = 0;
+  _$jscoverage['/base.js'].lineData[32] = 0;
+  _$jscoverage['/base.js'].lineData[33] = 0;
   _$jscoverage['/base.js'].lineData[34] = 0;
-  _$jscoverage['/base.js'].lineData[35] = 0;
   _$jscoverage['/base.js'].lineData[36] = 0;
-  _$jscoverage['/base.js'].lineData[38] = 0;
-  _$jscoverage['/base.js'].lineData[40] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -259,44 +259,37 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[7]++;
   var DomEvent = require('event/dom/base');
   _$jscoverage['/base.js'].lineData[8]++;
-  var addGestureEvent = require('./base/add-event');
-  _$jscoverage['/base.js'].lineData[10]++;
-  var Enumeration = {
-  start: 'gestureStart', 
+  var GestureUtil = require('event/gesture/util');
+  _$jscoverage['/base.js'].lineData[9]++;
+  var addGestureEvent = GestureUtil.addEvent;
+  _$jscoverage['/base.js'].lineData[11]++;
+  var BaseGesture = {
   START: 'gestureStart', 
-  move: 'gestureMove', 
   MOVE: 'gestureMove', 
-  end: 'gestureEnd', 
   END: 'gestureEnd'};
-  _$jscoverage['/base.js'].lineData[19]++;
-  function addGestureBaseEvent(event, onHandler) {
+  _$jscoverage['/base.js'].lineData[17]++;
+  function addBaseGestureEvent(event, onHandler) {
     _$jscoverage['/base.js'].functionData[1]++;
-    _$jscoverage['/base.js'].lineData[20]++;
+    _$jscoverage['/base.js'].lineData[18]++;
     var handle = {
   isActive: 1};
-    _$jscoverage['/base.js'].lineData[24]++;
+    _$jscoverage['/base.js'].lineData[22]++;
     handle[onHandler] = function(e) {
   _$jscoverage['/base.js'].functionData[2]++;
-  _$jscoverage['/base.js'].lineData[25]++;
+  _$jscoverage['/base.js'].lineData[23]++;
   DomEvent.fire(e.target, event, e);
 };
-    _$jscoverage['/base.js'].lineData[27]++;
+    _$jscoverage['/base.js'].lineData[25]++;
     addGestureEvent(event, {
   order: 1, 
   handle: handle});
   }
+  _$jscoverage['/base.js'].lineData[32]++;
+  addBaseGestureEvent(BaseGesture.START, 'onTouchStart');
+  _$jscoverage['/base.js'].lineData[33]++;
+  addBaseGestureEvent(BaseGesture.MOVE, 'onTouchMove');
   _$jscoverage['/base.js'].lineData[34]++;
-  addGestureBaseEvent(Enumeration.START, 'onTouchStart');
-  _$jscoverage['/base.js'].lineData[35]++;
-  addGestureBaseEvent(Enumeration.MOVE, 'onTouchMove');
+  addBaseGestureEvent(BaseGesture.END, 'onTouchEnd');
   _$jscoverage['/base.js'].lineData[36]++;
-  addGestureBaseEvent(Enumeration.END, 'onTouchEnd');
-  _$jscoverage['/base.js'].lineData[38]++;
-  S.mix(Enumeration, require('./base/tap'));
-  _$jscoverage['/base.js'].lineData[40]++;
-  return {
-  Enumeration: Enumeration, 
-  addEvent: addGestureEvent, 
-  Touch: require('./base/touch'), 
-  SingleTouch: require('./base/single-touch')};
+  return BaseGesture;
 });

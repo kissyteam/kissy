@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
         start = 5,
         enough = 20,
         shaking = 0,
-        SHAKE='shake',
+        SHAKE = 'shake',
         lastX, lastY, lastZ,
         max = Math.max,
         abs = Math.abs,
@@ -76,7 +76,7 @@ KISSY.add(function (S, require) {
     }
 
     return {
-        SHAKE:SHAKE
+        SHAKE: SHAKE
     };
 });
 /**

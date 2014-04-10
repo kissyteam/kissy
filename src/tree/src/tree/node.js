@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
         EXPAND_ICON_EL_FILE_CLS = [
             COMMON_EXPAND_EL_CLS
         ].join(' '),
-        EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [COMMON_EXPAND_EL_CLS + 'minus' ].join(' '),
+        EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [COMMON_EXPAND_EL_CLS + 'minus'].join(' '),
         EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [COMMON_EXPAND_EL_CLS + 'plus'].join(' '),
         ICON_EL_FILE_CLS = ['file-icon'].join(' '),
         ICON_EL_FOLDER_EXPAND_CLS = ['expanded-folder-icon'].join(' '),
@@ -346,7 +346,7 @@ KISSY.add(function (S, require) {
              */
             iconEl: {
                 selector: function () {
-                    return('.' + this.getBaseCssClass('icon'));
+                    return ('.' + this.getBaseCssClass('icon'));
                 }
             },
 

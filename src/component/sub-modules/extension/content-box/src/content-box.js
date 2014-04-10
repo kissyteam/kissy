@@ -50,7 +50,7 @@ KISSY.add(function (S, require) {
             },
             contentEl: {
                 selector: function () {
-                    return'.' + this.getBaseCssClass('content');
+                    return '.' + this.getBaseCssClass('content');
                 }
             },
             content: {

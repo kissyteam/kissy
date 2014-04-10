@@ -1040,7 +1040,6 @@ KISSY.add(function (S, require) {
                     value: true
                 },
 
-
                 /**
                  * Whether this component can be activated.
                  *

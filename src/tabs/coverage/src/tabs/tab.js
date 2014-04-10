@@ -231,38 +231,73 @@ if (! _$jscoverage['/tabs/tab.js']) {
   _$jscoverage['/tabs/tab.js'].lineData = [];
   _$jscoverage['/tabs/tab.js'].lineData[6] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[7] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[8] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[14] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[18] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[19] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[20] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[21] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[22] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[27] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[28] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[32] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[33] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[35] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[56] = 0;
 }
 if (! _$jscoverage['/tabs/tab.js'].functionData) {
   _$jscoverage['/tabs/tab.js'].functionData = [];
   _$jscoverage['/tabs/tab.js'].functionData[0] = 0;
   _$jscoverage['/tabs/tab.js'].functionData[1] = 0;
   _$jscoverage['/tabs/tab.js'].functionData[2] = 0;
+  _$jscoverage['/tabs/tab.js'].functionData[3] = 0;
+  _$jscoverage['/tabs/tab.js'].functionData[4] = 0;
 }
 if (! _$jscoverage['/tabs/tab.js'].branchData) {
   _$jscoverage['/tabs/tab.js'].branchData = {};
+  _$jscoverage['/tabs/tab.js'].branchData['20'] = [];
+  _$jscoverage['/tabs/tab.js'].branchData['20'][1] = new BranchData();
 }
-_$jscoverage['/tabs/tab.js'].lineData[6]++;
+_$jscoverage['/tabs/tab.js'].branchData['20'][1].init(93, 19, 'renderData.selected');
+function visit13_20_1(result) {
+  _$jscoverage['/tabs/tab.js'].branchData['20'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tabs/tab.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/tabs/tab.js'].functionData[0]++;
   _$jscoverage['/tabs/tab.js'].lineData[7]++;
   var Button = require('button');
-  _$jscoverage['/tabs/tab.js'].lineData[8]++;
-  var TabRender = require('./tab-render');
   _$jscoverage['/tabs/tab.js'].lineData[14]++;
   return Button.extend({
   isTabsTab: true, 
-  bindUI: function() {
+  beforeCreateDom: function(renderData) {
   _$jscoverage['/tabs/tab.js'].functionData[1]++;
   _$jscoverage['/tabs/tab.js'].lineData[18]++;
-  this.on('click', function() {
-  _$jscoverage['/tabs/tab.js'].functionData[2]++;
+  var attrs = renderData.elAttrs;
   _$jscoverage['/tabs/tab.js'].lineData[19]++;
+  attrs.role = 'tab';
+  _$jscoverage['/tabs/tab.js'].lineData[20]++;
+  if (visit13_20_1(renderData.selected)) {
+    _$jscoverage['/tabs/tab.js'].lineData[21]++;
+    attrs['aria-selected'] = true;
+    _$jscoverage['/tabs/tab.js'].lineData[22]++;
+    renderData.elCls.push(this.getBaseCssClasses('selected'));
+  }
+}, 
+  handleClickInternal: function(e) {
+  _$jscoverage['/tabs/tab.js'].functionData[2]++;
+  _$jscoverage['/tabs/tab.js'].lineData[27]++;
+  this.callSuper(e);
+  _$jscoverage['/tabs/tab.js'].lineData[28]++;
   this.set('selected', true);
-});
+}, 
+  _onSetSelected: function(v) {
+  _$jscoverage['/tabs/tab.js'].functionData[3]++;
+  _$jscoverage['/tabs/tab.js'].lineData[32]++;
+  var el = this.$el;
+  _$jscoverage['/tabs/tab.js'].lineData[33]++;
+  var selectedCls = this.getBaseCssClasses('selected');
+  _$jscoverage['/tabs/tab.js'].lineData[35]++;
+  el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-selected', !!v);
 }}, {
   ATTRS: {
   handleGestureEvents: {
@@ -270,8 +305,12 @@ KISSY.add(function(S, require) {
   focusable: {
   value: false}, 
   selected: {
-  view: 1}, 
-  xrender: {
-  value: TabRender}}, 
+  render: 1, 
+  sync: 0, 
+  parse: function(el) {
+  _$jscoverage['/tabs/tab.js'].functionData[4]++;
+  _$jscoverage['/tabs/tab.js'].lineData[56]++;
+  return el.hasClass(this.getBaseCssClass('selected'));
+}}}, 
   xclass: 'tabs-tab'});
 });

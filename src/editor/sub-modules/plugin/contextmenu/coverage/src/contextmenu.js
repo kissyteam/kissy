@@ -340,7 +340,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/contextmenu.js'].lineData[9]++;
   var focusFix = require('./focus-fix');
   _$jscoverage['/contextmenu.js'].lineData[10]++;
-  var Event = require('event');
+  var Event = require('event/dom');
   _$jscoverage['/contextmenu.js'].lineData[12]++;
   Editor.prototype.addContextMenu = function(id, filter, cfg) {
   _$jscoverage['/contextmenu.js'].functionData[1]++;

@@ -903,7 +903,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[13]++;
   var bodyTpl = require('./dialog/dialog-tpl');
   _$jscoverage['/dialog.js'].lineData[14]++;
-  var dtd = Editor.XHTML_DTD, UA = S.UA, Node = KISSY.NodeList, HTTP_TIP = 'http://', AUTOMATIC_TIP = '\u81ea\u52a8', MARGIN_DEFAULT = 10, IMAGE_DIALOG_BODY_HTML = bodyTpl, IMAGE_DIALOG_FOOT_HTML = '<div style="padding:5px 20px 20px;">' + '<a ' + 'href="javascript:void(\'\u786e\u5b9a\')" ' + 'class="{prefixCls}img-insert {prefixCls}button ks-inline-block" ' + 'style="margin-right:30px;">\u786e\u5b9a</a> ' + '<a  ' + 'href="javascript:void(\'\u53d6\u6d88\')" ' + 'class="{prefixCls}img-cancel {prefixCls}button ks-inline-block">\u53d6\u6d88</a></div>', warning = '\u8bf7\u70b9\u51fb\u6d4f\u89c8\u4e0a\u4f20\u56fe\u7247', valInput = Editor.Utils.valInput;
+  var dtd = Editor.XHTML_DTD, UA = S.UA, Node = require('node'), HTTP_TIP = 'http://', AUTOMATIC_TIP = '\u81ea\u52a8', MARGIN_DEFAULT = 10, IMAGE_DIALOG_BODY_HTML = bodyTpl, IMAGE_DIALOG_FOOT_HTML = '<div style="padding:5px 20px 20px;">' + '<a ' + 'href="javascript:void(\'\u786e\u5b9a\')" ' + 'class="{prefixCls}img-insert {prefixCls}button ks-inline-block" ' + 'style="margin-right:30px;">\u786e\u5b9a</a> ' + '<a  ' + 'href="javascript:void(\'\u53d6\u6d88\')" ' + 'class="{prefixCls}img-cancel {prefixCls}button ks-inline-block">\u53d6\u6d88</a></div>', warning = '\u8bf7\u70b9\u51fb\u6d4f\u89c8\u4e0a\u4f20\u56fe\u7247', valInput = Editor.Utils.valInput;
   _$jscoverage['/dialog.js'].lineData[35]++;
   function findAWithImg(img) {
     _$jscoverage['/dialog.js'].functionData[1]++;

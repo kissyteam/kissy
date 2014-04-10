@@ -567,7 +567,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[8]++;
   var Json = require('json');
   _$jscoverage['/draft.js'].lineData[9]++;
-  var Event = require('event');
+  var Event = require('event/dom');
   _$jscoverage['/draft.js'].lineData[10]++;
   var localStorage = require('./local-storage');
   _$jscoverage['/draft.js'].lineData[11]++;

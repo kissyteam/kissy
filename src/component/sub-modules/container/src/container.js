@@ -93,7 +93,6 @@ KISSY.add(function (S, require) {
             defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || prefixCls;
         },
 
-
         // decorate child element from parent component's root element.
         decorateDom: function () {
             var self = this,

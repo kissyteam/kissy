@@ -231,34 +231,34 @@ if (! _$jscoverage['/tabs/bar.js']) {
   _$jscoverage['/tabs/bar.js'].lineData = [];
   _$jscoverage['/tabs/bar.js'].lineData[6] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[7] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[8] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[14] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[16] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[17] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[18] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[13] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[15] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[19] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[25] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[27] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[20] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[21] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[22] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[28] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[29] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[30] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[31] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[32] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[37] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[38] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[39] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[33] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[35] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[40] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[41] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[42] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[43] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[44] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[49] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[50] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[51] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[46] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[47] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[52] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[53] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[54] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[59] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[60] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[61] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[55] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[57] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[62] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[63] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[64] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[65] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[89] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[100] = 0;
 }
@@ -272,130 +272,134 @@ if (! _$jscoverage['/tabs/bar.js'].functionData) {
   _$jscoverage['/tabs/bar.js'].functionData[5] = 0;
   _$jscoverage['/tabs/bar.js'].functionData[6] = 0;
   _$jscoverage['/tabs/bar.js'].functionData[7] = 0;
+  _$jscoverage['/tabs/bar.js'].functionData[8] = 0;
 }
 if (! _$jscoverage['/tabs/bar.js'].branchData) {
   _$jscoverage['/tabs/bar.js'].branchData = {};
-  _$jscoverage['/tabs/bar.js'].branchData['18'] = [];
-  _$jscoverage['/tabs/bar.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/tabs/bar.js'].branchData['28'] = [];
-  _$jscoverage['/tabs/bar.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/tabs/bar.js'].branchData['40'] = [];
-  _$jscoverage['/tabs/bar.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/tabs/bar.js'].branchData['50'] = [];
-  _$jscoverage['/tabs/bar.js'].branchData['50'][1] = new BranchData();
-  _$jscoverage['/tabs/bar.js'].branchData['51'] = [];
-  _$jscoverage['/tabs/bar.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/tabs/bar.js'].branchData['61'] = [];
-  _$jscoverage['/tabs/bar.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/tabs/bar.js'].branchData['21'] = [];
+  _$jscoverage['/tabs/bar.js'].branchData['21'][1] = new BranchData();
+  _$jscoverage['/tabs/bar.js'].branchData['31'] = [];
+  _$jscoverage['/tabs/bar.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/tabs/bar.js'].branchData['43'] = [];
+  _$jscoverage['/tabs/bar.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/tabs/bar.js'].branchData['53'] = [];
+  _$jscoverage['/tabs/bar.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/tabs/bar.js'].branchData['54'] = [];
+  _$jscoverage['/tabs/bar.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/tabs/bar.js'].branchData['64'] = [];
+  _$jscoverage['/tabs/bar.js'].branchData['64'][1] = new BranchData();
 }
-_$jscoverage['/tabs/bar.js'].branchData['61'][1].init(80, 34, 'self.get(\'changeType\') === \'mouse\'');
-function visit6_61_1(result) {
-  _$jscoverage['/tabs/bar.js'].branchData['61'][1].ranCondition(result);
+_$jscoverage['/tabs/bar.js'].branchData['64'][1].init(80, 34, 'self.get(\'changeType\') === \'mouse\'');
+function visit6_64_1(result) {
+  _$jscoverage['/tabs/bar.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['51'][1].init(21, 23, 'e && (prev = e.prevVal)');
-function visit5_51_1(result) {
-  _$jscoverage['/tabs/bar.js'].branchData['51'][1].ranCondition(result);
+}_$jscoverage['/tabs/bar.js'].branchData['54'][1].init(21, 23, 'e && (prev = e.prevVal)');
+function visit5_54_1(result) {
+  _$jscoverage['/tabs/bar.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['50'][1].init(39, 1, 'v');
-function visit4_50_1(result) {
-  _$jscoverage['/tabs/bar.js'].branchData['50'][1].ranCondition(result);
+}_$jscoverage['/tabs/bar.js'].branchData['53'][1].init(39, 1, 'v');
+function visit4_53_1(result) {
+  _$jscoverage['/tabs/bar.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['40'][1].init(159, 25, 'typeof next === \'boolean\'');
-function visit3_40_1(result) {
-  _$jscoverage['/tabs/bar.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/tabs/bar.js'].branchData['43'][1].init(159, 25, 'typeof next === \'boolean\'');
+function visit3_43_1(result) {
+  _$jscoverage['/tabs/bar.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['28'][1].init(21, 17, 'c.get(\'selected\')');
-function visit2_28_1(result) {
-  _$jscoverage['/tabs/bar.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/tabs/bar.js'].branchData['31'][1].init(21, 17, 'c.get(\'selected\')');
+function visit2_31_1(result) {
+  _$jscoverage['/tabs/bar.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['18'][1].init(21, 30, 'e.newVal && e.target.isTabsTab');
-function visit1_18_1(result) {
-  _$jscoverage['/tabs/bar.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/tabs/bar.js'].branchData['21'][1].init(21, 30, 'e.newVal && e.target.isTabsTab');
+function visit1_21_1(result) {
+  _$jscoverage['/tabs/bar.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/bar.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/tabs/bar.js'].functionData[0]++;
   _$jscoverage['/tabs/bar.js'].lineData[7]++;
   var Toolbar = require('toolbar');
-  _$jscoverage['/tabs/bar.js'].lineData[8]++;
-  var BarRender = require('./bar-render');
-  _$jscoverage['/tabs/bar.js'].lineData[14]++;
+  _$jscoverage['/tabs/bar.js'].lineData[13]++;
   var TabBar = Toolbar.extend({
-  bindUI: function() {
+  beforeCreateDom: function(renderData) {
   _$jscoverage['/tabs/bar.js'].functionData[1]++;
-  _$jscoverage['/tabs/bar.js'].lineData[16]++;
-  var self = this;
-  _$jscoverage['/tabs/bar.js'].lineData[17]++;
-  self.on('afterSelectedChange', function(e) {
+  _$jscoverage['/tabs/bar.js'].lineData[15]++;
+  renderData.elAttrs.role = 'tablist';
+}, 
+  bindUI: function() {
   _$jscoverage['/tabs/bar.js'].functionData[2]++;
-  _$jscoverage['/tabs/bar.js'].lineData[18]++;
-  if (visit1_18_1(e.newVal && e.target.isTabsTab)) {
-    _$jscoverage['/tabs/bar.js'].lineData[19]++;
+  _$jscoverage['/tabs/bar.js'].lineData[19]++;
+  var self = this;
+  _$jscoverage['/tabs/bar.js'].lineData[20]++;
+  self.on('afterSelectedChange', function(e) {
+  _$jscoverage['/tabs/bar.js'].functionData[3]++;
+  _$jscoverage['/tabs/bar.js'].lineData[21]++;
+  if (visit1_21_1(e.newVal && e.target.isTabsTab)) {
+    _$jscoverage['/tabs/bar.js'].lineData[22]++;
     self.set('selectedTab', e.target);
   }
 });
 }, 
   syncUI: function() {
-  _$jscoverage['/tabs/bar.js'].functionData[3]++;
-  _$jscoverage['/tabs/bar.js'].lineData[25]++;
-  var self = this, children = self.get('children');
-  _$jscoverage['/tabs/bar.js'].lineData[27]++;
-  S.each(children, function(c) {
   _$jscoverage['/tabs/bar.js'].functionData[4]++;
   _$jscoverage['/tabs/bar.js'].lineData[28]++;
-  if (visit2_28_1(c.get('selected'))) {
-    _$jscoverage['/tabs/bar.js'].lineData[29]++;
+  var self = this, children = self.get('children');
+  _$jscoverage['/tabs/bar.js'].lineData[30]++;
+  S.each(children, function(c) {
+  _$jscoverage['/tabs/bar.js'].functionData[5]++;
+  _$jscoverage['/tabs/bar.js'].lineData[31]++;
+  if (visit2_31_1(c.get('selected'))) {
+    _$jscoverage['/tabs/bar.js'].lineData[32]++;
     self.setInternal('selectedTab', c);
-    _$jscoverage['/tabs/bar.js'].lineData[30]++;
+    _$jscoverage['/tabs/bar.js'].lineData[33]++;
     return false;
   }
-  _$jscoverage['/tabs/bar.js'].lineData[32]++;
+  _$jscoverage['/tabs/bar.js'].lineData[35]++;
   return undefined;
 });
 }, 
   handleKeyDownInternal: function(e) {
-  _$jscoverage['/tabs/bar.js'].functionData[5]++;
-  _$jscoverage['/tabs/bar.js'].lineData[37]++;
-  var self = this;
-  _$jscoverage['/tabs/bar.js'].lineData[38]++;
-  var current = self.get('selectedTab');
-  _$jscoverage['/tabs/bar.js'].lineData[39]++;
-  var next = self.getNextItemByKeyDown(e, current);
+  _$jscoverage['/tabs/bar.js'].functionData[6]++;
   _$jscoverage['/tabs/bar.js'].lineData[40]++;
-  if (visit3_40_1(typeof next === 'boolean')) {
-    _$jscoverage['/tabs/bar.js'].lineData[41]++;
+  var self = this;
+  _$jscoverage['/tabs/bar.js'].lineData[41]++;
+  var current = self.get('selectedTab');
+  _$jscoverage['/tabs/bar.js'].lineData[42]++;
+  var next = self.getNextItemByKeyDown(e, current);
+  _$jscoverage['/tabs/bar.js'].lineData[43]++;
+  if (visit3_43_1(typeof next === 'boolean')) {
+    _$jscoverage['/tabs/bar.js'].lineData[44]++;
     return next;
   } else {
-    _$jscoverage['/tabs/bar.js'].lineData[43]++;
+    _$jscoverage['/tabs/bar.js'].lineData[46]++;
     next.set('selected', true);
-    _$jscoverage['/tabs/bar.js'].lineData[44]++;
+    _$jscoverage['/tabs/bar.js'].lineData[47]++;
     return true;
   }
 }, 
   _onSetSelectedTab: function(v, e) {
-  _$jscoverage['/tabs/bar.js'].functionData[6]++;
-  _$jscoverage['/tabs/bar.js'].lineData[49]++;
+  _$jscoverage['/tabs/bar.js'].functionData[7]++;
+  _$jscoverage['/tabs/bar.js'].lineData[52]++;
   var prev;
-  _$jscoverage['/tabs/bar.js'].lineData[50]++;
-  if (visit4_50_1(v)) {
-    _$jscoverage['/tabs/bar.js'].lineData[51]++;
-    if (visit5_51_1(e && (prev = e.prevVal))) {
-      _$jscoverage['/tabs/bar.js'].lineData[52]++;
+  _$jscoverage['/tabs/bar.js'].lineData[53]++;
+  if (visit4_53_1(v)) {
+    _$jscoverage['/tabs/bar.js'].lineData[54]++;
+    if (visit5_54_1(e && (prev = e.prevVal))) {
+      _$jscoverage['/tabs/bar.js'].lineData[55]++;
       prev.set('selected', false);
     }
-    _$jscoverage['/tabs/bar.js'].lineData[54]++;
+    _$jscoverage['/tabs/bar.js'].lineData[57]++;
     v.set('selected', true);
   }
 }, 
   _onSetHighlightedItem: function(v, e) {
-  _$jscoverage['/tabs/bar.js'].functionData[7]++;
-  _$jscoverage['/tabs/bar.js'].lineData[59]++;
+  _$jscoverage['/tabs/bar.js'].functionData[8]++;
+  _$jscoverage['/tabs/bar.js'].lineData[62]++;
   var self = this;
-  _$jscoverage['/tabs/bar.js'].lineData[60]++;
+  _$jscoverage['/tabs/bar.js'].lineData[63]++;
   self.callSuper(v, e);
-  _$jscoverage['/tabs/bar.js'].lineData[61]++;
-  if (visit6_61_1(self.get('changeType') === 'mouse')) {
-    _$jscoverage['/tabs/bar.js'].lineData[62]++;
+  _$jscoverage['/tabs/bar.js'].lineData[64]++;
+  if (visit6_64_1(self.get('changeType') === 'mouse')) {
+    _$jscoverage['/tabs/bar.js'].lineData[65]++;
     self._onSetSelectedTab.apply(self, arguments);
   }
 }}, {
@@ -405,9 +409,7 @@ KISSY.add(function(S, require) {
   value: 'click'}, 
   defaultChildCfg: {
   value: {
-  xclass: 'tabs-tab'}}, 
-  xrender: {
-  value: BarRender}}, 
+  xclass: 'tabs-tab'}}}, 
   xclass: 'tabs-bar'});
   _$jscoverage['/tabs/bar.js'].lineData[89]++;
   TabBar.ChangeType = {

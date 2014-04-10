@@ -231,17 +231,25 @@ if (! _$jscoverage['/button.js']) {
   _$jscoverage['/button.js'].lineData = [];
   _$jscoverage['/button.js'].lineData[6] = 0;
   _$jscoverage['/button.js'].lineData[7] = 0;
-  _$jscoverage['/button.js'].lineData[11] = 0;
-  _$jscoverage['/button.js'].lineData[17] = 0;
+  _$jscoverage['/button.js'].lineData[10] = 0;
+  _$jscoverage['/button.js'].lineData[16] = 0;
+  _$jscoverage['/button.js'].lineData[20] = 0;
   _$jscoverage['/button.js'].lineData[21] = 0;
-  _$jscoverage['/button.js'].lineData[25] = 0;
-  _$jscoverage['/button.js'].lineData[29] = 0;
-  _$jscoverage['/button.js'].lineData[34] = 0;
-  _$jscoverage['/button.js'].lineData[38] = 0;
-  _$jscoverage['/button.js'].lineData[39] = 0;
+  _$jscoverage['/button.js'].lineData[26] = 0;
+  _$jscoverage['/button.js'].lineData[27] = 0;
+  _$jscoverage['/button.js'].lineData[32] = 0;
+  _$jscoverage['/button.js'].lineData[36] = 0;
   _$jscoverage['/button.js'].lineData[40] = 0;
-  _$jscoverage['/button.js'].lineData[41] = 0;
-  _$jscoverage['/button.js'].lineData[44] = 0;
+  _$jscoverage['/button.js'].lineData[45] = 0;
+  _$jscoverage['/button.js'].lineData[49] = 0;
+  _$jscoverage['/button.js'].lineData[50] = 0;
+  _$jscoverage['/button.js'].lineData[51] = 0;
+  _$jscoverage['/button.js'].lineData[52] = 0;
+  _$jscoverage['/button.js'].lineData[55] = 0;
+  _$jscoverage['/button.js'].lineData[59] = 0;
+  _$jscoverage['/button.js'].lineData[61] = 0;
+  _$jscoverage['/button.js'].lineData[65] = 0;
+  _$jscoverage['/button.js'].lineData[69] = 0;
 }
 if (! _$jscoverage['/button.js'].functionData) {
   _$jscoverage['/button.js'].functionData = [];
@@ -249,113 +257,156 @@ if (! _$jscoverage['/button.js'].functionData) {
   _$jscoverage['/button.js'].functionData[1] = 0;
   _$jscoverage['/button.js'].functionData[2] = 0;
   _$jscoverage['/button.js'].functionData[3] = 0;
+  _$jscoverage['/button.js'].functionData[4] = 0;
+  _$jscoverage['/button.js'].functionData[5] = 0;
+  _$jscoverage['/button.js'].functionData[6] = 0;
+  _$jscoverage['/button.js'].functionData[7] = 0;
 }
 if (! _$jscoverage['/button.js'].branchData) {
   _$jscoverage['/button.js'].branchData = {};
-  _$jscoverage['/button.js'].branchData['25'] = [];
-  _$jscoverage['/button.js'].branchData['25'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['25'][2] = new BranchData();
-  _$jscoverage['/button.js'].branchData['25'][3] = new BranchData();
   _$jscoverage['/button.js'].branchData['26'] = [];
   _$jscoverage['/button.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['27'] = [];
-  _$jscoverage['/button.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['27'][2] = new BranchData();
-  _$jscoverage['/button.js'].branchData['28'] = [];
-  _$jscoverage['/button.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['34'] = [];
-  _$jscoverage['/button.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['40'] = [];
-  _$jscoverage['/button.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['36'] = [];
+  _$jscoverage['/button.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['36'][2] = new BranchData();
+  _$jscoverage['/button.js'].branchData['36'][3] = new BranchData();
+  _$jscoverage['/button.js'].branchData['37'] = [];
+  _$jscoverage['/button.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['38'] = [];
+  _$jscoverage['/button.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['38'][2] = new BranchData();
+  _$jscoverage['/button.js'].branchData['39'] = [];
+  _$jscoverage['/button.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['45'] = [];
+  _$jscoverage['/button.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['51'] = [];
+  _$jscoverage['/button.js'].branchData['51'][1] = new BranchData();
 }
-_$jscoverage['/button.js'].branchData['40'][1].init(76, 21, 'self.get(\'checkable\')');
-function visit10_40_1(result) {
-  _$jscoverage['/button.js'].branchData['40'][1].ranCondition(result);
+_$jscoverage['/button.js'].branchData['51'][1].init(76, 21, 'self.get(\'checkable\')');
+function visit10_51_1(result) {
+  _$jscoverage['/button.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['34'][1].init(464, 27, 'e.keyCode === KeyCode.SPACE');
-function visit9_34_1(result) {
-  _$jscoverage['/button.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/button.js'].branchData['45'][1].init(460, 27, 'e.keyCode === KeyCode.SPACE');
+function visit9_45_1(result) {
+  _$jscoverage['/button.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['28'][1].init(50, 18, 'e.type === \'keyup\'');
-function visit8_28_1(result) {
-  _$jscoverage['/button.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/button.js'].branchData['39'][1].init(46, 18, 'e.type === \'keyup\'');
+function visit8_39_1(result) {
+  _$jscoverage['/button.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['27'][2].init(106, 27, 'e.keyCode === KeyCode.SPACE');
-function visit7_27_2(result) {
-  _$jscoverage['/button.js'].branchData['27'][2].ranCondition(result);
+}_$jscoverage['/button.js'].branchData['38'][2].init(106, 27, 'e.keyCode === KeyCode.SPACE');
+function visit7_38_2(result) {
+  _$jscoverage['/button.js'].branchData['38'][2].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['27'][1].init(86, 69, 'e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
-function visit6_27_1(result) {
-  _$jscoverage['/button.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/button.js'].branchData['38'][1].init(86, 65, 'e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
+function visit6_38_1(result) {
+  _$jscoverage['/button.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['26'][1].init(46, 20, 'e.type === \'keydown\'');
-function visit5_26_1(result) {
+}_$jscoverage['/button.js'].branchData['37'][1].init(46, 20, 'e.type === \'keydown\'');
+function visit5_37_1(result) {
+  _$jscoverage['/button.js'].branchData['37'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['36'][3].init(17, 27, 'e.keyCode === KeyCode.ENTER');
+function visit4_36_3(result) {
+  _$jscoverage['/button.js'].branchData['36'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['36'][2].init(17, 67, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\'');
+function visit3_36_2(result) {
+  _$jscoverage['/button.js'].branchData['36'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['36'][1].init(17, 152, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\' || e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
+function visit2_36_1(result) {
+  _$jscoverage['/button.js'].branchData['36'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['26'][1].init(236, 18, 'renderData.checked');
+function visit1_26_1(result) {
   _$jscoverage['/button.js'].branchData['26'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/button.js'].branchData['25'][3].init(17, 27, 'e.keyCode === KeyCode.ENTER');
-function visit4_25_3(result) {
-  _$jscoverage['/button.js'].branchData['25'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/button.js'].branchData['25'][2].init(17, 67, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\'');
-function visit3_25_2(result) {
-  _$jscoverage['/button.js'].branchData['25'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/button.js'].branchData['25'][1].init(17, 156, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\' || e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
-function visit2_25_1(result) {
-  _$jscoverage['/button.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/button.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/button.js'].functionData[0]++;
   _$jscoverage['/button.js'].lineData[7]++;
-  var Node = require('node'), Control = require('component/control'), ButtonRender = require('button/render');
-  _$jscoverage['/button.js'].lineData[11]++;
+  var Node = require('node'), Control = require('component/control');
+  _$jscoverage['/button.js'].lineData[10]++;
   var KeyCode = Node.KeyCode;
-  _$jscoverage['/button.js'].lineData[17]++;
+  _$jscoverage['/button.js'].lineData[16]++;
   return Control.extend({
   isButton: 1, 
-  bindUI: function() {
+  beforeCreateDom: function(renderData) {
   _$jscoverage['/button.js'].functionData[1]++;
+  _$jscoverage['/button.js'].lineData[20]++;
+  var self = this;
   _$jscoverage['/button.js'].lineData[21]++;
+  S.mix(renderData.elAttrs, {
+  role: 'button', 
+  title: renderData.tooltip, 
+  'aria-describedby': renderData.describedby});
+  _$jscoverage['/button.js'].lineData[26]++;
+  if (visit1_26_1(renderData.checked)) {
+    _$jscoverage['/button.js'].lineData[27]++;
+    renderData.elCls.push(self.getBaseCssClasses('checked'));
+  }
+}, 
+  bindUI: function() {
+  _$jscoverage['/button.js'].functionData[2]++;
+  _$jscoverage['/button.js'].lineData[32]++;
   this.$el.on('keyup', this.handleKeyDownInternal, this);
 }, 
   handleKeyDownInternal: function(e) {
-  _$jscoverage['/button.js'].functionData[2]++;
-  _$jscoverage['/button.js'].lineData[25]++;
-  if (visit2_25_1(visit3_25_2(visit4_25_3(e.keyCode === KeyCode.ENTER) && visit5_26_1(e.type === 'keydown')) || visit6_27_1(visit7_27_2(e.keyCode === KeyCode.SPACE) && visit8_28_1(e.type === 'keyup')))) {
-    _$jscoverage['/button.js'].lineData[29]++;
+  _$jscoverage['/button.js'].functionData[3]++;
+  _$jscoverage['/button.js'].lineData[36]++;
+  if (visit2_36_1(visit3_36_2(visit4_36_3(e.keyCode === KeyCode.ENTER) && visit5_37_1(e.type === 'keydown')) || visit6_38_1(visit7_38_2(e.keyCode === KeyCode.SPACE) && visit8_39_1(e.type === 'keyup')))) {
+    _$jscoverage['/button.js'].lineData[40]++;
     return this.handleClickInternal(e);
   }
-  _$jscoverage['/button.js'].lineData[34]++;
-  return visit9_34_1(e.keyCode === KeyCode.SPACE);
+  _$jscoverage['/button.js'].lineData[45]++;
+  return visit9_45_1(e.keyCode === KeyCode.SPACE);
 }, 
   handleClickInternal: function() {
-  _$jscoverage['/button.js'].functionData[3]++;
-  _$jscoverage['/button.js'].lineData[38]++;
+  _$jscoverage['/button.js'].functionData[4]++;
+  _$jscoverage['/button.js'].lineData[49]++;
   var self = this;
-  _$jscoverage['/button.js'].lineData[39]++;
+  _$jscoverage['/button.js'].lineData[50]++;
   self.callSuper();
-  _$jscoverage['/button.js'].lineData[40]++;
-  if (visit10_40_1(self.get('checkable'))) {
-    _$jscoverage['/button.js'].lineData[41]++;
+  _$jscoverage['/button.js'].lineData[51]++;
+  if (visit10_51_1(self.get('checkable'))) {
+    _$jscoverage['/button.js'].lineData[52]++;
     self.set('checked', !self.get('checked'));
   }
-  _$jscoverage['/button.js'].lineData[44]++;
+  _$jscoverage['/button.js'].lineData[55]++;
   self.fire('click');
+}, 
+  _onSetChecked: function(v) {
+  _$jscoverage['/button.js'].functionData[5]++;
+  _$jscoverage['/button.js'].lineData[59]++;
+  var self = this, cls = self.getBaseCssClasses('checked');
+  _$jscoverage['/button.js'].lineData[61]++;
+  self.$el[v ? 'addClass' : 'removeClass'](cls);
+}, 
+  _onSetTooltip: function(title) {
+  _$jscoverage['/button.js'].functionData[6]++;
+  _$jscoverage['/button.js'].lineData[65]++;
+  this.el.setAttribute('title', title);
+}, 
+  _onSetDescribedby: function(describedby) {
+  _$jscoverage['/button.js'].functionData[7]++;
+  _$jscoverage['/button.js'].lineData[69]++;
+  this.el.setAttribute('aria-describedby', describedby);
 }}, {
   ATTRS: {
   value: {}, 
   describedby: {
   value: '', 
-  view: 1}, 
+  render: 1, 
+  sync: 0}, 
   tooltip: {
   value: '', 
-  view: 1}, 
+  render: 1, 
+  sync: 0}, 
   checkable: {}, 
   checked: {
   value: false, 
-  view: 1}, 
-  xrender: {
-  value: ButtonRender}}, 
+  render: 1, 
+  sync: 0}}, 
   xclass: 'button'});
 });

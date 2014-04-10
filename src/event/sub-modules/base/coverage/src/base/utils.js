@@ -259,24 +259,24 @@ if (! _$jscoverage['/base/utils.js']) {
   _$jscoverage['/base/utils.js'].lineData[61] = 0;
   _$jscoverage['/base/utils.js'].lineData[63] = 0;
   _$jscoverage['/base/utils.js'].lineData[67] = 0;
-  _$jscoverage['/base/utils.js'].lineData[70] = 0;
   _$jscoverage['/base/utils.js'].lineData[71] = 0;
   _$jscoverage['/base/utils.js'].lineData[72] = 0;
   _$jscoverage['/base/utils.js'].lineData[73] = 0;
   _$jscoverage['/base/utils.js'].lineData[74] = 0;
   _$jscoverage['/base/utils.js'].lineData[75] = 0;
   _$jscoverage['/base/utils.js'].lineData[76] = 0;
-  _$jscoverage['/base/utils.js'].lineData[79] = 0;
+  _$jscoverage['/base/utils.js'].lineData[77] = 0;
   _$jscoverage['/base/utils.js'].lineData[80] = 0;
   _$jscoverage['/base/utils.js'].lineData[81] = 0;
   _$jscoverage['/base/utils.js'].lineData[82] = 0;
   _$jscoverage['/base/utils.js'].lineData[83] = 0;
-  _$jscoverage['/base/utils.js'].lineData[89] = 0;
-  _$jscoverage['/base/utils.js'].lineData[92] = 0;
+  _$jscoverage['/base/utils.js'].lineData[84] = 0;
+  _$jscoverage['/base/utils.js'].lineData[90] = 0;
   _$jscoverage['/base/utils.js'].lineData[93] = 0;
   _$jscoverage['/base/utils.js'].lineData[94] = 0;
-  _$jscoverage['/base/utils.js'].lineData[97] = 0;
-  _$jscoverage['/base/utils.js'].lineData[101] = 0;
+  _$jscoverage['/base/utils.js'].lineData[95] = 0;
+  _$jscoverage['/base/utils.js'].lineData[98] = 0;
+  _$jscoverage['/base/utils.js'].lineData[102] = 0;
 }
 if (! _$jscoverage['/base/utils.js'].functionData) {
   _$jscoverage['/base/utils.js'].functionData = [];
@@ -304,23 +304,18 @@ if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData['43'][1] = new BranchData();
   _$jscoverage['/base/utils.js'].branchData['45'] = [];
   _$jscoverage['/base/utils.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/base/utils.js'].branchData['70'] = [];
-  _$jscoverage['/base/utils.js'].branchData['70'][1] = new BranchData();
-  _$jscoverage['/base/utils.js'].branchData['70'][2] = new BranchData();
-  _$jscoverage['/base/utils.js'].branchData['92'] = [];
-  _$jscoverage['/base/utils.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/base/utils.js'].branchData['71'] = [];
+  _$jscoverage['/base/utils.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/base/utils.js'].branchData['93'] = [];
+  _$jscoverage['/base/utils.js'].branchData['93'][1] = new BranchData();
 }
-_$jscoverage['/base/utils.js'].branchData['92'][1].init(114, 9, '_ksGroups');
-function visit21_92_1(result) {
-  _$jscoverage['/base/utils.js'].branchData['92'][1].ranCondition(result);
+_$jscoverage['/base/utils.js'].branchData['93'][1].init(114, 9, '_ksGroups');
+function visit20_93_1(result) {
+  _$jscoverage['/base/utils.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['70'][2].init(140, 25, 'typeof types === \'object\'');
-function visit20_70_2(result) {
-  _$jscoverage['/base/utils.js'].branchData['70'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/base/utils.js'].branchData['70'][1].init(131, 34, 'types && typeof types === \'object\'');
-function visit19_70_1(result) {
-  _$jscoverage['/base/utils.js'].branchData['70'][1].ranCondition(result);
+}_$jscoverage['/base/utils.js'].branchData['71'][1].init(171, 26, 'types && S.isObject(types)');
+function visit19_71_1(result) {
+  _$jscoverage['/base/utils.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].branchData['45'][1].init(50, 24, 'typeof fn === \'function\'');
 function visit18_45_1(result) {
@@ -427,54 +422,54 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/utils.js'].functionData[4]++;
   _$jscoverage['/base/utils.js'].lineData[67]++;
   var args = S.makeArray(arguments), types = args[2 + num];
-  _$jscoverage['/base/utils.js'].lineData[70]++;
-  if (visit19_70_1(types && visit20_70_2(typeof types === 'object'))) {
-    _$jscoverage['/base/utils.js'].lineData[71]++;
+  _$jscoverage['/base/utils.js'].lineData[71]++;
+  if (visit19_71_1(types && S.isObject(types))) {
+    _$jscoverage['/base/utils.js'].lineData[72]++;
     S.each(types, function(value, type) {
   _$jscoverage['/base/utils.js'].functionData[5]++;
-  _$jscoverage['/base/utils.js'].lineData[72]++;
-  var args2 = [].concat(args);
   _$jscoverage['/base/utils.js'].lineData[73]++;
-  args2.splice(0, 2);
+  var args2 = [].concat(args);
   _$jscoverage['/base/utils.js'].lineData[74]++;
-  args2[num] = type;
+  args2.splice(0, 2);
   _$jscoverage['/base/utils.js'].lineData[75]++;
-  args2[num + 1] = value;
+  args2[num] = type;
   _$jscoverage['/base/utils.js'].lineData[76]++;
+  args2[num + 1] = value;
+  _$jscoverage['/base/utils.js'].lineData[77]++;
   fn.apply(null, args2);
 });
   } else {
-    _$jscoverage['/base/utils.js'].lineData[79]++;
+    _$jscoverage['/base/utils.js'].lineData[80]++;
     splitAndRun(types, function(type) {
   _$jscoverage['/base/utils.js'].functionData[6]++;
-  _$jscoverage['/base/utils.js'].lineData[80]++;
-  var args2 = [].concat(args);
   _$jscoverage['/base/utils.js'].lineData[81]++;
-  args2.splice(0, 2);
+  var args2 = [].concat(args);
   _$jscoverage['/base/utils.js'].lineData[82]++;
-  args2[num] = type;
+  args2.splice(0, 2);
   _$jscoverage['/base/utils.js'].lineData[83]++;
+  args2[num] = type;
+  _$jscoverage['/base/utils.js'].lineData[84]++;
   fn.apply(null, args2);
 });
   }
 }, 
   fillGroupsForEvent: function(type, eventData) {
   _$jscoverage['/base/utils.js'].functionData[7]++;
-  _$jscoverage['/base/utils.js'].lineData[89]++;
+  _$jscoverage['/base/utils.js'].lineData[90]++;
   var typedGroups = getTypedGroups(type), _ksGroups = typedGroups[1];
-  _$jscoverage['/base/utils.js'].lineData[92]++;
-  if (visit21_92_1(_ksGroups)) {
-    _$jscoverage['/base/utils.js'].lineData[93]++;
-    _ksGroups = getGroupsRe(_ksGroups);
+  _$jscoverage['/base/utils.js'].lineData[93]++;
+  if (visit20_93_1(_ksGroups)) {
     _$jscoverage['/base/utils.js'].lineData[94]++;
+    _ksGroups = getGroupsRe(_ksGroups);
+    _$jscoverage['/base/utils.js'].lineData[95]++;
     eventData._ksGroups = _ksGroups;
   }
-  _$jscoverage['/base/utils.js'].lineData[97]++;
+  _$jscoverage['/base/utils.js'].lineData[98]++;
   eventData.type = typedGroups[0];
 }, 
   getGroupsRe: getGroupsRe = function(groups) {
   _$jscoverage['/base/utils.js'].functionData[8]++;
-  _$jscoverage['/base/utils.js'].lineData[101]++;
+  _$jscoverage['/base/utils.js'].lineData[102]++;
   return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
 }};
 });

@@ -369,7 +369,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    function bindUI(self){
+    function bindUI(self) {
         var action = self.get('disabled') ? 'detach' : 'on';
         self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)
             // click
@@ -402,7 +402,7 @@ KISSY.add(function (S, require) {
                 });
             },
 
-            bindUI:function(){
+            bindUI: function () {
                 bindUI(this);
             },
 

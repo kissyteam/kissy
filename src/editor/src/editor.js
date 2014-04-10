@@ -645,7 +645,7 @@ KISSY.add(function (S, require, exports, module) {
 
         // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
         _onSetHeight: function (v) {
-            adjustHeight(self, v);
+            adjustHeight(this, v);
         },
 
         _onSetMode: function (v) {

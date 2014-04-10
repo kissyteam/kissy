@@ -237,24 +237,21 @@ if (! _$jscoverage['/content-xtpl.js']) {
   _$jscoverage['/content-xtpl.js'].lineData[11] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[22] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[23] = 0;
-  _$jscoverage['/content-xtpl.js'].lineData[24] = 0;
-  _$jscoverage['/content-xtpl.js'].lineData[25] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/content-xtpl.js'].lineData[27] = 0;
+  _$jscoverage['/content-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[31] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[32] = 0;
-  _$jscoverage['/content-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[34] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[35] = 0;
+  _$jscoverage['/content-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[37] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[38] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[39] = 0;
-  _$jscoverage['/content-xtpl.js'].lineData[40] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[41] = 0;
   _$jscoverage['/content-xtpl.js'].lineData[42] = 0;
-  _$jscoverage['/content-xtpl.js'].lineData[44] = 0;
-  _$jscoverage['/content-xtpl.js'].lineData[45] = 0;
 }
 if (! _$jscoverage['/content-xtpl.js'].functionData) {
   _$jscoverage['/content-xtpl.js'].functionData = [];
@@ -265,14 +262,14 @@ if (! _$jscoverage['/content-xtpl.js'].branchData) {
   _$jscoverage['/content-xtpl.js'].branchData = {};
   _$jscoverage['/content-xtpl.js'].branchData['8'] = [];
   _$jscoverage['/content-xtpl.js'].branchData['8'][1] = new BranchData();
-  _$jscoverage['/content-xtpl.js'].branchData['33'] = [];
-  _$jscoverage['/content-xtpl.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/content-xtpl.js'].branchData['30'] = [];
+  _$jscoverage['/content-xtpl.js'].branchData['30'][1] = new BranchData();
 }
-_$jscoverage['/content-xtpl.js'].branchData['33'][1].init(1398, 35, 'commandRet3 && commandRet3.isBuffer');
-function visit2_33_1(result) {
-  _$jscoverage['/content-xtpl.js'].branchData['33'][1].ranCondition(result);
+_$jscoverage['/content-xtpl.js'].branchData['30'][1].init(1257, 35, 'commandRet2 && commandRet2.isBuffer');
+function visit2_30_1(result) {
+  _$jscoverage['/content-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/content-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
+}_$jscoverage['/content-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
 function visit1_8_1(result) {
   _$jscoverage['/content-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
@@ -285,53 +282,47 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/content-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/content-xtpl.js'].lineData[8]++;
-  if (visit1_8_1("1.50" !== S.version)) {
+  if (visit1_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/content-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/content-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/content-xtpl.js'].lineData[22]++;
-  buffer.write('<div id="ks-content-');
+  buffer.write('<div class="');
   _$jscoverage['/content-xtpl.js'].lineData[23]++;
-  var id0 = scope.resolve(["id"]);
-  _$jscoverage['/content-xtpl.js'].lineData[24]++;
-  buffer.write(id0, true);
-  _$jscoverage['/content-xtpl.js'].lineData[25]++;
-  buffer.write('"\r\n           class="');
-  _$jscoverage['/content-xtpl.js'].lineData[26]++;
-  var option1 = {
+  var option0 = {
   escape: 1};
+  _$jscoverage['/content-xtpl.js'].lineData[26]++;
+  var params1 = [];
+  _$jscoverage['/content-xtpl.js'].lineData[27]++;
+  params1.push('content');
+  _$jscoverage['/content-xtpl.js'].lineData[28]++;
+  option0.params = params1;
   _$jscoverage['/content-xtpl.js'].lineData[29]++;
-  var params2 = [];
+  var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
   _$jscoverage['/content-xtpl.js'].lineData[30]++;
-  params2.push('content');
-  _$jscoverage['/content-xtpl.js'].lineData[31]++;
-  option1.params = params2;
-  _$jscoverage['/content-xtpl.js'].lineData[32]++;
-  var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-  _$jscoverage['/content-xtpl.js'].lineData[33]++;
-  if (visit2_33_1(commandRet3 && commandRet3.isBuffer)) {
-    _$jscoverage['/content-xtpl.js'].lineData[34]++;
-    buffer = commandRet3;
-    _$jscoverage['/content-xtpl.js'].lineData[35]++;
-    commandRet3 = undefined;
+  if (visit2_30_1(commandRet2 && commandRet2.isBuffer)) {
+    _$jscoverage['/content-xtpl.js'].lineData[31]++;
+    buffer = commandRet2;
+    _$jscoverage['/content-xtpl.js'].lineData[32]++;
+    commandRet2 = undefined;
   }
-  _$jscoverage['/content-xtpl.js'].lineData[37]++;
-  buffer.write(commandRet3, true);
-  _$jscoverage['/content-xtpl.js'].lineData[38]++;
+  _$jscoverage['/content-xtpl.js'].lineData[34]++;
+  buffer.write(commandRet2, true);
+  _$jscoverage['/content-xtpl.js'].lineData[35]++;
   buffer.write('">');
-  _$jscoverage['/content-xtpl.js'].lineData[39]++;
-  var id4 = scope.resolve(["content"]);
-  _$jscoverage['/content-xtpl.js'].lineData[40]++;
-  buffer.write(id4, false);
-  _$jscoverage['/content-xtpl.js'].lineData[41]++;
+  _$jscoverage['/content-xtpl.js'].lineData[36]++;
+  var id3 = scope.resolve(["content"]);
+  _$jscoverage['/content-xtpl.js'].lineData[37]++;
+  buffer.write(id3, false);
+  _$jscoverage['/content-xtpl.js'].lineData[38]++;
   buffer.write('</div>');
-  _$jscoverage['/content-xtpl.js'].lineData[42]++;
+  _$jscoverage['/content-xtpl.js'].lineData[39]++;
   return buffer;
 };
-  _$jscoverage['/content-xtpl.js'].lineData[44]++;
+  _$jscoverage['/content-xtpl.js'].lineData[41]++;
   t.TPL_NAME = module.name;
-  _$jscoverage['/content-xtpl.js'].lineData[45]++;
+  _$jscoverage['/content-xtpl.js'].lineData[42]++;
   return t;
 });

@@ -232,47 +232,78 @@ if (! _$jscoverage['/menu/check-menuitem.js']) {
   _$jscoverage['/menu/check-menuitem.js'].lineData[6] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[7] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[8] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[13] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[15] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[9] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[14] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[16] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[17] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[18] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[19] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[21] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[23] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[26] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[27] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[28] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[29] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[30] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem.js'].functionData) {
   _$jscoverage['/menu/check-menuitem.js'].functionData = [];
   _$jscoverage['/menu/check-menuitem.js'].functionData[0] = 0;
   _$jscoverage['/menu/check-menuitem.js'].functionData[1] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].functionData[2] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem.js'].branchData) {
   _$jscoverage['/menu/check-menuitem.js'].branchData = {};
+  _$jscoverage['/menu/check-menuitem.js'].branchData['16'] = [];
+  _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem.js'].lineData[6]++;
+_$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].init(17, 18, 'renderData.checked');
+function visit4_16_1(result) {
+  _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/check-menuitem.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/menu/check-menuitem.js'].functionData[0]++;
   _$jscoverage['/menu/check-menuitem.js'].lineData[7]++;
   var MenuItem = require('./menuitem');
   _$jscoverage['/menu/check-menuitem.js'].lineData[8]++;
-  var CheckMenuItemRender = require('./check-menuitem-render');
-  _$jscoverage['/menu/check-menuitem.js'].lineData[13]++;
-  return MenuItem.extend({
-  handleClickInternal: function() {
+  var ContentBox = require('component/extension/content-box');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[9]++;
+  var CheckMenuItemTpl = require('./check-menuitem-xtpl');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[14]++;
+  return MenuItem.extend([ContentBox], {
+  beforeCreateDom: function(renderData) {
   _$jscoverage['/menu/check-menuitem.js'].functionData[1]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[15]++;
-  var self = this;
   _$jscoverage['/menu/check-menuitem.js'].lineData[16]++;
-  self.callSuper();
-  _$jscoverage['/menu/check-menuitem.js'].lineData[17]++;
+  if (visit4_16_1(renderData.checked)) {
+    _$jscoverage['/menu/check-menuitem.js'].lineData[17]++;
+    renderData.elCls.push(this.getBaseCssClasses('checked'));
+  }
+}, 
+  _onSetChecked: function(v) {
+  _$jscoverage['/menu/check-menuitem.js'].functionData[2]++;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[21]++;
+  var self = this, cls = self.getBaseCssClasses('checked');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[23]++;
+  self.$el[v ? 'addClass' : 'removeClass'](cls);
+}, 
+  handleClickInternal: function(e) {
+  _$jscoverage['/menu/check-menuitem.js'].functionData[3]++;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[26]++;
+  var self = this;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[27]++;
+  self.callSuper(e);
+  _$jscoverage['/menu/check-menuitem.js'].lineData[28]++;
   self.set('checked', !self.get('checked'));
-  _$jscoverage['/menu/check-menuitem.js'].lineData[18]++;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[29]++;
   self.fire('click');
-  _$jscoverage['/menu/check-menuitem.js'].lineData[19]++;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[30]++;
   return true;
 }}, {
   ATTRS: {
   checked: {
-  view: 1}, 
-  xrender: {
-  value: CheckMenuItemRender}}, 
+  render: 1, 
+  sync: 0}, 
+  contentTpl: {
+  value: CheckMenuItemTpl}}, 
   xclass: 'check-menuitem'});
 });

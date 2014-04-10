@@ -232,32 +232,33 @@ if (! _$jscoverage['/shake.js']) {
   _$jscoverage['/shake.js'].lineData[6] = 0;
   _$jscoverage['/shake.js'].lineData[7] = 0;
   _$jscoverage['/shake.js'].lineData[9] = 0;
-  _$jscoverage['/shake.js'].lineData[19] = 0;
   _$jscoverage['/shake.js'].lineData[20] = 0;
-  _$jscoverage['/shake.js'].lineData[27] = 0;
-  _$jscoverage['/shake.js'].lineData[32] = 0;
-  _$jscoverage['/shake.js'].lineData[34] = 0;
+  _$jscoverage['/shake.js'].lineData[21] = 0;
+  _$jscoverage['/shake.js'].lineData[28] = 0;
+  _$jscoverage['/shake.js'].lineData[33] = 0;
   _$jscoverage['/shake.js'].lineData[35] = 0;
-  _$jscoverage['/shake.js'].lineData[37] = 0;
-  _$jscoverage['/shake.js'].lineData[40] = 0;
+  _$jscoverage['/shake.js'].lineData[36] = 0;
+  _$jscoverage['/shake.js'].lineData[38] = 0;
   _$jscoverage['/shake.js'].lineData[41] = 0;
-  _$jscoverage['/shake.js'].lineData[43] = 0;
+  _$jscoverage['/shake.js'].lineData[42] = 0;
   _$jscoverage['/shake.js'].lineData[44] = 0;
   _$jscoverage['/shake.js'].lineData[45] = 0;
-  _$jscoverage['/shake.js'].lineData[49] = 0;
+  _$jscoverage['/shake.js'].lineData[46] = 0;
   _$jscoverage['/shake.js'].lineData[50] = 0;
   _$jscoverage['/shake.js'].lineData[51] = 0;
-  _$jscoverage['/shake.js'].lineData[54] = 0;
+  _$jscoverage['/shake.js'].lineData[52] = 0;
   _$jscoverage['/shake.js'].lineData[55] = 0;
-  _$jscoverage['/shake.js'].lineData[60] = 0;
+  _$jscoverage['/shake.js'].lineData[56] = 0;
   _$jscoverage['/shake.js'].lineData[61] = 0;
   _$jscoverage['/shake.js'].lineData[62] = 0;
   _$jscoverage['/shake.js'].lineData[63] = 0;
-  _$jscoverage['/shake.js'].lineData[65] = 0;
-  _$jscoverage['/shake.js'].lineData[68] = 0;
-  _$jscoverage['/shake.js'].lineData[72] = 0;
+  _$jscoverage['/shake.js'].lineData[64] = 0;
+  _$jscoverage['/shake.js'].lineData[66] = 0;
+  _$jscoverage['/shake.js'].lineData[69] = 0;
   _$jscoverage['/shake.js'].lineData[73] = 0;
   _$jscoverage['/shake.js'].lineData[74] = 0;
+  _$jscoverage['/shake.js'].lineData[75] = 0;
+  _$jscoverage['/shake.js'].lineData[78] = 0;
 }
 if (! _$jscoverage['/shake.js'].functionData) {
   _$jscoverage['/shake.js'].functionData = [];
@@ -270,42 +271,42 @@ if (! _$jscoverage['/shake.js'].functionData) {
 }
 if (! _$jscoverage['/shake.js'].branchData) {
   _$jscoverage['/shake.js'].branchData = {};
-  _$jscoverage['/shake.js'].branchData['19'] = [];
-  _$jscoverage['/shake.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['34'] = [];
-  _$jscoverage['/shake.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['40'] = [];
-  _$jscoverage['/shake.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['60'] = [];
-  _$jscoverage['/shake.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['62'] = [];
-  _$jscoverage['/shake.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['65'] = [];
-  _$jscoverage['/shake.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['20'] = [];
+  _$jscoverage['/shake.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['35'] = [];
+  _$jscoverage['/shake.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['41'] = [];
+  _$jscoverage['/shake.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['61'] = [];
+  _$jscoverage['/shake.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['63'] = [];
+  _$jscoverage['/shake.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['66'] = [];
+  _$jscoverage['/shake.js'].branchData['66'][1] = new BranchData();
 }
-_$jscoverage['/shake.js'].branchData['65'][1].init(165, 13, 'diff > enough');
-function visit6_65_1(result) {
-  _$jscoverage['/shake.js'].branchData['65'][1].ranCondition(result);
+_$jscoverage['/shake.js'].branchData['66'][1].init(165, 13, 'diff > enough');
+function visit6_66_1(result) {
+  _$jscoverage['/shake.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['62'][1].init(89, 12, 'diff > start');
-function visit5_62_1(result) {
-  _$jscoverage['/shake.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['63'][1].init(89, 12, 'diff > start');
+function visit5_63_1(result) {
+  _$jscoverage['/shake.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['60'][1].init(250, 19, 'lastX !== undefined');
-function visit4_60_1(result) {
-  _$jscoverage['/shake.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['61'][1].init(250, 19, 'lastX !== undefined');
+function visit4_61_1(result) {
+  _$jscoverage['/shake.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['40'][1].init(17, 12, 'this !== win');
-function visit3_40_1(result) {
-  _$jscoverage['/shake.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['41'][1].init(17, 12, 'this !== win');
+function visit3_41_1(result) {
+  _$jscoverage['/shake.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['34'][1].init(17, 12, 'this !== win');
-function visit2_34_1(result) {
-  _$jscoverage['/shake.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['35'][1].init(17, 12, 'this !== win');
+function visit2_35_1(result) {
+  _$jscoverage['/shake.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['19'][1].init(17, 7, 'shaking');
-function visit1_19_1(result) {
-  _$jscoverage['/shake.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['20'][1].init(17, 7, 'shaking');
+function visit1_20_1(result) {
+  _$jscoverage['/shake.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/shake.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -313,79 +314,82 @@ KISSY.add(function(S, require) {
   _$jscoverage['/shake.js'].lineData[7]++;
   var DomEvent = require('event/dom/base');
   _$jscoverage['/shake.js'].lineData[9]++;
-  var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = S.buffer(function() {
+  var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = S.buffer(function() {
   _$jscoverage['/shake.js'].functionData[1]++;
-  _$jscoverage['/shake.js'].lineData[19]++;
-  if (visit1_19_1(shaking)) {
-    _$jscoverage['/shake.js'].lineData[20]++;
-    DomEvent.fireHandler(win, 'shake', {
+  _$jscoverage['/shake.js'].lineData[20]++;
+  if (visit1_20_1(shaking)) {
+    _$jscoverage['/shake.js'].lineData[21]++;
+    DomEvent.fireHandler(win, SHAKE, {
   accelerationIncludingGravity: {
   x: lastX, 
   y: lastY, 
   z: lastZ}});
-    _$jscoverage['/shake.js'].lineData[27]++;
+    _$jscoverage['/shake.js'].lineData[28]++;
     clear();
   }
 }, 250);
-  _$jscoverage['/shake.js'].lineData[32]++;
+  _$jscoverage['/shake.js'].lineData[33]++;
   Special.shake = {
   setup: function() {
   _$jscoverage['/shake.js'].functionData[2]++;
-  _$jscoverage['/shake.js'].lineData[34]++;
-  if (visit2_34_1(this !== win)) {
-    _$jscoverage['/shake.js'].lineData[35]++;
+  _$jscoverage['/shake.js'].lineData[35]++;
+  if (visit2_35_1(this !== win)) {
+    _$jscoverage['/shake.js'].lineData[36]++;
     return;
   }
-  _$jscoverage['/shake.js'].lineData[37]++;
+  _$jscoverage['/shake.js'].lineData[38]++;
   win.addEventListener(devicemotion, shake, false);
 }, 
   tearDown: function() {
   _$jscoverage['/shake.js'].functionData[3]++;
-  _$jscoverage['/shake.js'].lineData[40]++;
-  if (visit3_40_1(this !== win)) {
-    _$jscoverage['/shake.js'].lineData[41]++;
+  _$jscoverage['/shake.js'].lineData[41]++;
+  if (visit3_41_1(this !== win)) {
+    _$jscoverage['/shake.js'].lineData[42]++;
     return;
   }
-  _$jscoverage['/shake.js'].lineData[43]++;
-  checkShake.stop();
   _$jscoverage['/shake.js'].lineData[44]++;
-  clear();
+  checkShake.stop();
   _$jscoverage['/shake.js'].lineData[45]++;
+  clear();
+  _$jscoverage['/shake.js'].lineData[46]++;
   win.removeEventListener(devicemotion, shake, false);
 }};
-  _$jscoverage['/shake.js'].lineData[49]++;
+  _$jscoverage['/shake.js'].lineData[50]++;
   function clear() {
     _$jscoverage['/shake.js'].functionData[4]++;
-    _$jscoverage['/shake.js'].lineData[50]++;
-    lastX = undefined;
     _$jscoverage['/shake.js'].lineData[51]++;
+    lastX = undefined;
+    _$jscoverage['/shake.js'].lineData[52]++;
     shaking = 0;
   }
-  _$jscoverage['/shake.js'].lineData[54]++;
+  _$jscoverage['/shake.js'].lineData[55]++;
   function shake(e) {
     _$jscoverage['/shake.js'].functionData[5]++;
-    _$jscoverage['/shake.js'].lineData[55]++;
+    _$jscoverage['/shake.js'].lineData[56]++;
     var accelerationIncludingGravity = e.accelerationIncludingGravity, x = accelerationIncludingGravity.x, y = accelerationIncludingGravity.y, z = accelerationIncludingGravity.z, diff;
-    _$jscoverage['/shake.js'].lineData[60]++;
-    if (visit4_60_1(lastX !== undefined)) {
-      _$jscoverage['/shake.js'].lineData[61]++;
-      diff = max(abs(x - lastX), abs(y - lastY), abs(z - lastZ));
+    _$jscoverage['/shake.js'].lineData[61]++;
+    if (visit4_61_1(lastX !== undefined)) {
       _$jscoverage['/shake.js'].lineData[62]++;
-      if (visit5_62_1(diff > start)) {
-        _$jscoverage['/shake.js'].lineData[63]++;
+      diff = max(abs(x - lastX), abs(y - lastY), abs(z - lastZ));
+      _$jscoverage['/shake.js'].lineData[63]++;
+      if (visit5_63_1(diff > start)) {
+        _$jscoverage['/shake.js'].lineData[64]++;
         checkShake();
       }
-      _$jscoverage['/shake.js'].lineData[65]++;
-      if (visit6_65_1(diff > enough)) {
-        _$jscoverage['/shake.js'].lineData[68]++;
+      _$jscoverage['/shake.js'].lineData[66]++;
+      if (visit6_66_1(diff > enough)) {
+        _$jscoverage['/shake.js'].lineData[69]++;
         shaking = 1;
       }
     }
-    _$jscoverage['/shake.js'].lineData[72]++;
-    lastX = x;
     _$jscoverage['/shake.js'].lineData[73]++;
-    lastY = y;
+    lastX = x;
     _$jscoverage['/shake.js'].lineData[74]++;
+    lastY = y;
+    _$jscoverage['/shake.js'].lineData[75]++;
     lastZ = z;
   }
+  _$jscoverage['/shake.js'].lineData[78]++;
+  return {
+  SHAKE: SHAKE};
 });

@@ -48,7 +48,7 @@ S.config("requires",{
     "editor/plugin/contextmenu": [
         "menu",
         "editor/plugin/focus-fix",
-        ""
+        "event/dom"
     ],
     "editor/plugin/dent-cmd": [
         "editor",
@@ -66,12 +66,13 @@ S.config("requires",{
     ],
     "editor/plugin/draft": [
         "json",
+        "event/dom",
         "editor/plugin/local-storage",
         "editor/plugin/menubutton"
     ],
     "editor/plugin/drag-upload": [
         "editor",
-        ""
+        "event/dom"
     ],
     "editor/plugin/element-path": [
         "editor"
@@ -93,7 +94,7 @@ S.config("requires",{
     "editor/plugin/flash-bridge": [
         "editor",
         "swf",
-        ""
+        "event/custom"
     ],
     "editor/plugin/flash-common/base-class": [
         "editor/plugin/flash-common/utils",
@@ -147,13 +148,15 @@ S.config("requires",{
         "editor/plugin/button",
         "editor/plugin/bubble",
         "editor/plugin/contextmenu",
-        "editor/plugin/dialog-loader"
+        "editor/plugin/dialog-loader",
+        "node"
     ],
     "editor/plugin/image/dialog": [
         "io",
         "editor/plugin/dialog",
         "tabs",
-        "editor/plugin/menubutton"
+        "editor/plugin/menubutton",
+        "node"
     ],
     "editor/plugin/indent": [
         "editor/plugin/indent/cmd",
@@ -224,7 +227,7 @@ S.config("requires",{
     ],
     "editor/plugin/maximize/cmd": [
         "editor",
-        ""
+        "event/dom"
     ],
     "editor/plugin/menubutton": [
         "editor",
@@ -336,5 +339,4 @@ S.config("requires",{
         "editor/plugin/flash/dialog"
     ]
 });
-
 });

@@ -276,15 +276,15 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js'].branchData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'] = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1] = new BranchData();
 }
-_$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1].init(1833, 35, 'commandRet5 && commandRet5.isBuffer');
+_$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1].init(1835, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit3_43_1(result) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['30'][1].init(1255, 35, 'commandRet2 && commandRet2.isBuffer');
+}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['30'][1].init(1257, 35, 'commandRet2 && commandRet2.isBuffer');
 function visit2_30_1(result) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['8'][1].init(142, 20, '"1.50" !== S.version');
+}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
 function visit1_8_1(result) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
@@ -297,9 +297,9 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[8]++;
-  if (visit1_8_1("1.50" !== S.version)) {
+  if (visit1_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/popup-picker/render-xtpl.js'].lineData[9]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[11]++;
   var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];

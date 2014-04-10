@@ -232,18 +232,15 @@ if (! _$jscoverage['/tree/tree-manager.js']) {
   _$jscoverage['/tree/tree-manager.js'].lineData[6] = 0;
   _$jscoverage['/tree/tree-manager.js'].lineData[7] = 0;
   _$jscoverage['/tree/tree-manager.js'].lineData[8] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[9] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[19] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[22] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[55] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[59] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[64] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[14] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[17] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[50] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[54] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[58] = 0;
   _$jscoverage['/tree/tree-manager.js'].lineData[65] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[68] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[66] = 0;
   _$jscoverage['/tree/tree-manager.js'].lineData[75] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[76] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[85] = 0;
-  _$jscoverage['/tree/tree-manager.js'].lineData[89] = 0;
+  _$jscoverage['/tree/tree-manager.js'].lineData[79] = 0;
 }
 if (! _$jscoverage['/tree/tree-manager.js'].functionData) {
   _$jscoverage['/tree/tree-manager.js'].functionData = [];
@@ -255,73 +252,49 @@ if (! _$jscoverage['/tree/tree-manager.js'].functionData) {
 }
 if (! _$jscoverage['/tree/tree-manager.js'].branchData) {
   _$jscoverage['/tree/tree-manager.js'].branchData = {};
-  _$jscoverage['/tree/tree-manager.js'].branchData['64'] = [];
-  _$jscoverage['/tree/tree-manager.js'].branchData['64'][1] = new BranchData();
   _$jscoverage['/tree/tree-manager.js'].branchData['65'] = [];
   _$jscoverage['/tree/tree-manager.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/tree/tree-manager.js'].branchData['65'][2] = new BranchData();
-  _$jscoverage['/tree/tree-manager.js'].branchData['75'] = [];
-  _$jscoverage['/tree/tree-manager.js'].branchData['75'][1] = new BranchData();
 }
-_$jscoverage['/tree/tree-manager.js'].branchData['75'][1].init(39, 15, 'n && ev.prevVal');
-function visit73_75_1(result) {
-  _$jscoverage['/tree/tree-manager.js'].branchData['75'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/tree/tree-manager.js'].branchData['65'][2].init(34, 6, 'ie < 9');
-function visit72_65_2(result) {
-  _$jscoverage['/tree/tree-manager.js'].branchData['65'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/tree/tree-manager.js'].branchData['65'][1].init(28, 12, 'ie && ie < 9');
-function visit71_65_1(result) {
+_$jscoverage['/tree/tree-manager.js'].branchData['65'][1].init(39, 15, 'n && ev.prevVal');
+function visit70_65_1(result) {
   _$jscoverage['/tree/tree-manager.js'].branchData['65'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/tree/tree-manager.js'].branchData['64'][1].init(191, 22, '!isTouchEventSupported');
-function visit70_64_1(result) {
-  _$jscoverage['/tree/tree-manager.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/tree-manager.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/tree/tree-manager.js'].functionData[0]++;
   _$jscoverage['/tree/tree-manager.js'].lineData[7]++;
-  var Node = require('node');
-  _$jscoverage['/tree/tree-manager.js'].lineData[8]++;
   var DelegateChildrenExtension = require('component/extension/delegate-children');
-  _$jscoverage['/tree/tree-manager.js'].lineData[9]++;
-  var UA = require('ua'), ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchEventSupported = Feature.isTouchEventSupported();
-  _$jscoverage['/tree/tree-manager.js'].lineData[19]++;
+  _$jscoverage['/tree/tree-manager.js'].lineData[8]++;
+  var TapGesture = require('event/gesture/tap');
+  _$jscoverage['/tree/tree-manager.js'].lineData[14]++;
   function TreeManager() {
     _$jscoverage['/tree/tree-manager.js'].functionData[1]++;
   }
-  _$jscoverage['/tree/tree-manager.js'].lineData[22]++;
+  _$jscoverage['/tree/tree-manager.js'].lineData[17]++;
   TreeManager.ATTRS = {
   showRootNode: {
   value: true, 
-  view: 1}, 
+  render: 1}, 
   selectedItem: {}, 
   focusable: {
   value: true}, 
   handleGestureEvents: {
   value: true}};
-  _$jscoverage['/tree/tree-manager.js'].lineData[55]++;
+  _$jscoverage['/tree/tree-manager.js'].lineData[50]++;
   S.augment(TreeManager, DelegateChildrenExtension, {
   isTree: 1, 
   __bindUI: function() {
   _$jscoverage['/tree/tree-manager.js'].functionData[2]++;
-  _$jscoverage['/tree/tree-manager.js'].lineData[59]++;
-  var self = this, prefixCls = self.get('prefixCls'), delegateCls = prefixCls + 'tree-node', events = Gesture.tap;
-  _$jscoverage['/tree/tree-manager.js'].lineData[64]++;
-  if (visit70_64_1(!isTouchEventSupported)) {
-    _$jscoverage['/tree/tree-manager.js'].lineData[65]++;
-    events += (visit71_65_1(ie && visit72_65_2(ie < 9)) ? ' dblclick ' : '');
-  }
-  _$jscoverage['/tree/tree-manager.js'].lineData[68]++;
-  self.$el.delegate(events, '.' + delegateCls, self.handleChildrenEvents, self);
+  _$jscoverage['/tree/tree-manager.js'].lineData[54]++;
+  var self = this, prefixCls = self.get('prefixCls'), delegateCls = prefixCls + 'tree-node';
+  _$jscoverage['/tree/tree-manager.js'].lineData[58]++;
+  self.$el.delegate(TapGesture.TAP, '.' + delegateCls, self.handleChildrenEvents, self);
 }, 
   _onSetSelectedItem: function(n, ev) {
   _$jscoverage['/tree/tree-manager.js'].functionData[3]++;
-  _$jscoverage['/tree/tree-manager.js'].lineData[75]++;
-  if (visit73_75_1(n && ev.prevVal)) {
-    _$jscoverage['/tree/tree-manager.js'].lineData[76]++;
+  _$jscoverage['/tree/tree-manager.js'].lineData[65]++;
+  if (visit70_65_1(n && ev.prevVal)) {
+    _$jscoverage['/tree/tree-manager.js'].lineData[66]++;
     ev.prevVal.set('selected', false, {
   data: {
   byPassSetTreeSelectedItem: 1}});
@@ -329,9 +302,9 @@ KISSY.add(function(S, require) {
 }, 
   _onSetShowRootNode: function(v) {
   _$jscoverage['/tree/tree-manager.js'].functionData[4]++;
-  _$jscoverage['/tree/tree-manager.js'].lineData[85]++;
+  _$jscoverage['/tree/tree-manager.js'].lineData[75]++;
   this.get('rowEl')[v ? 'show' : 'hide']();
 }});
-  _$jscoverage['/tree/tree-manager.js'].lineData[89]++;
+  _$jscoverage['/tree/tree-manager.js'].lineData[79]++;
   return TreeManager;
 });
