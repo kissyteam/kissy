@@ -1,0 +1,4 @@
+<project name="event/gesture/pinch.build" default="build">
+    <property name="component.name" value="event/gesture/pinch"/>
+    <import file="../../../../common.xml"/>
+</project>

@@ -1,0 +1,3 @@
+{
+    "event/gesture/util": ["dom", "ua", "event/dom/base"]
+}

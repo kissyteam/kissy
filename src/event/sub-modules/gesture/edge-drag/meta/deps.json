@@ -1,0 +1,3 @@
+{
+    "event/gesture/edge-drag": ["event/gesture/util", "event/dom/base"]
+}
