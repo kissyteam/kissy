@@ -21,7 +21,6 @@ KISSY.add(function (S, require) {
     var trim = S.trim;
     var $ = Node.all;
     var doc = S.Env.host.document;
-    var HTML_PARSER = 'HTML_PARSER';
 
     function normalExtras(extras) {
         if (!extras) {
@@ -54,27 +53,23 @@ KISSY.add(function (S, require) {
         return v;
     }
 
-    function applyParser(srcNode, parser) {
+    function applyParser(srcNode) {
         var self = this,
-            p, v, ret;
+            attr, attrName, ret;
+
+        var attrs = self.getAttrs();
 
         // 从 parser 中，默默设置属性，不触发事件
         // html parser 优先，超过 js 配置值
-        for (p in parser) {
-            v = parser[p];
-            // 函数
-            if (typeof v === 'function') {
+        for (attrName in attrs) {
+            attr = attrs[attrName];
+            // dom node retriever
+            if (attr.parse) {
                 // html parser 放弃
-                ret = v.call(self, srcNode);
+                ret = attr.parse.call(self, srcNode);
                 if (ret !== undefined) {
-                    self.setInternal(p, ret);
+                    self.setInternal(attrName, ret);
                 }
-            } else if (typeof v === 'string') {
-                // 单选选择器
-                self.setInternal(p, srcNode.one(v));
-            } else if (S.isArray(v) && v[0]) {
-                // 多选选择器
-                self.setInternal(p, srcNode.all(v[0]));
             }
         }
     }
@@ -114,12 +109,21 @@ KISSY.add(function (S, require) {
 
             initializer: function () {
                 var self = this;
+                var attrName, attr;
+                var attrs = self.getAttrs();
                 self.renderData = {};
                 self.childrenElSelectors = {};
                 self.renderCommands = {
                     getBaseCssClasses: getBaseCssClassesCmd,
                     getBaseCssClass: getBaseCssClassCmd
                 };
+                for (attrName in attrs) {
+                    attr = attrs[attrName];
+                    // dom node retriever
+                    if (attr.selector) {
+                        self.childrenElSelectors[attrName] = attr.selector;
+                    }
+                }
             },
 
             beforeCreateDom: function (renderData) {
@@ -130,16 +134,16 @@ KISSY.add(function (S, require) {
                     elAttrs = self.get('elAttrs'),
                     disabled,
                     attrs = self.getAttrs(),
-                    a,
+                    attrName,
                     attr,
                     elStyle = self.get('elStyle'),
                     zIndex,
                     elCls = self.get('elCls');
 
-                for (a in attrs) {
-                    attr = attrs[a];
-                    if (attr.view) {
-                        renderData[a] = self.get(a);
+                for (attrName in attrs) {
+                    attr = attrs[attrName];
+                    if (attr.render) {
+                        renderData[attrName] = self.get(attrName);
                     }
                 }
 
@@ -194,9 +198,11 @@ KISSY.add(function (S, require) {
 
             decorateDom: function (srcNode) {
                 var self = this;
-                applyParser.call(self, srcNode, self.constructor.HTML_PARSER);
                 self.$el = srcNode;
                 self.el = srcNode[0];
+                // retrieve dom node first
+                self.fillChildrenElsBySelectors();
+                applyParser.call(self, srcNode);
             },
 
             /**
@@ -271,7 +277,7 @@ KISSY.add(function (S, require) {
                         self.decorateDom(srcNode);
                     }
                     // prepare render info from attr value
-                    self.beforeCreateDom(self.renderData, self.childrenElSelectors, self.renderCommands);
+                    self.beforeCreateDom(self.renderData, self.renderCommands, self.childrenElSelectors);
                     // render dom nodes if not created from srcNode
                     if (!srcNode) {
                         self.createDom();
@@ -572,19 +578,17 @@ KISSY.add(function (S, require) {
             fillChildrenElsBySelectors: function (childrenElSelectors) {
                 var self = this,
                     el = self.$el,
-                    childName,
-                    selector;
+                    childName, selector;
 
                 childrenElSelectors = childrenElSelectors || self.childrenElSelectors;
 
                 for (childName in childrenElSelectors) {
                     selector = childrenElSelectors[childName];
-                    if (typeof selector === 'function') {
-                        self.setInternal(childName, selector(el));
-                    } else {
-                        self.setInternal(childName, self.$(S.substitute(selector, self.renderData)));
+                    var node = selector.call(self, el);
+                    if (typeof node === 'string') {
+                        node = self.$(node);
                     }
-                    delete childrenElSelectors[childName];
+                    self.setInternal(childName, node);
                 }
             },
 
@@ -834,24 +838,13 @@ KISSY.add(function (S, require) {
 
             name: 'control',
 
-            HTML_PARSER: {
-                id: function (el) {
-                    var id = el.attr('id');
-                    if (!id) {
-                        id = S.guid('ks-component');
-                        el.attr('id', id);
-                    }
-                    return id;
-                },
-                content: function (el) {
-                    return el.html();
-                },
-                disabled: function (el) {
-                    return el.hasClass(this.getBaseCssClass('disabled'));
-                }
-            },
-
             ATTRS: {
+                contentTpl: {
+                    value: function (scope, buffer) {
+                        return buffer.write(scope.get('content'));
+                    }
+                },
+
                 /**
                  * component's html content. Note: content and srcNode can not be set both!
                  * @type {String|KISSY.Node}
@@ -865,7 +858,10 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 content: {
-                    view: 1,
+                    parse: function (el) {
+                        return el.html();
+                    },
+                    render: 1,
                     sync: 0,
                     value: ''
                 },
@@ -883,7 +879,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 width: {
-                    view: 1,
+                    render: 1,
                     sync: 0
                 },
 
@@ -900,7 +896,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 height: {
-                    view: 1,
+                    render: 1,
                     sync: 0
                 },
 
@@ -912,7 +908,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 elCls: {
-                    view: 1,
+                    render: 1,
                     value: [],
                     setter: function (v) {
                         if (typeof v === 'string') {
@@ -930,7 +926,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 elStyle: {
-                    view: 1,
+                    render: 1,
                     value: {}
                 },
 
@@ -942,7 +938,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 elAttrs: {
-                    view: 1,
+                    render: 1,
                     value: {}
                 },
 
@@ -1016,7 +1012,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 zIndex: {
-                    view: 1,
+                    render: 1,
                     sync: 0
                 },
 
@@ -1039,7 +1035,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 visible: {
-                    view: 1,
+                    render: 1,
                     sync: 0,
                     value: true
                 },
@@ -1096,7 +1092,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 highlighted: {
-                    view: 1,
+                    render: 1,
                     sync: 0,
                     value: false
                 },
@@ -1114,9 +1110,12 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 disabled: {
-                    view: 1,
+                    render: 1,
                     sync: 0,
-                    value: false
+                    value: false,
+                    parse: function (el) {
+                        return el.hasClass(this.getBaseCssClass('disabled'));
+                    }
                 },
 
                 /**
@@ -1160,7 +1159,15 @@ KISSY.add(function (S, require) {
                  * @cfg {String} id
                  */
                 id: {
-                    view: 1,
+                    render: 1,
+                    parse: function (el) {
+                        var id = el.attr('id');
+                        if (!id) {
+                            id = S.guid('ks-component');
+                            el.attr('id', id);
+                        }
+                        return id;
+                    },
                     valueFn: function () {
                         return S.guid('ks-component');
                     }
@@ -1193,18 +1200,16 @@ KISSY.add(function (S, require) {
 
                 /**
                  * kissy node or css selector to find the first match node
+                 * parsed for configuration values.
                  *
-                 * parsed for configuration values,
-                 * passed to component's HTML_PARSER definition
                  * @cfg {KISSY.Node|String} srcNode
-                 *
                  */
                 /**
                  * @ignore
                  */
                 srcNode: {
                     setter: function (v) {
-                        return Node.all(v);
+                        return $(v);
                     }
                 },
 
@@ -1266,7 +1271,7 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 prefixCls: {
-                    view: 1,
+                    render: 1,
                     value: S.config('component/prefixCls') || 'ks-'
                 },
                 /**
@@ -1304,15 +1309,8 @@ KISSY.add(function (S, require) {
                     }
                 },
 
-
                 XTemplate: {
                     value: XTemplateRuntime
-                },
-
-                contentTpl: {
-                    value: function (scope, buffer) {
-                        return buffer.write(scope.get('content'));
-                    }
                 }
             }
         });
@@ -1342,7 +1340,6 @@ KISSY.add(function (S, require) {
             self = this,
             xclass,
             argsLen = args.length,
-            parsers = {},
             last = args[argsLen - 1];
 
         if (last && (xclass = last.xclass)) {
@@ -1350,21 +1347,7 @@ KISSY.add(function (S, require) {
         }
 
         var NewClass = Base.extend.apply(self, arguments);
-        NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
-        if (S.isArray(extensions)) {
-            // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
-            // 主类最优先
-            S.each(extensions.concat(NewClass), function (ext) {
-                if (ext) {
-                    // 合并 HTML_PARSER 到主类
-                    S.each(ext.HTML_PARSER, function (v, name) {
-                        parsers[name] = v;
-                    });
-                }
-            });
-            NewClass[HTML_PARSER] = parsers;
-        }
-        S.mix(NewClass[HTML_PARSER], self[HTML_PARSER], false);
+
         NewClass.extend = extend;
 
         if (xclass) {
@@ -1373,23 +1356,6 @@ KISSY.add(function (S, require) {
 
         return NewClass;
     };
-
-    /**
-     * Parse attribute from existing dom node.
-     * @static
-     * @protected
-     * @property HTML_PARSER
-     * @member KISSY.Component
-     *
-     * for example:
-     *     @example
-     *     Overlay.HTML_PARSER={
-     *          // el: root element of current component.
-     *          "isRed":function(el){
-     *              return el.hasClass("ks-red");
-     *          }
-     *      };
-     */
 
     return Control;
 });

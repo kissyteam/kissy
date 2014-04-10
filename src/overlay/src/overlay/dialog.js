@@ -19,15 +19,10 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Overlay
      */
     var Dialog = Overlay.extend({
-        beforeCreateDom: function (renderData, childrenElSelectors) {
+        beforeCreateDom: function (renderData) {
             S.mix(renderData.elAttrs, {
                 role: 'dialog',
                 'aria-labelledby': 'ks-stdmod-header-' + this.get('id')
-            });
-            S.mix(childrenElSelectors, {
-                header: '#ks-stdmod-header-{id}',
-                body: '#ks-stdmod-body-{id}',
-                footer: '#ks-stdmod-footer-{id}'
             });
         },
 
@@ -99,29 +94,11 @@ KISSY.add(function (S, require) {
             _setStdModRenderContent(this, 'footer', v);
         }
     }, {
-        HTML_PARSER: {
-            header: function (el) {
-                return el.one('.' + this.getBaseCssClass('header'));
-            },
-            body: function (el) {
-                return el.one('.' + this.getBaseCssClass('body'));
-            },
-            footer: function (el) {
-                return el.one('.' + this.getBaseCssClass('footer'));
-            },
-            headerContent: function (el) {
-                return el.one('.' + this.getBaseCssClass('header')).html();
-            },
-            bodyContent: function (el) {
-                return el.one('.' + this.getBaseCssClass('body')).html();
-            },
-            footerContent: function (el) {
-                var footer = el.one('.' + this.getBaseCssClass('footer'));
-                return footer && footer.html();
-            }
-        },
-
         ATTRS: {
+            contentTpl: {
+                value: DialogTpl
+            },
+
             /**
              * Header element of dialog.
              * @type {KISSY.Node}
@@ -132,6 +109,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             header: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('header');
+                }
             },
             /**
              * Body element of dialog.
@@ -143,6 +123,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             body: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('body');
+                }
             },
             /**
              * Footer element of dialog.
@@ -154,6 +137,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             footer: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('footer');
+                }
             },
             /**
              * Key-value map of body element's style.
@@ -175,7 +161,7 @@ KISSY.add(function (S, require) {
              */
             footerStyle: {
                 value: {},
-                view: 1
+                render: 1
             },
             /**
              * Key-value map of header element's style.
@@ -186,7 +172,7 @@ KISSY.add(function (S, require) {
              */
             headerStyle: {
                 value: {},
-                view: 1
+                render: 1
             },
             /**
              * html content of header element.
@@ -198,7 +184,10 @@ KISSY.add(function (S, require) {
             headerContent: {
                 value: '',
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function () {
+                    return this.get('header').html();
+                }
             },
             /**
              * html content of body element.
@@ -210,7 +199,10 @@ KISSY.add(function (S, require) {
             bodyContent: {
                 value: '',
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function () {
+                    return this.get('body').html();
+                }
             },
             /**
              * html content of footer element.
@@ -222,7 +214,10 @@ KISSY.add(function (S, require) {
             footerContent: {
                 value: '',
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function () {
+                    return this.get('footer').html();
+                }
             },
 
             /**
@@ -268,10 +263,6 @@ KISSY.add(function (S, require) {
              */
             escapeToClose: {
                 value: true
-            },
-
-            contentTpl: {
-                value: DialogTpl
             }
         },
         xclass: 'dialog'

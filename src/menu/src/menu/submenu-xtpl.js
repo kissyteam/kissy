@@ -19,28 +19,25 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands.block,
                 macroCommand = nativeCommands.macro,
                 debuggerCommand = nativeCommands["debugger"];
-            buffer.write('<div id="ks-content-');
-            var id0 = scope.resolve(["id"]);
-            buffer.write(id0, true);
-            buffer.write('"\n     class="');
-            var option1 = {
+            buffer.write('<div class="');
+            var option0 = {
                 escape: 1
             };
-            var params2 = [];
-            params2.push('content');
-            option1.params = params2;
-            var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-            if (commandRet3 && commandRet3.isBuffer) {
-                buffer = commandRet3;
-                commandRet3 = undefined;
+            var params1 = [];
+            params1.push('content');
+            option0.params = params1;
+            var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
+            if (commandRet2 && commandRet2.isBuffer) {
+                buffer = commandRet2;
+                commandRet2 = undefined;
             }
-            buffer.write(commandRet3, true);
+            buffer.write(commandRet2, true);
             buffer.write('">');
-            var id4 = scope.resolve(["content"]);
-            buffer.write(id4, false);
+            var id3 = scope.resolve(["content"]);
+            buffer.write(id3, false);
             buffer.write('</div>\n<span class="');
-            var id5 = scope.resolve(["prefixCls"]);
-            buffer.write(id5, true);
+            var id4 = scope.resolve(["prefixCls"]);
+            buffer.write(id4, true);
             buffer.write('submenu-arrow">►</span>');
             return buffer;
         };

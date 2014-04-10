@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
          */
         showRootNode: {
             value: true,
-            view: 1
+            render: 1
         },
         /**
          * Current selected tree node.

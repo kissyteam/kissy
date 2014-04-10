@@ -424,7 +424,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             scrollLeft: {
-                view: 1,
+                render: 1,
                 value: 0
             },
             /**
@@ -436,7 +436,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             scrollTop: {
-                view: 1,
+                render: 1,
                 value: 0
             },
 

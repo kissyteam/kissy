@@ -5,23 +5,20 @@
 {{#each (headerStyle)}}
  {{xindex}}:{{this}};
 {{/each}}
-"
-         id="ks-stdmod-header-{{id}}">{{{headerContent}}}</div>
+">{{{headerContent}}}</div>
 
     <div class="{{getBaseCssClasses ('body')}}"
          style="
 {{#each (bodyStyle)}}
  {{xindex}}:{{this}};
 {{/each}}
-"
-         id="ks-stdmod-body-{{id}}">{{{bodyContent}}}</div>
+">{{{bodyContent}}}</div>
 
     <div class="{{getBaseCssClasses ('footer')}}"
          style="
 {{#each (footerStyle)}}
  {{xindex}}:{{this}};
 {{/each}}
-"
-         id="ks-stdmod-footer-{{id}}">{{{footerContent}}}</div>
+">{{{footerContent}}}</div>
     <div tabindex="0"></div>
 {{/block}}

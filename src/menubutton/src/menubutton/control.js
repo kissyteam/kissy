@@ -278,7 +278,7 @@ KISSY.add(function (S, require) {
              */
             collapsed: {
                 value: true,
-                view: 1,
+                render: 1,
                 sync: 0
             },
 

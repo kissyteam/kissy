@@ -19,90 +19,94 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands.block,
                 macroCommand = nativeCommands.macro,
                 debuggerCommand = nativeCommands["debugger"];
-            buffer.write('<div id="ks-tree-node-row-');
-            var id0 = scope.resolve(["id"]);
-            buffer.write(id0, true);
-            buffer.write('"\n     class="');
-            var option1 = {
+            buffer.write('<div class="');
+            var option0 = {
                 escape: 1
             };
-            var params2 = [];
-            params2.push('row');
-            option1.params = params2;
-            var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-            if (commandRet3 && commandRet3.isBuffer) {
-                buffer = commandRet3;
-                commandRet3 = undefined;
+            var params1 = [];
+            params1.push('row');
+            option0.params = params1;
+            var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
+            if (commandRet2 && commandRet2.isBuffer) {
+                buffer = commandRet2;
+                commandRet2 = undefined;
             }
-            buffer.write(commandRet3, true);
+            buffer.write(commandRet2, true);
             buffer.write('\n     ');
-            var option4 = {
+            var option3 = {
                 escape: 1
             };
-            var params5 = [];
-            var id6 = scope.resolve(["selected"]);
-            params5.push(id6);
-            option4.params = params5;
-            option4.fn = function (scope, buffer) {
+            var params4 = [];
+            var id5 = scope.resolve(["selected"]);
+            params4.push(id5);
+            option3.params = params4;
+            option3.fn = function (scope, buffer) {
 
                 buffer.write('\n        ');
-                var option7 = {
+                var option6 = {
                     escape: 1
                 };
-                var params8 = [];
-                params8.push('selected');
-                option7.params = params8;
-                var commandRet9 = callCommandUtil(engine, scope, option7, buffer, "getBaseCssClasses", 4);
-                if (commandRet9 && commandRet9.isBuffer) {
-                    buffer = commandRet9;
-                    commandRet9 = undefined;
+                var params7 = [];
+                params7.push('selected');
+                option6.params = params7;
+                var commandRet8 = callCommandUtil(engine, scope, option6, buffer, "getBaseCssClasses", 3);
+                if (commandRet8 && commandRet8.isBuffer) {
+                    buffer = commandRet8;
+                    commandRet8 = undefined;
                 }
-                buffer.write(commandRet9, true);
+                buffer.write(commandRet8, true);
                 buffer.write('\n     ');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option4, buffer, 3, payload);
-            buffer.write('\n     ">\n    <div id="ks-tree-node-expand-icon-');
-            var id10 = scope.resolve(["id"]);
-            buffer.write(id10, true);
-            buffer.write('"\n         class="');
-            var option11 = {
+            buffer = ifCommand.call(engine, scope, option3, buffer, 2, payload);
+            buffer.write('\n     ">\n    <div class="');
+            var option9 = {
                 escape: 1
             };
-            var params12 = [];
-            params12.push('expand-icon');
-            option11.params = params12;
-            var commandRet13 = callCommandUtil(engine, scope, option11, buffer, "getBaseCssClasses", 8);
-            if (commandRet13 && commandRet13.isBuffer) {
-                buffer = commandRet13;
-                commandRet13 = undefined;
+            var params10 = [];
+            params10.push('expand-icon');
+            option9.params = params10;
+            var commandRet11 = callCommandUtil(engine, scope, option9, buffer, "getBaseCssClasses", 6);
+            if (commandRet11 && commandRet11.isBuffer) {
+                buffer = commandRet11;
+                commandRet11 = undefined;
             }
-            buffer.write(commandRet13, true);
+            buffer.write(commandRet11, true);
             buffer.write('">\n    </div>\n    ');
-            var option14 = {
+            var option12 = {
                 escape: 1
             };
-            var params15 = [];
-            var id16 = scope.resolve(["checkable"]);
-            params15.push(id16);
-            option14.params = params15;
-            option14.fn = function (scope, buffer) {
+            var params13 = [];
+            var id14 = scope.resolve(["checkable"]);
+            params13.push(id14);
+            option12.params = params13;
+            option12.fn = function (scope, buffer) {
 
-                buffer.write('\n    <div id="ks-tree-node-checked-');
-                var id17 = scope.resolve(["id"]);
-                buffer.write(id17, true);
-                buffer.write('"\n         class="');
-                var option18 = {
+                buffer.write('\n    <div class="');
+                var option15 = {
                     escape: 1
                 };
-                var params19 = [];
-                var exp21 = 'checked';
-                var id20 = scope.resolve(["checkState"]);
-                exp21 = ('checked') + (id20);
-                params19.push(exp21);
-                option18.params = params19;
-                var commandRet22 = callCommandUtil(engine, scope, option18, buffer, "getBaseCssClasses", 12);
+                var params16 = [];
+                var exp18 = 'checked';
+                var id17 = scope.resolve(["checkState"]);
+                exp18 = ('checked') + (id17);
+                params16.push(exp18);
+                option15.params = params16;
+                var commandRet19 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 9);
+                if (commandRet19 && commandRet19.isBuffer) {
+                    buffer = commandRet19;
+                    commandRet19 = undefined;
+                }
+                buffer.write(commandRet19, true);
+                buffer.write(' ');
+                var option20 = {
+                    escape: 1
+                };
+                var params21 = [];
+                params21.push('checked');
+                option20.params = params21;
+                var commandRet22 = callCommandUtil(engine, scope, option20, buffer, "getBaseCssClasses", 9);
                 if (commandRet22 && commandRet22.isBuffer) {
                     buffer = commandRet22;
                     commandRet22 = undefined;
@@ -112,67 +116,61 @@ KISSY.add(function (S, require, exports, module) {
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option14, buffer, 10, payload);
-            buffer.write('\n    <div id="ks-tree-node-icon-');
-            var id23 = scope.resolve(["id"]);
-            buffer.write(id23, true);
-            buffer.write('"\n         class="');
-            var option24 = {
+            buffer = ifCommand.call(engine, scope, option12, buffer, 8, payload);
+            buffer.write('\n    <div class="');
+            var option23 = {
                 escape: 1
             };
-            var params25 = [];
-            params25.push('icon');
-            option24.params = params25;
-            var commandRet26 = callCommandUtil(engine, scope, option24, buffer, "getBaseCssClasses", 15);
-            if (commandRet26 && commandRet26.isBuffer) {
-                buffer = commandRet26;
-                commandRet26 = undefined;
+            var params24 = [];
+            params24.push('icon');
+            option23.params = params24;
+            var commandRet25 = callCommandUtil(engine, scope, option23, buffer, "getBaseCssClasses", 11);
+            if (commandRet25 && commandRet25.isBuffer) {
+                buffer = commandRet25;
+                commandRet25 = undefined;
             }
-            buffer.write(commandRet26, true);
+            buffer.write(commandRet25, true);
             buffer.write('">\n\n    </div>\n    ');
-            var option27 = {};
-            var params28 = [];
-            params28.push('component/extension/content-xtpl');
-            option27.params = params28;
+            var option26 = {};
+            var params27 = [];
+            params27.push('component/extension/content-xtpl');
+            option26.params = params27;
             require("component/extension/content-xtpl");
-            option27.params[0] = module.resolve(option27.params[0]);
-            var commandRet29 = includeCommand.call(engine, scope, option27, buffer, 18, payload);
-            if (commandRet29 && commandRet29.isBuffer) {
-                buffer = commandRet29;
-                commandRet29 = undefined;
+            option26.params[0] = module.resolve(option26.params[0]);
+            var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 14, payload);
+            if (commandRet28 && commandRet28.isBuffer) {
+                buffer = commandRet28;
+                commandRet28 = undefined;
             }
-            buffer.write(commandRet29, false);
-            buffer.write('\n</div>\n<div id="ks-tree-node-children-');
-            var id30 = scope.resolve(["id"]);
-            buffer.write(id30, true);
-            buffer.write('"\n     class="');
-            var option31 = {
+            buffer.write(commandRet28, false);
+            buffer.write('\n</div>\n<div class="');
+            var option29 = {
                 escape: 1
             };
-            var params32 = [];
-            params32.push('children');
-            option31.params = params32;
-            var commandRet33 = callCommandUtil(engine, scope, option31, buffer, "getBaseCssClasses", 21);
-            if (commandRet33 && commandRet33.isBuffer) {
-                buffer = commandRet33;
-                commandRet33 = undefined;
+            var params30 = [];
+            params30.push('children');
+            option29.params = params30;
+            var commandRet31 = callCommandUtil(engine, scope, option29, buffer, "getBaseCssClasses", 16);
+            if (commandRet31 && commandRet31.isBuffer) {
+                buffer = commandRet31;
+                commandRet31 = undefined;
             }
-            buffer.write(commandRet33, true);
+            buffer.write(commandRet31, true);
             buffer.write('"\n');
-            var option34 = {
+            var option32 = {
                 escape: 1
             };
-            var params35 = [];
-            var id36 = scope.resolve(["expanded"]);
-            params35.push(!(id36));
-            option34.params = params35;
-            option34.fn = function (scope, buffer) {
+            var params33 = [];
+            var id34 = scope.resolve(["expanded"]);
+            params33.push(!(id34));
+            option32.params = params33;
+            option32.fn = function (scope, buffer) {
 
                 buffer.write('\nstyle="display:none"\n');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option34, buffer, 22, payload);
+            buffer = ifCommand.call(engine, scope, option32, buffer, 17, payload);
             buffer.write('\n>\n</div>');
             return buffer;
         };

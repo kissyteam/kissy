@@ -36,10 +36,6 @@ KISSY.add(function (S, require) {
         Mask,
         OverlayEffect
     ], {
-        beforeCreateDom: function (renderData, childrenElSelectors) {
-            childrenElSelectors.closeBtn = '#ks-overlay-close-{id}';
-        },
-
         bindUI: function () {
             var self = this,
                 closeBtn = self.get('closeBtn');
@@ -60,11 +56,6 @@ KISSY.add(function (S, require) {
             return self;
         }
     }, {
-        HTML_PARSER: {
-            closeBtn: function (el) {
-                return el.one('.' + this.getBaseCssClass('close'));
-            }
-        },
         ATTRS: {
             contentEl: {
             },
@@ -87,7 +78,10 @@ KISSY.add(function (S, require) {
             closable: {
                 value: false,
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function () {
+                    return !!this.get('closeBtn');
+                }
             },
 
             /**
@@ -100,6 +94,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             closeBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('close');
+                }
             },
 
             /**

@@ -32,108 +32,96 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    <a id="ks-date-picker-decade-panel-previous-century-btn-');
-            var id3 = scope.resolve(["id"]);
-            buffer.write(id3, true);
-            buffer.write('"\n       class="');
-            var option4 = {
+            buffer.write('">\n    <a class="');
+            var option3 = {
                 escape: 1
             };
-            var params5 = [];
-            params5.push('prev-century-btn');
-            option4.params = params5;
-            var commandRet6 = callCommandUtil(engine, scope, option4, buffer, "getBaseCssClasses", 3);
-            if (commandRet6 && commandRet6.isBuffer) {
-                buffer = commandRet6;
-                commandRet6 = undefined;
+            var params4 = [];
+            params4.push('prev-century-btn');
+            option3.params = params4;
+            var commandRet5 = callCommandUtil(engine, scope, option3, buffer, "getBaseCssClasses", 2);
+            if (commandRet5 && commandRet5.isBuffer) {
+                buffer = commandRet5;
+                commandRet5 = undefined;
             }
-            buffer.write(commandRet6, true);
+            buffer.write(commandRet5, true);
             buffer.write('"\n       href="#"\n       role="button"\n       title="');
-            var id7 = scope.resolve(["previousCenturyLabel"]);
-            buffer.write(id7, true);
+            var id6 = scope.resolve(["previousCenturyLabel"]);
+            buffer.write(id6, true);
             buffer.write('"\n       hidefocus="on">\n    </a>\n    <div class="');
-            var option8 = {
+            var option7 = {
                 escape: 1
             };
-            var params9 = [];
-            params9.push('century');
-            option8.params = params9;
-            var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 9);
-            if (commandRet10 && commandRet10.isBuffer) {
-                buffer = commandRet10;
-                commandRet10 = undefined;
+            var params8 = [];
+            params8.push('century');
+            option7.params = params8;
+            var commandRet9 = callCommandUtil(engine, scope, option7, buffer, "getBaseCssClasses", 8);
+            if (commandRet9 && commandRet9.isBuffer) {
+                buffer = commandRet9;
+                commandRet9 = undefined;
             }
-            buffer.write(commandRet10, true);
-            buffer.write('"\n         id="ks-date-picker-decade-panel-century-');
-            var id11 = scope.resolve(["id"]);
-            buffer.write(id11, true);
+            buffer.write(commandRet9, true);
             buffer.write('">\n                ');
-            var id12 = scope.resolve(["startYear"]);
-            buffer.write(id12, true);
+            var id10 = scope.resolve(["startYear"]);
+            buffer.write(id10, true);
             buffer.write('-');
-            var id13 = scope.resolve(["endYear"]);
-            buffer.write(id13, true);
-            buffer.write('\n    </div>\n    <a id="ks-date-picker-decade-panel-next-century-btn-');
-            var id14 = scope.resolve(["id"]);
-            buffer.write(id14, true);
-            buffer.write('"\n       class="');
-            var option15 = {
+            var id11 = scope.resolve(["endYear"]);
+            buffer.write(id11, true);
+            buffer.write('\n    </div>\n    <a class="');
+            var option12 = {
                 escape: 1
             };
-            var params16 = [];
-            params16.push('next-century-btn');
-            option15.params = params16;
-            var commandRet17 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 14);
-            if (commandRet17 && commandRet17.isBuffer) {
-                buffer = commandRet17;
-                commandRet17 = undefined;
+            var params13 = [];
+            params13.push('next-century-btn');
+            option12.params = params13;
+            var commandRet14 = callCommandUtil(engine, scope, option12, buffer, "getBaseCssClasses", 11);
+            if (commandRet14 && commandRet14.isBuffer) {
+                buffer = commandRet14;
+                commandRet14 = undefined;
             }
-            buffer.write(commandRet17, true);
+            buffer.write(commandRet14, true);
             buffer.write('"\n       href="#"\n       role="button"\n       title="');
-            var id18 = scope.resolve(["nextCenturyLabel"]);
-            buffer.write(id18, true);
+            var id15 = scope.resolve(["nextCenturyLabel"]);
+            buffer.write(id15, true);
             buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+            var option16 = {
+                escape: 1
+            };
+            var params17 = [];
+            params17.push('body');
+            option16.params = params17;
+            var commandRet18 = callCommandUtil(engine, scope, option16, buffer, "getBaseCssClasses", 18);
+            if (commandRet18 && commandRet18.isBuffer) {
+                buffer = commandRet18;
+                commandRet18 = undefined;
+            }
+            buffer.write(commandRet18, true);
+            buffer.write('">\n    <table class="');
             var option19 = {
                 escape: 1
             };
             var params20 = [];
-            params20.push('body');
+            params20.push('table');
             option19.params = params20;
-            var commandRet21 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 21);
+            var commandRet21 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 19);
             if (commandRet21 && commandRet21.isBuffer) {
                 buffer = commandRet21;
                 commandRet21 = undefined;
             }
             buffer.write(commandRet21, true);
-            buffer.write('">\n    <table class="');
-            var option22 = {
-                escape: 1
-            };
+            buffer.write('" cellspacing="0" role="grid">\n        <tbody>\n        ');
+            var option22 = {};
             var params23 = [];
-            params23.push('table');
+            params23.push('date/picker/decade-panel/decades-xtpl');
             option22.params = params23;
-            var commandRet24 = callCommandUtil(engine, scope, option22, buffer, "getBaseCssClasses", 22);
+            require("date/picker/decade-panel/decades-xtpl");
+            option22.params[0] = module.resolve(option22.params[0]);
+            var commandRet24 = includeCommand.call(engine, scope, option22, buffer, 21, payload);
             if (commandRet24 && commandRet24.isBuffer) {
                 buffer = commandRet24;
                 commandRet24 = undefined;
             }
-            buffer.write(commandRet24, true);
-            buffer.write('" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-decade-panel-tbody-');
-            var id25 = scope.resolve(["id"]);
-            buffer.write(id25, true);
-            buffer.write('">\n        ');
-            var option26 = {};
-            var params27 = [];
-            params27.push('date/picker/decade-panel/decades-xtpl');
-            option26.params = params27;
-            require("date/picker/decade-panel/decades-xtpl");
-            option26.params[0] = module.resolve(option26.params[0]);
-            var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 24, payload);
-            if (commandRet28 && commandRet28.isBuffer) {
-                buffer = commandRet28;
-                commandRet28 = undefined;
-            }
-            buffer.write(commandRet28, false);
+            buffer.write(commandRet24, false);
             buffer.write('\n        </tbody>\n    </table>\n</div>');
             return buffer;
         };

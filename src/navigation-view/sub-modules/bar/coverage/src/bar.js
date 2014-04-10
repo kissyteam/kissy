@@ -893,13 +893,13 @@ KISSY.add(function(S, require) {
   titleEl: {}, 
   title: {
   value: '', 
-  view: 1}, 
+  render: 1},
   withBackButton: {
   value: 1}, 
   withTitle: {
   value: 1, 
-  view: 1}, 
+  render: 1},
   backText: {
   value: 'Back', 
-  view: 1}}});
+  render: 1}}});
 });

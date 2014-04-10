@@ -5,8 +5,8 @@ KISSY.add(function (S, require, exports, module) {
             var engine = this,
                 nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
-            if ("1.50" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+            if ("5.0.0" !== S.version) {
+                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
@@ -81,7 +81,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('/global-min.js,');
                 var id17 = scope.resolve(["path"]);
                 buffer.write(id17, true);
-                buffer.write('/detail/alias.js,');
+                buffer.write('/detail/polyfill.js,');
                 var id18 = scope.resolve(["path"]);
                 buffer.write(id18, true);
                 buffer.write('/deps.js,');

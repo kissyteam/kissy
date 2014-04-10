@@ -84,7 +84,7 @@ KISSY.add(function (S, require) {
                 value: false
             },
             value: {
-                view: 1
+                render: 1
             },
             yearPanel: {
                 valueFn: setUpYearPanel

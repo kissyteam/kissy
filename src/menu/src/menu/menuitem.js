@@ -98,11 +98,6 @@ KISSY.add(function (S, require) {
             return $el && ($el[0] === element || $el.contains(element));
         }
     }, {
-        HTML_PARSER: {
-            selectable: function (el) {
-                return el.hasClass(this.getBaseCssClass('selectable'));
-            }
-        },
         ATTRS: {
             focusable: {
                 value: false
@@ -122,7 +117,10 @@ KISSY.add(function (S, require) {
              */
             selectable: {
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function (el) {
+                    return el.hasClass(this.getBaseCssClass('selectable'));
+                }
             },
 
             /**
@@ -159,7 +157,7 @@ KISSY.add(function (S, require) {
              */
             selected: {
                 sync: 0,
-                view: 1
+                render: 1
             }
         },
         xclass: 'menuitem'

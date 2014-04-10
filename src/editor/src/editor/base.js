@@ -13,15 +13,9 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Component.Control
      */
     return Control.extend({
-        beforeCreateDom: function (renderData, childrenElSelectors) {
+        beforeCreateDom: function (renderData) {
             S.mix(renderData, {
                 mobile: S.UA.mobile
-            });
-
-            S.mix(childrenElSelectors, {
-                textarea: '#ks-editor-textarea-{id}',
-                toolBarEl: '#ks-editor-tools-{id}',
-                statusBarEl: '#ks-editor-status-{id}'
             });
         }
     }, {
@@ -42,10 +36,14 @@ KISSY.add(function (S, require) {
              * textarea
              * @type {KISSY.Node}
              */
-            textarea: {},
+            textarea: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('textarea');
+                }
+            },
 
             textareaAttrs: {
-                view: 1,
+                render: 1,
                 sync: 0
             },
 
@@ -75,13 +73,21 @@ KISSY.add(function (S, require) {
              * toolbar element
              * @type {KISSY.Node}
              */
-            toolBarEl: {},
+            toolBarEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('tools');
+                }
+            },
 
             /**
              * status bar element
              * @type {KISSY.Node}
              */
-            statusBarEl: {},
+            statusBarEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('status');
+                }
+            },
 
             handleGestureEvents: {
                 value: false
@@ -98,7 +104,7 @@ KISSY.add(function (S, require) {
              * Defaults to: wysiswyg mode
              */
             mode: {
-                view: 1,
+                render: 1,
                 value: 1
             },
 
@@ -107,7 +113,7 @@ KISSY.add(function (S, require) {
              * @type {String}
              */
             data: {
-                view: 1,
+                render: 1,
                 sync: 0
             },
 

@@ -5,8 +5,8 @@ KISSY.add(function (S, require, exports, module) {
             var engine = this,
                 nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
-            if ("1.50" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+            if ("5.0.0" !== S.version) {
+                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,

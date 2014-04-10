@@ -39,7 +39,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             checked: {
-                view: 1,
+                render: 1,
                 sync: 0
             },
             contentTpl: {

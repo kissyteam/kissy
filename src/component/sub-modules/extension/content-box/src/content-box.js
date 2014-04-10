@@ -20,12 +20,6 @@ KISSY.add(function (S, require) {
     }
 
     ContentBox.prototype = {
-        __beforeCreateDom: function (renderData, childrenElSelectors) {
-            S.mix(childrenElSelectors, {
-                contentEl: '#ks-content-{id}'
-            });
-        },
-
         __createDom: function () {
             shortcut(this);
         },
@@ -53,14 +47,16 @@ KISSY.add(function (S, require) {
         ATTRS: {
             contentTpl: {
                 value: ContentTpl
-            }
-        },
-        HTML_PARSER: {
-            content: function (el) {
-                return el.one('.' + this.getBaseCssClass('content')).html();
             },
-            contentEl: function (el) {
-                return el.one('.' + this.getBaseCssClass('content'));
+            contentEl: {
+                selector: function () {
+                    return'.' + this.getBaseCssClass('content');
+                }
+            },
+            content: {
+                parse: function () {
+                    return this.get('contentEl').html();
+                }
             }
         }
     });

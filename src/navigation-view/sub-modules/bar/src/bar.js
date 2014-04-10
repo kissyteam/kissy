@@ -152,14 +152,6 @@ KISSY.add(function (S, require) {
             });
         },
 
-        beforeCreateDom: function (renderData, childrenElSelectors) {
-            S.mix(childrenElSelectors, {
-                centerEl: '#ks-navigation-bar-center-{id}',
-                contentEl: '#ks-navigation-bar-content-{id}',
-                titleEl: '#ks-navigation-bar-title-{id}'
-            });
-        },
-
         renderUI: function () {
             var self = this,
                 prefixCls = self.get('prefixCls');
@@ -286,11 +278,12 @@ KISSY.add(function (S, require) {
         },
 
         _onSetTitle: function (v) {
-            var titleEl=this.get('titleEl');
+            var titleEl = this.get('titleEl');
             if (titleEl) {
                 titleEl.html(v);
             }
         },
+
         _onSetBackText: function (v) {
             if (this._backBtn) {
                 this._backBtn.set('content', v);
@@ -309,12 +302,24 @@ KISSY.add(function (S, require) {
             focusable: {
                 value: false
             },
-            centerEl: {},
-            contentEl: {},
-            titleEl: {},
+            centerEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('center');
+                }
+            },
+            contentEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('content');
+                }
+            },
+            titleEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('title');
+                }
+            },
             title: {
                 value: '',
-                view: 1,
+                render: 1,
                 sync: 0
             },
             withBackButton: {
@@ -322,12 +327,12 @@ KISSY.add(function (S, require) {
             },
             withTitle: {
                 value: 1,
-                view: 1,
+                render: 1,
                 sync: 0
             },
             backText: {
                 value: 'Back',
-                view: 1,
+                render: 1,
                 sync: 0
             }
         }

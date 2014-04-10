@@ -35,12 +35,6 @@ KISSY.add(function (S, require) {
                 .attr('aria-selected', !!v);
         }
     }, {
-        HTML_PARSER: {
-            selected: function (el) {
-                return el.hasClass(this.getBaseCssClass('selected'));
-            }
-        },
-
         ATTRS: {
             handleGestureEvents: {
                 value: false
@@ -56,8 +50,11 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             selected: {
-                view: 1,
-                sync: 0
+                render: 1,
+                sync: 0,
+                parse: function (el) {
+                    return el.hasClass(this.getBaseCssClass('selected'));
+                }
             }
         },
         xclass: 'tabs-tab'

@@ -1,7 +1,6 @@
 {{#block ('ks-overlay-closable')}}
     {{#if (closable)}}
         <a href="javascript:void('close')"
-           id="ks-overlay-close-{{id}}"
            class="{{getBaseCssClasses ('close')}}"
            role='button'>
             <span class="{{getBaseCssClasses ('close-x')}}">close</span>
@@ -9,8 +8,7 @@
     {{/if}}
 {{/block}}
 
-<div id="ks-content-{{id}}"
-     class="{{getBaseCssClasses ('content')}}">
+<div class="{{getBaseCssClasses ('content')}}">
     {{#block ('ks-overlay-content')}}
         {{{content}}}
     {{/block}}

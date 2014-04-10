@@ -1,6 +1,5 @@
 <div class="{{getBaseCssClasses ('header')}}">
-    <a id="ks-date-picker-year-panel-previous-decade-btn-{{id}}"
-       class="{{getBaseCssClasses ('prev-decade-btn')}}"
+    <a class="{{getBaseCssClasses ('prev-decade-btn')}}"
        href="#"
        role="button"
        title="{{previousDecadeLabel}}"
@@ -11,16 +10,14 @@
        role="button"
        href="#"
        hidefocus="on"
-       title="{{decadeSelectLabel}}"
-       id="ks-date-picker-year-panel-decade-select-{{id}}">
-            <span id="ks-date-picker-year-panel-decade-select-content-{{id}}">
+       title="{{decadeSelectLabel}}">
+            <span>
                 {{startYear}}-{{endYear}}
             </span>
         <span class="{{getBaseCssClasses ('decade-select-arrow')}}">x</span>
     </a>
 
-    <a id="ks-date-picker-year-panel-next-decade-btn-{{id}}"
-       class="{{getBaseCssClasses ('next-decade-btn')}}"
+    <a class="{{getBaseCssClasses ('next-decade-btn')}}"
        href="#"
        role="button"
        title="{{nextDecadeLabel}}"
@@ -29,7 +26,7 @@
 </div>
 <div class="{{getBaseCssClasses ('body')}}">
     <table class="{{getBaseCssClasses ('table')}}" cellspacing="0" role="grid">
-        <tbody id="ks-date-picker-year-panel-tbody-{{id}}">
+        <tbody>
         {{{include ("date/picker/year-panel/years-xtpl")}}}
         </tbody>
     </table>

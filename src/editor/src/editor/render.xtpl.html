@@ -1,5 +1,4 @@
-<div class="{{prefixCls}}editor-tools"
-     id="ks-editor-tools-{{id}}">
+<div class="{{prefixCls}}editor-tools">
 
 </div>
 
@@ -13,13 +12,9 @@ ios 不能放在 iframe 上！
 {{#if (mobile)}}
 style="overflow:scroll;-webkit-overflow-scrolling:touch;"
 {{/if}}
-
-id="ks-editor-textarea-wrap-{{id}}"
 >
 
-<textarea
-        id="ks-editor-textarea-{{id}}"
-        class="{{prefixCls}}editor-textarea"
+<textarea class="{{prefixCls}}editor-textarea"
 
 {{#each (textareaAttrs)}}
 {{xindex}}="{{this}}"
@@ -33,7 +28,6 @@ style="display:none"
 
 </div>
 
-<div class="{{prefixCls}}editor-status"
-     id="ks-editor-status-{{id}}">
+<div class="{{prefixCls}}editor-status">
 
 </div>

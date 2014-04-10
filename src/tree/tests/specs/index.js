@@ -263,6 +263,8 @@ KISSY.add(function (S, DOM, Tree, Node) {
                 // check length
                 expect(tree.get('children').length).toBe(2);
 
+                S.log(first.get('el')[0].innerHTML)
+
                 // 选中
                 jasmine.simulate(first.get('checkIconEl')[0], 'click');
                 expect(first.get('checkState')).toBe(CheckState.CHECK);

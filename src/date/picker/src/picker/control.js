@@ -253,7 +253,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             value: {
-                view: 1,
+                render: 1,
                 valueFn: function () {
                     var date = new GregorianCalendar();
                     date.setTime(S.now());
@@ -314,7 +314,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             showToday: {
-                view: 1,
+                render: 1,
                 value: true
             },
             /**
@@ -326,11 +326,11 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             showClear: {
-                view: 1,
+                render: 1,
                 value: true
             },
             clear: {
-                view: 1,
+                render: 1,
                 value: false
             },
             /**
@@ -342,7 +342,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             showWeekNumber: {
-                view: 1,
+                render: 1,
                 value: true
             },
             xrender: {

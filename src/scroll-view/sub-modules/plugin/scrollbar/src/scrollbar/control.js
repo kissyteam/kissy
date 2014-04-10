@@ -202,18 +202,12 @@ KISSY.add(function (S, require) {
             self.scrollView = self.get('scrollView');
         },
 
-        beforeCreateDom: function (renderData, childrenElSelectors) {
+        beforeCreateDom: function (renderData) {
             renderData.elCls.push(renderData.prefixCls + 'scrollbar-' + renderData.axis);
-            S.mix(childrenElSelectors, {
-                dragEl: '#ks-scrollbar-drag-{id}',
-                downBtn: '#ks-scrollbar-arrow-down-{id}',
-                upBtn: '#ks-scrollbar-arrow-up-{id}',
-                trackEl: '#ks-scrollbar-track-{id}'
-            });
         },
 
         createDom: function () {
-            var self=this;
+            var self = this;
             self.$dragEl = self.get('dragEl');
             self.$trackEl = self.get('trackEl');
             self.$downBtn = self.get('downBtn');
@@ -318,7 +312,7 @@ KISSY.add(function (S, require) {
             },
 
             axis: {
-                view: 1
+                render: 1
             },
 
             /**
@@ -359,7 +353,7 @@ KISSY.add(function (S, require) {
                     }
                     return v;
                 },
-                view: 1
+                render: 1
             },
 
             dragHeight: {
@@ -370,29 +364,41 @@ KISSY.add(function (S, require) {
                     }
                     return v;
                 },
-                view: 1
+                render: 1
             },
 
             dragLeft: {
-                view: 1,
+                render: 1,
                 value: 0
             },
 
             dragTop: {
-                view: 1,
+                render: 1,
                 value: 0
             },
 
             dragEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('drag');
+                }
             },
 
             downBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('arrow-down');
+                }
             },
 
             upBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('arrow-up');
+                }
             },
 
             trackEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('track');
+                }
             },
 
             focusable: {

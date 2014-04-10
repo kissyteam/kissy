@@ -19,130 +19,118 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands.block,
                 macroCommand = nativeCommands.macro,
                 debuggerCommand = nativeCommands["debugger"];
-            buffer.write('<div id="ks-scrollbar-arrow-up-');
-            var id0 = scope.resolve(["id"]);
-            buffer.write(id0, true);
-            buffer.write('"\n        class="');
-            var option1 = {
+            buffer.write('<div class="');
+            var option0 = {
                 escape: 1
             };
-            var params2 = [];
-            var id3 = scope.resolve(["axis"]);
-            var exp4 = id3;
-            exp4 = (id3) + ('-arrow-up');
-            params2.push(exp4);
-            option1.params = params2;
-            var commandRet5 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-            if (commandRet5 && commandRet5.isBuffer) {
-                buffer = commandRet5;
-                commandRet5 = undefined;
+            var params1 = [];
+            var id2 = scope.resolve(["axis"]);
+            var exp3 = id2;
+            exp3 = (id2) + ('-arrow-up');
+            params1.push(exp3);
+            option0.params = params1;
+            var commandRet4 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
+            if (commandRet4 && commandRet4.isBuffer) {
+                buffer = commandRet4;
+                commandRet4 = undefined;
             }
-            buffer.write(commandRet5, true);
-            buffer.write('">\n    <a href="javascript:void(\'up\')">up</a>\n</div>\n<div id="ks-scrollbar-arrow-down-');
-            var id6 = scope.resolve(["id"]);
-            buffer.write(id6, true);
-            buffer.write('"\n        class="');
-            var option7 = {
+            buffer.write(commandRet4, true);
+            buffer.write('">\n    <a href="javascript:void(\'up\')">up</a>\n</div>\n<div class="');
+            var option5 = {
                 escape: 1
             };
-            var params8 = [];
-            var id9 = scope.resolve(["axis"]);
-            var exp10 = id9;
-            exp10 = (id9) + ('-arrow-down');
-            params8.push(exp10);
-            option7.params = params8;
-            var commandRet11 = callCommandUtil(engine, scope, option7, buffer, "getBaseCssClasses", 6);
-            if (commandRet11 && commandRet11.isBuffer) {
-                buffer = commandRet11;
-                commandRet11 = undefined;
+            var params6 = [];
+            var id7 = scope.resolve(["axis"]);
+            var exp8 = id7;
+            exp8 = (id7) + ('-arrow-down');
+            params6.push(exp8);
+            option5.params = params6;
+            var commandRet9 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 4);
+            if (commandRet9 && commandRet9.isBuffer) {
+                buffer = commandRet9;
+                commandRet9 = undefined;
             }
-            buffer.write(commandRet11, true);
-            buffer.write('">\n    <a href="javascript:void(\'down\')">down</a>\n</div>\n<div id="ks-scrollbar-track-');
-            var id12 = scope.resolve(["id"]);
-            buffer.write(id12, true);
-            buffer.write('"\n     class="');
-            var option13 = {
+            buffer.write(commandRet9, true);
+            buffer.write('">\n    <a href="javascript:void(\'down\')">down</a>\n</div>\n<div class="');
+            var option10 = {
                 escape: 1
             };
-            var params14 = [];
-            var id15 = scope.resolve(["axis"]);
-            var exp16 = id15;
-            exp16 = (id15) + ('-track');
-            params14.push(exp16);
-            option13.params = params14;
-            var commandRet17 = callCommandUtil(engine, scope, option13, buffer, "getBaseCssClasses", 10);
-            if (commandRet17 && commandRet17.isBuffer) {
-                buffer = commandRet17;
-                commandRet17 = undefined;
+            var params11 = [];
+            var id12 = scope.resolve(["axis"]);
+            var exp13 = id12;
+            exp13 = (id12) + ('-track');
+            params11.push(exp13);
+            option10.params = params11;
+            var commandRet14 = callCommandUtil(engine, scope, option10, buffer, "getBaseCssClasses", 7);
+            if (commandRet14 && commandRet14.isBuffer) {
+                buffer = commandRet14;
+                commandRet14 = undefined;
             }
-            buffer.write(commandRet17, true);
-            buffer.write('">\n<div id="ks-scrollbar-drag-');
-            var id18 = scope.resolve(["id"]);
-            buffer.write(id18, true);
-            buffer.write('"\n     class="');
-            var option19 = {
-                escape: 1
-            };
-            var params20 = [];
-            var id21 = scope.resolve(["axis"]);
-            var exp22 = id21;
-            exp22 = (id21) + ('-drag');
-            params20.push(exp22);
-            option19.params = params20;
-            var commandRet23 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 12);
-            if (commandRet23 && commandRet23.isBuffer) {
-                buffer = commandRet23;
-                commandRet23 = undefined;
-            }
-            buffer.write(commandRet23, true);
+            buffer.write(commandRet14, true);
             buffer.write('">\n<div class="');
-            var option24 = {
+            var option15 = {
                 escape: 1
             };
-            var params25 = [];
-            var id26 = scope.resolve(["axis"]);
-            var exp27 = id26;
-            exp27 = (id26) + ('-drag-top');
-            params25.push(exp27);
-            option24.params = params25;
-            var commandRet28 = callCommandUtil(engine, scope, option24, buffer, "getBaseCssClasses", 13);
-            if (commandRet28 && commandRet28.isBuffer) {
-                buffer = commandRet28;
-                commandRet28 = undefined;
+            var params16 = [];
+            var id17 = scope.resolve(["axis"]);
+            var exp18 = id17;
+            exp18 = (id17) + ('-drag');
+            params16.push(exp18);
+            option15.params = params16;
+            var commandRet19 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 8);
+            if (commandRet19 && commandRet19.isBuffer) {
+                buffer = commandRet19;
+                commandRet19 = undefined;
             }
-            buffer.write(commandRet28, true);
+            buffer.write(commandRet19, true);
+            buffer.write('">\n<div class="');
+            var option20 = {
+                escape: 1
+            };
+            var params21 = [];
+            var id22 = scope.resolve(["axis"]);
+            var exp23 = id22;
+            exp23 = (id22) + ('-drag-top');
+            params21.push(exp23);
+            option20.params = params21;
+            var commandRet24 = callCommandUtil(engine, scope, option20, buffer, "getBaseCssClasses", 9);
+            if (commandRet24 && commandRet24.isBuffer) {
+                buffer = commandRet24;
+                commandRet24 = undefined;
+            }
+            buffer.write(commandRet24, true);
             buffer.write('">\n</div>\n<div class="');
-            var option29 = {
+            var option25 = {
                 escape: 1
             };
-            var params30 = [];
-            var id31 = scope.resolve(["axis"]);
-            var exp32 = id31;
-            exp32 = (id31) + ('-drag-center');
-            params30.push(exp32);
-            option29.params = params30;
-            var commandRet33 = callCommandUtil(engine, scope, option29, buffer, "getBaseCssClasses", 15);
-            if (commandRet33 && commandRet33.isBuffer) {
-                buffer = commandRet33;
-                commandRet33 = undefined;
+            var params26 = [];
+            var id27 = scope.resolve(["axis"]);
+            var exp28 = id27;
+            exp28 = (id27) + ('-drag-center');
+            params26.push(exp28);
+            option25.params = params26;
+            var commandRet29 = callCommandUtil(engine, scope, option25, buffer, "getBaseCssClasses", 11);
+            if (commandRet29 && commandRet29.isBuffer) {
+                buffer = commandRet29;
+                commandRet29 = undefined;
             }
-            buffer.write(commandRet33, true);
+            buffer.write(commandRet29, true);
             buffer.write('">\n</div>\n<div class="');
-            var option34 = {
+            var option30 = {
                 escape: 1
             };
-            var params35 = [];
-            var id36 = scope.resolve(["axis"]);
-            var exp37 = id36;
-            exp37 = (id36) + ('-drag-bottom');
-            params35.push(exp37);
-            option34.params = params35;
-            var commandRet38 = callCommandUtil(engine, scope, option34, buffer, "getBaseCssClasses", 17);
-            if (commandRet38 && commandRet38.isBuffer) {
-                buffer = commandRet38;
-                commandRet38 = undefined;
+            var params31 = [];
+            var id32 = scope.resolve(["axis"]);
+            var exp33 = id32;
+            exp33 = (id32) + ('-drag-bottom');
+            params31.push(exp33);
+            option30.params = params31;
+            var commandRet34 = callCommandUtil(engine, scope, option30, buffer, "getBaseCssClasses", 13);
+            if (commandRet34 && commandRet34.isBuffer) {
+                buffer = commandRet34;
+                commandRet34 = undefined;
             }
-            buffer.write(commandRet38, true);
+            buffer.write(commandRet34, true);
             buffer.write('">\n</div>\n</div>\n</div>');
             return buffer;
         };

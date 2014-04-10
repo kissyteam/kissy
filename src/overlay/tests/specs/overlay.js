@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
+KISSY.add(function (S, UA, Node, Overlay, ResizePlugin) {
     var Dom = S.require('dom'),
         $ = Node.all;
     var ie = S.UA.ieMode;
@@ -385,5 +385,5 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
         });
     });
 }, {
-    requires: "event,ua,node,overlay,component/plugin/resize".split(',')
+    requires: "ua,node,overlay,component/plugin/resize".split(',')
 });

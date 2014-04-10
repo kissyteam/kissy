@@ -38,35 +38,32 @@ KISSY.add(function (S, require, exports, module) {
                 option2.params = params3;
                 option2.fn = function (scope, buffer) {
 
-                    buffer.write('\n        <a href="javascript:void(\'close\')"\n           id="ks-overlay-close-');
-                    var id5 = scope.resolve(["id"]);
-                    buffer.write(id5, true);
-                    buffer.write('"\n           class="');
-                    var option6 = {
+                    buffer.write('\n        <a href="javascript:void(\'close\')"\n           class="');
+                    var option5 = {
                         escape: 1
                     };
-                    var params7 = [];
-                    params7.push('close');
-                    option6.params = params7;
-                    var commandRet8 = callCommandUtil(engine, scope, option6, buffer, "getBaseCssClasses", 5);
-                    if (commandRet8 && commandRet8.isBuffer) {
-                        buffer = commandRet8;
-                        commandRet8 = undefined;
+                    var params6 = [];
+                    params6.push('close');
+                    option5.params = params6;
+                    var commandRet7 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 4);
+                    if (commandRet7 && commandRet7.isBuffer) {
+                        buffer = commandRet7;
+                        commandRet7 = undefined;
                     }
-                    buffer.write(commandRet8, true);
+                    buffer.write(commandRet7, true);
                     buffer.write('"\n           role=\'button\'>\n            <span class="');
-                    var option9 = {
+                    var option8 = {
                         escape: 1
                     };
-                    var params10 = [];
-                    params10.push('close-x');
-                    option9.params = params10;
-                    var commandRet11 = callCommandUtil(engine, scope, option9, buffer, "getBaseCssClasses", 7);
-                    if (commandRet11 && commandRet11.isBuffer) {
-                        buffer = commandRet11;
-                        commandRet11 = undefined;
+                    var params9 = [];
+                    params9.push('close-x');
+                    option8.params = params9;
+                    var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 6);
+                    if (commandRet10 && commandRet10.isBuffer) {
+                        buffer = commandRet10;
+                        commandRet10 = undefined;
                     }
-                    buffer.write(commandRet11, true);
+                    buffer.write(commandRet10, true);
                     buffer.write('">close</span>\n        </a>\n    ');
 
                     return buffer;
@@ -77,39 +74,36 @@ KISSY.add(function (S, require, exports, module) {
                 return buffer;
             };
             buffer = blockCommand.call(engine, scope, option0, buffer, 1, payload);
-            buffer.write('\n\n<div id="ks-content-');
-            var id12 = scope.resolve(["id"]);
-            buffer.write(id12, true);
-            buffer.write('"\n     class="');
-            var option13 = {
+            buffer.write('\n\n<div class="');
+            var option11 = {
                 escape: 1
             };
-            var params14 = [];
-            params14.push('content');
-            option13.params = params14;
-            var commandRet15 = callCommandUtil(engine, scope, option13, buffer, "getBaseCssClasses", 13);
-            if (commandRet15 && commandRet15.isBuffer) {
-                buffer = commandRet15;
-                commandRet15 = undefined;
+            var params12 = [];
+            params12.push('content');
+            option11.params = params12;
+            var commandRet13 = callCommandUtil(engine, scope, option11, buffer, "getBaseCssClasses", 11);
+            if (commandRet13 && commandRet13.isBuffer) {
+                buffer = commandRet13;
+                commandRet13 = undefined;
             }
-            buffer.write(commandRet15, true);
+            buffer.write(commandRet13, true);
             buffer.write('">\n    ');
-            var option16 = {
+            var option14 = {
                 escape: 1
             };
-            var params17 = [];
-            params17.push('ks-overlay-content');
-            option16.params = params17;
-            option16.fn = function (scope, buffer) {
+            var params15 = [];
+            params15.push('ks-overlay-content');
+            option14.params = params15;
+            option14.fn = function (scope, buffer) {
 
                 buffer.write('\n        ');
-                var id18 = scope.resolve(["content"]);
-                buffer.write(id18, false);
+                var id16 = scope.resolve(["content"]);
+                buffer.write(id16, false);
                 buffer.write('\n    ');
 
                 return buffer;
             };
-            buffer = blockCommand.call(engine, scope, option16, buffer, 14, payload);
+            buffer = blockCommand.call(engine, scope, option14, buffer, 12, payload);
             buffer.write('\n</div>');
             return buffer;
         };

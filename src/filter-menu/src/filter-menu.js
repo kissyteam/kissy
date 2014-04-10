@@ -16,14 +16,6 @@ KISSY.add(function (S, require) {
      * @class KISSY.FilterMenu
      */
     return Menu.extend([ContentBox], {
-            beforeCreateDom: function (renderData, childrenElSelectors) {
-                S.mix(childrenElSelectors, {
-                    placeholderEl: '#ks-filter-menu-placeholder-{id}',
-                    filterInputWrap: '#ks-filter-menu-input-wrap-{id}',
-                    filterInput: '#ks-filter-menu-input-{id}'
-                });
-            },
-
             bindUI: function () {
                 var self = this,
                     filterInput = self.get('filterInput');
@@ -182,21 +174,21 @@ KISSY.add(function (S, require) {
             }
         },
         {
-            HTML_PARSER: {
-                placeholderEl: function (el) {
-                    return el.one('.' + this.getBaseCssClass('placeholder'));
-                },
-                filterInputWrap: function (el) {
-                    return el.one('.' + this.getBaseCssClass('input-wrap'));
-                },
-                filterInput: function (el) {
-                    return el.one('.' + this.getBaseCssClass('input'));
-                }
-            },
-
             ATTRS: {
                 allowTextSelection: {
                     value: true
+                },
+
+                filterInput: {
+                    selector: function () {
+                        return ('.' + this.getBaseCssClass('input'));
+                    }
+                },
+
+                filterInputWrap: {
+                    selector: function () {
+                        return ('.' + this.getBaseCssClass('input-wrap'));
+                    }
                 },
 
                 /**
@@ -207,8 +199,18 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 placeholder: {
-                    view: 1,
-                    sync:0
+                    render: 1,
+                    sync: 0,
+                    parse: function () {
+                        var placeholderEl = this.get('placeholderEl');
+                        return placeholderEl && placeholderEl.html();
+                    }
+                },
+
+                placeholderEl: {
+                    selector: function () {
+                        return ('.' + this.getBaseCssClass('placeholder'));
+                    }
                 },
 
                 /**

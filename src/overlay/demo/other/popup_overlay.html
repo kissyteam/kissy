@@ -498,7 +498,7 @@
 
         <script>
 
-            KISSY.use('ua,event,node,overlay', function (S, UA, Event, Node, O) {
+            KISSY.use('ua,node,overlay', function (S, UA, Node, O) {
                 var popup = new O.Popup({
                     content: '<div class="loading" style="width:600px;height:200px;"> '
                             + '<div class="mask"></div> '
@@ -528,7 +528,7 @@
                     popup.hide();
                 });
                 if (UA.ie == 6) {
-                    Event.on(window, "scroll", function () {
+                    Node.one(window).on("scroll", function () {
                         if (popup.get('visible'))
                             popup.center();
                     });

@@ -101,30 +101,16 @@ KISSY.add(function (S, require) {
             }
         }
     }, {
-        HTML_PARSER: {
-            checkIconEl: function (el) {
-                return el.one('.' + this.getBaseCssClass(CHECK_CLS));
-            },
-            checkState: function (el) {
-                var checkIconEl = el.one('.' + this.getBaseCssClass(CHECK_CLS));
-                if (checkIconEl) {
-                    var allStates = ALL_STATES_CLS.split(/\s+/);
-                    for (var i = 0; i < allStates.length; i++) {
-                        if (checkIconEl.hasClass(this.getBaseCssClass(allStates[i]))) {
-                            return i;
-                        }
-                    }
-                }
-                return 0;
-            }
-        },
         ATTRS: {
             checkIconEl: {
+                selector: function () {
+                    return ('.' + this.getBaseCssClass(CHECK_CLS));
+                }
             },
 
             checkable: {
                 value: true,
-                view: 1,
+                render: 1,
                 sync: 0
             },
 
@@ -142,7 +128,19 @@ KISSY.add(function (S, require) {
                 // 2 全部都选了
                 value: 0,
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function () {
+                    var checkIconEl = this.get('checkIconEl');
+                    if (checkIconEl) {
+                        var allStates = ALL_STATES_CLS.split(/\s+/);
+                        for (var i = 0; i < allStates.length; i++) {
+                            if (checkIconEl.hasClass(this.getBaseCssClass(allStates[i]))) {
+                                return i;
+                            }
+                        }
+                    }
+                    return undefined;
+                }
             },
 
             defaultChildCfg: {

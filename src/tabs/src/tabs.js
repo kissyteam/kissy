@@ -309,13 +309,6 @@ KISSY.add(function (S, require) {
                 .addClass(self.getBaseCssClass(v));
         }
     }, {
-        HTML_PARSER: {
-            barOrientation: function (el) {
-                var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
-                return orientation && orientation[1] || 'top';
-            }
-        },
-
         ATTRS: {
             /**
              *  tabs config, eg: {title:'',content:''}
@@ -377,9 +370,13 @@ KISSY.add(function (S, require) {
              * @cfg {String} barOrientation
              */
             barOrientation: {
-                view: 1,
+                render: 1,
                 sync: 0,
-                value: 'top'
+                value: 'top',
+                parse: function (el) {
+                    var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
+                    return orientation && orientation[1] || undefined;
+                }
             }
         },
         xclass: 'tabs'

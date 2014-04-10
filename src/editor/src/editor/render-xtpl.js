@@ -22,82 +22,70 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('<div class="');
             var id0 = scope.resolve(["prefixCls"]);
             buffer.write(id0, true);
-            buffer.write('editor-tools"\n     id="ks-editor-tools-');
-            var id1 = scope.resolve(["id"]);
+            buffer.write('editor-tools">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios 不能放在 iframe 上！\n-->\n\n<div class="');
+            var id1 = scope.resolve(["prefixCls"]);
             buffer.write(id1, true);
-            buffer.write('">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios 不能放在 iframe 上！\n-->\n\n<div class="');
-            var id2 = scope.resolve(["prefixCls"]);
-            buffer.write(id2, true);
             buffer.write('editor-textarea-wrap"\n\n');
-            var option3 = {
+            var option2 = {
                 escape: 1
             };
-            var params4 = [];
-            var id5 = scope.resolve(["mobile"]);
-            params4.push(id5);
-            option3.params = params4;
-            option3.fn = function (scope, buffer) {
+            var params3 = [];
+            var id4 = scope.resolve(["mobile"]);
+            params3.push(id4);
+            option2.params = params3;
+            option2.fn = function (scope, buffer) {
 
                 buffer.write('\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option3, buffer, 13, payload);
-            buffer.write('\n\nid="ks-editor-textarea-wrap-');
-            var id6 = scope.resolve(["id"]);
-            buffer.write(id6, true);
-            buffer.write('"\n>\n\n<textarea\n        id="ks-editor-textarea-');
-            var id7 = scope.resolve(["id"]);
-            buffer.write(id7, true);
-            buffer.write('"\n        class="');
-            var id8 = scope.resolve(["prefixCls"]);
-            buffer.write(id8, true);
+            buffer = ifCommand.call(engine, scope, option2, buffer, 12, payload);
+            buffer.write('\n>\n\n<textarea class="');
+            var id5 = scope.resolve(["prefixCls"]);
+            buffer.write(id5, true);
             buffer.write('editor-textarea"\n\n');
-            var option9 = {
+            var option6 = {
                 escape: 1
             };
-            var params10 = [];
-            var id11 = scope.resolve(["textareaAttrs"]);
-            params10.push(id11);
-            option9.params = params10;
-            option9.fn = function (scope, buffer) {
+            var params7 = [];
+            var id8 = scope.resolve(["textareaAttrs"]);
+            params7.push(id8);
+            option6.params = params7;
+            option6.fn = function (scope, buffer) {
 
                 buffer.write('\n');
-                var id12 = scope.resolve(["xindex"]);
-                buffer.write(id12, true);
+                var id9 = scope.resolve(["xindex"]);
+                buffer.write(id9, true);
                 buffer.write('="');
-                var id13 = scope.resolve(["this"]);
-                buffer.write(id13, true);
+                var id10 = scope.resolve(["this"]);
+                buffer.write(id10, true);
                 buffer.write('"\n');
 
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option9, buffer, 24, payload);
+            buffer = eachCommand.call(engine, scope, option6, buffer, 19, payload);
             buffer.write('\n\n');
-            var option14 = {
+            var option11 = {
                 escape: 1
             };
-            var params15 = [];
-            var id16 = scope.resolve(["mode"]);
-            params15.push(id16);
-            option14.params = params15;
-            option14.fn = function (scope, buffer) {
+            var params12 = [];
+            var id13 = scope.resolve(["mode"]);
+            params12.push(id13);
+            option11.params = params12;
+            option11.fn = function (scope, buffer) {
 
                 buffer.write('\nstyle="display:none"\n');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option14, buffer, 28, payload);
+            buffer = ifCommand.call(engine, scope, option11, buffer, 23, payload);
             buffer.write('\n\n>');
-            var id17 = scope.resolve(["data"]);
-            buffer.write(id17, true);
+            var id14 = scope.resolve(["data"]);
+            buffer.write(id14, true);
             buffer.write('</textarea>\n\n</div>\n\n<div class="');
-            var id18 = scope.resolve(["prefixCls"]);
-            buffer.write(id18, true);
-            buffer.write('editor-status"\n     id="ks-editor-status-');
-            var id19 = scope.resolve(["id"]);
-            buffer.write(id19, true);
-            buffer.write('">\n\n</div>');
+            var id15 = scope.resolve(["prefixCls"]);
+            buffer.write(id15, true);
+            buffer.write('editor-status">\n\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

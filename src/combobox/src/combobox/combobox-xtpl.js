@@ -19,169 +19,160 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands.block,
                 macroCommand = nativeCommands.macro,
                 debuggerCommand = nativeCommands["debugger"];
-            buffer.write('<div id="ks-combobox-invalid-el-');
-            var id0 = scope.resolve(["id"]);
-            buffer.write(id0, true);
-            buffer.write('"\n     class="');
-            var option1 = {
+            buffer.write('<div class="');
+            var option0 = {
                 escape: 1
             };
-            var params2 = [];
-            params2.push('invalid-el');
-            option1.params = params2;
-            var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-            if (commandRet3 && commandRet3.isBuffer) {
-                buffer = commandRet3;
-                commandRet3 = undefined;
+            var params1 = [];
+            params1.push('invalid-el');
+            option0.params = params1;
+            var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
+            if (commandRet2 && commandRet2.isBuffer) {
+                buffer = commandRet2;
+                commandRet2 = undefined;
             }
-            buffer.write(commandRet3, true);
+            buffer.write(commandRet2, true);
             buffer.write('">\n    <div class="');
-            var option4 = {
+            var option3 = {
                 escape: 1
             };
-            var params5 = [];
-            params5.push('invalid-inner');
-            option4.params = params5;
-            var commandRet6 = callCommandUtil(engine, scope, option4, buffer, "getBaseCssClasses", 3);
-            if (commandRet6 && commandRet6.isBuffer) {
-                buffer = commandRet6;
-                commandRet6 = undefined;
+            var params4 = [];
+            params4.push('invalid-inner');
+            option3.params = params4;
+            var commandRet5 = callCommandUtil(engine, scope, option3, buffer, "getBaseCssClasses", 2);
+            if (commandRet5 && commandRet5.isBuffer) {
+                buffer = commandRet5;
+                commandRet5 = undefined;
             }
-            buffer.write(commandRet6, true);
+            buffer.write(commandRet5, true);
             buffer.write('"></div>\n</div>\n\n');
-            var option7 = {
+            var option6 = {
                 escape: 1
             };
-            var params8 = [];
-            var id9 = scope.resolve(["hasTrigger"]);
-            params8.push(id9);
-            option7.params = params8;
-            option7.fn = function (scope, buffer) {
+            var params7 = [];
+            var id8 = scope.resolve(["hasTrigger"]);
+            params7.push(id8);
+            option6.params = params7;
+            option6.fn = function (scope, buffer) {
 
-                buffer.write('\n<div id="ks-combobox-trigger-');
-                var id10 = scope.resolve(["id"]);
-                buffer.write(id10, true);
-                buffer.write('"\n     class="');
-                var option11 = {
+                buffer.write('\n<div class="');
+                var option9 = {
                     escape: 1
                 };
-                var params12 = [];
-                params12.push('trigger');
-                option11.params = params12;
-                var commandRet13 = callCommandUtil(engine, scope, option11, buffer, "getBaseCssClasses", 8);
-                if (commandRet13 && commandRet13.isBuffer) {
-                    buffer = commandRet13;
-                    commandRet13 = undefined;
+                var params10 = [];
+                params10.push('trigger');
+                option9.params = params10;
+                var commandRet11 = callCommandUtil(engine, scope, option9, buffer, "getBaseCssClasses", 6);
+                if (commandRet11 && commandRet11.isBuffer) {
+                    buffer = commandRet11;
+                    commandRet11 = undefined;
                 }
-                buffer.write(commandRet13, true);
+                buffer.write(commandRet11, true);
                 buffer.write('">\n    <div class="');
-                var option14 = {
+                var option12 = {
                     escape: 1
                 };
-                var params15 = [];
-                params15.push('trigger-inner');
-                option14.params = params15;
-                var commandRet16 = callCommandUtil(engine, scope, option14, buffer, "getBaseCssClasses", 9);
-                if (commandRet16 && commandRet16.isBuffer) {
-                    buffer = commandRet16;
-                    commandRet16 = undefined;
+                var params13 = [];
+                params13.push('trigger-inner');
+                option12.params = params13;
+                var commandRet14 = callCommandUtil(engine, scope, option12, buffer, "getBaseCssClasses", 7);
+                if (commandRet14 && commandRet14.isBuffer) {
+                    buffer = commandRet14;
+                    commandRet14 = undefined;
                 }
-                buffer.write(commandRet16, true);
+                buffer.write(commandRet14, true);
                 buffer.write('">&#x25BC;</div>\n</div>\n');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option7, buffer, 6, payload);
+            buffer = ifCommand.call(engine, scope, option6, buffer, 5, payload);
             buffer.write('\n\n<div class="');
-            var option17 = {
+            var option15 = {
                 escape: 1
             };
-            var params18 = [];
-            params18.push('input-wrap');
-            option17.params = params18;
-            var commandRet19 = callCommandUtil(engine, scope, option17, buffer, "getBaseCssClasses", 13);
-            if (commandRet19 && commandRet19.isBuffer) {
-                buffer = commandRet19;
-                commandRet19 = undefined;
+            var params16 = [];
+            params16.push('input-wrap');
+            option15.params = params16;
+            var commandRet17 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 11);
+            if (commandRet17 && commandRet17.isBuffer) {
+                buffer = commandRet17;
+                commandRet17 = undefined;
             }
-            buffer.write(commandRet19, true);
+            buffer.write(commandRet17, true);
             buffer.write('">\n\n    <input id="ks-combobox-input-');
-            var id20 = scope.resolve(["id"]);
-            buffer.write(id20, true);
+            var id18 = scope.resolve(["id"]);
+            buffer.write(id18, true);
             buffer.write('"\n           aria-haspopup="true"\n           aria-autocomplete="list"\n           aria-haspopup="true"\n           role="autocomplete"\n           aria-expanded="false"\n\n    ');
-            var option21 = {
+            var option19 = {
                 escape: 1
             };
-            var params22 = [];
-            var id23 = scope.resolve(["disabled"]);
-            params22.push(id23);
-            option21.params = params22;
-            option21.fn = function (scope, buffer) {
+            var params20 = [];
+            var id21 = scope.resolve(["disabled"]);
+            params20.push(id21);
+            option19.params = params20;
+            option19.fn = function (scope, buffer) {
 
                 buffer.write('\n    disabled\n    ');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option21, buffer, 22, payload);
+            buffer = ifCommand.call(engine, scope, option19, buffer, 20, payload);
             buffer.write('\n\n    autocomplete="off"\n    class="');
-            var option24 = {
+            var option22 = {
                 escape: 1
             };
-            var params25 = [];
-            params25.push('input');
-            option24.params = params25;
-            var commandRet26 = callCommandUtil(engine, scope, option24, buffer, "getBaseCssClasses", 27);
-            if (commandRet26 && commandRet26.isBuffer) {
-                buffer = commandRet26;
-                commandRet26 = undefined;
+            var params23 = [];
+            params23.push('input');
+            option22.params = params23;
+            var commandRet24 = callCommandUtil(engine, scope, option22, buffer, "getBaseCssClasses", 25);
+            if (commandRet24 && commandRet24.isBuffer) {
+                buffer = commandRet24;
+                commandRet24 = undefined;
             }
-            buffer.write(commandRet26, true);
+            buffer.write(commandRet24, true);
             buffer.write('"\n\n    value="');
-            var id27 = scope.resolve(["value"]);
-            buffer.write(id27, true);
-            buffer.write('"\n    />\n\n\n    <label id="ks-combobox-placeholder-');
-            var id28 = scope.resolve(["id"]);
-            buffer.write(id28, true);
-            buffer.write('"\n           for="ks-combobox-input-');
-            var id29 = scope.resolve(["id"]);
-            buffer.write(id29, true);
+            var id25 = scope.resolve(["value"]);
+            buffer.write(id25, true);
+            buffer.write('"\n    />\n\n\n    <label for="ks-combobox-input-');
+            var id26 = scope.resolve(["id"]);
+            buffer.write(id26, true);
             buffer.write('"\n            style=\'display:');
-            var option30 = {
+            var option27 = {
                 escape: 1
             };
-            var params31 = [];
-            var id32 = scope.resolve(["value"]);
-            params31.push(id32);
-            option30.params = params31;
-            option30.fn = function (scope, buffer) {
+            var params28 = [];
+            var id29 = scope.resolve(["value"]);
+            params28.push(id29);
+            option27.params = params28;
+            option27.fn = function (scope, buffer) {
 
                 buffer.write('none');
 
                 return buffer;
             };
-            option30.inverse = function (scope, buffer) {
+            option27.inverse = function (scope, buffer) {
 
                 buffer.write('block');
 
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option30, buffer, 35, payload);
+            buffer = ifCommand.call(engine, scope, option27, buffer, 32, payload);
             buffer.write(';\'\n    class="');
-            var option33 = {
+            var option30 = {
                 escape: 1
             };
-            var params34 = [];
-            params34.push('placeholder');
-            option33.params = params34;
-            var commandRet35 = callCommandUtil(engine, scope, option33, buffer, "getBaseCssClasses", 36);
-            if (commandRet35 && commandRet35.isBuffer) {
-                buffer = commandRet35;
-                commandRet35 = undefined;
+            var params31 = [];
+            params31.push('placeholder');
+            option30.params = params31;
+            var commandRet32 = callCommandUtil(engine, scope, option30, buffer, "getBaseCssClasses", 33);
+            if (commandRet32 && commandRet32.isBuffer) {
+                buffer = commandRet32;
+                commandRet32 = undefined;
             }
-            buffer.write(commandRet35, true);
+            buffer.write(commandRet32, true);
             buffer.write('">\n    ');
-            var id36 = scope.resolve(["placeholder"]);
-            buffer.write(id36, true);
+            var id33 = scope.resolve(["placeholder"]);
+            buffer.write(id33, true);
             buffer.write('\n    </label>\n</div>\n');
             return buffer;
         };

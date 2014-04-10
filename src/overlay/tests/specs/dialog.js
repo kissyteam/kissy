@@ -4,7 +4,7 @@
  */
 /*jshint quotmark:false*/
 KISSY.add(
-    function (S, Event, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
+    function (S, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
         var Dom = S.require('dom'), $ = Node.all;
         var Dialog = Overlay.Dialog;
         var ie = S.UA.ieMode;
@@ -217,5 +217,5 @@ KISSY.add(
             });
         });
     }, {
-        requires: "event,ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
+        requires: "ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
     });

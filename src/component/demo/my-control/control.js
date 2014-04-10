@@ -12,7 +12,7 @@ KISSY.add(function (S, Control, MyRender) {
             },
             checkEl: {},
             checked: {
-                view: 1,
+                render: 1,
                 value: false
             }
         }

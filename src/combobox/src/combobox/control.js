@@ -35,15 +35,6 @@ KISSY.add(function (S, require) {
         // if update input when press down or up key
         _savedValue: null,
 
-        beforeCreateDom: function (renderData, childrenElSelectors) {
-            S.mix(childrenElSelectors, {
-                input: '#ks-combobox-input-{id}',
-                trigger: '#ks-combobox-trigger-{id}',
-                invalidEl: '#ks-combobox-invalid-el-{id}',
-                placeholderEl: '#ks-combobox-placeholder-{id}'
-            });
-        },
-
         bindUI: function () {
             var self = this,
                 input = self.get('input');
@@ -327,24 +318,6 @@ KISSY.add(function (S, require) {
             this.get('input').attr('disabled', v);
         }
     }, {
-        HTML_PARSER: {
-            value: function (el) {
-                return el.one('.' + this.getBaseCssClass('input')).val();
-            },
-            input: function (el) {
-                return el.one('.' + this.getBaseCssClass('input'));
-            },
-            trigger: function (el) {
-                return el.one('.' + this.getBaseCssClass('trigger'));
-            },
-            invalidEl: function (el) {
-                return el.one('.' + this.getBaseCssClass('invalid-el'));
-            },
-            placeholderEl: function (el) {
-                return el.one('.' + this.getBaseCssClass('placeholder'));
-            }
-        },
-
         ATTRS: {
             contentTpl: {
                 value: ComboboxTpl
@@ -359,6 +332,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             input: {
+                selector: function () {
+                    return ('.' + this.getBaseCssClass('input'));
+                }
             },
 
             /**
@@ -371,7 +347,10 @@ KISSY.add(function (S, require) {
             value: {
                 value: '',
                 sync: 0,
-                view: 1
+                render: 1,
+                parse: function () {
+                    return this.get('input').val();
+                }
             },
 
             /**
@@ -379,6 +358,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             trigger: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('trigger');
+                }
             },
 
             /**
@@ -389,8 +371,12 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             placeholder: {
-                view: 1,
-                sync: 0
+                render: 1,
+                sync: 0,
+                parse: function () {
+                    var placeHolder = this.get('placeholderEl');
+                    return placeHolder && placeHolder.html();
+                }
             },
 
             /**
@@ -398,6 +384,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             placeholderEl: {
+                selector: function () {
+                    return ('.' + this.getBaseCssClass('placeholder'));
+                }
             },
 
             /**
@@ -416,6 +405,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             invalidEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('invalid-el');
+                }
             },
 
             allowTextSelection: {
@@ -433,7 +425,7 @@ KISSY.add(function (S, require) {
             hasTrigger: {
                 value: true,
                 sync: 0,
-                view: 1
+                render: 1
             },
 
             /**
@@ -484,7 +476,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             collapsed: {
-                view: 1,
+                render: 1,
                 sync: 0,
                 value: true
             },

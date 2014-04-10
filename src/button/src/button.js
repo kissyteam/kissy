@@ -96,7 +96,7 @@ KISSY.add(function (S, require) {
              */
             describedby: {
                 value: '',
-                view: 1,
+                render: 1,
                 sync: 0
             },
             /**
@@ -113,7 +113,7 @@ KISSY.add(function (S, require) {
              */
             tooltip: {
                 value: '',
-                view: 1,
+                render: 1,
                 sync: 0
             },
 
@@ -143,7 +143,7 @@ KISSY.add(function (S, require) {
              */
             checked: {
                 value: false,
-                view: 1,
+                render: 1,
                 sync: 0
             }
         },
