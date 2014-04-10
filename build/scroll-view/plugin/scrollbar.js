@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:49
+build time: Apr 10 20:09
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
     var params1 = [];
     var id2 = scope.resolve(["axis"]);
     var exp3 = id2;
-    exp3 = id2 + "-arrow-up";
+    exp3 = id2 + "-arrow-up arrow-up";
     params1.push(exp3);
     option0.params = params1;
     var commandRet4 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
@@ -37,7 +37,7 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
     var params6 = [];
     var id7 = scope.resolve(["axis"]);
     var exp8 = id7;
-    exp8 = id7 + "-arrow-down";
+    exp8 = id7 + "-arrow-down arrow-down";
     params6.push(exp8);
     option5.params = params6;
     var commandRet9 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 4);
@@ -51,7 +51,7 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
     var params11 = [];
     var id12 = scope.resolve(["axis"]);
     var exp13 = id12;
-    exp13 = id12 + "-track";
+    exp13 = id12 + "-track track";
     params11.push(exp13);
     option10.params = params11;
     var commandRet14 = callCommandUtil(engine, scope, option10, buffer, "getBaseCssClasses", 7);
@@ -65,7 +65,7 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
     var params16 = [];
     var id17 = scope.resolve(["axis"]);
     var exp18 = id17;
-    exp18 = id17 + "-drag";
+    exp18 = id17 + "-drag drag";
     params16.push(exp18);
     option15.params = params16;
     var commandRet19 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 8);
@@ -236,6 +236,16 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["ua", "component/control", "e
       self.hideTimer = null
     }
   }
+  function bindDrag(self, disabled) {
+    var action = disabled ? "detach" : "on";
+    if(!self.get("autoHide")) {
+      self.$dragEl[action]("dragstart mousedown", preventDefault)[action](DragType.DRAG_START, onDragStartHandler, self)[action](DragType.DRAG, onDragHandler, self);
+      S.each([self.$downBtn, self.$upBtn], function(b) {
+        b[action](BaseGesture.START, onUpDownBtnMouseDown, self)[action](BaseGesture.END, onUpDownBtnMouseUp, self)
+      });
+      self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self)
+    }
+  }
   var Feature = S.Feature;
   var isTransform3dSupported = Feature.isTransform3dSupported();
   var transformVendorInfo = Feature.getCssVendorInfo("transform");
@@ -271,7 +281,8 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["ua", "component/control", "e
     if(autoHide) {
       self.hideFn = S.bind(self.hide, self)
     }
-    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on("scrollTouchEnd" + SCROLLBAR_EVENT_NS, onScrollEnd, self).on("afterDisabledChange" + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on("reflow" + SCROLLBAR_EVENT_NS, onScrollViewReflow, self)
+    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on("scrollTouchEnd" + SCROLLBAR_EVENT_NS, onScrollEnd, self).on("afterDisabledChange" + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on("reflow" + SCROLLBAR_EVENT_NS, onScrollViewReflow, self);
+    bindDrag(self, self.get("disabled"))
   }, syncUI:function() {
     onScrollViewReflow.call(this)
   }, _onSetDragHeight:function(v) {
@@ -283,15 +294,8 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["ua", "component/control", "e
   }, _onSetDragTop:function(v) {
     this.dragEl.style.top = v + "px"
   }, _onSetDisabled:function(v) {
-    var self = this;
-    var action = v ? "detach" : "on";
-    if(!self.get("autoHide")) {
-      self.$dragEl[action]("dragstart mousedown", preventDefault)[action](DragType.DRAG_START, onDragStartHandler, self)[action](DragType.DRAG, onDragHandler, self);
-      S.each([self.$downBtn, self.$upBtn], function(b) {
-        b[action](BaseGesture.START, onUpDownBtnMouseDown, self)[action](BaseGesture.END, onUpDownBtnMouseUp, self)
-      });
-      self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self)
-    }
+    this.callSuper(v);
+    bindDrag(this, v)
   }, destructor:function() {
     this.scrollView.detach(SCROLLBAR_EVENT_NS);
     clearHideTimer(this)

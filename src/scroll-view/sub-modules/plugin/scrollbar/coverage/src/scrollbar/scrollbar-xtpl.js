@@ -355,31 +355,31 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['129'] = [];
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['129'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['129'][1].init(5353, 37, 'commandRet34 && commandRet34.isBuffer');
+_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['129'][1].init(5384, 37, 'commandRet34 && commandRet34.isBuffer');
 function visit29_129_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['113'][1].init(4695, 37, 'commandRet29 && commandRet29.isBuffer');
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['113'][1].init(4726, 37, 'commandRet29 && commandRet29.isBuffer');
 function visit28_113_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['97'][1].init(4037, 37, 'commandRet24 && commandRet24.isBuffer');
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['97'][1].init(4068, 37, 'commandRet24 && commandRet24.isBuffer');
 function visit27_97_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['81'][1].init(3391, 37, 'commandRet19 && commandRet19.isBuffer');
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['81'][1].init(3422, 37, 'commandRet19 && commandRet19.isBuffer');
 function visit26_81_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['65'][1].init(2749, 37, 'commandRet14 && commandRet14.isBuffer');
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['65'][1].init(2775, 37, 'commandRet14 && commandRet14.isBuffer');
 function visit25_65_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'][1].init(2053, 35, 'commandRet9 && commandRet9.isBuffer');
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'][1].init(2073, 35, 'commandRet9 && commandRet9.isBuffer');
 function visit24_49_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['33'][1].init(1369, 35, 'commandRet4 && commandRet4.isBuffer');
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['33'][1].init(1378, 35, 'commandRet4 && commandRet4.isBuffer');
 function visit23_33_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['33'][1].ranCondition(result);
   return result;
@@ -414,7 +414,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[28]++;
   var exp3 = id2;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[29]++;
-  exp3 = (id2) + ('-arrow-up');
+  exp3 = (id2) + ('-arrow-up arrow-up');
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[30]++;
   params1.push(exp3);
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[31]++;
@@ -442,7 +442,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[44]++;
   var exp8 = id7;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[45]++;
-  exp8 = (id7) + ('-arrow-down');
+  exp8 = (id7) + ('-arrow-down arrow-down');
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[46]++;
   params6.push(exp8);
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[47]++;
@@ -470,7 +470,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[60]++;
   var exp13 = id12;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[61]++;
-  exp13 = (id12) + ('-track');
+  exp13 = (id12) + ('-track track');
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[62]++;
   params11.push(exp13);
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[63]++;
@@ -498,7 +498,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[76]++;
   var exp18 = id17;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[77]++;
-  exp18 = (id17) + ('-drag');
+  exp18 = (id17) + ('-drag drag');
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[78]++;
   params16.push(exp18);
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[79]++;

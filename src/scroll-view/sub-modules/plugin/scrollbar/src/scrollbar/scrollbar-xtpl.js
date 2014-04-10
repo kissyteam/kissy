@@ -26,7 +26,7 @@ KISSY.add(function (S, require, exports, module) {
             var params1 = [];
             var id2 = scope.resolve(["axis"]);
             var exp3 = id2;
-            exp3 = (id2) + ('-arrow-up');
+            exp3 = (id2) + ('-arrow-up arrow-up');
             params1.push(exp3);
             option0.params = params1;
             var commandRet4 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
@@ -42,7 +42,7 @@ KISSY.add(function (S, require, exports, module) {
             var params6 = [];
             var id7 = scope.resolve(["axis"]);
             var exp8 = id7;
-            exp8 = (id7) + ('-arrow-down');
+            exp8 = (id7) + ('-arrow-down arrow-down');
             params6.push(exp8);
             option5.params = params6;
             var commandRet9 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 4);
@@ -58,7 +58,7 @@ KISSY.add(function (S, require, exports, module) {
             var params11 = [];
             var id12 = scope.resolve(["axis"]);
             var exp13 = id12;
-            exp13 = (id12) + ('-track');
+            exp13 = (id12) + ('-track track');
             params11.push(exp13);
             option10.params = params11;
             var commandRet14 = callCommandUtil(engine, scope, option10, buffer, "getBaseCssClasses", 7);
@@ -74,7 +74,7 @@ KISSY.add(function (S, require, exports, module) {
             var params16 = [];
             var id17 = scope.resolve(["axis"]);
             var exp18 = id17;
-            exp18 = (id17) + ('-drag');
+            exp18 = (id17) + ('-drag drag');
             params16.push(exp18);
             option15.params = params16;
             var commandRet19 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 8);

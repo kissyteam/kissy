@@ -8,7 +8,6 @@ if (location.href.indexOf('useHashChange') !== -1) {
     history.pushState = null;
 }
 
-
 KISSY.use('navigation-view,' +
         'navigation-view/bar,' +
         'node,' +
@@ -264,7 +263,7 @@ KISSY.use('navigation-view,' +
                 });
 
                 this.onScroll(function (top) {
-                    S.log(top);
+                    // S.log(top);
                 });
             },
 

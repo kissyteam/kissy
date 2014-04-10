@@ -176,6 +176,20 @@ KISSY.add(function (S, require) {
         }
     }
 
+    function bindDrag(self, disabled) {
+        var action = disabled ? 'detach' : 'on';
+        if (!self.get('autoHide')) {
+            self.$dragEl[action]('dragstart mousedown', preventDefault)
+                [action](DragType.DRAG_START, onDragStartHandler, self)
+                [action](DragType.DRAG, onDragHandler, self);
+            S.each([self.$downBtn, self.$upBtn], function (b) {
+                b[action](BaseGesture.START, onUpDownBtnMouseDown, self)
+                    [action](BaseGesture.END, onUpDownBtnMouseUp, self);
+            });
+            self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self);
+        }
+    }
+
     var Feature = S.Feature;
     var isTransform3dSupported = Feature.isTransform3dSupported();
     var transformVendorInfo = Feature.getCssVendorInfo('transform');
@@ -230,6 +244,8 @@ KISSY.add(function (S, require) {
                 .on('scrollTouchEnd' + SCROLLBAR_EVENT_NS, onScrollEnd, self)
                 .on('afterDisabledChange' + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self)
                 .on('reflow' + SCROLLBAR_EVENT_NS, onScrollViewReflow, self);
+
+            bindDrag(self, self.get('disabled'));
         },
 
         syncUI: function () {
@@ -253,18 +269,8 @@ KISSY.add(function (S, require) {
         },
 
         _onSetDisabled: function (v) {
-            var self = this;
-            var action = v ? 'detach' : 'on';
-            if (!self.get('autoHide')) {
-                self.$dragEl[action]('dragstart mousedown', preventDefault)
-                    [action](DragType.DRAG_START, onDragStartHandler, self)
-                    [action](DragType.DRAG, onDragHandler, self);
-                S.each([self.$downBtn, self.$upBtn], function (b) {
-                    b[action](BaseGesture.START, onUpDownBtnMouseDown, self)
-                        [action](BaseGesture.END, onUpDownBtnMouseUp, self);
-                });
-                self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self);
-            }
+            this.callSuper(v);
+            bindDrag(this, v);
         },
 
         destructor: function () {
