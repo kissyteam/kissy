@@ -390,7 +390,7 @@
 
     <target name="build-all" depends="check-src">
         <subant target="" failonerror="true" inheritall="false">
-            <fileset dir="./sub-modules" includes="**/build.xml"/>
+            <fileset dir="./" includes="**/build.xml" excludes="build.xml"/>
         </subant>
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>

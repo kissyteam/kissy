@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:50
+build time: Apr 10 20:14
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:50
+build time: Apr 10 20:14
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140410184955' will replace with current timestamp when compressing.
+         * NOTICE: '20140410201418' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140410184955',
+        __BUILD_TIME: '20140410201418',
 
         /**
          * KISSY Environment.
@@ -2350,7 +2350,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140410184955';
+    var TIMESTAMP = '20140410201418';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2470,7 +2470,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:50
+build time: Apr 10 20:14
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3321,7 +3321,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:50
+build time: Apr 10 20:14
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3505,7 +3505,7 @@ KISSY.add("ua", [], function(S, require, exports, module, undefined) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:50
+build time: Apr 10 20:14
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3802,14 +3802,30 @@ S.config("requires",{
         "event/dom/base"
     ],
     "event/gesture/base": [
-        "event/dom/base",
         "event/gesture/util"
     ],
     "event/gesture/drag": [
-        "event/gesture/util",
-        "event/dom/base"
+        "event/gesture/util"
+    ],
+    "event/gesture/edge-drag": [
+        "event/gesture/util"
+    ],
+    "event/gesture/pinch": [
+        "event/gesture/util"
+    ],
+    "event/gesture/rotate": [
+        "event/gesture/util"
     ],
     "event/gesture/shake": [
+        "event/dom/base"
+    ],
+    "event/gesture/swipe": [
+        "event/gesture/util"
+    ],
+    "event/gesture/tap": [
+        "event/gesture/util"
+    ],
+    "event/gesture/util": [
         "event/dom/base"
     ],
     "feature": [
@@ -3839,6 +3855,9 @@ S.config("requires",{
     "navigation-view": [
         "component/container",
         "component/extension/content-box"
+    ],
+    "navigation-view/bar": [
+        "button"
     ],
     "node": [
         "dom",
@@ -3906,8 +3925,7 @@ S.config("requires",{
     ],
     "tree": [
         "component/container",
-        "component/extension/content-xtpl",
-        "",
+        "component/extension/content-box",
         "component/extension/delegate-children"
     ],
     "ua": [

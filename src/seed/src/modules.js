@@ -136,14 +136,30 @@ S.config("requires",{
         "event/dom/base"
     ],
     "event/gesture/base": [
-        "event/dom/base",
         "event/gesture/util"
     ],
     "event/gesture/drag": [
-        "event/gesture/util",
-        "event/dom/base"
+        "event/gesture/util"
+    ],
+    "event/gesture/edge-drag": [
+        "event/gesture/util"
+    ],
+    "event/gesture/pinch": [
+        "event/gesture/util"
+    ],
+    "event/gesture/rotate": [
+        "event/gesture/util"
     ],
     "event/gesture/shake": [
+        "event/dom/base"
+    ],
+    "event/gesture/swipe": [
+        "event/gesture/util"
+    ],
+    "event/gesture/tap": [
+        "event/gesture/util"
+    ],
+    "event/gesture/util": [
         "event/dom/base"
     ],
     "feature": [
@@ -173,6 +189,9 @@ S.config("requires",{
     "navigation-view": [
         "component/container",
         "component/extension/content-box"
+    ],
+    "navigation-view/bar": [
+        "button"
     ],
     "node": [
         "dom",
@@ -240,8 +259,7 @@ S.config("requires",{
     ],
     "tree": [
         "component/container",
-        "component/extension/content-xtpl",
-        "",
+        "component/extension/content-box",
         "component/extension/delegate-children"
     ],
     "ua": [

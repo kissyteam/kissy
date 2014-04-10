@@ -1,9 +1,4 @@
-<project name="date.build" default="build" basedir=".">
+<project name="date.build" default="build-all" basedir=".">
     <property name="component.name" value="date"/>
     <import file="../common.xml"/>
-    <target name="build">
-        <subant target="" failonerror="true" inheritall="false">
-            <fileset dir="./" includes="**/build.xml" excludes="build.xml"/>
-        </subant>
-    </target>
 </project>
