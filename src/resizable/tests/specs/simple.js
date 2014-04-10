@@ -2,7 +2,7 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, Resizable) {
+KISSY.add(function (S, Resizable) {
     /*jshint quotmark:false*/
     // ie9 mousemove does not fire
     var ie = S.UA.ieMode;
@@ -17,7 +17,7 @@ KISSY.add(function (S, Event, Resizable) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 20;
                 },
 
                 toBeEqualRect: function (expect) {
@@ -34,7 +34,7 @@ KISSY.add(function (S, Event, Resizable) {
 
 
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
@@ -456,5 +456,5 @@ KISSY.add(function (S, Event, Resizable) {
     });
 
 }, {
-    requires: ['event', 'resizable']
+    requires: ['resizable']
 });

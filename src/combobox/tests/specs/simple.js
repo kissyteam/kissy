@@ -2,9 +2,11 @@
  * Simple TC for KISSY ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, ComboBox) {
+KISSY.add(function (S, require) {
     window.focus();
     document.body.focus();
+    var Event = require('event/dom');
+    var ComboBox = require('combobox');
 
     describe('simple combobox', function () {
 
@@ -293,7 +295,6 @@ KISSY.add(function (S, Event, ComboBox) {
             waits(100);
         });
 
-
         if (!S.UA.ios && !S.UA.android) {
             it('should response to mouse', function () {
                 t.focus();
@@ -336,7 +337,6 @@ KISSY.add(function (S, Event, ComboBox) {
                 waits(100);
             });
         }
-
 
         it('should update selectedItem and hide menu', function () {
             t.focus();
@@ -445,6 +445,4 @@ KISSY.add(function (S, Event, ComboBox) {
         });
 
     });
-}, {
-    requires: ['event', 'combobox']
 });

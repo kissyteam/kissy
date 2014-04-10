@@ -174,26 +174,15 @@ KISSY.add(function (S, require) {
              */
             createDom: function () {
                 var self = this;
-                self.beforeCreateDom(self.renderData = {},
-                    self.childrenElSelectors = {},
-                    self.renderCommands = {
-                        getBaseCssClasses: getBaseCssClassesCmd,
-                        getBaseCssClass: getBaseCssClassCmd
-                    });
-                // initialize view
-                // allow custom view instance
                 var html = self.renderTpl(startTpl) + self.renderTpl(self.get('contentTpl')) + endTpl;
                 self.$el = $(html);
                 self.el = self.$el[0];
                 self.fillChildrenElsBySelectors();
             },
 
-            decorateDom: function (srcNode) {
-                var self = this;
-                applyParser.call(self, srcNode, self.constructor.HTML_PARSER);
-                self.$el = srcNode;
-                self.el = srcNode[0];
-            },
+            decorateDom: noop,
+
+            afterCreateDom: noop,
 
             /**
              * Call view object to render ui elements.
@@ -275,10 +264,20 @@ KISSY.add(function (S, require) {
                     self.fire('beforeCreateDom');
                     var srcNode = self.get('srcNode');
                     if (srcNode) {
-                        self.decorateDom(srcNode);
-                    } else {
+                        applyParser.call(self, srcNode, self.constructor.HTML_PARSER);
+                        self.$el = srcNode;
+                        self.el = srcNode[0];
+                    }
+                    self.beforeCreateDom(self.renderData = {},
+                        self.childrenElSelectors = {},
+                        self.renderCommands = {
+                            getBaseCssClasses: getBaseCssClassesCmd,
+                            getBaseCssClass: getBaseCssClassCmd
+                        });
+                    if (!srcNode) {
                         self.createDom();
                     }
+                    self.afterCreateDom();
                     self.__callPluginsMethod('pluginCreateDom');
                     /**
                      * @event afterCreateDom
@@ -819,6 +818,7 @@ KISSY.add(function (S, require) {
                 beforeCreateDom: __getHook('__beforeCreateDom'),
                 createDom: __getHook('__createDom'),
                 decorateDom: __getHook('__decorateDom'),
+                afterCreateDom: __getHook('__afterCreateDom'),
                 renderUI: __getHook('__renderUI'),
                 bindUI: __getHook('__bindUI'),
                 syncUI: __getHook('__syncUI')

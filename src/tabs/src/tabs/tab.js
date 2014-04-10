@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Button = require('button');
-    var TabRender = require('./tab-render');
+
     /**
      * KISSY.Tabs.Tab. xclass:'tabs-tab'
      * @class KISSY.Tabs.Tab
@@ -14,12 +14,33 @@ KISSY.add(function (S, require) {
     return Button.extend({
         isTabsTab: true,
 
-        bindUI: function () {
-            this.on('click', function () {
-                this.set('selected', true);
-            });
+        beforeCreateDom: function (renderData) {
+            var attrs = renderData.elAttrs;
+            attrs.role = 'tab';
+            if (renderData.selected) {
+                attrs['aria-selected'] = true;
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
+            }
+        },
+
+        handleClickInternal: function (e) {
+            this.callSuper(e);
+            this.set('selected', true);
+        },
+
+        _onSetSelected: function (v) {
+            var el = this.$el;
+            var selectedCls = this.getBaseCssClasses('selected');
+            el[v ? 'addClass' : 'removeClass'](selectedCls)
+                .attr('aria-selected', !!v);
         }
     }, {
+        HTML_PARSER: {
+            selected: function (el) {
+                return el.hasClass(this.getBaseCssClass('selected'));
+            }
+        },
+
         ATTRS: {
             handleGestureEvents: {
                 value: false
@@ -35,10 +56,8 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             selected: {
-                view: 1
-            },
-            xrender: {
-                value: TabRender
+                view: 1,
+                sync: 0
             }
         },
         xclass: 'tabs-tab'

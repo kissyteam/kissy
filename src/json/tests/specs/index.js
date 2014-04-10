@@ -215,7 +215,7 @@ KISSY.add(function (S, Json) {
                     'href=\\"http://www.xiami.com/u/6252\\">iburning</a> 收到 <a class=\'nick-name\' ' +
                     'href=\'http://www.xiami.com/u/2412\' target=\'_blank\'>红茶盗用</a> 的鲜花 ",' +
                     '"since_id":"1393494716.25127100","user_id":2412,"type":1,"songs":null,"role":2},' +
-                    '"event":"sysRoomMessage"} ';
+                    '"event2":"sysRoomMessage"} ';
 
                 expect(Json.parse(data).data.since_id).toBe('1393494716.25127100');
             });

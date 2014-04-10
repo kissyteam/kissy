@@ -23,8 +23,8 @@ KISSY.add(function (S, require) {
      *
      *
      *      @example
-     *      KISSY.use('event',function(S,Event){
-     *          var target = S.mix({}, Event.Target);
+     *      KISSY.use('event/custom',function(S,CustomEvent){
+     *          var target = S.mix({}, CustomEvent.Target);
      *          target.on('ok',function(){
      *              document.writeln('ok fired @'+new Date());
      *          });

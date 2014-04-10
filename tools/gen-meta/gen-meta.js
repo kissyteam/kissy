@@ -15,10 +15,10 @@ var suffix = program.suffix || '/meta';
 var isModule = program.module;
 var output = program.output;
 var dir = program.dir || path.join(root, 'src/');
-var HEAD = isModule ? 'KISSY.add(function(S){\n' : '(function(S){\n';
-var FOOT = isModule ? '\n});' : '\n})(KISSY);';
+var HEAD = isModule ? 'KISSY.add(function(S){' : '(function(S){';
+var FOOT = isModule ? '});' : '})(KISSY);';
 var requireFiles = [];
-var aliasFiles = [];
+var jsFiles = [];
 
 function getFiles(dir) {
     var files = fs.readdirSync(dir);
@@ -30,10 +30,11 @@ function getFiles(dir) {
         if (fs.statSync(name).isDirectory()) {
             getFiles(name);
         } else if (S.endsWith(dir, suffix)) {
-            if (files[i] === 'deps.json') {
+            var file = files[i];
+            if (file === 'deps.json') {
                 requireFiles.push(name);
-            } else if (files[i] === 'alias.js') {
-                aliasFiles.push(name);
+            } else if (S.endsWith(file, '.js')) {
+                jsFiles.push(name);
             }
         }
     }
@@ -42,7 +43,7 @@ function getFiles(dir) {
 getFiles(dir);
 
 var requires = {};
-var aliasCode = '';
+var jsCode = [''];
 
 S.each(requireFiles, function (r) {
     /*jshint evil:true */
@@ -53,20 +54,35 @@ S.each(requireFiles, function (r) {
 
 requires = require('deps-optimizer').optimize(requires);
 
-S.each(aliasFiles, function (r) {
-    aliasCode += fs.readFileSync(r, {
+S.each(jsFiles, function (r) {
+    jsCode.push(fs.readFileSync(r, {
         encoding: 'utf-8'
-    }) + '\n';
+    }));
 });
 
-var code = 'S.config("requires",' + JSON.stringify(requires, undefined, 4) + ');\n';
+var code = ['S.config("requires",' + JSON.stringify(requires, undefined, 4) + ');'];
 
-if (S.trim(aliasCode)) {
-    code += 'var Feature = S.Feature, UA = S.UA;\n';
-    code += 'function alias(cfg) {\n' +
-        '    S.config("alias", cfg);\n' +
-        '}\n';
-    code += aliasCode;
+if (S.trim(jsCode)) {
+    code = code.concat(['var Feature = S.Feature,',
+        '    UA = S.UA,',
+        '    win = window,',
+        '    isTouchGestureSupported = Feature.isTouchGestureSupported(),',
+        '    add = S.add,',
+        '    emptyObject = {};',
+    '']);
+    code = code.concat(['function alias(name, aliasName) {',
+        '   var cfg;',
+        '   if(typeof name ==="string") {' ,
+        '       cfg = {};' ,
+        '       cfg[name] = aliasName;',
+        '   } else {' ,
+        '       cfg = name;',
+        '   }',
+        '   S.config("alias", cfg);' ,
+        '}']);
+    code = code.concat(jsCode);
 }
 
-fs.writeFileSync(output, '/*jshint indent:false, quotmark:false*/\n' + HEAD + code + FOOT);
+code = ['/*jshint indent:false, quotmark:false*/', HEAD].concat(code).concat(FOOT);
+
+fs.writeFileSync(output, code.join('\n'));

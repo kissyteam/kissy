@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var SWF = require('swf');
-    var Event = require('event');
+    var CustomEvent = require('event/custom');
 
     var instances = {};
     var logger = S.getLogger('s/editor/plugin/flash-bridge');
@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         this._init(cfg);
     }
 
-    S.augment(FlashBridge, Event.Target, {
+    S.augment(FlashBridge, CustomEvent.Target, {
         _init: function (cfg) {
             var self = this,
                 id = S.guid('flash-bridge-'),

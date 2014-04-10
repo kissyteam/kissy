@@ -1,3 +1,1 @@
-alias({
-    anim: Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
-});
+alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');

@@ -6,7 +6,6 @@
 KISSY.add(function (S, require) {
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-    var ToolbarRender = require('toolbar/render');
     var Node = require('node');
 
     var KeyCode = Node.KeyCode;
@@ -87,42 +86,8 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Component.Container
      */
     return Container.extend([DelegateChildrenExtension], {
-        _onSetHighlightedItem: function (item, e) {
-            var id, itemEl,
-                self = this,
-                prevVal = e && e.prevVal,
-                children = self.get('children'),
-                el = self.el;
-            // only clear children's status
-            if (prevVal && S.inArray(prevVal, children)) {
-                prevVal.set('highlighted', false, {
-                    data: {
-                        byPassSetToolbarHighlightedItem: 1
-                    }
-                });
-            }
-            if (item) {
-                if (el.ownerDocument.activeElement !== el) {
-                    self.focus();
-                }
-                itemEl = item.el;
-                id = itemEl.id;
-                if (!id) {
-                    itemEl.id = id = S.guid('ks-toolbar-item');
-                }
-                el.setAttribute('aria-activedescendant', id);
-            } else {
-                el.setAttribute('aria-activedescendant', '');
-            }
-        },
-
-        _onSetExpandedItem: function (v, e) {
-            if (e && e.prevVal) {
-                e.prevVal.set('collapsed', true);
-            }
-            if (v) {
-                v.set('collapsed', false);
-            }
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'toolbar';
         },
 
         /**
@@ -165,7 +130,7 @@ KISSY.add(function (S, require) {
             // the key event, so attempt to handle it here.
             switch (e.keyCode) {
                 case KeyCode.ESC:
-                    self.view.getKeyEventTarget().fire('blur');
+                    self.getKeyEventTarget().fire('blur');
                     return true;
 
                 case KeyCode.HOME:
@@ -212,8 +177,45 @@ KISSY.add(function (S, require) {
             }
 
             return true;
-        }
+        },
 
+        _onSetHighlightedItem: function (item, e) {
+            var id, itemEl,
+                self = this,
+                prevVal = e && e.prevVal,
+                children = self.get('children'),
+                el = self.el;
+            // only clear children's status
+            if (prevVal && S.inArray(prevVal, children)) {
+                prevVal.set('highlighted', false, {
+                    data: {
+                        byPassSetToolbarHighlightedItem: 1
+                    }
+                });
+            }
+            if (item) {
+                if (el.ownerDocument.activeElement !== el) {
+                    self.focus();
+                }
+                itemEl = item.el;
+                id = itemEl.id;
+                if (!id) {
+                    itemEl.id = id = S.guid('ks-toolbar-item');
+                }
+                el.setAttribute('aria-activedescendant', id);
+            } else {
+                el.setAttribute('aria-activedescendant', '');
+            }
+        },
+
+        _onSetExpandedItem: function (v, e) {
+            if (e && e.prevVal) {
+                e.prevVal.set('collapsed', true);
+            }
+            if (v) {
+                v.set('collapsed', false);
+            }
+        }
     }, {
         xclass: 'toolbar',
         ATTRS: {
@@ -227,9 +229,6 @@ KISSY.add(function (S, require) {
                     handleGestureEvents: false,
                     focusable: false
                 }
-            },
-            xrender: {
-                value: ToolbarRender
             }
         }
     });

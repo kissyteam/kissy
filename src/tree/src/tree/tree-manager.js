@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-    var TapGesture=require('event/gesture/tap');
+    var TapGesture = require('event/gesture/tap');
 
     /**
      * Manage tree node for tree root

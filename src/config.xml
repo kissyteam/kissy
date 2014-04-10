@@ -22,8 +22,8 @@
     <property name="kissy.lib.dir" location="${kissy.dir}/lib/build/"/>
     <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
 
-    <property name="version" value="1.50"/>
-    <property name="cdn.version" value="1.5.0"/>
+    <property name="version" value="5.0.0"/>
+    <property name="cdn.version" value="5.0.0"/>
     <property name="charset" value="utf-8"/>
     <property name="js-css.files" value="**/*.js,**/*.css"/>
     <property name="js-css.min.files" value="**/*-min.js,**/*-min.css"/>

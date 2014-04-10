@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
-    var Event = require('event');
+    var Event = require('event/dom');
     var Node = S.Node,
         Utils = Editor.Utils,
         Dom = S.require('dom');

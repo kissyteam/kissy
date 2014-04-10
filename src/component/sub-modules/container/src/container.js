@@ -93,7 +93,8 @@ KISSY.add(function (S, require) {
             defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || prefixCls;
         },
 
-        createDom: function () {
+
+        afterCreateDom: function () {
             this.createChildren();
         },
 

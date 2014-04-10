@@ -253,7 +253,7 @@
                     d.show();
                 });
 
-                window.srcNodeDialog=d;
+                window.srcNodeDialog = d;
 
             });
 
@@ -306,14 +306,14 @@
                 });
 
                 dialog.plug(new DragPlugin({
-                            handlers: ['.ks-dialog-header']
-                        }).plug(new ConstrainPlugin({
-                                    constrain: '#c1'
-                                }))).plug(new ResizePlugin({
-                            minWidth: 150,
-                            minHeight: 70,
-                            handlers: ["b", "t", "r", "l", "tr", 'tl', "br", 'bl']
-                        }));
+                    handlers: ['.ks-dialog-header']
+                }).plug(new ConstrainPlugin({
+                            constrain: '#c1'
+                        }))).plug(new ResizePlugin({
+                    minWidth: 150,
+                    minHeight: 70,
+                    handlers: ["b", "t", "r", "l", "tr", 'tl', "br", 'bl']
+                }));
 
                 dialog.on('beforeVisibleChange', function (e) {
                     if (e.newVal) {
@@ -342,7 +342,6 @@
                         dialog.hide();
                     }
                 });
-
 
                 Node.one('#btn7').on('click', function () {
                     dialog.getPlugin('component/plugin/drag')
@@ -385,7 +384,8 @@
         </style>
         <button id="btn5" class="button">我在可视区域的正中间，点击关闭销毁</button>
         <script>
-            KISSY.use("ua,event,node,overlay", function (S, UA, Event, Node, O) {
+            KISSY.use("ua,node,overlay", function (S, UA, Node, O) {
+                var win = Node.all(window);
                 var dialog = new O.Dialog({
                     width: 424,
                     elCls: 'my',
@@ -408,7 +408,7 @@
 
                 dialog.on("destroy", function () {
                     btn5.detach("click", show);
-                    Event.detach(window, "scroll", center);
+                    win.detach("scroll", center);
                 });
 
                 btn5.on('click', show);
@@ -425,7 +425,7 @@
                 }
 
                 if (UA.ie == 6) {
-                    Event.on(window, "scroll", center);
+                    win.on("scroll", center);
                 }
             });
         </script>
@@ -451,7 +451,7 @@
         <div id="btn18" tabindex="0"><img width="50" height="50"
                                           src="http://img04.taobaocdn.com/tps/i4/T1QaObXfRoXXXXXXXX-130-130.jpg"/></div>
         <script>
-            KISSY.use("dom,node,ua,event,overlay", function (S, Dom, Node, UA, Event, Overlay) {
+            KISSY.use("dom,node,ua,overlay", function (S, Dom, Node, UA, Overlay) {
                 var Dialog = Overlay.Dialog, $ = S.all;
 
                 S.ready(function (S) {

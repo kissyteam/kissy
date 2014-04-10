@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var Body = require('tabs/body');
     require('tabs/tab');
     var Panel = require('tabs/panel');
-    var Render = require('tabs/render');
+    var CLS = 'top bottom left right';
 
     function setBar(children, barOrientation, bar) {
         children[BarIndexMap[barOrientation]] = bar;
@@ -73,6 +73,37 @@ KISSY.add(function (S, require) {
                 setBar(children, barOrientation, bar);
                 setBody(children, barOrientation, body);
             }
+        },
+
+        beforeCreateDom: function (renderData) {
+            renderData.elCls
+                .push(this.getBaseCssClass(this.get('barOrientation')));
+        },
+
+        decorateDom: function () {
+            this.get('bar').set('changeType', this.get('changeType'));
+        },
+
+        bindUI: function () {
+            this.on('afterSelectedTabChange', function (e) {
+                this.setSelectedTab(e.newVal);
+            });
+
+            /**
+             * fired when selected tab is changed
+             * @event afterSelectedTabChange
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.newVal selected tab
+             */
+
+            /**
+             * fired before selected tab is changed
+             * @event beforeSelectedTabChange
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
+             */
         },
 
         /**
@@ -271,31 +302,20 @@ KISSY.add(function (S, require) {
             return this;
         },
 
-        /**
-         * @ignore
-         */
-        bindUI: function () {
-            this.on('afterSelectedTabChange', function (e) {
-                this.setSelectedTab(e.newVal);
-            });
-
-            /**
-             * fired when selected tab is changed
-             * @event afterSelectedTabChange
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.newVal selected tab
-             */
-
-            /**
-             * fired before selected tab is changed
-             * @event beforeSelectedTabChange
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
-             */
+        _onSetBarOrientation: function (v) {
+            var self = this,
+                el = self.$el;
+            el.removeClass(self.getBaseCssClass(CLS))
+                .addClass(self.getBaseCssClass(v));
         }
     }, {
+        HTML_PARSER: {
+            barOrientation: function (el) {
+                var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
+                return orientation && orientation[1] || 'top';
+            }
+        },
+
         ATTRS: {
             /**
              *  tabs config, eg: {title:'',content:''}
@@ -358,11 +378,8 @@ KISSY.add(function (S, require) {
              */
             barOrientation: {
                 view: 1,
+                sync: 0,
                 value: 'top'
-            },
-
-            xrender: {
-                value: Render
             }
         },
         xclass: 'tabs'

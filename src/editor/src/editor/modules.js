@@ -48,7 +48,7 @@ S.config("requires",{
     "editor/plugin/contextmenu": [
         "menu",
         "editor/plugin/focus-fix",
-        "event"
+        ""
     ],
     "editor/plugin/dent-cmd": [
         "editor",
@@ -71,7 +71,7 @@ S.config("requires",{
     ],
     "editor/plugin/drag-upload": [
         "editor",
-        "event"
+        ""
     ],
     "editor/plugin/element-path": [
         "editor"
@@ -93,7 +93,7 @@ S.config("requires",{
     "editor/plugin/flash-bridge": [
         "editor",
         "swf",
-        "event"
+        ""
     ],
     "editor/plugin/flash-common/base-class": [
         "editor/plugin/flash-common/utils",
@@ -224,7 +224,7 @@ S.config("requires",{
     ],
     "editor/plugin/maximize/cmd": [
         "editor",
-        "event"
+        ""
     ],
     "editor/plugin/menubutton": [
         "editor",

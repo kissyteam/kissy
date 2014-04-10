@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Menu = require('menu');
     var focusFix = require('./focus-fix');
-    var Event = require('event');
+    var Event = require('event/dom');
 
     Editor.prototype.addContextMenu = function (id, filter, cfg) {
 

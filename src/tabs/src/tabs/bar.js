@@ -5,13 +5,16 @@
  */
 KISSY.add(function (S, require) {
     var Toolbar = require('toolbar');
-    var BarRender = require('./bar-render');
     /**
      * tab bar container for tab tabs.xclass: 'tabs-bar'.
      * @class  KISSY.Tabs.Bar
      * @extends KISSY.Toolbar
      */
     var TabBar = Toolbar.extend({
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'tablist';
+        },
+
         bindUI: function () {
             var self = this;
             self.on('afterSelectedChange', function (e) {
@@ -74,9 +77,6 @@ KISSY.add(function (S, require) {
                 value: {
                     xclass: 'tabs-tab'
                 }
-            },
-            xrender: {
-                value: BarRender
             }
         },
         xclass: 'tabs-bar'

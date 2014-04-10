@@ -242,7 +242,7 @@ if (! _$jscoverage['/web.js'].branchData) {
   _$jscoverage['/web.js'].branchData['18'][1] = new BranchData();
 }
 _$jscoverage['/web.js'].branchData['18'][1].init(20, 29, 'location.protocol === \'https\'');
-function visit11_18_1(result) {
+function visit17_18_1(result) {
   _$jscoverage['/web.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].lineData[7]++;
@@ -254,6 +254,6 @@ _$jscoverage['/web.js'].lineData[15]++;
 KISSY.config({
   packages: {
   gallery: {
-  base: visit11_18_1(location.protocol === 'https') ? 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'}}});
+  base: visit17_18_1(location.protocol === 'https') ? 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'}}});
 _$jscoverage['/web.js'].lineData[24]++;
 KISSY.use('feature');

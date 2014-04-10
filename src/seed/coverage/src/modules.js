@@ -231,13 +231,28 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData = [];
   _$jscoverage['/modules.js'].lineData[2] = 0;
   _$jscoverage['/modules.js'].lineData[3] = 0;
+  _$jscoverage['/modules.js'].lineData[255] = 0;
+  _$jscoverage['/modules.js'].lineData[262] = 0;
+  _$jscoverage['/modules.js'].lineData[263] = 0;
   _$jscoverage['/modules.js'].lineData[264] = 0;
   _$jscoverage['/modules.js'].lineData[265] = 0;
   _$jscoverage['/modules.js'].lineData[266] = 0;
   _$jscoverage['/modules.js'].lineData[268] = 0;
-  _$jscoverage['/modules.js'].lineData[271] = 0;
-  _$jscoverage['/modules.js'].lineData[282] = 0;
-  _$jscoverage['/modules.js'].lineData[295] = 0;
+  _$jscoverage['/modules.js'].lineData[270] = 0;
+  _$jscoverage['/modules.js'].lineData[273] = 0;
+  _$jscoverage['/modules.js'].lineData[274] = 0;
+  _$jscoverage['/modules.js'].lineData[285] = 0;
+  _$jscoverage['/modules.js'].lineData[292] = 0;
+  _$jscoverage['/modules.js'].lineData[293] = 0;
+  _$jscoverage['/modules.js'].lineData[296] = 0;
+  _$jscoverage['/modules.js'].lineData[297] = 0;
+  _$jscoverage['/modules.js'].lineData[300] = 0;
+  _$jscoverage['/modules.js'].lineData[301] = 0;
+  _$jscoverage['/modules.js'].lineData[304] = 0;
+  _$jscoverage['/modules.js'].lineData[305] = 0;
+  _$jscoverage['/modules.js'].lineData[308] = 0;
+  _$jscoverage['/modules.js'].lineData[309] = 0;
+  _$jscoverage['/modules.js'].lineData[312] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -246,18 +261,54 @@ if (! _$jscoverage['/modules.js'].functionData) {
 }
 if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData = {};
-  _$jscoverage['/modules.js'].branchData['274'] = [];
-  _$jscoverage['/modules.js'].branchData['274'][1] = new BranchData();
-  _$jscoverage['/modules.js'].branchData['286'] = [];
-  _$jscoverage['/modules.js'].branchData['286'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['264'] = [];
+  _$jscoverage['/modules.js'].branchData['264'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['277'] = [];
+  _$jscoverage['/modules.js'].branchData['277'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['288'] = [];
+  _$jscoverage['/modules.js'].branchData['288'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['292'] = [];
+  _$jscoverage['/modules.js'].branchData['292'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['296'] = [];
+  _$jscoverage['/modules.js'].branchData['296'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['300'] = [];
+  _$jscoverage['/modules.js'].branchData['300'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['304'] = [];
+  _$jscoverage['/modules.js'].branchData['304'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['308'] = [];
+  _$jscoverage['/modules.js'].branchData['308'][1] = new BranchData();
 }
-_$jscoverage['/modules.js'].branchData['286'][1].init(109, 13, 'UA.ieMode < 9');
-function visit10_286_1(result) {
-  _$jscoverage['/modules.js'].branchData['286'][1].ranCondition(result);
+_$jscoverage['/modules.js'].branchData['308'][1].init(5826, 24, '!isTouchGestureSupported');
+function visit16_308_1(result) {
+  _$jscoverage['/modules.js'].branchData['308'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['274'][1].init(31, 13, 'UA.ieMode < 9');
-function visit9_274_1(result) {
-  _$jscoverage['/modules.js'].branchData['274'][1].ranCondition(result);
+}_$jscoverage['/modules.js'].branchData['304'][1].init(5745, 22, '!win.DeviceMotionEvent');
+function visit15_304_1(result) {
+  _$jscoverage['/modules.js'].branchData['304'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['300'][1].init(5661, 24, '!isTouchGestureSupported');
+function visit14_300_1(result) {
+  _$jscoverage['/modules.js'].branchData['300'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['296'][1].init(5578, 24, '!isTouchGestureSupported');
+function visit13_296_1(result) {
+  _$jscoverage['/modules.js'].branchData['296'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['292'][1].init(5491, 24, '!isTouchGestureSupported');
+function visit12_292_1(result) {
+  _$jscoverage['/modules.js'].branchData['292'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['288'][1].init(98, 13, 'UA.ieMode < 9');
+function visit11_288_1(result) {
+  _$jscoverage['/modules.js'].branchData['288'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['277'][1].init(31, 13, 'UA.ieMode < 9');
+function visit10_277_1(result) {
+  _$jscoverage['/modules.js'].branchData['277'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['264'][1].init(19, 23, 'typeof name === "string"');
+function visit9_264_1(result) {
+  _$jscoverage['/modules.js'].branchData['264'][1].ranCondition(result);
   return result;
 }_$jscoverage['/modules.js'].lineData[2]++;
 (function(S) {
@@ -276,7 +327,7 @@ function visit9_274_1(result) {
   "component/container": ["component/control"], 
   "component/control": ["node", "base", "component/manager", "xtemplate/runtime"], 
   "component/extension/align": ["node"], 
-  "component/extension/content-render": ["component/extension/content-xtpl"], 
+  "": ["component/extension/content-xtpl"], 
   "component/extension/delegate-children": ["node", "component/manager"], 
   "component/extension/shim": ["ua"], 
   "component/plugin/drag": ["dd"], 
@@ -295,7 +346,6 @@ function visit9_274_1(result) {
   "dom/ie": ["dom/base"], 
   "dom/selector": ["dom/basic"], 
   "editor": ["html-parser", "component/control"], 
-  "event": ["event/dom", "event/custom", "event/gesture"], 
   "event/base": ["util"], 
   "event/custom": ["event/base"], 
   "event/dom/base": ["event/base", "dom"], 
@@ -306,20 +356,19 @@ function visit9_274_1(result) {
   "event/gesture/base": ["event/dom/base"], 
   "event/gesture/drag": ["event/gesture/base"], 
   "event/gesture/shake": ["event/dom/base"], 
-  "event/gesture/touch": ["event/gesture/base"], 
   "feature": ["ua"], 
   "filter-menu": ["menu"], 
   "io": ["dom", "event/custom", "promise", "uri", "event/dom"], 
-  "menu": ["component/container", "component/extension/delegate-children", "component/extension/content-render", "component/extension/align", "component/extension/shim"], 
+  "menu": ["component/container", "component/extension/delegate-children", "", "component/extension/align", "component/extension/shim"], 
   "menubutton": ["button", "menu"], 
-  "navigation-view": ["component/container", "component/extension/content-render"], 
-  "node": ["dom", "event/dom", "event/gesture", "anim"], 
-  "overlay": ["component/container", "component/extension/shim", "component/extension/align", "component/extension/content-render"], 
+  "navigation-view": ["component/container", ""], 
+  "node": ["dom", "event/dom", "anim"], 
+  "overlay": ["component/container", "component/extension/shim", "component/extension/align", ""], 
   "path": ["util"], 
   "resizable": ["dd"], 
   "resizable/plugin/proxy": ["node", "base"], 
   "router": ["event/dom", "uri", "event/custom"], 
-  "scroll-view/base": ["anim/timer", "component/container", "component/extension/content-render"], 
+  "scroll-view/base": ["anim/timer", "component/container", ""], 
   "scroll-view/plugin/pull-to-refresh": ["base"], 
   "scroll-view/plugin/scrollbar": ["component/control", "event/gesture/drag"], 
   "scroll-view/touch": ["scroll-view/base"], 
@@ -329,32 +378,65 @@ function visit9_274_1(result) {
   "swf": ["dom", "json", "attribute"], 
   "tabs": ["toolbar", "button"], 
   "toolbar": ["component/container", "component/extension/delegate-children"], 
-  "tree": ["component/container", "component/extension/content-render", "component/extension/delegate-children"], 
+  "tree": ["component/container", "", "component/extension/delegate-children"], 
   "ua": ["util"], 
   "uri": ["path"], 
   "xtemplate": ["xtemplate/compiler"], 
   "xtemplate/compiler": ["xtemplate/runtime"], 
   "xtemplate/runtime": ["util"]});
-  _$jscoverage['/modules.js'].lineData[264]++;
-  var Feature = S.Feature, UA = S.UA;
-  _$jscoverage['/modules.js'].lineData[265]++;
-  function alias(cfg) {
+  _$jscoverage['/modules.js'].lineData[255]++;
+  var Feature = S.Feature, UA = S.UA, win = window, isTouchGestureSupported = Feature.isTouchGestureSupported(), add = S.add, emptyObject = {};
+  _$jscoverage['/modules.js'].lineData[262]++;
+  function alias(name, aliasName) {
     _$jscoverage['/modules.js'].functionData[1]++;
-    _$jscoverage['/modules.js'].lineData[266]++;
+    _$jscoverage['/modules.js'].lineData[263]++;
+    var cfg;
+    _$jscoverage['/modules.js'].lineData[264]++;
+    if (visit9_264_1(typeof name === "string")) {
+      _$jscoverage['/modules.js'].lineData[265]++;
+      cfg = {};
+      _$jscoverage['/modules.js'].lineData[266]++;
+      cfg[name] = aliasName;
+    } else {
+      _$jscoverage['/modules.js'].lineData[268]++;
+      cfg = name;
+    }
+    _$jscoverage['/modules.js'].lineData[270]++;
     S.config("alias", cfg);
   }
-  _$jscoverage['/modules.js'].lineData[268]++;
+  _$jscoverage['/modules.js'].lineData[273]++;
+  alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
+  _$jscoverage['/modules.js'].lineData[274]++;
   alias({
-  anim: Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'});
-  _$jscoverage['/modules.js'].lineData[271]++;
-  alias({
-  'dom/basic': ['dom/base', visit9_274_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list'], 
+  'dom/basic': ['dom/base', visit10_277_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list'], 
   dom: ['dom/basic', Feature.isQuerySelectorSupported() ? '' : 'dom/selector']});
-  _$jscoverage['/modules.js'].lineData[282]++;
-  alias({
-  'event/dom': ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit10_286_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin'], 
-  'event/gesture': ['event/gesture/base', Feature.isTouchGestureSupported() ? 'event/gesture/touch' : '']});
-  _$jscoverage['/modules.js'].lineData[295]++;
-  alias({
-  'scroll-view': Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'});
+  _$jscoverage['/modules.js'].lineData[285]++;
+  alias('event/dom', ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit11_288_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']);
+  _$jscoverage['/modules.js'].lineData[292]++;
+  if (visit12_292_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[293]++;
+    add('event/gesture/edge-drag', emptyObject);
+  }
+  _$jscoverage['/modules.js'].lineData[296]++;
+  if (visit13_296_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[297]++;
+    add('event/gesture/pinch', emptyObject);
+  }
+  _$jscoverage['/modules.js'].lineData[300]++;
+  if (visit14_300_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[301]++;
+    add('event/gesture/rotate', emptyObject);
+  }
+  _$jscoverage['/modules.js'].lineData[304]++;
+  if (visit15_304_1(!win.DeviceMotionEvent)) {
+    _$jscoverage['/modules.js'].lineData[305]++;
+    add('event/gesture/shake', emptyObject);
+  }
+  _$jscoverage['/modules.js'].lineData[308]++;
+  if (visit16_308_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[309]++;
+    add('event/gesture/swipe', emptyObject);
+  }
+  _$jscoverage['/modules.js'].lineData[312]++;
+  alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 })(KISSY);

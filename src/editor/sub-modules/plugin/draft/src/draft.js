@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Json = require('json');
-    var Event = require('event');
+    var Event = require('event/dom');
     var localStorage = require('./local-storage');
     var Overlay = require('overlay');
     var MenuButton = require('./menubutton');

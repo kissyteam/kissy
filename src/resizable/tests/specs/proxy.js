@@ -2,7 +2,7 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, Resizable, ResizableProxyPlugin) {
+KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
     /*jshint quotmark:false*/
     // ie9 mousemove does not fire
     var ie = S.UA.ieMode;
@@ -118,5 +118,5 @@ KISSY.add(function (S, Event, Resizable, ResizableProxyPlugin) {
         });
     });
 }, {
-    requires: ['event', 'resizable', 'resizable/plugin/proxy']
+    requires: ['resizable', 'resizable/plugin/proxy']
 });

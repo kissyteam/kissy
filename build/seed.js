@@ -1,12 +1,12 @@
 /*
-Copyright 2014, KISSY v1.50
+Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 4 12:25
+build time: Apr 10 12:30
 */
 /*
-Copyright 2014, KISSY v1.50
+Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 4 12:25
+build time: Apr 10 12:29
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140404122504' will replace with current timestamp when compressing.
+         * NOTICE: '20140410122932' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140404122504',
+        __BUILD_TIME: '20140410122932',
 
         /**
          * KISSY Environment.
@@ -93,10 +93,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.50' will replace with current version when compressing.
+         * NOTICE: '5.0.0' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.50',
+        version: '5.0.0',
 
         /**
          * set KISSY configuration
@@ -2350,7 +2350,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140404122504';
+    var TIMESTAMP = '20140410122932';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2468,9 +2468,9 @@ KISSY.add('i18n', {
     }
 })(KISSY);
 /*
-Copyright 2014, KISSY v1.50
+Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 4 12:25
+build time: Apr 10 12:29
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3319,9 +3319,9 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 });
 
 /*
-Copyright 2014, KISSY v1.50
+Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 4 12:25
+build time: Apr 10 12:29
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3503,9 +3503,9 @@ KISSY.add("ua", [], function(S, require, exports, module, undefined) {
 });
 
 /*
-Copyright 2014, KISSY v1.50
+Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 4 12:25
+build time: Apr 10 12:29
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3708,7 +3708,7 @@ S.config("requires",{
     "component/extension/align": [
         "node"
     ],
-    "component/extension/content-render": [
+    "": [
         "component/extension/content-xtpl"
     ],
     "component/extension/delegate-children": [
@@ -3775,11 +3775,6 @@ S.config("requires",{
         "html-parser",
         "component/control"
     ],
-    "event": [
-        "event/dom",
-        "event/custom",
-        "event/gesture"
-    ],
     "event/base": [
         "util"
     ],
@@ -3811,9 +3806,6 @@ S.config("requires",{
     "event/gesture/shake": [
         "event/dom/base"
     ],
-    "event/gesture/touch": [
-        "event/gesture/base"
-    ],
     "feature": [
         "ua"
     ],
@@ -3830,7 +3822,7 @@ S.config("requires",{
     "menu": [
         "component/container",
         "component/extension/delegate-children",
-        "component/extension/content-render",
+        "",
         "component/extension/align",
         "component/extension/shim"
     ],
@@ -3840,19 +3832,18 @@ S.config("requires",{
     ],
     "navigation-view": [
         "component/container",
-        "component/extension/content-render"
+        ""
     ],
     "node": [
         "dom",
         "event/dom",
-        "event/gesture",
         "anim"
     ],
     "overlay": [
         "component/container",
         "component/extension/shim",
         "component/extension/align",
-        "component/extension/content-render"
+        ""
     ],
     "path": [
         "util"
@@ -3872,7 +3863,7 @@ S.config("requires",{
     "scroll-view/base": [
         "anim/timer",
         "component/container",
-        "component/extension/content-render"
+        ""
     ],
     "scroll-view/plugin/pull-to-refresh": [
         "base"
@@ -3908,7 +3899,7 @@ S.config("requires",{
     ],
     "tree": [
         "component/container",
-        "component/extension/content-render",
+        "",
         "component/extension/delegate-children"
     ],
     "ua": [
@@ -3927,13 +3918,25 @@ S.config("requires",{
         "util"
     ]
 });
-var Feature = S.Feature, UA = S.UA;
-function alias(cfg) {
-    S.config("alias", cfg);
+var Feature = S.Feature,
+    UA = S.UA,
+    win = window,
+    isTouchGestureSupported = Feature.isTouchGestureSupported(),
+    add = S.add,
+    emptyObject = {};
+
+function alias(name, aliasName) {
+   var cfg;
+   if(typeof name ==="string") {
+       cfg = {};
+       cfg[name] = aliasName;
+   } else {
+       cfg = name;
+   }
+   S.config("alias", cfg);
 }
-alias({
-    anim: Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
-});
+
+alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
 alias({
     'dom/basic': [
         'dom/base',
@@ -3945,21 +3948,32 @@ alias({
         Feature.isQuerySelectorSupported() ? '' : 'dom/selector'
     ]
 });
-alias({
-    'event/dom': [
-        'event/dom/base',
-        Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
+alias('event/dom', [
+    'event/dom/base',
+    Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
         UA.ieMode < 9 ? 'event/dom/ie' : '',
-        Feature.isInputEventSupported() ? '' : 'event/dom/input',
-        UA.ie ? '' : 'event/dom/focusin'
-    ],
-    'event/gesture': [
-        'event/gesture/base',
-        Feature.isTouchGestureSupported() ? 'event/gesture/touch' : ''
-    ]
-});
-alias({
-    'scroll-view': Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'
-});
+    Feature.isInputEventSupported() ? '' : 'event/dom/input',
+    UA.ie ? '' : 'event/dom/focusin'
+]);
+if (!isTouchGestureSupported) {
+    add('event/gesture/edge-drag', emptyObject);
+}
 
+if (!isTouchGestureSupported) {
+    add('event/gesture/pinch', emptyObject);
+}
+
+if (!isTouchGestureSupported) {
+    add('event/gesture/rotate', emptyObject);
+}
+
+if (!win.DeviceMotionEvent) {
+    add('event/gesture/shake', emptyObject);
+}
+
+if (!isTouchGestureSupported) {
+    add('event/gesture/swipe', emptyObject);
+}
+
+alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 })(KISSY);

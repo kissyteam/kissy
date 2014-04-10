@@ -42,7 +42,7 @@ S.config("requires",{
     "component/extension/align": [
         "node"
     ],
-    "component/extension/content-render": [
+    "": [
         "component/extension/content-xtpl"
     ],
     "component/extension/delegate-children": [
@@ -109,11 +109,6 @@ S.config("requires",{
         "html-parser",
         "component/control"
     ],
-    "event": [
-        "event/dom",
-        "event/custom",
-        "event/gesture"
-    ],
     "event/base": [
         "util"
     ],
@@ -145,9 +140,6 @@ S.config("requires",{
     "event/gesture/shake": [
         "event/dom/base"
     ],
-    "event/gesture/touch": [
-        "event/gesture/base"
-    ],
     "feature": [
         "ua"
     ],
@@ -164,7 +156,7 @@ S.config("requires",{
     "menu": [
         "component/container",
         "component/extension/delegate-children",
-        "component/extension/content-render",
+        "",
         "component/extension/align",
         "component/extension/shim"
     ],
@@ -174,19 +166,18 @@ S.config("requires",{
     ],
     "navigation-view": [
         "component/container",
-        "component/extension/content-render"
+        ""
     ],
     "node": [
         "dom",
         "event/dom",
-        "event/gesture",
         "anim"
     ],
     "overlay": [
         "component/container",
         "component/extension/shim",
         "component/extension/align",
-        "component/extension/content-render"
+        ""
     ],
     "path": [
         "util"
@@ -206,7 +197,7 @@ S.config("requires",{
     "scroll-view/base": [
         "anim/timer",
         "component/container",
-        "component/extension/content-render"
+        ""
     ],
     "scroll-view/plugin/pull-to-refresh": [
         "base"
@@ -242,7 +233,7 @@ S.config("requires",{
     ],
     "tree": [
         "component/container",
-        "component/extension/content-render",
+        "",
         "component/extension/delegate-children"
     ],
     "ua": [
@@ -261,13 +252,25 @@ S.config("requires",{
         "util"
     ]
 });
-var Feature = S.Feature, UA = S.UA;
-function alias(cfg) {
-    S.config("alias", cfg);
+var Feature = S.Feature,
+    UA = S.UA,
+    win = window,
+    isTouchGestureSupported = Feature.isTouchGestureSupported(),
+    add = S.add,
+    emptyObject = {};
+
+function alias(name, aliasName) {
+   var cfg;
+   if(typeof name ==="string") {
+       cfg = {};
+       cfg[name] = aliasName;
+   } else {
+       cfg = name;
+   }
+   S.config("alias", cfg);
 }
-alias({
-    anim: Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
-});
+
+alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
 alias({
     'dom/basic': [
         'dom/base',
@@ -279,21 +282,32 @@ alias({
         Feature.isQuerySelectorSupported() ? '' : 'dom/selector'
     ]
 });
-alias({
-    'event/dom': [
-        'event/dom/base',
-        Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
+alias('event/dom', [
+    'event/dom/base',
+    Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
         UA.ieMode < 9 ? 'event/dom/ie' : '',
-        Feature.isInputEventSupported() ? '' : 'event/dom/input',
-        UA.ie ? '' : 'event/dom/focusin'
-    ],
-    'event/gesture': [
-        'event/gesture/base',
-        Feature.isTouchGestureSupported() ? 'event/gesture/touch' : ''
-    ]
-});
-alias({
-    'scroll-view': Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'
-});
+    Feature.isInputEventSupported() ? '' : 'event/dom/input',
+    UA.ie ? '' : 'event/dom/focusin'
+]);
+if (!isTouchGestureSupported) {
+    add('event/gesture/edge-drag', emptyObject);
+}
 
+if (!isTouchGestureSupported) {
+    add('event/gesture/pinch', emptyObject);
+}
+
+if (!isTouchGestureSupported) {
+    add('event/gesture/rotate', emptyObject);
+}
+
+if (!win.DeviceMotionEvent) {
+    add('event/gesture/shake', emptyObject);
+}
+
+if (!isTouchGestureSupported) {
+    add('event/gesture/swipe', emptyObject);
+}
+
+alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 })(KISSY);

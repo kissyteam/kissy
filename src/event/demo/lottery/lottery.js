@@ -1,23 +1,22 @@
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node');
     var Base = require('base');
-    var Event = require('event');
     var Color = require('color');
     var Overlay = require('overlay');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
-    var BaseGesture= require('event/gesture/base');
+    var BaseGesture = require('event/gesture/base');
 
-    var $ = Node.all, Gesture = Event.Gesture;
+    var $ = Node.all;
 
     var methods = {
         initializer: function () {
             var self = this,
-                canvas = self.get("canvas"),
-                color = self.get("color");
+                canvas = self.get('canvas'),
+                color = self.get('color');
 
-            self.set("ctx", canvas[0].getContext('2d'));
-            self.set("colorHex", new Color(color).toHex());
+            self.set('ctx', canvas[0].getContext('2d'));
+            self.set('colorHex', new Color(color).toHex());
 
             self.bindEvt();
             self.overlay();
@@ -26,9 +25,9 @@ KISSY.add(function (S,require) {
         },
         overlay: function () {
             var self = this,
-                canvas = self.get("canvas"),
+                canvas = self.get('canvas'),
                 overlay = new Overlay({
-                    elCls: "gg-dialog",
+                    elCls: 'gg-dialog',
                     mask: true,
                     align: {
                         node: canvas,
@@ -39,22 +38,22 @@ KISSY.add(function (S,require) {
 
             overlay.render();
 
-            overlay.get('contentEl').delegate(tap, ".J_Start", function () {
+            overlay.get('contentEl').delegate(tap, '.J_Start', function () {
                 overlay.hide();
                 self.reset();
             });
 
-            overlay.get('contentEl').delegate(tap, ".J_Cancel", function () {
+            overlay.get('contentEl').delegate(tap, '.J_Cancel', function () {
                 overlay.hide();
-                self.fire("quit");
+                self.fire('quit');
             });
 
-            self.set("overlay", overlay);
+            self.set('overlay', overlay);
         },
         bindEvt: function () {
             var self = this,
-                canvas = self.get("canvas"),
-                ctx = self.get("ctx"),
+                canvas = self.get('canvas'),
+                ctx = self.get('ctx'),
                 clientOffset = canvas.offset(),
                 w = canvas.width(), h = canvas.height(),
                 clientOffsetX = clientOffset.left,
@@ -63,15 +62,17 @@ KISSY.add(function (S,require) {
                 oldY,
                 curX,
                 curY,
-                color = self.get("color"),
-                colorHex = self.get("colorHex"),
+                color = self.get('color'),
 
                 isOver = function () {
                     var data = ctx.getImageData(0, 0, w, h).data;
 
                     //剩余像素（未被刮开）点数。#CCC ,255
                     for (var i = 0, j = 0, k = 0; i < data.length; i += 4, k++) {
-                        if ((data[i] == color.r) && (data[i + 1] == color.g) && (data[i + 2] == color.b) && (data[i + 3] == color.a)) {
+                        if ((data[i] === color.r) &&
+                            (data[i + 1] === color.g) &&
+                            (data[i + 2] === color.b) &&
+                            (data[i + 3] === color.a)) {
                             j++;
                         }
                     }
@@ -98,13 +99,13 @@ KISSY.add(function (S,require) {
                     oldY = curY;
 
                     // force update for some android browsers
-                    canvas.css('padding-right', canvas.css('padding-right') == '0px' ? "1px" : '0px');
+                    canvas.css('padding-right', canvas.css('padding-right') === '0px' ? '1px' : '0px');
                 },
 
                 touchEnd = function (ev) {
                     ev.preventDefault();
-                    canvas.detach(Gesture.move, touchMove);
-                    canvas.detach(Gesture.end, touchEnd);
+                    canvas.detach(BaseGesture.MOVE, touchMove);
+                    canvas.detach(BaseGesture.END, touchEnd);
                     ctx.closePath();
                     isOver();
                 };
@@ -116,11 +117,11 @@ KISSY.add(function (S,require) {
 
                 //设置笔触.
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.lineJoin = "round";
-                ctx.lineCap = "round";
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
                 //ctx.fillStyle = '';    //红米手机无法刷出来的原因之一,必须置空.
                 ctx.strokeStyle = '#fff';
-                ctx.lineWidth = self.get("eraserWidth");
+                ctx.lineWidth = self.get('eraserWidth');
 
                 oldX = pageX - clientOffsetX;
                 oldY = pageY - clientOffsetY;
@@ -129,25 +130,25 @@ KISSY.add(function (S,require) {
                 ctx.moveTo(oldX, oldY);
 
 
-                canvas.on(Gesture.move, touchMove);
-                canvas.on(Gesture.end, touchEnd);
+                canvas.on(BaseGesture.MOVE, touchMove);
+                canvas.on(BaseGesture.END, touchEnd);
             });
         },
         reset: function () {
             var self = this,
-                canvas = self.get("canvas"),
-                ctx = self.get("ctx"),
+                canvas = self.get('canvas'),
+                ctx = self.get('ctx'),
                 w = canvas.width(), h = canvas.height(),
-                maskColorHex = self.get("colorHex");
+                maskColorHex = self.get('colorHex');
             //初始化的操作
             canvas[0].width = w; //强刷.
-            ctx.globalCompositeOperation = "source-over"; //解决部分手机白屏.
+            ctx.globalCompositeOperation = 'source-over'; //解决部分手机白屏.
             ctx.fillStyle = maskColorHex;
             ctx.fillRect(0, 0, w, h);
         },
         start: function () {
             var self = this,
-                overlay = self.get("overlay"),
+                overlay = self.get('overlay'),
                 el = overlay.get('contentEl');
 
             el.html('<div class="bd">刮一刮图层，可以刮出红包</div><div class="ft"><button class="ok J_Start">开始刮奖</button></div>');
@@ -156,7 +157,7 @@ KISSY.add(function (S,require) {
         },
         getPuzzle: function () {
             var self = this,
-                overlay = self.get("overlay"),
+                overlay = self.get('overlay'),
                 el = overlay.get('contentEl');
 
             el.html('<div class="bd"><p>很遗憾，没有刮到红包 :(</p><p>' + self.failTxt() + '</p><p class="fail"></p></div><div class="ft"><button class="cancel J_Cancel">不玩了</button><button class="ok J_Start">刮下一张</button></div>');
@@ -286,7 +287,7 @@ KISSY.add(function (S,require) {
             var getRandom = function (m, n) {
                 return Math.ceil(Math.random() * (n - m) + m);
             };
-            return txt[getRandom(0, txt.length - 1)].join("");
+            return txt[getRandom(0, txt.length - 1)].join('');
         }
     };
 

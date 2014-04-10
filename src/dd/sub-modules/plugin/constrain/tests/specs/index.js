@@ -2,7 +2,7 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, DD, Constrain) {
+KISSY.add(function (S, DD, Constrain) {
     var Draggable = DD.Draggable,
         $ = S.all;
 
@@ -285,5 +285,5 @@ KISSY.add(function (S, Event, DD, Constrain) {
         });
     });
 }, {
-    requires: ['event', 'dd', 'dd/plugin/constrain']
+    requires: ['dd', 'dd/plugin/constrain']
 });
