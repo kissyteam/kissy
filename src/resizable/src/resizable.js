@@ -197,7 +197,7 @@ KISSY.add(function (S, require) {
             /**
              * KISSY Node to be resizable.
              * Need to be positioned 'relative' or 'absolute'.
-             * @cfg {KISSY.NodeList} node
+             * @cfg {KISSY.Node} node
              */
             /**
              * @ignore

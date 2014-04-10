@@ -36,7 +36,7 @@ KISSY.add(function (S, require) {
         /**
          * animate for current node list.
          * @chainable
-         * @member KISSY.NodeList
+         * @member KISSY.Node
          */
         animate: function () {
             var self = this,
@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
          * @param [clearQueue]
          * @param [queue]
          * @chainable
-         * @member KISSY.NodeList
+         * @member KISSY.Node
          */
         stop: function (end, clearQueue, queue) {
             var self = this;
@@ -87,7 +87,7 @@ KISSY.add(function (S, require) {
          * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
          * @param queue
          * @chainable
-         * @member KISSY.NodeList
+         * @member KISSY.Node
          */
         pause: function (end, queue) {
             var self = this;
@@ -101,7 +101,7 @@ KISSY.add(function (S, require) {
          * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
          * @param queue
          * @chainable
-         * @member KISSY.NodeList
+         * @member KISSY.Node
          */
         resume: function (end, queue) {
             var self = this;
@@ -113,7 +113,7 @@ KISSY.add(function (S, require) {
         /**
          * whether one of current node list is animating.
          * @return {Boolean}
-         * @member KISSY.NodeList
+         * @member KISSY.Node
          */
         isRunning: function () {
             var self = this;
@@ -127,7 +127,7 @@ KISSY.add(function (S, require) {
         /**
          * whether one of current node list 's animation is paused.
          * @return {Boolean}
-         * @member KISSY.NodeList
+         * @member KISSY.Node
          */
         isPaused: function () {
             var self = this;
@@ -146,7 +146,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method show
      */
 
@@ -156,7 +156,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method hide
      */
 
@@ -166,7 +166,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method toggle
      */
 
@@ -176,7 +176,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method fadeIn
      */
 
@@ -186,7 +186,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method fadeOut
      */
 
@@ -196,7 +196,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method fadeToggle
      */
 
@@ -206,7 +206,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method slideUp
      */
 
@@ -216,7 +216,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method slideDown
      */
 
@@ -226,7 +226,7 @@ KISSY.add(function (S, require) {
      * @param {Function} [complete] callback function on anim complete.
      * @param {String|Function} [easing] easing type or custom function.
      * @chainable
-     * @member KISSY.NodeList
+     * @member KISSY.Node
      * @method slideToggle
      */
 

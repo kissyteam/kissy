@@ -62,7 +62,7 @@ KISSY.add(function (S, require) {
 
     /**
      * @class KISSY.Editor.ElementPath
-     * @param lastNode {KISSY.NodeList}
+     * @param lastNode {KISSY.Node}
      */
     function ElementPath(lastNode) {
         var self = this,

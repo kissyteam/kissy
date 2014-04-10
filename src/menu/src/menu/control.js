@@ -181,7 +181,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Whether this menu contains specified html element.
-         * @param {KISSY.NodeList} element html Element to be tested.
+         * @param {KISSY.Node} element html Element to be tested.
          * @return {Boolean}
          * @protected
          */

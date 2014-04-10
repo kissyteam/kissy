@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
     var Container = require('component/container');
     var Control = require('component/control');
     var ContentTpl = require('component/extension/content-xtpl');
-    var ContentRender = require('component/extension/content-render');
+    var ContentBox = require('component/extension/content-box');
 
     function getAnimCss(prefixCls, animation, enter) {
         return prefixCls + 'navigation-view-' +
@@ -223,9 +223,7 @@ KISSY.add(function (S, require) {
         };
     }
 
-    var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
-
-    return Container.extend({
+    return Container.extend([ContentBox],{
         initializer: function () {
             this.viewStack = [];
         },
@@ -306,10 +304,6 @@ KISSY.add(function (S, require) {
 
             allowTextSelection: {
                 value: true
-            },
-
-            xrender: {
-                value: NavigationViewRender
             },
 
             contentTpl: {

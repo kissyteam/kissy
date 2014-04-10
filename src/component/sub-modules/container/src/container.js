@@ -94,7 +94,29 @@ KISSY.add(function (S, require) {
         },
 
 
-        afterCreateDom: function () {
+        // decorate child element from parent component's root element.
+        decorateDom: function () {
+            var self = this,
+                childrenContainerEl = self.getChildrenContainerEl(),
+                defaultChildCfg = self.get('defaultChildCfg'),
+                prefixCls = defaultChildCfg.prefixCls,
+                defaultChildXClass = defaultChildCfg.xclass,
+                childrenComponents = [],
+                children = childrenContainerEl.children();
+            children.each(function (c) {
+                var ChildUI = self.getComponentConstructorByNode(prefixCls, c) ||
+                    defaultChildXClass &&
+                    Manager.getConstructorByXClass(defaultChildXClass);
+                if (ChildUI) {
+                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
+                        srcNode: c
+                    })));
+                }
+            });
+            self.set('children', childrenComponents);
+        },
+
+        createDom: function () {
             this.createChildren();
         },
 
@@ -238,28 +260,6 @@ KISSY.add(function (S, require) {
         getChildAt: function (index) {
             var children = this.get('children');
             return children[index] || null;
-        },
-
-        // decorate child element from parent component's root element.
-        decorateDom: function () {
-            var self = this,
-                childrenContainerEl = self.getChildrenContainerEl(),
-                defaultChildCfg = self.get('defaultChildCfg'),
-                prefixCls = defaultChildCfg.prefixCls,
-                defaultChildXClass = defaultChildCfg.xclass,
-                childrenComponents = [],
-                children = childrenContainerEl.children();
-            children.each(function (c) {
-                var ChildUI = self.getComponentConstructorByNode(prefixCls, c) ||
-                    defaultChildXClass &&
-                    Manager.getConstructorByXClass(defaultChildXClass);
-                if (ChildUI) {
-                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
-                        srcNode: c
-                    })));
-                }
-            });
-            self.set('children', childrenComponents);
         },
 
         // Return the dom element into which child component to be rendered.

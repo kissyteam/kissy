@@ -352,7 +352,7 @@ KISSY.add(function (S, require) {
 
             /**
              * Input element of current combobox.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property input
              */
             /**

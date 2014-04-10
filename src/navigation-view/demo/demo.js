@@ -13,7 +13,7 @@ KISSY.use('navigation-view,' +
         'navigation-view/bar,' +
         'node,' +
         'event/gesture/tap,' +
-        'event/gesture/base' +
+        'event/gesture/base,' +
         'router,' +
         'promise,' +
         window.PAGE_VIEW,

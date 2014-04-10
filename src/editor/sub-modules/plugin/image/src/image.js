@@ -11,8 +11,8 @@ KISSY.add(function (S, require) {
     var DialogLoader = require('./dialog-loader');
 
     var UA = S.UA,
-        Node = KISSY.NodeList,
-        $ = S.all,
+        Node = require('node'),
+        $ = Node.all,
         checkImg = function (node) {
             node = $(node);
             if (node.nodeName() === 'img' &&

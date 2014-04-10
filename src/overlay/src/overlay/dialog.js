@@ -19,15 +19,12 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Overlay
      */
     var Dialog = Overlay.extend({
-        beforeCreateDom: function (renderData) {
+        beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(renderData.elAttrs, {
                 role: 'dialog',
                 'aria-labelledby': 'ks-stdmod-header-' + this.get('id')
             });
-        },
-
-        createDom: function () {
-            this.fillChildrenElsBySelectors({
+            S.mix(childrenElSelectors, {
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -69,7 +66,7 @@ KISSY.add(function (S, require) {
         _onSetVisible: function (v, e) {
             var self = this,
                 el = self.el;
-            self.callSuper(v,e);
+            self.callSuper(v, e);
             if (v) {
                 self.__lastActive = el.ownerDocument.activeElement;
                 self.focus();
@@ -127,7 +124,7 @@ KISSY.add(function (S, require) {
         ATTRS: {
             /**
              * Header element of dialog.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property header
              * @readonly
              */
@@ -138,7 +135,7 @@ KISSY.add(function (S, require) {
             },
             /**
              * Body element of dialog.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property body
              * @readonly
              */
@@ -149,7 +146,7 @@ KISSY.add(function (S, require) {
             },
             /**
              * Footer element of dialog.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property footer
              * @readonly
              */
@@ -167,7 +164,7 @@ KISSY.add(function (S, require) {
              */
             bodyStyle: {
                 value: {},
-                sync:0
+                sync: 0
             },
             /**
              * Key-value map of footer element's style.
@@ -193,38 +190,38 @@ KISSY.add(function (S, require) {
             },
             /**
              * html content of header element.
-             * @cfg {KISSY.NodeList|String} headerContent
+             * @cfg {KISSY.Node|String} headerContent
              */
             /**
              * @ignore
              */
             headerContent: {
                 value: '',
-                sync:0,
+                sync: 0,
                 view: 1
             },
             /**
              * html content of body element.
-             * @cfg {KISSY.NodeList|String} bodyContent
+             * @cfg {KISSY.Node|String} bodyContent
              */
             /**
              * @ignore
              */
             bodyContent: {
                 value: '',
-                sync:0,
+                sync: 0,
                 view: 1
             },
             /**
              * html content of footer element.
-             * @cfg {KISSY.NodeList|String} footerContent
+             * @cfg {KISSY.Node|String} footerContent
              */
             /**
              * @ignore
              */
             footerContent: {
                 value: '',
-                sync:0,
+                sync: 0,
                 view: 1
             },
 

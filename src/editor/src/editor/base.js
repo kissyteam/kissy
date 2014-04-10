@@ -6,38 +6,58 @@
 KISSY.add(function (S, require) {
     var HtmlParser = require('html-parser');
     var Control = require('component/control');
-    var EditorRender = require('./render');
+    var RenderTpl = require('./render-xtpl');
     /**
      * editor component for KISSY. xclass: 'editor'.
      * @class KISSY.Editor
      * @extends KISSY.Component.Control
      */
-    return Control.extend({}, {
+    return Control.extend({
+        beforeCreateDom: function (renderData, childrenElSelectors) {
+            S.mix(renderData, {
+                mobile: S.UA.mobile
+            });
+
+            S.mix(childrenElSelectors, {
+                textarea: '#ks-editor-textarea-{id}',
+                toolBarEl: '#ks-editor-tools-{id}',
+                statusBarEl: '#ks-editor-status-{id}'
+            });
+        }
+    }, {
         Config: {},
 
         XHTML_DTD: HtmlParser.DTD,
 
         ATTRS: {
+            contentTpl: {
+                value: RenderTpl
+            },
+
+            height: {
+                value: 300
+            },
 
             /**
              * textarea
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             textarea: {},
 
             textareaAttrs: {
-                view: 1
+                view: 1,
+                sync: 0
             },
 
             /**
              * iframe
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             iframe: {},
 
             /**
              * iframe 's contentWindow.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             window: {
                 // ie6 一旦中途设置了 domain
@@ -47,19 +67,19 @@ KISSY.add(function (S, require) {
 
             /**
              * iframe 's document
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             document: {},
 
             /**
              * toolbar element
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             toolBarEl: {},
 
             /**
              * status bar element
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             statusBarEl: {},
 
@@ -87,7 +107,8 @@ KISSY.add(function (S, require) {
              * @type {String}
              */
             data: {
-                view: 1
+                view: 1,
+                sync: 0
             },
 
             /**
@@ -104,10 +125,6 @@ KISSY.add(function (S, require) {
              */
             customLink: {
                 value: []
-            },
-
-            xrender: {
-                value: EditorRender
             }
         },
 

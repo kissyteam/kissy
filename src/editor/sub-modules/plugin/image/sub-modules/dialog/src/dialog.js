@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
     var bodyTpl = require('./dialog/dialog-tpl');
     var dtd = Editor.XHTML_DTD,
         UA = S.UA,
-        Node = KISSY.NodeList,
+        Node = require('node'),
         HTTP_TIP = 'http://',
         AUTOMATIC_TIP = '自动',
         MARGIN_DEFAULT = 10,

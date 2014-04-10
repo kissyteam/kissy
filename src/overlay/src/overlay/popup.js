@@ -131,7 +131,7 @@ KISSY.add(function (S, require) {
         ATTRS: {
             /**
              * Trigger elements to show popup.
-             * @cfg {KISSY.NodeList} trigger
+             * @cfg {KISSY.Node} trigger
              */
             /**
              * @ignore

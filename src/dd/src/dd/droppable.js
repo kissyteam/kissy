@@ -197,12 +197,12 @@ KISSY.add(function (S, require) {
         ATTRS: {
             /**
              * droppable element
-             * @cfg {String|HTMLElement|KISSY.NodeList} node
+             * @cfg {String|HTMLElement|KISSY.Node} node
              * @member KISSY.DD.Droppable
              */
             /**
              * droppable element
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property node
              * @member KISSY.DD.Droppable
              */

@@ -438,7 +438,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|KISSY.NodeList} node
+         * @param {undefined|String|HTMLElement|KISSY.Node} node
          * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align}
          * @chainable
          */

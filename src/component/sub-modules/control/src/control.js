@@ -112,6 +112,16 @@ KISSY.add(function (S, require) {
 
             syncInternal: noop,
 
+            initializer: function () {
+                var self = this;
+                self.renderData = {};
+                self.childrenElSelectors = {};
+                self.renderCommands = {
+                    getBaseCssClasses: getBaseCssClassesCmd,
+                    getBaseCssClass: getBaseCssClassCmd
+                };
+            },
+
             beforeCreateDom: function (renderData) {
                 var self = this,
                     width,
@@ -174,15 +184,20 @@ KISSY.add(function (S, require) {
              */
             createDom: function () {
                 var self = this;
+                // initialize view
+                // allow custom view instance
                 var html = self.renderTpl(startTpl) + self.renderTpl(self.get('contentTpl')) + endTpl;
                 self.$el = $(html);
                 self.el = self.$el[0];
                 self.fillChildrenElsBySelectors();
             },
 
-            decorateDom: noop,
-
-            afterCreateDom: noop,
+            decorateDom: function (srcNode) {
+                var self = this;
+                applyParser.call(self, srcNode, self.constructor.HTML_PARSER);
+                self.$el = srcNode;
+                self.el = srcNode[0];
+            },
 
             /**
              * Call view object to render ui elements.
@@ -237,18 +252,6 @@ KISSY.add(function (S, require) {
             syncUI: noop,
 
             /**
-             * @protected
-             */
-            destructor: function () {
-                var self = this;
-                // remove instance from manager
-                Manager.removeComponent(self);
-                if (self.$el) {
-                    self.$el.remove();
-                }
-            },
-
-            /**
              * create dom structure of this component
              * (control will delegate to render).
              * @chainable
@@ -263,21 +266,16 @@ KISSY.add(function (S, require) {
                      */
                     self.fire('beforeCreateDom');
                     var srcNode = self.get('srcNode');
+                    // collect attr value from dom nodes
                     if (srcNode) {
-                        applyParser.call(self, srcNode, self.constructor.HTML_PARSER);
-                        self.$el = srcNode;
-                        self.el = srcNode[0];
+                        self.decorateDom(srcNode);
                     }
-                    self.beforeCreateDom(self.renderData = {},
-                        self.childrenElSelectors = {},
-                        self.renderCommands = {
-                            getBaseCssClasses: getBaseCssClassesCmd,
-                            getBaseCssClass: getBaseCssClassCmd
-                        });
+                    // prepare render info from attr value
+                    self.beforeCreateDom(self.renderData, self.childrenElSelectors, self.renderCommands);
+                    // render dom nodes if not created from srcNode
                     if (!srcNode) {
                         self.createDom();
                     }
-                    self.afterCreateDom();
                     self.__callPluginsMethod('pluginCreateDom');
                     /**
                      * @event afterCreateDom
@@ -385,7 +383,7 @@ KISSY.add(function (S, require) {
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
-             * @return {KISSY.NodeList}
+             * @return {KISSY.Node}
              * @ignore
              */
             getKeyEventTarget: function () {
@@ -604,7 +602,7 @@ KISSY.add(function (S, require) {
             /**
              * Get component's constructor from KISSY Node.
              * @param prefixCls
-             * @param {KISSY.NodeList} childNode Child component's root node.
+             * @param {KISSY.Node} childNode Child component's root node.
              */
             getComponentConstructorByNode: function (prefixCls, childNode) {
                 var cls = childNode[0].className;
@@ -710,7 +708,6 @@ KISSY.add(function (S, require) {
                 });
             },
 
-
             _onSetWidth: function (w) {
                 this.$el.width(w);
             },
@@ -811,6 +808,18 @@ KISSY.add(function (S, require) {
                 this.$el.offset({
                     top: y
                 });
+            },
+
+            /**
+             * @protected
+             */
+            destructor: function () {
+                var self = this;
+                // remove instance from manager
+                Manager.removeComponent(self);
+                if (self.$el) {
+                    self.$el.remove();
+                }
             }
         },
         {
@@ -818,7 +827,6 @@ KISSY.add(function (S, require) {
                 beforeCreateDom: __getHook('__beforeCreateDom'),
                 createDom: __getHook('__createDom'),
                 decorateDom: __getHook('__decorateDom'),
-                afterCreateDom: __getHook('__afterCreateDom'),
                 renderUI: __getHook('__renderUI'),
                 bindUI: __getHook('__bindUI'),
                 syncUI: __getHook('__syncUI')
@@ -846,12 +854,12 @@ KISSY.add(function (S, require) {
             ATTRS: {
                 /**
                  * component's html content. Note: content and srcNode can not be set both!
-                 * @type {String|KISSY.NodeList}
+                 * @type {String|KISSY.Node}
                  * @property content
                  */
                 /**
                  * component's html content. Note: content and srcNode can not be set both!
-                 * @cfg {String|KISSY.NodeList} content
+                 * @cfg {String|KISSY.Node} content
                  */
                 /**
                  * @ignore
@@ -1139,7 +1147,7 @@ KISSY.add(function (S, require) {
 
                 /**
                  * archor element where component append to
-                 * @cfg {KISSY.NodeList} render
+                 * @cfg {KISSY.Node} render
                  */
                 /**
                  * @ignore
@@ -1160,7 +1168,7 @@ KISSY.add(function (S, require) {
 
                 /**
                  * archor element where component insert before
-                 * @cfg {KISSY.NodeList} elBefore
+                 * @cfg {KISSY.Node} elBefore
                  */
                 /**
                  * @ignore
@@ -1170,7 +1178,7 @@ KISSY.add(function (S, require) {
 
                 /**
                  * root element of current component
-                 * @type {KISSY.NodeList}
+                 * @type {KISSY.Node}
                  * @readonly
                  * @property el
                  */
@@ -1188,7 +1196,7 @@ KISSY.add(function (S, require) {
                  *
                  * parsed for configuration values,
                  * passed to component's HTML_PARSER definition
-                 * @cfg {KISSY.NodeList|String} srcNode
+                 * @cfg {KISSY.Node|String} srcNode
                  *
                  */
                 /**
@@ -1388,6 +1396,8 @@ KISSY.add(function (S, require) {
 /*
  yiminghe@gmail.com - 2014.04.08
  - use event modules: event/gesture/base, event/gesture/tap
+ - remove render layer
+ - beforeCreateDom is called after srcNode parser
 
  yiminghe@gmail.com - 2012.10.31
  - 考虑触屏，绑定 Event.Gesture.tap 为主行为事件

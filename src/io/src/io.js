@@ -128,7 +128,7 @@ KISSY.add(function (S, require) {
         /**
          * submit form without page refresh
          * @param {String} url request destination
-         * @param {HTMLElement|KISSY.NodeList} form element tobe submited
+         * @param {HTMLElement|KISSY.Node} form element tobe submited
          * @param {Object} [data] name-value object associated with this request
          * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
          * @param {String} callback.status status of this request with type String

@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Check whether this menu item contains specified element.
-         * @param {KISSY.NodeList} element Element to be tested.
+         * @param {KISSY.Node} element Element to be tested.
          * @protected
          */
         containsElement: function (element) {

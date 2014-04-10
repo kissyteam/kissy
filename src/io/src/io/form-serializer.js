@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
         /**
          * form serialization
          * @method
-         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
+         * @param {HTMLElement[]|HTMLElement|KISSY.Node} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
          * @member KISSY.IO

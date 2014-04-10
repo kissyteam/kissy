@@ -12,6 +12,9 @@ KISSY.add(function (S, require) {
         CHECK = 1,
         EMPTY = 0;
 
+    var CHECK_CLS = 'checked',
+        ALL_STATES_CLS = 'checked0 checked1 checked2';
+
     /**
      * Checked tree node. xclass: 'check-tree-node'.
      * @class KISSY.Tree.CheckNode
@@ -45,8 +48,6 @@ KISSY.add(function (S, require) {
             }
 
             self.set('checkState', checkState);
-
-            self.fire('click');
             return true;
         },
 
@@ -58,6 +59,11 @@ KISSY.add(function (S, require) {
                 c,
                 cState,
                 cs;
+
+            var checkCls = self.getBaseCssClasses(CHECK_CLS).split(/\s+/).join(s + ' ') + s,
+                checkIconEl = self.get('checkIconEl');
+            checkIconEl.removeClass(self.getBaseCssClasses(ALL_STATES_CLS))
+                .addClass(checkCls);
 
             if (s === CHECK || s === EMPTY) {
                 S.each(self.get('children'), function (c) {
@@ -95,13 +101,31 @@ KISSY.add(function (S, require) {
             }
         }
     }, {
+        HTML_PARSER: {
+            checkIconEl: function (el) {
+                return el.one('.' + this.getBaseCssClass(CHECK_CLS));
+            },
+            checkState: function (el) {
+                var checkIconEl = el.one('.' + this.getBaseCssClass(CHECK_CLS));
+                if (checkIconEl) {
+                    var allStates = ALL_STATES_CLS.split(/\s+/);
+                    for (var i = 0; i < allStates.length; i++) {
+                        if (checkIconEl.hasClass(this.getBaseCssClass(allStates[i]))) {
+                            return i;
+                        }
+                    }
+                }
+                return 0;
+            }
+        },
         ATTRS: {
             checkIconEl: {
             },
 
             checkable: {
                 value: true,
-                view: 1
+                view: 1,
+                sync: 0
             },
 
             /**

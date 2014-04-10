@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
         },
         /**
          * Mask node of current component.
-         * @type {KISSY.NodeList}
+         * @type {KISSY.Node}
          * @property maskNode
          * @readonly
          */

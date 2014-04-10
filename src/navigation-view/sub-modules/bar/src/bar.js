@@ -4,8 +4,8 @@
  */
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var BarRender = require('./bar/bar-render');
     var Button = require('button');
+    var tpl = require('./bar/bar-xtpl');
 
     function createGhost(elem) {
         var ghost, width;
@@ -152,6 +152,14 @@ KISSY.add(function (S, require) {
             });
         },
 
+        beforeCreateDom: function (renderData, childrenElSelectors) {
+            S.mix(childrenElSelectors, {
+                centerEl: '#ks-navigation-bar-center-{id}',
+                contentEl: '#ks-navigation-bar-content-{id}',
+                titleEl: '#ks-navigation-bar-title-{id}'
+            });
+        },
+
         renderUI: function () {
             var self = this,
                 prefixCls = self.get('prefixCls');
@@ -275,36 +283,52 @@ KISSY.add(function (S, require) {
                 this._stack.pop();
                 this.go(title, this._stack.length, true);
             }
+        },
+
+        _onSetTitle: function (v) {
+            var titleEl=this.get('titleEl');
+            if (titleEl) {
+                titleEl.html(v);
+            }
+        },
+        _onSetBackText: function (v) {
+            if (this._backBtn) {
+                this._backBtn.set('content', v);
+            }
         }
     }, {
         xclass: 'navigation-bar',
+
         ATTRS: {
+            contentTpl: {
+                value: tpl
+            },
             handleGestureEvents: {
                 value: false
             },
             focusable: {
                 value: false
             },
-            xrender: {
-                value: BarRender
-            },
             centerEl: {},
             contentEl: {},
             titleEl: {},
             title: {
                 value: '',
-                view: 1
+                view: 1,
+                sync: 0
             },
             withBackButton: {
                 value: 1
             },
             withTitle: {
                 value: 1,
-                view: 1
+                view: 1,
+                sync: 0
             },
             backText: {
                 value: 'Back',
-                view: 1
+                view: 1,
+                sync: 0
             }
         }
     });

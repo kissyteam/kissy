@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
      *      @example
      *      KISSY.all('a').attr('href','http://docs.kissyui.com');
      *
-     * @class KISSY.NodeList
+     * @class KISSY.Node
      */
     function Node(html, props, ownerDocument) {
         var self = this,

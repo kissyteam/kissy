@@ -49,6 +49,18 @@ KISSY.add(function (S, require, exports, module) {
 
     var WYSIWYG_MODE = 1;
 
+    function adjustHeight(self, height) {
+        var textareaEl = self.get('textarea'),
+            toolBarEl = self.get('toolBarEl'),
+            statusBarEl = self.get('statusBarEl');
+        height = parseInt(height, 10);
+        // 减去顶部和底部工具条高度
+        height -= (toolBarEl && toolBarEl.outerHeight() || 0) +
+            (statusBarEl && statusBarEl.outerHeight() || 0);
+        textareaEl.parent().css(HEIGHT, height);
+        textareaEl.css(HEIGHT, height);
+    }
+
     Editor.addMembers({
         initializer: function () {
             var self = this;
@@ -104,84 +116,8 @@ KISSY.add(function (S, require, exports, module) {
             });
         },
 
-        // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
-        _onSetHeight: function (v) {
-            var self = this,
-                textareaEl = self.get('textarea'),
-                toolBarEl = self.get('toolBarEl'),
-                statusBarEl = self.get('statusBarEl');
-            v = parseInt(v, 10);
-            // 减去顶部和底部工具条高度
-            v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
-                (statusBarEl && statusBarEl.outerHeight() || 0);
-            textareaEl.parent().css(HEIGHT, v);
-            textareaEl.css(HEIGHT, v);
-        },
-
-        _onSetMode: function (v) {
-            var self = this,
-                iframe = self.get('iframe'),
-                textarea = self.get('textarea');
-            if (v === WYSIWYG_MODE) {
-                self.setData(textarea.val());
-                textarea.hide();
-                self.fire('wysiwygMode');
-            } else {
-                // 刚开始就配置 mode 为 sourcecode
-                if (iframe) {
-                    textarea.val(self.getFormatData(WYSIWYG_MODE));
-                    iframe.hide();
-                }
-                textarea.show();
-                self.fire('sourceMode');
-            }
-        },
-
-        // 覆盖 control
-        _onSetFocused: function (v) {
-            var self = this;
-            // docReady 后才能调用
-            if (v && self.__docReady) {
-                self.focus();
-            }
-        },
-
-        destructor: function () {
-            var self = this,
-                form,
-                textarea = self.get('textarea'),
-                doc = self.get('document');
-
-            if (self.get('attachForm') &&
-                (form = textarea[0].form) &&
-                (form = $(form))) {
-                form.detach('submit', self.sync, self);
-            }
-
-            if (doc) {
-                var body = $(doc[0].body),
-                    documentElement = $(doc[0].documentElement),
-                    win = self.get('window');
-
-                focusManager.remove(self);
-
-                doc.detach();
-
-                documentElement.detach();
-
-                body.detach();
-
-                win.detach();
-            }
-
-            S.each(self.__controls, function (control) {
-                if (control.destroy) {
-                    control.destroy();
-                }
-            });
-
-            self.__commands = {};
-            self.__controls = {};
+        syncUI: function () {
+            adjustHeight(this, this.get('height'));
         },
 
         /**
@@ -556,7 +492,7 @@ KISSY.add(function (S, require, exports, module) {
 
         /**
          * Insert a element into current editor.
-         * @param {KISSY.NodeList} element
+         * @param {KISSY.Node} element
          * @member KISSY.Editor
          */
         insertElement: function (element) {
@@ -705,6 +641,77 @@ KISSY.add(function (S, require, exports, module) {
                 self.getSelection().scrollIntoView();
             }, 50);
             saveLater.call(self);
+        },
+
+        // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
+        _onSetHeight: function (v) {
+            adjustHeight(self, v);
+        },
+
+        _onSetMode: function (v) {
+            var self = this,
+                iframe = self.get('iframe'),
+                textarea = self.get('textarea');
+            if (v === WYSIWYG_MODE) {
+                self.setData(textarea.val());
+                textarea.hide();
+                self.fire('wysiwygMode');
+            } else {
+                // 刚开始就配置 mode 为 sourcecode
+                if (iframe) {
+                    textarea.val(self.getFormatData(WYSIWYG_MODE));
+                    iframe.hide();
+                }
+                textarea.show();
+                self.fire('sourceMode');
+            }
+        },
+
+        // 覆盖 control
+        _onSetFocused: function (v) {
+            var self = this;
+            // docReady 后才能调用
+            if (v && self.__docReady) {
+                self.focus();
+            }
+        },
+
+        destructor: function () {
+            var self = this,
+                form,
+                textarea = self.get('textarea'),
+                doc = self.get('document');
+
+            if (self.get('attachForm') &&
+                (form = textarea[0].form) &&
+                (form = $(form))) {
+                form.detach('submit', self.sync, self);
+            }
+
+            if (doc) {
+                var body = $(doc[0].body),
+                    documentElement = $(doc[0].documentElement),
+                    win = self.get('window');
+
+                focusManager.remove(self);
+
+                doc.detach();
+
+                documentElement.detach();
+
+                body.detach();
+
+                win.detach();
+            }
+
+            S.each(self.__controls, function (control) {
+                if (control.destroy) {
+                    control.destroy();
+                }
+            });
+
+            self.__commands = {};
+            self.__controls = {};
         }
     });
 
@@ -949,7 +956,7 @@ KISSY.add(function (S, require, exports, module) {
             var focusGrabber;
             focusGrabber = new Node(
                 // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
-                '<span ' +
+                    '<span ' +
                     'tabindex="-1" ' +
                     'style="position:absolute; left:-10000"' +
                     ' role="presentation"' +

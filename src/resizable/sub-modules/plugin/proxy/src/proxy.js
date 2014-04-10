@@ -106,7 +106,7 @@ KISSY.add(function (S, require) {
 
             /**
              * Current proxy node.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property proxyNode
              */
             /**

@@ -408,7 +408,7 @@ KISSY.add(function (S, require) {
             /**
              * content element of scroll view component
              * @property contentEl
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              */
             /**
              * @ignore

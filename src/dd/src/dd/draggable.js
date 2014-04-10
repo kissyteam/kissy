@@ -493,13 +493,13 @@ KISSY.add(function (S, require) {
             /**
              * the dragged node. maybe a proxy node.
              * @property node
-             * @type {HTMLElement|KISSY.NodeList}
+             * @type {HTMLElement|KISSY.Node}
              * @readonly
              */
 
             /**
              * the dragged node.
-             * @cfg {HTMLElement|KISSY.NodeList} node
+             * @cfg {HTMLElement|KISSY.Node} node
              */
 
             /**
@@ -577,7 +577,7 @@ KISSY.add(function (S, require) {
 
             /**
              * the handler which fired the drag event.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property activeHandler
              * @readonly
              */

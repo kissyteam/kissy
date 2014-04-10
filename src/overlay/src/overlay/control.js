@@ -36,10 +36,8 @@ KISSY.add(function (S, require) {
         Mask,
         OverlayEffect
     ], {
-        createDom:function(){
-            this.fillChildrenElsBySelectors({
-                closeBtn: '#ks-overlay-close-{id}'
-            });
+        beforeCreateDom: function (renderData, childrenElSelectors) {
+            childrenElSelectors.closeBtn = '#ks-overlay-close-{id}';
         },
 
         bindUI: function () {
@@ -88,13 +86,13 @@ KISSY.add(function (S, require) {
              */
             closable: {
                 value: false,
-                sync:0,
+                sync: 0,
                 view: 1
             },
 
             /**
              * close button element.
-             * @type {KISSY.NodeList}
+             * @type {KISSY.Node}
              * @property closeBtn
              * @readonly
              */

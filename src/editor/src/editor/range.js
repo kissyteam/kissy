@@ -501,28 +501,28 @@ KISSY.add(function (S, require) {
 
         /**
          * Set range start after node
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          */
         setStartAfter: function (node) {
             this.setStart(node.parent(), node._4eIndex() + 1);
         },
         /**
          * Set range start before node
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          */
         setStartBefore: function (node) {
             this.setStart(node.parent(), node._4eIndex());
         },
         /**
          * Set range end after node
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          */
         setEndAfter: function (node) {
             this.setEnd(node.parent(), node._4eIndex() + 1);
         },
         /**
          * Set range end before node
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          */
         setEndBefore: function (node) {
             this.setEnd(node.parent(), node._4eIndex());
@@ -550,7 +550,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Sets the start position of a Range.
-         * @param {KISSY.NodeList} startNode The node to start the range.
+         * @param {KISSY.Node} startNode The node to start the range.
          * @param {Number} startOffset An integer greater than or equal to zero
          *        representing the offset for the start of the range from the start
          *        of startNode.
@@ -581,7 +581,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Sets the end position of a Range.
-         * @param {KISSY.NodeList} endNode The node to end the range.
+         * @param {KISSY.Node} endNode The node to end the range.
          * @param {Number} endOffset An integer greater than or equal to zero
          *        representing the offset for the end of the range from the start
          *        of endNode.
@@ -612,7 +612,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Sets the start position of a Range by specified rules.
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          * @param {Number} position
          */
         setStartAt: function (node, position) {
@@ -643,7 +643,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Sets the end position of a Range by specified rules.
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          * @param {Number} position
          */
         setEndAt: function (node, position) {
@@ -1000,7 +1000,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Set the start position and then collapse range.
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          * @param {Number} position
          */
         moveToPosition: function (node, position) {
@@ -1086,7 +1086,7 @@ KISSY.add(function (S, require) {
         },
         /**
          * Insert a new node at start position of current range
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          */
         insertNode: function (node) {
             var self = this;
@@ -1455,7 +1455,7 @@ KISSY.add(function (S, require) {
         /**
          * Check whether current range is on the inner edge of the specified element.
          * @param {Number} checkType The checking side.
-         * @param {KISSY.NodeList} element The target element to check.
+         * @param {KISSY.Node} element The target element to check.
          */
         checkBoundaryOfElement: function (element, checkType) {
             var walkerRange = this.clone();
@@ -1545,7 +1545,7 @@ KISSY.add(function (S, require) {
          * at the start or end of current range into a block element.
          * @param {Boolean} isStart Start or end of current range tobe enlarged.
          * @param {String} blockTag Block element's tag name.
-         * @return {KISSY.NodeList} Newly generated block element.
+         * @return {KISSY.Node} Newly generated block element.
          */
         fixBlock: function (isStart, blockTag) {
             var self = this,
@@ -1633,8 +1633,8 @@ KISSY.add(function (S, require) {
 
         /**
          * Split toSplit element into two parts at current range's start position.
-         * @param {KISSY.NodeList} toSplit Element to split.
-         * @return {KISSY.NodeList} The second newly generated element.
+         * @param {KISSY.Node} toSplit Element to split.
+         * @return {KISSY.Node} The second newly generated element.
          */
         splitElement: function (toSplit) {
             var self = this;
@@ -1660,7 +1660,7 @@ KISSY.add(function (S, require) {
         /**
          * Move the range to the depth-first start/end editing point inside
          * an element.
-         * @param {KISSY.NodeList} el The element to find edit point into.
+         * @param {KISSY.Node} el The element to find edit point into.
          * @param {Boolean} [isMoveToEnd] Find start or end editing point.
          * Set true to find end editing point.
          * @return {Boolean} Whether find edit point
@@ -1709,7 +1709,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Set range surround current node 's content.
-         * @param {KISSY.NodeList} node
+         * @param {KISSY.Node} node
          */
         selectNodeContents: function (node) {
             var self = this, domNode = node[0];
@@ -1721,7 +1721,7 @@ KISSY.add(function (S, require) {
 
         /**
          * Insert node by dtd.(not invalidate dtd convention)
-         * @param {KISSY.NodeList} element
+         * @param {KISSY.Node} element
          */
         insertNodeByDtd: function (element) {
             var current,
