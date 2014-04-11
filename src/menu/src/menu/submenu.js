@@ -114,11 +114,11 @@ KISSY.add(function (S, require) {
             },
 
             // click ，立即显示
-            handleClickInternal: function () {
+            handleClickInternal: function (e) {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                self.callSuper();
+                self.callSuper(e);
             },
 
             /**
