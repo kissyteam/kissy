@@ -130,10 +130,9 @@ KISSY.add(function (S, require) {
 
             // click ，立即显示
             handleClickInternal: function (e) {
-                var self = this;
-                showMenu.call(self);
+                showMenu.call(this);
                 //  trigger click event from menuitem
-                self.callSuper(e);
+                this.callSuper(e);
             },
 
             /**
