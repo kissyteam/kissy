@@ -1,4 +1,4 @@
-KISSY.add("cyclic/c", function (S, require, exports) {
+KISSY.add("circular-dependency/c", function (S, require, exports) {
     var a = require('./a');
     exports.c = 'c';
     exports.get = function () {
