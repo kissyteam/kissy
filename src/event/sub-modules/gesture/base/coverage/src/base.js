@@ -264,9 +264,9 @@ KISSY.add(function(S, require) {
   var addGestureEvent = GestureUtil.addEvent;
   _$jscoverage['/base.js'].lineData[11]++;
   var BaseGesture = {
-  START: 'gestureStart', 
-  MOVE: 'gestureMove', 
-  END: 'gestureEnd'};
+  START: 'ksGestureStart', 
+  MOVE: 'ksGestureMove', 
+  END: 'ksGestureEnd'};
   _$jscoverage['/base.js'].lineData[17]++;
   function addBaseGestureEvent(event, onHandler) {
     _$jscoverage['/base.js'].functionData[1]++;

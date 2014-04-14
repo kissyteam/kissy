@@ -9,9 +9,9 @@ KISSY.add(function (S, require) {
     var addGestureEvent = GestureUtil.addEvent;
 
     var BaseGesture = {
-        START: 'gestureStart',
-        MOVE: 'gestureMove',
-        END: 'gestureEnd'
+        START: 'ksGestureStart',
+        MOVE: 'ksGestureMove',
+        END: 'ksGestureEnd'
     };
 
     function addBaseGestureEvent(event, onHandler) {

@@ -235,63 +235,54 @@ if (! _$jscoverage['/edge-drag.js']) {
   _$jscoverage['/edge-drag.js'].lineData[8] = 0;
   _$jscoverage['/edge-drag.js'].lineData[9] = 0;
   _$jscoverage['/edge-drag.js'].lineData[10] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[15] = 0;
   _$jscoverage['/edge-drag.js'].lineData[16] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[17] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[28] = 0;
   _$jscoverage['/edge-drag.js'].lineData[29] = 0;
   _$jscoverage['/edge-drag.js'].lineData[30] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[33] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[32] = 0;
   _$jscoverage['/edge-drag.js'].lineData[34] = 0;
   _$jscoverage['/edge-drag.js'].lineData[37] = 0;
   _$jscoverage['/edge-drag.js'].lineData[38] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[39] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[41] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[45] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[40] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[43] = 0;
   _$jscoverage['/edge-drag.js'].lineData[46] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[47] = 0;
   _$jscoverage['/edge-drag.js'].lineData[48] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[49] = 0;
   _$jscoverage['/edge-drag.js'].lineData[50] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[51] = 0;
   _$jscoverage['/edge-drag.js'].lineData[53] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[54] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[55] = 0;
   _$jscoverage['/edge-drag.js'].lineData[56] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[58] = 0;
   _$jscoverage['/edge-drag.js'].lineData[59] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[62] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[64] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[65] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[66] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[60] = 0;
   _$jscoverage['/edge-drag.js'].lineData[67] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[68] = 0;
   _$jscoverage['/edge-drag.js'].lineData[69] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[70] = 0;
   _$jscoverage['/edge-drag.js'].lineData[71] = 0;
   _$jscoverage['/edge-drag.js'].lineData[72] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[73] = 0;
   _$jscoverage['/edge-drag.js'].lineData[74] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[75] = 0;
   _$jscoverage['/edge-drag.js'].lineData[76] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[83] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[84] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[85] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[86] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[87] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[88] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[89] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[90] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[92] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[93] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[96] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[149] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[77] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[80] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[133] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[136] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[139] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[143] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[144] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[145] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[146] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[147] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[148] = 0;
   _$jscoverage['/edge-drag.js'].lineData[152] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[155] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[159] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[160] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[161] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[153] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[157] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[158] = 0;
   _$jscoverage['/edge-drag.js'].lineData[162] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[163] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[164] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[165] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[169] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[170] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[174] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[175] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[179] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[183] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[166] = 0;
 }
 if (! _$jscoverage['/edge-drag.js'].functionData) {
   _$jscoverage['/edge-drag.js'].functionData = [];
@@ -304,172 +295,138 @@ if (! _$jscoverage['/edge-drag.js'].functionData) {
 }
 if (! _$jscoverage['/edge-drag.js'].branchData) {
   _$jscoverage['/edge-drag.js'].branchData = {};
+  _$jscoverage['/edge-drag.js'].branchData['28'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['28'][1] = new BranchData();
   _$jscoverage['/edge-drag.js'].branchData['29'] = [];
   _$jscoverage['/edge-drag.js'].branchData['29'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['29'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['33'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['33'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['30'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['32'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['32'][1] = new BranchData();
   _$jscoverage['/edge-drag.js'].branchData['37'] = [];
   _$jscoverage['/edge-drag.js'].branchData['37'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['38'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['38'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['45'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['46'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['47'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['37'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['37'][3] = new BranchData();
   _$jscoverage['/edge-drag.js'].branchData['48'] = [];
   _$jscoverage['/edge-drag.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['53'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['53'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['53'][3] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['64'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['66'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['66'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['66'][3] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['50'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['50'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['50'][3] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['55'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['67'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['67'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['67'][3] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['69'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['69'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['69'][3] = new BranchData();
   _$jscoverage['/edge-drag.js'].branchData['71'] = [];
   _$jscoverage['/edge-drag.js'].branchData['71'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['83'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['83'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['83'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['83'][3] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['85'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['85'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['85'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['85'][3] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['87'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['87'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['87'][3] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['89'] = [];
-  _$jscoverage['/edge-drag.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['89'][2] = new BranchData();
-  _$jscoverage['/edge-drag.js'].branchData['89'][3] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['71'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['71'][3] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['73'] = [];
+  _$jscoverage['/edge-drag.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['73'][2] = new BranchData();
+  _$jscoverage['/edge-drag.js'].branchData['73'][3] = new BranchData();
 }
-_$jscoverage['/edge-drag.js'].branchData['89'][3].init(757, 24, 'y < invalidRegion.bottom');
-function visit30_89_3(result) {
-  _$jscoverage['/edge-drag.js'].branchData['89'][3].ranCondition(result);
+_$jscoverage['/edge-drag.js'].branchData['73'][3].init(757, 24, 'y < invalidRegion.bottom');
+function visit24_73_3(result) {
+  _$jscoverage['/edge-drag.js'].branchData['73'][3].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['89'][2].init(735, 18, 'direction === \'up\'');
-function visit29_89_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['89'][2].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['73'][2].init(735, 18, 'direction === \'up\'');
+function visit23_73_2(result) {
+  _$jscoverage['/edge-drag.js'].branchData['73'][2].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['89'][1].init(735, 46, 'direction === \'up\' && y < invalidRegion.bottom');
-function visit28_89_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['73'][1].init(735, 46, 'direction === \'up\' && y < invalidRegion.bottom');
+function visit22_73_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['87'][3].init(654, 21, 'y > invalidRegion.top');
-function visit27_87_3(result) {
-  _$jscoverage['/edge-drag.js'].branchData['87'][3].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['71'][3].init(654, 21, 'y > invalidRegion.top');
+function visit21_71_3(result) {
+  _$jscoverage['/edge-drag.js'].branchData['71'][3].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['87'][2].init(630, 20, 'direction === \'down\'');
-function visit26_87_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['87'][2].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['71'][2].init(630, 20, 'direction === \'down\'');
+function visit20_71_2(result) {
+  _$jscoverage['/edge-drag.js'].branchData['71'][2].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['87'][1].init(630, 45, 'direction === \'down\' && y > invalidRegion.top');
-function visit25_87_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['87'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['85'][3].init(547, 23, 'x < invalidRegion.right');
-function visit24_85_3(result) {
-  _$jscoverage['/edge-drag.js'].branchData['85'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['85'][2].init(523, 20, 'direction === \'left\'');
-function visit23_85_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['85'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['85'][1].init(523, 47, 'direction === \'left\' && x < invalidRegion.right');
-function visit22_85_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['85'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['83'][3].init(441, 22, 'x > invalidRegion.left');
-function visit21_83_3(result) {
-  _$jscoverage['/edge-drag.js'].branchData['83'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['83'][2].init(416, 21, 'direction === \'right\'');
-function visit20_83_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['83'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['83'][1].init(416, 47, 'direction === \'right\' && x > invalidRegion.left');
-function visit19_83_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['83'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['71'][1].init(1643, 14, 'self.isStarted');
-function visit18_71_1(result) {
+}_$jscoverage['/edge-drag.js'].branchData['71'][1].init(630, 45, 'direction === \'down\' && y > invalidRegion.top');
+function visit19_71_1(result) {
   _$jscoverage['/edge-drag.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['66'][3].init(78, 21, 'direction === \'right\'');
-function visit17_66_3(result) {
-  _$jscoverage['/edge-drag.js'].branchData['66'][3].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['69'][3].init(547, 23, 'x < invalidRegion.right');
+function visit18_69_3(result) {
+  _$jscoverage['/edge-drag.js'].branchData['69'][3].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['66'][2].init(54, 20, 'direction === \'left\'');
-function visit16_66_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['66'][2].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['69'][2].init(523, 20, 'direction === \'left\'');
+function visit17_69_2(result) {
+  _$jscoverage['/edge-drag.js'].branchData['69'][2].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['66'][1].init(54, 45, 'direction === \'left\' || direction === \'right\'');
-function visit15_66_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['69'][1].init(523, 47, 'direction === \'left\' && x < invalidRegion.right');
+function visit16_69_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['64'][1].init(1374, 5, '!move');
-function visit14_64_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['67'][3].init(441, 22, 'x > invalidRegion.left');
+function visit15_67_3(result) {
+  _$jscoverage['/edge-drag.js'].branchData['67'][3].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['53'][3].init(1128, 20, 'direction === \'down\'');
-function visit13_53_3(result) {
-  _$jscoverage['/edge-drag.js'].branchData['53'][3].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['67'][2].init(416, 21, 'direction === \'right\'');
+function visit14_67_2(result) {
+  _$jscoverage['/edge-drag.js'].branchData['67'][2].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['53'][2].init(1106, 18, 'direction === \'up\'');
-function visit12_53_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['53'][2].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['67'][1].init(416, 47, 'direction === \'right\' && x > invalidRegion.left');
+function visit13_67_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['53'][1].init(1106, 42, 'direction === \'up\' || direction === \'down\'');
-function visit11_53_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['55'][1].init(1212, 14, 'self.isStarted');
+function visit12_55_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['48'][1].init(43, 10, 'deltaY < 0');
-function visit10_48_1(result) {
+}_$jscoverage['/edge-drag.js'].branchData['50'][3].init(78, 21, 'direction === \'right\'');
+function visit11_50_3(result) {
+  _$jscoverage['/edge-drag.js'].branchData['50'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/edge-drag.js'].branchData['50'][2].init(54, 20, 'direction === \'left\'');
+function visit10_50_2(result) {
+  _$jscoverage['/edge-drag.js'].branchData['50'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/edge-drag.js'].branchData['50'][1].init(54, 45, 'direction === \'left\' || direction === \'right\'');
+function visit9_50_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['50'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/edge-drag.js'].branchData['48'][1].init(943, 5, '!move');
+function visit8_48_1(result) {
   _$jscoverage['/edge-drag.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['47'][1].init(933, 15, 'self.isVertical');
-function visit9_47_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['47'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['37'][3].init(697, 20, 'direction === \'down\'');
+function visit7_37_3(result) {
+  _$jscoverage['/edge-drag.js'].branchData['37'][3].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['46'][1].init(43, 10, 'deltaX < 0');
-function visit8_46_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['37'][2].init(675, 18, 'direction === \'up\'');
+function visit6_37_2(result) {
+  _$jscoverage['/edge-drag.js'].branchData['37'][2].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['45'][1].init(818, 17, 'self.isHorizontal');
-function visit7_45_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['45'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['38'][1].init(18, 21, 'absDeltaY > absDeltaX');
-function visit6_38_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['38'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['37'][1].init(595, 36, 'self.isVertical && self.isHorizontal');
+}_$jscoverage['/edge-drag.js'].branchData['37'][1].init(675, 42, 'direction === \'up\' || direction === \'down\'');
 function visit5_37_1(result) {
   _$jscoverage['/edge-drag.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['33'][2].init(507, 22, 'absDeltaY > MAX_OFFSET');
-function visit4_33_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['33'][2].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['32'][1].init(30, 10, 'deltaY < 0');
+function visit4_32_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['33'][1].init(486, 43, 'self.isHorizontal && absDeltaY > MAX_OFFSET');
-function visit3_33_1(result) {
-  _$jscoverage['/edge-drag.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/edge-drag.js'].branchData['30'][1].init(30, 10, 'deltaX < 0');
+function visit3_30_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/edge-drag.js'].branchData['29'][2].init(400, 22, 'absDeltaX > MAX_OFFSET');
-function visit2_29_2(result) {
-  _$jscoverage['/edge-drag.js'].branchData['29'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/edge-drag.js'].branchData['29'][1].init(381, 41, 'self.isVertical && absDeltaX > MAX_OFFSET');
-function visit1_29_1(result) {
+}_$jscoverage['/edge-drag.js'].branchData['29'][1].init(18, 21, 'absDeltaX > absDeltaY');
+function visit2_29_1(result) {
   _$jscoverage['/edge-drag.js'].branchData['29'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/edge-drag.js'].branchData['28'][1].init(398, 10, '!direction');
+function visit1_28_1(result) {
+  _$jscoverage['/edge-drag.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/edge-drag.js'].lineData[5]++;
 KISSY.add(function(S, require) {
@@ -483,117 +440,95 @@ KISSY.add(function(S, require) {
   _$jscoverage['/edge-drag.js'].lineData[9]++;
   var SingleTouch = GestureUtil.SingleTouch;
   _$jscoverage['/edge-drag.js'].lineData[10]++;
-  var MAX_OFFSET = 35, EDGE_DRAG_START = 'edgeDragStart', EDGE_DRAG = 'edgeDrag', EDGE_DRAG_END = 'edgeDragEnd', MIN_EDGE_DISTANCE = 60;
-  _$jscoverage['/edge-drag.js'].lineData[16]++;
+  var EDGE_DRAG_START = 'edgeDragStart', EDGE_DRAG = 'edgeDrag', EDGE_DRAG_END = 'edgeDragEnd', MIN_EDGE_DISTANCE = 60;
+  _$jscoverage['/edge-drag.js'].lineData[15]++;
   function fire(self, e, move) {
     _$jscoverage['/edge-drag.js'].functionData[1]++;
-    _$jscoverage['/edge-drag.js'].lineData[17]++;
-    var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, event, direction;
-    _$jscoverage['/edge-drag.js'].lineData[29]++;
-    if (visit1_29_1(self.isVertical && visit2_29_2(absDeltaX > MAX_OFFSET))) {
-      _$jscoverage['/edge-drag.js'].lineData[30]++;
-      self.isVertical = 0;
-    }
-    _$jscoverage['/edge-drag.js'].lineData[33]++;
-    if (visit3_33_1(self.isHorizontal && visit4_33_2(absDeltaY > MAX_OFFSET))) {
+    _$jscoverage['/edge-drag.js'].lineData[16]++;
+    var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, event, direction = self.direction;
+    _$jscoverage['/edge-drag.js'].lineData[28]++;
+    if (visit1_28_1(!direction)) {
+      _$jscoverage['/edge-drag.js'].lineData[29]++;
+      if (visit2_29_1(absDeltaX > absDeltaY)) {
+        _$jscoverage['/edge-drag.js'].lineData[30]++;
+        direction = visit3_30_1(deltaX < 0) ? 'left' : 'right';
+      } else {
+        _$jscoverage['/edge-drag.js'].lineData[32]++;
+        direction = visit4_32_1(deltaY < 0) ? 'up' : 'down';
+      }
       _$jscoverage['/edge-drag.js'].lineData[34]++;
-      self.isHorizontal = 0;
+      self.direction = direction;
     }
     _$jscoverage['/edge-drag.js'].lineData[37]++;
-    if (visit5_37_1(self.isVertical && self.isHorizontal)) {
+    if (visit5_37_1(visit6_37_2(direction === 'up') || visit7_37_3(direction === 'down'))) {
       _$jscoverage['/edge-drag.js'].lineData[38]++;
-      if (visit6_38_1(absDeltaY > absDeltaX)) {
-        _$jscoverage['/edge-drag.js'].lineData[39]++;
-        self.isHorizontal = 0;
-      } else {
-        _$jscoverage['/edge-drag.js'].lineData[41]++;
-        self.isVertical = 0;
-      }
-    }
-    _$jscoverage['/edge-drag.js'].lineData[45]++;
-    if (visit7_45_1(self.isHorizontal)) {
-      _$jscoverage['/edge-drag.js'].lineData[46]++;
-      direction = self.direction = visit8_46_1(deltaX < 0) ? 'left' : 'right';
-    } else {
-      _$jscoverage['/edge-drag.js'].lineData[47]++;
-      if (visit9_47_1(self.isVertical)) {
-        _$jscoverage['/edge-drag.js'].lineData[48]++;
-        direction = self.direction = visit10_48_1(deltaY < 0) ? 'up' : 'down';
-      } else {
-        _$jscoverage['/edge-drag.js'].lineData[50]++;
-        direction = self.direction;
-      }
-    }
-    _$jscoverage['/edge-drag.js'].lineData[53]++;
-    if (visit11_53_1(visit12_53_2(direction === 'up') || visit13_53_3(direction === 'down'))) {
-      _$jscoverage['/edge-drag.js'].lineData[54]++;
       distance = absDeltaY;
     } else {
-      _$jscoverage['/edge-drag.js'].lineData[56]++;
+      _$jscoverage['/edge-drag.js'].lineData[40]++;
       distance = absDeltaX;
     }
-    _$jscoverage['/edge-drag.js'].lineData[59]++;
+    _$jscoverage['/edge-drag.js'].lineData[43]++;
     var velocityX, velocityY;
-    _$jscoverage['/edge-drag.js'].lineData[62]++;
+    _$jscoverage['/edge-drag.js'].lineData[46]++;
     var duration = (e.timeStamp - self.startTime);
-    _$jscoverage['/edge-drag.js'].lineData[64]++;
-    if (visit14_64_1(!move)) {
-      _$jscoverage['/edge-drag.js'].lineData[65]++;
+    _$jscoverage['/edge-drag.js'].lineData[48]++;
+    if (visit8_48_1(!move)) {
+      _$jscoverage['/edge-drag.js'].lineData[49]++;
       event = EDGE_DRAG_END;
-      _$jscoverage['/edge-drag.js'].lineData[66]++;
-      if (visit15_66_1(visit16_66_2(direction === 'left') || visit17_66_3(direction === 'right'))) {
-        _$jscoverage['/edge-drag.js'].lineData[67]++;
+      _$jscoverage['/edge-drag.js'].lineData[50]++;
+      if (visit9_50_1(visit10_50_2(direction === 'left') || visit11_50_3(direction === 'right'))) {
+        _$jscoverage['/edge-drag.js'].lineData[51]++;
         velocityX = distance / duration;
       } else {
-        _$jscoverage['/edge-drag.js'].lineData[69]++;
+        _$jscoverage['/edge-drag.js'].lineData[53]++;
         velocityY = distance / duration;
       }
     } else {
-      _$jscoverage['/edge-drag.js'].lineData[71]++;
-      if (visit18_71_1(self.isStarted)) {
-        _$jscoverage['/edge-drag.js'].lineData[72]++;
+      _$jscoverage['/edge-drag.js'].lineData[55]++;
+      if (visit12_55_1(self.isStarted)) {
+        _$jscoverage['/edge-drag.js'].lineData[56]++;
         event = EDGE_DRAG;
       } else {
-        _$jscoverage['/edge-drag.js'].lineData[74]++;
+        _$jscoverage['/edge-drag.js'].lineData[58]++;
         event = EDGE_DRAG_START;
-        _$jscoverage['/edge-drag.js'].lineData[75]++;
+        _$jscoverage['/edge-drag.js'].lineData[59]++;
         var win = window;
-        _$jscoverage['/edge-drag.js'].lineData[76]++;
+        _$jscoverage['/edge-drag.js'].lineData[60]++;
         var invalidRegion = {
   left: win.pageXOffset + MIN_EDGE_DISTANCE, 
   right: win.pageXOffset + win.innerWidth - MIN_EDGE_DISTANCE, 
   top: win.pageYOffset + MIN_EDGE_DISTANCE, 
   bottom: win.pageYOffset + win.innerHeight - MIN_EDGE_DISTANCE};
-        _$jscoverage['/edge-drag.js'].lineData[83]++;
-        if (visit19_83_1(visit20_83_2(direction === 'right') && visit21_83_3(x > invalidRegion.left))) {
-          _$jscoverage['/edge-drag.js'].lineData[84]++;
+        _$jscoverage['/edge-drag.js'].lineData[67]++;
+        if (visit13_67_1(visit14_67_2(direction === 'right') && visit15_67_3(x > invalidRegion.left))) {
+          _$jscoverage['/edge-drag.js'].lineData[68]++;
           return false;
         } else {
-          _$jscoverage['/edge-drag.js'].lineData[85]++;
-          if (visit22_85_1(visit23_85_2(direction === 'left') && visit24_85_3(x < invalidRegion.right))) {
-            _$jscoverage['/edge-drag.js'].lineData[86]++;
+          _$jscoverage['/edge-drag.js'].lineData[69]++;
+          if (visit16_69_1(visit17_69_2(direction === 'left') && visit18_69_3(x < invalidRegion.right))) {
+            _$jscoverage['/edge-drag.js'].lineData[70]++;
             return false;
           } else {
-            _$jscoverage['/edge-drag.js'].lineData[87]++;
-            if (visit25_87_1(visit26_87_2(direction === 'down') && visit27_87_3(y > invalidRegion.top))) {
-              _$jscoverage['/edge-drag.js'].lineData[88]++;
+            _$jscoverage['/edge-drag.js'].lineData[71]++;
+            if (visit19_71_1(visit20_71_2(direction === 'down') && visit21_71_3(y > invalidRegion.top))) {
+              _$jscoverage['/edge-drag.js'].lineData[72]++;
               return false;
             } else {
-              _$jscoverage['/edge-drag.js'].lineData[89]++;
-              if (visit28_89_1(visit29_89_2(direction === 'up') && visit30_89_3(y < invalidRegion.bottom))) {
-                _$jscoverage['/edge-drag.js'].lineData[90]++;
+              _$jscoverage['/edge-drag.js'].lineData[73]++;
+              if (visit22_73_1(visit23_73_2(direction === 'up') && visit24_73_3(y < invalidRegion.bottom))) {
+                _$jscoverage['/edge-drag.js'].lineData[74]++;
                 return false;
               }
             }
           }
         }
-        _$jscoverage['/edge-drag.js'].lineData[92]++;
+        _$jscoverage['/edge-drag.js'].lineData[76]++;
         self.isStarted = 1;
-        _$jscoverage['/edge-drag.js'].lineData[93]++;
+        _$jscoverage['/edge-drag.js'].lineData[77]++;
         self.startTime = e.timeStamp;
       }
     }
-    _$jscoverage['/edge-drag.js'].lineData[96]++;
+    _$jscoverage['/edge-drag.js'].lineData[80]++;
     DomEvent.fire(touch.target, event, {
   originalEvent: e.originalEvent, 
   pageX: touch.pageX, 
@@ -605,51 +540,49 @@ KISSY.add(function(S, require) {
   duration: duration / 1000, 
   velocityX: velocityX, 
   velocityY: velocityY});
-    _$jscoverage['/edge-drag.js'].lineData[149]++;
+    _$jscoverage['/edge-drag.js'].lineData[133]++;
     return undefined;
   }
-  _$jscoverage['/edge-drag.js'].lineData[152]++;
+  _$jscoverage['/edge-drag.js'].lineData[136]++;
   function EdgeDrag() {
     _$jscoverage['/edge-drag.js'].functionData[2]++;
   }
-  _$jscoverage['/edge-drag.js'].lineData[155]++;
+  _$jscoverage['/edge-drag.js'].lineData[139]++;
   S.extend(EdgeDrag, SingleTouch, {
   requiredGestureType: 'touch', 
   start: function() {
   _$jscoverage['/edge-drag.js'].functionData[3]++;
-  _$jscoverage['/edge-drag.js'].lineData[159]++;
+  _$jscoverage['/edge-drag.js'].lineData[143]++;
   var self = this;
-  _$jscoverage['/edge-drag.js'].lineData[160]++;
+  _$jscoverage['/edge-drag.js'].lineData[144]++;
   EdgeDrag.superclass.start.apply(self, arguments);
-  _$jscoverage['/edge-drag.js'].lineData[161]++;
+  _$jscoverage['/edge-drag.js'].lineData[145]++;
   var touch = self.lastTouches[0];
-  _$jscoverage['/edge-drag.js'].lineData[162]++;
-  self.isHorizontal = 1;
-  _$jscoverage['/edge-drag.js'].lineData[163]++;
-  self.isVertical = 1;
-  _$jscoverage['/edge-drag.js'].lineData[164]++;
+  _$jscoverage['/edge-drag.js'].lineData[146]++;
+  self.direction = null;
+  _$jscoverage['/edge-drag.js'].lineData[147]++;
   self.startX = touch.pageX;
-  _$jscoverage['/edge-drag.js'].lineData[165]++;
+  _$jscoverage['/edge-drag.js'].lineData[148]++;
   self.startY = touch.pageY;
 }, 
   move: function(e) {
   _$jscoverage['/edge-drag.js'].functionData[4]++;
-  _$jscoverage['/edge-drag.js'].lineData[169]++;
+  _$jscoverage['/edge-drag.js'].lineData[152]++;
   EdgeDrag.superclass.move.apply(this, arguments);
-  _$jscoverage['/edge-drag.js'].lineData[170]++;
+  _$jscoverage['/edge-drag.js'].lineData[153]++;
   return fire(this, e, 1);
 }, 
   end: function(e) {
   _$jscoverage['/edge-drag.js'].functionData[5]++;
-  _$jscoverage['/edge-drag.js'].lineData[174]++;
+  _$jscoverage['/edge-drag.js'].lineData[157]++;
   EdgeDrag.superclass.end.apply(this, arguments);
-  _$jscoverage['/edge-drag.js'].lineData[175]++;
+  _$jscoverage['/edge-drag.js'].lineData[158]++;
   return fire(this, e, 0);
 }});
-  _$jscoverage['/edge-drag.js'].lineData[179]++;
+  _$jscoverage['/edge-drag.js'].lineData[162]++;
   addGestureEvent([EDGE_DRAG, EDGE_DRAG_END, EDGE_DRAG_START], {
   handle: new EdgeDrag()});
-  _$jscoverage['/edge-drag.js'].lineData[183]++;
+  _$jscoverage['/edge-drag.js'].lineData[166]++;
   return {
   EDGE_DRAG: EDGE_DRAG, 
   EDGE_DRAG_START: EDGE_DRAG_START, 

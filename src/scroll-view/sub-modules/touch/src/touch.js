@@ -171,28 +171,20 @@ KISSY.add(function (S, require) {
         self.startScroll.top = self.get('scrollTop');
     }
 
-    var onDragHandler = function (e) {
+    function onDraggingHandler(e) {
         var self = this;
 
-        if (e.gestureType !== 'touch' || !self.isScrolling) {
+        if (e.gestureType !== 'touch') {
             return;
         }
-
-        var xDiff = Math.abs(e.deltaX);
-        var yDiff = Math.abs(e.deltaY);
 
         var lockX = self._lockX,
             lockY = self._lockY;
 
         // if lockX or lockY then do not prevent native scroll on some condition
         if (lockX || lockY) {
-            var dragInitDirection;
-
-            if (!(dragInitDirection = self.dragInitDirection)) {
-                self.dragInitDirection = dragInitDirection = xDiff > yDiff ? 'left' : 'top';
-            }
-
-            if (lockX && dragInitDirection === 'left' && !self.allowScroll[dragInitDirection]) {
+            var direction = e.direction;
+            if (lockX && direction === 'left' && !self.allowScroll[direction]) {
                 self.isScrolling = 0;
                 if (self._preventDefaultX) {
                     e.preventDefault();
@@ -200,7 +192,7 @@ KISSY.add(function (S, require) {
                 return;
             }
 
-            if (lockY && dragInitDirection === 'top' && !self.allowScroll[dragInitDirection]) {
+            if (lockY && direction === 'top' && !self.allowScroll[direction]) {
                 self.isScrolling = 0;
                 if (self._preventDefaultY) {
                     e.preventDefault();
@@ -210,14 +202,22 @@ KISSY.add(function (S, require) {
         }
 
         e.preventDefault();
+    }
+
+    function onDragHandler(e) {
+        var self = this;
+
+        if (e.gestureType !== 'touch') {
+            return;
+        }
 
         onDragScroll(self, e, 'left');
         onDragScroll(self, e, 'top');
-    };
+    }
 
     function onDragEndHandler(e) {
         var self = this;
-        if (e.gestureType !== 'touch' || !self.isScrolling) {
+        if (e.gestureType !== 'touch') {
             return;
         }
         self.fire('touchEnd', {
@@ -374,6 +374,7 @@ KISSY.add(function (S, require) {
         self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)
             // click
             [action](BaseGesture.START, onGestureStart, self)
+            [action](DragGesture.DRAGGING, onDraggingHandler, self)
             [action](DragGesture.DRAG, onDragHandler, self)
             [action](DragGesture.DRAG_END, onDragEndHandler, self);
     }

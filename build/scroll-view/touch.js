@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:49
+build time: Apr 14 14:16
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -124,27 +124,22 @@ KISSY.add("scroll-view/touch", ["./base", "anim/timer", "event/gesture/base", "e
     self.startScroll.left = self.get("scrollLeft");
     self.startScroll.top = self.get("scrollTop")
   }
-  var onDragHandler = function(e) {
+  function onDraggingHandler(e) {
     var self = this;
-    if(e.gestureType !== "touch" || !self.isScrolling) {
+    if(e.gestureType !== "touch") {
       return
     }
-    var xDiff = Math.abs(e.deltaX);
-    var yDiff = Math.abs(e.deltaY);
     var lockX = self._lockX, lockY = self._lockY;
     if(lockX || lockY) {
-      var dragInitDirection;
-      if(!(dragInitDirection = self.dragInitDirection)) {
-        self.dragInitDirection = dragInitDirection = xDiff > yDiff ? "left" : "top"
-      }
-      if(lockX && dragInitDirection === "left" && !self.allowScroll[dragInitDirection]) {
+      var direction = e.direction;
+      if(lockX && direction === "left" && !self.allowScroll[direction]) {
         self.isScrolling = 0;
         if(self._preventDefaultX) {
           e.preventDefault()
         }
         return
       }
-      if(lockY && dragInitDirection === "top" && !self.allowScroll[dragInitDirection]) {
+      if(lockY && direction === "top" && !self.allowScroll[direction]) {
         self.isScrolling = 0;
         if(self._preventDefaultY) {
           e.preventDefault()
@@ -152,13 +147,19 @@ KISSY.add("scroll-view/touch", ["./base", "anim/timer", "event/gesture/base", "e
         return
       }
     }
-    e.preventDefault();
+    e.preventDefault()
+  }
+  function onDragHandler(e) {
+    var self = this;
+    if(e.gestureType !== "touch") {
+      return
+    }
     onDragScroll(self, e, "left");
     onDragScroll(self, e, "top")
-  };
+  }
   function onDragEndHandler(e) {
     var self = this;
-    if(e.gestureType !== "touch" || !self.isScrolling) {
+    if(e.gestureType !== "touch") {
       return
     }
     self.fire("touchEnd", {pageX:e.pageX, deltaX:e.deltaX, deltaY:e.deltaY, pageY:e.pageY, velocityX:e.velocityX, velocityY:e.velocityY})
@@ -273,7 +274,7 @@ KISSY.add("scroll-view/touch", ["./base", "anim/timer", "event/gesture/base", "e
   }
   function bindUI(self) {
     var action = self.get("disabled") ? "detach" : "on";
-    self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](BaseGesture.START, onGestureStart, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self)
+    self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](BaseGesture.START, onGestureStart, self)[action](DragGesture.DRAGGING, onDraggingHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self)
   }
   return ScrollViewBase.extend({initializer:function() {
     var self = this;

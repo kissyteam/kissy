@@ -179,9 +179,11 @@ bug in ios if native scroll exists
         $(window).on(EdgeDragGesture.EDGE_DRAG, function (e) {
             var direction = e.direction;
             var node = map[direction];
+            e.preventDefault();
             if (node.active) {
                 return;
             }
+
             if (direction === 'left') {
                 node.css('right', window.innerWidth + window.pageXOffset - e.pageX - node.width());
             } else if (direction === 'right') {
@@ -191,7 +193,7 @@ bug in ios if native scroll exists
             } else if (direction === 'down') {
                 node.css('top', e.pageY - window.pageYOffset - node.height());
             }
-            e.preventDefault();
+
         });
 
         var factor = 4;
@@ -219,6 +221,7 @@ bug in ios if native scroll exists
             node.animate(anim, {
                 duration: time
             });
+            e.preventDefault();
         });
     });
 </script>

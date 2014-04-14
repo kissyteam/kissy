@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 20:09
+build time: Apr 14 14:15
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -126,7 +126,7 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["ua", "component/control", "e
   var UA = require("ua");
   var Control = require("component/control");
   var BaseGesture = require("event/gesture/base");
-  var DragType = require("event/gesture/drag");
+  var DragGesture = require("event/gesture/drag");
   var ScrollBarTpl = require("./scrollbar-xtpl");
   var MIN_BAR_LENGTH = 20;
   var SCROLLBAR_EVENT_NS = ".ks-scrollbar";
@@ -239,7 +239,7 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["ua", "component/control", "e
   function bindDrag(self, disabled) {
     var action = disabled ? "detach" : "on";
     if(!self.get("autoHide")) {
-      self.$dragEl[action]("dragstart mousedown", preventDefault)[action](DragType.DRAG_START, onDragStartHandler, self)[action](DragType.DRAG, onDragHandler, self);
+      self.$dragEl[action](["dragstart", "mousedown", DragGesture.DRAGGING], preventDefault)[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](DragGesture.DRAG, onDragHandler, self);
       S.each([self.$downBtn, self.$upBtn], function(b) {
         b[action](BaseGesture.START, onUpDownBtnMouseDown, self)[action](BaseGesture.END, onUpDownBtnMouseUp, self)
       });

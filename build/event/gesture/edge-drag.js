@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 19:04
+build time: Apr 14 14:16
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -14,30 +14,16 @@ KISSY.add("event/gesture/edge-drag", ["event/gesture/util", "event/dom/base"], f
   var addGestureEvent = GestureUtil.addEvent;
   var DomEvent = require("event/dom/base");
   var SingleTouch = GestureUtil.SingleTouch;
-  var MAX_OFFSET = 35, EDGE_DRAG_START = "edgeDragStart", EDGE_DRAG = "edgeDrag", EDGE_DRAG_END = "edgeDragEnd", MIN_EDGE_DISTANCE = 60;
+  var EDGE_DRAG_START = "edgeDragStart", EDGE_DRAG = "edgeDrag", EDGE_DRAG_END = "edgeDragEnd", MIN_EDGE_DISTANCE = 60;
   function fire(self, e, move) {
-    var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, event, direction;
-    if(self.isVertical && absDeltaX > MAX_OFFSET) {
-      self.isVertical = 0
-    }
-    if(self.isHorizontal && absDeltaY > MAX_OFFSET) {
-      self.isHorizontal = 0
-    }
-    if(self.isVertical && self.isHorizontal) {
-      if(absDeltaY > absDeltaX) {
-        self.isHorizontal = 0
+    var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, event, direction = self.direction;
+    if(!direction) {
+      if(absDeltaX > absDeltaY) {
+        direction = deltaX < 0 ? "left" : "right"
       }else {
-        self.isVertical = 0
+        direction = deltaY < 0 ? "up" : "down"
       }
-    }
-    if(self.isHorizontal) {
-      direction = self.direction = deltaX < 0 ? "left" : "right"
-    }else {
-      if(self.isVertical) {
-        direction = self.direction = deltaY < 0 ? "up" : "down"
-      }else {
-        direction = self.direction
-      }
+      self.direction = direction
     }
     if(direction === "up" || direction === "down") {
       distance = absDeltaY
@@ -88,8 +74,7 @@ KISSY.add("event/gesture/edge-drag", ["event/gesture/util", "event/dom/base"], f
     var self = this;
     EdgeDrag.superclass.start.apply(self, arguments);
     var touch = self.lastTouches[0];
-    self.isHorizontal = 1;
-    self.isVertical = 1;
+    self.direction = null;
     self.startX = touch.pageX;
     self.startY = touch.pageY
   }, move:function(e) {

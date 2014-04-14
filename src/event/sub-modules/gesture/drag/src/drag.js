@@ -8,9 +8,10 @@ KISSY.add(function (S, require) {
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
-    var DRAG_START = 'gestureDragStart',
-        DRAG_END = 'gestureDragEnd',
-        DRAG = 'gestureDrag',
+    var DRAG_START = 'ksDragStart',
+        DRAG_END = 'ksDragEnd',
+        DRAGGING = 'ksDragging',
+        DRAG = 'ksDrag',
         SAMPLE_INTERVAL = 300,
         MIN_DISTANCE = 3;
     var doc = document;
@@ -24,6 +25,19 @@ KISSY.add(function (S, require) {
     function startDrag(self, e) {
         var currentTouch = self.lastTouches[0];
         var startPos = self.startPos;
+        if (!self.direction) {
+            var deltaX = e.pageX - self.startPos.pageX,
+                deltaY = e.pageY - self.startPos.pageY,
+                absDeltaX = Math.abs(deltaX),
+                absDeltaY = Math.abs(deltaY);
+            if (absDeltaX > absDeltaY) {
+                self.direction = deltaX < 0 ? 'left' : 'right';
+            } else {
+                self.direction = deltaY < 0 ? 'up' : 'down';
+            }
+        }
+        // call e.preventDefault() to prevent native browser behavior for android chrome
+        DomEvent.fire(self.dragTarget, DRAGGING, getEventObject(self, e));
         // fire dragstart after moving at least 3px
         if (getDistance(currentTouch, startPos) > MIN_DISTANCE) {
             if (self.isStarted) {
@@ -65,6 +79,7 @@ KISSY.add(function (S, require) {
         ret.startPos = self.startPos;
         ret.touch = currentTouch;
         ret.gestureType = e.gestureType;
+        ret.direction = self.direction;
         return ret;
     }
 
@@ -83,6 +98,7 @@ KISSY.add(function (S, require) {
                 pageX: touch.pageX,
                 pageY: touch.pageY
             };
+            self.direction = null;
         },
 
         move: function (e) {
@@ -117,6 +133,7 @@ KISSY.add(function (S, require) {
     });
 
     return {
+        DRAGGING: DRAGGING,
         DRAG_START: DRAG_START,
         DRAG: DRAG,
         DRAG_END: DRAG_END

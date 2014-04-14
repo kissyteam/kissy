@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
         BaseGesture = require('event/gesture/base'),
         DDM = require('./ddm'),
         Base = require('base'),
-        DragType = require('event/gesture/drag');
+        DragGesture = require('event/gesture/drag');
 
     var UA = require('ua'),
         $ = Node.all,
@@ -236,11 +236,11 @@ KISSY.add(function (S, require) {
             var self = this,
                 node = self.getEventTargetEl();
             if (node) {
-                node.on(DragType.DRAG_START, onDragStart, self)
-                    .on(DragType.DRAG, onDrag, self)
-                    .on(DragType.DRAG_END, onDragEnd, self)
+                node.on(DragGesture.DRAG_START, onDragStart, self)
+                    .on(DragGesture.DRAG, onDrag, self)
+                    .on(DragGesture.DRAG_END, onDragEnd, self)
                     .on(BaseGesture.START, onGestureStart, self)
-                    .on('dragstart', self._fixDragStart);
+                    .on(['dragstart',DragGesture.DRAGGING], preventDefault);
             }
         },
 
@@ -248,11 +248,11 @@ KISSY.add(function (S, require) {
             var self = this,
                 node = self.getEventTargetEl();
             if (node) {
-                node.detach(DragType.DRAG_START, onDragStart, self)
-                    .detach(DragType.DRAG, onDrag, self)
-                    .detach(DragType.DRAG_END, onDragEnd, self)
+                node.detach(DragGesture.DRAG_START, onDragStart, self)
+                    .detach(DragGesture.DRAG, onDrag, self)
+                    .detach(DragGesture.DRAG_END, onDragEnd, self)
                     .detach(BaseGesture.START, onGestureStart, self)
-                    .detach('dragstart', self._fixDragStart);
+                    .detach(['dragstart',DragGesture.DRAGGING], preventDefault);
             }
         },
 
@@ -264,8 +264,6 @@ KISSY.add(function (S, require) {
             }
             self[d ? 'stop' : 'start']();
         },
-
-        _fixDragStart: fixDragStart,
 
         _checkHandler: function (t) {
             var self = this,
@@ -760,7 +758,7 @@ KISSY.add(function (S, require) {
      2. 防止 html5 draggable 元素的拖放默认行为 (选中文字拖放)
      3. 防止默认的选择文本行为(??场景？)
      */
-    function fixDragStart(e) {
+    function preventDefault(e) {
         e.preventDefault();
     }
 

@@ -479,7 +479,7 @@ function visit21_368_1(result) {
 function visit20_357_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['357'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['282'][1].init(9650, 11, 'supportCss3');
+}_$jscoverage['/scrollbar/control.js'].branchData['282'][1].init(9686, 11, 'supportCss3');
 function visit19_282_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['282'][1].ranCondition(result);
   return result;
@@ -565,7 +565,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/control.js'].lineData[9]++;
   var BaseGesture = require('event/gesture/base');
   _$jscoverage['/scrollbar/control.js'].lineData[10]++;
-  var DragType = require('event/gesture/drag');
+  var DragGesture = require('event/gesture/drag');
   _$jscoverage['/scrollbar/control.js'].lineData[11]++;
   var ScrollBarTpl = require('./scrollbar-xtpl');
   _$jscoverage['/scrollbar/control.js'].lineData[13]++;
@@ -781,7 +781,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/scrollbar/control.js'].lineData[181]++;
     if (visit14_181_1(!self.get('autoHide'))) {
       _$jscoverage['/scrollbar/control.js'].lineData[184]++;
-      self.$dragEl[action]('dragstart mousedown', preventDefault)[action](DragType.DRAG_START, onDragStartHandler, self)[action](DragType.DRAG, onDragHandler, self);
+      self.$dragEl[action](['dragstart', 'mousedown', DragGesture.DRAGGING], preventDefault)[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](DragGesture.DRAG, onDragHandler, self);
       _$jscoverage['/scrollbar/control.js'].lineData[185]++;
       S.each([self.$downBtn, self.$upBtn], function(b) {
   _$jscoverage['/scrollbar/control.js'].functionData[16]++;

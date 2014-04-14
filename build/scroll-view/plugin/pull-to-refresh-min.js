@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:49
+build time: Apr 14 14:15
 */
 KISSY.add("scroll-view/plugin/pull-to-refresh",["base"],function(d,f){var g=f("base"),h=d.substitute,e=d.Feature.getCssVendorInfo("transform"),i=e&&e.propertyName;return g.extend({pluginId:this.getName(),_onSetState:function(a){if(this.scrollView){var a=a.newVal,b=this.scrollView.get("prefixCls"),c=this.$el;c.attr("class",b+"scroll-view-pull-to-refresh "+b+"scroll-view-"+a);this.labelEl.html(this.get(a+"Html"));this.elHeight=c.height()}},_onScrollMove:function(a){a=a.newVal;0-a>this.elHeight?this.set("state",
 "releasing"):0>a&&this.set("state","pulling")},_onDragEnd:function(){var a=this,b=a.scrollView;if(0-b.get("scrollTop")>a.elHeight){b.minScroll.top=-a.elHeight;var c=a.get("loadFn");a.set("state","loading");var d=function(){b.scrollTo({top:-a.elHeight});b.scrollTo({top:b.minScroll.top},{duration:b.get("snapDuration"),easing:b.get("snapEasing")});a.set("state","pulling")};c?c.call(a,d):d.call(a)}},_onSetScrollTop:function(a){a=a.newVal;0>a&&(this.el.style[i]="translate3d(0,"+-a+"px,0)")},pluginRenderUI:function(a){this.scrollView=

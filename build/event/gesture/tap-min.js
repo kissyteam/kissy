@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 19:04
+build time: Apr 14 14:16
 */
 KISSY.add("event/gesture/tap",["event/gesture/util","event/dom/base","ua"],function(j,l){function o(a){a.preventDefault()}function m(a){a.singleTapTimer&&(clearTimeout(a.singleTapTimer),a.singleTapTimer=0);a.tapHoldTimer&&(clearTimeout(a.tapHoldTimer),a.tapHoldTimer=0)}function d(){d.superclass.constructor.apply(this,arguments)}var k=l("event/gesture/util"),p=k.addEvent,f=l("event/dom/base"),k=k.SingleTouch,n=l("ua"),q=f.Object;j.extend(d,k,{start:function(a){var b=this;d.superclass.start.call(b,
 a);m(b);var c=b.lastTouches[0];b.tapHoldTimer=setTimeout(function(){var g=j.mix({touch:c,which:1,TAP_HOLD_DELAY:(j.now()-a.timeStamp)/1E3},b.lastXY);b.tapHoldTimer=0;b.lastXY=0;f.fire(c.target,"tapHold",g)},1E3);b.isStarted=!0},move:function(){var a;if(!(a=this.lastXY))return!1;var b=this.lastTouches[0];if(!b||5<Math.abs(b.pageX-a.pageX)||5<Math.abs(b.pageY-a.pageY))return m(this),!1},end:function(a,b){var c;m(this);if(!b&&(c=this.lastXY)){var g=this.lastTouches[0],e=g.target,h=new q(a.originalEvent);

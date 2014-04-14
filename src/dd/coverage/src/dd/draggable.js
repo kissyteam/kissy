@@ -264,109 +264,109 @@ if (! _$jscoverage['/dd/draggable.js']) {
   _$jscoverage['/dd/draggable.js'].lineData[262] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[263] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[265] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[271] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[269] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[272] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[274] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[275] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[276] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[277] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[278] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[279] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[281] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[283] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[285] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[286] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[287] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[288] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[289] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[291] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[293] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[295] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[297] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[298] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[299] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[300] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[301] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[315] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[316] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[323] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[324] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[327] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[328] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[333] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[334] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[338] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[339] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[348] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[352] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[357] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[358] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[361] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[366] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[313] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[314] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[321] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[322] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[325] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[326] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[331] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[332] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[336] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[337] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[346] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[350] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[355] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[356] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[359] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[364] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[374] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[376] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[377] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[378] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[379] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[380] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[381] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[382] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[383] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[384] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[388] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[391] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[394] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[395] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[398] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[402] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[403] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[386] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[389] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[392] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[393] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[396] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[400] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[401] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[404] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[406] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[408] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[417] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[418] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[415] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[416] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[421] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[423] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[425] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[428] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[426] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[429] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[431] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[433] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[435] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[436] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[441] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[434] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[439] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[444] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[446] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[448] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[460] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[461] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[464] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[471] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[458] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[459] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[462] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[469] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[470] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[472] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[474] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[478] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[487] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[510] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[476] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[485] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[508] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[509] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[511] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[513] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[554] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[555] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[556] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[557] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[558] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[559] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[560] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[561] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[562] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[565] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[563] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[564] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[566] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[568] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[567] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[569] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[571] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[573] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[574] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[572] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[733] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[735] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[737] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[738] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[741] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[742] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[736] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[739] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[740] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[745] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[746] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[747] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[748] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[749] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[752] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[753] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[763] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[764] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[770] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[771] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[750] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[751] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[761] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[762] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[768] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[769] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[772] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[773] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[774] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[775] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[776] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[779] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[777] = 0;
 }
 if (! _$jscoverage['/dd/draggable.js'].functionData) {
   _$jscoverage['/dd/draggable.js'].functionData = [];
@@ -418,136 +418,136 @@ if (! _$jscoverage['/dd/draggable.js'].branchData) {
   _$jscoverage['/dd/draggable.js'].branchData['250'][1] = new BranchData();
   _$jscoverage['/dd/draggable.js'].branchData['262'] = [];
   _$jscoverage['/dd/draggable.js'].branchData['262'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['276'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['276'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['276'][2] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['288'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['288'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['288'][2] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['299'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['299'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['315'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['315'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['323'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['323'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['327'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['327'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['357'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['357'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['378'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['378'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['394'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['394'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['402'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['402'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['406'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['406'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['417'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['417'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['423'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['423'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['510'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['510'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['557'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['557'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['561'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['561'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['565'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['565'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['568'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['568'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['741'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['741'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['752'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['752'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['274'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['274'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['274'][2] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['286'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['286'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['286'][2] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['297'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['297'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['313'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['313'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['321'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['321'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['325'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['325'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['355'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['355'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['376'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['376'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['392'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['392'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['400'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['400'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['404'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['404'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['415'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['415'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['421'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['421'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['508'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['508'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['555'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['555'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['559'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['559'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['563'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['563'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['566'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['566'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['739'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['739'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['750'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['750'][1] = new BranchData();
 }
-_$jscoverage['/dd/draggable.js'].branchData['752'][1].init(305, 19, 'doc.body.setCapture');
-function visit81_752_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['752'][1].ranCondition(result);
+_$jscoverage['/dd/draggable.js'].branchData['750'][1].init(305, 19, 'doc.body.setCapture');
+function visit81_750_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['750'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['741'][1].init(259, 23, 'doc.body.releaseCapture');
-function visit80_741_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['741'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['739'][1].init(259, 23, 'doc.body.releaseCapture');
+function visit80_739_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['739'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['568'][1].init(338, 10, 'v.nodeType');
-function visit79_568_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['568'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['566'][1].init(338, 10, 'v.nodeType');
+function visit79_566_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['566'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['565'][1].init(202, 21, 'typeof v === \'string\'');
-function visit78_565_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['565'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['563'][1].init(202, 21, 'typeof v === \'string\'');
+function visit78_563_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['563'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['561'][1].init(29, 23, 'typeof v === \'function\'');
-function visit77_561_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['561'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['559'][1].init(29, 23, 'typeof v === \'function\'');
+function visit77_559_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['559'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['557'][1].init(62, 10, '!vs.length');
-function visit76_557_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['557'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['555'][1].init(62, 10, '!vs.length');
+function visit76_555_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['555'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['510'][1].init(25, 20, '!(v instanceof Node)');
-function visit75_510_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['510'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['508'][1].init(25, 20, '!(v instanceof Node)');
+function visit75_508_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['508'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['423'][1].init(17, 7, 'e || {}');
-function visit74_423_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['423'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['421'][1].init(17, 7, 'e || {}');
+function visit74_421_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['417'][1].init(17, 17, 'this._isValidDrag');
-function visit73_417_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['417'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['415'][1].init(17, 17, 'this._isValidDrag');
+function visit73_415_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['415'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['406'][1].init(1527, 11, 'def && move');
-function visit72_406_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['406'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['404'][1].init(1527, 11, 'def && move');
+function visit72_404_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['404'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['402'][1].init(1424, 32, 'self.get(\'preventDefaultOnMove\')');
-function visit71_402_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['402'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['400'][1].init(1424, 32, 'self.get(\'preventDefaultOnMove\')');
+function visit71_400_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['394'][1].init(1230, 40, 'self.fire(\'drag\', customEvent) === false');
-function visit70_394_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['394'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['392'][1].init(1230, 40, 'self.fire(\'drag\', customEvent) === false');
+function visit70_392_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['392'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['378'][1].init(677, 4, 'move');
-function visit69_378_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['378'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['376'][1].init(677, 4, 'move');
+function visit69_376_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['376'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['357'][1].init(149, 25, 'e.gestureType === \'touch\'');
-function visit68_357_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['357'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['355'][1].init(149, 25, 'e.gestureType === \'touch\'');
+function visit68_355_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['355'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['327'][1].init(1069, 15, 'self._allowMove');
-function visit67_327_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['327'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['325'][1].init(1069, 15, 'self._allowMove');
+function visit67_325_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['325'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['323'][1].init(973, 25, 'e.gestureType === \'mouse\'');
-function visit66_323_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['323'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['321'][1].init(973, 25, 'e.gestureType === \'mouse\'');
+function visit66_321_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['321'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['315'][1].init(683, 16, 'self.get(\'halt\')');
-function visit65_315_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['315'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['313'][1].init(683, 16, 'self.get(\'halt\')');
+function visit65_313_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['299'][1].init(83, 2, 'ie');
-function visit64_299_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['299'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['297'][1].init(83, 2, 'ie');
+function visit64_297_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['297'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['288'][2].init(79, 13, 'e.which !== 1');
-function visit63_288_2(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['288'][2].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['286'][2].init(79, 13, 'e.which !== 1');
+function visit63_286_2(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['286'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['288'][1].init(46, 46, 'self.get(\'primaryButtonOnly\') && e.which !== 1');
-function visit62_288_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['288'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['286'][1].init(46, 46, 'self.get(\'primaryButtonOnly\') && e.which !== 1');
+function visit62_286_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['286'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['276'][2].init(51, 16, 'handler[0] === t');
-function visit61_276_2(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['276'][2].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['274'][2].init(51, 16, 'handler[0] === t');
+function visit61_274_2(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['274'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['276'][1].init(51, 39, 'handler[0] === t || handler.contains(t)');
-function visit60_276_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['276'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['274'][1].init(51, 39, 'handler[0] === t || handler.contains(t)');
+function visit60_274_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['274'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['262'][1].init(91, 4, 'node');
 function visit59_262_1(result) {
@@ -577,7 +577,7 @@ function visit54_23_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].functionData[0]++;
   _$jscoverage['/dd/draggable.js'].lineData[7]++;
-  var Node = require('node'), BaseGesture = require('event/gesture/base'), DDM = require('./ddm'), Base = require('base'), DragType = require('event/gesture/drag');
+  var Node = require('node'), BaseGesture = require('event/gesture/base'), DDM = require('./ddm'), Base = require('base'), DragGesture = require('event/gesture/drag');
   _$jscoverage['/dd/draggable.js'].lineData[13]++;
   var UA = require('ua'), $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   _$jscoverage['/dd/draggable.js'].lineData[21]++;
@@ -656,7 +656,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[238]++;
   if (visit57_238_1(node)) {
     _$jscoverage['/dd/draggable.js'].lineData[243]++;
-    node.on(DragType.DRAG_START, onDragStart, self).on(DragType.DRAG, onDrag, self).on(DragType.DRAG_END, onDragEnd, self).on(BaseGesture.START, onGestureStart, self).on('dragstart', self._fixDragStart);
+    node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BaseGesture.START, onGestureStart, self).on(['dragstart', DragGesture.DRAGGING], preventDefault);
   }
 }, 
   stop: function() {
@@ -666,7 +666,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[250]++;
   if (visit58_250_1(node)) {
     _$jscoverage['/dd/draggable.js'].lineData[255]++;
-    node.detach(DragType.DRAG_START, onDragStart, self).detach(DragType.DRAG, onDrag, self).detach(DragType.DRAG_END, onDragEnd, self).detach(BaseGesture.START, onGestureStart, self).detach('dragstart', self._fixDragStart);
+    node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BaseGesture.START, onGestureStart, self).detach(['dragstart', DragGesture.DRAGGING], preventDefault);
   }
 }, 
   _onSetDisabled: function(d) {
@@ -681,83 +681,82 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[265]++;
   self[d ? 'stop' : 'start']();
 }, 
-  _fixDragStart: fixDragStart, 
   _checkHandler: function(t) {
   _$jscoverage['/dd/draggable.js'].functionData[13]++;
-  _$jscoverage['/dd/draggable.js'].lineData[271]++;
+  _$jscoverage['/dd/draggable.js'].lineData[269]++;
   var self = this, handlers = self.get('handlers'), ret = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[274]++;
+  _$jscoverage['/dd/draggable.js'].lineData[272]++;
   each(handlers, function(handler) {
   _$jscoverage['/dd/draggable.js'].functionData[14]++;
-  _$jscoverage['/dd/draggable.js'].lineData[276]++;
-  if (visit60_276_1(visit61_276_2(handler[0] === t) || handler.contains(t))) {
-    _$jscoverage['/dd/draggable.js'].lineData[277]++;
+  _$jscoverage['/dd/draggable.js'].lineData[274]++;
+  if (visit60_274_1(visit61_274_2(handler[0] === t) || handler.contains(t))) {
+    _$jscoverage['/dd/draggable.js'].lineData[275]++;
     ret = 1;
-    _$jscoverage['/dd/draggable.js'].lineData[278]++;
+    _$jscoverage['/dd/draggable.js'].lineData[276]++;
     self.setInternal('activeHandler', handler);
-    _$jscoverage['/dd/draggable.js'].lineData[279]++;
+    _$jscoverage['/dd/draggable.js'].lineData[277]++;
     return false;
   }
-  _$jscoverage['/dd/draggable.js'].lineData[281]++;
+  _$jscoverage['/dd/draggable.js'].lineData[279]++;
   return undefined;
 });
-  _$jscoverage['/dd/draggable.js'].lineData[283]++;
+  _$jscoverage['/dd/draggable.js'].lineData[281]++;
   return ret;
 }, 
   _checkDragStartValid: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[15]++;
-  _$jscoverage['/dd/draggable.js'].lineData[287]++;
+  _$jscoverage['/dd/draggable.js'].lineData[285]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[288]++;
-  if (visit62_288_1(self.get('primaryButtonOnly') && visit63_288_2(e.which !== 1))) {
-    _$jscoverage['/dd/draggable.js'].lineData[289]++;
+  _$jscoverage['/dd/draggable.js'].lineData[286]++;
+  if (visit62_286_1(self.get('primaryButtonOnly') && visit63_286_2(e.which !== 1))) {
+    _$jscoverage['/dd/draggable.js'].lineData[287]++;
     return 0;
   }
-  _$jscoverage['/dd/draggable.js'].lineData[291]++;
+  _$jscoverage['/dd/draggable.js'].lineData[289]++;
   return 1;
 }, 
   _prepare: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[16]++;
-  _$jscoverage['/dd/draggable.js'].lineData[295]++;
+  _$jscoverage['/dd/draggable.js'].lineData[293]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[297]++;
+  _$jscoverage['/dd/draggable.js'].lineData[295]++;
   self._isValidDrag = 1;
-  _$jscoverage['/dd/draggable.js'].lineData[299]++;
-  if (visit64_299_1(ie)) {
-    _$jscoverage['/dd/draggable.js'].lineData[300]++;
+  _$jscoverage['/dd/draggable.js'].lineData[297]++;
+  if (visit64_297_1(ie)) {
+    _$jscoverage['/dd/draggable.js'].lineData[298]++;
     fixIEMouseDown();
-    _$jscoverage['/dd/draggable.js'].lineData[301]++;
+    _$jscoverage['/dd/draggable.js'].lineData[299]++;
     $doc.on(BaseGesture.END, {
   fn: fixIEMouseUp, 
   once: true});
   }
-  _$jscoverage['/dd/draggable.js'].lineData[315]++;
-  if (visit65_315_1(self.get('halt'))) {
-    _$jscoverage['/dd/draggable.js'].lineData[316]++;
+  _$jscoverage['/dd/draggable.js'].lineData[313]++;
+  if (visit65_313_1(self.get('halt'))) {
+    _$jscoverage['/dd/draggable.js'].lineData[314]++;
     e.stopPropagation();
   }
-  _$jscoverage['/dd/draggable.js'].lineData[323]++;
-  if (visit66_323_1(e.gestureType === 'mouse')) {
-    _$jscoverage['/dd/draggable.js'].lineData[324]++;
+  _$jscoverage['/dd/draggable.js'].lineData[321]++;
+  if (visit66_321_1(e.gestureType === 'mouse')) {
+    _$jscoverage['/dd/draggable.js'].lineData[322]++;
     e.preventDefault();
   }
-  _$jscoverage['/dd/draggable.js'].lineData[327]++;
-  if (visit67_327_1(self._allowMove)) {
-    _$jscoverage['/dd/draggable.js'].lineData[328]++;
+  _$jscoverage['/dd/draggable.js'].lineData[325]++;
+  if (visit67_325_1(self._allowMove)) {
+    _$jscoverage['/dd/draggable.js'].lineData[326]++;
     self.setInternal('startNodePos', self.get('node').offset());
   }
 }, 
   _start: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[17]++;
-  _$jscoverage['/dd/draggable.js'].lineData[333]++;
+  _$jscoverage['/dd/draggable.js'].lineData[331]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[334]++;
+  _$jscoverage['/dd/draggable.js'].lineData[332]++;
   self.mousePos = {
   left: e.pageX, 
   top: e.pageY};
-  _$jscoverage['/dd/draggable.js'].lineData[338]++;
+  _$jscoverage['/dd/draggable.js'].lineData[336]++;
   DDM.start(e, self);
-  _$jscoverage['/dd/draggable.js'].lineData[339]++;
+  _$jscoverage['/dd/draggable.js'].lineData[337]++;
   self.fire('dragstart', {
   drag: self, 
   gestureType: e.gestureType, 
@@ -766,23 +765,23 @@ KISSY.add(function(S, require) {
   deltaY: e.deltaY, 
   pageX: e.pageX, 
   pageY: e.pageY});
-  _$jscoverage['/dd/draggable.js'].lineData[348]++;
+  _$jscoverage['/dd/draggable.js'].lineData[346]++;
   self.get('dragNode').addClass(PREFIX_CLS + 'dragging');
 }, 
   _move: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[18]++;
-  _$jscoverage['/dd/draggable.js'].lineData[352]++;
+  _$jscoverage['/dd/draggable.js'].lineData[350]++;
   var self = this, pageX = e.pageX, pageY = e.pageY;
-  _$jscoverage['/dd/draggable.js'].lineData[357]++;
-  if (visit68_357_1(e.gestureType === 'touch')) {
-    _$jscoverage['/dd/draggable.js'].lineData[358]++;
+  _$jscoverage['/dd/draggable.js'].lineData[355]++;
+  if (visit68_355_1(e.gestureType === 'touch')) {
+    _$jscoverage['/dd/draggable.js'].lineData[356]++;
     e.preventDefault();
   }
-  _$jscoverage['/dd/draggable.js'].lineData[361]++;
+  _$jscoverage['/dd/draggable.js'].lineData[359]++;
   self.mousePos = {
   left: pageX, 
   top: pageY};
-  _$jscoverage['/dd/draggable.js'].lineData[366]++;
+  _$jscoverage['/dd/draggable.js'].lineData[364]++;
   var customEvent = {
   drag: self, 
   gestureType: e.gestureType, 
@@ -791,79 +790,79 @@ KISSY.add(function(S, require) {
   deltaY: e.deltaY, 
   pageX: e.pageX, 
   pageY: e.pageY};
-  _$jscoverage['/dd/draggable.js'].lineData[376]++;
+  _$jscoverage['/dd/draggable.js'].lineData[374]++;
   var move = self._allowMove;
-  _$jscoverage['/dd/draggable.js'].lineData[378]++;
-  if (visit69_378_1(move)) {
-    _$jscoverage['/dd/draggable.js'].lineData[379]++;
+  _$jscoverage['/dd/draggable.js'].lineData[376]++;
+  if (visit69_376_1(move)) {
+    _$jscoverage['/dd/draggable.js'].lineData[377]++;
     var startNodePos = self.get('startNodePos');
-    _$jscoverage['/dd/draggable.js'].lineData[380]++;
+    _$jscoverage['/dd/draggable.js'].lineData[378]++;
     var left = startNodePos.left + e.deltaX, top = startNodePos.top + e.deltaY;
-    _$jscoverage['/dd/draggable.js'].lineData[382]++;
+    _$jscoverage['/dd/draggable.js'].lineData[380]++;
     customEvent.left = left;
-    _$jscoverage['/dd/draggable.js'].lineData[383]++;
+    _$jscoverage['/dd/draggable.js'].lineData[381]++;
     customEvent.top = top;
-    _$jscoverage['/dd/draggable.js'].lineData[384]++;
+    _$jscoverage['/dd/draggable.js'].lineData[382]++;
     self.setInternal('actualPos', {
   left: left, 
   top: top});
-    _$jscoverage['/dd/draggable.js'].lineData[388]++;
+    _$jscoverage['/dd/draggable.js'].lineData[386]++;
     self.fire('dragalign', customEvent);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[391]++;
+  _$jscoverage['/dd/draggable.js'].lineData[389]++;
   var def = 1;
-  _$jscoverage['/dd/draggable.js'].lineData[394]++;
-  if (visit70_394_1(self.fire('drag', customEvent) === false)) {
-    _$jscoverage['/dd/draggable.js'].lineData[395]++;
+  _$jscoverage['/dd/draggable.js'].lineData[392]++;
+  if (visit70_392_1(self.fire('drag', customEvent) === false)) {
+    _$jscoverage['/dd/draggable.js'].lineData[393]++;
     def = 0;
   }
-  _$jscoverage['/dd/draggable.js'].lineData[398]++;
+  _$jscoverage['/dd/draggable.js'].lineData[396]++;
   DDM.move(e, self);
-  _$jscoverage['/dd/draggable.js'].lineData[402]++;
-  if (visit71_402_1(self.get('preventDefaultOnMove'))) {
-    _$jscoverage['/dd/draggable.js'].lineData[403]++;
+  _$jscoverage['/dd/draggable.js'].lineData[400]++;
+  if (visit71_400_1(self.get('preventDefaultOnMove'))) {
+    _$jscoverage['/dd/draggable.js'].lineData[401]++;
     e.preventDefault();
   }
-  _$jscoverage['/dd/draggable.js'].lineData[406]++;
-  if (visit72_406_1(def && move)) {
-    _$jscoverage['/dd/draggable.js'].lineData[408]++;
+  _$jscoverage['/dd/draggable.js'].lineData[404]++;
+  if (visit72_404_1(def && move)) {
+    _$jscoverage['/dd/draggable.js'].lineData[406]++;
     self.get('node').offset(self.get('actualPos'));
   }
 }, 
   stopDrag: function() {
   _$jscoverage['/dd/draggable.js'].functionData[19]++;
-  _$jscoverage['/dd/draggable.js'].lineData[417]++;
-  if (visit73_417_1(this._isValidDrag)) {
-    _$jscoverage['/dd/draggable.js'].lineData[418]++;
+  _$jscoverage['/dd/draggable.js'].lineData[415]++;
+  if (visit73_415_1(this._isValidDrag)) {
+    _$jscoverage['/dd/draggable.js'].lineData[416]++;
     this._end();
   }
 }, 
   _end: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[20]++;
+  _$jscoverage['/dd/draggable.js'].lineData[421]++;
+  e = visit74_421_1(e || {});
   _$jscoverage['/dd/draggable.js'].lineData[423]++;
-  e = visit74_423_1(e || {});
-  _$jscoverage['/dd/draggable.js'].lineData[425]++;
   var self = this, activeDrop;
-  _$jscoverage['/dd/draggable.js'].lineData[428]++;
+  _$jscoverage['/dd/draggable.js'].lineData[426]++;
   self._isValidDrag = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[431]++;
+  _$jscoverage['/dd/draggable.js'].lineData[429]++;
   self.get('node').removeClass(PREFIX_CLS + 'drag-over');
-  _$jscoverage['/dd/draggable.js'].lineData[433]++;
+  _$jscoverage['/dd/draggable.js'].lineData[431]++;
   self.get('dragNode').removeClass(PREFIX_CLS + 'dragging');
-  _$jscoverage['/dd/draggable.js'].lineData[435]++;
+  _$jscoverage['/dd/draggable.js'].lineData[433]++;
   if ((activeDrop = DDM.get('activeDrop'))) {
-    _$jscoverage['/dd/draggable.js'].lineData[436]++;
+    _$jscoverage['/dd/draggable.js'].lineData[434]++;
     self.fire('dragdrophit', {
   drag: self, 
   drop: activeDrop});
   } else {
-    _$jscoverage['/dd/draggable.js'].lineData[441]++;
+    _$jscoverage['/dd/draggable.js'].lineData[439]++;
     self.fire('dragdropmiss', {
   drag: self});
   }
-  _$jscoverage['/dd/draggable.js'].lineData[446]++;
+  _$jscoverage['/dd/draggable.js'].lineData[444]++;
   DDM.end(e, self);
-  _$jscoverage['/dd/draggable.js'].lineData[448]++;
+  _$jscoverage['/dd/draggable.js'].lineData[446]++;
   self.fire('dragend', {
   drag: self, 
   gestureType: e.gestureType, 
@@ -875,32 +874,32 @@ KISSY.add(function(S, require) {
 }, 
   _handleOut: function() {
   _$jscoverage['/dd/draggable.js'].functionData[21]++;
-  _$jscoverage['/dd/draggable.js'].lineData[460]++;
+  _$jscoverage['/dd/draggable.js'].lineData[458]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[461]++;
+  _$jscoverage['/dd/draggable.js'].lineData[459]++;
   self.get('node').removeClass(PREFIX_CLS + 'drag-over');
-  _$jscoverage['/dd/draggable.js'].lineData[464]++;
+  _$jscoverage['/dd/draggable.js'].lineData[462]++;
   self.fire('dragexit', {
   drag: self, 
   drop: DDM.get('activeDrop')});
 }, 
   _handleEnter: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[22]++;
-  _$jscoverage['/dd/draggable.js'].lineData[471]++;
+  _$jscoverage['/dd/draggable.js'].lineData[469]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[472]++;
+  _$jscoverage['/dd/draggable.js'].lineData[470]++;
   self.get('node').addClass(PREFIX_CLS + 'drag-over');
-  _$jscoverage['/dd/draggable.js'].lineData[474]++;
+  _$jscoverage['/dd/draggable.js'].lineData[472]++;
   self.fire('dragenter', e);
 }, 
   _handleOver: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[23]++;
-  _$jscoverage['/dd/draggable.js'].lineData[478]++;
+  _$jscoverage['/dd/draggable.js'].lineData[476]++;
   this.fire('dragover', e);
 }, 
   destructor: function() {
   _$jscoverage['/dd/draggable.js'].functionData[24]++;
-  _$jscoverage['/dd/draggable.js'].lineData[487]++;
+  _$jscoverage['/dd/draggable.js'].lineData[485]++;
   this.stop();
 }}, {
   name: 'Draggable', 
@@ -908,12 +907,12 @@ KISSY.add(function(S, require) {
   node: {
   setter: function(v) {
   _$jscoverage['/dd/draggable.js'].functionData[25]++;
-  _$jscoverage['/dd/draggable.js'].lineData[510]++;
-  if (visit75_510_1(!(v instanceof Node))) {
-    _$jscoverage['/dd/draggable.js'].lineData[511]++;
+  _$jscoverage['/dd/draggable.js'].lineData[508]++;
+  if (visit75_508_1(!(v instanceof Node))) {
+    _$jscoverage['/dd/draggable.js'].lineData[509]++;
     return $(v);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[513]++;
+  _$jscoverage['/dd/draggable.js'].lineData[511]++;
   return undefined;
 }}, 
   dragNode: {}, 
@@ -923,37 +922,37 @@ KISSY.add(function(S, require) {
   value: [], 
   getter: function(vs) {
   _$jscoverage['/dd/draggable.js'].functionData[26]++;
-  _$jscoverage['/dd/draggable.js'].lineData[556]++;
+  _$jscoverage['/dd/draggable.js'].lineData[554]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[557]++;
-  if (visit76_557_1(!vs.length)) {
-    _$jscoverage['/dd/draggable.js'].lineData[558]++;
+  _$jscoverage['/dd/draggable.js'].lineData[555]++;
+  if (visit76_555_1(!vs.length)) {
+    _$jscoverage['/dd/draggable.js'].lineData[556]++;
     vs[0] = self.get('node');
   }
-  _$jscoverage['/dd/draggable.js'].lineData[560]++;
+  _$jscoverage['/dd/draggable.js'].lineData[558]++;
   each(vs, function(v, i) {
   _$jscoverage['/dd/draggable.js'].functionData[27]++;
-  _$jscoverage['/dd/draggable.js'].lineData[561]++;
-  if (visit77_561_1(typeof v === 'function')) {
-    _$jscoverage['/dd/draggable.js'].lineData[562]++;
+  _$jscoverage['/dd/draggable.js'].lineData[559]++;
+  if (visit77_559_1(typeof v === 'function')) {
+    _$jscoverage['/dd/draggable.js'].lineData[560]++;
     v = v.call(self);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[565]++;
-  if (visit78_565_1(typeof v === 'string')) {
-    _$jscoverage['/dd/draggable.js'].lineData[566]++;
+  _$jscoverage['/dd/draggable.js'].lineData[563]++;
+  if (visit78_563_1(typeof v === 'string')) {
+    _$jscoverage['/dd/draggable.js'].lineData[564]++;
     v = self.get('node').one(v);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[568]++;
-  if (visit79_568_1(v.nodeType)) {
-    _$jscoverage['/dd/draggable.js'].lineData[569]++;
+  _$jscoverage['/dd/draggable.js'].lineData[566]++;
+  if (visit79_566_1(v.nodeType)) {
+    _$jscoverage['/dd/draggable.js'].lineData[567]++;
     v = $(v);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[571]++;
+  _$jscoverage['/dd/draggable.js'].lineData[569]++;
   vs[i] = v;
 });
-  _$jscoverage['/dd/draggable.js'].lineData[573]++;
+  _$jscoverage['/dd/draggable.js'].lineData[571]++;
   self.setInternal('handlers', vs);
-  _$jscoverage['/dd/draggable.js'].lineData[574]++;
+  _$jscoverage['/dd/draggable.js'].lineData[572]++;
   return vs;
 }}, 
   activeHandler: {}, 
@@ -978,52 +977,52 @@ KISSY.add(function(S, require) {
   POINT: 'point', 
   INTERSECT: 'intersect', 
   STRICT: 'strict'}}});
-  _$jscoverage['/dd/draggable.js'].lineData[735]++;
+  _$jscoverage['/dd/draggable.js'].lineData[733]++;
   var _ieSelectBack;
-  _$jscoverage['/dd/draggable.js'].lineData[737]++;
+  _$jscoverage['/dd/draggable.js'].lineData[735]++;
   function fixIEMouseUp() {
     _$jscoverage['/dd/draggable.js'].functionData[28]++;
-    _$jscoverage['/dd/draggable.js'].lineData[738]++;
+    _$jscoverage['/dd/draggable.js'].lineData[736]++;
     doc.body.onselectstart = _ieSelectBack;
-    _$jscoverage['/dd/draggable.js'].lineData[741]++;
-    if (visit80_741_1(doc.body.releaseCapture)) {
-      _$jscoverage['/dd/draggable.js'].lineData[742]++;
+    _$jscoverage['/dd/draggable.js'].lineData[739]++;
+    if (visit80_739_1(doc.body.releaseCapture)) {
+      _$jscoverage['/dd/draggable.js'].lineData[740]++;
       doc.body.releaseCapture();
     }
   }
-  _$jscoverage['/dd/draggable.js'].lineData[747]++;
+  _$jscoverage['/dd/draggable.js'].lineData[745]++;
   function fixIEMouseDown() {
     _$jscoverage['/dd/draggable.js'].functionData[29]++;
-    _$jscoverage['/dd/draggable.js'].lineData[748]++;
+    _$jscoverage['/dd/draggable.js'].lineData[746]++;
     _ieSelectBack = doc.body.onselectstart;
-    _$jscoverage['/dd/draggable.js'].lineData[749]++;
+    _$jscoverage['/dd/draggable.js'].lineData[747]++;
     doc.body.onselectstart = fixIESelect;
-    _$jscoverage['/dd/draggable.js'].lineData[752]++;
-    if (visit81_752_1(doc.body.setCapture)) {
-      _$jscoverage['/dd/draggable.js'].lineData[753]++;
+    _$jscoverage['/dd/draggable.js'].lineData[750]++;
+    if (visit81_750_1(doc.body.setCapture)) {
+      _$jscoverage['/dd/draggable.js'].lineData[751]++;
       doc.body.setCapture();
     }
   }
-  _$jscoverage['/dd/draggable.js'].lineData[763]++;
-  function fixDragStart(e) {
+  _$jscoverage['/dd/draggable.js'].lineData[761]++;
+  function preventDefault(e) {
     _$jscoverage['/dd/draggable.js'].functionData[30]++;
-    _$jscoverage['/dd/draggable.js'].lineData[764]++;
+    _$jscoverage['/dd/draggable.js'].lineData[762]++;
     e.preventDefault();
   }
-  _$jscoverage['/dd/draggable.js'].lineData[770]++;
+  _$jscoverage['/dd/draggable.js'].lineData[768]++;
   function fixIESelect() {
     _$jscoverage['/dd/draggable.js'].functionData[31]++;
-    _$jscoverage['/dd/draggable.js'].lineData[771]++;
+    _$jscoverage['/dd/draggable.js'].lineData[769]++;
     return false;
   }
-  _$jscoverage['/dd/draggable.js'].lineData[774]++;
+  _$jscoverage['/dd/draggable.js'].lineData[772]++;
   function onGestureStart(e) {
     _$jscoverage['/dd/draggable.js'].functionData[32]++;
-    _$jscoverage['/dd/draggable.js'].lineData[775]++;
+    _$jscoverage['/dd/draggable.js'].lineData[773]++;
     this._isValidDrag = 0;
-    _$jscoverage['/dd/draggable.js'].lineData[776]++;
+    _$jscoverage['/dd/draggable.js'].lineData[774]++;
     this.onGestureStart(e);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[779]++;
+  _$jscoverage['/dd/draggable.js'].lineData[777]++;
   return Draggable;
 });

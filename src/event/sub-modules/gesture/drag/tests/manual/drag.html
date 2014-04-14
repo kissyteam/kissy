@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<h1>test pinch event</h1>
+<h1>test draf event</h1>
 
 <div id='t'
      style='border:1px solid green;
@@ -30,27 +30,31 @@
 <div style="height: 900px;"></div>
 <div style="height: 900px;"></div>
 <script>
-    KISSY.use('node,event/gesture/drag', function (S, Node, DragType) {
+    KISSY.use('node,event/gesture/drag', function (S, Node, DragGesture) {
         var left = 0;
         var top = 0;
         var $ = Node.all;
         var t = $('#t');
-        t.on('mousedown dragstart', function (e) {
+        t.on('dragstart', function (e) {
             e.preventDefault();
         });
-        t.on(DragType.DRAG_START, function () {
+        log(DragGesture.DRAGGING);
+        t.on(DragGesture.DRAGGING, function (e) {
+           e.preventDefault();
+        });
+        t.on(DragGesture.DRAG_START, function () {
             left = parseInt(t.css('left'));
             top = parseInt(t.css('top'));
         });
-        t.on(DragType.DRAG, function (e) {
+        t.on(DragGesture.DRAG, function (e) {
             t.css({
                 left: e.deltaX + left,
                 top: e.deltaY + top
             });
             e.preventDefault();
         });
-        t.on(DragType.DRAG_END, function (e) {
-            log(e.velocityX + ' : ' + e.velocityY);
+        t.on(DragGesture.DRAG_END, function (e) {
+            log(e.direction + ' : ' + e.velocityX + ' : ' + e.velocityY);
         });
     });
 </script>

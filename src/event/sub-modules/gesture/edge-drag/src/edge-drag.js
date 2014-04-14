@@ -7,8 +7,7 @@ KISSY.add(function (S, require) {
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
-    var MAX_OFFSET = 35,
-        EDGE_DRAG_START = 'edgeDragStart',
+    var EDGE_DRAG_START = 'edgeDragStart',
         EDGE_DRAG = 'edgeDrag',
         EDGE_DRAG_END = 'edgeDragEnd',
         MIN_EDGE_DISTANCE = 60;
@@ -24,30 +23,15 @@ KISSY.add(function (S, require) {
             absDeltaY = Math.abs(deltaY),
             distance,
             event,
-            direction;
-
-        if (self.isVertical && absDeltaX > MAX_OFFSET) {
-            self.isVertical = 0;
-        }
-
-        if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
-            self.isHorizontal = 0;
-        }
-
-        if (self.isVertical && self.isHorizontal) {
-            if (absDeltaY > absDeltaX) {
-                self.isHorizontal = 0;
-            } else {
-                self.isVertical = 0;
-            }
-        }
-
-        if (self.isHorizontal) {
-            direction = self.direction = deltaX < 0 ? 'left' : 'right';
-        } else if (self.isVertical) {
-            direction = self.direction = deltaY < 0 ? 'up' : 'down';
-        } else {
             direction = self.direction;
+
+        if (!direction) {
+            if (absDeltaX > absDeltaY) {
+                direction = deltaX < 0 ? 'left' : 'right';
+            } else {
+                direction = deltaY < 0 ? 'up' : 'down';
+            }
+            self.direction = direction;
         }
 
         if (direction === 'up' || direction === 'down') {
@@ -159,8 +143,7 @@ KISSY.add(function (S, require) {
             var self = this;
             EdgeDrag.superclass.start.apply(self, arguments);
             var touch = self.lastTouches[0];
-            self.isHorizontal = 1;
-            self.isVertical = 1;
+            self.direction = null;
             self.startX = touch.pageX;
             self.startY = touch.pageY;
         },
@@ -187,5 +170,9 @@ KISSY.add(function (S, require) {
     };
 });
 /*
- http://msdn.microsoft.com/zh-cn/library/windows/apps/hh465415.aspx
+ note:
+ - android chrome will fire touchcancel before touchmove ....
+
+ refer:
+ - http://msdn.microsoft.com/zh-cn/library/windows/apps/hh465415.aspx
  */

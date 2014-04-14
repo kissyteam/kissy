@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 18:37
+build time: Apr 14 14:14
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -198,7 +198,7 @@ KISSY.add("dd/ddm", ["node", "base", "ua"], function(S, require) {
   return DDM
 });
 KISSY.add("dd/draggable", ["node", "event/gesture/base", "./ddm", "base", "event/gesture/drag", "ua"], function(S, require) {
-  var Node = require("node"), BaseGesture = require("event/gesture/base"), DDM = require("./ddm"), Base = require("base"), DragType = require("event/gesture/drag");
+  var Node = require("node"), BaseGesture = require("event/gesture/base"), DDM = require("./ddm"), Base = require("base"), DragGesture = require("event/gesture/drag");
   var UA = require("ua"), $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   function checkValid(fn) {
     return function() {
@@ -236,12 +236,12 @@ KISSY.add("dd/draggable", ["node", "event/gesture/base", "./ddm", "base", "event
   }, start:function() {
     var self = this, node = self.getEventTargetEl();
     if(node) {
-      node.on(DragType.DRAG_START, onDragStart, self).on(DragType.DRAG, onDrag, self).on(DragType.DRAG_END, onDragEnd, self).on(BaseGesture.START, onGestureStart, self).on("dragstart", self._fixDragStart)
+      node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BaseGesture.START, onGestureStart, self).on(["dragstart", DragGesture.DRAGGING], preventDefault)
     }
   }, stop:function() {
     var self = this, node = self.getEventTargetEl();
     if(node) {
-      node.detach(DragType.DRAG_START, onDragStart, self).detach(DragType.DRAG, onDrag, self).detach(DragType.DRAG_END, onDragEnd, self).detach(BaseGesture.START, onGestureStart, self).detach("dragstart", self._fixDragStart)
+      node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BaseGesture.START, onGestureStart, self).detach(["dragstart", DragGesture.DRAGGING], preventDefault)
     }
   }, _onSetDisabled:function(d) {
     var self = this, node = self.get("dragNode");
@@ -249,7 +249,7 @@ KISSY.add("dd/draggable", ["node", "event/gesture/base", "./ddm", "base", "event
       node[d ? "addClass" : "removeClass"](PREFIX_CLS + "-disabled")
     }
     self[d ? "stop" : "start"]()
-  }, _fixDragStart:fixDragStart, _checkHandler:function(t) {
+  }, _checkHandler:function(t) {
     var self = this, handlers = self.get("handlers"), ret = 0;
     each(handlers, function(handler) {
       if(handler[0] === t || handler.contains(t)) {
@@ -383,7 +383,7 @@ KISSY.add("dd/draggable", ["node", "event/gesture/base", "./ddm", "base", "event
       doc.body.setCapture()
     }
   }
-  function fixDragStart(e) {
+  function preventDefault(e) {
     e.preventDefault()
   }
   function fixIESelect() {

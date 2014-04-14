@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 19:04
+build time: Apr 14 14:15
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("event/gesture/drag", ["event/gesture/util", "event/dom/base"], functi
   var addGestureEvent = GestureUtil.addEvent;
   var DomEvent = require("event/dom/base");
   var SingleTouch = GestureUtil.SingleTouch;
-  var DRAG_START = "gestureDragStart", DRAG_END = "gestureDragEnd", DRAG = "gestureDrag", SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
+  var DRAG_START = "ksDragStart", DRAG_END = "ksDragEnd", DRAGGING = "ksDragging", DRAG = "ksDrag", SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
   var doc = document;
   function getDistance(p1, p2) {
     var deltaX = p1.pageX - p2.pageX, deltaY = p1.pageY - p2.pageY;
@@ -23,6 +23,15 @@ KISSY.add("event/gesture/drag", ["event/gesture/util", "event/dom/base"], functi
   function startDrag(self, e) {
     var currentTouch = self.lastTouches[0];
     var startPos = self.startPos;
+    if(!self.direction) {
+      var deltaX = e.pageX - self.startPos.pageX, deltaY = e.pageY - self.startPos.pageY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY);
+      if(absDeltaX > absDeltaY) {
+        self.direction = deltaX < 0 ? "left" : "right"
+      }else {
+        self.direction = deltaY < 0 ? "up" : "down"
+      }
+    }
+    DomEvent.fire(self.dragTarget, DRAGGING, getEventObject(self, e));
     if(getDistance(currentTouch, startPos) > MIN_DISTANCE) {
       if(self.isStarted) {
         sample(self, e)
@@ -56,6 +65,7 @@ KISSY.add("event/gesture/drag", ["event/gesture/util", "event/dom/base"], functi
     ret.startPos = self.startPos;
     ret.touch = currentTouch;
     ret.gestureType = e.gestureType;
+    ret.direction = self.direction;
     return ret
   }
   function Drag() {
@@ -66,7 +76,8 @@ KISSY.add("event/gesture/drag", ["event/gesture/util", "event/dom/base"], functi
     var touch = self.lastTouches[0];
     self.lastTime = self.startTime;
     self.dragTarget = touch.target;
-    self.startPos = self.lastPos = {pageX:touch.pageX, pageY:touch.pageY}
+    self.startPos = self.lastPos = {pageX:touch.pageX, pageY:touch.pageY};
+    self.direction = null
   }, move:function(e) {
     var self = this;
     Drag.superclass.move.apply(self, arguments);
@@ -88,6 +99,6 @@ KISSY.add("event/gesture/drag", ["event/gesture/util", "event/dom/base"], functi
     }
   }});
   addGestureEvent([DRAG_START, DRAG, DRAG_END], {handle:new Drag});
-  return{DRAG_START:DRAG_START, DRAG:DRAG, DRAG_END:DRAG_END}
+  return{DRAGGING:DRAGGING, DRAG_START:DRAG_START, DRAG:DRAG, DRAG_END:DRAG_END}
 });
 
