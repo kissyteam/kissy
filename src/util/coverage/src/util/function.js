@@ -388,7 +388,7 @@ function visit62_20_1(result) {
   _$jscoverage['/util/function.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].lineData[7]++;
-KISSY.add(function(S, undefined) {
+KISSY.add(function(S) {
   _$jscoverage['/util/function.js'].functionData[0]++;
   _$jscoverage['/util/function.js'].lineData[9]++;
   function bindFn(r, fn, obj) {
@@ -433,7 +433,7 @@ KISSY.add(function(S, undefined) {
   _$jscoverage['/util/function.js'].lineData[96]++;
   if (visit65_96_1(!m)) {
     _$jscoverage['/util/function.js'].lineData[97]++;
-    S.error('method undefined');
+    S.error('method undefine');
   }
   _$jscoverage['/util/function.js'].lineData[100]++;
   f = function() {

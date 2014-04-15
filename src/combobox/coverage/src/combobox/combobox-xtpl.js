@@ -383,27 +383,27 @@ if (! _$jscoverage['/combobox/combobox-xtpl.js'].branchData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'] = [];
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1] = new BranchData();
 }
-_$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1].init(6845, 37, 'commandRet32 && commandRet32.isBuffer');
+_$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1].init(6909, 37, 'commandRet32 && commandRet32.isBuffer');
 function visit8_168_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['128'][1].init(5365, 37, 'commandRet24 && commandRet24.isBuffer');
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['128'][1].init(5413, 37, 'commandRet24 && commandRet24.isBuffer');
 function visit7_128_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['97'][1].init(3990, 37, 'commandRet17 && commandRet17.isBuffer');
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['97'][1].init(4010, 37, 'commandRet17 && commandRet17.isBuffer');
 function visit6_97_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['79'][1].init(969, 37, 'commandRet14 && commandRet14.isBuffer');
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['79'][1].init(973, 37, 'commandRet14 && commandRet14.isBuffer');
 function visit5_79_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['66'][1].init(379, 37, 'commandRet11 && commandRet11.isBuffer');
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['66'][1].init(381, 37, 'commandRet11 && commandRet11.isBuffer');
 function visit4_66_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['43'][1].init(1786, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['43'][1].init(1788, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit3_43_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -453,7 +453,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[35]++;
-  buffer.write('">\n    <div class="');
+  buffer.write('">\r\n    <div class="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -475,7 +475,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[47]++;
   buffer.write(commandRet5, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[48]++;
-  buffer.write('"></div>\n</div>\n\n');
+  buffer.write('"></div>\r\n</div>\r\n\r\n');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[49]++;
   var option6 = {
   escape: 1};
@@ -491,7 +491,7 @@ KISSY.add(function(S, require, exports, module) {
   option6.fn = function(scope, buffer) {
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData[2]++;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[58]++;
-  buffer.write('\n<div class="');
+  buffer.write('\r\n<div class="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[59]++;
   var option9 = {
   escape: 1};
@@ -513,7 +513,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[70]++;
   buffer.write(commandRet11, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[71]++;
-  buffer.write('">\n    <div class="');
+  buffer.write('">\r\n    <div class="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[72]++;
   var option12 = {
   escape: 1};
@@ -535,14 +535,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[83]++;
   buffer.write(commandRet14, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[84]++;
-  buffer.write('">&#x25BC;</div>\n</div>\n');
+  buffer.write('">&#x25BC;</div>\r\n</div>\r\n');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[86]++;
   return buffer;
 };
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[88]++;
   buffer = ifCommand.call(engine, scope, option6, buffer, 5, payload);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[89]++;
-  buffer.write('\n\n<div class="');
+  buffer.write('\r\n\r\n<div class="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[90]++;
   var option15 = {
   escape: 1};
@@ -564,13 +564,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[101]++;
   buffer.write(commandRet17, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[102]++;
-  buffer.write('">\n\n    <input id="ks-combobox-input-');
+  buffer.write('">\r\n\r\n    <input id="ks-combobox-input-');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[103]++;
   var id18 = scope.resolve(["id"]);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[104]++;
   buffer.write(id18, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[105]++;
-  buffer.write('"\n           aria-haspopup="true"\n           aria-autocomplete="list"\n           aria-haspopup="true"\n           role="autocomplete"\n           aria-expanded="false"\n\n    ');
+  buffer.write('"\r\n           aria-haspopup="true"\r\n           aria-autocomplete="list"\r\n           aria-haspopup="true"\r\n           role="autocomplete"\r\n           aria-expanded="false"\r\n\r\n    ');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[106]++;
   var option19 = {
   escape: 1};
@@ -586,14 +586,14 @@ KISSY.add(function(S, require, exports, module) {
   option19.fn = function(scope, buffer) {
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData[3]++;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[115]++;
-  buffer.write('\n    disabled\n    ');
+  buffer.write('\r\n    disabled\r\n    ');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[117]++;
   return buffer;
 };
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[119]++;
   buffer = ifCommand.call(engine, scope, option19, buffer, 20, payload);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[120]++;
-  buffer.write('\n\n    autocomplete="off"\n    class="');
+  buffer.write('\r\n\r\n    autocomplete="off"\r\n    class="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[121]++;
   var option22 = {
   escape: 1};
@@ -615,19 +615,19 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[132]++;
   buffer.write(commandRet24, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[133]++;
-  buffer.write('"\n\n    value="');
+  buffer.write('"\r\n\r\n    value="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[134]++;
   var id25 = scope.resolve(["value"]);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[135]++;
   buffer.write(id25, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[136]++;
-  buffer.write('"\n    />\n\n\n    <label for="ks-combobox-input-');
+  buffer.write('"\r\n    />\r\n\r\n\r\n    <label for="ks-combobox-input-');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[137]++;
   var id26 = scope.resolve(["id"]);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[138]++;
   buffer.write(id26, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[139]++;
-  buffer.write('"\n            style=\'display:');
+  buffer.write('"\r\n            style=\'display:');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[140]++;
   var option27 = {
   escape: 1};
@@ -658,7 +658,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[159]++;
   buffer = ifCommand.call(engine, scope, option27, buffer, 32, payload);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[160]++;
-  buffer.write(';\'\n    class="');
+  buffer.write(';\'\r\n    class="');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[161]++;
   var option30 = {
   escape: 1};
@@ -680,13 +680,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[172]++;
   buffer.write(commandRet32, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[173]++;
-  buffer.write('">\n    ');
+  buffer.write('">\r\n    ');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[174]++;
   var id33 = scope.resolve(["placeholder"]);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[175]++;
   buffer.write(id33, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[176]++;
-  buffer.write('\n    </label>\n</div>\n');
+  buffer.write('\r\n    </label>\r\n</div>\r\n');
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[177]++;
   return buffer;
 };

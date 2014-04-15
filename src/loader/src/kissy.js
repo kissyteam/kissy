@@ -78,6 +78,7 @@ var KISSY = (function (undefined) {
          */
         Config: {
             debug: '@DEBUG@',
+            packages: {},
             fns: {}
         },
 

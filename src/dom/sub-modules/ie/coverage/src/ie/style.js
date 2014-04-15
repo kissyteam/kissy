@@ -333,75 +333,75 @@ if (! _$jscoverage['/ie/style.js'].branchData) {
   _$jscoverage['/ie/style.js'].branchData['170'] = [];
   _$jscoverage['/ie/style.js'].branchData['170'][1] = new BranchData();
 }
-_$jscoverage['/ie/style.js'].branchData['170'][1].init(1440, 10, 'ret === \'\'');
+_$jscoverage['/ie/style.js'].branchData['170'][1].init(1474, 10, 'ret === \'\'');
 function visit86_170_1(result) {
   _$jscoverage['/ie/style.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['162'][2].init(404, 8, 'ret || 0');
+}_$jscoverage['/ie/style.js'].branchData['162'][2].init(414, 8, 'ret || 0');
 function visit85_162_2(result) {
   _$jscoverage['/ie/style.js'].branchData['162'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['162'][1].init(373, 19, 'name === \'fontSize\'');
+}_$jscoverage['/ie/style.js'].branchData['162'][1].init(383, 19, 'name === \'fontSize\'');
 function visit84_162_1(result) {
   _$jscoverage['/ie/style.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['152'][1].init(785, 49, 'Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)');
+}_$jscoverage['/ie/style.js'].branchData['152'][1].init(801, 49, 'Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)');
 function visit83_152_1(result) {
   _$jscoverage['/ie/style.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['140'][1].init(158, 48, 'elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name]');
+}_$jscoverage['/ie/style.js'].branchData['140'][1].init(162, 48, 'elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name]');
 function visit82_140_1(result) {
   _$jscoverage['/ie/style.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['137'][1].init(16, 22, 'cssProps[name] || name');
+}_$jscoverage['/ie/style.js'].branchData['137'][1].init(17, 22, 'cssProps[name] || name');
 function visit81_137_1(result) {
   _$jscoverage['/ie/style.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['124'][2].init(78, 34, 'currentStyle[styleName] !== \'none\'');
+}_$jscoverage['/ie/style.js'].branchData['124'][2].init(80, 34, 'currentStyle[styleName] !== \'none\'');
 function visit80_124_2(result) {
   _$jscoverage['/ie/style.js'].branchData['124'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['124'][1].init(55, 57, 'BORDER_MAP[current] && currentStyle[styleName] !== \'none\'');
+}_$jscoverage['/ie/style.js'].branchData['124'][1].init(57, 57, 'BORDER_MAP[current] && currentStyle[styleName] !== \'none\'');
 function visit79_124_1(result) {
   _$jscoverage['/ie/style.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['122'][2].init(285, 25, 'current.indexOf(\'px\') < 0');
+}_$jscoverage['/ie/style.js'].branchData['122'][2].init(290, 25, 'current.indexOf(\'px\') < 0');
 function visit78_122_2(result) {
   _$jscoverage['/ie/style.js'].branchData['122'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['122'][1].init(274, 36, 'current && current.indexOf(\'px\') < 0');
+}_$jscoverage['/ie/style.js'].branchData['122'][1].init(279, 36, 'current && current.indexOf(\'px\') < 0');
 function visit77_122_1(result) {
   _$jscoverage['/ie/style.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['120'][2].init(84, 42, 'currentStyle && String(currentStyle[name])');
+}_$jscoverage['/ie/style.js'].branchData['120'][2].init(85, 42, 'currentStyle && String(currentStyle[name])');
 function visit76_120_2(result) {
   _$jscoverage['/ie/style.js'].branchData['120'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['120'][1].init(84, 55, 'currentStyle && String(currentStyle[name]) || undefined');
+}_$jscoverage['/ie/style.js'].branchData['120'][1].init(85, 55, 'currentStyle && String(currentStyle[name]) || undefined');
 function visit75_120_1(result) {
   _$jscoverage['/ie/style.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3889, 11, 'UA.ie === 8');
+}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3988, 11, 'UA.ie === 8');
 function visit74_105_1(result) {
   _$jscoverage['/ie/style.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['83'][1].init(141, 37, 'currentStyle && !currentStyle[FILTER]');
+}_$jscoverage['/ie/style.js'].branchData['83'][1].init(143, 37, 'currentStyle && !currentStyle[FILTER]');
 function visit73_83_1(result) {
   _$jscoverage['/ie/style.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['81'][1].init(55, 179, '!opacity || currentStyle && !currentStyle[FILTER]');
+}_$jscoverage['/ie/style.js'].branchData['81'][1].init(56, 181, '!opacity || currentStyle && !currentStyle[FILTER]');
 function visit72_81_1(result) {
   _$jscoverage['/ie/style.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['73'][3].init(634, 8, 'val >= 1');
+}_$jscoverage['/ie/style.js'].branchData['73'][3].init(647, 8, 'val >= 1');
 function visit71_73_3(result) {
   _$jscoverage['/ie/style.js'].branchData['73'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['73'][2].init(634, 20, 'val >= 1 || !opacity');
+}_$jscoverage['/ie/style.js'].branchData['73'][2].init(647, 20, 'val >= 1 || !opacity');
 function visit70_73_2(result) {
   _$jscoverage['/ie/style.js'].branchData['73'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['73'][1].init(634, 61, '(val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, \'\'))');
+}_$jscoverage['/ie/style.js'].branchData['73'][1].init(647, 61, '(val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, \'\'))');
 function visit69_73_1(result) {
   _$jscoverage['/ie/style.js'].branchData['73'][1].ranCondition(result);
   return result;
@@ -413,7 +413,7 @@ function visit68_66_3(result) {
 function visit67_66_2(result) {
   _$jscoverage['/ie/style.js'].branchData['66'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['66'][1].init(224, 59, 'currentStyle && currentStyle[FILTER] || style[FILTER] || \'\'');
+}_$jscoverage['/ie/style.js'].branchData['66'][1].init(227, 59, 'currentStyle && currentStyle[FILTER] || style[FILTER] || \'\'');
 function visit66_66_1(result) {
   _$jscoverage['/ie/style.js'].branchData['66'][1].ranCondition(result);
   return result;
@@ -421,19 +421,19 @@ function visit66_66_1(result) {
 function visit65_53_1(result) {
   _$jscoverage['/ie/style.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['52'][1].init(40, 146, '(computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || \'\'');
+}_$jscoverage['/ie/style.js'].branchData['52'][1].init(41, 148, '(computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || \'\'');
 function visit64_52_1(result) {
   _$jscoverage['/ie/style.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['46'][1].init(13, 30, 'docElem.style[OPACITY] == null');
+}_$jscoverage['/ie/style.js'].branchData['46'][1].init(14, 30, 'docElem.style[OPACITY] == null');
 function visit63_46_1(result) {
   _$jscoverage['/ie/style.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['34'][1].init(17, 8, 'computed');
+}_$jscoverage['/ie/style.js'].branchData['34'][1].init(18, 8, 'computed');
 function visit62_34_1(result) {
   _$jscoverage['/ie/style.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['14'][1].init(158, 26, 'doc && doc.documentElement');
+}_$jscoverage['/ie/style.js'].branchData['14'][1].init(163, 26, 'doc && doc.documentElement');
 function visit61_14_1(result) {
   _$jscoverage['/ie/style.js'].branchData['14'][1].ranCondition(result);
   return result;

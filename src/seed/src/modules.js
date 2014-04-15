@@ -163,6 +163,7 @@ S.config("requires",{
         "event/dom/base"
     ],
     "feature": [
+        "util",
         "ua"
     ],
     "filter-menu": [
@@ -261,9 +262,6 @@ S.config("requires",{
         "component/container",
         "component/extension/content-box",
         "component/extension/delegate-children"
-    ],
-    "ua": [
-        "util"
     ],
     "uri": [
         "path"

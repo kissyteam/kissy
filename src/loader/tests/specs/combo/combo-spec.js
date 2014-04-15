@@ -111,29 +111,32 @@ describe("ComboLoader", function () {
         runs(function () {
             var l = new S.Loader.ComboLoader();
 
+            S.config('packages', {
+                test: {
+                    base: 'http://a/'
+                }
+            });
+
             S.config('modules', {
-                a: {
-                    requires: ["b", "c"]
+                'test/a': {
+                    requires: ["./b", "./c"]
                 },
-                b: {
-                    requires: ["d", "e"]
+                'test/b': {
+                    requires: ["./d", "./e"]
                 },
-                d: {
-                    requires: ["f", "g"]
+                'test/d': {
+                    requires: ["./f", "./g"]
                 },
-                "h": {
-                    requires: ["a", "m"]
+                'test/h': {
+                    requires: ["./a", "./m"]
                 }
             });
 
             var r;
-            r = l.calculate((["a", "h"]));
+            r = l.calculate((["test/a", "test/h"]));
             var c = l.getComboUrls(r);
-            expect(c.js[0].url).toBe(kBase +
-                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
-
+            expect(c.js[0].url).toBe("http://a/??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
         });
-
     });
 
     it("should trunk url by comboMaxFileNum config rightly", function () {
@@ -144,25 +147,31 @@ describe("ComboLoader", function () {
 
             S.config('comboMaxFileNum', 2);
 
+            S.config('packages', {
+                a: {
+                    base: 'http://a/'
+                }
+            });
+
             var l = new S.Loader.ComboLoader();
 
             S.config('modules', {
-                a: {
-                    requires: ["b", "c"]
+                'a/a': {
+                    requires: ["a/b", "a/c"]
                 },
-                b: {
-                    requires: ["d", "e"]
+                'a/b': {
+                    requires: ["a/d", "a/e"]
                 }
             });
 
             var r;
-            r = l.calculate((["a", "b"]));
+            r = l.calculate((["a/a", "a/b"]));
             var c = l.getComboUrls(r);
             var js = c.js;
             expect(js.length).toBe(3);
-            expect(js[0].url).toBe(kBase + "??a.js,b.js");
-            expect(js[1].url).toBe(kBase + "??d.js,e.js");
-            expect(js[2].url).toBe(kBase + "??c.js");
+            expect(js[0].url).toBe("http://a/??a.js,b.js");
+            expect(js[1].url).toBe("http://a/??d.js,e.js");
+            expect(js[2].url).toBe("http://a/??c.js");
 
             S.config('comboMaxFileNum', comboMaxFileNum);
         });
@@ -197,7 +206,7 @@ describe("ComboLoader", function () {
             r = l.calculate((ret));
             var c = l.getComboUrls(r);
             var cjs = c.js;
-            expect(cjs.length).toBe(3);
+            expect(cjs.length).toBe(5);
 
             S.Loader.Utils.each(cjs, function (j) {
                 expect(j.url.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength);
@@ -370,7 +379,7 @@ describe("ComboLoader", function () {
 
         S.config({
             packages: {
-                test5:{
+                test5: {
                     base: '/kissy/src/loader/tests/specs/combo/test5'
                 }
             }

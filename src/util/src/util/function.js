@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add(function (S, undefined) {
-    // ios Function.prototype.bind === undefined
+KISSY.add(function (S) {
+    // ios Function.prototype.bind === undefine
     function bindFn(r, fn, obj) {
         function FNOP() {
         }
@@ -94,7 +94,7 @@ KISSY.add(function (S, undefined) {
             }
 
             if (!m) {
-                S.error('method undefined');
+                S.error('method undefine');
             }
 
             f = function () {

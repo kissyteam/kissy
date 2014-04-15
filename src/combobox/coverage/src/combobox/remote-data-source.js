@@ -280,35 +280,35 @@ if (! _$jscoverage['/combobox/remote-data-source.js'].branchData) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['50'] = [];
   _$jscoverage['/combobox/remote-data-source.js'].branchData['50'][1] = new BranchData();
 }
-_$jscoverage['/combobox/remote-data-source.js'].branchData['50'][1].init(166, 5, 'cache');
+_$jscoverage['/combobox/remote-data-source.js'].branchData['50'][1].init(171, 5, 'cache');
 function visit84_50_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['46'][1].init(21, 5, 'parse');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['46'][1].init(22, 5, 'parse');
 function visit83_46_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['43'][1].init(782, 17, 'xhrCfg.data || {}');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['43'][1].init(804, 17, 'xhrCfg.data || {}');
 function visit82_43_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['37'][1].init(565, 5, 'cache');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['37'][1].init(581, 5, 'cache');
 function visit81_37_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['34'][2].init(461, 19, 'allowEmpty !== true');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['34'][2].init(474, 19, 'allowEmpty !== true');
 function visit80_34_2(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['34'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['34'][1].init(448, 32, '!inputVal && allowEmpty !== true');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['34'][1].init(461, 32, '!inputVal && allowEmpty !== true');
 function visit79_34_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['29'][1].init(300, 7, 'self.io');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['29'][1].init(308, 7, 'self.io');
 function visit78_29_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['28'][1].init(265, 17, 'self.caches || {}');
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['28'][1].init(272, 17, 'self.caches || {}');
 function visit77_28_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['28'][1].ranCondition(result);
   return result;

@@ -11,7 +11,7 @@
     <target name="build" depends="common.build.build"/>
 
     <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/loader-pkg.js"
+        <concat destfile="${component.src.dir.tmp}/loader-pkg-debug.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
             <path location="${component.src.dir}/setup.js"/>
@@ -29,7 +29,7 @@
         <!-- build loader-nodejs -->
         <concat destfile="${kissy.lib.dir}/loader.js" encoding="${charset}"
                 outputencoding="${charset}">
-            <path location="${component.src.dir.tmp}/loader-pkg.js"/>
+            <path location="${component.src.dir.tmp}/loader-pkg-debug.js"/>
             <path location="${component.src.dir}/nodejs.js"/>
         </concat>
     </target>

@@ -273,39 +273,39 @@ if (! _$jscoverage['/ie/insertion.js'].branchData) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][2] = new BranchData();
   _$jscoverage['/ie/insertion.js'].branchData['37'][3] = new BranchData();
 }
-_$jscoverage['/ie/insertion.js'].branchData['37'][3].init(39, 19, 'el.type === \'radio\'');
+_$jscoverage['/ie/insertion.js'].branchData['37'][3].init(40, 19, 'el.type === \'radio\'');
 function visit60_37_3(result) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['37'][2].init(13, 22, 'el.type === \'checkbox\'');
+}_$jscoverage['/ie/insertion.js'].branchData['37'][2].init(14, 22, 'el.type === \'checkbox\'');
 function visit59_37_2(result) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['37'][1].init(13, 45, 'el.type === \'checkbox\' || el.type === \'radio\'');
+}_$jscoverage['/ie/insertion.js'].branchData['37'][1].init(14, 45, 'el.type === \'checkbox\' || el.type === \'radio\'');
 function visit58_37_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['28'][1].init(100, 13, 'j < cs.length');
+}_$jscoverage['/ie/insertion.js'].branchData['28'][1].init(102, 13, 'j < cs.length');
 function visit57_28_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['26'][1].init(288, 41, 'el.nodeType === Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/ie/insertion.js'].branchData['26'][1].init(294, 41, 'el.nodeType === Dom.NodeType.ELEMENT_NODE');
 function visit56_26_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['24'][1].init(184, 28, 'Dom.nodeName(el) === \'input\'');
+}_$jscoverage['/ie/insertion.js'].branchData['24'][1].init(188, 28, 'Dom.nodeName(el) === \'input\'');
 function visit55_24_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['22'][1].init(54, 51, 'el.nodeType === Dom.NodeType.DOCUMENT_FRAGMENT_NODE');
+}_$jscoverage['/ie/insertion.js'].branchData['22'][1].init(56, 51, 'el.nodeType === Dom.NodeType.DOCUMENT_FRAGMENT_NODE');
 function visit54_22_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['20'][1].init(29, 14, 'i < ret.length');
+}_$jscoverage['/ie/insertion.js'].branchData['20'][1].init(30, 14, 'i < ret.length');
 function visit53_20_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/insertion.js'].branchData['10'][1].init(73, 13, 'UA.ieMode < 8');
+}_$jscoverage['/ie/insertion.js'].branchData['10'][1].init(77, 13, 'UA.ieMode < 8');
 function visit52_10_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['10'][1].ranCondition(result);
   return result;

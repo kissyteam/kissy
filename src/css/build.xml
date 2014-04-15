@@ -15,8 +15,9 @@
                      **/common.css,
                      **/icons-mixin.css"
                      includes="**/*.css"/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
         </copy>
-        <concat destfile="${component.src.dir.tmp}/dpl/base.css" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${component.src.dir.tmp}/dpl/base-debug.css" encoding="${charset}" outputencoding="${charset}">
             <path location="assets/dpl/reset.css"/>
             <path location="assets/dpl/flying-swing.css"/>
             <path location="assets/dpl/grids.css"/>

@@ -289,55 +289,55 @@ if (! _$jscoverage['/base/special-events.js'].branchData) {
   _$jscoverage['/base/special-events.js'].branchData['66'][1] = new BranchData();
   _$jscoverage['/base/special-events.js'].branchData['66'][2] = new BranchData();
 }
-_$jscoverage['/base/special-events.js'].branchData['66'][2].init(25, 41, 'self === self.ownerDocument.activeElement');
+_$jscoverage['/base/special-events.js'].branchData['66'][2].init(26, 41, 'self === self.ownerDocument.activeElement');
 function visit202_66_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['66'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['66'][1].init(25, 54, 'self === self.ownerDocument.activeElement && self.blur');
+}_$jscoverage['/base/special-events.js'].branchData['66'][1].init(26, 54, 'self === self.ownerDocument.activeElement && self.blur');
 function visit201_66_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['65'][1].init(54, 35, '!onlyHandlers && self.ownerDocument');
+}_$jscoverage['/base/special-events.js'].branchData['65'][1].init(56, 35, '!onlyHandlers && self.ownerDocument');
 function visit200_65_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['58'][1].init(21, 13, '!onlyHandlers');
+}_$jscoverage['/base/special-events.js'].branchData['58'][1].init(22, 13, '!onlyHandlers');
 function visit199_58_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['46'][2].init(25, 41, 'self !== self.ownerDocument.activeElement');
+}_$jscoverage['/base/special-events.js'].branchData['46'][2].init(26, 41, 'self !== self.ownerDocument.activeElement');
 function visit198_46_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['46'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['46'][1].init(25, 55, 'self !== self.ownerDocument.activeElement && self.focus');
+}_$jscoverage['/base/special-events.js'].branchData['46'][1].init(26, 55, 'self !== self.ownerDocument.activeElement && self.focus');
 function visit197_46_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['45'][1].init(54, 35, '!onlyHandlers && self.ownerDocument');
+}_$jscoverage['/base/special-events.js'].branchData['45'][1].init(56, 35, '!onlyHandlers && self.ownerDocument');
 function visit196_45_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['38'][1].init(21, 13, '!onlyHandlers');
+}_$jscoverage['/base/special-events.js'].branchData['38'][1].init(22, 13, '!onlyHandlers');
 function visit195_38_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['27'][2].init(144, 39, 'self.nodeName.toLowerCase() === \'input\'');
+}_$jscoverage['/base/special-events.js'].branchData['27'][2].init(147, 39, 'self.nodeName.toLowerCase() === \'input\'');
 function visit194_27_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['27'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['27'][1].init(55, 53, 'self.click && self.nodeName.toLowerCase() === \'input\'');
+}_$jscoverage['/base/special-events.js'].branchData['27'][1].init(56, 53, 'self.click && self.nodeName.toLowerCase() === \'input\'');
 function visit193_27_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['26'][3].init(71, 32, 'String(self.type) === \'checkbox\'');
+}_$jscoverage['/base/special-events.js'].branchData['26'][3].init(73, 32, 'String(self.type) === \'checkbox\'');
 function visit192_26_3(result) {
   _$jscoverage['/base/special-events.js'].branchData['26'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['26'][2].init(71, 109, 'String(self.type) === \'checkbox\' && self.click && self.nodeName.toLowerCase() === \'input\'');
+}_$jscoverage['/base/special-events.js'].branchData['26'][2].init(73, 110, 'String(self.type) === \'checkbox\' && self.click && self.nodeName.toLowerCase() === \'input\'');
 function visit191_26_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['26'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/special-events.js'].branchData['26'][1].init(54, 126, '!onlyHandlers && String(self.type) === \'checkbox\' && self.click && self.nodeName.toLowerCase() === \'input\'');
+}_$jscoverage['/base/special-events.js'].branchData['26'][1].init(56, 127, '!onlyHandlers && String(self.type) === \'checkbox\' && self.click && self.nodeName.toLowerCase() === \'input\'');
 function visit190_26_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['26'][1].ranCondition(result);
   return result;

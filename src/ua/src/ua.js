@@ -2,9 +2,10 @@
  * @ignore
  * ua
  */
-KISSY.add(function (S, require, exports, module, undefined) {
+KISSY.add(function (S) {
     /*global process*/
     var win = S.Env.host,
+        undef,
         doc = win.document,
         navigator = win.navigator,
         ua = navigator && navigator.userAgent || '';
@@ -61,135 +62,135 @@ KISSY.add(function (S, require, exports, module, undefined) {
         var UA = {
             /**
              * webkit version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            webkit: undefined,
+            webkit: undef,
             /**
              * trident version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            trident: undefined,
+            trident: undef,
             /**
              * gecko version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            gecko: undefined,
+            gecko: undef,
             /**
              * presto version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            presto: undefined,
+            presto: undef,
             /**
              * chrome version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            chrome: undefined,
+            chrome: undef,
             /**
              * safari version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            safari: undefined,
+            safari: undef,
             /**
              * firefox version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            firefox: undefined,
+            firefox: undef,
             /**
              * ie version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            ie: undefined,
+            ie: undef,
             /**
              * ie document mode
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            ieMode: undefined,
+            ieMode: undef,
             /**
              * opera version
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            opera: undefined,
+            opera: undef,
             /**
              * mobile browser. apple, android.
              * @type String
              * @member KISSY.UA
              */
-            mobile: undefined,
+            mobile: undef,
             /**
              * browser render engine name. webkit, trident
              * @type String
              * @member KISSY.UA
              */
-            core: undefined,
+            core: undef,
             /**
              * browser shell name. ie, chrome, firefox
              * @type String
              * @member KISSY.UA
              */
-            shell: undefined,
+            shell: undef,
 
             /**
              * PhantomJS version number
-             * @type undefined|Number
+             * @type undef|Number
              * @member KISSY.UA
              */
-            phantomjs: undefined,
+            phantomjs: undef,
 
             /**
              * operating system. android, ios, linux, windows
              * @type string
              * @member KISSY.UA
              */
-            os: undefined,
+            os: undef,
 
             /**
              * ipad ios version
              * @type Number
              * @member KISSY.UA
              */
-            ipad: undefined,
+            ipad: undef,
             /**
              * iphone ios version
              * @type Number
              * @member KISSY.UA
              */
-            iphone: undefined,
+            iphone: undef,
             /**
              * ipod ios
              * @type Number
              * @member KISSY.UA
              */
-            ipod: undefined,
+            ipod: undef,
             /**
              * ios version
              * @type Number
              * @member KISSY.UA
              */
-            ios: undefined,
+            ios: undef,
 
             /**
              * android version
              * @type Number
              * @member KISSY.UA
              */
-            android: undefined,
+            android: undef,
 
             /**
              * nodejs version
              * @type Number
              * @member KISSY.UA
              */
-            nodejs: undefined
+            nodejs: undef
         };
 
         // ejecta

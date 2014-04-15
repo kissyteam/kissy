@@ -21,6 +21,7 @@
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
+        this.filter = '';
         mix(this, cfg);
     }
 
@@ -53,14 +54,6 @@
          */
         getBase: function () {
             return this.base;
-        },
-
-        /**
-         * Whether is debug for this package.
-         * @return {Boolean}
-         */
-        isDebug: function () {
-            return checkGlobalIfNotExist(this, 'debug');
         },
 
         /**
@@ -202,7 +195,7 @@
             var ret = [];
             for (var i = 0, l = alias.length; i < l; i++) {
                 if (alias[i]) {
-                    var mod = Utils.createModuleInfo(alias[i]);
+                    var mod = Utils.getOrCreateModuleInfo(alias[i]);
                     var normalAlias = mod.getNormalizedAlias();
                     if (normalAlias) {
                         ret.push.apply(ret, normalAlias);
@@ -245,7 +238,7 @@
         getPackage: function () {
             var self = this;
             if (!self.packageInfo) {
-                var packages = Config.packages || {},
+                var packages = Config.packages,
                     modNameSlash = self.name + '/',
                     pName = '',
                     p;
@@ -254,7 +247,7 @@
                         pName = p;
                     }
                 }
-                self.packageInfo = packages[pName] || Config.corePackage;
+                self.packageInfo = packages[pName] || packages.core;
             }
             return self.packageInfo;
         },
@@ -300,7 +293,7 @@
          * @return {KISSY.Loader.Module[]}
          */
         getRequiredMods: function () {
-            return Utils.createModulesInfo(this.getNormalizedRequires());
+            return Utils.getOrCreateModulesInfo(this.getNormalizedRequires());
         },
 
         /**

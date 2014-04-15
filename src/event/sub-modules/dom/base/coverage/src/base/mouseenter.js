@@ -252,15 +252,15 @@ if (! _$jscoverage['/base/mouseenter.js'].branchData) {
   _$jscoverage['/base/mouseenter.js'].branchData['24'][1] = new BranchData();
   _$jscoverage['/base/mouseenter.js'].branchData['24'][2] = new BranchData();
 }
-_$jscoverage['/base/mouseenter.js'].branchData['24'][2].init(38, 31, 'relatedTarget !== currentTarget');
+_$jscoverage['/base/mouseenter.js'].branchData['24'][2].init(39, 31, 'relatedTarget !== currentTarget');
 function visit49_24_2(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/mouseenter.js'].branchData['24'][1].init(38, 78, 'relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget)');
+}_$jscoverage['/base/mouseenter.js'].branchData['24'][1].init(39, 78, 'relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget)');
 function visit48_24_1(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/mouseenter.js'].branchData['23'][1].init(287, 118, '!relatedTarget || (relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget))');
+}_$jscoverage['/base/mouseenter.js'].branchData['23'][1].init(293, 119, '!relatedTarget || (relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget))');
 function visit47_23_1(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['23'][1].ranCondition(result);
   return result;

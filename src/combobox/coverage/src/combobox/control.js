@@ -631,267 +631,267 @@ if (! _$jscoverage['/combobox/control.js'].branchData) {
   _$jscoverage['/combobox/control.js'].branchData['742'] = [];
   _$jscoverage['/combobox/control.js'].branchData['742'][1] = new BranchData();
 }
-_$jscoverage['/combobox/control.js'].branchData['742'][1].init(25, 28, '!children[i].get(\'disabled\')');
+_$jscoverage['/combobox/control.js'].branchData['742'][1].init(26, 28, '!children[i].get(\'disabled\')');
 function visit74_742_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['742'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['741'][1].init(29, 19, 'i < children.length');
+}_$jscoverage['/combobox/control.js'].branchData['741'][1].init(30, 19, 'i < children.length');
 function visit73_741_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['741'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['740'][1].init(745, 43, '!matchVal && self.get(\'autoHighlightFirst\')');
+}_$jscoverage['/combobox/control.js'].branchData['740'][1].init(767, 43, '!matchVal && self.get(\'autoHighlightFirst\')');
 function visit72_740_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['740'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['731'][1].init(25, 38, 'children[i].get(\'textContent\') === val');
+}_$jscoverage['/combobox/control.js'].branchData['731'][1].init(26, 38, 'children[i].get(\'textContent\') === val');
 function visit71_731_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['731'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['730'][1].init(29, 19, 'i < children.length');
+}_$jscoverage['/combobox/control.js'].branchData['730'][1].init(30, 19, 'i < children.length');
 function visit70_730_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['730'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['729'][1].init(306, 30, 'self.get(\'highlightMatchItem\')');
+}_$jscoverage['/combobox/control.js'].branchData['729'][1].init(317, 30, 'self.get(\'highlightMatchItem\')');
 function visit69_729_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['729'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['719'][1].init(25, 15, 'i < data.length');
+}_$jscoverage['/combobox/control.js'].branchData['719'][1].init(26, 15, 'i < data.length');
 function visit68_719_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['719'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['718'][1].init(408, 19, 'data && data.length');
+}_$jscoverage['/combobox/control.js'].branchData['718'][1].init(426, 19, 'data && data.length');
 function visit67_718_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['718'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['686'][1].init(57, 1, 't');
+}_$jscoverage['/combobox/control.js'].branchData['686'][1].init(59, 1, 't');
 function visit66_686_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['686'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['676'][1].init(48, 26, 'self._focusoutDismissTimer');
+}_$jscoverage['/combobox/control.js'].branchData['676'][1].init(50, 26, 'self._focusoutDismissTimer');
 function visit65_676_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['676'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['671'][1].init(13, 26, 'self._focusoutDismissTimer');
+}_$jscoverage['/combobox/control.js'].branchData['671'][1].init(14, 26, 'self._focusoutDismissTimer');
 function visit64_671_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['671'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['660'][1].init(141, 5, 'error');
+}_$jscoverage['/combobox/control.js'].branchData['660'][1].init(145, 5, 'error');
 function visit63_660_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['660'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['648'][1].init(92, 15, 'item.isMenuItem');
+}_$jscoverage['/combobox/control.js'].branchData['648'][1].init(96, 15, 'item.isMenuItem');
 function visit62_648_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['648'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['639'][1].init(68, 49, 'parseInt(menuEl.css(\'borderRightWidth\'), 10) || 0');
+}_$jscoverage['/combobox/control.js'].branchData['639'][1].init(69, 49, 'parseInt(menuEl.css(\'borderRightWidth\'), 10) || 0');
 function visit61_639_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['639'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['638'][1].init(110, 48, 'parseInt(menuEl.css(\'borderLeftWidth\'), 10) || 0');
+}_$jscoverage['/combobox/control.js'].branchData['638'][1].init(113, 48, 'parseInt(menuEl.css(\'borderLeftWidth\'), 10) || 0');
 function visit60_638_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['638'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['635'][1].init(75, 19, 'menu.get(\'visible\')');
+}_$jscoverage['/combobox/control.js'].branchData['635'][1].init(78, 19, 'menu.get(\'visible\')');
 function visit59_635_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['635'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['626'][1].init(559, 24, 'self.get(\'matchElWidth\')');
+}_$jscoverage['/combobox/control.js'].branchData['626'][1].init(571, 24, 'self.get(\'matchElWidth\')');
 function visit58_626_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['626'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['614'][2].init(104, 17, 'menu === e.target');
+}_$jscoverage['/combobox/control.js'].branchData['614'][2].init(108, 17, 'menu === e.target');
 function visit57_614_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['614'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['614'][1].init(98, 23, '!e || menu === e.target');
+}_$jscoverage['/combobox/control.js'].branchData['614'][1].init(102, 23, '!e || menu === e.target');
 function visit56_614_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['614'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['571'][1].init(17, 28, '!children[i].get(\'disabled\')');
+}_$jscoverage['/combobox/control.js'].branchData['571'][1].init(18, 28, '!children[i].get(\'disabled\')');
 function visit55_571_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['571'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['570'][1].init(25, 19, 'i < children.length');
+}_$jscoverage['/combobox/control.js'].branchData['570'][1].init(26, 19, 'i < children.length');
 function visit54_570_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['570'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['455'][1].init(25, 11, 'm.isControl');
+}_$jscoverage['/combobox/control.js'].branchData['455'][1].init(26, 11, 'm.isControl');
 function visit53_455_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['455'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['448'][1].init(36, 23, 'v.xclass || \'popupmenu\'');
+}_$jscoverage['/combobox/control.js'].branchData['448'][1].init(37, 23, 'v.xclass || \'popupmenu\'');
 function visit52_448_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['448'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['447'][1].init(25, 12, '!v.isControl');
+}_$jscoverage['/combobox/control.js'].branchData['447'][1].init(26, 12, '!v.isControl');
 function visit51_447_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['447'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['378'][1].init(93, 33, 'placeHolder && placeHolder.html()');
+}_$jscoverage['/combobox/control.js'].branchData['378'][1].init(95, 33, 'placeHolder && placeHolder.html()');
 function visit50_378_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['378'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['307'][1].init(80, 49, 'parseInt(menuEl.css(\'borderRightWidth\'), 10) || 0');
+}_$jscoverage['/combobox/control.js'].branchData['307'][1].init(81, 49, 'parseInt(menuEl.css(\'borderRightWidth\'), 10) || 0');
 function visit49_307_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['307'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['306'][1].init(42, 48, 'parseInt(menuEl.css(\'borderLeftWidth\'), 10) || 0');
+}_$jscoverage['/combobox/control.js'].branchData['306'][1].init(43, 48, 'parseInt(menuEl.css(\'borderLeftWidth\'), 10) || 0');
 function visit48_306_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['306'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['302'][1].init(25, 24, 'self.get(\'matchElWidth\')');
+}_$jscoverage['/combobox/control.js'].branchData['302'][1].init(26, 24, 'self.get(\'matchElWidth\')');
 function visit47_302_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['302'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['301'][1].init(104, 20, '!menu.get(\'visible\')');
+}_$jscoverage['/combobox/control.js'].branchData['301'][1].init(107, 20, '!menu.get(\'visible\')');
 function visit46_301_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['301'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['296'][1].init(118, 1, 'v');
+}_$jscoverage['/combobox/control.js'].branchData['296'][1].init(122, 1, 'v');
 function visit45_296_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['269'][1].init(144, 9, 'validator');
+}_$jscoverage['/combobox/control.js'].branchData['269'][1].init(149, 9, 'validator');
 function visit44_269_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['269'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['256'][1].init(122, 15, 'v !== undefined');
+}_$jscoverage['/combobox/control.js'].branchData['256'][1].init(125, 15, 'v !== undefined');
 function visit43_256_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['256'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['253'][3].init(2687, 22, 'keyCode === KeyCode.UP');
+}_$jscoverage['/combobox/control.js'].branchData['253'][3].init(2752, 22, 'keyCode === KeyCode.UP');
 function visit42_253_3(result) {
   _$jscoverage['/combobox/control.js'].branchData['253'][3].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['253'][2].init(2659, 24, 'keyCode === KeyCode.DOWN');
+}_$jscoverage['/combobox/control.js'].branchData['253'][2].init(2724, 24, 'keyCode === KeyCode.DOWN');
 function visit41_253_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['253'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['253'][1].init(2659, 50, 'keyCode === KeyCode.DOWN || keyCode === KeyCode.UP');
+}_$jscoverage['/combobox/control.js'].branchData['253'][1].init(2724, 50, 'keyCode === KeyCode.DOWN || keyCode === KeyCode.UP');
 function visit40_253_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['253'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['247'][1].init(196, 20, 'self.get(\'multiple\')');
+}_$jscoverage['/combobox/control.js'].branchData['247'][1].init(200, 20, 'self.get(\'multiple\')');
 function visit39_247_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['247'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['243'][2].init(1876, 23, 'keyCode === KeyCode.TAB');
+}_$jscoverage['/combobox/control.js'].branchData['243'][2].init(1919, 23, 'keyCode === KeyCode.TAB');
 function visit38_243_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['243'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['243'][1].init(1876, 42, 'keyCode === KeyCode.TAB && highlightedItem');
+}_$jscoverage['/combobox/control.js'].branchData['243'][1].init(1919, 42, 'keyCode === KeyCode.TAB && highlightedItem');
 function visit37_243_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['235'][1].init(1484, 89, 'updateInputOnDownUp && S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])');
+}_$jscoverage['/combobox/control.js'].branchData['235'][1].init(1519, 90, 'updateInputOnDownUp && S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])');
 function visit36_235_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['235'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['226'][1].init(74, 19, 'updateInputOnDownUp');
+}_$jscoverage['/combobox/control.js'].branchData['226'][1].init(76, 19, 'updateInputOnDownUp');
 function visit35_226_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['226'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['224'][1].init(1018, 23, 'keyCode === KeyCode.ESC');
+}_$jscoverage['/combobox/control.js'].branchData['224'][1].init(1042, 23, 'keyCode === KeyCode.ESC');
 function visit34_224_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['211'][1].init(49, 53, 'highlightedItem === getFirstEnabledItem(menuChildren)');
+}_$jscoverage['/combobox/control.js'].branchData['211'][1].init(50, 53, 'highlightedItem === getFirstEnabledItem(menuChildren)');
 function visit33_211_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['210'][2].init(240, 22, 'keyCode === KeyCode.UP');
+}_$jscoverage['/combobox/control.js'].branchData['210'][2].init(244, 22, 'keyCode === KeyCode.UP');
 function visit32_210_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['210'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['210'][1].init(151, 103, 'keyCode === KeyCode.UP && highlightedItem === getFirstEnabledItem(menuChildren)');
+}_$jscoverage['/combobox/control.js'].branchData['210'][1].init(153, 104, 'keyCode === KeyCode.UP && highlightedItem === getFirstEnabledItem(menuChildren)');
 function visit31_210_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['210'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['209'][1].init(51, 72, 'highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse())');
+}_$jscoverage['/combobox/control.js'].branchData['209'][1].init(52, 72, 'highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse())');
 function visit30_209_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['208'][3].init(86, 24, 'keyCode === KeyCode.DOWN');
+}_$jscoverage['/combobox/control.js'].branchData['208'][3].init(88, 24, 'keyCode === KeyCode.DOWN');
 function visit29_208_3(result) {
   _$jscoverage['/combobox/control.js'].branchData['208'][3].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['208'][2].init(86, 124, 'keyCode === KeyCode.DOWN && highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse())');
+}_$jscoverage['/combobox/control.js'].branchData['208'][2].init(88, 125, 'keyCode === KeyCode.DOWN && highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse())');
 function visit28_208_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['208'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['208'][1].init(86, 255, 'keyCode === KeyCode.DOWN && highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse()) || keyCode === KeyCode.UP && highlightedItem === getFirstEnabledItem(menuChildren)');
+}_$jscoverage['/combobox/control.js'].branchData['208'][1].init(88, 258, 'keyCode === KeyCode.DOWN && highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse()) || keyCode === KeyCode.UP && highlightedItem === getFirstEnabledItem(menuChildren)');
 function visit27_208_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['208'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['206'][1].init(227, 38, 'updateInputOnDownUp && highlightedItem');
+}_$jscoverage['/combobox/control.js'].branchData['206'][1].init(233, 38, 'updateInputOnDownUp && highlightedItem');
 function visit26_206_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['200'][1].init(356, 19, 'menu.get(\'visible\')');
+}_$jscoverage['/combobox/control.js'].branchData['200'][1].init(368, 19, 'menu.get(\'visible\')');
 function visit25_200_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['176'][1].init(21, 21, 'self.get(\'collapsed\')');
+}_$jscoverage['/combobox/control.js'].branchData['176'][1].init(22, 21, 'self.get(\'collapsed\')');
 function visit24_176_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['175'][3].init(212, 21, 'trigger[0] === target');
+}_$jscoverage['/combobox/control.js'].branchData['175'][3].init(219, 21, 'trigger[0] === target');
 function visit23_175_3(result) {
   _$jscoverage['/combobox/control.js'].branchData['175'][3].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['175'][2].init(212, 49, 'trigger[0] === target || trigger.contains(target)');
+}_$jscoverage['/combobox/control.js'].branchData['175'][2].init(219, 49, 'trigger[0] === target || trigger.contains(target)');
 function visit22_175_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['175'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['175'][1].init(200, 62, 'trigger && (trigger[0] === target || trigger.contains(target))');
+}_$jscoverage['/combobox/control.js'].branchData['175'][1].init(207, 62, 'trigger && (trigger[0] === target || trigger.contains(target))');
 function visit21_175_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['163'][1].init(589, 35, 'placeholderEl && !self.get(\'value\')');
+}_$jscoverage['/combobox/control.js'].branchData['163'][1].init(605, 35, 'placeholderEl && !self.get(\'value\')');
 function visit20_163_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['155'][2].init(54, 25, 'val === self.get(\'value\')');
+}_$jscoverage['/combobox/control.js'].branchData['155'][2].init(55, 25, 'val === self.get(\'value\')');
 function visit19_155_2(result) {
   _$jscoverage['/combobox/control.js'].branchData['155'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['155'][1].init(29, 51, '!self.get(\'focused\') && (val === self.get(\'value\'))');
+}_$jscoverage['/combobox/control.js'].branchData['155'][1].init(30, 51, '!self.get(\'focused\') && (val === self.get(\'value\'))');
 function visit18_155_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['154'][1].init(25, 5, 'error');
+}_$jscoverage['/combobox/control.js'].branchData['154'][1].init(26, 5, 'error');
 function visit17_154_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['152'][1].init(165, 21, 'self.get(\'invalidEl\')');
+}_$jscoverage['/combobox/control.js'].branchData['152'][1].init(170, 21, 'self.get(\'invalidEl\')');
 function visit16_152_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['139'][1].init(114, 21, 'self.get(\'invalidEl\')');
+}_$jscoverage['/combobox/control.js'].branchData['139'][1].init(118, 21, 'self.get(\'invalidEl\')');
 function visit15_139_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['124'][1].init(124, 19, 'value === undefined');
+}_$jscoverage['/combobox/control.js'].branchData['124'][1].init(127, 19, 'value === undefined');
 function visit14_124_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['121'][1].init(126, 20, 'e.causedByInputEvent');
+}_$jscoverage['/combobox/control.js'].branchData['121'][1].init(130, 20, 'e.causedByInputEvent');
 function visit13_121_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['85'][1].init(329, 15, 'i < data.length');
+}_$jscoverage['/combobox/control.js'].branchData['85'][1].init(337, 15, 'i < data.length');
 function visit12_85_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['79'][1].init(85, 18, 'self.get(\'format\')');
+}_$jscoverage['/combobox/control.js'].branchData['79'][1].init(87, 18, 'self.get(\'format\')');
 function visit11_79_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['77'][1].init(81, 19, 'data && data.length');
+}_$jscoverage['/combobox/control.js'].branchData['77'][1].init(84, 19, 'data && data.length');
 function visit10_77_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/control.js'].branchData['56'][1].init(502, 20, 'menu.get(\'rendered\')');
+}_$jscoverage['/combobox/control.js'].branchData['56'][1].init(520, 20, 'menu.get(\'rendered\')');
 function visit9_56_1(result) {
   _$jscoverage['/combobox/control.js'].branchData['56'][1].ranCondition(result);
   return result;

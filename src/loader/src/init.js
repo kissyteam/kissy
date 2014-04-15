@@ -113,6 +113,11 @@
         charset: 'utf-8',
         lang: 'zh-cn'
     });
+    S.config('packages', {
+        core: {
+            filter: '@DEBUG@' ? 'debug' : ''
+        }
+    });
     // ejecta
     if (doc && doc.getElementsByTagName) {
         // will transform base to absolute path

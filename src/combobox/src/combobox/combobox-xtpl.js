@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    <div class="');
+            buffer.write('">\r\n    <div class="');
             var option3 = {
                 escape: 1
             };
@@ -45,7 +45,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, true);
-            buffer.write('"></div>\n</div>\n\n');
+            buffer.write('"></div>\r\n</div>\r\n\r\n');
             var option6 = {
                 escape: 1
             };
@@ -55,7 +55,7 @@ KISSY.add(function (S, require, exports, module) {
             option6.params = params7;
             option6.fn = function (scope, buffer) {
 
-                buffer.write('\n<div class="');
+                buffer.write('\r\n<div class="');
                 var option9 = {
                     escape: 1
                 };
@@ -68,7 +68,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet11 = undefined;
                 }
                 buffer.write(commandRet11, true);
-                buffer.write('">\n    <div class="');
+                buffer.write('">\r\n    <div class="');
                 var option12 = {
                     escape: 1
                 };
@@ -81,12 +81,12 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet14 = undefined;
                 }
                 buffer.write(commandRet14, true);
-                buffer.write('">&#x25BC;</div>\n</div>\n');
+                buffer.write('">&#x25BC;</div>\r\n</div>\r\n');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option6, buffer, 5, payload);
-            buffer.write('\n\n<div class="');
+            buffer.write('\r\n\r\n<div class="');
             var option15 = {
                 escape: 1
             };
@@ -99,10 +99,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet17 = undefined;
             }
             buffer.write(commandRet17, true);
-            buffer.write('">\n\n    <input id="ks-combobox-input-');
+            buffer.write('">\r\n\r\n    <input id="ks-combobox-input-');
             var id18 = scope.resolve(["id"]);
             buffer.write(id18, true);
-            buffer.write('"\n           aria-haspopup="true"\n           aria-autocomplete="list"\n           aria-haspopup="true"\n           role="autocomplete"\n           aria-expanded="false"\n\n    ');
+            buffer.write('"\r\n           aria-haspopup="true"\r\n           aria-autocomplete="list"\r\n           aria-haspopup="true"\r\n           role="autocomplete"\r\n           aria-expanded="false"\r\n\r\n    ');
             var option19 = {
                 escape: 1
             };
@@ -112,12 +112,12 @@ KISSY.add(function (S, require, exports, module) {
             option19.params = params20;
             option19.fn = function (scope, buffer) {
 
-                buffer.write('\n    disabled\n    ');
+                buffer.write('\r\n    disabled\r\n    ');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option19, buffer, 20, payload);
-            buffer.write('\n\n    autocomplete="off"\n    class="');
+            buffer.write('\r\n\r\n    autocomplete="off"\r\n    class="');
             var option22 = {
                 escape: 1
             };
@@ -130,13 +130,13 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet24 = undefined;
             }
             buffer.write(commandRet24, true);
-            buffer.write('"\n\n    value="');
+            buffer.write('"\r\n\r\n    value="');
             var id25 = scope.resolve(["value"]);
             buffer.write(id25, true);
-            buffer.write('"\n    />\n\n\n    <label for="ks-combobox-input-');
+            buffer.write('"\r\n    />\r\n\r\n\r\n    <label for="ks-combobox-input-');
             var id26 = scope.resolve(["id"]);
             buffer.write(id26, true);
-            buffer.write('"\n            style=\'display:');
+            buffer.write('"\r\n            style=\'display:');
             var option27 = {
                 escape: 1
             };
@@ -157,7 +157,7 @@ KISSY.add(function (S, require, exports, module) {
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option27, buffer, 32, payload);
-            buffer.write(';\'\n    class="');
+            buffer.write(';\'\r\n    class="');
             var option30 = {
                 escape: 1
             };
@@ -170,10 +170,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet32 = undefined;
             }
             buffer.write(commandRet32, true);
-            buffer.write('">\n    ');
+            buffer.write('">\r\n    ');
             var id33 = scope.resolve(["placeholder"]);
             buffer.write(id33, true);
-            buffer.write('\n    </label>\n</div>\n');
+            buffer.write('\r\n    </label>\r\n</div>\r\n');
             return buffer;
         };
 t.TPL_NAME = module.name;

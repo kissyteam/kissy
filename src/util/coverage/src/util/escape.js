@@ -288,19 +288,19 @@ if (! _$jscoverage['/util/escape.js'].branchData) {
   _$jscoverage['/util/escape.js'].branchData['110'] = [];
   _$jscoverage['/util/escape.js'].branchData['110'][1] = new BranchData();
 }
-_$jscoverage['/util/escape.js'].branchData['110'][1].init(24, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
+_$jscoverage['/util/escape.js'].branchData['110'][1].init(25, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
 function visit61_110_1(result) {
   _$jscoverage['/util/escape.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/escape.js'].branchData['82'][1].init(123, 32, '!possibleEscapeHtmlReg.test(str)');
+}_$jscoverage['/util/escape.js'].branchData['82'][1].init(128, 32, '!possibleEscapeHtmlReg.test(str)');
 function visit60_82_1(result) {
   _$jscoverage['/util/escape.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/escape.js'].branchData['78'][2].init(25, 9, 'str !== 0');
+}_$jscoverage['/util/escape.js'].branchData['78'][2].init(26, 9, 'str !== 0');
 function visit59_78_2(result) {
   _$jscoverage['/util/escape.js'].branchData['78'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/escape.js'].branchData['78'][1].init(17, 17, '!str && str !== 0');
+}_$jscoverage['/util/escape.js'].branchData['78'][1].init(18, 17, '!str && str !== 0');
 function visit58_78_1(result) {
   _$jscoverage['/util/escape.js'].branchData['78'][1].ranCondition(result);
   return result;

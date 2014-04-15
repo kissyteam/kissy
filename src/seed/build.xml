@@ -45,12 +45,12 @@
     </target>
 
     <target name="concat" depends="merge-dependency">
-        <concat destfile="${component.src.dir.tmp}/seed-pkg.js"
+        <concat destfile="${component.src.dir.tmp}/seed-pkg-debug.js"
                 encoding="${charset}" outputencoding="${charset}">
-            <path location="${kissy.build.dir}/loader.js"/>
-            <path location="${kissy.build.dir}/util.js"/>
-            <path location="${kissy.build.dir}/ua.js"/>
-            <path location="${kissy.build.dir}/feature.js"/>
+            <path location="${kissy.build.dir}/loader-debug.js"/>
+            <path location="${kissy.build.dir}/util-debug.js"/>
+            <path location="${kissy.build.dir}/ua-debug.js"/>
+            <path location="${kissy.build.dir}/feature-debug.js"/>
             <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
             <path location="${component.src.dir}/web.js"/>
@@ -61,8 +61,8 @@
         <concat destfile="${kissy.lib.dir}/seed.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${kissy.lib.dir}/loader.js"/>
-            <path location="${kissy.build.dir}/util.js"/>
-            <path location="${kissy.build.dir}/ua.js"/>
+            <path location="${kissy.build.dir}/util-debug.js"/>
+            <path location="${kissy.build.dir}/ua-debug.js"/>
             <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
         </concat>

@@ -235,101 +235,101 @@ if (! _$jscoverage['/data-structure.js']) {
   _$jscoverage['/data-structure.js'].lineData[13] = 0;
   _$jscoverage['/data-structure.js'].lineData[23] = 0;
   _$jscoverage['/data-structure.js'].lineData[24] = 0;
-  _$jscoverage['/data-structure.js'].lineData[27] = 0;
-  _$jscoverage['/data-structure.js'].lineData[31] = 0;
-  _$jscoverage['/data-structure.js'].lineData[40] = 0;
-  _$jscoverage['/data-structure.js'].lineData[48] = 0;
-  _$jscoverage['/data-structure.js'].lineData[55] = 0;
-  _$jscoverage['/data-structure.js'].lineData[63] = 0;
-  _$jscoverage['/data-structure.js'].lineData[71] = 0;
-  _$jscoverage['/data-structure.js'].lineData[79] = 0;
-  _$jscoverage['/data-structure.js'].lineData[87] = 0;
+  _$jscoverage['/data-structure.js'].lineData[25] = 0;
+  _$jscoverage['/data-structure.js'].lineData[28] = 0;
+  _$jscoverage['/data-structure.js'].lineData[32] = 0;
+  _$jscoverage['/data-structure.js'].lineData[41] = 0;
+  _$jscoverage['/data-structure.js'].lineData[49] = 0;
+  _$jscoverage['/data-structure.js'].lineData[56] = 0;
+  _$jscoverage['/data-structure.js'].lineData[64] = 0;
+  _$jscoverage['/data-structure.js'].lineData[72] = 0;
+  _$jscoverage['/data-structure.js'].lineData[80] = 0;
+  _$jscoverage['/data-structure.js'].lineData[84] = 0;
   _$jscoverage['/data-structure.js'].lineData[91] = 0;
-  _$jscoverage['/data-structure.js'].lineData[98] = 0;
-  _$jscoverage['/data-structure.js'].lineData[99] = 0;
-  _$jscoverage['/data-structure.js'].lineData[103] = 0;
-  _$jscoverage['/data-structure.js'].lineData[108] = 0;
-  _$jscoverage['/data-structure.js'].lineData[113] = 0;
+  _$jscoverage['/data-structure.js'].lineData[92] = 0;
+  _$jscoverage['/data-structure.js'].lineData[96] = 0;
+  _$jscoverage['/data-structure.js'].lineData[101] = 0;
+  _$jscoverage['/data-structure.js'].lineData[106] = 0;
+  _$jscoverage['/data-structure.js'].lineData[111] = 0;
+  _$jscoverage['/data-structure.js'].lineData[114] = 0;
+  _$jscoverage['/data-structure.js'].lineData[115] = 0;
+  _$jscoverage['/data-structure.js'].lineData[116] = 0;
   _$jscoverage['/data-structure.js'].lineData[118] = 0;
-  _$jscoverage['/data-structure.js'].lineData[121] = 0;
-  _$jscoverage['/data-structure.js'].lineData[122] = 0;
+  _$jscoverage['/data-structure.js'].lineData[119] = 0;
   _$jscoverage['/data-structure.js'].lineData[123] = 0;
-  _$jscoverage['/data-structure.js'].lineData[125] = 0;
-  _$jscoverage['/data-structure.js'].lineData[126] = 0;
   _$jscoverage['/data-structure.js'].lineData[130] = 0;
-  _$jscoverage['/data-structure.js'].lineData[137] = 0;
-  _$jscoverage['/data-structure.js'].lineData[141] = 0;
-  _$jscoverage['/data-structure.js'].lineData[145] = 0;
+  _$jscoverage['/data-structure.js'].lineData[134] = 0;
+  _$jscoverage['/data-structure.js'].lineData[138] = 0;
+  _$jscoverage['/data-structure.js'].lineData[142] = 0;
+  _$jscoverage['/data-structure.js'].lineData[146] = 0;
+  _$jscoverage['/data-structure.js'].lineData[147] = 0;
   _$jscoverage['/data-structure.js'].lineData[149] = 0;
-  _$jscoverage['/data-structure.js'].lineData[153] = 0;
-  _$jscoverage['/data-structure.js'].lineData[154] = 0;
-  _$jscoverage['/data-structure.js'].lineData[156] = 0;
-  _$jscoverage['/data-structure.js'].lineData[164] = 0;
-  _$jscoverage['/data-structure.js'].lineData[166] = 0;
+  _$jscoverage['/data-structure.js'].lineData[157] = 0;
+  _$jscoverage['/data-structure.js'].lineData[159] = 0;
+  _$jscoverage['/data-structure.js'].lineData[160] = 0;
+  _$jscoverage['/data-structure.js'].lineData[161] = 0;
+  _$jscoverage['/data-structure.js'].lineData[163] = 0;
+  _$jscoverage['/data-structure.js'].lineData[165] = 0;
   _$jscoverage['/data-structure.js'].lineData[167] = 0;
-  _$jscoverage['/data-structure.js'].lineData[168] = 0;
-  _$jscoverage['/data-structure.js'].lineData[170] = 0;
-  _$jscoverage['/data-structure.js'].lineData[172] = 0;
-  _$jscoverage['/data-structure.js'].lineData[174] = 0;
+  _$jscoverage['/data-structure.js'].lineData[171] = 0;
+  _$jscoverage['/data-structure.js'].lineData[175] = 0;
+  _$jscoverage['/data-structure.js'].lineData[176] = 0;
   _$jscoverage['/data-structure.js'].lineData[178] = 0;
+  _$jscoverage['/data-structure.js'].lineData[179] = 0;
+  _$jscoverage['/data-structure.js'].lineData[180] = 0;
   _$jscoverage['/data-structure.js'].lineData[182] = 0;
   _$jscoverage['/data-structure.js'].lineData[183] = 0;
-  _$jscoverage['/data-structure.js'].lineData[185] = 0;
-  _$jscoverage['/data-structure.js'].lineData[186] = 0;
   _$jscoverage['/data-structure.js'].lineData[187] = 0;
+  _$jscoverage['/data-structure.js'].lineData[188] = 0;
   _$jscoverage['/data-structure.js'].lineData[189] = 0;
-  _$jscoverage['/data-structure.js'].lineData[190] = 0;
-  _$jscoverage['/data-structure.js'].lineData[194] = 0;
+  _$jscoverage['/data-structure.js'].lineData[191] = 0;
+  _$jscoverage['/data-structure.js'].lineData[192] = 0;
+  _$jscoverage['/data-structure.js'].lineData[193] = 0;
   _$jscoverage['/data-structure.js'].lineData[195] = 0;
   _$jscoverage['/data-structure.js'].lineData[196] = 0;
+  _$jscoverage['/data-structure.js'].lineData[197] = 0;
   _$jscoverage['/data-structure.js'].lineData[198] = 0;
   _$jscoverage['/data-structure.js'].lineData[199] = 0;
   _$jscoverage['/data-structure.js'].lineData[200] = 0;
-  _$jscoverage['/data-structure.js'].lineData[202] = 0;
+  _$jscoverage['/data-structure.js'].lineData[201] = 0;
   _$jscoverage['/data-structure.js'].lineData[203] = 0;
-  _$jscoverage['/data-structure.js'].lineData[204] = 0;
-  _$jscoverage['/data-structure.js'].lineData[205] = 0;
-  _$jscoverage['/data-structure.js'].lineData[206] = 0;
   _$jscoverage['/data-structure.js'].lineData[207] = 0;
   _$jscoverage['/data-structure.js'].lineData[208] = 0;
   _$jscoverage['/data-structure.js'].lineData[210] = 0;
-  _$jscoverage['/data-structure.js'].lineData[214] = 0;
-  _$jscoverage['/data-structure.js'].lineData[215] = 0;
-  _$jscoverage['/data-structure.js'].lineData[217] = 0;
-  _$jscoverage['/data-structure.js'].lineData[218] = 0;
-  _$jscoverage['/data-structure.js'].lineData[226] = 0;
-  _$jscoverage['/data-structure.js'].lineData[227] = 0;
-  _$jscoverage['/data-structure.js'].lineData[228] = 0;
-  _$jscoverage['/data-structure.js'].lineData[230] = 0;
-  _$jscoverage['/data-structure.js'].lineData[238] = 0;
+  _$jscoverage['/data-structure.js'].lineData[211] = 0;
+  _$jscoverage['/data-structure.js'].lineData[219] = 0;
+  _$jscoverage['/data-structure.js'].lineData[220] = 0;
+  _$jscoverage['/data-structure.js'].lineData[221] = 0;
+  _$jscoverage['/data-structure.js'].lineData[223] = 0;
+  _$jscoverage['/data-structure.js'].lineData[231] = 0;
+  _$jscoverage['/data-structure.js'].lineData[239] = 0;
+  _$jscoverage['/data-structure.js'].lineData[240] = 0;
+  _$jscoverage['/data-structure.js'].lineData[241] = 0;
+  _$jscoverage['/data-structure.js'].lineData[245] = 0;
   _$jscoverage['/data-structure.js'].lineData[246] = 0;
   _$jscoverage['/data-structure.js'].lineData[247] = 0;
-  _$jscoverage['/data-structure.js'].lineData[248] = 0;
+  _$jscoverage['/data-structure.js'].lineData[250] = 0;
   _$jscoverage['/data-structure.js'].lineData[252] = 0;
-  _$jscoverage['/data-structure.js'].lineData[253] = 0;
-  _$jscoverage['/data-structure.js'].lineData[254] = 0;
-  _$jscoverage['/data-structure.js'].lineData[257] = 0;
-  _$jscoverage['/data-structure.js'].lineData[259] = 0;
-  _$jscoverage['/data-structure.js'].lineData[268] = 0;
-  _$jscoverage['/data-structure.js'].lineData[269] = 0;
-  _$jscoverage['/data-structure.js'].lineData[277] = 0;
-  _$jscoverage['/data-structure.js'].lineData[278] = 0;
-  _$jscoverage['/data-structure.js'].lineData[286] = 0;
-  _$jscoverage['/data-structure.js'].lineData[289] = 0;
-  _$jscoverage['/data-structure.js'].lineData[290] = 0;
-  _$jscoverage['/data-structure.js'].lineData[291] = 0;
-  _$jscoverage['/data-structure.js'].lineData[292] = 0;
-  _$jscoverage['/data-structure.js'].lineData[295] = 0;
-  _$jscoverage['/data-structure.js'].lineData[303] = 0;
+  _$jscoverage['/data-structure.js'].lineData[261] = 0;
+  _$jscoverage['/data-structure.js'].lineData[262] = 0;
+  _$jscoverage['/data-structure.js'].lineData[270] = 0;
+  _$jscoverage['/data-structure.js'].lineData[271] = 0;
+  _$jscoverage['/data-structure.js'].lineData[279] = 0;
+  _$jscoverage['/data-structure.js'].lineData[282] = 0;
+  _$jscoverage['/data-structure.js'].lineData[283] = 0;
+  _$jscoverage['/data-structure.js'].lineData[284] = 0;
+  _$jscoverage['/data-structure.js'].lineData[285] = 0;
+  _$jscoverage['/data-structure.js'].lineData[288] = 0;
+  _$jscoverage['/data-structure.js'].lineData[296] = 0;
+  _$jscoverage['/data-structure.js'].lineData[304] = 0;
+  _$jscoverage['/data-structure.js'].lineData[309] = 0;
+  _$jscoverage['/data-structure.js'].lineData[310] = 0;
   _$jscoverage['/data-structure.js'].lineData[311] = 0;
+  _$jscoverage['/data-structure.js'].lineData[314] = 0;
   _$jscoverage['/data-structure.js'].lineData[316] = 0;
   _$jscoverage['/data-structure.js'].lineData[317] = 0;
   _$jscoverage['/data-structure.js'].lineData[318] = 0;
-  _$jscoverage['/data-structure.js'].lineData[321] = 0;
   _$jscoverage['/data-structure.js'].lineData[323] = 0;
-  _$jscoverage['/data-structure.js'].lineData[324] = 0;
-  _$jscoverage['/data-structure.js'].lineData[325] = 0;
-  _$jscoverage['/data-structure.js'].lineData[330] = 0;
 }
 if (! _$jscoverage['/data-structure.js'].functionData) {
   _$jscoverage['/data-structure.js'].functionData = [];
@@ -362,175 +362,168 @@ if (! _$jscoverage['/data-structure.js'].functionData) {
   _$jscoverage['/data-structure.js'].functionData[26] = 0;
   _$jscoverage['/data-structure.js'].functionData[27] = 0;
   _$jscoverage['/data-structure.js'].functionData[28] = 0;
-  _$jscoverage['/data-structure.js'].functionData[29] = 0;
 }
 if (! _$jscoverage['/data-structure.js'].branchData) {
   _$jscoverage['/data-structure.js'].branchData = {};
-  _$jscoverage['/data-structure.js'].branchData['166'] = [];
-  _$jscoverage['/data-structure.js'].branchData['166'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['167'] = [];
-  _$jscoverage['/data-structure.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['159'] = [];
+  _$jscoverage['/data-structure.js'].branchData['159'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['160'] = [];
+  _$jscoverage['/data-structure.js'].branchData['160'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['175'] = [];
+  _$jscoverage['/data-structure.js'].branchData['175'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['179'] = [];
+  _$jscoverage['/data-structure.js'].branchData['179'][1] = new BranchData();
   _$jscoverage['/data-structure.js'].branchData['182'] = [];
   _$jscoverage['/data-structure.js'].branchData['182'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['186'] = [];
-  _$jscoverage['/data-structure.js'].branchData['186'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['189'] = [];
-  _$jscoverage['/data-structure.js'].branchData['189'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['195'] = [];
-  _$jscoverage['/data-structure.js'].branchData['195'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['199'] = [];
-  _$jscoverage['/data-structure.js'].branchData['199'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['203'] = [];
-  _$jscoverage['/data-structure.js'].branchData['203'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['204'] = [];
-  _$jscoverage['/data-structure.js'].branchData['204'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['188'] = [];
+  _$jscoverage['/data-structure.js'].branchData['188'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['192'] = [];
+  _$jscoverage['/data-structure.js'].branchData['192'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['196'] = [];
+  _$jscoverage['/data-structure.js'].branchData['196'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['197'] = [];
+  _$jscoverage['/data-structure.js'].branchData['197'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['200'] = [];
+  _$jscoverage['/data-structure.js'].branchData['200'][1] = new BranchData();
   _$jscoverage['/data-structure.js'].branchData['207'] = [];
   _$jscoverage['/data-structure.js'].branchData['207'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['214'] = [];
-  _$jscoverage['/data-structure.js'].branchData['214'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['227'] = [];
-  _$jscoverage['/data-structure.js'].branchData['227'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['247'] = [];
-  _$jscoverage['/data-structure.js'].branchData['247'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['248'] = [];
-  _$jscoverage['/data-structure.js'].branchData['248'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['253'] = [];
-  _$jscoverage['/data-structure.js'].branchData['253'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['253'][2] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['257'] = [];
-  _$jscoverage['/data-structure.js'].branchData['257'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['269'] = [];
-  _$jscoverage['/data-structure.js'].branchData['269'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['278'] = [];
-  _$jscoverage['/data-structure.js'].branchData['278'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['289'] = [];
-  _$jscoverage['/data-structure.js'].branchData['289'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['289'][2] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['290'] = [];
-  _$jscoverage['/data-structure.js'].branchData['290'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['291'] = [];
-  _$jscoverage['/data-structure.js'].branchData['291'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['316'] = [];
-  _$jscoverage['/data-structure.js'].branchData['316'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['316'][2] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['317'] = [];
-  _$jscoverage['/data-structure.js'].branchData['317'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['318'] = [];
-  _$jscoverage['/data-structure.js'].branchData['318'][1] = new BranchData();
-  _$jscoverage['/data-structure.js'].branchData['320'] = [];
-  _$jscoverage['/data-structure.js'].branchData['320'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['220'] = [];
+  _$jscoverage['/data-structure.js'].branchData['220'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['240'] = [];
+  _$jscoverage['/data-structure.js'].branchData['240'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['246'] = [];
+  _$jscoverage['/data-structure.js'].branchData['246'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['246'][2] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['250'] = [];
+  _$jscoverage['/data-structure.js'].branchData['250'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['262'] = [];
+  _$jscoverage['/data-structure.js'].branchData['262'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['271'] = [];
+  _$jscoverage['/data-structure.js'].branchData['271'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['282'] = [];
+  _$jscoverage['/data-structure.js'].branchData['282'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['282'][2] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['283'] = [];
+  _$jscoverage['/data-structure.js'].branchData['283'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['284'] = [];
+  _$jscoverage['/data-structure.js'].branchData['284'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['309'] = [];
+  _$jscoverage['/data-structure.js'].branchData['309'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['309'][2] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['310'] = [];
+  _$jscoverage['/data-structure.js'].branchData['310'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['311'] = [];
+  _$jscoverage['/data-structure.js'].branchData['311'][1] = new BranchData();
+  _$jscoverage['/data-structure.js'].branchData['313'] = [];
+  _$jscoverage['/data-structure.js'].branchData['313'][1] = new BranchData();
 }
-_$jscoverage['/data-structure.js'].branchData['320'][1].init(114, 35, 'normalizedRequiresStatus === status');
-function visit139_320_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['320'][1].ranCondition(result);
+_$jscoverage['/data-structure.js'].branchData['313'][1].init(114, 35, 'normalizedRequiresStatus === status');
+function visit135_313_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['318'][1].init(346, 151, '(normalizedRequires = self.normalizedRequires) && (normalizedRequiresStatus === status)');
-function visit138_318_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['318'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['311'][1].init(346, 151, '(normalizedRequires = self.normalizedRequires) && (normalizedRequiresStatus === status)');
+function visit134_311_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['311'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['317'][1].init(25, 14, 'requires || []');
-function visit137_317_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['317'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['310'][1].init(25, 14, 'requires || []');
+function visit133_310_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['310'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['316'][2].init(255, 21, 'requires.length === 0');
-function visit136_316_2(result) {
-  _$jscoverage['/data-structure.js'].branchData['316'][2].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['309'][2].init(255, 21, 'requires.length === 0');
+function visit132_309_2(result) {
+  _$jscoverage['/data-structure.js'].branchData['309'][2].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['316'][1].init(242, 34, '!requires || requires.length === 0');
-function visit135_316_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['316'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['309'][1].init(242, 34, '!requires || requires.length === 0');
+function visit131_309_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['291'][1].init(255, 18, '!requiresWithAlias');
-function visit134_291_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['291'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['284'][1].init(255, 18, '!requiresWithAlias');
+function visit130_284_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['284'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['290'][1].init(25, 14, 'requires || []');
-function visit133_290_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['290'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['283'][1].init(25, 14, 'requires || []');
+function visit129_283_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['289'][2].init(165, 21, 'requires.length === 0');
-function visit132_289_2(result) {
-  _$jscoverage['/data-structure.js'].branchData['289'][2].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['282'][2].init(165, 21, 'requires.length === 0');
+function visit128_282_2(result) {
+  _$jscoverage['/data-structure.js'].branchData['282'][2].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['289'][1].init(152, 34, '!requires || requires.length === 0');
-function visit131_289_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['289'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['282'][1].init(152, 34, '!requires || requires.length === 0');
+function visit127_282_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['282'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['278'][1].init(51, 46, 'self.charset || self.getPackage().getCharset()');
-function visit130_278_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['278'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['271'][1].init(51, 46, 'self.charset || self.getPackage().getCharset()');
+function visit126_271_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['271'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['269'][1].init(51, 38, 'self.tag || self.getPackage().getTag()');
-function visit129_269_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['269'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['262'][1].init(51, 38, 'self.tag || self.getPackage().getTag()');
+function visit125_262_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['257'][1].init(414, 37, 'packages[pName] || Config.corePackage');
-function visit128_257_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['257'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['250'][1].init(408, 32, 'packages[pName] || packages.core');
+function visit124_250_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['253'][2].init(69, 23, 'p.length > pName.length');
-function visit127_253_2(result) {
-  _$jscoverage['/data-structure.js'].branchData['253'][2].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['246'][2].init(69, 23, 'p.length > pName.length');
+function visit123_246_2(result) {
+  _$jscoverage['/data-structure.js'].branchData['246'][2].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['253'][1].init(26, 66, 'Utils.startsWith(modNameSlash, p + \'/\') && p.length > pName.length');
-function visit126_253_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['253'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['246'][1].init(26, 66, 'Utils.startsWith(modNameSlash, p + \'/\') && p.length > pName.length');
+function visit122_246_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['246'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['248'][1].init(33, 21, 'Config.packages || {}');
-function visit125_248_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['248'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['240'][1].init(48, 17, '!self.packageInfo');
+function visit121_240_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['240'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['247'][1].init(48, 17, '!self.packageInfo');
-function visit124_247_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['247'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['220'][1].init(48, 9, '!self.url');
+function visit120_220_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['227'][1].init(48, 9, '!self.url');
-function visit123_227_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['227'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/data-structure.js'].branchData['214'][1].init(769, 11, '!ret.length');
-function visit122_214_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['214'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/data-structure.js'].branchData['207'][1].init(156, 11, 'normalAlias');
-function visit121_207_1(result) {
+}_$jscoverage['/data-structure.js'].branchData['207'][1].init(774, 11, '!ret.length');
+function visit119_207_1(result) {
   _$jscoverage['/data-structure.js'].branchData['207'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['204'][1].init(22, 8, 'alias[i]');
-function visit120_204_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['204'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['200'][1].init(161, 11, 'normalAlias');
+function visit118_200_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['203'][1].init(344, 5, 'i < l');
-function visit119_203_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['203'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['197'][1].init(22, 8, 'alias[i]');
+function visit117_197_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['199'][1].init(192, 25, 'typeof alias === \'string\'');
-function visit118_199_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['199'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['196'][1].init(344, 5, 'i < l');
+function visit116_196_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['195'][1].init(48, 20, 'self.normalizedAlias');
-function visit117_195_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['195'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['192'][1].init(192, 25, 'typeof alias === \'string\'');
+function visit115_192_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['189'][1].init(388, 11, 'alias || []');
-function visit116_189_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['189'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['188'][1].init(48, 20, 'self.normalizedAlias');
+function visit114_188_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['186'][1].init(268, 17, 'packageInfo.alias');
-function visit115_186_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['186'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/data-structure.js'].branchData['182'][1].init(150, 5, 'alias');
-function visit114_182_1(result) {
+}_$jscoverage['/data-structure.js'].branchData['182'][1].init(388, 11, 'alias || []');
+function visit113_182_1(result) {
   _$jscoverage['/data-structure.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['167'][1].init(22, 33, 'Utils.endsWith(self.name, \'.css\')');
-function visit113_167_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['167'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['179'][1].init(268, 17, 'packageInfo.alias');
+function visit112_179_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/data-structure.js'].branchData['166'][1].init(80, 2, '!v');
-function visit112_166_1(result) {
-  _$jscoverage['/data-structure.js'].branchData['166'][1].ranCondition(result);
+}_$jscoverage['/data-structure.js'].branchData['175'][1].init(150, 5, 'alias');
+function visit111_175_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['175'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/data-structure.js'].branchData['160'][1].init(22, 33, 'Utils.endsWith(self.name, \'.css\')');
+function visit110_160_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['160'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/data-structure.js'].branchData['159'][1].init(80, 2, '!v');
+function visit109_159_1(result) {
+  _$jscoverage['/data-structure.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/data-structure.js'].lineData[6]++;
 (function(S) {
@@ -547,300 +540,297 @@ function visit112_166_1(result) {
   function Package(cfg) {
     _$jscoverage['/data-structure.js'].functionData[2]++;
     _$jscoverage['/data-structure.js'].lineData[24]++;
+    this.filter = '';
+    _$jscoverage['/data-structure.js'].lineData[25]++;
     mix(this, cfg);
   }
-  _$jscoverage['/data-structure.js'].lineData[27]++;
+  _$jscoverage['/data-structure.js'].lineData[28]++;
   Package.prototype = {
   constructor: Package, 
   reset: function(cfg) {
   _$jscoverage['/data-structure.js'].functionData[3]++;
-  _$jscoverage['/data-structure.js'].lineData[31]++;
+  _$jscoverage['/data-structure.js'].lineData[32]++;
   mix(this, cfg);
 }, 
   getTag: function() {
   _$jscoverage['/data-structure.js'].functionData[4]++;
-  _$jscoverage['/data-structure.js'].lineData[40]++;
+  _$jscoverage['/data-structure.js'].lineData[41]++;
   return checkGlobalIfNotExist(this, 'tag');
 }, 
   getName: function() {
   _$jscoverage['/data-structure.js'].functionData[5]++;
-  _$jscoverage['/data-structure.js'].lineData[48]++;
+  _$jscoverage['/data-structure.js'].lineData[49]++;
   return this.name;
 }, 
   getBase: function() {
   _$jscoverage['/data-structure.js'].functionData[6]++;
-  _$jscoverage['/data-structure.js'].lineData[55]++;
+  _$jscoverage['/data-structure.js'].lineData[56]++;
   return this.base;
 }, 
-  isDebug: function() {
-  _$jscoverage['/data-structure.js'].functionData[7]++;
-  _$jscoverage['/data-structure.js'].lineData[63]++;
-  return checkGlobalIfNotExist(this, 'debug');
-}, 
   getCharset: function() {
-  _$jscoverage['/data-structure.js'].functionData[8]++;
-  _$jscoverage['/data-structure.js'].lineData[71]++;
+  _$jscoverage['/data-structure.js'].functionData[7]++;
+  _$jscoverage['/data-structure.js'].lineData[64]++;
   return checkGlobalIfNotExist(this, 'charset');
 }, 
   isCombine: function() {
-  _$jscoverage['/data-structure.js'].functionData[9]++;
-  _$jscoverage['/data-structure.js'].lineData[79]++;
+  _$jscoverage['/data-structure.js'].functionData[8]++;
+  _$jscoverage['/data-structure.js'].lineData[72]++;
   return checkGlobalIfNotExist(this, 'combine');
 }, 
   getGroup: function() {
-  _$jscoverage['/data-structure.js'].functionData[10]++;
-  _$jscoverage['/data-structure.js'].lineData[87]++;
+  _$jscoverage['/data-structure.js'].functionData[9]++;
+  _$jscoverage['/data-structure.js'].lineData[80]++;
   return checkGlobalIfNotExist(this, 'group');
 }};
-  _$jscoverage['/data-structure.js'].lineData[91]++;
+  _$jscoverage['/data-structure.js'].lineData[84]++;
   Loader.Package = Package;
-  _$jscoverage['/data-structure.js'].lineData[98]++;
+  _$jscoverage['/data-structure.js'].lineData[91]++;
   function Module(cfg) {
-    _$jscoverage['/data-structure.js'].functionData[11]++;
-    _$jscoverage['/data-structure.js'].lineData[99]++;
+    _$jscoverage['/data-structure.js'].functionData[10]++;
+    _$jscoverage['/data-structure.js'].lineData[92]++;
     var self = this;
-    _$jscoverage['/data-structure.js'].lineData[103]++;
+    _$jscoverage['/data-structure.js'].lineData[96]++;
     self.exports = {};
-    _$jscoverage['/data-structure.js'].lineData[108]++;
+    _$jscoverage['/data-structure.js'].lineData[101]++;
     self.status = Loader.Status.INIT;
-    _$jscoverage['/data-structure.js'].lineData[113]++;
+    _$jscoverage['/data-structure.js'].lineData[106]++;
     self.name = undefined;
-    _$jscoverage['/data-structure.js'].lineData[118]++;
+    _$jscoverage['/data-structure.js'].lineData[111]++;
     self.factory = undefined;
-    _$jscoverage['/data-structure.js'].lineData[121]++;
+    _$jscoverage['/data-structure.js'].lineData[114]++;
     self.cjs = 1;
-    _$jscoverage['/data-structure.js'].lineData[122]++;
+    _$jscoverage['/data-structure.js'].lineData[115]++;
     mix(self, cfg);
-    _$jscoverage['/data-structure.js'].lineData[123]++;
+    _$jscoverage['/data-structure.js'].lineData[116]++;
     self.waits = {};
-    _$jscoverage['/data-structure.js'].lineData[125]++;
+    _$jscoverage['/data-structure.js'].lineData[118]++;
     self.require = function(moduleName) {
-  _$jscoverage['/data-structure.js'].functionData[12]++;
-  _$jscoverage['/data-structure.js'].lineData[126]++;
+  _$jscoverage['/data-structure.js'].functionData[11]++;
+  _$jscoverage['/data-structure.js'].lineData[119]++;
   return S.require(moduleName, self.name);
 };
   }
-  _$jscoverage['/data-structure.js'].lineData[130]++;
+  _$jscoverage['/data-structure.js'].lineData[123]++;
   Module.prototype = {
   kissy: 1, 
   constructor: Module, 
   resolve: function(relativeName) {
-  _$jscoverage['/data-structure.js'].functionData[13]++;
-  _$jscoverage['/data-structure.js'].lineData[137]++;
+  _$jscoverage['/data-structure.js'].functionData[12]++;
+  _$jscoverage['/data-structure.js'].lineData[130]++;
   return Utils.normalizePath(this.name, relativeName);
 }, 
   add: function(loader) {
-  _$jscoverage['/data-structure.js'].functionData[14]++;
-  _$jscoverage['/data-structure.js'].lineData[141]++;
+  _$jscoverage['/data-structure.js'].functionData[13]++;
+  _$jscoverage['/data-structure.js'].lineData[134]++;
   this.waits[loader.id] = loader;
 }, 
   remove: function(loader) {
-  _$jscoverage['/data-structure.js'].functionData[15]++;
-  _$jscoverage['/data-structure.js'].lineData[145]++;
+  _$jscoverage['/data-structure.js'].functionData[14]++;
+  _$jscoverage['/data-structure.js'].lineData[138]++;
   delete this.waits[loader.id];
 }, 
   contains: function(loader) {
-  _$jscoverage['/data-structure.js'].functionData[16]++;
-  _$jscoverage['/data-structure.js'].lineData[149]++;
+  _$jscoverage['/data-structure.js'].functionData[15]++;
+  _$jscoverage['/data-structure.js'].lineData[142]++;
   return this.waits[loader.id];
 }, 
   flush: function() {
-  _$jscoverage['/data-structure.js'].functionData[17]++;
-  _$jscoverage['/data-structure.js'].lineData[153]++;
+  _$jscoverage['/data-structure.js'].functionData[16]++;
+  _$jscoverage['/data-structure.js'].lineData[146]++;
   Utils.each(this.waits, function(loader) {
-  _$jscoverage['/data-structure.js'].functionData[18]++;
-  _$jscoverage['/data-structure.js'].lineData[154]++;
+  _$jscoverage['/data-structure.js'].functionData[17]++;
+  _$jscoverage['/data-structure.js'].lineData[147]++;
   loader.flush();
 });
-  _$jscoverage['/data-structure.js'].lineData[156]++;
+  _$jscoverage['/data-structure.js'].lineData[149]++;
   this.waits = {};
 }, 
   getType: function() {
-  _$jscoverage['/data-structure.js'].functionData[19]++;
-  _$jscoverage['/data-structure.js'].lineData[164]++;
+  _$jscoverage['/data-structure.js'].functionData[18]++;
+  _$jscoverage['/data-structure.js'].lineData[157]++;
   var self = this, v = self.type;
-  _$jscoverage['/data-structure.js'].lineData[166]++;
-  if (visit112_166_1(!v)) {
-    _$jscoverage['/data-structure.js'].lineData[167]++;
-    if (visit113_167_1(Utils.endsWith(self.name, '.css'))) {
-      _$jscoverage['/data-structure.js'].lineData[168]++;
+  _$jscoverage['/data-structure.js'].lineData[159]++;
+  if (visit109_159_1(!v)) {
+    _$jscoverage['/data-structure.js'].lineData[160]++;
+    if (visit110_160_1(Utils.endsWith(self.name, '.css'))) {
+      _$jscoverage['/data-structure.js'].lineData[161]++;
       v = 'css';
     } else {
-      _$jscoverage['/data-structure.js'].lineData[170]++;
+      _$jscoverage['/data-structure.js'].lineData[163]++;
       v = 'js';
     }
-    _$jscoverage['/data-structure.js'].lineData[172]++;
+    _$jscoverage['/data-structure.js'].lineData[165]++;
     self.type = v;
   }
-  _$jscoverage['/data-structure.js'].lineData[174]++;
+  _$jscoverage['/data-structure.js'].lineData[167]++;
   return v;
 }, 
   getAlias: function() {
-  _$jscoverage['/data-structure.js'].functionData[20]++;
-  _$jscoverage['/data-structure.js'].lineData[178]++;
+  _$jscoverage['/data-structure.js'].functionData[19]++;
+  _$jscoverage['/data-structure.js'].lineData[171]++;
   var self = this, name = self.name, packageInfo, alias = self.alias;
-  _$jscoverage['/data-structure.js'].lineData[182]++;
-  if (visit114_182_1(alias)) {
-    _$jscoverage['/data-structure.js'].lineData[183]++;
+  _$jscoverage['/data-structure.js'].lineData[175]++;
+  if (visit111_175_1(alias)) {
+    _$jscoverage['/data-structure.js'].lineData[176]++;
     return alias;
   }
-  _$jscoverage['/data-structure.js'].lineData[185]++;
+  _$jscoverage['/data-structure.js'].lineData[178]++;
   packageInfo = self.getPackage();
-  _$jscoverage['/data-structure.js'].lineData[186]++;
-  if (visit115_186_1(packageInfo.alias)) {
-    _$jscoverage['/data-structure.js'].lineData[187]++;
+  _$jscoverage['/data-structure.js'].lineData[179]++;
+  if (visit112_179_1(packageInfo.alias)) {
+    _$jscoverage['/data-structure.js'].lineData[180]++;
     alias = packageInfo.alias(name);
   }
-  _$jscoverage['/data-structure.js'].lineData[189]++;
-  alias = self.alias = visit116_189_1(alias || []);
-  _$jscoverage['/data-structure.js'].lineData[190]++;
+  _$jscoverage['/data-structure.js'].lineData[182]++;
+  alias = self.alias = visit113_182_1(alias || []);
+  _$jscoverage['/data-structure.js'].lineData[183]++;
   return alias;
 }, 
   getNormalizedAlias: function() {
-  _$jscoverage['/data-structure.js'].functionData[21]++;
-  _$jscoverage['/data-structure.js'].lineData[194]++;
+  _$jscoverage['/data-structure.js'].functionData[20]++;
+  _$jscoverage['/data-structure.js'].lineData[187]++;
   var self = this;
-  _$jscoverage['/data-structure.js'].lineData[195]++;
-  if (visit117_195_1(self.normalizedAlias)) {
-    _$jscoverage['/data-structure.js'].lineData[196]++;
+  _$jscoverage['/data-structure.js'].lineData[188]++;
+  if (visit114_188_1(self.normalizedAlias)) {
+    _$jscoverage['/data-structure.js'].lineData[189]++;
     return self.normalizedAlias;
   }
-  _$jscoverage['/data-structure.js'].lineData[198]++;
+  _$jscoverage['/data-structure.js'].lineData[191]++;
   var alias = self.getAlias();
-  _$jscoverage['/data-structure.js'].lineData[199]++;
-  if (visit118_199_1(typeof alias === 'string')) {
-    _$jscoverage['/data-structure.js'].lineData[200]++;
+  _$jscoverage['/data-structure.js'].lineData[192]++;
+  if (visit115_192_1(typeof alias === 'string')) {
+    _$jscoverage['/data-structure.js'].lineData[193]++;
     alias = [alias];
   }
-  _$jscoverage['/data-structure.js'].lineData[202]++;
+  _$jscoverage['/data-structure.js'].lineData[195]++;
   var ret = [];
-  _$jscoverage['/data-structure.js'].lineData[203]++;
-  for (var i = 0, l = alias.length; visit119_203_1(i < l); i++) {
-    _$jscoverage['/data-structure.js'].lineData[204]++;
-    if (visit120_204_1(alias[i])) {
-      _$jscoverage['/data-structure.js'].lineData[205]++;
-      var mod = Utils.createModuleInfo(alias[i]);
-      _$jscoverage['/data-structure.js'].lineData[206]++;
+  _$jscoverage['/data-structure.js'].lineData[196]++;
+  for (var i = 0, l = alias.length; visit116_196_1(i < l); i++) {
+    _$jscoverage['/data-structure.js'].lineData[197]++;
+    if (visit117_197_1(alias[i])) {
+      _$jscoverage['/data-structure.js'].lineData[198]++;
+      var mod = Utils.getOrCreateModuleInfo(alias[i]);
+      _$jscoverage['/data-structure.js'].lineData[199]++;
       var normalAlias = mod.getNormalizedAlias();
-      _$jscoverage['/data-structure.js'].lineData[207]++;
-      if (visit121_207_1(normalAlias)) {
-        _$jscoverage['/data-structure.js'].lineData[208]++;
+      _$jscoverage['/data-structure.js'].lineData[200]++;
+      if (visit118_200_1(normalAlias)) {
+        _$jscoverage['/data-structure.js'].lineData[201]++;
         ret.push.apply(ret, normalAlias);
       } else {
-        _$jscoverage['/data-structure.js'].lineData[210]++;
+        _$jscoverage['/data-structure.js'].lineData[203]++;
         ret.push(alias[i]);
       }
     }
   }
-  _$jscoverage['/data-structure.js'].lineData[214]++;
-  if (visit122_214_1(!ret.length)) {
-    _$jscoverage['/data-structure.js'].lineData[215]++;
+  _$jscoverage['/data-structure.js'].lineData[207]++;
+  if (visit119_207_1(!ret.length)) {
+    _$jscoverage['/data-structure.js'].lineData[208]++;
     ret.push(self.name);
   }
-  _$jscoverage['/data-structure.js'].lineData[217]++;
+  _$jscoverage['/data-structure.js'].lineData[210]++;
   self.normalizedAlias = ret;
-  _$jscoverage['/data-structure.js'].lineData[218]++;
+  _$jscoverage['/data-structure.js'].lineData[211]++;
   return ret;
 }, 
   getUrl: function() {
-  _$jscoverage['/data-structure.js'].functionData[22]++;
-  _$jscoverage['/data-structure.js'].lineData[226]++;
+  _$jscoverage['/data-structure.js'].functionData[21]++;
+  _$jscoverage['/data-structure.js'].lineData[219]++;
   var self = this;
-  _$jscoverage['/data-structure.js'].lineData[227]++;
-  if (visit123_227_1(!self.url)) {
-    _$jscoverage['/data-structure.js'].lineData[228]++;
+  _$jscoverage['/data-structure.js'].lineData[220]++;
+  if (visit120_220_1(!self.url)) {
+    _$jscoverage['/data-structure.js'].lineData[221]++;
     self.url = S.Config.resolveModFn(self);
   }
-  _$jscoverage['/data-structure.js'].lineData[230]++;
+  _$jscoverage['/data-structure.js'].lineData[223]++;
   return self.url;
 }, 
   getName: function() {
-  _$jscoverage['/data-structure.js'].functionData[23]++;
-  _$jscoverage['/data-structure.js'].lineData[238]++;
+  _$jscoverage['/data-structure.js'].functionData[22]++;
+  _$jscoverage['/data-structure.js'].lineData[231]++;
   return this.name;
 }, 
   getPackage: function() {
-  _$jscoverage['/data-structure.js'].functionData[24]++;
-  _$jscoverage['/data-structure.js'].lineData[246]++;
+  _$jscoverage['/data-structure.js'].functionData[23]++;
+  _$jscoverage['/data-structure.js'].lineData[239]++;
   var self = this;
-  _$jscoverage['/data-structure.js'].lineData[247]++;
-  if (visit124_247_1(!self.packageInfo)) {
-    _$jscoverage['/data-structure.js'].lineData[248]++;
-    var packages = visit125_248_1(Config.packages || {}), modNameSlash = self.name + '/', pName = '', p;
-    _$jscoverage['/data-structure.js'].lineData[252]++;
+  _$jscoverage['/data-structure.js'].lineData[240]++;
+  if (visit121_240_1(!self.packageInfo)) {
+    _$jscoverage['/data-structure.js'].lineData[241]++;
+    var packages = Config.packages, modNameSlash = self.name + '/', pName = '', p;
+    _$jscoverage['/data-structure.js'].lineData[245]++;
     for (p in packages) {
-      _$jscoverage['/data-structure.js'].lineData[253]++;
-      if (visit126_253_1(Utils.startsWith(modNameSlash, p + '/') && visit127_253_2(p.length > pName.length))) {
-        _$jscoverage['/data-structure.js'].lineData[254]++;
+      _$jscoverage['/data-structure.js'].lineData[246]++;
+      if (visit122_246_1(Utils.startsWith(modNameSlash, p + '/') && visit123_246_2(p.length > pName.length))) {
+        _$jscoverage['/data-structure.js'].lineData[247]++;
         pName = p;
       }
     }
-    _$jscoverage['/data-structure.js'].lineData[257]++;
-    self.packageInfo = visit128_257_1(packages[pName] || Config.corePackage);
+    _$jscoverage['/data-structure.js'].lineData[250]++;
+    self.packageInfo = visit124_250_1(packages[pName] || packages.core);
   }
-  _$jscoverage['/data-structure.js'].lineData[259]++;
+  _$jscoverage['/data-structure.js'].lineData[252]++;
   return self.packageInfo;
 }, 
   getTag: function() {
-  _$jscoverage['/data-structure.js'].functionData[25]++;
-  _$jscoverage['/data-structure.js'].lineData[268]++;
+  _$jscoverage['/data-structure.js'].functionData[24]++;
+  _$jscoverage['/data-structure.js'].lineData[261]++;
   var self = this;
-  _$jscoverage['/data-structure.js'].lineData[269]++;
-  return visit129_269_1(self.tag || self.getPackage().getTag());
+  _$jscoverage['/data-structure.js'].lineData[262]++;
+  return visit125_262_1(self.tag || self.getPackage().getTag());
 }, 
   getCharset: function() {
-  _$jscoverage['/data-structure.js'].functionData[26]++;
-  _$jscoverage['/data-structure.js'].lineData[277]++;
+  _$jscoverage['/data-structure.js'].functionData[25]++;
+  _$jscoverage['/data-structure.js'].lineData[270]++;
   var self = this;
-  _$jscoverage['/data-structure.js'].lineData[278]++;
-  return visit130_278_1(self.charset || self.getPackage().getCharset());
+  _$jscoverage['/data-structure.js'].lineData[271]++;
+  return visit126_271_1(self.charset || self.getPackage().getCharset());
 }, 
   getRequiresWithAlias: function() {
-  _$jscoverage['/data-structure.js'].functionData[27]++;
-  _$jscoverage['/data-structure.js'].lineData[286]++;
+  _$jscoverage['/data-structure.js'].functionData[26]++;
+  _$jscoverage['/data-structure.js'].lineData[279]++;
   var self = this, requiresWithAlias = self.requiresWithAlias, requires = self.requires;
-  _$jscoverage['/data-structure.js'].lineData[289]++;
-  if (visit131_289_1(!requires || visit132_289_2(requires.length === 0))) {
-    _$jscoverage['/data-structure.js'].lineData[290]++;
-    return visit133_290_1(requires || []);
+  _$jscoverage['/data-structure.js'].lineData[282]++;
+  if (visit127_282_1(!requires || visit128_282_2(requires.length === 0))) {
+    _$jscoverage['/data-structure.js'].lineData[283]++;
+    return visit129_283_1(requires || []);
   } else {
-    _$jscoverage['/data-structure.js'].lineData[291]++;
-    if (visit134_291_1(!requiresWithAlias)) {
-      _$jscoverage['/data-structure.js'].lineData[292]++;
+    _$jscoverage['/data-structure.js'].lineData[284]++;
+    if (visit130_284_1(!requiresWithAlias)) {
+      _$jscoverage['/data-structure.js'].lineData[285]++;
       self.requiresWithAlias = requiresWithAlias = Utils.normalizeModNamesWithAlias(requires, self.name);
     }
   }
-  _$jscoverage['/data-structure.js'].lineData[295]++;
+  _$jscoverage['/data-structure.js'].lineData[288]++;
   return requiresWithAlias;
 }, 
   getRequiredMods: function() {
-  _$jscoverage['/data-structure.js'].functionData[28]++;
-  _$jscoverage['/data-structure.js'].lineData[303]++;
-  return Utils.createModulesInfo(this.getNormalizedRequires());
+  _$jscoverage['/data-structure.js'].functionData[27]++;
+  _$jscoverage['/data-structure.js'].lineData[296]++;
+  return Utils.getOrCreateModulesInfo(this.getNormalizedRequires());
 }, 
   getNormalizedRequires: function() {
-  _$jscoverage['/data-structure.js'].functionData[29]++;
-  _$jscoverage['/data-structure.js'].lineData[311]++;
+  _$jscoverage['/data-structure.js'].functionData[28]++;
+  _$jscoverage['/data-structure.js'].lineData[304]++;
   var self = this, normalizedRequires, normalizedRequiresStatus = self.normalizedRequiresStatus, status = self.status, requires = self.requires;
-  _$jscoverage['/data-structure.js'].lineData[316]++;
-  if (visit135_316_1(!requires || visit136_316_2(requires.length === 0))) {
-    _$jscoverage['/data-structure.js'].lineData[317]++;
-    return visit137_317_1(requires || []);
+  _$jscoverage['/data-structure.js'].lineData[309]++;
+  if (visit131_309_1(!requires || visit132_309_2(requires.length === 0))) {
+    _$jscoverage['/data-structure.js'].lineData[310]++;
+    return visit133_310_1(requires || []);
   } else {
-    _$jscoverage['/data-structure.js'].lineData[318]++;
-    if (visit138_318_1((normalizedRequires = self.normalizedRequires) && (visit139_320_1(normalizedRequiresStatus === status)))) {
-      _$jscoverage['/data-structure.js'].lineData[321]++;
+    _$jscoverage['/data-structure.js'].lineData[311]++;
+    if (visit134_311_1((normalizedRequires = self.normalizedRequires) && (visit135_313_1(normalizedRequiresStatus === status)))) {
+      _$jscoverage['/data-structure.js'].lineData[314]++;
       return normalizedRequires;
     } else {
-      _$jscoverage['/data-structure.js'].lineData[323]++;
+      _$jscoverage['/data-structure.js'].lineData[316]++;
       self.normalizedRequiresStatus = status;
-      _$jscoverage['/data-structure.js'].lineData[324]++;
+      _$jscoverage['/data-structure.js'].lineData[317]++;
       self.normalizedRequires = Utils.normalizeModNames(requires, self.name);
-      _$jscoverage['/data-structure.js'].lineData[325]++;
+      _$jscoverage['/data-structure.js'].lineData[318]++;
       return self.normalizedRequires;
     }
   }
 }};
-  _$jscoverage['/data-structure.js'].lineData[330]++;
+  _$jscoverage['/data-structure.js'].lineData[323]++;
   Loader.Module = Module;
 })(KISSY);

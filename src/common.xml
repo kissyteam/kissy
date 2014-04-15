@@ -6,8 +6,6 @@
 <project name="common.build" xmlns:ac="antlib:net.sf.antcontrib">
     <import file="./config.xml"/>
 
-    <property name="copyright.files" value="**/*.css, **/*.js"/>
-
     <!-- component src dir -->
     <property name="component.work.dir" location="./"/>
     <property name="component.src.dir" location="./src/"/>
@@ -90,6 +88,7 @@
             <fileset dir="${component.work.dir}"
                      excludes="**/*.less,**/*.sass"
                      includes="assets/**/*"/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
         </copy>
     </target>
 
@@ -101,28 +100,17 @@
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
-                <java classname="com.taobao.f2e.Main" fork="true" failonerror="true">
-                    <arg value="-packageUrls"/>
-
-                    <arg value="${component.name}=${component.src.dir}/${component.basename}"/>
-
-                    <arg value="-require"/>
+                <exec executable="node" failonerror="true">
+                    <arg value="${tools.dir}/kmc/run"/>
+                    <arg value="--packageName"/>
                     <arg value="${component.name}"/>
-
-                    <arg value="-compact"/>
-                    <arg value="true"/>
-
-                    <arg value="-output"/>
-                    <arg value="${component.src.dir.tmp}/${component.basename}-pkg.js"/>
-
-                    <arg value="-outputDependency"/>
+                    <arg value="--packageBase"/>
+                    <arg value="${component.src.dir}/"/>
+                    <arg value="--destFile"/>
+                    <arg value="${component.src.dir.tmp}/${component.basename}-pkg-debug.js"/>
+                    <arg value="--depFile"/>
                     <arg value="${component.meta.dir}/deps.json"/>
-
-                    <classpath>
-                        <pathelement path="${module-compiler}"/>
-                        <pathelement path="${java.class.path}"/>
-                    </classpath>
-                </java>
+                </exec>
             </ac:then>
         </ac:if>
     </target>
@@ -169,7 +157,7 @@
             <srcfile/>
             <arg line="-o"/>
             <targetfile/>
-            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
+            <mapper type="regexp" from="^(.*)-debug\.(css|js)$" to="\1.\2"/>
         </apply>
     </target>
 
@@ -181,7 +169,7 @@
                 flags="g"
                 byline="true"
                 encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="**/*.js"/>
+            <fileset dir="${component.build.dir}" includes="**/*-debug.js"/>
         </replaceregexp>
 
         <replaceregexp match="@DEBUG@"
@@ -189,7 +177,7 @@
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="**/*.js,**/*.css"/>
+            <fileset dir="${component.build.dir}" includes="**/*.js-debug,**/*-debug.css"/>
         </replaceregexp>
 
         <!-- 用 Closure Compiler 压缩 JS -->
@@ -197,8 +185,7 @@
                verbose="true"
                failonerror="true"
                dest="${component.build.dir}">
-            <fileset dir="${component.build.dir}"
-                     excludes="**/*-min.js" includes="**/*.js"/>
+            <fileset dir="${component.build.dir}" includes="**/*-debug.js"/>
             <arg line="-jar"/>
             <arg path="${closure-compiler}"/>
             <arg line="--charset ${charset}"/>
@@ -208,13 +195,13 @@
             <srcfile/>
             <arg value="--js_output_file"/>
             <targetfile/>
-            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
+            <mapper type="regexp" from="^(.*)-debug\.(css|js)$" to="\1.\2"/>
         </apply>
         <!--
             restore log
         -->
         <move todir="${component.build.dir}">
-            <fileset dir="${component.src.dir.tmp}" includes="**/*.js"/>
+            <fileset dir="${component.src.dir.tmp}" includes="**/*-debug.js"/>
         </move>
     </target>
 
@@ -222,7 +209,7 @@
     <target name="native2ascii">
         <mkdir dir="${component.build.dir.tmp}"/>
         <move todir="${component.build.dir.tmp}">
-            <fileset dir="${component.build.dir}" includes="**/*-min.js"/>
+            <fileset dir="${component.build.dir}" excludes="**/*-debug.js" includes="**/*.js"/>
         </move>
         <native2ascii encoding="${charset}"
                       src="${component.build.dir.tmp}"
@@ -240,7 +227,7 @@
 
         <mkdir dir="${component.build.dir.tmp}"/>
         <move todir="${component.build.dir.tmp}">
-            <fileset dir="${component.build.dir}" includes="${copyright.files}"/>
+            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
         </move>
 
         <ac:for param="file">
@@ -303,9 +290,8 @@
         <!-- pkg 移到外围 -->
         <move encoding="${charset}" todir="${build.component.dir}/../">
             <fileset dir="${component.build.dir}"
-                     includes="**/*-pkg.js,**/*-pkg-min.js"/>
-            <mapper type="regexp" from="(.*)-pkg(.*)"
-                    to="\1\2"/>
+                     includes="**/*-pkg.js,**/*-pkg-debug.js"/>
+            <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
         </move>
 
         <move todir="${build.component.dir}/">
@@ -354,15 +340,15 @@
                     <available file="${build.component.dir}" type="dir"/>
                     <ac:then>
                         <copy todir="${lib.component.dir}">
-                            <fileset dir="${build.component.dir}"
-                                     includes="**/*.js" excludes="**/*-min.js"/>
+                            <fileset dir="${build.component.dir}" includes="**/*-debug.js"/>
+                            <mapper type="regexp" from="^(.*)-debug\.(css|js)$" to="\1.\2"/>
                         </copy>
                     </ac:then>
                 </ac:if>
 
                 <copy todir="${kissy.lib.dir}">
-                    <fileset dir="${kissy.build.dir}"
-                             includes="${component.name}.js"/>
+                    <fileset dir="${kissy.build.dir}" includes="${component.name}.js"/>
+                    <mapper type="regexp" from="^(.*)-debug\.(css|js)$" to="\1.\2"/>
                 </copy>
             </ac:then>
         </ac:if>

@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var dirname = __dirname;
 var root = path.join(dirname, '../../');
-var S = require(path.join(root, 'lib/seed.js'));
 var program = require(path.join(root, 'bin/lib/commander.js'));
 
 program.option('--suffix [suffix]')
@@ -20,6 +19,17 @@ var FOOT = isModule ? '});' : '})(KISSY);';
 var requireFiles = [];
 var jsFiles = [];
 
+function endsWith(str, suffix) {
+    var ind = str.length - suffix.length;
+    return ind >= 0 && str.indexOf(suffix, ind) === ind;
+}
+
+function mix(r, s) {
+    for (var i in s) {
+        r[i] = s[i];
+    }
+}
+
 function getFiles(dir) {
     var files = fs.readdirSync(dir);
     for (var i in files) {
@@ -29,11 +39,11 @@ function getFiles(dir) {
         var name = dir + '/' + files[i];
         if (fs.statSync(name).isDirectory()) {
             getFiles(name);
-        } else if (S.endsWith(dir, suffix)) {
+        } else if (endsWith(dir, suffix)) {
             var file = files[i];
             if (file === 'deps.json') {
                 requireFiles.push(name);
-            } else if (S.endsWith(file, '.js')) {
+            } else if (endsWith(file, '.js')) {
                 jsFiles.push(name);
             }
         }
@@ -45,16 +55,22 @@ getFiles(dir);
 var requires = {};
 var jsCode = [''];
 
-S.each(requireFiles, function (r) {
+requireFiles.forEach(function (r) {
     /*jshint evil:true */
-    S.mix(requires, eval('(' + fs.readFileSync(r, {
+    var content = fs.readFileSync(r, {
         encoding: 'utf-8'
-    }) + ')'));
+    });
+    try {
+        mix(requires, eval('(' + content + ')'));
+    } catch (e) {
+        console.error(r + ' : ' + content);
+        throw e;
+    }
 });
 
 requires = require('deps-optimizer').optimize(requires);
 
-S.each(jsFiles, function (r) {
+jsFiles.forEach(function (r) {
     jsCode.push(fs.readFileSync(r, {
         encoding: 'utf-8'
     }));
@@ -62,14 +78,14 @@ S.each(jsFiles, function (r) {
 
 var code = ['S.config("requires",' + JSON.stringify(requires, undefined, 4) + ');'];
 
-if (S.trim(jsCode)) {
+if (jsCode.length > 1) {
     code = code.concat(['var Feature = S.Feature,',
         '    UA = S.UA,',
         '    win = window,',
         '    isTouchGestureSupported = Feature.isTouchGestureSupported(),',
         '    add = S.add,',
         '    emptyObject = {};',
-    '']);
+        '']);
     code = code.concat(['function alias(name, aliasName) {',
         '   var cfg;',
         '   if(typeof name ==="string") {' ,

@@ -4,10 +4,11 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  *
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
     // [[Class]] -> type pairs
     var class2type = {},
         FALSE = false,
+        undef,
         noop = S.noop,
         OP = Object.prototype,
         toString = OP.toString;
@@ -61,7 +62,7 @@ KISSY.add(function (S, undefined) {
             for (key in obj) {
             }
 
-            return ((key === undefined) || hasOwnProperty(obj, key));
+            return ((key === undef) || hasOwnProperty(obj, key));
         }
     });
 

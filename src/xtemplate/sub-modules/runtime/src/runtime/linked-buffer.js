@@ -2,7 +2,9 @@
  * LinkedBuffer of generate content from xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
+    var undef;
+
     function Buffer(list) {
         this.list = list;
         this.data = '';
@@ -36,7 +38,7 @@ KISSY.add(function (S, undefined) {
         error: function (reason) {
             var callback = this.list.callback;
             if (callback) {
-                callback(reason, undefined);
+                callback(reason, undef);
                 this.list.callback = null;
             }
         },

@@ -25,24 +25,25 @@
     // how to get mod url
     Config.resolveModFn = function (mod) {
         var name = mod.name,
-            min = '-min',
-            t, url, subPath;
+            filter, t, url, subPath;
         var packageInfo = mod.getPackage();
         var packageBase = packageInfo.getBase();
         var packageName = packageInfo.getName();
         var extname = '.' + mod.getType();
         // special for css module
         name = name.replace(/\.css$/, '');
-        if (packageInfo.isDebug()) {
-            min = '';
+        filter = packageInfo.filter;
+
+        if (filter) {
+            filter = '-' + filter;
         }
 
         // packageName: a/y use('a/y');
         if (name === packageName) {
-            url = packageBase.substring(0, packageBase.length - 1) + min + extname;
+            url = packageBase.substring(0, packageBase.length - 1) + filter + extname;
         } else {
-            subPath = name + min + extname;
-            if (packageName) {
+            subPath = name + filter + extname;
+            if (Utils.startsWith(name, packageName + '/')) {
                 subPath = subPath.substring(packageName.length + 1);
             }
             url = packageBase + subPath;
@@ -55,27 +56,13 @@
         return url;
     };
 
-    configFns.core = function (cfg) {
-        var base = cfg.base;
-        var corePackage = Config.corePackage;
-        if (base) {
-            cfg.base = normalizePath(base, true);
-        }
-        if (!corePackage) {
-            corePackage = Config.corePackage = new Package({
-                name: ''
-            });
-        }
-        corePackage.reset(cfg);
-    };
-
     configFns.requires = shortcut('requires');
 
     configFns.alias = shortcut('alias');
 
     configFns.packages = function (config) {
         var Config = this.Config,
-            ps = Config.packages = Config.packages || {};
+            packages = Config.packages;
         if (config) {
             Utils.each(config, function (cfg, key) {
                 // object type
@@ -84,18 +71,20 @@
                 if (base) {
                     cfg.base = normalizePath(base, true);
                 }
-                if (ps[name]) {
-                    ps[name].reset(cfg);
+                if (packages[name]) {
+                    packages[name].reset(cfg);
                 } else {
-                    ps[name] = new Package(cfg);
+                    packages[name] = new Package(cfg);
                 }
             });
             return undefined;
         } else if (config === false) {
-            Config.packages = {};
+            Config.packages = {
+                core: packages.core
+            };
             return undefined;
         } else {
-            return ps;
+            return packages;
         }
     };
 
@@ -106,7 +95,7 @@
                 if (url) {
                     modCfg.url = normalizePath(url);
                 }
-                var mod = Utils.createModuleInfo(modName, modCfg);
+                var mod = Utils.getOrCreateModuleInfo(modName, modCfg);
                 // #485, invalid after add
                 if (mod.status === Loader.Status.INIT) {
                     Utils.mix(mod, modCfg);
@@ -117,14 +106,16 @@
 
     configFns.base = function (base) {
         var self = this,
-            corePackage = Config.corePackage;
+            corePackage = Config.packages.core;
 
         if (!base) {
             return corePackage && corePackage.getBase();
         }
 
-        self.config('core', {
-            base: base
+        self.config('packages', {
+            core: {
+                base: base
+            }
         });
 
         return undefined;

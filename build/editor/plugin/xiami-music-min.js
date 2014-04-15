@@ -1,9 +1,0 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Apr 10 18:46
-*/
-KISSY.add("editor/plugin/xiami-music",["editor","./flash-common/base-class","./flash-common/utils","./fake-objects","./button"],function(h,b){function i(){i.superclass.constructor.apply(this,arguments)}function j(c){this.config=c||{}}var l=b("editor"),m=b("./flash-common/base-class"),k=b("./flash-common/utils"),n=b("./fake-objects");b("./button");h.extend(i,m,{_updateTip:function(c,g){var f=this.get("editor").restoreRealElement(g);f&&(c.html(g.attr("title")),c.attr("href",this._getFlashUrl(f)))}});
-h.augment(j,{pluginRenderUI:function(c){function g(a){return/xiami\.com/i.test(a)}n.init(c);var f=c.htmlDataProcessor,b=f&&f.dataFilter;b&&b.addRules({tags:{object:function(a){var c=a.getAttribute("title"),d,e;d=a.getAttribute("classid");var b=a.childNodes;if(!d){for(d=0;d<b.length;d++)if(e=b[d],"embed"===e.nodeName){if(!k.isFlashEmbed(e))break;if(g(e.attributes.src))return f.createFakeParserElement(a,"ke_xiami","xiami-music",!0,{title:c})}return null}for(d=0;d<b.length;d++)if(e=b[d],"param"===e.nodeName&&
-"movie"===e.getAttribute("name").toLowerCase()&&g(e.getAttribute("value")||e.getAttribute("VALUE")))return f.createFakeParserElement(a,"ke_xiami","xiami-music",!0,{title:c})},embed:function(a){if(k.isFlashEmbed(a)&&g(a.getAttribute("src")))return f.createFakeParserElement(a,"ke_xiami","xiami-music",!0,{title:a.getAttribute("title")})}}},4);var h=new i({editor:c,cls:"ke_xiami",type:"xiami-music",bubbleId:"xiami",pluginConfig:this.config,contextMenuId:"xiami",contextMenuHandlers:{"\u867e\u7c73\u5c5e\u6027":function(){var a=
-this.get("editorSelectedEl");a&&h.show(a)}}});c.addButton("xiamiMusic",{tooltip:"\u63d2\u5165\u867e\u7c73\u97f3\u4e50",listeners:{click:function(){h.show()}},mode:l.Mode.WYSIWYG_MODE})}});return j});

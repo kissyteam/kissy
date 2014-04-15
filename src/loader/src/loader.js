@@ -4,14 +4,22 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
-        mods = Env.mods = {},
         Utils = Loader.Utils,
         ComboLoader = Loader.ComboLoader;
+    var logger = S.getLogger('s/loader');
+    var mods = Env.mods = {};
 
     Utils.mix(S, {
+        getModule: function (modName) {
+            return Utils.getOrCreateModuleInfo(modName);
+        },
+
+        getPackage: function (packageName) {
+            return S.Config.packages[packageName];
+        },
+
         /**
          * Registers a module with the KISSY global.
          * @param {String} name module name.

@@ -1,87 +1,9 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 10 20:14
+build time: Apr 15 14:25
 */
-/*
- Combined modules by KISSY Module Compiler: 
-
- feature
-*/
-
-KISSY.add("feature", ["util", "ua"], function(S, require) {
-  require("util");
-  var win = S.Env.host, Config = S.Config, UA = require("ua"), propertyPrefixes = ["Webkit", "Moz", "O", "ms"], propertyPrefixesLength = propertyPrefixes.length, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
-  if(documentElement) {
-    if(documentElement.querySelector && ie !== 8) {
-      isQuerySelectorSupportedState = true
-    }
-    documentElementStyle = documentElement.style;
-    isClassListSupportedState = "classList" in documentElement;
-    navigator = win.navigator || {};
-    isMsPointerSupported = "msPointerEnabled" in navigator;
-    isPointerSupported = "pointerEnabled" in navigator
-  }
-  function getVendorInfo(name) {
-    if(name.indexOf("-") !== -1) {
-      name = S.camelCase(name)
-    }
-    if(name in vendorInfos) {
-      return vendorInfos[name]
-    }
-    if(!documentElementStyle || name in documentElementStyle) {
-      vendorInfos[name] = {propertyName:name, propertyNamePrefix:""}
-    }else {
-      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName;
-      for(var i = 0;i < propertyPrefixesLength;i++) {
-        var propertyNamePrefix = propertyPrefixes[i];
-        vendorName = propertyNamePrefix + upperFirstName;
-        if(vendorName in documentElementStyle) {
-          vendorInfos[name] = {propertyName:vendorName, propertyNamePrefix:propertyNamePrefix}
-        }
-      }
-      vendorInfos[name] = vendorInfos[name] || null
-    }
-    return vendorInfos[name]
-  }
-  S.Feature = {isMsPointerSupported:function() {
-    return isMsPointerSupported
-  }, isPointerSupported:function() {
-    return isPointerSupported
-  }, isTouchEventSupported:function() {
-    return isTouchEventSupportedState
-  }, isTouchGestureSupported:function() {
-    return isTouchEventSupportedState || isPointerSupported || isMsPointerSupported
-  }, isDeviceMotionSupported:function() {
-    return!!win.DeviceMotionEvent
-  }, isHashChangeSupported:function() {
-    return"onhashchange" in win && (!ie || ie > 7)
-  }, isInputEventSupported:function() {
-    return!Config.simulateInputEvent && "oninput" in win && (!ie || ie > 9)
-  }, isTransform3dSupported:function() {
-    if(isTransform3dSupported !== undefined) {
-      return isTransform3dSupported
-    }
-    if(!documentElement || !getVendorInfo("transform")) {
-      isTransform3dSupported = false
-    }else {
-      var el = doc.createElement("p");
-      var transformProperty = getVendorInfo("transform").name;
-      documentElement.insertBefore(el, documentElement.firstChild);
-      el.style[transformProperty] = "translate3d(1px,1px,1px)";
-      var computedStyle = win.getComputedStyle(el);
-      var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-      documentElement.removeChild(el);
-      isTransform3dSupported = has3d !== undefined && has3d.length > 0 && has3d !== "none"
-    }
-    return isTransform3dSupported
-  }, isClassListSupported:function() {
-    return isClassListSupportedState
-  }, isQuerySelectorSupported:function() {
-    return!Config.simulateCss3Selector && isQuerySelectorSupportedState
-  }, getCssVendorInfo:function(name) {
-    return getVendorInfo(name)
-  }};
-  return S.Feature
-});
-
+KISSY.add("feature",["util","ua"],function(g,o){function l(a){-1!==a.indexOf("-")&&(a=g.camelCase(a));if(a in f)return f[a];if(!j||a in j)f[a]={propertyName:a,propertyNamePrefix:""};else{for(var e=a.charAt(0).toUpperCase()+a.slice(1),b,d=0;d<u;d++){var c=p[d];b=c+e;b in j&&(f[a]={propertyName:b,propertyNamePrefix:c})}f[a]=f[a]||null}return f[a]}o("util");var d=g.Env.host,q=g.Config,c=o("ua"),p=["Webkit","Moz","O","ms"],u=p.length,k=d.document||{},m,n,h,b=k&&k.documentElement,j,r=!0,s=!1,t="ontouchstart"in
+k&&!c.phantomjs,f={},i=c.ieMode;b&&(b.querySelector&&8!==i&&(s=!0),j=b.style,r="classList"in b,c=d.navigator||{},m="msPointerEnabled"in c,n="pointerEnabled"in c);g.Feature={isMsPointerSupported:function(){return m},isPointerSupported:function(){return n},isTouchEventSupported:function(){return t},isTouchGestureSupported:function(){return t||n||m},isDeviceMotionSupported:function(){return!!d.DeviceMotionEvent},isHashChangeSupported:function(){return"onhashchange"in d&&(!i||i>7)},isInputEventSupported:function(){return!q.simulateInputEvent&&
+"oninput"in d&&(!i||i>9)},isTransform3dSupported:function(){if(h!==void 0)return h;if(!b||!l("transform"))h=false;else{var a=k.createElement("p"),e=l("transform").name;b.insertBefore(a,b.firstChild);a.style[e]="translate3d(1px,1px,1px)";var c=d.getComputedStyle(a),e=c.getPropertyValue(e)||c[e];b.removeChild(a);h=e!==void 0&&e.length>0&&e!=="none"}return h},isClassListSupported:function(){return r},isQuerySelectorSupported:function(){return!q.simulateCss3Selector&&s},getCssVendorInfo:function(a){return l(a)}};
+return g.Feature});

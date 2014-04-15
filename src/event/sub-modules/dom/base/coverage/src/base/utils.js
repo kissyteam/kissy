@@ -269,27 +269,27 @@ if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData['29'] = [];
   _$jscoverage['/base/utils.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/base/utils.js'].branchData['29'][1].init(21, 14, 'el.detachEvent');
+_$jscoverage['/base/utils.js'].branchData['29'][1].init(22, 14, 'el.detachEvent');
 function visit208_29_1(result) {
   _$jscoverage['/base/utils.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['24'][1].init(21, 22, 'el.removeEventListener');
+}_$jscoverage['/base/utils.js'].branchData['24'][1].init(22, 22, 'el.removeEventListener');
 function visit207_24_1(result) {
   _$jscoverage['/base/utils.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['22'][1].init(502, 30, 'doc && doc.removeEventListener');
+}_$jscoverage['/base/utils.js'].branchData['22'][1].init(515, 30, 'doc && doc.removeEventListener');
 function visit206_22_1(result) {
   _$jscoverage['/base/utils.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['18'][1].init(21, 14, 'el.attachEvent');
+}_$jscoverage['/base/utils.js'].branchData['18'][1].init(22, 14, 'el.attachEvent');
 function visit205_18_1(result) {
   _$jscoverage['/base/utils.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['13'][1].init(21, 19, 'el.addEventListener');
+}_$jscoverage['/base/utils.js'].branchData['13'][1].init(22, 19, 'el.addEventListener');
 function visit204_13_1(result) {
   _$jscoverage['/base/utils.js'].branchData['13'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['11'][1].init(101, 27, 'doc && doc.addEventListener');
+}_$jscoverage['/base/utils.js'].branchData['11'][1].init(103, 27, 'doc && doc.addEventListener');
 function visit203_11_1(result) {
   _$jscoverage['/base/utils.js'].branchData['11'][1].ranCondition(result);
   return result;

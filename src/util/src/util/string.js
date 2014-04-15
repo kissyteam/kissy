@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
+    var undef;
     var logger = S.getLogger('s/util');
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
@@ -20,7 +21,7 @@ KISSY.add(function (S, undefined) {
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // If the type of val is null, undefined, number, string, boolean, return TRUE.
+        // If the type of val is null, undef, number, string, boolean, return TRUE.
         return val == null || (t !== 'object' && t !== 'function');
     }
 
@@ -37,7 +38,7 @@ KISSY.add(function (S, undefined) {
          *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
          *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
          *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         *     {foo: undef, bar: 2}    // -> 'foo=undef&bar=2'
          *     {foo: TRUE, bar: 2}    // -> 'foo=TRUE&bar=2'
          *
          * @param {Object} o json data
@@ -50,7 +51,7 @@ KISSY.add(function (S, undefined) {
         param: function (o, sep, eq, serializeArray) {
             sep = sep || SEP;
             eq = eq || EQ;
-            if (serializeArray === undefined) {
+            if (serializeArray === undef) {
                 serializeArray = TRUE;
             }
             var buf = [], key, i, v, len, val,
@@ -63,7 +64,7 @@ KISSY.add(function (S, undefined) {
                 // val is valid non-array value
                 if (isValidParamValue(val)) {
                     buf.push(key);
-                    if (val !== undefined) {
+                    if (val !== undef) {
                         buf.push(eq, encode(val + EMPTY));
                     }
                     buf.push(sep);
@@ -73,7 +74,7 @@ KISSY.add(function (S, undefined) {
                         v = val[i];
                         if (isValidParamValue(v)) {
                             buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                            if (v !== undefined) {
+                            if (v !== undef) {
                                 buf.push(eq, encode(v + EMPTY));
                             }
                             buf.push(sep);
@@ -119,7 +120,7 @@ KISSY.add(function (S, undefined) {
                 eqIndex = pairs[i].indexOf(eq);
                 if (eqIndex === -1) {
                     key = decode(pairs[i]);
-                    val = undefined;
+                    val = undef;
                 } else {
                     // remember to decode key!
                     key = decode(pairs[i].substring(0, eqIndex));
@@ -208,7 +209,7 @@ KISSY.add(function (S, undefined) {
         },
         /**
          * Substitutes keywords in a string using an object/array.
-         * Removes undefined keywords and ignores escaped keywords.
+         * Removes undef keywords and ignores escaped keywords.
          * @param {String} str template string
          * @param {Object} o json data
          * @member KISSY
@@ -223,7 +224,7 @@ KISSY.add(function (S, undefined) {
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
-                return (o[name] === undefined) ? EMPTY : o[name];
+                return (o[name] === undef) ? EMPTY : o[name];
             });
         },
 

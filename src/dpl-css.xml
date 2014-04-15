@@ -3,6 +3,7 @@
         <copy todir="${component.src.dir.tmp}">
             <fileset dir="${component.work.dir}"
                      includes="assets/**/dpl.css"/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
         </copy>
     </target>
 </project>

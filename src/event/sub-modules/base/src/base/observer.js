@@ -3,7 +3,8 @@
  * observer for event.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
+    var undef;
 
     /**
      * KISSY 's base observer for handle user-specified function
@@ -91,7 +92,7 @@ KISSY.add(function (S, undefined) {
 
             // handler's group does not match specified groups (at fire step)
             if (_ksGroups && (!self.groups || !(self.groups.match(_ksGroups)))) {
-                return undefined;
+                return undef;
             }
 
             return self.notifyInternal(event, ce);

@@ -415,115 +415,115 @@ if (! _$jscoverage['/base/dom-event.js'].branchData) {
   _$jscoverage['/base/dom-event.js'].branchData['331'][1] = new BranchData();
   _$jscoverage['/base/dom-event.js'].branchData['331'][2] = new BranchData();
 }
-_$jscoverage['/base/dom-event.js'].branchData['331'][2].init(300, 36, 'srcData === DomEventUtils.data(dest)');
+_$jscoverage['/base/dom-event.js'].branchData['331'][2].init(307, 36, 'srcData === DomEventUtils.data(dest)');
 function visit28_331_2(result) {
   _$jscoverage['/base/dom-event.js'].branchData['331'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['331'][1].init(289, 47, 'srcData && srcData === DomEventUtils.data(dest)');
+}_$jscoverage['/base/dom-event.js'].branchData['331'][1].init(296, 47, 'srcData && srcData === DomEventUtils.data(dest)');
 function visit27_331_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['331'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['327'][1].init(97, 83, '!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))');
+}_$jscoverage['/base/dom-event.js'].branchData['327'][1].init(100, 83, '!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))');
 function visit26_327_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['327'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['292'][3].init(124, 15, 'r !== undefined');
+}_$jscoverage['/base/dom-event.js'].branchData['292'][3].init(126, 15, 'r !== undefined');
 function visit25_292_3(result) {
   _$jscoverage['/base/dom-event.js'].branchData['292'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['292'][2].init(107, 13, 'ret !== false');
+}_$jscoverage['/base/dom-event.js'].branchData['292'][2].init(109, 13, 'ret !== false');
 function visit24_292_2(result) {
   _$jscoverage['/base/dom-event.js'].branchData['292'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['292'][1].init(107, 32, 'ret !== false && r !== undefined');
+}_$jscoverage['/base/dom-event.js'].branchData['292'][1].init(109, 32, 'ret !== false && r !== undefined');
 function visit23_292_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['292'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['290'][1].init(542, 18, 'domEventObservable');
+}_$jscoverage['/base/dom-event.js'].branchData['290'][1].init(553, 18, 'domEventObservable');
 function visit22_290_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['284'][1].init(260, 36, '!onlyHandlers && !domEventObservable');
+}_$jscoverage['/base/dom-event.js'].branchData['284'][1].init(265, 36, '!onlyHandlers && !domEventObservable');
 function visit21_284_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['284'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['279'][1].init(676, 6, 'i >= 0');
+}_$jscoverage['/base/dom-event.js'].branchData['279'][1].init(700, 6, 'i >= 0');
 function visit20_279_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['272'][1].init(468, 14, 's && s.typeFix');
+}_$jscoverage['/base/dom-event.js'].branchData['272'][1].init(485, 14, 's && s.typeFix');
 function visit19_272_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['247'][1].init(100, 15, 'eventData || {}');
+}_$jscoverage['/base/dom-event.js'].branchData['247'][1].init(103, 15, 'eventData || {}');
 function visit18_247_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['247'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['187'][1].init(123, 6, 'j >= 0');
+}_$jscoverage['/base/dom-event.js'].branchData['187'][1].init(125, 6, 'j >= 0');
 function visit17_187_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['185'][1].init(152, 34, 'cfg.deep && t.getElementsByTagName');
+}_$jscoverage['/base/dom-event.js'].branchData['185'][1].init(156, 34, 'cfg.deep && t.getElementsByTagName');
 function visit16_185_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['181'][1].init(266, 6, 'i >= 0');
+}_$jscoverage['/base/dom-event.js'].branchData['181'][1].init(276, 6, 'i >= 0');
 function visit15_181_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['181'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['144'][1].init(156, 6, 'i >= 0');
+}_$jscoverage['/base/dom-event.js'].branchData['144'][1].init(159, 6, 'i >= 0');
 function visit14_144_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['113'][1].init(659, 11, 'customEvent');
+}_$jscoverage['/base/dom-event.js'].branchData['113'][1].init(684, 11, 'customEvent');
 function visit13_113_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['104'][1].init(440, 5, '!type');
+}_$jscoverage['/base/dom-event.js'].branchData['104'][1].init(456, 5, '!type');
 function visit12_104_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['99'][1].init(306, 50, '!domEventObservablesHolder || !domEventObservables');
+}_$jscoverage['/base/dom-event.js'].branchData['99'][1].init(317, 50, '!domEventObservablesHolder || !domEventObservables');
 function visit11_99_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['97'][1].init(130, 31, 'domEventObservablesHolder || {}');
+}_$jscoverage['/base/dom-event.js'].branchData['97'][1].init(131, 31, 'domEventObservablesHolder || {}');
 function visit10_97_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['74'][1].init(1650, 19, '!domEventObservable');
+}_$jscoverage['/base/dom-event.js'].branchData['74'][1].init(1692, 19, '!domEventObservable');
 function visit9_74_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['67'][1].init(1360, 62, '!(domEventObservables = domEventObservablesHolder.observables)');
+}_$jscoverage['/base/dom-event.js'].branchData['67'][1].init(1395, 62, '!(domEventObservables = domEventObservablesHolder.observables)');
 function visit8_67_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['57'][1].init(579, 18, 'domEventObservable');
+}_$jscoverage['/base/dom-event.js'].branchData['57'][1].init(591, 18, 'domEventObservable');
 function visit7_57_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['53'][1].init(65, 28, 'typeof KISSY === \'undefined\'');
+}_$jscoverage['/base/dom-event.js'].branchData['53'][1].init(66, 28, 'typeof KISSY === \'undefined\'');
 function visit6_53_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['52'][2].init(305, 42, 'DomEventObservable.triggeredEvent === type');
+}_$jscoverage['/base/dom-event.js'].branchData['52'][2].init(312, 42, 'DomEventObservable.triggeredEvent === type');
 function visit5_52_2(result) {
   _$jscoverage['/base/dom-event.js'].branchData['52'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['52'][1].init(305, 94, 'DomEventObservable.triggeredEvent === type || typeof KISSY === \'undefined\'');
+}_$jscoverage['/base/dom-event.js'].branchData['52'][1].init(312, 95, 'DomEventObservable.triggeredEvent === type || typeof KISSY === \'undefined\'');
 function visit4_52_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['44'][1].init(324, 44, '!(handle = domEventObservablesHolder.handle)');
+}_$jscoverage['/base/dom-event.js'].branchData['44'][1].init(336, 44, '!(handle = domEventObservablesHolder.handle)');
 function visit3_44_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['22'][1].init(174, 42, '!cfg.originalType && (typeFix = s.typeFix)');
+}_$jscoverage['/base/dom-event.js'].branchData['22'][1].init(180, 42, '!cfg.originalType && (typeFix = s.typeFix)');
 function visit2_22_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['17'][1].init(17, 19, 'Special[type] || {}');
+}_$jscoverage['/base/dom-event.js'].branchData['17'][1].init(18, 19, 'Special[type] || {}');
 function visit1_17_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['17'][1].ranCondition(result);
   return result;

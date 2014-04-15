@@ -18,7 +18,7 @@
             <fileset dir="assets" includes="**/*"/>
         </copy>
 
-        <concat destfile="${component.src.dir.tmp}/cool/editor-pkg.css"
+        <concat destfile="${component.src.dir.tmp}/cool/editor-pkg-debug.css"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir.tmp}/editor-common.css"/>
             <fileset dir="${component.src.dir.tmp}/cool" includes="**/*.css"/>
@@ -27,24 +27,24 @@
         <smartsprites cssfilesuffix="-sprite"
                       spritepngie6="true"
                       loglevel="info">
-            <fileset file="${component.src.dir.tmp}/cool/editor-pkg.css"/>
+            <fileset file="${component.src.dir.tmp}/cool/editor-pkg-debug.css"/>
         </smartsprites>
 
-        <copy tofile="${component.src.dir.tmp}/cool/editor.css">
-            <path location="${component.src.dir.tmp}/cool/editor-pkg-sprite.css"/>
+        <copy tofile="${component.src.dir.tmp}/cool/editor-debug.css">
+            <path location="${component.src.dir.tmp}/cool/editor-pkg-debug-sprite.css"/>
         </copy>
 
         <replace token="./cool.png"
-                 file="${component.src.dir.tmp}/cool/editor.css"
+                 file="${component.src.dir.tmp}/cool/editor-debug.css"
                  value="http://g.tbcdn.cn/kissy/k/${cdn.version}/editor/theme/cool/cool.png"
                  encoding="${charset}"/>
 
         <replace token="./cool-ie6.png"
-                 file="${component.src.dir.tmp}/cool/editor.css"
+                 file="${component.src.dir.tmp}/cool/editor-debug.css"
                  value="http://g.tbcdn.cn/kissy/k/${cdn.version}/editor/theme/cool/cool-ie6.png"
                  encoding="${charset}"/>
 
         <delete dir="${component.src.dir.tmp}/cool/"
-                excludes="editor.css,editor-pkg-sprite.css,cool.png,cool-ie6.png,text-bg.png"></delete>
+                excludes="editor-debug.css,editor-pkg-debug-sprite.css,cool.png,cool-ie6.png,text-bg.png"></delete>
     </target>
 </project>

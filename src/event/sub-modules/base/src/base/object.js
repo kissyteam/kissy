@@ -3,12 +3,12 @@
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
     var returnFalse = function () {
         return false;
     }, returnTrue = function () {
         return true;
-    };
+    }, undef;
 
     /**
      * @class KISSY.Event.Object
@@ -25,13 +25,13 @@ KISSY.add(function (S, undefined) {
          * @property target
          * @member KISSY.Event.Object
          */
-        self.target = undefined;
+        self.target = undef;
         /**
          * currentTarget
          * @property currentTarget
          * @member KISSY.Event.Object
          */
-        self.currentTarget = undefined;
+        self.currentTarget = undef;
         /**
          * current event type
          * @property type

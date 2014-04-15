@@ -221,10 +221,10 @@
          * create modules info
          * @param {String[]} modNames to be created module names
          */
-        createModulesInfo: function (modNames) {
+        getOrCreateModulesInfo: function (modNames) {
             var ret = [];
             Utils.each(modNames, function (m, i) {
-                ret[i] = Utils.createModuleInfo(m);
+                ret[i] = Utils.getOrCreateModuleInfo(m);
             });
             return ret;
         },
@@ -235,7 +235,7 @@
          * @param {Object} [cfg] module config
          * @return {KISSY.Loader.Module}
          */
-        createModuleInfo: function (modName, cfg) {
+        getOrCreateModuleInfo: function (modName, cfg) {
             modName = addIndexAndRemoveJsExtFromName(modName);
 
             var mods = Env.mods,
@@ -386,7 +386,7 @@
         unalias: function (modNames) {
             var ret = [];
             for (var i = 0; i < modNames.length; i++) {
-                var mod = Utils.createModuleInfo(modNames[i]);
+                var mod = Utils.getOrCreateModuleInfo(modNames[i]);
                 ret.push.apply(ret, mod.getNormalizedAlias());
             }
             return ret;
@@ -436,7 +436,7 @@
             }
 
             // 没有 use，静态载入的 add 可能执行
-            Utils.createModuleInfo(name);
+            Utils.getOrCreateModuleInfo(name);
 
             module = mods[name];
 

@@ -3,9 +3,10 @@
  * @ignore
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
     var logger = S.getLogger('s/web');
     var win = S.Env.host,
+        undef,
         doc = win.document || {},
         docElem = doc.documentElement,
         location = win.location,
@@ -71,7 +72,7 @@ KISSY.add(function (S, undefined) {
             } catch (e) {
                 logger.error('parseXML error :');
                 logger.error(e);
-                xml = undefined;
+                xml = undef;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
                 S.error('Invalid XML: ' + data);

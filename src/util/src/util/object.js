@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
+    var undef;
     var logger = S.getLogger('s/util');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
@@ -71,7 +72,7 @@ KISSY.add(function (S, undefined) {
                     i = 0,
                     length = object && object.length,
                 // do not use typeof obj == 'function': bug in phantomjs
-                    isObj = length === undefined || toString.call(object) === '[object Function]';
+                    isObj = length === undef || toString.call(object) === '[object Function]';
 
                 context = context || null;
 
@@ -118,7 +119,7 @@ KISSY.add(function (S, undefined) {
          */
         isEmptyObject: function (o) {
             for (var p in o) {
-                if (p !== undefined) {
+                if (p !== undef) {
                     return false;
                 }
             }
@@ -142,7 +143,7 @@ KISSY.add(function (S, undefined) {
                     guid = o[marker] = S.guid(marker);
                 }
                 catch (e) {
-                    guid = undefined;
+                    guid = undef;
                 }
             }
             return guid;
@@ -182,11 +183,11 @@ KISSY.add(function (S, undefined) {
             if (wl && (typeof wl !== 'function')) {
                 var originalWl = wl;
                 wl = function (name, val) {
-                    return S.inArray(name, originalWl) ? val : undefined;
+                    return S.inArray(name, originalWl) ? val : undef;
                 };
             }
 
-            if (ov === undefined) {
+            if (ov === undef) {
                 ov = TRUE;
             }
 
@@ -242,11 +243,11 @@ KISSY.add(function (S, undefined) {
 
             if (!S.isArray(wl)) {
                 ov = wl;
-                wl = undefined;
+                wl = undef;
                 len++;
             }
             if (typeof ov !== 'boolean') {
-                ov = undefined;
+                ov = undef;
                 len++;
             }
 
@@ -388,7 +389,7 @@ KISSY.add(function (S, undefined) {
     }
 
     function removeConstructor(k, v) {
-        return k === 'constructor' ? undefined : v;
+        return k === 'constructor' ? undef : v;
     }
 
     function _mix(p, r, s, ov, wl, deep, cache) {
@@ -400,8 +401,8 @@ KISSY.add(function (S, undefined) {
                 src = s[p];
             // prevent never-end loop
             if (target === src) {
-                // S.mix({},{x:undefined})
-                if (target === undefined) {
+                // S.mix({},{x:undef})
+                if (target === undef) {
                     r[p] = target;
                 }
                 return;
@@ -422,7 +423,7 @@ KISSY.add(function (S, undefined) {
                     r[p] = clone;
                     mixInternal(clone, src, ov, wl, TRUE, cache);
                 }
-            } else if (src !== undefined && (ov || !(p in r))) {
+            } else if (src !== undef && (ov || !(p in r))) {
                 r[p] = src;
             }
         }

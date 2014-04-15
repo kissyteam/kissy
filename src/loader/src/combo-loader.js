@@ -300,7 +300,7 @@
                 if (cache[m]) {
                     continue;
                 }
-                mod = Utils.createModuleInfo(m);
+                mod = Utils.getOrCreateModuleInfo(m);
                 modStatus = mod.status;
                 if (modStatus === Status.ERROR) {
                     errorList.push(mod);

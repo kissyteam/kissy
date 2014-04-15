@@ -4,8 +4,9 @@
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add(function (S, undefined) {
+KISSY.add(function (S) {
     var TRUE = true,
+        undef,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
@@ -26,7 +27,7 @@ KISSY.add(function (S, undefined) {
          */
         indexOf: indexOf ?
             function (item, arr, fromIndex) {
-                return fromIndex === undefined ?
+                return fromIndex === undef ?
                     indexOf.call(arr, item) :
                     indexOf.call(arr, item, fromIndex);
             } :
@@ -51,12 +52,12 @@ KISSY.add(function (S, undefined) {
          */
         lastIndexOf: (lastIndexOf) ?
             function (item, arr, fromIndex) {
-                return fromIndex === undefined ?
+                return fromIndex === undef ?
                     lastIndexOf.call(arr, item) :
                     lastIndexOf.call(arr, item, fromIndex);
             } :
             function (item, arr, fromIndex) {
-                if (fromIndex === undefined) {
+                if (fromIndex === undef) {
                     fromIndex = arr.length - 1;
                 }
                 for (var i = fromIndex; i >= 0; i--) {
@@ -210,7 +211,7 @@ KISSY.add(function (S, undefined) {
 
             while (k < len) {
                 if (k in arr) {
-                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                    accumulator = callback.call(undef, accumulator, arr[k], k, arr);
                 }
                 k++;
             }

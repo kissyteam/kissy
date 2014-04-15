@@ -19,7 +19,7 @@
             success = success.success;
         }
 
-        if (S.endsWith(url, '.css')) {
+        if (Utils.endsWith(url, '.css')) {
             S.log('node js can not load css: ' + url, 'warn');
             if (success) {
                 success();

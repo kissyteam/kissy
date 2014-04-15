@@ -303,63 +303,63 @@ if (! _$jscoverage['/ie/traversal.js'].branchData) {
   _$jscoverage['/ie/traversal.js'].branchData['66'] = [];
   _$jscoverage['/ie/traversal.js'].branchData['66'][1] = new BranchData();
 }
-_$jscoverage['/ie/traversal.js'].branchData['66'][1].init(21, 33, 'getAttr(children[i], \'id\') === id');
+_$jscoverage['/ie/traversal.js'].branchData['66'][1].init(22, 33, 'getAttr(children[i], \'id\') === id');
 function visit131_66_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['65'][1].init(109, 5, 'i < l');
+}_$jscoverage['/ie/traversal.js'].branchData['65'][1].init(111, 5, 'i < l');
 function visit130_65_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['63'][2].init(60, 24, 'getAttr(el, \'id\') !== id');
+}_$jscoverage['/ie/traversal.js'].branchData['63'][2].init(62, 24, 'getAttr(el, \'id\') !== id');
 function visit129_63_2(result) {
   _$jscoverage['/ie/traversal.js'].branchData['63'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['63'][1].init(54, 30, 'el && getAttr(el, \'id\') !== id');
+}_$jscoverage['/ie/traversal.js'].branchData['63'][1].init(56, 30, 'el && getAttr(el, \'id\') !== id');
 function visit128_63_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['43'][2].init(41, 17, 'el.nodeType === 1');
+}_$jscoverage['/ie/traversal.js'].branchData['43'][2].init(42, 17, 'el.nodeType === 1');
 function visit127_43_2(result) {
   _$jscoverage['/ie/traversal.js'].branchData['43'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['43'][1].init(25, 33, '!needsFilter || el.nodeType === 1');
+}_$jscoverage['/ie/traversal.js'].branchData['43'][1].init(26, 33, '!needsFilter || el.nodeType === 1');
 function visit126_43_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['38'][2].init(171, 32, 'typeof nodes.length !== \'number\'');
+}_$jscoverage['/ie/traversal.js'].branchData['38'][2].init(175, 32, 'typeof nodes.length !== \'number\'');
 function visit125_38_2(result) {
   _$jscoverage['/ie/traversal.js'].branchData['38'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['38'][1].init(156, 47, 'needsFilter || typeof nodes.length !== \'number\'');
+}_$jscoverage['/ie/traversal.js'].branchData['38'][1].init(160, 47, 'needsFilter || typeof nodes.length !== \'number\'');
 function visit124_38_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['36'][1].init(77, 12, 'name === \'*\'');
+}_$jscoverage['/ie/traversal.js'].branchData['36'][1].init(78, 12, 'name === \'*\'');
 function visit123_36_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['33'][1].init(715, 36, 'div.getElementsByTagName(\'*\').length');
+}_$jscoverage['/ie/traversal.js'].branchData['33'][1].init(742, 36, 'div.getElementsByTagName(\'*\').length');
 function visit122_33_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['22'][1].init(20, 27, 'a.contains && a.contains(b)');
+}_$jscoverage['/ie/traversal.js'].branchData['22'][1].init(21, 27, 'a.contains && a.contains(b)');
 function visit121_22_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['21'][2].init(355, 40, 'b.nodeType === Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/ie/traversal.js'].branchData['21'][2].init(368, 40, 'b.nodeType === Dom.NodeType.ELEMENT_NODE');
 function visit120_21_2(result) {
   _$jscoverage['/ie/traversal.js'].branchData['21'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['21'][1].init(350, 45, 'b && b.nodeType === Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/ie/traversal.js'].branchData['21'][1].init(363, 45, 'b && b.nodeType === Dom.NodeType.ELEMENT_NODE');
 function visit119_21_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['16'][1].init(233, 7, 'a === b');
+}_$jscoverage['/ie/traversal.js'].branchData['16'][1].init(241, 7, 'a === b');
 function visit118_16_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/traversal.js'].branchData['9'][1].init(13, 41, 'a.nodeType === Dom.NodeType.DOCUMENT_NODE');
+}_$jscoverage['/ie/traversal.js'].branchData['9'][1].init(14, 41, 'a.nodeType === Dom.NodeType.DOCUMENT_NODE');
 function visit117_9_1(result) {
   _$jscoverage['/ie/traversal.js'].branchData['9'][1].ranCondition(result);
   return result;

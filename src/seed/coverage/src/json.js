@@ -275,35 +275,35 @@ if (! _$jscoverage['/json.js'].branchData) {
   _$jscoverage['/json.js'].branchData['42'] = [];
   _$jscoverage['/json.js'].branchData['42'][1] = new BranchData();
 }
-_$jscoverage['/json.js'].branchData['42'][1].init(59, 177, 'INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, \'@\').replace(INVALID_TOKENS_REG, \']\').replace(INVALID_BRACES_REG, \'\'))');
+_$jscoverage['/json.js'].branchData['42'][1].init(61, 179, 'INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, \'@\').replace(INVALID_TOKENS_REG, \']\').replace(INVALID_BRACES_REG, \'\'))');
 function visit8_42_1(result) {
   _$jscoverage['/json.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['40'][1].init(84, 4, 'data');
+}_$jscoverage['/json.js'].branchData['40'][1].init(87, 4, 'data');
 function visit7_40_1(result) {
   _$jscoverage['/json.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['37'][1].init(93, 24, 'typeof data === \'string\'');
+}_$jscoverage['/json.js'].branchData['37'][1].init(97, 24, 'typeof data === \'string\'');
 function visit6_37_1(result) {
   _$jscoverage['/json.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['34'][1].init(17, 13, 'data === null');
+}_$jscoverage['/json.js'].branchData['34'][1].init(18, 13, 'data === null');
 function visit5_34_1(result) {
   _$jscoverage['/json.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['18'][1].init(281, 10, 'nativeJson');
+}_$jscoverage['/json.js'].branchData['18'][1].init(293, 10, 'nativeJson');
 function visit4_18_1(result) {
   _$jscoverage['/json.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['14'][1].init(222, 13, 'UA.ieMode < 9');
+}_$jscoverage['/json.js'].branchData['14'][1].init(230, 13, 'UA.ieMode < 9');
 function visit3_14_1(result) {
   _$jscoverage['/json.js'].branchData['14'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['11'][2].init(117, 26, 'typeof global === \'object\'');
+}_$jscoverage['/json.js'].branchData['11'][2].init(121, 26, 'typeof global === \'object\'');
 function visit2_11_2(result) {
   _$jscoverage['/json.js'].branchData['11'][2].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['11'][1].init(104, 39, 'UA.nodejs && typeof global === \'object\'');
+}_$jscoverage['/json.js'].branchData['11'][1].init(108, 39, 'UA.nodejs && typeof global === \'object\'');
 function visit1_11_1(result) {
   _$jscoverage['/json.js'].branchData['11'][1].ranCondition(result);
   return result;
