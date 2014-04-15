@@ -601,231 +601,231 @@ if (! _$jscoverage['/editor/clipboard.js'].branchData) {
   _$jscoverage['/editor/clipboard.js'].branchData['508'] = [];
   _$jscoverage['/editor/clipboard.js'].branchData['508'][1] = new BranchData();
 }
-_$jscoverage['/editor/clipboard.js'].branchData['508'][1].init(102, 5, 'c.set');
+_$jscoverage['/editor/clipboard.js'].branchData['508'][1].init(104, 5, 'c.set');
 function visit57_508_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['508'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['506'][1].init(301, 24, 'clipboardCommands[value]');
+}_$jscoverage['/editor/clipboard.js'].branchData['506'][1].init(310, 24, 'clipboardCommands[value]');
 function visit56_506_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['506'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['500'][1].init(101, 5, 'c.get');
+}_$jscoverage['/editor/clipboard.js'].branchData['500'][1].init(104, 5, 'c.get');
 function visit55_500_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['500'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['497'][1].init(1430, 6, 'i >= 0');
+}_$jscoverage['/editor/clipboard.js'].branchData['497'][1].init(1463, 6, 'i >= 0');
 function visit54_497_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['497'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['479'][1].init(88, 24, 'clipboardCommands[value]');
+}_$jscoverage['/editor/clipboard.js'].branchData['479'][1].init(90, 24, 'clipboardCommands[value]');
 function visit53_479_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['479'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['470'][1].init(102, 32, 'i < clipboardCommandsList.length');
+}_$jscoverage['/editor/clipboard.js'].branchData['470'][1].init(105, 32, 'i < clipboardCommandsList.length');
 function visit52_470_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['470'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['467'][1].init(94, 22, '!contextmenu.__copyFix');
+}_$jscoverage['/editor/clipboard.js'].branchData['467'][1].init(97, 22, '!contextmenu.__copyFix');
 function visit51_467_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['467'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['435'][1].init(194, 1, '0');
+}_$jscoverage['/editor/clipboard.js'].branchData['435'][1].init(202, 1, '0');
 function visit50_435_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['435'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['413'][1].init(856, 30, '!htmlMode && isPlainText(html)');
+}_$jscoverage['/editor/clipboard.js'].branchData['413'][1].init(873, 30, '!htmlMode && isPlainText(html)');
 function visit49_413_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['413'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['406'][1].init(415, 59, 'html.indexOf(\'<br class="Apple-interchange-newline">\') > -1');
+}_$jscoverage['/editor/clipboard.js'].branchData['406'][1].init(422, 59, 'html.indexOf(\'<br class="Apple-interchange-newline">\') > -1');
 function visit48_406_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['406'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['399'][1].init(123, 29, 'html.indexOf(\'Apple-\') !== -1');
+}_$jscoverage['/editor/clipboard.js'].branchData['399'][1].init(126, 29, 'html.indexOf(\'Apple-\') !== -1');
 function visit47_399_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['399'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['387'][1].init(200, 29, 'html.indexOf(\'<br><br>\') > -1');
+}_$jscoverage['/editor/clipboard.js'].branchData['387'][1].init(206, 29, 'html.indexOf(\'<br><br>\') > -1');
 function visit46_387_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['387'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['384'][1].init(99, 8, 'UA.gecko');
+}_$jscoverage['/editor/clipboard.js'].branchData['384'][1].init(102, 8, 'UA.gecko');
 function visit45_384_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['384'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['381'][1].init(1008, 20, 'UA.gecko || UA.opera');
+}_$jscoverage['/editor/clipboard.js'].branchData['381'][1].init(1036, 20, 'UA.gecko || UA.opera');
 function visit44_381_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['381'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['376'][1].init(497, 26, 'html.match(/<\\/div><div>/)');
+}_$jscoverage['/editor/clipboard.js'].branchData['376'][1].init(509, 26, 'html.match(/<\\/div><div>/)');
 function visit43_376_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['376'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['366'][1].init(80, 35, 'html.match(/<div>(?:<br>)?<\\/div>/)');
+}_$jscoverage['/editor/clipboard.js'].branchData['366'][1].init(82, 35, 'html.match(/<div>(?:<br>)?<\\/div>/)');
 function visit42_366_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['366'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['364'][2].init(258, 26, 'html.indexOf(\'<div>\') > -1');
+}_$jscoverage['/editor/clipboard.js'].branchData['364'][2].init(269, 26, 'html.indexOf(\'<div>\') > -1');
 function visit41_364_2(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['364'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['364'][1].init(245, 39, 'UA.webkit && html.indexOf(\'<div>\') > -1');
+}_$jscoverage['/editor/clipboard.js'].branchData['364'][1].init(256, 39, 'UA.webkit && html.indexOf(\'<div>\') > -1');
 function visit40_364_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['364'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['359'][1].init(154, 20, 'html.match(/^[^<]$/)');
+}_$jscoverage['/editor/clipboard.js'].branchData['359'][1].init(160, 20, 'html.match(/^[^<]$/)');
 function visit39_359_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['359'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['342'][1].init(46, 38, '!html.match(/^([^<]|<br( ?\\/)?>)*$/gi)');
+}_$jscoverage['/editor/clipboard.js'].branchData['342'][1].init(48, 38, '!html.match(/^([^<]|<br( ?\\/)?>)*$/gi)');
 function visit38_342_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['342'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['340'][1].init(555, 20, 'UA.gecko || UA.opera');
+}_$jscoverage['/editor/clipboard.js'].branchData['340'][1].init(566, 20, 'UA.gecko || UA.opera');
 function visit37_340_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['340'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['337'][1].init(117, 98, '!html.match(/^([^<]|<br( ?\\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\\/)?>)*<\\/p>|(\\r\\n))*$/gi)');
+}_$jscoverage['/editor/clipboard.js'].branchData['337'][1].init(119, 98, '!html.match(/^([^<]|<br( ?\\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\\/)?>)*<\\/p>|(\\r\\n))*$/gi)');
 function visit36_337_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['337'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['335'][1].init(268, 5, 'UA.ie');
+}_$jscoverage['/editor/clipboard.js'].branchData['335'][1].init(274, 5, 'UA.ie');
 function visit35_335_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['335'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['332'][1].init(89, 90, '!html.match(/^[^<]*$/g) && !html.match(/^(<div><br( ?\\/)?><\\/div>|<div>[^<]*<\\/div>)*$/gi)');
+}_$jscoverage['/editor/clipboard.js'].branchData['332'][1].init(91, 90, '!html.match(/^[^<]*$/g) && !html.match(/^(<div><br( ?\\/)?><\\/div>|<div>[^<]*<\\/div>)*$/gi)');
 function visit34_332_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['332'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['330'][1].init(13, 9, 'UA.webkit');
+}_$jscoverage['/editor/clipboard.js'].branchData['330'][1].init(14, 9, 'UA.webkit');
 function visit33_330_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['330'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['321'][1].init(62, 16, 'control.parent()');
+}_$jscoverage['/editor/clipboard.js'].branchData['321'][1].init(64, 16, 'control.parent()');
 function visit32_321_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['321'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['309'][2].init(127, 39, 'sel.getType() === KES.SELECTION_ELEMENT');
+}_$jscoverage['/editor/clipboard.js'].branchData['309'][2].init(131, 39, 'sel.getType() === KES.SELECTION_ELEMENT');
 function visit31_309_2(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['309'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['309'][1].init(127, 92, '(sel.getType() === KES.SELECTION_ELEMENT) && (control = sel.getSelectedElement())');
+}_$jscoverage['/editor/clipboard.js'].branchData['309'][1].init(131, 93, '(sel.getType() === KES.SELECTION_ELEMENT) && (control = sel.getSelectedElement())');
 function visit30_309_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['275'][1].init(571, 13, 'UA.ieMode > 7');
+}_$jscoverage['/editor/clipboard.js'].branchData['275'][1].init(586, 13, 'UA.ieMode > 7');
 function visit29_275_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['275'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['246'][1].init(1300, 61, '/(class="?Mso|style="[^"]*\\bmso\\-|w:WordDocument)/.test(html)');
+}_$jscoverage['/editor/clipboard.js'].branchData['246'][1].init(1340, 61, '/(class="?Mso|style="[^"]*\\bmso\\-|w:WordDocument)/.test(html)');
 function visit28_246_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['246'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['242'][1].init(1167, 16, 're !== undefined');
+}_$jscoverage['/editor/clipboard.js'].branchData['242'][1].init(1203, 16, 're !== undefined');
 function visit27_242_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['238'][1].init(1084, 12, 're === false');
+}_$jscoverage['/editor/clipboard.js'].branchData['238'][1].init(1116, 12, 're === false');
 function visit26_238_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['224'][1].init(668, 26, '!(html = cleanPaste(html))');
+}_$jscoverage['/editor/clipboard.js'].branchData['224'][1].init(686, 26, '!(html = cleanPaste(html))');
 function visit25_224_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['214'][2].init(14, 93, '(bogusSpan = pasteBin.first()) && (bogusSpan.hasClass(\'Apple-style-span\'))');
+}_$jscoverage['/editor/clipboard.js'].branchData['214'][2].init(14, 94, '(bogusSpan = pasteBin.first()) && (bogusSpan.hasClass(\'Apple-style-span\'))');
 function visit24_214_2(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['214'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['214'][1].init(-1, 107, 'UA.webkit && (bogusSpan = pasteBin.first()) && (bogusSpan.hasClass(\'Apple-style-span\'))');
+}_$jscoverage['/editor/clipboard.js'].branchData['214'][1].init(-1, 108, 'UA.webkit && (bogusSpan = pasteBin.first()) && (bogusSpan.hasClass(\'Apple-style-span\'))');
 function visit23_214_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['179'][1].init(987, 9, 'UA.webkit');
+}_$jscoverage['/editor/clipboard.js'].branchData['179'][1].init(1015, 9, 'UA.webkit');
 function visit22_179_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['163'][1].init(376, 34, 'doc.getElementById(\'ke-paste-bin\')');
+}_$jscoverage['/editor/clipboard.js'].branchData['163'][1].init(388, 34, 'doc.getElementById(\'ke-paste-bin\')');
 function visit21_163_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['152'][1].init(17, 26, 'this._isPreventBeforePaste');
+}_$jscoverage['/editor/clipboard.js'].branchData['152'][1].init(18, 26, 'this._isPreventBeforePaste');
 function visit20_152_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['138'][1].init(84, 20, 'self._isPreventPaste');
+}_$jscoverage['/editor/clipboard.js'].branchData['138'][1].init(87, 20, 'self._isPreventPaste');
 function visit19_138_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['123'][1].init(46, 23, 'self._preventPasteTimer');
+}_$jscoverage['/editor/clipboard.js'].branchData['123'][1].init(48, 23, 'self._preventPasteTimer');
 function visit18_123_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['115'][3].init(204, 19, 'ranges.length === 1');
+}_$jscoverage['/editor/clipboard.js'].branchData['115'][3].init(208, 19, 'ranges.length === 1');
 function visit17_115_3(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['115'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['115'][2].init(204, 44, 'ranges.length === 1 && ranges[0].collapsed');
+}_$jscoverage['/editor/clipboard.js'].branchData['115'][2].init(208, 44, 'ranges.length === 1 && ranges[0].collapsed');
 function visit16_115_2(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['115'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['115'][1].init(192, 57, 'ranges && !(ranges.length === 1 && ranges[0].collapsed)');
+}_$jscoverage['/editor/clipboard.js'].branchData['115'][1].init(196, 57, 'ranges && !(ranges.length === 1 && ranges[0].collapsed)');
 function visit15_115_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['114'][1].init(61, 22, 'sel && sel.getRanges()');
+}_$jscoverage['/editor/clipboard.js'].branchData['114'][1].init(62, 22, 'sel && sel.getRanges()');
 function visit14_114_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['101'][1].init(106, 19, 'command === \'paste\'');
+}_$jscoverage['/editor/clipboard.js'].branchData['101'][1].init(111, 19, 'command === \'paste\'');
 function visit13_101_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['91'][2].init(308, 16, 'e.keyCode === 45');
+}_$jscoverage['/editor/clipboard.js'].branchData['91'][2].init(317, 16, 'e.keyCode === 45');
 function visit12_91_2(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['91'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['91'][1].init(80, 30, 'e.shiftKey && e.keyCode === 45');
+}_$jscoverage['/editor/clipboard.js'].branchData['91'][1].init(82, 30, 'e.shiftKey && e.keyCode === 45');
 function visit11_91_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['89'][3].init(224, 16, 'e.keyCode === 86');
+}_$jscoverage['/editor/clipboard.js'].branchData['89'][3].init(231, 16, 'e.keyCode === 86');
 function visit10_89_3(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['89'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['89'][2].init(211, 29, 'e.ctrlKey && e.keyCode === 86');
+}_$jscoverage['/editor/clipboard.js'].branchData['89'][2].init(218, 29, 'e.ctrlKey && e.keyCode === 86');
 function visit9_89_2(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['89'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['89'][1].init(211, 111, 'e.ctrlKey && e.keyCode === 86 || e.shiftKey && e.keyCode === 45');
+}_$jscoverage['/editor/clipboard.js'].branchData['89'][1].init(218, 113, 'e.ctrlKey && e.keyCode === 86 || e.shiftKey && e.keyCode === 45');
 function visit8_89_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['85'][1].init(84, 47, 'editor.get(\'mode\') !== Editor.Mode.WYSIWYG_MODE');
+}_$jscoverage['/editor/clipboard.js'].branchData['85'][1].init(87, 47, 'editor.get(\'mode\') !== Editor.Mode.WYSIWYG_MODE');
 function visit7_85_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['66'][1].init(1800, 6, 'OLD_IE');
+}_$jscoverage['/editor/clipboard.js'].branchData['66'][1].init(1841, 6, 'OLD_IE');
 function visit6_66_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['52'][1].init(711, 32, '!tryToCutCopyPaste(editor, type)');
+}_$jscoverage['/editor/clipboard.js'].branchData['52'][1].init(725, 32, '!tryToCutCopyPaste(editor, type)');
 function visit5_52_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['42'][1].init(139, 16, 'type === \'paste\'');
+}_$jscoverage['/editor/clipboard.js'].branchData['42'][1].init(142, 16, 'type === \'paste\'');
 function visit4_42_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['40'][1].init(33, 14, 'type === \'cut\'');
+}_$jscoverage['/editor/clipboard.js'].branchData['40'][1].init(34, 14, 'type === \'cut\'');
 function visit3_40_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['39'][1].init(29, 6, 'OLD_IE');
+}_$jscoverage['/editor/clipboard.js'].branchData['39'][1].init(30, 6, 'OLD_IE');
 function visit2_39_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['14'][1].init(53, 14, 'UA.ieMode < 11');
+}_$jscoverage['/editor/clipboard.js'].branchData['14'][1].init(55, 14, 'UA.ieMode < 11');
 function visit1_14_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['14'][1].ranCondition(result);
   return result;

@@ -1095,347 +1095,347 @@ if (! _$jscoverage['/word-filter.js'].branchData) {
   _$jscoverage['/word-filter.js'].branchData['1196'] = [];
   _$jscoverage['/word-filter.js'].branchData['1196'][1] = new BranchData();
 }
-_$jscoverage['/word-filter.js'].branchData['1196'][1].init(790, 8, 'UA.gecko');
+_$jscoverage['/word-filter.js'].branchData['1196'][1].init(807, 8, 'UA.gecko');
 function visit187_1196_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1165'][1].init(561, 6, 'imgSrc');
+}_$jscoverage['/word-filter.js'].branchData['1165'][1].init(569, 6, 'imgSrc');
 function visit186_1165_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1162'][1].init(410, 29, 'imgSrcInfo && imgSrcInfo[1]');
+}_$jscoverage['/word-filter.js'].branchData['1162'][1].init(414, 29, 'imgSrcInfo && imgSrcInfo[1]');
 function visit185_1162_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1161'][1].init(281, 90, 'previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=[\'\'](.*?)[\'\']/)');
+}_$jscoverage['/word-filter.js'].branchData['1161'][1].init(284, 90, 'previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=[\'\'](.*?)[\'\']/)');
 function visit184_1161_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1157'][1].init(713, 21, 'UA.gecko && imageInfo');
+}_$jscoverage['/word-filter.js'].branchData['1157'][1].init(726, 21, 'UA.gecko && imageInfo');
 function visit183_1157_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1152'][1].init(95, 60, 'listSymbol && listSymbol.match(/>(?:[(]?)([^\\s]+?)([.)]?)</)');
+}_$jscoverage['/word-filter.js'].branchData['1152'][1].init(96, 60, 'listSymbol && listSymbol.match(/>(?:[(]?)([^\\s]+?)([.)]?)</)');
 function visit182_1152_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1151'][2].init(136, 17, 'imageInfo && \'l.\'');
+}_$jscoverage['/word-filter.js'].branchData['1151'][2].init(138, 17, 'imageInfo && \'l.\'');
 function visit181_1151_2(result) {
   _$jscoverage['/word-filter.js'].branchData['1151'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1151'][1].init(117, 38, 'listInfo[1] || (imageInfo && \'l.\')');
+}_$jscoverage['/word-filter.js'].branchData['1151'][1].init(119, 38, 'listInfo[1] || (imageInfo && \'l.\')');
 function visit180_1151_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1151'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1149'][1].init(235, 8, 'listInfo');
+}_$jscoverage['/word-filter.js'].branchData['1149'][1].init(240, 8, 'listInfo');
 function visit179_1149_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1118'][1].init(25, 37, 'element.nodeName in dtd.$tableContent');
+}_$jscoverage['/word-filter.js'].branchData['1118'][1].init(26, 37, 'element.nodeName in dtd.$tableContent');
 function visit178_1118_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1112'][1].init(25, 37, 'element.nodeName in dtd.$tableContent');
+}_$jscoverage['/word-filter.js'].branchData['1112'][1].init(26, 37, 'element.nodeName in dtd.$tableContent');
 function visit177_1112_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1103'][1].init(33, 54, 'element.nodeName in {\n  table: 1, \n  td: 1, \n  th: 1, \n  img: 1}');
+}_$jscoverage['/word-filter.js'].branchData['1103'][1].init(34, 54, 'element.nodeName in {\n  table: 1, \n  td: 1, \n  th: 1, \n  img: 1}');
 function visit176_1103_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1096'][1].init(33, 26, 'element.nodeName === \'img\'');
+}_$jscoverage['/word-filter.js'].branchData['1096'][1].init(34, 26, 'element.nodeName === \'img\'');
 function visit175_1096_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1096'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1083'][1].init(524, 38, 'value && !emptyMarginRegex.test(value)');
+}_$jscoverage['/word-filter.js'].branchData['1083'][1].init(535, 38, 'value && !emptyMarginRegex.test(value)');
 function visit174_1083_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1083'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1079'][1].init(389, 24, 'name !== indentStyleName');
+}_$jscoverage['/word-filter.js'].branchData['1079'][1].init(396, 24, 'name !== indentStyleName');
 function visit173_1079_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1079'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1076'][1].init(179, 17, 'name === \'margin\'');
+}_$jscoverage['/word-filter.js'].branchData['1076'][1].init(183, 17, 'name === \'margin\'');
 function visit172_1076_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1076'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1072'][1].init(29, 36, 'element.nodeName in {\n  p: 1, \n  div: 1}');
+}_$jscoverage['/word-filter.js'].branchData['1072'][1].init(30, 36, 'element.nodeName in {\n  p: 1, \n  div: 1}');
 function visit171_1072_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1072'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1047'][1].init(25, 27, 'getAncestor(element, /h\\d/)');
+}_$jscoverage['/word-filter.js'].branchData['1047'][1].init(26, 27, 'getAncestor(element, /h\\d/)');
 function visit170_1047_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1047'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1042'][2].init(224, 40, 'href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
+}_$jscoverage['/word-filter.js'].branchData['1042'][2].init(228, 40, 'href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
 function visit169_1042_2(result) {
   _$jscoverage['/word-filter.js'].branchData['1042'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1042'][1].init(211, 53, 'UA.webkit && href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
+}_$jscoverage['/word-filter.js'].branchData['1042'][1].init(215, 53, 'UA.webkit && href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
 function visit168_1042_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1042'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1040'][1].init(55, 70, '!(href = element.getAttribute(\'href\')) && element.getAttribute(\'name\')');
+}_$jscoverage['/word-filter.js'].branchData['1040'][1].init(57, 70, '!(href = element.getAttribute(\'href\')) && element.getAttribute(\'name\')');
 function visit167_1040_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1040'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1022'][1].init(2157, 9, 'styleText');
+}_$jscoverage['/word-filter.js'].branchData['1022'][1].init(2197, 9, 'styleText');
 function visit166_1022_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1022'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1009'][1].init(462, 119, 'ancestor && (/ mso-hide:\\s*all|display:\\s*none /).test(ancestor.getAttribute(\'style\'))');
+}_$jscoverage['/word-filter.js'].branchData['1009'][1].init(468, 120, 'ancestor && (/ mso-hide:\\s*all|display:\\s*none /).test(ancestor.getAttribute(\'style\'))');
 function visit165_1009_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1009'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1003'][1].init(418, 8, 'listType');
+}_$jscoverage['/word-filter.js'].branchData['1003'][1].init(426, 8, 'listType');
 function visit164_1003_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1003'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1001'][1].init(111, 60, 'listSymbol && listSymbol.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
+}_$jscoverage['/word-filter.js'].branchData['1001'][1].init(112, 60, 'listSymbol && listSymbol.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
 function visit163_1001_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1001'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1000'][2].init(252, 32, 'listSymbolNode.nodeValue || \'l.\'');
+}_$jscoverage['/word-filter.js'].branchData['1000'][2].init(257, 32, 'listSymbolNode.nodeValue || \'l.\'');
 function visit162_1000_2(result) {
   _$jscoverage['/word-filter.js'].branchData['1000'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1000'][1].init(232, 54, 'listSymbolNode && (listSymbolNode.nodeValue || \'l.\')');
+}_$jscoverage['/word-filter.js'].branchData['1000'][1].init(237, 54, 'listSymbolNode && (listSymbolNode.nodeValue || \'l.\')');
 function visit161_1000_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1000'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['997'][2].init(54, 23, 'node.nodeName === \'img\'');
+}_$jscoverage['/word-filter.js'].branchData['997'][2].init(55, 23, 'node.nodeName === \'img\'');
 function visit160_997_2(result) {
   _$jscoverage['/word-filter.js'].branchData['997'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['997'][1].init(36, 41, 'node.nodeValue || node.nodeName === \'img\'');
+}_$jscoverage['/word-filter.js'].branchData['997'][1].init(37, 41, 'node.nodeValue || node.nodeName === \'img\'');
 function visit159_997_1(result) {
   _$jscoverage['/word-filter.js'].branchData['997'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['995'][1].init(607, 30, 'isListBulletIndicator(element)');
+}_$jscoverage['/word-filter.js'].branchData['995'][1].init(620, 30, 'isListBulletIndicator(element)');
 function visit158_995_1(result) {
   _$jscoverage['/word-filter.js'].branchData['995'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['988'][1].init(274, 33, 'containsNothingButSpaces(element)');
+}_$jscoverage['/word-filter.js'].branchData['988'][1].init(280, 33, 'containsNothingButSpaces(element)');
 function visit157_988_1(result) {
   _$jscoverage['/word-filter.js'].branchData['988'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['984'][1].init(99, 41, 'isListBulletIndicator(element.parentNode)');
+}_$jscoverage['/word-filter.js'].branchData['984'][1].init(101, 41, 'isListBulletIndicator(element.parentNode)');
 function visit156_984_1(result) {
   _$jscoverage['/word-filter.js'].branchData['984'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['974'][1].init(58, 8, 'size < 3');
+}_$jscoverage['/word-filter.js'].branchData['974'][1].init(59, 8, 'size < 3');
 function visit155_974_1(result) {
   _$jscoverage['/word-filter.js'].branchData['974'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['973'][1].init(47, 8, 'size > 3');
+}_$jscoverage['/word-filter.js'].branchData['973'][1].init(48, 8, 'size > 3');
 function visit154_973_1(result) {
   _$jscoverage['/word-filter.js'].branchData['973'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['971'][1].init(969, 4, 'size');
+}_$jscoverage['/word-filter.js'].branchData['971'][1].init(985, 4, 'size');
 function visit153_971_1(result) {
   _$jscoverage['/word-filter.js'].branchData['971'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['964'][1].init(517, 28, 'element.getAttribute(\'face\')');
+}_$jscoverage['/word-filter.js'].branchData['964'][1].init(526, 28, 'element.getAttribute(\'face\')');
 function visit152_964_1(result) {
   _$jscoverage['/word-filter.js'].branchData['964'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['959'][1].init(33, 43, 'element.getAttribute(\'color\') !== \'#000000\'');
+}_$jscoverage['/word-filter.js'].branchData['959'][1].init(34, 43, 'element.getAttribute(\'color\') !== \'#000000\'');
 function visit151_959_1(result) {
   _$jscoverage['/word-filter.js'].branchData['959'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['958'][1].init(166, 29, 'element.getAttribute(\'color\')');
+}_$jscoverage['/word-filter.js'].branchData['958'][1].init(169, 29, 'element.getAttribute(\'color\')');
 function visit150_958_1(result) {
   _$jscoverage['/word-filter.js'].branchData['958'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['956'][1].init(37, 15, 'styleText || \'\'');
+}_$jscoverage['/word-filter.js'].branchData['956'][1].init(38, 15, 'styleText || \'\'');
 function visit149_956_1(result) {
   _$jscoverage['/word-filter.js'].branchData['956'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['949'][1].init(198, 9, 'styleText');
+}_$jscoverage['/word-filter.js'].branchData['949'][1].init(202, 9, 'styleText');
 function visit148_949_1(result) {
   _$jscoverage['/word-filter.js'].branchData['949'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['944'][1].init(443, 22, '\'font\' === parent.name');
+}_$jscoverage['/word-filter.js'].branchData['944'][1].init(455, 22, '\'font\' === parent.name');
 function visit147_944_1(result) {
   _$jscoverage['/word-filter.js'].branchData['944'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['934'][1].init(101, 41, 'isListBulletIndicator(element.parentNode)');
+}_$jscoverage['/word-filter.js'].branchData['934'][1].init(103, 41, 'isListBulletIndicator(element.parentNode)');
 function visit146_934_1(result) {
   _$jscoverage['/word-filter.js'].branchData['934'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['921'][1].init(82, 29, 'getAncestor(element, \'thead\')');
+}_$jscoverage['/word-filter.js'].branchData['921'][1].init(84, 29, 'getAncestor(element, \'thead\')');
 function visit145_921_1(result) {
   _$jscoverage['/word-filter.js'].branchData['921'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['908'][1].init(248, 29, 'element.getAttribute(\'style\')');
+}_$jscoverage['/word-filter.js'].branchData['908'][1].init(255, 29, 'element.getAttribute(\'style\')');
 function visit144_908_1(result) {
   _$jscoverage['/word-filter.js'].branchData['908'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['901'][2].init(393, 32, 'singleChild.nodeName === \'table\'');
+}_$jscoverage['/word-filter.js'].branchData['901'][2].init(398, 32, 'singleChild.nodeName === \'table\'');
 function visit143_901_2(result) {
   _$jscoverage['/word-filter.js'].branchData['901'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['901'][1].init(378, 47, 'singleChild && singleChild.nodeName === \'table\'');
+}_$jscoverage['/word-filter.js'].branchData['901'][1].init(383, 47, 'singleChild && singleChild.nodeName === \'table\'');
 function visit142_901_1(result) {
   _$jscoverage['/word-filter.js'].branchData['901'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['886'][1].init(312, 39, 'bullet && !bullet.getAttribute(\'style\')');
+}_$jscoverage['/word-filter.js'].branchData['886'][1].init(317, 39, 'bullet && !bullet.getAttribute(\'style\')');
 function visit141_886_1(result) {
   _$jscoverage['/word-filter.js'].branchData['886'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['885'][1].init(247, 35, 'bulletText && bulletText.parentNode');
+}_$jscoverage['/word-filter.js'].branchData['885'][1].init(251, 35, 'bulletText && bulletText.parentNode');
 function visit140_885_1(result) {
   _$jscoverage['/word-filter.js'].branchData['885'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['883'][2].init(36, 19, 'node.nodeType === 3');
+}_$jscoverage['/word-filter.js'].branchData['883'][2].init(37, 19, 'node.nodeType === 3');
 function visit139_883_2(result) {
   _$jscoverage['/word-filter.js'].branchData['883'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['883'][1].init(36, 65, 'node.nodeType === 3 && !containsNothingButSpaces(node.parentNode)');
+}_$jscoverage['/word-filter.js'].branchData['883'][1].init(37, 65, 'node.nodeType === 3 && !containsNothingButSpaces(node.parentNode)');
 function visit138_883_1(result) {
   _$jscoverage['/word-filter.js'].branchData['883'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['881'][1].init(257, 54, '/MsoListParagraph/.exec(element.getAttribute(\'class\'))');
+}_$jscoverage['/word-filter.js'].branchData['881'][1].init(261, 54, '/MsoListParagraph/.exec(element.getAttribute(\'class\'))');
 function visit137_881_1(result) {
   _$jscoverage['/word-filter.js'].branchData['881'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['867'][1].init(347, 5, 'style');
+}_$jscoverage['/word-filter.js'].branchData['867'][1].init(353, 5, 'style');
 function visit136_867_1(result) {
   _$jscoverage['/word-filter.js'].branchData['867'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['863'][1].init(100, 25, 'typeof style === \'object\'');
+}_$jscoverage['/word-filter.js'].branchData['863'][1].init(102, 25, 'typeof style === \'object\'');
 function visit135_863_1(result) {
   _$jscoverage['/word-filter.js'].branchData['863'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['861'][1].init(241, 13, 'name in rules');
+}_$jscoverage['/word-filter.js'].branchData['861'][1].init(245, 13, 'name in rules');
 function visit134_861_1(result) {
   _$jscoverage['/word-filter.js'].branchData['861'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['848'][1].init(704, 9, 'className');
+}_$jscoverage['/word-filter.js'].branchData['848'][1].init(716, 9, 'className');
 function visit133_848_1(result) {
   _$jscoverage['/word-filter.js'].branchData['848'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['845'][1].init(506, 17, '!rules[tagName]');
+}_$jscoverage['/word-filter.js'].branchData['845'][1].init(515, 17, '!rules[tagName]');
 function visit132_845_1(result) {
   _$jscoverage['/word-filter.js'].branchData['845'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['841'][1].init(311, 28, 'className.match(/MsoNormal/)');
+}_$jscoverage['/word-filter.js'].branchData['841'][1].init(316, 28, 'className.match(/MsoNormal/)');
 function visit131_841_1(result) {
   _$jscoverage['/word-filter.js'].branchData['841'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['837'][1].init(59, 14, 'tagName || \'*\'');
+}_$jscoverage['/word-filter.js'].branchData['837'][1].init(60, 14, 'tagName || \'*\'');
 function visit130_837_1(result) {
   _$jscoverage['/word-filter.js'].branchData['837'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['831'][1].init(190, 10, 'i < length');
+}_$jscoverage['/word-filter.js'].branchData['831'][1].init(193, 10, 'i < length');
 function visit129_831_1(result) {
   _$jscoverage['/word-filter.js'].branchData['831'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['822'][1].init(411, 12, 'styleDefText');
+}_$jscoverage['/word-filter.js'].branchData['822'][1].init(418, 12, 'styleDefText');
 function visit128_822_1(result) {
   _$jscoverage['/word-filter.js'].branchData['822'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['819'][1].init(178, 39, 'styleDefSection && styleDefSection[1]');
+}_$jscoverage['/word-filter.js'].branchData['819'][1].init(180, 39, 'styleDefSection && styleDefSection[1]');
 function visit127_819_1(result) {
   _$jscoverage['/word-filter.js'].branchData['819'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['815'][1].init(25, 8, 'UA.gecko');
+}_$jscoverage['/word-filter.js'].branchData['815'][1].init(26, 8, 'UA.gecko');
 function visit126_815_1(result) {
   _$jscoverage['/word-filter.js'].branchData['815'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['805'][1].init(2097, 25, 'tagName in listDtdParents');
+}_$jscoverage['/word-filter.js'].branchData['805'][1].init(2142, 25, 'tagName in listDtdParents');
 function visit125_805_1(result) {
   _$jscoverage['/word-filter.js'].branchData['805'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['795'][1].init(104, 4, 'href');
+}_$jscoverage['/word-filter.js'].branchData['795'][1].init(106, 4, 'href');
 function visit124_795_1(result) {
   _$jscoverage['/word-filter.js'].branchData['795'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['793'][1].init(141, 25, 'tagName === \'v:imagedata\'');
+}_$jscoverage['/word-filter.js'].branchData['793'][1].init(145, 25, 'tagName === \'v:imagedata\'');
 function visit123_793_1(result) {
   _$jscoverage['/word-filter.js'].branchData['793'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['789'][3].init(1412, 28, 'tagName.indexOf(\'ke\') === -1');
+}_$jscoverage['/word-filter.js'].branchData['789'][3].init(1441, 28, 'tagName.indexOf(\'ke\') === -1');
 function visit122_789_3(result) {
   _$jscoverage['/word-filter.js'].branchData['789'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['789'][2].init(1381, 27, 'tagName.indexOf(\':\') !== -1');
+}_$jscoverage['/word-filter.js'].branchData['789'][2].init(1410, 27, 'tagName.indexOf(\':\') !== -1');
 function visit121_789_2(result) {
   _$jscoverage['/word-filter.js'].branchData['789'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['789'][1].init(1381, 59, 'tagName.indexOf(\':\') !== -1 && tagName.indexOf(\'ke\') === -1');
+}_$jscoverage['/word-filter.js'].branchData['789'][1].init(1410, 59, 'tagName.indexOf(\':\') !== -1 && tagName.indexOf(\'ke\') === -1');
 function visit120_789_1(result) {
   _$jscoverage['/word-filter.js'].branchData['789'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['783'][1].init(79, 33, 'containsNothingButSpaces(element)');
+}_$jscoverage['/word-filter.js'].branchData['783'][1].init(81, 33, 'containsNothingButSpaces(element)');
 function visit119_783_1(result) {
   _$jscoverage['/word-filter.js'].branchData['783'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['781'][1].init(980, 22, 'tagName in dtd.$inline');
+}_$jscoverage['/word-filter.js'].branchData['781'][1].init(1001, 22, 'tagName in dtd.$inline');
 function visit118_781_1(result) {
   _$jscoverage['/word-filter.js'].branchData['781'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['776'][1].init(143, 24, 'resolveListItem(element)');
+}_$jscoverage['/word-filter.js'].branchData['776'][1].init(146, 24, 'resolveListItem(element)');
 function visit117_776_1(result) {
   _$jscoverage['/word-filter.js'].branchData['776'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['773'][1].init(593, 20, 'tagName.match(/h\\d/)');
+}_$jscoverage['/word-filter.js'].branchData['773'][1].init(606, 20, 'tagName.match(/h\\d/)');
 function visit116_773_1(result) {
   _$jscoverage['/word-filter.js'].branchData['773'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['765'][1].init(212, 53, 'tagName in blockLike && element.getAttribute(\'style\')');
+}_$jscoverage['/word-filter.js'].branchData['765'][1].init(217, 53, 'tagName in blockLike && element.getAttribute(\'style\')');
 function visit115_765_1(result) {
   _$jscoverage['/word-filter.js'].branchData['765'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['761'][1].init(35, 22, 'element.nodeName || \'\'');
+}_$jscoverage['/word-filter.js'].branchData['761'][1].init(36, 22, 'element.nodeName || \'\'');
 function visit114_761_1(result) {
   _$jscoverage['/word-filter.js'].branchData['761'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['755'][1].init(139, 59, 'UA.gecko && (applyStyleFilter = filters.applyStyleFilter)');
+}_$jscoverage['/word-filter.js'].branchData['755'][1].init(142, 59, 'UA.gecko && (applyStyleFilter = filters.applyStyleFilter)');
 function visit113_755_1(result) {
   _$jscoverage['/word-filter.js'].branchData['755'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['711'][1].init(162, 9, 'i < count');
+}_$jscoverage['/word-filter.js'].branchData['711'][1].init(166, 9, 'i < count');
 function visit112_711_1(result) {
   _$jscoverage['/word-filter.js'].branchData['711'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['684'][1].init(2689, 34, '!element.getAttribute(\'ke:indent\')');
+}_$jscoverage['/word-filter.js'].branchData['684'][1].init(2738, 34, '!element.getAttribute(\'ke:indent\')');
 function visit111_684_1(result) {
   _$jscoverage['/word-filter.js'].branchData['684'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['669'][1].init(41, 25, 'listId !== previousListId');
+}_$jscoverage['/word-filter.js'].branchData['669'][1].init(42, 25, 'listId !== previousListId');
 function visit110_669_1(result) {
   _$jscoverage['/word-filter.js'].branchData['669'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['668'][1].init(244, 12, 'indent === 1');
+}_$jscoverage['/word-filter.js'].branchData['668'][1].init(249, 12, 'indent === 1');
 function visit109_668_1(result) {
   _$jscoverage['/word-filter.js'].branchData['668'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['658'][2].init(34, 100, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1)');
+}_$jscoverage['/word-filter.js'].branchData['658'][2].init(34, 101, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1)');
 function visit108_658_2(result) {
   _$jscoverage['/word-filter.js'].branchData['658'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['658'][1].init(71, 105, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1) || 1');
+}_$jscoverage['/word-filter.js'].branchData['658'][1].init(72, 106, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1) || 1');
 function visit107_658_1(result) {
   _$jscoverage['/word-filter.js'].branchData['658'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['657'][1].init(727, 14, 'listBaseIndent');
+}_$jscoverage['/word-filter.js'].branchData['657'][1].init(739, 14, 'listBaseIndent');
 function visit106_657_1(result) {
   _$jscoverage['/word-filter.js'].branchData['657'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['652'][1].init(70, 31, 'margin > previousListItemMargin');
+}_$jscoverage['/word-filter.js'].branchData['652'][1].init(71, 31, 'margin > previousListItemMargin');
 function visit105_652_1(result) {
   _$jscoverage['/word-filter.js'].branchData['652'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['651'][3].init(399, 31, 'previousListItemMargin !== null');
+}_$jscoverage['/word-filter.js'].branchData['651'][3].init(405, 31, 'previousListItemMargin !== null');
 function visit104_651_3(result) {
   _$jscoverage['/word-filter.js'].branchData['651'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['651'][2].init(399, 102, 'previousListItemMargin !== null && margin > previousListItemMargin');
+}_$jscoverage['/word-filter.js'].branchData['651'][2].init(405, 103, 'previousListItemMargin !== null && margin > previousListItemMargin');
 function visit103_651_2(result) {
   _$jscoverage['/word-filter.js'].branchData['651'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['651'][1].init(380, 121, '!listBaseIndent && previousListItemMargin !== null && margin > previousListItemMargin');
+}_$jscoverage['/word-filter.js'].branchData['651'][1].init(386, 122, '!listBaseIndent && previousListItemMargin !== null && margin > previousListItemMargin');
 function visit102_651_1(result) {
   _$jscoverage['/word-filter.js'].branchData['651'][1].ranCondition(result);
   return result;
@@ -1443,123 +1443,123 @@ function visit102_651_1(result) {
 function visit101_648_2(result) {
   _$jscoverage['/word-filter.js'].branchData['648'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['648'][1].init(190, 42, 'values[3] || values[1] || values[0]');
+}_$jscoverage['/word-filter.js'].branchData['648'][1].init(193, 42, 'values[3] || values[1] || values[0]');
 function visit100_648_1(result) {
   _$jscoverage['/word-filter.js'].branchData['648'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['638'][1].init(67, 29, 'element.getAttribute(\'style\')');
+}_$jscoverage['/word-filter.js'].branchData['638'][1].init(70, 29, 'element.getAttribute(\'style\')');
 function visit99_638_1(result) {
   _$jscoverage['/word-filter.js'].branchData['638'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['635'][1].init(82, 53, 'listMarker.length && (listMarker = listMarker[0])');
+}_$jscoverage['/word-filter.js'].branchData['635'][1].init(83, 53, 'listMarker.length && (listMarker = listMarker[0])');
 function visit98_635_1(result) {
   _$jscoverage['/word-filter.js'].branchData['635'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['634'][1].init(101, 136, '(listMarker = removeAnyChildWithName(element, \'ke:listbullet\')) && listMarker.length && (listMarker = listMarker[0])');
+}_$jscoverage['/word-filter.js'].branchData['634'][1].init(105, 137, '(listMarker = removeAnyChildWithName(element, \'ke:listbullet\')) && listMarker.length && (listMarker = listMarker[0])');
 function visit97_634_1(result) {
   _$jscoverage['/word-filter.js'].branchData['634'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['627'][1].init(46, 74, '(text = onlyChild(element)) && (/^(:?\\s|&nbsp;)+$/).test(text.nodeValue)');
+}_$jscoverage['/word-filter.js'].branchData['627'][1].init(48, 74, '(text = onlyChild(element)) && (/^(:?\\s|&nbsp;)+$/).test(text.nodeValue)');
 function visit96_627_1(result) {
   _$jscoverage['/word-filter.js'].branchData['627'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['620'][1].init(76, 40, '/mso-list\\s*:\\s*Ignore/i.test(styleText)');
+}_$jscoverage['/word-filter.js'].branchData['620'][1].init(78, 40, '/mso-list\\s*:\\s*Ignore/i.test(styleText)');
 function visit95_620_1(result) {
   _$jscoverage['/word-filter.js'].branchData['620'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['598'][1].init(87, 5, 'style');
+}_$jscoverage['/word-filter.js'].branchData['598'][1].init(90, 5, 'style');
 function visit94_598_1(result) {
   _$jscoverage['/word-filter.js'].branchData['598'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['595'][1].init(25, 9, 'i < count');
+}_$jscoverage['/word-filter.js'].branchData['595'][1].init(26, 9, 'i < count');
 function visit93_595_1(result) {
   _$jscoverage['/word-filter.js'].branchData['595'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['594'][1].init(959, 10, 'mergeStyle');
+}_$jscoverage['/word-filter.js'].branchData['594'][1].init(993, 10, 'mergeStyle');
 function visit92_594_1(result) {
   _$jscoverage['/word-filter.js'].branchData['594'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['584'][2].init(21, 25, 'match[1] === mergeStyle');
+}_$jscoverage['/word-filter.js'].branchData['584'][2].init(22, 25, 'match[1] === mergeStyle');
 function visit91_584_2(result) {
   _$jscoverage['/word-filter.js'].branchData['584'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['584'][1].init(21, 40, 'match[1] === mergeStyle || !mergeStyle');
+}_$jscoverage['/word-filter.js'].branchData['584'][1].init(22, 40, 'match[1] === mergeStyle || !mergeStyle');
 function visit90_584_1(result) {
   _$jscoverage['/word-filter.js'].branchData['584'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['583'][1].init(284, 5, 'match');
+}_$jscoverage['/word-filter.js'].branchData['583'][1].init(293, 5, 'match');
 function visit89_583_1(result) {
   _$jscoverage['/word-filter.js'].branchData['583'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['577'][2].init(84, 45, 'Number(child.getAttribute(\'value\')) === i + 1');
+}_$jscoverage['/word-filter.js'].branchData['577'][2].init(87, 45, 'Number(child.getAttribute(\'value\')) === i + 1');
 function visit88_577_2(result) {
   _$jscoverage['/word-filter.js'].branchData['577'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['577'][1].init(53, 76, 'child.getAttribute(\'value\') && Number(child.getAttribute(\'value\')) === i + 1');
+}_$jscoverage['/word-filter.js'].branchData['577'][1].init(56, 76, 'child.getAttribute(\'value\') && Number(child.getAttribute(\'value\')) === i + 1');
 function visit87_577_1(result) {
   _$jscoverage['/word-filter.js'].branchData['577'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['574'][1].init(378, 9, 'i < count');
+}_$jscoverage['/word-filter.js'].branchData['574'][1].init(392, 9, 'i < count');
 function visit86_574_1(result) {
   _$jscoverage['/word-filter.js'].branchData['574'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['570'][1].init(271, 48, 'styleTypeRegexp.exec(list.getAttribute(\'style\'))');
+}_$jscoverage['/word-filter.js'].branchData['570'][1].init(281, 48, 'styleTypeRegexp.exec(list.getAttribute(\'style\'))');
 function visit85_570_1(result) {
   _$jscoverage['/word-filter.js'].branchData['570'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['561'][1].init(24, 21, 'list.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['561'][1].init(25, 21, 'list.childNodes || []');
 function visit84_561_1(result) {
   _$jscoverage['/word-filter.js'].branchData['561'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['541'][1].init(2573, 16, 'i < rules.length');
+}_$jscoverage['/word-filter.js'].branchData['541'][1].init(2630, 16, 'i < rules.length');
 function visit83_541_1(result) {
   _$jscoverage['/word-filter.js'].branchData['541'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['535'][1].init(1973, 10, '!whitelist');
+}_$jscoverage['/word-filter.js'].branchData['535'][1].init(2016, 10, '!whitelist');
 function visit82_535_1(result) {
   _$jscoverage['/word-filter.js'].branchData['535'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['526'][1].init(832, 28, 'typeof newValue === \'string\'');
+}_$jscoverage['/word-filter.js'].branchData['526'][1].init(849, 28, 'typeof newValue === \'string\'');
 function visit81_526_1(result) {
   _$jscoverage['/word-filter.js'].branchData['526'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['521'][1].init(596, 25, 'newValue && newValue.push');
+}_$jscoverage['/word-filter.js'].branchData['521'][1].init(608, 25, 'newValue && newValue.push');
 function visit80_521_1(result) {
   _$jscoverage['/word-filter.js'].branchData['521'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['515'][1].init(267, 30, 'typeof newValue === \'function\'');
+}_$jscoverage['/word-filter.js'].branchData['515'][1].init(273, 30, 'typeof newValue === \'function\'');
 function visit79_515_1(result) {
   _$jscoverage['/word-filter.js'].branchData['515'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['512'][1].init(54, 17, 'newValue || value');
+}_$jscoverage['/word-filter.js'].branchData['512'][1].init(55, 17, 'newValue || value');
 function visit78_512_1(result) {
   _$jscoverage['/word-filter.js'].branchData['512'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['511'][1].init(101, 9, 'whitelist');
+}_$jscoverage['/word-filter.js'].branchData['511'][1].init(103, 9, 'whitelist');
 function visit77_511_1(result) {
   _$jscoverage['/word-filter.js'].branchData['511'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['510'][1].init(44, 15, 'newName || name');
+}_$jscoverage['/word-filter.js'].branchData['510'][1].init(45, 15, 'newName || name');
 function visit76_510_1(result) {
   _$jscoverage['/word-filter.js'].branchData['510'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['509'][2].init(317, 42, '!valuePattern || value.match(valuePattern)');
+}_$jscoverage['/word-filter.js'].branchData['509'][2].init(323, 42, '!valuePattern || value.match(valuePattern)');
 function visit75_509_2(result) {
   _$jscoverage['/word-filter.js'].branchData['509'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['509'][1].init(288, 73, 'name.match(namePattern) && (!valuePattern || value.match(valuePattern))');
+}_$jscoverage['/word-filter.js'].branchData['509'][1].init(294, 73, 'name.match(namePattern) && (!valuePattern || value.match(valuePattern))');
 function visit74_509_1(result) {
   _$jscoverage['/word-filter.js'].branchData['509'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['503'][1].init(33, 11, 'styles[i]');
+}_$jscoverage['/word-filter.js'].branchData['503'][1].init(34, 11, 'styles[i]');
 function visit73_503_1(result) {
   _$jscoverage['/word-filter.js'].branchData['503'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['502'][1].init(399, 17, 'i < styles.length');
+}_$jscoverage['/word-filter.js'].branchData['502'][1].init(409, 17, 'i < styles.length');
 function visit72_502_1(result) {
   _$jscoverage['/word-filter.js'].branchData['502'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['494'][1].init(80, 22, 'name === \'font-family\'');
+}_$jscoverage['/word-filter.js'].branchData['494'][1].init(82, 22, 'name === \'font-family\'');
 function visit71_494_1(result) {
   _$jscoverage['/word-filter.js'].branchData['494'][1].ranCondition(result);
   return result;
@@ -1567,279 +1567,279 @@ function visit71_494_1(result) {
 function visit70_489_1(result) {
   _$jscoverage['/word-filter.js'].branchData['489'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['464'][1].init(7648, 22, 'i < openedLists.length');
+}_$jscoverage['/word-filter.js'].branchData['464'][1].init(7805, 22, 'i < openedLists.length');
 function visit69_464_1(result) {
   _$jscoverage['/word-filter.js'].branchData['464'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['459'][3].init(6724, 20, 'child.nodeType === 3');
+}_$jscoverage['/word-filter.js'].branchData['459'][3].init(6858, 20, 'child.nodeType === 3');
 function visit68_459_3(result) {
   _$jscoverage['/word-filter.js'].branchData['459'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['459'][2].init(6724, 48, 'child.nodeType === 3 && !S.trim(child.nodeValue)');
+}_$jscoverage['/word-filter.js'].branchData['459'][2].init(6858, 48, 'child.nodeType === 3 && !S.trim(child.nodeValue)');
 function visit67_459_2(result) {
   _$jscoverage['/word-filter.js'].branchData['459'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['459'][1].init(6714, 59, 'list && !(child.nodeType === 3 && !S.trim(child.nodeValue))');
+}_$jscoverage['/word-filter.js'].branchData['459'][1].init(6848, 59, 'list && !(child.nodeType === 3 && !S.trim(child.nodeValue))');
 function visit66_459_1(result) {
   _$jscoverage['/word-filter.js'].branchData['459'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['445'][1].init(238, 38, 'diff-- && (parent = list.parentNode)');
+}_$jscoverage['/word-filter.js'].branchData['445'][1].init(242, 38, 'diff-- && (parent = list.parentNode)');
 function visit65_445_1(result) {
   _$jscoverage['/word-filter.js'].branchData['445'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['441'][1].init(319, 27, 'listItemIndent < lastIndent');
+}_$jscoverage['/word-filter.js'].branchData['441'][1].init(325, 27, 'listItemIndent < lastIndent');
 function visit64_441_1(result) {
   _$jscoverage['/word-filter.js'].branchData['441'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['436'][1].init(29, 27, 'listItemIndent > lastIndent');
+}_$jscoverage['/word-filter.js'].branchData['436'][1].init(30, 27, 'listItemIndent > lastIndent');
 function visit63_436_1(result) {
   _$jscoverage['/word-filter.js'].branchData['436'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['431'][1].init(5270, 5, '!list');
+}_$jscoverage['/word-filter.js'].branchData['431'][1].init(5373, 5, '!list');
 function visit62_431_1(result) {
   _$jscoverage['/word-filter.js'].branchData['431'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['411'][2].init(4341, 17, 'listType === \'ol\'');
+}_$jscoverage['/word-filter.js'].branchData['411'][2].init(4424, 17, 'listType === \'ol\'');
 function visit61_411_2(result) {
   _$jscoverage['/word-filter.js'].branchData['411'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['411'][1].init(4341, 27, 'listType === \'ol\' && bullet');
+}_$jscoverage['/word-filter.js'].branchData['411'][1].init(4424, 27, 'listType === \'ol\' && bullet');
 function visit60_411_1(result) {
   _$jscoverage['/word-filter.js'].branchData['411'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['406'][3].init(4121, 17, 'listType === \'ol\'');
+}_$jscoverage['/word-filter.js'].branchData['406'][3].init(4199, 17, 'listType === \'ol\'');
 function visit59_406_3(result) {
   _$jscoverage['/word-filter.js'].branchData['406'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['406'][2].init(4101, 60, 'listStyleType !== (listType === \'ol\' ? \'decimal\' : \'disc\')');
+}_$jscoverage['/word-filter.js'].branchData['406'][2].init(4179, 60, 'listStyleType !== (listType === \'ol\' ? \'decimal\' : \'disc\')');
 function visit58_406_2(result) {
   _$jscoverage['/word-filter.js'].branchData['406'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['406'][1].init(4084, 77, 'listStyleType && listStyleType !== (listType === \'ol\' ? \'decimal\' : \'disc\')');
+}_$jscoverage['/word-filter.js'].branchData['406'][1].init(4162, 77, 'listStyleType && listStyleType !== (listType === \'ol\' ? \'decimal\' : \'disc\')');
 function visit57_406_1(result) {
   _$jscoverage['/word-filter.js'].branchData['406'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['405'][2].init(4018, 17, 'listType === \'ol\'');
+}_$jscoverage['/word-filter.js'].branchData['405'][2].init(4095, 17, 'listType === \'ol\'');
 function visit56_405_2(result) {
   _$jscoverage['/word-filter.js'].branchData['405'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['405'][1].init(3999, 59, 'listStyleType || (listType === \'ol\' ? \'decimal\' : \'disc\')');
+}_$jscoverage['/word-filter.js'].branchData['405'][1].init(4076, 59, 'listStyleType || (listType === \'ol\' ? \'decimal\' : \'disc\')');
 function visit55_405_1(result) {
   _$jscoverage['/word-filter.js'].branchData['405'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['399'][1].init(2246, 9, '!listType');
+}_$jscoverage['/word-filter.js'].branchData['399'][1].init(2283, 9, '!listType');
 function visit54_399_1(result) {
   _$jscoverage['/word-filter.js'].branchData['399'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['380'][2].init(193, 17, 'num < itemNumeric');
+}_$jscoverage['/word-filter.js'].branchData['380'][2].init(195, 17, 'num < itemNumeric');
 function visit53_380_2(result) {
   _$jscoverage['/word-filter.js'].branchData['380'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['380'][1].init(177, 33, '!itemNumeric || num < itemNumeric');
+}_$jscoverage['/word-filter.js'].branchData['380'][1].init(179, 33, '!itemNumeric || num < itemNumeric');
 function visit52_380_1(result) {
   _$jscoverage['/word-filter.js'].branchData['380'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['378'][2].init(228, 13, 'type === \'ol\'');
+}_$jscoverage['/word-filter.js'].branchData['378'][2].init(231, 13, 'type === \'ol\'');
 function visit51_378_2(result) {
   _$jscoverage['/word-filter.js'].branchData['378'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['378'][1].init(228, 46, 'type === \'ol\' && (/alpha|roman/).test(style)');
+}_$jscoverage['/word-filter.js'].branchData['378'][1].init(231, 46, 'type === \'ol\' && (/alpha|roman/).test(style)');
 function visit50_378_1(result) {
   _$jscoverage['/word-filter.js'].branchData['378'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['375'][1].init(42, 53, 'listMarkerPatterns[type][style].test(bullet[1])');
+}_$jscoverage['/word-filter.js'].branchData['375'][1].init(44, 53, 'listMarkerPatterns[type][style].test(bullet[1])');
 function visit49_375_1(result) {
   _$jscoverage['/word-filter.js'].branchData['375'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['365'][1].init(216, 130, 'previousListType && listMarkerPatterns[previousListType][previousListStyleType].test(bullet[1])');
+}_$jscoverage['/word-filter.js'].branchData['365'][1].init(219, 131, 'previousListType && listMarkerPatterns[previousListType][previousListStyleType].test(bullet[1])');
 function visit48_365_1(result) {
   _$jscoverage['/word-filter.js'].branchData['365'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['359'][1].init(36, 44, 'listItem.getAttribute(\'ke:listtype\') || \'ol\'');
+}_$jscoverage['/word-filter.js'].branchData['359'][1].init(37, 44, 'listItem.getAttribute(\'ke:listtype\') || \'ol\'');
 function visit47_359_1(result) {
   _$jscoverage['/word-filter.js'].branchData['359'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['358'][1].init(1303, 7, '!bullet');
+}_$jscoverage['/word-filter.js'].branchData['358'][1].init(1333, 7, '!bullet');
 function visit46_358_1(result) {
   _$jscoverage['/word-filter.js'].branchData['358'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['353'][1].init(1080, 29, 'listItemIndent !== lastIndent');
+}_$jscoverage['/word-filter.js'].branchData['353'][1].init(1105, 29, 'listItemIndent !== lastIndent');
 function visit45_353_1(result) {
   _$jscoverage['/word-filter.js'].branchData['353'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['343'][1].init(550, 33, 'listItem.getAttribute(\'ke:reset\')');
+}_$jscoverage['/word-filter.js'].branchData['343'][1].init(565, 33, 'listItem.getAttribute(\'ke:reset\')');
 function visit44_343_1(result) {
   _$jscoverage['/word-filter.js'].branchData['343'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['336'][1].init(328, 35, 'listItem.getAttribute(\'ke:ignored\')');
+}_$jscoverage['/word-filter.js'].branchData['336'][1].init(336, 35, 'listItem.getAttribute(\'ke:ignored\')');
 function visit43_336_1(result) {
   _$jscoverage['/word-filter.js'].branchData['336'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['333'][1].init(182, 52, 'bullet && bullet.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
+}_$jscoverage['/word-filter.js'].branchData['333'][1].init(187, 52, 'bullet && bullet.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
 function visit42_333_1(result) {
   _$jscoverage['/word-filter.js'].branchData['333'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['328'][1].init(61, 26, '\'ke:li\' === child.nodeName');
+}_$jscoverage['/word-filter.js'].branchData['328'][1].init(64, 26, '\'ke:li\' === child.nodeName');
 function visit41_328_1(result) {
   _$jscoverage['/word-filter.js'].branchData['328'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['325'][1].init(727, 19, 'i < children.length');
+}_$jscoverage['/word-filter.js'].branchData['325'][1].init(745, 19, 'i < children.length');
 function visit40_325_1(result) {
   _$jscoverage['/word-filter.js'].branchData['325'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['308'][1].init(28, 24, 'element.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['308'][1].init(29, 24, 'element.childNodes || []');
 function visit39_308_1(result) {
   _$jscoverage['/word-filter.js'].branchData['308'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['291'][1].init(369, 7, 'j < num');
+}_$jscoverage['/word-filter.js'].branchData['291'][1].init(375, 7, 'j < num');
 function visit38_291_1(result) {
   _$jscoverage['/word-filter.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['285'][1].init(2271, 27, 'child.nodeName in dtd.$list');
+}_$jscoverage['/word-filter.js'].branchData['285'][1].init(2319, 27, 'child.nodeName in dtd.$list');
 function visit37_285_1(result) {
   _$jscoverage['/word-filter.js'].branchData['285'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['273'][1].init(167, 25, 'listId !== previousListId');
+}_$jscoverage['/word-filter.js'].branchData['273'][1].init(170, 25, 'listId !== previousListId');
 function visit36_273_1(result) {
   _$jscoverage['/word-filter.js'].branchData['273'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['270'][1].init(423, 11, 'level === 1');
+}_$jscoverage['/word-filter.js'].branchData['270'][1].init(431, 11, 'level === 1');
 function visit35_270_1(result) {
   _$jscoverage['/word-filter.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['265'][1].init(132, 6, 'margin');
+}_$jscoverage['/word-filter.js'].branchData['265'][1].init(134, 6, 'margin');
 function visit34_265_1(result) {
   _$jscoverage['/word-filter.js'].branchData['265'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['257'][1].init(740, 35, 'element.getAttribute(\'start\') && !i');
+}_$jscoverage['/word-filter.js'].branchData['257'][1].init(757, 35, 'element.getAttribute(\'start\') && !i');
 function visit33_257_1(result) {
   _$jscoverage['/word-filter.js'].branchData['257'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['249'][1].init(159, 26, '!--listItemChildren.length');
+}_$jscoverage['/word-filter.js'].branchData['249'][1].init(162, 26, '!--listItemChildren.length');
 function visit32_249_1(result) {
   _$jscoverage['/word-filter.js'].branchData['249'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['246'][1].init(257, 26, 'last.nodeName in dtd.$list');
+}_$jscoverage['/word-filter.js'].branchData['246'][1].init(263, 26, 'last.nodeName in dtd.$list');
 function visit31_246_1(result) {
   _$jscoverage['/word-filter.js'].branchData['246'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['241'][1].init(44, 22, 'child.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['241'][1].init(45, 22, 'child.childNodes || []');
 function visit30_241_1(result) {
   _$jscoverage['/word-filter.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['240'][1].init(61, 31, 'child.nodeName in dtd.$listItem');
+}_$jscoverage['/word-filter.js'].branchData['240'][1].init(64, 31, 'child.nodeName in dtd.$listItem');
 function visit29_240_1(result) {
   _$jscoverage['/word-filter.js'].branchData['240'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['237'][1].init(591, 19, 'i < children.length');
+}_$jscoverage['/word-filter.js'].branchData['237'][1].init(610, 19, 'i < children.length');
 function visit28_237_1(result) {
   _$jscoverage['/word-filter.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['234'][1].init(513, 24, 'element.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['234'][1].init(529, 24, 'element.childNodes || []');
 function visit27_234_1(result) {
   _$jscoverage['/word-filter.js'].branchData['234'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['219'][1].init(21, 25, 'typeof level === \'number\'');
+}_$jscoverage['/word-filter.js'].branchData['219'][1].init(22, 25, 'typeof level === \'number\'');
 function visit26_219_1(result) {
   _$jscoverage['/word-filter.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['205'][2].init(18, 23, 'tag.indexOf(\'$\') === -1');
+}_$jscoverage['/word-filter.js'].branchData['205'][2].init(20, 23, 'tag.indexOf(\'$\') === -1');
 function visit25_205_2(result) {
   _$jscoverage['/word-filter.js'].branchData['205'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['205'][1].init(18, 48, 'tag.indexOf(\'$\') === -1 && dtd[tag][tagName]');
+}_$jscoverage['/word-filter.js'].branchData['205'][1].init(20, 48, 'tag.indexOf(\'$\') === -1 && dtd[tag][tagName]');
 function visit24_205_1(result) {
   _$jscoverage['/word-filter.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['175'][1].init(47, 24, 'typeof name === \'object\'');
+}_$jscoverage['/word-filter.js'].branchData['175'][1].init(49, 24, 'typeof name === \'object\'');
 function visit23_175_1(result) {
   _$jscoverage['/word-filter.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['171'][1].init(93, 25, 'typeof value === \'string\'');
+}_$jscoverage['/word-filter.js'].branchData['171'][1].init(96, 25, 'typeof value === \'string\'');
 function visit22_171_1(result) {
   _$jscoverage['/word-filter.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['158'][1].init(75, 5, 'child');
+}_$jscoverage['/word-filter.js'].branchData['158'][1].init(77, 5, 'child');
 function visit21_158_1(result) {
   _$jscoverage['/word-filter.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['156'][1].init(126, 14, 'child.nodeName');
+}_$jscoverage['/word-filter.js'].branchData['156'][1].init(130, 14, 'child.nodeName');
 function visit20_156_1(result) {
   _$jscoverage['/word-filter.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['154'][1].init(52, 16, 'evaluator(child)');
+}_$jscoverage['/word-filter.js'].branchData['154'][1].init(54, 16, 'evaluator(child)');
 function visit19_154_1(result) {
   _$jscoverage['/word-filter.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['152'][1].init(102, 19, 'i < children.length');
+}_$jscoverage['/word-filter.js'].branchData['152'][1].init(107, 19, 'i < children.length');
 function visit18_152_1(result) {
   _$jscoverage['/word-filter.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['150'][1].init(48, 21, 'elem.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['150'][1].init(50, 21, 'elem.childNodes || []');
 function visit17_150_1(result) {
   _$jscoverage['/word-filter.js'].branchData['150'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['141'][2].init(67, 54, 'parent.nodeName && parent.nodeName.match(tagNameRegex)');
+}_$jscoverage['/word-filter.js'].branchData['141'][2].init(69, 54, 'parent.nodeName && parent.nodeName.match(tagNameRegex)');
 function visit16_141_2(result) {
   _$jscoverage['/word-filter.js'].branchData['141'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['141'][1].init(54, 69, 'parent && !(parent.nodeName && parent.nodeName.match(tagNameRegex))');
+}_$jscoverage['/word-filter.js'].branchData['141'][1].init(56, 69, 'parent && !(parent.nodeName && parent.nodeName.match(tagNameRegex))');
 function visit15_141_1(result) {
   _$jscoverage['/word-filter.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['130'][1].init(127, 26, 'child.nodeName === tagName');
+}_$jscoverage['/word-filter.js'].branchData['130'][1].init(132, 26, 'child.nodeName === tagName');
 function visit14_130_1(result) {
   _$jscoverage['/word-filter.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['127'][1].init(52, 15, '!child.nodeName');
+}_$jscoverage['/word-filter.js'].branchData['127'][1].init(54, 15, '!child.nodeName');
 function visit13_127_1(result) {
   _$jscoverage['/word-filter.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['125'][1].init(113, 19, 'i < children.length');
+}_$jscoverage['/word-filter.js'].branchData['125'][1].init(118, 19, 'i < children.length');
 function visit12_125_1(result) {
   _$jscoverage['/word-filter.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['121'][1].init(24, 21, 'elem.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['121'][1].init(25, 21, 'elem.childNodes || []');
 function visit11_121_1(result) {
   _$jscoverage['/word-filter.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['117'][1].init(160, 18, 'firstChild || null');
+}_$jscoverage['/word-filter.js'].branchData['117'][1].init(164, 18, 'firstChild || null');
 function visit10_117_1(result) {
   _$jscoverage['/word-filter.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['116'][2].init(104, 11, 'count === 1');
+}_$jscoverage['/word-filter.js'].branchData['116'][2].init(106, 11, 'count === 1');
 function visit9_116_2(result) {
   _$jscoverage['/word-filter.js'].branchData['116'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['116'][1].init(104, 29, '(count === 1) && childNodes[0]');
+}_$jscoverage['/word-filter.js'].branchData['116'][1].init(106, 29, '(count === 1) && childNodes[0]');
 function visit8_116_1(result) {
   _$jscoverage['/word-filter.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['114'][1].init(26, 21, 'elem.childNodes || []');
+}_$jscoverage['/word-filter.js'].branchData['114'][1].init(27, 21, 'elem.childNodes || []');
 function visit7_114_1(result) {
   _$jscoverage['/word-filter.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['100'][1].init(294, 23, '!(/%$/).test(cssLength)');
+}_$jscoverage['/word-filter.js'].branchData['100'][1].init(303, 23, '!(/%$/).test(cssLength)');
 function visit6_100_1(result) {
   _$jscoverage['/word-filter.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['92'][1].init(17, 11, '!calculator');
+}_$jscoverage['/word-filter.js'].branchData['92'][1].init(18, 11, '!calculator');
 function visit5_92_1(result) {
   _$jscoverage['/word-filter.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['77'][1].init(13, 3, 'str');
+}_$jscoverage['/word-filter.js'].branchData['77'][1].init(14, 3, 'str');
 function visit4_77_1(result) {
   _$jscoverage['/word-filter.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['69'][1].init(104, 14, 'str.length > 0');
+}_$jscoverage['/word-filter.js'].branchData['69'][1].init(107, 14, 'str.length > 0');
 function visit3_69_1(result) {
   _$jscoverage['/word-filter.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['58'][1].init(54, 25, 'str.substr(0, k) === j[1]');
+}_$jscoverage['/word-filter.js'].branchData['58'][1].init(55, 25, 'str.substr(0, k) === j[1]');
 function visit2_58_1(result) {
   _$jscoverage['/word-filter.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['57'][1].init(101, 5, 'i < l');
+}_$jscoverage['/word-filter.js'].branchData['57'][1].init(104, 5, 'i < l');
 function visit1_57_1(result) {
   _$jscoverage['/word-filter.js'].branchData['57'][1].ranCondition(result);
   return result;

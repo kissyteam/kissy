@@ -345,71 +345,71 @@ if (! _$jscoverage['/node/anim.js'].branchData) {
   _$jscoverage['/node/anim.js'].branchData['253'] = [];
   _$jscoverage['/node/anim.js'].branchData['253'][1] = new BranchData();
 }
-_$jscoverage['/node/anim.js'].branchData['253'][1].init(43, 21, 'duration.Anim || Anim');
+_$jscoverage['/node/anim.js'].branchData['253'][1].init(44, 21, 'duration.Anim || Anim');
 function visit17_253_1(result) {
   _$jscoverage['/node/anim.js'].branchData['253'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['252'][1].init(73, 28, 'typeof duration === \'object\'');
+}_$jscoverage['/node/anim.js'].branchData['252'][1].init(75, 28, 'typeof duration === \'object\'');
 function visit16_252_1(result) {
   _$jscoverage['/node/anim.js'].branchData['252'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['248'][1].init(93, 19, 'Dom[k] && !duration');
+}_$jscoverage['/node/anim.js'].branchData['248'][1].init(96, 19, 'Dom[k] && !duration');
 function visit15_248_1(result) {
   _$jscoverage['/node/anim.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['135'][1].init(21, 22, 'Anim.isPaused(self[i])');
+}_$jscoverage['/node/anim.js'].branchData['135'][1].init(22, 22, 'Anim.isPaused(self[i])');
 function visit14_135_1(result) {
   _$jscoverage['/node/anim.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['134'][1].init(58, 15, 'i < self.length');
+}_$jscoverage['/node/anim.js'].branchData['134'][1].init(60, 15, 'i < self.length');
 function visit13_134_1(result) {
   _$jscoverage['/node/anim.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['121'][1].init(21, 23, 'Anim.isRunning(self[i])');
+}_$jscoverage['/node/anim.js'].branchData['121'][1].init(22, 23, 'Anim.isRunning(self[i])');
 function visit12_121_1(result) {
   _$jscoverage['/node/anim.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['120'][1].init(58, 15, 'i < self.length');
+}_$jscoverage['/node/anim.js'].branchData['120'][1].init(60, 15, 'i < self.length');
 function visit11_120_1(result) {
   _$jscoverage['/node/anim.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['61'][1].init(166, 7, 'arg0.to');
+}_$jscoverage['/node/anim.js'].branchData['61'][1].init(170, 7, 'arg0.to');
 function visit10_61_1(result) {
   _$jscoverage['/node/anim.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['57'][1].init(518, 5, 'i < l');
+}_$jscoverage['/node/anim.js'].branchData['57'][1].init(534, 5, 'i < l');
 function visit9_57_1(result) {
   _$jscoverage['/node/anim.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['53'][1].init(39, 16, 'cfg.Anim || Anim');
+}_$jscoverage['/node/anim.js'].branchData['53'][1].init(40, 16, 'cfg.Anim || Anim');
 function visit8_53_1(result) {
   _$jscoverage['/node/anim.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['52'][1].init(58, 3, 'cfg');
+}_$jscoverage['/node/anim.js'].branchData['52'][1].init(60, 3, 'cfg');
 function visit7_52_1(result) {
   _$jscoverage['/node/anim.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['49'][1].init(35, 16, 'cfg.Anim || Anim');
+}_$jscoverage['/node/anim.js'].branchData['49'][1].init(36, 16, 'cfg.Anim || Anim');
 function visit6_49_1(result) {
   _$jscoverage['/node/anim.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['48'][1].init(254, 6, 'cfg.to');
+}_$jscoverage['/node/anim.js'].branchData['48'][1].init(261, 6, 'cfg.to');
 function visit5_48_1(result) {
   _$jscoverage['/node/anim.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['44'][1].init(77, 15, 'self.length > 1');
+}_$jscoverage['/node/anim.js'].branchData['44'][1].init(79, 15, 'self.length > 1');
 function visit4_44_1(result) {
   _$jscoverage['/node/anim.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['29'][1].init(163, 14, 'i < ret.length');
+}_$jscoverage['/node/anim.js'].branchData['29'][1].init(169, 14, 'i < ret.length');
 function visit3_29_1(result) {
   _$jscoverage['/node/anim.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['26'][2].init(77, 7, 'i < num');
+}_$jscoverage['/node/anim.js'].branchData['26'][2].init(80, 7, 'i < num');
 function visit2_26_2(result) {
   _$jscoverage['/node/anim.js'].branchData['26'][2].ranCondition(result);
   return result;
-}_$jscoverage['/node/anim.js'].branchData['26'][1].init(66, 9, 'from || 0');
+}_$jscoverage['/node/anim.js'].branchData['26'][1].init(69, 9, 'from || 0');
 function visit1_26_1(result) {
   _$jscoverage['/node/anim.js'].branchData['26'][1].ranCondition(result);
   return result;

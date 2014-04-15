@@ -288,11 +288,11 @@ if (! _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'] = [];
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1] = new BranchData();
 }
-_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1].init(2390, 35, 'commandRet8 && commandRet8.isBuffer');
+_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1].init(2394, 35, 'commandRet8 && commandRet8.isBuffer');
 function visit31_56_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['43'][1].init(1863, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['43'][1].init(1865, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit30_43_1(result) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -345,7 +345,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, false);
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[35]++;
-  buffer.write('\n<div class="');
+  buffer.write('\r\n<div class="');
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -367,7 +367,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[47]++;
   buffer.write(commandRet5, true);
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[48]++;
-  buffer.write('">\n    <div class="');
+  buffer.write('">\r\n    <div class="');
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[49]++;
   var option6 = {
   escape: 1};
@@ -389,7 +389,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[60]++;
   buffer.write(commandRet8, true);
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[61]++;
-  buffer.write('">\n    </div>\n</div>');
+  buffer.write('">\r\n    </div>\r\n</div>');
   _$jscoverage['/menubutton/menubutton-xtpl.js'].lineData[62]++;
   return buffer;
 };

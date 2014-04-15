@@ -281,31 +281,31 @@ if (! _$jscoverage['/json/parse.js'].branchData) {
   _$jscoverage['/json/parse.js'].branchData['48'] = [];
   _$jscoverage['/json/parse.js'].branchData['48'][1] = new BranchData();
 }
-_$jscoverage['/json/parse.js'].branchData['48'][1].init(59, 7, 'reviver');
+_$jscoverage['/json/parse.js'].branchData['48'][1].init(61, 7, 'reviver');
 function visit7_48_1(result) {
   _$jscoverage['/json/parse.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parse.js'].branchData['34'][1].init(118, 24, 'newElement === undefined');
+}_$jscoverage['/json/parse.js'].branchData['34'][1].init(121, 24, 'newElement === undefined');
 function visit6_34_1(result) {
   _$jscoverage['/json/parse.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parse.js'].branchData['31'][1].init(88, 7, 'i < len');
+}_$jscoverage['/json/parse.js'].branchData['31'][1].init(90, 7, 'i < len');
 function visit5_31_1(result) {
   _$jscoverage['/json/parse.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parse.js'].branchData['24'][1].init(89, 24, 'newElement !== undefined');
+}_$jscoverage['/json/parse.js'].branchData['24'][1].init(91, 24, 'newElement !== undefined');
 function visit4_24_1(result) {
   _$jscoverage['/json/parse.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parse.js'].branchData['22'][1].init(114, 7, 'i < len');
+}_$jscoverage['/json/parse.js'].branchData['22'][1].init(118, 7, 'i < len');
 function visit3_22_1(result) {
   _$jscoverage['/json/parse.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parse.js'].branchData['18'][1].init(17, 14, 'S.isArray(val)');
+}_$jscoverage['/json/parse.js'].branchData['18'][1].init(18, 14, 'S.isArray(val)');
 function visit2_18_1(result) {
   _$jscoverage['/json/parse.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parse.js'].branchData['17'][1].init(78, 23, 'typeof val === \'object\'');
+}_$jscoverage['/json/parse.js'].branchData['17'][1].init(82, 23, 'typeof val === \'object\'');
 function visit1_17_1(result) {
   _$jscoverage['/json/parse.js'].branchData['17'][1].ranCondition(result);
   return result;

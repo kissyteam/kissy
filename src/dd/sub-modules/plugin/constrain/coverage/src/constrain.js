@@ -298,47 +298,47 @@ if (! _$jscoverage['/constrain.js'].branchData) {
   _$jscoverage['/constrain.js'].branchData['119'] = [];
   _$jscoverage['/constrain.js'].branchData['119'][1] = new BranchData();
 }
-_$jscoverage['/constrain.js'].branchData['119'][1].init(44, 21, 'typeof v === \'string\'');
+_$jscoverage['/constrain.js'].branchData['119'][1].init(45, 21, 'typeof v === \'string\'');
 function visit11_119_1(result) {
   _$jscoverage['/constrain.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['118'][2].init(136, 66, 'S.isWindow(v) || typeof v === \'string\'');
+}_$jscoverage['/constrain.js'].branchData['118'][2].init(139, 67, 'S.isWindow(v) || typeof v === \'string\'');
 function visit10_118_2(result) {
   _$jscoverage['/constrain.js'].branchData['118'][2].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['118'][1].init(122, 80, 'v.nodeType || S.isWindow(v) || typeof v === \'string\'');
+}_$jscoverage['/constrain.js'].branchData['118'][1].init(125, 81, 'v.nodeType || S.isWindow(v) || typeof v === \'string\'');
 function visit9_118_1(result) {
   _$jscoverage['/constrain.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['116'][1].init(29, 10, 'v === true');
+}_$jscoverage['/constrain.js'].branchData['116'][1].init(30, 10, 'v === true');
 function visit8_116_1(result) {
   _$jscoverage['/constrain.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['115'][1].init(25, 1, 'v');
+}_$jscoverage['/constrain.js'].branchData['115'][1].init(26, 1, 'v');
 function visit7_115_1(result) {
   _$jscoverage['/constrain.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['51'][1].init(156, 9, 'constrain');
+}_$jscoverage['/constrain.js'].branchData['51'][1].init(162, 9, 'constrain');
 function visit6_51_1(result) {
   _$jscoverage['/constrain.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['38'][1].init(789, 22, 'self.__constrainRegion');
+}_$jscoverage['/constrain.js'].branchData['38'][1].init(808, 22, 'self.__constrainRegion');
 function visit5_38_1(result) {
   _$jscoverage['/constrain.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['35'][1].init(679, 26, 'S.isPlainObject(constrain)');
+}_$jscoverage['/constrain.js'].branchData['35'][1].init(695, 26, 'S.isPlainObject(constrain)');
 function visit4_35_1(result) {
   _$jscoverage['/constrain.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['27'][1].init(338, 20, 'constrain.getDOMNode');
+}_$jscoverage['/constrain.js'].branchData['27'][1].init(346, 20, 'constrain.getDOMNode');
 function visit3_27_1(result) {
   _$jscoverage['/constrain.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['20'][1].init(17, 24, 'S.isWindow(constrain[0])');
+}_$jscoverage['/constrain.js'].branchData['20'][1].init(18, 24, 'S.isWindow(constrain[0])');
 function visit2_20_1(result) {
   _$jscoverage['/constrain.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['19'][1].init(179, 9, 'constrain');
+}_$jscoverage['/constrain.js'].branchData['19'][1].init(185, 9, 'constrain');
 function visit1_19_1(result) {
   _$jscoverage['/constrain.js'].branchData['19'][1].ranCondition(result);
   return result;

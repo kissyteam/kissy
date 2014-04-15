@@ -412,87 +412,87 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['309'] = [];
   _$jscoverage['/cmd.js'].branchData['309'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['309'][1].init(17, 36, '!editor.hasCommand(\'maximizeWindow\')');
+_$jscoverage['/cmd.js'].branchData['309'][1].init(18, 36, '!editor.hasCommand(\'maximizeWindow\')');
 function visit21_309_1(result) {
   _$jscoverage['/cmd.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['299'][1].init(46, 12, 'self._resize');
+}_$jscoverage['/cmd.js'].branchData['299'][1].init(48, 12, 'self._resize');
 function visit20_299_1(result) {
   _$jscoverage['/cmd.js'].branchData['299'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['291'][1].init(84, 45, 'editor.fire(\'beforeMaximizeWindow\') === false');
+}_$jscoverage['/cmd.js'].branchData['291'][1].init(87, 45, 'editor.fire(\'beforeMaximizeWindow\') === false');
 function visit19_291_1(result) {
   _$jscoverage['/cmd.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['273'][1].init(253, 13, '!self._resize');
+}_$jscoverage['/cmd.js'].branchData['273'][1].init(263, 13, '!self._resize');
 function visit18_273_1(result) {
   _$jscoverage['/cmd.js'].branchData['273'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['266'][1].init(84, 12, 'self._resize');
+}_$jscoverage['/cmd.js'].branchData['266'][1].init(87, 12, 'self._resize');
 function visit17_266_1(result) {
   _$jscoverage['/cmd.js'].branchData['266'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['258'][1].init(1662, 13, 'stop !== true');
+}_$jscoverage['/cmd.js'].branchData['258'][1].init(1712, 13, 'stop !== true');
 function visit16_258_1(result) {
   _$jscoverage['/cmd.js'].branchData['258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['219'][1].init(487, 3, '!ie');
+}_$jscoverage['/cmd.js'].branchData['219'][1].init(498, 3, '!ie');
 function visit15_219_1(result) {
   _$jscoverage['/cmd.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['194'][1].init(172, 7, 'element');
+}_$jscoverage['/cmd.js'].branchData['194'][1].init(176, 7, 'element');
 function visit14_194_1(result) {
   _$jscoverage['/cmd.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['190'][1].init(486, 27, 'editor.__iframeFocus && sel');
+}_$jscoverage['/cmd.js'].branchData['190'][1].init(505, 27, 'editor.__iframeFocus && sel');
 function visit13_190_1(result) {
   _$jscoverage['/cmd.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['185'][1].init(354, 18, 'savedRanges && sel');
+}_$jscoverage['/cmd.js'].branchData['185'][1].init(368, 18, 'savedRanges && sel');
 function visit12_185_1(result) {
   _$jscoverage['/cmd.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['181'][1].init(271, 8, 'UA.gecko');
+}_$jscoverage['/cmd.js'].branchData['181'][1].init(281, 8, 'UA.gecko');
 function visit11_181_1(result) {
   _$jscoverage['/cmd.js'].branchData['181'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['164'][1].init(316, 22, 'sel && sel.getRanges()');
+}_$jscoverage['/cmd.js'].branchData['164'][1].init(325, 22, 'sel && sel.getRanges()');
 function visit10_164_1(result) {
   _$jscoverage['/cmd.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['159'][1].init(121, 34, '!UA.gecko || !editor.__iframeFocus');
+}_$jscoverage['/cmd.js'].branchData['159'][1].init(125, 34, '!UA.gecko || !editor.__iframeFocus');
 function visit9_159_1(result) {
   _$jscoverage['/cmd.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['145'][1].init(1009, 6, 'ie < 8');
+}_$jscoverage['/cmd.js'].branchData['145'][1].init(1038, 6, 'ie < 8');
 function visit8_145_1(result) {
   _$jscoverage['/cmd.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['133'][1].init(66, 16, 'pre !== \'static\'');
+}_$jscoverage['/cmd.js'].branchData['133'][1].init(68, 16, 'pre !== \'static\'');
 function visit7_133_1(result) {
   _$jscoverage['/cmd.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['107'][1].init(1329, 6, 'ie < 8');
+}_$jscoverage['/cmd.js'].branchData['107'][1].init(1369, 6, 'ie < 8');
 function visit6_107_1(result) {
   _$jscoverage['/cmd.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['74'][1].init(33, 24, 'i < _savedParents.length');
+}_$jscoverage['/cmd.js'].branchData['74'][1].init(34, 24, 'i < _savedParents.length');
 function visit5_74_1(result) {
   _$jscoverage['/cmd.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['73'][1].init(238, 13, '_savedParents');
+}_$jscoverage['/cmd.js'].branchData['73'][1].init(244, 13, '_savedParents');
 function visit4_73_1(result) {
   _$jscoverage['/cmd.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['43'][1].init(188, 12, 'self._resize');
+}_$jscoverage['/cmd.js'].branchData['43'][1].init(196, 12, 'self._resize');
 function visit3_43_1(result) {
   _$jscoverage['/cmd.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['39'][1].init(85, 44, 'editor.fire(\'beforeRestoreWindow\') === false');
+}_$jscoverage['/cmd.js'].branchData['39'][1].init(89, 44, 'editor.fire(\'beforeRestoreWindow\') === false');
 function visit2_39_1(result) {
   _$jscoverage['/cmd.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['18'][1].init(17, 7, '!iframe');
+}_$jscoverage['/cmd.js'].branchData['18'][1].init(18, 7, '!iframe');
 function visit1_18_1(result) {
   _$jscoverage['/cmd.js'].branchData['18'][1].ranCondition(result);
   return result;

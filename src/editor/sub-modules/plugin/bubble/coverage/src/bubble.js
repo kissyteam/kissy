@@ -402,159 +402,159 @@ if (! _$jscoverage['/bubble.js'].branchData) {
   _$jscoverage['/bubble.js'].branchData['203'] = [];
   _$jscoverage['/bubble.js'].branchData['203'][1] = new BranchData();
 }
-_$jscoverage['/bubble.js'].branchData['203'][1].init(17, 31, '!bubble.get(\'editorSelectedEl\')');
+_$jscoverage['/bubble.js'].branchData['203'][1].init(18, 31, '!bubble.get(\'editorSelectedEl\')');
 function visit39_203_1(result) {
   _$jscoverage['/bubble.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['192'][1].init(290, 22, '!bubble.get(\'visible\')');
+}_$jscoverage['/bubble.js'].branchData['192'][1].init(297, 22, '!bubble.get(\'visible\')');
 function visit38_192_1(result) {
   _$jscoverage['/bubble.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['188'][1].init(117, 6, 'archor');
+}_$jscoverage['/bubble.js'].branchData['188'][1].init(120, 6, 'archor');
 function visit37_188_1(result) {
   _$jscoverage['/bubble.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['185'][1].init(53, 2, 'xy');
+}_$jscoverage['/bubble.js'].branchData['185'][1].init(55, 2, 'xy');
 function visit36_185_1(result) {
   _$jscoverage['/bubble.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['175'][1].init(134, 9, 'editorWin');
+}_$jscoverage['/bubble.js'].branchData['175'][1].init(138, 9, 'editorWin');
 function visit35_175_1(result) {
   _$jscoverage['/bubble.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['157'][1].init(199, 1, 'a');
+}_$jscoverage['/bubble.js'].branchData['157'][1].init(205, 1, 'a');
 function visit34_157_1(result) {
   _$jscoverage['/bubble.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['153'][1].init(76, 12, '!lastElement');
+}_$jscoverage['/bubble.js'].branchData['153'][1].init(78, 12, '!lastElement');
 function visit33_153_1(result) {
   _$jscoverage['/bubble.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['151'][1].init(153, 23, 'elementPath && elements');
+}_$jscoverage['/bubble.js'].branchData['151'][1].init(158, 23, 'elementPath && elements');
 function visit32_151_1(result) {
   _$jscoverage['/bubble.js'].branchData['151'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['125'][1].init(112, 9, 'cfg || {}');
+}_$jscoverage['/bubble.js'].branchData['125'][1].init(117, 9, 'cfg || {}');
 function visit31_125_1(result) {
   _$jscoverage['/bubble.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['114'][3].init(1491, 15, 'y !== undefined');
+}_$jscoverage['/bubble.js'].branchData['114'][3].init(1547, 15, 'y !== undefined');
 function visit30_114_3(result) {
   _$jscoverage['/bubble.js'].branchData['114'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['114'][2].init(1472, 15, 'x !== undefined');
+}_$jscoverage['/bubble.js'].branchData['114'][2].init(1528, 15, 'x !== undefined');
 function visit29_114_2(result) {
   _$jscoverage['/bubble.js'].branchData['114'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['114'][1].init(1472, 34, 'x !== undefined && y !== undefined');
+}_$jscoverage['/bubble.js'].branchData['114'][1].init(1528, 34, 'x !== undefined && y !== undefined');
 function visit28_114_1(result) {
   _$jscoverage['/bubble.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['110'][3].init(1408, 14, 'elLeft < right');
+}_$jscoverage['/bubble.js'].branchData['110'][3].init(1460, 14, 'elLeft < right');
 function visit27_110_3(result) {
   _$jscoverage['/bubble.js'].branchData['110'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['110'][2].init(1391, 13, 'elLeft > left');
+}_$jscoverage['/bubble.js'].branchData['110'][2].init(1443, 13, 'elLeft > left');
 function visit26_110_2(result) {
   _$jscoverage['/bubble.js'].branchData['110'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['110'][1].init(1391, 31, 'elLeft > left && elLeft < right');
+}_$jscoverage['/bubble.js'].branchData['110'][1].init(1443, 31, 'elLeft > left && elLeft < right');
 function visit25_110_1(result) {
   _$jscoverage['/bubble.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['108'][3].init(1332, 13, 'elLeft < left');
+}_$jscoverage['/bubble.js'].branchData['108'][3].init(1382, 13, 'elLeft < left');
 function visit24_108_3(result) {
   _$jscoverage['/bubble.js'].branchData['108'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['108'][2].init(1314, 14, 'elRight > left');
+}_$jscoverage['/bubble.js'].branchData['108'][2].init(1364, 14, 'elRight > left');
 function visit23_108_2(result) {
   _$jscoverage['/bubble.js'].branchData['108'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['108'][1].init(1314, 31, 'elRight > left && elLeft < left');
+}_$jscoverage['/bubble.js'].branchData['108'][1].init(1364, 31, 'elRight > left && elLeft < left');
 function visit22_108_1(result) {
   _$jscoverage['/bubble.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['103'][3].init(1226, 17, 'elBottom < bottom');
+}_$jscoverage['/bubble.js'].branchData['103'][3].init(1271, 17, 'elBottom < bottom');
 function visit21_103_3(result) {
   _$jscoverage['/bubble.js'].branchData['103'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['103'][2].init(1208, 14, 'elBottom > top');
+}_$jscoverage['/bubble.js'].branchData['103'][2].init(1253, 14, 'elBottom > top');
 function visit20_103_2(result) {
   _$jscoverage['/bubble.js'].branchData['103'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['103'][1].init(1208, 35, 'elBottom > top && elBottom < bottom');
+}_$jscoverage['/bubble.js'].branchData['103'][1].init(1253, 35, 'elBottom > top && elBottom < bottom');
 function visit19_103_1(result) {
   _$jscoverage['/bubble.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['98'][3].init(1083, 14, 'elTop < bottom');
+}_$jscoverage['/bubble.js'].branchData['98'][3].init(1123, 14, 'elTop < bottom');
 function visit18_98_3(result) {
   _$jscoverage['/bubble.js'].branchData['98'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['98'][2].init(1062, 17, 'elBottom > bottom');
+}_$jscoverage['/bubble.js'].branchData['98'][2].init(1102, 17, 'elBottom > bottom');
 function visit17_98_2(result) {
   _$jscoverage['/bubble.js'].branchData['98'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['98'][1].init(1062, 35, 'elBottom > bottom && elTop < bottom');
+}_$jscoverage['/bubble.js'].branchData['98'][1].init(1102, 35, 'elBottom > bottom && elTop < bottom');
 function visit16_98_1(result) {
   _$jscoverage['/bubble.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['92'][1].init(53, 17, 'elBottom > bottom');
+}_$jscoverage['/bubble.js'].branchData['92'][1].init(54, 17, 'elBottom > bottom');
 function visit15_92_1(result) {
   _$jscoverage['/bubble.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['91'][2].init(886, 38, 'el[0].nodeName.toLowerCase() === \'img\'');
+}_$jscoverage['/bubble.js'].branchData['91'][2].init(919, 38, 'el[0].nodeName.toLowerCase() === \'img\'');
 function visit14_91_2(result) {
   _$jscoverage['/bubble.js'].branchData['91'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['91'][1].init(22, 71, 'el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
+}_$jscoverage['/bubble.js'].branchData['91'][1].init(23, 72, 'el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
 function visit13_91_1(result) {
   _$jscoverage['/bubble.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['90'][1].init(861, 94, 'S.UA.ie && el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
+}_$jscoverage['/bubble.js'].branchData['90'][1].init(893, 96, 'S.UA.ie && el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
 function visit12_90_1(result) {
   _$jscoverage['/bubble.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['63'][1].init(65, 3, '!el');
+}_$jscoverage['/bubble.js'].branchData['63'][1].init(70, 3, '!el');
 function visit11_63_1(result) {
   _$jscoverage['/bubble.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['50'][1].init(97, 33, 'archor.get(\'y\') < bubble.get(\'y\')');
+}_$jscoverage['/bubble.js'].branchData['50'][1].init(100, 33, 'archor.get(\'y\') < bubble.get(\'y\')');
 function visit10_50_1(result) {
   _$jscoverage['/bubble.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['48'][1].init(21, 7, '!archor');
+}_$jscoverage['/bubble.js'].branchData['48'][1].init(22, 7, '!archor');
 function visit9_48_1(result) {
   _$jscoverage['/bubble.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['46'][1].init(34, 62, 'bubble.get(\'visible\') && overlap(self, bubble)');
+}_$jscoverage['/bubble.js'].branchData['46'][1].init(35, 63, 'bubble.get(\'visible\') && overlap(self, bubble)');
 function visit8_46_1(result) {
   _$jscoverage['/bubble.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['45'][2].init(56, 15, 'bubble !== self');
+}_$jscoverage['/bubble.js'].branchData['45'][2].init(58, 15, 'bubble !== self');
 function visit7_45_2(result) {
   _$jscoverage['/bubble.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['45'][1].init(36, 97, 'bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
+}_$jscoverage['/bubble.js'].branchData['45'][1].init(37, 99, 'bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
 function visit6_45_1(result) {
   _$jscoverage['/bubble.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['44'][1].init(17, 134, 'bubble.isKeBubble && bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
+}_$jscoverage['/bubble.js'].branchData['44'][1].init(18, 137, 'bubble.isKeBubble && bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
 function visit5_44_1(result) {
   _$jscoverage['/bubble.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['33'][1].init(201, 81, 'inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top)');
+}_$jscoverage['/bubble.js'].branchData['33'][1].init(207, 82, 'inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top)');
 function visit4_33_1(result) {
   _$jscoverage['/bubble.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['22'][3].init(26, 6, 'b >= r');
+}_$jscoverage['/bubble.js'].branchData['22'][3].init(27, 6, 'b >= r');
 function visit3_22_3(result) {
   _$jscoverage['/bubble.js'].branchData['22'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['22'][2].init(16, 6, 't <= r');
+}_$jscoverage['/bubble.js'].branchData['22'][2].init(17, 6, 't <= r');
 function visit2_22_2(result) {
   _$jscoverage['/bubble.js'].branchData['22'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['22'][1].init(16, 16, 't <= r && b >= r');
+}_$jscoverage['/bubble.js'].branchData['22'][1].init(17, 16, 't <= r && b >= r');
 function visit1_22_1(result) {
   _$jscoverage['/bubble.js'].branchData['22'][1].ranCondition(result);
   return result;

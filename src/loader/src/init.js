@@ -16,8 +16,8 @@
         return (new Function('return ' + s))();
     }
 
-    var baseReg = /^(.*)(seed|loader)(?:-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|loader)(?:-min)?\.js/i;
+    var baseReg = /^(.*)(seed|loader)(?:-debug)?\.js[^/]*/i,
+        baseTestReg = /(seed|loader)(?:-debug)?\.js/i;
 
     function getBaseInfoFromOneScript(script) {
         // can not use KISSY.Uri
@@ -77,7 +77,7 @@
     }
 
     /**
-     * get base from seed.js
+     * get base from seed-debug.js
      * @return {Object} base for kissy
      * @ignore
      *
@@ -101,7 +101,7 @@
         }
 
         var msg = 'must load kissy by file name in browser environment: ' +
-            'seed.js or seed-min.js loader.js or loader-min.js';
+            'seed-debug.js or seed.js loader.js or loader-debug.js';
 
         S.log(msg, 'error');
         return null;

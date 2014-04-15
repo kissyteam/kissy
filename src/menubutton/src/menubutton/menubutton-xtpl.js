@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, false);
-            buffer.write('\n<div class="');
+            buffer.write('\r\n<div class="');
             var option3 = {
                 escape: 1
             };
@@ -45,7 +45,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, true);
-            buffer.write('">\n    <div class="');
+            buffer.write('">\r\n    <div class="');
             var option6 = {
                 escape: 1
             };
@@ -58,7 +58,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet8 = undefined;
             }
             buffer.write(commandRet8, true);
-            buffer.write('">\n    </div>\n</div>');
+            buffer.write('">\r\n    </div>\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

@@ -307,23 +307,23 @@ if (! _$jscoverage['/node/attach.js'].branchData) {
   _$jscoverage['/node/attach.js'].branchData['130'][1] = new BranchData();
   _$jscoverage['/node/attach.js'].branchData['130'][2] = new BranchData();
 }
-_$jscoverage['/node/attach.js'].branchData['130'][2].init(28, 25, 'args[index] === undefined');
+_$jscoverage['/node/attach.js'].branchData['130'][2].init(30, 25, 'args[index] === undefined');
 function visit22_130_2(result) {
   _$jscoverage['/node/attach.js'].branchData['130'][2].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['130'][1].init(28, 49, 'args[index] === undefined && !S.isObject(args[0])');
+}_$jscoverage['/node/attach.js'].branchData['130'][1].init(30, 49, 'args[index] === undefined && !S.isObject(args[0])');
 function visit21_130_1(result) {
   _$jscoverage['/node/attach.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['122'][1].init(151, 12, 'ret === null');
+}_$jscoverage['/node/attach.js'].branchData['122'][1].init(156, 12, 'ret === null');
 function visit20_122_1(result) {
   _$jscoverage['/node/attach.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['120'][1].init(85, 17, 'ret === undefined');
+}_$jscoverage['/node/attach.js'].branchData['120'][1].init(88, 17, 'ret === undefined');
 function visit19_120_1(result) {
   _$jscoverage['/node/attach.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['111'][1].init(85, 17, 'ret === undefined');
+}_$jscoverage['/node/attach.js'].branchData['111'][1].init(88, 17, 'ret === undefined');
 function visit18_111_1(result) {
   _$jscoverage['/node/attach.js'].branchData['111'][1].ranCondition(result);
   return result;

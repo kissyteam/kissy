@@ -262,11 +262,11 @@ if (! _$jscoverage['/json/quote.js'].branchData) {
   _$jscoverage['/json/quote.js'].branchData['39'] = [];
   _$jscoverage['/json/quote.js'].branchData['39'][1] = new BranchData();
 }
-_$jscoverage['/json/quote.js'].branchData['39'][1].init(44, 29, '!(v = REVERSE_CONTROL_MAP[m])');
+_$jscoverage['/json/quote.js'].branchData['39'][1].init(46, 29, '!(v = REVERSE_CONTROL_MAP[m])');
 function visit45_39_1(result) {
   _$jscoverage['/json/quote.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/quote.js'].branchData['30'][1].init(44, 21, '!(v = CONTROL_MAP[m])');
+}_$jscoverage['/json/quote.js'].branchData['30'][1].init(46, 21, '!(v = CONTROL_MAP[m])');
 function visit44_30_1(result) {
   _$jscoverage['/json/quote.js'].branchData['30'][1].ranCondition(result);
   return result;

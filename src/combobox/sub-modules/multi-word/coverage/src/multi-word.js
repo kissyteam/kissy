@@ -382,131 +382,131 @@ if (! _$jscoverage['/multi-word.js'].branchData) {
   _$jscoverage['/multi-word.js'].branchData['242'][1] = new BranchData();
   _$jscoverage['/multi-word.js'].branchData['242'][2] = new BranchData();
 }
-_$jscoverage['/multi-word.js'].branchData['242'][2].init(55, 24, 'separatorType === SUFFIX');
+_$jscoverage['/multi-word.js'].branchData['242'][2].init(58, 24, 'separatorType === SUFFIX');
 function visit40_242_2(result) {
   _$jscoverage['/multi-word.js'].branchData['242'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['242'][1].init(55, 57, 'separatorType === SUFFIX && strContainsChar(separator, c)');
+}_$jscoverage['/multi-word.js'].branchData['242'][1].init(58, 57, 'separatorType === SUFFIX && strContainsChar(separator, c)');
 function visit39_242_1(result) {
   _$jscoverage['/multi-word.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['239'][1].init(2073, 17, 'tokenIndex === -1');
+}_$jscoverage['/multi-word.js'].branchData['239'][1].init(2141, 17, 'tokenIndex === -1');
 function visit38_239_1(result) {
   _$jscoverage['/multi-word.js'].branchData['239'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['235'][1].init(2003, 14, '!tokens.length');
+}_$jscoverage['/multi-word.js'].branchData['235'][1].init(2067, 14, '!tokens.length');
 function visit37_235_1(result) {
   _$jscoverage['/multi-word.js'].branchData['235'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['230'][1].init(1906, 12, 'cache.length');
+}_$jscoverage['/multi-word.js'].branchData['230'][1].init(1965, 12, 'cache.length');
 function visit36_230_1(result) {
   _$jscoverage['/multi-word.js'].branchData['230'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['219'][1].init(25, 12, 'cache.length');
+}_$jscoverage['/multi-word.js'].branchData['219'][1].init(26, 12, 'cache.length');
 function visit35_219_1(result) {
   _$jscoverage['/multi-word.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['214'][1].init(60, 12, 'cache.length');
+}_$jscoverage['/multi-word.js'].branchData['214'][1].init(62, 12, 'cache.length');
 function visit34_214_1(result) {
   _$jscoverage['/multi-word.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['212'][1].init(21, 24, 'separatorType === SUFFIX');
+}_$jscoverage['/multi-word.js'].branchData['212'][1].init(22, 24, 'separatorType === SUFFIX');
 function visit33_212_1(result) {
   _$jscoverage['/multi-word.js'].branchData['212'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['211'][1].init(758, 29, 'strContainsChar(separator, c)');
+}_$jscoverage['/multi-word.js'].branchData['211'][1].init(782, 29, 'strContainsChar(separator, c)');
 function visit32_211_1(result) {
   _$jscoverage['/multi-word.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['206'][1].init(21, 12, 'cache.length');
+}_$jscoverage['/multi-word.js'].branchData['206'][1].init(22, 12, 'cache.length');
 function visit31_206_1(result) {
   _$jscoverage['/multi-word.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['205'][1].init(513, 55, 'allowWhitespaceAsStandaloneToken && rWhitespace.test(c)');
+}_$jscoverage['/multi-word.js'].branchData['205'][1].init(531, 55, 'allowWhitespaceAsStandaloneToken && rWhitespace.test(c)');
 function visit30_205_1(result) {
   _$jscoverage['/multi-word.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['198'][1].init(293, 20, 'i === cursorPosition');
+}_$jscoverage['/multi-word.js'].branchData['198'][1].init(304, 20, 'i === cursorPosition');
 function visit29_198_1(result) {
   _$jscoverage['/multi-word.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['194'][1].init(193, 9, 'inLiteral');
+}_$jscoverage['/multi-word.js'].branchData['194'][1].init(200, 9, 'inLiteral');
 function visit28_194_1(result) {
   _$jscoverage['/multi-word.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['190'][1].init(21, 13, 'c === literal');
+}_$jscoverage['/multi-word.js'].branchData['190'][1].init(22, 13, 'c === literal');
 function visit27_190_1(result) {
   _$jscoverage['/multi-word.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['189'][1].init(53, 7, 'literal');
+}_$jscoverage['/multi-word.js'].branchData['189'][1].init(55, 7, 'literal');
 function visit26_189_1(result) {
   _$jscoverage['/multi-word.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['187'][1].init(545, 19, 'i < inputVal.length');
+}_$jscoverage['/multi-word.js'].branchData['187'][1].init(561, 19, 'i < inputVal.length');
 function visit25_187_1(result) {
   _$jscoverage['/multi-word.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['181'][1].init(370, 24, 'separatorType !== SUFFIX');
+}_$jscoverage['/multi-word.js'].branchData['181'][1].init(379, 24, 'separatorType !== SUFFIX');
 function visit24_181_1(result) {
   _$jscoverage['/multi-word.js'].branchData['181'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['90'][1].init(287, 22, 'separator.length === 1');
+}_$jscoverage['/multi-word.js'].branchData['90'][1].init(293, 22, 'separator.length === 1');
 function visit23_90_1(result) {
   _$jscoverage['/multi-word.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['88'][1].init(145, 43, 'strContainsChar(separator, token.charAt(l))');
+}_$jscoverage['/multi-word.js'].branchData['88'][1].init(149, 43, 'strContainsChar(separator, token.charAt(l))');
 function visit22_88_1(result) {
   _$jscoverage['/multi-word.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['80'][2].init(102, 50, 'nextToken && rWhitespace.test(nextToken.charAt(0))');
+}_$jscoverage['/multi-word.js'].branchData['80'][2].init(104, 50, 'nextToken && rWhitespace.test(nextToken.charAt(0))');
 function visit21_80_2(result) {
   _$jscoverage['/multi-word.js'].branchData['80'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['80'][1].init(91, 62, 'value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))');
+}_$jscoverage['/multi-word.js'].branchData['80'][1].init(93, 62, 'value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))');
 function visit20_80_1(result) {
   _$jscoverage['/multi-word.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['78'][1].init(556, 24, 'separatorType !== SUFFIX');
+}_$jscoverage['/multi-word.js'].branchData['78'][1].init(569, 24, 'separatorType !== SUFFIX');
 function visit19_78_1(result) {
   _$jscoverage['/multi-word.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['75'][1].init(439, 28, 'tokens[tokenIndex + 1] || \'\'');
+}_$jscoverage['/multi-word.js'].branchData['75'][1].init(448, 28, 'tokens[tokenIndex + 1] || \'\'');
 function visit18_75_1(result) {
   _$jscoverage['/multi-word.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['57'][2].init(726, 24, 'separatorType === SUFFIX');
+}_$jscoverage['/multi-word.js'].branchData['57'][2].init(744, 24, 'separatorType === SUFFIX');
 function visit17_57_2(result) {
   _$jscoverage['/multi-word.js'].branchData['57'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['57'][1].init(726, 71, 'separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))');
+}_$jscoverage['/multi-word.js'].branchData['57'][1].init(744, 71, 'separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))');
 function visit16_57_1(result) {
   _$jscoverage['/multi-word.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['51'][1].init(25, 43, 'strContainsChar(separator, token.charAt(0))');
+}_$jscoverage['/multi-word.js'].branchData['51'][1].init(26, 43, 'strContainsChar(separator, token.charAt(0))');
 function visit15_51_1(result) {
   _$jscoverage['/multi-word.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['50'][1].init(418, 24, 'separatorType !== SUFFIX');
+}_$jscoverage['/multi-word.js'].branchData['50'][1].init(429, 24, 'separatorType !== SUFFIX');
 function visit14_50_1(result) {
   _$jscoverage['/multi-word.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['32'][1].init(80, 27, 'self.get(\'alignWithCursor\')');
+}_$jscoverage['/multi-word.js'].branchData['32'][1].init(83, 27, 'self.get(\'alignWithCursor\')');
 function visit13_32_1(result) {
   _$jscoverage['/multi-word.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['18'][2].init(25, 29, 'e.target === this.get(\'menu\')');
+}_$jscoverage['/multi-word.js'].branchData['18'][2].init(26, 29, 'e.target === this.get(\'menu\')');
 function visit12_18_2(result) {
   _$jscoverage['/multi-word.js'].branchData['18'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['18'][1].init(13, 41, 'e.newVal && e.target === this.get(\'menu\')');
+}_$jscoverage['/multi-word.js'].branchData['18'][1].init(14, 41, 'e.newVal && e.target === this.get(\'menu\')');
 function visit11_18_1(result) {
   _$jscoverage['/multi-word.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['14'][2].init(21, 21, 'str.indexOf(c) !== -1');
+}_$jscoverage['/multi-word.js'].branchData['14'][2].init(22, 21, 'str.indexOf(c) !== -1');
 function visit10_14_2(result) {
   _$jscoverage['/multi-word.js'].branchData['14'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word.js'].branchData['14'][1].init(16, 26, 'c && str.indexOf(c) !== -1');
+}_$jscoverage['/multi-word.js'].branchData['14'][1].init(17, 26, 'c && str.indexOf(c) !== -1');
 function visit9_14_1(result) {
   _$jscoverage['/multi-word.js'].branchData['14'][1].ranCondition(result);
   return result;

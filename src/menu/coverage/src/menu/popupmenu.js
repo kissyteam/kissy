@@ -274,23 +274,23 @@ if (! _$jscoverage['/menu/popupmenu.js'].branchData) {
   _$jscoverage['/menu/popupmenu.js'].branchData['47'] = [];
   _$jscoverage['/menu/popupmenu.js'].branchData['47'][1] = new BranchData();
 }
-_$jscoverage['/menu/popupmenu.js'].branchData['47'][1].init(72, 8, 'rootMenu');
+_$jscoverage['/menu/popupmenu.js'].branchData['47'][1].init(74, 8, 'rootMenu');
 function visit42_47_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['45'][1].init(276, 32, 'self.get(\'autoHideOnMouseLeave\')');
+}_$jscoverage['/menu/popupmenu.js'].branchData['45'][1].init(284, 32, 'self.get(\'autoHideOnMouseLeave\')');
 function visit41_45_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['34'][1].init(284, 13, 'last === self');
+}_$jscoverage['/menu/popupmenu.js'].branchData['34'][1].init(293, 13, 'last === self');
 function visit40_34_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['33'][2].init(234, 28, 'cur.isMenuItem || cur.isMenu');
+}_$jscoverage['/menu/popupmenu.js'].branchData['33'][2].init(242, 28, 'cur.isMenuItem || cur.isMenu');
 function visit39_33_2(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['33'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['33'][1].init(132, 37, 'cur && (cur.isMenuItem || cur.isMenu)');
+}_$jscoverage['/menu/popupmenu.js'].branchData['33'][1].init(136, 37, 'cur && (cur.isMenuItem || cur.isMenu)');
 function visit38_33_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['33'][1].ranCondition(result);
   return result;

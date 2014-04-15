@@ -278,23 +278,23 @@ if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData['332'] = [];
   _$jscoverage['/modules.js'].branchData['332'][1] = new BranchData();
 }
-_$jscoverage['/modules.js'].branchData['332'][1].init(6607, 24, '!isTouchGestureSupported');
+_$jscoverage['/modules.js'].branchData['332'][1].init(6616, 24, '!isTouchGestureSupported');
 function visit16_332_1(result) {
   _$jscoverage['/modules.js'].branchData['332'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['328'][1].init(6526, 22, '!win.DeviceMotionEvent');
+}_$jscoverage['/modules.js'].branchData['328'][1].init(6535, 22, '!win.DeviceMotionEvent');
 function visit15_328_1(result) {
   _$jscoverage['/modules.js'].branchData['328'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['324'][1].init(6442, 24, '!isTouchGestureSupported');
+}_$jscoverage['/modules.js'].branchData['324'][1].init(6451, 24, '!isTouchGestureSupported');
 function visit14_324_1(result) {
   _$jscoverage['/modules.js'].branchData['324'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['320'][1].init(6359, 24, '!isTouchGestureSupported');
+}_$jscoverage['/modules.js'].branchData['320'][1].init(6368, 24, '!isTouchGestureSupported');
 function visit13_320_1(result) {
   _$jscoverage['/modules.js'].branchData['320'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['316'][1].init(6272, 24, '!isTouchGestureSupported');
+}_$jscoverage['/modules.js'].branchData['316'][1].init(6281, 24, '!isTouchGestureSupported');
 function visit12_316_1(result) {
   _$jscoverage['/modules.js'].branchData['316'][1].ranCondition(result);
   return result;
@@ -326,7 +326,7 @@ function visit9_288_1(result) {
   "combobox/multi-word": ["combobox"], 
   "component/container": ["component/control"], 
   "component/control": ["node", "event/gesture/base", "event/gesture/tap", "component/manager", "base", "xtemplate/runtime"], 
-  "component/extension/align": ["node"], 
+  "component/extension/align": ["node", "ua"], 
   "component/extension/content-box": ["component/extension/content-xtpl"], 
   "component/extension/delegate-children": ["component/manager", "event/gesture/base", "event/gesture/tap"], 
   "component/extension/shim": ["ua"], 
@@ -340,7 +340,6 @@ function visit9_288_1(result) {
   "dd/plugin/constrain": ["node", "base"], 
   "dd/plugin/proxy": ["dd"], 
   "dd/plugin/scroll": ["dd"], 
-  "dom": ["ua"], 
   "dom/base": ["ua"], 
   "dom/class-list": ["dom/base"], 
   "dom/ie": ["dom/base"], 
@@ -348,7 +347,7 @@ function visit9_288_1(result) {
   "editor": ["html-parser", "component/control"], 
   "event/base": ["util"], 
   "event/custom": ["event/base"], 
-  "event/dom/base": ["event/base", "dom"], 
+  "event/dom/base": ["event/base", "dom", "ua"], 
   "event/dom/focusin": ["event/dom/base"], 
   "event/dom/hashchange": ["event/dom/base"], 
   "event/dom/ie": ["event/dom/base"], 
@@ -364,7 +363,7 @@ function visit9_288_1(result) {
   "event/gesture/util": ["event/dom/base"], 
   "feature": ["util", "ua"], 
   "filter-menu": ["menu"], 
-  "io": ["dom", "event/custom", "promise", "uri", "event/dom"], 
+  "io": ["dom", "event/custom", "promise", "uri", "ua", "event/dom"], 
   "menu": ["component/container", "component/extension/delegate-children", "component/extension/content-box", "component/extension/align", "component/extension/shim"], 
   "menubutton": ["button", "menu"], 
   "navigation-view": ["component/container", "component/extension/content-box"], 

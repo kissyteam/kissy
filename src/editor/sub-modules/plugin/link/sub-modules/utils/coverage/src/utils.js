@@ -295,35 +295,35 @@ if (! _$jscoverage['/utils.js'].branchData) {
   _$jscoverage['/utils.js'].branchData['70'] = [];
   _$jscoverage['/utils.js'].branchData['70'][1] = new BranchData();
 }
-_$jscoverage['/utils.js'].branchData['70'][1].init(151, 25, '!range || range.collapsed');
+_$jscoverage['/utils.js'].branchData['70'][1].init(155, 25, '!range || range.collapsed');
 function visit8_70_1(result) {
   _$jscoverage['/utils.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['68'][1].init(56, 25, 'sel && sel.getRanges()[0]');
+}_$jscoverage['/utils.js'].branchData['68'][1].init(57, 25, 'sel && sel.getRanges()[0]');
 function visit7_68_1(result) {
   _$jscoverage['/utils.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['63'][1].init(110, 11, '_selectedEl');
+}_$jscoverage['/utils.js'].branchData['63'][1].init(114, 11, '_selectedEl');
 function visit6_63_1(result) {
   _$jscoverage['/utils.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['51'][1].init(331, 5, 'range');
+}_$jscoverage['/utils.js'].branchData['51'][1].init(340, 5, 'range');
 function visit5_51_1(result) {
   _$jscoverage['/utils.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['46'][1].init(130, 24, 'range && range.collapsed');
+}_$jscoverage['/utils.js'].branchData['46'][1].init(134, 24, 'range && range.collapsed');
 function visit4_46_1(result) {
   _$jscoverage['/utils.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['35'][1].init(256, 16, 'el.style.cssText');
+}_$jscoverage['/utils.js'].branchData['35'][1].init(265, 16, 'el.style.cssText');
 function visit3_35_1(result) {
   _$jscoverage['/utils.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['31'][1].init(52, 11, 'a.specified');
+}_$jscoverage['/utils.js'].branchData['31'][1].init(54, 11, 'a.specified');
 function visit2_31_1(result) {
   _$jscoverage['/utils.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['29'][1].init(86, 21, 'i < attributes.length');
+}_$jscoverage['/utils.js'].branchData['29'][1].init(89, 21, 'i < attributes.length');
 function visit1_29_1(result) {
   _$jscoverage['/utils.js'].branchData['29'][1].ranCondition(result);
   return result;

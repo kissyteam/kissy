@@ -284,27 +284,27 @@ if (! _$jscoverage['/shake.js'].branchData) {
   _$jscoverage['/shake.js'].branchData['66'] = [];
   _$jscoverage['/shake.js'].branchData['66'][1] = new BranchData();
 }
-_$jscoverage['/shake.js'].branchData['66'][1].init(165, 13, 'diff > enough');
+_$jscoverage['/shake.js'].branchData['66'][1].init(170, 13, 'diff > enough');
 function visit6_66_1(result) {
   _$jscoverage['/shake.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['63'][1].init(89, 12, 'diff > start');
+}_$jscoverage['/shake.js'].branchData['63'][1].init(91, 12, 'diff > start');
 function visit5_63_1(result) {
   _$jscoverage['/shake.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['61'][1].init(250, 19, 'lastX !== undefined');
+}_$jscoverage['/shake.js'].branchData['61'][1].init(256, 19, 'lastX !== undefined');
 function visit4_61_1(result) {
   _$jscoverage['/shake.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['41'][1].init(17, 12, 'this !== win');
+}_$jscoverage['/shake.js'].branchData['41'][1].init(18, 12, 'this !== win');
 function visit3_41_1(result) {
   _$jscoverage['/shake.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['35'][1].init(17, 12, 'this !== win');
+}_$jscoverage['/shake.js'].branchData['35'][1].init(18, 12, 'this !== win');
 function visit2_35_1(result) {
   _$jscoverage['/shake.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['20'][1].init(17, 7, 'shaking');
+}_$jscoverage['/shake.js'].branchData['20'][1].init(18, 7, 'shaking');
 function visit1_20_1(result) {
   _$jscoverage['/shake.js'].branchData['20'][1].ranCondition(result);
   return result;

@@ -256,7 +256,7 @@ if (! _$jscoverage['/menu/check-menuitem.js'].branchData) {
   _$jscoverage['/menu/check-menuitem.js'].branchData['16'] = [];
   _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].init(17, 18, 'renderData.checked');
+_$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].init(18, 18, 'renderData.checked');
 function visit4_16_1(result) {
   _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].ranCondition(result);
   return result;

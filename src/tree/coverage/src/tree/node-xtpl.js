@@ -384,31 +384,31 @@ if (! _$jscoverage['/tree/node-xtpl.js'].branchData) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['154'] = [];
   _$jscoverage['/tree/node-xtpl.js'].branchData['154'][1] = new BranchData();
 }
-_$jscoverage['/tree/node-xtpl.js'].branchData['154'][1].init(6327, 37, 'commandRet31 && commandRet31.isBuffer');
+_$jscoverage['/tree/node-xtpl.js'].branchData['154'][1].init(6357, 37, 'commandRet31 && commandRet31.isBuffer');
 function visit29_154_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['141'][1].init(5790, 37, 'commandRet28 && commandRet28.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['141'][1].init(5816, 37, 'commandRet28 && commandRet28.isBuffer');
 function visit28_141_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['128'][1].init(5151, 37, 'commandRet25 && commandRet25.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['128'][1].init(5171, 37, 'commandRet25 && commandRet25.isBuffer');
 function visit27_128_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['110'][1].init(1090, 37, 'commandRet22 && commandRet22.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['110'][1].init(1092, 37, 'commandRet22 && commandRet22.isBuffer');
 function visit26_110_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['97'][1].init(525, 37, 'commandRet19 && commandRet19.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['97'][1].init(527, 37, 'commandRet19 && commandRet19.isBuffer');
 function visit25_97_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['71'][1].init(2829, 37, 'commandRet11 && commandRet11.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['71'][1].init(2839, 37, 'commandRet11 && commandRet11.isBuffer');
 function visit24_71_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-xtpl.js'].branchData['53'][1].init(372, 35, 'commandRet8 && commandRet8.isBuffer');
+}_$jscoverage['/tree/node-xtpl.js'].branchData['53'][1].init(374, 35, 'commandRet8 && commandRet8.isBuffer');
 function visit23_53_1(result) {
   _$jscoverage['/tree/node-xtpl.js'].branchData['53'][1].ranCondition(result);
   return result;
@@ -458,7 +458,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[35]++;
-  buffer.write('\n     ');
+  buffer.write('\r\n     ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -474,7 +474,7 @@ KISSY.add(function(S, require, exports, module) {
   option3.fn = function(scope, buffer) {
   _$jscoverage['/tree/node-xtpl.js'].functionData[2]++;
   _$jscoverage['/tree/node-xtpl.js'].lineData[45]++;
-  buffer.write('\n        ');
+  buffer.write('\r\n        ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[46]++;
   var option6 = {
   escape: 1};
@@ -496,14 +496,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[57]++;
   buffer.write(commandRet8, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[58]++;
-  buffer.write('\n     ');
+  buffer.write('\r\n     ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[60]++;
   return buffer;
 };
   _$jscoverage['/tree/node-xtpl.js'].lineData[62]++;
   buffer = ifCommand.call(engine, scope, option3, buffer, 2, payload);
   _$jscoverage['/tree/node-xtpl.js'].lineData[63]++;
-  buffer.write('\n     ">\n    <div class="');
+  buffer.write('\r\n     ">\r\n    <div class="');
   _$jscoverage['/tree/node-xtpl.js'].lineData[64]++;
   var option9 = {
   escape: 1};
@@ -525,7 +525,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[75]++;
   buffer.write(commandRet11, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[76]++;
-  buffer.write('">\n    </div>\n    ');
+  buffer.write('">\r\n    </div>\r\n    ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[77]++;
   var option12 = {
   escape: 1};
@@ -541,7 +541,7 @@ KISSY.add(function(S, require, exports, module) {
   option12.fn = function(scope, buffer) {
   _$jscoverage['/tree/node-xtpl.js'].functionData[3]++;
   _$jscoverage['/tree/node-xtpl.js'].lineData[86]++;
-  buffer.write('\n    <div class="');
+  buffer.write('\r\n    <div class="');
   _$jscoverage['/tree/node-xtpl.js'].lineData[87]++;
   var option15 = {
   escape: 1};
@@ -591,14 +591,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[114]++;
   buffer.write(commandRet22, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[115]++;
-  buffer.write('"></div>\n    ');
+  buffer.write('"></div>\r\n    ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[117]++;
   return buffer;
 };
   _$jscoverage['/tree/node-xtpl.js'].lineData[119]++;
   buffer = ifCommand.call(engine, scope, option12, buffer, 8, payload);
   _$jscoverage['/tree/node-xtpl.js'].lineData[120]++;
-  buffer.write('\n    <div class="');
+  buffer.write('\r\n    <div class="');
   _$jscoverage['/tree/node-xtpl.js'].lineData[121]++;
   var option23 = {
   escape: 1};
@@ -620,7 +620,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[132]++;
   buffer.write(commandRet25, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[133]++;
-  buffer.write('">\n\n    </div>\n    ');
+  buffer.write('">\r\n\r\n    </div>\r\n    ');
   _$jscoverage['/tree/node-xtpl.js'].lineData[134]++;
   var option26 = {};
   _$jscoverage['/tree/node-xtpl.js'].lineData[135]++;
@@ -645,7 +645,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[145]++;
   buffer.write(commandRet28, false);
   _$jscoverage['/tree/node-xtpl.js'].lineData[146]++;
-  buffer.write('\n</div>\n<div class="');
+  buffer.write('\r\n</div>\r\n<div class="');
   _$jscoverage['/tree/node-xtpl.js'].lineData[147]++;
   var option29 = {
   escape: 1};
@@ -667,7 +667,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tree/node-xtpl.js'].lineData[158]++;
   buffer.write(commandRet31, true);
   _$jscoverage['/tree/node-xtpl.js'].lineData[159]++;
-  buffer.write('"\n');
+  buffer.write('"\r\n');
   _$jscoverage['/tree/node-xtpl.js'].lineData[160]++;
   var option32 = {
   escape: 1};
@@ -683,14 +683,14 @@ KISSY.add(function(S, require, exports, module) {
   option32.fn = function(scope, buffer) {
   _$jscoverage['/tree/node-xtpl.js'].functionData[4]++;
   _$jscoverage['/tree/node-xtpl.js'].lineData[169]++;
-  buffer.write('\nstyle="display:none"\n');
+  buffer.write('\r\nstyle="display:none"\r\n');
   _$jscoverage['/tree/node-xtpl.js'].lineData[171]++;
   return buffer;
 };
   _$jscoverage['/tree/node-xtpl.js'].lineData[173]++;
   buffer = ifCommand.call(engine, scope, option32, buffer, 17, payload);
   _$jscoverage['/tree/node-xtpl.js'].lineData[174]++;
-  buffer.write('\n>\n</div>');
+  buffer.write('\r\n>\r\n</div>');
   _$jscoverage['/tree/node-xtpl.js'].lineData[175]++;
   return buffer;
 };

@@ -286,23 +286,23 @@ if (! _$jscoverage['/io/script-transport.js'].branchData) {
   _$jscoverage['/io/script-transport.js'].branchData['81'] = [];
   _$jscoverage['/io/script-transport.js'].branchData['81'][1] = new BranchData();
 }
-_$jscoverage['/io/script-transport.js'].branchData['81'][1].init(442, 17, 'event === \'error\'');
+_$jscoverage['/io/script-transport.js'].branchData['81'][1].init(457, 17, 'event === \'error\'');
 function visit115_81_1(result) {
   _$jscoverage['/io/script-transport.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/script-transport.js'].branchData['79'][1].init(348, 17, 'event !== \'error\'');
+}_$jscoverage['/io/script-transport.js'].branchData['79'][1].init(361, 17, 'event !== \'error\'');
 function visit114_79_1(result) {
   _$jscoverage['/io/script-transport.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/script-transport.js'].branchData['75'][1].init(248, 5, 'abort');
+}_$jscoverage['/io/script-transport.js'].branchData['75'][1].init(257, 5, 'abort');
 function visit113_75_1(result) {
   _$jscoverage['/io/script-transport.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/script-transport.js'].branchData['71'][1].init(146, 7, '!script');
+}_$jscoverage['/io/script-transport.js'].branchData['71'][1].init(151, 7, '!script');
 function visit112_71_1(result) {
   _$jscoverage['/io/script-transport.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/script-transport.js'].branchData['42'][1].init(120, 19, '!config.crossDomain');
+}_$jscoverage['/io/script-transport.js'].branchData['42'][1].init(124, 19, '!config.crossDomain');
 function visit111_42_1(result) {
   _$jscoverage['/io/script-transport.js'].branchData['42'][1].ranCondition(result);
   return result;

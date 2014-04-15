@@ -4,18 +4,18 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var ui=require('./font/ui');
-    var cmd=require('./bold/cmd');
+    var ui = require('./font/ui');
+    var cmd = require('./bold/cmd');
     require('./button');
     function bold() {
     }
 
     S.augment(bold, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
             editor.addButton('bold', {
-                cmdType:'bold',
-                tooltip:'粗体'
+                cmdType: 'bold',
+                tooltip: '粗体'
             }, ui.Button);
 
             editor.docReady(function () {

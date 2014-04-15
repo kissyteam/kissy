@@ -31,6 +31,7 @@ function mix(r, s) {
 }
 
 function getFiles(dir) {
+    dir = dir.replace(/\\/g, '/');
     var files = fs.readdirSync(dir);
     for (var i in files) {
         if (!files.hasOwnProperty(i)) {
@@ -63,7 +64,7 @@ requireFiles.forEach(function (r) {
     try {
         mix(requires, eval('(' + content + ')'));
     } catch (e) {
-        console.error(r + ' : ' + content);
+        console.error(r + ': ' + content);
         throw e;
     }
 });

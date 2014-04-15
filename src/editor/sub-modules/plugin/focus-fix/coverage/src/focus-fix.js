@@ -283,27 +283,27 @@ if (! _$jscoverage['/focus-fix.js'].branchData) {
   _$jscoverage['/focus-fix.js'].branchData['67'] = [];
   _$jscoverage['/focus-fix.js'].branchData['67'][1] = new BranchData();
 }
-_$jscoverage['/focus-fix.js'].branchData['67'][1].init(21, 8, 'e.newVal');
+_$jscoverage['/focus-fix.js'].branchData['67'][1].init(22, 8, 'e.newVal');
 function visit6_67_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['59'][1].init(78, 6, 'editor');
+}_$jscoverage['/focus-fix.js'].branchData['59'][1].init(81, 6, 'editor');
 function visit5_59_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['46'][2].init(269, 58, '$range.item(0).ownerDocument === editor.get(\'document\')[0]');
+}_$jscoverage['/focus-fix.js'].branchData['46'][2].init(276, 58, '$range.item(0).ownerDocument === editor.get(\'document\')[0]');
 function visit4_46_2(result) {
   _$jscoverage['/focus-fix.js'].branchData['46'][2].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['46'][1].init(235, 73, '$range.item && $range.item(0).ownerDocument === editor.get(\'document\')[0]');
+}_$jscoverage['/focus-fix.js'].branchData['46'][1].init(241, 73, '$range.item && $range.item(0).ownerDocument === editor.get(\'document\')[0]');
 function visit3_46_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['39'][1].init(471, 6, '$range');
+}_$jscoverage['/focus-fix.js'].branchData['39'][1].init(487, 6, '$range');
 function visit2_39_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['23'][1].init(439, 15, 'UA.ie && editor');
+}_$jscoverage['/focus-fix.js'].branchData['23'][1].init(451, 15, 'UA.ie && editor');
 function visit1_23_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['23'][1].ranCondition(result);
   return result;

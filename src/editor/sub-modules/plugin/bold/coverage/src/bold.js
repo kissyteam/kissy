@@ -258,11 +258,11 @@ if (! _$jscoverage['/bold.js'].branchData) {
   _$jscoverage['/bold.js'].branchData['23'][1] = new BranchData();
   _$jscoverage['/bold.js'].branchData['23'][2] = new BranchData();
 }
-_$jscoverage['/bold.js'].branchData['23'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.B');
+_$jscoverage['/bold.js'].branchData['23'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.B');
 function visit2_23_2(result) {
   _$jscoverage['/bold.js'].branchData['23'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bold.js'].branchData['23'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.B');
+}_$jscoverage['/bold.js'].branchData['23'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.B');
 function visit1_23_1(result) {
   _$jscoverage['/bold.js'].branchData['23'][1].ranCondition(result);
   return result;

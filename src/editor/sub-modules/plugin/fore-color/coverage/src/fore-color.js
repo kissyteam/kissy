@@ -250,7 +250,7 @@ if (! _$jscoverage['/fore-color.js'].branchData) {
   _$jscoverage['/fore-color.js'].branchData['12'] = [];
   _$jscoverage['/fore-color.js'].branchData['12'][1] = new BranchData();
 }
-_$jscoverage['/fore-color.js'].branchData['12'][1].init(23, 12, 'config || {}');
+_$jscoverage['/fore-color.js'].branchData['12'][1].init(24, 12, 'config || {}');
 function visit1_12_1(result) {
   _$jscoverage['/fore-color.js'].branchData['12'][1].ranCondition(result);
   return result;

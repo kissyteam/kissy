@@ -302,15 +302,15 @@ if (! _$jscoverage['/filter-menu/render-xtpl.js'].branchData) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'] = [];
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1] = new BranchData();
 }
-_$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1].init(3103, 37, 'commandRet12 && commandRet12.isBuffer');
+_$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1].init(3117, 37, 'commandRet12 && commandRet12.isBuffer');
 function visit5_72_1(result) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'][1].init(2447, 35, 'commandRet9 && commandRet9.isBuffer');
+}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'][1].init(2455, 35, 'commandRet9 && commandRet9.isBuffer');
 function visit4_59_1(result) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'][1].init(1784, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'][1].init(1786, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit3_43_1(result) {
   _$jscoverage['/filter-menu/render-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -360,7 +360,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[35]++;
-  buffer.write('">\n    <div class="');
+  buffer.write('">\r\n    <div class="');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -382,13 +382,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[47]++;
   buffer.write(commandRet5, true);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[48]++;
-  buffer.write('">\n        ');
+  buffer.write('">\r\n        ');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[49]++;
   var id6 = scope.resolve(["placeholder"]);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[50]++;
   buffer.write(id6, true);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[51]++;
-  buffer.write('\n    </div>\n    <input class="');
+  buffer.write('\r\n    </div>\r\n    <input class="');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[52]++;
   var option7 = {
   escape: 1};
@@ -410,7 +410,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[63]++;
   buffer.write(commandRet9, true);
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[64]++;
-  buffer.write('"\n            autocomplete="off"/>\n</div>\n');
+  buffer.write('"\r\n            autocomplete="off"/>\r\n</div>\r\n');
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[65]++;
   var option10 = {};
   _$jscoverage['/filter-menu/render-xtpl.js'].lineData[66]++;

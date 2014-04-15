@@ -319,7 +319,7 @@ if (! _$jscoverage['/init.js'].branchData) {
   _$jscoverage['/init.js'].branchData['122'] = [];
   _$jscoverage['/init.js'].branchData['122'][1] = new BranchData();
 }
-_$jscoverage['/init.js'].branchData['122'][1].init(3530, 31, 'doc && doc.getElementsByTagName');
+_$jscoverage['/init.js'].branchData['122'][1].init(3544, 31, 'doc && doc.getElementsByTagName');
 function visit170_122_1(result) {
   _$jscoverage['/init.js'].branchData['122'][1].ranCondition(result);
   return result;
@@ -395,7 +395,7 @@ function visit157_7_1(result) {
     return (new Function('return ' + s))();
   }
   _$jscoverage['/init.js'].lineData[19]++;
-  var baseReg = /^(.*)(seed|loader)(?:-min)?\.js[^/]*/i, baseTestReg = /(seed|loader)(?:-min)?\.js/i;
+  var baseReg = /^(.*)(seed|loader)(?:-debug)?\.js[^/]*/i, baseTestReg = /(seed|loader)(?:-debug)?\.js/i;
   _$jscoverage['/init.js'].lineData[22]++;
   function getBaseInfoFromOneScript(script) {
     _$jscoverage['/init.js'].functionData[2]++;
@@ -481,7 +481,7 @@ function visit157_7_1(result) {
       }
     }
     _$jscoverage['/init.js'].lineData[103]++;
-    var msg = 'must load kissy by file name in browser environment: ' + 'seed.js or seed-min.js loader.js or loader-min.js';
+    var msg = 'must load kissy by file name in browser environment: ' + 'seed-debug.js or seed.js loader.js or loader-debug.js';
     _$jscoverage['/init.js'].lineData[106]++;
     S.log(msg, 'error');
     _$jscoverage['/init.js'].lineData[107]++;

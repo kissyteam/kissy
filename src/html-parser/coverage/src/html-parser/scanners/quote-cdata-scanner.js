@@ -252,7 +252,7 @@ if (! _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'] = [];
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1].init(20, 10, 'opts || {}');
+_$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1].init(21, 10, 'opts || {}');
 function visit283_13_1(result) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1].ranCondition(result);
   return result;

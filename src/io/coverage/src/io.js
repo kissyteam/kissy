@@ -289,27 +289,27 @@ if (! _$jscoverage['/io.js'].branchData) {
   _$jscoverage['/io.js'].branchData['143'] = [];
   _$jscoverage['/io.js'].branchData['143'][1] = new BranchData();
 }
-_$jscoverage['/io.js'].branchData['143'][1].init(17, 26, 'typeof data === \'function\'');
+_$jscoverage['/io.js'].branchData['143'][1].init(18, 26, 'typeof data === \'function\'');
 function visit192_143_1(result) {
   _$jscoverage['/io.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['121'][1].init(17, 26, 'typeof data === \'function\'');
+}_$jscoverage['/io.js'].branchData['121'][1].init(18, 26, 'typeof data === \'function\'');
 function visit191_121_1(result) {
   _$jscoverage['/io.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['93'][1].init(17, 26, 'typeof data === \'function\'');
+}_$jscoverage['/io.js'].branchData['93'][1].init(18, 26, 'typeof data === \'function\'');
 function visit190_93_1(result) {
   _$jscoverage['/io.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['70'][1].init(17, 26, 'typeof data === \'function\'');
+}_$jscoverage['/io.js'].branchData['70'][1].init(18, 26, 'typeof data === \'function\'');
 function visit189_70_1(result) {
   _$jscoverage['/io.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['26'][1].init(19, 13, 'type || \'get\'');
+}_$jscoverage['/io.js'].branchData['26'][1].init(20, 13, 'type || \'get\'');
 function visit188_26_1(result) {
   _$jscoverage['/io.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io.js'].branchData['19'][1].init(35, 26, 'typeof data === \'function\'');
+}_$jscoverage['/io.js'].branchData['19'][1].init(37, 26, 'typeof data === \'function\'');
 function visit187_19_1(result) {
   _$jscoverage['/io.js'].branchData['19'][1].ranCondition(result);
   return result;

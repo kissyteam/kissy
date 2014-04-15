@@ -253,11 +253,11 @@ if (! _$jscoverage['/shim.js'].branchData) {
   _$jscoverage['/shim.js'].branchData['45'] = [];
   _$jscoverage['/shim.js'].branchData['45'][1] = new BranchData();
 }
-_$jscoverage['/shim.js'].branchData['45'][1].init(13, 16, 'this.get(\'shim\')');
+_$jscoverage['/shim.js'].branchData['45'][1].init(14, 16, 'this.get(\'shim\')');
 function visit2_45_1(result) {
   _$jscoverage['/shim.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shim.js'].branchData['8'][1].init(43, 11, 'UA.ie === 6');
+}_$jscoverage['/shim.js'].branchData['8'][1].init(45, 11, 'UA.ie === 6');
 function visit1_8_1(result) {
   _$jscoverage['/shim.js'].branchData['8'][1].ranCondition(result);
   return result;

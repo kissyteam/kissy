@@ -255,15 +255,15 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['23'] = [];
   _$jscoverage['/cmd.js'].branchData['23'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['23'][1].init(17, 31, '!editor.hasCommand(\'foreColor\')');
+_$jscoverage['/cmd.js'].branchData['23'][1].init(18, 31, '!editor.hasCommand(\'foreColor\')');
 function visit3_23_1(result) {
   _$jscoverage['/cmd.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][2].init(115, 21, 'el.nodeName() === \'a\'');
+}_$jscoverage['/cmd.js'].branchData['17'][2].init(118, 21, 'el.nodeName() === \'a\'');
 function visit2_17_2(result) {
   _$jscoverage['/cmd.js'].branchData['17'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][1].init(115, 43, 'el.nodeName() === \'a\' || el.all(\'a\').length');
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(118, 43, 'el.nodeName() === \'a\' || el.all(\'a\').length');
 function visit1_17_1(result) {
   _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;

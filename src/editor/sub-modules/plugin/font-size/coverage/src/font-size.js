@@ -261,7 +261,7 @@ if (! _$jscoverage['/font-size.js'].branchData) {
   _$jscoverage['/font-size.js'].branchData['13'] = [];
   _$jscoverage['/font-size.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/font-size.js'].branchData['13'][1].init(23, 12, 'config || {}');
+_$jscoverage['/font-size.js'].branchData['13'][1].init(24, 12, 'config || {}');
 function visit1_13_1(result) {
   _$jscoverage['/font-size.js'].branchData['13'][1].ranCondition(result);
   return result;

@@ -271,23 +271,23 @@ if (! _$jscoverage['/focusin.js'].branchData) {
   _$jscoverage['/focusin.js'].branchData['35'] = [];
   _$jscoverage['/focusin.js'].branchData['35'][1] = new BranchData();
 }
-_$jscoverage['/focusin.js'].branchData['35'][1].init(106, 14, 'doc[key] === 0');
+_$jscoverage['/focusin.js'].branchData['35'][1].init(109, 14, 'doc[key] === 0');
 function visit5_35_1(result) {
   _$jscoverage['/focusin.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focusin.js'].branchData['33'][1].init(27, 26, 'this.ownerDocument || this');
+}_$jscoverage['/focusin.js'].branchData['33'][1].init(28, 26, 'this.ownerDocument || this');
 function visit4_33_1(result) {
   _$jscoverage['/focusin.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focusin.js'].branchData['27'][1].init(234, 14, 'doc[key] === 1');
+}_$jscoverage['/focusin.js'].branchData['27'][1].init(241, 14, 'doc[key] === 1');
 function visit3_27_1(result) {
   _$jscoverage['/focusin.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focusin.js'].branchData['23'][1].init(114, 13, '!(key in doc)');
+}_$jscoverage['/focusin.js'].branchData['23'][1].init(117, 13, '!(key in doc)');
 function visit2_23_1(result) {
   _$jscoverage['/focusin.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focusin.js'].branchData['22'][1].init(66, 26, 'this.ownerDocument || this');
+}_$jscoverage['/focusin.js'].branchData['22'][1].init(68, 26, 'this.ownerDocument || this');
 function visit1_22_1(result) {
   _$jscoverage['/focusin.js'].branchData['22'][1].ranCondition(result);
   return result;

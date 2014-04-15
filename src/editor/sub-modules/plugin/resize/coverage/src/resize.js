@@ -288,27 +288,27 @@ if (! _$jscoverage['/resize.js'].branchData) {
   _$jscoverage['/resize.js'].branchData['63'] = [];
   _$jscoverage['/resize.js'].branchData['63'][1] = new BranchData();
 }
-_$jscoverage['/resize.js'].branchData['63'][1].init(149, 25, 'S.inArray(\'x\', direction)');
+_$jscoverage['/resize.js'].branchData['63'][1].init(153, 25, 'S.inArray(\'x\', direction)');
 function visit6_63_1(result) {
   _$jscoverage['/resize.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['60'][1].init(21, 25, 'S.inArray(\'y\', direction)');
+}_$jscoverage['/resize.js'].branchData['60'][1].init(22, 25, 'S.inArray(\'y\', direction)');
 function visit5_60_1(result) {
   _$jscoverage['/resize.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['24'][1].init(21, 20, 'direction[0] === \'x\'');
+}_$jscoverage['/resize.js'].branchData['24'][1].init(22, 20, 'direction[0] === \'x\'');
 function visit4_24_1(result) {
   _$jscoverage['/resize.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['23'][1].init(248, 22, 'direction.length === 1');
+}_$jscoverage['/resize.js'].branchData['23'][1].init(256, 22, 'direction.length === 1');
 function visit3_23_1(result) {
   _$jscoverage['/resize.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['19'][1].init(149, 27, 'cfg.direction || [\'x\', \'y\']');
+}_$jscoverage['/resize.js'].branchData['19'][1].init(152, 27, 'cfg.direction || [\'x\', \'y\']');
 function visit2_19_1(result) {
   _$jscoverage['/resize.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['11'][1].init(23, 12, 'config || {}');
+}_$jscoverage['/resize.js'].branchData['11'][1].init(24, 12, 'config || {}');
 function visit1_11_1(result) {
   _$jscoverage['/resize.js'].branchData['11'][1].ranCondition(result);
   return result;

@@ -264,6 +264,7 @@ if (! _$jscoverage['/nodejs.js']) {
   _$jscoverage['/nodejs.js'].lineData[74] = 0;
   _$jscoverage['/nodejs.js'].lineData[76] = 0;
   _$jscoverage['/nodejs.js'].lineData[80] = 0;
+  _$jscoverage['/nodejs.js'].lineData[83] = 0;
 }
 if (! _$jscoverage['/nodejs.js'].functionData) {
   _$jscoverage['/nodejs.js'].functionData = [];
@@ -426,4 +427,8 @@ function visit215_16_1(result) {
   _$jscoverage['/nodejs.js'].lineData[80]++;
   return visit224_80_1(typeof modName === 'string') ? ret[0] : ret;
 };
+  _$jscoverage['/nodejs.js'].lineData[83]++;
+  S.config('packages', {
+  core: {
+  filter: ''}});
 })(KISSY);

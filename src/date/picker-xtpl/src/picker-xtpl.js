@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    <a class="');
+            buffer.write('">\r\n    <a class="');
             var option3 = {
                 escape: 1
             };
@@ -45,10 +45,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, true);
-            buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
             var id6 = scope.resolve(["previousYearLabel"]);
             buffer.write(id6, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n    <a class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
             var option7 = {
                 escape: 1
             };
@@ -61,10 +61,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet9 = undefined;
             }
             buffer.write(commandRet9, true);
-            buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
             var id10 = scope.resolve(["previousMonthLabel"]);
             buffer.write(id10, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n    <a class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
             var option11 = {
                 escape: 1
             };
@@ -77,13 +77,13 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet13 = undefined;
             }
             buffer.write(commandRet13, true);
-            buffer.write('"\n       role="button"\n       href="#"\n       tabindex="-1"\n       hidefocus="on"\n       title="');
+            buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       tabindex="-1"\r\n       hidefocus="on"\r\n       title="');
             var id14 = scope.resolve(["monthSelectLabel"]);
             buffer.write(id14, true);
-            buffer.write('">\n        <span>');
+            buffer.write('">\r\n        <span>');
             var id15 = scope.resolve(["monthYearLabel"]);
             buffer.write(id15, true);
-            buffer.write('</span>\n        <span class="');
+            buffer.write('</span>\r\n        <span class="');
             var option16 = {
                 escape: 1
             };
@@ -96,7 +96,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet18 = undefined;
             }
             buffer.write(commandRet18, true);
-            buffer.write('">x</span>\n    </a>\n    <a class="');
+            buffer.write('">x</span>\r\n    </a>\r\n    <a class="');
             var option19 = {
                 escape: 1
             };
@@ -109,10 +109,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet21 = undefined;
             }
             buffer.write(commandRet21, true);
-            buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
             var id22 = scope.resolve(["nextMonthLabel"]);
             buffer.write(id22, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n    <a class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
             var option23 = {
                 escape: 1
             };
@@ -125,10 +125,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet25 = undefined;
             }
             buffer.write(commandRet25, true);
-            buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
             var id26 = scope.resolve(["nextYearLabel"]);
             buffer.write(id26, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
             var option27 = {
                 escape: 1
             };
@@ -141,7 +141,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet29 = undefined;
             }
             buffer.write(commandRet29, true);
-            buffer.write('">\n    <table class="');
+            buffer.write('">\r\n    <table class="');
             var option30 = {
                 escape: 1
             };
@@ -154,7 +154,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet32 = undefined;
             }
             buffer.write(commandRet32, true);
-            buffer.write('" cellspacing="0" role="grid">\n        <thead>\n        <tr role="row">\n            ');
+            buffer.write('" cellspacing="0" role="grid">\r\n        <thead>\r\n        <tr role="row">\r\n            ');
             var option33 = {
                 escape: 1
             };
@@ -164,7 +164,7 @@ KISSY.add(function (S, require, exports, module) {
             option33.params = params34;
             option33.fn = function (scope, buffer) {
 
-                buffer.write('\n            <th role="columnheader" class="');
+                buffer.write('\r\n            <th role="columnheader" class="');
                 var option36 = {
                     escape: 1
                 };
@@ -190,7 +190,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet41 = undefined;
                 }
                 buffer.write(commandRet41, true);
-                buffer.write('">\n                <span class="');
+                buffer.write('">\r\n                <span class="');
                 var option42 = {
                     escape: 1
                 };
@@ -203,12 +203,12 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet44 = undefined;
                 }
                 buffer.write(commandRet44, true);
-                buffer.write('">x</span>\n            </th>\n            ');
+                buffer.write('">x</span>\r\n            </th>\r\n            ');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option33, buffer, 44, payload);
-            buffer.write('\n            ');
+            buffer.write('\r\n            ');
             var option45 = {
                 escape: 1
             };
@@ -218,7 +218,7 @@ KISSY.add(function (S, require, exports, module) {
             option45.params = params46;
             option45.fn = function (scope, buffer) {
 
-                buffer.write('\n            <th role="columnheader" title="');
+                buffer.write('\r\n            <th role="columnheader" title="');
                 var id48 = scope.resolve(["this"]);
                 buffer.write(id48, true);
                 buffer.write('" class="');
@@ -234,7 +234,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet51 = undefined;
                 }
                 buffer.write(commandRet51, true);
-                buffer.write('">\n                <span class="');
+                buffer.write('">\r\n                <span class="');
                 var option52 = {
                     escape: 1
                 };
@@ -247,16 +247,16 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet54 = undefined;
                 }
                 buffer.write(commandRet54, true);
-                buffer.write('">\n                    ');
+                buffer.write('">\r\n                    ');
                 var id56 = scope.resolve(["xindex"]);
                 var id55 = scope.resolve(["veryShortWeekdays", id56]);
                 buffer.write(id55, true);
-                buffer.write('\n                </span>\n            </th>\n            ');
+                buffer.write('\r\n                </span>\r\n            </th>\r\n            ');
 
                 return buffer;
             };
             buffer = eachCommand.call(engine, scope, option45, buffer, 49, payload);
-            buffer.write('\n        </tr>\n        </thead>\n        <tbody>\n        ');
+            buffer.write('\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        ');
             var option57 = {};
             var commandRet58 = callCommandUtil(engine, scope, option57, buffer, "renderDates", 59);
             if (commandRet58 && commandRet58.isBuffer) {
@@ -264,7 +264,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet58 = undefined;
             }
             buffer.write(commandRet58, false);
-            buffer.write('\n        </tbody>\n    </table>\n</div>\n');
+            buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>\r\n');
             var option59 = {
                 escape: 1
             };
@@ -279,7 +279,7 @@ KISSY.add(function (S, require, exports, module) {
             option59.params = params60;
             option59.fn = function (scope, buffer) {
 
-                buffer.write('\n<div class="');
+                buffer.write('\r\n<div class="');
                 var option64 = {
                     escape: 1
                 };
@@ -292,7 +292,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet66 = undefined;
                 }
                 buffer.write(commandRet66, true);
-                buffer.write('">\n    <a class="');
+                buffer.write('">\r\n    <a class="');
                 var option67 = {
                     escape: 1
                 };
@@ -305,13 +305,13 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet69 = undefined;
                 }
                 buffer.write(commandRet69, true);
-                buffer.write('"\n       role="button"\n       hidefocus="on"\n       tabindex="-1"\n       href="#"\n       title="');
+                buffer.write('"\r\n       role="button"\r\n       hidefocus="on"\r\n       tabindex="-1"\r\n       href="#"\r\n       title="');
                 var id70 = scope.resolve(["todayTimeLabel"]);
                 buffer.write(id70, true);
                 buffer.write('">');
                 var id71 = scope.resolve(["todayLabel"]);
                 buffer.write(id71, true);
-                buffer.write('</a>\n    <a class="');
+                buffer.write('</a>\r\n    <a class="');
                 var option72 = {
                     escape: 1
                 };
@@ -324,10 +324,10 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet74 = undefined;
                 }
                 buffer.write(commandRet74, true);
-                buffer.write('"\n       role="button"\n       hidefocus="on"\n       tabindex="-1"\n       href="#">');
+                buffer.write('"\r\n       role="button"\r\n       hidefocus="on"\r\n       tabindex="-1"\r\n       href="#">');
                 var id75 = scope.resolve(["clearLabel"]);
                 buffer.write(id75, true);
-                buffer.write('</a>\n</div>\n');
+                buffer.write('</a>\r\n</div>\r\n');
 
                 return buffer;
             };

@@ -1,6 +1,6 @@
 {
     "name": "kissy",
-    "version": "1.5.0dev",
+    "version": "5.0.0dev",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
     "homepage": "http://docs.kissyui.com",
@@ -45,7 +45,8 @@
         "jscs": "~1.0.15",
         "recluster": "~0.3.6",
         "debug": "~0.7.4",
-        "deps-optimizer": "~0.1"
+        "deps-optimizer": "~0.1",
+        "kmc": "1.1.x"
     },
     "dependencies": {
         "chokidar": "~0.7.0",

@@ -258,11 +258,11 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['20'] = [];
   _$jscoverage['/cmd.js'].branchData['20'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['20'][1].init(92, 33, 'selection && !selection.isInvalid');
+_$jscoverage['/cmd.js'].branchData['20'][1].init(94, 33, 'selection && !selection.isInvalid');
 function visit2_20_1(result) {
   _$jscoverage['/cmd.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['16'][1].init(124, 28, '!editor.hasCommand(queryCmd)');
+}_$jscoverage['/cmd.js'].branchData['16'][1].init(127, 28, '!editor.hasCommand(queryCmd)');
 function visit1_16_1(result) {
   _$jscoverage['/cmd.js'].branchData['16'][1].ranCondition(result);
   return result;

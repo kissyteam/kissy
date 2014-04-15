@@ -35,7 +35,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('">');
             var id3 = scope.resolve(["content"]);
             buffer.write(id3, false);
-            buffer.write('</div>\n<span class="');
+            buffer.write('</div>\r\n<span class="');
             var id4 = scope.resolve(["prefixCls"]);
             buffer.write(id4, true);
             buffer.write('submenu-arrow">►</span>');

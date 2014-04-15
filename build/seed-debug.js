@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 14:26
+build time: Apr 15 17:58
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 14:25
+build time: Apr 15 17:57
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140415142539' will replace with current timestamp when compressing.
+         * NOTICE: '20140415175730' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140415142539',
+        __BUILD_TIME: '20140415175730',
 
         /**
          * KISSY Environment.
@@ -2343,7 +2343,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140415142539';
+    var TIMESTAMP = '20140415175730';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2352,8 +2352,8 @@ KISSY.add('i18n', {
         return (new Function('return ' + s))();
     }
 
-    var baseReg = /^(.*)(seed|loader)(?:-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|loader)(?:-min)?\.js/i;
+    var baseReg = /^(.*)(seed|loader)(?:-debug)?\.js[^/]*/i,
+        baseTestReg = /(seed|loader)(?:-debug)?\.js/i;
 
     function getBaseInfoFromOneScript(script) {
         // can not use KISSY.Uri
@@ -2413,7 +2413,7 @@ KISSY.add('i18n', {
     }
 
     /**
-     * get base from seed.js
+     * get base from seed-debug.js
      * @return {Object} base for kissy
      * @ignore
      *
@@ -2437,7 +2437,7 @@ KISSY.add('i18n', {
         }
 
         var msg = 'must load kissy by file name in browser environment: ' +
-            'seed.js or seed-min.js loader.js or loader-min.js';
+            'seed-debug.js or seed.js loader.js or loader-debug.js';
 
         S.log(msg, 'error');
         return null;
@@ -2468,7 +2468,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 14:26
+build time: Apr 15 17:57
 */
 /*
 combined files : 
@@ -4281,7 +4281,7 @@ KISSY.add('util',['util/array', 'util/escape', 'util/function', 'util/object', '
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 14:25
+build time: Apr 15 17:57
 */
 /*
 combined files : 
@@ -4709,7 +4709,7 @@ KISSY.add('ua',function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 14:25
+build time: Apr 15 17:57
 */
 /*
 combined files : 
@@ -5030,7 +5030,8 @@ S.config("requires",{
         "xtemplate/runtime"
     ],
     "component/extension/align": [
-        "node"
+        "node",
+        "ua"
     ],
     "component/extension/content-box": [
         "component/extension/content-xtpl"
@@ -5082,9 +5083,6 @@ S.config("requires",{
     "dd/plugin/scroll": [
         "dd"
     ],
-    "dom": [
-        "ua"
-    ],
     "dom/base": [
         "ua"
     ],
@@ -5109,7 +5107,8 @@ S.config("requires",{
     ],
     "event/dom/base": [
         "event/base",
-        "dom"
+        "dom",
+        "ua"
     ],
     "event/dom/focusin": [
         "event/dom/base"
@@ -5162,6 +5161,7 @@ S.config("requires",{
         "event/custom",
         "promise",
         "uri",
+        "ua",
         "event/dom"
     ],
     "menu": [

@@ -283,23 +283,23 @@ if (! _$jscoverage['/tabs/body.js'].branchData) {
   _$jscoverage['/tabs/body.js'].branchData['83'] = [];
   _$jscoverage['/tabs/body.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/tabs/body.js'].branchData['83'][1].init(66, 18, '!c.get(\'selected\')');
+_$jscoverage['/tabs/body.js'].branchData['83'][1].init(68, 18, '!c.get(\'selected\')');
 function visit11_83_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['81'][1].init(13, 22, 'self.get(\'lazyRender\')');
+}_$jscoverage['/tabs/body.js'].branchData['81'][1].init(14, 22, 'self.get(\'lazyRender\')');
 function visit10_81_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['51'][1].init(83, 22, 'this.get(\'lazyRender\')');
+}_$jscoverage['/tabs/body.js'].branchData['51'][1].init(85, 22, 'this.get(\'lazyRender\')');
 function visit9_51_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(21, 17, 'c.get(\'selected\')');
+}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(22, 17, 'c.get(\'selected\')');
 function visit8_33_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['20'][1].init(146, 18, 'children[newIndex]');
+}_$jscoverage['/tabs/body.js'].branchData['20'][1].init(150, 18, 'children[newIndex]');
 function visit7_20_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['20'][1].ranCondition(result);
   return result;

@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, false);
-            buffer.write('\n');
+            buffer.write('\r\n');
             var option3 = {
                 escape: 1
             };
@@ -41,7 +41,7 @@ KISSY.add(function (S, require, exports, module) {
             option3.params = params4;
             option3.fn = function (scope, buffer) {
 
-                buffer.write('\n    <div class="');
+                buffer.write('\r\n    <div class="');
                 var option5 = {
                     escape: 1
                 };
@@ -54,7 +54,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet7 = undefined;
                 }
                 buffer.write(commandRet7, true);
-                buffer.write('"\n         style="\n');
+                buffer.write('"\r\n         style="\r\n');
                 var option8 = {
                     escape: 1
                 };
@@ -64,21 +64,21 @@ KISSY.add(function (S, require, exports, module) {
                 option8.params = params9;
                 option8.fn = function (scope, buffer) {
 
-                    buffer.write('\n ');
+                    buffer.write('\r\n ');
                     var id11 = scope.resolve(["xindex"]);
                     buffer.write(id11, true);
                     buffer.write(':');
                     var id12 = scope.resolve(["this"]);
                     buffer.write(id12, true);
-                    buffer.write(';\n');
+                    buffer.write(';\r\n');
 
                     return buffer;
                 };
                 buffer = eachCommand.call(engine, scope, option8, buffer, 5, payload);
-                buffer.write('\n">');
+                buffer.write('\r\n">');
                 var id13 = scope.resolve(["headerContent"]);
                 buffer.write(id13, false);
-                buffer.write('</div>\n\n    <div class="');
+                buffer.write('</div>\r\n\r\n    <div class="');
                 var option14 = {
                     escape: 1
                 };
@@ -91,7 +91,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet16 = undefined;
                 }
                 buffer.write(commandRet16, true);
-                buffer.write('"\n         style="\n');
+                buffer.write('"\r\n         style="\r\n');
                 var option17 = {
                     escape: 1
                 };
@@ -101,21 +101,21 @@ KISSY.add(function (S, require, exports, module) {
                 option17.params = params18;
                 option17.fn = function (scope, buffer) {
 
-                    buffer.write('\n ');
+                    buffer.write('\r\n ');
                     var id20 = scope.resolve(["xindex"]);
                     buffer.write(id20, true);
                     buffer.write(':');
                     var id21 = scope.resolve(["this"]);
                     buffer.write(id21, true);
-                    buffer.write(';\n');
+                    buffer.write(';\r\n');
 
                     return buffer;
                 };
                 buffer = eachCommand.call(engine, scope, option17, buffer, 12, payload);
-                buffer.write('\n">');
+                buffer.write('\r\n">');
                 var id22 = scope.resolve(["bodyContent"]);
                 buffer.write(id22, false);
-                buffer.write('</div>\n\n    <div class="');
+                buffer.write('</div>\r\n\r\n    <div class="');
                 var option23 = {
                     escape: 1
                 };
@@ -128,7 +128,7 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet25 = undefined;
                 }
                 buffer.write(commandRet25, true);
-                buffer.write('"\n         style="\n');
+                buffer.write('"\r\n         style="\r\n');
                 var option26 = {
                     escape: 1
                 };
@@ -138,21 +138,21 @@ KISSY.add(function (S, require, exports, module) {
                 option26.params = params27;
                 option26.fn = function (scope, buffer) {
 
-                    buffer.write('\n ');
+                    buffer.write('\r\n ');
                     var id29 = scope.resolve(["xindex"]);
                     buffer.write(id29, true);
                     buffer.write(':');
                     var id30 = scope.resolve(["this"]);
                     buffer.write(id30, true);
-                    buffer.write(';\n');
+                    buffer.write(';\r\n');
 
                     return buffer;
                 };
                 buffer = eachCommand.call(engine, scope, option26, buffer, 19, payload);
-                buffer.write('\n">');
+                buffer.write('\r\n">');
                 var id31 = scope.resolve(["footerContent"]);
                 buffer.write(id31, false);
-                buffer.write('</div>\n    <div tabindex="0"></div>\n');
+                buffer.write('</div>\r\n    <div tabindex="0"></div>\r\n');
 
                 return buffer;
             };

@@ -535,75 +535,75 @@ if (! _$jscoverage['/picker-xtpl.js'].branchData) {
   _$jscoverage['/picker-xtpl.js'].branchData['322'] = [];
   _$jscoverage['/picker-xtpl.js'].branchData['322'][1] = new BranchData();
 }
-_$jscoverage['/picker-xtpl.js'].branchData['322'][1].init(1929, 37, 'commandRet74 && commandRet74.isBuffer');
+_$jscoverage['/picker-xtpl.js'].branchData['322'][1].init(1945, 37, 'commandRet74 && commandRet74.isBuffer');
 function visit20_322_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['322'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['303'][1].init(967, 37, 'commandRet69 && commandRet69.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['303'][1].init(971, 37, 'commandRet69 && commandRet69.isBuffer');
 function visit19_303_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['303'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['290'][1].init(382, 37, 'commandRet66 && commandRet66.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['290'][1].init(384, 37, 'commandRet66 && commandRet66.isBuffer');
 function visit18_290_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['274'][1].init(12297, 7, '!(id61)');
+}_$jscoverage['/picker-xtpl.js'].branchData['274'][1].init(12421, 7, '!(id61)');
 function visit17_274_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['262'][1].init(11842, 37, 'commandRet58 && commandRet58.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['262'][1].init(11958, 37, 'commandRet58 && commandRet58.isBuffer');
 function visit16_262_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['245'][1].init(1167, 37, 'commandRet54 && commandRet54.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['245'][1].init(1171, 37, 'commandRet54 && commandRet54.isBuffer');
 function visit15_245_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['245'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['232'][1].init(557, 37, 'commandRet51 && commandRet51.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['232'][1].init(559, 37, 'commandRet51 && commandRet51.isBuffer');
 function visit14_232_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['232'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['201'][1].init(1607, 37, 'commandRet44 && commandRet44.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['201'][1].init(1611, 37, 'commandRet44 && commandRet44.isBuffer');
 function visit13_201_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['188'][1].init(997, 37, 'commandRet41 && commandRet41.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['188'][1].init(999, 37, 'commandRet41 && commandRet41.isBuffer');
 function visit12_188_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['175'][1].init(420, 37, 'commandRet38 && commandRet38.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['175'][1].init(422, 37, 'commandRet38 && commandRet38.isBuffer');
 function visit11_175_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['152'][1].init(6875, 37, 'commandRet32 && commandRet32.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['152'][1].init(6955, 37, 'commandRet32 && commandRet32.isBuffer');
 function visit10_152_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['139'][1].init(6342, 37, 'commandRet29 && commandRet29.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['139'][1].init(6420, 37, 'commandRet29 && commandRet29.isBuffer');
 function visit9_139_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['123'][1].init(5572, 37, 'commandRet25 && commandRet25.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['123'][1].init(5634, 37, 'commandRet25 && commandRet25.isBuffer');
 function visit8_123_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['107'][1].init(4798, 37, 'commandRet21 && commandRet21.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['107'][1].init(4846, 37, 'commandRet21 && commandRet21.isBuffer');
 function visit7_107_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['94'][1].init(4242, 37, 'commandRet18 && commandRet18.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['94'][1].init(4286, 37, 'commandRet18 && commandRet18.isBuffer');
 function visit6_94_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['75'][1].init(3315, 37, 'commandRet13 && commandRet13.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['75'][1].init(3345, 37, 'commandRet13 && commandRet13.isBuffer');
 function visit5_75_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['59'][1].init(2543, 35, 'commandRet9 && commandRet9.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['59'][1].init(2559, 35, 'commandRet9 && commandRet9.isBuffer');
 function visit4_59_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['43'][1].init(1780, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/picker-xtpl.js'].branchData['43'][1].init(1782, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit3_43_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -653,7 +653,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/picker-xtpl.js'].lineData[35]++;
-  buffer.write('">\n    <a class="');
+  buffer.write('">\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -675,13 +675,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[47]++;
   buffer.write(commandRet5, true);
   _$jscoverage['/picker-xtpl.js'].lineData[48]++;
-  buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+  buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
   _$jscoverage['/picker-xtpl.js'].lineData[49]++;
   var id6 = scope.resolve(["previousYearLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[50]++;
   buffer.write(id6, true);
   _$jscoverage['/picker-xtpl.js'].lineData[51]++;
-  buffer.write('"\n       hidefocus="on">\n    </a>\n    <a class="');
+  buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[52]++;
   var option7 = {
   escape: 1};
@@ -703,13 +703,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[63]++;
   buffer.write(commandRet9, true);
   _$jscoverage['/picker-xtpl.js'].lineData[64]++;
-  buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+  buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
   _$jscoverage['/picker-xtpl.js'].lineData[65]++;
   var id10 = scope.resolve(["previousMonthLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[66]++;
   buffer.write(id10, true);
   _$jscoverage['/picker-xtpl.js'].lineData[67]++;
-  buffer.write('"\n       hidefocus="on">\n    </a>\n    <a class="');
+  buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[68]++;
   var option11 = {
   escape: 1};
@@ -731,19 +731,19 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[79]++;
   buffer.write(commandRet13, true);
   _$jscoverage['/picker-xtpl.js'].lineData[80]++;
-  buffer.write('"\n       role="button"\n       href="#"\n       tabindex="-1"\n       hidefocus="on"\n       title="');
+  buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       tabindex="-1"\r\n       hidefocus="on"\r\n       title="');
   _$jscoverage['/picker-xtpl.js'].lineData[81]++;
   var id14 = scope.resolve(["monthSelectLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[82]++;
   buffer.write(id14, true);
   _$jscoverage['/picker-xtpl.js'].lineData[83]++;
-  buffer.write('">\n        <span>');
+  buffer.write('">\r\n        <span>');
   _$jscoverage['/picker-xtpl.js'].lineData[84]++;
   var id15 = scope.resolve(["monthYearLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[85]++;
   buffer.write(id15, true);
   _$jscoverage['/picker-xtpl.js'].lineData[86]++;
-  buffer.write('</span>\n        <span class="');
+  buffer.write('</span>\r\n        <span class="');
   _$jscoverage['/picker-xtpl.js'].lineData[87]++;
   var option16 = {
   escape: 1};
@@ -765,7 +765,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[98]++;
   buffer.write(commandRet18, true);
   _$jscoverage['/picker-xtpl.js'].lineData[99]++;
-  buffer.write('">x</span>\n    </a>\n    <a class="');
+  buffer.write('">x</span>\r\n    </a>\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[100]++;
   var option19 = {
   escape: 1};
@@ -787,13 +787,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[111]++;
   buffer.write(commandRet21, true);
   _$jscoverage['/picker-xtpl.js'].lineData[112]++;
-  buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+  buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
   _$jscoverage['/picker-xtpl.js'].lineData[113]++;
   var id22 = scope.resolve(["nextMonthLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[114]++;
   buffer.write(id22, true);
   _$jscoverage['/picker-xtpl.js'].lineData[115]++;
-  buffer.write('"\n       hidefocus="on">\n    </a>\n    <a class="');
+  buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[116]++;
   var option23 = {
   escape: 1};
@@ -815,13 +815,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[127]++;
   buffer.write(commandRet25, true);
   _$jscoverage['/picker-xtpl.js'].lineData[128]++;
-  buffer.write('"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="');
+  buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
   _$jscoverage['/picker-xtpl.js'].lineData[129]++;
   var id26 = scope.resolve(["nextYearLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[130]++;
   buffer.write(id26, true);
   _$jscoverage['/picker-xtpl.js'].lineData[131]++;
-  buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+  buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
   _$jscoverage['/picker-xtpl.js'].lineData[132]++;
   var option27 = {
   escape: 1};
@@ -843,7 +843,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[143]++;
   buffer.write(commandRet29, true);
   _$jscoverage['/picker-xtpl.js'].lineData[144]++;
-  buffer.write('">\n    <table class="');
+  buffer.write('">\r\n    <table class="');
   _$jscoverage['/picker-xtpl.js'].lineData[145]++;
   var option30 = {
   escape: 1};
@@ -865,7 +865,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[156]++;
   buffer.write(commandRet32, true);
   _$jscoverage['/picker-xtpl.js'].lineData[157]++;
-  buffer.write('" cellspacing="0" role="grid">\n        <thead>\n        <tr role="row">\n            ');
+  buffer.write('" cellspacing="0" role="grid">\r\n        <thead>\r\n        <tr role="row">\r\n            ');
   _$jscoverage['/picker-xtpl.js'].lineData[158]++;
   var option33 = {
   escape: 1};
@@ -881,7 +881,7 @@ KISSY.add(function(S, require, exports, module) {
   option33.fn = function(scope, buffer) {
   _$jscoverage['/picker-xtpl.js'].functionData[2]++;
   _$jscoverage['/picker-xtpl.js'].lineData[167]++;
-  buffer.write('\n            <th role="columnheader" class="');
+  buffer.write('\r\n            <th role="columnheader" class="');
   _$jscoverage['/picker-xtpl.js'].lineData[168]++;
   var option36 = {
   escape: 1};
@@ -925,7 +925,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[192]++;
   buffer.write(commandRet41, true);
   _$jscoverage['/picker-xtpl.js'].lineData[193]++;
-  buffer.write('">\n                <span class="');
+  buffer.write('">\r\n                <span class="');
   _$jscoverage['/picker-xtpl.js'].lineData[194]++;
   var option42 = {
   escape: 1};
@@ -947,14 +947,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[205]++;
   buffer.write(commandRet44, true);
   _$jscoverage['/picker-xtpl.js'].lineData[206]++;
-  buffer.write('">x</span>\n            </th>\n            ');
+  buffer.write('">x</span>\r\n            </th>\r\n            ');
   _$jscoverage['/picker-xtpl.js'].lineData[208]++;
   return buffer;
 };
   _$jscoverage['/picker-xtpl.js'].lineData[210]++;
   buffer = ifCommand.call(engine, scope, option33, buffer, 44, payload);
   _$jscoverage['/picker-xtpl.js'].lineData[211]++;
-  buffer.write('\n            ');
+  buffer.write('\r\n            ');
   _$jscoverage['/picker-xtpl.js'].lineData[212]++;
   var option45 = {
   escape: 1};
@@ -970,7 +970,7 @@ KISSY.add(function(S, require, exports, module) {
   option45.fn = function(scope, buffer) {
   _$jscoverage['/picker-xtpl.js'].functionData[3]++;
   _$jscoverage['/picker-xtpl.js'].lineData[221]++;
-  buffer.write('\n            <th role="columnheader" title="');
+  buffer.write('\r\n            <th role="columnheader" title="');
   _$jscoverage['/picker-xtpl.js'].lineData[222]++;
   var id48 = scope.resolve(["this"]);
   _$jscoverage['/picker-xtpl.js'].lineData[223]++;
@@ -998,7 +998,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[236]++;
   buffer.write(commandRet51, true);
   _$jscoverage['/picker-xtpl.js'].lineData[237]++;
-  buffer.write('">\n                <span class="');
+  buffer.write('">\r\n                <span class="');
   _$jscoverage['/picker-xtpl.js'].lineData[238]++;
   var option52 = {
   escape: 1};
@@ -1020,7 +1020,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[249]++;
   buffer.write(commandRet54, true);
   _$jscoverage['/picker-xtpl.js'].lineData[250]++;
-  buffer.write('">\n                    ');
+  buffer.write('">\r\n                    ');
   _$jscoverage['/picker-xtpl.js'].lineData[251]++;
   var id56 = scope.resolve(["xindex"]);
   _$jscoverage['/picker-xtpl.js'].lineData[252]++;
@@ -1028,14 +1028,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[253]++;
   buffer.write(id55, true);
   _$jscoverage['/picker-xtpl.js'].lineData[254]++;
-  buffer.write('\n                </span>\n            </th>\n            ');
+  buffer.write('\r\n                </span>\r\n            </th>\r\n            ');
   _$jscoverage['/picker-xtpl.js'].lineData[256]++;
   return buffer;
 };
   _$jscoverage['/picker-xtpl.js'].lineData[258]++;
   buffer = eachCommand.call(engine, scope, option45, buffer, 49, payload);
   _$jscoverage['/picker-xtpl.js'].lineData[259]++;
-  buffer.write('\n        </tr>\n        </thead>\n        <tbody>\n        ');
+  buffer.write('\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        ');
   _$jscoverage['/picker-xtpl.js'].lineData[260]++;
   var option57 = {};
   _$jscoverage['/picker-xtpl.js'].lineData[261]++;
@@ -1050,7 +1050,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[266]++;
   buffer.write(commandRet58, false);
   _$jscoverage['/picker-xtpl.js'].lineData[267]++;
-  buffer.write('\n        </tbody>\n    </table>\n</div>\n');
+  buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>\r\n');
   _$jscoverage['/picker-xtpl.js'].lineData[268]++;
   var option59 = {
   escape: 1};
@@ -1075,7 +1075,7 @@ KISSY.add(function(S, require, exports, module) {
   option59.fn = function(scope, buffer) {
   _$jscoverage['/picker-xtpl.js'].functionData[4]++;
   _$jscoverage['/picker-xtpl.js'].lineData[282]++;
-  buffer.write('\n<div class="');
+  buffer.write('\r\n<div class="');
   _$jscoverage['/picker-xtpl.js'].lineData[283]++;
   var option64 = {
   escape: 1};
@@ -1097,7 +1097,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[294]++;
   buffer.write(commandRet66, true);
   _$jscoverage['/picker-xtpl.js'].lineData[295]++;
-  buffer.write('">\n    <a class="');
+  buffer.write('">\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[296]++;
   var option67 = {
   escape: 1};
@@ -1119,7 +1119,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[307]++;
   buffer.write(commandRet69, true);
   _$jscoverage['/picker-xtpl.js'].lineData[308]++;
-  buffer.write('"\n       role="button"\n       hidefocus="on"\n       tabindex="-1"\n       href="#"\n       title="');
+  buffer.write('"\r\n       role="button"\r\n       hidefocus="on"\r\n       tabindex="-1"\r\n       href="#"\r\n       title="');
   _$jscoverage['/picker-xtpl.js'].lineData[309]++;
   var id70 = scope.resolve(["todayTimeLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[310]++;
@@ -1131,7 +1131,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[313]++;
   buffer.write(id71, true);
   _$jscoverage['/picker-xtpl.js'].lineData[314]++;
-  buffer.write('</a>\n    <a class="');
+  buffer.write('</a>\r\n    <a class="');
   _$jscoverage['/picker-xtpl.js'].lineData[315]++;
   var option72 = {
   escape: 1};
@@ -1153,13 +1153,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[326]++;
   buffer.write(commandRet74, true);
   _$jscoverage['/picker-xtpl.js'].lineData[327]++;
-  buffer.write('"\n       role="button"\n       hidefocus="on"\n       tabindex="-1"\n       href="#">');
+  buffer.write('"\r\n       role="button"\r\n       hidefocus="on"\r\n       tabindex="-1"\r\n       href="#">');
   _$jscoverage['/picker-xtpl.js'].lineData[328]++;
   var id75 = scope.resolve(["clearLabel"]);
   _$jscoverage['/picker-xtpl.js'].lineData[329]++;
   buffer.write(id75, true);
   _$jscoverage['/picker-xtpl.js'].lineData[330]++;
-  buffer.write('</a>\n</div>\n');
+  buffer.write('</a>\r\n</div>\r\n');
   _$jscoverage['/picker-xtpl.js'].lineData[332]++;
   return buffer;
 };

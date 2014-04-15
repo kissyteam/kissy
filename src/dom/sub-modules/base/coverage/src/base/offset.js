@@ -502,251 +502,251 @@ if (! _$jscoverage['/base/offset.js'].branchData) {
   _$jscoverage['/base/offset.js'].branchData['456'] = [];
   _$jscoverage['/base/offset.js'].branchData['456'][1] = new BranchData();
 }
-_$jscoverage['/base/offset.js'].branchData['456'][1].init(23, 35, 'parseFloat(Dom.css(elem, key)) || 0');
+_$jscoverage['/base/offset.js'].branchData['456'][1].init(24, 35, 'parseFloat(Dom.css(elem, key)) || 0');
 function visit329_456_1(result) {
   _$jscoverage['/base/offset.js'].branchData['456'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['447'][1].init(89, 36, 'Dom.css(elem, POSITION) === \'static\'');
+}_$jscoverage['/base/offset.js'].branchData['447'][1].init(91, 36, 'Dom.css(elem, POSITION) === \'static\'');
 function visit328_447_1(result) {
   _$jscoverage['/base/offset.js'].branchData['447'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['438'][1].init(41, 84, '(currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
+}_$jscoverage['/base/offset.js'].branchData['438'][1].init(42, 85, '(currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
 function visit327_438_1(result) {
   _$jscoverage['/base/offset.js'].branchData['438'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['437'][2].init(938, 25, 'currentWin != relativeWin');
+}_$jscoverage['/base/offset.js'].branchData['437'][2].init(961, 25, 'currentWin != relativeWin');
 function visit326_437_2(result) {
   _$jscoverage['/base/offset.js'].branchData['437'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['437'][1].init(25, 126, 'currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
+}_$jscoverage['/base/offset.js'].branchData['437'][1].init(26, 128, 'currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
 function visit325_437_1(result) {
   _$jscoverage['/base/offset.js'].branchData['437'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['436'][1].init(584, 152, 'currentWin && currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
+}_$jscoverage['/base/offset.js'].branchData['436'][1].init(596, 155, 'currentWin && currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
 function visit324_436_1(result) {
   _$jscoverage['/base/offset.js'].branchData['436'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['431'][1].init(365, 25, 'currentWin == relativeWin');
+}_$jscoverage['/base/offset.js'].branchData['431'][1].init(372, 25, 'currentWin == relativeWin');
 function visit323_431_1(result) {
   _$jscoverage['/base/offset.js'].branchData['431'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['422'][1].init(289, 25, 'relativeWin || currentWin');
+}_$jscoverage['/base/offset.js'].branchData['422'][1].init(297, 25, 'relativeWin || currentWin');
 function visit322_422_1(result) {
   _$jscoverage['/base/offset.js'].branchData['422'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['400'][2].init(1792, 19, 'body.clientTop || 0');
+}_$jscoverage['/base/offset.js'].branchData['400'][2].init(1835, 19, 'body.clientTop || 0');
 function visit321_400_2(result) {
   _$jscoverage['/base/offset.js'].branchData['400'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['400'][1].init(1771, 40, 'docElem.clientTop || body.clientTop || 0');
+}_$jscoverage['/base/offset.js'].branchData['400'][1].init(1814, 40, 'docElem.clientTop || body.clientTop || 0');
 function visit320_400_1(result) {
   _$jscoverage['/base/offset.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['399'][2].init(1736, 20, 'body.clientLeft || 0');
+}_$jscoverage['/base/offset.js'].branchData['399'][2].init(1778, 20, 'body.clientLeft || 0');
 function visit319_399_2(result) {
   _$jscoverage['/base/offset.js'].branchData['399'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['399'][1].init(1714, 42, 'docElem.clientLeft || body.clientLeft || 0');
+}_$jscoverage['/base/offset.js'].branchData['399'][1].init(1756, 42, 'docElem.clientLeft || body.clientLeft || 0');
 function visit318_399_1(result) {
   _$jscoverage['/base/offset.js'].branchData['399'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['362'][1].init(104, 27, '!elem.getBoundingClientRect');
+}_$jscoverage['/base/offset.js'].branchData['362'][1].init(109, 27, '!elem.getBoundingClientRect');
 function visit317_362_1(result) {
   _$jscoverage['/base/offset.js'].branchData['362'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['353'][2].init(716, 20, 'body && body[prop]');
+}_$jscoverage['/base/offset.js'].branchData['353'][2].init(733, 20, 'body && body[prop]');
 function visit316_353_2(result) {
   _$jscoverage['/base/offset.js'].branchData['353'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['353'][1].init(72, 43, 'body && body[prop] || documentElementProp');
+}_$jscoverage['/base/offset.js'].branchData['353'][1].init(73, 43, 'body && body[prop] || documentElementProp');
 function visit315_353_1(result) {
   _$jscoverage['/base/offset.js'].branchData['353'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['352'][3].init(641, 30, 'doc[compatMode] === CSS1Compat');
+}_$jscoverage['/base/offset.js'].branchData['352'][3].init(657, 30, 'doc[compatMode] === CSS1Compat');
 function visit314_352_3(result) {
   _$jscoverage['/base/offset.js'].branchData['352'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['352'][2].init(641, 53, 'doc[compatMode] === CSS1Compat && documentElementProp');
+}_$jscoverage['/base/offset.js'].branchData['352'][2].init(657, 53, 'doc[compatMode] === CSS1Compat && documentElementProp');
 function visit313_352_2(result) {
   _$jscoverage['/base/offset.js'].branchData['352'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['352'][1].init(641, 116, 'doc[compatMode] === CSS1Compat && documentElementProp || body && body[prop] || documentElementProp');
+}_$jscoverage['/base/offset.js'].branchData['352'][1].init(657, 117, 'doc[compatMode] === CSS1Compat && documentElementProp || body && body[prop] || documentElementProp');
 function visit312_352_1(result) {
   _$jscoverage['/base/offset.js'].branchData['352'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['341'][1].init(202, 16, 'UA.mobile && ret');
+}_$jscoverage['/base/offset.js'].branchData['341'][1].init(207, 16, 'UA.mobile && ret');
 function visit311_341_1(result) {
   _$jscoverage['/base/offset.js'].branchData['341'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['311'][1].init(172, 23, 'typeof ret !== \'number\'');
+}_$jscoverage['/base/offset.js'].branchData['311'][1].init(176, 23, 'typeof ret !== \'number\'');
 function visit310_311_1(result) {
   _$jscoverage['/base/offset.js'].branchData['311'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['307'][1].init(229, 23, 'typeof ret !== \'number\'');
+}_$jscoverage['/base/offset.js'].branchData['307'][1].init(234, 23, 'typeof ret !== \'number\'');
 function visit309_307_1(result) {
   _$jscoverage['/base/offset.js'].branchData['307'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['300'][1].init(181, 14, 'name === \'Top\'');
+}_$jscoverage['/base/offset.js'].branchData['300'][1].init(185, 14, 'name === \'Top\'');
 function visit308_300_1(result) {
   _$jscoverage['/base/offset.js'].branchData['300'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['299'][1].init(114, 15, 'name === \'Left\'');
+}_$jscoverage['/base/offset.js'].branchData['299'][1].init(117, 15, 'name === \'Left\'');
 function visit307_299_1(result) {
   _$jscoverage['/base/offset.js'].branchData['299'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['296'][1].init(58, 15, 'v !== undefined');
+}_$jscoverage['/base/offset.js'].branchData['296'][1].init(60, 15, 'v !== undefined');
 function visit306_296_1(result) {
   _$jscoverage['/base/offset.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['289'][1].init(21, 15, 'v !== undefined');
+}_$jscoverage['/base/offset.js'].branchData['289'][1].init(22, 15, 'v !== undefined');
 function visit305_289_1(result) {
   _$jscoverage['/base/offset.js'].branchData['289'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['288'][2].init(311, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
+}_$jscoverage['/base/offset.js'].branchData['288'][2].init(322, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
 function visit304_288_2(result) {
   _$jscoverage['/base/offset.js'].branchData['288'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['288'][1].init(303, 47, 'elem && elem.nodeType === NodeType.ELEMENT_NODE');
+}_$jscoverage['/base/offset.js'].branchData['288'][1].init(314, 47, 'elem && elem.nodeType === NodeType.ELEMENT_NODE');
 function visit303_288_1(result) {
   _$jscoverage['/base/offset.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['278'][1].init(17, 24, 'typeof elem === \'number\'');
+}_$jscoverage['/base/offset.js'].branchData['278'][1].init(18, 24, 'typeof elem === \'number\'');
 function visit302_278_1(result) {
   _$jscoverage['/base/offset.js'].branchData['278'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['218'][1].init(120, 12, 'alignWithTop');
+}_$jscoverage['/base/offset.js'].branchData['218'][1].init(122, 12, 'alignWithTop');
 function visit301_218_1(result) {
   _$jscoverage['/base/offset.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['217'][1].init(40, 26, 'alignWithTop === undefined');
+}_$jscoverage['/base/offset.js'].branchData['217'][1].init(41, 26, 'alignWithTop === undefined');
 function visit300_217_1(result) {
   _$jscoverage['/base/offset.js'].branchData['217'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['209'][1].init(77, 16, 'diffTop.left < 0');
+}_$jscoverage['/base/offset.js'].branchData['209'][1].init(79, 16, 'diffTop.left < 0');
 function visit299_209_1(result) {
   _$jscoverage['/base/offset.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['205'][1].init(230, 22, 'alignWithTop === false');
+}_$jscoverage['/base/offset.js'].branchData['205'][1].init(234, 22, 'alignWithTop === false');
 function visit298_205_1(result) {
   _$jscoverage['/base/offset.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['203'][1].init(69, 21, 'alignWithTop === true');
+}_$jscoverage['/base/offset.js'].branchData['203'][1].init(71, 21, 'alignWithTop === true');
 function visit297_203_1(result) {
   _$jscoverage['/base/offset.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['201'][3].init(49, 19, 'diffBottom.left > 0');
+}_$jscoverage['/base/offset.js'].branchData['201'][3].init(50, 19, 'diffBottom.left > 0');
 function visit296_201_3(result) {
   _$jscoverage['/base/offset.js'].branchData['201'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['201'][2].init(29, 16, 'diffTop.left < 0');
+}_$jscoverage['/base/offset.js'].branchData['201'][2].init(30, 16, 'diffTop.left < 0');
 function visit295_201_2(result) {
   _$jscoverage['/base/offset.js'].branchData['201'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['201'][1].init(29, 39, 'diffTop.left < 0 || diffBottom.left > 0');
+}_$jscoverage['/base/offset.js'].branchData['201'][1].init(30, 39, 'diffTop.left < 0 || diffBottom.left > 0');
 function visit294_201_1(result) {
   _$jscoverage['/base/offset.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['200'][1].init(25, 18, 'onlyScrollIfNeeded');
+}_$jscoverage['/base/offset.js'].branchData['200'][1].init(26, 18, 'onlyScrollIfNeeded');
 function visit293_200_1(result) {
   _$jscoverage['/base/offset.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['199'][1].init(4813, 21, 'allowHorizontalScroll');
+}_$jscoverage['/base/offset.js'].branchData['199'][1].init(4926, 21, 'allowHorizontalScroll');
 function visit292_199_1(result) {
   _$jscoverage['/base/offset.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['192'][1].init(112, 12, 'alignWithTop');
+}_$jscoverage['/base/offset.js'].branchData['192'][1].init(114, 12, 'alignWithTop');
 function visit291_192_1(result) {
   _$jscoverage['/base/offset.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['191'][1].init(36, 26, 'alignWithTop === undefined');
+}_$jscoverage['/base/offset.js'].branchData['191'][1].init(37, 26, 'alignWithTop === undefined');
 function visit290_191_1(result) {
   _$jscoverage['/base/offset.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['183'][1].init(69, 15, 'diffTop.top < 0');
+}_$jscoverage['/base/offset.js'].branchData['183'][1].init(71, 15, 'diffTop.top < 0');
 function visit289_183_1(result) {
   _$jscoverage['/base/offset.js'].branchData['183'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['179'][1].init(211, 22, 'alignWithTop === false');
+}_$jscoverage['/base/offset.js'].branchData['179'][1].init(215, 22, 'alignWithTop === false');
 function visit288_179_1(result) {
   _$jscoverage['/base/offset.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['177'][1].init(61, 21, 'alignWithTop === true');
+}_$jscoverage['/base/offset.js'].branchData['177'][1].init(63, 21, 'alignWithTop === true');
 function visit287_177_1(result) {
   _$jscoverage['/base/offset.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['175'][3].init(44, 18, 'diffBottom.top > 0');
+}_$jscoverage['/base/offset.js'].branchData['175'][3].init(45, 18, 'diffBottom.top > 0');
 function visit286_175_3(result) {
   _$jscoverage['/base/offset.js'].branchData['175'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['175'][2].init(25, 15, 'diffTop.top < 0');
+}_$jscoverage['/base/offset.js'].branchData['175'][2].init(26, 15, 'diffTop.top < 0');
 function visit285_175_2(result) {
   _$jscoverage['/base/offset.js'].branchData['175'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['175'][1].init(25, 37, 'diffTop.top < 0 || diffBottom.top > 0');
+}_$jscoverage['/base/offset.js'].branchData['175'][1].init(26, 37, 'diffTop.top < 0 || diffBottom.top > 0');
 function visit284_175_1(result) {
   _$jscoverage['/base/offset.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['174'][1].init(3560, 18, 'onlyScrollIfNeeded');
+}_$jscoverage['/base/offset.js'].branchData['174'][1].init(3648, 18, 'onlyScrollIfNeeded');
 function visit283_174_1(result) {
   _$jscoverage['/base/offset.js'].branchData['174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['170'][1].init(60, 56, 'parseFloat(Dom.css(container, \'borderBottomWidth\')) || 0');
+}_$jscoverage['/base/offset.js'].branchData['170'][1].init(61, 56, 'parseFloat(Dom.css(container, \'borderBottomWidth\')) || 0');
 function visit282_170_1(result) {
   _$jscoverage['/base/offset.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['167'][1].init(61, 55, 'parseFloat(Dom.css(container, \'borderRightWidth\')) || 0');
+}_$jscoverage['/base/offset.js'].branchData['167'][1].init(62, 55, 'parseFloat(Dom.css(container, \'borderRightWidth\')) || 0');
 function visit281_167_1(result) {
   _$jscoverage['/base/offset.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['162'][1].init(51, 53, 'parseFloat(Dom.css(container, \'borderTopWidth\')) || 0');
+}_$jscoverage['/base/offset.js'].branchData['162'][1].init(52, 53, 'parseFloat(Dom.css(container, \'borderTopWidth\')) || 0');
 function visit280_162_1(result) {
   _$jscoverage['/base/offset.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['160'][1].init(52, 54, 'parseFloat(Dom.css(container, \'borderLeftWidth\')) || 0');
+}_$jscoverage['/base/offset.js'].branchData['160'][1].init(53, 54, 'parseFloat(Dom.css(container, \'borderLeftWidth\')) || 0');
 function visit279_160_1(result) {
   _$jscoverage['/base/offset.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['130'][1].init(1459, 5, 'isWin');
+}_$jscoverage['/base/offset.js'].branchData['130'][1].init(1503, 5, 'isWin');
 function visit278_130_1(result) {
   _$jscoverage['/base/offset.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['113'][1].init(885, 35, 'allowHorizontalScroll === undefined');
+}_$jscoverage['/base/offset.js'].branchData['113'][1].init(912, 35, 'allowHorizontalScroll === undefined');
 function visit277_113_1(result) {
   _$jscoverage['/base/offset.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['107'][1].init(577, 29, 'S.isPlainObject(alignWithTop)');
+}_$jscoverage['/base/offset.js'].branchData['107'][1].init(598, 29, 'S.isPlainObject(alignWithTop)');
 function visit276_107_1(result) {
   _$jscoverage['/base/offset.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['103'][1].init(435, 45, 'container.nodeType === NodeType.DOCUMENT_NODE');
+}_$jscoverage['/base/offset.js'].branchData['103'][1].init(452, 45, 'container.nodeType === NodeType.DOCUMENT_NODE');
 function visit275_103_1(result) {
   _$jscoverage['/base/offset.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['98'][1].init(290, 10, '!container');
+}_$jscoverage['/base/offset.js'].branchData['98'][1].init(302, 10, '!container');
 function visit274_98_1(result) {
   _$jscoverage['/base/offset.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['94'][1].init(186, 9, 'container');
+}_$jscoverage['/base/offset.js'].branchData['94'][1].init(194, 9, 'container');
 function visit273_94_1(result) {
   _$jscoverage['/base/offset.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['90'][1].init(88, 27, '!(elem = Dom.get(selector))');
+}_$jscoverage['/base/offset.js'].branchData['90'][1].init(92, 27, '!(elem = Dom.get(selector))');
 function visit272_90_1(result) {
   _$jscoverage['/base/offset.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['65'][1].init(458, 6, 'i >= 0');
+}_$jscoverage['/base/offset.js'].branchData['65'][1].init(471, 6, 'i >= 0');
 function visit271_65_1(result) {
   _$jscoverage['/base/offset.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['58'][1].init(100, 4, 'elem');
+}_$jscoverage['/base/offset.js'].branchData['58'][1].init(103, 4, 'elem');
 function visit270_58_1(result) {
   _$jscoverage['/base/offset.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['55'][1].init(73, 25, 'coordinates === undefined');
+}_$jscoverage['/base/offset.js'].branchData['55'][1].init(76, 25, 'coordinates === undefined');
 function visit269_55_1(result) {
   _$jscoverage['/base/offset.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['12'][1].init(128, 26, 'doc && doc.documentElement');
+}_$jscoverage['/base/offset.js'].branchData['12'][1].init(132, 26, 'doc && doc.documentElement');
 function visit268_12_1(result) {
   _$jscoverage['/base/offset.js'].branchData['12'][1].ranCondition(result);
   return result;

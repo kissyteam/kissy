@@ -267,15 +267,15 @@ if (! _$jscoverage['/node/override.js'].branchData) {
   _$jscoverage['/node/override.js'].branchData['49'] = [];
   _$jscoverage['/node/override.js'].branchData['49'][1] = new BranchData();
 }
-_$jscoverage['/node/override.js'].branchData['49'][1].init(46, 26, 'typeof others === \'string\'');
+_$jscoverage['/node/override.js'].branchData['49'][1].init(48, 26, 'typeof others === \'string\'');
 function visit48_49_1(result) {
   _$jscoverage['/node/override.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/override.js'].branchData['38'][1].init(197, 7, 'newNode');
+}_$jscoverage['/node/override.js'].branchData['38'][1].init(203, 7, 'newNode');
 function visit47_38_1(result) {
   _$jscoverage['/node/override.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/override.js'].branchData['35'][1].init(84, 27, 'typeof newNode !== \'object\'');
+}_$jscoverage['/node/override.js'].branchData['35'][1].init(87, 27, 'typeof newNode !== \'object\'');
 function visit46_35_1(result) {
   _$jscoverage['/node/override.js'].branchData['35'][1].ranCondition(result);
   return result;

@@ -255,15 +255,15 @@ if (! _$jscoverage['/html-parser/dtd.js'].branchData) {
   _$jscoverage['/html-parser/dtd.js'].branchData['828'] = [];
   _$jscoverage['/html-parser/dtd.js'].branchData['828'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/dtd.js'].branchData['828'][1].init(19662, 20, 'i < html5Tags.length');
+_$jscoverage['/html-parser/dtd.js'].branchData['828'][1].init(20480, 20, 'i < html5Tags.length');
 function visit3_828_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['828'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['821'][1].init(29, 20, 'i < html5Tags.length');
+}_$jscoverage['/html-parser/dtd.js'].branchData['821'][1].init(30, 20, 'i < html5Tags.length');
 function visit2_821_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['821'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['820'][1].init(17, 12, 'p2 === \'div\'');
+}_$jscoverage['/html-parser/dtd.js'].branchData['820'][1].init(18, 12, 'p2 === \'div\'');
 function visit1_820_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['820'][1].ranCondition(result);
   return result;

@@ -79,4 +79,10 @@
         });
         return typeof modName === 'string' ? ret[0] : ret;
     };
+
+    S.config('packages', {
+        core: {
+            filter: ''
+        }
+    });
 })(KISSY);

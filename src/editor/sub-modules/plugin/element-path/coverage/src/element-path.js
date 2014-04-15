@@ -294,15 +294,15 @@ if (! _$jscoverage['/element-path.js'].branchData) {
   _$jscoverage['/element-path.js'].branchData['52'] = [];
   _$jscoverage['/element-path.js'].branchData['52'][1] = new BranchData();
 }
-_$jscoverage['/element-path.js'].branchData['52'][1].init(102, 59, 'element.attr(\'_ke_real_element_type\') || element.nodeName()');
+_$jscoverage['/element-path.js'].branchData['52'][1].init(105, 59, 'element.attr(\'_ke_real_element_type\') || element.nodeName()');
 function visit3_52_1(result) {
   _$jscoverage['/element-path.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/element-path.js'].branchData['49'][1].init(554, 19, 'i < elements.length');
+}_$jscoverage['/element-path.js'].branchData['49'][1].init(569, 19, 'i < elements.length');
 function visit2_49_1(result) {
   _$jscoverage['/element-path.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/element-path.js'].branchData['44'][1].init(370, 16, 'i < cache.length');
+}_$jscoverage['/element-path.js'].branchData['44'][1].init(380, 16, 'i < cache.length');
 function visit1_44_1(result) {
   _$jscoverage['/element-path.js'].branchData['44'][1].ranCondition(result);
   return result;

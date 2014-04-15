@@ -291,31 +291,31 @@ if (! _$jscoverage['/flash.js'].branchData) {
   _$jscoverage['/flash.js'].branchData['73'] = [];
   _$jscoverage['/flash.js'].branchData['73'][1] = new BranchData();
 }
-_$jscoverage['/flash.js'].branchData['73'][1].init(100, 10, 'selectedEl');
+_$jscoverage['/flash.js'].branchData['73'][1].init(102, 10, 'selectedEl');
 function visit7_73_1(result) {
   _$jscoverage['/flash.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['51'][1].init(33, 32, 'flashUtils.isFlashEmbed(element)');
+}_$jscoverage['/flash.js'].branchData['51'][1].init(34, 32, 'flashUtils.isFlashEmbed(element)');
 function visit6_51_1(result) {
   _$jscoverage['/flash.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['36'][1].init(45, 44, '!flashUtils.isFlashEmbed(childNodes[i][i])');
+}_$jscoverage['/flash.js'].branchData['36'][1].init(46, 44, '!flashUtils.isFlashEmbed(childNodes[i][i])');
 function visit5_36_1(result) {
   _$jscoverage['/flash.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['35'][1].init(41, 34, 'childNodes[i].nodeName === \'embed\'');
+}_$jscoverage['/flash.js'].branchData['35'][1].init(42, 34, 'childNodes[i].nodeName === \'embed\'');
 function visit4_35_1(result) {
   _$jscoverage['/flash.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['34'][1].init(176, 21, 'i < childNodes.length');
+}_$jscoverage['/flash.js'].branchData['34'][1].init(179, 21, 'i < childNodes.length');
 function visit3_34_1(result) {
   _$jscoverage['/flash.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['31'][1].init(111, 8, '!classId');
+}_$jscoverage['/flash.js'].branchData['31'][1].init(113, 8, '!classId');
 function visit2_31_1(result) {
   _$jscoverage['/flash.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['17'][1].init(23, 12, 'config || {}');
+}_$jscoverage['/flash.js'].branchData['17'][1].init(24, 12, 'config || {}');
 function visit1_17_1(result) {
   _$jscoverage['/flash.js'].branchData['17'][1].ranCondition(result);
   return result;

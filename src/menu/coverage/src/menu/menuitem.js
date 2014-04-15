@@ -297,51 +297,51 @@ if (! _$jscoverage['/menu/menuitem.js'].branchData) {
   _$jscoverage['/menu/menuitem.js'].branchData['98'][2] = new BranchData();
   _$jscoverage['/menu/menuitem.js'].branchData['98'][3] = new BranchData();
 }
-_$jscoverage['/menu/menuitem.js'].branchData['98'][3].init(60, 18, '$el[0] === element');
+_$jscoverage['/menu/menuitem.js'].branchData['98'][3].init(62, 18, '$el[0] === element');
 function visit37_98_3(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['98'][3].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['98'][2].init(60, 43, '$el[0] === element || $el.contains(element)');
+}_$jscoverage['/menu/menuitem.js'].branchData['98'][2].init(62, 43, '$el[0] === element || $el.contains(element)');
 function visit36_98_2(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['98'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['98'][1].init(52, 52, '$el && ($el[0] === element || $el.contains(element))');
+}_$jscoverage['/menu/menuitem.js'].branchData['98'][1].init(54, 52, '$el && ($el[0] === element || $el.contains(element))');
 function visit35_98_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['74'][1].init(325, 2, '!p');
+}_$jscoverage['/menu/menuitem.js'].branchData['74'][1].init(332, 2, '!p');
 function visit34_74_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['72'][1].init(32, 34, '$(e).css(\'overflow\') !== \'visible\'');
+}_$jscoverage['/menu/menuitem.js'].branchData['72'][1].init(33, 34, '$(e).css(\'overflow\') !== \'visible\'');
 function visit33_72_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['67'][1].init(552, 1, 'v');
+}_$jscoverage['/menu/menuitem.js'].branchData['67'][1].init(567, 1, 'v');
 function visit32_67_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['60'][1].init(25, 1, 'v');
+}_$jscoverage['/menu/menuitem.js'].branchData['60'][1].init(26, 1, 'v');
 function visit31_60_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['57'][1].init(21, 20, 'self.get(\'rendered\')');
+}_$jscoverage['/menu/menuitem.js'].branchData['57'][1].init(22, 20, 'self.get(\'rendered\')');
 function visit30_57_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['56'][2].init(127, 31, 'e && e.byPassSetHighlightedItem');
+}_$jscoverage['/menu/menuitem.js'].branchData['56'][2].init(131, 31, 'e && e.byPassSetHighlightedItem');
 function visit29_56_2(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['56'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['56'][1].init(125, 34, '!(e && e.byPassSetHighlightedItem)');
+}_$jscoverage['/menu/menuitem.js'].branchData['56'][1].init(129, 34, '!(e && e.byPassSetHighlightedItem)');
 function visit28_56_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['43'][1].init(235, 22, 'self.get(\'selectable\')');
+}_$jscoverage['/menu/menuitem.js'].branchData['43'][1].init(242, 22, 'self.get(\'selectable\')');
 function visit27_43_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['22'][1].init(125, 19, 'renderData.selected');
+}_$jscoverage['/menu/menuitem.js'].branchData['22'][1].init(128, 19, 'renderData.selected');
 function visit26_22_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['22'][1].ranCondition(result);
   return result;

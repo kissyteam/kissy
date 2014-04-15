@@ -1,12 +1,12 @@
 {
   "name": "kissy",
-  "version": "1.4.0",
+  "version": "5.0.0dev",
   "homepage": "http://kissyui.com",
   "authors": [
     "yiminghe <yiminghe@gmail.com>"
   ],
   "description": "A Powerful Javascript Framework",
-  "main": "build/seed-min.js",
+  "main": "build/seed.js",
   "keywords": [
     "javascript",
     "framework",

@@ -281,19 +281,19 @@ if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData['82'] = [];
   _$jscoverage['/btn.js'].branchData['82'][1] = new BranchData();
 }
-_$jscoverage['/btn.js'].branchData['82'][1].init(69, 11, 'this.__lock');
+_$jscoverage['/btn.js'].branchData['82'][1].init(71, 11, 'this.__lock');
 function visit4_82_1(result) {
   _$jscoverage['/btn.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['64'][1].init(126, 26, 'index < history.length - 1');
+}_$jscoverage['/btn.js'].branchData['64'][1].init(130, 26, 'index < history.length - 1');
 function visit3_64_1(result) {
   _$jscoverage['/btn.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['40'][1].init(69, 11, 'this.__lock');
+}_$jscoverage['/btn.js'].branchData['40'][1].init(71, 11, 'this.__lock');
 function visit2_40_1(result) {
   _$jscoverage['/btn.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['23'][1].init(84, 9, 'index > 0');
+}_$jscoverage['/btn.js'].branchData['23'][1].init(87, 9, 'index > 0');
 function visit1_23_1(result) {
   _$jscoverage['/btn.js'].branchData['23'][1].ranCondition(result);
   return result;

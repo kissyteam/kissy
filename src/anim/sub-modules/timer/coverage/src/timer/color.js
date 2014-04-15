@@ -303,55 +303,55 @@ if (! _$jscoverage['/timer/color.js'].branchData) {
   _$jscoverage['/timer/color.js'].branchData['111'][1] = new BranchData();
   _$jscoverage['/timer/color.js'].branchData['111'][2] = new BranchData();
 }
-_$jscoverage['/timer/color.js'].branchData['111'][2].init(267, 10, 'to[3] || 1');
+_$jscoverage['/timer/color.js'].branchData['111'][2].init(272, 10, 'to[3] || 1');
 function visit13_111_2(result) {
   _$jscoverage['/timer/color.js'].branchData['111'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['111'][1].init(253, 12, 'from[3] || 1');
+}_$jscoverage['/timer/color.js'].branchData['111'][1].init(258, 12, 'from[3] || 1');
 function visit12_111_1(result) {
   _$jscoverage['/timer/color.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['105'][3].init(416, 15, 'to.length === 4');
+}_$jscoverage['/timer/color.js'].branchData['105'][3].init(424, 15, 'to.length === 4');
 function visit11_105_3(result) {
   _$jscoverage['/timer/color.js'].branchData['105'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['105'][2].init(395, 17, 'from.length === 4');
+}_$jscoverage['/timer/color.js'].branchData['105'][2].init(403, 17, 'from.length === 4');
 function visit10_105_2(result) {
   _$jscoverage['/timer/color.js'].branchData['105'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['105'][1].init(395, 36, 'from.length === 4 || to.length === 4');
+}_$jscoverage['/timer/color.js'].branchData['105'][1].init(403, 36, 'from.length === 4 || to.length === 4');
 function visit9_105_1(result) {
   _$jscoverage['/timer/color.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['99'][3].init(100, 15, 'to.length === 3');
+}_$jscoverage['/timer/color.js'].branchData['99'][3].init(102, 15, 'to.length === 3');
 function visit8_99_3(result) {
   _$jscoverage['/timer/color.js'].branchData['99'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['99'][2].init(79, 17, 'from.length === 3');
+}_$jscoverage['/timer/color.js'].branchData['99'][2].init(81, 17, 'from.length === 3');
 function visit7_99_2(result) {
   _$jscoverage['/timer/color.js'].branchData['99'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['99'][1].init(79, 36, 'from.length === 3 && to.length === 3');
+}_$jscoverage['/timer/color.js'].branchData['99'][1].init(81, 36, 'from.length === 3 && to.length === 3');
 function visit6_99_1(result) {
   _$jscoverage['/timer/color.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['92'][1].init(202, 7, 'self.to');
+}_$jscoverage['/timer/color.js'].branchData['92'][1].init(208, 7, 'self.to');
 function visit5_92_1(result) {
   _$jscoverage['/timer/color.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['89'][1].init(106, 9, 'self.from');
+}_$jscoverage['/timer/color.js'].branchData['89'][1].init(109, 9, 'self.from');
 function visit4_89_1(result) {
   _$jscoverage['/timer/color.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['72'][1].init(905, 33, 'KEYWORDS[val = val.toLowerCase()]');
+}_$jscoverage['/timer/color.js'].branchData['72'][1].init(933, 33, 'KEYWORDS[val = val.toLowerCase()]');
 function visit3_72_1(result) {
   _$jscoverage['/timer/color.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['62'][1].init(21, 19, 'match[i].length < 2');
+}_$jscoverage['/timer/color.js'].branchData['62'][1].init(22, 19, 'match[i].length < 2');
 function visit2_62_1(result) {
   _$jscoverage['/timer/color.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['61'][1].init(29, 16, 'i < match.length');
+}_$jscoverage['/timer/color.js'].branchData['61'][1].init(30, 16, 'i < match.length');
 function visit1_61_1(result) {
   _$jscoverage['/timer/color.js'].branchData['61'][1].ranCondition(result);
   return result;

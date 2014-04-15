@@ -15,23 +15,23 @@
 
     <target name="concat-css">
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="assets" includes="**/*"/>
+            <fileset dir="${component.assets.dir}" includes="**/*" excludes="common.css"/>
         </copy>
 
-        <concat destfile="${component.src.dir.tmp}/cool/editor-pkg-debug.css"
+        <concat destfile="${component.src.dir.tmp}/cool/editor-debug.css"
                 encoding="${charset}" outputencoding="${charset}">
-            <path location="${component.src.dir.tmp}/editor-common.css"/>
+            <path location="${component.assets.dir}/common.css"/>
             <fileset dir="${component.src.dir.tmp}/cool" includes="**/*.css"/>
         </concat>
 
         <smartsprites cssfilesuffix="-sprite"
                       spritepngie6="true"
                       loglevel="info">
-            <fileset file="${component.src.dir.tmp}/cool/editor-pkg-debug.css"/>
+            <fileset file="${component.src.dir.tmp}/cool/editor-debug.css"/>
         </smartsprites>
 
         <copy tofile="${component.src.dir.tmp}/cool/editor-debug.css">
-            <path location="${component.src.dir.tmp}/cool/editor-pkg-debug-sprite.css"/>
+            <path location="${component.src.dir.tmp}/cool/editor-debug-sprite.css"/>
         </copy>
 
         <replace token="./cool.png"
@@ -45,6 +45,6 @@
                  encoding="${charset}"/>
 
         <delete dir="${component.src.dir.tmp}/cool/"
-                excludes="editor-debug.css,editor-pkg-debug-sprite.css,cool.png,cool-ie6.png,text-bg.png"></delete>
+                excludes="editor-debug.css,editor-debug-sprite.css,cool.png,cool-ie6.png,text-bg.png"/>
     </target>
 </project>

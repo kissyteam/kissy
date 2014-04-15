@@ -5,7 +5,7 @@
     <import file="../common.xml"/>
 
     <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/${component.basename}-pkg.js"
+        <concat destfile="${component.src.dir.tmp}/${component.basename}-pkg-debug.js"
                 encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${component.src.dir}" includes="**/*.js"/>
         </concat>

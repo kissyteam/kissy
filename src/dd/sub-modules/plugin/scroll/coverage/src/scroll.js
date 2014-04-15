@@ -357,63 +357,63 @@ if (! _$jscoverage['/scroll.js'].branchData) {
   _$jscoverage['/scroll.js'].branchData['214'] = [];
   _$jscoverage['/scroll.js'].branchData['214'][1] = new BranchData();
 }
-_$jscoverage['/scroll.js'].branchData['214'][1].init(803, 16, 'drag.get(\'move\')');
+_$jscoverage['/scroll.js'].branchData['214'][1].init(819, 16, 'drag.get(\'move\')');
 function visit15_214_1(result) {
   _$jscoverage['/scroll.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['206'][1].init(372, 14, 'isWin(node[0])');
+}_$jscoverage['/scroll.js'].branchData['206'][1].init(380, 14, 'isWin(node[0])');
 function visit14_206_1(result) {
   _$jscoverage['/scroll.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['198'][1].init(1076, 6, 'adjust');
+}_$jscoverage['/scroll.js'].branchData['198'][1].init(1115, 6, 'adjust');
 function visit13_198_1(result) {
   _$jscoverage['/scroll.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['193'][1].init(937, 17, 'diffX2 <= diff[0]');
+}_$jscoverage['/scroll.js'].branchData['193'][1].init(971, 17, 'diffX2 <= diff[0]');
 function visit12_193_1(result) {
   _$jscoverage['/scroll.js'].branchData['193'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['186'][1].init(758, 17, 'diffX >= -diff[0]');
+}_$jscoverage['/scroll.js'].branchData['186'][1].init(785, 17, 'diffX >= -diff[0]');
 function visit11_186_1(result) {
   _$jscoverage['/scroll.js'].branchData['186'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['179'][1].init(576, 17, 'diffY2 <= diff[1]');
+}_$jscoverage['/scroll.js'].branchData['179'][1].init(596, 17, 'diffY2 <= diff[1]');
 function visit10_179_1(result) {
   _$jscoverage['/scroll.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['172'][1].init(399, 17, 'diffY >= -diff[1]');
+}_$jscoverage['/scroll.js'].branchData['172'][1].init(412, 17, 'diffY >= -diff[1]');
 function visit9_172_1(result) {
   _$jscoverage['/scroll.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['160'][1].init(21, 16, 'checkContainer()');
+}_$jscoverage['/scroll.js'].branchData['160'][1].init(22, 16, 'checkContainer()');
 function visit8_160_1(result) {
   _$jscoverage['/scroll.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['141'][1].init(512, 6, '!timer');
+}_$jscoverage['/scroll.js'].branchData['141'][1].init(529, 6, '!timer');
 function visit7_141_1(result) {
   _$jscoverage['/scroll.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['131'][1].init(183, 16, 'checkContainer()');
+}_$jscoverage['/scroll.js'].branchData['131'][1].init(190, 16, 'checkContainer()');
 function visit6_131_1(result) {
   _$jscoverage['/scroll.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['127'][1].init(105, 7, 'ev.fake');
+}_$jscoverage['/scroll.js'].branchData['127'][1].init(108, 7, 'ev.fake');
 function visit5_127_1(result) {
   _$jscoverage['/scroll.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['116'][1].init(246, 26, '!DDM.inRegion(r, mousePos)');
+}_$jscoverage['/scroll.js'].branchData['116'][1].init(254, 26, '!DDM.inRegion(r, mousePos)');
 function visit4_116_1(result) {
   _$jscoverage['/scroll.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['109'][1].init(21, 14, 'isWin(node[0])');
+}_$jscoverage['/scroll.js'].branchData['109'][1].init(22, 14, 'isWin(node[0])');
 function visit3_109_1(result) {
   _$jscoverage['/scroll.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['50'][1].init(17, 14, 'isWin(node[0])');
+}_$jscoverage['/scroll.js'].branchData['50'][1].init(18, 14, 'isWin(node[0])');
 function visit2_50_1(result) {
   _$jscoverage['/scroll.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scroll.js'].branchData['32'][1].init(17, 14, 'isWin(node[0])');
+}_$jscoverage['/scroll.js'].branchData['32'][1].init(18, 14, 'isWin(node[0])');
 function visit1_32_1(result) {
   _$jscoverage['/scroll.js'].branchData['32'][1].ranCondition(result);
   return result;

@@ -511,527 +511,527 @@ if (! _$jscoverage['/html-parser/writer/minify.js'].branchData) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['225'] = [];
   _$jscoverage['/html-parser/writer/minify.js'].branchData['225'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/writer/minify.js'].branchData['225'][1].init(46, 11, '!self.inPre');
+_$jscoverage['/html-parser/writer/minify.js'].branchData['225'][1].init(48, 11, '!self.inPre');
 function visit533_225_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['225'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['212'][2].init(670, 40, 'value && canRemoveAttributeQuotes(value)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['212'][2].init(692, 40, 'value && canRemoveAttributeQuotes(value)');
 function visit532_212_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['212'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['212'][1].init(668, 43, '!(value && canRemoveAttributeQuotes(value))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['212'][1].init(690, 43, '!(value && canRemoveAttributeQuotes(value))');
 function visit531_212_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['212'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['203'][1].init(382, 24, 'isBooleanAttribute(name)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['203'][1].init(395, 24, 'isBooleanAttribute(name)');
 function visit530_203_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['197'][1].init(194, 129, 'canDeleteEmptyAttribute(el, attr) || isAttributeRedundant(el, attr)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['197'][1].init(201, 131, 'canDeleteEmptyAttribute(el, attr) || isAttributeRedundant(el, attr)');
 function visit529_197_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['194'][1].init(107, 16, 'attr.value || \'\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['194'][1].init(110, 16, 'attr.value || \'\'');
 function visit528_194_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['176'][1].init(46, 20, 'el.tagName === \'pre\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['176'][1].init(48, 20, 'el.tagName === \'pre\'');
 function visit527_176_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['165'][1].init(46, 20, 'el.tagName === \'pre\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['165'][1].init(48, 20, 'el.tagName === \'pre\'');
 function visit526_165_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['154'][1].init(17, 26, 'isConditionalComment(text)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['154'][1].init(18, 26, 'isConditionalComment(text)');
 function visit525_154_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['118'][1].init(565, 20, 'attrName === \'style\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['118'][1].init(578, 20, 'attrName === \'style\'');
 function visit524_118_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['115'][1].init(415, 85, 'isUriTypeAttribute(attrName, tag) || isNumberTypeAttribute(attrName, tag)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['115'][1].init(425, 86, 'isUriTypeAttribute(attrName, tag) || isNumberTypeAttribute(attrName, tag)');
 function visit523_115_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['113'][1].init(310, 20, 'attrName === \'class\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['113'][1].init(318, 20, 'attrName === \'class\'');
 function visit522_113_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['109'][1].init(120, 26, 'isEventAttribute(attrName)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['109'][1].init(124, 26, 'isEventAttribute(attrName)');
 function visit521_109_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['108'][1].init(80, 16, 'attr.value || \'\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['108'][1].init(82, 16, 'attr.value || \'\'');
 function visit520_108_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][7].init(118, 22, 'attrName === \'colspan\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][7].init(119, 22, 'attrName === \'colspan\'');
 function visit519_101_7(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][7].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][6].init(92, 22, 'attrName === \'rowspan\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][6].init(93, 22, 'attrName === \'rowspan\'');
 function visit518_101_6(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][6].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][5].init(92, 48, 'attrName === \'rowspan\' || attrName === \'colspan\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][5].init(93, 48, 'attrName === \'rowspan\' || attrName === \'colspan\'');
 function visit517_101_5(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][4].init(74, 12, 'tag === \'td\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][4].init(75, 12, 'tag === \'td\'');
 function visit516_101_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][3].init(58, 12, 'tag === \'th\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][3].init(59, 12, 'tag === \'th\'');
 function visit515_101_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][2].init(58, 28, 'tag === \'th\' || tag === \'td\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][2].init(59, 28, 'tag === \'th\' || tag === \'td\'');
 function visit514_101_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][1].init(58, 83, '(tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['101'][1].init(59, 83, '(tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\')');
 function visit513_101_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][4].init(467, 19, 'attrName === \'span\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][4].init(473, 19, 'attrName === \'span\'');
 function visit512_100_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['100'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][3].init(450, 13, 'tag === \'col\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][3].init(456, 13, 'tag === \'col\'');
 function visit511_100_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['100'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][2].init(450, 36, 'tag === \'col\' && attrName === \'span\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][2].init(456, 36, 'tag === \'col\' && attrName === \'span\'');
 function visit510_100_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['100'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][1].init(62, 143, '(tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['100'][1].init(63, 144, '(tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
 function visit509_100_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][4].init(408, 19, 'attrName === \'span\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][4].init(413, 19, 'attrName === \'span\'');
 function visit508_99_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['99'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][3].init(386, 18, 'tag === \'colgroup\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][3].init(391, 18, 'tag === \'colgroup\'');
 function visit507_99_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['99'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][2].init(386, 41, 'tag === \'colgroup\' && attrName === \'span\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][2].init(391, 41, 'tag === \'colgroup\' && attrName === \'span\'');
 function visit506_99_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['99'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][1].init(86, 206, '(tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['99'][1].init(87, 208, '(tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
 function visit505_99_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['98'][3].init(298, 18, 'tag === \'textarea\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['98'][3].init(302, 18, 'tag === \'textarea\'');
 function visit504_98_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['98'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['98'][2].init(298, 65, 'tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['98'][2].init(302, 65, 'tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)');
 function visit503_98_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['98'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['98'][1].init(89, 293, '(tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['98'][1].init(90, 296, '(tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
 function visit502_98_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][6].init(251, 23, 'attrName === \'tabindex\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][6].init(254, 23, 'attrName === \'tabindex\'');
 function visit501_97_6(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['97'][6].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][5].init(228, 19, 'attrName === \'size\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][5].init(231, 19, 'attrName === \'size\'');
 function visit500_97_5(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['97'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][4].init(228, 46, 'attrName === \'size\' || attrName === \'tabindex\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][4].init(231, 46, 'attrName === \'size\' || attrName === \'tabindex\'');
 function visit499_97_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['97'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][3].init(207, 16, 'tag === \'select\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][3].init(210, 16, 'tag === \'select\'');
 function visit498_97_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['97'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][2].init(207, 68, 'tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][2].init(210, 68, 'tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')');
 function visit497_97_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['97'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][1].init(93, 383, '(tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')) || (tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['97'][1].init(94, 387, '(tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')) || (tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
 function visit496_97_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][6].init(160, 23, 'attrName === \'tabindex\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][6].init(162, 23, 'attrName === \'tabindex\'');
 function visit495_96_6(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['96'][6].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][5].init(132, 24, 'attrName === \'maxlength\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][5].init(134, 24, 'attrName === \'maxlength\'');
 function visit494_96_5(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['96'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][4].init(132, 51, 'attrName === \'maxlength\' || attrName === \'tabindex\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][4].init(134, 51, 'attrName === \'maxlength\' || attrName === \'tabindex\'');
 function visit493_96_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['96'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][3].init(112, 15, 'tag === \'input\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][3].init(114, 15, 'tag === \'input\'');
 function visit492_96_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['96'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][2].init(112, 72, 'tag === \'input\' && (attrName === \'maxlength\' || attrName === \'tabindex\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][2].init(114, 72, 'tag === \'input\' && (attrName === \'maxlength\' || attrName === \'tabindex\')');
 function visit491_96_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['96'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][1].init(87, 477, '(tag === \'input\' && (attrName === \'maxlength\' || attrName === \'tabindex\')) || (tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')) || (tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['96'][1].init(88, 482, '(tag === \'input\' && (attrName === \'maxlength\' || attrName === \'tabindex\')) || (tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')) || (tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
 function visit490_96_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['95'][3].init(66, 23, 'attrName === \'tabindex\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['95'][3].init(67, 23, 'attrName === \'tabindex\'');
 function visit489_95_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['95'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['95'][2].init(23, 66, '(/^(?:a|area|object|button)$/).test(tag) && attrName === \'tabindex\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['95'][2].init(24, 66, '(/^(?:a|area|object|button)$/).test(tag) && attrName === \'tabindex\'');
 function visit488_95_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['95'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['95'][1].init(-1, 565, '((/^(?:a|area|object|button)$/).test(tag) && attrName === \'tabindex\') || (tag === \'input\' && (attrName === \'maxlength\' || attrName === \'tabindex\')) || (tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')) || (tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['95'][1].init(-1, 571, '((/^(?:a|area|object|button)$/).test(tag) && attrName === \'tabindex\') || (tag === \'input\' && (attrName === \'maxlength\' || attrName === \'tabindex\')) || (tag === \'select\' && (attrName === \'size\' || attrName === \'tabindex\')) || (tag === \'textarea\' && (/^(?:rows|cols|tabindex)$/).test(attrName)) || (tag === \'colgroup\' && attrName === \'span\') || (tag === \'col\' && attrName === \'span\') || ((tag === \'th\' || tag === \'td\') && (attrName === \'rowspan\' || attrName === \'colspan\'))');
 function visit487_95_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][5].init(104, 18, 'attrName === \'for\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][5].init(105, 18, 'attrName === \'for\'');
 function visit486_89_5(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['89'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][4].init(82, 18, 'attrName === \'src\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][4].init(83, 18, 'attrName === \'src\'');
 function visit485_89_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['89'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][3].init(82, 40, 'attrName === \'src\' || attrName === \'for\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][3].init(83, 40, 'attrName === \'src\' || attrName === \'for\'');
 function visit484_89_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['89'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][2].init(61, 16, 'tag === \'script\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][2].init(62, 16, 'tag === \'script\'');
 function visit483_89_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['89'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][1].init(61, 62, 'tag === \'script\' && (attrName === \'src\' || attrName === \'for\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['89'][1].init(62, 62, 'tag === \'script\' && (attrName === \'src\' || attrName === \'for\')');
 function visit482_89_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][4].init(652, 22, 'attrName === \'profile\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][4].init(661, 22, 'attrName === \'profile\'');
 function visit481_88_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['88'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][3].init(634, 14, 'tag === \'head\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][3].init(643, 14, 'tag === \'head\'');
 function visit480_88_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['88'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][2].init(634, 40, 'tag === \'head\' && attrName === \'profile\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][2].init(643, 40, 'tag === \'head\' && attrName === \'profile\'');
 function visit479_88_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['88'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][1].init(85, 125, '(tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['88'][1].init(86, 126, '(tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit478_88_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][6].init(589, 21, 'attrName === \'usemap\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][6].init(597, 21, 'attrName === \'usemap\'');
 function visit477_87_6(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['87'][6].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][5].init(567, 18, 'attrName === \'src\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][5].init(575, 18, 'attrName === \'src\'');
 function visit476_87_5(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['87'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][4].init(567, 43, 'attrName === \'src\' || attrName === \'usemap\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][4].init(575, 43, 'attrName === \'src\' || attrName === \'usemap\'');
 function visit475_87_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['87'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][3].init(547, 15, 'tag === \'input\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][3].init(555, 15, 'tag === \'input\'');
 function visit474_87_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['87'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][2].init(547, 64, 'tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][2].init(555, 64, 'tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')');
 function visit473_87_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['87'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][1].init(60, 211, '(tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['87'][1].init(61, 213, '(tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit472_87_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][4].init(503, 21, 'attrName === \'action\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][4].init(510, 21, 'attrName === \'action\'');
 function visit471_86_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['86'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][3].init(485, 14, 'tag === \'form\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][3].init(492, 14, 'tag === \'form\'');
 function visit470_86_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['86'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][2].init(485, 39, 'tag === \'form\' && attrName === \'action\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][2].init(492, 39, 'tag === \'form\' && attrName === \'action\'');
 function visit469_86_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['86'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][1].init(75, 272, '(tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['86'][1].init(76, 275, '(tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit468_86_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][6].init(443, 19, 'attrName === \'cite\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][6].init(449, 19, 'attrName === \'cite\'');
 function visit467_85_6(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['85'][6].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][5].init(425, 13, 'tag === \'del\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][5].init(431, 13, 'tag === \'del\'');
 function visit466_85_5(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['85'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][4].init(408, 13, 'tag === \'ins\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][4].init(414, 13, 'tag === \'ins\'');
 function visit465_85_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['85'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][3].init(408, 30, 'tag === \'ins\' || tag === \'del\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][3].init(414, 30, 'tag === \'ins\' || tag === \'del\'');
 function visit464_85_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['85'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][2].init(408, 54, '(tag === \'ins\' || tag === \'del\') && attrName === \'cite\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][2].init(414, 54, '(tag === \'ins\' || tag === \'del\') && attrName === \'cite\'');
 function visit463_85_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['85'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][1].init(65, 348, '((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['85'][1].init(66, 352, '((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit462_85_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][4].init(365, 19, 'attrName === \'cite\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][4].init(370, 19, 'attrName === \'cite\'');
 function visit461_84_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['84'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][3].init(341, 20, 'tag === \'blockquote\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][3].init(346, 20, 'tag === \'blockquote\'');
 function visit460_84_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['84'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][2].init(341, 43, 'tag === \'blockquote\' && attrName === \'cite\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][2].init(346, 43, 'tag === \'blockquote\' && attrName === \'cite\'');
 function visit459_84_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['84'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][1].init(55, 414, '(tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['84'][1].init(56, 419, '(tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit458_84_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][4].init(299, 19, 'attrName === \'cite\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][4].init(303, 19, 'attrName === \'cite\'');
 function visit457_83_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['83'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][3].init(284, 11, 'tag === \'q\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][3].init(288, 11, 'tag === \'q\'');
 function visit456_83_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['83'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][2].init(284, 34, 'tag === \'q\' && attrName === \'cite\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][2].init(288, 34, 'tag === \'q\' && attrName === \'cite\'');
 function visit455_83_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['83'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][1].init(94, 470, '(tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['83'][1].init(95, 476, '(tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit454_83_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['82'][3].init(188, 16, 'tag === \'object\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['82'][3].init(191, 16, 'tag === \'object\'');
 function visit453_82_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['82'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['82'][2].init(188, 73, 'tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['82'][2].init(191, 73, 'tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)');
 function visit452_82_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['82'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['82'][1].init(82, 565, '(tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) || (tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['82'][1].init(83, 572, '(tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) || (tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit451_82_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['81'][3].init(104, 13, 'tag === \'img\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['81'][3].init(106, 13, 'tag === \'img\'');
 function visit450_81_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['81'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['81'][2].init(104, 61, 'tag === \'img\' && (/^(?:src|longdesc|usemap)$/).test(attrName)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['81'][2].init(106, 61, 'tag === \'img\' && (/^(?:src|longdesc|usemap)$/).test(attrName)');
 function visit449_81_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['81'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['81'][1].init(79, 648, '(tag === \'img\' && (/^(?:src|longdesc|usemap)$/).test(attrName)) || (tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) || (tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['81'][1].init(80, 656, '(tag === \'img\' && (/^(?:src|longdesc|usemap)$/).test(attrName)) || (tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) || (tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit448_81_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['80'][3].init(62, 19, 'attrName === \'href\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['80'][3].init(63, 19, 'attrName === \'href\'');
 function visit447_80_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['80'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['80'][2].init(23, 58, '(/^(?:a|area|link|base)$/).test(tag) && attrName === \'href\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['80'][2].init(24, 58, '(/^(?:a|area|link|base)$/).test(tag) && attrName === \'href\'');
 function visit446_80_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['80'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['80'][1].init(-1, 728, '((/^(?:a|area|link|base)$/).test(tag) && attrName === \'href\') || (tag === \'img\' && (/^(?:src|longdesc|usemap)$/).test(attrName)) || (tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) || (tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['80'][1].init(-1, 737, '((/^(?:a|area|link|base)$/).test(tag) && attrName === \'href\') || (tag === \'img\' && (/^(?:src|longdesc|usemap)$/).test(attrName)) || (tag === \'object\' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) || (tag === \'q\' && attrName === \'cite\') || (tag === \'blockquote\' && attrName === \'cite\') || ((tag === \'ins\' || tag === \'del\') && attrName === \'cite\') || (tag === \'form\' && attrName === \'action\') || (tag === \'input\' && (attrName === \'src\' || attrName === \'usemap\')) || (tag === \'head\' && attrName === \'profile\') || (tag === \'script\' && (attrName === \'src\' || attrName === \'for\'))');
 function visit445_80_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['66'][1].init(43, 20, 'attrValue === \'rect\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['66'][1].init(44, 20, 'attrValue === \'rect\'');
 function visit444_66_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['65'][2].init(168, 20, 'attrName === \'shape\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['65'][2].init(173, 20, 'attrName === \'shape\'');
 function visit443_65_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['65'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['65'][1].init(37, 64, 'attrName === \'shape\' && attrValue === \'rect\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['65'][1].init(38, 65, 'attrName === \'shape\' && attrValue === \'rect\'');
 function visit442_65_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['64'][2].init(128, 14, 'tag === \'area\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['64'][2].init(132, 14, 'tag === \'area\'');
 function visit441_64_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['64'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['64'][1].init(128, 102, 'tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['64'][1].init(132, 104, 'tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\'');
 function visit440_64_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['62'][1].init(42, 24, 'attrValue === \'text/css\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['62'][1].init(43, 24, 'attrValue === \'text/css\'');
 function visit439_62_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['61'][2].init(40, 19, 'attrName === \'type\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['61'][2].init(41, 19, 'attrName === \'type\'');
 function visit438_61_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['61'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['61'][1].init(38, 67, 'attrName === \'type\' && attrValue === \'text/css\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['61'][1].init(39, 68, 'attrName === \'type\' && attrValue === \'text/css\'');
 function visit437_61_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['60'][3].init(541, 15, 'tag === \'style\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['60'][3].init(558, 15, 'tag === \'style\'');
 function visit436_60_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['60'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['60'][2].init(541, 106, 'tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['60'][2].init(558, 108, 'tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\'');
 function visit435_60_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['60'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['60'][1].init(136, 232, '(tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['60'][1].init(140, 238, '(tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
 function visit434_60_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['58'][1].init(42, 31, 'attrValue === \'text/javascript\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['58'][1].init(43, 31, 'attrValue === \'text/javascript\'');
 function visit433_58_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['57'][2].init(41, 19, 'attrName === \'type\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['57'][2].init(42, 19, 'attrName === \'type\'');
 function visit432_57_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['57'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['57'][1].init(39, 74, 'attrName === \'type\' && attrValue === \'text/javascript\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['57'][1].init(40, 75, 'attrName === \'type\' && attrValue === \'text/javascript\'');
 function visit431_57_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['56'][3].init(403, 16, 'tag === \'script\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['56'][3].init(416, 16, 'tag === \'script\'');
 function visit430_56_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['56'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['56'][2].init(403, 114, 'tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['56'][2].init(416, 116, 'tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\'');
 function visit429_56_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['56'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['56'][1].init(124, 369, '(tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['56'][1].init(128, 379, '(tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
 function visit428_56_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['54'][1].init(42, 20, 'attrValue === \'text\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['54'][1].init(43, 20, 'attrValue === \'text\'');
 function visit427_54_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['53'][2].init(40, 19, 'attrName === \'type\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['53'][2].init(41, 19, 'attrName === \'type\'');
 function visit426_53_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['53'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['53'][1].init(38, 63, 'attrName === \'type\' && attrValue === \'text\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['53'][1].init(39, 64, 'attrName === \'type\' && attrValue === \'text\'');
 function visit425_53_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['52'][3].init(277, 15, 'tag === \'input\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['52'][3].init(286, 15, 'tag === \'input\'');
 function visit424_52_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['52'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['52'][2].init(277, 102, 'tag === \'input\' && attrName === \'type\' && attrValue === \'text\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['52'][2].init(286, 104, 'tag === \'input\' && attrName === \'type\' && attrValue === \'text\'');
 function visit423_52_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['52'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['52'][1].init(124, 494, '(tag === \'input\' && attrName === \'type\' && attrValue === \'text\') || (tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['52'][1].init(128, 508, '(tag === \'input\' && attrName === \'type\' && attrValue === \'text\') || (tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
 function visit422_52_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['50'][1].init(44, 19, 'attrValue === \'get\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['50'][1].init(45, 19, 'attrValue === \'get\'');
 function visit421_50_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['49'][2].init(39, 21, 'attrName === \'method\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['49'][2].init(40, 21, 'attrName === \'method\'');
 function visit420_49_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['49'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['49'][1].init(37, 64, 'attrName === \'method\' && attrValue === \'get\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['49'][1].init(38, 65, 'attrName === \'method\' && attrValue === \'get\'');
 function visit419_49_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['48'][3].init(151, 14, 'tag === \'form\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['48'][3].init(156, 14, 'tag === \'form\'');
 function visit418_48_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['48'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['48'][2].init(151, 102, 'tag === \'form\' && attrName === \'method\' && attrValue === \'get\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['48'][2].init(156, 104, 'tag === \'form\' && attrName === \'method\' && attrValue === \'get\'');
 function visit417_48_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['48'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['48'][1].init(127, 619, '(tag === \'form\' && attrName === \'method\' && attrValue === \'get\') || (tag === \'input\' && attrName === \'type\' && attrValue === \'text\') || (tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['48'][1].init(131, 637, '(tag === \'form\' && attrName === \'method\' && attrValue === \'get\') || (tag === \'input\' && attrName === \'type\' && attrValue === \'text\') || (tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
 function visit416_48_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['46'][1].init(42, 26, 'attrValue === \'javascript\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['46'][1].init(43, 26, 'attrValue === \'javascript\'');
 function visit415_46_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['45'][2].init(37, 23, 'attrName === \'language\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['45'][2].init(38, 23, 'attrName === \'language\'');
 function visit414_45_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['45'][1].init(35, 69, 'attrName === \'language\' && attrValue === \'javascript\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['45'][1].init(36, 70, 'attrName === \'language\' && attrValue === \'javascript\'');
 function visit413_45_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['44'][3].init(22, 16, 'tag === \'script\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['44'][3].init(23, 16, 'tag === \'script\'');
 function visit412_44_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['44'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['44'][2].init(22, 105, 'tag === \'script\' && attrName === \'language\' && attrValue === \'javascript\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['44'][2].init(23, 107, 'tag === \'script\' && attrName === \'language\' && attrValue === \'javascript\'');
 function visit411_44_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['44'][1].init(-1, 747, '(tag === \'script\' && attrName === \'language\' && attrValue === \'javascript\') || (tag === \'form\' && attrName === \'method\' && attrValue === \'get\') || (tag === \'input\' && attrName === \'type\' && attrValue === \'text\') || (tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['44'][1].init(-1, 769, '(tag === \'script\' && attrName === \'language\' && attrValue === \'javascript\') || (tag === \'form\' && attrName === \'method\' && attrValue === \'get\') || (tag === \'input\' && attrName === \'type\' && attrValue === \'text\') || (tag === \'script\' && attrName === \'type\' && attrValue === \'text/javascript\') || (tag === \'style\' && attrName === \'type\' && attrValue === \'text/css\') || (tag === \'area\' && attrName === \'shape\' && attrValue === \'rect\')');
 function visit410_44_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['41'][1].init(80, 16, 'attr.value || \'\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['41'][1].init(82, 16, 'attr.value || \'\'');
 function visit409_41_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][4].init(41, 20, 'attrName === \'value\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][4].init(42, 20, 'attrName === \'value\'');
 function visit408_26_4(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['26'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][3].init(22, 15, 'tag === \'input\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][3].init(23, 15, 'tag === \'input\'');
 function visit407_26_3(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['26'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][2].init(22, 39, 'tag === \'input\' && attrName === \'value\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][2].init(23, 39, 'tag === \'input\' && attrName === \'value\'');
 function visit406_26_2(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['26'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][1].init(22, 91, '(tag === \'input\' && attrName === \'value\') || reEmptyAttribute.test(attrName)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['26'][1].init(23, 92, '(tag === \'input\' && attrName === \'value\') || reEmptyAttribute.test(attrName)');
 function visit405_26_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['25'][1].init(89, 16, '!trim(attrValue)');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['25'][1].init(92, 16, '!trim(attrValue)');
 function visit404_25_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['23'][1].init(25, 16, 'attr.value || \'\'');
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['23'][1].init(26, 16, 'attr.value || \'\'');
 function visit403_23_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['23'][1].ranCondition(result);
   return result;

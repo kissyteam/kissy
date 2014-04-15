@@ -341,83 +341,83 @@ if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData['114'][2] = new BranchData();
   _$jscoverage['/base/utils.js'].branchData['114'][3] = new BranchData();
 }
-_$jscoverage['/base/utils.js'].branchData['114'][3].init(44, 27, 'anim.config.queue === queue');
+_$jscoverage['/base/utils.js'].branchData['114'][3].init(45, 27, 'anim.config.queue === queue');
 function visit32_114_3(result) {
   _$jscoverage['/base/utils.js'].branchData['114'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['114'][2].init(21, 19, 'queue === undefined');
+}_$jscoverage['/base/utils.js'].branchData['114'][2].init(22, 19, 'queue === undefined');
 function visit31_114_2(result) {
   _$jscoverage['/base/utils.js'].branchData['114'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['114'][1].init(21, 50, 'queue === undefined || anim.config.queue === queue');
+}_$jscoverage['/base/utils.js'].branchData['114'][1].init(22, 50, 'queue === undefined || anim.config.queue === queue');
 function visit30_114_1(result) {
   _$jscoverage['/base/utils.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['106'][1].init(113, 15, 'queue !== false');
+}_$jscoverage['/base/utils.js'].branchData['106'][1].init(116, 15, 'queue !== false');
 function visit29_106_1(result) {
   _$jscoverage['/base/utils.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['104'][1].init(21, 19, 'queue === undefined');
+}_$jscoverage['/base/utils.js'].branchData['104'][1].init(22, 19, 'queue === undefined');
 function visit28_104_1(result) {
   _$jscoverage['/base/utils.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['103'][1].init(17, 10, 'clearQueue');
+}_$jscoverage['/base/utils.js'].branchData['103'][1].init(18, 10, 'clearQueue');
 function visit27_103_1(result) {
   _$jscoverage['/base/utils.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['99'][1].init(77, 42, 'allRunning && !S.isEmptyObject(allRunning)');
+}_$jscoverage['/base/utils.js'].branchData['99'][1].init(79, 42, 'allRunning && !S.isEmptyObject(allRunning)');
 function visit26_99_1(result) {
   _$jscoverage['/base/utils.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['94'][1].init(72, 34, 'paused && !S.isEmptyObject(paused)');
+}_$jscoverage['/base/utils.js'].branchData['94'][1].init(74, 34, 'paused && !S.isEmptyObject(paused)');
 function visit25_94_1(result) {
   _$jscoverage['/base/utils.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['78'][1].init(38, 27, 'anim.config.queue === queue');
+}_$jscoverage['/base/utils.js'].branchData['78'][1].init(39, 27, 'anim.config.queue === queue');
 function visit24_78_1(result) {
   _$jscoverage['/base/utils.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['77'][2].init(17, 19, 'queue === undefined');
+}_$jscoverage['/base/utils.js'].branchData['77'][2].init(18, 19, 'queue === undefined');
 function visit23_77_2(result) {
   _$jscoverage['/base/utils.js'].branchData['77'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['77'][1].init(17, 66, 'queue === undefined || anim.config.queue === queue');
+}_$jscoverage['/base/utils.js'].branchData['77'][1].init(18, 67, 'queue === undefined || anim.config.queue === queue');
 function visit22_77_1(result) {
   _$jscoverage['/base/utils.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['72'][1].init(39, 19, 'action === \'resume\'');
+}_$jscoverage['/base/utils.js'].branchData['72'][1].init(40, 19, 'action === \'resume\'');
 function visit21_72_1(result) {
   _$jscoverage['/base/utils.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['65'][1].init(91, 6, 'paused');
+}_$jscoverage['/base/utils.js'].branchData['65'][1].init(94, 6, 'paused');
 function visit20_65_1(result) {
   _$jscoverage['/base/utils.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['56'][1].init(59, 23, 'S.isEmptyObject(paused)');
+}_$jscoverage['/base/utils.js'].branchData['56'][1].init(61, 23, 'S.isEmptyObject(paused)');
 function visit19_56_1(result) {
   _$jscoverage['/base/utils.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['54'][1].init(91, 6, 'paused');
+}_$jscoverage['/base/utils.js'].branchData['54'][1].init(94, 6, 'paused');
 function visit18_54_1(result) {
   _$jscoverage['/base/utils.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['45'][1].init(91, 7, '!paused');
+}_$jscoverage['/base/utils.js'].branchData['45'][1].init(94, 7, '!paused');
 function visit17_45_1(result) {
   _$jscoverage['/base/utils.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['34'][1].init(96, 10, 'allRunning');
+}_$jscoverage['/base/utils.js'].branchData['34'][1].init(99, 10, 'allRunning');
 function visit16_34_1(result) {
   _$jscoverage['/base/utils.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['25'][1].init(63, 27, 'S.isEmptyObject(allRunning)');
+}_$jscoverage['/base/utils.js'].branchData['25'][1].init(65, 27, 'S.isEmptyObject(allRunning)');
 function visit15_25_1(result) {
   _$jscoverage['/base/utils.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['23'][1].init(96, 10, 'allRunning');
+}_$jscoverage['/base/utils.js'].branchData['23'][1].init(99, 10, 'allRunning');
 function visit14_23_1(result) {
   _$jscoverage['/base/utils.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['14'][1].init(96, 11, '!allRunning');
+}_$jscoverage['/base/utils.js'].branchData['14'][1].init(99, 11, '!allRunning');
 function visit13_14_1(result) {
   _$jscoverage['/base/utils.js'].branchData['14'][1].ranCondition(result);
   return result;

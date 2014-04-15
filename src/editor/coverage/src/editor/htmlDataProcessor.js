@@ -475,151 +475,151 @@ if (! _$jscoverage['/editor/htmlDataProcessor.js'].branchData) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['350'] = [];
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['350'][1] = new BranchData();
 }
-_$jscoverage['/editor/htmlDataProcessor.js'].branchData['350'][1].init(85, 25, '_dataFilter || dataFilter');
+_$jscoverage['/editor/htmlDataProcessor.js'].branchData['350'][1].init(87, 25, '_dataFilter || dataFilter');
 function visit374_350_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['350'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['333'][1].init(25, 9, 'UA.webkit');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['333'][1].init(26, 9, 'UA.webkit');
 function visit373_333_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['333'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['285'][1].init(183, 49, 'attributes.indexOf(\'_keSaved_\' + attrName) === -1');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['285'][1].init(186, 49, 'attributes.indexOf(\'_keSaved_\' + attrName) === -1');
 function visit372_285_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['285'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['244'][1].init(25, 17, '!(\'br\' in dtd[i])');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['244'][1].init(26, 17, '!(\'br\' in dtd[i])');
 function visit371_244_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['244'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['230'][1].init(65, 26, 'blockNeedsExtension(block)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['230'][1].init(67, 26, 'blockNeedsExtension(block)');
 function visit370_230_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['230'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['221'][1].init(138, 7, '!OLD_IE');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['221'][1].init(141, 7, '!OLD_IE');
 function visit369_221_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['218'][1].init(65, 26, 'blockNeedsExtension(block)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['218'][1].init(67, 26, 'blockNeedsExtension(block)');
 function visit368_218_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['212'][1].init(52, 30, 'lastChild.nodeName === \'input\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['212'][1].init(53, 30, 'lastChild.nodeName === \'input\'');
 function visit367_212_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['212'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['211'][2].init(335, 25, 'block.nodeName === \'form\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['211'][2].init(341, 25, 'block.nodeName === \'form\'');
 function visit366_211_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['211'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['211'][1].init(188, 83, 'block.nodeName === \'form\' && lastChild.nodeName === \'input\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['211'][1].init(191, 84, 'block.nodeName === \'form\' && lastChild.nodeName === \'input\'');
 function visit365_211_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['208'][1].init(144, 272, '!lastChild || block.nodeName === \'form\' && lastChild.nodeName === \'input\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['208'][1].init(147, 276, '!lastChild || block.nodeName === \'form\' && lastChild.nodeName === \'input\'');
 function visit364_208_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['208'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['199'][2].init(182, 24, 'lastChild.nodeType === 3');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['199'][2].init(185, 24, 'lastChild.nodeType === 3');
 function visit363_199_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['199'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['199'][1].init(182, 67, 'lastChild.nodeType === 3 && tailNbspRegex.test(lastChild.nodeValue)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['199'][1].init(185, 67, 'lastChild.nodeType === 3 && tailNbspRegex.test(lastChild.nodeValue)');
 function visit362_199_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][3].init(57, 27, 'lastChild.nodeName === \'br\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][3].init(58, 27, 'lastChild.nodeName === \'br\'');
 function visit361_197_3(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][2].init(29, 24, 'lastChild.nodeType === 1');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][2].init(30, 24, 'lastChild.nodeType === 1');
 function visit360_197_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][1].init(29, 55, 'lastChild.nodeType === 1 && lastChild.nodeName === \'br\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][1].init(30, 55, 'lastChild.nodeType === 1 && lastChild.nodeName === \'br\'');
 function visit359_197_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['196'][1].init(88, 9, 'lastChild');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['196'][1].init(90, 9, 'lastChild');
 function visit358_196_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][3].init(204, 19, 'last.nodeType === 3');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][3].init(208, 19, 'last.nodeType === 3');
 function visit357_188_3(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][2].init(204, 46, 'last.nodeType === 3 && !S.trim(last.nodeValue)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][2].init(208, 46, 'last.nodeType === 3 && !S.trim(last.nodeValue)');
 function visit356_188_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][1].init(196, 54, 'last && last.nodeType === 3 && !S.trim(last.nodeValue)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][1].init(200, 54, 'last && last.nodeType === 3 && !S.trim(last.nodeValue)');
 function visit355_188_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['155'][1].init(5173, 6, 'OLD_IE');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['155'][1].init(5285, 6, 'OLD_IE');
 function visit354_155_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['148'][1].init(99, 74, 'contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['148'][1].init(101, 74, 'contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker');
 function visit353_148_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['129'][1].init(33, 10, '!S.trim(v)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['129'][1].init(34, 10, '!S.trim(v)');
 function visit352_129_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['115'][1].init(33, 60, '!(element.childNodes.length) && !(element.attributes.length)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['115'][1].init(34, 60, '!(element.childNodes.length) && !(element.attributes.length)');
 function visit351_115_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['107'][1].init(364, 12, 'parentHeight');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['107'][1].init(370, 12, 'parentHeight');
 function visit350_107_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['104'][1].init(199, 11, 'parentWidth');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['104'][1].init(202, 11, 'parentWidth');
 function visit349_104_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['101'][2].init(251, 28, 'parent.nodeName === \'object\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['101'][2].init(255, 28, 'parent.nodeName === \'object\'');
 function visit348_101_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['101'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['101'][1].init(241, 38, 'parent && parent.nodeName === \'object\'');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['101'][1].init(245, 38, 'parent && parent.nodeName === \'object\'');
 function visit347_101_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['89'][1].init(131, 40, 'element.getAttribute(savedAttributeName)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['89'][1].init(133, 40, 'element.getAttribute(savedAttributeName)');
 function visit346_89_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['87'][1].init(322, 25, 'i < attributeNames.length');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['87'][1].init(327, 25, 'i < attributeNames.length');
 function visit345_87_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['82'][1].init(99, 17, 'attributes.length');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['82'][1].init(102, 17, 'attributes.length');
 function visit344_82_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][3].init(78, 54, 'child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][3].init(80, 54, 'child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE');
 function visit343_32_3(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][2].init(78, 74, 'child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE && !child.nodeValue');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][2].init(80, 74, 'child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE && !child.nodeValue');
 function visit342_32_2(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][1].init(76, 77, '!(child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE && !child.nodeValue)');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][1].init(78, 77, '!(child.nodeType === S.require(\'dom\').NodeType.TEXT_NODE && !child.nodeValue)');
 function visit341_32_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['30'][1].init(67, 5, 'i < l');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['30'][1].init(69, 5, 'i < l');
 function visit340_30_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['28'][1].init(197, 1, 'l');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['28'][1].init(203, 1, 'l');
 function visit339_28_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['13'][1].init(99, 16, 'S.UA.ieMode < 11');
+}_$jscoverage['/editor/htmlDataProcessor.js'].branchData['13'][1].init(102, 16, 'S.UA.ieMode < 11');
 function visit338_13_1(result) {
   _$jscoverage['/editor/htmlDataProcessor.js'].branchData['13'][1].ranCondition(result);
   return result;

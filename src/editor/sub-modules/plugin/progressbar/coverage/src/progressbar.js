@@ -259,7 +259,7 @@ if (! _$jscoverage['/progressbar.js'].branchData) {
   _$jscoverage['/progressbar.js'].branchData['42'] = [];
   _$jscoverage['/progressbar.js'].branchData['42'][1] = new BranchData();
 }
-_$jscoverage['/progressbar.js'].branchData['42'][1].init(1216, 9, 'container');
+_$jscoverage['/progressbar.js'].branchData['42'][1].init(1243, 9, 'container');
 function visit1_42_1(result) {
   _$jscoverage['/progressbar.js'].branchData['42'][1].ranCondition(result);
   return result;

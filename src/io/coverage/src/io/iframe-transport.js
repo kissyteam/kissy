@@ -366,75 +366,75 @@ if (! _$jscoverage['/io/iframe-transport.js'].branchData) {
   _$jscoverage['/io/iframe-transport.js'].branchData['235'] = [];
   _$jscoverage['/io/iframe-transport.js'].branchData['235'][1] = new BranchData();
 }
-_$jscoverage['/io/iframe-transport.js'].branchData['235'][1].init(3297, 21, 'eventType === \'error\'');
+_$jscoverage['/io/iframe-transport.js'].branchData['235'][1].init(3375, 21, 'eventType === \'error\'');
 function visit64_235_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['235'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['221'][1].init(1473, 9, 'iframeDoc');
+}_$jscoverage['/io/iframe-transport.js'].branchData['221'][1].init(1499, 9, 'iframeDoc');
 function visit63_221_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['215'][1].init(1198, 34, 'iframeDoc && iframeDoc.XMLDocument');
+}_$jscoverage['/io/iframe-transport.js'].branchData['215'][1].init(1218, 34, 'iframeDoc && iframeDoc.XMLDocument');
 function visit62_215_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['202'][1].init(239, 38, 'S.startsWith(io.responseText, \'<?xml\')');
+}_$jscoverage['/io/iframe-transport.js'].branchData['202'][1].init(243, 38, 'S.startsWith(io.responseText, \'<?xml\')');
 function visit61_202_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['202'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['198'][1].init(116, 27, 'iframeDoc && iframeDoc.body');
+}_$jscoverage['/io/iframe-transport.js'].branchData['198'][1].init(119, 27, 'iframeDoc && iframeDoc.body');
 function visit60_198_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['193'][1].init(994, 20, 'eventType === \'load\'');
+}_$jscoverage['/io/iframe-transport.js'].branchData['193'][1].init(1030, 20, 'eventType === \'load\'');
 function visit59_193_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['193'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['173'][3].init(439, 11, 'UA.ie === 6');
+}_$jscoverage['/io/iframe-transport.js'].branchData['173'][3].init(455, 11, 'UA.ie === 6');
 function visit58_173_3(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['173'][3].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['173'][2].init(414, 21, 'eventType === \'abort\'');
+}_$jscoverage['/io/iframe-transport.js'].branchData['173'][2].init(430, 21, 'eventType === \'abort\'');
 function visit57_173_2(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['173'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['173'][1].init(414, 36, 'eventType === \'abort\' && UA.ie === 6');
+}_$jscoverage['/io/iframe-transport.js'].branchData['173'][1].init(430, 36, 'eventType === \'abort\' && UA.ie === 6');
 function visit56_173_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['168'][1].init(308, 7, '!iframe');
+}_$jscoverage['/io/iframe-transport.js'].branchData['168'][1].init(319, 7, '!iframe');
 function visit55_168_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['149'][1].init(1433, 11, 'UA.ie === 6');
+}_$jscoverage['/io/iframe-transport.js'].branchData['149'][1].init(1482, 11, 'UA.ie === 6');
 function visit54_149_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['137'][1].init(1110, 5, 'query');
+}_$jscoverage['/io/iframe-transport.js'].branchData['137'][1].init(1147, 5, 'query');
 function visit53_137_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['133'][1].init(1030, 4, 'data');
+}_$jscoverage['/io/iframe-transport.js'].branchData['133'][1].init(1063, 4, 'data');
 function visit52_133_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['113'][1].init(81, 30, 'Dom.attr(form, \'action\') || \'\'');
+}_$jscoverage['/io/iframe-transport.js'].branchData['113'][1].init(83, 30, 'Dom.attr(form, \'action\') || \'\'');
 function visit51_113_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['112'][1].init(25, 30, 'Dom.attr(form, \'target\') || \'\'');
+}_$jscoverage['/io/iframe-transport.js'].branchData['112'][1].init(26, 30, 'Dom.attr(form, \'target\') || \'\'');
 function visit50_112_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['81'][1].init(114, 25, 'isArray && serializeArray');
+}_$jscoverage['/io/iframe-transport.js'].branchData['81'][1].init(117, 25, 'isArray && serializeArray');
 function visit49_81_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['78'][1].init(135, 13, 'i < vs.length');
+}_$jscoverage['/io/iframe-transport.js'].branchData['78'][1].init(139, 13, 'i < vs.length');
 function visit48_78_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/iframe-transport.js'].branchData['68'][1].init(503, 31, 'doc.body || doc.documentElement');
+}_$jscoverage['/io/iframe-transport.js'].branchData['68'][1].init(517, 31, 'doc.body || doc.documentElement');
 function visit47_68_1(result) {
   _$jscoverage['/io/iframe-transport.js'].branchData['68'][1].ranCondition(result);
   return result;

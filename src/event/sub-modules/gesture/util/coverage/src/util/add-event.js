@@ -612,263 +612,263 @@ if (! _$jscoverage['/util/add-event.js'].branchData) {
   _$jscoverage['/util/add-event.js'].branchData['421'] = [];
   _$jscoverage['/util/add-event.js'].branchData['421'][1] = new BranchData();
 }
-_$jscoverage['/util/add-event.js'].branchData['421'][1].init(303, 19, 'config.order || 100');
+_$jscoverage['/util/add-event.js'].branchData['421'][1].init(309, 19, 'config.order || 100');
 function visit65_421_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['412'][1].init(13, 26, 'typeof events === \'string\'');
+}_$jscoverage['/util/add-event.js'].branchData['412'][1].init(14, 26, 'typeof events === \'string\'');
 function visit64_412_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['412'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['404'][1].init(105, 27, '!handle.eventHandles.length');
+}_$jscoverage['/util/add-event.js'].branchData['404'][1].init(109, 27, '!handle.eventHandles.length');
 function visit63_404_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['404'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['401'][1].init(17, 5, 'event');
+}_$jscoverage['/util/add-event.js'].branchData['401'][1].init(18, 5, 'event');
 function visit62_401_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['401'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['400'][1].init(93, 6, 'handle');
+}_$jscoverage['/util/add-event.js'].branchData['400'][1].init(96, 6, 'handle');
 function visit61_400_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['392'][1].init(193, 5, 'event');
+}_$jscoverage['/util/add-event.js'].branchData['392'][1].init(199, 5, 'event');
 function visit60_392_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['392'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['389'][1].init(93, 7, '!handle');
+}_$jscoverage['/util/add-event.js'].branchData['389'][1].init(96, 7, '!handle');
 function visit59_389_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['352'][1].init(66, 26, '!eventHandles[event].count');
+}_$jscoverage['/util/add-event.js'].branchData['352'][1].init(68, 26, '!eventHandles[event].count');
 function visit58_352_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['352'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['350'][1].init(67, 19, 'eventHandles[event]');
+}_$jscoverage['/util/add-event.js'].branchData['350'][1].init(69, 19, 'eventHandles[event]');
 function visit57_350_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['350'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['328'][1].init(151, 19, 'eventHandles[event]');
+}_$jscoverage['/util/add-event.js'].branchData['328'][1].init(155, 19, 'eventHandles[event]');
 function visit56_328_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['328'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['317'][1].init(58, 15, 'eventHandles[e]');
+}_$jscoverage['/util/add-event.js'].branchData['317'][1].init(60, 15, 'eventHandles[e]');
 function visit55_317_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['317'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['315'][1].init(1212, 5, 'i < l');
+}_$jscoverage['/util/add-event.js'].branchData['315'][1].init(1245, 5, 'i < l');
 function visit54_315_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['309'][3].init(487, 26, 'h[method](event) === false');
+}_$jscoverage['/util/add-event.js'].branchData['309'][3].init(500, 26, 'h[method](event) === false');
 function visit53_309_3(result) {
   _$jscoverage['/util/add-event.js'].branchData['309'][3].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['309'][2].init(474, 39, 'h[method] && h[method](event) === false');
+}_$jscoverage['/util/add-event.js'].branchData['309'][2].init(487, 39, 'h[method] && h[method](event) === false');
 function visit52_309_2(result) {
   _$jscoverage['/util/add-event.js'].branchData['309'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['309'][1].init(460, 53, 'h.isActive && h[method] && h[method](event) === false');
+}_$jscoverage['/util/add-event.js'].branchData['309'][1].init(473, 53, 'h.isActive && h[method] && h[method](event) === false');
 function visit51_309_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['305'][1].init(328, 11, 'h.processed');
+}_$jscoverage['/util/add-event.js'].branchData['305'][1].init(337, 11, 'h.processed');
 function visit50_305_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['305'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['301'][2].init(206, 37, 'gestureType !== h.requiredGestureType');
+}_$jscoverage['/util/add-event.js'].branchData['301'][2].init(211, 37, 'gestureType !== h.requiredGestureType');
 function visit49_301_2(result) {
   _$jscoverage['/util/add-event.js'].branchData['301'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['301'][1].init(181, 62, 'h.requiredGestureType && gestureType !== h.requiredGestureType');
+}_$jscoverage['/util/add-event.js'].branchData['301'][1].init(186, 62, 'h.requiredGestureType && gestureType !== h.requiredGestureType');
 function visit48_301_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['301'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['296'][1].init(57, 15, 'eventHandles[e]');
+}_$jscoverage['/util/add-event.js'].branchData['296'][1].init(59, 15, 'eventHandles[e]');
 function visit47_296_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['294'][1].init(464, 5, 'i < l');
+}_$jscoverage['/util/add-event.js'].branchData['294'][1].init(476, 5, 'i < l');
 function visit46_294_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['291'][1].init(342, 28, '!event.changedTouches.length');
+}_$jscoverage['/util/add-event.js'].branchData['291'][1].init(351, 28, '!event.changedTouches.length');
 function visit45_291_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['276'][1].init(76, 20, '!self.touches.length');
+}_$jscoverage['/util/add-event.js'].branchData['276'][1].init(78, 20, '!self.touches.length');
 function visit44_276_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['276'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['274'][1].init(610, 20, 'isPointerEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['274'][1].init(627, 20, 'isPointerEvent(type)');
 function visit43_274_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['272'][1].init(529, 18, 'isMouseEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['272'][1].init(544, 18, 'isMouseEvent(type)');
 function visit42_272_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['267'][1].init(296, 18, 'isTouchEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['267'][1].init(306, 18, 'isTouchEvent(type)');
 function visit41_267_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['267'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['261'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
+}_$jscoverage['/util/add-event.js'].branchData['261'][1].init(22, 37, 'self.isEventSimulatedFromTouch(event)');
 function visit40_261_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['260'][1].init(81, 18, 'isMouseEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['260'][1].init(84, 18, 'isMouseEvent(type)');
 function visit39_260_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['260'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['250'][1].init(376, 19, '!isTouchEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['250'][1].init(386, 19, '!isTouchEvent(type)');
 function visit38_250_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['248'][1].init(273, 20, 'isPointerEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['248'][1].init(281, 20, 'isPointerEvent(type)');
 function visit37_248_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['244'][1].init(21, 36, 'self.isEventSimulatedFromTouch(type)');
+}_$jscoverage['/util/add-event.js'].branchData['244'][1].init(22, 36, 'self.isEventSimulatedFromTouch(type)');
 function visit36_244_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['244'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['243'][1].init(81, 18, 'isMouseEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['243'][1].init(84, 18, 'isMouseEvent(type)');
 function visit35_243_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['231'][1].init(884, 5, 'i < l');
+}_$jscoverage['/util/add-event.js'].branchData['231'][1].init(906, 5, 'i < l');
 function visit34_231_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['224'][1].init(73, 25, 'self.touches.length === 1');
+}_$jscoverage['/util/add-event.js'].branchData['224'][1].init(75, 25, 'self.touches.length === 1');
 function visit33_224_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['222'][1].init(493, 20, 'isPointerEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['222'][1].init(506, 20, 'isPointerEvent(type)');
 function visit32_222_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['218'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
+}_$jscoverage['/util/add-event.js'].branchData['218'][1].init(22, 37, 'self.isEventSimulatedFromTouch(event)');
 function visit31_218_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['217'][1].init(300, 18, 'isMouseEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['217'][1].init(308, 18, 'isMouseEvent(type)');
 function visit30_217_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['217'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['214'][1].init(153, 18, 'isTouchEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['214'][1].init(158, 18, 'isTouchEvent(type)');
 function visit29_214_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['199'][1].init(856, 10, 'touchEvent');
+}_$jscoverage['/util/add-event.js'].branchData['199'][1].init(879, 10, 'touchEvent');
 function visit28_199_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['194'][2].init(679, 22, 'touchList.length === 1');
+}_$jscoverage['/util/add-event.js'].branchData['194'][2].init(697, 22, 'touchList.length === 1');
 function visit27_194_2(result) {
   _$jscoverage['/util/add-event.js'].branchData['194'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['194'][1].init(666, 35, 'touchList && touchList.length === 1');
+}_$jscoverage['/util/add-event.js'].branchData['194'][1].init(684, 35, 'touchList && touchList.length === 1');
 function visit26_194_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['189'][1].init(138, 18, 'isMouseEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['189'][1].init(141, 18, 'isMouseEvent(type)');
 function visit25_189_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['187'][1].init(21, 20, 'isPointerEvent(type)');
+}_$jscoverage['/util/add-event.js'].branchData['187'][1].init(22, 20, 'isPointerEvent(type)');
 function visit24_187_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['182'][3].init(53, 22, 'type === \'touchcancel\'');
+}_$jscoverage['/util/add-event.js'].branchData['182'][3].init(54, 22, 'type === \'touchcancel\'');
 function visit23_182_3(result) {
   _$jscoverage['/util/add-event.js'].branchData['182'][3].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['182'][2].init(30, 19, 'type === \'touchend\'');
+}_$jscoverage['/util/add-event.js'].branchData['182'][2].init(31, 19, 'type === \'touchend\'');
 function visit22_182_2(result) {
   _$jscoverage['/util/add-event.js'].branchData['182'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['182'][1].init(30, 45, 'type === \'touchend\' || type === \'touchcancel\'');
+}_$jscoverage['/util/add-event.js'].branchData['182'][1].init(31, 45, 'type === \'touchend\' || type === \'touchcancel\'');
 function visit21_182_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['169'][3].init(211, 14, 'dy <= DUP_DIST');
+}_$jscoverage['/util/add-event.js'].branchData['169'][3].init(215, 14, 'dy <= DUP_DIST');
 function visit20_169_3(result) {
   _$jscoverage['/util/add-event.js'].branchData['169'][3].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['169'][2].init(193, 14, 'dx <= DUP_DIST');
+}_$jscoverage['/util/add-event.js'].branchData['169'][2].init(197, 14, 'dx <= DUP_DIST');
 function visit19_169_2(result) {
   _$jscoverage['/util/add-event.js'].branchData['169'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['169'][1].init(193, 32, 'dx <= DUP_DIST && dy <= DUP_DIST');
+}_$jscoverage['/util/add-event.js'].branchData['169'][1].init(197, 32, 'dx <= DUP_DIST && dy <= DUP_DIST');
 function visit18_169_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['165'][2].init(162, 5, 'i < l');
+}_$jscoverage['/util/add-event.js'].branchData['165'][2].init(166, 5, 'i < l');
 function visit17_165_2(result) {
   _$jscoverage['/util/add-event.js'].branchData['165'][2].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['165'][1].init(162, 21, 'i < l && (t = lts[i])');
+}_$jscoverage['/util/add-event.js'].branchData['165'][1].init(166, 21, 'i < l && (t = lts[i])');
 function visit16_165_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['153'][1].init(70, 6, 'i > -1');
+}_$jscoverage['/util/add-event.js'].branchData['153'][1].init(72, 6, 'i > -1');
 function visit15_153_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['147'][1].init(165, 22, 'this.isPrimaryTouch(t)');
+}_$jscoverage['/util/add-event.js'].branchData['147'][1].init(169, 22, 'this.isPrimaryTouch(t)');
 function visit14_147_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['137'][1].init(17, 28, 'this.isPrimaryTouch(inTouch)');
+}_$jscoverage['/util/add-event.js'].branchData['137'][1].init(18, 28, 'this.isPrimaryTouch(inTouch)');
 function visit13_137_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['131'][1].init(17, 24, 'this.firstTouch === null');
+}_$jscoverage['/util/add-event.js'].branchData['131'][1].init(18, 24, 'this.firstTouch === null');
 function visit12_131_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['127'][1].init(20, 38, 'this.firstTouch === inTouch.identifier');
+}_$jscoverage['/util/add-event.js'].branchData['127'][1].init(21, 38, 'this.firstTouch === inTouch.identifier');
 function visit11_127_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['120'][1].init(57, 29, 'touch.pointerId === pointerId');
+}_$jscoverage['/util/add-event.js'].branchData['120'][1].init(59, 29, 'touch.pointerId === pointerId');
 function visit10_120_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['118'][1].init(195, 5, 'i < l');
+}_$jscoverage['/util/add-event.js'].branchData['118'][1].init(201, 5, 'i < l');
 function visit9_118_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['105'][1].init(57, 29, 'touch.pointerId === pointerId');
+}_$jscoverage['/util/add-event.js'].branchData['105'][1].init(59, 29, 'touch.pointerId === pointerId');
 function visit8_105_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['103'][1].init(195, 5, 'i < l');
+}_$jscoverage['/util/add-event.js'].branchData['103'][1].init(201, 5, 'i < l');
 function visit7_103_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['86'][1].init(219, 33, '!isPointerEvent(gestureMoveEvent)');
+}_$jscoverage['/util/add-event.js'].branchData['86'][1].init(224, 33, '!isPointerEvent(gestureMoveEvent)');
 function visit6_86_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['53'][1].init(1584, 30, 'Feature.isMsPointerSupported()');
+}_$jscoverage['/util/add-event.js'].branchData['53'][1].init(1631, 30, 'Feature.isMsPointerSupported()');
 function visit5_53_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['47'][1].init(1306, 28, 'Feature.isPointerSupported()');
+}_$jscoverage['/util/add-event.js'].branchData['47'][1].init(1347, 28, 'Feature.isPointerSupported()');
 function visit4_47_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['36'][1].init(13, 6, 'UA.ios');
+}_$jscoverage['/util/add-event.js'].branchData['36'][1].init(14, 6, 'UA.ios');
 function visit3_36_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['35'][1].init(809, 31, 'Feature.isTouchEventSupported()');
+}_$jscoverage['/util/add-event.js'].branchData['35'][1].init(838, 31, 'Feature.isTouchEventSupported()');
 function visit2_35_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/add-event.js'].branchData['27'][1].init(16, 64, 'S.startsWith(type, \'MSPointer\') || S.startsWith(type, \'pointer\')');
+}_$jscoverage['/util/add-event.js'].branchData['27'][1].init(17, 64, 'S.startsWith(type, \'MSPointer\') || S.startsWith(type, \'pointer\')');
 function visit1_27_1(result) {
   _$jscoverage['/util/add-event.js'].branchData['27'][1].ranCondition(result);
   return result;

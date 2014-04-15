@@ -349,47 +349,47 @@ if (! _$jscoverage['/resizable.js'].branchData) {
   _$jscoverage['/resizable.js'].branchData['117'] = [];
   _$jscoverage['/resizable.js'].branchData['117'][1] = new BranchData();
 }
-_$jscoverage['/resizable.js'].branchData['117'][1].init(29, 6, 'pos[i]');
+_$jscoverage['/resizable.js'].branchData['117'][1].init(30, 6, 'pos[i]');
 function visit11_117_1(result) {
   _$jscoverage['/resizable.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['116'][1].init(717, 22, 'i < ATTRS_ORDER.length');
+}_$jscoverage['/resizable.js'].branchData['116'][1].init(732, 22, 'i < ATTRS_ORDER.length');
 function visit10_116_1(result) {
   _$jscoverage['/resizable.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['87'][1].init(299, 19, 'i < handlers.length');
+}_$jscoverage['/resizable.js'].branchData['87'][1].init(307, 19, 'i < handlers.length');
 function visit9_87_1(result) {
   _$jscoverage['/resizable.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['70'][1].init(20, 14, 'a1[i] || a2[i]');
+}_$jscoverage['/resizable.js'].branchData['70'][1].init(21, 14, 'a1[i] || a2[i]');
 function visit8_70_1(result) {
   _$jscoverage['/resizable.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['69'][1].init(41, 13, 'i < a1.length');
+}_$jscoverage['/resizable.js'].branchData['69'][1].init(43, 13, 'i < a1.length');
 function visit7_69_1(result) {
   _$jscoverage['/resizable.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['57'][1].init(21, 19, 'j < vertical.length');
+}_$jscoverage['/resizable.js'].branchData['57'][1].init(22, 19, 'j < vertical.length');
 function visit6_57_1(result) {
   _$jscoverage['/resizable.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['56'][1].init(1778, 21, 'i < horizontal.length');
+}_$jscoverage['/resizable.js'].branchData['56'][1].init(1828, 21, 'i < horizontal.length');
 function visit5_56_1(result) {
   _$jscoverage['/resizable.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['49'][1].init(148, 13, 'preserveRatio');
+}_$jscoverage['/resizable.js'].branchData['49'][1].init(152, 13, 'preserveRatio');
 function visit4_49_1(result) {
   _$jscoverage['/resizable.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['40'][1].init(111, 13, 'preserveRatio');
+}_$jscoverage['/resizable.js'].branchData['40'][1].init(114, 13, 'preserveRatio');
 function visit3_40_1(result) {
   _$jscoverage['/resizable.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['32'][1].init(111, 13, 'preserveRatio');
+}_$jscoverage['/resizable.js'].branchData['32'][1].init(114, 13, 'preserveRatio');
 function visit2_32_1(result) {
   _$jscoverage['/resizable.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['24'][1].init(148, 13, 'preserveRatio');
+}_$jscoverage['/resizable.js'].branchData['24'][1].init(152, 13, 'preserveRatio');
 function visit1_24_1(result) {
   _$jscoverage['/resizable.js'].branchData['24'][1].ranCondition(result);
   return result;

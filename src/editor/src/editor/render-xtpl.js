@@ -22,10 +22,10 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('<div class="');
             var id0 = scope.resolve(["prefixCls"]);
             buffer.write(id0, true);
-            buffer.write('editor-tools">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios 不能放在 iframe 上！\n-->\n\n<div class="');
+            buffer.write('editor-tools">\r\n\r\n</div>\r\n\r\n<!--\r\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\r\nios 不能放在 iframe 上！\r\n-->\r\n\r\n<div class="');
             var id1 = scope.resolve(["prefixCls"]);
             buffer.write(id1, true);
-            buffer.write('editor-textarea-wrap"\n\n');
+            buffer.write('editor-textarea-wrap"\r\n\r\n');
             var option2 = {
                 escape: 1
             };
@@ -35,15 +35,15 @@ KISSY.add(function (S, require, exports, module) {
             option2.params = params3;
             option2.fn = function (scope, buffer) {
 
-                buffer.write('\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n');
+                buffer.write('\r\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\r\n');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option2, buffer, 12, payload);
-            buffer.write('\n>\n\n<textarea class="');
+            buffer.write('\r\n>\r\n\r\n<textarea class="');
             var id5 = scope.resolve(["prefixCls"]);
             buffer.write(id5, true);
-            buffer.write('editor-textarea"\n\n');
+            buffer.write('editor-textarea"\r\n\r\n');
             var option6 = {
                 escape: 1
             };
@@ -53,18 +53,18 @@ KISSY.add(function (S, require, exports, module) {
             option6.params = params7;
             option6.fn = function (scope, buffer) {
 
-                buffer.write('\n');
+                buffer.write('\r\n');
                 var id9 = scope.resolve(["xindex"]);
                 buffer.write(id9, true);
                 buffer.write('="');
                 var id10 = scope.resolve(["this"]);
                 buffer.write(id10, true);
-                buffer.write('"\n');
+                buffer.write('"\r\n');
 
                 return buffer;
             };
             buffer = eachCommand.call(engine, scope, option6, buffer, 19, payload);
-            buffer.write('\n\n');
+            buffer.write('\r\n\r\n');
             var option11 = {
                 escape: 1
             };
@@ -74,18 +74,18 @@ KISSY.add(function (S, require, exports, module) {
             option11.params = params12;
             option11.fn = function (scope, buffer) {
 
-                buffer.write('\nstyle="display:none"\n');
+                buffer.write('\r\nstyle="display:none"\r\n');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option11, buffer, 23, payload);
-            buffer.write('\n\n>');
+            buffer.write('\r\n\r\n>');
             var id14 = scope.resolve(["data"]);
             buffer.write(id14, true);
-            buffer.write('</textarea>\n\n</div>\n\n<div class="');
+            buffer.write('</textarea>\r\n\r\n</div>\r\n\r\n<div class="');
             var id15 = scope.resolve(["prefixCls"]);
             buffer.write(id15, true);
-            buffer.write('editor-status">\n\n</div>');
+            buffer.write('editor-status">\r\n\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

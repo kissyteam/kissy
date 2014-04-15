@@ -264,23 +264,23 @@ if (! _$jscoverage['/html-parser/nodes/attribute.js'].branchData) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][4] = new BranchData();
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][5] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][5].init(78, 32, 'this.nodeType === other.nodeType');
+_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][5].init(79, 32, 'this.nodeType === other.nodeType');
 function visit181_22_5(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][4].init(48, 26, 'this.value === other.value');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][4].init(49, 26, 'this.value === other.value');
 function visit180_22_4(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][3].init(48, 62, 'this.value === other.value && this.nodeType === other.nodeType');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][3].init(49, 62, 'this.value === other.value && this.nodeType === other.nodeType');
 function visit179_22_3(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][2].init(20, 24, 'this.name === other.name');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][2].init(21, 24, 'this.name === other.name');
 function visit178_22_2(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][1].init(20, 90, 'this.name === other.name && this.value === other.value && this.nodeType === other.nodeType');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][1].init(21, 90, 'this.name === other.name && this.value === other.value && this.nodeType === other.nodeType');
 function visit177_22_1(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['22'][1].ranCondition(result);
   return result;

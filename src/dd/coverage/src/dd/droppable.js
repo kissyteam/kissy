@@ -310,43 +310,43 @@ if (! _$jscoverage['/dd/droppable.js'].branchData) {
   _$jscoverage['/dd/droppable.js'].branchData['214'] = [];
   _$jscoverage['/dd/droppable.js'].branchData['214'][1] = new BranchData();
 }
-_$jscoverage['/dd/droppable.js'].branchData['214'][1].init(25, 1, 'v');
+_$jscoverage['/dd/droppable.js'].branchData['214'][1].init(26, 1, 'v');
 function visit99_214_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['143'][1].init(58, 4, 'node');
+}_$jscoverage['/dd/droppable.js'].branchData['143'][1].init(60, 4, 'node');
 function visit98_143_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['136'][1].init(514, 4, 'node');
+}_$jscoverage['/dd/droppable.js'].branchData['136'][1].init(527, 4, 'node');
 function visit97_136_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['132'][1].init(89, 4, 'node');
+}_$jscoverage['/dd/droppable.js'].branchData['132'][1].init(92, 4, 'node');
 function visit96_132_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['129'][1].init(231, 33, 'validDrop(dropGroups, dragGroups)');
+}_$jscoverage['/dd/droppable.js'].branchData['129'][1].init(237, 33, 'validDrop(dropGroups, dragGroups)');
 function visit95_129_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['120'][3].init(147, 21, 'domNode === proxyNode');
+}_$jscoverage['/dd/droppable.js'].branchData['120'][3].init(151, 21, 'domNode === proxyNode');
 function visit94_120_3(result) {
   _$jscoverage['/dd/droppable.js'].branchData['120'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['120'][2].init(123, 20, 'domNode === dragNode');
+}_$jscoverage['/dd/droppable.js'].branchData['120'][2].init(127, 20, 'domNode === dragNode');
 function visit93_120_2(result) {
   _$jscoverage['/dd/droppable.js'].branchData['120'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['120'][1].init(123, 45, 'domNode === dragNode || domNode === proxyNode');
+}_$jscoverage['/dd/droppable.js'].branchData['120'][1].init(127, 45, 'domNode === dragNode || domNode === proxyNode');
 function visit92_120_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['17'][1].init(17, 13, 'dragGroups[d]');
+}_$jscoverage['/dd/droppable.js'].branchData['17'][1].init(18, 13, 'dragGroups[d]');
 function visit91_17_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['13'][1].init(13, 19, 'dragGroups === true');
+}_$jscoverage['/dd/droppable.js'].branchData['13'][1].init(14, 19, 'dragGroups === true');
 function visit90_13_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['13'][1].ranCondition(result);
   return result;

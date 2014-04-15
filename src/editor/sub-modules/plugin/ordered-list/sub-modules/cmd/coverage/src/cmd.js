@@ -263,15 +263,15 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['32'] = [];
   _$jscoverage['/cmd.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['32'][1].init(92, 33, 'selection && !selection.isInvalid');
+_$jscoverage['/cmd.js'].branchData['32'][1].init(94, 33, 'selection && !selection.isInvalid');
 function visit3_32_1(result) {
   _$jscoverage['/cmd.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['28'][1].init(418, 27, '!editor.hasCommand(queryOl)');
+}_$jscoverage['/cmd.js'].branchData['28'][1].init(430, 27, '!editor.hasCommand(queryOl)');
 function visit2_28_1(result) {
   _$jscoverage['/cmd.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][1].init(17, 37, '!editor.hasCommand(insertOrderedList)');
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(18, 37, '!editor.hasCommand(insertOrderedList)');
 function visit1_17_1(result) {
   _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;

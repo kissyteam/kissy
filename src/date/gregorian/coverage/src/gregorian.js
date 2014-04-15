@@ -793,303 +793,303 @@ if (! _$jscoverage['/gregorian.js'].branchData) {
   _$jscoverage['/gregorian.js'].branchData['1373'] = [];
   _$jscoverage['/gregorian.js'].branchData['1373'][1] = new BranchData();
 }
-_$jscoverage['/gregorian.js'].branchData['1373'][1].init(150, 36, 'nDays >= self.minimalDaysInFirstWeek');
+_$jscoverage['/gregorian.js'].branchData['1373'][1].init(153, 36, 'nDays >= self.minimalDaysInFirstWeek');
 function visit86_1373_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1373'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1357'][1].init(214, 21, 'dayOfMonth > monthLen');
+}_$jscoverage['/gregorian.js'].branchData['1357'][1].init(220, 21, 'dayOfMonth > monthLen');
 function visit85_1357_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1357'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1326'][1].init(13, 1, 'f');
+}_$jscoverage['/gregorian.js'].branchData['1326'][1].init(14, 1, 'f');
 function visit84_1326_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1326'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1270'][1].init(44590, 9, '\'@DEBUG@\'');
+}_$jscoverage['/gregorian.js'].branchData['1270'][1].init(45854, 9, '\'@DEBUG@\'');
 function visit83_1270_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1258'][1].init(17, 19, 'field === undefined');
+}_$jscoverage['/gregorian.js'].branchData['1258'][1].init(18, 19, 'field === undefined');
 function visit82_1258_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1247'][1].init(61, 58, 'this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['1247'][1].init(62, 58, 'this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
 function visit81_1247_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1247'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1246'][2].init(137, 42, 'this.timezoneOffset === obj.timezoneOffset');
+}_$jscoverage['/gregorian.js'].branchData['1246'][2].init(140, 42, 'this.timezoneOffset === obj.timezoneOffset');
 function visit80_1246_2(result) {
   _$jscoverage['/gregorian.js'].branchData['1246'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1246'][1].init(61, 120, 'this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['1246'][1].init(62, 121, 'this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
 function visit79_1246_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1246'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1245'][2].init(74, 42, 'this.firstDayOfWeek === obj.firstDayOfWeek');
+}_$jscoverage['/gregorian.js'].branchData['1245'][2].init(76, 42, 'this.firstDayOfWeek === obj.firstDayOfWeek');
 function visit78_1245_2(result) {
   _$jscoverage['/gregorian.js'].branchData['1245'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1245'][1].init(51, 182, 'this.firstDayOfWeek === obj.firstDayOfWeek && this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['1245'][1].init(52, 184, 'this.firstDayOfWeek === obj.firstDayOfWeek && this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
 function visit77_1245_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1245'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1244'][2].init(20, 32, 'this.getTime() === obj.getTime()');
+}_$jscoverage['/gregorian.js'].branchData['1244'][2].init(21, 32, 'this.getTime() === obj.getTime()');
 function visit76_1244_2(result) {
   _$jscoverage['/gregorian.js'].branchData['1244'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1244'][1].init(20, 234, 'this.getTime() === obj.getTime() && this.firstDayOfWeek === obj.firstDayOfWeek && this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['1244'][1].init(21, 237, 'this.getTime() === obj.getTime() && this.firstDayOfWeek === obj.firstDayOfWeek && this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek');
 function visit75_1244_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1244'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1227'][1].init(17, 23, 'this.time === undefined');
+}_$jscoverage['/gregorian.js'].branchData['1227'][1].init(18, 23, 'this.time === undefined');
 function visit74_1227_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1227'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1212'][1].init(764, 10, 'days !== 0');
+}_$jscoverage['/gregorian.js'].branchData['1212'][1].init(782, 10, 'days !== 0');
 function visit73_1212_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1212'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1208'][1].init(653, 8, 'days < 0');
+}_$jscoverage['/gregorian.js'].branchData['1208'][1].init(667, 8, 'days < 0');
 function visit72_1208_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1208'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1195'][3].init(57, 38, 'dayOfWeek > GregorianCalendar.SATURDAY');
+}_$jscoverage['/gregorian.js'].branchData['1195'][3].init(58, 38, 'dayOfWeek > GregorianCalendar.SATURDAY');
 function visit71_1195_3(result) {
   _$jscoverage['/gregorian.js'].branchData['1195'][3].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1195'][2].init(17, 36, 'dayOfWeek < GregorianCalendar.SUNDAY');
+}_$jscoverage['/gregorian.js'].branchData['1195'][2].init(18, 36, 'dayOfWeek < GregorianCalendar.SUNDAY');
 function visit70_1195_2(result) {
   _$jscoverage['/gregorian.js'].branchData['1195'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1195'][1].init(17, 78, 'dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY');
+}_$jscoverage['/gregorian.js'].branchData['1195'][1].init(18, 78, 'dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY');
 function visit69_1195_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1195'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1179'][1].init(21, 16, 'weekOfYear === 1');
+}_$jscoverage['/gregorian.js'].branchData['1179'][1].init(22, 16, 'weekOfYear === 1');
 function visit68_1179_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1178'][1].init(323, 36, 'month === GregorianCalendar.DECEMBER');
+}_$jscoverage['/gregorian.js'].branchData['1178'][1].init(331, 36, 'month === GregorianCalendar.DECEMBER');
 function visit67_1178_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1175'][1].init(21, 16, 'weekOfYear >= 52');
+}_$jscoverage['/gregorian.js'].branchData['1175'][1].init(22, 16, 'weekOfYear >= 52');
 function visit66_1175_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1174'][1].init(174, 35, 'month === GregorianCalendar.JANUARY');
+}_$jscoverage['/gregorian.js'].branchData['1174'][1].init(178, 35, 'month === GregorianCalendar.JANUARY');
 function visit65_1174_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1153'][1].init(64, 27, 'weekYear === this.get(YEAR)');
+}_$jscoverage['/gregorian.js'].branchData['1153'][1].init(66, 27, 'weekYear === this.get(YEAR)');
 function visit64_1153_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1121'][1].init(17, 54, 'this.minimalDaysInFirstWeek !== minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['1121'][1].init(18, 54, 'this.minimalDaysInFirstWeek !== minimalDaysInFirstWeek');
 function visit63_1121_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1099'][1].init(17, 38, 'this.firstDayOfWeek !== firstDayOfWeek');
+}_$jscoverage['/gregorian.js'].branchData['1099'][1].init(18, 38, 'this.firstDayOfWeek !== firstDayOfWeek');
 function visit62_1099_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1099'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1089'][1].init(17, 38, 'this.timezoneOffset !== timezoneOffset');
+}_$jscoverage['/gregorian.js'].branchData['1089'][1].init(18, 38, 'this.timezoneOffset !== timezoneOffset');
 function visit61_1089_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1089'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['963'][1].init(17, 7, '!amount');
+}_$jscoverage['/gregorian.js'].branchData['963'][1].init(18, 7, '!amount');
 function visit60_963_1(result) {
   _$jscoverage['/gregorian.js'].branchData['963'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['822'][1].init(152, 10, 'yearAmount');
+}_$jscoverage['/gregorian.js'].branchData['822'][1].init(156, 10, 'yearAmount');
 function visit59_822_1(result) {
   _$jscoverage['/gregorian.js'].branchData['822'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['818'][1].init(396, 15, 'field === MONTH');
+}_$jscoverage['/gregorian.js'].branchData['818'][1].init(408, 15, 'field === MONTH');
 function visit58_818_1(result) {
   _$jscoverage['/gregorian.js'].branchData['818'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['814'][1].init(242, 14, 'field === YEAR');
+}_$jscoverage['/gregorian.js'].branchData['814'][1].init(250, 14, 'field === YEAR');
 function visit57_814_1(result) {
   _$jscoverage['/gregorian.js'].branchData['814'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['807'][1].init(17, 7, '!amount');
+}_$jscoverage['/gregorian.js'].branchData['807'][1].init(18, 7, '!amount');
 function visit56_807_1(result) {
   _$jscoverage['/gregorian.js'].branchData['807'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['702'][1].init(33, 7, 'i < len');
+}_$jscoverage['/gregorian.js'].branchData['702'][1].init(34, 7, 'i < len');
 function visit55_702_1(result) {
   _$jscoverage['/gregorian.js'].branchData['702'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['701'][1].init(134, 22, 'len < MILLISECONDS + 1');
+}_$jscoverage['/gregorian.js'].branchData['701'][1].init(138, 22, 'len < MILLISECONDS + 1');
 function visit54_701_1(result) {
   _$jscoverage['/gregorian.js'].branchData['701'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['699'][1].init(57, 9, 'len === 2');
+}_$jscoverage['/gregorian.js'].branchData['699'][1].init(59, 9, 'len === 2');
 function visit53_699_1(result) {
   _$jscoverage['/gregorian.js'].branchData['699'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['594'][1].init(17, 23, 'this.time === undefined');
+}_$jscoverage['/gregorian.js'].branchData['594'][1].init(18, 23, 'this.time === undefined');
 function visit52_594_1(result) {
   _$jscoverage['/gregorian.js'].branchData['594'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['578'][1].init(398, 31, 'dayOfWeek !== firstDayOfWeekCfg');
+}_$jscoverage['/gregorian.js'].branchData['578'][1].init(405, 31, 'dayOfWeek !== firstDayOfWeekCfg');
 function visit51_578_1(result) {
   _$jscoverage['/gregorian.js'].branchData['578'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['575'][1].init(245, 58, '(firstDayOfWeek - fixedDate) >= self.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['575'][1].init(249, 58, '(firstDayOfWeek - fixedDate) >= self.minimalDaysInFirstWeek');
 function visit50_575_1(result) {
   _$jscoverage['/gregorian.js'].branchData['575'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['569'][1].init(77, 23, 'self.isSet(DAY_OF_YEAR)');
+}_$jscoverage['/gregorian.js'].branchData['569'][1].init(79, 23, 'self.isSet(DAY_OF_YEAR)');
 function visit49_569_1(result) {
   _$jscoverage['/gregorian.js'].branchData['569'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['561'][1].init(344, 9, 'dowim < 0');
+}_$jscoverage['/gregorian.js'].branchData['561'][1].init(352, 9, 'dowim < 0');
 function visit48_561_1(result) {
   _$jscoverage['/gregorian.js'].branchData['561'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['555'][1].init(64, 32, 'self.isSet(DAY_OF_WEEK_IN_MONTH)');
+}_$jscoverage['/gregorian.js'].branchData['555'][1].init(66, 32, 'self.isSet(DAY_OF_WEEK_IN_MONTH)');
 function visit47_555_1(result) {
   _$jscoverage['/gregorian.js'].branchData['555'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['548'][1].init(428, 31, 'dayOfWeek !== firstDayOfWeekCfg');
+}_$jscoverage['/gregorian.js'].branchData['548'][1].init(437, 31, 'dayOfWeek !== firstDayOfWeekCfg');
 function visit46_548_1(result) {
   _$jscoverage['/gregorian.js'].branchData['548'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['544'][1].init(262, 58, '(firstDayOfWeek - fixedDate) >= self.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['544'][1].init(267, 58, '(firstDayOfWeek - fixedDate) >= self.minimalDaysInFirstWeek');
 function visit45_544_1(result) {
   _$jscoverage['/gregorian.js'].branchData['544'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['539'][1].init(25, 25, 'self.isSet(WEEK_OF_MONTH)');
+}_$jscoverage['/gregorian.js'].branchData['539'][1].init(26, 25, 'self.isSet(WEEK_OF_MONTH)');
 function visit44_539_1(result) {
   _$jscoverage['/gregorian.js'].branchData['539'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['536'][1].init(21, 24, 'self.isSet(DAY_OF_MONTH)');
+}_$jscoverage['/gregorian.js'].branchData['536'][1].init(22, 24, 'self.isSet(DAY_OF_MONTH)');
 function visit43_536_1(result) {
   _$jscoverage['/gregorian.js'].branchData['536'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['535'][1].init(1037, 17, 'self.isSet(MONTH)');
+}_$jscoverage['/gregorian.js'].branchData['535'][1].init(1070, 17, 'self.isSet(MONTH)');
 function visit42_535_1(result) {
   _$jscoverage['/gregorian.js'].branchData['535'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['531'][1].init(930, 23, 'self.isSet(DAY_OF_WEEK)');
+}_$jscoverage['/gregorian.js'].branchData['531'][1].init(959, 23, 'self.isSet(DAY_OF_WEEK)');
 function visit41_531_1(result) {
   _$jscoverage['/gregorian.js'].branchData['531'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['519'][1].init(206, 33, 'month < GregorianCalendar.JANUARY');
+}_$jscoverage['/gregorian.js'].branchData['519'][1].init(211, 33, 'month < GregorianCalendar.JANUARY');
 function visit40_519_1(result) {
   _$jscoverage['/gregorian.js'].branchData['519'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['516'][1].init(60, 34, 'month > GregorianCalendar.DECEMBER');
+}_$jscoverage['/gregorian.js'].branchData['516'][1].init(62, 34, 'month > GregorianCalendar.DECEMBER');
 function visit39_516_1(result) {
   _$jscoverage['/gregorian.js'].branchData['516'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['514'][1].init(235, 17, 'self.isSet(MONTH)');
+}_$jscoverage['/gregorian.js'].branchData['514'][1].init(247, 17, 'self.isSet(MONTH)');
 function visit38_514_1(result) {
   _$jscoverage['/gregorian.js'].branchData['514'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['497'][1].init(110, 20, '!this.fieldsComputed');
+}_$jscoverage['/gregorian.js'].branchData['497'][1].init(114, 20, '!this.fieldsComputed');
 function visit37_497_1(result) {
   _$jscoverage['/gregorian.js'].branchData['497'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['494'][1].init(17, 23, 'this.time === undefined');
+}_$jscoverage['/gregorian.js'].branchData['494'][1].init(18, 23, 'this.time === undefined');
 function visit36_494_1(result) {
   _$jscoverage['/gregorian.js'].branchData['494'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['468'][1].init(555, 25, 'fields[MILLISECONDS] || 0');
+}_$jscoverage['/gregorian.js'].branchData['468'][1].init(572, 25, 'fields[MILLISECONDS] || 0');
 function visit35_468_1(result) {
   _$jscoverage['/gregorian.js'].branchData['468'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['466'][1].init(477, 20, 'fields[SECONDS] || 0');
+}_$jscoverage['/gregorian.js'].branchData['466'][1].init(492, 20, 'fields[SECONDS] || 0');
 function visit34_466_1(result) {
   _$jscoverage['/gregorian.js'].branchData['466'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['464'][1].init(402, 19, 'fields[MINUTE] || 0');
+}_$jscoverage['/gregorian.js'].branchData['464'][1].init(415, 19, 'fields[MINUTE] || 0');
 function visit33_464_1(result) {
   _$jscoverage['/gregorian.js'].branchData['464'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['460'][1].init(257, 23, 'this.isSet(HOUR_OF_DAY)');
+}_$jscoverage['/gregorian.js'].branchData['460'][1].init(266, 23, 'this.isSet(HOUR_OF_DAY)');
 function visit32_460_1(result) {
   _$jscoverage['/gregorian.js'].branchData['460'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['452'][1].init(17, 17, '!this.isSet(YEAR)');
+}_$jscoverage['/gregorian.js'].branchData['452'][1].init(18, 17, '!this.isSet(YEAR)');
 function visit31_452_1(result) {
   _$jscoverage['/gregorian.js'].branchData['452'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['434'][1].init(118, 29, 'fixedDate >= (nextJan1st - 7)');
+}_$jscoverage['/gregorian.js'].branchData['434'][1].init(120, 29, 'fixedDate >= (nextJan1st - 7)');
 function visit30_434_1(result) {
   _$jscoverage['/gregorian.js'].branchData['434'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['432'][2].init(268, 36, 'nDays >= this.minimalDaysInFirstWeek');
+}_$jscoverage['/gregorian.js'].branchData['432'][2].init(273, 36, 'nDays >= this.minimalDaysInFirstWeek');
 function visit29_432_2(result) {
   _$jscoverage['/gregorian.js'].branchData['432'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['432'][1].init(268, 148, 'nDays >= this.minimalDaysInFirstWeek && fixedDate >= (nextJan1st - 7)');
+}_$jscoverage['/gregorian.js'].branchData['432'][1].init(273, 150, 'nDays >= this.minimalDaysInFirstWeek && fixedDate >= (nextJan1st - 7)');
 function visit28_432_1(result) {
   _$jscoverage['/gregorian.js'].branchData['432'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['427'][1].init(2423, 16, 'weekOfYear >= 52');
+}_$jscoverage['/gregorian.js'].branchData['427'][1].init(2485, 16, 'weekOfYear >= 52');
 function visit27_427_1(result) {
   _$jscoverage['/gregorian.js'].branchData['427'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['418'][1].init(1961, 16, 'weekOfYear === 0');
+}_$jscoverage['/gregorian.js'].branchData['418'][1].init(2014, 16, 'weekOfYear === 0');
 function visit26_418_1(result) {
   _$jscoverage['/gregorian.js'].branchData['418'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['394'][1].init(959, 15, 'timeOfDay !== 0');
+}_$jscoverage['/gregorian.js'].branchData['394'][1].init(988, 15, 'timeOfDay !== 0');
 function visit25_394_1(result) {
   _$jscoverage['/gregorian.js'].branchData['394'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['376'][1].init(24, 13, 'timeOfDay < 0');
+}_$jscoverage['/gregorian.js'].branchData['376'][1].init(25, 13, 'timeOfDay < 0');
 function visit24_376_1(result) {
   _$jscoverage['/gregorian.js'].branchData['376'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['372'][1].init(322, 20, 'timeOfDay >= ONE_DAY');
+}_$jscoverage['/gregorian.js'].branchData['372'][1].init(329, 20, 'timeOfDay >= ONE_DAY');
 function visit23_372_1(result) {
   _$jscoverage['/gregorian.js'].branchData['372'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['357'][1].init(20, 32, 'this.fields[field] !== undefined');
+}_$jscoverage['/gregorian.js'].branchData['357'][1].init(21, 32, 'this.fields[field] !== undefined');
 function visit22_357_1(result) {
   _$jscoverage['/gregorian.js'].branchData['357'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['343'][1].init(1226, 19, 'value === undefined');
+}_$jscoverage['/gregorian.js'].branchData['343'][1].init(1258, 19, 'value === undefined');
 function visit21_343_1(result) {
   _$jscoverage['/gregorian.js'].branchData['343'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['325'][1].init(204, 11, 'value === 1');
+}_$jscoverage['/gregorian.js'].branchData['325'][1].init(207, 11, 'value === 1');
 function visit20_325_1(result) {
   _$jscoverage['/gregorian.js'].branchData['325'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['312'][1].init(17, 31, 'MAX_VALUES[field] !== undefined');
+}_$jscoverage['/gregorian.js'].branchData['312'][1].init(18, 31, 'MAX_VALUES[field] !== undefined');
 function visit19_312_1(result) {
   _$jscoverage['/gregorian.js'].branchData['312'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['294'][1].init(163, 23, 'field === WEEK_OF_MONTH');
+}_$jscoverage['/gregorian.js'].branchData['294'][1].init(169, 23, 'field === WEEK_OF_MONTH');
 function visit18_294_1(result) {
   _$jscoverage['/gregorian.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['289'][1].init(17, 31, 'MIN_VALUES[field] !== undefined');
+}_$jscoverage['/gregorian.js'].branchData['289'][1].init(18, 31, 'MIN_VALUES[field] !== undefined');
 function visit17_289_1(result) {
   _$jscoverage['/gregorian.js'].branchData['289'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['88'][1].init(1216, 21, 'arguments.length >= 3');
+}_$jscoverage['/gregorian.js'].branchData['88'][1].init(1262, 21, 'arguments.length >= 3');
 function visit16_88_1(result) {
   _$jscoverage['/gregorian.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['70'][1].init(700, 39, 'timezoneOffset || locale.timezoneOffset');
+}_$jscoverage['/gregorian.js'].branchData['70'][1].init(728, 39, 'timezoneOffset || locale.timezoneOffset');
 function visit15_70_1(result) {
   _$jscoverage['/gregorian.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['53'][1].init(296, 23, 'locale || defaultLocale');
+}_$jscoverage['/gregorian.js'].branchData['53'][1].init(307, 23, 'locale || defaultLocale');
 function visit14_53_1(result) {
   _$jscoverage['/gregorian.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['49'][1].init(205, 16, 'args.length >= 3');
+}_$jscoverage['/gregorian.js'].branchData['49'][1].init(212, 16, 'args.length >= 3');
 function visit13_49_1(result) {
   _$jscoverage['/gregorian.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['46'][1].init(58, 34, 'typeof timezoneOffset === \'object\'');
+}_$jscoverage['/gregorian.js'].branchData['46'][1].init(62, 34, 'typeof timezoneOffset === \'object\'');
 function visit12_46_1(result) {
   _$jscoverage['/gregorian.js'].branchData['46'][1].ranCondition(result);
   return result;

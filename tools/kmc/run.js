@@ -28,8 +28,7 @@ kmc.config({
             'path': packageBase + Path.basename(packageName),
             ignorePackageNameInUri: true
         }
-    ],
-    silent: false
+    ]
 });
 
 kmc.build({

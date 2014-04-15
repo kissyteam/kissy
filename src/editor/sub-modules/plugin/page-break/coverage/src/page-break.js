@@ -300,51 +300,51 @@ if (! _$jscoverage['/page-break.js'].branchData) {
   _$jscoverage['/page-break.js'].branchData['83'] = [];
   _$jscoverage['/page-break.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/page-break.js'].branchData['83'][1].init(827, 27, 'start.nodeName() !== \'body\'');
+_$jscoverage['/page-break.js'].branchData['83'][1].init(850, 27, 'start.nodeName() !== \'body\'');
 function visit12_83_1(result) {
   _$jscoverage['/page-break.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['74'][1].init(570, 6, '!range');
+}_$jscoverage['/page-break.js'].branchData['74'][1].init(584, 6, '!range');
 function visit11_74_1(result) {
   _$jscoverage['/page-break.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['72'][1].init(68, 25, 'sel && sel.getRanges()[0]');
+}_$jscoverage['/page-break.js'].branchData['72'][1].init(69, 25, 'sel && sel.getRanges()[0]');
 function visit10_72_1(result) {
   _$jscoverage['/page-break.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['48'][1].init(43, 120, '(/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
+}_$jscoverage['/page-break.js'].branchData['48'][1].init(44, 121, '(/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
 function visit9_48_1(result) {
   _$jscoverage['/page-break.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['47'][1].init(695, 164, 'childStyle && (/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
+}_$jscoverage['/page-break.js'].branchData['47'][1].init(712, 166, 'childStyle && (/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
 function visit8_47_1(result) {
   _$jscoverage['/page-break.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['44'][2].init(57, 25, 'child.nodeName === \'span\'');
+}_$jscoverage['/page-break.js'].branchData['44'][2].init(58, 25, 'child.nodeName === \'span\'');
 function visit7_44_2(result) {
   _$jscoverage['/page-break.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['44'][1].init(38, 86, '(child.nodeName === \'span\') && child.getAttribute(\'style\')');
+}_$jscoverage['/page-break.js'].branchData['44'][1].init(39, 87, '(child.nodeName === \'span\') && child.getAttribute(\'style\')');
 function visit6_44_1(result) {
   _$jscoverage['/page-break.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['43'][1].init(539, 125, 'child && (child.nodeName === \'span\') && child.getAttribute(\'style\')');
+}_$jscoverage['/page-break.js'].branchData['43'][1].init(552, 127, 'child && (child.nodeName === \'span\') && child.getAttribute(\'style\')');
 function visit5_43_1(result) {
   _$jscoverage['/page-break.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['37'][1].init(37, 28, 'childNodes[i].nodeType === 1');
+}_$jscoverage['/page-break.js'].branchData['37'][1].init(38, 28, 'childNodes[i].nodeType === 1');
 function visit4_37_1(result) {
   _$jscoverage['/page-break.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['36'][1].init(110, 21, 'i < childNodes.length');
+}_$jscoverage['/page-break.js'].branchData['36'][1].init(112, 21, 'i < childNodes.length');
 function visit3_36_1(result) {
   _$jscoverage['/page-break.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['34'][1].init(132, 5, 'style');
+}_$jscoverage['/page-break.js'].branchData['34'][1].init(136, 5, 'style');
 function visit2_34_1(result) {
   _$jscoverage['/page-break.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['26'][1].init(74, 41, 'dataProcessor && dataProcessor.dataFilter');
+}_$jscoverage['/page-break.js'].branchData['26'][1].init(75, 41, 'dataProcessor && dataProcessor.dataFilter');
 function visit1_26_1(result) {
   _$jscoverage['/page-break.js'].branchData['26'][1].ranCondition(result);
   return result;

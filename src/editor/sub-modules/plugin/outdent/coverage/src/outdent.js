@@ -264,11 +264,11 @@ if (! _$jscoverage['/outdent.js'].branchData) {
   _$jscoverage['/outdent.js'].branchData['34'] = [];
   _$jscoverage['/outdent.js'].branchData['34'][1] = new BranchData();
 }
-_$jscoverage['/outdent.js'].branchData['34'][1].init(185, 35, 'editor.queryCommandValue(\'outdent\')');
+_$jscoverage['/outdent.js'].branchData['34'][1].init(189, 35, 'editor.queryCommandValue(\'outdent\')');
 function visit2_34_1(result) {
   _$jscoverage['/outdent.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/outdent.js'].branchData['31'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/outdent.js'].branchData['31'][1].init(34, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_31_1(result) {
   _$jscoverage['/outdent.js'].branchData['31'][1].ranCondition(result);
   return result;

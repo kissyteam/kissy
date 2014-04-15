@@ -281,19 +281,19 @@ if (! _$jscoverage['/proxy.js'].branchData) {
   _$jscoverage['/proxy.js'].branchData['58'] = [];
   _$jscoverage['/proxy.js'].branchData['58'][1] = new BranchData();
 }
-_$jscoverage['/proxy.js'].branchData['58'][1].init(239, 24, 'self.get(\'destroyOnEnd\')');
+_$jscoverage['/proxy.js'].branchData['58'][1].init(245, 24, 'self.get(\'destroyOnEnd\')');
 function visit4_58_1(result) {
   _$jscoverage['/proxy.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['55'][1].init(124, 21, 'self.get(\'moveOnEnd\')');
+}_$jscoverage['/proxy.js'].branchData['55'][1].init(127, 21, 'self.get(\'moveOnEnd\')');
 function visit3_55_1(result) {
   _$jscoverage['/proxy.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['36'][1].init(25, 26, 'typeof node === \'function\'');
+}_$jscoverage['/proxy.js'].branchData['36'][1].init(26, 26, 'typeof node === \'function\'');
 function visit2_36_1(result) {
   _$jscoverage['/proxy.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['35'][1].init(151, 22, '!self.get(\'proxyNode\')');
+}_$jscoverage['/proxy.js'].branchData['35'][1].init(155, 22, '!self.get(\'proxyNode\')');
 function visit1_35_1(result) {
   _$jscoverage['/proxy.js'].branchData['35'][1].ranCondition(result);
   return result;

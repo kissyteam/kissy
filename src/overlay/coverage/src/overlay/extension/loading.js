@@ -255,11 +255,11 @@ if (! _$jscoverage['/overlay/extension/loading.js'].branchData) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['45'] = [];
   _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1] = new BranchData();
 }
-_$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].init(17, 18, 'this._loadingExtEl');
+_$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].init(18, 18, 'this._loadingExtEl');
 function visit20_45_1(result) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].init(46, 19, '!self._loadingExtEl');
+}_$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].init(48, 19, '!self._loadingExtEl');
 function visit19_23_1(result) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].ranCondition(result);
   return result;

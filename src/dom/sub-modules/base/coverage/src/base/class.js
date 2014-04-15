@@ -306,39 +306,39 @@ if (! _$jscoverage['/base/class.js'].branchData) {
   _$jscoverage['/base/class.js'].branchData['91'][1] = new BranchData();
   _$jscoverage['/base/class.js'].branchData['91'][2] = new BranchData();
 }
-_$jscoverage['/base/class.js'].branchData['91'][2].init(25, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
+_$jscoverage['/base/class.js'].branchData['91'][2].init(26, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
 function visit109_91_2(result) {
   _$jscoverage['/base/class.js'].branchData['91'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['91'][1].init(25, 97, 'elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, className)');
+}_$jscoverage['/base/class.js'].branchData['91'][1].init(26, 98, 'elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, className)');
 function visit108_91_1(result) {
   _$jscoverage['/base/class.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['64'][1].init(80, 43, 'className && !classList.contains(className)');
+}_$jscoverage['/base/class.js'].branchData['64'][1].init(82, 43, 'className && !classList.contains(className)');
 function visit107_64_1(result) {
   _$jscoverage['/base/class.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['62'][1].init(56, 5, 'i < l');
+}_$jscoverage['/base/class.js'].branchData['62'][1].init(57, 5, 'i < l');
 function visit106_62_1(result) {
   _$jscoverage['/base/class.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['61'][1].init(86, 16, 'classList.length');
+}_$jscoverage['/base/class.js'].branchData['61'][1].init(88, 16, 'classList.length');
 function visit105_61_1(result) {
   _$jscoverage['/base/class.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['45'][1].init(21, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
+}_$jscoverage['/base/class.js'].branchData['45'][1].init(22, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
 function visit104_45_1(result) {
   _$jscoverage['/base/class.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['32'][1].init(195, 5, 'i < l');
+}_$jscoverage['/base/class.js'].branchData['32'][1].init(200, 5, 'i < l');
 function visit103_32_1(result) {
   _$jscoverage['/base/class.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['18'][1].init(163, 5, 'i < l');
+}_$jscoverage['/base/class.js'].branchData['18'][1].init(169, 5, 'i < l');
 function visit102_18_1(result) {
   _$jscoverage['/base/class.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['13'][1].init(22, 9, 'str || \'\'');
+}_$jscoverage['/base/class.js'].branchData['13'][1].init(23, 9, 'str || \'\'');
 function visit101_13_1(result) {
   _$jscoverage['/base/class.js'].branchData['13'][1].ranCondition(result);
   return result;

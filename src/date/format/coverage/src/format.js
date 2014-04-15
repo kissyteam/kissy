@@ -752,427 +752,427 @@ if (! _$jscoverage['/format.js'].branchData) {
   _$jscoverage['/format.js'].branchData['759'] = [];
   _$jscoverage['/format.js'].branchData['759'][1] = new BranchData();
 }
-_$jscoverage['/format.js'].branchData['759'][1].init(21, 11, 'datePattern');
+_$jscoverage['/format.js'].branchData['759'][1].init(22, 11, 'datePattern');
 function visit106_759_1(result) {
   _$jscoverage['/format.js'].branchData['759'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['758'][1].init(408, 11, 'timePattern');
+}_$jscoverage['/format.js'].branchData['758'][1].init(419, 11, 'timePattern');
 function visit105_758_1(result) {
   _$jscoverage['/format.js'].branchData['758'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['754'][1].init(250, 23, 'timeStyle !== undefined');
+}_$jscoverage['/format.js'].branchData['754'][1].init(257, 23, 'timeStyle !== undefined');
 function visit104_754_1(result) {
   _$jscoverage['/format.js'].branchData['754'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['750'][1].init(97, 23, 'dateStyle !== undefined');
+}_$jscoverage['/format.js'].branchData['750'][1].init(100, 23, 'dateStyle !== undefined');
 function visit103_750_1(result) {
   _$jscoverage['/format.js'].branchData['750'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['748'][1].init(22, 23, 'locale || defaultLocale');
+}_$jscoverage['/format.js'].branchData['748'][1].init(23, 23, 'locale || defaultLocale');
 function visit102_748_1(result) {
   _$jscoverage['/format.js'].branchData['748'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['700'][1].init(2451, 15, 'errorIndex >= 0');
+}_$jscoverage['/format.js'].branchData['700'][1].init(2510, 15, 'errorIndex >= 0');
 function visit101_700_1(result) {
   _$jscoverage['/format.js'].branchData['700'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['693'][1].init(907, 28, 'startIndex === oldStartIndex');
+}_$jscoverage['/format.js'].branchData['693'][1].init(928, 28, 'startIndex === oldStartIndex');
 function visit100_693_1(result) {
   _$jscoverage['/format.js'].branchData['693'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['680'][3].init(114, 8, 'c <= \'9\'');
+}_$jscoverage['/format.js'].branchData['680'][3].init(116, 8, 'c <= \'9\'');
 function visit99_680_3(result) {
   _$jscoverage['/format.js'].branchData['680'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['680'][2].init(102, 8, 'c >= \'0\'');
+}_$jscoverage['/format.js'].branchData['680'][2].init(104, 8, 'c >= \'0\'');
 function visit98_680_2(result) {
   _$jscoverage['/format.js'].branchData['680'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['680'][1].init(102, 20, 'c >= \'0\' && c <= \'9\'');
+}_$jscoverage['/format.js'].branchData['680'][1].init(104, 20, 'c >= \'0\' && c <= \'9\'');
 function visit97_680_1(result) {
   _$jscoverage['/format.js'].branchData['680'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['676'][1].init(33, 19, '\'field\' in nextComp');
+}_$jscoverage['/format.js'].branchData['676'][1].init(34, 19, '\'field\' in nextComp');
 function visit96_676_1(result) {
   _$jscoverage['/format.js'].branchData['676'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['675'][1].init(127, 8, 'nextComp');
+}_$jscoverage['/format.js'].branchData['675'][1].init(130, 8, 'nextComp');
 function visit95_675_1(result) {
   _$jscoverage['/format.js'].branchData['675'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['672'][1].init(791, 15, '\'field\' in comp');
+}_$jscoverage['/format.js'].branchData['672'][1].init(807, 15, '\'field\' in comp');
 function visit94_672_1(result) {
   _$jscoverage['/format.js'].branchData['672'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['665'][1].init(37, 49, 'text.charAt(j) !== dateStr.charAt(j + startIndex)');
+}_$jscoverage['/format.js'].branchData['665'][1].init(38, 49, 'text.charAt(j) !== dateStr.charAt(j + startIndex)');
 function visit93_665_1(result) {
   _$jscoverage['/format.js'].branchData['665'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['664'][1].init(41, 11, 'j < textLen');
+}_$jscoverage['/format.js'].branchData['664'][1].init(42, 11, 'j < textLen');
 function visit92_664_1(result) {
   _$jscoverage['/format.js'].branchData['664'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['661'][1].init(77, 34, '(textLen + startIndex) > dateStrLen');
+}_$jscoverage['/format.js'].branchData['661'][1].init(79, 34, '(textLen + startIndex) > dateStrLen');
 function visit91_661_1(result) {
   _$jscoverage['/format.js'].branchData['661'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['656'][3].init(47, 7, 'i < len');
+}_$jscoverage['/format.js'].branchData['656'][3].init(48, 7, 'i < len');
 function visit90_656_3(result) {
   _$jscoverage['/format.js'].branchData['656'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['656'][2].init(29, 14, 'errorIndex < 0');
+}_$jscoverage['/format.js'].branchData['656'][2].init(30, 14, 'errorIndex < 0');
 function visit89_656_2(result) {
   _$jscoverage['/format.js'].branchData['656'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['656'][1].init(29, 25, 'errorIndex < 0 && i < len');
+}_$jscoverage['/format.js'].branchData['656'][1].init(30, 25, 'errorIndex < 0 && i < len');
 function visit88_656_1(result) {
   _$jscoverage['/format.js'].branchData['656'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['629'][1].init(142, 15, '\'field\' in comp');
+}_$jscoverage['/format.js'].branchData['629'][1].init(146, 15, '\'field\' in comp');
 function visit87_629_1(result) {
   _$jscoverage['/format.js'].branchData['629'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['627'][1].init(60, 9, 'comp.text');
+}_$jscoverage['/format.js'].branchData['627'][1].init(62, 9, 'comp.text');
 function visit86_627_1(result) {
   _$jscoverage['/format.js'].branchData['627'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['625'][1].init(361, 7, 'i < len');
+}_$jscoverage['/format.js'].branchData['625'][1].init(370, 7, 'i < len');
 function visit85_625_1(result) {
   _$jscoverage['/format.js'].branchData['625'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['604'][1].init(4670, 5, 'match');
+}_$jscoverage['/format.js'].branchData['604'][1].init(4794, 5, 'match');
 function visit84_604_1(result) {
   _$jscoverage['/format.js'].branchData['604'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['575'][1].init(231, 16, 'zoneChar === \'+\'');
+}_$jscoverage['/format.js'].branchData['575'][1].init(237, 16, 'zoneChar === \'+\'');
 function visit83_575_1(result) {
   _$jscoverage['/format.js'].branchData['575'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['572'][1].init(118, 16, 'zoneChar === \'-\'');
+}_$jscoverage['/format.js'].branchData['572'][1].init(121, 16, 'zoneChar === \'-\'');
 function visit82_572_1(result) {
   _$jscoverage['/format.js'].branchData['572'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['563'][1].init(65, 8, 'tmp.ampm');
+}_$jscoverage['/format.js'].branchData['563'][1].init(67, 8, 'tmp.ampm');
 function visit81_563_1(result) {
   _$jscoverage['/format.js'].branchData['563'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['554'][1].init(71, 8, 'tmp.ampm');
+}_$jscoverage['/format.js'].branchData['554'][1].init(73, 8, 'tmp.ampm');
 function visit80_554_1(result) {
   _$jscoverage['/format.js'].branchData['554'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['542'][1].init(93, 9, 'hour < 12');
+}_$jscoverage['/format.js'].branchData['542'][1].init(95, 9, 'hour < 12');
 function visit79_542_1(result) {
   _$jscoverage['/format.js'].branchData['542'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['540'][1].init(29, 11, 'match.value');
+}_$jscoverage['/format.js'].branchData['540'][1].init(30, 11, 'match.value');
 function visit78_540_1(result) {
   _$jscoverage['/format.js'].branchData['540'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['539'][1].init(25, 25, 'calendar.isSetHourOfDay()');
+}_$jscoverage['/format.js'].branchData['539'][1].init(26, 25, 'calendar.isSetHourOfDay()');
 function visit77_539_1(result) {
   _$jscoverage['/format.js'].branchData['539'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['531'][1].init(77, 9, 'count > 3');
+}_$jscoverage['/format.js'].branchData['531'][1].init(78, 9, 'count > 3');
 function visit76_531_1(result) {
   _$jscoverage['/format.js'].branchData['531'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['521'][1].init(500, 5, 'match');
+}_$jscoverage['/format.js'].branchData['521'][1].init(512, 5, 'match');
 function visit75_521_1(result) {
   _$jscoverage['/format.js'].branchData['521'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['512'][1].init(73, 11, 'count === 3');
+}_$jscoverage['/format.js'].branchData['512'][1].init(74, 11, 'count === 3');
 function visit74_512_1(result) {
   _$jscoverage['/format.js'].branchData['512'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['511'][1].init(56, 10, 'count >= 3');
+}_$jscoverage['/format.js'].branchData['511'][1].init(58, 10, 'count >= 3');
 function visit73_511_1(result) {
   _$jscoverage['/format.js'].branchData['511'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['502'][1].init(29, 13, 'tmp.era === 0');
+}_$jscoverage['/format.js'].branchData['502'][1].init(30, 13, 'tmp.era === 0');
 function visit72_502_1(result) {
   _$jscoverage['/format.js'].branchData['502'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['501'][1].init(65, 12, '\'era\' in tmp');
+}_$jscoverage['/format.js'].branchData['501'][1].init(67, 12, '\'era\' in tmp');
 function visit71_501_1(result) {
   _$jscoverage['/format.js'].branchData['501'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['489'][1].init(29, 17, 'match.value === 0');
+}_$jscoverage['/format.js'].branchData['489'][1].init(30, 17, 'match.value === 0');
 function visit70_489_1(result) {
   _$jscoverage['/format.js'].branchData['489'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['488'][1].init(25, 20, 'calendar.isSetYear()');
+}_$jscoverage['/format.js'].branchData['488'][1].init(26, 20, 'calendar.isSetYear()');
 function visit69_488_1(result) {
   _$jscoverage['/format.js'].branchData['488'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['482'][1].init(44, 28, 'dateStr.length <= startIndex');
+}_$jscoverage['/format.js'].branchData['482'][1].init(46, 28, 'dateStr.length <= startIndex');
 function visit68_482_1(result) {
   _$jscoverage['/format.js'].branchData['482'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['471'][1].init(408, 8, 'isNaN(n)');
+}_$jscoverage['/format.js'].branchData['471'][1].init(422, 8, 'isNaN(n)');
 function visit67_471_1(result) {
   _$jscoverage['/format.js'].branchData['471'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['464'][1].init(172, 19, '!str.match(/^\\d+$/)');
+}_$jscoverage['/format.js'].branchData['464'][1].init(177, 19, '!str.match(/^\\d+$/)');
 function visit66_464_1(result) {
   _$jscoverage['/format.js'].branchData['464'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['460'][1].init(17, 36, 'dateStr.length <= startIndex + count');
+}_$jscoverage['/format.js'].branchData['460'][1].init(18, 36, 'dateStr.length <= startIndex + count');
 function visit65_460_1(result) {
   _$jscoverage['/format.js'].branchData['460'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['459'][1].init(43, 9, 'obeyCount');
+}_$jscoverage['/format.js'].branchData['459'][1].init(45, 9, 'obeyCount');
 function visit64_459_1(result) {
   _$jscoverage['/format.js'].branchData['459'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['450'][3].init(59, 7, 'c > \'9\'');
+}_$jscoverage['/format.js'].branchData['450'][3].init(61, 7, 'c > \'9\'');
 function visit63_450_3(result) {
   _$jscoverage['/format.js'].branchData['450'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['450'][2].init(48, 7, 'c < \'0\'');
+}_$jscoverage['/format.js'].branchData['450'][2].init(50, 7, 'c < \'0\'');
 function visit62_450_2(result) {
   _$jscoverage['/format.js'].branchData['450'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['450'][1].init(48, 18, 'c < \'0\' || c > \'9\'');
+}_$jscoverage['/format.js'].branchData['450'][1].init(50, 18, 'c < \'0\' || c > \'9\'');
 function visit61_450_1(result) {
   _$jscoverage['/format.js'].branchData['450'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['448'][1].init(69, 7, 'i < len');
+}_$jscoverage['/format.js'].branchData['448'][1].init(72, 7, 'i < len');
 function visit60_448_1(result) {
   _$jscoverage['/format.js'].branchData['448'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['438'][1].init(17, 50, 'dateStr.charAt(startIndex + i) !== match.charAt(i)');
+}_$jscoverage['/format.js'].branchData['438'][1].init(18, 50, 'dateStr.charAt(startIndex + i) !== match.charAt(i)');
 function visit59_438_1(result) {
   _$jscoverage['/format.js'].branchData['438'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['437'][1].init(25, 8, 'i < mLen');
+}_$jscoverage['/format.js'].branchData['437'][1].init(26, 8, 'i < mLen');
 function visit58_437_1(result) {
   _$jscoverage['/format.js'].branchData['437'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['430'][1].init(407, 10, 'index >= 0');
+}_$jscoverage['/format.js'].branchData['430'][1].init(421, 10, 'index >= 0');
 function visit57_430_1(result) {
   _$jscoverage['/format.js'].branchData['430'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['424'][2].init(82, 17, 'mLen > matchedLen');
+}_$jscoverage['/format.js'].branchData['424'][2].init(85, 17, 'mLen > matchedLen');
 function visit56_424_2(result) {
   _$jscoverage['/format.js'].branchData['424'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['424'][1].init(82, 82, 'mLen > matchedLen && matchPartString(dateStr, startIndex, m, mLen)');
+}_$jscoverage['/format.js'].branchData['424'][1].init(85, 83, 'mLen > matchedLen && matchPartString(dateStr, startIndex, m, mLen)');
 function visit55_424_1(result) {
   _$jscoverage['/format.js'].branchData['424'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['421'][1].init(123, 7, 'i < len');
+}_$jscoverage['/format.js'].branchData['421'][1].init(128, 7, 'i < len');
 function visit54_421_1(result) {
   _$jscoverage['/format.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['393'][1].init(97, 10, 'offset < 0');
+}_$jscoverage['/format.js'].branchData['393'][1].init(99, 10, 'offset < 0');
 function visit53_393_1(result) {
   _$jscoverage['/format.js'].branchData['393'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['385'][1].init(17, 55, 'calendar.getHourOfDay() % 12 || 12');
+}_$jscoverage['/format.js'].branchData['385'][1].init(17, 56, 'calendar.getHourOfDay() % 12 || 12');
 function visit52_385_1(result) {
   _$jscoverage['/format.js'].branchData['385'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['379'][1].init(48, 29, 'calendar.getHourOfDay() >= 12');
+}_$jscoverage['/format.js'].branchData['379'][1].init(49, 29, 'calendar.getHourOfDay() >= 12');
 function visit51_379_1(result) {
   _$jscoverage['/format.js'].branchData['379'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['374'][1].init(84, 10, 'count >= 4');
+}_$jscoverage['/format.js'].branchData['374'][1].init(86, 10, 'count >= 4');
 function visit50_374_1(result) {
   _$jscoverage['/format.js'].branchData['374'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['369'][1].init(53, 29, 'calendar.getHourOfDay() || 24');
+}_$jscoverage['/format.js'].branchData['369'][1].init(54, 29, 'calendar.getHourOfDay() || 24');
 function visit49_369_1(result) {
   _$jscoverage['/format.js'].branchData['369'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['362'][1].init(168, 11, 'count === 3');
+}_$jscoverage['/format.js'].branchData['362'][1].init(172, 11, 'count === 3');
 function visit48_362_1(result) {
   _$jscoverage['/format.js'].branchData['362'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['360'][1].init(74, 10, 'count >= 4');
+}_$jscoverage['/format.js'].branchData['360'][1].init(76, 10, 'count >= 4');
 function visit47_360_1(result) {
   _$jscoverage['/format.js'].branchData['360'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['356'][1].init(199, 11, 'count !== 2');
+}_$jscoverage['/format.js'].branchData['356'][1].init(204, 11, 'count !== 2');
 function visit46_356_1(result) {
   _$jscoverage['/format.js'].branchData['356'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['353'][1].init(73, 10, 'value <= 0');
+}_$jscoverage['/format.js'].branchData['353'][1].init(75, 10, 'value <= 0');
 function visit45_353_1(result) {
   _$jscoverage['/format.js'].branchData['353'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['348'][1].init(33, 22, 'calendar.getYear() > 0');
+}_$jscoverage['/format.js'].branchData['348'][1].init(34, 22, 'calendar.getYear() > 0');
 function visit44_348_1(result) {
   _$jscoverage['/format.js'].branchData['348'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['338'][1].init(23, 23, 'locale || defaultLocale');
+}_$jscoverage['/format.js'].branchData['338'][1].init(24, 23, 'locale || defaultLocale');
 function visit43_338_1(result) {
   _$jscoverage['/format.js'].branchData['338'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['203'][3].init(181, 15, 'maxDigits === 2');
+}_$jscoverage['/format.js'].branchData['203'][3].init(186, 15, 'maxDigits === 2');
 function visit42_203_3(result) {
   _$jscoverage['/format.js'].branchData['203'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['203'][2].init(162, 15, 'minDigits === 2');
+}_$jscoverage['/format.js'].branchData['203'][2].init(167, 15, 'minDigits === 2');
 function visit41_203_2(result) {
   _$jscoverage['/format.js'].branchData['203'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['203'][1].init(162, 34, 'minDigits === 2 && maxDigits === 2');
+}_$jscoverage['/format.js'].branchData['203'][1].init(167, 34, 'minDigits === 2 && maxDigits === 2');
 function visit40_203_1(result) {
   _$jscoverage['/format.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['199'][1].init(21, 15, 'minDigits === 4');
+}_$jscoverage['/format.js'].branchData['199'][1].init(22, 15, 'minDigits === 4');
 function visit39_199_1(result) {
   _$jscoverage['/format.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['198'][3].init(300, 13, 'value < 10000');
+}_$jscoverage['/format.js'].branchData['198'][3].init(307, 13, 'value < 10000');
 function visit38_198_3(result) {
   _$jscoverage['/format.js'].branchData['198'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['198'][2].init(283, 13, 'value >= 1000');
+}_$jscoverage['/format.js'].branchData['198'][2].init(290, 13, 'value >= 1000');
 function visit37_198_2(result) {
   _$jscoverage['/format.js'].branchData['198'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['198'][1].init(283, 30, 'value >= 1000 && value < 10000');
+}_$jscoverage['/format.js'].branchData['198'][1].init(290, 30, 'value >= 1000 && value < 10000');
 function visit36_198_1(result) {
   _$jscoverage['/format.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['193'][3].init(35, 15, 'minDigits === 2');
+}_$jscoverage['/format.js'].branchData['193'][3].init(36, 15, 'minDigits === 2');
 function visit35_193_3(result) {
   _$jscoverage['/format.js'].branchData['193'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['193'][2].init(21, 10, 'value < 10');
+}_$jscoverage['/format.js'].branchData['193'][2].init(22, 10, 'value < 10');
 function visit34_193_2(result) {
   _$jscoverage['/format.js'].branchData['193'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['193'][1].init(21, 29, 'value < 10 && minDigits === 2');
+}_$jscoverage['/format.js'].branchData['193'][1].init(22, 29, 'value < 10 && minDigits === 2');
 function visit33_193_1(result) {
   _$jscoverage['/format.js'].branchData['193'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['192'][5].init(50, 14, 'minDigits <= 2');
+}_$jscoverage['/format.js'].branchData['192'][5].init(51, 14, 'minDigits <= 2');
 function visit32_192_5(result) {
   _$jscoverage['/format.js'].branchData['192'][5].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['192'][4].init(32, 14, 'minDigits >= 1');
+}_$jscoverage['/format.js'].branchData['192'][4].init(33, 14, 'minDigits >= 1');
 function visit31_192_4(result) {
   _$jscoverage['/format.js'].branchData['192'][4].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['192'][3].init(32, 32, 'minDigits >= 1 && minDigits <= 2');
+}_$jscoverage['/format.js'].branchData['192'][3].init(33, 32, 'minDigits >= 1 && minDigits <= 2');
 function visit30_192_3(result) {
   _$jscoverage['/format.js'].branchData['192'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['192'][2].init(17, 11, 'value < 100');
+}_$jscoverage['/format.js'].branchData['192'][2].init(18, 11, 'value < 100');
 function visit29_192_2(result) {
   _$jscoverage['/format.js'].branchData['192'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['192'][1].init(17, 47, 'value < 100 && minDigits >= 1 && minDigits <= 2');
+}_$jscoverage['/format.js'].branchData['192'][1].init(18, 47, 'value < 100 && minDigits >= 1 && minDigits <= 2');
 function visit28_192_1(result) {
   _$jscoverage['/format.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['191'][1].init(355, 10, 'value >= 0');
+}_$jscoverage['/format.js'].branchData['191'][1].init(362, 10, 'value >= 0');
 function visit27_191_1(result) {
   _$jscoverage['/format.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['190'][1].init(319, 22, 'maxDigits || MAX_VALUE');
+}_$jscoverage['/format.js'].branchData['190'][1].init(325, 22, 'maxDigits || MAX_VALUE');
 function visit26_190_1(result) {
   _$jscoverage['/format.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['189'][1].init(285, 12, 'buffer || []');
+}_$jscoverage['/format.js'].branchData['189'][1].init(290, 12, 'buffer || []');
 function visit25_189_1(result) {
   _$jscoverage['/format.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['174'][1].init(2481, 11, 'count !== 0');
+}_$jscoverage['/format.js'].branchData['174'][1].init(2560, 11, 'count !== 0');
 function visit24_174_1(result) {
   _$jscoverage['/format.js'].branchData['174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['170'][1].init(2396, 7, 'inQuote');
+}_$jscoverage['/format.js'].branchData['170'][1].init(2471, 7, 'inQuote');
 function visit23_170_1(result) {
   _$jscoverage['/format.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['160'][3].init(1928, 15, 'lastField === c');
+}_$jscoverage['/format.js'].branchData['160'][3].init(1985, 15, 'lastField === c');
 function visit22_160_3(result) {
   _$jscoverage['/format.js'].branchData['160'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['160'][2].init(1908, 16, 'lastField === -1');
+}_$jscoverage['/format.js'].branchData['160'][2].init(1965, 16, 'lastField === -1');
 function visit21_160_2(result) {
   _$jscoverage['/format.js'].branchData['160'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['160'][1].init(1908, 35, 'lastField === -1 || lastField === c');
+}_$jscoverage['/format.js'].branchData['160'][1].init(1965, 35, 'lastField === -1 || lastField === c');
 function visit20_160_1(result) {
   _$jscoverage['/format.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['156'][1].init(1769, 30, 'patternChars.indexOf(c) === -1');
+}_$jscoverage['/format.js'].branchData['156'][1].init(1822, 30, 'patternChars.indexOf(c) === -1');
 function visit19_156_1(result) {
   _$jscoverage['/format.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['145'][1].init(21, 11, 'count !== 0');
+}_$jscoverage['/format.js'].branchData['145'][1].init(22, 11, 'count !== 0');
 function visit18_145_1(result) {
   _$jscoverage['/format.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][8].init(1429, 8, 'c <= \'Z\'');
+}_$jscoverage['/format.js'].branchData['144'][8].init(1470, 8, 'c <= \'Z\'');
 function visit17_144_8(result) {
   _$jscoverage['/format.js'].branchData['144'][8].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][7].init(1417, 8, 'c >= \'A\'');
+}_$jscoverage['/format.js'].branchData['144'][7].init(1458, 8, 'c >= \'A\'');
 function visit16_144_7(result) {
   _$jscoverage['/format.js'].branchData['144'][7].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][6].init(1417, 20, 'c >= \'A\' && c <= \'Z\'');
+}_$jscoverage['/format.js'].branchData['144'][6].init(1458, 20, 'c >= \'A\' && c <= \'Z\'');
 function visit15_144_6(result) {
   _$jscoverage['/format.js'].branchData['144'][6].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][5].init(1405, 8, 'c <= \'z\'');
+}_$jscoverage['/format.js'].branchData['144'][5].init(1446, 8, 'c <= \'z\'');
 function visit14_144_5(result) {
   _$jscoverage['/format.js'].branchData['144'][5].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][4].init(1393, 8, 'c >= \'a\'');
+}_$jscoverage['/format.js'].branchData['144'][4].init(1434, 8, 'c >= \'a\'');
 function visit13_144_4(result) {
   _$jscoverage['/format.js'].branchData['144'][4].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][3].init(1393, 20, 'c >= \'a\' && c <= \'z\'');
+}_$jscoverage['/format.js'].branchData['144'][3].init(1434, 20, 'c >= \'a\' && c <= \'z\'');
 function visit12_144_3(result) {
   _$jscoverage['/format.js'].branchData['144'][3].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][2].init(1393, 44, 'c >= \'a\' && c <= \'z\' || c >= \'A\' && c <= \'Z\'');
+}_$jscoverage['/format.js'].branchData['144'][2].init(1434, 44, 'c >= \'a\' && c <= \'z\' || c >= \'A\' && c <= \'Z\'');
 function visit11_144_2(result) {
   _$jscoverage['/format.js'].branchData['144'][2].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['144'][1].init(1391, 47, '!(c >= \'a\' && c <= \'z\' || c >= \'A\' && c <= \'Z\')');
+}_$jscoverage['/format.js'].branchData['144'][1].init(1432, 47, '!(c >= \'a\' && c <= \'z\' || c >= \'A\' && c <= \'Z\')');
 function visit10_144_1(result) {
   _$jscoverage['/format.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['140'][1].init(1292, 7, 'inQuote');
+}_$jscoverage['/format.js'].branchData['140'][1].init(1329, 7, 'inQuote');
 function visit9_140_1(result) {
   _$jscoverage['/format.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['125'][1].init(25, 11, 'count !== 0');
+}_$jscoverage['/format.js'].branchData['125'][1].init(26, 11, 'count !== 0');
 function visit8_125_1(result) {
   _$jscoverage['/format.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['124'][1].init(692, 8, '!inQuote');
+}_$jscoverage['/format.js'].branchData['124'][1].init(710, 8, '!inQuote');
 function visit7_124_1(result) {
   _$jscoverage['/format.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['118'][1].init(281, 7, 'inQuote');
+}_$jscoverage['/format.js'].branchData['118'][1].init(288, 7, 'inQuote');
 function visit6_118_1(result) {
   _$jscoverage['/format.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['113'][1].init(58, 11, 'count !== 0');
+}_$jscoverage['/format.js'].branchData['113'][1].init(60, 11, 'count !== 0');
 function visit5_113_1(result) {
   _$jscoverage['/format.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['111'][1].init(72, 10, 'c === \'\\\'\'');
+}_$jscoverage['/format.js'].branchData['111'][1].init(74, 10, 'c === \'\\\'\'');
 function visit4_111_1(result) {
   _$jscoverage['/format.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['109'][1].init(133, 15, '(i + 1) < length');
+}_$jscoverage['/format.js'].branchData['109'][1].init(136, 15, '(i + 1) < length');
 function visit3_109_1(result) {
   _$jscoverage['/format.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['106'][1].init(57, 10, 'c === \'\\\'\'');
+}_$jscoverage['/format.js'].branchData['106'][1].init(60, 10, 'c === \'\\\'\'');
 function visit2_106_1(result) {
   _$jscoverage['/format.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/format.js'].branchData['103'][1].init(207, 10, 'i < length');
+}_$jscoverage['/format.js'].branchData['103'][1].init(215, 10, 'i < length');
 function visit1_103_1(result) {
   _$jscoverage['/format.js'].branchData['103'][1].ranCondition(result);
   return result;

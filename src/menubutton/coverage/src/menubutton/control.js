@@ -394,107 +394,107 @@ _$jscoverage['/menubutton/control.js'].branchData['302'][2].init(41, 26, 'menuIt
 function visit27_302_2(result) {
   _$jscoverage['/menubutton/control.js'].branchData['302'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['302'][1].init(121, 32, 'menuItem && menuItem.el.id || \'\'');
+}_$jscoverage['/menubutton/control.js'].branchData['302'][1].init(124, 32, 'menuItem && menuItem.el.id || \'\'');
 function visit26_302_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['302'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['299'][1].init(13, 15, 'e.target.isMenu');
+}_$jscoverage['/menubutton/control.js'].branchData['299'][1].init(14, 15, 'e.target.isMenu');
 function visit25_299_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['299'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['293'][1].init(13, 50, 'e.target.isMenuItem && this.get(\'collapseOnClick\')');
+}_$jscoverage['/menubutton/control.js'].branchData['293'][1].init(14, 50, 'e.target.isMenuItem && this.get(\'collapseOnClick\')');
 function visit24_293_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['293'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['266'][1].init(25, 11, 'm.isControl');
+}_$jscoverage['/menubutton/control.js'].branchData['266'][1].init(26, 11, 'm.isControl');
 function visit23_266_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['266'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['259'][1].init(36, 23, 'v.xclass || \'popupmenu\'');
+}_$jscoverage['/menubutton/control.js'].branchData['259'][1].init(37, 23, 'v.xclass || \'popupmenu\'');
 function visit22_259_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['259'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['258'][1].init(25, 12, '!v.isControl');
+}_$jscoverage['/menubutton/control.js'].branchData['258'][1].init(26, 12, '!v.isControl');
 function visit21_258_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['207'][1].init(48, 2, '!v');
+}_$jscoverage['/menubutton/control.js'].branchData['207'][1].init(50, 2, '!v');
 function visit20_207_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['207'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['201'][1].init(61, 46, 'menu.get(\'rendered\') && menu.getChildAt(index)');
+}_$jscoverage['/menubutton/control.js'].branchData['201'][1].init(63, 46, 'menu.get(\'rendered\') && menu.getChildAt(index)');
 function visit19_201_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['189'][1].init(122, 13, 'menu.children');
+}_$jscoverage['/menubutton/control.js'].branchData['189'][1].init(125, 13, 'menu.children');
 function visit18_189_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['187'][1].init(21, 19, 'menu.removeChildren');
+}_$jscoverage['/menubutton/control.js'].branchData['187'][1].init(22, 19, 'menu.removeChildren');
 function visit17_187_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['186'][1].init(58, 4, 'menu');
+}_$jscoverage['/menubutton/control.js'].branchData['186'][1].init(60, 4, 'menu');
 function visit16_186_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['186'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['124'][1].init(43, 22, 'keyCode === KeyCode.UP');
+}_$jscoverage['/menubutton/control.js'].branchData['124'][1].init(44, 22, 'keyCode === KeyCode.UP');
 function visit15_124_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['123'][2].init(1029, 24, 'keyCode === KeyCode.DOWN');
+}_$jscoverage['/menubutton/control.js'].branchData['123'][2].init(1058, 24, 'keyCode === KeyCode.DOWN');
 function visit14_123_2(result) {
   _$jscoverage['/menubutton/control.js'].branchData['123'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['123'][1].init(44, 66, 'keyCode === KeyCode.DOWN || keyCode === KeyCode.UP');
+}_$jscoverage['/menubutton/control.js'].branchData['123'][1].init(45, 67, 'keyCode === KeyCode.DOWN || keyCode === KeyCode.UP');
 function visit13_123_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['122'][2].init(982, 25, 'keyCode === KeyCode.SPACE');
+}_$jscoverage['/menubutton/control.js'].branchData['122'][2].init(1010, 25, 'keyCode === KeyCode.SPACE');
 function visit12_122_2(result) {
   _$jscoverage['/menubutton/control.js'].branchData['122'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['122'][1].init(982, 111, 'keyCode === KeyCode.SPACE || keyCode === KeyCode.DOWN || keyCode === KeyCode.UP');
+}_$jscoverage['/menubutton/control.js'].branchData['122'][1].init(1010, 113, 'keyCode === KeyCode.SPACE || keyCode === KeyCode.DOWN || keyCode === KeyCode.UP');
 function visit11_122_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['114'][1].init(111, 23, 'keyCode === KeyCode.ESC');
+}_$jscoverage['/menubutton/control.js'].branchData['114'][1].init(114, 23, 'keyCode === KeyCode.ESC');
 function visit10_114_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['111'][1].init(547, 43, 'menu.get(\'rendered\') && menu.get(\'visible\')');
+}_$jscoverage['/menubutton/control.js'].branchData['111'][1].init(564, 43, 'menu.get(\'rendered\') && menu.get(\'visible\')');
 function visit9_111_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['107'][1].init(436, 18, 'type !== \'keydown\'');
+}_$jscoverage['/menubutton/control.js'].branchData['107'][1].init(449, 18, 'type !== \'keydown\'');
 function visit8_107_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['104'][1].init(110, 16, 'type !== \'keyup\'');
+}_$jscoverage['/menubutton/control.js'].branchData['104'][1].init(113, 16, 'type !== \'keyup\'');
 function visit7_104_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['101'][1].init(198, 25, 'keyCode === KeyCode.SPACE');
+}_$jscoverage['/menubutton/control.js'].branchData['101'][1].init(205, 25, 'keyCode === KeyCode.SPACE');
 function visit6_101_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['69'][1].init(80, 49, 'parseInt(menuEl.css(\'borderRightWidth\'), 10) || 0');
+}_$jscoverage['/menubutton/control.js'].branchData['69'][1].init(81, 49, 'parseInt(menuEl.css(\'borderRightWidth\'), 10) || 0');
 function visit5_69_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['68'][1].init(42, 48, 'parseInt(menuEl.css(\'borderLeftWidth\'), 10) || 0');
+}_$jscoverage['/menubutton/control.js'].branchData['68'][1].init(43, 48, 'parseInt(menuEl.css(\'borderLeftWidth\'), 10) || 0');
 function visit4_68_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['64'][1].init(478, 24, 'self.get(\'matchElWidth\')');
+}_$jscoverage['/menubutton/control.js'].branchData['64'][1].init(490, 24, 'self.get(\'matchElWidth\')');
 function visit3_64_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['52'][1].init(21, 20, '!menu.get(\'visible\')');
+}_$jscoverage['/menubutton/control.js'].branchData['52'][1].init(22, 20, '!menu.get(\'visible\')');
 function visit2_52_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['49'][1].init(249, 1, 'v');
+}_$jscoverage['/menubutton/control.js'].branchData['49'][1].init(255, 1, 'v');
 function visit1_49_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['49'][1].ranCondition(result);
   return result;

@@ -357,71 +357,71 @@ if (! _$jscoverage['/stylesheet.js'].branchData) {
   _$jscoverage['/stylesheet.js'].branchData['192'] = [];
   _$jscoverage['/stylesheet.js'].branchData['192'][1] = new BranchData();
 }
-_$jscoverage['/stylesheet.js'].branchData['192'][1].init(110, 13, 'sheet.addRule');
+_$jscoverage['/stylesheet.js'].branchData['192'][1].init(113, 13, 'sheet.addRule');
 function visit17_192_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['190'][1].init(13, 16, 'sheet.insertRule');
+}_$jscoverage['/stylesheet.js'].branchData['190'][1].init(14, 16, 'sheet.insertRule');
 function visit16_190_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['184'][1].init(86, 16, 'sheet.removeRule');
+}_$jscoverage['/stylesheet.js'].branchData['184'][1].init(89, 16, 'sheet.removeRule');
 function visit15_184_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['182'][1].init(13, 16, 'sheet.deleteRule');
+}_$jscoverage['/stylesheet.js'].branchData['182'][1].init(14, 16, 'sheet.deleteRule');
 function visit14_182_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['176'][1].init(39, 10, 'base || \'\'');
+}_$jscoverage['/stylesheet.js'].branchData['176'][1].init(40, 10, 'base || \'\'');
 function visit13_176_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['154'][1].init(81, 12, 'selectorText');
+}_$jscoverage['/stylesheet.js'].branchData['154'][1].init(84, 12, 'selectorText');
 function visit12_154_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['137'][1].init(110, 3, 'css');
+}_$jscoverage['/stylesheet.js'].branchData['137'][1].init(113, 3, 'css');
 function visit11_137_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['128'][1].init(29, 28, 'sheet[rulesName][i] === rule');
+}_$jscoverage['/stylesheet.js'].branchData['128'][1].init(30, 28, 'sheet[rulesName][i] === rule');
 function visit10_128_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['127'][1].init(156, 6, 'i >= 0');
+}_$jscoverage['/stylesheet.js'].branchData['127'][1].init(159, 6, 'i >= 0');
 function visit9_127_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['122'][1].init(79, 3, 'css');
+}_$jscoverage['/stylesheet.js'].branchData['122'][1].init(81, 3, 'css');
 function visit8_122_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['120'][1].init(493, 4, 'rule');
+}_$jscoverage['/stylesheet.js'].branchData['120'][1].init(508, 4, 'rule');
 function visit7_120_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['114'][1].init(29, 28, 'i < multiSelector.length - 1');
+}_$jscoverage['/stylesheet.js'].branchData['114'][1].init(30, 28, 'i < multiSelector.length - 1');
 function visit6_114_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['113'][1].init(269, 24, 'multiSelector.length > 1');
+}_$jscoverage['/stylesheet.js'].branchData['113'][1].init(277, 24, 'multiSelector.length > 1');
 function visit5_113_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['50'][1].init(812, 6, 'i >= 0');
+}_$jscoverage['/stylesheet.js'].branchData['50'][1].init(848, 6, 'i >= 0');
 function visit4_50_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['42'][1].init(579, 30, 'sheet && (\'cssRules\' in sheet)');
+}_$jscoverage['/stylesheet.js'].branchData['42'][1].init(607, 30, 'sheet && (\'cssRules\' in sheet)');
 function visit3_42_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['34'][1].init(435, 25, 'el.sheet || el.styleSheet');
+}_$jscoverage['/stylesheet.js'].branchData['34'][1].init(455, 25, 'el.sheet || el.styleSheet');
 function visit2_34_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['27'][1].init(231, 5, 'el.el');
+}_$jscoverage['/stylesheet.js'].branchData['27'][1].init(244, 5, 'el.el');
 function visit1_27_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['27'][1].ranCondition(result);
   return result;

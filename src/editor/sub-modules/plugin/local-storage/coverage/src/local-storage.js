@@ -285,15 +285,15 @@ if (! _$jscoverage['/local-storage.js'].branchData) {
   _$jscoverage['/local-storage.js'].branchData['15'][2] = new BranchData();
   _$jscoverage['/local-storage.js'].branchData['15'][3] = new BranchData();
 }
-_$jscoverage['/local-storage.js'].branchData['15'][3].init(233, 6, 'ie > 8');
+_$jscoverage['/local-storage.js'].branchData['15'][3].init(242, 6, 'ie > 8');
 function visit3_15_3(result) {
   _$jscoverage['/local-storage.js'].branchData['15'][3].ranCondition(result);
   return result;
-}_$jscoverage['/local-storage.js'].branchData['15'][2].init(226, 13, '!ie || ie > 8');
+}_$jscoverage['/local-storage.js'].branchData['15'][2].init(235, 13, '!ie || ie > 8');
 function visit2_15_2(result) {
   _$jscoverage['/local-storage.js'].branchData['15'][2].ranCondition(result);
   return result;
-}_$jscoverage['/local-storage.js'].branchData['15'][1].init(226, 37, '(!ie || ie > 8) && window.localStorage');
+}_$jscoverage['/local-storage.js'].branchData['15'][1].init(235, 37, '(!ie || ie > 8) && window.localStorage');
 function visit1_15_1(result) {
   _$jscoverage['/local-storage.js'].branchData['15'][1].ranCondition(result);
   return result;

@@ -389,111 +389,111 @@ if (! _$jscoverage['/drag-upload.js'].branchData) {
   _$jscoverage['/drag-upload.js'].branchData['146'] = [];
   _$jscoverage['/drag-upload.js'].branchData['146'][1] = new BranchData();
 }
-_$jscoverage['/drag-upload.js'].branchData['146'][1].init(1253, 39, 'file.type || \'application/octet-stream\'');
+_$jscoverage['/drag-upload.js'].branchData['146'][1].init(1278, 39, 'file.type || \'application/octet-stream\'');
 function visit27_146_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['131'][1].init(37, 23, 'xhr.responseText !== \'\'');
+}_$jscoverage['/drag-upload.js'].branchData['131'][1].init(38, 23, 'xhr.responseText !== \'\'');
 function visit26_131_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['130'][3].init(55, 18, 'xhr.status === 304');
+}_$jscoverage['/drag-upload.js'].branchData['130'][3].init(56, 18, 'xhr.status === 304');
 function visit25_130_3(result) {
   _$jscoverage['/drag-upload.js'].branchData['130'][3].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['130'][2].init(33, 18, 'xhr.status === 200');
+}_$jscoverage['/drag-upload.js'].branchData['130'][2].init(34, 18, 'xhr.status === 200');
 function visit24_130_2(result) {
   _$jscoverage['/drag-upload.js'].branchData['130'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['130'][1].init(33, 40, 'xhr.status === 200 || xhr.status === 304');
+}_$jscoverage['/drag-upload.js'].branchData['130'][1].init(34, 40, 'xhr.status === 200 || xhr.status === 304');
 function visit23_130_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['129'][1].init(29, 20, 'xhr.readyState === 4');
+}_$jscoverage['/drag-upload.js'].branchData['129'][1].init(30, 20, 'xhr.readyState === 4');
 function visit22_129_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['110'][1].init(432, 7, 'i < len');
+}_$jscoverage['/drag-upload.js'].branchData['110'][1].init(442, 7, 'i < len');
 function visit21_110_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['103'][1].init(106, 18, 'window.BlobBuilder');
+}_$jscoverage['/drag-upload.js'].branchData['103'][1].init(109, 18, 'window.BlobBuilder');
 function visit20_103_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['99'][1].init(3377, 63, 'window.XMLHttpRequest && !XMLHttpRequest.prototype.sendAsBinary');
+}_$jscoverage['/drag-upload.js'].branchData['99'][1].init(3458, 63, 'window.XMLHttpRequest && !XMLHttpRequest.prototype.sendAsBinary');
 function visit19_99_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['89'][3].init(738, 17, 'npName === \'html\'');
+}_$jscoverage['/drag-upload.js'].branchData['89'][3].init(752, 17, 'npName === \'html\'');
 function visit18_89_3(result) {
   _$jscoverage['/drag-upload.js'].branchData['89'][3].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['89'][2].init(717, 17, 'npName === \'head\'');
+}_$jscoverage['/drag-upload.js'].branchData['89'][2].init(731, 17, 'npName === \'head\'');
 function visit17_89_2(result) {
   _$jscoverage['/drag-upload.js'].branchData['89'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['89'][1].init(717, 38, 'npName === \'head\' || npName === \'html\'');
+}_$jscoverage['/drag-upload.js'].branchData['89'][1].init(731, 38, 'npName === \'head\' || npName === \'html\'');
 function visit16_89_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['80'][1].init(228, 23, 'size / 1000 > sizeLimit');
+}_$jscoverage['/drag-upload.js'].branchData['80'][1].init(233, 23, 'size / 1000 > sizeLimit');
 function visit15_80_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['77'][1].init(110, 22, '!name.match(suffixReg)');
+}_$jscoverage['/drag-upload.js'].branchData['77'][1].init(112, 22, '!name.match(suffixReg)');
 function visit14_77_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['75'][1].init(1180, 16, 'i < files.length');
+}_$jscoverage['/drag-upload.js'].branchData['75'][1].init(1208, 16, 'i < files.length');
 function visit13_75_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['72'][1].init(1080, 6, '!files');
+}_$jscoverage['/drag-upload.js'].branchData['72'][1].init(1105, 6, '!files');
 function visit12_72_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['56'][1].init(33, 26, 'Dom.nodeName(el) === \'img\'');
+}_$jscoverage['/drag-upload.js'].branchData['56'][1].init(34, 26, 'Dom.nodeName(el) === \'img\'');
 function visit11_56_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['54'][1].init(291, 26, '!S.isEmptyObject(inserted)');
+}_$jscoverage['/drag-upload.js'].branchData['54'][1].init(298, 26, '!S.isEmptyObject(inserted)');
 function visit10_54_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['41'][1].init(62, 13, '!startMonitor');
+}_$jscoverage['/drag-upload.js'].branchData['41'][1].init(64, 13, '!startMonitor');
 function visit9_41_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['32'][2].init(99, 25, 'Dom.nodeName(t) === \'img\'');
+}_$jscoverage['/drag-upload.js'].branchData['32'][2].init(102, 25, 'Dom.nodeName(t) === \'img\'');
 function visit8_32_2(result) {
   _$jscoverage['/drag-upload.js'].branchData['32'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['32'][1].init(99, 54, 'Dom.nodeName(t) === \'img\' && t.src.match(/^file:\\/\\//)');
+}_$jscoverage['/drag-upload.js'].branchData['32'][1].init(102, 54, 'Dom.nodeName(t) === \'img\' && t.src.match(/^file:\\/\\//)');
 function visit7_32_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['24'][1].init(271, 32, 'cfg.suffix || \'png,jpg,jpeg,gif\'');
+}_$jscoverage['/drag-upload.js'].branchData['24'][1].init(276, 32, 'cfg.suffix || \'png,jpg,jpeg,gif\'');
 function visit6_24_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['23'][1].init(225, 19, 'cfg.serverUrl || \'\'');
+}_$jscoverage['/drag-upload.js'].branchData['23'][1].init(229, 19, 'cfg.serverUrl || \'\'');
 function visit5_23_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['22'][1].init(173, 22, 'cfg.serverParams || {}');
+}_$jscoverage['/drag-upload.js'].branchData['22'][1].init(176, 22, 'cfg.serverParams || {}');
 function visit4_22_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['21'][1].init(107, 33, 'cfg.sizeLimit || Number.MAX_VALUE');
+}_$jscoverage['/drag-upload.js'].branchData['21'][1].init(109, 33, 'cfg.sizeLimit || Number.MAX_VALUE');
 function visit3_21_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['20'][1].init(50, 27, 'cfg.fileInput || \'Filedata\'');
+}_$jscoverage['/drag-upload.js'].branchData['20'][1].init(51, 27, 'cfg.fileInput || \'Filedata\'');
 function visit2_20_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag-upload.js'].branchData['14'][1].init(23, 12, 'config || {}');
+}_$jscoverage['/drag-upload.js'].branchData['14'][1].init(24, 12, 'config || {}');
 function visit1_14_1(result) {
   _$jscoverage['/drag-upload.js'].branchData['14'][1].ranCondition(result);
   return result;

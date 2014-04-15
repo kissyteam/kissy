@@ -349,43 +349,43 @@ if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData['204'] = [];
   _$jscoverage['/btn.js'].branchData['204'][1] = new BranchData();
 }
-_$jscoverage['/btn.js'].branchData['204'][1].init(47, 23, 'e.color || defaultColor');
+_$jscoverage['/btn.js'].branchData['204'][1].init(48, 23, 'e.color || defaultColor');
 function visit10_204_1(result) {
   _$jscoverage['/btn.js'].branchData['204'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['154'][1].init(46, 13, 'self.colorWin');
+}_$jscoverage['/btn.js'].branchData['154'][1].init(48, 13, 'self.colorWin');
 function visit9_154_1(result) {
   _$jscoverage['/btn.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['145'][1].init(394, 45, 't.hasClass(prefixCls + \'editor-color-remove\')');
+}_$jscoverage['/btn.js'].branchData['145'][1].init(404, 45, 't.hasClass(prefixCls + \'editor-color-remove\')');
 function visit8_145_1(result) {
   _$jscoverage['/btn.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['141'][1].init(208, 40, 't.hasClass(prefixCls + \'editor-color-a\')');
+}_$jscoverage['/btn.js'].branchData['141'][1].init(214, 40, 't.hasClass(prefixCls + \'editor-color-a\')');
 function visit7_141_1(result) {
   _$jscoverage['/btn.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['77'][1].init(24, 13, 'self.colorWin');
+}_$jscoverage['/btn.js'].branchData['77'][1].init(25, 13, 'self.colorWin');
 function visit6_77_1(result) {
   _$jscoverage['/btn.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['74'][1].init(72, 7, 'checked');
+}_$jscoverage['/btn.js'].branchData['74'][1].init(74, 7, 'checked');
 function visit5_74_1(result) {
   _$jscoverage['/btn.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['67'][1].init(24, 13, 'self.colorWin');
+}_$jscoverage['/btn.js'].branchData['67'][1].init(25, 13, 'self.colorWin');
 function visit4_67_1(result) {
   _$jscoverage['/btn.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['39'][1].init(65, 5, 'j < 8');
+}_$jscoverage['/btn.js'].branchData['39'][1].init(67, 5, 'j < 8');
 function visit3_39_1(result) {
   _$jscoverage['/btn.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['37'][1].init(154, 5, 'k < l');
+}_$jscoverage['/btn.js'].branchData['37'][1].init(157, 5, 'k < l');
 function visit2_37_1(result) {
   _$jscoverage['/btn.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['34'][1].init(235, 5, 'i < 3');
+}_$jscoverage['/btn.js'].branchData['34'][1].init(241, 5, 'i < 3');
 function visit1_34_1(result) {
   _$jscoverage['/btn.js'].branchData['34'][1].ranCondition(result);
   return result;

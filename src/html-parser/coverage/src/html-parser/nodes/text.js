@@ -273,27 +273,27 @@ if (! _$jscoverage['/html-parser/nodes/text.js'].branchData) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['35'] = [];
   _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].init(17, 14, 'this.nodeValue');
+_$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].init(18, 14, 'this.nodeValue');
 function visit239_35_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].init(25, 12, 'this !== ret');
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].init(26, 12, 'this !== ret');
 function visit238_26_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].init(21, 3, 'ret');
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].init(22, 3, 'ret');
 function visit237_25_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].init(50, 36, '(ret = filter.onText(this)) !== false');
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].init(52, 36, '(ret = filter.onText(this)) !== false');
 function visit236_24_2(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].init(38, 48, '!filter || (ret = filter.onText(this)) !== false');
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].init(40, 48, '!filter || (ret = filter.onText(this)) !== false');
 function visit235_24_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].init(13, 21, 'typeof v === \'string\'');
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].init(14, 21, 'typeof v === \'string\'');
 function visit234_10_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].ranCondition(result);
   return result;

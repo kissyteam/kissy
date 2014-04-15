@@ -247,7 +247,7 @@ if (! _$jscoverage['/html-parser/scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanner.js'].branchData['14'] = [];
   _$jscoverage['/html-parser/scanner.js'].branchData['14'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/scanner.js'].branchData['14'][1].init(20, 39, 'SpecialScanners[nodeName] || TagScanner');
+_$jscoverage['/html-parser/scanner.js'].branchData['14'][1].init(21, 39, 'SpecialScanners[nodeName] || TagScanner');
 function visit276_14_1(result) {
   _$jscoverage['/html-parser/scanner.js'].branchData['14'][1].ranCondition(result);
   return result;

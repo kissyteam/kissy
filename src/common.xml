@@ -11,6 +11,7 @@
     <property name="component.src.dir" location="./src/"/>
     <property name="component.coverage.dir" location="./coverage/src/"/>
     <property name="component.meta.dir" location="./meta/"/>
+    <property name="component.assets.dir" location="./assets/"/>
     <property name="component.src.dir.tmp" location="./tmp/"/>
     <property name="component.files" value="**/*.*"/>
 
@@ -177,7 +178,7 @@
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="**/*.js-debug,**/*-debug.css"/>
+            <fileset dir="${component.build.dir}" includes="**/*-debug.js,**/*-debug.css"/>
         </replaceregexp>
 
         <!-- 用 Closure Compiler 压缩 JS -->
@@ -347,7 +348,7 @@
                 </ac:if>
 
                 <copy todir="${kissy.lib.dir}">
-                    <fileset dir="${kissy.build.dir}" includes="${component.name}.js"/>
+                    <fileset dir="${kissy.build.dir}" includes="${component.name}-debug.js"/>
                     <mapper type="regexp" from="^(.*)-debug\.(css|js)$" to="\1.\2"/>
                 </copy>
             </ac:then>

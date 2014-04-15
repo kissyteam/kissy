@@ -267,11 +267,11 @@ if (! _$jscoverage['/overlay/control.js'].branchData) {
   _$jscoverage['/overlay/control.js'].branchData['55'] = [];
   _$jscoverage['/overlay/control.js'].branchData['55'][1] = new BranchData();
 }
-_$jscoverage['/overlay/control.js'].branchData['55'][1].init(47, 40, 'actions[self.get(\'closeAction\')] || HIDE');
+_$jscoverage['/overlay/control.js'].branchData['55'][1].init(49, 40, 'actions[self.get(\'closeAction\')] || HIDE');
 function visit2_55_1(result) {
   _$jscoverage['/overlay/control.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/control.js'].branchData['42'][1].init(95, 8, 'closeBtn');
+}_$jscoverage['/overlay/control.js'].branchData['42'][1].init(98, 8, 'closeBtn');
 function visit1_42_1(result) {
   _$jscoverage['/overlay/control.js'].branchData['42'][1].ranCondition(result);
   return result;

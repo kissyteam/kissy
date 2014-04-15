@@ -294,39 +294,39 @@ if (! _$jscoverage['/dd/draggable-delegate.js'].branchData) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['87'] = [];
   _$jscoverage['/dd/draggable-delegate.js'].branchData['87'][1] = new BranchData();
 }
-_$jscoverage['/dd/draggable-delegate.js'].branchData['87'][1].init(74, 14, 'target.test(h)');
+_$jscoverage['/dd/draggable-delegate.js'].branchData['87'][1].init(76, 14, 'target.test(h)');
 function visit53_87_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['85'][1].init(37, 19, 'i < handlers.length');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['85'][1].init(38, 19, 'i < handlers.length');
 function visit52_85_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['84'][2].init(170, 21, 'target[0] !== node[0]');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['84'][2].init(174, 21, 'target[0] !== node[0]');
 function visit51_84_2(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['84'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['84'][1].init(160, 31, 'target && target[0] !== node[0]');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['84'][1].init(164, 31, 'target && target[0] !== node[0]');
 function visit50_84_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['65'][1].init(810, 5, '!node');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['65'][1].init(836, 5, '!node');
 function visit49_65_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['59'][1].init(594, 7, 'handler');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['59'][1].init(614, 7, 'handler');
 function visit48_59_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['53'][1].init(417, 15, 'handlers.length');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['53'][1].init(431, 15, 'handlers.length');
 function visit47_53_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['44'][1].init(110, 30, '!self._checkDragStartValid(ev)');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['44'][1].init(115, 30, '!self._checkDragStartValid(ev)');
 function visit46_44_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['26'][1].init(109, 9, 'container');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['26'][1].init(112, 9, 'container');
 function visit45_26_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['26'][1].ranCondition(result);
   return result;

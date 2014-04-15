@@ -282,43 +282,43 @@ if (! _$jscoverage['/button.js'].branchData) {
   _$jscoverage['/button.js'].branchData['51'] = [];
   _$jscoverage['/button.js'].branchData['51'][1] = new BranchData();
 }
-_$jscoverage['/button.js'].branchData['51'][1].init(76, 21, 'self.get(\'checkable\')');
+_$jscoverage['/button.js'].branchData['51'][1].init(79, 21, 'self.get(\'checkable\')');
 function visit10_51_1(result) {
   _$jscoverage['/button.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['45'][1].init(460, 27, 'e.keyCode === KeyCode.SPACE');
+}_$jscoverage['/button.js'].branchData['45'][1].init(470, 27, 'e.keyCode === KeyCode.SPACE');
 function visit9_45_1(result) {
   _$jscoverage['/button.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['39'][1].init(46, 18, 'e.type === \'keyup\'');
+}_$jscoverage['/button.js'].branchData['39'][1].init(47, 18, 'e.type === \'keyup\'');
 function visit8_39_1(result) {
   _$jscoverage['/button.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['38'][2].init(106, 27, 'e.keyCode === KeyCode.SPACE');
+}_$jscoverage['/button.js'].branchData['38'][2].init(109, 27, 'e.keyCode === KeyCode.SPACE');
 function visit7_38_2(result) {
   _$jscoverage['/button.js'].branchData['38'][2].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['38'][1].init(86, 65, 'e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
+}_$jscoverage['/button.js'].branchData['38'][1].init(88, 66, 'e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
 function visit6_38_1(result) {
   _$jscoverage['/button.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['37'][1].init(46, 20, 'e.type === \'keydown\'');
+}_$jscoverage['/button.js'].branchData['37'][1].init(47, 20, 'e.type === \'keydown\'');
 function visit5_37_1(result) {
   _$jscoverage['/button.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['36'][3].init(17, 27, 'e.keyCode === KeyCode.ENTER');
+}_$jscoverage['/button.js'].branchData['36'][3].init(18, 27, 'e.keyCode === KeyCode.ENTER');
 function visit4_36_3(result) {
   _$jscoverage['/button.js'].branchData['36'][3].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['36'][2].init(17, 67, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\'');
+}_$jscoverage['/button.js'].branchData['36'][2].init(18, 68, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\'');
 function visit3_36_2(result) {
   _$jscoverage['/button.js'].branchData['36'][2].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['36'][1].init(17, 152, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\' || e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
+}_$jscoverage['/button.js'].branchData['36'][1].init(18, 155, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\' || e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
 function visit2_36_1(result) {
   _$jscoverage['/button.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['26'][1].init(236, 18, 'renderData.checked');
+}_$jscoverage['/button.js'].branchData['26'][1].init(243, 18, 'renderData.checked');
 function visit1_26_1(result) {
   _$jscoverage['/button.js'].branchData['26'][1].ranCondition(result);
   return result;

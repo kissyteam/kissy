@@ -369,15 +369,15 @@ if (! _$jscoverage['/overlay/dialog-xtpl.js'].branchData) {
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['126'] = [];
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['126'][1] = new BranchData();
 }
-_$jscoverage['/overlay/dialog-xtpl.js'].branchData['126'][1].init(3505, 37, 'commandRet25 && commandRet25.isBuffer');
+_$jscoverage['/overlay/dialog-xtpl.js'].branchData['126'][1].init(3535, 37, 'commandRet25 && commandRet25.isBuffer');
 function visit7_126_1(result) {
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog-xtpl.js'].branchData['89'][1].init(1936, 37, 'commandRet16 && commandRet16.isBuffer');
+}_$jscoverage['/overlay/dialog-xtpl.js'].branchData['89'][1].init(1952, 37, 'commandRet16 && commandRet16.isBuffer');
 function visit6_89_1(result) {
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog-xtpl.js'].branchData['52'][1].init(378, 35, 'commandRet7 && commandRet7.isBuffer');
+}_$jscoverage['/overlay/dialog-xtpl.js'].branchData['52'][1].init(380, 35, 'commandRet7 && commandRet7.isBuffer');
 function visit5_52_1(result) {
   _$jscoverage['/overlay/dialog-xtpl.js'].branchData['52'][1].ranCondition(result);
   return result;
@@ -430,7 +430,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, false);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[35]++;
-  buffer.write('\n');
+  buffer.write('\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -444,7 +444,7 @@ KISSY.add(function(S, require, exports, module) {
   option3.fn = function(scope, buffer) {
   _$jscoverage['/overlay/dialog-xtpl.js'].functionData[2]++;
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[44]++;
-  buffer.write('\n    <div class="');
+  buffer.write('\r\n    <div class="');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[45]++;
   var option5 = {
   escape: 1};
@@ -466,7 +466,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[56]++;
   buffer.write(commandRet7, true);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[57]++;
-  buffer.write('"\n         style="\n');
+  buffer.write('"\r\n         style="\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[58]++;
   var option8 = {
   escape: 1};
@@ -482,7 +482,7 @@ KISSY.add(function(S, require, exports, module) {
   option8.fn = function(scope, buffer) {
   _$jscoverage['/overlay/dialog-xtpl.js'].functionData[3]++;
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[67]++;
-  buffer.write('\n ');
+  buffer.write('\r\n ');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[68]++;
   var id11 = scope.resolve(["xindex"]);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[69]++;
@@ -494,20 +494,20 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[72]++;
   buffer.write(id12, true);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[73]++;
-  buffer.write(';\n');
+  buffer.write(';\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[75]++;
   return buffer;
 };
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[77]++;
   buffer = eachCommand.call(engine, scope, option8, buffer, 5, payload);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[78]++;
-  buffer.write('\n">');
+  buffer.write('\r\n">');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[79]++;
   var id13 = scope.resolve(["headerContent"]);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[80]++;
   buffer.write(id13, false);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[81]++;
-  buffer.write('</div>\n\n    <div class="');
+  buffer.write('</div>\r\n\r\n    <div class="');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[82]++;
   var option14 = {
   escape: 1};
@@ -529,7 +529,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[93]++;
   buffer.write(commandRet16, true);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[94]++;
-  buffer.write('"\n         style="\n');
+  buffer.write('"\r\n         style="\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[95]++;
   var option17 = {
   escape: 1};
@@ -545,7 +545,7 @@ KISSY.add(function(S, require, exports, module) {
   option17.fn = function(scope, buffer) {
   _$jscoverage['/overlay/dialog-xtpl.js'].functionData[4]++;
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[104]++;
-  buffer.write('\n ');
+  buffer.write('\r\n ');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[105]++;
   var id20 = scope.resolve(["xindex"]);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[106]++;
@@ -557,20 +557,20 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[109]++;
   buffer.write(id21, true);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[110]++;
-  buffer.write(';\n');
+  buffer.write(';\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[112]++;
   return buffer;
 };
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[114]++;
   buffer = eachCommand.call(engine, scope, option17, buffer, 12, payload);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[115]++;
-  buffer.write('\n">');
+  buffer.write('\r\n">');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[116]++;
   var id22 = scope.resolve(["bodyContent"]);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[117]++;
   buffer.write(id22, false);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[118]++;
-  buffer.write('</div>\n\n    <div class="');
+  buffer.write('</div>\r\n\r\n    <div class="');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[119]++;
   var option23 = {
   escape: 1};
@@ -592,7 +592,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[130]++;
   buffer.write(commandRet25, true);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[131]++;
-  buffer.write('"\n         style="\n');
+  buffer.write('"\r\n         style="\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[132]++;
   var option26 = {
   escape: 1};
@@ -608,7 +608,7 @@ KISSY.add(function(S, require, exports, module) {
   option26.fn = function(scope, buffer) {
   _$jscoverage['/overlay/dialog-xtpl.js'].functionData[5]++;
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[141]++;
-  buffer.write('\n ');
+  buffer.write('\r\n ');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[142]++;
   var id29 = scope.resolve(["xindex"]);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[143]++;
@@ -620,20 +620,20 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[146]++;
   buffer.write(id30, true);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[147]++;
-  buffer.write(';\n');
+  buffer.write(';\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[149]++;
   return buffer;
 };
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[151]++;
   buffer = eachCommand.call(engine, scope, option26, buffer, 19, payload);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[152]++;
-  buffer.write('\n">');
+  buffer.write('\r\n">');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[153]++;
   var id31 = scope.resolve(["footerContent"]);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[154]++;
   buffer.write(id31, false);
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[155]++;
-  buffer.write('</div>\n    <div tabindex="0"></div>\n');
+  buffer.write('</div>\r\n    <div tabindex="0"></div>\r\n');
   _$jscoverage['/overlay/dialog-xtpl.js'].lineData[157]++;
   return buffer;
 };

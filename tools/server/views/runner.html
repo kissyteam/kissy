@@ -20,15 +20,15 @@
     </style>
     {{#if (query.min)}}
         {{#if (loader)}}
-            <script src="/kissy/build/loader-min.js"></script>
+            <script src="/kissy/build/loader.js"></script>
         {{else}}
-            <script src="/kissy/build/seed-min.js"></script>
+            <script src="/kissy/build/seed.js"></script>
         {{/if}}
     {{else}}
         {{#if (loader)}}
             <script src="/kissy/build/loader.js"></script>
         {{else}}
-            <script src="/kissy/build/seed.js"></script>
+            <script src="/kissy/build/seed-debug.js"></script>
         {{/if}}
     {{/if}}
     <script>

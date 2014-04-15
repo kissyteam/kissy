@@ -874,615 +874,615 @@ if (! _$jscoverage['/html-parser/lexer/lexer.js'].branchData) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['676'] = [];
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['676'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/lexer/lexer.js'].branchData['676'][1].init(212, 10, '\'>\' === ch');
+_$jscoverage['/html-parser/lexer/lexer.js'].branchData['676'][1].init(216, 10, '\'>\' === ch');
 function visit168_676_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['676'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['674'][1].init(98, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['674'][1].init(100, 17, 'NEGATIVE_1 === ch');
 function visit167_674_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['674'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['672'][1].init(196, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['672'][1].init(200, 10, '\'-\' === ch');
 function visit166_672_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['672'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['670'][1].init(90, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['670'][1].init(92, 17, 'NEGATIVE_1 === ch');
 function visit165_670_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['670'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['668'][1].init(180, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['668'][1].init(184, 10, '\'-\' === ch');
 function visit164_668_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['668'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['666'][1].init(82, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['666'][1].init(84, 17, 'NEGATIVE_1 === ch');
 function visit163_666_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['666'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['652'][1].init(180, 18, 'Utils.isLetter(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['652'][1].init(184, 18, 'Utils.isLetter(ch)');
 function visit162_652_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['652'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['650'][1].init(82, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['650'][1].init(84, 17, 'NEGATIVE_1 === ch');
 function visit161_650_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['650'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['634'][1].init(228, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['634'][1].init(232, 10, '\'-\' === ch');
 function visit160_634_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['634'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['632'][1].init(106, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['632'][1].init(108, 17, 'NEGATIVE_1 === ch');
 function visit159_632_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['632'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['630'][1].init(220, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['630'][1].init(224, 10, '\'-\' === ch');
 function visit158_630_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['630'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['628'][1].init(106, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['628'][1].init(108, 17, 'NEGATIVE_1 === ch');
 function visit157_628_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['628'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][3].init(964, 114, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][3].init(977, 115, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName');
 function visit156_616_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][2].init(964, 256, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/))');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][2].init(977, 258, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/))');
 function visit155_616_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][1].init(951, 307, '!tagName || (mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/)))');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][1].init(964, 310, '!tagName || (mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/)))');
 function visit154_616_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['616'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['587'][1].init(41, 12, '\'\' === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['587'][1].init(42, 12, '\'\' === quote');
 function visit153_587_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['587'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['586'][1].init(45, 10, 'quoteSmart');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['586'][1].init(46, 10, 'quoteSmart');
 function visit152_586_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['586'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][3].init(628, 10, '\'/\' !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][3].init(637, 10, '\'/\' !== ch');
 function visit151_575_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][2].init(605, 17, 'NEGATIVE_1 !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][2].init(614, 17, 'NEGATIVE_1 !== ch');
 function visit150_575_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][1].init(558, 34, '(NEGATIVE_1 !== ch) && (\'/\' !== ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][1].init(566, 34, '(NEGATIVE_1 !== ch) && (\'/\' !== ch)');
 function visit149_575_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['575'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['572'][1].init(359, 10, 'ch === \'*\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['572'][1].init(364, 10, 'ch === \'*\'');
 function visit148_572_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['572'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][3].init(217, 10, '\'*\' !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][3].init(220, 10, '\'*\' !== ch');
 function visit147_570_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][2].init(194, 17, 'NEGATIVE_1 !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][2].init(197, 17, 'NEGATIVE_1 !== ch');
 function visit146_570_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][1].init(143, 34, '(NEGATIVE_1 !== ch) && (\'*\' !== ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][1].init(145, 34, '(NEGATIVE_1 !== ch) && (\'*\' !== ch)');
 function visit145_570_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['566'][1].init(471, 10, '\'*\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['566'][1].init(478, 10, '\'*\' === ch');
 function visit144_566_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['566'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['564'][1].init(345, 10, '\'/\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['564'][1].init(350, 10, '\'/\' === ch');
 function visit143_564_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['564'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['562'][1].init(215, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['562'][1].init(218, 17, 'NEGATIVE_1 === ch');
 function visit142_562_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['562'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['559'][1].init(41, 12, '\'\' === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['559'][1].init(42, 12, '\'\' === quote');
 function visit141_559_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['559'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['558'][1].init(45, 10, 'quoteSmart');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['558'][1].init(46, 10, 'quoteSmart');
 function visit140_558_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['558'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][3].init(298, 12, 'ch !== quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][3].init(302, 12, 'ch !== quote');
 function visit139_550_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][2].init(281, 11, 'ch !== \'\\\\\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][2].init(285, 11, 'ch !== \'\\\\\'');
 function visit138_550_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][1].init(281, 30, '(ch !== \'\\\\\') && (ch !== quote)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][1].init(285, 30, '(ch !== \'\\\\\') && (ch !== quote)');
 function visit137_550_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['550'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['548'][1].init(150, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['548'][1].init(152, 17, 'NEGATIVE_1 === ch');
 function visit136_548_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['548'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['546'][1].init(41, 12, '\'\' !== quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['546'][1].init(42, 12, '\'\' !== quote');
 function visit135_546_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['546'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['545'][1].init(46, 10, 'quoteSmart');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['545'][1].init(47, 10, 'quoteSmart');
 function visit134_545_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['545'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['539'][1].init(180, 13, '\'"\' === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['539'][1].init(183, 13, '\'"\' === quote');
 function visit133_539_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['539'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['537'][1].init(41, 12, '\'\' === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['537'][1].init(42, 12, '\'\' === quote');
 function visit132_537_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['537'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['536'][1].init(45, 22, 'quoteSmart && !comment');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['536'][1].init(46, 22, 'quoteSmart && !comment');
 function visit131_536_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['536'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['530'][1].init(181, 14, '\'\\\'\' === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['530'][1].init(184, 14, '\'\\\'\' === quote');
 function visit130_530_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['530'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['528'][1].init(41, 12, '\'\' === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['528'][1].init(42, 12, '\'\' === quote');
 function visit129_528_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['528'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['527'][1].init(46, 22, 'quoteSmart && !comment');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['527'][1].init(47, 22, 'quoteSmart && !comment');
 function visit128_527_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['527'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['479'][1].init(80, 10, '\'?\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['479'][1].init(82, 10, '\'?\' === ch');
 function visit127_479_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['479'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][2].init(246, 10, '\'!\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][2].init(252, 10, '\'!\' === ch');
 function visit126_477_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][1].init(45, 91, '\'!\' === ch || \'?\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][1].init(46, 93, '\'!\' === ch || \'?\' === ch');
 function visit125_477_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['476'][1].init(37, 137, 'Utils.isLetter(ch) || \'!\' === ch || \'?\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['476'][1].init(38, 140, 'Utils.isLetter(ch) || \'!\' === ch || \'?\' === ch');
 function visit124_476_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['476'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['475'][2].init(159, 10, '\'/\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['475'][2].init(163, 10, '\'/\' === ch');
 function visit123_475_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['475'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['475'][1].init(159, 175, '\'/\' === ch || Utils.isLetter(ch) || \'!\' === ch || \'?\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['475'][1].init(163, 179, '\'/\' === ch || Utils.isLetter(ch) || \'!\' === ch || \'?\' === ch');
 function visit122_475_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['475'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['473'][1].init(72, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['473'][1].init(74, 17, 'NEGATIVE_1 === ch');
 function visit121_473_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['473'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][3].init(2163, 10, '\'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][3].init(2204, 10, '\'<\' === ch');
 function visit120_471_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][2].init(2146, 11, '0 === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][2].init(2187, 11, '0 === quote');
 function visit119_471_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][1].init(2146, 28, '(0 === quote) && (\'<\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][1].init(2187, 28, '(0 === quote) && (\'<\' === ch)');
 function visit118_471_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['471'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][3].init(442, 10, '\'/\' !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][3].init(451, 10, '\'/\' !== ch');
 function visit117_467_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][2].init(419, 17, 'NEGATIVE_1 !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][2].init(428, 17, 'NEGATIVE_1 !== ch');
 function visit116_467_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][1].init(392, 34, '(NEGATIVE_1 !== ch) && (\'/\' !== ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][1].init(400, 34, '(NEGATIVE_1 !== ch) && (\'/\' !== ch)');
 function visit115_467_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['467'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['464'][1].init(255, 10, 'ch === \'*\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['464'][1].init(260, 10, 'ch === \'*\'');
 function visit114_464_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['464'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][3].init(155, 10, '\'*\' !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][3].init(158, 10, '\'*\' !== ch');
 function visit113_462_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][2].init(132, 17, 'NEGATIVE_1 !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][2].init(135, 17, 'NEGATIVE_1 !== ch');
 function visit112_462_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][1].init(101, 34, '(NEGATIVE_1 !== ch) && (\'*\' !== ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][1].init(103, 34, '(NEGATIVE_1 !== ch) && (\'*\' !== ch)');
 function visit111_462_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['462'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][1].init(538, 10, '\'*\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][1].init(549, 10, '\'*\' === ch');
 function visit110_458_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][3].init(143, 11, '\'\\n\' !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][3].init(146, 11, '\'\\n\' !== ch');
 function visit109_457_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][2].init(120, 17, 'NEGATIVE_1 !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][2].init(123, 17, 'NEGATIVE_1 !== ch');
 function visit108_457_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][1].init(93, 35, '(NEGATIVE_1 !== ch) && (\'\\n\' !== ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][1].init(95, 35, '(NEGATIVE_1 !== ch) && (\'\\n\' !== ch)');
 function visit107_457_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['457'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['454'][1].init(336, 10, '\'/\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['454'][1].init(343, 10, '\'/\' === ch');
 function visit106_454_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['454'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][1].init(249, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][1].init(254, 17, 'NEGATIVE_1 === ch');
 function visit105_452_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][4].init(1000, 10, 'ch === \'/\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][4].init(1017, 10, 'ch === \'/\'');
 function visit104_447_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][3].init(983, 11, '0 === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][3].init(1000, 11, '0 === quote');
 function visit103_447_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][2].init(983, 28, '(0 === quote) && (ch === \'/\')');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][2].init(1000, 28, '(0 === quote) && (ch === \'/\')');
 function visit102_447_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][1].init(968, 43, 'quoteSmart && (0 === quote) && (ch === \'/\')');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][1].init(985, 43, 'quoteSmart && (0 === quote) && (ch === \'/\')');
 function visit101_447_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['447'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['445'][2].init(871, 12, 'ch === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['445'][2].init(886, 12, 'ch === quote');
 function visit100_445_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['445'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['445'][1].init(856, 28, 'quoteSmart && (ch === quote)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['445'][1].init(871, 28, 'quoteSmart && (ch === quote)');
 function visit99_445_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['445'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['440'][1].init(60, 12, 'ch !== quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['440'][1].init(61, 12, 'ch !== quote');
 function visit98_440_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['440'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][4].init(173, 11, '\'\\\\\' !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][4].init(176, 11, '\'\\\\\' !== ch');
 function visit97_439_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][3].init(173, 74, '(\'\\\\\' !== ch) && (ch !== quote)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][3].init(176, 75, '(\'\\\\\' !== ch) && (ch !== quote)');
 function visit96_439_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][2].init(150, 17, 'NEGATIVE_1 !== ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][2].init(153, 17, 'NEGATIVE_1 !== ch');
 function visit95_439_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][1].init(150, 97, '(NEGATIVE_1 !== ch) && (\'\\\\\' !== ch) && (ch !== quote)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][1].init(153, 98, '(NEGATIVE_1 !== ch) && (\'\\\\\' !== ch) && (ch !== quote)');
 function visit94_439_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['439'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][4].init(323, 11, '\'\\\\\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][4].init(329, 11, '\'\\\\\' === ch');
 function visit93_436_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][3].init(306, 11, '0 !== quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][3].init(312, 11, '0 !== quote');
 function visit92_436_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][2].init(306, 29, '(0 !== quote) && (\'\\\\\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][2].init(312, 29, '(0 !== quote) && (\'\\\\\' === ch)');
 function visit91_436_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][1].init(291, 44, 'quoteSmart && (0 !== quote) && (\'\\\\\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][1].init(297, 44, 'quoteSmart && (0 !== quote) && (\'\\\\\' === ch)');
 function visit90_436_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['436'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][6].init(192, 11, '\'\\\'\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][6].init(196, 11, '\'\\\'\' === ch');
 function visit89_434_6(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][6].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][5].init(176, 10, '\'"\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][5].init(180, 10, '\'"\' === ch');
 function visit88_434_5(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][4].init(176, 28, '(\'"\' === ch) || (\'\\\'\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][4].init(180, 28, '(\'"\' === ch) || (\'\\\'\' === ch)');
 function visit87_434_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][3].init(158, 11, '0 === quote');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][3].init(162, 11, '0 === quote');
 function visit86_434_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][2].init(158, 47, '(0 === quote) && ((\'"\' === ch) || (\'\\\'\' === ch))');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][2].init(162, 47, '(0 === quote) && ((\'"\' === ch) || (\'\\\'\' === ch))');
 function visit85_434_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][1].init(143, 62, 'quoteSmart && (0 === quote) && ((\'"\' === ch) || (\'\\\'\' === ch))');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][1].init(147, 62, 'quoteSmart && (0 === quote) && ((\'"\' === ch) || (\'\\\'\' === ch))');
 function visit84_434_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['434'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['432'][1].init(64, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['432'][1].init(66, 17, 'NEGATIVE_1 === ch');
 function visit83_432_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['432'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['402'][1].init(168, 23, '!Utils.isWhitespace(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['402'][1].init(171, 23, '!Utils.isWhitespace(ch)');
 function visit82_402_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['402'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['400'][1].init(69, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['400'][1].init(70, 10, '\'>\' === ch');
 function visit81_400_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['393'][1].init(80, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['393'][1].init(81, 10, '\'-\' === ch');
 function visit80_393_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['393'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['388'][1].init(176, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['388'][1].init(179, 17, 'NEGATIVE_1 === ch');
 function visit79_388_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['388'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['386'][1].init(79, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['386'][1].init(80, 10, '\'-\' === ch');
 function visit78_386_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['386'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['375'][1].init(280, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['375'][1].init(285, 10, '\'>\' === ch');
 function visit77_375_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['375'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['373'][1].init(166, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['373'][1].init(169, 17, 'NEGATIVE_1 === ch');
 function visit76_373_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['373'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['370'][1].init(77, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['370'][1].init(78, 10, '\'-\' === ch');
 function visit75_370_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['370'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['363'][1].init(175, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['363'][1].init(178, 10, '\'-\' === ch');
 function visit74_363_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['363'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['361'][1].init(76, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['361'][1].init(77, 10, '\'>\' === ch');
 function visit73_361_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['361'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['356'][1].init(64, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['356'][1].init(66, 17, 'NEGATIVE_1 === ch');
 function visit72_356_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['356'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['315'][1].init(723, 23, '!Utils.isWhitespace(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['315'][1].init(736, 23, '!Utils.isWhitespace(ch)');
 function visit71_315_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['310'][1].init(471, 10, '\'=\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['310'][1].init(479, 10, '\'=\' === ch');
 function visit70_310_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['310'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['304'][1].init(142, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['304'][1].init(144, 17, 'NEGATIVE_1 === ch');
 function visit69_304_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['304'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['293'][1].init(255, 10, '\'"\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['293'][1].init(259, 10, '\'"\' === ch');
 function visit68_293_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['293'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['290'][1].init(75, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['290'][1].init(76, 17, 'NEGATIVE_1 === ch');
 function visit67_290_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['283'][1].init(255, 11, '\'\\\'\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['283'][1].init(259, 11, '\'\\\'\' === ch');
 function visit66_283_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['280'][1].init(75, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['280'][1].init(76, 17, 'NEGATIVE_1 === ch');
 function visit65_280_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['280'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['273'][1].init(246, 22, 'Utils.isWhitespace(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['273'][1].init(250, 22, 'Utils.isWhitespace(ch)');
 function visit64_273_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['273'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][3].init(91, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][3].init(92, 10, '\'>\' === ch');
 function visit63_270_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][2].init(68, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][2].init(69, 17, 'NEGATIVE_1 === ch');
 function visit62_270_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][1].init(68, 34, '(NEGATIVE_1 === ch) || (\'>\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][1].init(69, 34, '(NEGATIVE_1 === ch) || (\'>\' === ch)');
 function visit61_270_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['263'][1].init(526, 23, '!Utils.isWhitespace(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['263'][1].init(536, 23, '!Utils.isWhitespace(ch)');
 function visit60_263_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['263'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['260'][1].init(380, 10, '\'"\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['260'][1].init(387, 10, '\'"\' === ch');
 function visit59_260_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['260'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['257'][1].init(233, 11, '\'\\\'\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['257'][1].init(237, 11, '\'\\\'\' === ch');
 function visit58_257_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['257'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][3].init(73, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][3].init(74, 10, '\'>\' === ch');
 function visit57_254_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][2].init(50, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][2].init(51, 17, 'NEGATIVE_1 === ch');
 function visit56_254_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][1].init(50, 34, '(NEGATIVE_1 === ch) || (\'>\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][1].init(51, 34, '(NEGATIVE_1 === ch) || (\'>\' === ch)');
 function visit55_254_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['254'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][1].init(933, 10, '\'=\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][1].init(948, 10, '\'=\' === ch');
 function visit54_248_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['243'][1].init(558, 22, 'Utils.isWhitespace(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['243'][1].init(568, 22, 'Utils.isWhitespace(ch)');
 function visit53_243_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['236'][1].init(33, 10, '\'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['236'][1].init(34, 10, '\'<\' === ch');
 function visit52_236_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['236'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][5].init(124, 10, '\'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][5].init(126, 10, '\'<\' === ch');
 function visit51_235_5(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][4].init(108, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][4].init(110, 10, '\'>\' === ch');
 function visit50_235_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][3].init(108, 27, '(\'>\' === ch) || (\'<\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][3].init(110, 27, '(\'>\' === ch) || (\'<\' === ch)');
 function visit49_235_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][2].init(85, 17, 'NEGATIVE_1 === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][2].init(87, 17, 'NEGATIVE_1 === ch');
 function visit48_235_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][1].init(85, 50, '(NEGATIVE_1 === ch) || (\'>\' === ch) || (\'<\' === ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][1].init(87, 50, '(NEGATIVE_1 === ch) || (\'>\' === ch) || (\'<\' === ch)');
 function visit47_235_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['235'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['226'][2].init(366, 10, 'ch === \'/\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['226'][2].init(373, 10, 'ch === \'/\'');
 function visit46_226_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['226'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['226'][1].init(366, 53, 'ch === \'/\' || Utils.isValidAttributeNameStartChar(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['226'][1].init(373, 53, 'ch === \'/\' || Utils.isValidAttributeNameStartChar(ch)');
 function visit45_226_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['226'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['223'][2].init(79, 10, 'ch === \'/\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['223'][2].init(81, 10, 'ch === \'/\'');
 function visit44_223_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['223'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['223'][1].init(79, 53, 'ch === \'/\' || Utils.isValidAttributeNameStartChar(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['223'][1].init(81, 53, 'ch === \'/\' || Utils.isValidAttributeNameStartChar(ch)');
 function visit43_223_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['221'][1].init(88, 18, '!attributes.length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['221'][1].init(90, 18, '!attributes.length');
 function visit42_221_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['213'][1].init(33, 10, '\'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['213'][1].init(34, 10, '\'<\' === ch');
 function visit41_213_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['213'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][5].init(114, 10, '\'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][5].init(116, 10, '\'<\' === ch');
 function visit40_212_5(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][4].init(100, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][4].init(102, 10, '\'>\' === ch');
 function visit39_212_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][3].init(100, 24, '\'>\' === ch || \'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][3].init(102, 24, '\'>\' === ch || \'<\' === ch');
 function visit38_212_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][2].init(87, 9, 'ch === -1');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][2].init(89, 9, 'ch === -1');
 function visit37_212_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][1].init(87, 37, 'ch === -1 || \'>\' === ch || \'<\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][1].init(89, 37, 'ch === -1 || \'>\' === ch || \'<\' === ch');
 function visit36_212_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['212'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][3].init(35, 9, 'ch === -1');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][3].init(36, 9, 'ch === -1');
 function visit35_191_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][2].init(35, 30, 'ch === -1 && attributes.length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][2].init(36, 30, 'ch === -1 && attributes.length');
 function visit34_191_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][1].init(25, 40, 'strict && ch === -1 && attributes.length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][1].init(26, 40, 'strict && ch === -1 && attributes.length');
 function visit33_191_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['189'][1].init(329, 6, 'strict');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['189'][1].init(340, 6, 'strict');
 function visit32_189_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['141'][1].init(91, 10, '2 > length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['141'][1].init(92, 10, '2 > length');
 function visit31_141_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['140'][1].init(96, 12, '0 !== length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['140'][1].init(100, 12, '0 !== length');
 function visit30_140_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['130'][1].init(77, 5, 'l > 0');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['130'][1].init(80, 5, 'l > 0');
 function visit29_130_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['120'][1].init(77, 5, 'l > 0');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['120'][1].init(80, 5, 'l > 0');
 function visit28_120_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['105'][1].init(91, 10, '2 > length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['105'][1].init(92, 10, '2 > length');
 function visit27_105_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['104'][1].init(81, 12, '0 !== length');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['104'][1].init(85, 12, '0 !== length');
 function visit26_104_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['76'][1].init(122, 10, '\'-\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['76'][1].init(124, 10, '\'-\' === ch');
 function visit25_76_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['72'][1].init(33, 10, '\'>\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['72'][1].init(34, 10, '\'>\' === ch');
 function visit24_72_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['69'][1].init(80, 9, 'ch === -1');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['69'][1].init(82, 9, 'ch === -1');
 function visit23_69_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][3].init(378, 10, '\'?\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][3].init(385, 10, '\'?\' === ch');
 function visit22_67_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][2].init(364, 10, '\'!\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][2].init(371, 10, '\'!\' === ch');
 function visit21_67_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][1].init(364, 24, '\'!\' === ch || \'?\' === ch');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][1].init(371, 24, '\'!\' === ch || \'?\' === ch');
 function visit20_67_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['64'][2].init(196, 10, 'ch === \'/\'');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['64'][2].init(200, 10, 'ch === \'/\'');
 function visit19_64_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['64'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['64'][1].init(196, 32, 'ch === \'/\' || Utils.isLetter(ch)');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['64'][1].init(200, 32, 'ch === \'/\' || Utils.isLetter(ch)');
 function visit18_64_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['62'][1].init(80, 9, 'ch === -1');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['62'][1].init(82, 9, 'ch === -1');
 function visit17_62_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['28'][1].init(150, 9, 'cfg || {}');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['28'][1].init(155, 9, 'cfg || {}');
 function visit16_28_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['28'][1].ranCondition(result);
   return result;

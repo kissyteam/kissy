@@ -229,13 +229,19 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/iframe-content-tpl.js']) {
   _$jscoverage['/editor/iframe-content-tpl.js'] = {};
   _$jscoverage['/editor/iframe-content-tpl.js'].lineData = [];
-  _$jscoverage['/editor/iframe-content-tpl.js'].lineData[3] = 0;
+  _$jscoverage['/editor/iframe-content-tpl.js'].lineData[4] = 0;
+  _$jscoverage['/editor/iframe-content-tpl.js'].lineData[5] = 0;
 }
 if (! _$jscoverage['/editor/iframe-content-tpl.js'].functionData) {
   _$jscoverage['/editor/iframe-content-tpl.js'].functionData = [];
+  _$jscoverage['/editor/iframe-content-tpl.js'].functionData[0] = 0;
 }
 if (! _$jscoverage['/editor/iframe-content-tpl.js'].branchData) {
   _$jscoverage['/editor/iframe-content-tpl.js'].branchData = {};
 }
-_$jscoverage['/editor/iframe-content-tpl.js'].lineData[3]++;
-KISSY.add('<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');
+_$jscoverage['/editor/iframe-content-tpl.js'].lineData[4]++;
+KISSY.add(function() {
+  _$jscoverage['/editor/iframe-content-tpl.js'].functionData[0]++;
+  _$jscoverage['/editor/iframe-content-tpl.js'].lineData[5]++;
+  return '<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>';
+});

@@ -324,55 +324,55 @@ if (! _$jscoverage['/ie/change.js'].branchData) {
   _$jscoverage['/ie/change.js'].branchData['106'] = [];
   _$jscoverage['/ie/change.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/ie/change.js'].branchData['106'][1].init(167, 140, 'e.isPropagationStopped() || isCheckBoxOrRadio(self)');
+_$jscoverage['/ie/change.js'].branchData['106'][1].init(171, 142, 'e.isPropagationStopped() || isCheckBoxOrRadio(self)');
 function visit13_106_1(result) {
   _$jscoverage['/ie/change.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['92'][1].init(39, 38, 'isFormElement(t) && !t.__changeHandler');
+}_$jscoverage['/ie/change.js'].branchData['92'][1].init(41, 38, 'isFormElement(t) && !t.__changeHandler');
 function visit12_92_1(result) {
   _$jscoverage['/ie/change.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['83'][1].init(83, 14, 'this.__changed');
+}_$jscoverage['/ie/change.js'].branchData['83'][1].init(85, 14, 'this.__changed');
 function visit11_83_1(result) {
   _$jscoverage['/ie/change.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['70'][1].init(78, 18, 'self.__changeTimer');
+}_$jscoverage['/ie/change.js'].branchData['70'][1].init(81, 18, 'self.__changeTimer');
 function visit10_70_1(result) {
   _$jscoverage['/ie/change.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['67'][1].init(69, 42, 'e.originalEvent.propertyName === \'checked\'');
+}_$jscoverage['/ie/change.js'].branchData['67'][1].init(71, 42, 'e.originalEvent.propertyName === \'checked\'');
 function visit9_67_1(result) {
   _$jscoverage['/ie/change.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['56'][1].init(25, 19, 'fel.__changeHandler');
+}_$jscoverage['/ie/change.js'].branchData['56'][1].init(26, 19, 'fel.__changeHandler');
 function visit8_56_1(result) {
   _$jscoverage['/ie/change.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['47'][1].init(21, 23, 'isCheckBoxOrRadio(self)');
+}_$jscoverage['/ie/change.js'].branchData['47'][1].init(22, 23, 'isCheckBoxOrRadio(self)');
 function visit7_47_1(result) {
   _$jscoverage['/ie/change.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['46'][1].init(46, 19, 'isFormElement(self)');
+}_$jscoverage['/ie/change.js'].branchData['46'][1].init(48, 19, 'isFormElement(self)');
 function visit6_46_1(result) {
   _$jscoverage['/ie/change.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['27'][1].init(147, 23, 'isCheckBoxOrRadio(self)');
+}_$jscoverage['/ie/change.js'].branchData['27'][1].init(150, 23, 'isCheckBoxOrRadio(self)');
 function visit5_27_1(result) {
   _$jscoverage['/ie/change.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['24'][1].init(46, 19, 'isFormElement(self)');
+}_$jscoverage['/ie/change.js'].branchData['24'][1].init(48, 19, 'isFormElement(self)');
 function visit4_24_1(result) {
   _$jscoverage['/ie/change.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['18'][3].init(67, 16, 'type === \'radio\'');
+}_$jscoverage['/ie/change.js'].branchData['18'][3].init(69, 16, 'type === \'radio\'');
 function visit3_18_3(result) {
   _$jscoverage['/ie/change.js'].branchData['18'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['18'][2].init(44, 19, 'type === \'checkbox\'');
+}_$jscoverage['/ie/change.js'].branchData['18'][2].init(46, 19, 'type === \'checkbox\'');
 function visit2_18_2(result) {
   _$jscoverage['/ie/change.js'].branchData['18'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['18'][1].init(44, 39, 'type === \'checkbox\' || type === \'radio\'');
+}_$jscoverage['/ie/change.js'].branchData['18'][1].init(46, 39, 'type === \'checkbox\' || type === \'radio\'');
 function visit1_18_1(result) {
   _$jscoverage['/ie/change.js'].branchData['18'][1].ranCondition(result);
   return result;

@@ -284,39 +284,39 @@ if (! _$jscoverage['/ie/submit.js'].branchData) {
   _$jscoverage['/ie/submit.js'].branchData['61'] = [];
   _$jscoverage['/ie/submit.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/ie/submit.js'].branchData['61'][1].init(76, 93, '!e.isPropagationStopped() && !e.synthetic');
+_$jscoverage['/ie/submit.js'].branchData['61'][1].init(78, 95, '!e.isPropagationStopped() && !e.synthetic');
 function visit22_61_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['59'][1].init(38, 170, 'self.parentNode && !e.isPropagationStopped() && !e.synthetic');
+}_$jscoverage['/ie/submit.js'].branchData['59'][1].init(40, 174, 'self.parentNode && !e.isPropagationStopped() && !e.synthetic');
 function visit21_59_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['48'][1].init(163, 25, 'form && !form.__submitFix');
+}_$jscoverage['/ie/submit.js'].branchData['48'][1].init(168, 25, 'form && !form.__submitFix');
 function visit20_48_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['46'][3].init(100, 21, 'nodeName === \'button\'');
+}_$jscoverage['/ie/submit.js'].branchData['46'][3].init(102, 21, 'nodeName === \'button\'');
 function visit19_46_3(result) {
   _$jscoverage['/ie/submit.js'].branchData['46'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['46'][2].init(76, 20, 'nodeName === \'input\'');
+}_$jscoverage['/ie/submit.js'].branchData['46'][2].init(78, 20, 'nodeName === \'input\'');
 function visit18_46_2(result) {
   _$jscoverage['/ie/submit.js'].branchData['46'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['46'][1].init(76, 45, 'nodeName === \'input\' || nodeName === \'button\'');
+}_$jscoverage['/ie/submit.js'].branchData['46'][1].init(78, 45, 'nodeName === \'input\' || nodeName === \'button\'');
 function visit17_46_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['32'][1].init(21, 16, 'form.__submitFix');
+}_$jscoverage['/ie/submit.js'].branchData['32'][1].init(22, 16, 'form.__submitFix');
 function visit16_32_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['27'][1].init(77, 28, 'getNodeName(self) === \'form\'');
+}_$jscoverage['/ie/submit.js'].branchData['27'][1].init(80, 28, 'getNodeName(self) === \'form\'');
 function visit15_27_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/submit.js'].branchData['16'][1].init(77, 28, 'getNodeName(self) === \'form\'');
+}_$jscoverage['/ie/submit.js'].branchData['16'][1].init(80, 28, 'getNodeName(self) === \'form\'');
 function visit14_16_1(result) {
   _$jscoverage['/ie/submit.js'].branchData['16'][1].ranCondition(result);
   return result;

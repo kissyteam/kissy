@@ -275,7 +275,7 @@ if (! _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'] = [];
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1].init(1872, 35, 'commandRet5 && commandRet5.isBuffer');
+_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1].init(1876, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit3_43_1(result) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -325,7 +325,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[35]++;
-  buffer.write('">\n</div>\n');
+  buffer.write('">\r\n</div>\r\n');
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[36]++;
   var option3 = {};
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[37]++;

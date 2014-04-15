@@ -317,31 +317,31 @@ if (! _$jscoverage['/overlay/extension/mask.js'].branchData) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['164'] = [];
   _$jscoverage['/overlay/extension/mask.js'].branchData['164'][1] = new BranchData();
 }
-_$jscoverage['/overlay/extension/mask.js'].branchData['164'][1].init(70, 17, 'mask.closeOnClick');
+_$jscoverage['/overlay/extension/mask.js'].branchData['164'][1].init(72, 17, 'mask.closeOnClick');
 function visit27_164_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['153'][1].init(46, 16, 'self.get(\'mask\')');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['153'][1].init(48, 16, 'self.get(\'mask\')');
 function visit26_153_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['143'][1].init(77, 16, '!isNaN(elZIndex)');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['143'][1].init(79, 16, '!isNaN(elZIndex)');
 function visit25_143_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['116'][1].init(94, 15, 'effect === NONE');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['116'][1].init(100, 15, 'effect === NONE');
 function visit24_116_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['112'][1].init(23, 19, 'mask.effect || NONE');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['112'][1].init(25, 19, 'mask.effect || NONE');
 function visit23_112_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['103'][1].init(121, 5, 'shown');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['103'][1].init(124, 5, 'shown');
 function visit22_103_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].init(70, 11, 'UA.ie === 6');
+}_$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].init(72, 11, 'UA.ie === 6');
 function visit21_9_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].ranCondition(result);
   return result;

@@ -420,79 +420,79 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData['223'] = [];
   _$jscoverage['/dialog.js'].branchData['223'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['223'][1].init(85, 16, 'left.contains(t)');
+_$jscoverage['/dialog.js'].branchData['223'][1].init(87, 16, 'left.contains(t)');
 function visit19_223_1(result) {
   _$jscoverage['/dialog.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['221'][1].init(95, 20, 't.nodeName() === \'a\'');
+}_$jscoverage['/dialog.js'].branchData['221'][1].init(98, 20, 't.nodeName() === \'a\'');
 function visit18_221_1(result) {
   _$jscoverage['/dialog.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['206'][1].init(75, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
+}_$jscoverage['/dialog.js'].branchData['206'][1].init(77, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
 function visit17_206_1(result) {
   _$jscoverage['/dialog.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['190'][1].init(137, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
+}_$jscoverage['/dialog.js'].branchData['190'][1].init(140, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
 function visit16_190_1(result) {
   _$jscoverage['/dialog.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['103'][1].init(140, 9, 'i < n - 1');
+}_$jscoverage['/dialog.js'].branchData['103'][1].init(143, 9, 'i < n - 1');
 function visit15_103_1(result) {
   _$jscoverage['/dialog.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['101'][1].init(29, 15, 'step[i] || step');
+}_$jscoverage['/dialog.js'].branchData['101'][1].init(30, 15, 'step[i] || step');
 function visit14_101_1(result) {
   _$jscoverage['/dialog.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['100'][1].init(46, 5, 'i < n');
+}_$jscoverage['/dialog.js'].branchData['100'][1].init(47, 5, 'i < n');
 function visit13_100_1(result) {
   _$jscoverage['/dialog.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['99'][1].init(239, 7, 'len > 1');
+}_$jscoverage['/dialog.js'].branchData['99'][1].init(246, 7, 'len > 1');
 function visit12_99_1(result) {
   _$jscoverage['/dialog.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['97'][1].init(143, 9, 'len === 1');
+}_$jscoverage['/dialog.js'].branchData['97'][1].init(148, 9, 'len === 1');
 function visit11_97_1(result) {
   _$jscoverage['/dialog.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['94'][1].init(64, 18, 'step === undefined');
+}_$jscoverage['/dialog.js'].branchData['94'][1].init(66, 18, 'step === undefined');
 function visit10_94_1(result) {
   _$jscoverage['/dialog.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['81'][1].init(389, 20, 'document.defaultView');
+}_$jscoverage['/dialog.js'].branchData['81'][1].init(401, 20, 'document.defaultView');
 function visit9_81_1(result) {
   _$jscoverage['/dialog.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['70'][1].init(21, 5, '!frag');
+}_$jscoverage['/dialog.js'].branchData['70'][1].init(22, 5, '!frag');
 function visit8_70_1(result) {
   _$jscoverage['/dialog.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['69'][1].init(55, 17, 'ret === undefined');
+}_$jscoverage['/dialog.js'].branchData['69'][1].init(57, 17, 'ret === undefined');
 function visit7_69_1(result) {
   _$jscoverage['/dialog.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['49'][1].init(347, 8, 'i < step');
+}_$jscoverage['/dialog.js'].branchData['49'][1].init(355, 8, 'i < step');
 function visit6_49_1(result) {
   _$jscoverage['/dialog.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['30'][1].init(24, 18, 'x.indexOf(\'%\') > 0');
+}_$jscoverage['/dialog.js'].branchData['30'][1].init(25, 18, 'x.indexOf(\'%\') > 0');
 function visit5_30_1(result) {
   _$jscoverage['/dialog.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['27'][1].init(542, 38, '/^rgb\\((.*),(.*),(.*)\\)$/i.test(color)');
+}_$jscoverage['/dialog.js'].branchData['27'][1].init(557, 38, '/^rgb\\((.*),(.*),(.*)\\)$/i.test(color)');
 function visit4_27_1(result) {
   _$jscoverage['/dialog.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['22'][1].init(328, 48, '/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color)');
+}_$jscoverage['/dialog.js'].branchData['22'][1].init(338, 48, '/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color)');
 function visit3_22_1(result) {
   _$jscoverage['/dialog.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['17'][1].init(106, 57, '/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color)');
+}_$jscoverage['/dialog.js'].branchData['17'][1].init(111, 57, '/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color)');
 function visit2_17_1(result) {
   _$jscoverage['/dialog.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['13'][1].init(13, 16, 'S.isArray(color)');
+}_$jscoverage['/dialog.js'].branchData['13'][1].init(14, 16, 'S.isArray(color)');
 function visit1_13_1(result) {
   _$jscoverage['/dialog.js'].branchData['13'][1].ranCondition(result);
   return result;

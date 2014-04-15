@@ -276,19 +276,19 @@ if (! _$jscoverage['/justify-right.js'].branchData) {
   _$jscoverage['/justify-right.js'].branchData['50'][1] = new BranchData();
   _$jscoverage['/justify-right.js'].branchData['50'][2] = new BranchData();
 }
-_$jscoverage['/justify-right.js'].branchData['50'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.R');
+_$jscoverage['/justify-right.js'].branchData['50'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.R');
 function visit4_50_2(result) {
   _$jscoverage['/justify-right.js'].branchData['50'][2].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['50'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.R');
+}_$jscoverage['/justify-right.js'].branchData['50'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.R');
 function visit3_50_1(result) {
   _$jscoverage['/justify-right.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['36'][1].init(185, 40, 'editor.queryCommandValue(\'justifyRight\')');
+}_$jscoverage['/justify-right.js'].branchData['36'][1].init(189, 40, 'editor.queryCommandValue(\'justifyRight\')');
 function visit2_36_1(result) {
   _$jscoverage['/justify-right.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['33'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-right.js'].branchData['33'][1].init(34, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_33_1(result) {
   _$jscoverage['/justify-right.js'].branchData['33'][1].ranCondition(result);
   return result;

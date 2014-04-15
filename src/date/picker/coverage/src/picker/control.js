@@ -413,31 +413,31 @@ if (! _$jscoverage['/picker/control.js'].branchData) {
   _$jscoverage['/picker/control.js'].branchData['216'] = [];
   _$jscoverage['/picker/control.js'].branchData['216'][1] = new BranchData();
 }
-_$jscoverage['/picker/control.js'].branchData['216'][1].init(43, 7, 'ctrlKey');
+_$jscoverage['/picker/control.js'].branchData['216'][1].init(44, 7, 'ctrlKey');
 function visit7_216_1(result) {
   _$jscoverage['/picker/control.js'].branchData['216'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['209'][1].init(42, 7, 'ctrlKey');
+}_$jscoverage['/picker/control.js'].branchData['209'][1].init(43, 7, 'ctrlKey');
 function visit6_209_1(result) {
   _$jscoverage['/picker/control.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['182'][1].init(47, 8, '!ctrlKey');
+}_$jscoverage['/picker/control.js'].branchData['182'][1].init(48, 8, '!ctrlKey');
 function visit5_182_1(result) {
   _$jscoverage['/picker/control.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['176'][1].init(293, 17, 'this.get(\'clear\')');
+}_$jscoverage['/picker/control.js'].branchData['176'][1].init(302, 17, 'this.get(\'clear\')');
 function visit4_176_1(result) {
   _$jscoverage['/picker/control.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['137'][1].init(41, 18, '!this.get(\'clear\')');
+}_$jscoverage['/picker/control.js'].branchData['137'][1].init(43, 18, '!this.get(\'clear\')');
 function visit3_137_1(result) {
   _$jscoverage['/picker/control.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['126'][1].init(74, 2, '!v');
+}_$jscoverage['/picker/control.js'].branchData['126'][1].init(77, 2, '!v');
 function visit2_126_1(result) {
   _$jscoverage['/picker/control.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['81'][1].init(263, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
+}_$jscoverage['/picker/control.js'].branchData['81'][1].init(270, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
 function visit1_81_1(result) {
   _$jscoverage['/picker/control.js'].branchData['81'][1].ranCondition(result);
   return result;

@@ -302,35 +302,35 @@ if (! _$jscoverage['/dd/droppable-delegate.js'].branchData) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['92'] = [];
   _$jscoverage['/dd/droppable-delegate.js'].branchData['92'][1] = new BranchData();
 }
-_$jscoverage['/dd/droppable-delegate.js'].branchData['92'][1].init(321, 23, 'lastNode[0] !== node[0]');
+_$jscoverage['/dd/droppable-delegate.js'].branchData['92'][1].init(329, 23, 'lastNode[0] !== node[0]');
 function visit89_92_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['69'][1].init(934, 3, 'ret');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['69'][1].init(963, 3, 'ret');
 function visit88_69_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['61'][1].init(111, 9, 'a < vArea');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['61'][1].init(114, 9, 'a < vArea');
 function visit87_61_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['58'][1].init(274, 24, 'DDM.inRegion(r, pointer)');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['58'][1].init(281, 24, 'DDM.inRegion(r, pointer)');
 function visit86_58_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['54'][3].init(129, 20, 'domNode === dragNode');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['54'][3].init(132, 20, 'domNode === dragNode');
 function visit85_54_3(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['54'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['54'][2].init(104, 21, 'domNode === proxyNode');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['54'][2].init(107, 21, 'domNode === proxyNode');
 function visit84_54_2(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['54'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['54'][1].init(104, 45, 'domNode === proxyNode || domNode === dragNode');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['54'][1].init(107, 45, 'domNode === proxyNode || domNode === dragNode');
 function visit83_54_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['50'][1].init(275, 8, 'allNodes');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['50'][1].init(285, 8, 'allNodes');
 function visit82_50_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['50'][1].ranCondition(result);
   return result;

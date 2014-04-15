@@ -257,15 +257,15 @@ if (! _$jscoverage['/tree/control.js'].branchData) {
   _$jscoverage['/tree/control.js'].branchData['35'] = [];
   _$jscoverage['/tree/control.js'].branchData['35'][1] = new BranchData();
 }
-_$jscoverage['/tree/control.js'].branchData['35'][1].init(126, 30, 'v && !self.get(\'selectedItem\')');
+_$jscoverage['/tree/control.js'].branchData['35'][1].init(131, 30, 'v && !self.get(\'selectedItem\')');
 function visit20_35_1(result) {
   _$jscoverage['/tree/control.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/control.js'].branchData['27'][1].init(164, 43, 'current && current.handleKeyDownInternal(e)');
+}_$jscoverage['/tree/control.js'].branchData['27'][1].init(169, 43, 'current && current.handleKeyDownInternal(e)');
 function visit19_27_1(result) {
   _$jscoverage['/tree/control.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/control.js'].branchData['24'][1].init(69, 16, 'current === this');
+}_$jscoverage['/tree/control.js'].branchData['24'][1].init(71, 16, 'current === this');
 function visit18_24_1(result) {
   _$jscoverage['/tree/control.js'].branchData['24'][1].ranCondition(result);
   return result;

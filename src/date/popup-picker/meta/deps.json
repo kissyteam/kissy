@@ -1,3 +1,3 @@
 {
-    "date/popup-picker": ["date/picker-xtpl", "date/picker", "component/extension/shim", "component/extension/align"]
+ "date/popup-picker": ["date/picker-xtpl", "date/picker", "component/extension/shim", "component/extension/align"] 
 }

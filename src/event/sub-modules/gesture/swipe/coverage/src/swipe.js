@@ -328,75 +328,75 @@ if (! _$jscoverage['/swipe.js'].branchData) {
   _$jscoverage['/swipe.js'].branchData['75'] = [];
   _$jscoverage['/swipe.js'].branchData['75'][1] = new BranchData();
 }
-_$jscoverage['/swipe.js'].branchData['75'][1].init(1573, 28, 'direction && !self.isStarted');
+_$jscoverage['/swipe.js'].branchData['75'][1].init(1630, 28, 'direction && !self.isStarted');
 function visit18_75_1(result) {
   _$jscoverage['/swipe.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['73'][1].init(1518, 4, '!ing');
+}_$jscoverage['/swipe.js'].branchData['73'][1].init(1573, 4, '!ing');
 function visit17_73_1(result) {
   _$jscoverage['/swipe.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['65'][1].init(25, 10, 'deltaY < 0');
+}_$jscoverage['/swipe.js'].branchData['65'][1].init(26, 10, 'deltaY < 0');
 function visit16_65_1(result) {
   _$jscoverage['/swipe.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['64'][1].init(1328, 15, 'self.isVertical');
+}_$jscoverage['/swipe.js'].branchData['64'][1].init(1374, 15, 'self.isVertical');
 function visit15_64_1(result) {
   _$jscoverage['/swipe.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['62'][1].init(25, 10, 'deltaX < 0');
+}_$jscoverage['/swipe.js'].branchData['62'][1].init(26, 10, 'deltaX < 0');
 function visit14_62_1(result) {
   _$jscoverage['/swipe.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['61'][1].init(1198, 17, 'self.isHorizontal');
+}_$jscoverage['/swipe.js'].branchData['61'][1].init(1241, 17, 'self.isHorizontal');
 function visit13_61_1(result) {
   _$jscoverage['/swipe.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['56'][2].init(153, 24, 'absDeltaX < MIN_DISTANCE');
+}_$jscoverage['/swipe.js'].branchData['56'][2].init(158, 24, 'absDeltaX < MIN_DISTANCE');
 function visit12_56_2(result) {
   _$jscoverage['/swipe.js'].branchData['56'][2].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['56'][1].init(132, 45, 'self.isHorizontal && absDeltaX < MIN_DISTANCE');
+}_$jscoverage['/swipe.js'].branchData['56'][1].init(137, 45, 'self.isHorizontal && absDeltaX < MIN_DISTANCE');
 function visit11_56_1(result) {
   _$jscoverage['/swipe.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['52'][2].init(36, 24, 'absDeltaY < MIN_DISTANCE');
+}_$jscoverage['/swipe.js'].branchData['52'][2].init(37, 24, 'absDeltaY < MIN_DISTANCE');
 function visit10_52_2(result) {
   _$jscoverage['/swipe.js'].branchData['52'][2].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['52'][1].init(17, 43, 'self.isVertical && absDeltaY < MIN_DISTANCE');
+}_$jscoverage['/swipe.js'].branchData['52'][1].init(18, 43, 'self.isVertical && absDeltaY < MIN_DISTANCE');
 function visit9_52_1(result) {
   _$jscoverage['/swipe.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['45'][1].init(21, 21, 'absDeltaY > absDeltaX');
+}_$jscoverage['/swipe.js'].branchData['45'][1].init(22, 21, 'absDeltaY > absDeltaX');
 function visit8_45_1(result) {
   _$jscoverage['/swipe.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['44'][1].init(17, 36, 'self.isVertical && self.isHorizontal');
+}_$jscoverage['/swipe.js'].branchData['44'][1].init(18, 36, 'self.isVertical && self.isHorizontal');
 function visit7_44_1(result) {
   _$jscoverage['/swipe.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['43'][1].init(676, 3, 'ing');
+}_$jscoverage['/swipe.js'].branchData['43'][1].init(701, 3, 'ing');
 function visit6_43_1(result) {
   _$jscoverage['/swipe.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['39'][2].init(592, 22, 'absDeltaY > MAX_OFFSET');
+}_$jscoverage['/swipe.js'].branchData['39'][2].init(613, 22, 'absDeltaY > MAX_OFFSET');
 function visit5_39_2(result) {
   _$jscoverage['/swipe.js'].branchData['39'][2].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['39'][1].init(571, 43, 'self.isHorizontal && absDeltaY > MAX_OFFSET');
+}_$jscoverage['/swipe.js'].branchData['39'][1].init(592, 43, 'self.isHorizontal && absDeltaY > MAX_OFFSET');
 function visit4_39_1(result) {
   _$jscoverage['/swipe.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['35'][2].init(489, 22, 'absDeltaX > MAX_OFFSET');
+}_$jscoverage['/swipe.js'].branchData['35'][2].init(506, 22, 'absDeltaX > MAX_OFFSET');
 function visit3_35_2(result) {
   _$jscoverage['/swipe.js'].branchData['35'][2].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['35'][1].init(470, 41, 'self.isVertical && absDeltaX > MAX_OFFSET');
+}_$jscoverage['/swipe.js'].branchData['35'][1].init(487, 41, 'self.isVertical && absDeltaX > MAX_OFFSET');
 function visit2_35_1(result) {
   _$jscoverage['/swipe.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swipe.js'].branchData['31'][1].init(381, 36, 'time - self.startTime > MAX_DURATION');
+}_$jscoverage['/swipe.js'].branchData['31'][1].init(394, 36, 'time - self.startTime > MAX_DURATION');
 function visit1_31_1(result) {
   _$jscoverage['/swipe.js'].branchData['31'][1].ranCondition(result);
   return result;

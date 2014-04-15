@@ -29,7 +29,7 @@ KISSY.add(function (S, require, exports, module) {
             option0.params = params1;
             option0.fn = function (scope, buffer) {
 
-                buffer.write('\n<tr role="row">\n    ');
+                buffer.write('\r\n<tr role="row">\r\n    ');
                 var option3 = {
                     escape: 1
                 };
@@ -40,10 +40,10 @@ KISSY.add(function (S, require, exports, module) {
                 option3.params = params4;
                 option3.fn = function (scope, buffer) {
 
-                    buffer.write('\n    <td role="gridcell"\n        title="');
+                    buffer.write('\r\n    <td role="gridcell"\r\n        title="');
                     var id7 = scope.resolve(["title"]);
                     buffer.write(id7, true);
-                    buffer.write('"\n        class="');
+                    buffer.write('"\r\n        class="');
                     var option8 = {
                         escape: 1
                     };
@@ -56,7 +56,7 @@ KISSY.add(function (S, require, exports, module) {
                         commandRet10 = undefined;
                     }
                     buffer.write(commandRet10, true);
-                    buffer.write('\n        ');
+                    buffer.write('\r\n        ');
                     var option11 = {
                         escape: 1
                     };
@@ -69,7 +69,7 @@ KISSY.add(function (S, require, exports, module) {
                     option11.params = params12;
                     option11.fn = function (scope, buffer) {
 
-                        buffer.write('\n        ');
+                        buffer.write('\r\n        ');
                         var option16 = {
                             escape: 1
                         };
@@ -82,12 +82,12 @@ KISSY.add(function (S, require, exports, module) {
                             commandRet18 = undefined;
                         }
                         buffer.write(commandRet18, true);
-                        buffer.write('\n        ');
+                        buffer.write('\r\n        ');
 
                         return buffer;
                     };
                     buffer = ifCommand.call(engine, scope, option11, buffer, 7, payload);
-                    buffer.write('\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="');
+                    buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                     var option19 = {
                         escape: 1
                     };
@@ -100,15 +100,15 @@ KISSY.add(function (S, require, exports, module) {
                         commandRet21 = undefined;
                     }
                     buffer.write(commandRet21, true);
-                    buffer.write('">\n            ');
+                    buffer.write('">\r\n            ');
                     var id22 = scope.resolve(["content"]);
                     buffer.write(id22, true);
-                    buffer.write('\n        </a>\n    </td>\n    ');
+                    buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
 
                     return buffer;
                 };
                 buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
-                buffer.write('\n</tr>\n');
+                buffer.write('\r\n</tr>\r\n');
 
                 return buffer;
             };

@@ -5,7 +5,7 @@ function log(str) {
 }
 
 self.onmessage = function (e) {
-    importScripts('http://' + e.data.host + '/kissy/build/seed.js');
+    importScripts('http://' + e.data.host + '/kissy/build/seed-debug.js');
     KISSY.config('base', 'http://' + e.data.host + '/kissy/build/');
     //KISSY.config('combine',true);
     KISSY.config('loadModsFn', function (rs, config) {

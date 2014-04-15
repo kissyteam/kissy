@@ -35,7 +35,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet4 = undefined;
             }
             buffer.write(commandRet4, true);
-            buffer.write('">\n    <a href="javascript:void(\'up\')">up</a>\n</div>\n<div class="');
+            buffer.write('">\r\n    <a href="javascript:void(\'up\')">up</a>\r\n</div>\r\n<div class="');
             var option5 = {
                 escape: 1
             };
@@ -51,7 +51,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet9 = undefined;
             }
             buffer.write(commandRet9, true);
-            buffer.write('">\n    <a href="javascript:void(\'down\')">down</a>\n</div>\n<div class="');
+            buffer.write('">\r\n    <a href="javascript:void(\'down\')">down</a>\r\n</div>\r\n<div class="');
             var option10 = {
                 escape: 1
             };
@@ -67,7 +67,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet14 = undefined;
             }
             buffer.write(commandRet14, true);
-            buffer.write('">\n<div class="');
+            buffer.write('">\r\n<div class="');
             var option15 = {
                 escape: 1
             };
@@ -83,7 +83,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet19 = undefined;
             }
             buffer.write(commandRet19, true);
-            buffer.write('">\n<div class="');
+            buffer.write('">\r\n<div class="');
             var option20 = {
                 escape: 1
             };
@@ -99,7 +99,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet24 = undefined;
             }
             buffer.write(commandRet24, true);
-            buffer.write('">\n</div>\n<div class="');
+            buffer.write('">\r\n</div>\r\n<div class="');
             var option25 = {
                 escape: 1
             };
@@ -115,7 +115,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet29 = undefined;
             }
             buffer.write(commandRet29, true);
-            buffer.write('">\n</div>\n<div class="');
+            buffer.write('">\r\n</div>\r\n<div class="');
             var option30 = {
                 escape: 1
             };
@@ -131,7 +131,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet34 = undefined;
             }
             buffer.write(commandRet34, true);
-            buffer.write('">\n</div>\n</div>\n</div>');
+            buffer.write('">\r\n</div>\r\n</div>\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

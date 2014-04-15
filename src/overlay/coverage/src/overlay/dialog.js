@@ -329,47 +329,47 @@ if (! _$jscoverage['/overlay/dialog.js'].branchData) {
   _$jscoverage['/overlay/dialog.js'].branchData['304'] = [];
   _$jscoverage['/overlay/dialog.js'].branchData['304'][1] = new BranchData();
 }
-_$jscoverage['/overlay/dialog.js'].branchData['304'][1].init(65, 38, 'node.equals($el) || $el.contains(node)');
+_$jscoverage['/overlay/dialog.js'].branchData['304'][1].init(67, 38, 'node.equals($el) || $el.contains(node)');
 function visit18_304_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['304'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['298'][1].init(921, 41, 'node.equals(lastFocusItem) && !e.shiftKey');
+}_$jscoverage['/overlay/dialog.js'].branchData['298'][1].init(945, 41, 'node.equals(lastFocusItem) && !e.shiftKey');
 function visit17_298_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['298'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['295'][1].init(740, 30, 'node.equals($el) && e.shiftKey');
+}_$jscoverage['/overlay/dialog.js'].branchData['295'][1].init(761, 30, 'node.equals($el) && e.shiftKey');
 function visit16_295_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['278'][1].init(72, 19, 'keyCode !== KEY_TAB');
+}_$jscoverage['/overlay/dialog.js'].branchData['278'][1].init(76, 19, 'keyCode !== KEY_TAB');
 function visit15_278_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['278'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['76'][1].init(25, 17, 'self.__lastActive');
+}_$jscoverage['/overlay/dialog.js'].branchData['76'][1].init(26, 17, 'self.__lastActive');
 function visit14_76_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['65'][1].init(110, 1, 'v');
+}_$jscoverage['/overlay/dialog.js'].branchData['65'][1].init(114, 1, 'v');
 function visit13_65_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['51'][3].init(23, 44, 'e.target.nodeName.toLowerCase() === \'select\'');
+}_$jscoverage['/overlay/dialog.js'].branchData['51'][3].init(24, 44, 'e.target.nodeName.toLowerCase() === \'select\'');
 function visit12_51_3(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][3].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['51'][2].init(23, 66, 'e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled');
+}_$jscoverage['/overlay/dialog.js'].branchData['51'][2].init(24, 66, 'e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled');
 function visit11_51_2(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][2].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['51'][1].init(21, 69, '!(e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled)');
+}_$jscoverage['/overlay/dialog.js'].branchData['51'][1].init(22, 69, '!(e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled)');
 function visit10_51_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['50'][1].init(44, 30, 'e.keyCode === Node.KeyCode.ESC');
+}_$jscoverage['/overlay/dialog.js'].branchData['50'][1].init(45, 30, 'e.keyCode === Node.KeyCode.ESC');
 function visit9_50_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['49'][1].init(17, 75, 'this.get(\'escapeToClose\') && e.keyCode === Node.KeyCode.ESC');
+}_$jscoverage['/overlay/dialog.js'].branchData['49'][1].init(18, 76, 'this.get(\'escapeToClose\') && e.keyCode === Node.KeyCode.ESC');
 function visit8_49_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['49'][1].ranCondition(result);
   return result;

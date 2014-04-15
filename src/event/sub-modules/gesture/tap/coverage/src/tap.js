@@ -343,63 +343,63 @@ if (! _$jscoverage['/tap.js'].branchData) {
   _$jscoverage['/tap.js'].branchData['158'] = [];
   _$jscoverage['/tap.js'].branchData['158'][1] = new BranchData();
 }
-_$jscoverage['/tap.js'].branchData['158'][1].init(2350, 27, 'duration > SINGLE_TAP_DELAY');
+_$jscoverage['/tap.js'].branchData['158'][1].init(2423, 27, 'duration > SINGLE_TAP_DELAY');
 function visit15_158_1(result) {
   _$jscoverage['/tap.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['140'][1].init(155, 27, 'duration < SINGLE_TAP_DELAY');
+}_$jscoverage['/tap.js'].branchData['140'][1].init(159, 27, 'duration < SINGLE_TAP_DELAY');
 function visit14_140_1(result) {
   _$jscoverage['/tap.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['136'][1].init(1501, 11, 'lastEndTime');
+}_$jscoverage['/tap.js'].branchData['136'][1].init(1552, 11, 'lastEndTime');
 function visit13_136_1(result) {
   _$jscoverage['/tap.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['123'][1].init(33, 30, 'target.ownerDocument || target');
+}_$jscoverage['/tap.js'].branchData['123'][1].init(34, 30, 'target.ownerDocument || target');
 function visit12_123_1(result) {
   _$jscoverage['/tap.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['120'][1].init(21, 6, 'UA.ios');
+}_$jscoverage['/tap.js'].branchData['120'][1].init(22, 6, 'UA.ios');
 function visit11_120_1(result) {
   _$jscoverage['/tap.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['119'][1].init(911, 45, 'eventObject.isDefaultPrevented() && UA.mobile');
+}_$jscoverage['/tap.js'].branchData['119'][1].init(945, 45, 'eventObject.isDefaultPrevented() && UA.mobile');
 function visit10_119_1(result) {
   _$jscoverage['/tap.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['96'][1].init(202, 23, '!(lastXY = self.lastXY)');
+}_$jscoverage['/tap.js'].branchData['96'][1].init(213, 23, '!(lastXY = self.lastXY)');
 function visit9_96_1(result) {
   _$jscoverage['/tap.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['91'][1].init(103, 11, 'moreTouches');
+}_$jscoverage['/tap.js'].branchData['91'][1].init(109, 11, 'moreTouches');
 function visit8_91_1(result) {
   _$jscoverage['/tap.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['78'][1].init(87, 68, 'Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY');
+}_$jscoverage['/tap.js'].branchData['78'][1].init(88, 68, 'Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY');
 function visit7_78_1(result) {
   _$jscoverage['/tap.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['77'][2].init(420, 68, 'Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY');
+}_$jscoverage['/tap.js'].branchData['77'][2].init(431, 68, 'Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY');
 function visit6_77_2(result) {
   _$jscoverage['/tap.js'].branchData['77'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['77'][1].init(32, 156, 'Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY');
+}_$jscoverage['/tap.js'].branchData['77'][1].init(33, 157, 'Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY');
 function visit5_77_1(result) {
   _$jscoverage['/tap.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['76'][1].init(385, 189, '!currentTouch || Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY');
+}_$jscoverage['/tap.js'].branchData['76'][1].init(395, 191, '!currentTouch || Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY');
 function visit4_76_1(result) {
   _$jscoverage['/tap.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['69'][1].init(70, 23, '!(lastXY = self.lastXY)');
+}_$jscoverage['/tap.js'].branchData['69'][1].init(73, 23, '!(lastXY = self.lastXY)');
 function visit3_69_1(result) {
   _$jscoverage['/tap.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['31'][1].init(142, 17, 'self.tapHoldTimer');
+}_$jscoverage['/tap.js'].branchData['31'][1].init(147, 17, 'self.tapHoldTimer');
 function visit2_31_1(result) {
   _$jscoverage['/tap.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['27'][1].init(13, 19, 'self.singleTapTimer');
+}_$jscoverage['/tap.js'].branchData['27'][1].init(14, 19, 'self.singleTapTimer');
 function visit1_27_1(result) {
   _$jscoverage['/tap.js'].branchData['27'][1].ranCondition(result);
   return result;

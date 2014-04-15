@@ -261,19 +261,19 @@ if (! _$jscoverage['/html-parser/nodes/cdata.js'].branchData) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'] = [];
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1].init(25, 12, 'this !== ret');
+_$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1].init(26, 12, 'this !== ret');
 function visit185_20_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1].init(21, 3, 'ret');
+}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1].init(22, 3, 'ret');
 function visit184_19_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][2].init(50, 37, '(ret = filter.onCData(this)) !== false');
+}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][2].init(52, 37, '(ret = filter.onCData(this)) !== false');
 function visit183_18_2(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].init(38, 49, '!filter || (ret = filter.onCData(this)) !== false');
+}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].init(40, 49, '!filter || (ret = filter.onCData(this)) !== false');
 function visit182_18_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].ranCondition(result);
   return result;

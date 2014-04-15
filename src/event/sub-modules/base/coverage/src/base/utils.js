@@ -309,35 +309,35 @@ if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData['93'] = [];
   _$jscoverage['/base/utils.js'].branchData['93'][1] = new BranchData();
 }
-_$jscoverage['/base/utils.js'].branchData['93'][1].init(114, 9, '_ksGroups');
+_$jscoverage['/base/utils.js'].branchData['93'][1].init(118, 9, '_ksGroups');
 function visit20_93_1(result) {
   _$jscoverage['/base/utils.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['71'][1].init(171, 26, 'types && S.isObject(types)');
+}_$jscoverage['/base/utils.js'].branchData['71'][1].init(176, 26, 'types && S.isObject(types)');
 function visit19_71_1(result) {
   _$jscoverage['/base/utils.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['45'][1].init(50, 24, 'typeof fn === \'function\'');
+}_$jscoverage['/base/utils.js'].branchData['45'][1].init(53, 24, 'typeof fn === \'function\'');
 function visit18_45_1(result) {
   _$jscoverage['/base/utils.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['43'][1].init(23, 8, 'fn || {}');
+}_$jscoverage['/base/utils.js'].branchData['43'][1].init(24, 8, 'fn || {}');
 function visit17_43_1(result) {
   _$jscoverage['/base/utils.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['35'][1].init(157, 24, 'type.indexOf(\' \') === -1');
+}_$jscoverage['/base/utils.js'].branchData['35'][1].init(163, 24, 'type.indexOf(\' \') === -1');
 function visit16_35_1(result) {
   _$jscoverage['/base/utils.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['30'][1].init(17, 15, 'S.isArray(type)');
+}_$jscoverage['/base/utils.js'].branchData['30'][1].init(18, 15, 'S.isArray(type)');
 function visit15_30_1(result) {
   _$jscoverage['/base/utils.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['19'][1].init(207, 2, 'gs');
+}_$jscoverage['/base/utils.js'].branchData['19'][1].init(215, 2, 'gs');
 function visit14_19_1(result) {
   _$jscoverage['/base/utils.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['12'][1].init(13, 21, 'type.indexOf(\'.\') < 0');
+}_$jscoverage['/base/utils.js'].branchData['12'][1].init(14, 21, 'type.indexOf(\'.\') < 0');
 function visit13_12_1(result) {
   _$jscoverage['/base/utils.js'].branchData['12'][1].ranCondition(result);
   return result;

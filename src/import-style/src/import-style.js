@@ -27,7 +27,7 @@
             processed = {};
         isDebug = Config.debug;
         S.each(modNames, function (modName) {
-            var mod = S.Loader.Utils.createModuleInfo(S, modName);
+            var mod = S.Loader.Utils.getOrCreateModuleInfo(S, modName);
             collectCss(mod, cssList, stack, cssCache, stackCache, processed);
         });
         if (cssList.length) {
@@ -43,7 +43,7 @@
                 for (var i = 0; i < cssList.length; i++) {
                     var currentCss = cssList[i];
                     var currentPackage = currentCss.getPackage();
-                    var packagePath = currentPackage.getUri().toString();
+                    var packagePath = currentPackage.getBase();
                     // map individual module
                     var fullpath = currentCss.getPath();
                     if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {

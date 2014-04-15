@@ -290,27 +290,27 @@ if (! _$jscoverage['/html-parser/writer/basic.js'].branchData) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['61'] = [];
   _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].init(93, 34, 'isBooleanAttribute(name) && !value');
+_$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].init(96, 34, 'isBooleanAttribute(name) && !value');
 function visit349_61_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].init(25, 16, 'attr.value || \'\'');
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].init(26, 16, 'attr.value || \'\'');
 function visit348_59_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].init(17, 15, 'el.isSelfClosed');
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].init(18, 15, 'el.isSelfClosed');
 function visit347_48_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].init(37, 14, 'j < arg.length');
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].init(38, 14, 'j < arg.length');
 function visit346_33_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].init(52, 14, 'arg.length > 1');
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].init(54, 14, 'arg.length > 1');
 function visit345_32_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].init(119, 15, 'i < args.length');
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].init(123, 15, 'i < args.length');
 function visit344_30_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].ranCondition(result);
   return result;

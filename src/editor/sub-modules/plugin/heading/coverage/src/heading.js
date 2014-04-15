@@ -270,11 +270,11 @@ if (! _$jscoverage['/heading.js'].branchData) {
   _$jscoverage['/heading.js'].branchData['74'] = [];
   _$jscoverage['/heading.js'].branchData['74'][1] = new BranchData();
 }
-_$jscoverage['/heading.js'].branchData['74'][1].init(37, 22, 'value === headingValue');
+_$jscoverage['/heading.js'].branchData['74'][1].init(38, 22, 'value === headingValue');
 function visit2_74_1(result) {
   _$jscoverage['/heading.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/heading.js'].branchData['66'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/heading.js'].branchData['66'][1].init(34, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_66_1(result) {
   _$jscoverage['/heading.js'].branchData['66'][1].ranCondition(result);
   return result;

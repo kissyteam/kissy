@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    <div class="');
+            buffer.write('">\r\n    <div class="');
             var option3 = {
                 escape: 1
             };
@@ -45,10 +45,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, true);
-            buffer.write('">\n        ');
+            buffer.write('">\r\n        ');
             var id6 = scope.resolve(["placeholder"]);
             buffer.write(id6, true);
-            buffer.write('\n    </div>\n    <input class="');
+            buffer.write('\r\n    </div>\r\n    <input class="');
             var option7 = {
                 escape: 1
             };
@@ -61,7 +61,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet9 = undefined;
             }
             buffer.write(commandRet9, true);
-            buffer.write('"\n            autocomplete="off"/>\n</div>\n');
+            buffer.write('"\r\n            autocomplete="off"/>\r\n</div>\r\n');
             var option10 = {};
             var params11 = [];
             params11.push('component/extension/content-xtpl');

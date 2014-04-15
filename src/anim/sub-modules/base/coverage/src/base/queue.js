@@ -306,51 +306,51 @@ if (! _$jscoverage['/base/queue.js'].branchData) {
   _$jscoverage['/base/queue.js'].branchData['77'] = [];
   _$jscoverage['/base/queue.js'].branchData['77'][1] = new BranchData();
 }
-_$jscoverage['/base/queue.js'].branchData['77'][1].init(49, 10, '!qu.length');
+_$jscoverage['/base/queue.js'].branchData['77'][1].init(51, 10, '!qu.length');
 function visit12_77_1(result) {
   _$jscoverage['/base/queue.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['75'][1].init(64, 2, 'qu');
+}_$jscoverage['/base/queue.js'].branchData['75'][1].init(66, 2, 'qu');
 function visit11_75_1(result) {
   _$jscoverage['/base/queue.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['68'][1].init(213, 29, 'S.isEmptyObject(quCollection)');
+}_$jscoverage['/base/queue.js'].branchData['68'][1].init(219, 29, 'S.isEmptyObject(quCollection)');
 function visit10_68_1(result) {
   _$jscoverage['/base/queue.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['65'][1].init(123, 12, 'quCollection');
+}_$jscoverage['/base/queue.js'].branchData['65'][1].init(126, 12, 'quCollection');
 function visit9_65_1(result) {
   _$jscoverage['/base/queue.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['63'][1].init(21, 17, 'queue || queueKey');
+}_$jscoverage['/base/queue.js'].branchData['63'][1].init(22, 17, 'queue || queueKey');
 function visit8_63_1(result) {
   _$jscoverage['/base/queue.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['51'][1].init(261, 16, 'qu && !qu.length');
+}_$jscoverage['/base/queue.js'].branchData['51'][1].init(270, 16, 'qu && !qu.length');
 function visit7_51_1(result) {
   _$jscoverage['/base/queue.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['47'][1].init(66, 10, 'index > -1');
+}_$jscoverage['/base/queue.js'].branchData['47'][1].init(68, 10, 'index > -1');
 function visit6_47_1(result) {
   _$jscoverage['/base/queue.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['45'][1].init(87, 2, 'qu');
+}_$jscoverage['/base/queue.js'].branchData['45'][1].init(90, 2, 'qu');
 function visit5_45_1(result) {
   _$jscoverage['/base/queue.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['25'][1].init(54, 16, '!qu && !readOnly');
+}_$jscoverage['/base/queue.js'].branchData['25'][1].init(56, 16, '!qu && !readOnly');
 function visit4_25_1(result) {
   _$jscoverage['/base/queue.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['23'][1].init(247, 12, 'quCollection');
+}_$jscoverage['/base/queue.js'].branchData['23'][1].init(257, 12, 'quCollection');
 function visit3_23_1(result) {
   _$jscoverage['/base/queue.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['19'][1].init(127, 26, '!quCollection && !readOnly');
+}_$jscoverage['/base/queue.js'].branchData['19'][1].init(133, 26, '!quCollection && !readOnly');
 function visit2_19_1(result) {
   _$jscoverage['/base/queue.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['14'][1].init(16, 16, 'name || queueKey');
+}_$jscoverage['/base/queue.js'].branchData['14'][1].init(17, 16, 'name || queueKey');
 function visit1_14_1(result) {
   _$jscoverage['/base/queue.js'].branchData['14'][1].ranCondition(result);
   return result;

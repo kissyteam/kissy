@@ -42,7 +42,8 @@ S.config("requires",{
         "xtemplate/runtime"
     ],
     "component/extension/align": [
-        "node"
+        "node",
+        "ua"
     ],
     "component/extension/content-box": [
         "component/extension/content-xtpl"
@@ -94,9 +95,6 @@ S.config("requires",{
     "dd/plugin/scroll": [
         "dd"
     ],
-    "dom": [
-        "ua"
-    ],
     "dom/base": [
         "ua"
     ],
@@ -121,7 +119,8 @@ S.config("requires",{
     ],
     "event/dom/base": [
         "event/base",
-        "dom"
+        "dom",
+        "ua"
     ],
     "event/dom/focusin": [
         "event/dom/base"
@@ -174,6 +173,7 @@ S.config("requires",{
         "event/custom",
         "promise",
         "uri",
+        "ua",
         "event/dom"
     ],
     "menu": [

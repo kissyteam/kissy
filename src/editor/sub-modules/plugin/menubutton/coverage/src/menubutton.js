@@ -271,23 +271,23 @@ if (! _$jscoverage['/menubutton.js'].branchData) {
   _$jscoverage['/menubutton.js'].branchData['36'] = [];
   _$jscoverage['/menubutton.js'].branchData['36'][1] = new BranchData();
 }
-_$jscoverage['/menubutton.js'].branchData['36'][1].init(563, 37, 'cfg.mode === Editor.Mode.WYSIWYG_MODE');
+_$jscoverage['/menubutton.js'].branchData['36'][1].init(583, 37, 'cfg.mode === Editor.Mode.WYSIWYG_MODE');
 function visit5_36_1(result) {
   _$jscoverage['/menubutton.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['26'][1].init(172, 9, 'cfg.elCls');
+}_$jscoverage['/menubutton.js'].branchData['26'][1].init(177, 9, 'cfg.elCls');
 function visit4_26_1(result) {
   _$jscoverage['/menubutton.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['23'][1].init(48, 8, 'cfg.menu');
+}_$jscoverage['/menubutton.js'].branchData['23'][1].init(50, 8, 'cfg.menu');
 function visit3_23_1(result) {
   _$jscoverage['/menubutton.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['21'][1].init(141, 3, 'cfg');
+}_$jscoverage['/menubutton.js'].branchData['21'][1].init(146, 3, 'cfg');
 function visit2_21_1(result) {
   _$jscoverage['/menubutton.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['17'][1].init(22, 31, 'SelectType || MenuButton.Select');
+}_$jscoverage['/menubutton.js'].branchData['17'][1].init(23, 31, 'SelectType || MenuButton.Select');
 function visit1_17_1(result) {
   _$jscoverage['/menubutton.js'].branchData['17'][1].ranCondition(result);
   return result;

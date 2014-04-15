@@ -306,27 +306,27 @@ if (! _$jscoverage['/contextmenu.js'].branchData) {
   _$jscoverage['/contextmenu.js'].branchData['89'] = [];
   _$jscoverage['/contextmenu.js'].branchData['89'][1] = new BranchData();
 }
-_$jscoverage['/contextmenu.js'].branchData['89'][1].init(2103, 5, 'event');
+_$jscoverage['/contextmenu.js'].branchData['89'][1].init(2180, 5, 'event');
 function visit6_89_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['63'][1].init(249, 2, '!x');
+}_$jscoverage['/contextmenu.js'].branchData['63'][1].init(258, 2, '!x');
 function visit5_63_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['44'][1].init(21, 13, 'e.which === 1');
+}_$jscoverage['/contextmenu.js'].branchData['44'][1].init(22, 13, 'e.which === 1');
 function visit4_44_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['34'][1].init(21, 31, 'e.keyCode === Event.KeyCode.ESC');
+}_$jscoverage['/contextmenu.js'].branchData['34'][1].init(22, 31, 'e.keyCode === Event.KeyCode.ESC');
 function visit3_34_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['19'][1].init(97, 5, 'event');
+}_$jscoverage['/contextmenu.js'].branchData['19'][1].init(104, 5, 'event');
 function visit2_19_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['16'][1].init(42, 9, 'cfg || {}');
+}_$jscoverage['/contextmenu.js'].branchData['16'][1].init(46, 9, 'cfg || {}');
 function visit1_16_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['16'][1].ranCondition(result);
   return result;

@@ -1070,7 +1070,7 @@ KISSY.add(function (S, require, exports, module) {
     function prepareIFrameHTML(id, customStyle, customLink, data) {
         var links = '',
             i;
-        var innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
+        var innerCssFile = Utils.debugUrl('theme/iframe.css');
         customLink = customLink.concat([]);
         customLink.unshift(innerCssFile);
         for (i = 0; i < customLink.length; i++) {

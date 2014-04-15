@@ -258,11 +258,11 @@ if (! _$jscoverage['/italic.js'].branchData) {
   _$jscoverage['/italic.js'].branchData['25'][1] = new BranchData();
   _$jscoverage['/italic.js'].branchData['25'][2] = new BranchData();
 }
-_$jscoverage['/italic.js'].branchData['25'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.I');
+_$jscoverage['/italic.js'].branchData['25'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.I');
 function visit2_25_2(result) {
   _$jscoverage['/italic.js'].branchData['25'][2].ranCondition(result);
   return result;
-}_$jscoverage['/italic.js'].branchData['25'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.I');
+}_$jscoverage['/italic.js'].branchData['25'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.I');
 function visit1_25_1(result) {
   _$jscoverage['/italic.js'].branchData['25'][1].ranCondition(result);
   return result;

@@ -268,23 +268,23 @@ if (! _$jscoverage['/html-parser/nodes/comment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['29'] = [];
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1].init(17, 14, 'this.nodeValue');
+_$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1].init(18, 14, 'this.nodeValue');
 function visit190_29_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/comment.js'].branchData['20'][1].init(25, 12, 'this !== ret');
+}_$jscoverage['/html-parser/nodes/comment.js'].branchData['20'][1].init(26, 12, 'this !== ret');
 function visit189_20_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/comment.js'].branchData['19'][1].init(21, 3, 'ret');
+}_$jscoverage['/html-parser/nodes/comment.js'].branchData['19'][1].init(22, 3, 'ret');
 function visit188_19_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][2].init(50, 39, '(ret = filter.onComment(this)) !== false');
+}_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][2].init(52, 39, '(ret = filter.onComment(this)) !== false');
 function visit187_18_2(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].init(38, 51, '!filter || (ret = filter.onComment(this)) !== false');
+}_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].init(40, 51, '!filter || (ret = filter.onComment(this)) !== false');
 function visit186_18_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].ranCondition(result);
   return result;

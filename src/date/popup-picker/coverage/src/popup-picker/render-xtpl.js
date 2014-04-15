@@ -276,7 +276,7 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js'].branchData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'] = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1] = new BranchData();
 }
-_$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1].init(1835, 35, 'commandRet5 && commandRet5.isBuffer');
+_$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1].init(1837, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit3_43_1(result) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -326,7 +326,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[35]++;
-  buffer.write('">\n    ');
+  buffer.write('">\r\n    ');
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[36]++;
   var option3 = {};
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[37]++;
@@ -351,7 +351,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[47]++;
   buffer.write(commandRet5, false);
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[48]++;
-  buffer.write('\n</div>');
+  buffer.write('\r\n</div>');
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[49]++;
   return buffer;
 };

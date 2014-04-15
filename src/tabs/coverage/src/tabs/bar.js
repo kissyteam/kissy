@@ -289,27 +289,27 @@ if (! _$jscoverage['/tabs/bar.js'].branchData) {
   _$jscoverage['/tabs/bar.js'].branchData['64'] = [];
   _$jscoverage['/tabs/bar.js'].branchData['64'][1] = new BranchData();
 }
-_$jscoverage['/tabs/bar.js'].branchData['64'][1].init(80, 34, 'self.get(\'changeType\') === \'mouse\'');
+_$jscoverage['/tabs/bar.js'].branchData['64'][1].init(83, 34, 'self.get(\'changeType\') === \'mouse\'');
 function visit6_64_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['54'][1].init(21, 23, 'e && (prev = e.prevVal)');
+}_$jscoverage['/tabs/bar.js'].branchData['54'][1].init(22, 23, 'e && (prev = e.prevVal)');
 function visit5_54_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['53'][1].init(39, 1, 'v');
+}_$jscoverage['/tabs/bar.js'].branchData['53'][1].init(41, 1, 'v');
 function visit4_53_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['43'][1].init(159, 25, 'typeof next === \'boolean\'');
+}_$jscoverage['/tabs/bar.js'].branchData['43'][1].init(163, 25, 'typeof next === \'boolean\'');
 function visit3_43_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['31'][1].init(21, 17, 'c.get(\'selected\')');
+}_$jscoverage['/tabs/bar.js'].branchData['31'][1].init(22, 17, 'c.get(\'selected\')');
 function visit2_31_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['21'][1].init(21, 30, 'e.newVal && e.target.isTabsTab');
+}_$jscoverage['/tabs/bar.js'].branchData['21'][1].init(22, 30, 'e.newVal && e.target.isTabsTab');
 function visit1_21_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['21'][1].ranCondition(result);
   return result;

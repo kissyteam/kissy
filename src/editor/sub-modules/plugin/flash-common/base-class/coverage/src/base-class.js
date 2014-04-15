@@ -321,39 +321,39 @@ if (! _$jscoverage['/base-class.js'].branchData) {
   _$jscoverage['/base-class.js'].branchData['132'][1] = new BranchData();
   _$jscoverage['/base-class.js'].branchData['132'][2] = new BranchData();
 }
-_$jscoverage['/base-class.js'].branchData['132'][2].init(87, 22, 't.nodeName() === \'img\'');
+_$jscoverage['/base-class.js'].branchData['132'][2].init(90, 22, 't.nodeName() === \'img\'');
 function visit9_132_2(result) {
   _$jscoverage['/base-class.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['132'][1].init(87, 64, 't.nodeName() === \'img\' && t.hasClass(self.get(\'cls\'), undefined)');
+}_$jscoverage['/base-class.js'].branchData['132'][1].init(90, 64, 't.nodeName() === \'img\' && t.hasClass(self.get(\'cls\'), undefined)');
 function visit8_132_1(result) {
   _$jscoverage['/base-class.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['121'][1].init(153, 2, '!r');
+}_$jscoverage['/base-class.js'].branchData['121'][1].init(157, 2, '!r');
 function visit7_121_1(result) {
   _$jscoverage['/base-class.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['98'][1].init(109, 1, 'a');
+}_$jscoverage['/base-class.js'].branchData['98'][1].init(111, 1, 'a');
 function visit6_98_1(result) {
   _$jscoverage['/base-class.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['82'][1].init(176, 2, 'r0');
+}_$jscoverage['/base-class.js'].branchData['82'][1].init(179, 2, 'r0');
 function visit5_82_1(result) {
   _$jscoverage['/base-class.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['81'][1].init(87, 9, 'r && r[0]');
+}_$jscoverage['/base-class.js'].branchData['81'][1].init(88, 9, 'r && r[0]');
 function visit4_81_1(result) {
   _$jscoverage['/base-class.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['79'][1].init(93, 11, 'S.UA.webkit');
+}_$jscoverage['/base-class.js'].branchData['79'][1].init(95, 11, 'S.UA.webkit');
 function visit3_79_1(result) {
   _$jscoverage['/base-class.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['53'][1].init(24, 33, 'el.hasClass(cls, undefined) && el');
+}_$jscoverage['/base-class.js'].branchData['53'][1].init(25, 33, 'el.hasClass(cls, undefined) && el');
 function visit2_53_1(result) {
   _$jscoverage['/base-class.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['45'][1].init(92, 28, 'contextMenuHandlers[content]');
+}_$jscoverage['/base-class.js'].branchData['45'][1].init(94, 28, 'contextMenuHandlers[content]');
 function visit1_45_1(result) {
   _$jscoverage['/base-class.js'].branchData['45'][1].ranCondition(result);
   return result;

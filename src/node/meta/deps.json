@@ -1,3 +1,3 @@
 {
-    "node": ["dom", "event/dom", "anim"]
+ "node": ["dom", "event/dom", "anim"] 
 }

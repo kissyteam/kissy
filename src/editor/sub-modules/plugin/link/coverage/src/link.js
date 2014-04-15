@@ -290,15 +290,15 @@ if (! _$jscoverage['/link.js'].branchData) {
   _$jscoverage['/link.js'].branchData['89'] = [];
   _$jscoverage['/link.js'].branchData['89'][1] = new BranchData();
 }
-_$jscoverage['/link.js'].branchData['89'][1].init(216, 73, 'a.attr(Utils.savedHref) || a.attr(\'href\')');
+_$jscoverage['/link.js'].branchData['89'][1].init(221, 74, 'a.attr(Utils.savedHref) || a.attr(\'href\')');
 function visit3_89_1(result) {
   _$jscoverage['/link.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/link.js'].branchData['86'][1].init(101, 2, '!a');
+}_$jscoverage['/link.js'].branchData['86'][1].init(103, 2, '!a');
 function visit2_86_1(result) {
   _$jscoverage['/link.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/link.js'].branchData['31'][1].init(23, 12, 'config || {}');
+}_$jscoverage['/link.js'].branchData['31'][1].init(24, 12, 'config || {}');
 function visit1_31_1(result) {
   _$jscoverage['/link.js'].branchData['31'][1].ranCondition(result);
   return result;

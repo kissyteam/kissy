@@ -379,51 +379,51 @@ if (! _$jscoverage['/tabs.js'].branchData) {
   _$jscoverage['/tabs.js'].branchData['378'][1] = new BranchData();
   _$jscoverage['/tabs.js'].branchData['378'][2] = new BranchData();
 }
-_$jscoverage['/tabs.js'].branchData['378'][2].init(118, 29, 'orientation && orientation[1]');
+_$jscoverage['/tabs.js'].branchData['378'][2].init(120, 29, 'orientation && orientation[1]');
 function visit25_378_2(result) {
   _$jscoverage['/tabs.js'].branchData['378'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['378'][1].init(118, 42, 'orientation && orientation[1] || undefined');
+}_$jscoverage['/tabs.js'].branchData['378'][1].init(120, 42, 'orientation && orientation[1] || undefined');
 function visit24_378_1(result) {
   _$jscoverage['/tabs.js'].branchData['378'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['236'][1].init(21, 17, 'c.get(\'selected\')');
+}_$jscoverage['/tabs.js'].branchData['236'][1].init(22, 17, 'c.get(\'selected\')');
 function visit23_236_1(result) {
   _$jscoverage['/tabs.js'].branchData['236'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['216'][1].init(21, 17, 'c.get(\'selected\')');
+}_$jscoverage['/tabs.js'].branchData['216'][1].init(22, 17, 'c.get(\'selected\')');
 function visit22_216_1(result) {
   _$jscoverage['/tabs.js'].branchData['216'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['173'][1].init(121, 11, 'index === 0');
+}_$jscoverage['/tabs.js'].branchData['173'][1].init(124, 11, 'index === 0');
 function visit21_173_1(result) {
   _$jscoverage['/tabs.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['171'][1].init(21, 18, 'barCs.length === 1');
+}_$jscoverage['/tabs.js'].branchData['171'][1].init(22, 18, 'barCs.length === 1');
 function visit20_171_1(result) {
   _$jscoverage['/tabs.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['170'][1].init(406, 19, 'tab.get(\'selected\')');
+}_$jscoverage['/tabs.js'].branchData['170'][1].init(418, 19, 'tab.get(\'selected\')');
 function visit19_170_1(result) {
   _$jscoverage['/tabs.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['144'][1].init(658, 13, 'item.selected');
+}_$jscoverage['/tabs.js'].branchData['144'][1].init(685, 13, 'item.selected');
 function visit18_144_1(result) {
   _$jscoverage['/tabs.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['126'][1].init(259, 28, 'typeof index === \'undefined\'');
+}_$jscoverage['/tabs.js'].branchData['126'][1].init(268, 28, 'typeof index === \'undefined\'');
 function visit17_126_1(result) {
   _$jscoverage['/tabs.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['68'][1].init(1314, 31, '!selected && barChildren.length');
+}_$jscoverage['/tabs.js'].branchData['68'][1].init(1349, 31, '!selected && barChildren.length');
 function visit16_68_1(result) {
   _$jscoverage['/tabs.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['56'][1].init(32, 25, 'selected || item.selected');
+}_$jscoverage['/tabs.js'].branchData['56'][1].init(33, 25, 'selected || item.selected');
 function visit15_56_1(result) {
   _$jscoverage['/tabs.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['33'][1].init(117, 5, 'items');
+}_$jscoverage['/tabs.js'].branchData['33'][1].init(122, 5, 'items');
 function visit14_33_1(result) {
   _$jscoverage['/tabs.js'].branchData['33'][1].ranCondition(result);
   return result;

@@ -276,19 +276,19 @@ if (! _$jscoverage['/justify-left.js'].branchData) {
   _$jscoverage['/justify-left.js'].branchData['47'][1] = new BranchData();
   _$jscoverage['/justify-left.js'].branchData['47'][2] = new BranchData();
 }
-_$jscoverage['/justify-left.js'].branchData['47'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.L');
+_$jscoverage['/justify-left.js'].branchData['47'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.L');
 function visit4_47_2(result) {
   _$jscoverage['/justify-left.js'].branchData['47'][2].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['47'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.L');
+}_$jscoverage['/justify-left.js'].branchData['47'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.L');
 function visit3_47_1(result) {
   _$jscoverage['/justify-left.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['34'][1].init(185, 39, 'editor.queryCommandValue(\'justifyLeft\')');
+}_$jscoverage['/justify-left.js'].branchData['34'][1].init(189, 39, 'editor.queryCommandValue(\'justifyLeft\')');
 function visit2_34_1(result) {
   _$jscoverage['/justify-left.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['31'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-left.js'].branchData['31'][1].init(34, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_31_1(result) {
   _$jscoverage['/justify-left.js'].branchData['31'][1].ranCondition(result);
   return result;

@@ -258,11 +258,11 @@ if (! _$jscoverage['/underline.js'].branchData) {
   _$jscoverage['/underline.js'].branchData['24'][1] = new BranchData();
   _$jscoverage['/underline.js'].branchData['24'][2] = new BranchData();
 }
-_$jscoverage['/underline.js'].branchData['24'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.U');
+_$jscoverage['/underline.js'].branchData['24'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.U');
 function visit2_24_2(result) {
   _$jscoverage['/underline.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/underline.js'].branchData['24'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.U');
+}_$jscoverage['/underline.js'].branchData['24'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.U');
 function visit1_24_1(result) {
   _$jscoverage['/underline.js'].branchData['24'][1].ranCondition(result);
   return result;

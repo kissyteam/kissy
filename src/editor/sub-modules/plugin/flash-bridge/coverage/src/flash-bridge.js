@@ -317,39 +317,39 @@ if (! _$jscoverage['/flash-bridge.js'].branchData) {
   _$jscoverage['/flash-bridge.js'].branchData['103'] = [];
   _$jscoverage['/flash-bridge.js'].branchData['103'][1] = new BranchData();
 }
-_$jscoverage['/flash-bridge.js'].branchData['103'][1].init(102, 8, 'instance');
+_$jscoverage['/flash-bridge.js'].branchData['103'][1].init(105, 8, 'instance');
 function visit9_103_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['88'][1].init(46, 11, 'self._ready');
+}_$jscoverage['/flash-bridge.js'].branchData['88'][1].init(48, 11, 'self._ready');
 function visit8_88_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['82'][1].init(168, 4, 'type');
+}_$jscoverage['/flash-bridge.js'].branchData['82'][1].init(173, 4, 'type');
 function visit7_82_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['80'][1].init(81, 14, 'type === \'log\'');
+}_$jscoverage['/flash-bridge.js'].branchData['80'][1].init(84, 14, 'type === \'log\'');
 function visit6_80_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['64'][1].init(58, 18, 'i < methods.length');
+}_$jscoverage['/flash-bridge.js'].branchData['64'][1].init(60, 18, 'i < methods.length');
 function visit5_64_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['50'][1].init(1149, 12, 'cfg.ajbridge');
+}_$jscoverage['/flash-bridge.js'].branchData['50'][1].init(1180, 12, 'cfg.ajbridge');
 function visit4_50_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['28'][1].init(106, 22, 'params.flashVars || {}');
+}_$jscoverage['/flash-bridge.js'].branchData['28'][1].init(108, 22, 'params.flashVars || {}');
 function visit3_28_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['25'][1].init(248, 16, 'cfg.params || {}');
+}_$jscoverage['/flash-bridge.js'].branchData['25'][1].init(254, 16, 'cfg.params || {}');
 function visit2_25_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['24'][1].init(206, 15, 'cfg.attrs || {}');
+}_$jscoverage['/flash-bridge.js'].branchData['24'][1].init(211, 15, 'cfg.attrs || {}');
 function visit1_24_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['24'][1].ranCondition(result);
   return result;

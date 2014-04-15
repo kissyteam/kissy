@@ -23,6 +23,10 @@
                      excludesfile="${kissy.src.dir}/xtemplate/build.xml"
                      includes="*/build.xml"/>
         </subant>
+
+        <subant target="" failonerror="true"
+                buildpath="${kissy.src.dir}/seed"
+                inheritall="false"/>
     </target>
 
     <!--jshint all js-->
@@ -161,5 +165,6 @@
 
     <target name="clean">
         <delete dir="${kissy.build.dir}"/>
+        <delete dir="${kissy.lib.dir}"/>
     </target>
 </project>

@@ -266,23 +266,23 @@ if (! _$jscoverage['/utils.js'].branchData) {
   _$jscoverage['/utils.js'].branchData['32'] = [];
   _$jscoverage['/utils.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/utils.js'].branchData['32'][1].init(110, 30, 'Dom.attr(element, \'src\') || \'\'');
+_$jscoverage['/utils.js'].branchData['32'][1].init(111, 30, 'Dom.attr(element, \'src\') || \'\'');
 function visit5_32_1(result) {
   _$jscoverage['/utils.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['31'][2].init(29, 61, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\'');
+}_$jscoverage['/utils.js'].branchData['31'][2].init(30, 61, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\'');
 function visit4_31_2(result) {
   _$jscoverage['/utils.js'].branchData['31'][2].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['31'][1].init(-1, 142, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\' || /\\.swf(?:$|\\?)/i.test(Dom.attr(element, \'src\') || \'\')');
+}_$jscoverage['/utils.js'].branchData['31'][1].init(-1, 143, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\' || /\\.swf(?:$|\\?)/i.test(Dom.attr(element, \'src\') || \'\')');
 function visit3_31_1(result) {
   _$jscoverage['/utils.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['21'][1].init(98, 16, '_type || \'flash\'');
+}_$jscoverage['/utils.js'].branchData['21'][1].init(100, 16, '_type || \'flash\'');
 function visit2_21_1(result) {
   _$jscoverage['/utils.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['20'][1].init(54, 18, '_cls || \'ke_flash\'');
+}_$jscoverage['/utils.js'].branchData['20'][1].init(55, 18, '_cls || \'ke_flash\'');
 function visit1_20_1(result) {
   _$jscoverage['/utils.js'].branchData['20'][1].ranCondition(result);
   return result;

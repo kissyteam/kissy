@@ -270,15 +270,15 @@ if (! _$jscoverage['/dialog-loader.js'].branchData) {
   _$jscoverage['/dialog-loader.js'].branchData['38'] = [];
   _$jscoverage['/dialog-loader.js'].branchData['38'][1] = new BranchData();
 }
-_$jscoverage['/dialog-loader.js'].branchData['38'][1].init(173, 35, 'editor.getControl(name + \'/dialog\')');
+_$jscoverage['/dialog-loader.js'].branchData['38'][1].init(178, 35, 'editor.getControl(name + \'/dialog\')');
 function visit3_38_1(result) {
   _$jscoverage['/dialog-loader.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog-loader.js'].branchData['15'][1].init(62, 13, 'S.UA.ie === 6');
+}_$jscoverage['/dialog-loader.js'].branchData['15'][1].init(64, 13, 'S.UA.ie === 6');
 function visit2_15_1(result) {
   _$jscoverage['/dialog-loader.js'].branchData['15'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog-loader.js'].branchData['12'][1].init(21, 11, '!globalMask');
+}_$jscoverage['/dialog-loader.js'].branchData['12'][1].init(22, 11, '!globalMask');
 function visit1_12_1(result) {
   _$jscoverage['/dialog-loader.js'].branchData['12'][1].ranCondition(result);
   return result;

@@ -1,3 +1,3 @@
 {
-    "event/gesture/rotate": ["event/gesture/util", "event/dom/base"]
+ "event/gesture/rotate": ["event/gesture/util", "event/dom/base"] 
 }

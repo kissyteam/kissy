@@ -523,199 +523,199 @@ if (! _$jscoverage['/align.js'].branchData) {
   _$jscoverage['/align.js'].branchData['457'] = [];
   _$jscoverage['/align.js'].branchData['457'][1] = new BranchData();
 }
-_$jscoverage['/align.js'].branchData['457'][1].init(46, 8, 'self.$el');
+_$jscoverage['/align.js'].branchData['457'][1].init(48, 8, 'self.$el');
 function visit69_457_1(result) {
   _$jscoverage['/align.js'].branchData['457'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['432'][1].init(3175, 38, 'newElRegion.height !== elRegion.height');
+}_$jscoverage['/align.js'].branchData['432'][1].init(3262, 38, 'newElRegion.height !== elRegion.height');
 function visit68_432_1(result) {
   _$jscoverage['/align.js'].branchData['432'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['428'][1].init(3020, 36, 'newElRegion.width !== elRegion.width');
+}_$jscoverage['/align.js'].branchData['428'][1].init(3103, 36, 'newElRegion.width !== elRegion.width');
 function visit67_428_1(result) {
   _$jscoverage['/align.js'].branchData['428'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['410'][1].init(1459, 48, 'newOverflowCfg.adjustX || newOverflowCfg.adjustY');
+}_$jscoverage['/align.js'].branchData['410'][1].init(1502, 48, 'newOverflowCfg.adjustX || newOverflowCfg.adjustY');
 function visit66_410_1(result) {
   _$jscoverage['/align.js'].branchData['410'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['406'][1].init(1316, 83, 'overflow.adjustY && isFailY(elFuturePos, elRegion, visibleRect)');
+}_$jscoverage['/align.js'].branchData['406'][1].init(1355, 84, 'overflow.adjustY && isFailY(elFuturePos, elRegion, visibleRect)');
 function visit65_406_1(result) {
   _$jscoverage['/align.js'].branchData['406'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['403'][1].init(1189, 83, 'overflow.adjustX && isFailX(elFuturePos, elRegion, visibleRect)');
+}_$jscoverage['/align.js'].branchData['403'][1].init(1225, 84, 'overflow.adjustX && isFailX(elFuturePos, elRegion, visibleRect)');
 function visit64_403_1(result) {
   _$jscoverage['/align.js'].branchData['403'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['394'][1].init(857, 4, 'fail');
+}_$jscoverage['/align.js'].branchData['394'][1].init(884, 4, 'fail');
 function visit63_394_1(result) {
   _$jscoverage['/align.js'].branchData['394'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['382'][1].init(447, 43, 'isFailY(elFuturePos, elRegion, visibleRect)');
+}_$jscoverage['/align.js'].branchData['382'][1].init(462, 43, 'isFailY(elFuturePos, elRegion, visibleRect)');
 function visit62_382_1(result) {
   _$jscoverage['/align.js'].branchData['382'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['370'][1].init(50, 43, 'isFailX(elFuturePos, elRegion, visibleRect)');
+}_$jscoverage['/align.js'].branchData['370'][1].init(53, 43, 'isFailX(elFuturePos, elRegion, visibleRect)');
 function visit61_370_1(result) {
   _$jscoverage['/align.js'].branchData['370'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['367'][2].init(809, 36, 'overflow.adjustX || overflow.adjustY');
+}_$jscoverage['/align.js'].branchData['367'][2].init(831, 36, 'overflow.adjustX || overflow.adjustY');
 function visit60_367_2(result) {
   _$jscoverage['/align.js'].branchData['367'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['367'][1].init(793, 53, 'visibleRect && (overflow.adjustX || overflow.adjustY)');
+}_$jscoverage['/align.js'].branchData['367'][1].init(815, 53, 'visibleRect && (overflow.adjustX || overflow.adjustY)');
 function visit59_367_1(result) {
   _$jscoverage['/align.js'].branchData['367'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['348'][1].init(132, 14, 'overflow || {}');
+}_$jscoverage['/align.js'].branchData['348'][1].init(135, 14, 'overflow || {}');
 function visit58_348_1(result) {
   _$jscoverage['/align.js'].branchData['348'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['347'][2].init(70, 27, 'offset && [].concat(offset)');
+}_$jscoverage['/align.js'].branchData['347'][2].init(72, 27, 'offset && [].concat(offset)');
 function visit57_347_2(result) {
   _$jscoverage['/align.js'].branchData['347'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['347'][1].init(70, 37, 'offset && [].concat(offset) || [0, 0]');
+}_$jscoverage['/align.js'].branchData['347'][1].init(72, 37, 'offset && [].concat(offset) || [0, 0]');
 function visit56_347_1(result) {
   _$jscoverage['/align.js'].branchData['347'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['346'][1].init(32, 14, 'refNode || win');
+}_$jscoverage['/align.js'].branchData['346'][1].init(33, 14, 'refNode || win');
 function visit55_346_1(result) {
   _$jscoverage['/align.js'].branchData['346'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['332'][1].init(17, 13, 'v && v.points');
+}_$jscoverage['/align.js'].branchData['332'][1].init(18, 13, 'v && v.points');
 function visit54_332_1(result) {
   _$jscoverage['/align.js'].branchData['332'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['314'][1].init(13, 19, 'this.get(\'visible\')');
+}_$jscoverage['/align.js'].branchData['314'][1].init(14, 19, 'this.get(\'visible\')');
 function visit53_314_1(result) {
   _$jscoverage['/align.js'].branchData['314'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['308'][2].init(13, 17, 'e.target === this');
+}_$jscoverage['/align.js'].branchData['308'][2].init(14, 17, 'e.target === this');
 function visit52_308_2(result) {
   _$jscoverage['/align.js'].branchData['308'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['308'][1].init(13, 29, 'e.target === this && e.newVal');
+}_$jscoverage['/align.js'].branchData['308'][1].init(14, 29, 'e.target === this && e.newVal');
 function visit51_308_1(result) {
   _$jscoverage['/align.js'].branchData['308'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['300'][1].init(378, 9, 'H === \'r\'');
+}_$jscoverage['/align.js'].branchData['300'][1].init(396, 9, 'H === \'r\'');
 function visit50_300_1(result) {
   _$jscoverage['/align.js'].branchData['300'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['298'][1].init(321, 9, 'H === \'c\'');
+}_$jscoverage['/align.js'].branchData['298'][1].init(337, 9, 'H === \'c\'');
 function visit49_298_1(result) {
   _$jscoverage['/align.js'].branchData['298'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['294'][1].init(266, 9, 'V === \'b\'');
+}_$jscoverage['/align.js'].branchData['294'][1].init(278, 9, 'V === \'b\'');
 function visit48_294_1(result) {
   _$jscoverage['/align.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['292'][1].init(209, 9, 'V === \'c\'');
+}_$jscoverage['/align.js'].branchData['292'][1].init(219, 9, 'V === \'c\'');
 function visit47_292_1(result) {
   _$jscoverage['/align.js'].branchData['292'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['258'][1].init(70, 20, '!S.isWindow(domNode)');
+}_$jscoverage['/align.js'].branchData['258'][1].init(73, 20, '!S.isWindow(domNode)');
 function visit46_258_1(result) {
   _$jscoverage['/align.js'].branchData['258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['185'][2].init(1382, 42, 'pos.top + size.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['185'][2].init(1419, 42, 'pos.top + size.height > visibleRect.bottom');
 function visit45_185_2(result) {
   _$jscoverage['/align.js'].branchData['185'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['185'][1].init(1362, 62, 'overflow.adjustY && pos.top + size.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['185'][1].init(1399, 62, 'overflow.adjustY && pos.top + size.height > visibleRect.bottom');
 function visit44_185_1(result) {
   _$jscoverage['/align.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['180'][1].init(41, 42, 'pos.top + size.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['180'][1].init(42, 42, 'pos.top + size.height > visibleRect.bottom');
 function visit43_180_1(result) {
   _$jscoverage['/align.js'].branchData['180'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['179'][2].init(1123, 26, 'pos.top >= visibleRect.top');
+}_$jscoverage['/align.js'].branchData['179'][2].init(1154, 26, 'pos.top >= visibleRect.top');
 function visit42_179_2(result) {
   _$jscoverage['/align.js'].branchData['179'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['179'][1].init(36, 84, 'pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['179'][1].init(37, 85, 'pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom');
 function visit41_179_1(result) {
   _$jscoverage['/align.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['178'][1].init(1084, 121, 'overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['178'][1].init(1114, 123, 'overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom');
 function visit40_178_1(result) {
   _$jscoverage['/align.js'].branchData['178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['173'][2].init(914, 25, 'pos.top < visibleRect.top');
+}_$jscoverage['/align.js'].branchData['173'][2].init(939, 25, 'pos.top < visibleRect.top');
 function visit39_173_2(result) {
   _$jscoverage['/align.js'].branchData['173'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['173'][1].init(894, 45, 'overflow.adjustY && pos.top < visibleRect.top');
+}_$jscoverage['/align.js'].branchData['173'][1].init(919, 45, 'overflow.adjustY && pos.top < visibleRect.top');
 function visit38_173_1(result) {
   _$jscoverage['/align.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['167'][2].init(658, 41, 'pos.left + size.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['167'][2].init(677, 41, 'pos.left + size.width > visibleRect.right');
 function visit37_167_2(result) {
   _$jscoverage['/align.js'].branchData['167'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['167'][1].init(638, 61, 'overflow.adjustX && pos.left + size.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['167'][1].init(657, 61, 'overflow.adjustX && pos.left + size.width > visibleRect.right');
 function visit36_167_1(result) {
   _$jscoverage['/align.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['162'][1].init(43, 41, 'pos.left + size.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['162'][1].init(44, 41, 'pos.left + size.width > visibleRect.right');
 function visit35_162_1(result) {
   _$jscoverage['/align.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['161'][2].init(401, 28, 'pos.left >= visibleRect.left');
+}_$jscoverage['/align.js'].branchData['161'][2].init(414, 28, 'pos.left >= visibleRect.left');
 function visit34_161_2(result) {
   _$jscoverage['/align.js'].branchData['161'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['161'][1].init(35, 85, 'pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['161'][1].init(36, 86, 'pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right');
 function visit33_161_1(result) {
   _$jscoverage['/align.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['160'][1].init(363, 121, 'overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['160'][1].init(375, 123, 'overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right');
 function visit32_160_1(result) {
   _$jscoverage['/align.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['155'][2].init(189, 27, 'pos.left < visibleRect.left');
+}_$jscoverage['/align.js'].branchData['155'][2].init(196, 27, 'pos.left < visibleRect.left');
 function visit31_155_2(result) {
   _$jscoverage['/align.js'].branchData['155'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['155'][1].init(169, 47, 'overflow.adjustX && pos.left < visibleRect.left');
+}_$jscoverage['/align.js'].branchData['155'][1].init(176, 47, 'overflow.adjustX && pos.left < visibleRect.left');
 function visit30_155_1(result) {
   _$jscoverage['/align.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['145'][1].init(48, 54, 'elFuturePos.top + elRegion.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['145'][1].init(49, 54, 'elFuturePos.top + elRegion.height > visibleRect.bottom');
 function visit29_145_1(result) {
   _$jscoverage['/align.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['144'][2].init(16, 33, 'elFuturePos.top < visibleRect.top');
+}_$jscoverage['/align.js'].branchData['144'][2].init(17, 33, 'elFuturePos.top < visibleRect.top');
 function visit28_144_2(result) {
   _$jscoverage['/align.js'].branchData['144'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['144'][1].init(16, 103, 'elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom');
+}_$jscoverage['/align.js'].branchData['144'][1].init(17, 104, 'elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom');
 function visit27_144_1(result) {
   _$jscoverage['/align.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['140'][1].init(50, 53, 'elFuturePos.left + elRegion.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['140'][1].init(51, 53, 'elFuturePos.left + elRegion.width > visibleRect.right');
 function visit26_140_1(result) {
   _$jscoverage['/align.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['139'][2].init(16, 35, 'elFuturePos.left < visibleRect.left');
+}_$jscoverage['/align.js'].branchData['139'][2].init(17, 35, 'elFuturePos.left < visibleRect.left');
 function visit25_139_2(result) {
   _$jscoverage['/align.js'].branchData['139'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['139'][1].init(16, 104, 'elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right');
+}_$jscoverage['/align.js'].branchData['139'][1].init(17, 105, 'elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right');
 function visit24_139_1(result) {
   _$jscoverage['/align.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['112'][1].init(119, 36, 'visibleRect.right > visibleRect.left');
+}_$jscoverage['/align.js'].branchData['112'][1].init(121, 36, 'visibleRect.right > visibleRect.left');
 function visit23_112_1(result) {
   _$jscoverage['/align.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['111'][2].init(70, 36, 'visibleRect.bottom > visibleRect.top');
+}_$jscoverage['/align.js'].branchData['111'][2].init(71, 36, 'visibleRect.bottom > visibleRect.top');
 function visit22_111_2(result) {
   _$jscoverage['/align.js'].branchData['111'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['111'][1].init(36, 88, 'visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left');
+}_$jscoverage['/align.js'].branchData['111'][1].init(37, 89, 'visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left');
 function visit21_111_1(result) {
   _$jscoverage['/align.js'].branchData['111'][1].ranCondition(result);
   return result;
@@ -723,7 +723,7 @@ function visit21_111_1(result) {
 function visit20_110_4(result) {
   _$jscoverage['/align.js'].branchData['110'][4].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['110'][3].init(23, 125, 'visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left');
+}_$jscoverage['/align.js'].branchData['110'][3].init(23, 127, 'visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left');
 function visit19_110_3(result) {
   _$jscoverage['/align.js'].branchData['110'][3].ranCondition(result);
   return result;
@@ -731,71 +731,71 @@ function visit19_110_3(result) {
 function visit18_110_2(result) {
   _$jscoverage['/align.js'].branchData['110'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['110'][1].init(-1, 149, 'visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left');
+}_$jscoverage['/align.js'].branchData['110'][1].init(-1, 151, 'visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left');
 function visit17_110_1(result) {
   _$jscoverage['/align.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['83'][1].init(45, 35, '$(el).css(\'overflow\') !== \'visible\'');
+}_$jscoverage['/align.js'].branchData['83'][1].init(46, 35, '$(el).css(\'overflow\') !== \'visible\'');
 function visit16_83_1(result) {
   _$jscoverage['/align.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['82'][2].init(307, 22, 'el !== documentElement');
+}_$jscoverage['/align.js'].branchData['82'][2].init(312, 22, 'el !== documentElement');
 function visit15_82_2(result) {
   _$jscoverage['/align.js'].branchData['82'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['82'][1].init(34, 81, 'el !== documentElement && $(el).css(\'overflow\') !== \'visible\'');
+}_$jscoverage['/align.js'].branchData['82'][1].init(35, 82, 'el !== documentElement && $(el).css(\'overflow\') !== \'visible\'');
 function visit14_82_1(result) {
   _$jscoverage['/align.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['81'][2].init(270, 11, 'el !== body');
+}_$jscoverage['/align.js'].branchData['81'][2].init(274, 11, 'el !== body');
 function visit13_81_2(result) {
   _$jscoverage['/align.js'].branchData['81'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['81'][1].init(270, 116, 'el !== body && el !== documentElement && $(el).css(\'overflow\') !== \'visible\'');
+}_$jscoverage['/align.js'].branchData['81'][1].init(274, 118, 'el !== body && el !== documentElement && $(el).css(\'overflow\') !== \'visible\'');
 function visit12_81_1(result) {
   _$jscoverage['/align.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['77'][3].init(96, 20, 'el.clientWidth !== 0');
+}_$jscoverage['/align.js'].branchData['77'][3].init(98, 20, 'el.clientWidth !== 0');
 function visit11_77_3(result) {
   _$jscoverage['/align.js'].branchData['77'][3].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['77'][2].init(86, 30, '!UA.ie || el.clientWidth !== 0');
+}_$jscoverage['/align.js'].branchData['77'][2].init(88, 30, '!UA.ie || el.clientWidth !== 0');
 function visit10_77_2(result) {
   _$jscoverage['/align.js'].branchData['77'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['77'][1].init(86, 388, '(!UA.ie || el.clientWidth !== 0) && (el !== body && el !== documentElement && $(el).css(\'overflow\') !== \'visible\')');
+}_$jscoverage['/align.js'].branchData['77'][1].init(88, 394, '(!UA.ie || el.clientWidth !== 0) && (el !== body && el !== documentElement && $(el).css(\'overflow\') !== \'visible\')');
 function visit9_77_1(result) {
   _$jscoverage['/align.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['46'][1].init(72, 26, 'positionStyle !== \'static\'');
+}_$jscoverage['/align.js'].branchData['46'][1].init(74, 26, 'positionStyle !== \'static\'');
 function visit8_46_1(result) {
   _$jscoverage['/align.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['44'][2].init(1049, 15, 'parent !== body');
+}_$jscoverage['/align.js'].branchData['44'][2].init(1075, 15, 'parent !== body');
 function visit7_44_2(result) {
   _$jscoverage['/align.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['44'][1].init(1039, 25, 'parent && parent !== body');
+}_$jscoverage['/align.js'].branchData['44'][1].init(1065, 25, 'parent && parent !== body');
 function visit6_44_1(result) {
   _$jscoverage['/align.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['41'][1].init(20, 41, 'element.nodeName.toLowerCase() === \'html\'');
+}_$jscoverage['/align.js'].branchData['41'][1].init(21, 41, 'element.nodeName.toLowerCase() === \'html\'');
 function visit5_41_1(result) {
   _$jscoverage['/align.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['40'][1].init(881, 11, '!skipStatic');
+}_$jscoverage['/align.js'].branchData['40'][1].init(903, 11, '!skipStatic');
 function visit4_40_1(result) {
   _$jscoverage['/align.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['38'][3].init(191, 28, 'positionStyle === \'absolute\'');
+}_$jscoverage['/align.js'].branchData['38'][3].init(195, 28, 'positionStyle === \'absolute\'');
 function visit3_38_3(result) {
   _$jscoverage['/align.js'].branchData['38'][3].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['38'][2].init(162, 25, 'positionStyle === \'fixed\'');
+}_$jscoverage['/align.js'].branchData['38'][2].init(166, 25, 'positionStyle === \'fixed\'');
 function visit2_38_2(result) {
   _$jscoverage['/align.js'].branchData['38'][2].ranCondition(result);
   return result;
-}_$jscoverage['/align.js'].branchData['38'][1].init(162, 57, 'positionStyle === \'fixed\' || positionStyle === \'absolute\'');
+}_$jscoverage['/align.js'].branchData['38'][1].init(166, 57, 'positionStyle === \'fixed\' || positionStyle === \'absolute\'');
 function visit1_38_1(result) {
   _$jscoverage['/align.js'].branchData['38'][1].ranCondition(result);
   return result;

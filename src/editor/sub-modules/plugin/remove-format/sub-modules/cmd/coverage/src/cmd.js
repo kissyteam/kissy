@@ -301,47 +301,47 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['118'] = [];
   _$jscoverage['/cmd.js'].branchData['118'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['118'][1].init(136, 38, 'tagsRegex.test(currentNode.nodeName())');
+_$jscoverage['/cmd.js'].branchData['118'][1].init(138, 38, 'tagsRegex.test(currentNode.nodeName())');
 function visit11_118_1(result) {
   _$jscoverage['/cmd.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['113'][1].init(-1, 173, 'currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className)');
+}_$jscoverage['/cmd.js'].branchData['113'][1].init(-1, 175, 'currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className)');
 function visit10_113_1(result) {
   _$jscoverage['/cmd.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['111'][3].init(678, 32, 'currentNode.nodeName() === \'img\'');
+}_$jscoverage['/cmd.js'].branchData['111'][3].init(690, 32, 'currentNode.nodeName() === \'img\'');
 function visit9_111_3(result) {
   _$jscoverage['/cmd.js'].branchData['111'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['111'][2].init(678, 329, 'currentNode.nodeName() === \'img\' && (currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className))');
+}_$jscoverage['/cmd.js'].branchData['111'][2].init(690, 334, 'currentNode.nodeName() === \'img\' && (currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className))');
 function visit8_111_2(result) {
   _$jscoverage['/cmd.js'].branchData['111'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['111'][1].init(675, 334, '!(currentNode.nodeName() === \'img\' && (currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className)))');
+}_$jscoverage['/cmd.js'].branchData['111'][1].init(687, 339, '!(currentNode.nodeName() === \'img\' && (currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className)))');
 function visit7_111_1(result) {
   _$jscoverage['/cmd.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['101'][1].init(131, 27, 'currentNode.equals(endNode)');
+}_$jscoverage['/cmd.js'].branchData['101'][1].init(133, 27, 'currentNode.equals(endNode)');
 function visit6_101_1(result) {
   _$jscoverage['/cmd.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['83'][1].init(367, 38, 'tagsRegex.test(pathElement.nodeName())');
+}_$jscoverage['/cmd.js'].branchData['83'][1].init(373, 38, 'tagsRegex.test(pathElement.nodeName())');
 function visit5_83_1(result) {
   _$jscoverage['/cmd.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['78'][1].init(41, 109, 'pathElement.equals(path.block) || pathElement.equals(path.blockLimit)');
+}_$jscoverage['/cmd.js'].branchData['78'][1].init(42, 110, 'pathElement.equals(path.block) || pathElement.equals(path.blockLimit)');
 function visit4_78_1(result) {
   _$jscoverage['/cmd.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['47'][1].init(34, 15, 'range.collapsed');
+}_$jscoverage['/cmd.js'].branchData['47'][1].init(36, 15, 'range.collapsed');
 function visit3_47_1(result) {
   _$jscoverage['/cmd.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['38'][1].init(17, 34, '!editor.hasCommand(\'removeFormat\')');
+}_$jscoverage['/cmd.js'].branchData['38'][1].init(18, 34, '!editor.hasCommand(\'removeFormat\')');
 function visit2_38_1(result) {
   _$jscoverage['/cmd.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['31'][1].init(25, 16, 'i < attrs.length');
+}_$jscoverage['/cmd.js'].branchData['31'][1].init(26, 16, 'i < attrs.length');
 function visit1_31_1(result) {
   _$jscoverage['/cmd.js'].branchData['31'][1].ranCondition(result);
   return result;

@@ -461,115 +461,115 @@ if (! _$jscoverage['/dd/draggable.js'].branchData) {
   _$jscoverage['/dd/draggable.js'].branchData['750'] = [];
   _$jscoverage['/dd/draggable.js'].branchData['750'][1] = new BranchData();
 }
-_$jscoverage['/dd/draggable.js'].branchData['750'][1].init(305, 19, 'doc.body.setCapture');
+_$jscoverage['/dd/draggable.js'].branchData['750'][1].init(310, 19, 'doc.body.setCapture');
 function visit81_750_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['750'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['739'][1].init(259, 23, 'doc.body.releaseCapture');
+}_$jscoverage['/dd/draggable.js'].branchData['739'][1].init(263, 23, 'doc.body.releaseCapture');
 function visit80_739_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['739'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['566'][1].init(338, 10, 'v.nodeType');
+}_$jscoverage['/dd/draggable.js'].branchData['566'][1].init(346, 10, 'v.nodeType');
 function visit79_566_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['566'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['563'][1].init(202, 21, 'typeof v === \'string\'');
+}_$jscoverage['/dd/draggable.js'].branchData['563'][1].init(207, 21, 'typeof v === \'string\'');
 function visit78_563_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['563'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['559'][1].init(29, 23, 'typeof v === \'function\'');
+}_$jscoverage['/dd/draggable.js'].branchData['559'][1].init(30, 23, 'typeof v === \'function\'');
 function visit77_559_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['559'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['555'][1].init(62, 10, '!vs.length');
+}_$jscoverage['/dd/draggable.js'].branchData['555'][1].init(64, 10, '!vs.length');
 function visit76_555_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['555'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['508'][1].init(25, 20, '!(v instanceof Node)');
+}_$jscoverage['/dd/draggable.js'].branchData['508'][1].init(26, 20, '!(v instanceof Node)');
 function visit75_508_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['508'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['421'][1].init(17, 7, 'e || {}');
+}_$jscoverage['/dd/draggable.js'].branchData['421'][1].init(18, 7, 'e || {}');
 function visit74_421_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['415'][1].init(17, 17, 'this._isValidDrag');
+}_$jscoverage['/dd/draggable.js'].branchData['415'][1].init(18, 17, 'this._isValidDrag');
 function visit73_415_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['415'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['404'][1].init(1527, 11, 'def && move');
+}_$jscoverage['/dd/draggable.js'].branchData['404'][1].init(1582, 11, 'def && move');
 function visit72_404_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['404'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['400'][1].init(1424, 32, 'self.get(\'preventDefaultOnMove\')');
+}_$jscoverage['/dd/draggable.js'].branchData['400'][1].init(1475, 32, 'self.get(\'preventDefaultOnMove\')');
 function visit71_400_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['392'][1].init(1230, 40, 'self.fire(\'drag\', customEvent) === false');
+}_$jscoverage['/dd/draggable.js'].branchData['392'][1].init(1273, 40, 'self.fire(\'drag\', customEvent) === false');
 function visit70_392_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['392'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['376'][1].init(677, 4, 'move');
+}_$jscoverage['/dd/draggable.js'].branchData['376'][1].init(704, 4, 'move');
 function visit69_376_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['376'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['355'][1].init(149, 25, 'e.gestureType === \'touch\'');
+}_$jscoverage['/dd/draggable.js'].branchData['355'][1].init(155, 25, 'e.gestureType === \'touch\'');
 function visit68_355_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['355'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['325'][1].init(1069, 15, 'self._allowMove');
+}_$jscoverage['/dd/draggable.js'].branchData['325'][1].init(1102, 15, 'self._allowMove');
 function visit67_325_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['325'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['321'][1].init(973, 25, 'e.gestureType === \'mouse\'');
+}_$jscoverage['/dd/draggable.js'].branchData['321'][1].init(1002, 25, 'e.gestureType === \'mouse\'');
 function visit66_321_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['321'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['313'][1].init(683, 16, 'self.get(\'halt\')');
+}_$jscoverage['/dd/draggable.js'].branchData['313'][1].init(704, 16, 'self.get(\'halt\')');
 function visit65_313_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['297'][1].init(83, 2, 'ie');
+}_$jscoverage['/dd/draggable.js'].branchData['297'][1].init(88, 2, 'ie');
 function visit64_297_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['297'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['286'][2].init(79, 13, 'e.which !== 1');
+}_$jscoverage['/dd/draggable.js'].branchData['286'][2].init(81, 13, 'e.which !== 1');
 function visit63_286_2(result) {
   _$jscoverage['/dd/draggable.js'].branchData['286'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['286'][1].init(46, 46, 'self.get(\'primaryButtonOnly\') && e.which !== 1');
+}_$jscoverage['/dd/draggable.js'].branchData['286'][1].init(48, 46, 'self.get(\'primaryButtonOnly\') && e.which !== 1');
 function visit62_286_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['286'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['274'][2].init(51, 16, 'handler[0] === t');
+}_$jscoverage['/dd/draggable.js'].branchData['274'][2].init(53, 16, 'handler[0] === t');
 function visit61_274_2(result) {
   _$jscoverage['/dd/draggable.js'].branchData['274'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['274'][1].init(51, 39, 'handler[0] === t || handler.contains(t)');
+}_$jscoverage['/dd/draggable.js'].branchData['274'][1].init(53, 39, 'handler[0] === t || handler.contains(t)');
 function visit60_274_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['262'][1].init(91, 4, 'node');
+}_$jscoverage['/dd/draggable.js'].branchData['262'][1].init(94, 4, 'node');
 function visit59_262_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['250'][1].init(94, 4, 'node');
+}_$jscoverage['/dd/draggable.js'].branchData['250'][1].init(97, 4, 'node');
 function visit58_250_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['238'][1].init(94, 4, 'node');
+}_$jscoverage['/dd/draggable.js'].branchData['238'][1].init(97, 4, 'node');
 function visit57_238_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['224'][1].init(21, 22, '!self._checkHandler(t)');
+}_$jscoverage['/dd/draggable.js'].branchData['224'][1].init(22, 22, '!self._checkHandler(t)');
 function visit56_224_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['223'][1].init(77, 28, 'self._checkDragStartValid(e)');
+}_$jscoverage['/dd/draggable.js'].branchData['223'][1].init(81, 28, 'self._checkDragStartValid(e)');
 function visit55_223_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['23'][1].init(17, 17, 'this._isValidDrag');
+}_$jscoverage['/dd/draggable.js'].branchData['23'][1].init(18, 17, 'this._isValidDrag');
 function visit54_23_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['23'][1].ranCondition(result);
   return result;

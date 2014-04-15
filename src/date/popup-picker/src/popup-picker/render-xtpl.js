@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    ');
+            buffer.write('">\r\n    ');
             var option3 = {};
             var params4 = [];
             params4.push('date/picker-xtpl');
@@ -45,7 +45,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, false);
-            buffer.write('\n</div>');
+            buffer.write('\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

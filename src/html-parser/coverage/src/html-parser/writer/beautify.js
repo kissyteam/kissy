@@ -374,95 +374,95 @@ if (! _$jscoverage['/html-parser/writer/beautify.js'].branchData) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['195'] = [];
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['195'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/writer/beautify.js'].branchData['195'][1].init(17, 16, 'this.allowIndent');
+_$jscoverage['/html-parser/writer/beautify.js'].branchData['195'][1].init(18, 16, 'this.allowIndent');
 function visit372_195_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['195'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['188'][1].init(17, 16, 'this.allowIndent');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['188'][1].init(18, 16, 'this.allowIndent');
 function visit371_188_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['179'][1].init(103, 11, '!this.inPre');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['179'][1].init(107, 11, '!this.inPre');
 function visit370_179_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['176'][1].init(17, 16, 'this.allowIndent');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['176'][1].init(18, 16, 'this.allowIndent');
 function visit369_176_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['169'][1].init(586, 21, 'rules.breakAfterClose');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['169'][1].init(608, 21, 'rules.breakAfterClose');
 function visit368_169_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['165'][1].init(502, 17, 'tagName === \'pre\'');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['165'][1].init(520, 17, 'tagName === \'pre\'');
 function visit367_165_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['158'][1].init(304, 22, 'rules.breakBeforeClose');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['158'][1].init(315, 22, 'rules.breakBeforeClose');
 function visit366_158_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['156'][1].init(224, 16, 'self.allowIndent');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['156'][1].init(233, 16, 'self.allowIndent');
 function visit365_156_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['152'][1].init(136, 17, 'rules.allowIndent');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['152'][1].init(141, 17, 'rules.allowIndent');
 function visit364_152_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['150'][1].init(78, 25, 'self.rules[tagName] || {}');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['150'][1].init(80, 25, 'self.rules[tagName] || {}');
 function visit363_150_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['150'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['142'][1].init(434, 17, 'tagName === \'pre\'');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['142'][1].init(449, 17, 'tagName === \'pre\'');
 function visit362_142_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['139'][1].init(346, 20, 'rules.breakAfterOpen');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['139'][1].init(358, 20, 'rules.breakAfterOpen');
 function visit361_139_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['135'][1].init(55, 17, 'rules.allowIndent');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['135'][1].init(57, 17, 'rules.allowIndent');
 function visit360_135_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['131'][1].init(107, 15, 'el.isSelfClosed');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['131'][1].init(111, 15, 'el.isSelfClosed');
 function visit359_131_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['130'][1].init(64, 25, 'this.rules[tagName] || {}');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['130'][1].init(67, 25, 'this.rules[tagName] || {}');
 function visit358_130_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['120'][1].init(187, 21, 'rules.breakBeforeOpen');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['120'][1].init(193, 21, 'rules.breakBeforeOpen');
 function visit357_120_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['118'][1].init(107, 16, 'this.allowIndent');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['118'][1].init(111, 16, 'this.allowIndent');
 function visit356_118_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['117'][1].init(49, 25, 'this.rules[tagName] || {}');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['117'][1].init(50, 25, 'this.rules[tagName] || {}');
 function visit355_117_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['108'][1].init(17, 20, '!this.rules[tagName]');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['108'][1].init(18, 20, '!this.rules[tagName]');
 function visit354_108_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['96'][1].init(25, 25, '!(/[\\r\\n\\t ]/.test(o[j]))');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['96'][1].init(26, 25, '!(/[\\r\\n\\t ]/.test(o[j]))');
 function visit353_96_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['95'][1].init(283, 6, 'j >= 0');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['95'][1].init(287, 6, 'j >= 0');
 function visit352_95_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['91'][1].init(50, 23, '!this.inPre && o.length');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['91'][1].init(52, 23, '!this.inPre && o.length');
 function visit351_91_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/beautify.js'].branchData['82'][1].init(17, 11, '!this.inPre');
+}_$jscoverage['/html-parser/writer/beautify.js'].branchData['82'][1].init(18, 11, '!this.inPre');
 function visit350_82_1(result) {
   _$jscoverage['/html-parser/writer/beautify.js'].branchData['82'][1].ranCondition(result);
   return result;

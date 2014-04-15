@@ -302,39 +302,39 @@ if (! _$jscoverage['/ui.js'].branchData) {
   _$jscoverage['/ui.js'].branchData['75'] = [];
   _$jscoverage['/ui.js'].branchData['75'][1] = new BranchData();
 }
-_$jscoverage['/ui.js'].branchData['75'][1].init(189, 33, 'editor.queryCommandValue(cmdType)');
+_$jscoverage['/ui.js'].branchData['75'][1].init(195, 33, 'editor.queryCommandValue(cmdType)');
 function visit9_75_1(result) {
   _$jscoverage['/ui.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['71'][1].init(22, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/ui.js'].branchData['71'][1].init(24, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit8_71_1(result) {
   _$jscoverage['/ui.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['61'][1].init(72, 7, 'checked');
+}_$jscoverage['/ui.js'].branchData['61'][1].init(74, 7, 'checked');
 function visit7_61_1(result) {
   _$jscoverage['/ui.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['40'][1].init(144, 36, 'currentValue === value.toLowerCase()');
+}_$jscoverage['/ui.js'].branchData['40'][1].init(147, 36, 'currentValue === value.toLowerCase()');
 function visit6_40_1(result) {
   _$jscoverage['/ui.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['37'][1].init(115, 19, 'j < children.length');
+}_$jscoverage['/ui.js'].branchData['37'][1].init(117, 19, 'j < children.length');
 function visit5_37_1(result) {
   _$jscoverage['/ui.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['35'][1].init(201, 22, 'currentValue !== false');
+}_$jscoverage['/ui.js'].branchData['35'][1].init(205, 22, 'currentValue !== false');
 function visit4_35_1(result) {
   _$jscoverage['/ui.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['31'][1].init(300, 8, 'children');
+}_$jscoverage['/ui.js'].branchData['31'][1].init(309, 8, 'children');
 function visit3_31_1(result) {
   _$jscoverage['/ui.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['29'][1].init(110, 32, 'menu.get && menu.get(\'children\')');
+}_$jscoverage['/ui.js'].branchData['29'][1].init(112, 32, 'menu.get && menu.get(\'children\')');
 function visit2_29_1(result) {
   _$jscoverage['/ui.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['23'][1].init(21, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/ui.js'].branchData['23'][1].init(22, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_23_1(result) {
   _$jscoverage['/ui.js'].branchData['23'][1].ranCondition(result);
   return result;

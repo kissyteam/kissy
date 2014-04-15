@@ -308,31 +308,31 @@ if (! _$jscoverage['/pull-to-refresh.js'].branchData) {
   _$jscoverage['/pull-to-refresh.js'].branchData['78'] = [];
   _$jscoverage['/pull-to-refresh.js'].branchData['78'][1] = new BranchData();
 }
-_$jscoverage['/pull-to-refresh.js'].branchData['78'][1].init(43, 5, 'v < 0');
+_$jscoverage['/pull-to-refresh.js'].branchData['78'][1].init(45, 5, 'v < 0');
 function visit7_78_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['68'][1].init(720, 6, 'loadFn');
+}_$jscoverage['/pull-to-refresh.js'].branchData['68'][1].init(739, 6, 'loadFn');
 function visit6_68_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['49'][1].init(141, 21, '0 - b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['49'][1].init(145, 21, '0 - b > self.elHeight');
 function visit5_49_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['40'][1].init(173, 5, 'b < 0');
+}_$jscoverage['/pull-to-refresh.js'].branchData['40'][1].init(178, 5, 'b < 0');
 function visit4_40_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['38'][1].init(76, 21, '0 - b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['38'][1].init(79, 21, '0 - b > self.elHeight');
 function visit3_38_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['21'][1].init(17, 16, '!this.scrollView');
+}_$jscoverage['/pull-to-refresh.js'].branchData['21'][1].init(18, 16, '!this.scrollView');
 function visit2_21_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['10'][1].init(167, 55, 'transformVendorInfo && transformVendorInfo.propertyName');
+}_$jscoverage['/pull-to-refresh.js'].branchData['10'][1].init(171, 55, 'transformVendorInfo && transformVendorInfo.propertyName');
 function visit1_10_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['10'][1].ranCondition(result);
   return result;

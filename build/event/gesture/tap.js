@@ -1,0 +1,9 @@
+/*
+Copyright 2014, KISSY v5.0.0
+MIT Licensed
+build time: Apr 15 17:53
+*/
+KISSY.add("event/gesture/tap",["event/gesture/util","event/dom/base","ua"],function(j,l){function o(a){a.preventDefault()}function m(a){a.singleTapTimer&&(clearTimeout(a.singleTapTimer),a.singleTapTimer=0);a.tapHoldTimer&&(clearTimeout(a.tapHoldTimer),a.tapHoldTimer=0)}function d(){d.superclass.constructor.apply(this,arguments)}var k=l("event/gesture/util"),p=k.addEvent,f=l("event/dom/base"),k=k.SingleTouch,n=l("ua"),q=f.Object;j.extend(d,k,{start:function(a){var b=this;d.superclass.start.call(b,
+a);m(b);var c=b.lastTouches[0];b.tapHoldTimer=setTimeout(function(){var g=j.mix({touch:c,which:1,TAP_HOLD_DELAY:(j.now()-a.timeStamp)/1E3},b.lastXY);b.tapHoldTimer=0;b.lastXY=0;f.fire(c.target,"tapHold",g)},1E3);b.isStarted=!0},move:function(){var a;if(!(a=this.lastXY))return!1;var b=this.lastTouches[0];if(!b||5<Math.abs(b.pageX-a.pageX)||5<Math.abs(b.pageY-a.pageY))return m(this),!1},end:function(a,b){var c;m(this);if(!b&&(c=this.lastXY)){var g=this.lastTouches[0],e=g.target,h=new q(a.originalEvent);
+j.mix(h,{type:"tap",which:1,pageX:c.pageX,pageY:c.pageY,target:e,currentTarget:e});h.touch=g;f.fire(e,"tap",h);if(h.isDefaultPrevented()&&n.mobile)if(n.ios)a.preventDefault();else f.on(e.ownerDocument||e,"click",{fn:o,once:1});var h=this.lastEndTime,d=a.timeStamp,i;this.lastEndTime=d;if(h&&(i=d-h,300>i)){this.lastEndTime=0;f.fire(e,"doubleTap",{touch:g,pageX:c.pageX,pageY:c.pageY,which:1,duration:i/1E3});return}i=d-this.startTime;300<i?f.fire(e,"singleTap",{touch:g,pageX:c.pageX,pageY:c.pageY,which:1,
+duration:i/1E3}):this.singleTapTimer=setTimeout(function(){f.fire(e,"singleTap",{touch:g,pageX:c.pageX,pageY:c.pageY,which:1,duration:i/1E3})},300)}}});p(["tap","doubleTap","singleTap","tapHold"],{handle:new d});return{TAP:"tap",SINGLE_TAP:"singleTap",DOUBLE_TAP:"doubleTap",TAP_HOLD:"tapHold"}});

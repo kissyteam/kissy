@@ -306,35 +306,35 @@ if (! _$jscoverage['/multi-word/cursor.js'].branchData) {
   _$jscoverage['/multi-word/cursor.js'].branchData['149'] = [];
   _$jscoverage['/multi-word/cursor.js'].branchData['149'][1] = new BranchData();
 }
-_$jscoverage['/multi-word/cursor.js'].branchData['149'][1].init(1825, 18, 'selectionStart > 0');
+_$jscoverage['/multi-word/cursor.js'].branchData['149'][1].init(1879, 18, 'selectionStart > 0');
 function visit8_149_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['124'][2].init(1004, 24, 'elem.type !== \'textarea\'');
+}_$jscoverage['/multi-word/cursor.js'].branchData['124'][2].init(1033, 24, 'elem.type !== \'textarea\'');
 function visit7_124_2(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['124'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['124'][1].init(977, 51, '!supportInputScrollLeft && elem.type !== \'textarea\'');
+}_$jscoverage['/multi-word/cursor.js'].branchData['124'][1].init(1006, 51, '!supportInputScrollLeft && elem.type !== \'textarea\'');
 function visit6_124_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['108'][1].init(351, 13, 'doc.selection');
+}_$jscoverage['/multi-word/cursor.js'].branchData['108'][1].init(364, 13, 'doc.selection');
 function visit5_108_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['87'][1].init(325, 23, 'input[0].scrollLeft > 0');
+}_$jscoverage['/multi-word/cursor.js'].branchData['87'][1].init(337, 23, 'input[0].scrollLeft > 0');
 function visit4_87_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['68'][1].init(419, 9, '!FAKE_DIV');
+}_$jscoverage['/multi-word/cursor.js'].branchData['68'][1].init(433, 9, '!FAKE_DIV');
 function visit3_68_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['59'][1].init(110, 49, 'String(elem[0].type.toLowerCase()) === \'textarea\'');
+}_$jscoverage['/multi-word/cursor.js'].branchData['59'][1].init(115, 49, 'String(elem[0].type.toLowerCase()) === \'textarea\'');
 function visit2_59_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['56'][1].init(42, 5, '!fake');
+}_$jscoverage['/multi-word/cursor.js'].branchData['56'][1].init(44, 5, '!fake');
 function visit1_56_1(result) {
   _$jscoverage['/multi-word/cursor.js'].branchData['56'][1].ranCondition(result);
   return result;

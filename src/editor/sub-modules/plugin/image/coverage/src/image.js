@@ -346,47 +346,47 @@ if (! _$jscoverage['/image.js'].branchData) {
   _$jscoverage['/image.js'].branchData['156'] = [];
   _$jscoverage['/image.js'].branchData['156'][1] = new BranchData();
 }
-_$jscoverage['/image.js'].branchData['156'][1].init(43, 40, 'a.attr(\'_ke_saved_src\') || a.attr(\'src\')');
+_$jscoverage['/image.js'].branchData['156'][1].init(44, 40, 'a.attr(\'_ke_saved_src\') || a.attr(\'src\')');
 function visit11_156_1(result) {
   _$jscoverage['/image.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['155'][1].init(101, 1, 'a');
+}_$jscoverage['/image.js'].branchData['155'][1].init(103, 1, 'a');
 function visit10_155_1(result) {
   _$jscoverage['/image.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['143'][1].init(112, 9, 'r && r[0]');
+}_$jscoverage['/image.js'].branchData['143'][1].init(114, 9, 'r && r[0]');
 function visit9_143_1(result) {
   _$jscoverage['/image.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['141'][1].init(33, 9, 'UA.webkit');
+}_$jscoverage['/image.js'].branchData['141'][1].init(34, 9, 'UA.webkit');
 function visit8_141_1(result) {
   _$jscoverage['/image.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['118'][1].init(98, 11, 'checkImg(t)');
+}_$jscoverage['/image.js'].branchData['118'][1].init(101, 11, 'checkImg(t)');
 function visit7_118_1(result) {
   _$jscoverage['/image.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['105'][1].init(33, 21, 'h.content === content');
+}_$jscoverage['/image.js'].branchData['105'][1].init(34, 21, 'h.content === content');
 function visit6_105_1(result) {
   _$jscoverage['/image.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['77'][1].init(193, 6, '!UA.ie');
+}_$jscoverage['/image.js'].branchData['77'][1].init(197, 6, '!UA.ie');
 function visit5_77_1(result) {
   _$jscoverage['/image.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['64'][1].init(103, 3, 'img');
+}_$jscoverage['/image.js'].branchData['64'][1].init(105, 3, 'img');
 function visit4_64_1(result) {
   _$jscoverage['/image.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['31'][1].init(23, 12, 'config || {}');
+}_$jscoverage['/image.js'].branchData['31'][1].init(24, 12, 'config || {}');
 function visit3_31_1(result) {
   _$jscoverage['/image.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['18'][2].init(45, 25, 'node.nodeName() === \'img\'');
+}_$jscoverage['/image.js'].branchData['18'][2].init(47, 25, 'node.nodeName() === \'img\'');
 function visit2_18_2(result) {
   _$jscoverage['/image.js'].branchData['18'][2].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['18'][1].init(45, 139, 'node.nodeName() === \'img\' && (!/(^|\\s+)ke_/.test(node[0].className))');
+}_$jscoverage['/image.js'].branchData['18'][1].init(47, 141, 'node.nodeName() === \'img\' && (!/(^|\\s+)ke_/.test(node[0].className))');
 function visit1_18_1(result) {
   _$jscoverage['/image.js'].branchData['18'][1].ranCondition(result);
   return result;

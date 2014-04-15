@@ -294,43 +294,43 @@ if (! _$jscoverage['/swf/ua.js'].branchData) {
   _$jscoverage['/swf/ua.js'].branchData['102'] = [];
   _$jscoverage['/swf/ua.js'].branchData['102'][1] = new BranchData();
 }
-_$jscoverage['/swf/ua.js'].branchData['102'][1].init(16, 53, 'getNumberVersion(fpv(force)) >= getNumberVersion(ver)');
+_$jscoverage['/swf/ua.js'].branchData['102'][1].init(17, 53, 'getNumberVersion(fpv(force)) >= getNumberVersion(ver)');
 function visit10_102_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['86'][1].init(71, 17, 'force || firstRun');
+}_$jscoverage['/swf/ua.js'].branchData['86'][1].init(73, 17, 'force || firstRun');
 function visit9_86_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['74'][1].init(111, 11, 'padding > 0');
+}_$jscoverage['/swf/ua.js'].branchData['74'][1].init(115, 11, 'padding > 0');
 function visit8_74_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['71'][1].init(15, 8, 'num || 0');
+}_$jscoverage['/swf/ua.js'].branchData['71'][1].init(16, 8, 'num || 0');
 function visit7_71_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['64'][1].init(261, 8, 'ret || 0');
+}_$jscoverage['/swf/ua.js'].branchData['64'][1].init(269, 8, 'ret || 0');
 function visit6_64_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['61'][1].init(140, 14, 'S.isArray(arr)');
+}_$jscoverage['/swf/ua.js'].branchData['61'][1].init(145, 14, 'S.isArray(arr)');
 function visit5_61_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['57'][1].init(19, 23, 'typeof ver === \'string\'');
+}_$jscoverage['/swf/ua.js'].branchData['57'][1].init(20, 23, 'typeof ver === \'string\'');
 function visit4_57_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['34'][1].init(730, 4, '!ver');
+}_$jscoverage['/swf/ua.js'].branchData['34'][1].init(749, 4, '!ver');
 function visit3_34_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['21'][1].init(20, 41, 'navigator.plugins[\'Shockwave Flash\'] || 0');
+}_$jscoverage['/swf/ua.js'].branchData['21'][1].init(21, 41, 'navigator.plugins[\'Shockwave Flash\'] || 0');
 function visit2_21_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['20'][1].init(127, 47, 'navigator.plugins && navigator.mimeTypes.length');
+}_$jscoverage['/swf/ua.js'].branchData['20'][1].init(132, 47, 'navigator.plugins && navigator.mimeTypes.length');
 function visit1_20_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['20'][1].ranCondition(result);
   return result;

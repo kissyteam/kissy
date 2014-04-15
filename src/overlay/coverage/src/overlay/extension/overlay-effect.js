@@ -308,35 +308,35 @@ if (! _$jscoverage['/overlay/extension/overlay-effect.js'].branchData) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][1] = new BranchData();
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][2] = new BranchData();
 }
-_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][2].init(60, 26, 'typeof effect === \'string\'');
+_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][2].init(62, 26, 'typeof effect === \'string\'');
 function visit35_152_2(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][2].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][1].init(60, 46, 'typeof effect === \'string\' && !effects[effect]');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][1].init(62, 46, 'typeof effect === \'string\' && !effects[effect]');
 function visit34_152_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['78'][1].init(246, 6, 'target');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['78'][1].init(254, 6, 'target');
 function visit33_78_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['75'][2].init(172, 17, 'effect === \'none\'');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['75'][2].init(177, 17, 'effect === \'none\'');
 function visit32_75_2(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['75'][2].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['75'][1].init(172, 28, 'effect === \'none\' && !target');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['75'][1].init(177, 28, 'effect === \'none\' && !target');
 function visit31_75_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['73'][1].init(83, 26, 'effectCfg.effect || \'none\'');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['73'][1].init(85, 26, 'effectCfg.effect || \'none\'');
 function visit30_73_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['45'][1].init(682, 4, 'show');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['45'][1].init(706, 4, 'show');
 function visit29_45_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['22'][1].init(13, 18, 'self.__effectGhost');
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['22'][1].init(14, 18, 'self.__effectGhost');
 function visit28_22_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['22'][1].ranCondition(result);
   return result;

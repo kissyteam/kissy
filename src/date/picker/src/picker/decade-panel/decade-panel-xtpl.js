@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    <a class="');
+            buffer.write('">\r\n    <a class="');
             var option3 = {
                 escape: 1
             };
@@ -45,10 +45,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, true);
-            buffer.write('"\n       href="#"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
             var id6 = scope.resolve(["previousCenturyLabel"]);
             buffer.write(id6, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n    <div class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <div class="');
             var option7 = {
                 escape: 1
             };
@@ -61,13 +61,13 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet9 = undefined;
             }
             buffer.write(commandRet9, true);
-            buffer.write('">\n                ');
+            buffer.write('">\r\n                ');
             var id10 = scope.resolve(["startYear"]);
             buffer.write(id10, true);
             buffer.write('-');
             var id11 = scope.resolve(["endYear"]);
             buffer.write(id11, true);
-            buffer.write('\n    </div>\n    <a class="');
+            buffer.write('\r\n    </div>\r\n    <a class="');
             var option12 = {
                 escape: 1
             };
@@ -80,10 +80,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet14 = undefined;
             }
             buffer.write(commandRet14, true);
-            buffer.write('"\n       href="#"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
             var id15 = scope.resolve(["nextCenturyLabel"]);
             buffer.write(id15, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
             var option16 = {
                 escape: 1
             };
@@ -96,7 +96,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet18 = undefined;
             }
             buffer.write(commandRet18, true);
-            buffer.write('">\n    <table class="');
+            buffer.write('">\r\n    <table class="');
             var option19 = {
                 escape: 1
             };
@@ -109,7 +109,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet21 = undefined;
             }
             buffer.write(commandRet21, true);
-            buffer.write('" cellspacing="0" role="grid">\n        <tbody>\n        ');
+            buffer.write('" cellspacing="0" role="grid">\r\n        <tbody>\r\n        ');
             var option22 = {};
             var params23 = [];
             params23.push('date/picker/decade-panel/decades-xtpl');
@@ -122,7 +122,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet24 = undefined;
             }
             buffer.write(commandRet24, false);
-            buffer.write('\n        </tbody>\n    </table>\n</div>');
+            buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

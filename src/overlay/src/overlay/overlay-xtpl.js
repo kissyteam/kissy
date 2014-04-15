@@ -28,7 +28,7 @@ KISSY.add(function (S, require, exports, module) {
             option0.params = params1;
             option0.fn = function (scope, buffer) {
 
-                buffer.write('\n    ');
+                buffer.write('\r\n    ');
                 var option2 = {
                     escape: 1
                 };
@@ -38,7 +38,7 @@ KISSY.add(function (S, require, exports, module) {
                 option2.params = params3;
                 option2.fn = function (scope, buffer) {
 
-                    buffer.write('\n        <a href="javascript:void(\'close\')"\n           class="');
+                    buffer.write('\r\n        <a href="javascript:void(\'close\')"\r\n           class="');
                     var option5 = {
                         escape: 1
                     };
@@ -51,7 +51,7 @@ KISSY.add(function (S, require, exports, module) {
                         commandRet7 = undefined;
                     }
                     buffer.write(commandRet7, true);
-                    buffer.write('"\n           role=\'button\'>\n            <span class="');
+                    buffer.write('"\r\n           role=\'button\'>\r\n            <span class="');
                     var option8 = {
                         escape: 1
                     };
@@ -64,17 +64,17 @@ KISSY.add(function (S, require, exports, module) {
                         commandRet10 = undefined;
                     }
                     buffer.write(commandRet10, true);
-                    buffer.write('">close</span>\n        </a>\n    ');
+                    buffer.write('">close</span>\r\n        </a>\r\n    ');
 
                     return buffer;
                 };
                 buffer = ifCommand.call(engine, scope, option2, buffer, 2, payload);
-                buffer.write('\n');
+                buffer.write('\r\n');
 
                 return buffer;
             };
             buffer = blockCommand.call(engine, scope, option0, buffer, 1, payload);
-            buffer.write('\n\n<div class="');
+            buffer.write('\r\n\r\n<div class="');
             var option11 = {
                 escape: 1
             };
@@ -87,7 +87,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet13 = undefined;
             }
             buffer.write(commandRet13, true);
-            buffer.write('">\n    ');
+            buffer.write('">\r\n    ');
             var option14 = {
                 escape: 1
             };
@@ -96,15 +96,15 @@ KISSY.add(function (S, require, exports, module) {
             option14.params = params15;
             option14.fn = function (scope, buffer) {
 
-                buffer.write('\n        ');
+                buffer.write('\r\n        ');
                 var id16 = scope.resolve(["content"]);
                 buffer.write(id16, false);
-                buffer.write('\n    ');
+                buffer.write('\r\n    ');
 
                 return buffer;
             };
             buffer = blockCommand.call(engine, scope, option14, buffer, 12, payload);
-            buffer.write('\n</div>');
+            buffer.write('\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

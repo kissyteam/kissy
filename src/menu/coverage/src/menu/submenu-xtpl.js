@@ -320,7 +320,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[37]++;
   buffer.write(id3, false);
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[38]++;
-  buffer.write('</div>\n<span class="');
+  buffer.write('</div>\r\n<span class="');
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[39]++;
   var id4 = scope.resolve(["prefixCls"]);
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[40]++;

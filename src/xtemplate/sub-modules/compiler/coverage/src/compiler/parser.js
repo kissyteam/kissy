@@ -545,147 +545,147 @@ if (! _$jscoverage['/compiler/parser.js'].branchData) {
   _$jscoverage['/compiler/parser.js'].branchData['1870'] = [];
   _$jscoverage['/compiler/parser.js'].branchData['1870'][1] = new BranchData();
 }
-_$jscoverage['/compiler/parser.js'].branchData['1870'][1].init(856, 17, 'ret !== undefined');
+_$jscoverage['/compiler/parser.js'].branchData['1870'][1].init(872, 17, 'ret !== undefined');
 function visit42_1870_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1870'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1867'][1].init(738, 13, 'reducedAction');
+}_$jscoverage['/compiler/parser.js'].branchData['1867'][1].init(751, 13, 'reducedAction');
 function visit41_1867_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1867'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1864'][1].init(590, 7, 'i < len');
+}_$jscoverage['/compiler/parser.js'].branchData['1864'][1].init(600, 7, 'i < len');
 function visit40_1864_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1864'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1858'][1].init(257, 31, 'production.rhs || production[1]');
+}_$jscoverage['/compiler/parser.js'].branchData['1858'][1].init(260, 31, 'production.rhs || production[1]');
 function visit39_1858_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1858'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1857'][1].init(184, 34, 'production.action || production[2]');
+}_$jscoverage['/compiler/parser.js'].branchData['1857'][1].init(186, 34, 'production.action || production[2]');
 function visit38_1857_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1857'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1856'][1].init(108, 34, 'production.symbol || production[0]');
+}_$jscoverage['/compiler/parser.js'].branchData['1856'][1].init(109, 34, 'production.symbol || production[0]');
 function visit37_1856_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1856'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1839'][1].init(83, 18, 'tableAction[state]');
+}_$jscoverage['/compiler/parser.js'].branchData['1839'][1].init(86, 18, 'tableAction[state]');
 function visit36_1839_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1839'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1836'][1].init(336, 7, '!action');
+}_$jscoverage['/compiler/parser.js'].branchData['1836'][1].init(347, 7, '!action');
 function visit35_1836_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1836'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1832'][1].init(26, 48, 'tableAction[state] && tableAction[state][symbol]');
+}_$jscoverage['/compiler/parser.js'].branchData['1832'][1].init(27, 48, 'tableAction[state] && tableAction[state][symbol]');
 function visit34_1832_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1832'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1831'][1].init(169, 6, 'symbol');
+}_$jscoverage['/compiler/parser.js'].branchData['1831'][1].init(175, 6, 'symbol');
 function visit33_1831_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1831'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['1827'][1].init(62, 7, '!symbol');
+}_$jscoverage['/compiler/parser.js'].branchData['1827'][1].init(64, 7, '!symbol');
 function visit32_1827_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1827'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['352'][1].init(88, 20, 'this.$1.length !== 3');
+}_$jscoverage['/compiler/parser.js'].branchData['352'][1].init(89, 20, 'this.$1.length !== 3');
 function visit31_352_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['352'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['347'][1].init(101, 20, 'this.$1.length !== 4');
+}_$jscoverage['/compiler/parser.js'].branchData['347'][1].init(102, 20, 'this.$1.length !== 4');
 function visit30_347_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['347'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['202'][1].init(79, 21, 'this.matches[1] || \'\'');
+}_$jscoverage['/compiler/parser.js'].branchData['202'][1].init(81, 21, 'this.matches[1] || \'\'');
 function visit29_202_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['202'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['167'][1].init(503, 1, 'n');
+}_$jscoverage['/compiler/parser.js'].branchData['167'][1].init(518, 1, 'n');
 function visit28_167_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['161'][1].init(278, 5, 'n % 2');
+}_$jscoverage['/compiler/parser.js'].branchData['161'][1].init(287, 5, 'n % 2');
 function visit27_161_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['135'][1].init(1043, 3, 'ret');
+}_$jscoverage['/compiler/parser.js'].branchData['135'][1].init(1067, 3, 'ret');
 function visit26_135_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['128'][1].init(766, 17, 'ret === undefined');
+}_$jscoverage['/compiler/parser.js'].branchData['128'][1].init(783, 17, 'ret === undefined');
 function visit25_128_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['127'][1].init(713, 27, 'action && action.call(self)');
+}_$jscoverage['/compiler/parser.js'].branchData['127'][1].init(729, 27, 'action && action.call(self)');
 function visit24_127_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['113'][1].init(74, 5, 'lines');
+}_$jscoverage['/compiler/parser.js'].branchData['113'][1].init(76, 5, 'lines');
 function visit23_113_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['111'][1].init(224, 23, 'm = input.match(regexp)');
+}_$jscoverage['/compiler/parser.js'].branchData['111'][1].init(229, 23, 'm = input.match(regexp)');
 function visit22_111_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['110'][2].init(131, 20, 'rule[2] || undefined');
+}_$jscoverage['/compiler/parser.js'].branchData['110'][2].init(133, 20, 'rule[2] || undefined');
 function visit21_110_2(result) {
   _$jscoverage['/compiler/parser.js'].branchData['110'][2].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['110'][1].init(116, 35, 'rule.action || rule[2] || undefined');
+}_$jscoverage['/compiler/parser.js'].branchData['110'][1].init(118, 35, 'rule.action || rule[2] || undefined');
 function visit20_110_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['109'][1].init(64, 21, 'rule.token || rule[0]');
+}_$jscoverage['/compiler/parser.js'].branchData['109'][1].init(65, 21, 'rule.token || rule[0]');
 function visit19_109_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['108'][1].init(63, 22, 'rule.regexp || rule[1]');
+}_$jscoverage['/compiler/parser.js'].branchData['108'][1].init(65, 22, 'rule.regexp || rule[1]');
 function visit18_108_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['106'][1].init(416, 16, 'i < rules.length');
+}_$jscoverage['/compiler/parser.js'].branchData['106'][1].init(426, 16, 'i < rules.length');
 function visit17_106_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['103'][1].init(308, 6, '!input');
+}_$jscoverage['/compiler/parser.js'].branchData['103'][1].init(315, 6, '!input');
 function visit16_103_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['90'][1].init(390, 16, 'reverseSymbolMap');
+}_$jscoverage['/compiler/parser.js'].branchData['90'][1].init(400, 16, 'reverseSymbolMap');
 function visit15_90_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['84'][1].init(151, 30, '!reverseSymbolMap && symbolMap');
+}_$jscoverage['/compiler/parser.js'].branchData['84'][1].init(155, 30, '!reverseSymbolMap && symbolMap');
 function visit14_84_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['74'][1].init(516, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
+}_$jscoverage['/compiler/parser.js'].branchData['74'][1].init(525, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
 function visit13_74_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['72'][1].init(309, 36, 'matched.length > DEBUG_CONTEXT_LIMIT');
+}_$jscoverage['/compiler/parser.js'].branchData['72'][1].init(316, 36, 'matched.length > DEBUG_CONTEXT_LIMIT');
 function visit12_72_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['52'][1].init(25, 30, 'S.inArray(currentState, state)');
+}_$jscoverage['/compiler/parser.js'].branchData['52'][1].init(26, 30, 'S.inArray(currentState, state)');
 function visit11_52_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['48'][1].init(25, 37, 'currentState === Lexer.STATIC.INITIAL');
+}_$jscoverage['/compiler/parser.js'].branchData['48'][1].init(26, 37, 'currentState === Lexer.STATIC.INITIAL');
 function visit10_48_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['47'][1].init(66, 6, '!state');
+}_$jscoverage['/compiler/parser.js'].branchData['47'][1].init(68, 6, '!state');
 function visit9_47_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['46'][1].init(29, 15, 'r.state || r[3]');
+}_$jscoverage['/compiler/parser.js'].branchData['46'][1].init(30, 15, 'r.state || r[3]');
 function visit8_46_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/parser.js'].branchData['42'][1].init(150, 13, 'self.mapState');
+}_$jscoverage['/compiler/parser.js'].branchData['42'][1].init(154, 13, 'self.mapState');
 function visit7_42_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['42'][1].ranCondition(result);
   return result;

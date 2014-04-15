@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n    <a class="');
+            buffer.write('">\r\n    <a class="');
             var option3 = {
                 escape: 1
             };
@@ -45,10 +45,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet5 = undefined;
             }
             buffer.write(commandRet5, true);
-            buffer.write('"\n       href="#"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
             var id6 = scope.resolve(["previousYearLabel"]);
             buffer.write(id6, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n\n\n        <a class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n\r\n        <a class="');
             var option7 = {
                 escape: 1
             };
@@ -61,13 +61,13 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet9 = undefined;
             }
             buffer.write(commandRet9, true);
-            buffer.write('"\n           role="button"\n           href="#"\n           hidefocus="on"\n           title="');
+            buffer.write('"\r\n           role="button"\r\n           href="#"\r\n           hidefocus="on"\r\n           title="');
             var id10 = scope.resolve(["yearSelectLabel"]);
             buffer.write(id10, true);
-            buffer.write('">\n            <span>');
+            buffer.write('">\r\n            <span>');
             var id11 = scope.resolve(["year"]);
             buffer.write(id11, true);
-            buffer.write('</span>\n            <span class="');
+            buffer.write('</span>\r\n            <span class="');
             var option12 = {
                 escape: 1
             };
@@ -80,7 +80,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet14 = undefined;
             }
             buffer.write(commandRet14, true);
-            buffer.write('">x</span>\n        </a>\n\n    <a class="');
+            buffer.write('">x</span>\r\n        </a>\r\n\r\n    <a class="');
             var option15 = {
                 escape: 1
             };
@@ -93,10 +93,10 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet17 = undefined;
             }
             buffer.write(commandRet17, true);
-            buffer.write('"\n       href="#"\n       role="button"\n       title="');
+            buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
             var id18 = scope.resolve(["nextYearLabel"]);
             buffer.write(id18, true);
-            buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
             var option19 = {
                 escape: 1
             };
@@ -109,7 +109,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet21 = undefined;
             }
             buffer.write(commandRet21, true);
-            buffer.write('">\n    <table class="');
+            buffer.write('">\r\n    <table class="');
             var option22 = {
                 escape: 1
             };
@@ -122,7 +122,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet24 = undefined;
             }
             buffer.write(commandRet24, true);
-            buffer.write('" cellspacing="0" role="grid">\n        <tbody>\n        ');
+            buffer.write('" cellspacing="0" role="grid">\r\n        <tbody>\r\n        ');
             var option25 = {};
             var params26 = [];
             params26.push('date/picker/month-panel/months-xtpl');
@@ -135,7 +135,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet27 = undefined;
             }
             buffer.write(commandRet27, false);
-            buffer.write('\n        </tbody>\n    </table>\n</div>');
+            buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

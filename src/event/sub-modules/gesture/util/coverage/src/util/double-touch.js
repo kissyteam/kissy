@@ -262,15 +262,15 @@ if (! _$jscoverage['/util/double-touch.js'].branchData) {
   _$jscoverage['/util/double-touch.js'].branchData['28'] = [];
   _$jscoverage['/util/double-touch.js'].branchData['28'][1] = new BranchData();
 }
-_$jscoverage['/util/double-touch.js'].branchData['28'][1].init(21, 20, 'Dom.contains(t2, t1)');
+_$jscoverage['/util/double-touch.js'].branchData['28'][1].init(22, 20, 'Dom.contains(t2, t1)');
 function visit68_28_1(result) {
   _$jscoverage['/util/double-touch.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/double-touch.js'].branchData['23'][1].init(204, 20, 'Dom.contains(t1, t2)');
+}_$jscoverage['/util/double-touch.js'].branchData['23'][1].init(211, 20, 'Dom.contains(t1, t2)');
 function visit67_23_1(result) {
   _$jscoverage['/util/double-touch.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/double-touch.js'].branchData['20'][1].init(134, 9, 't1 === t2');
+}_$jscoverage['/util/double-touch.js'].branchData['20'][1].init(138, 9, 't1 === t2');
 function visit66_20_1(result) {
   _$jscoverage['/util/double-touch.js'].branchData['20'][1].ranCondition(result);
   return result;

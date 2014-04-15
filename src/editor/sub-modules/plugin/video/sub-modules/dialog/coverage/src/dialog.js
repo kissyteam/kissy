@@ -346,55 +346,55 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData['205'] = [];
   _$jscoverage['/dialog.js'].branchData['205'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['205'][1].init(218, 36, 'parseInt(r.style(\'margin\'), 10) || 0');
+_$jscoverage['/dialog.js'].branchData['205'][1].init(222, 36, 'parseInt(r.style(\'margin\'), 10) || 0');
 function visit13_205_1(result) {
   _$jscoverage['/dialog.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['201'][1].init(124, 1, 'f');
+}_$jscoverage['/dialog.js'].branchData['201'][1].init(128, 1, 'f');
 function visit12_201_1(result) {
   _$jscoverage['/dialog.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['185'][1].init(967, 2, 'ev');
+}_$jscoverage['/dialog.js'].branchData['185'][1].init(996, 2, 'ev');
 function visit11_185_1(result) {
   _$jscoverage['/dialog.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['168'][1].init(118, 20, 'c.paramName || \'url\'');
+}_$jscoverage['/dialog.js'].branchData['168'][1].init(123, 20, 'c.paramName || \'url\'');
 function visit10_168_1(result) {
   _$jscoverage['/dialog.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['163'][1].init(64, 15, 'c.reg.test(url)');
+}_$jscoverage['/dialog.js'].branchData['163'][1].init(66, 15, 'c.reg.test(url)');
 function visit9_163_1(result) {
   _$jscoverage['/dialog.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['161'][1].init(33, 17, 'i < urlCfg.length');
+}_$jscoverage['/dialog.js'].branchData['161'][1].init(34, 17, 'i < urlCfg.length');
 function visit8_161_1(result) {
   _$jscoverage['/dialog.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['160'][1].init(123, 6, 'urlCfg');
+}_$jscoverage['/dialog.js'].branchData['160'][1].init(127, 6, 'urlCfg');
 function visit7_160_1(result) {
   _$jscoverage['/dialog.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['148'][1].init(198, 37, 'parseInt(self.dMargin.val(), 10) || 0');
+}_$jscoverage['/dialog.js'].branchData['148'][1].init(201, 37, 'parseInt(self.dMargin.val(), 10) || 0');
 function visit6_148_1(result) {
   _$jscoverage['/dialog.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['147'][1].init(110, 42, 'parseInt(self.dWidth.val(), 10) || p.width');
+}_$jscoverage['/dialog.js'].branchData['147'][1].init(112, 42, 'parseInt(self.dWidth.val(), 10) || p.width');
 function visit5_147_1(result) {
   _$jscoverage['/dialog.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['146'][1].init(33, 44, 'parseInt(self.dHeight.val(), 10) || p.height');
+}_$jscoverage['/dialog.js'].branchData['146'][1].init(34, 44, 'parseInt(self.dHeight.val(), 10) || p.height');
 function visit4_146_1(result) {
   _$jscoverage['/dialog.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['139'][1].init(61, 3, '!re');
+}_$jscoverage['/dialog.js'].branchData['139'][1].init(63, 3, '!re');
 function visit3_139_1(result) {
   _$jscoverage['/dialog.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['135'][1].init(172, 2, '!p');
+}_$jscoverage['/dialog.js'].branchData['135'][1].init(177, 2, '!p');
 function visit2_135_1(result) {
   _$jscoverage['/dialog.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['96'][1].init(545, 28, 'cfg.urlTip || \'\\u8bf7\\u8f93\\u5165\\u89c6\\u9891\\u64ad\\u653e\\u94fe\\u63a5...\'');
+}_$jscoverage['/dialog.js'].branchData['96'][1].init(560, 28, 'cfg.urlTip || \'\\u8bf7\\u8f93\\u5165\\u89c6\\u9891\\u64ad\\u653e\\u94fe\\u63a5...\'');
 function visit1_96_1(result) {
   _$jscoverage['/dialog.js'].branchData['96'][1].ranCondition(result);
   return result;

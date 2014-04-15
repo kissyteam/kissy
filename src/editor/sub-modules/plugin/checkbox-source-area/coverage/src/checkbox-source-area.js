@@ -277,7 +277,7 @@ if (! _$jscoverage['/checkbox-source-area.js'].branchData) {
   _$jscoverage['/checkbox-source-area.js'].branchData['47'] = [];
   _$jscoverage['/checkbox-source-area.js'].branchData['47'][1] = new BranchData();
 }
-_$jscoverage['/checkbox-source-area.js'].branchData['47'][1].init(114, 18, 'el.attr(\'checked\')');
+_$jscoverage['/checkbox-source-area.js'].branchData['47'][1].init(118, 18, 'el.attr(\'checked\')');
 function visit1_47_1(result) {
   _$jscoverage['/checkbox-source-area.js'].branchData['47'][1].ranCondition(result);
   return result;

@@ -385,27 +385,27 @@ if (! _$jscoverage['/menubutton/select.js'].branchData) {
   _$jscoverage['/menubutton/select.js'].branchData['222'] = [];
   _$jscoverage['/menubutton/select.js'].branchData['222'][1] = new BranchData();
 }
-_$jscoverage['/menubutton/select.js'].branchData['222'][1].init(35, 14, 'e.newVal || \'\'');
+_$jscoverage['/menubutton/select.js'].branchData['222'][1].init(36, 14, 'e.newVal || \'\'');
 function visit64_222_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['196'][1].init(268, 25, 'curValue === option.val()');
+}_$jscoverage['/menubutton/select.js'].branchData['196'][1].init(275, 25, 'curValue === option.val()');
 function visit63_196_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['179'][1].init(65, 9, 'cfg || {}');
+}_$jscoverage['/menubutton/select.js'].branchData['179'][1].init(67, 9, 'cfg || {}');
 function visit62_179_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['134'][1].init(98, 36, 'c.get(\'value\') === self.get(\'value\')');
+}_$jscoverage['/menubutton/select.js'].branchData['134'][1].init(101, 36, 'c.get(\'value\') === self.get(\'value\')');
 function visit61_134_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['93'][1].init(153, 21, 'newValue !== oldValue');
+}_$jscoverage['/menubutton/select.js'].branchData['93'][1].init(157, 21, 'newValue !== oldValue');
 function visit60_93_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['89'][1].init(69, 17, 'target.isMenuItem');
+}_$jscoverage['/menubutton/select.js'].branchData['89'][1].init(72, 17, 'target.isMenuItem');
 function visit59_89_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['89'][1].ranCondition(result);
   return result;
@@ -413,107 +413,107 @@ function visit59_89_1(result) {
 function visit58_78_2(result) {
   _$jscoverage['/menubutton/select.js'].branchData['78'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['78'][1].init(301, 52, 'textContent || content || self.get(\'defaultCaption\')');
+}_$jscoverage['/menubutton/select.js'].branchData['78'][1].init(306, 52, 'textContent || content || self.get(\'defaultCaption\')');
 function visit57_78_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['76'][3].init(173, 31, 'item.get && item.get(\'content\')');
+}_$jscoverage['/menubutton/select.js'].branchData['76'][3].init(175, 31, 'item.get && item.get(\'content\')');
 function visit56_76_3(result) {
   _$jscoverage['/menubutton/select.js'].branchData['76'][3].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['76'][2].init(157, 47, 'item.content || item.get && item.get(\'content\')');
+}_$jscoverage['/menubutton/select.js'].branchData['76'][2].init(159, 47, 'item.content || item.get && item.get(\'content\')');
 function visit55_76_2(result) {
   _$jscoverage['/menubutton/select.js'].branchData['76'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['76'][1].init(148, 57, 'item && (item.content || item.get && item.get(\'content\'))');
+}_$jscoverage['/menubutton/select.js'].branchData['76'][1].init(150, 57, 'item && (item.content || item.get && item.get(\'content\'))');
 function visit54_76_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['75'][3].init(88, 35, 'item.get && item.get(\'textContent\')');
+}_$jscoverage['/menubutton/select.js'].branchData['75'][3].init(89, 35, 'item.get && item.get(\'textContent\')');
 function visit53_75_3(result) {
   _$jscoverage['/menubutton/select.js'].branchData['75'][3].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['75'][2].init(68, 55, 'item.textContent || item.get && item.get(\'textContent\')');
+}_$jscoverage['/menubutton/select.js'].branchData['75'][2].init(69, 55, 'item.textContent || item.get && item.get(\'textContent\')');
 function visit52_75_2(result) {
   _$jscoverage['/menubutton/select.js'].branchData['75'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['75'][1].init(59, 65, 'item && (item.textContent || item.get && item.get(\'textContent\'))');
+}_$jscoverage['/menubutton/select.js'].branchData['75'][1].init(60, 65, 'item && (item.textContent || item.get && item.get(\'textContent\'))');
 function visit51_75_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['67'][1].init(179, 12, 'selectedItem');
+}_$jscoverage['/menubutton/select.js'].branchData['67'][1].init(185, 12, 'selectedItem');
 function visit50_67_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['63'][1].init(73, 4, 'item');
+}_$jscoverage['/menubutton/select.js'].branchData['63'][1].init(75, 4, 'item');
 function visit49_63_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['62'][1].init(24, 31, 'selectedItem || m.getChildAt(0)');
+}_$jscoverage['/menubutton/select.js'].branchData['62'][1].init(25, 31, 'selectedItem || m.getChildAt(0)');
 function visit48_62_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['61'][1].init(122, 14, 'e.target === m');
+}_$jscoverage['/menubutton/select.js'].branchData['61'][1].init(126, 14, 'e.target === m');
 function visit47_61_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['51'][1].init(35, 25, 'getItemValue(c) === value');
+}_$jscoverage['/menubutton/select.js'].branchData['51'][1].init(36, 25, 'getItemValue(c) === value');
 function visit46_51_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['50'][1].init(17, 10, 'c && c.set');
+}_$jscoverage['/menubutton/select.js'].branchData['50'][1].init(18, 10, 'c && c.set');
 function visit45_50_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['48'][2].init(92, 32, 'menu.get && menu.get(\'children\')');
+}_$jscoverage['/menubutton/select.js'].branchData['48'][2].init(94, 32, 'menu.get && menu.get(\'children\')');
 function visit44_48_2(result) {
   _$jscoverage['/menubutton/select.js'].branchData['48'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['48'][1].init(84, 40, 'menu && menu.get && menu.get(\'children\')');
+}_$jscoverage['/menubutton/select.js'].branchData['48'][1].init(86, 40, 'menu && menu.get && menu.get(\'children\')');
 function visit43_48_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['38'][1].init(25, 26, 'c.textContent || c.content');
+}_$jscoverage['/menubutton/select.js'].branchData['38'][1].init(26, 26, 'c.textContent || c.content');
 function visit42_38_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['37'][1].init(22, 26, '(v = c.value) === undefined');
+}_$jscoverage['/menubutton/select.js'].branchData['37'][1].init(23, 26, '(v = c.value) === undefined');
 function visit41_37_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['34'][1].init(25, 40, 'c.get(\'textContent\') || c.get(\'content\')');
+}_$jscoverage['/menubutton/select.js'].branchData['34'][1].init(26, 40, 'c.get(\'textContent\') || c.get(\'content\')');
 function visit40_34_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['33'][1].init(22, 33, '(v = c.get(\'value\')) === undefined');
+}_$jscoverage['/menubutton/select.js'].branchData['33'][1].init(23, 33, '(v = c.get(\'value\')) === undefined');
 function visit39_33_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['32'][1].init(17, 5, 'c.get');
+}_$jscoverage['/menubutton/select.js'].branchData['32'][1].init(18, 5, 'c.get');
 function visit38_32_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['31'][1].init(28, 1, 'c');
+}_$jscoverage['/menubutton/select.js'].branchData['31'][1].init(30, 1, 'c');
 function visit37_31_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['18'][1].init(40, 25, 'getItemValue(c) === value');
+}_$jscoverage['/menubutton/select.js'].branchData['18'][1].init(42, 25, 'getItemValue(c) === value');
 function visit36_18_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['16'][1].init(201, 13, 'i < cs.length');
+}_$jscoverage['/menubutton/select.js'].branchData['16'][1].init(207, 13, 'i < cs.length');
 function visit35_16_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['12'][3].init(62, 32, 'menu.get && menu.get(\'children\')');
+}_$jscoverage['/menubutton/select.js'].branchData['12'][3].init(63, 32, 'menu.get && menu.get(\'children\')');
 function visit34_12_3(result) {
   _$jscoverage['/menubutton/select.js'].branchData['12'][3].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['12'][2].init(62, 38, 'menu.get && menu.get(\'children\') || []');
+}_$jscoverage['/menubutton/select.js'].branchData['12'][2].init(63, 38, 'menu.get && menu.get(\'children\') || []');
 function visit33_12_2(result) {
   _$jscoverage['/menubutton/select.js'].branchData['12'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/select.js'].branchData['12'][1].init(45, 55, 'menu.children || menu.get && menu.get(\'children\') || []');
+}_$jscoverage['/menubutton/select.js'].branchData['12'][1].init(46, 55, 'menu.children || menu.get && menu.get(\'children\') || []');
 function visit32_12_1(result) {
   _$jscoverage['/menubutton/select.js'].branchData['12'][1].ranCondition(result);
   return result;

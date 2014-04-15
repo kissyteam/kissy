@@ -268,7 +268,7 @@ if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData['51'] = [];
   _$jscoverage['/btn.js'].branchData['51'][1] = new BranchData();
 }
-_$jscoverage['/btn.js'].branchData['51'][1].init(111, 21, 'button.get(\'checked\')');
+_$jscoverage['/btn.js'].branchData['51'][1].init(114, 21, 'button.get(\'checked\')');
 function visit1_51_1(result) {
   _$jscoverage['/btn.js'].branchData['51'][1].ranCondition(result);
   return result;

@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('">\n</div>\n');
+            buffer.write('">\r\n</div>\r\n');
             var option3 = {};
             var params4 = [];
             params4.push('component/extension/content-xtpl');

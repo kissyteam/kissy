@@ -1,3 +1,3 @@
 {
-    "editor/plugin/justify-left": ["editor", "editor/plugin/justify-left/cmd", "editor/plugin/button"]
+ "editor/plugin/justify-left": ["editor", "editor/plugin/justify-left/cmd", "editor/plugin/button"] 
 }

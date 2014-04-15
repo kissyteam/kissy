@@ -310,7 +310,7 @@ if (! _$jscoverage['/control/render-xtpl.js'].branchData) {
   _$jscoverage['/control/render-xtpl.js'].branchData['30'] = [];
   _$jscoverage['/control/render-xtpl.js'].branchData['30'][1] = new BranchData();
 }
-_$jscoverage['/control/render-xtpl.js'].branchData['30'][1].init(1272, 35, 'commandRet2 && commandRet2.isBuffer');
+_$jscoverage['/control/render-xtpl.js'].branchData['30'][1].init(1274, 35, 'commandRet2 && commandRet2.isBuffer');
 function visit2_30_1(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -340,7 +340,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[24]++;
   buffer.write(id0, true);
   _$jscoverage['/control/render-xtpl.js'].lineData[25]++;
-  buffer.write('"\n class="');
+  buffer.write('"\r\n class="');
   _$jscoverage['/control/render-xtpl.js'].lineData[26]++;
   var option1 = {
   escape: 1};
@@ -356,7 +356,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/control/render-xtpl.js'].lineData[35]++;
-  buffer.write('\n');
+  buffer.write('\r\n');
   _$jscoverage['/control/render-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -372,20 +372,20 @@ KISSY.add(function(S, require, exports, module) {
   option3.fn = function(scope, buffer) {
   _$jscoverage['/control/render-xtpl.js'].functionData[2]++;
   _$jscoverage['/control/render-xtpl.js'].lineData[45]++;
-  buffer.write('\n ');
+  buffer.write('\r\n ');
   _$jscoverage['/control/render-xtpl.js'].lineData[46]++;
   var id6 = scope.resolve(["this"]);
   _$jscoverage['/control/render-xtpl.js'].lineData[47]++;
   buffer.write(id6, true);
   _$jscoverage['/control/render-xtpl.js'].lineData[48]++;
-  buffer.write('\n');
+  buffer.write('\r\n');
   _$jscoverage['/control/render-xtpl.js'].lineData[50]++;
   return buffer;
 };
   _$jscoverage['/control/render-xtpl.js'].lineData[52]++;
   buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
   _$jscoverage['/control/render-xtpl.js'].lineData[53]++;
-  buffer.write('\n"\n\n');
+  buffer.write('\r\n"\r\n\r\n');
   _$jscoverage['/control/render-xtpl.js'].lineData[54]++;
   var option7 = {
   escape: 1};
@@ -401,7 +401,7 @@ KISSY.add(function(S, require, exports, module) {
   option7.fn = function(scope, buffer) {
   _$jscoverage['/control/render-xtpl.js'].functionData[3]++;
   _$jscoverage['/control/render-xtpl.js'].lineData[63]++;
-  buffer.write('\n ');
+  buffer.write('\r\n ');
   _$jscoverage['/control/render-xtpl.js'].lineData[64]++;
   var id10 = scope.resolve(["xindex"]);
   _$jscoverage['/control/render-xtpl.js'].lineData[65]++;
@@ -413,14 +413,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[68]++;
   buffer.write(id11, true);
   _$jscoverage['/control/render-xtpl.js'].lineData[69]++;
-  buffer.write('"\n');
+  buffer.write('"\r\n');
   _$jscoverage['/control/render-xtpl.js'].lineData[71]++;
   return buffer;
 };
   _$jscoverage['/control/render-xtpl.js'].lineData[73]++;
   buffer = eachCommand.call(engine, scope, option7, buffer, 8, payload);
   _$jscoverage['/control/render-xtpl.js'].lineData[74]++;
-  buffer.write('\n\nstyle="\n');
+  buffer.write('\r\n\r\nstyle="\r\n');
   _$jscoverage['/control/render-xtpl.js'].lineData[75]++;
   var option12 = {
   escape: 1};
@@ -436,7 +436,7 @@ KISSY.add(function(S, require, exports, module) {
   option12.fn = function(scope, buffer) {
   _$jscoverage['/control/render-xtpl.js'].functionData[4]++;
   _$jscoverage['/control/render-xtpl.js'].lineData[84]++;
-  buffer.write('\n ');
+  buffer.write('\r\n ');
   _$jscoverage['/control/render-xtpl.js'].lineData[85]++;
   var id15 = scope.resolve(["xindex"]);
   _$jscoverage['/control/render-xtpl.js'].lineData[86]++;
@@ -448,14 +448,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[89]++;
   buffer.write(id16, true);
   _$jscoverage['/control/render-xtpl.js'].lineData[90]++;
-  buffer.write(';\n');
+  buffer.write(';\r\n');
   _$jscoverage['/control/render-xtpl.js'].lineData[92]++;
   return buffer;
 };
   _$jscoverage['/control/render-xtpl.js'].lineData[94]++;
   buffer = eachCommand.call(engine, scope, option12, buffer, 13, payload);
   _$jscoverage['/control/render-xtpl.js'].lineData[95]++;
-  buffer.write('\n">');
+  buffer.write('\r\n">');
   _$jscoverage['/control/render-xtpl.js'].lineData[96]++;
   return buffer;
 };

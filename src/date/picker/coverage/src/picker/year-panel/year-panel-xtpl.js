@@ -363,31 +363,31 @@ if (! _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['136'] = [];
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['136'][1] = new BranchData();
 }
-_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['136'][1].init(6097, 37, 'commandRet28 && commandRet28.isBuffer');
+_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['136'][1].init(6155, 37, 'commandRet28 && commandRet28.isBuffer');
 function visit88_136_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['123'][1].init(5421, 37, 'commandRet25 && commandRet25.isBuffer');
+}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['123'][1].init(5475, 37, 'commandRet25 && commandRet25.isBuffer');
 function visit87_123_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['110'][1].init(4888, 37, 'commandRet22 && commandRet22.isBuffer');
+}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['110'][1].init(4940, 37, 'commandRet22 && commandRet22.isBuffer');
 function visit86_110_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['94'][1].init(4138, 37, 'commandRet18 && commandRet18.isBuffer');
+}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['94'][1].init(4176, 37, 'commandRet18 && commandRet18.isBuffer');
 function visit85_94_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['81'][1].init(3579, 37, 'commandRet15 && commandRet15.isBuffer');
+}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['81'][1].init(3611, 37, 'commandRet15 && commandRet15.isBuffer');
 function visit84_81_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['59'][1].init(2526, 35, 'commandRet9 && commandRet9.isBuffer');
+}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['59'][1].init(2542, 35, 'commandRet9 && commandRet9.isBuffer');
 function visit83_59_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['43'][1].init(1782, 35, 'commandRet5 && commandRet5.isBuffer');
+}_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['43'][1].init(1784, 35, 'commandRet5 && commandRet5.isBuffer');
 function visit82_43_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -437,7 +437,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[34]++;
   buffer.write(commandRet2, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[35]++;
-  buffer.write('">\n    <a class="');
+  buffer.write('">\r\n    <a class="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[36]++;
   var option3 = {
   escape: 1};
@@ -459,13 +459,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[47]++;
   buffer.write(commandRet5, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[48]++;
-  buffer.write('"\n       href="#"\n       role="button"\n       title="');
+  buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[49]++;
   var id6 = scope.resolve(["previousDecadeLabel"]);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[50]++;
   buffer.write(id6, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[51]++;
-  buffer.write('"\n       hidefocus="on">\n    </a>\n\n    <a class="');
+  buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[52]++;
   var option7 = {
   escape: 1};
@@ -487,13 +487,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[63]++;
   buffer.write(commandRet9, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[64]++;
-  buffer.write('"\n       role="button"\n       href="#"\n       hidefocus="on"\n       title="');
+  buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[65]++;
   var id10 = scope.resolve(["decadeSelectLabel"]);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[66]++;
   buffer.write(id10, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[67]++;
-  buffer.write('">\n            <span>\n                ');
+  buffer.write('">\r\n            <span>\r\n                ');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[68]++;
   var id11 = scope.resolve(["startYear"]);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[69]++;
@@ -505,7 +505,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[72]++;
   buffer.write(id12, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[73]++;
-  buffer.write('\n            </span>\n        <span class="');
+  buffer.write('\r\n            </span>\r\n        <span class="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[74]++;
   var option13 = {
   escape: 1};
@@ -527,7 +527,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[85]++;
   buffer.write(commandRet15, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[86]++;
-  buffer.write('">x</span>\n    </a>\n\n    <a class="');
+  buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[87]++;
   var option16 = {
   escape: 1};
@@ -549,13 +549,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[98]++;
   buffer.write(commandRet18, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[99]++;
-  buffer.write('"\n       href="#"\n       role="button"\n       title="');
+  buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[100]++;
   var id19 = scope.resolve(["nextDecadeLabel"]);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[101]++;
   buffer.write(id19, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[102]++;
-  buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+  buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[103]++;
   var option20 = {
   escape: 1};
@@ -577,7 +577,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[114]++;
   buffer.write(commandRet22, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[115]++;
-  buffer.write('">\n    <table class="');
+  buffer.write('">\r\n    <table class="');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[116]++;
   var option23 = {
   escape: 1};
@@ -599,7 +599,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[127]++;
   buffer.write(commandRet25, true);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[128]++;
-  buffer.write('" cellspacing="0" role="grid">\n        <tbody>\n        ');
+  buffer.write('" cellspacing="0" role="grid">\r\n        <tbody>\r\n        ');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[129]++;
   var option26 = {};
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[130]++;
@@ -624,7 +624,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[140]++;
   buffer.write(commandRet28, false);
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[141]++;
-  buffer.write('\n        </tbody>\n    </table>\n</div>');
+  buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[142]++;
   return buffer;
 };

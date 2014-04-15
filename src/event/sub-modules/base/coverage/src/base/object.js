@@ -272,7 +272,7 @@ function visit1_102_1(result) {
   _$jscoverage['/base/object.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/object.js'].lineData[6]++;
-KISSY.add(function(S, undefined) {
+KISSY.add(function(S) {
   _$jscoverage['/base/object.js'].functionData[0]++;
   _$jscoverage['/base/object.js'].lineData[7]++;
   var returnFalse = function() {
@@ -283,7 +283,7 @@ KISSY.add(function(S, undefined) {
   _$jscoverage['/base/object.js'].functionData[2]++;
   _$jscoverage['/base/object.js'].lineData[10]++;
   return true;
-};
+}, undef;
   _$jscoverage['/base/object.js'].lineData[18]++;
   function EventObject() {
     _$jscoverage['/base/object.js'].functionData[3]++;
@@ -292,9 +292,9 @@ KISSY.add(function(S, undefined) {
     _$jscoverage['/base/object.js'].lineData[22]++;
     self.timeStamp = S.now();
     _$jscoverage['/base/object.js'].lineData[28]++;
-    self.target = undefined;
+    self.target = undef;
     _$jscoverage['/base/object.js'].lineData[34]++;
-    self.currentTarget = undefined;
+    self.currentTarget = undef;
   }
   _$jscoverage['/base/object.js'].lineData[43]++;
   EventObject.prototype = {

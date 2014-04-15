@@ -304,31 +304,31 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData['123'] = [];
   _$jscoverage['/dialog.js'].branchData['123'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['123'][1].init(107, 10, 'cfg.target');
+_$jscoverage['/dialog.js'].branchData['123'][1].init(110, 10, 'cfg.target');
 function visit7_123_1(result) {
   _$jscoverage['/dialog.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['119'][1].init(243, 39, '_selectedEl.attr(\'target\') === \'_blank\'');
+}_$jscoverage['/dialog.js'].branchData['119'][1].init(247, 39, '_selectedEl.attr(\'target\') === \'_blank\'');
 function visit6_119_1(result) {
   _$jscoverage['/dialog.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['118'][1].init(168, 31, '_selectedEl.attr(\'title\') || \'\'');
+}_$jscoverage['/dialog.js'].branchData['118'][1].init(171, 31, '_selectedEl.attr(\'title\') || \'\'');
 function visit5_118_1(result) {
   _$jscoverage['/dialog.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['116'][1].init(27, 55, '_selectedEl.attr(savedHref) || _selectedEl.attr(\'href\')');
+}_$jscoverage['/dialog.js'].branchData['116'][1].init(28, 55, '_selectedEl.attr(savedHref) || _selectedEl.attr(\'href\')');
 function visit4_116_1(result) {
   _$jscoverage['/dialog.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['115'][1].init(182, 11, '_selectedEl');
+}_$jscoverage['/dialog.js'].branchData['115'][1].init(188, 11, '_selectedEl');
 function visit3_115_1(result) {
   _$jscoverage['/dialog.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['94'][1].init(139, 52, '!Editor.Utils.verifyInputs(d.get(\'el\').all(\'input\'))');
+}_$jscoverage['/dialog.js'].branchData['94'][1].init(144, 52, '!Editor.Utils.verifyInputs(d.get(\'el\').all(\'input\'))');
 function visit2_94_1(result) {
   _$jscoverage['/dialog.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['53'][1].init(78, 12, 'config || {}');
+}_$jscoverage['/dialog.js'].branchData['53'][1].init(81, 12, 'config || {}');
 function visit1_53_1(result) {
   _$jscoverage['/dialog.js'].branchData['53'][1].ranCondition(result);
   return result;

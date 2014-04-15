@@ -330,13 +330,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/editor/render-xtpl.js'].lineData[24]++;
   buffer.write(id0, true);
   _$jscoverage['/editor/render-xtpl.js'].lineData[25]++;
-  buffer.write('editor-tools">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01\n-->\n\n<div class="');
+  buffer.write('editor-tools">\r\n\r\n</div>\r\n\r\n<!--\r\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\r\nios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01\r\n-->\r\n\r\n<div class="');
   _$jscoverage['/editor/render-xtpl.js'].lineData[26]++;
   var id1 = scope.resolve(["prefixCls"]);
   _$jscoverage['/editor/render-xtpl.js'].lineData[27]++;
   buffer.write(id1, true);
   _$jscoverage['/editor/render-xtpl.js'].lineData[28]++;
-  buffer.write('editor-textarea-wrap"\n\n');
+  buffer.write('editor-textarea-wrap"\r\n\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[29]++;
   var option2 = {
   escape: 1};
@@ -352,20 +352,20 @@ KISSY.add(function(S, require, exports, module) {
   option2.fn = function(scope, buffer) {
   _$jscoverage['/editor/render-xtpl.js'].functionData[2]++;
   _$jscoverage['/editor/render-xtpl.js'].lineData[38]++;
-  buffer.write('\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n');
+  buffer.write('\r\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[40]++;
   return buffer;
 };
   _$jscoverage['/editor/render-xtpl.js'].lineData[42]++;
   buffer = ifCommand.call(engine, scope, option2, buffer, 12, payload);
   _$jscoverage['/editor/render-xtpl.js'].lineData[43]++;
-  buffer.write('\n>\n\n<textarea class="');
+  buffer.write('\r\n>\r\n\r\n<textarea class="');
   _$jscoverage['/editor/render-xtpl.js'].lineData[44]++;
   var id5 = scope.resolve(["prefixCls"]);
   _$jscoverage['/editor/render-xtpl.js'].lineData[45]++;
   buffer.write(id5, true);
   _$jscoverage['/editor/render-xtpl.js'].lineData[46]++;
-  buffer.write('editor-textarea"\n\n');
+  buffer.write('editor-textarea"\r\n\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[47]++;
   var option6 = {
   escape: 1};
@@ -381,7 +381,7 @@ KISSY.add(function(S, require, exports, module) {
   option6.fn = function(scope, buffer) {
   _$jscoverage['/editor/render-xtpl.js'].functionData[3]++;
   _$jscoverage['/editor/render-xtpl.js'].lineData[56]++;
-  buffer.write('\n');
+  buffer.write('\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[57]++;
   var id9 = scope.resolve(["xindex"]);
   _$jscoverage['/editor/render-xtpl.js'].lineData[58]++;
@@ -393,14 +393,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/editor/render-xtpl.js'].lineData[61]++;
   buffer.write(id10, true);
   _$jscoverage['/editor/render-xtpl.js'].lineData[62]++;
-  buffer.write('"\n');
+  buffer.write('"\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[64]++;
   return buffer;
 };
   _$jscoverage['/editor/render-xtpl.js'].lineData[66]++;
   buffer = eachCommand.call(engine, scope, option6, buffer, 19, payload);
   _$jscoverage['/editor/render-xtpl.js'].lineData[67]++;
-  buffer.write('\n\n');
+  buffer.write('\r\n\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[68]++;
   var option11 = {
   escape: 1};
@@ -416,26 +416,26 @@ KISSY.add(function(S, require, exports, module) {
   option11.fn = function(scope, buffer) {
   _$jscoverage['/editor/render-xtpl.js'].functionData[4]++;
   _$jscoverage['/editor/render-xtpl.js'].lineData[77]++;
-  buffer.write('\nstyle="display:none"\n');
+  buffer.write('\r\nstyle="display:none"\r\n');
   _$jscoverage['/editor/render-xtpl.js'].lineData[79]++;
   return buffer;
 };
   _$jscoverage['/editor/render-xtpl.js'].lineData[81]++;
   buffer = ifCommand.call(engine, scope, option11, buffer, 23, payload);
   _$jscoverage['/editor/render-xtpl.js'].lineData[82]++;
-  buffer.write('\n\n>');
+  buffer.write('\r\n\r\n>');
   _$jscoverage['/editor/render-xtpl.js'].lineData[83]++;
   var id14 = scope.resolve(["data"]);
   _$jscoverage['/editor/render-xtpl.js'].lineData[84]++;
   buffer.write(id14, true);
   _$jscoverage['/editor/render-xtpl.js'].lineData[85]++;
-  buffer.write('</textarea>\n\n</div>\n\n<div class="');
+  buffer.write('</textarea>\r\n\r\n</div>\r\n\r\n<div class="');
   _$jscoverage['/editor/render-xtpl.js'].lineData[86]++;
   var id15 = scope.resolve(["prefixCls"]);
   _$jscoverage['/editor/render-xtpl.js'].lineData[87]++;
   buffer.write(id15, true);
   _$jscoverage['/editor/render-xtpl.js'].lineData[88]++;
-  buffer.write('editor-status">\n\n</div>');
+  buffer.write('editor-status">\r\n\r\n</div>');
   _$jscoverage['/editor/render-xtpl.js'].lineData[89]++;
   return buffer;
 };

@@ -257,7 +257,7 @@ if (! _$jscoverage['/tabs/tab.js'].branchData) {
   _$jscoverage['/tabs/tab.js'].branchData['20'] = [];
   _$jscoverage['/tabs/tab.js'].branchData['20'][1] = new BranchData();
 }
-_$jscoverage['/tabs/tab.js'].branchData['20'][1].init(93, 19, 'renderData.selected');
+_$jscoverage['/tabs/tab.js'].branchData['20'][1].init(96, 19, 'renderData.selected');
 function visit13_20_1(result) {
   _$jscoverage['/tabs/tab.js'].branchData['20'][1].ranCondition(result);
   return result;

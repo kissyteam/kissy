@@ -319,47 +319,47 @@ if (! _$jscoverage['/io/xdr-flash-transport.js'].branchData) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['141'] = [];
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1] = new BranchData();
 }
-_$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1].init(44, 3, 'xhr');
+_$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1].init(46, 3, 'xhr');
 function visit132_141_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['113'][1].init(1084, 3, 'ret');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['113'][1].init(1118, 3, 'ret');
 function visit131_113_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['109'][1].init(101, 17, 'c.statusText || e');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['109'][1].init(103, 17, 'c.statusText || e');
 function visit130_109_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['88'][1].init(254, 36, 'c && (responseText = c.responseText)');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['88'][1].init(263, 36, 'c && (responseText = c.responseText)');
 function visit129_88_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][2].init(118, 22, 'c.hasContent && c.data');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][2].init(122, 22, 'c.hasContent && c.data');
 function visit128_71_2(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][1].init(118, 28, 'c.hasContent && c.data || {}');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][1].init(122, 28, 'c.hasContent && c.data || {}');
 function visit127_71_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['57'][1].init(278, 6, '!flash');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['57'][1].init(286, 6, '!flash');
 function visit126_57_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['55'][1].init(179, 50, 'xdr.src || (S.config(\'base\') + \'io/assets/io.swf\')');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['55'][1].init(185, 50, 'xdr.src || (S.config(\'base\') + \'io/assets/io.swf\')');
 function visit125_55_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['53'][1].init(99, 11, 'c.xdr || {}');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['53'][1].init(102, 11, 'c.xdr || {}');
 function visit124_53_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['38'][1].init(616, 31, 'doc.body || doc.documentElement');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['38'][1].init(633, 31, 'doc.body || doc.documentElement');
 function visit123_38_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['22'][1].init(13, 4, 'init');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['22'][1].init(14, 4, 'init');
 function visit122_22_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['22'][1].ranCondition(result);
   return result;

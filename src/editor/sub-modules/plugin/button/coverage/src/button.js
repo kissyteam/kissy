@@ -274,23 +274,23 @@ if (! _$jscoverage['/button.js'].branchData) {
   _$jscoverage['/button.js'].branchData['50'] = [];
   _$jscoverage['/button.js'].branchData['50'][1] = new BranchData();
 }
-_$jscoverage['/button.js'].branchData['50'][1].init(965, 42, 'b.get(\'mode\') === Editor.Mode.WYSIWYG_MODE');
+_$jscoverage['/button.js'].branchData['50'][1].init(998, 42, 'b.get(\'mode\') === Editor.Mode.WYSIWYG_MODE');
 function visit5_50_1(result) {
   _$jscoverage['/button.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['42'][1].init(695, 12, '!cfg.content');
+}_$jscoverage['/button.js'].branchData['42'][1].init(720, 12, '!cfg.content');
 function visit4_42_1(result) {
   _$jscoverage['/button.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['29'][1].init(306, 15, 'cfg.elCls || \'\'');
+}_$jscoverage['/button.js'].branchData['29'][1].init(318, 15, 'cfg.elCls || \'\'');
 function visit3_29_1(result) {
   _$jscoverage['/button.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['25'][1].init(190, 9, 'cfg.elCls');
+}_$jscoverage['/button.js'].branchData['25'][1].init(198, 9, 'cfg.elCls');
 function visit2_25_1(result) {
   _$jscoverage['/button.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['19'][1].init(14, 24, 'ButtonType === undefined');
+}_$jscoverage['/button.js'].branchData['19'][1].init(16, 24, 'ButtonType === undefined');
 function visit1_19_1(result) {
   _$jscoverage['/button.js'].branchData['19'][1].ranCondition(result);
   return result;

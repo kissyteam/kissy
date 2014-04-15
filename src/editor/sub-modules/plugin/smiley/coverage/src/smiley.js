@@ -296,35 +296,35 @@ if (! _$jscoverage['/smiley.js'].branchData) {
   _$jscoverage['/smiley.js'].branchData['88'] = [];
   _$jscoverage['/smiley.js'].branchData['88'][1] = new BranchData();
 }
-_$jscoverage['/smiley.js'].branchData['88'][1].init(29, 11, 'this.smiley');
+_$jscoverage['/smiley.js'].branchData['88'][1].init(30, 11, 'this.smiley');
 function visit8_88_1(result) {
   _$jscoverage['/smiley.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['82'][1].init(32, 11, 'self.smiley');
+}_$jscoverage['/smiley.js'].branchData['82'][1].init(33, 11, 'self.smiley');
 function visit7_82_1(result) {
   _$jscoverage['/smiley.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['59'][2].init(154, 20, 't.nodeName() === \'a\'');
+}_$jscoverage['/smiley.js'].branchData['59'][2].init(157, 20, 't.nodeName() === \'a\'');
 function visit6_59_2(result) {
   _$jscoverage['/smiley.js'].branchData['59'][2].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['59'][1].init(154, 92, 't.nodeName() === \'a\' && (icon = t.attr(\'data-icon\'))');
+}_$jscoverage['/smiley.js'].branchData['59'][1].init(157, 93, 't.nodeName() === \'a\' && (icon = t.attr(\'data-icon\'))');
 function visit5_59_1(result) {
   _$jscoverage['/smiley.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['45'][1].init(33, 23, '!(smiley = self.smiley)');
+}_$jscoverage['/smiley.js'].branchData['45'][1].init(34, 23, '!(smiley = self.smiley)');
 function visit4_45_1(result) {
   _$jscoverage['/smiley.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['44'][1].init(109, 7, 'checked');
+}_$jscoverage['/smiley.js'].branchData['44'][1].init(111, 7, 'checked');
 function visit3_44_1(result) {
   _$jscoverage['/smiley.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['35'][1].init(36, 11, 'self.smiley');
+}_$jscoverage['/smiley.js'].branchData['35'][1].init(37, 11, 'self.smiley');
 function visit2_35_1(result) {
   _$jscoverage['/smiley.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['11'][1].init(196, 7, 'i <= 98');
+}_$jscoverage['/smiley.js'].branchData['11'][1].init(201, 7, 'i <= 98');
 function visit1_11_1(result) {
   _$jscoverage['/smiley.js'].branchData['11'][1].ranCondition(result);
   return result;

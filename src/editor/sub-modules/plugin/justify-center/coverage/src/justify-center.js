@@ -276,19 +276,19 @@ if (! _$jscoverage['/justify-center.js'].branchData) {
   _$jscoverage['/justify-center.js'].branchData['47'][1] = new BranchData();
   _$jscoverage['/justify-center.js'].branchData['47'][2] = new BranchData();
 }
-_$jscoverage['/justify-center.js'].branchData['47'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.E');
+_$jscoverage['/justify-center.js'].branchData['47'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.E');
 function visit4_47_2(result) {
   _$jscoverage['/justify-center.js'].branchData['47'][2].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['47'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.E');
+}_$jscoverage['/justify-center.js'].branchData['47'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.E');
 function visit3_47_1(result) {
   _$jscoverage['/justify-center.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['33'][1].init(185, 41, 'editor.queryCommandValue(\'justifyCenter\')');
+}_$jscoverage['/justify-center.js'].branchData['33'][1].init(189, 41, 'editor.queryCommandValue(\'justifyCenter\')');
 function visit2_33_1(result) {
   _$jscoverage['/justify-center.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['30'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-center.js'].branchData['30'][1].init(34, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_30_1(result) {
   _$jscoverage['/justify-center.js'].branchData['30'][1].ranCondition(result);
   return result;

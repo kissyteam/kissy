@@ -309,47 +309,47 @@ if (! _$jscoverage['/gregorian/utils.js'].branchData) {
   _$jscoverage['/gregorian/utils.js'].branchData['95'] = [];
   _$jscoverage['/gregorian/utils.js'].branchData['95'][1] = new BranchData();
 }
-_$jscoverage['/gregorian/utils.js'].branchData['95'][1].init(21, 31, 'ACCUMULATED_DAYS[i] <= daysDiff');
+_$jscoverage['/gregorian/utils.js'].branchData['95'][1].init(22, 31, 'ACCUMULATED_DAYS[i] <= daysDiff');
 function visit11_95_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['94'][1].init(376, 27, 'i < ACCUMULATED_DAYS.length');
+}_$jscoverage['/gregorian/utils.js'].branchData['94'][1].init(384, 27, 'i < ACCUMULATED_DAYS.length');
 function visit10_94_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['69'][3].init(123, 16, 'year % 400 === 0');
+}_$jscoverage['/gregorian/utils.js'].branchData['69'][3].init(127, 16, 'year % 400 === 0');
 function visit9_69_3(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['69'][3].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['69'][2].init(101, 16, 'year % 100 !== 0');
+}_$jscoverage['/gregorian/utils.js'].branchData['69'][2].init(105, 16, 'year % 100 !== 0');
 function visit8_69_2(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['69'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['69'][1].init(101, 39, '(year % 100 !== 0) || (year % 400 === 0)');
+}_$jscoverage['/gregorian/utils.js'].branchData['69'][1].init(105, 39, '(year % 100 !== 0) || (year % 400 === 0)');
 function visit7_69_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['66'][1].init(18, 15, '(year & 3) !== 0');
+}_$jscoverage['/gregorian/utils.js'].branchData['66'][1].init(19, 15, '(year & 3) !== 0');
 function visit6_66_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][4].init(530, 8, 'n1 === 4');
+}_$jscoverage['/gregorian/utils.js'].branchData['57'][4].init(548, 8, 'n1 === 4');
 function visit5_57_4(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['57'][4].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][3].init(516, 10, 'n100 === 4');
+}_$jscoverage['/gregorian/utils.js'].branchData['57'][3].init(534, 10, 'n100 === 4');
 function visit4_57_3(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['57'][3].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][2].init(516, 22, 'n100 === 4 || n1 === 4');
+}_$jscoverage['/gregorian/utils.js'].branchData['57'][2].init(534, 22, 'n100 === 4 || n1 === 4');
 function visit3_57_2(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['57'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][1].init(514, 25, '!(n100 === 4 || n1 === 4)');
+}_$jscoverage['/gregorian/utils.js'].branchData['57'][1].init(532, 25, '!(n100 === 4 || n1 === 4)');
 function visit2_57_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['33'][1].init(76, 14, 'fixedDate >= 0');
+}_$jscoverage['/gregorian/utils.js'].branchData['33'][1].init(78, 14, 'fixedDate >= 0');
 function visit1_33_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['33'][1].ranCondition(result);
   return result;

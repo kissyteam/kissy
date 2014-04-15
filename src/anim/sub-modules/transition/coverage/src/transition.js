@@ -354,51 +354,51 @@ if (! _$jscoverage['/transition.js'].branchData) {
   _$jscoverage['/transition.js'].branchData['159'] = [];
   _$jscoverage['/transition.js'].branchData['159'][1] = new BranchData();
 }
-_$jscoverage['/transition.js'].branchData['159'][1].init(7, 213, 'S.trim(elStyle[TRANSITION].replace(new RegExp(\'(^|,)\' + \'\\\\s*(?:\' + propList.join(\'|\') + \')\\\\s+[^,]+\', \'gi\'), \'$1\')).replace(/^,|,,|,$/g, \'\') || \'none\'');
+_$jscoverage['/transition.js'].branchData['159'][1].init(7, 216, 'S.trim(elStyle[TRANSITION].replace(new RegExp(\'(^|,)\' + \'\\\\s*(?:\' + propList.join(\'|\') + \')\\\\s+[^,]+\', \'gi\'), \'$1\')).replace(/^,|,,|,$/g, \'\') || \'none\'');
 function visit12_159_1(result) {
   _$jscoverage['/transition.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['149'][1].init(21, 7, '!finish');
+}_$jscoverage['/transition.js'].branchData['149'][1].init(22, 7, '!finish');
 function visit11_149_1(result) {
   _$jscoverage['/transition.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['143'][1].init(250, 24, 'self._transitionEndTimer');
+}_$jscoverage['/transition.js'].branchData['143'][1].init(259, 24, 'self._transitionEndTimer');
 function visit10_143_1(result) {
   _$jscoverage['/transition.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['125'][1].init(113, 29, 'propData.duration >= tRunTime');
+}_$jscoverage['/transition.js'].branchData['125'][1].init(116, 29, 'propData.duration >= tRunTime');
 function visit9_125_1(result) {
   _$jscoverage['/transition.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['120'][1].init(61, 26, 'propData.delay >= tRunTime');
+}_$jscoverage['/transition.js'].branchData['120'][1].init(63, 26, 'propData.delay >= tRunTime');
 function visit8_120_1(result) {
   _$jscoverage['/transition.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['94'][1].init(778, 8, 'original');
+}_$jscoverage['/transition.js'].branchData['94'][1].init(799, 8, 'original');
 function visit7_94_1(result) {
   _$jscoverage['/transition.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['92'][1].init(688, 31, 'original.indexOf(\'none\') !== -1');
+}_$jscoverage['/transition.js'].branchData['92'][1].init(707, 31, 'original.indexOf(\'none\') !== -1');
 function visit6_92_1(result) {
   _$jscoverage['/transition.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['65'][1].init(444, 11, '!vendorInfo');
+}_$jscoverage['/transition.js'].branchData['65'][1].init(454, 11, '!vendorInfo');
 function visit5_65_1(result) {
   _$jscoverage['/transition.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['58'][1].init(25, 66, '!S.startsWith(val.easing, \'cubic-bezier\') && !css3Anim[val.easing]');
+}_$jscoverage['/transition.js'].branchData['58'][1].init(26, 66, '!S.startsWith(val.easing, \'cubic-bezier\') && !css3Anim[val.easing]');
 function visit4_58_1(result) {
   _$jscoverage['/transition.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['57'][1].init(68, 30, 'typeof val.easing === \'string\'');
+}_$jscoverage['/transition.js'].branchData['57'][1].init(70, 30, 'typeof val.easing === \'string\'');
 function visit3_57_1(result) {
   _$jscoverage['/transition.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['42'][1].init(38, 34, '!(self instanceof TransitionAnim)');
+}_$jscoverage['/transition.js'].branchData['42'][1].init(40, 34, '!(self instanceof TransitionAnim)');
 function visit2_42_1(result) {
   _$jscoverage['/transition.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['25'][1].init(17, 3, 'str');
+}_$jscoverage['/transition.js'].branchData['25'][1].init(18, 3, 'str');
 function visit1_25_1(result) {
   _$jscoverage['/transition.js'].branchData['25'][1].ranCondition(result);
   return result;

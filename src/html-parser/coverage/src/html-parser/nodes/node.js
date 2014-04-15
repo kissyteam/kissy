@@ -287,23 +287,23 @@ if (! _$jscoverage['/html-parser/nodes/node.js'].branchData) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['61'] = [];
   _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].init(17, 30, 'this.page && this.page.getText');
+_$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].init(18, 30, 'this.page && this.page.getText');
 function visit196_61_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].init(21, 17, '\'endLine\' in this');
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].init(22, 17, '\'endLine\' in this');
 function visit195_48_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].init(17, 9, 'this.page');
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].init(18, 9, 'this.page');
 function visit194_47_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].init(21, 19, '\'startLine\' in this');
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].init(22, 19, '\'startLine\' in this');
 function visit193_38_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].init(17, 9, 'this.page');
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].init(18, 9, 'this.page');
 function visit192_37_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].ranCondition(result);
   return result;

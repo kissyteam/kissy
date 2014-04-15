@@ -500,15 +500,15 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData['467'] = [];
   _$jscoverage['/dialog.js'].branchData['467'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['467'][1].init(660, 15, 'self.selectedTd');
+_$jscoverage['/dialog.js'].branchData['467'][1].init(676, 15, 'self.selectedTd');
 function visit47_467_1(result) {
   _$jscoverage['/dialog.js'].branchData['467'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['456'][1].init(138, 18, 'self.selectedTable');
+}_$jscoverage['/dialog.js'].branchData['456'][1].init(143, 18, 'self.selectedTable');
 function visit46_456_1(result) {
   _$jscoverage['/dialog.js'].branchData['456'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['439'][1].init(1069, 7, 'caption');
+}_$jscoverage['/dialog.js'].branchData['439'][1].init(1100, 7, 'caption');
 function visit45_439_1(result) {
   _$jscoverage['/dialog.js'].branchData['439'][1].ranCondition(result);
   return result;
@@ -516,175 +516,175 @@ function visit45_439_1(result) {
 function visit44_436_1(result) {
   _$jscoverage['/dialog.js'].branchData['436'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['430'][1].init(767, 21, 'w.indexOf(\'%\') !== -1');
+}_$jscoverage['/dialog.js'].branchData['430'][1].init(789, 21, 'w.indexOf(\'%\') !== -1');
 function visit43_430_1(result) {
   _$jscoverage['/dialog.js'].branchData['430'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['423'][1].init(501, 76, 'selectedTable.style(\'width\') || (\'\' + selectedTable.width())');
+}_$jscoverage['/dialog.js'].branchData['423'][1].init(516, 77, 'selectedTable.style(\'width\') || (\'\' + selectedTable.width())');
 function visit42_423_1(result) {
   _$jscoverage['/dialog.js'].branchData['423'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['421'][1].init(427, 51, 'selectedTable.attr(\'border\') || \'0\'');
+}_$jscoverage['/dialog.js'].branchData['421'][1].init(440, 52, 'selectedTable.attr(\'border\') || \'0\'');
 function visit41_421_1(result) {
   _$jscoverage['/dialog.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['418'][1].init(363, 33, 'selectedTable.attr(\'align\') || \'\'');
+}_$jscoverage['/dialog.js'].branchData['418'][1].init(373, 33, 'selectedTable.attr(\'align\') || \'\'');
 function visit40_418_1(result) {
   _$jscoverage['/dialog.js'].branchData['418'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['415'][1].init(38, 50, 'parseInt(self.selectedTd.css(\'padding\'), 10) || \'0\'');
+}_$jscoverage['/dialog.js'].branchData['415'][1].init(39, 50, 'parseInt(self.selectedTd.css(\'padding\'), 10) || \'0\'');
 function visit39_415_1(result) {
   _$jscoverage['/dialog.js'].branchData['415'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['413'][1].init(187, 15, 'self.selectedTd');
+}_$jscoverage['/dialog.js'].branchData['413'][1].init(192, 15, 'self.selectedTd');
 function visit38_413_1(result) {
   _$jscoverage['/dialog.js'].branchData['413'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['397'][1].init(61, 8, 'i < cols');
+}_$jscoverage['/dialog.js'].branchData['397'][1].init(63, 8, 'i < cols');
 function visit37_397_1(result) {
   _$jscoverage['/dialog.js'].branchData['397'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['395'][1].init(2070, 8, 'r < rows');
+}_$jscoverage['/dialog.js'].branchData['395'][1].init(2134, 8, 'r < rows');
 function visit36_395_1(result) {
   _$jscoverage['/dialog.js'].branchData['395'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['386'][1].init(96, 8, 'i < cols');
+}_$jscoverage['/dialog.js'].branchData['386'][1].init(99, 8, 'i < cols');
 function visit35_386_1(result) {
   _$jscoverage['/dialog.js'].branchData['386'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['383'][1].init(1690, 20, 'd.thead.get(\'value\')');
+}_$jscoverage['/dialog.js'].branchData['383'][1].init(1742, 20, 'd.thead.get(\'value\')');
 function visit34_383_1(result) {
   _$jscoverage['/dialog.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['380'][1].init(1529, 23, 'valid(d.tcaption.val())');
+}_$jscoverage['/dialog.js'].branchData['380'][1].init(1578, 23, 'valid(d.tcaption.val())');
 function visit33_380_1(result) {
   _$jscoverage['/dialog.js'].branchData['380'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['375'][1].init(1393, 14, 'classes.length');
+}_$jscoverage['/dialog.js'].branchData['375'][1].init(1437, 14, 'classes.length');
 function visit32_375_1(result) {
   _$jscoverage['/dialog.js'].branchData['375'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['372'][1].init(1287, 22, 'd.tcollapse[0].checked');
+}_$jscoverage['/dialog.js'].branchData['372'][1].init(1328, 22, 'd.tcollapse[0].checked');
 function visit31_372_1(result) {
   _$jscoverage['/dialog.js'].branchData['372'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['368'][2].init(1164, 37, 'String(trim(d.tborder.val())) === \'0\'');
+}_$jscoverage['/dialog.js'].branchData['368'][2].init(1201, 37, 'String(trim(d.tborder.val())) === \'0\'');
 function visit30_368_2(result) {
   _$jscoverage['/dialog.js'].branchData['368'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['368'][1].init(1137, 64, '!valid(d.tborder.val()) || String(trim(d.tborder.val())) === \'0\'');
+}_$jscoverage['/dialog.js'].branchData['368'][1].init(1174, 64, '!valid(d.tborder.val()) || String(trim(d.tborder.val())) === \'0\'');
 function visit29_368_1(result) {
   _$jscoverage['/dialog.js'].branchData['368'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['362'][1].init(998, 13, 'styles.length');
+}_$jscoverage['/dialog.js'].branchData['362'][1].init(1029, 13, 'styles.length');
 function visit28_362_1(result) {
   _$jscoverage['/dialog.js'].branchData['362'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['358'][1].init(869, 22, 'valid(d.theight.val())');
+}_$jscoverage['/dialog.js'].branchData['358'][1].init(896, 22, 'valid(d.theight.val())');
 function visit27_358_1(result) {
   _$jscoverage['/dialog.js'].branchData['358'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['354'][1].init(717, 21, 'valid(d.twidth.val())');
+}_$jscoverage['/dialog.js'].branchData['354'][1].init(740, 21, 'valid(d.twidth.val())');
 function visit26_354_1(result) {
   _$jscoverage['/dialog.js'].branchData['354'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['347'][1].init(562, 22, 'valid(d.tborder.val())');
+}_$jscoverage['/dialog.js'].branchData['347'][1].init(578, 22, 'valid(d.tborder.val())');
 function visit25_347_1(result) {
   _$jscoverage['/dialog.js'].branchData['347'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['343'][1].init(427, 28, 'valid(d.talign.get(\'value\'))');
+}_$jscoverage['/dialog.js'].branchData['343'][1].init(439, 28, 'valid(d.talign.get(\'value\'))');
 function visit24_343_1(result) {
   _$jscoverage['/dialog.js'].branchData['343'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['337'][1].init(181, 31, 'parseInt(d.trows.val(), 10) || 1');
+}_$jscoverage['/dialog.js'].branchData['337'][1].init(186, 31, 'parseInt(d.trows.val(), 10) || 1');
 function visit23_337_1(result) {
   _$jscoverage['/dialog.js'].branchData['337'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['336'][1].init(125, 31, 'parseInt(d.tcols.val(), 10) || 1');
+}_$jscoverage['/dialog.js'].branchData['336'][1].init(129, 31, 'parseInt(d.tcols.val(), 10) || 1');
 function visit22_336_1(result) {
   _$jscoverage['/dialog.js'].branchData['336'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['326'][1].init(2459, 7, 'caption');
+}_$jscoverage['/dialog.js'].branchData['326'][1].init(2523, 7, 'caption');
 function visit21_326_1(result) {
   _$jscoverage['/dialog.js'].branchData['326'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['315'][1].init(85, 21, 'caption && caption[0]');
+}_$jscoverage['/dialog.js'].branchData['315'][1].init(87, 21, 'caption && caption[0]');
 function visit20_315_1(result) {
   _$jscoverage['/dialog.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['313'][1].init(1801, 23, 'valid(d.tcaption.val())');
+}_$jscoverage['/dialog.js'].branchData['313'][1].init(1852, 23, 'valid(d.tcaption.val())');
 function visit19_313_1(result) {
   _$jscoverage['/dialog.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['310'][1].init(1683, 15, 'self.selectedTd');
+}_$jscoverage['/dialog.js'].branchData['310'][1].init(1731, 15, 'self.selectedTd');
 function visit18_310_1(result) {
   _$jscoverage['/dialog.js'].branchData['310'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['309'][1].init(1627, 37, 'parseInt(d.cellpadding.val(), 10) || 0');
+}_$jscoverage['/dialog.js'].branchData['309'][1].init(1674, 37, 'parseInt(d.cellpadding.val(), 10) || 0');
 function visit17_309_1(result) {
   _$jscoverage['/dialog.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['303'][1].init(1390, 22, 'd.tcollapse[0].checked');
+}_$jscoverage['/dialog.js'].branchData['303'][1].init(1431, 22, 'd.tcollapse[0].checked');
 function visit16_303_1(result) {
   _$jscoverage['/dialog.js'].branchData['303'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['295'][1].init(1163, 22, 'valid(d.theight.val())');
+}_$jscoverage['/dialog.js'].branchData['295'][1].init(1196, 22, 'valid(d.theight.val())');
 function visit15_295_1(result) {
   _$jscoverage['/dialog.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['288'][1].init(913, 21, 'valid(d.twidth.val())');
+}_$jscoverage['/dialog.js'].branchData['288'][1].init(939, 21, 'valid(d.twidth.val())');
 function visit14_288_1(result) {
   _$jscoverage['/dialog.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['282'][2].init(692, 18, 'tborderVal === \'0\'');
+}_$jscoverage['/dialog.js'].branchData['282'][2].init(712, 18, 'tborderVal === \'0\'');
 function visit13_282_2(result) {
   _$jscoverage['/dialog.js'].branchData['282'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['282'][1].init(670, 40, '!valid(tborderVal) || tborderVal === \'0\'');
+}_$jscoverage['/dialog.js'].branchData['282'][1].init(690, 40, '!valid(tborderVal) || tborderVal === \'0\'');
 function visit12_282_1(result) {
   _$jscoverage['/dialog.js'].branchData['282'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['277'][1].init(482, 17, 'valid(tborderVal)');
+}_$jscoverage['/dialog.js'].branchData['277'][1].init(497, 17, 'valid(tborderVal)');
 function visit11_277_1(result) {
   _$jscoverage['/dialog.js'].branchData['277'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['270'][1].init(285, 16, 'valid(talignVal)');
+}_$jscoverage['/dialog.js'].branchData['270'][1].init(293, 16, 'valid(talignVal)');
 function visit10_270_1(result) {
   _$jscoverage['/dialog.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['255'][1].init(21, 19, '!self.selectedTable');
+}_$jscoverage['/dialog.js'].branchData['255'][1].init(22, 19, '!self.selectedTable');
 function visit9_255_1(result) {
   _$jscoverage['/dialog.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['250'][1].init(640, 3, '!re');
+}_$jscoverage['/dialog.js'].branchData['250'][1].init(659, 3, '!re');
 function visit8_250_1(result) {
   _$jscoverage['/dialog.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['242'][1].init(39, 6, 'tw < 0');
+}_$jscoverage['/dialog.js'].branchData['242'][1].init(40, 6, 'tw < 0');
 function visit7_242_1(result) {
   _$jscoverage['/dialog.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['241'][2].init(33, 8, 'tw > 100');
+}_$jscoverage['/dialog.js'].branchData['241'][2].init(34, 8, 'tw > 100');
 function visit6_241_2(result) {
   _$jscoverage['/dialog.js'].branchData['241'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['241'][1].init(-1, 46, 'tw > 100 || tw < 0');
+}_$jscoverage['/dialog.js'].branchData['241'][1].init(-1, 47, 'tw > 100 || tw < 0');
 function visit5_241_1(result) {
   _$jscoverage['/dialog.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['240'][1].init(24, 105, '!tw || (tw > 100 || tw < 0)');
+}_$jscoverage['/dialog.js'].branchData['240'][1].init(25, 108, '!tw || (tw > 100 || tw < 0)');
 function visit4_240_1(result) {
   _$jscoverage['/dialog.js'].branchData['240'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['237'][1].init(174, 43, 'tableDialog.twidthunit.get(\'value\') === \'%\'');
+}_$jscoverage['/dialog.js'].branchData['237'][1].init(180, 43, 'tableDialog.twidthunit.get(\'value\') === \'%\'');
 function visit3_237_1(result) {
   _$jscoverage['/dialog.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['165'][1].init(16, 22, 'trim(str).length !== 0');
+}_$jscoverage['/dialog.js'].branchData['165'][1].init(17, 22, 'trim(str).length !== 0');
 function visit2_165_1(result) {
   _$jscoverage['/dialog.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['11'][1].init(163, 16, 'S.UA.ieMode < 11');
+}_$jscoverage['/dialog.js'].branchData['11'][1].init(168, 16, 'S.UA.ieMode < 11');
 function visit1_11_1(result) {
   _$jscoverage['/dialog.js'].branchData['11'][1].ranCondition(result);
   return result;

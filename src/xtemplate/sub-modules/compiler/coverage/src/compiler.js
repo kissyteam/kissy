@@ -491,127 +491,127 @@ if (! _$jscoverage['/compiler.js'].branchData) {
   _$jscoverage['/compiler.js'].branchData['418'] = [];
   _$jscoverage['/compiler.js'].branchData['418'][1] = new BranchData();
 }
-_$jscoverage['/compiler.js'].branchData['418'][1].init(17, 5, '!name');
+_$jscoverage['/compiler.js'].branchData['418'][1].init(18, 5, '!name');
 function visit73_418_1(result) {
   _$jscoverage['/compiler.js'].branchData['418'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['314'][1].init(370, 8, 'newParts');
+}_$jscoverage['/compiler.js'].branchData['314'][1].init(379, 8, 'newParts');
 function visit72_314_1(result) {
   _$jscoverage['/compiler.js'].branchData['314'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['255'][1].init(2009, 6, 'idName');
+}_$jscoverage['/compiler.js'].branchData['255'][1].init(2058, 6, 'idName');
 function visit71_255_1(result) {
   _$jscoverage['/compiler.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['247'][1].init(1627, 5, 'block');
+}_$jscoverage['/compiler.js'].branchData['247'][1].init(1668, 5, 'block');
 function visit70_247_1(result) {
   _$jscoverage['/compiler.js'].branchData['247'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['242'][1].init(17, 5, 'block');
+}_$jscoverage['/compiler.js'].branchData['242'][1].init(18, 5, 'block');
 function visit69_242_1(result) {
   _$jscoverage['/compiler.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['241'][1].init(1213, 26, 'idString in nativeCommands');
+}_$jscoverage['/compiler.js'].branchData['241'][1].init(1248, 26, 'idString in nativeCommands');
 function visit68_241_1(result) {
   _$jscoverage['/compiler.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['237'][1].init(1139, 6, '!block');
+}_$jscoverage['/compiler.js'].branchData['237'][1].init(1170, 6, '!block');
 function visit67_237_1(result) {
   _$jscoverage['/compiler.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['230'][3].init(89, 21, 'idString === \'extend\'');
+}_$jscoverage['/compiler.js'].branchData['230'][3].init(91, 21, 'idString === \'extend\'');
 function visit66_230_3(result) {
   _$jscoverage['/compiler.js'].branchData['230'][3].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['230'][2].init(63, 22, 'idString === \'include\'');
+}_$jscoverage['/compiler.js'].branchData['230'][2].init(65, 22, 'idString === \'include\'');
 function visit65_230_2(result) {
   _$jscoverage['/compiler.js'].branchData['230'][2].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['230'][1].init(63, 47, 'idString === \'include\' || idString === \'extend\'');
+}_$jscoverage['/compiler.js'].branchData['230'][1].init(65, 47, 'idString === \'include\' || idString === \'extend\'');
 function visit64_230_1(result) {
   _$jscoverage['/compiler.js'].branchData['230'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['228'][1].init(744, 20, 'xtplAstToJs.isModule');
+}_$jscoverage['/compiler.js'].branchData['228'][1].init(766, 20, 'xtplAstToJs.isModule');
 function visit63_228_1(result) {
   _$jscoverage['/compiler.js'].branchData['228'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['222'][1].init(163, 19, 'programNode.inverse');
+}_$jscoverage['/compiler.js'].branchData['222'][1].init(166, 19, 'programNode.inverse');
 function visit62_222_1(result) {
   _$jscoverage['/compiler.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['219'][1].init(367, 5, 'block');
+}_$jscoverage['/compiler.js'].branchData['219'][1].init(380, 5, 'block');
 function visit61_219_1(result) {
   _$jscoverage['/compiler.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['189'][1].init(764, 4, 'hash');
+}_$jscoverage['/compiler.js'].branchData['189'][1].init(787, 4, 'hash');
 function visit60_189_1(result) {
   _$jscoverage['/compiler.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['178'][1].init(289, 6, 'params');
+}_$jscoverage['/compiler.js'].branchData['178'][1].init(301, 6, 'params');
 function visit59_178_1(result) {
   _$jscoverage['/compiler.js'].branchData['178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['156'][1].init(610, 7, 'i < len');
+}_$jscoverage['/compiler.js'].branchData['156'][1].init(624, 7, 'i < len');
 function visit58_156_1(result) {
   _$jscoverage['/compiler.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['149'][1].init(209, 20, 'xtplAstToJs.isModule');
+}_$jscoverage['/compiler.js'].branchData['149'][1].init(216, 20, 'xtplAstToJs.isModule');
 function visit57_149_1(result) {
   _$jscoverage['/compiler.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['135'][1].init(127, 7, 'i < len');
+}_$jscoverage['/compiler.js'].branchData['135'][1].init(130, 7, 'i < len');
 function visit56_135_1(result) {
   _$jscoverage['/compiler.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['117'][1].init(100, 10, 'idPartType');
+}_$jscoverage['/compiler.js'].branchData['117'][1].init(103, 10, 'idPartType');
 function visit55_117_1(result) {
   _$jscoverage['/compiler.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['114'][1].init(71, 5, 'i < l');
+}_$jscoverage['/compiler.js'].branchData['114'][1].init(73, 5, 'i < l');
 function visit54_114_1(result) {
   _$jscoverage['/compiler.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['112'][1].init(336, 5, 'check');
+}_$jscoverage['/compiler.js'].branchData['112'][1].init(349, 5, 'check');
 function visit53_112_1(result) {
   _$jscoverage['/compiler.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['107'][1].init(17, 15, 'idParts[i].type');
+}_$jscoverage['/compiler.js'].branchData['107'][1].init(18, 15, 'idParts[i].type');
 function visit52_107_1(result) {
   _$jscoverage['/compiler.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['106'][1].init(201, 5, 'i < l');
+}_$jscoverage['/compiler.js'].branchData['106'][1].init(208, 5, 'i < l');
 function visit51_106_1(result) {
   _$jscoverage['/compiler.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['100'][1].init(13, 20, 'idParts.length === 1');
+}_$jscoverage['/compiler.js'].branchData['100'][1].init(14, 20, 'idParts.length === 1');
 function visit50_100_1(result) {
   _$jscoverage['/compiler.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['84'][1].init(34, 13, 'type === \'&&\'');
+}_$jscoverage['/compiler.js'].branchData['84'][1].init(35, 13, 'type === \'&&\'');
 function visit49_84_1(result) {
   _$jscoverage['/compiler.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['83'][3].init(527, 13, 'type === \'||\'');
+}_$jscoverage['/compiler.js'].branchData['83'][3].init(543, 13, 'type === \'||\'');
 function visit48_83_3(result) {
   _$jscoverage['/compiler.js'].branchData['83'][3].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['83'][2].init(510, 13, 'type === \'&&\'');
+}_$jscoverage['/compiler.js'].branchData['83'][2].init(526, 13, 'type === \'&&\'');
 function visit47_83_2(result) {
   _$jscoverage['/compiler.js'].branchData['83'][2].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['83'][1].init(510, 30, 'type === \'&&\' || type === \'||\'');
+}_$jscoverage['/compiler.js'].branchData['83'][1].init(526, 30, 'type === \'&&\' || type === \'||\'');
 function visit46_83_1(result) {
   _$jscoverage['/compiler.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['50'][1].init(13, 6, 'isCode');
+}_$jscoverage['/compiler.js'].branchData['50'][1].init(14, 6, 'isCode');
 function visit45_50_1(result) {
   _$jscoverage['/compiler.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['42'][1].init(87, 12, 'm.length % 2');
+}_$jscoverage['/compiler.js'].branchData['42'][1].init(89, 12, 'm.length % 2');
 function visit44_42_1(result) {
   _$jscoverage['/compiler.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler.js'].branchData['22'][1].init(28, 27, 'S.indexOf(t, keywords) > -1');
+}_$jscoverage['/compiler.js'].branchData['22'][1].init(29, 27, 'S.indexOf(t, keywords) > -1');
 function visit43_22_1(result) {
   _$jscoverage['/compiler.js'].branchData['22'][1].ranCondition(result);
   return result;

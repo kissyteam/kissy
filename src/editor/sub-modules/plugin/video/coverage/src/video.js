@@ -331,79 +331,79 @@ if (! _$jscoverage['/video.js'].branchData) {
   _$jscoverage['/video.js'].branchData['111'] = [];
   _$jscoverage['/video.js'].branchData['111'][1] = new BranchData();
 }
-_$jscoverage['/video.js'].branchData['111'][1].init(100, 10, 'selectedEl');
+_$jscoverage['/video.js'].branchData['111'][1].init(102, 10, 'selectedEl');
 function visit19_111_1(result) {
   _$jscoverage['/video.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['89'][1].init(177, 40, 'getProvider(element.getAttribute(\'src\'))');
+}_$jscoverage['/video.js'].branchData['89'][1].init(181, 40, 'getProvider(element.getAttribute(\'src\'))');
 function visit18_89_1(result) {
   _$jscoverage['/video.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['86'][1].init(33, 33, '!flashUtils.isFlashEmbed(element)');
+}_$jscoverage['/video.js'].branchData['86'][1].init(34, 33, '!flashUtils.isFlashEmbed(element)');
 function visit17_86_1(result) {
   _$jscoverage['/video.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['75'][2].init(53, 90, 'c.getAttribute(\'value\') || c.getAttribute(\'VALUE\')');
+}_$jscoverage['/video.js'].branchData['75'][2].init(54, 91, 'c.getAttribute(\'value\') || c.getAttribute(\'VALUE\')');
 function visit16_75_2(result) {
   _$jscoverage['/video.js'].branchData['75'][2].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['75'][1].init(41, 103, 'getProvider(c.getAttribute(\'value\') || c.getAttribute(\'VALUE\'))');
+}_$jscoverage['/video.js'].branchData['75'][1].init(42, 104, 'getProvider(c.getAttribute(\'value\') || c.getAttribute(\'VALUE\'))');
 function visit15_75_1(result) {
   _$jscoverage['/video.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['74'][1].init(61, 48, 'c.getAttribute(\'name\').toLowerCase() === \'movie\'');
+}_$jscoverage['/video.js'].branchData['74'][1].init(62, 48, 'c.getAttribute(\'name\').toLowerCase() === \'movie\'');
 function visit14_74_1(result) {
   _$jscoverage['/video.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['73'][2].init(94, 22, 'c.nodeName === \'param\'');
+}_$jscoverage['/video.js'].branchData['73'][2].init(96, 22, 'c.nodeName === \'param\'');
 function visit13_73_2(result) {
   _$jscoverage['/video.js'].branchData['73'][2].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['73'][1].init(94, 110, 'c.nodeName === \'param\' && c.getAttribute(\'name\').toLowerCase() === \'movie\'');
+}_$jscoverage['/video.js'].branchData['73'][1].init(96, 111, 'c.nodeName === \'param\' && c.getAttribute(\'name\').toLowerCase() === \'movie\'');
 function visit12_73_1(result) {
   _$jscoverage['/video.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['71'][1].init(1094, 21, 'i < childNodes.length');
+}_$jscoverage['/video.js'].branchData['71'][1].init(1113, 21, 'i < childNodes.length');
 function visit11_71_1(result) {
   _$jscoverage['/video.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['63'][1].init(233, 48, 'getProvider(childNodes[i].getAttribute(\'src\'))');
+}_$jscoverage['/video.js'].branchData['63'][1].init(237, 48, 'getProvider(childNodes[i].getAttribute(\'src\'))');
 function visit10_63_1(result) {
   _$jscoverage['/video.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['60'][1].init(45, 41, '!flashUtils.isFlashEmbed(childNodes[i])');
+}_$jscoverage['/video.js'].branchData['60'][1].init(46, 41, '!flashUtils.isFlashEmbed(childNodes[i])');
 function visit9_60_1(result) {
   _$jscoverage['/video.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['59'][1].init(41, 36, 'childNodes[i].nodeName === \'embed\'');
+}_$jscoverage['/video.js'].branchData['59'][1].init(42, 36, 'childNodes[i].nodeName === \'embed\'');
 function visit8_59_1(result) {
   _$jscoverage['/video.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['58'][1].init(108, 21, 'i < childNodes.length');
+}_$jscoverage['/video.js'].branchData['58'][1].init(111, 21, 'i < childNodes.length');
 function visit7_58_1(result) {
   _$jscoverage['/video.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['55'][1].init(176, 8, '!classId');
+}_$jscoverage['/video.js'].branchData['55'][1].init(179, 8, '!classId');
 function visit6_55_1(result) {
   _$jscoverage['/video.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['49'][1].init(779, 10, 'dataFilter');
+}_$jscoverage['/video.js'].branchData['49'][1].init(808, 10, 'dataFilter');
 function visit5_49_1(result) {
   _$jscoverage['/video.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['43'][1].init(610, 18, 'videoCfg.providers');
+}_$jscoverage['/video.js'].branchData['43'][1].init(633, 18, 'videoCfg.providers');
 function visit4_43_1(result) {
   _$jscoverage['/video.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['34'][1].init(66, 15, 'p.reg.test(url)');
+}_$jscoverage['/video.js'].branchData['34'][1].init(68, 15, 'p.reg.test(url)');
 function visit3_34_1(result) {
   _$jscoverage['/video.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['31'][1].init(36, 19, 'i < provider.length');
+}_$jscoverage['/video.js'].branchData['31'][1].init(37, 19, 'i < provider.length');
 function visit2_31_1(result) {
   _$jscoverage['/video.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['25'][1].init(74, 41, 'dataProcessor && dataProcessor.dataFilter');
+}_$jscoverage['/video.js'].branchData['25'][1].init(75, 41, 'dataProcessor && dataProcessor.dataFilter');
 function visit1_25_1(result) {
   _$jscoverage['/video.js'].branchData['25'][1].ranCondition(result);
   return result;

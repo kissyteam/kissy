@@ -289,35 +289,35 @@ if (! _$jscoverage['/html-parser/lexer/page.js'].branchData) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['58'] = [];
   _$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1].init(64, 11, '\'\\r\' === ch');
+_$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1].init(66, 11, '\'\\r\' === ch');
 function visit176_58_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][3].init(176, 7, '0 !== i');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][3].init(181, 7, '0 !== i');
 function visit175_56_3(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['56'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][2].init(161, 11, 'ch === \'\\n\'');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][2].init(166, 11, 'ch === \'\\n\'');
 function visit174_56_2(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['56'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][1].init(161, 22, 'ch === \'\\n\' && 0 !== i');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][1].init(166, 22, 'ch === \'\\n\' && 0 !== i');
 function visit173_56_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['43'][1].init(1038, 12, '\'\\n\' === ret');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['43'][1].init(1064, 12, '\'\\n\' === ret');
 function visit172_43_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['37'][1].init(131, 13, 'next === \'\\n\'');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['37'][1].init(135, 13, 'next === \'\\n\'');
 function visit171_37_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['33'][1].init(755, 12, '\'\\r\' === ret');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['33'][1].init(771, 12, '\'\\r\' === ret');
 function visit170_33_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['20'][1].init(92, 18, 'i >= source.length');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['20'][1].init(95, 18, 'i >= source.length');
 function visit169_20_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['20'][1].ranCondition(result);
   return result;

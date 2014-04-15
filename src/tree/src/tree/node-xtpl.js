@@ -32,7 +32,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet2 = undefined;
             }
             buffer.write(commandRet2, true);
-            buffer.write('\n     ');
+            buffer.write('\r\n     ');
             var option3 = {
                 escape: 1
             };
@@ -42,7 +42,7 @@ KISSY.add(function (S, require, exports, module) {
             option3.params = params4;
             option3.fn = function (scope, buffer) {
 
-                buffer.write('\n        ');
+                buffer.write('\r\n        ');
                 var option6 = {
                     escape: 1
                 };
@@ -55,12 +55,12 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet8 = undefined;
                 }
                 buffer.write(commandRet8, true);
-                buffer.write('\n     ');
+                buffer.write('\r\n     ');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option3, buffer, 2, payload);
-            buffer.write('\n     ">\n    <div class="');
+            buffer.write('\r\n     ">\r\n    <div class="');
             var option9 = {
                 escape: 1
             };
@@ -73,7 +73,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet11 = undefined;
             }
             buffer.write(commandRet11, true);
-            buffer.write('">\n    </div>\n    ');
+            buffer.write('">\r\n    </div>\r\n    ');
             var option12 = {
                 escape: 1
             };
@@ -83,7 +83,7 @@ KISSY.add(function (S, require, exports, module) {
             option12.params = params13;
             option12.fn = function (scope, buffer) {
 
-                buffer.write('\n    <div class="');
+                buffer.write('\r\n    <div class="');
                 var option15 = {
                     escape: 1
                 };
@@ -112,12 +112,12 @@ KISSY.add(function (S, require, exports, module) {
                     commandRet22 = undefined;
                 }
                 buffer.write(commandRet22, true);
-                buffer.write('"></div>\n    ');
+                buffer.write('"></div>\r\n    ');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option12, buffer, 8, payload);
-            buffer.write('\n    <div class="');
+            buffer.write('\r\n    <div class="');
             var option23 = {
                 escape: 1
             };
@@ -130,7 +130,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet25 = undefined;
             }
             buffer.write(commandRet25, true);
-            buffer.write('">\n\n    </div>\n    ');
+            buffer.write('">\r\n\r\n    </div>\r\n    ');
             var option26 = {};
             var params27 = [];
             params27.push('component/extension/content-xtpl');
@@ -143,7 +143,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet28 = undefined;
             }
             buffer.write(commandRet28, false);
-            buffer.write('\n</div>\n<div class="');
+            buffer.write('\r\n</div>\r\n<div class="');
             var option29 = {
                 escape: 1
             };
@@ -156,7 +156,7 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet31 = undefined;
             }
             buffer.write(commandRet31, true);
-            buffer.write('"\n');
+            buffer.write('"\r\n');
             var option32 = {
                 escape: 1
             };
@@ -166,12 +166,12 @@ KISSY.add(function (S, require, exports, module) {
             option32.params = params33;
             option32.fn = function (scope, buffer) {
 
-                buffer.write('\nstyle="display:none"\n');
+                buffer.write('\r\nstyle="display:none"\r\n');
 
                 return buffer;
             };
             buffer = ifCommand.call(engine, scope, option32, buffer, 17, payload);
-            buffer.write('\n>\n</div>');
+            buffer.write('\r\n>\r\n</div>');
             return buffer;
         };
 t.TPL_NAME = module.name;

@@ -247,7 +247,7 @@ if (! _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'] = [];
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1].init(20, 10, 'opts || {}');
+_$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1].init(21, 10, 'opts || {}');
 function visit323_11_1(result) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1].ranCondition(result);
   return result;

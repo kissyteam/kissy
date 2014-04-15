@@ -281,11 +281,11 @@ if (! _$jscoverage['/editor/focusManager.js'].branchData) {
   _$jscoverage['/editor/focusManager.js'].branchData['25'] = [];
   _$jscoverage['/editor/focusManager.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/editor/focusManager.js'].branchData['25'][1].init(106, 5, 'timer');
+_$jscoverage['/editor/focusManager.js'].branchData['25'][1].init(110, 5, 'timer');
 function visit337_25_1(result) {
   _$jscoverage['/editor/focusManager.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/focusManager.js'].branchData['13'][1].init(105, 5, 'timer');
+}_$jscoverage['/editor/focusManager.js'].branchData['13'][1].init(109, 5, 'timer');
 function visit336_13_1(result) {
   _$jscoverage['/editor/focusManager.js'].branchData['13'][1].ranCondition(result);
   return result;
