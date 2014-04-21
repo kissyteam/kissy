@@ -1,209 +1,186 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:57
+build time: Apr 21 22:07
 */
 /*
-combined files : 
-
+combined modules:
 ua
-
 */
 /**
  * @ignore
  * ua
  */
-KISSY.add('ua',function (S) {
+KISSY.add('ua', [], function (S) {
     /*global process*/
-    var win = S.Env.host,
-        undef,
-        doc = win.document,
-        navigator = win.navigator,
-        ua = navigator && navigator.userAgent || '';
-
+    var win = S.Env.host, undef, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || '';
     function numberify(s) {
-        var c = 0;
+        var c = 0;    // convert '1.2.3.4' to 1.234
         // convert '1.2.3.4' to 1.234
         return parseFloat(s.replace(/\./g, function () {
-            return (c++ === 0) ? '.' : '';
+            return c++ === 0 ? '.' : '';
         }));
     }
-
     function setTridentVersion(ua, UA) {
         var core, m;
-        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-
+        UA[core = 'trident'] = 0.1;    // Trident detected, look for revision
+                                       // Get the Trident's accurate version
+        // Trident detected, look for revision
         // Get the Trident's accurate version
         if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
             UA[core] = numberify(m[1]);
         }
-
         UA.core = core;
     }
-
     function getIEVersion(ua) {
         var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
-            (v = (m[1] || m[2]))) {
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) && (v = m[1] || m[2])) {
             return numberify(v);
         }
         return 0;
     }
-
     function getDescriptorFromUserAgent(ua) {
-        var EMPTY = '',
-            os,
-            core = EMPTY,
-            shell = EMPTY,
-            m,
-            IE_DETECT_RANGE = [6, 9],
-            ieVersion,
-            v,
-            end,
-            VERSION_PLACEHOLDER = '{{version}}',
-            IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-            div = doc && doc.createElement('div'),
-            s = [];
-
+        var EMPTY = '', os, core = EMPTY, shell = EMPTY, m, IE_DETECT_RANGE = [
+                6,
+                9
+            ], ieVersion, v, end, VERSION_PLACEHOLDER = '{{version}}', IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->', div = doc && doc.createElement('div'), s = [];    /**
+         * KISSY UA
+         * @class KISSY.UA
+         * @singleton
+         */
         /**
          * KISSY UA
          * @class KISSY.UA
          * @singleton
          */
         var UA = {
-            /**
+                /**
              * webkit version
              * @type undef|Number
              * @member KISSY.UA
              */
-            webkit: undef,
-            /**
+                webkit: undef,
+                /**
              * trident version
              * @type undef|Number
              * @member KISSY.UA
              */
-            trident: undef,
-            /**
+                trident: undef,
+                /**
              * gecko version
              * @type undef|Number
              * @member KISSY.UA
              */
-            gecko: undef,
-            /**
+                gecko: undef,
+                /**
              * presto version
              * @type undef|Number
              * @member KISSY.UA
              */
-            presto: undef,
-            /**
+                presto: undef,
+                /**
              * chrome version
              * @type undef|Number
              * @member KISSY.UA
              */
-            chrome: undef,
-            /**
+                chrome: undef,
+                /**
              * safari version
              * @type undef|Number
              * @member KISSY.UA
              */
-            safari: undef,
-            /**
+                safari: undef,
+                /**
              * firefox version
              * @type undef|Number
              * @member KISSY.UA
              */
-            firefox: undef,
-            /**
+                firefox: undef,
+                /**
              * ie version
              * @type undef|Number
              * @member KISSY.UA
              */
-            ie: undef,
-            /**
+                ie: undef,
+                /**
              * ie document mode
              * @type undef|Number
              * @member KISSY.UA
              */
-            ieMode: undef,
-            /**
+                ieMode: undef,
+                /**
              * opera version
              * @type undef|Number
              * @member KISSY.UA
              */
-            opera: undef,
-            /**
+                opera: undef,
+                /**
              * mobile browser. apple, android.
              * @type String
              * @member KISSY.UA
              */
-            mobile: undef,
-            /**
+                mobile: undef,
+                /**
              * browser render engine name. webkit, trident
              * @type String
              * @member KISSY.UA
              */
-            core: undef,
-            /**
+                core: undef,
+                /**
              * browser shell name. ie, chrome, firefox
              * @type String
              * @member KISSY.UA
              */
-            shell: undef,
-
-            /**
+                shell: undef,
+                /**
              * PhantomJS version number
              * @type undef|Number
              * @member KISSY.UA
              */
-            phantomjs: undef,
-
-            /**
+                phantomjs: undef,
+                /**
              * operating system. android, ios, linux, windows
              * @type string
              * @member KISSY.UA
              */
-            os: undef,
-
-            /**
+                os: undef,
+                /**
              * ipad ios version
              * @type Number
              * @member KISSY.UA
              */
-            ipad: undef,
-            /**
+                ipad: undef,
+                /**
              * iphone ios version
              * @type Number
              * @member KISSY.UA
              */
-            iphone: undef,
-            /**
+                iphone: undef,
+                /**
              * ipod ios
              * @type Number
              * @member KISSY.UA
              */
-            ipod: undef,
-            /**
+                ipod: undef,
+                /**
              * ios version
              * @type Number
              * @member KISSY.UA
              */
-            ios: undef,
-
-            /**
+                ios: undef,
+                /**
              * android version
              * @type Number
              * @member KISSY.UA
              */
-            android: undef,
-
-            /**
+                android: undef,
+                /**
              * nodejs version
              * @type Number
              * @member KISSY.UA
              */
-            nodejs: undef
-        };
-
+                nodejs: undef
+            };    // ejecta
         // ejecta
         if (div && div.getElementsByTagName) {
             // try to use IE-Conditional-Comment detect IE more accurately
@@ -211,10 +188,13 @@ KISSY.add('ua',function (S) {
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
             s = div.getElementsByTagName('s');
         }
-
         if (s.length > 0) {
-            setTridentVersion(ua, UA);
-
+            setTridentVersion(ua, UA);    // Detect the accurate version
+                                          // 注意：
+                                          //  UA.shell = ie, 表示外壳是 ie
+                                          //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                                          //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
+                                          //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
             // Detect the accurate version
             // 注意：
             //  UA.shell = ie, 表示外壳是 ie
@@ -227,8 +207,8 @@ KISSY.add('ua',function (S) {
                     UA[shell = 'ie'] = v;
                     break;
                 }
-            }
-
+            }    // https://github.com/kissyteam/kissy/issues/321
+                 // win8 embed app
             // https://github.com/kissyteam/kissy/issues/321
             // win8 embed app
             if (!UA.ie && (ieVersion = getIEVersion(ua))) {
@@ -239,7 +219,6 @@ KISSY.add('ua',function (S) {
             // https://github.com/kissyteam/kissy/issues/545
             if (((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
                 UA[core = 'webkit'] = numberify(m[1]);
-
                 if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
                     UA[shell = 'opera'] = numberify(m[1]);
                 } else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
@@ -249,12 +228,11 @@ KISSY.add('ua',function (S) {
                 } else {
                     // default to mobile safari
                     UA.safari = UA.webkit;
-                }
-
+                }    // Apple Mobile
                 // Apple Mobile
                 if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
-                    UA.mobile = 'apple'; // iPad, iPhone or iPod Touch
-
+                    UA.mobile = 'apple';    // iPad, iPhone or iPod Touch
+                    // iPad, iPhone or iPod Touch
                     m = ua.match(/OS ([^\s]*)/);
                     if (m && m[1]) {
                         UA.ios = numberify(m[1].replace('_', '.'));
@@ -272,10 +250,10 @@ KISSY.add('ua',function (S) {
                     if (m && m[1]) {
                         UA.android = numberify(m[1]);
                     }
-                } else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-                    UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+                } else if (m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/)) {
+                    UA.mobile = m[0].toLowerCase();    // Nokia N-series, Android, webOS, ex: NokiaN95
                 }
-
+                // Nokia N-series, Android, webOS, ex: NokiaN95
                 if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
                     UA.phantomjs = numberify(m[1]);
                 }
@@ -283,90 +261,84 @@ KISSY.add('ua',function (S) {
                 // Presto
                 // ref: http://www.useragentstring.com/pages/useragentstring.php
                 if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
-                    UA[core = 'presto'] = numberify(m[1]);
-
+                    UA[core = 'presto'] = numberify(m[1]);    // Opera
                     // Opera
                     if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
-                        UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
-
+                        UA[shell = 'opera'] = numberify(m[1]);    // Opera detected, look for revision
+                        // Opera detected, look for revision
                         if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
                             UA[shell] = numberify(m[1]);
-                        }
-
+                        }    // Opera Mini
                         // Opera Mini
                         if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                            UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
-                        } else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                            UA.mobile = m[0].toLowerCase();    // ex: Opera Mini/2.0.4509/1316
+                        } else // ex: Opera Mini/2.0.4509/1316
+                        if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
                             // Opera Mobile
                             // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
                             // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
                             UA.mobile = m[0];
                         }
-                    }
+                    }    // NOT WebKit or Presto
+                } else
                     // NOT WebKit or Presto
-                } else {
-                    // MSIE
-                    // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
-                    // and analysis tools in nodejs
-                    if ((ieVersion = getIEVersion(ua))) {
-                        UA[shell = 'ie'] = ieVersion;
-                        setTridentVersion(ua, UA);
-                        // NOT WebKit, Presto or IE
-                    } else {
-                        // Gecko
-                        if ((m = ua.match(/Gecko/))) {
-                            UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
-                            if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
-                                UA[core] = numberify(m[1]);
-                                if (/Mobile|Tablet/.test(ua)) {
-                                    UA.mobile = 'firefox';
+                    {
+                        // MSIE
+                        // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                        // and analysis tools in nodejs
+                        if (ieVersion = getIEVersion(ua)) {
+                            UA[shell = 'ie'] = ieVersion;
+                            setTridentVersion(ua, UA);    // NOT WebKit, Presto or IE
+                        } else
+                            // NOT WebKit, Presto or IE
+                            {
+                                // Gecko
+                                if (m = ua.match(/Gecko/)) {
+                                    UA[core = 'gecko'] = 0.1;    // Gecko detected, look for revision
+                                    // Gecko detected, look for revision
+                                    if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                                        UA[core] = numberify(m[1]);
+                                        if (/Mobile|Tablet/.test(ua)) {
+                                            UA.mobile = 'firefox';
+                                        }
+                                    }    // Firefox
+                                    // Firefox
+                                    if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                                        UA[shell = 'firefox'] = numberify(m[1]);
+                                    }
                                 }
                             }
-                            // Firefox
-                            if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                                UA[shell = 'firefox'] = numberify(m[1]);
-                            }
-                        }
                     }
-                }
             }
         }
-
         if (!os) {
-            if ((/windows|win32/i).test(ua)) {
+            if (/windows|win32/i.test(ua)) {
                 os = 'windows';
-            } else if ((/macintosh|mac_powerpc/i).test(ua)) {
+            } else if (/macintosh|mac_powerpc/i.test(ua)) {
                 os = 'macintosh';
-            } else if ((/linux/i).test(ua)) {
+            } else if (/linux/i.test(ua)) {
                 os = 'linux';
-            } else if ((/rhino/i).test(ua)) {
+            } else if (/rhino/i.test(ua)) {
                 os = 'rhino';
             }
         }
-
         UA.os = os;
         UA.core = UA.core || core;
         UA.shell = shell;
         UA.ieMode = UA.ie && doc.documentMode || UA.ie;
-
         return UA;
     }
-
-    var UA = S.UA = getDescriptorFromUserAgent(ua);
-
+    var UA = S.UA = getDescriptorFromUserAgent(ua);    // nodejs
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
-
         if ((versions = process.versions) && (nodeVersion = versions.node)) {
             UA.os = process.platform;
             UA.nodejs = numberify(nodeVersion);
         }
-    }
-
+    }    // use by analysis tools in nodejs
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
-
     var browsers = [
             // browser core type
             'webkit',
@@ -379,9 +351,7 @@ KISSY.add('ua',function (S) {
             'firefox',
             'ie',
             'opera'
-        ],
-        documentElement = doc && doc.documentElement,
-        className = '';
+        ], documentElement = doc && doc.documentElement, className = '';
     if (documentElement) {
         for (var i = 0; i < browsers.length; i++) {
             var key = browsers[i];
@@ -392,15 +362,11 @@ KISSY.add('ua',function (S) {
             }
         }
         if (className) {
-            documentElement.className = (documentElement.className + className)
-                .replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
+            documentElement.className = (documentElement.className + className).replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
         }
     }
-
     return UA;
-});
-
-/*
+});    /*
  NOTES:
  2013.07.08 yiminghe@gmail.com
  - support ie11 and opera(using blink)
@@ -425,4 +391,3 @@ KISSY.add('ua',function (S) {
  皆权衡。
  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
  */
-

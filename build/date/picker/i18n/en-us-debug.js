@@ -1,14 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 18:17
+build time: Apr 21 22:22
+*/
+/*
+combined modules:
+date/picker/i18n/en-us
 */
 /**
  * i18n resources for date-picker
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/i18n/en-us', {
+KISSY.add('date/picker/i18n/en-us', [], {
     today: 'Today',
     clear: 'Clear',
     previousMonth: 'Previous month (PageUp)',
@@ -25,5 +29,13 @@ KISSY.add('date/picker/i18n/en-us', {
     nextDecade: 'Next decade',
     previousCentury: 'Last century',
     nextCentury: 'Next century',
-    veryShortWeekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+    veryShortWeekdays: [
+        'S',
+        'M',
+        'T',
+        'W',
+        'T',
+        'F',
+        'S'
+    ]
 });

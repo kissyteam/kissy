@@ -238,7 +238,7 @@ if (! _$jscoverage['/i18n/zh-cn.js'].branchData) {
   _$jscoverage['/i18n/zh-cn.js'].branchData = {};
 }
 _$jscoverage['/i18n/zh-cn.js'].lineData[6]++;
-KISSY.add('date/i18n/zh-cn', {
+KISSY.add({
   timezoneOffset: 8 * 60, 
   firstDayOfWeek: 1, 
   minimalDaysInFirstWeek: 1, 

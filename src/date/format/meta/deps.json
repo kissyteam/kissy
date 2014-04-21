@@ -1,3 +1,1 @@
-{
- "date/format": ["date/gregorian", "i18n!date"] 
-}
+{"date/format":["i18n!date","./gregorian/utils","./gregorian/const","./const"]}

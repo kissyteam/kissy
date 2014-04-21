@@ -238,7 +238,7 @@ if (! _$jscoverage['/i18n/zh-cn.js'].branchData) {
   _$jscoverage['/i18n/zh-cn.js'].branchData = {};
 }
 _$jscoverage['/i18n/zh-cn.js'].lineData[6]++;
-KISSY.add('date/picker/i18n/zh-cn', {
+KISSY.add({
   today: '\u4eca\u5929', 
   clear: '\u6e05\u9664', 
   previousMonth: '\u4e0a\u4e2a\u6708 (\u7ffb\u9875\u4e0a\u952e)', 

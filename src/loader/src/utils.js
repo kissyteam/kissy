@@ -17,7 +17,7 @@
          * @singleton
          * @private
          */
-            Utils = Loader.Utils = {},
+        Utils = Loader.Utils = {},
         doc = host.document;
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -161,6 +161,10 @@
         keys: keys,
 
         isArray: isArray,
+
+        normalizeSlash: function (str) {
+            return str.replace(/\\/g, '/');
+        },
 
         normalizePath: function (parentPath, subPath) {
             var firstChar = subPath.charAt(0);
@@ -341,7 +345,7 @@
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
                     (module.cjs ? [S,
-                        requires && requires.length ? module.require : undefined,
+                            requires && requires.length ? module.require : undefined,
                         module.exports,
                         module] :
                         Utils.getModules(module.getRequiresWithAlias())));

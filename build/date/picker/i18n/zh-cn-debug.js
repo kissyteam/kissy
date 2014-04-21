@@ -1,30 +1,42 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 18:17
+build time: Apr 21 22:22
+*/
+/*
+combined modules:
+date/picker/i18n/zh-cn
 */
 /**
  * i18n resources for date-picker
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/i18n/zh-cn', {
-    today: '今天',
-    clear: '清除',
-    previousMonth: '上个月 (翻页上键)',
-    nextMonth: '下个月 (翻页下键)',
-    monthSelect: '选择月份',
-    yearSelect: '选择年份',
-    decadeSelect: '选择年代',
+KISSY.add('date/picker/i18n/zh-cn', [], {
+    today: '\u4ECA\u5929',
+    clear: '\u6E05\u9664',
+    previousMonth: '\u4E0A\u4E2A\u6708 (\u7FFB\u9875\u4E0A\u952E)',
+    nextMonth: '\u4E0B\u4E2A\u6708 (\u7FFB\u9875\u4E0B\u952E)',
+    monthSelect: '\u9009\u62E9\u6708\u4EFD',
+    yearSelect: '\u9009\u62E9\u5E74\u4EFD',
+    decadeSelect: '\u9009\u62E9\u5E74\u4EE3',
     /*jshint quotmark: false*/
-    yearFormat: "yyyy'年'",
-    monthYearFormat: "yyyy'年'M'月'",
-    dateFormat: "yyyy'年'M'月'd'日'",
-    previousYear: '上一年 (Control键加左方向键)',
-    nextYear: '下一年 (Control键加右方向键)',
-    previousDecade: '上一年代',
-    nextDecade: '下一年代',
-    previousCentury: '上一世纪',
-    nextCentury: '下一世纪',
-    veryShortWeekdays: ['日', '一', '二', '三', '四', '五', '六']
+    yearFormat: 'yyyy\'\u5E74\'',
+    monthYearFormat: 'yyyy\'\u5E74\'M\'\u6708\'',
+    dateFormat: 'yyyy\'\u5E74\'M\'\u6708\'d\'\u65E5\'',
+    previousYear: '\u4E0A\u4E00\u5E74 (Control\u952E\u52A0\u5DE6\u65B9\u5411\u952E)',
+    nextYear: '\u4E0B\u4E00\u5E74 (Control\u952E\u52A0\u53F3\u65B9\u5411\u952E)',
+    previousDecade: '\u4E0A\u4E00\u5E74\u4EE3',
+    nextDecade: '\u4E0B\u4E00\u5E74\u4EE3',
+    previousCentury: '\u4E0A\u4E00\u4E16\u7EAA',
+    nextCentury: '\u4E0B\u4E00\u4E16\u7EAA',
+    veryShortWeekdays: [
+        '\u65E5',
+        '\u4E00',
+        '\u4E8C',
+        '\u4E09',
+        '\u56DB',
+        '\u4E94',
+        '\u516D'
+    ]
 });

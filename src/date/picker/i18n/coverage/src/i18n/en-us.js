@@ -238,7 +238,7 @@ if (! _$jscoverage['/i18n/en-us.js'].branchData) {
   _$jscoverage['/i18n/en-us.js'].branchData = {};
 }
 _$jscoverage['/i18n/en-us.js'].lineData[6]++;
-KISSY.add('date/picker/i18n/en-us', {
+KISSY.add({
   today: 'Today', 
   clear: 'Clear', 
   previousMonth: 'Previous month (PageUp)', 

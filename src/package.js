@@ -78,11 +78,17 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "date/gregorian": {
             "base": "/kissy/src/date/gregorian/src/gregorian"
         },
-        "date/i18n": {
-            "base": "/kissy/src/date/i18n/src/i18n"
+        "date/i18n/en-us": {
+            "base": "/kissy/src/date/i18n/en-us/src/en-us"
         },
-        "date/picker/i18n": {
-            "base": "/kissy/src/date/picker/i18n/src/i18n"
+        "date/i18n/zh-cn": {
+            "base": "/kissy/src/date/i18n/zh-cn/src/zh-cn"
+        },
+        "date/picker/i18n/en-us": {
+            "base": "/kissy/src/date/picker/i18n/en-us/src/en-us"
+        },
+        "date/picker/i18n/zh-cn": {
+            "base": "/kissy/src/date/picker/i18n/zh-cn/src/zh-cn"
         },
         "date/picker": {
             "base": "/kissy/src/date/picker/src/picker"

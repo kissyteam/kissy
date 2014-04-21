@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/i18n/zh-cn', {
+KISSY.add({
     today: '今天',
     clear: '清除',
     previousMonth: '上个月 (翻页上键)',

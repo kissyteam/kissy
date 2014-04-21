@@ -1,3 +1,1 @@
-{
- "date/picker": ["node", "date/gregorian", "i18n!date/picker", "component/control", "date/format", "date/picker-xtpl", "event/gesture/tap"] 
-}
+{"date/picker":["node","i18n!date/picker","component/control","event/gesture/tap","./gregorian/utils","i18n!date","./gregorian/const","./const","date/picker-xtpl"]}

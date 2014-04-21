@@ -231,24 +231,24 @@ if (! _$jscoverage['/json.js']) {
   _$jscoverage['/json.js'].lineData = [];
   _$jscoverage['/json.js'].lineData[6] = 0;
   _$jscoverage['/json.js'].lineData[7] = 0;
-  _$jscoverage['/json.js'].lineData[14] = 0;
-  _$jscoverage['/json.js'].lineData[15] = 0;
+  _$jscoverage['/json.js'].lineData[12] = 0;
+  _$jscoverage['/json.js'].lineData[13] = 0;
+  _$jscoverage['/json.js'].lineData[16] = 0;
+  _$jscoverage['/json.js'].lineData[17] = 0;
   _$jscoverage['/json.js'].lineData[18] = 0;
   _$jscoverage['/json.js'].lineData[19] = 0;
-  _$jscoverage['/json.js'].lineData[20] = 0;
-  _$jscoverage['/json.js'].lineData[21] = 0;
-  _$jscoverage['/json.js'].lineData[24] = 0;
-  _$jscoverage['/json.js'].lineData[25] = 0;
-  _$jscoverage['/json.js'].lineData[29] = 0;
+  _$jscoverage['/json.js'].lineData[22] = 0;
+  _$jscoverage['/json.js'].lineData[23] = 0;
+  _$jscoverage['/json.js'].lineData[27] = 0;
+  _$jscoverage['/json.js'].lineData[31] = 0;
+  _$jscoverage['/json.js'].lineData[32] = 0;
   _$jscoverage['/json.js'].lineData[33] = 0;
-  _$jscoverage['/json.js'].lineData[34] = 0;
   _$jscoverage['/json.js'].lineData[35] = 0;
   _$jscoverage['/json.js'].lineData[37] = 0;
-  _$jscoverage['/json.js'].lineData[39] = 0;
+  _$jscoverage['/json.js'].lineData[38] = 0;
   _$jscoverage['/json.js'].lineData[40] = 0;
-  _$jscoverage['/json.js'].lineData[42] = 0;
-  _$jscoverage['/json.js'].lineData[46] = 0;
-  _$jscoverage['/json.js'].lineData[50] = 0;
+  _$jscoverage['/json.js'].lineData[44] = 0;
+  _$jscoverage['/json.js'].lineData[48] = 0;
 }
 if (! _$jscoverage['/json.js'].functionData) {
   _$jscoverage['/json.js'].functionData = [];
@@ -259,105 +259,111 @@ if (! _$jscoverage['/json.js'].functionData) {
 }
 if (! _$jscoverage['/json.js'].branchData) {
   _$jscoverage['/json.js'].branchData = {};
-  _$jscoverage['/json.js'].branchData['11'] = [];
-  _$jscoverage['/json.js'].branchData['11'][1] = new BranchData();
-  _$jscoverage['/json.js'].branchData['11'][2] = new BranchData();
-  _$jscoverage['/json.js'].branchData['14'] = [];
-  _$jscoverage['/json.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/json.js'].branchData['18'] = [];
-  _$jscoverage['/json.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/json.js'].branchData['34'] = [];
-  _$jscoverage['/json.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/json.js'].branchData['37'] = [];
-  _$jscoverage['/json.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['8'] = [];
+  _$jscoverage['/json.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['9'] = [];
+  _$jscoverage['/json.js'].branchData['9'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['12'] = [];
+  _$jscoverage['/json.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['12'][2] = new BranchData();
+  _$jscoverage['/json.js'].branchData['16'] = [];
+  _$jscoverage['/json.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['32'] = [];
+  _$jscoverage['/json.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['35'] = [];
+  _$jscoverage['/json.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/json.js'].branchData['38'] = [];
+  _$jscoverage['/json.js'].branchData['38'][1] = new BranchData();
   _$jscoverage['/json.js'].branchData['40'] = [];
   _$jscoverage['/json.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/json.js'].branchData['42'] = [];
-  _$jscoverage['/json.js'].branchData['42'][1] = new BranchData();
 }
-_$jscoverage['/json.js'].branchData['42'][1].init(61, 179, 'INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, \'@\').replace(INVALID_TOKENS_REG, \']\').replace(INVALID_BRACES_REG, \'\'))');
-function visit8_42_1(result) {
-  _$jscoverage['/json.js'].branchData['42'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/json.js'].branchData['40'][1].init(87, 4, 'data');
-function visit7_40_1(result) {
+_$jscoverage['/json.js'].branchData['40'][1].init(61, 179, 'INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, \'@\').replace(INVALID_TOKENS_REG, \']\').replace(INVALID_BRACES_REG, \'\'))');
+function visit9_40_1(result) {
   _$jscoverage['/json.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['37'][1].init(97, 24, 'typeof data === \'string\'');
-function visit6_37_1(result) {
-  _$jscoverage['/json.js'].branchData['37'][1].ranCondition(result);
+}_$jscoverage['/json.js'].branchData['38'][1].init(87, 4, 'data');
+function visit8_38_1(result) {
+  _$jscoverage['/json.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['34'][1].init(18, 13, 'data === null');
-function visit5_34_1(result) {
-  _$jscoverage['/json.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/json.js'].branchData['35'][1].init(97, 24, 'typeof data === \'string\'');
+function visit7_35_1(result) {
+  _$jscoverage['/json.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['18'][1].init(293, 10, 'nativeJson');
-function visit4_18_1(result) {
-  _$jscoverage['/json.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/json.js'].branchData['32'][1].init(18, 13, 'data === null');
+function visit6_32_1(result) {
+  _$jscoverage['/json.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['14'][1].init(230, 13, 'UA.ieMode < 9');
-function visit3_14_1(result) {
-  _$jscoverage['/json.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/json.js'].branchData['16'][1].init(285, 10, 'nativeJson');
+function visit5_16_1(result) {
+  _$jscoverage['/json.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['11'][2].init(121, 26, 'typeof global === \'object\'');
-function visit2_11_2(result) {
-  _$jscoverage['/json.js'].branchData['11'][2].ranCondition(result);
+}_$jscoverage['/json.js'].branchData['12'][2].init(219, 16, 'documentMode < 9');
+function visit4_12_2(result) {
+  _$jscoverage['/json.js'].branchData['12'][2].ranCondition(result);
   return result;
-}_$jscoverage['/json.js'].branchData['11'][1].init(108, 39, 'UA.nodejs && typeof global === \'object\'');
-function visit1_11_1(result) {
-  _$jscoverage['/json.js'].branchData['11'][1].ranCondition(result);
+}_$jscoverage['/json.js'].branchData['12'][1].init(203, 32, 'documentMode && documentMode < 9');
+function visit3_12_1(result) {
+  _$jscoverage['/json.js'].branchData['12'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json.js'].branchData['9'][1].init(101, 27, 'typeof JSON === \'undefined\'');
+function visit2_9_1(result) {
+  _$jscoverage['/json.js'].branchData['9'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json.js'].branchData['8'][1].init(54, 23, 'doc && doc.documentMode');
+function visit1_8_1(result) {
+  _$jscoverage['/json.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json.js'].lineData[6]++;
 (function(S) {
   _$jscoverage['/json.js'].functionData[0]++;
   _$jscoverage['/json.js'].lineData[7]++;
-  var UA = S.UA, Env = S.Env, win = Env.host, nativeJson = ((visit1_11_1(UA.nodejs && visit2_11_2(typeof global === 'object'))) ? global : win).JSON;
-  _$jscoverage['/json.js'].lineData[14]++;
-  if (visit3_14_1(UA.ieMode < 9)) {
-    _$jscoverage['/json.js'].lineData[15]++;
+  var doc = S.Env.host.document, documentMode = visit1_8_1(doc && doc.documentMode), nativeJson = visit2_9_1(typeof JSON === 'undefined') ? null : JSON;
+  _$jscoverage['/json.js'].lineData[12]++;
+  if (visit3_12_1(documentMode && visit4_12_2(documentMode < 9))) {
+    _$jscoverage['/json.js'].lineData[13]++;
     nativeJson = null;
   }
-  _$jscoverage['/json.js'].lineData[18]++;
-  if (visit4_18_1(nativeJson)) {
-    _$jscoverage['/json.js'].lineData[19]++;
+  _$jscoverage['/json.js'].lineData[16]++;
+  if (visit5_16_1(nativeJson)) {
+    _$jscoverage['/json.js'].lineData[17]++;
     S.add('json', function() {
   _$jscoverage['/json.js'].functionData[1]++;
-  _$jscoverage['/json.js'].lineData[20]++;
+  _$jscoverage['/json.js'].lineData[18]++;
   S.JSON = nativeJson;
-  _$jscoverage['/json.js'].lineData[21]++;
+  _$jscoverage['/json.js'].lineData[19]++;
   return nativeJson;
 });
-    _$jscoverage['/json.js'].lineData[24]++;
+    _$jscoverage['/json.js'].lineData[22]++;
     S.parseJson = function(data) {
   _$jscoverage['/json.js'].functionData[2]++;
-  _$jscoverage['/json.js'].lineData[25]++;
+  _$jscoverage['/json.js'].lineData[23]++;
   return nativeJson.parse(data);
 };
   } else {
-    _$jscoverage['/json.js'].lineData[29]++;
+    _$jscoverage['/json.js'].lineData[27]++;
     var INVALID_CHARS_REG = /^[\],:{}\s]*$/, INVALID_BRACES_REG = /(?:^|:|,)(?:\s*\[)+/g, INVALID_ESCAPES_REG = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g, INVALID_TOKENS_REG = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
-    _$jscoverage['/json.js'].lineData[33]++;
+    _$jscoverage['/json.js'].lineData[31]++;
     S.parseJson = function(data) {
   _$jscoverage['/json.js'].functionData[3]++;
-  _$jscoverage['/json.js'].lineData[34]++;
-  if (visit5_34_1(data === null)) {
-    _$jscoverage['/json.js'].lineData[35]++;
+  _$jscoverage['/json.js'].lineData[32]++;
+  if (visit6_32_1(data === null)) {
+    _$jscoverage['/json.js'].lineData[33]++;
     return data;
   }
-  _$jscoverage['/json.js'].lineData[37]++;
-  if (visit6_37_1(typeof data === 'string')) {
-    _$jscoverage['/json.js'].lineData[39]++;
+  _$jscoverage['/json.js'].lineData[35]++;
+  if (visit7_35_1(typeof data === 'string')) {
+    _$jscoverage['/json.js'].lineData[37]++;
     data = S.trim(data);
-    _$jscoverage['/json.js'].lineData[40]++;
-    if (visit7_40_1(data)) {
-      _$jscoverage['/json.js'].lineData[42]++;
-      if (visit8_42_1(INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@').replace(INVALID_TOKENS_REG, ']').replace(INVALID_BRACES_REG, '')))) {
-        _$jscoverage['/json.js'].lineData[46]++;
+    _$jscoverage['/json.js'].lineData[38]++;
+    if (visit8_38_1(data)) {
+      _$jscoverage['/json.js'].lineData[40]++;
+      if (visit9_40_1(INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@').replace(INVALID_TOKENS_REG, ']').replace(INVALID_BRACES_REG, '')))) {
+        _$jscoverage['/json.js'].lineData[44]++;
         return (new Function('return ' + data))();
       }
     }
   }
-  _$jscoverage['/json.js'].lineData[50]++;
+  _$jscoverage['/json.js'].lineData[48]++;
   return S.error('Invalid Json: ' + data);
 };
   }

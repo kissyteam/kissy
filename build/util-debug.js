@@ -1,11 +1,11 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:57
+build time: Apr 21 22:07
 */
 /*
-combined files : 
-
+combined modules:
+util
 util/array
 util/escape
 util/function
@@ -13,27 +13,147 @@ util/object
 util/string
 util/type
 util/web
-util
-
 */
+/**
+ * @ignore
+ * lang
+ * @author  yiminghe@gmail.com
+ *
+ */
+KISSY.add('util', [
+    'util/array',
+    'util/escape',
+    'util/function',
+    'util/object',
+    'util/string',
+    'util/type',
+    'util/web'
+], function (S, require) {
+    var FALSE = false, CLONE_MARKER = '__~ks_cloned';
+    S.mix = function (to, from) {
+        for (var i in from) {
+            to[i] = from[i];
+        }
+        return to;
+    };
+    require('util/array');
+    require('util/escape');
+    require('util/function');
+    require('util/object');
+    require('util/string');
+    require('util/type');
+    require('util/web');
+    S.mix(S, {
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         * @param input
+         * @member KISSY
+         * @param {Function} [filter] filter function
+         * @return {Object} the new cloned object
+         * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+         */
+        clone: function (input, filter) {
+            // 稍微改改就和规范一样了 :)
+            // Let memory be an association list of pairs of objects,
+            // initially empty. This is used to handle duplicate references.
+            // In each pair of objects, one is called the source object
+            // and the other the destination object.
+            var memory = {}, ret = cloneInternal(input, filter, memory);
+            S.each(memory, function (v) {
+                // 清理在源对象上做的标记
+                v = v.input;
+                if (v[CLONE_MARKER]) {
+                    try {
+                        delete v[CLONE_MARKER];
+                    } catch (e) {
+                        v[CLONE_MARKER] = undefined;
+                    }
+                }
+            });
+            memory = null;
+            return ret;
+        }
+    });
+    function cloneInternal(input, f, memory) {
+        var destination = input, isArray, isPlainObject, k, stamp;
+        if (!input) {
+            return destination;
+        }    // If input is the source object of a pair of objects in memory,
+             // then return the destination object in that pair of objects .
+             // and abort these steps.
+        // If input is the source object of a pair of objects in memory,
+        // then return the destination object in that pair of objects .
+        // and abort these steps.
+        if (input[CLONE_MARKER]) {
+            // 对应的克隆后对象
+            return memory[input[CLONE_MARKER]].destination;
+        } else if (typeof input === 'object') {
+            // 引用类型要先记录
+            var Constructor = input.constructor;
+            if (S.inArray(Constructor, [
+                    Boolean,
+                    String,
+                    Number,
+                    Date,
+                    RegExp
+                ])) {
+                destination = new Constructor(input.valueOf());
+            } else if (isArray = S.isArray(input)) {
+                // ImageData , File, Blob , FileList .. etc
+                destination = f ? S.filter(input, f) : input.concat();
+            } else if (isPlainObject = S.isPlainObject(input)) {
+                destination = {};
+            }    // Add a mapping from input (the source object)
+                 // to output (the destination object) to memory.
+                 // 做标记
+                 // stamp can not be
+            // Add a mapping from input (the source object)
+            // to output (the destination object) to memory.
+            // 做标记
+            // stamp can not be
+            input[CLONE_MARKER] = stamp = S.guid('c');    // 存储源对象以及克隆后的对象
+            // 存储源对象以及克隆后的对象
+            memory[stamp] = {
+                destination: destination,
+                input: input
+            };
+        }    // If input is an Array object or an Object object,
+             // then, for each enumerable property in input,
+             // add a new property to output having the same name,
+             // and having a value created from invoking the internal structured cloning algorithm recursively
+             // with the value of the property as the 'input' argument and memory as the 'memory' argument.
+             // The order of the properties in the input and output objects must be the same.
+             // clone it
+        // If input is an Array object or an Object object,
+        // then, for each enumerable property in input,
+        // add a new property to output having the same name,
+        // and having a value created from invoking the internal structured cloning algorithm recursively
+        // with the value of the property as the 'input' argument and memory as the 'memory' argument.
+        // The order of the properties in the input and output objects must be the same.
+        // clone it
+        if (isArray) {
+            for (var i = 0; i < destination.length; i++) {
+                destination[i] = cloneInternal(destination[i], f, memory);
+            }
+        } else if (isPlainObject) {
+            for (k in input) {
+                if (k !== CLONE_MARKER && (!f || f.call(input, input[k], k, input) !== FALSE)) {
+                    destination[k] = cloneInternal(input[k], f, memory);
+                }
+            }
+        }
+        return destination;
+    }
+    return S;
+});
 /**
  * @ignore
  * array utilities of lang
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add('util/array',function (S) {
-    var TRUE = true,
-        undef,
-        AP = Array.prototype,
-        indexOf = AP.indexOf,
-        lastIndexOf = AP.lastIndexOf,
-        filter = AP.filter,
-        every = AP.every,
-        some = AP.some,
-        map = AP.map,
-        FALSE = false;
-
+KISSY.add('util/array', [], function (S) {
+    var TRUE = true, undef, AP = Array.prototype, indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter, every = AP.every, some = AP.some, map = AP.map, FALSE = false;
     S.mix(S, {
         /**
          * Search for a specified value within an array.
@@ -43,21 +163,16 @@ KISSY.add('util/array',function (S) {
          * @param {Array} arr the array of items where item will be search
          * @return {number} item's index in array
          */
-        indexOf: indexOf ?
-            function (item, arr, fromIndex) {
-                return fromIndex === undef ?
-                    indexOf.call(arr, item) :
-                    indexOf.call(arr, item, fromIndex);
-            } :
-            function (item, arr, fromIndex) {
-                for (var i = fromIndex || 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === item) {
-                        return i;
-                    }
+        indexOf: indexOf ? function (item, arr, fromIndex) {
+            return fromIndex === undef ? indexOf.call(arr, item) : indexOf.call(arr, item, fromIndex);
+        } : function (item, arr, fromIndex) {
+            for (var i = fromIndex || 0, len = arr.length; i < len; ++i) {
+                if (arr[i] === item) {
+                    return i;
                 }
-                return -1;
-            },
-
+            }
+            return -1;
+        },
         /**
          * Returns the index of the last item in the array
          * that contains the specified value, -1 if the
@@ -68,24 +183,19 @@ KISSY.add('util/array',function (S) {
          * @return {number} item's last index in array
          * @member KISSY
          */
-        lastIndexOf: (lastIndexOf) ?
-            function (item, arr, fromIndex) {
-                return fromIndex === undef ?
-                    lastIndexOf.call(arr, item) :
-                    lastIndexOf.call(arr, item, fromIndex);
-            } :
-            function (item, arr, fromIndex) {
-                if (fromIndex === undef) {
-                    fromIndex = arr.length - 1;
+        lastIndexOf: lastIndexOf ? function (item, arr, fromIndex) {
+            return fromIndex === undef ? lastIndexOf.call(arr, item) : lastIndexOf.call(arr, item, fromIndex);
+        } : function (item, arr, fromIndex) {
+            if (fromIndex === undef) {
+                fromIndex = arr.length - 1;
+            }
+            for (var i = fromIndex; i >= 0; i--) {
+                if (arr[i] === item) {
+                    break;
                 }
-                for (var i = fromIndex; i >= 0; i--) {
-                    if (arr[i] === item) {
-                        break;
-                    }
-                }
-                return i;
-            },
-
+            }
+            return i;
+        },
         /**
          * Returns a copy of the array with the duplicate entries removed
          * @param a {Array} the array to find the subset of unique for
@@ -99,10 +209,7 @@ KISSY.add('util/array',function (S) {
             if (override) {
                 b.reverse();
             }
-            var i = 0,
-                n,
-                item;
-
+            var i = 0, n, item;
             while (i < b.length) {
                 item = b[i];
                 while ((n = S.lastIndexOf(item, b)) !== i) {
@@ -110,13 +217,11 @@ KISSY.add('util/array',function (S) {
                 }
                 i += 1;
             }
-
             if (override) {
                 b.reverse();
             }
             return b;
         },
-
         /**
          * Search for a specified value index within an array.
          * @param item individual item to be searched
@@ -127,7 +232,6 @@ KISSY.add('util/array',function (S) {
         inArray: function (item, arr) {
             return S.indexOf(item, arr) > -1;
         },
-
         /**
          * Executes the supplied function on each item in the array.
          * Returns a new array containing the items that the supplied
@@ -140,20 +244,17 @@ KISSY.add('util/array',function (S) {
          * @return {Array} The items on which the supplied function returned TRUE.
          * If no items matched an empty array is returned.
          */
-        filter: filter ?
-            function (arr, fn, context) {
-                return filter.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var ret = [];
-                S.each(arr, function (item, i, arr) {
-                    if (fn.call(context || this, item, i, arr)) {
-                        ret.push(item);
-                    }
-                });
-                return ret;
-            },
-
+        filter: filter ? function (arr, fn, context) {
+            return filter.call(arr, fn, context || this);
+        } : function (arr, fn, context) {
+            var ret = [];
+            S.each(arr, function (item, i, arr) {
+                if (fn.call(context || this, item, i, arr)) {
+                    ret.push(item);
+                }
+            });
+            return ret;
+        },
         /**
          * Executes the supplied function on each item in the array.
          * Returns a new array containing the items that the supplied
@@ -166,24 +267,19 @@ KISSY.add('util/array',function (S) {
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
-        map: map ?
-            function (arr, fn, context) {
-                return map.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var len = arr.length,
-                    res = new Array(len);
-                for (var i = 0; i < len; i++) {
-                    var el = typeof arr === 'string' ? arr.charAt(i) : arr[i];
-                    if (el ||
-                        //ie<9 in invalid when typeof arr == string
-                        i in arr) {
-                        res[i] = fn.call(context || this, el, i, arr);
-                    }
+        map: map ? function (arr, fn, context) {
+            return map.call(arr, fn, context || this);
+        } : function (arr, fn, context) {
+            var len = arr.length, res = new Array(len);
+            for (var i = 0; i < len; i++) {
+                var el = typeof arr === 'string' ? arr.charAt(i) : arr[i];
+                if (el || //ie<9 in invalid when typeof arr == string
+                    i in arr) {
+                    res[i] = fn.call(context || this, el, i, arr);
                 }
-                return res;
-            },
-
+            }
+            return res;
+        },
         /**
          * Executes the supplied function on each item in the array.
          * Returns a value which is accumulation of the value that the supplied
@@ -200,13 +296,11 @@ KISSY.add('util/array',function (S) {
             var len = arr.length;
             if (typeof callback !== 'function') {
                 throw new TypeError('callback is not function!');
-            }
-
+            }    // no value to return if no initial value and an empty array
             // no value to return if no initial value and an empty array
             if (len === 0 && arguments.length === 2) {
                 throw new TypeError('arguments invalid');
             }
-
             var k = 0;
             var accumulator;
             if (arguments.length >= 3) {
@@ -216,27 +310,22 @@ KISSY.add('util/array',function (S) {
                     if (k in arr) {
                         accumulator = arr[k++];
                         break;
-                    }
-
+                    }    // if array contains no values, no initial value to return
                     // if array contains no values, no initial value to return
                     k += 1;
                     if (k >= len) {
                         throw new TypeError();
                     }
-                }
-                while (TRUE);
+                } while (TRUE);
             }
-
             while (k < len) {
                 if (k in arr) {
                     accumulator = callback.call(undef, accumulator, arr[k], k, arr);
                 }
                 k++;
             }
-
             return accumulator;
         },
-
         /**
          * Tests whether all elements in the array pass the test implemented by the provided function.
          * @method
@@ -246,20 +335,17 @@ KISSY.add('util/array',function (S) {
          * @member KISSY
          * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
          */
-        every: every ?
-            function (arr, fn, context) {
-                return every.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var len = arr && arr.length || 0;
-                for (var i = 0; i < len; i++) {
-                    if (i in arr && !fn.call(context, arr[i], i, arr)) {
-                        return FALSE;
-                    }
+        every: every ? function (arr, fn, context) {
+            return every.call(arr, fn, context || this);
+        } : function (arr, fn, context) {
+            var len = arr && arr.length || 0;
+            for (var i = 0; i < len; i++) {
+                if (i in arr && !fn.call(context, arr[i], i, arr)) {
+                    return FALSE;
                 }
-                return TRUE;
-            },
-
+            }
+            return TRUE;
+        },
         /**
          * Tests whether some element in the array passes the test implemented by the provided function.
          * @method
@@ -269,19 +355,17 @@ KISSY.add('util/array',function (S) {
          * @member KISSY
          * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
          */
-        some: some ?
-            function (arr, fn, context) {
-                return some.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var len = arr && arr.length || 0;
-                for (var i = 0; i < len; i++) {
-                    if (i in arr && fn.call(context, arr[i], i, arr)) {
-                        return TRUE;
-                    }
+        some: some ? function (arr, fn, context) {
+            return some.call(arr, fn, context || this);
+        } : function (arr, fn, context) {
+            var len = arr && arr.length || 0;
+            for (var i = 0; i < len; i++) {
+                if (i in arr && fn.call(context, arr[i], i, arr)) {
+                    return TRUE;
                 }
-                return FALSE;
-            },
+            }
+            return FALSE;
+        },
         /**
          * Converts object to a TRUE array.
          * // do not pass form.elements to this function ie678 bug
@@ -296,19 +380,14 @@ KISSY.add('util/array',function (S) {
             if (S.isArray(o)) {
                 return o;
             }
-            var lengthType = typeof o.length,
-                oType = typeof o;
+            var lengthType = typeof o.length, oType = typeof o;    // The strings and functions also have 'length'
             // The strings and functions also have 'length'
-            if (lengthType !== 'number' ||
-                // select element
+            if (lengthType !== 'number' || // select element
                 // https://github.com/kissyteam/kissy/issues/537
-                typeof o.nodeName === 'string' ||
-                // window
+                typeof o.nodeName === 'string' || // window
                 /*jshint eqeqeq:false*/
-                (o != null && o == o.window) ||
-                oType === 'string' ||
-                // https://github.com/ariya/phantomjs/issues/11478
-                (oType === 'function' && !('item' in o && lengthType === 'number'))) {
+                o != null && o == o.window || oType === 'string' || // https://github.com/ariya/phantomjs/issues/11478
+                oType === 'function' && !('item' in o && lengthType === 'number')) {
                 return [o];
             }
             var ret = [];
@@ -325,15 +404,14 @@ KISSY.add('util/array',function (S) {
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add('util/escape',function (S) {
+KISSY.add('util/escape', [], function (S) {
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-
     var EMPTY = '',
-    // FALSE = false,
-    // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
-    // http://wonko.com/post/html-escaping
+        // FALSE = false,
+        // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+        // http://wonko.com/post/html-escaping
         htmlEntities = {
             '&amp;': '&',
             '&gt;': '>',
@@ -342,23 +420,17 @@ KISSY.add('util/escape',function (S) {
             '&#x2F;': '/',
             '&quot;': '"',
             /*jshint quotmark:false*/
-            '&#x27;': "'"
-        },
-        reverseEntities = {},
-        escapeHtmlReg,
-        unEscapeHtmlReg,
-        possibleEscapeHtmlReg = /[&<>"'`]/,
-    // - # $ ^ * ( ) + [ ] { } | \ , . ?
+            '&#x27;': '\''
+        }, reverseEntities = {}, escapeHtmlReg, unEscapeHtmlReg, possibleEscapeHtmlReg = /[&<>"'`]/,
+        // - # $ ^ * ( ) + [ ] { } | \ , . ?
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
             reverseEntities[htmlEntities[k]] = k;
         }
-    })();
-
+    }());
     escapeHtmlReg = getEscapeReg();
     unEscapeHtmlReg = getUnEscapeReg();
-
     function getEscapeReg() {
         var str = EMPTY;
         for (var e in htmlEntities) {
@@ -369,7 +441,6 @@ KISSY.add('util/escape',function (S) {
         escapeHtmlReg = new RegExp(str, 'g');
         return escapeHtmlReg;
     }
-
     function getUnEscapeReg() {
         var str = EMPTY;
         for (var e in reverseEntities) {
@@ -380,7 +451,6 @@ KISSY.add('util/escape',function (S) {
         unEscapeHtmlReg = new RegExp(str, 'g');
         return unEscapeHtmlReg;
     }
-
     S.mix(S, {
         /**
          * get escaped string from html.
@@ -407,7 +477,6 @@ KISSY.add('util/escape',function (S) {
                 return reverseEntities[m];
             });
         },
-
         /**
          * get escaped regexp string for construct regexp.
          * @param str
@@ -417,7 +486,6 @@ KISSY.add('util/escape',function (S) {
         escapeRegExp: function (str) {
             return str.replace(escapeRegExp, '\\$&');
         },
-
         /**
          * un-escape html to string.
          * only unescape
@@ -432,7 +500,6 @@ KISSY.add('util/escape',function (S) {
             });
         }
     });
-
     S.escapeHTML = S.escapeHtml;
     S.unEscapeHTML = S.unEscapeHtml;
 });
@@ -442,28 +509,20 @@ KISSY.add('util/escape',function (S) {
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add('util/function',function (S) {
+KISSY.add('util/function', [], function (S) {
     // ios Function.prototype.bind === undefine
     function bindFn(r, fn, obj) {
         function FNOP() {
         }
-
-        var slice = [].slice,
-            args = slice.call(arguments, 3),
-            bound = function () {
+        var slice = [].slice, args = slice.call(arguments, 3), bound = function () {
                 var inArgs = slice.call(arguments);
-                return fn.apply(
-                    this instanceof FNOP ? this :
-                        // fix: y.x=S.bind(fn);
-                        obj || this,
-                    (r ? inArgs.concat(args) : args.concat(inArgs))
-                );
+                return fn.apply(this instanceof FNOP ? this : // fix: y.x=S.bind(fn);
+                obj || this, r ? inArgs.concat(args) : args.concat(inArgs));
             };
         FNOP.prototype = fn.prototype;
         bound.prototype = new FNOP();
         return bound;
     }
-
     S.mix(S, {
         /**
          * empty function
@@ -482,7 +541,6 @@ KISSY.add('util/function',function (S) {
          * @return {Function} new function with context and arguments
          */
         bind: bindFn(0, bindFn, null, 0),
-
         /**
          * Creates a new function that, when called, itself calls this function in the context of the provided this value,
          * with a given sequence of arguments preceding any provided when the new function was called.
@@ -494,7 +552,6 @@ KISSY.add('util/function',function (S) {
          * @return {Function} new function with context and arguments
          */
         rbind: bindFn(0, bindFn, null, 1),
-
         /**
          * Executes the supplied function in the context of the supplied
          * object 'when' milliseconds later. Executes the function a
@@ -522,25 +579,17 @@ KISSY.add('util/function',function (S) {
          */
         later: function (fn, when, periodic, context, data) {
             when = when || 0;
-            var m = fn,
-                d = S.makeArray(data),
-                f,
-                r;
-
+            var m = fn, d = S.makeArray(data), f, r;
             if (typeof fn === 'string') {
                 m = context[fn];
             }
-
             if (!m) {
                 S.error('method undefine');
             }
-
             f = function () {
                 m.apply(context, d);
             };
-
-            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
+            r = periodic ? setInterval(f, when) : setTimeout(f, when);
             return {
                 id: r,
                 interval: periodic,
@@ -553,7 +602,6 @@ KISSY.add('util/function',function (S) {
                 }
             };
         },
-
         /**
          * Throttles a call to a method based on the time between calls.
          * @param {Function} fn The function call to throttle.
@@ -565,15 +613,12 @@ KISSY.add('util/function',function (S) {
          */
         throttle: function (fn, ms, context) {
             ms = ms || 150;
-
             if (ms === -1) {
                 return function () {
                     fn.apply(context || this, arguments);
                 };
             }
-
             var last = S.now();
-
             return function () {
                 var now = S.now();
                 if (now - last > ms) {
@@ -582,7 +627,6 @@ KISSY.add('util/function',function (S) {
                 }
             };
         },
-
         /**
          * buffers a call between a fixed time
          * @param {Function} fn
@@ -593,26 +637,22 @@ KISSY.add('util/function',function (S) {
          */
         buffer: function (fn, ms, context) {
             ms = ms || 150;
-
             if (ms === -1) {
                 return function () {
                     fn.apply(context || this, arguments);
                 };
             }
             var bufferTimer = null;
-
             function f() {
                 f.stop();
                 bufferTimer = S.later(fn, ms, 0, context || this, arguments);
             }
-
             f.stop = function () {
                 if (bufferTimer) {
                     bufferTimer.cancel();
                     bufferTimer = 0;
                 }
             };
-
             return f;
         }
     });
@@ -623,21 +663,12 @@ KISSY.add('util/function',function (S) {
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add('util/object',function (S) {
+KISSY.add('util/object', [], function (S) {
     var undef;
     var logger = S.getLogger('s/util');
-    var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
-        STAMP_MARKER = '__~ks_stamped',
-        host = S.Env.host,
-        TRUE = true,
-        EMPTY = '',
-        toString = ({}).toString,
-        Obj = Object,
-        objectCreate = Obj.create;
-
+    var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR', STAMP_MARKER = '__~ks_stamped', host = S.Env.host, TRUE = true, EMPTY = '', toString = {}.toString, Obj = Object, objectCreate = Obj.create;    // error in native ie678, not in simulated ie9
     // error in native ie678, not in simulated ie9
-    var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
-        enumProperties = [
+    var hasEnumBug = !{ toString: 1 }.propertyIsEnumerable('toString'), enumProperties = [
             'constructor',
             'hasOwnProperty',
             'isPrototypeOf',
@@ -646,7 +677,6 @@ KISSY.add('util/object',function (S) {
             'toLocaleString',
             'valueOf'
         ];
-
     mix(S, {
         /**
          * Get all the property names of o as array
@@ -656,14 +686,12 @@ KISSY.add('util/object',function (S) {
          */
         keys: Object.keys || function (o) {
             var result = [], p, i;
-
             for (p in o) {
                 // S.keys(new XX())
                 if (o.hasOwnProperty(p)) {
                     result.push(p);
                 }
             }
-
             if (hasEnumBug) {
                 for (i = enumProperties.length - 1; i >= 0; i--) {
                     p = enumProperties[i];
@@ -672,7 +700,6 @@ KISSY.add('util/object',function (S) {
                     }
                 }
             }
-
             return result;
         },
         /**
@@ -685,28 +712,21 @@ KISSY.add('util/object',function (S) {
          */
         each: function (object, fn, context) {
             if (object) {
-                var key,
-                    val,
-                    keys,
-                    i = 0,
-                    length = object && object.length,
-                // do not use typeof obj == 'function': bug in phantomjs
+                var key, val, keys, i = 0, length = object && object.length,
+                    // do not use typeof obj == 'function': bug in phantomjs
                     isObj = length === undef || toString.call(object) === '[object Function]';
-
                 context = context || null;
-
                 if (isObj) {
                     keys = S.keys(object);
                     for (; i < keys.length; i++) {
-                        key = keys[i];
+                        key = keys[i];    // can not use hasOwnProperty
                         // can not use hasOwnProperty
                         if (fn.call(context, object[key], key, object) === false) {
                             break;
                         }
                     }
                 } else {
-                    for (val = object[0];
-                         i < length; val = object[++i]) {
+                    for (val = object[0]; i < length; val = object[++i]) {
                         if (fn.call(context, val, i, object) === false) {
                             break;
                         }
@@ -727,11 +747,9 @@ KISSY.add('util/object',function (S) {
         now: Date.now || function () {
             return +new Date();
         },
-
         isArray: function (obj) {
             return toString.call(obj) === '[object Array]';
         },
-
         /**
          * Checks to see if an object is empty.
          * @member KISSY
@@ -760,14 +778,12 @@ KISSY.add('util/object',function (S) {
             } else if (!readOnly) {
                 try {
                     guid = o[marker] = S.guid(marker);
-                }
-                catch (e) {
+                } catch (e) {
                     guid = undef;
                 }
             }
             return guid;
         },
-
         /**
          * Copies all the properties of s to r.
          * @method
@@ -794,32 +810,27 @@ KISSY.add('util/object',function (S) {
                 wl = /**
                  @ignore
                  @type {String[]|Function}
-                 */ov.whitelist;
+                 */
+                ov.whitelist;
                 deep = ov.deep;
                 ov = ov.overwrite;
             }
-
-            if (wl && (typeof wl !== 'function')) {
+            if (wl && typeof wl !== 'function') {
                 var originalWl = wl;
                 wl = function (name, val) {
                     return S.inArray(name, originalWl) ? val : undef;
                 };
             }
-
             if (ov === undef) {
                 ov = TRUE;
             }
-
-            var cache = [],
-                c,
-                i = 0;
+            var cache = [], c, i = 0;
             mixInternal(r, s, ov, wl, deep, cache);
-            while ((c = cache[i++])) {
+            while (c = cache[i++]) {
                 delete c[MIX_CIRCULAR_DETECTION];
             }
             return r;
         },
-
         /**
          * Returns a new object containing all of the properties of
          * all the supplied objects. The properties from later objects
@@ -831,15 +842,12 @@ KISSY.add('util/object',function (S) {
          */
         merge: function (varArgs) {
             varArgs = S.makeArray(arguments);
-            var o = {},
-                i,
-                l = varArgs.length;
+            var o = {}, i, l = varArgs.length;
             for (i = 0; i < l; i++) {
                 S.mix(o, varArgs[i]);
             }
             return o;
         },
-
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
@@ -850,16 +858,8 @@ KISSY.add('util/object',function (S) {
          * @member KISSY
          */
         augment: function (r, varArgs) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                i = 1,
-                proto,
-                arg,
-                ov = args[len],
-                wl = args[len + 1];
-
+            var args = S.makeArray(arguments), len = args.length - 2, i = 1, proto, arg, ov = args[len], wl = args[len + 1];
             args[1] = varArgs;
-
             if (!S.isArray(wl)) {
                 ov = wl;
                 wl = undef;
@@ -869,18 +869,15 @@ KISSY.add('util/object',function (S) {
                 ov = undef;
                 len++;
             }
-
             for (; i < len; i++) {
                 arg = args[i];
-                if ((proto = arg.prototype)) {
+                if (proto = arg.prototype) {
                     arg = S.mix({}, proto, true, removeConstructor);
                 }
                 S.mix(r.prototype, arg, ov, wl);
             }
-
             return r;
         },
-
         /**
          * Utility to set up the prototype, constructor and superclass properties to
          * support an inheritance strategy that can chain constructors and methods.
@@ -904,32 +901,25 @@ KISSY.add('util/object',function (S) {
                     return r;
                 }
             }
-
-            var sp = s.prototype,
-                rp;
-
+            var sp = s.prototype, rp;    // in case parent does not set constructor
+                                         // eg: parent.prototype={};
             // in case parent does not set constructor
             // eg: parent.prototype={};
-            sp.constructor = s;
-
+            sp.constructor = s;    // add prototype chain
             // add prototype chain
             rp = createObject(sp, r);
             r.prototype = S.mix(rp, r.prototype);
-            r.superclass = sp;
-
+            r.superclass = sp;    // add prototype overrides
             // add prototype overrides
             if (px) {
                 S.mix(rp, px);
-            }
-
+            }    // add object overrides
             // add object overrides
             if (sx) {
                 S.mix(r, sx);
             }
-
             return r;
         },
-
         /**
          * Returns the namespace specified and creates it if it doesn't exist. Be careful
          * when naming packages. Reserved words may work in some browsers and not others.
@@ -944,25 +934,19 @@ KISSY.add('util/object',function (S) {
          * @member KISSY
          */
         namespace: function () {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === TRUE && l--);
-
+            var args = S.makeArray(arguments), l = args.length, o = null, i, j, p, global = args[l - 1] === TRUE && l--;
             for (i = 0; i < l; i++) {
                 p = (EMPTY + args[i]).split('.');
                 o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                for (j = host[p[0]] === o ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;
         }
     });
-
     function Empty() {
     }
-
     function createObject(proto, constructor) {
         var newProto;
         if (objectCreate) {
@@ -974,25 +958,20 @@ KISSY.add('util/object',function (S) {
         newProto.constructor = constructor;
         return newProto;
     }
-
     function mix(r, s) {
         for (var i in s) {
             r[i] = s[i];
         }
     }
-
     function mixInternal(r, s, ov, wl, deep, cache) {
         if (!s || !r) {
             return r;
         }
-        var i, p, keys, len;
-
+        var i, p, keys, len;    // 记录循环标志
         // 记录循环标志
-        s[MIX_CIRCULAR_DETECTION] = r;
-
+        s[MIX_CIRCULAR_DETECTION] = r;    // 记录被记录了循环标志的对像
         // 记录被记录了循环标志的对像
-        cache.push(s);
-
+        cache.push(s);    // mix all properties
         // mix all properties
         keys = S.keys(s);
         len = keys.length;
@@ -1003,21 +982,17 @@ KISSY.add('util/object',function (S) {
                 _mix(p, r, s, ov, wl, deep, cache);
             }
         }
-
         return r;
     }
-
     function removeConstructor(k, v) {
         return k === 'constructor' ? undef : v;
     }
-
     function _mix(p, r, s, ov, wl, deep, cache) {
         // 要求覆盖
         // 或者目的不存在
         // 或者深度mix
         if (ov || !(p in r) || deep) {
-            var target = r[p],
-                src = s[p];
+            var target = r[p], src = s[p];    // prevent never-end loop
             // prevent never-end loop
             if (target === src) {
                 // S.mix({},{x:undef})
@@ -1028,7 +1003,7 @@ KISSY.add('util/object',function (S) {
             }
             if (wl) {
                 src = wl.call(s, p, src);
-            }
+            }    // 来源是数组和对象，并且要求深度 mix
             // 来源是数组和对象，并且要求深度 mix
             if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
                 if (src[MIX_CIRCULAR_DETECTION]) {
@@ -1036,9 +1011,7 @@ KISSY.add('util/object',function (S) {
                 } else {
                     // 目标值为对象或数组，直接 mix
                     // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
-                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
-                        target :
-                        (S.isArray(src) ? [] : {});
+                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ? target : S.isArray(src) ? [] : {};
                     r[p] = clone;
                     mixInternal(clone, src, ov, wl, TRUE, cache);
                 }
@@ -1054,31 +1027,26 @@ KISSY.add('util/object',function (S) {
  * @author yiminghe@gmail.com
  *
  */
-KISSY.add('util/string',function (S) {
+KISSY.add('util/string', [], function (S) {
     var undef;
-    var logger = S.getLogger('s/util');
+    var logger = S.getLogger('s/util');    // IE doesn't include non-breaking-space (0xa0) in their \s character
+                                           // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+                                           // include it in the regexp to enforce consistent cross-browser behavior.
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-    var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
-        EMPTY = '';
-    var RE_DASH = /-([a-z])/ig;
-    var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        trim = String.prototype.trim;
-    var SEP = '&',
-        EQ = '=',
-        TRUE = true;
-
+    var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g, EMPTY = '';
+    var RE_DASH = /-([a-z])/gi;
+    var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g, trim = String.prototype.trim;
+    var SEP = '&', EQ = '=', TRUE = true;
     function isValidParamValue(val) {
-        var t = typeof val;
+        var t = typeof val;    // If the type of val is null, undef, number, string, boolean, return TRUE.
         // If the type of val is null, undef, number, string, boolean, return TRUE.
-        return val == null || (t !== 'object' && t !== 'function');
+        return val == null || t !== 'object' && t !== 'function';
     }
-
     function upperCase() {
         return arguments[1].toUpperCase();
     }
-
     S.mix(S, {
         /**
          * Creates a serialized string of an array or object.
@@ -1104,13 +1072,10 @@ KISSY.add('util/string',function (S) {
             if (serializeArray === undef) {
                 serializeArray = TRUE;
             }
-            var buf = [], key, i, v, len, val,
-                encode = S.urlEncode;
+            var buf = [], key, i, v, len, val, encode = S.urlEncode;
             for (key in o) {
-
                 val = o[key];
-                key = encode(key);
-
+                key = encode(key);    // val is valid non-array value
                 // val is valid non-array value
                 if (isValidParamValue(val)) {
                     buf.push(key);
@@ -1123,21 +1088,19 @@ KISSY.add('util/string',function (S) {
                     for (i = 0, len = val.length; i < len; ++i) {
                         v = val[i];
                         if (isValidParamValue(v)) {
-                            buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                            buf.push(key, serializeArray ? encode('[]') : EMPTY);
                             if (v !== undef) {
                                 buf.push(eq, encode(v + EMPTY));
                             }
                             buf.push(sep);
                         }
                     }
-                }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
-
+                }    // ignore other cases, including empty array, Function, RegExp, Date etc.
             }
+            // ignore other cases, including empty array, Function, RegExp, Date etc.
             buf.pop();
             return buf.join(EMPTY);
         },
-
         /**
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
          *
@@ -1159,13 +1122,7 @@ KISSY.add('util/string',function (S) {
             }
             sep = sep || SEP;
             eq = eq || EQ;
-            var ret = {},
-                eqIndex,
-                decode = S.urlDecode,
-                pairs = str.split(sep),
-                key, val,
-                i = 0, len = pairs.length;
-
+            var ret = {}, eqIndex, decode = S.urlDecode, pairs = str.split(sep), key, val, i = 0, len = pairs.length;
             for (; i < len; ++i) {
                 eqIndex = pairs[i].indexOf(eq);
                 if (eqIndex === -1) {
@@ -1189,7 +1146,10 @@ KISSY.add('util/string',function (S) {
                     if (S.isArray(ret[key])) {
                         ret[key].push(val);
                     } else {
-                        ret[key] = [ret[key], val];
+                        ret[key] = [
+                            ret[key],
+                            val
+                        ];
                     }
                 } else {
                     ret[key] = val;
@@ -1207,7 +1167,6 @@ KISSY.add('util/string',function (S) {
         startsWith: function (str, prefix) {
             return str.lastIndexOf(prefix, 0) === 0;
         },
-
         /**
          * test whether a string end with a specified substring
          * @param {String} str the whole string
@@ -1219,20 +1178,16 @@ KISSY.add('util/string',function (S) {
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) === ind;
         },
-
         /**
          * Removes the whitespace from the beginning and end of a string.
          * @method
          * @member KISSY
          */
-        trim: trim ?
-            function (str) {
-                return str == null ? EMPTY : trim.call(str);
-            } :
-            function (str) {
-                return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
-            },
-
+        trim: trim ? function (str) {
+            return str == null ? EMPTY : trim.call(str);
+        } : function (str) {
+            return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
+        },
         /**
          * Call encodeURIComponent to encode a url component
          * @param {String} s part of url to be encoded.
@@ -1242,7 +1197,6 @@ KISSY.add('util/string',function (S) {
         urlEncode: function (s) {
             return encodeURIComponent(String(s));
         },
-
         /**
          * Call decodeURIComponent to decode a url component
          * and replace '+' with space.
@@ -1253,7 +1207,6 @@ KISSY.add('util/string',function (S) {
         urlDecode: function (s) {
             return decodeURIComponent(s.replace(/\+/g, ' '));
         },
-
         camelCase: function (name) {
             return name.replace(RE_DASH, upperCase);
         },
@@ -1269,15 +1222,13 @@ KISSY.add('util/string',function (S) {
             if (typeof str !== 'string' || !o) {
                 return str;
             }
-
             return str.replace(regexp || SUBSTITUTE_REG, function (match, name) {
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
-                return (o[name] === undef) ? EMPTY : o[name];
+                return o[name] === undef ? EMPTY : o[name];
             });
         },
-
         /** uppercase first character.
          * @member KISSY
          * @param s
@@ -1295,30 +1246,20 @@ KISSY.add('util/string',function (S) {
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  *
  */
-KISSY.add('util/type',function (S) {
+KISSY.add('util/type', [], function (S) {
     // [[Class]] -> type pairs
-    var class2type = {},
-        FALSE = false,
-        undef,
-        noop = S.noop,
-        OP = Object.prototype,
-        toString = OP.toString;
-
+    var class2type = {}, FALSE = false, undef, noop = S.noop, OP = Object.prototype, toString = OP.toString;
     function hasOwnProperty(o, p) {
         return OP.hasOwnProperty.call(o, p);
     }
-
     S.mix(S, {
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          * @member KISSY
          */
         type: function (o) {
-            return o == null ?
-                String(o) :
-                class2type[toString.call(o)] || 'object';
+            return o == null ? String(o) : class2type[toString.call(o)] || 'object';
         },
-
         /**
          * Checks to see if an object is a plain object (created using '{}'
          * or 'new Object()' but not 'new FunctionClass()').
@@ -1328,15 +1269,12 @@ KISSY.add('util/type',function (S) {
             // Must be an Object.
             // Because of IE, we also have to check the presence of the constructor property.
             // Make sure that Dom nodes and window objects don't pass through, as well
-            if (!obj || S.type(obj) !== 'object' || obj.nodeType ||
-                /*jshint eqeqeq:false*/
+            if (!obj || S.type(obj) !== 'object' || obj.nodeType || /*jshint eqeqeq:false*/
                 // must == for ie8
                 obj.window == obj) {
                 return FALSE;
             }
-
             var key, objConstructor;
-
             try {
                 // Not own constructor property must be Object
                 if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, 'constructor') && !hasOwnProperty(objConstructor.prototype, 'isPrototypeOf')) {
@@ -1345,18 +1283,17 @@ KISSY.add('util/type',function (S) {
             } catch (e) {
                 // IE8,9 Will throw exceptions on certain host objects
                 return FALSE;
-            }
-
+            }    // Own properties are enumerated firstly, so to speed up,
+                 // if last one is own, then all properties are own.
+                 /*jshint noempty:false*/
             // Own properties are enumerated firstly, so to speed up,
             // if last one is own, then all properties are own.
             /*jshint noempty:false*/
             for (key in obj) {
             }
-
-            return ((key === undef) || hasOwnProperty(obj, key));
+            return key === undef || hasOwnProperty(obj, key);
         }
     });
-
     if ('@DEBUG@') {
         S.mix(S, {
             /**
@@ -1425,21 +1362,18 @@ KISSY.add('util/type',function (S) {
             isObject: noop
         });
     }
-
     var types = 'Boolean Number String Function Date RegExp Object Array'.split(' ');
     for (var i = 0; i < types.length; i++) {
         /*jshint loopfunc:true*/
         (function (name, lc) {
             // populate the class2type map
-            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
-
+            class2type['[object ' + name + ']'] = lc = name.toLowerCase();    // add isBoolean/isNumber/...
             // add isBoolean/isNumber/...
             S['is' + name] = function (o) {
                 return S.type(o) === lc;
             };
-        })(types[i], i);
+        }(types[i], i));
     }
-
     S.isArray = Array.isArray || S.isArray;
 });
 /**
@@ -1447,40 +1381,23 @@ KISSY.add('util/type',function (S) {
  * @ignore
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('util/web',function (S) {
+KISSY.add('util/web', [], function (S) {
     var logger = S.getLogger('s/web');
-    var win = S.Env.host,
-        undef,
-        doc = win.document || {},
-        docElem = doc.documentElement,
-        location = win.location,
-        EMPTY = '',
-        domReady = 0,
-        callbacks = [],
-    // The number of poll times.
+    var win = S.Env.host, undef, doc = win.document || {}, docElem = doc.documentElement, location = win.location, EMPTY = '', domReady = 0, callbacks = [],
+        // The number of poll times.
         POLL_RETIRES = 500,
-    // The poll interval in milliseconds.
+        // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
-    // #id or id
-        RE_ID_STR = /^#?([\w-]+)$/,
-        RE_NOT_WHITESPACE = /\S/,
-        standardEventModel = doc.addEventListener,
-        supportEvent = doc.attachEvent || standardEventModel,
-        DOM_READY_EVENT = 'DOMContentLoaded',
-        READY_STATE_CHANGE_EVENT = 'readystatechange',
-        LOAD_EVENT = 'load',
-        COMPLETE = 'complete',
-        addEventListener = standardEventModel ? function (el, type, fn) {
+        // #id or id
+        RE_ID_STR = /^#?([\w-]+)$/, RE_NOT_WHITESPACE = /\S/, standardEventModel = doc.addEventListener, supportEvent = doc.attachEvent || standardEventModel, DOM_READY_EVENT = 'DOMContentLoaded', READY_STATE_CHANGE_EVENT = 'readystatechange', LOAD_EVENT = 'load', COMPLETE = 'complete', addEventListener = standardEventModel ? function (el, type, fn) {
             el.addEventListener(type, fn, false);
         } : function (el, type, fn) {
             el.attachEvent('on' + type, fn);
-        },
-        removeEventListener = standardEventModel ? function (el, type, fn) {
+        }, removeEventListener = standardEventModel ? function (el, type, fn) {
             el.removeEventListener(type, fn, false);
         } : function (el, type, fn) {
             el.detachEvent('on' + type, fn);
         };
-
     S.mix(S, {
         /**
          * A crude way of determining if an object is a window
@@ -1491,7 +1408,6 @@ KISSY.add('util/web',function (S) {
             /*jshint eqeqeq:false*/
             return obj != null && obj == obj.window;
         },
-
         /**
          * get xml representation of data
          * @param {String} data
@@ -1507,7 +1423,8 @@ KISSY.add('util/web',function (S) {
                 // Standard
                 if (win.DOMParser) {
                     xml = new DOMParser().parseFromString(data, 'text/xml');
-                } else { // IE
+                } else {
+                    // IE
                     /*global ActiveXObject*/
                     xml = new ActiveXObject('Microsoft.XMLDOM');
                     xml.async = false;
@@ -1523,7 +1440,6 @@ KISSY.add('util/web',function (S) {
             }
             return xml;
         },
-
         /**
          * Evaluates a script in a global context.
          * @member KISSY
@@ -1538,11 +1454,10 @@ KISSY.add('util/web',function (S) {
                 } else {
                     (function (data) {
                         win['eval'].call(win, data);
-                    })(data);
+                    }(data));
                 }
             }
         },
-
         /**
          * Specify a function to execute when the Dom is fully loaded.
          * @param fn {Function} A function to execute after the Dom is ready
@@ -1564,7 +1479,6 @@ KISSY.add('util/web',function (S) {
             }
             return this;
         },
-
         /**
          * Executes the supplied callback when the item with the supplied id is found.
          * @param id {String} The id of the element, or an array of ids to look for.
@@ -1575,23 +1489,22 @@ KISSY.add('util/web',function (S) {
             id = (id + EMPTY).match(RE_ID_STR)[1];
             var retryCount = 1;
             var timer = S.later(function () {
-                if (++retryCount > POLL_RETIRES) {
-                    timer.cancel();
-                    return;
-                }
-                var node = doc.getElementById(id);
-                if (node) {
-                    fn(node);
-                    timer.cancel();
-                }
-            }, POLL_INTERVAL, true);
+                    if (++retryCount > POLL_RETIRES) {
+                        timer.cancel();
+                        return;
+                    }
+                    var node = doc.getElementById(id);
+                    if (node) {
+                        fn(node);
+                        timer.cancel();
+                    }
+                }, POLL_INTERVAL, true);
         }
     });
-
     function fireReady() {
         if (domReady) {
             return;
-        }
+        }    // nodejs
         // nodejs
         if (win && win.setTimeout) {
             removeEventListener(win, LOAD_EVENT, fireReady);
@@ -1601,15 +1514,14 @@ KISSY.add('util/web',function (S) {
             try {
                 callbacks[i](S);
             } catch (e) {
-                S.log(e.stack || e, 'error');
+                S.log(e.stack || e, 'error');    /*jshint loopfunc:true*/
                 /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;
                 }, 0);
             }
         }
-    }
-
+    }    //  Binds ready events.
     //  Binds ready events.
     function bindReady() {
         // Catch cases where ready() is called after the
@@ -1617,18 +1529,15 @@ KISSY.add('util/web',function (S) {
         if (!doc || doc.readyState === COMPLETE) {
             fireReady();
             return;
-        }
-
+        }    // A fallback to window.onload, that will always work
         // A fallback to window.onload, that will always work
-        addEventListener(win, LOAD_EVENT, fireReady);
-
+        addEventListener(win, LOAD_EVENT, fireReady);    // w3c mode
         // w3c mode
         if (standardEventModel) {
             var domReady = function () {
                 removeEventListener(doc, DOM_READY_EVENT, domReady);
                 fireReady();
             };
-
             addEventListener(doc, DOM_READY_EVENT, domReady);
         } else {
             var stateChange = function () {
@@ -1636,23 +1545,20 @@ KISSY.add('util/web',function (S) {
                     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
                     fireReady();
                 }
-            };
-
+            };    // ensure firing before onload (but completed after all inner iframes is loaded)
+                  // maybe late but safe also for iframes
             // ensure firing before onload (but completed after all inner iframes is loaded)
             // maybe late but safe also for iframes
-            addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-
+            addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);    // If IE and not a frame
+                                                                             // continually check to see if the document is ready
             // If IE and not a frame
             // continually check to see if the document is ready
-            var notframe,
-                doScroll = docElem && docElem.doScroll;
-
+            var notframe, doScroll = docElem && docElem.doScroll;
             try {
-                notframe = (win.frameElement === null);
+                notframe = win.frameElement === null;
             } catch (e) {
                 notframe = false;
-            }
-
+            }    // can not use in iframe,parent window is dom ready so doScroll is ready too
             // can not use in iframe,parent window is dom ready so doScroll is ready too
             if (doScroll && notframe) {
                 var readyScroll = function () {
@@ -1667,13 +1573,14 @@ KISSY.add('util/web',function (S) {
                 readyScroll();
             }
         }
-    }
-
+    }    // If url contains '?ks-debug', debug mode will turn on automatically.
     // If url contains '?ks-debug', debug mode will turn on automatically.
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
-    }
-
+    }    // bind on start
+         // in case when you bind but the DOMContentLoaded has triggered
+         // then you has to wait onload
+         // worst case no callback at all
     // bind on start
     // in case when you bind but the DOMContentLoaded has triggered
     // then you has to wait onload
@@ -1681,133 +1588,8 @@ KISSY.add('util/web',function (S) {
     if (supportEvent) {
         bindReady();
     }
-
     try {
         doc.execCommand('BackgroundImageCache', false, true);
     } catch (e) {
     }
-
 });
-
-/**
- * @ignore
- * lang
- * @author  yiminghe@gmail.com
- *
- */
-KISSY.add('util',['util/array', 'util/escape', 'util/function', 'util/object', 'util/string', 'util/type', 'util/web'], function (S, require) {
-    var FALSE = false,
-        CLONE_MARKER = '__~ks_cloned';
-
-    S.mix = function (to, from) {
-        for (var i in from) {
-            to[i] = from[i];
-        }
-        return to;
-    };
-
-    require('util/array');
-    require('util/escape');
-    require('util/function');
-    require('util/object');
-    require('util/string');
-    require('util/type');
-    require('util/web');
-
-    S.mix(S, {
-        /**
-         * Creates a deep copy of a plain object or array. Others are returned untouched.
-         * @param input
-         * @member KISSY
-         * @param {Function} [filter] filter function
-         * @return {Object} the new cloned object
-         * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
-         */
-        clone: function (input, filter) {
-            // 稍微改改就和规范一样了 :)
-            // Let memory be an association list of pairs of objects,
-            // initially empty. This is used to handle duplicate references.
-            // In each pair of objects, one is called the source object
-            // and the other the destination object.
-            var memory = {},
-                ret = cloneInternal(input, filter, memory);
-            S.each(memory, function (v) {
-                // 清理在源对象上做的标记
-                v = v.input;
-                if (v[CLONE_MARKER]) {
-                    try {
-                        delete v[CLONE_MARKER];
-                    } catch (e) {
-                        v[CLONE_MARKER] = undefined;
-                    }
-                }
-            });
-            memory = null;
-            return ret;
-        }
-    });
-
-    function cloneInternal(input, f, memory) {
-        var destination = input,
-            isArray,
-            isPlainObject,
-            k,
-            stamp;
-        if (!input) {
-            return destination;
-        }
-
-        // If input is the source object of a pair of objects in memory,
-        // then return the destination object in that pair of objects .
-        // and abort these steps.
-        if (input[CLONE_MARKER]) {
-            // 对应的克隆后对象
-            return memory[input[CLONE_MARKER]].destination;
-        } else if (typeof input === 'object') {
-            // 引用类型要先记录
-            var Constructor = input.constructor;
-            if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
-                destination = new Constructor(input.valueOf());
-            } else if ((isArray = S.isArray(input))) {
-                // ImageData , File, Blob , FileList .. etc
-                destination = f ? S.filter(input, f) : input.concat();
-            } else if ((isPlainObject = S.isPlainObject(input))) {
-                destination = {};
-            }
-            // Add a mapping from input (the source object)
-            // to output (the destination object) to memory.
-            // 做标记
-            // stamp can not be
-            input[CLONE_MARKER] = (stamp = S.guid('c'));
-            // 存储源对象以及克隆后的对象
-            memory[stamp] = {destination: destination, input: input};
-        }
-        // If input is an Array object or an Object object,
-        // then, for each enumerable property in input,
-        // add a new property to output having the same name,
-        // and having a value created from invoking the internal structured cloning algorithm recursively
-        // with the value of the property as the 'input' argument and memory as the 'memory' argument.
-        // The order of the properties in the input and output objects must be the same.
-
-        // clone it
-        if (isArray) {
-            for (var i = 0; i < destination.length; i++) {
-                destination[i] = cloneInternal(destination[i], f, memory);
-            }
-        } else if (isPlainObject) {
-            for (k in input) {
-
-                if (k !== CLONE_MARKER &&
-                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                    destination[k] = cloneInternal(input[k], f, memory);
-                }
-
-            }
-        }
-
-        return destination;
-    }
-
-    return S;
-});
-

@@ -238,7 +238,7 @@ if (! _$jscoverage['/i18n/en-us.js'].branchData) {
   _$jscoverage['/i18n/en-us.js'].branchData = {};
 }
 _$jscoverage['/i18n/en-us.js'].lineData[6]++;
-KISSY.add('date/i18n/en-us', {
+KISSY.add({
   timezoneOffset: -8 * 60, 
   firstDayOfWeek: 0, 
   minimalDaysInFirstWeek: 1, 

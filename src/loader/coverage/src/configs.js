@@ -298,13 +298,12 @@ if (! _$jscoverage['/configs.js']) {
   _$jscoverage['/configs.js'].lineData[135] = 0;
   _$jscoverage['/configs.js'].lineData[136] = 0;
   _$jscoverage['/configs.js'].lineData[137] = 0;
-  _$jscoverage['/configs.js'].lineData[139] = 0;
+  _$jscoverage['/configs.js'].lineData[138] = 0;
   _$jscoverage['/configs.js'].lineData[140] = 0;
+  _$jscoverage['/configs.js'].lineData[141] = 0;
   _$jscoverage['/configs.js'].lineData[142] = 0;
-  _$jscoverage['/configs.js'].lineData[143] = 0;
   _$jscoverage['/configs.js'].lineData[144] = 0;
-  _$jscoverage['/configs.js'].lineData[146] = 0;
-  _$jscoverage['/configs.js'].lineData[149] = 0;
+  _$jscoverage['/configs.js'].lineData[147] = 0;
 }
 if (! _$jscoverage['/configs.js'].functionData) {
   _$jscoverage['/configs.js'].functionData = [];
@@ -352,35 +351,29 @@ if (! _$jscoverage['/configs.js'].branchData) {
   _$jscoverage['/configs.js'].branchData['111'][1] = new BranchData();
   _$jscoverage['/configs.js'].branchData['112'] = [];
   _$jscoverage['/configs.js'].branchData['112'][1] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['136'] = [];
-  _$jscoverage['/configs.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['139'] = [];
-  _$jscoverage['/configs.js'].branchData['139'][1] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['139'][2] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['142'] = [];
-  _$jscoverage['/configs.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/configs.js'].branchData['143'] = [];
-  _$jscoverage['/configs.js'].branchData['143'][1] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['137'] = [];
+  _$jscoverage['/configs.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['137'][2] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['140'] = [];
+  _$jscoverage['/configs.js'].branchData['140'][1] = new BranchData();
+  _$jscoverage['/configs.js'].branchData['141'] = [];
+  _$jscoverage['/configs.js'].branchData['141'][1] = new BranchData();
 }
-_$jscoverage['/configs.js'].branchData['143'][1].init(18, 22, 'base.charAt(0) === \'/\'');
-function visit99_143_1(result) {
-  _$jscoverage['/configs.js'].branchData['143'][1].ranCondition(result);
+_$jscoverage['/configs.js'].branchData['141'][1].init(18, 22, 'base.charAt(0) === \'/\'');
+function visit98_141_1(result) {
+  _$jscoverage['/configs.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['142'][1].init(218, 12, 'locationPath');
-function visit98_142_1(result) {
-  _$jscoverage['/configs.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/configs.js'].branchData['140'][1].init(163, 12, 'locationPath');
+function visit97_140_1(result) {
+  _$jscoverage['/configs.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['139'][2].init(128, 36, 'base.charAt(base.length - 1) !== \'/\'');
-function visit97_139_2(result) {
-  _$jscoverage['/configs.js'].branchData['139'][2].ranCondition(result);
+}_$jscoverage['/configs.js'].branchData['137'][2].init(73, 36, 'base.charAt(base.length - 1) !== \'/\'');
+function visit96_137_2(result) {
+  _$jscoverage['/configs.js'].branchData['137'][2].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['139'][1].init(113, 51, 'isDirectory && base.charAt(base.length - 1) !== \'/\'');
-function visit96_139_1(result) {
-  _$jscoverage['/configs.js'].branchData['139'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/configs.js'].branchData['136'][1].init(14, 25, 'base.indexOf(\'\\\\\') !== -1');
-function visit95_136_1(result) {
-  _$jscoverage['/configs.js'].branchData['136'][1].ranCondition(result);
+}_$jscoverage['/configs.js'].branchData['137'][1].init(58, 51, 'isDirectory && base.charAt(base.length - 1) !== \'/\'');
+function visit95_137_1(result) {
+  _$jscoverage['/configs.js'].branchData['137'][1].ranCondition(result);
   return result;
 }_$jscoverage['/configs.js'].branchData['112'][1].init(21, 36, 'corePackage && corePackage.getBase()');
 function visit94_112_1(result) {
@@ -618,27 +611,24 @@ function visit80_16_1(result) {
   function normalizePath(base, isDirectory) {
     _$jscoverage['/configs.js'].functionData[10]++;
     _$jscoverage['/configs.js'].lineData[136]++;
-    if (visit95_136_1(base.indexOf('\\') !== -1)) {
-      _$jscoverage['/configs.js'].lineData[137]++;
-      base = base.replace(/\\/g, '/');
-    }
-    _$jscoverage['/configs.js'].lineData[139]++;
-    if (visit96_139_1(isDirectory && visit97_139_2(base.charAt(base.length - 1) !== '/'))) {
-      _$jscoverage['/configs.js'].lineData[140]++;
+    base = Utils.normalizeSlash(base);
+    _$jscoverage['/configs.js'].lineData[137]++;
+    if (visit95_137_1(isDirectory && visit96_137_2(base.charAt(base.length - 1) !== '/'))) {
+      _$jscoverage['/configs.js'].lineData[138]++;
       base += '/';
     }
-    _$jscoverage['/configs.js'].lineData[142]++;
-    if (visit98_142_1(locationPath)) {
-      _$jscoverage['/configs.js'].lineData[143]++;
-      if (visit99_143_1(base.charAt(0) === '/')) {
-        _$jscoverage['/configs.js'].lineData[144]++;
+    _$jscoverage['/configs.js'].lineData[140]++;
+    if (visit97_140_1(locationPath)) {
+      _$jscoverage['/configs.js'].lineData[141]++;
+      if (visit98_141_1(base.charAt(0) === '/')) {
+        _$jscoverage['/configs.js'].lineData[142]++;
         base = location.protocol + '//' + location.host + base;
       } else {
-        _$jscoverage['/configs.js'].lineData[146]++;
+        _$jscoverage['/configs.js'].lineData[144]++;
         base = Utils.normalizePath(locationPath, base);
       }
     }
-    _$jscoverage['/configs.js'].lineData[149]++;
+    _$jscoverage['/configs.js'].lineData[147]++;
     return base;
   }
 })(KISSY);

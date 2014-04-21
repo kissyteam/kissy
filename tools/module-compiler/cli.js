@@ -18,21 +18,10 @@ var depFile = program.depFile;
 
 packageBase = packageBase.replace(/\\/g, '/');
 
-var kmc = require('kmc');
+var compile = require('./compile');
 
-kmc.config({
-    packages: [
-        {
-            // 'event/base'
-            'name': packageName,
-            'path': packageBase + Path.basename(packageName),
-            ignorePackageNameInUri: true
-        }
-    ]
-});
-
-kmc.build({
-    src: packageBase + Path.basename(packageName) + '.js',
-    dest: destFile,
-    depPath: depFile
-});
+compile(packageName, [{
+    // 'event/base'
+    'name': packageName,
+    'path': packageBase + Path.basename(packageName)
+}], destFile, depFile);

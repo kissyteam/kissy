@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/i18n/en-us', {
+KISSY.add({
     today: 'Today',
     clear: 'Clear',
     previousMonth: 'Previous month (PageUp)',

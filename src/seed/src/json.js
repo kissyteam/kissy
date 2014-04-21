@@ -4,14 +4,12 @@
  * 2. export light-weighted json parse
  */
 (function (S) {
-    var UA = S.UA,
-        Env = S.Env,
-        win = Env.host,
-    /*global global*/
-        nativeJson = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
+    var doc = S.Env.host.document,
+        documentMode = doc && doc.documentMode,
+        nativeJson = typeof JSON === 'undefined' ? null : JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
-    if (UA.ieMode < 9) {
+    if (documentMode && documentMode < 9) {
         nativeJson = null;
     }
 

@@ -6,7 +6,8 @@ S.config("requires",{
         "promise"
     ],
     "anim/timer": [
-        "anim/base"
+        "dom",
+        "./base"
     ],
     "anim/transition": [
         "anim/base"

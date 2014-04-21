@@ -19,7 +19,7 @@
        tabindex="-1"
        hidefocus="on"
        title="{{monthSelectLabel}}">
-        <span>{{monthYearLabel}}</span>
+        <span class="{{getBaseCssClasses ('month-select-content')}}">{{monthYearLabel}}</span>
         <span class="{{getBaseCssClasses ('month-select-arrow')}}">x</span>
     </a>
     <a class="{{getBaseCssClasses ('next-month-btn')}}"
@@ -55,7 +55,7 @@
             {{/each}}
         </tr>
         </thead>
-        <tbody>
+        <tbody class="{{getBaseCssClasses ('tbody')}}">
         {{{renderDates()}}}
         </tbody>
     </table>

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:57
+build time: Apr 21 22:07
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140415175730' will replace with current timestamp when compressing.
+         * NOTICE: '20140421220710' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140415175730',
+        __BUILD_TIME: '20140421220710',
 
         /**
          * KISSY Environment.
@@ -347,7 +347,7 @@ var KISSY = (function (undefined) {
          * @singleton
          * @private
          */
-            Utils = Loader.Utils = {},
+        Utils = Loader.Utils = {},
         doc = host.document;
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -491,6 +491,10 @@ var KISSY = (function (undefined) {
         keys: keys,
 
         isArray: isArray,
+
+        normalizeSlash: function (str) {
+            return str.replace(/\\/g, '/');
+        },
 
         normalizePath: function (parentPath, subPath) {
             var firstChar = subPath.charAt(0);
@@ -671,7 +675,7 @@ var KISSY = (function (undefined) {
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
                     (module.cjs ? [S,
-                        requires && requires.length ? module.require : undefined,
+                            requires && requires.length ? module.require : undefined,
                         module.exports,
                         module] :
                         Utils.getModules(module.getRequiresWithAlias())));
@@ -1557,9 +1561,7 @@ var KISSY = (function (undefined) {
     }
 
     function normalizePath(base, isDirectory) {
-        if (base.indexOf('\\') !== -1) {
-            base = base.replace(/\\/g, '/');
-        }
+        base = Utils.normalizeSlash(base);
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
@@ -2338,7 +2340,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140415175730';
+    var TIMESTAMP = '20140421220710';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

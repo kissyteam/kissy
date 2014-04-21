@@ -102,7 +102,7 @@
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
                 <exec executable="node" failonerror="true">
-                    <arg value="${tools.dir}/kmc/run"/>
+                    <arg value="${tools.dir}/module-compiler/cli"/>
                     <arg value="--packageName"/>
                     <arg value="${component.name}"/>
                     <arg value="--packageBase"/>

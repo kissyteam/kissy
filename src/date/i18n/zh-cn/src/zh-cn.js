@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/i18n/zh-cn', {
+KISSY.add({
     // in minutes
     timezoneOffset: 8 * 60,
     firstDayOfWeek: 1,

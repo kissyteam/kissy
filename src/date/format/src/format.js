@@ -30,7 +30,6 @@ KISSY.add(function (S, require) {
              */
             SHORT: 3
         };
-    var logger = S.getLogger('s/date/format');
 
     /*
      Letter    Date or Time Component    Presentation    Examples
@@ -54,6 +53,8 @@ KISSY.add(function (S, require) {
      x z    Time zone    General time zone    Pacific Standard Time; PST; GMT-08:00
      Z    Time zone    RFC 822 time zone    -0800
      */
+
+    var logger = S.getLogger('s/date/format');
 
     var patternChars = new Array(GregorianCalendar.DAY_OF_WEEK_IN_MONTH + 2).
         join('1');
