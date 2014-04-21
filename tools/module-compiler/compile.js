@@ -1,6 +1,6 @@
 /**
  * combine kissy module and generate deps.json
- * @type {exports}
+ * @author yiminghe@gmail.com
  */
 var fs = require('fs');
 var esprima = require('esprima');

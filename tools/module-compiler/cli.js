@@ -1,4 +1,7 @@
-// build a package
+/**
+ * build a package by command line
+ * @author yiminghe@gmail.com
+ */
 console.log(process.argv);
 var dirname = __dirname;
 var Path = require('path');
