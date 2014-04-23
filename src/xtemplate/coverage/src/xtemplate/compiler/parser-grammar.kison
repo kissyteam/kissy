@@ -7,6 +7,8 @@
         this.popState();
     }
 
+    var codeSection = ['p', 'e'];
+
     return {
         productions: [
             {
@@ -43,7 +45,8 @@
                 symbol: 'statement',
                 rhs: ['OPEN_BLOCK', 'command', 'CLOSE', 'program', 'OPEN_CLOSE_BLOCK', 'id', 'CLOSE'],
                 action: function () {
-                    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6, this.$1.length !== 4);
+                    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2,
+                        this.$4, this.$6, this.$1.length !== 4);
                 }
             },
 
@@ -363,6 +366,8 @@
             // states:
             // t: in tpl mode
             // et: escape tpl
+            // e: enter escaped tpl {{
+            // p: enter plain tpl {{{
             rules: [
                 {
                     // "\n".match(/./)
@@ -407,13 +412,31 @@
                     state: ['t'],
                     // support Inverted Sections in mustache
                     // support {{@
-                    regexp: /^{{{?(?:#|@|\^)/,
-                    token: 'OPEN_BLOCK'
+                    regexp: /^{{{?(?:#|@)/,
+                    token: 'OPEN_BLOCK',
+                    action: function () {
+                        var self = this,
+                            text = self.text;
+                        if (text.length === 4) {
+                            self.pushState('p');
+                        } else {
+                            self.pushState('e');
+                        }
+                    }
                 },
                 {
                     state: ['t'],
                     regexp: /^{{{?\//,
-                    token: 'OPEN_CLOSE_BLOCK'
+                    token: 'OPEN_CLOSE_BLOCK',
+                    action: function () {
+                        var self = this,
+                            text = self.text;
+                        if (text.length === 4) {
+                            self.pushState('p');
+                        } else {
+                            self.pushState('e');
+                        }
+                    }
                 },
                 {
                     state: ['t'],
@@ -441,106 +464,125 @@
                 {
                     state: ['t'],
                     regexp: /^{{{?/,
-                    token: 'OPEN_TPL'
+                    token: 'OPEN_TPL',
+                    action: function () {
+                        var self = this,
+                            text = self.text;
+                        if (text.length === 3) {
+                            self.pushState('p');
+                        } else {
+                            self.pushState('e');
+                        }
+                    }
                 },
                 {
                     // ignore white space
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\s+/
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^,/,
                     token: 'COMMA'
                 },
                 {
-                    state: ['t'],
-                    regexp: /^}}}?/,
-                    action: popState,
+                    state: ['p'],
+                    regexp: /^}}}/,
+                    action: function () {
+                        this.popState(2);
+                    },
                     token: 'CLOSE'
                 },
                 {
-                    state: ['t'],
+                    state: ['e'],
+                    regexp: /^}}/,
+                    action: function () {
+                        this.popState(2);
+                    },
+                    token: 'CLOSE'
+                },
+                {
+                    state: codeSection,
                     regexp: /^\(/,
                     token: 'LPAREN'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\)/,
                     token: 'RPAREN'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\|\|/,
                     token: 'OR'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^&&/,
                     token: 'AND'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^===/,
                     token: 'LOGIC_EQUALS'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^!==/,
                     token: 'LOGIC_NOT_EQUALS'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^>=/,
                     token: 'GE'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^<=/,
                     token: 'LE'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^>/,
                     token: 'GT'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^</,
                     token: 'LT'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\+/,
                     token: 'PLUS'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^-/,
                     token: 'MINUS'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\*/,
                     token: 'MULTIPLY'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\//,
                     token: 'DIVIDE'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^%/,
                     token: 'MODULUS'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^!/,
                     token: 'NOT'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     // notice escape string
                     regexp: /^"(\\[\s\S]|[^\\"])*"/,
                     action: function () {
@@ -549,7 +591,7 @@
                     token: 'STRING'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     // notice escape string
                     regexp: /^'(\\[\s\S]|[^\\'])*'/,
                     action: function () {
@@ -558,27 +600,27 @@
                     token: 'STRING'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^true/,
                     token: 'BOOLEAN'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^false/,
                     token: 'BOOLEAN'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\d+(?:\.\d+)?(?:e-?\d+)?/i,
                     token: 'NUMBER'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^=/,
                     token: 'EQUALS'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\.\./,
                     token: 'ID',
                     action: function () {
@@ -593,22 +635,22 @@
                     action: popState
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\./,
                     token: 'SEP'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\[/,
                     token: 'REF_START'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^\]/,
                     token: 'REF_END'
                 },
                 {
-                    state: ['t'],
+                    state: codeSection,
                     regexp: /^[a-zA-Z0-9_$]+/,
                     token: 'ID'
                 }

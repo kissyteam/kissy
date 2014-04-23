@@ -1,2 +1,2 @@
-node ../../../../../../bin/kissy-kison -g parser-grammar.kison
+node ../../../../../bin/kissy-kison -g parser-grammar.kison
 pause
