@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     var Walker = require('./walker');
     var KERange = require('./range');
     var Editor = require('./base');
-    var ElementPath = require('./elementPath');
+    var ElementPath = require('./element-path');
     var TRUE = true,
         FALSE = false,
         NULL = null,

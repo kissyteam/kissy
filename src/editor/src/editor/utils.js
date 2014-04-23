@@ -17,11 +17,11 @@ KISSY.add(function (S, require) {
          * @class KISSY.Editor.Utils
          * @singleton
          */
-            Utils = {
+        Utils = {
             debugUrl: function (url) {
                 var Config = S.Config;
-                if (!Config.debug) {
-                    url = url.replace(/\.(js|css)/i, '-min.$1');
+                if (Config.debug) {
+                    url = url.replace(/\.(js|css)/i, '-debug.$1');
                 }
                 if (url.indexOf('?t') === -1) {
                     if (url.indexOf('?') !== -1) {
@@ -29,7 +29,9 @@ KISSY.add(function (S, require) {
                     } else {
                         url += '?';
                     }
-                    url += 't=' + encodeURIComponent(Config.tag);
+                    if (Config.tag) {
+                        url += 't=' + encodeURIComponent(Config.tag);
+                    }
                 }
                 return S.config('base') + 'editor/' + url;
             },

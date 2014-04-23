@@ -15,7 +15,12 @@
 
     <target name="concat-css">
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.assets.dir}" includes="**/*" excludes="common.css"/>
+            <fileset dir="${component.assets.dir}" excludes="**/*.css"/>
+        </copy>
+
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="${component.assets.dir}" includes="**/*.css" excludes="common.css"/>
+            <mapper type="regexp" from="^(.*)\.css$" to="\1-debug.css"/>
         </copy>
 
         <concat destfile="${component.src.dir.tmp}/cool/editor-debug.css"

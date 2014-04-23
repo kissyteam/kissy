@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var Walker = require('./walker');
     var Editor = require('./base');
-    var ElementPath = require('./elementPath');
+    var ElementPath = require('./element-path');
     var OLD_IE = S.UA.ieMode < 11;
     var headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD;

@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
     var Utils = require('./utils');
     var Walker = require('./walker');
     var Editor = require('./base');
-    var ElementPath = require('./elementPath');
+    var ElementPath = require('./element-path');
     /**
      * Enum for range
      * @enum {number} KISSY.Editor.RangeType

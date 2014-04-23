@@ -2368,7 +2368,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[15]++;
   var Editor = require('./base');
   _$jscoverage['/editor/range.js'].lineData[16]++;
-  var ElementPath = require('./elementPath');
+  var ElementPath = require('./element-path');
   _$jscoverage['/editor/range.js'].lineData[21]++;
   Editor.RangeType = {
   POSITION_AFTER_START: 1, 

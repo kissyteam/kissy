@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     var KESelection = require('./selection');
     var KERange = require('./range');
     var Editor = require('./base');
-    var ElementPath = require('./elementPath');
+    var ElementPath = require('./element-path');
 
     var TRUE = true,
         FALSE = false,
@@ -152,23 +152,23 @@ KISSY.add(function (S, require) {
         applyToRange: function (range) {
             var self = this;
             return (self.applyToRange =
-                this.type === KEST.STYLE_INLINE ?
-                    applyInlineStyle
-                    : self.type === KEST.STYLE_BLOCK ?
-                    applyBlockStyle
-                    : self.type === KEST.STYLE_OBJECT ?
-                    NULL
-                    //yiminghe note:no need!
-                    //applyObjectStyle
-                    : NULL).call(self, range);
+                    this.type === KEST.STYLE_INLINE ?
+                applyInlineStyle
+                : self.type === KEST.STYLE_BLOCK ?
+                applyBlockStyle
+                : self.type === KEST.STYLE_OBJECT ?
+                NULL
+                //yiminghe note:no need!
+                //applyObjectStyle
+                : NULL).call(self, range);
         },
 
         removeFromRange: function (range) {
             var self = this;
             return (self.removeFromRange =
-                self.type === KEST.STYLE_INLINE ?
-                    removeInlineStyle
-                    : NULL).call(self, range);
+                    self.type === KEST.STYLE_INLINE ?
+                removeInlineStyle
+                : NULL).call(self, range);
         },
 
         // Checks if an element, or any of its attributes, is removable by the
@@ -627,14 +627,14 @@ KISSY.add(function (S, require) {
                 // Check if the current node can be a child of the style element.
                 if (!nodeName || (
                     dtd[nodeName] &&
-                        (currentNode._4ePosition(lastNode) |
-                            (KEP.POSITION_PRECEDING |
-                                KEP.POSITION_IDENTICAL |
-                                KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING +
-                            KEP.POSITION_IDENTICAL +
-                            KEP.POSITION_IS_CONTAINED) &&
-                        (!def.childRule || def.childRule(currentNode))
-                   )) {
+                    (currentNode._4ePosition(lastNode) |
+                        (KEP.POSITION_PRECEDING |
+                            KEP.POSITION_IDENTICAL |
+                            KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING +
+                    KEP.POSITION_IDENTICAL +
+                    KEP.POSITION_IS_CONTAINED) &&
+                    (!def.childRule || def.childRule(currentNode))
+                    )) {
                     var currentParent = currentNode.parent();
 
                     // hack for
@@ -669,7 +669,7 @@ KISSY.add(function (S, require) {
                                 (KEP.POSITION_PRECEDING +
                                     KEP.POSITION_IDENTICAL +
                                     KEP.POSITION_IS_CONTAINED)
-                               )) {
+                                )) {
                             styleRange = new KERange(document);
                             styleRange.setStartBefore(currentNode);
                         }
@@ -693,14 +693,14 @@ KISSY.add(function (S, require) {
                             // in this style DTD, so apply the style immediately.
                             while (
                                 (applyStyle = !includedNode.next(notBookmark, 1)) &&
-                                    ((parentNode = includedNode.parent()) &&
-                                        dtd[parentNode.nodeName()]) &&
-                                    (parentNode._4ePosition(firstNode) |
-                                        KEP.POSITION_FOLLOWING |
-                                        KEP.POSITION_IDENTICAL |
-                                        KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING +
-                                        KEP.POSITION_IDENTICAL +
-                                        KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(parentNode))) {
+                                ((parentNode = includedNode.parent()) &&
+                                    dtd[parentNode.nodeName()]) &&
+                                (parentNode._4ePosition(firstNode) |
+                                    KEP.POSITION_FOLLOWING |
+                                    KEP.POSITION_IDENTICAL |
+                                    KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING +
+                                KEP.POSITION_IDENTICAL +
+                                KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(parentNode))) {
                                 includedNode = parentNode;
                             }
 
@@ -885,7 +885,7 @@ KISSY.add(function (S, require) {
                         if (element.nodeName() !== this.element) {
                             var _overrides = getOverrides(this);
                             removeOverrides(element,
-                                _overrides[element.nodeName()] || _overrides['*']);
+                                    _overrides[element.nodeName()] || _overrides['*']);
                         } else {
                             removeFromElement(this, element);
                         }
@@ -999,7 +999,7 @@ KISSY.add(function (S, require) {
                     } else {
                         var overrides = getOverrides(this);
                         removeOverrides(currentNode,
-                            overrides[currentNode.nodeName()] || overrides['*']);
+                                overrides[currentNode.nodeName()] || overrides['*']);
 
                     }
 
@@ -1037,7 +1037,7 @@ KISSY.add(function (S, require) {
         if (typeof source === 'string') {
             source = parseStyleText(source);
         }
-        if (target === 'string') {
+        if (typeof target === 'string') {
             target = parseStyleText(target);
         }
         for (var name in source) {
@@ -1339,7 +1339,7 @@ KISSY.add(function (S, require) {
 
             if (firstChild) {
                 // Check the cached nodes for merging.
-                if (firstChild.nodeType === Dom.NodeType.ELEMENT_NODE){
+                if (firstChild.nodeType === Dom.NodeType.ELEMENT_NODE) {
                     Dom._4eMergeSiblings(firstChild);
                 }
 

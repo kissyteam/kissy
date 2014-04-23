@@ -8,21 +8,20 @@ KISSY.add(function (S, require, exports, module) {
     var iframeContentTpl = require('editor/iframe-content-tpl');
     var Editor = require('editor/base');
     var Utils = require('editor/utils');
-    var focusManager = require('editor/focusManager');
+    var focusManager = require('editor/focus-manager');
     var clipboard = require('editor/clipboard');
-    var enterKey = require('editor/enterKey');
-    var htmlDataProcessor = require('editor/htmlDataProcessor');
-    var selectionFix = require('editor/selectionFix');
+    var enterKey = require('editor/enter-key');
+    var htmlDataProcessor = require('editor/html-data-processor');
+    var selectionFix = require('editor/selection-fix');
     require('editor/modules');
     require('editor/styles');
-    require('editor/domIterator');
+    require('editor/dom-iterator');
     require('editor/z-index-manager');
     module.exports = Editor;
     var logger = S.getLogger('s/editor');
     var TRUE = true,
         FALSE = false,
         NULL = null,
-
         window = S.Env.host,
         document = window.document,
         UA = S.UA,
