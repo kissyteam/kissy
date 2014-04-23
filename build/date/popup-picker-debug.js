@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:22
+build time: Apr 23 11:59
 */
 /*
 combined modules:
@@ -19,8 +19,7 @@ KISSY.add('date/popup-picker', [
     'component/extension/shim',
     'component/extension/align'
 ], function (S, require) {
-    var PopupPickerTpl = require('./popup-picker/render-xtpl'), DatePicker = require('date/picker'), Shim = require('component/extension/shim'), AlignExtension = require('component/extension/align');
-    var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, { ATTRS: { contentTpl: { value: PopupPickerTpl } } });    /**
+    var PopupPickerTpl = require('./popup-picker/render-xtpl'), DatePicker = require('date/picker'), Shim = require('component/extension/shim'), AlignExtension = require('component/extension/align');    /**
      * popup date picker ui component
      * @class KISSY.Date.PopupPicker
      * @extends KISSY.Component.Control
@@ -39,7 +38,7 @@ KISSY.add('date/popup-picker', [
         AlignExtension
     ], {}, {
         xclass: 'popup-date-picker',
-        ATTRS: { xrender: { value: PopupDatePickerRender } }
+        ATTRS: { contentTpl: { value: PopupPickerTpl } }
     });
 });
 /** Compiled By kissy-xtemplate */

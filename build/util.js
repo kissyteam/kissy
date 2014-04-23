@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:07
+build time: Apr 23 12:00
 */
 KISSY.add("util","util/array,util/escape,util/function,util/object,util/string,util/type,util/web".split(","),function(d,e){function j(c,f,a){var b=c,l,n,i,k;if(!c)return b;if(c[h])return a[c[h]].destination;if(typeof c==="object"){k=c.constructor;if(d.inArray(k,[Boolean,String,Number,Date,RegExp]))b=new k(c.valueOf());else if(l=d.isArray(c))b=f?d.filter(c,f):c.concat();else if(n=d.isPlainObject(c))b={};c[h]=k=d.guid("c");a[k]={destination:b,input:c}}if(l)for(c=0;c<b.length;c++)b[c]=j(b[c],f,a);else if(n)for(i in c)if(i!==
 h&&(!f||f.call(c,c[i],i,c)!==g))b[i]=j(c[i],f,a);return b}var g=false,h="__~ks_cloned";d.mix=function(d,f){for(var a in f)d[a]=f[a];return d};e("util/array");e("util/escape");e("util/function");e("util/object");e("util/string");e("util/type");e("util/web");d.mix(d,{clone:function(c,f){var a={},b=j(c,f,a);d.each(a,function(b){b=b.input;if(b[h])try{delete b[h]}catch(a){b[h]=void 0}});a=null;return b}});return d});

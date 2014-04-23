@@ -64,80 +64,106 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
             var id10 = scope.resolve(["decadeSelectLabel"]);
             buffer.write(id10, true);
-            buffer.write('">\r\n            <span>\r\n                ');
-            var id11 = scope.resolve(["startYear"]);
-            buffer.write(id11, true);
-            buffer.write('-');
-            var id12 = scope.resolve(["endYear"]);
-            buffer.write(id12, true);
-            buffer.write('\r\n            </span>\r\n        <span class="');
-            var option13 = {
+            buffer.write('">\r\n            <span class="');
+            var option11 = {
                 escape: 1
             };
-            var params14 = [];
-            params14.push('decade-select-arrow');
-            option13.params = params14;
-            var commandRet15 = callCommandUtil(engine, scope, option13, buffer, "getBaseCssClasses", 17);
-            if (commandRet15 && commandRet15.isBuffer) {
-                buffer = commandRet15;
-                commandRet15 = undefined;
+            var params12 = [];
+            params12.push('decade-select-content');
+            option11.params = params12;
+            var commandRet13 = callCommandUtil(engine, scope, option11, buffer, "getBaseCssClasses", 14);
+            if (commandRet13 && commandRet13.isBuffer) {
+                buffer = commandRet13;
+                commandRet13 = undefined;
             }
-            buffer.write(commandRet15, true);
-            buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
+            buffer.write(commandRet13, true);
+            buffer.write('">\r\n                ');
+            var id14 = scope.resolve(["startYear"]);
+            buffer.write(id14, true);
+            buffer.write('-');
+            var id15 = scope.resolve(["endYear"]);
+            buffer.write(id15, true);
+            buffer.write('\r\n            </span>\r\n        <span class="');
             var option16 = {
                 escape: 1
             };
             var params17 = [];
-            params17.push('next-decade-btn');
+            params17.push('decade-select-arrow');
             option16.params = params17;
-            var commandRet18 = callCommandUtil(engine, scope, option16, buffer, "getBaseCssClasses", 20);
+            var commandRet18 = callCommandUtil(engine, scope, option16, buffer, "getBaseCssClasses", 17);
             if (commandRet18 && commandRet18.isBuffer) {
                 buffer = commandRet18;
                 commandRet18 = undefined;
             }
             buffer.write(commandRet18, true);
-            buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
-            var id19 = scope.resolve(["nextDecadeLabel"]);
-            buffer.write(id19, true);
-            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
-            var option20 = {
+            buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
+            var option19 = {
                 escape: 1
             };
-            var params21 = [];
-            params21.push('body');
-            option20.params = params21;
-            var commandRet22 = callCommandUtil(engine, scope, option20, buffer, "getBaseCssClasses", 27);
-            if (commandRet22 && commandRet22.isBuffer) {
-                buffer = commandRet22;
-                commandRet22 = undefined;
+            var params20 = [];
+            params20.push('next-decade-btn');
+            option19.params = params20;
+            var commandRet21 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 20);
+            if (commandRet21 && commandRet21.isBuffer) {
+                buffer = commandRet21;
+                commandRet21 = undefined;
             }
-            buffer.write(commandRet22, true);
-            buffer.write('">\r\n    <table class="');
+            buffer.write(commandRet21, true);
+            buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+            var id22 = scope.resolve(["nextDecadeLabel"]);
+            buffer.write(id22, true);
+            buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
             var option23 = {
                 escape: 1
             };
             var params24 = [];
-            params24.push('table');
+            params24.push('body');
             option23.params = params24;
-            var commandRet25 = callCommandUtil(engine, scope, option23, buffer, "getBaseCssClasses", 28);
+            var commandRet25 = callCommandUtil(engine, scope, option23, buffer, "getBaseCssClasses", 27);
             if (commandRet25 && commandRet25.isBuffer) {
                 buffer = commandRet25;
                 commandRet25 = undefined;
             }
             buffer.write(commandRet25, true);
-            buffer.write('" cellspacing="0" role="grid">\r\n        <tbody>\r\n        ');
-            var option26 = {};
+            buffer.write('">\r\n    <table class="');
+            var option26 = {
+                escape: 1
+            };
             var params27 = [];
-            params27.push('date/picker/year-panel/years-xtpl');
+            params27.push('table');
             option26.params = params27;
-            require("date/picker/year-panel/years-xtpl");
-            option26.params[0] = module.resolve(option26.params[0]);
-            var commandRet28 = includeCommand.call(engine, scope, option26, buffer, 30, payload);
+            var commandRet28 = callCommandUtil(engine, scope, option26, buffer, "getBaseCssClasses", 28);
             if (commandRet28 && commandRet28.isBuffer) {
                 buffer = commandRet28;
                 commandRet28 = undefined;
             }
-            buffer.write(commandRet28, false);
+            buffer.write(commandRet28, true);
+            buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
+            var option29 = {
+                escape: 1
+            };
+            var params30 = [];
+            params30.push('tbody');
+            option29.params = params30;
+            var commandRet31 = callCommandUtil(engine, scope, option29, buffer, "getBaseCssClasses", 29);
+            if (commandRet31 && commandRet31.isBuffer) {
+                buffer = commandRet31;
+                commandRet31 = undefined;
+            }
+            buffer.write(commandRet31, true);
+            buffer.write('">\r\n        ');
+            var option32 = {};
+            var params33 = [];
+            params33.push('./years-xtpl');
+            option32.params = params33;
+            require("./years-xtpl");
+            option32.params[0] = module.resolve(option32.params[0]);
+            var commandRet34 = includeCommand.call(engine, scope, option32, buffer, 30, payload);
+            if (commandRet34 && commandRet34.isBuffer) {
+                buffer = commandRet34;
+                commandRet34 = undefined;
+            }
+            buffer.write(commandRet34, false);
             buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
             return buffer;
         };

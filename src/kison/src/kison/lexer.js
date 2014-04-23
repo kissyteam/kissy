@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
          * Lexer generator
          * @class KISSY.Kison.Lexer
          */
-            Lexer = function (cfg) {
+        Lexer = function (cfg) {
 
             var self = this;
 
@@ -129,11 +129,7 @@ KISSY.add(function (S, require) {
                         if (token) {
                             token = self.mapSymbol(token);
                         }
-                        ret = [
-                            token,
-                            v.regexp,
-                            action || 0
-                        ];
+                        ret = [token, v.regexp, action || 0];
                         if (compressState && state) {
                             state = S.map(state, function (s) {
                                 return self.mapState(s);
@@ -185,8 +181,13 @@ KISSY.add(function (S, require) {
             this.stateStack.push(state);
         },
 
-        popState: function () {
-            return this.stateStack.pop();
+        popState: function (num) {
+            num = num || 1;
+            var ret;
+            while (num--) {
+                ret = this.stateStack.pop();
+            }
+            return ret;
         },
 
         showDebugInfo: function () {

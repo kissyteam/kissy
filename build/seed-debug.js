@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:07
+build time: Apr 23 12:00
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:07
+build time: Apr 23 12:00
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140421220710' will replace with current timestamp when compressing.
+         * NOTICE: '20140423120000' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140421220710',
+        __BUILD_TIME: '20140423120000',
 
         /**
          * KISSY Environment.
@@ -2345,7 +2345,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140421220710';
+    var TIMESTAMP = '20140423120000';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2470,7 +2470,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:07
+build time: Apr 23 12:00
 */
 /*
 combined modules:
@@ -4065,7 +4065,7 @@ KISSY.add('util/web', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:07
+build time: Apr 23 12:00
 */
 /*
 combined modules:
@@ -4458,7 +4458,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:07
+build time: Apr 23 12:00
 */
 /*
 combined modules:
@@ -4775,7 +4775,10 @@ S.config("requires",{
         "resizable"
     ],
     "date/format": [
-        "date/gregorian"
+        "i18n!date",
+        "./gregorian/utils",
+        "./gregorian/const",
+        "./const"
     ],
     "date/gregorian": [
         "i18n!date"
@@ -4783,8 +4786,11 @@ S.config("requires",{
     "date/picker": [
         "i18n!date/picker",
         "component/control",
-        "date/format",
-        "date/picker-xtpl"
+        "date/picker-xtpl",
+        "./gregorian/utils",
+        "i18n!date",
+        "./gregorian/const",
+        "./const"
     ],
     "date/popup-picker": [
         "date/picker",
@@ -4979,9 +4985,6 @@ S.config("requires",{
         "path"
     ],
     "xtemplate": [
-        "xtemplate/compiler"
-    ],
-    "xtemplate/compiler": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [

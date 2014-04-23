@@ -396,43 +396,43 @@ if (! _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['165'][1] = new BranchData();
 }
 _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['165'][1].init(5834, 37, 'commandRet40 && commandRet40.isBuffer');
-function visit25_165_1(result) {
+function visit21_165_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['165'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['147'][1].init(464, 37, 'commandRet37 && commandRet37.isBuffer');
-function visit24_147_1(result) {
+function visit20_147_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['147'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['134'][1].init(4244, 14, '(id32) > (id33)');
-function visit23_134_1(result) {
+function visit19_134_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['134'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['116'][1].init(464, 37, 'commandRet29 && commandRet29.isBuffer');
-function visit22_116_1(result) {
+function visit18_116_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['116'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['103'][1].init(2807, 14, '(id24) < (id25)');
-function visit21_103_1(result) {
+function visit17_103_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['103'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['85'][1].init(459, 37, 'commandRet21 && commandRet21.isBuffer');
-function visit20_85_1(result) {
+function visit16_85_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['85'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['70'][1].init(201, 15, '(id15) <= (id16)');
-function visit19_70_1(result) {
+function visit15_70_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['64'][1].init(1018, 15, '(id12) <= (id13)');
-function visit18_64_1(result) {
+function visit14_64_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['51'][1].init(440, 35, 'commandRet9 && commandRet9.isBuffer');
-function visit17_51_1(result) {
+function visit13_51_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
-function visit16_8_1(result) {
+function visit12_8_1(result) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[2]++;
@@ -444,7 +444,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[8]++;
-  if (visit16_8_1("5.0.0" !== S.version)) {
+  if (visit12_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[9]++;
     throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
@@ -498,7 +498,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[50]++;
   var commandRet9 = callCommandUtil(engine, scope, option7, buffer, "getBaseCssClasses", 5);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[51]++;
-  if (visit17_51_1(commandRet9 && commandRet9.isBuffer)) {
+  if (visit13_51_1(commandRet9 && commandRet9.isBuffer)) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[52]++;
     buffer = commandRet9;
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[53]++;
@@ -520,7 +520,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[63]++;
   var id13 = scope.resolve(["year"]);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[64]++;
-  exp14 = visit18_64_1((id12) <= (id13));
+  exp14 = visit14_64_1((id12) <= (id13));
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[65]++;
   var exp18 = exp14;
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[66]++;
@@ -532,7 +532,7 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[69]++;
     var id16 = scope.resolve(["endDecade"]);
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[70]++;
-    exp17 = visit19_70_1((id15) <= (id16));
+    exp17 = visit15_70_1((id15) <= (id16));
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[71]++;
     exp18 = exp17;
   }
@@ -557,7 +557,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[84]++;
   var commandRet21 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 7);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[85]++;
-  if (visit20_85_1(commandRet21 && commandRet21.isBuffer)) {
+  if (visit16_85_1(commandRet21 && commandRet21.isBuffer)) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[86]++;
     buffer = commandRet21;
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[87]++;
@@ -586,7 +586,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[102]++;
   var id25 = scope.resolve(["startYear"]);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[103]++;
-  exp26 = visit21_103_1((id24) < (id25));
+  exp26 = visit17_103_1((id24) < (id25));
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[104]++;
   params23.push(exp26);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[105]++;
@@ -608,7 +608,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[115]++;
   var commandRet29 = callCommandUtil(engine, scope, option27, buffer, "getBaseCssClasses", 10);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[116]++;
-  if (visit22_116_1(commandRet29 && commandRet29.isBuffer)) {
+  if (visit18_116_1(commandRet29 && commandRet29.isBuffer)) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[117]++;
     buffer = commandRet29;
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[118]++;
@@ -637,7 +637,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[133]++;
   var id33 = scope.resolve(["endYear"]);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[134]++;
-  exp34 = visit23_134_1((id32) > (id33));
+  exp34 = visit19_134_1((id32) > (id33));
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[135]++;
   params31.push(exp34);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[136]++;
@@ -659,7 +659,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[146]++;
   var commandRet37 = callCommandUtil(engine, scope, option35, buffer, "getBaseCssClasses", 13);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[147]++;
-  if (visit24_147_1(commandRet37 && commandRet37.isBuffer)) {
+  if (visit20_147_1(commandRet37 && commandRet37.isBuffer)) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[148]++;
     buffer = commandRet37;
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[149]++;
@@ -688,7 +688,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[164]++;
   var commandRet40 = callCommandUtil(engine, scope, option38, buffer, "getBaseCssClasses", 19);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[165]++;
-  if (visit25_165_1(commandRet40 && commandRet40.isBuffer)) {
+  if (visit21_165_1(commandRet40 && commandRet40.isBuffer)) {
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[166]++;
     buffer = commandRet40;
     _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[167]++;

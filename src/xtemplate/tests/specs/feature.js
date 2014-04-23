@@ -396,22 +396,6 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('');
             });
 
-            it('support else', function () {
-                var tpl = '{{#each (l)}}{{title}}{{else}}1{{/each}}';
-
-                var data = {
-                    x: [
-                        {
-                            title: 5
-                        }
-                    ]
-                };
-
-                var render = new XTemplate(tpl).render(data);
-
-                expect(render).toBe('1');
-            });
-
             it('support array as render parameter', function () {
                 var tpl = '!{{#each (this)}}{{this}}-{{/each}}!';
 

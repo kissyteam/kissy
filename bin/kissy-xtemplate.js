@@ -14,7 +14,7 @@ program
     .parse(process.argv);
 
 var S = require('../lib/seed'),
-    XTemplateCompiler = S.nodeRequire('xtemplate/compiler'),
+    XTemplateCompiler = S.nodeRequire('xtemplate').Compiler,
     chokidar = require('chokidar'),
 /*jshint camelcase: false*/
     jsBeautify = require('js-beautify').js_beautify,

@@ -51,7 +51,7 @@ function compileModule(modName, codes, requires) {
     }
     codes[modName] = '';
     var mod = S.getModule(modName);
-    if (!fs.existsSync(mod.getUrl())) {
+    if (mod.getPackage().getName() === 'core' || !fs.existsSync(mod.getUrl())) {
         return;
     }
     var code = fs.readFileSync(mod.getUrl());

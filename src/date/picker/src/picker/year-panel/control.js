@@ -6,11 +6,40 @@
 KISSY.add(function (S, require) {
     var Node = require('node'),
         Control = require('component/control'),
-        DecadePanelRender = require('./render'),
         DecadePanel = require('../decade-panel/control');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
     var $ = Node.all;
+    var DateFormat = require('date/format'),
+        YearsTpl = require('./years-xtpl'),
+        YearPanelTpl = require('./year-panel-xtpl');
+
+    function prepareYears(self) {
+        var value = self.get('value');
+        var currentYear = value.getYear();
+        var startYear = parseInt(currentYear / 10, 10) * 10;
+        var preYear = startYear - 1;
+        var current = value.clone();
+        var locale = self.get('locale');
+        var yearFormat = locale.yearFormat;
+        var dateLocale = value.getLocale();
+        var dateFormatter = new DateFormat(yearFormat, dateLocale);
+        var years = [];
+        var index = 0;
+        for (var i = 0; i < 3; i++) {
+            years[i] = [];
+            for (var j = 0; j < 4; j++) {
+                current.setYear(preYear + index);
+                years[i][j] = {
+                    content: preYear + index,
+                    title: dateFormatter.format(current)
+                };
+                index++;
+            }
+        }
+        self.years = years;
+        return years;
+    }
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
@@ -65,21 +94,57 @@ KISSY.add(function (S, require) {
     }
 
     return Control.extend({
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            var value = self.get('value');
+            var currentYear = value.getYear();
+            var startYear = parseInt(currentYear / 10, 10) * 10;
+            var endYear = startYear + 9;
+            var locale = self.get('locale');
+            S.mix(renderData, {
+                decadeSelectLabel: locale.decadeSelect,
+                years: prepareYears(self),
+                startYear: startYear,
+                endYear: endYear,
+                year: value.getYear(),
+                previousDecadeLabel: locale.previousDecade,
+                nextDecadeLabel: locale.nextDecade
+            });
+        },
+
         bindUI: function () {
             var self = this;
             self.get('nextDecadeBtn').on(tap, nextDecade, self);
             self.get('previousDecadeBtn').on(tap, prevDecade, self);
             self.get('tbodyEl').delegate(
                 tap,
-                '.' + self.view.getBaseCssClass('cell'),
+                    '.' + self.getBaseCssClass('cell'),
                 chooseCell,
                 self
             );
             self.get('decadeSelectEl').on(tap, showDecadePanel, self);
+        },
+
+        _onSetValue: function (value) {
+            var self = this;
+            var currentYear = value.getYear();
+            var startYear = parseInt(currentYear / 10, 10) * 10;
+            var endYear = startYear + 9;
+            S.mix(self.renderData, {
+                startYear: startYear,
+                endYear: endYear,
+                years: prepareYears(self),
+                year: value.getYear()
+            });
+            self.get('tbodyEl').html(this.renderTpl(YearsTpl));
+            self.get('decadeSelectContentEl').html(startYear + '-' + endYear);
         }
     }, {
         xclass: 'date-picker-year-panel',
         ATTRS: {
+            contentTpl: {
+                value: YearPanelTpl
+            },
             focusable: {
                 value: false
             },
@@ -89,8 +154,30 @@ KISSY.add(function (S, require) {
             decadePanel: {
                 valueFn: setUpDecadePanel
             },
-            xrender: {
-                value: DecadePanelRender
+            tbodyEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('tbody');
+                }
+            },
+            previousDecadeBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('prev-decade-btn');
+                }
+            },
+            nextDecadeBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('next-decade-btn');
+                }
+            },
+            decadeSelectEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('decade-select');
+                }
+            },
+            decadeSelectContentEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('decade-select-content');
+                }
             }
         }
     });

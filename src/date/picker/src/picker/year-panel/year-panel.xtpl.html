@@ -11,7 +11,7 @@
        href="#"
        hidefocus="on"
        title="{{decadeSelectLabel}}">
-            <span>
+            <span class="{{getBaseCssClasses ('decade-select-content')}}">
                 {{startYear}}-{{endYear}}
             </span>
         <span class="{{getBaseCssClasses ('decade-select-arrow')}}">x</span>
@@ -26,8 +26,8 @@
 </div>
 <div class="{{getBaseCssClasses ('body')}}">
     <table class="{{getBaseCssClasses ('table')}}" cellspacing="0" role="grid">
-        <tbody>
-        {{{include ("date/picker/year-panel/years-xtpl")}}}
+        <tbody class="{{getBaseCssClasses ('tbody')}}">
+        {{{include ("./years-xtpl")}}}
         </tbody>
     </table>
 </div>

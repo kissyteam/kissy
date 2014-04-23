@@ -6,15 +6,14 @@
        hidefocus="on">
     </a>
 
-
-        <a class="{{getBaseCssClasses ('year-select')}}"
-           role="button"
-           href="#"
-           hidefocus="on"
-           title="{{yearSelectLabel}}">
-            <span>{{year}}</span>
-            <span class="{{getBaseCssClasses ('year-select-arrow')}}">x</span>
-        </a>
+    <a class="{{getBaseCssClasses ('year-select')}}"
+       role="button"
+       href="#"
+       hidefocus="on"
+       title="{{yearSelectLabel}}">
+        <span class="{{getBaseCssClasses ('year-select-content')}}">{{year}}</span>
+        <span class="{{getBaseCssClasses ('year-select-arrow')}}">x</span>
+    </a>
 
     <a class="{{getBaseCssClasses ('next-year-btn')}}"
        href="#"
@@ -25,8 +24,8 @@
 </div>
 <div class="{{getBaseCssClasses ('body')}}">
     <table class="{{getBaseCssClasses ('table')}}" cellspacing="0" role="grid">
-        <tbody>
-        {{{include ("date/picker/month-panel/months-xtpl")}}}
+        <tbody class="{{getBaseCssClasses ('tbody')}}">
+        {{{include ("./months-xtpl")}}}
         </tbody>
     </table>
 </div>

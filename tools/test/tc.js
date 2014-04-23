@@ -296,12 +296,6 @@ tests.push('/kissy/src/util/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/util/tests/runner/test.jss?coverage');
 
-tests.push('/kissy/src/xtemplate/sub-modules/compiler/tests/runner');
-
-tests.push('/kissy/src/xtemplate/sub-modules/compiler/tests/runner?build');
-
-tests.push('/kissy/src/xtemplate/sub-modules/compiler/tests/runner?coverage');
-
 tests.push('/kissy/src/xtemplate/sub-modules/runtime/tests/runner');
 
 tests.push('/kissy/src/xtemplate/sub-modules/runtime/tests/runner?build');

@@ -331,23 +331,23 @@ if (! _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['98'][1] = new BranchData();
 }
 _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['98'][1].init(2762, 37, 'commandRet21 && commandRet21.isBuffer');
-function visit41_98_1(result) {
+function visit39_98_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['98'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['80'][1].init(458, 37, 'commandRet18 && commandRet18.isBuffer');
-function visit40_80_1(result) {
+function visit38_80_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['67'][1].init(1178, 16, '(id13) === (id14)');
-function visit39_67_1(result) {
+function visit37_67_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['67'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['54'][1].init(600, 37, 'commandRet10 && commandRet10.isBuffer');
-function visit38_54_1(result) {
+function visit36_54_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
-function visit37_8_1(result) {
+function visit35_8_1(result) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[2]++;
@@ -359,7 +359,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[8]++;
-  if (visit37_8_1("5.0.0" !== S.version)) {
+  if (visit35_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[9]++;
     throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
@@ -419,7 +419,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[53]++;
   var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 6);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[54]++;
-  if (visit38_54_1(commandRet10 && commandRet10.isBuffer)) {
+  if (visit36_54_1(commandRet10 && commandRet10.isBuffer)) {
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[55]++;
     buffer = commandRet10;
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[56]++;
@@ -441,7 +441,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[66]++;
   var id14 = scope.resolve(["value"]);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[67]++;
-  exp15 = visit39_67_1((id13) === (id14));
+  exp15 = visit37_67_1((id13) === (id14));
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[68]++;
   params12.push(exp15);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[69]++;
@@ -463,7 +463,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[79]++;
   var commandRet18 = callCommandUtil(engine, scope, option16, buffer, "getBaseCssClasses", 8);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[80]++;
-  if (visit40_80_1(commandRet18 && commandRet18.isBuffer)) {
+  if (visit38_80_1(commandRet18 && commandRet18.isBuffer)) {
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[81]++;
     buffer = commandRet18;
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[82]++;
@@ -492,7 +492,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[97]++;
   var commandRet21 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 14);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[98]++;
-  if (visit41_98_1(commandRet21 && commandRet21.isBuffer)) {
+  if (visit39_98_1(commandRet21 && commandRet21.isBuffer)) {
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[99]++;
     buffer = commandRet21;
     _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[100]++;

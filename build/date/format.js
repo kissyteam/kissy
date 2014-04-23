@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:21
+build time: Apr 23 11:58
 */
 KISSY.add("date/format",["date/gregorian","i18n!date"],function(A,F){function h(c,b,n){n.push({field:c,count:b})}function y(c,b,n,j){j=j||[];n=n||e;if(0<=c){if(100>c&&1<=b&&2>=b)return 10>c&&2===b&&j.push(H),j.push(c),j.join("");if(1E3<=c&&1E4>c){if(4===b)return j.push(c),j.join("");if(2===b&&2===n)return y(c%100,2,2,j)}}j.push(c+"");return j.join("")}function B(c,b,n){this.locale=b||x;for(var b=c.length,j=!1,e=[],f=null,i=0,z=-1,k=0;k<b;k++){var m=c.charAt(k);if("'"===m){if(k+1<b&&(m=c.charAt(k+
 1),"'"===m)){k++;0!==i&&(h(z,i,e),z=-1,i=0);j&&(f+=m);continue}j?(e.push({text:f}),j=!1):(0!==i&&(h(z,i,e),z=-1,i=0),f="",j=!0)}else if(j)f+=m;else if("a"<=m&&"z">=m||"A"<=m&&"Z">=m){if(-1===l.indexOf(m))throw Error('Illegal pattern character "'+m+'"');-1===z||z===m?(z=m,i++):(h(z,i,e),z=m,i=1)}else 0!==i&&(h(z,i,e),z=-1,i=0),e.push({text:m})}if(j)throw Error("Unterminated quote");0!==i&&h(z,i,e);this.pattern=e;this.timezoneOffset=n}function C(c,b,n,j){switch(c){case "G":c=0<j.getYear()?1:0;b=n.eras[c];

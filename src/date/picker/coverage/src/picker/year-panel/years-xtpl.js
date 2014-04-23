@@ -387,39 +387,39 @@ if (! _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['160'][1] = new BranchData();
 }
 _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['160'][1].init(5635, 37, 'commandRet37 && commandRet37.isBuffer');
-function visit97_160_1(result) {
+function visit61_160_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['160'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['142'][1].init(463, 37, 'commandRet34 && commandRet34.isBuffer');
-function visit96_142_1(result) {
+function visit60_142_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['142'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['129'][1].init(4048, 14, '(id29) > (id30)');
-function visit95_129_1(result) {
+function visit59_129_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['111'][1].init(463, 37, 'commandRet26 && commandRet26.isBuffer');
-function visit94_111_1(result) {
+function visit58_111_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['98'][1].init(2613, 14, '(id21) < (id22)');
-function visit93_98_1(result) {
+function visit57_98_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['98'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['80'][1].init(459, 37, 'commandRet18 && commandRet18.isBuffer');
-function visit92_80_1(result) {
+function visit56_80_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['67'][1].init(1179, 16, '(id13) === (id14)');
-function visit91_67_1(result) {
+function visit55_67_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['67'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['54'][1].init(600, 37, 'commandRet10 && commandRet10.isBuffer');
-function visit90_54_1(result) {
+function visit54_54_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
-function visit89_8_1(result) {
+function visit53_8_1(result) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[2]++;
@@ -431,7 +431,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[8]++;
-  if (visit89_8_1("5.0.0" !== S.version)) {
+  if (visit53_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[9]++;
     throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
@@ -491,7 +491,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[53]++;
   var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 6);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[54]++;
-  if (visit90_54_1(commandRet10 && commandRet10.isBuffer)) {
+  if (visit54_54_1(commandRet10 && commandRet10.isBuffer)) {
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[55]++;
     buffer = commandRet10;
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[56]++;
@@ -513,7 +513,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[66]++;
   var id14 = scope.resolve(["year"]);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[67]++;
-  exp15 = visit91_67_1((id13) === (id14));
+  exp15 = visit55_67_1((id13) === (id14));
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[68]++;
   params12.push(exp15);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[69]++;
@@ -535,7 +535,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[79]++;
   var commandRet18 = callCommandUtil(engine, scope, option16, buffer, "getBaseCssClasses", 8);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[80]++;
-  if (visit92_80_1(commandRet18 && commandRet18.isBuffer)) {
+  if (visit56_80_1(commandRet18 && commandRet18.isBuffer)) {
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[81]++;
     buffer = commandRet18;
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[82]++;
@@ -564,7 +564,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[97]++;
   var id22 = scope.resolve(["startYear"]);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[98]++;
-  exp23 = visit93_98_1((id21) < (id22));
+  exp23 = visit57_98_1((id21) < (id22));
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[99]++;
   params20.push(exp23);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[100]++;
@@ -586,7 +586,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[110]++;
   var commandRet26 = callCommandUtil(engine, scope, option24, buffer, "getBaseCssClasses", 11);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[111]++;
-  if (visit94_111_1(commandRet26 && commandRet26.isBuffer)) {
+  if (visit58_111_1(commandRet26 && commandRet26.isBuffer)) {
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[112]++;
     buffer = commandRet26;
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[113]++;
@@ -615,7 +615,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[128]++;
   var id30 = scope.resolve(["endYear"]);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[129]++;
-  exp31 = visit95_129_1((id29) > (id30));
+  exp31 = visit59_129_1((id29) > (id30));
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[130]++;
   params28.push(exp31);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[131]++;
@@ -637,7 +637,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[141]++;
   var commandRet34 = callCommandUtil(engine, scope, option32, buffer, "getBaseCssClasses", 14);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[142]++;
-  if (visit96_142_1(commandRet34 && commandRet34.isBuffer)) {
+  if (visit60_142_1(commandRet34 && commandRet34.isBuffer)) {
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[143]++;
     buffer = commandRet34;
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[144]++;
@@ -666,7 +666,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[159]++;
   var commandRet37 = callCommandUtil(engine, scope, option35, buffer, "getBaseCssClasses", 20);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[160]++;
-  if (visit97_160_1(commandRet37 && commandRet37.isBuffer)) {
+  if (visit61_160_1(commandRet37 && commandRet37.isBuffer)) {
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[161]++;
     buffer = commandRet37;
     _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[162]++;

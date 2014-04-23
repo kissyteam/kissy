@@ -9,14 +9,6 @@ KISSY.add(function (S, require) {
         Shim = require('component/extension/shim'),
         AlignExtension = require('component/extension/align');
 
-    var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, {
-        ATTRS: {
-            contentTpl: {
-                value: PopupPickerTpl
-            }
-        }
-    });
-
     /**
      * popup date picker ui component
      * @class KISSY.Date.PopupPicker
@@ -28,8 +20,8 @@ KISSY.add(function (S, require) {
     }, {
         xclass: 'popup-date-picker',
         ATTRS: {
-            xrender: {
-                value: PopupDatePickerRender
+            contentTpl: {
+                value: PopupPickerTpl
             }
         }
     });

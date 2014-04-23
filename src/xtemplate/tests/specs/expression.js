@@ -14,6 +14,16 @@ KISSY.add(function (S, require) {
             expect(render).toBe('1');
         });
 
+
+        it('distinguish {{}} from {{}}}',function(){
+            var tpl = '{{1}}}';
+
+            debugger
+            var render = new XTemplate(tpl).render();
+
+            expect(render).toBe('1}');
+        });
+
         it('support (', function () {
             var tpl = '{{3 - (1+1)}}';
 
@@ -262,6 +272,21 @@ KISSY.add(function (S, require) {
                     x: 2
                 }
             })).toBe('01');
+        });
+
+        it('support transform data in if statement', function () {
+            var tpl = '{{#if (transform(x) === 2)}}2{{else}}1{{/if}}';
+            var content = new XTemplate(tpl, {
+                name: 'transform-in-if-statement',
+                commands: {
+                    transform: function (scope, option) {
+                        return option.params[0] + 1;
+                    }
+                }
+            }).render({
+                    x: 1
+                });
+            expect(content).toBe('2');
         });
     });
 });

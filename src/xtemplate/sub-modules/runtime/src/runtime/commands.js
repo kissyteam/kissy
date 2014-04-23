@@ -46,8 +46,6 @@ KISSY.add(function (S, require) {
                         buffer = option.fn(opScope, buffer);
                     }
                 }
-            } else if (option.inverse) {
-                buffer = option.inverse(scope, buffer);
             }
             return buffer;
         },
@@ -60,8 +58,6 @@ KISSY.add(function (S, require) {
                 var opScope = new Scope(param0);
                 opScope.setParent(scope);
                 buffer = option.fn(opScope, buffer);
-            } else if (option.inverse) {
-                buffer = option.inverse(scope, buffer);
             }
             return buffer;
         },

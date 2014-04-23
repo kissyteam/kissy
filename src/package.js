@@ -543,14 +543,8 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "util": {
             "base": "/kissy/src/util/src/util"
         },
-        "xtemplate/nodejs": {
-            "base": "/kissy/src/xtemplate/nodejs/src/nodejs"
-        },
         "xtemplate": {
             "base": "/kissy/src/xtemplate/src/xtemplate"
-        },
-        "xtemplate/compiler": {
-            "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler"
         },
         "xtemplate/runtime": {
             "base": "/kissy/src/xtemplate/sub-modules/runtime/src/runtime"

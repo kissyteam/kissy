@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 21 22:21
+build time: Apr 23 11:59
 */
 /*
 combined modules:
@@ -69,92 +69,92 @@ KISSY.add('date/picker-xtpl', [], function (S, require, exports, module) {
         buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       tabindex="-1"\r\n       hidefocus="on"\r\n       title="');
         var id14 = scope.resolve(['monthSelectLabel']);
         buffer.write(id14, true);
-        buffer.write('">\r\n        <span>');
-        var id15 = scope.resolve(['monthYearLabel']);
-        buffer.write(id15, true);
-        buffer.write('</span>\r\n        <span class="');
-        var option16 = { escape: 1 };
-        var params17 = [];
-        params17.push('month-select-arrow');
-        option16.params = params17;
-        var commandRet18 = callCommandUtil(engine, scope, option16, buffer, 'getBaseCssClasses', 23);
-        if (commandRet18 && commandRet18.isBuffer) {
-            buffer = commandRet18;
-            commandRet18 = undefined;
+        buffer.write('">\r\n        <span class="');
+        var option15 = { escape: 1 };
+        var params16 = [];
+        params16.push('month-select-content');
+        option15.params = params16;
+        var commandRet17 = callCommandUtil(engine, scope, option15, buffer, 'getBaseCssClasses', 22);
+        if (commandRet17 && commandRet17.isBuffer) {
+            buffer = commandRet17;
+            commandRet17 = undefined;
         }
-        buffer.write(commandRet18, true);
-        buffer.write('">x</span>\r\n    </a>\r\n    <a class="');
+        buffer.write(commandRet17, true);
+        buffer.write('">');
+        var id18 = scope.resolve(['monthYearLabel']);
+        buffer.write(id18, true);
+        buffer.write('</span>\r\n        <span class="');
         var option19 = { escape: 1 };
         var params20 = [];
-        params20.push('next-month-btn');
+        params20.push('month-select-arrow');
         option19.params = params20;
-        var commandRet21 = callCommandUtil(engine, scope, option19, buffer, 'getBaseCssClasses', 25);
+        var commandRet21 = callCommandUtil(engine, scope, option19, buffer, 'getBaseCssClasses', 23);
         if (commandRet21 && commandRet21.isBuffer) {
             buffer = commandRet21;
             commandRet21 = undefined;
         }
         buffer.write(commandRet21, true);
+        buffer.write('">x</span>\r\n    </a>\r\n    <a class="');
+        var option22 = { escape: 1 };
+        var params23 = [];
+        params23.push('next-month-btn');
+        option22.params = params23;
+        var commandRet24 = callCommandUtil(engine, scope, option22, buffer, 'getBaseCssClasses', 25);
+        if (commandRet24 && commandRet24.isBuffer) {
+            buffer = commandRet24;
+            commandRet24 = undefined;
+        }
+        buffer.write(commandRet24, true);
         buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
-        var id22 = scope.resolve(['nextMonthLabel']);
-        buffer.write(id22, true);
+        var id25 = scope.resolve(['nextMonthLabel']);
+        buffer.write(id25, true);
         buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <a class="');
-        var option23 = { escape: 1 };
-        var params24 = [];
-        params24.push('next-year-btn');
-        option23.params = params24;
-        var commandRet25 = callCommandUtil(engine, scope, option23, buffer, 'getBaseCssClasses', 32);
-        if (commandRet25 && commandRet25.isBuffer) {
-            buffer = commandRet25;
-            commandRet25 = undefined;
+        var option26 = { escape: 1 };
+        var params27 = [];
+        params27.push('next-year-btn');
+        option26.params = params27;
+        var commandRet28 = callCommandUtil(engine, scope, option26, buffer, 'getBaseCssClasses', 32);
+        if (commandRet28 && commandRet28.isBuffer) {
+            buffer = commandRet28;
+            commandRet28 = undefined;
         }
-        buffer.write(commandRet25, true);
+        buffer.write(commandRet28, true);
         buffer.write('"\r\n       href="#"\r\n       tabindex="-1"\r\n       role="button"\r\n       title="');
-        var id26 = scope.resolve(['nextYearLabel']);
-        buffer.write(id26, true);
+        var id29 = scope.resolve(['nextYearLabel']);
+        buffer.write(id29, true);
         buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
-        var option27 = { escape: 1 };
-        var params28 = [];
-        params28.push('body');
-        option27.params = params28;
-        var commandRet29 = callCommandUtil(engine, scope, option27, buffer, 'getBaseCssClasses', 40);
-        if (commandRet29 && commandRet29.isBuffer) {
-            buffer = commandRet29;
-            commandRet29 = undefined;
-        }
-        buffer.write(commandRet29, true);
-        buffer.write('">\r\n    <table class="');
         var option30 = { escape: 1 };
         var params31 = [];
-        params31.push('table');
+        params31.push('body');
         option30.params = params31;
-        var commandRet32 = callCommandUtil(engine, scope, option30, buffer, 'getBaseCssClasses', 41);
+        var commandRet32 = callCommandUtil(engine, scope, option30, buffer, 'getBaseCssClasses', 40);
         if (commandRet32 && commandRet32.isBuffer) {
             buffer = commandRet32;
             commandRet32 = undefined;
         }
         buffer.write(commandRet32, true);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <thead>\r\n        <tr role="row">\r\n            ');
+        buffer.write('">\r\n    <table class="');
         var option33 = { escape: 1 };
         var params34 = [];
-        var id35 = scope.resolve(['showWeekNumber']);
-        params34.push(id35);
+        params34.push('table');
         option33.params = params34;
-        option33.fn = function (scope, buffer) {
+        var commandRet35 = callCommandUtil(engine, scope, option33, buffer, 'getBaseCssClasses', 41);
+        if (commandRet35 && commandRet35.isBuffer) {
+            buffer = commandRet35;
+            commandRet35 = undefined;
+        }
+        buffer.write(commandRet35, true);
+        buffer.write('" cellspacing="0" role="grid">\r\n        <thead>\r\n        <tr role="row">\r\n            ');
+        var option36 = { escape: 1 };
+        var params37 = [];
+        var id38 = scope.resolve(['showWeekNumber']);
+        params37.push(id38);
+        option36.params = params37;
+        option36.fn = function (scope, buffer) {
             buffer.write('\r\n            <th role="columnheader" class="');
-            var option36 = { escape: 1 };
-            var params37 = [];
-            params37.push('column-header');
-            option36.params = params37;
-            var commandRet38 = callCommandUtil(engine, scope, option36, buffer, 'getBaseCssClasses', 45);
-            if (commandRet38 && commandRet38.isBuffer) {
-                buffer = commandRet38;
-                commandRet38 = undefined;
-            }
-            buffer.write(commandRet38, true);
-            buffer.write(' ');
             var option39 = { escape: 1 };
             var params40 = [];
-            params40.push('week-number-header');
+            params40.push('column-header');
             option39.params = params40;
             var commandRet41 = callCommandUtil(engine, scope, option39, buffer, 'getBaseCssClasses', 45);
             if (commandRet41 && commandRet41.isBuffer) {
@@ -162,130 +162,152 @@ KISSY.add('date/picker-xtpl', [], function (S, require, exports, module) {
                 commandRet41 = undefined;
             }
             buffer.write(commandRet41, true);
-            buffer.write('">\r\n                <span class="');
+            buffer.write(' ');
             var option42 = { escape: 1 };
             var params43 = [];
-            params43.push('column-header-inner');
+            params43.push('week-number-header');
             option42.params = params43;
-            var commandRet44 = callCommandUtil(engine, scope, option42, buffer, 'getBaseCssClasses', 46);
+            var commandRet44 = callCommandUtil(engine, scope, option42, buffer, 'getBaseCssClasses', 45);
             if (commandRet44 && commandRet44.isBuffer) {
                 buffer = commandRet44;
                 commandRet44 = undefined;
             }
             buffer.write(commandRet44, true);
+            buffer.write('">\r\n                <span class="');
+            var option45 = { escape: 1 };
+            var params46 = [];
+            params46.push('column-header-inner');
+            option45.params = params46;
+            var commandRet47 = callCommandUtil(engine, scope, option45, buffer, 'getBaseCssClasses', 46);
+            if (commandRet47 && commandRet47.isBuffer) {
+                buffer = commandRet47;
+                commandRet47 = undefined;
+            }
+            buffer.write(commandRet47, true);
             buffer.write('">x</span>\r\n            </th>\r\n            ');
             return buffer;
         };
-        buffer = ifCommand.call(engine, scope, option33, buffer, 44, payload);
+        buffer = ifCommand.call(engine, scope, option36, buffer, 44, payload);
         buffer.write('\r\n            ');
-        var option45 = { escape: 1 };
-        var params46 = [];
-        var id47 = scope.resolve(['weekdays']);
-        params46.push(id47);
-        option45.params = params46;
-        option45.fn = function (scope, buffer) {
+        var option48 = { escape: 1 };
+        var params49 = [];
+        var id50 = scope.resolve(['weekdays']);
+        params49.push(id50);
+        option48.params = params49;
+        option48.fn = function (scope, buffer) {
             buffer.write('\r\n            <th role="columnheader" title="');
-            var id48 = scope.resolve(['this']);
-            buffer.write(id48, true);
+            var id51 = scope.resolve(['this']);
+            buffer.write(id51, true);
             buffer.write('" class="');
-            var option49 = { escape: 1 };
-            var params50 = [];
-            params50.push('column-header');
-            option49.params = params50;
-            var commandRet51 = callCommandUtil(engine, scope, option49, buffer, 'getBaseCssClasses', 50);
-            if (commandRet51 && commandRet51.isBuffer) {
-                buffer = commandRet51;
-                commandRet51 = undefined;
-            }
-            buffer.write(commandRet51, true);
-            buffer.write('">\r\n                <span class="');
             var option52 = { escape: 1 };
             var params53 = [];
-            params53.push('column-header-inner');
+            params53.push('column-header');
             option52.params = params53;
-            var commandRet54 = callCommandUtil(engine, scope, option52, buffer, 'getBaseCssClasses', 51);
+            var commandRet54 = callCommandUtil(engine, scope, option52, buffer, 'getBaseCssClasses', 50);
             if (commandRet54 && commandRet54.isBuffer) {
                 buffer = commandRet54;
                 commandRet54 = undefined;
             }
             buffer.write(commandRet54, true);
+            buffer.write('">\r\n                <span class="');
+            var option55 = { escape: 1 };
+            var params56 = [];
+            params56.push('column-header-inner');
+            option55.params = params56;
+            var commandRet57 = callCommandUtil(engine, scope, option55, buffer, 'getBaseCssClasses', 51);
+            if (commandRet57 && commandRet57.isBuffer) {
+                buffer = commandRet57;
+                commandRet57 = undefined;
+            }
+            buffer.write(commandRet57, true);
             buffer.write('">\r\n                    ');
-            var id56 = scope.resolve(['xindex']);
-            var id55 = scope.resolve([
+            var id59 = scope.resolve(['xindex']);
+            var id58 = scope.resolve([
                     'veryShortWeekdays',
-                    id56
+                    id59
                 ]);
-            buffer.write(id55, true);
+            buffer.write(id58, true);
             buffer.write('\r\n                </span>\r\n            </th>\r\n            ');
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option45, buffer, 49, payload);
-        buffer.write('\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        ');
-        var option57 = {};
-        var commandRet58 = callCommandUtil(engine, scope, option57, buffer, 'renderDates', 59);
-        if (commandRet58 && commandRet58.isBuffer) {
-            buffer = commandRet58;
-            commandRet58 = undefined;
+        buffer = eachCommand.call(engine, scope, option48, buffer, 49, payload);
+        buffer.write('\r\n        </tr>\r\n        </thead>\r\n        <tbody class="');
+        var option60 = { escape: 1 };
+        var params61 = [];
+        params61.push('tbody');
+        option60.params = params61;
+        var commandRet62 = callCommandUtil(engine, scope, option60, buffer, 'getBaseCssClasses', 58);
+        if (commandRet62 && commandRet62.isBuffer) {
+            buffer = commandRet62;
+            commandRet62 = undefined;
         }
-        buffer.write(commandRet58, false);
+        buffer.write(commandRet62, true);
+        buffer.write('">\r\n        ');
+        var option63 = {};
+        var commandRet64 = callCommandUtil(engine, scope, option63, buffer, 'renderDates', 59);
+        if (commandRet64 && commandRet64.isBuffer) {
+            buffer = commandRet64;
+            commandRet64 = undefined;
+        }
+        buffer.write(commandRet64, false);
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>\r\n');
-        var option59 = { escape: 1 };
-        var params60 = [];
-        var id61 = scope.resolve(['showToday']);
-        var exp63 = id61;
-        if (!id61) {
-            var id62 = scope.resolve(['showClear']);
-            exp63 = id62;
+        var option65 = { escape: 1 };
+        var params66 = [];
+        var id67 = scope.resolve(['showToday']);
+        var exp69 = id67;
+        if (!id67) {
+            var id68 = scope.resolve(['showClear']);
+            exp69 = id68;
         }
-        params60.push(exp63);
-        option59.params = params60;
-        option59.fn = function (scope, buffer) {
+        params66.push(exp69);
+        option65.params = params66;
+        option65.fn = function (scope, buffer) {
             buffer.write('\r\n<div class="');
-            var option64 = { escape: 1 };
-            var params65 = [];
-            params65.push('footer');
-            option64.params = params65;
-            var commandRet66 = callCommandUtil(engine, scope, option64, buffer, 'getBaseCssClasses', 64);
-            if (commandRet66 && commandRet66.isBuffer) {
-                buffer = commandRet66;
-                commandRet66 = undefined;
+            var option70 = { escape: 1 };
+            var params71 = [];
+            params71.push('footer');
+            option70.params = params71;
+            var commandRet72 = callCommandUtil(engine, scope, option70, buffer, 'getBaseCssClasses', 64);
+            if (commandRet72 && commandRet72.isBuffer) {
+                buffer = commandRet72;
+                commandRet72 = undefined;
             }
-            buffer.write(commandRet66, true);
+            buffer.write(commandRet72, true);
             buffer.write('">\r\n    <a class="');
-            var option67 = { escape: 1 };
-            var params68 = [];
-            params68.push('today-btn');
-            option67.params = params68;
-            var commandRet69 = callCommandUtil(engine, scope, option67, buffer, 'getBaseCssClasses', 65);
-            if (commandRet69 && commandRet69.isBuffer) {
-                buffer = commandRet69;
-                commandRet69 = undefined;
+            var option73 = { escape: 1 };
+            var params74 = [];
+            params74.push('today-btn');
+            option73.params = params74;
+            var commandRet75 = callCommandUtil(engine, scope, option73, buffer, 'getBaseCssClasses', 65);
+            if (commandRet75 && commandRet75.isBuffer) {
+                buffer = commandRet75;
+                commandRet75 = undefined;
             }
-            buffer.write(commandRet69, true);
+            buffer.write(commandRet75, true);
             buffer.write('"\r\n       role="button"\r\n       hidefocus="on"\r\n       tabindex="-1"\r\n       href="#"\r\n       title="');
-            var id70 = scope.resolve(['todayTimeLabel']);
-            buffer.write(id70, true);
+            var id76 = scope.resolve(['todayTimeLabel']);
+            buffer.write(id76, true);
             buffer.write('">');
-            var id71 = scope.resolve(['todayLabel']);
-            buffer.write(id71, true);
+            var id77 = scope.resolve(['todayLabel']);
+            buffer.write(id77, true);
             buffer.write('</a>\r\n    <a class="');
-            var option72 = { escape: 1 };
-            var params73 = [];
-            params73.push('clear-btn');
-            option72.params = params73;
-            var commandRet74 = callCommandUtil(engine, scope, option72, buffer, 'getBaseCssClasses', 71);
-            if (commandRet74 && commandRet74.isBuffer) {
-                buffer = commandRet74;
-                commandRet74 = undefined;
+            var option78 = { escape: 1 };
+            var params79 = [];
+            params79.push('clear-btn');
+            option78.params = params79;
+            var commandRet80 = callCommandUtil(engine, scope, option78, buffer, 'getBaseCssClasses', 71);
+            if (commandRet80 && commandRet80.isBuffer) {
+                buffer = commandRet80;
+                commandRet80 = undefined;
             }
-            buffer.write(commandRet74, true);
+            buffer.write(commandRet80, true);
             buffer.write('"\r\n       role="button"\r\n       hidefocus="on"\r\n       tabindex="-1"\r\n       href="#">');
-            var id75 = scope.resolve(['clearLabel']);
-            buffer.write(id75, true);
+            var id81 = scope.resolve(['clearLabel']);
+            buffer.write(id81, true);
             buffer.write('</a>\r\n</div>\r\n');
             return buffer;
         };
-        buffer = ifCommand.call(engine, scope, option59, buffer, 63, payload);
+        buffer = ifCommand.call(engine, scope, option65, buffer, 63, payload);
         return buffer;
     };
     t.TPL_NAME = module.name;

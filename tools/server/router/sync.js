@@ -19,7 +19,7 @@ function syncCode(callback, errorCallback) {
 
 function syncDocs(callback, errorCallback) {
     sync(serverConfig.docsDir, function () {
-        sync(serverConfig.docsDir + '/1.5', callback, errorCallback);
+        sync(serverConfig.docsDir + '/5.0', callback, errorCallback);
     }, errorCallback);
 }
 

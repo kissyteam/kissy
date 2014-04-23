@@ -6,12 +6,45 @@
 KISSY.add(function (S, require) {
     var Node = require('node'),
         Control = require('component/control'),
-        YearPanel = require('../year-panel/control'),
-        MonthPanelRender = require('./render');
-
+        YearPanel = require('../year-panel/control');
+    var DateFormat = require('date/format'),
+        MonthsTpl = require('./months-xtpl'),
+        MonthPanelTpl = require('./month-panel-xtpl');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
     var $ = Node.all;
+
+    function prepareMonths(self) {
+        var value = self.get('value');
+        var currentMonth = value.getMonth();
+        var current = value.clone();
+        var locale = self.get('locale');
+        var monthYearFormat = locale.monthYearFormat;
+        var dateLocale = value.getLocale();
+        var dateFormatter = new DateFormat(monthYearFormat, dateLocale);
+        var months = [];
+        var shortMonths = dateLocale.shortMonths;
+        var index = 0;
+        for (var i = 0; i < 3; i++) {
+            months[i] = [];
+            for (var j = 0; j < 4; j++) {
+                current.setMonth(index);
+                months[i][j] = {
+                    value: index,
+                    content: shortMonths[index],
+                    title: dateFormatter.format(current)
+                };
+                index++;
+            }
+        }
+        S.mix(self.renderData, {
+            months: months,
+            year: value.getYear(),
+            month: currentMonth
+        });
+        self.months = months;
+        return months;
+    }
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
@@ -24,7 +57,7 @@ KISSY.add(function (S, require) {
         goYear(this, 1);
     }
 
-    function prevYear(e) {
+    function previousYear(e) {
         e.preventDefault();
         goYear(this, -1);
     }
@@ -65,21 +98,43 @@ KISSY.add(function (S, require) {
     }
 
     return Control.extend({
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            var locale = self.get('locale');
+            S.mix(renderData, {
+                yearSelectLabel: locale.yearSelect,
+                previousYearLabel: locale.previousYear,
+                nextYearLabel: locale.nextYear
+            });
+            prepareMonths(self);
+        },
+
         bindUI: function () {
             var self = this;
             self.get('nextYearBtn').on(tap, nextYear, self);
-            self.get('previousYearBtn').on(tap, prevYear, self);
+            self.get('previousYearBtn').on(tap, previousYear, self);
             self.get('tbodyEl').delegate(
                 tap,
-                '.' + self.view.getBaseCssClass('cell'),
+                    '.' + self.getBaseCssClass('cell'),
                 chooseCell,
                 self
             );
             self.get('yearSelectEl').on(tap, showYearPanel, self);
+        },
+
+        _onSetValue: function (value) {
+            var self = this;
+            prepareMonths(self);
+            self.get('tbodyEl').html(this.renderTpl(MonthsTpl));
+            self.get('yearSelectContentEl').html(value.getYear());
         }
     }, {
         xclass: 'date-picker-month-panel',
         ATTRS: {
+            contentTpl: {
+                value: MonthPanelTpl
+            },
+
             focusable: {
                 value: false
             },
@@ -89,8 +144,30 @@ KISSY.add(function (S, require) {
             yearPanel: {
                 valueFn: setUpYearPanel
             },
-            xrender: {
-                value: MonthPanelRender
+            tbodyEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('tbody');
+                }
+            },
+            previousYearBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('prev-year-btn');
+                }
+            },
+            nextYearBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('next-year-btn');
+                }
+            },
+            yearSelectEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('year-select');
+                }
+            },
+            yearSelectContentEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('year-select-content');
+                }
             }
         }
     });

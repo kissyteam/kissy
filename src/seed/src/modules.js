@@ -64,7 +64,10 @@ S.config("requires",{
         "resizable"
     ],
     "date/format": [
-        "date/gregorian"
+        "i18n!date",
+        "./gregorian/utils",
+        "./gregorian/const",
+        "./const"
     ],
     "date/gregorian": [
         "i18n!date"
@@ -72,8 +75,11 @@ S.config("requires",{
     "date/picker": [
         "i18n!date/picker",
         "component/control",
-        "date/format",
-        "date/picker-xtpl"
+        "date/picker-xtpl",
+        "./gregorian/utils",
+        "i18n!date",
+        "./gregorian/const",
+        "./const"
     ],
     "date/popup-picker": [
         "date/picker",
@@ -268,9 +274,6 @@ S.config("requires",{
         "path"
     ],
     "xtemplate": [
-        "xtemplate/compiler"
-    ],
-    "xtemplate/compiler": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [

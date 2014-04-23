@@ -109,19 +109,32 @@ KISSY.add(function (S, require, exports, module) {
                 commandRet21 = undefined;
             }
             buffer.write(commandRet21, true);
-            buffer.write('" cellspacing="0" role="grid">\r\n        <tbody>\r\n        ');
-            var option22 = {};
+            buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
+            var option22 = {
+                escape: 1
+            };
             var params23 = [];
-            params23.push('date/picker/decade-panel/decades-xtpl');
+            params23.push('tbody');
             option22.params = params23;
-            require("date/picker/decade-panel/decades-xtpl");
-            option22.params[0] = module.resolve(option22.params[0]);
-            var commandRet24 = includeCommand.call(engine, scope, option22, buffer, 21, payload);
+            var commandRet24 = callCommandUtil(engine, scope, option22, buffer, "getBaseCssClasses", 20);
             if (commandRet24 && commandRet24.isBuffer) {
                 buffer = commandRet24;
                 commandRet24 = undefined;
             }
-            buffer.write(commandRet24, false);
+            buffer.write(commandRet24, true);
+            buffer.write('">\r\n        ');
+            var option25 = {};
+            var params26 = [];
+            params26.push('./decades-xtpl');
+            option25.params = params26;
+            require("./decades-xtpl");
+            option25.params[0] = module.resolve(option25.params[0]);
+            var commandRet27 = includeCommand.call(engine, scope, option25, buffer, 21, payload);
+            if (commandRet27 && commandRet27.isBuffer) {
+                buffer = commandRet27;
+                commandRet27 = undefined;
+            }
+            buffer.write(commandRet27, false);
             buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
             return buffer;
         };
