@@ -267,31 +267,31 @@ if (! _$jscoverage['/get-script.js']) {
   _$jscoverage['/get-script.js'].lineData[107] = 0;
   _$jscoverage['/get-script.js'].lineData[110] = 0;
   _$jscoverage['/get-script.js'].lineData[116] = 0;
-  _$jscoverage['/get-script.js'].lineData[118] = 0;
-  _$jscoverage['/get-script.js'].lineData[119] = 0;
   _$jscoverage['/get-script.js'].lineData[122] = 0;
   _$jscoverage['/get-script.js'].lineData[123] = 0;
-  _$jscoverage['/get-script.js'].lineData[124] = 0;
+  _$jscoverage['/get-script.js'].lineData[126] = 0;
   _$jscoverage['/get-script.js'].lineData[127] = 0;
   _$jscoverage['/get-script.js'].lineData[128] = 0;
-  _$jscoverage['/get-script.js'].lineData[133] = 0;
-  _$jscoverage['/get-script.js'].lineData[134] = 0;
-  _$jscoverage['/get-script.js'].lineData[135] = 0;
-  _$jscoverage['/get-script.js'].lineData[136] = 0;
+  _$jscoverage['/get-script.js'].lineData[131] = 0;
+  _$jscoverage['/get-script.js'].lineData[132] = 0;
   _$jscoverage['/get-script.js'].lineData[137] = 0;
+  _$jscoverage['/get-script.js'].lineData[138] = 0;
   _$jscoverage['/get-script.js'].lineData[139] = 0;
+  _$jscoverage['/get-script.js'].lineData[140] = 0;
   _$jscoverage['/get-script.js'].lineData[141] = 0;
-  _$jscoverage['/get-script.js'].lineData[142] = 0;
+  _$jscoverage['/get-script.js'].lineData[143] = 0;
   _$jscoverage['/get-script.js'].lineData[145] = 0;
-  _$jscoverage['/get-script.js'].lineData[148] = 0;
+  _$jscoverage['/get-script.js'].lineData[146] = 0;
   _$jscoverage['/get-script.js'].lineData[149] = 0;
-  _$jscoverage['/get-script.js'].lineData[150] = 0;
+  _$jscoverage['/get-script.js'].lineData[152] = 0;
   _$jscoverage['/get-script.js'].lineData[153] = 0;
   _$jscoverage['/get-script.js'].lineData[154] = 0;
-  _$jscoverage['/get-script.js'].lineData[156] = 0;
-  _$jscoverage['/get-script.js'].lineData[159] = 0;
-  _$jscoverage['/get-script.js'].lineData[162] = 0;
-  _$jscoverage['/get-script.js'].lineData[164] = 0;
+  _$jscoverage['/get-script.js'].lineData[157] = 0;
+  _$jscoverage['/get-script.js'].lineData[158] = 0;
+  _$jscoverage['/get-script.js'].lineData[160] = 0;
+  _$jscoverage['/get-script.js'].lineData[163] = 0;
+  _$jscoverage['/get-script.js'].lineData[166] = 0;
+  _$jscoverage['/get-script.js'].lineData[168] = 0;
 }
 if (! _$jscoverage['/get-script.js'].functionData) {
   _$jscoverage['/get-script.js'].functionData = [];
@@ -324,82 +324,99 @@ if (! _$jscoverage['/get-script.js'].branchData) {
   _$jscoverage['/get-script.js'].branchData['88'][1] = new BranchData();
   _$jscoverage['/get-script.js'].branchData['116'] = [];
   _$jscoverage['/get-script.js'].branchData['116'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['116'][2] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['116'][3] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['118'] = [];
-  _$jscoverage['/get-script.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['118'][2] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['124'] = [];
-  _$jscoverage['/get-script.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['125'] = [];
-  _$jscoverage['/get-script.js'].branchData['125'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['125'][2] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['126'] = [];
-  _$jscoverage['/get-script.js'].branchData['126'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['133'] = [];
-  _$jscoverage['/get-script.js'].branchData['133'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['139'] = [];
-  _$jscoverage['/get-script.js'].branchData['139'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['148'] = [];
-  _$jscoverage['/get-script.js'].branchData['148'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['153'] = [];
-  _$jscoverage['/get-script.js'].branchData['153'][1] = new BranchData();
-  _$jscoverage['/get-script.js'].branchData['156'] = [];
-  _$jscoverage['/get-script.js'].branchData['156'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['117'] = [];
+  _$jscoverage['/get-script.js'].branchData['117'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['117'][2] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['117'][3] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['120'] = [];
+  _$jscoverage['/get-script.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['120'][2] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['122'] = [];
+  _$jscoverage['/get-script.js'].branchData['122'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['122'][2] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['128'] = [];
+  _$jscoverage['/get-script.js'].branchData['128'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['129'] = [];
+  _$jscoverage['/get-script.js'].branchData['129'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['129'][2] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['130'] = [];
+  _$jscoverage['/get-script.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['137'] = [];
+  _$jscoverage['/get-script.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['143'] = [];
+  _$jscoverage['/get-script.js'].branchData['143'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['152'] = [];
+  _$jscoverage['/get-script.js'].branchData['152'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['157'] = [];
+  _$jscoverage['/get-script.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/get-script.js'].branchData['160'] = [];
+  _$jscoverage['/get-script.js'].branchData['160'][1] = new BranchData();
 }
-_$jscoverage['/get-script.js'].branchData['156'][1].init(3352, 3, 'css');
-function visit155_156_1(result) {
-  _$jscoverage['/get-script.js'].branchData['156'][1].ranCondition(result);
+_$jscoverage['/get-script.js'].branchData['160'][1].init(3540, 3, 'css');
+function visit158_160_1(result) {
+  _$jscoverage['/get-script.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['153'][1].init(3274, 9, '!headNode');
-function visit154_153_1(result) {
-  _$jscoverage['/get-script.js'].branchData['153'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['157'][1].init(3462, 9, '!headNode');
+function visit157_157_1(result) {
+  _$jscoverage['/get-script.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['148'][1].init(3117, 7, 'timeout');
-function visit153_148_1(result) {
-  _$jscoverage['/get-script.js'].branchData['148'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['152'][1].init(3305, 7, 'timeout');
+function visit156_152_1(result) {
+  _$jscoverage['/get-script.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['139'][1].init(2888, 3, 'css');
-function visit152_139_1(result) {
-  _$jscoverage['/get-script.js'].branchData['139'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['143'][1].init(3076, 3, 'css');
+function visit155_143_1(result) {
+  _$jscoverage['/get-script.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['133'][1].init(2698, 9, 'useNative');
-function visit151_133_1(result) {
-  _$jscoverage['/get-script.js'].branchData['133'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['137'][1].init(2886, 9, 'useNative');
+function visit154_137_1(result) {
+  _$jscoverage['/get-script.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['126'][1].init(43, 25, 'readyState === \'complete\'');
-function visit150_126_1(result) {
-  _$jscoverage['/get-script.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['130'][1].init(43, 25, 'readyState === \'complete\'');
+function visit153_130_1(result) {
+  _$jscoverage['/get-script.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['125'][2].init(99, 23, 'readyState === \'loaded\'');
-function visit149_125_2(result) {
-  _$jscoverage['/get-script.js'].branchData['125'][2].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['129'][2].init(99, 23, 'readyState === \'loaded\'');
+function visit152_129_2(result) {
+  _$jscoverage['/get-script.js'].branchData['129'][2].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['125'][1].init(31, 69, 'readyState === \'loaded\' || readyState === \'complete\'');
-function visit148_125_1(result) {
-  _$jscoverage['/get-script.js'].branchData['125'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['129'][1].init(31, 69, 'readyState === \'loaded\' || readyState === \'complete\'');
+function visit151_129_1(result) {
+  _$jscoverage['/get-script.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['124'][1].init(65, 101, '!readyState || readyState === \'loaded\' || readyState === \'complete\'');
-function visit147_124_1(result) {
-  _$jscoverage['/get-script.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['128'][1].init(65, 101, '!readyState || readyState === \'loaded\' || readyState === \'complete\'');
+function visit150_128_1(result) {
+  _$jscoverage['/get-script.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['118'][2].init(2261, 25, 'forceCssPoll && useNative');
-function visit146_118_2(result) {
-  _$jscoverage['/get-script.js'].branchData['118'][2].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['122'][2].init(2449, 25, 'forceCssPoll && useNative');
+function visit149_122_2(result) {
+  _$jscoverage['/get-script.js'].branchData['122'][2].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['118'][1].init(2254, 32, 'css && forceCssPoll && useNative');
-function visit145_118_1(result) {
-  _$jscoverage['/get-script.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['122'][1].init(2442, 32, 'css && forceCssPoll && useNative');
+function visit148_122_1(result) {
+  _$jscoverage['/get-script.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['116'][3].init(2224, 12, 'webkit < 536');
-function visit144_116_3(result) {
-  _$jscoverage['/get-script.js'].branchData['116'][3].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['120'][2].init(166, 30, '!Utils.trident && !Utils.gecko');
+function visit147_120_2(result) {
+  _$jscoverage['/get-script.js'].branchData['120'][2].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['116'][2].init(2214, 22, 'webkit && webkit < 536');
-function visit143_116_2(result) {
-  _$jscoverage['/get-script.js'].branchData['116'][2].ranCondition(result);
+}_$jscoverage['/get-script.js'].branchData['120'][1].init(155, 41, '!webkit && !Utils.trident && !Utils.gecko');
+function visit146_120_1(result) {
+  _$jscoverage['/get-script.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/get-script.js'].branchData['116'][1].init(2188, 49, 'S.Config.forceCssPoll || (webkit && webkit < 536)');
+}_$jscoverage['/get-script.js'].branchData['117'][3].init(69, 12, 'webkit < 536');
+function visit145_117_3(result) {
+  _$jscoverage['/get-script.js'].branchData['117'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/get-script.js'].branchData['117'][2].init(59, 22, 'webkit && webkit < 536');
+function visit144_117_2(result) {
+  _$jscoverage['/get-script.js'].branchData['117'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/get-script.js'].branchData['117'][1].init(38, 198, '(webkit && webkit < 536) || (!webkit && !Utils.trident && !Utils.gecko)');
+function visit143_117_1(result) {
+  _$jscoverage['/get-script.js'].branchData['117'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/get-script.js'].branchData['116'][1].init(2188, 237, 'S.Config.forceCssPoll || (webkit && webkit < 536) || (!webkit && !Utils.trident && !Utils.gecko)');
 function visit142_116_1(result) {
   _$jscoverage['/get-script.js'].branchData['116'][1].ranCondition(result);
   return result;
@@ -524,74 +541,74 @@ function visit135_54_1(result) {
   _$jscoverage['/get-script.js'].lineData[110]++;
   var useNative = 'onload' in node;
   _$jscoverage['/get-script.js'].lineData[116]++;
-  var forceCssPoll = visit142_116_1(S.Config.forceCssPoll || (visit143_116_2(webkit && visit144_116_3(webkit < 536))));
-  _$jscoverage['/get-script.js'].lineData[118]++;
-  if (visit145_118_1(css && visit146_118_2(forceCssPoll && useNative))) {
-    _$jscoverage['/get-script.js'].lineData[119]++;
+  var forceCssPoll = visit142_116_1(S.Config.forceCssPoll || visit143_117_1((visit144_117_2(webkit && visit145_117_3(webkit < 536))) || (visit146_120_1(!webkit && visit147_120_2(!Utils.trident && !Utils.gecko)))));
+  _$jscoverage['/get-script.js'].lineData[122]++;
+  if (visit148_122_1(css && visit149_122_2(forceCssPoll && useNative))) {
+    _$jscoverage['/get-script.js'].lineData[123]++;
     useNative = false;
   }
-  _$jscoverage['/get-script.js'].lineData[122]++;
+  _$jscoverage['/get-script.js'].lineData[126]++;
   function onload() {
     _$jscoverage['/get-script.js'].functionData[6]++;
-    _$jscoverage['/get-script.js'].lineData[123]++;
+    _$jscoverage['/get-script.js'].lineData[127]++;
     var readyState = node.readyState;
-    _$jscoverage['/get-script.js'].lineData[124]++;
-    if (visit147_124_1(!readyState || visit148_125_1(visit149_125_2(readyState === 'loaded') || visit150_126_1(readyState === 'complete')))) {
-      _$jscoverage['/get-script.js'].lineData[127]++;
+    _$jscoverage['/get-script.js'].lineData[128]++;
+    if (visit150_128_1(!readyState || visit151_129_1(visit152_129_2(readyState === 'loaded') || visit153_130_1(readyState === 'complete')))) {
+      _$jscoverage['/get-script.js'].lineData[131]++;
       node.onreadystatechange = node.onload = null;
-      _$jscoverage['/get-script.js'].lineData[128]++;
+      _$jscoverage['/get-script.js'].lineData[132]++;
       end(0);
     }
   }
-  _$jscoverage['/get-script.js'].lineData[133]++;
-  if (visit151_133_1(useNative)) {
-    _$jscoverage['/get-script.js'].lineData[134]++;
+  _$jscoverage['/get-script.js'].lineData[137]++;
+  if (visit154_137_1(useNative)) {
+    _$jscoverage['/get-script.js'].lineData[138]++;
     node.onload = onload;
-    _$jscoverage['/get-script.js'].lineData[135]++;
+    _$jscoverage['/get-script.js'].lineData[139]++;
     node.onerror = function() {
   _$jscoverage['/get-script.js'].functionData[7]++;
-  _$jscoverage['/get-script.js'].lineData[136]++;
+  _$jscoverage['/get-script.js'].lineData[140]++;
   node.onerror = null;
-  _$jscoverage['/get-script.js'].lineData[137]++;
+  _$jscoverage['/get-script.js'].lineData[141]++;
   end(1);
 };
   } else {
-    _$jscoverage['/get-script.js'].lineData[139]++;
-    if (visit152_139_1(css)) {
-      _$jscoverage['/get-script.js'].lineData[141]++;
+    _$jscoverage['/get-script.js'].lineData[143]++;
+    if (visit155_143_1(css)) {
+      _$jscoverage['/get-script.js'].lineData[145]++;
       Utils.pollCss(node, function() {
   _$jscoverage['/get-script.js'].functionData[8]++;
-  _$jscoverage['/get-script.js'].lineData[142]++;
+  _$jscoverage['/get-script.js'].lineData[146]++;
   end(0);
 });
     } else {
-      _$jscoverage['/get-script.js'].lineData[145]++;
+      _$jscoverage['/get-script.js'].lineData[149]++;
       node.onreadystatechange = onload;
     }
   }
-  _$jscoverage['/get-script.js'].lineData[148]++;
-  if (visit153_148_1(timeout)) {
-    _$jscoverage['/get-script.js'].lineData[149]++;
+  _$jscoverage['/get-script.js'].lineData[152]++;
+  if (visit156_152_1(timeout)) {
+    _$jscoverage['/get-script.js'].lineData[153]++;
     timer = setTimeout(function() {
   _$jscoverage['/get-script.js'].functionData[9]++;
-  _$jscoverage['/get-script.js'].lineData[150]++;
+  _$jscoverage['/get-script.js'].lineData[154]++;
   end(1);
 }, timeout * MILLISECONDS_OF_SECOND);
   }
-  _$jscoverage['/get-script.js'].lineData[153]++;
-  if (visit154_153_1(!headNode)) {
-    _$jscoverage['/get-script.js'].lineData[154]++;
+  _$jscoverage['/get-script.js'].lineData[157]++;
+  if (visit157_157_1(!headNode)) {
+    _$jscoverage['/get-script.js'].lineData[158]++;
     headNode = Utils.docHead();
   }
-  _$jscoverage['/get-script.js'].lineData[156]++;
-  if (visit155_156_1(css)) {
-    _$jscoverage['/get-script.js'].lineData[159]++;
+  _$jscoverage['/get-script.js'].lineData[160]++;
+  if (visit158_160_1(css)) {
+    _$jscoverage['/get-script.js'].lineData[163]++;
     headNode.appendChild(node);
   } else {
-    _$jscoverage['/get-script.js'].lineData[162]++;
+    _$jscoverage['/get-script.js'].lineData[166]++;
     headNode.insertBefore(node, headNode.firstChild);
   }
-  _$jscoverage['/get-script.js'].lineData[164]++;
+  _$jscoverage['/get-script.js'].lineData[168]++;
   return node;
 };
 })(KISSY);

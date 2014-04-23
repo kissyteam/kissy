@@ -113,7 +113,11 @@
         // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
         // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
         // phantomjs 1.7 == webkit 534.34
-        var forceCssPoll = S.Config.forceCssPoll || (webkit && webkit < 536);
+        var forceCssPoll = S.Config.forceCssPoll ||
+            (webkit && webkit < 536) ||
+            // unknown browser defaults to css poll
+            // https://github.com/kissyteam/kissy/issues/607
+            (!webkit && !Utils.trident && !Utils.gecko);
 
         if (css && forceCssPoll && useNative) {
             useNative = false;

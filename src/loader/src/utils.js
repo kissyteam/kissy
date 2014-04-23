@@ -69,21 +69,26 @@
         }));
     }
 
-    function getIEVersion() {
-        var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
-            (v = (m[1] || m[2]))) {
-            return numberify(v);
-        }
-        return undefined;
-    }
-
-    var m,
+    var m, v,
         ua = (host.navigator || {}).userAgent || '';
 
     // https://github.com/kissyteam/kissy/issues/545
     if (((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
         Utils.webkit = numberify(m[1]);
+    }
+    if ((m = ua.match(/Trident\/([\d.]*)/))) {
+        Utils.trident = numberify(m[1]);
+    }
+    if ((m = ua.match(/Gecko/))) {
+        Utils.gecko = 0.1; // Gecko detected, look for revision
+        if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+            Utils.gecko = numberify(m[1]);
+        }
+    }
+    if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
+        (v = (m[1] || m[2]))) {
+        Utils.ie = numberify(v);
+        Utils.trident = Utils.trident || 1;
     }
 
     var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/;
@@ -191,8 +196,6 @@
             var urlParts2 = url2.match(urlReg);
             return urlParts1[0] === urlParts2[0];
         },
-
-        ie: getIEVersion(),
 
         /**
          * get document head

@@ -11,7 +11,7 @@ KISSY.add(function (S) {
             ghost = el.clone(true);
 
         ghost.css({
-            visibility: 'visible',
+            visibility: 'hidden',
             overflow: 'hidden'
         }).addClass(self.get('prefixCls') + 'overlay-ghost');
 
@@ -28,15 +28,17 @@ KISSY.add(function (S) {
             effectCfg = self.get('effect'),
             target = $(effectCfg.target),
             duration = effectCfg.duration,
-            targetBox = S.mix(target.offset(), {
+            targetBox = {
                 width: target.width(),
                 height: target.height()
-            }),
-            elBox = S.mix(el.offset(), {
+            },
+            targetOffset = target.offset(),
+            elBox = {
                 width: el.width(),
                 height: el.height()
-            }),
-            from, to,
+            },
+            elOffset = el.offset(),
+            from, to, fromOffset, toOffset,
             ghost = getGhost(self),
             easing = effectCfg.easing;
 
@@ -44,17 +46,27 @@ KISSY.add(function (S) {
 
         if (show) {
             from = targetBox;
+            fromOffset = targetOffset;
             to = elBox;
+            toOffset = elOffset;
         } else {
             from = elBox;
+            fromOffset = elOffset;
             to = targetBox;
+            toOffset = targetOffset;
         }
-
+        // get css left top value
+        // in case overlay is inside a relative container
+        ghost.offset(toOffset);
+        S.mix(to, {
+            left: ghost.css('left'),
+            top: ghost.css('top')
+        });
         el.css('visibility', 'hidden');
         ghost.css(from);
-
+        ghost.offset(fromOffset);
         self.__effectGhost = ghost;
-
+        ghost.css('visibility', 'visible');
         ghost.animate(to, {
             Anim: effectCfg.Anim,
             duration: duration,

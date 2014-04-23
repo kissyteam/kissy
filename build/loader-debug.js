@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 12:00
+build time: Apr 23 15:55
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140423120000' will replace with current timestamp when compressing.
+         * NOTICE: '20140423155544' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140423120000',
+        __BUILD_TIME: '20140423155544',
 
         /**
          * KISSY Environment.
@@ -399,21 +399,26 @@ var KISSY = (function (undefined) {
         }));
     }
 
-    function getIEVersion() {
-        var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
-            (v = (m[1] || m[2]))) {
-            return numberify(v);
-        }
-        return undefined;
-    }
-
-    var m,
+    var m, v,
         ua = (host.navigator || {}).userAgent || '';
 
     // https://github.com/kissyteam/kissy/issues/545
     if (((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
         Utils.webkit = numberify(m[1]);
+    }
+    if ((m = ua.match(/Trident\/([\d.]*)/))) {
+        Utils.trident = numberify(m[1]);
+    }
+    if ((m = ua.match(/Gecko/))) {
+        Utils.gecko = 0.1; // Gecko detected, look for revision
+        if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+            Utils.gecko = numberify(m[1]);
+        }
+    }
+    if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
+        (v = (m[1] || m[2]))) {
+        Utils.ie = numberify(v);
+        Utils.trident = Utils.trident || 1;
     }
 
     var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/;
@@ -521,8 +526,6 @@ var KISSY = (function (undefined) {
             var urlParts2 = url2.match(urlReg);
             return urlParts1[0] === urlParts2[0];
         },
-
-        ie: getIEVersion(),
 
         /**
          * get document head
@@ -1367,7 +1370,11 @@ var KISSY = (function (undefined) {
         // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
         // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
         // phantomjs 1.7 == webkit 534.34
-        var forceCssPoll = S.Config.forceCssPoll || (webkit && webkit < 536);
+        var forceCssPoll = S.Config.forceCssPoll ||
+            (webkit && webkit < 536) ||
+            // unknown browser defaults to css poll
+            // https://github.com/kissyteam/kissy/issues/607
+            (!webkit && !Utils.trident && !Utils.gecko);
 
         if (css && forceCssPoll && useNative) {
             useNative = false;
@@ -2340,7 +2347,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140423120000';
+    var TIMESTAMP = '20140423155544';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
