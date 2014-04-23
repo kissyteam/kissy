@@ -1,7 +1,6 @@
 /*jshint quotmark:false*/
 describe("ComboLoader", function () {
     var S = KISSY,
-        kBase = S.config('base'),
         host = location.host;
 
     beforeEach(function () {
@@ -142,7 +141,6 @@ describe("ComboLoader", function () {
     it("should trunk url by comboMaxFileNum config rightly", function () {
         waits(10);
         runs(function () {
-
             var comboMaxFileNum = S.config('comboMaxFileNum');
 
             S.config('comboMaxFileNum', 2);
@@ -354,7 +352,6 @@ describe("ComboLoader", function () {
         });
     });
 
-
     it("should load mod not config", function () {
         S.config({
             packages: {
@@ -403,5 +400,22 @@ describe("ComboLoader", function () {
         waitsFor(function () {
             return ok;
         }, "too long!");
+    });
+
+    it('optimize common prefix',function(){
+        S.config({
+            packages: {
+                t: {
+                    base: '/t'
+                }
+
+            }
+        });
+        var loader = new S.Loader.ComboLoader();
+        var mods = loader.calculate((['t/a/b/a','t/a/b/b','t/a/b/c']));
+        var urls = loader.getComboUrls(mods);
+        var host = location.host;
+        expect(urls.js[0].url)
+            .toBe("http://" + host + "/t/a/b/??a.js,b.js,c.js");
     });
 });

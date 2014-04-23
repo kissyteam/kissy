@@ -83,6 +83,7 @@
     </target>
 
     <target name="before-concat"/>
+    <target name="after-concat"/>
 
     <target name="concat-css">
         <copy todir="${component.src.dir.tmp}">
@@ -363,6 +364,7 @@
     before-concat,
     concat,
     concat-css,
+    after-concat,
     prepare,
     js-cover-gen,
     compress-js,

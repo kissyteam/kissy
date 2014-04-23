@@ -114,10 +114,6 @@ S.config("requires",{
     "dom/selector": [
         "dom/basic"
     ],
-    "editor": [
-        "html-parser",
-        "component/control"
-    ],
     "event/base": [
         "util"
     ],

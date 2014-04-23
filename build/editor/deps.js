@@ -1,6 +1,16 @@
+/*
+Copyright 2014, KISSY v5.0.0
+MIT Licensed
+build time: Apr 23 18:21
+*/
 /*jshint indent:false, quotmark:false*/
-KISSY.add(function(S){
+(function(S){
 S.config("requires",{
+    "editor": [
+        "node",
+        "html-parser",
+        "component/control"
+    ],
     "editor/plugin/back-color": [
         "editor/plugin/color/btn",
         "editor/plugin/back-color/cmd"
@@ -78,8 +88,7 @@ S.config("requires",{
         "editor"
     ],
     "editor/plugin/fake-objects": [
-        "editor",
-        "html-parser"
+        "editor"
     ],
     "editor/plugin/flash": [
         "editor/plugin/flash-common/base-class",
@@ -148,15 +157,13 @@ S.config("requires",{
         "editor/plugin/button",
         "editor/plugin/bubble",
         "editor/plugin/contextmenu",
-        "editor/plugin/dialog-loader",
-        "node"
+        "editor/plugin/dialog-loader"
     ],
     "editor/plugin/image/dialog": [
         "io",
         "editor/plugin/dialog",
         "tabs",
-        "editor/plugin/menubutton",
-        "node"
+        "editor/plugin/menubutton"
     ],
     "editor/plugin/indent": [
         "editor/plugin/indent/cmd",
@@ -339,4 +346,4 @@ S.config("requires",{
         "editor/plugin/flash/dialog"
     ]
 });
-});
+})(KISSY);

@@ -1,20 +1,18 @@
 <project name="editor.build" default="build-all" basedir=".">
     <property name="component.name" value="editor"/>
+    <property name="component.meta.dir" location="./ke-meta/"/>
 
     <import file="../common.xml"/>
 
-    <target name="merge-editor-dependency">
+    <target name="after-concat">
         <exec executable="node" failonerror="true">
             <arg value="${tools.dir}/gen-meta/gen-meta"/>
             <arg value="--dir"/>
-            <arg value="${kissy.src.dir}/editor/sub-modules/plugin/"/>
-            <arg value="--module"/>
+            <arg value="${kissy.src.dir}/editor/"/>
             <arg value="--suffix"/>
             <arg value="/ke-meta"/>
             <arg value="--output"/>
-            <arg value="${component.src.dir}/editor/modules.js"/>
+            <arg value="${component.src.dir.tmp}/deps.js"/>
         </exec>
     </target>
-
-    <target name="before-concat" depends="merge-editor-dependency"/>
 </project>

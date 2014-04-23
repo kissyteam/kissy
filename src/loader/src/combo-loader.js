@@ -195,10 +195,14 @@
         };
     }
 
-    function getCommonPrefix(str1, str2) {
+    function getCommonPathPrefix(str1, str2) {
         // ie bug
         // 'a//b'.split(/\//) => [a,b]
-        var prefix = str1.substring(0, str1.indexOf('//') + 2);
+        var protocolIndex = str1.indexOf('//');
+        var prefix = '';
+        if (protocolIndex !== -1) {
+            prefix = str1.substring(0, str1.indexOf('//') + 2);
+        }
         str1 = str1.substring(prefix.length).split(/\//);
         str2 = str2.substring(prefix.length).split(/\//);
         var l = Math.min(str1.length, str2.length);
@@ -208,6 +212,22 @@
             }
         }
         return prefix + str1.slice(0, i).join('/') + '/';
+    }
+
+    // ??editor/plugin/x,editor/plugin/b
+    // =>
+    // editor/plugin/??x,b
+    function getUrlConsiderCommonPrefix(commonPrefix, currentComboUrls, basePrefix, comboPrefix, comboSep, suffix) {
+        if (commonPrefix && currentComboUrls.length > 1) {
+            var commonPrefixLen = commonPrefix.length;
+            var currentUrls = [];
+            for (var i = 0; i < currentComboUrls.length; i++) {
+                currentUrls[i] = currentComboUrls[i].substring(commonPrefixLen);
+            }
+            return basePrefix + commonPrefix + comboPrefix + currentUrls.join(comboSep) + suffix;
+        } else {
+            return basePrefix + comboPrefix + currentComboUrls.join(comboSep) + suffix;
+        }
     }
 
     Utils.mix(ComboLoader.prototype, {
@@ -383,7 +403,7 @@
                     /*jshint loopfunc:true*/
                     Utils.each(typeGroup, function (tmpMods, prefix) {
                         if (Utils.isSameOriginAs(prefix, packageBase)) {
-                            var newPrefix = getCommonPrefix(prefix, packageBase);
+                            var newPrefix = getCommonPathPrefix(prefix, packageBase);
                             tmpMods.push(mod);
                             if (tag && tag !== tmpMods.tag) {
                                 tmpMods.tag = getHash(tmpMods.tag + tag);
@@ -438,25 +458,27 @@
                 var currentComboMods = [];
                 var tag = sendMods.tag;
                 var charset = sendMods.charset;
-                var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : ''),
-                    suffixLength = suffix.length;
+                var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : '');
 
                 var baseLen = basePrefix.length,
-                    prefix = basePrefix + comboPrefix,
+                    commonPrefix,
                     res = [];
 
-                var l = prefix.length;
-
                 /*jshint loopfunc:true*/
-                var pushComboUrl = function () {
+                function pushComboUrl(sentUrl) {
                     //noinspection JSReferencingMutableVariableFromClosure
                     res.push({
                         combine: 1,
-                        url: prefix + currentComboUrls.join(comboSep) + suffix,
+                        url: sentUrl,
                         charset: charset,
                         mods: currentComboMods
                     });
-                };
+                }
+
+                function getSentUrl() {
+                    return getUrlConsiderCommonPrefix(commonPrefix, currentComboUrls,
+                        basePrefix, comboPrefix, comboSep, suffix);
+                }
 
                 for (var i = 0; i < sendMods.length; i++) {
                     var currentMod = sendMods[i];
@@ -472,23 +494,33 @@
                         });
                         continue;
                     }
+
                     // ignore query parameter
                     var subPath = url.slice(baseLen).replace(/\?.*$/, '');
                     currentComboUrls.push(subPath);
                     currentComboMods.push(currentMod);
 
-                    if (currentComboUrls.length > maxFileNum ||
-                        (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)) {
+                    if (commonPrefix === undefined) {
+                        commonPrefix = subPath.indexOf('/') !== -1 ? subPath : '';
+                    } else if (commonPrefix !== '') {
+                        commonPrefix = getCommonPathPrefix(commonPrefix, subPath);
+                        if (commonPrefix === '/') {
+                            commonPrefix = '';
+                        }
+                    }
+
+                    if (currentComboUrls.length > maxFileNum || getSentUrl().length > maxUrlLength) {
                         currentComboUrls.pop();
                         currentComboMods.pop();
-                        pushComboUrl();
+                        pushComboUrl(getSentUrl());
                         currentComboUrls = [];
                         currentComboMods = [];
+                        commonPrefix = undefined;
                         i--;
                     }
                 }
                 if (currentComboUrls.length) {
-                    pushComboUrl();
+                    pushComboUrl(getSentUrl());
                 }
 
                 comboRes[type].push.apply(comboRes[type], res);

@@ -13,7 +13,6 @@ KISSY.add(function (S, require, exports, module) {
     var enterKey = require('editor/enter-key');
     var htmlDataProcessor = require('editor/html-data-processor');
     var selectionFix = require('editor/selection-fix');
-    require('editor/modules');
     require('editor/styles');
     require('editor/dom-iterator');
     require('editor/z-index-manager');
