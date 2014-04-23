@@ -9,7 +9,6 @@ KISSY.add(function (S) {
         undef,
         doc = win.document || {},
         docElem = doc.documentElement,
-        location = win.location,
         EMPTY = '',
         domReady = 0,
         callbacks = [],
@@ -223,11 +222,6 @@ KISSY.add(function (S) {
                 readyScroll();
             }
         }
-    }
-
-    // If url contains '?ks-debug', debug mode will turn on automatically.
-    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
     }
 
     // bind on start

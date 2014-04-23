@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 15:56
+build time: Apr 23 16:15
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 15:55
+build time: Apr 23 16:14
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140423155544' will replace with current timestamp when compressing.
+         * NOTICE: '20140423161444' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140423155544',
+        __BUILD_TIME: '20140423161444',
 
         /**
          * KISSY Environment.
@@ -2352,7 +2352,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140423155544';
+    var TIMESTAMP = '20140423161444';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2477,7 +2477,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 15:56
+build time: Apr 23 16:15
 */
 /*
 combined modules:
@@ -3859,7 +3859,7 @@ KISSY.add('util/type', [], function (S) {
  */
 KISSY.add('util/web', [], function (S) {
     var logger = S.getLogger('s/web');
-    var win = S.Env.host, undef, doc = win.document || {}, docElem = doc.documentElement, location = win.location, EMPTY = '', domReady = 0, callbacks = [],
+    var win = S.Env.host, undef, doc = win.document || {}, docElem = doc.documentElement, EMPTY = '', domReady = 0, callbacks = [],
         // The number of poll times.
         POLL_RETIRES = 500,
         // The poll interval in milliseconds.
@@ -4049,10 +4049,6 @@ KISSY.add('util/web', [], function (S) {
                 readyScroll();
             }
         }
-    }    // If url contains '?ks-debug', debug mode will turn on automatically.
-    // If url contains '?ks-debug', debug mode will turn on automatically.
-    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
     }    // bind on start
          // in case when you bind but the DOMContentLoaded has triggered
          // then you has to wait onload
@@ -4072,7 +4068,7 @@ KISSY.add('util/web', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 15:55
+build time: Apr 23 16:14
 */
 /*
 combined modules:
@@ -4465,7 +4461,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 15:56
+build time: Apr 23 16:15
 */
 /*
 combined modules:

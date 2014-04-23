@@ -312,51 +312,51 @@ if (! _$jscoverage['/util.js'].branchData) {
   _$jscoverage['/util.js'].branchData['110'][2] = new BranchData();
 }
 _$jscoverage['/util.js'].branchData['110'][2].init(50, 43, 'f.call(input, input[k], k, input) !== FALSE');
-function visit228_110_2(result) {
+function visit225_110_2(result) {
   _$jscoverage['/util.js'].branchData['110'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['110'][1].init(43, 51, '!f || (f.call(input, input[k], k, input) !== FALSE)');
-function visit227_110_1(result) {
+function visit224_110_1(result) {
   _$jscoverage['/util.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['109'][2].init(24, 18, 'k !== CLONE_MARKER');
-function visit226_109_2(result) {
+function visit223_109_2(result) {
   _$jscoverage['/util.js'].branchData['109'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['109'][1].init(24, 96, 'k !== CLONE_MARKER && (!f || (f.call(input, input[k], k, input) !== FALSE))');
-function visit225_109_1(result) {
+function visit222_109_1(result) {
   _$jscoverage['/util.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['106'][1].init(2121, 13, 'isPlainObject');
-function visit224_106_1(result) {
+function visit221_106_1(result) {
   _$jscoverage['/util.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['103'][1].init(30, 22, 'i < destination.length');
-function visit223_103_1(result) {
+function visit220_103_1(result) {
   _$jscoverage['/util.js'].branchData['103'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['102'][1].init(1938, 7, 'isArray');
-function visit222_102_1(result) {
+function visit219_102_1(result) {
   _$jscoverage['/util.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['78'][1].init(93, 63, 'S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])');
-function visit221_78_1(result) {
+function visit218_78_1(result) {
   _$jscoverage['/util.js'].branchData['78'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['75'][1].init(515, 25, 'typeof input === \'object\'');
-function visit220_75_1(result) {
+function visit217_75_1(result) {
   _$jscoverage['/util.js'].branchData['75'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['72'][1].init(385, 19, 'input[CLONE_MARKER]');
-function visit219_72_1(result) {
+function visit216_72_1(result) {
   _$jscoverage['/util.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['65'][1].init(134, 6, '!input');
-function visit218_65_1(result) {
+function visit215_65_1(result) {
   _$jscoverage['/util.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['46'][1].init(84, 15, 'v[CLONE_MARKER]');
-function visit217_46_1(result) {
+function visit214_46_1(result) {
   _$jscoverage['/util.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].lineData[7]++;
@@ -401,7 +401,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util.js'].lineData[45]++;
   v = v.input;
   _$jscoverage['/util.js'].lineData[46]++;
-  if (visit217_46_1(v[CLONE_MARKER])) {
+  if (visit214_46_1(v[CLONE_MARKER])) {
     _$jscoverage['/util.js'].lineData[47]++;
     try {
       _$jscoverage['/util.js'].lineData[48]++;
@@ -423,21 +423,21 @@ KISSY.add(function(S, require) {
     _$jscoverage['/util.js'].lineData[60]++;
     var destination = input, isArray, isPlainObject, k, stamp;
     _$jscoverage['/util.js'].lineData[65]++;
-    if (visit218_65_1(!input)) {
+    if (visit215_65_1(!input)) {
       _$jscoverage['/util.js'].lineData[66]++;
       return destination;
     }
     _$jscoverage['/util.js'].lineData[72]++;
-    if (visit219_72_1(input[CLONE_MARKER])) {
+    if (visit216_72_1(input[CLONE_MARKER])) {
       _$jscoverage['/util.js'].lineData[74]++;
       return memory[input[CLONE_MARKER]].destination;
     } else {
       _$jscoverage['/util.js'].lineData[75]++;
-      if (visit220_75_1(typeof input === 'object')) {
+      if (visit217_75_1(typeof input === 'object')) {
         _$jscoverage['/util.js'].lineData[77]++;
         var Constructor = input.constructor;
         _$jscoverage['/util.js'].lineData[78]++;
-        if (visit221_78_1(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp]))) {
+        if (visit218_78_1(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp]))) {
           _$jscoverage['/util.js'].lineData[79]++;
           destination = new Constructor(input.valueOf());
         } else {
@@ -462,19 +462,19 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/util.js'].lineData[102]++;
-    if (visit222_102_1(isArray)) {
+    if (visit219_102_1(isArray)) {
       _$jscoverage['/util.js'].lineData[103]++;
-      for (var i = 0; visit223_103_1(i < destination.length); i++) {
+      for (var i = 0; visit220_103_1(i < destination.length); i++) {
         _$jscoverage['/util.js'].lineData[104]++;
         destination[i] = cloneInternal(destination[i], f, memory);
       }
     } else {
       _$jscoverage['/util.js'].lineData[106]++;
-      if (visit224_106_1(isPlainObject)) {
+      if (visit221_106_1(isPlainObject)) {
         _$jscoverage['/util.js'].lineData[107]++;
         for (k in input) {
           _$jscoverage['/util.js'].lineData[109]++;
-          if (visit225_109_1(visit226_109_2(k !== CLONE_MARKER) && (visit227_110_1(!f || (visit228_110_2(f.call(input, input[k], k, input) !== FALSE)))))) {
+          if (visit222_109_1(visit223_109_2(k !== CLONE_MARKER) && (visit224_110_1(!f || (visit225_110_2(f.call(input, input[k], k, input) !== FALSE)))))) {
             _$jscoverage['/util.js'].lineData[111]++;
             destination[k] = cloneInternal(input[k], f, memory);
           }

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 15:56
+build time: Apr 23 16:15
 */
 /*
 combined modules:
@@ -1383,7 +1383,7 @@ KISSY.add('util/type', [], function (S) {
  */
 KISSY.add('util/web', [], function (S) {
     var logger = S.getLogger('s/web');
-    var win = S.Env.host, undef, doc = win.document || {}, docElem = doc.documentElement, location = win.location, EMPTY = '', domReady = 0, callbacks = [],
+    var win = S.Env.host, undef, doc = win.document || {}, docElem = doc.documentElement, EMPTY = '', domReady = 0, callbacks = [],
         // The number of poll times.
         POLL_RETIRES = 500,
         // The poll interval in milliseconds.
@@ -1573,10 +1573,6 @@ KISSY.add('util/web', [], function (S) {
                 readyScroll();
             }
         }
-    }    // If url contains '?ks-debug', debug mode will turn on automatically.
-    // If url contains '?ks-debug', debug mode will turn on automatically.
-    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
     }    // bind on start
          // in case when you bind but the DOMContentLoaded has triggered
          // then you has to wait onload
