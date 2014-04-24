@@ -5,16 +5,16 @@
 KISSY.add(function (S, require) {
     var XTemplate = require('xtemplate');
     describe('async', function () {
-        it('can report error',function(){
+        it('can report error', function () {
             var tpl = '{{tms(1)}}3';
             var ret = '';
             expect(new XTemplate(tpl, {
                 commands: {
                     'tms': function (scope, option, buffer) {
                         return buffer.async(function (asyncBuffer) {
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 asyncBuffer.error('report error');
-                            },100);
+                            }, 100);
                         });
                     }
                 }
@@ -220,6 +220,32 @@ KISSY.add(function (S, require) {
             });
             runs(function () {
                 expect(ret).toBe('1 OK');
+            });
+        });
+
+        it('can be nested into each command', function () {
+            var finalRet;
+            new XTemplate('{{#each(items)}}{{echo()}}{{/each}}', {
+                commands: {
+                    echo: function (scope, option, buffer) {
+                        return buffer.async(function (asyncBuffer) {
+                            setTimeout(function () {
+                                asyncBuffer.write(scope.data).end();
+                            }, 0);
+                        });
+                    }
+                }
+            }).render({
+                    items: [1, 2, 3]
+                }, function (error, ret) {
+                    finalRet = ret;
+                });
+            waitsFor(function () {
+                return finalRet;
+            });
+
+            runs(function () {
+                expect(finalRet).toBe('123');
             });
         });
     });

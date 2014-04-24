@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:37
+build time: Apr 24 17:47
 */
 /*
 combined modules:
@@ -275,9 +275,9 @@ KISSY.add('xtemplate/runtime/commands', ['./scope'], function (S, require) {
                 if (param0) {
                     if (S.isArray(param0)) {
                         xcount = param0.length;
-                        opScope = new Scope();
-                        affix = opScope.affix = { xcount: xcount };
                         for (var xindex = 0; xindex < xcount; xindex++) {
+                            opScope = new Scope();
+                            affix = opScope.affix = { xcount: xcount };    // two more variable scope for array looping
                             // two more variable scope for array looping
                             opScope.data = param0[xindex];
                             affix[xindexName] = xindex;
@@ -288,9 +288,9 @@ KISSY.add('xtemplate/runtime/commands', ['./scope'], function (S, require) {
                             buffer = option.fn(opScope, buffer);
                         }
                     } else {
-                        opScope = new Scope();
-                        affix = opScope.affix = {};
                         for (var name in param0) {
+                            opScope = new Scope();
+                            affix = opScope.affix = {};
                             opScope.data = param0[name];
                             affix[xindexName] = name;
                             if (valueName) {
