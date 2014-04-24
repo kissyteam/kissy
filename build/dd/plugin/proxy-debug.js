@@ -1,27 +1,29 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:43
+build time: Apr 24 14:40
 */
 /*
-combined files : 
-
+combined modules:
 dd/plugin/proxy
-
 */
 /**
  * @ignore
  * generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
-    var Node = require('node'),
-        DD = require('dd'),
-        Base = require('base');
-
-    var DDM = DD.DDM,
-        PROXY_EVENT = '.-ks-proxy' + S.now();
-
+KISSY.add('dd/plugin/proxy', [
+    'node',
+    'dd',
+    'base'
+], function (S, require) {
+    var Node = require('node'), DD = require('dd'), Base = require('base');
+    var DDM = DD.DDM, PROXY_EVENT = '.-ks-proxy' + S.now();    /**
+     * @extends KISSY.Base
+     * @class KISSY.DD.Plugin.Proxy
+     * Proxy plugin to provide abilities for draggable tp create a proxy drag node,
+     * instead of dragging the original node.
+     */
     /**
      * @extends KISSY.Base
      * @class KISSY.DD.Plugin.Proxy
@@ -30,7 +32,6 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
      */
     return Base.extend({
         pluginId: 'dd/plugin/proxy',
-
         /**
          * make this draggable object can be proxied.
          * @param {KISSY.DD.Draggable} drag
@@ -38,10 +39,8 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
          */
         pluginInitializer: function (drag) {
             var self = this;
-
             function start() {
-                var node = self.get('node'),
-                    dragNode = drag.get('node');
+                var node = self.get('node'), dragNode = drag.get('node');    // cache proxy node
                 // cache proxy node
                 if (!self.get('proxyNode')) {
                     if (typeof node === 'function') {
@@ -59,10 +58,8 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
                 drag.setInternal('dragNode', dragNode);
                 drag.setInternal('node', node);
             }
-
             function end() {
-                var node = self.get('proxyNode'),
-                    dragNode = drag.get('dragNode');
+                var node = self.get('proxyNode'), dragNode = drag.get('dragNode');
                 if (self.get('moveOnEnd')) {
                     dragNode.offset(node.offset());
                 }
@@ -74,9 +71,7 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
                 }
                 drag.setInternal('node', dragNode);
             }
-
-            drag.on('dragstart' + PROXY_EVENT, start)
-                .on('dragend' + PROXY_EVENT, end);
+            drag.on('dragstart' + PROXY_EVENT, start).on('dragend' + PROXY_EVENT, end);
         },
         /**
          * make this draggable object unproxied
@@ -101,7 +96,6 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
                     return new Node(drag.get('node').clone(true));
                 }
             },
-
             /**
              * destroy the proxy node at the end of this drag.
              * default false
@@ -110,10 +104,7 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
             /**
              * @ignore
              */
-            destroyOnEnd: {
-                value: false
-            },
-
+            destroyOnEnd: { value: false },
             /**
              * move the original node at the end of the drag.
              * default true
@@ -122,10 +113,7 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
             /**
              * @ignore
              */
-            moveOnEnd: {
-                value: true
-            },
-
+            moveOnEnd: { value: true },
             /**
              * Current proxy node.
              * @type {KISSY.Node}
@@ -138,3 +126,5 @@ KISSY.add('dd/plugin/proxy',['node', 'dd', 'base'], function (S, require) {
         }
     });
 });
+
+

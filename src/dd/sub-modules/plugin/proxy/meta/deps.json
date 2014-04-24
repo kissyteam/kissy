@@ -1,3 +1,1 @@
-{
- "dd/plugin/proxy": ["node", "dd", "base"] 
-}
+{"dd/plugin/proxy":["node","dd","base"]}

@@ -1,3 +1,1 @@
-{
- "scroll-view/plugin/scrollbar": ["base", "ua", "component/control", "event/gesture/base", "event/gesture/drag"] 
-}
+{"scroll-view/plugin/scrollbar":["base","ua","component/control","event/gesture/base","event/gesture/drag"]}

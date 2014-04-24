@@ -240,7 +240,8 @@ KISSY.add(function (S, require) {
                     .on(DragGesture.DRAG, onDrag, self)
                     .on(DragGesture.DRAG_END, onDragEnd, self)
                     .on(BaseGesture.START, onGestureStart, self)
-                    .on(['dragstart',DragGesture.DRAGGING], preventDefault);
+                    // android need to prevent on touchmove
+                    .on(['dragstart','touchmove'], preventDefault);
             }
         },
 
@@ -252,7 +253,7 @@ KISSY.add(function (S, require) {
                     .detach(DragGesture.DRAG, onDrag, self)
                     .detach(DragGesture.DRAG_END, onDragEnd, self)
                     .detach(BaseGesture.START, onGestureStart, self)
-                    .detach(['dragstart',DragGesture.DRAGGING], preventDefault);
+                    .detach(['dragstart','touchmove'], preventDefault);
             }
         },
 

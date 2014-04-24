@@ -179,7 +179,7 @@ KISSY.add(function (S, require) {
     function bindDrag(self, disabled) {
         var action = disabled ? 'detach' : 'on';
         if (!self.get('autoHide')) {
-            self.$dragEl[action](['dragstart', 'mousedown', DragGesture.DRAGGING], preventDefault)
+            self.$dragEl[action](['dragstart', 'mousedown', 'touchmove'], preventDefault)
                 [action](DragGesture.DRAG_START, onDragStartHandler, self)
                 [action](DragGesture.DRAG, onDragHandler, self);
             S.each([self.$downBtn, self.$upBtn], function (b) {

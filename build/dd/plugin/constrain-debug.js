@@ -1,32 +1,25 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:43
+build time: Apr 24 14:40
 */
 /*
-combined files : 
-
+combined modules:
 dd/plugin/constrain
-
 */
 /**
  * @ignore
  * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/constrain',['node', 'base'], function (S, require, exports, module) {
-    var Node = require('node'),
-        Base = require('base');
-    var $ = Node.all,
-        CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
-        WIN = S.Env.host;
-
+KISSY.add('dd/plugin/constrain', [
+    'node',
+    'base'
+], function (S, require, exports, module) {
+    var Node = require('node'), Base = require('base');
+    var $ = Node.all, CONSTRAIN_EVENT = '.-ks-constrain' + S.now(), WIN = S.Env.host;
     function onDragStart(e) {
-        var self = this,
-            drag = e.drag,
-            l, t, lt,
-            dragNode = drag.get('dragNode'),
-            constrain = self.get('constrain');
+        var self = this, drag = e.drag, l, t, lt, dragNode = drag.get('dragNode'), constrain = self.get('constrain');
         if (constrain) {
             if (S.isWindow(constrain[0])) {
                 self.__constrainRegion = {
@@ -52,35 +45,29 @@ KISSY.add('dd/plugin/constrain',['node', 'base'], function (S, require, exports,
             }
         }
     }
-
     function onDragAlign(e) {
-        var self = this,
-            info = {},
-            l = e.left,
-            t = e.top,
-            constrain = self.__constrainRegion;
+        var self = this, info = {}, l = e.left, t = e.top, constrain = self.__constrainRegion;
         if (constrain) {
             info.left = Math.min(Math.max(constrain.left, l), constrain.right);
             info.top = Math.min(Math.max(constrain.top, t), constrain.bottom);
             e.drag.setInternal('actualPos', info);
         }
     }
-
     function onDragEnd() {
         this.__constrainRegion = null;
-    }
-
+    }    /**
+     * @class KISSY.DD.Plugin.Constrain
+     * @extends KISSY.Base
+     * Constrain plugin to provide ability to constrain draggable to specified region
+     */
     /**
      * @class KISSY.DD.Plugin.Constrain
      * @extends KISSY.Base
      * Constrain plugin to provide ability to constrain draggable to specified region
      */
     module.exports = Base.extend({
-
         pluginId: 'dd/plugin/constrain',
-
         __constrainRegion: null,
-
         /**
          * start monitoring drag
          * @param {KISSY.DD.Draggable} drag
@@ -88,20 +75,15 @@ KISSY.add('dd/plugin/constrain',['node', 'base'], function (S, require, exports,
          */
         pluginInitializer: function (drag) {
             var self = this;
-            drag.on('dragstart' + CONSTRAIN_EVENT, onDragStart, self)
-                .on('dragend' + CONSTRAIN_EVENT, onDragEnd, self)
-                .on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
+            drag.on('dragstart' + CONSTRAIN_EVENT, onDragStart, self).on('dragend' + CONSTRAIN_EVENT, onDragEnd, self).on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
         },
-
         /**
          * stop monitoring drag
          * @param {KISSY.DD.Draggable} drag
          * @private
          */
         pluginDestructor: function (drag) {
-            drag.detach(CONSTRAIN_EVENT, {
-                context: this
-            });
+            drag.detach(CONSTRAIN_EVENT, { context: this });
         }
     }, {
         ATTRS: {
@@ -110,13 +92,11 @@ KISSY.add('dd/plugin/constrain',['node', 'base'], function (S, require, exports,
              * @type {Boolean|HTMLElement|String}
              * @property constrain
              */
-
             /**
              * constrained container. true stands for viewport.
              * Defaults: true.
              * @cfg {Boolean|HTMLElement|String} constrain
              */
-
             /**
              * @ignore
              */
@@ -126,8 +106,7 @@ KISSY.add('dd/plugin/constrain',['node', 'base'], function (S, require, exports,
                     if (v) {
                         if (v === true) {
                             return $(WIN);
-                        } else if (v.nodeType || S.isWindow(v) ||
-                            typeof v === 'string') {
+                        } else if (v.nodeType || S.isWindow(v) || typeof v === 'string') {
                             return $(v);
                         }
                     }
@@ -137,3 +116,4 @@ KISSY.add('dd/plugin/constrain',['node', 'base'], function (S, require, exports,
         }
     });
 });
+
