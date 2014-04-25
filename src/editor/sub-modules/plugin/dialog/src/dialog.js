@@ -9,6 +9,7 @@ KISSY.add(function (S, require) {
     var focusFix = require('./focus-fix');
     var ConstrainPlugin = require('dd/plugin/constrain');
     var DragPlugin = require('component/plugin/drag');
+    var Dom = require('dom');
 
     return Overlay.Dialog.extend({
         initializer: function () {
@@ -32,8 +33,8 @@ KISSY.add(function (S, require) {
             self.center();
             var y = self.get('y');
             //居中有点偏下
-            if (y - S.require('dom').scrollTop() > 200) {
-                y = S.require('dom').scrollTop() + 200;
+            if (y - Dom.scrollTop() > 200) {
+                y = Dom.scrollTop() + 200;
                 self.set('y', y);
             }
             self.callSuper();

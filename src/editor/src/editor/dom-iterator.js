@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
         NULL = null,
         UA = S.UA,
         KER = Editor.RangeType,
-        Dom = S.require('dom');
+        Dom = require('dom');
 
     /**
      * iterator for range

@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var SWF = require('swf');
-    var Dom = S.require('dom'),
+    var Dom = require('dom'),
 
         flashUtils = {
 

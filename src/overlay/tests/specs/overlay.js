@@ -3,9 +3,8 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(function (S, UA, Node, Overlay, ResizePlugin) {
-    var Dom = S.require('dom'),
-        $ = Node.all;
+KISSY.add(function (S, Dom,UA, Node, Overlay, ResizePlugin) {
+    var $ = Node.all;
     var ie = S.UA.ieMode;
 
     beforeEach(function () {
@@ -371,7 +370,6 @@ KISSY.add(function (S, UA, Node, Overlay, ResizePlugin) {
             });
 
             it('attribute has order', function () {
-                var Dom = S.require('dom');
                 Dom.addStyleSheet('.overlay1522 {position:absolute;}');
                 var o = new Overlay({
                     prefixCls: 'kk-',
@@ -385,5 +383,5 @@ KISSY.add(function (S, UA, Node, Overlay, ResizePlugin) {
         });
     });
 }, {
-    requires: "ua,node,overlay,component/plugin/resize".split(',')
+    requires: "dom,ua,node,overlay,component/plugin/resize".split(',')
 });

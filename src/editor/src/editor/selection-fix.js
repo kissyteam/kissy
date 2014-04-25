@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         KES = Editor.SelectionType;
 
     /*

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var Dom = S.require('dom'),
+    var Dom = require('dom'),
         $ = S.all;
 
     /*jshint quotmark:false*/

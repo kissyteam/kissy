@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
     /*
      A comma separated list of elements to be removed
      when executing the "remove format" command.

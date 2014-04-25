@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         UA = S.UA,
 
         /**

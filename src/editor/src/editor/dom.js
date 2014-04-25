@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         xhtmlDtd = Editor.XHTML_DTD,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         NodeType = Dom.NodeType,
         UA = S.UA,
         REMOVE_EMPTY = {

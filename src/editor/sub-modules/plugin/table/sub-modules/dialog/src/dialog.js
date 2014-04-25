@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     var MenuButton = require('../menubutton');
     var OLD_IE = S.UA.ieMode < 11;
     var Node = S.Node,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         trim = S.trim,
         showBorderClassName = 'ke_show_border',
         collapseTableClass = 'k-e-collapse-table',

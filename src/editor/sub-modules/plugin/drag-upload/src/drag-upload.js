@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var Event = require('event/dom');
     var Node = S.Node,
         Utils = Editor.Utils,
-        Dom = S.require('dom');
+        Dom = require('dom');
 
     function dragUpload(config) {
         this.config = config || {};

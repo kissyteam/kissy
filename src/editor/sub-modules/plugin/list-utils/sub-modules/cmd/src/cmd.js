@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         Walker = Editor.Walker,
         UA = S.UA,
         Node = S.Node,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         headerTagRegex = /^h[1-6]$/;
 
     function ListCommand(type) {

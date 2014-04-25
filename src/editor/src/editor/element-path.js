@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     var Editor = require('./base');
     require('./dom');
 
-    var Dom = S.require('dom'),
+    var Dom = require('dom'),
         dtd = Editor.XHTML_DTD,
         TRUE = true,
         FALSE = false,

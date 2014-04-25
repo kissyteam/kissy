@@ -3,10 +3,10 @@
  * list Utils
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var listNodeNames = {ol: 1, ul: 1},
         Node = S.Node,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         NodeType = Dom.NodeType,
         UA = S.UA,
         list = {
@@ -61,7 +61,7 @@ KISSY.add(function (S) {
                             // Note the recursion here, it pushes inner list items with
                             // +1 indentation in the correct order.
                             list.listToArray(child, database, baseArray,
-                                baseIndentLevel + 1, itemObj.grandparent);
+                                    baseIndentLevel + 1, itemObj.grandparent);
                         } else {
                             itemObj.contents.push(child);
                         }

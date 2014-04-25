@@ -8,44 +8,56 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
-    var Editor = require('./base');
     var HtmlParser = require('html-parser');
     var OLD_IE = S.UA.ieMode < 11;
+    var Node = require('node');
+    var dtd = HtmlParser.DTD;
+    var NodeType = Node.NodeType;
+
+    // <span></span> <span><span></span></span>
+    function isEmptyElement(el) {
+        if (el.nodeName === 'br') {
+            return false;
+        }
+        if (!dtd.$inline[el.nodeName]) {
+            return false;
+        }
+        var childNodes = el.childNodes,
+            i, child,
+            l = childNodes.length;
+        if (l) {
+            for (i = 0; i < l; i++) {
+                child = childNodes[i];
+                var nodeType = child.nodeType;
+                if (!(nodeType === NodeType.TEXT_NODE && !child.nodeValue)) {
+                    return false;
+                }
+                if (!isEmptyElement(child)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return true;
+        }
+    }
+
     return {
         init: function (editor) {
-            var Node = S.Node,
-                UA = S.UA,
+            var UA = S.UA,
                 htmlFilter = new HtmlParser.Filter(),
                 dataFilter = new HtmlParser.Filter();
 
             // remove empty inline element
             function filterInline(element) {
-                var childNodes = element.childNodes,
-                    i,
-                    child,
-                    allEmpty,
-                    l = childNodes.length;
-                if (l) {
-                    allEmpty = 1;
-                    for (i = 0; i < l; i++) {
-                        child = childNodes[i];
-                        if (!(child.nodeType === S.require('dom').NodeType.TEXT_NODE && !child.nodeValue)) {
-                            allEmpty = 0;
-                            break;
-                        }
-                    }
-                    return allEmpty ? false : undefined;
-                } else {
-                    return false;
-                }
+                return !isEmptyElement(element);
             }
 
             (function () {
-
                 function wrapAsComment(element) {
                     var html = HtmlParser.serialize(element);
                     return new HtmlParser.Comment(protectedSourceMarker +
-                        encodeURIComponent(html).replace(/--/g,'%2D%2D'));
+                        encodeURIComponent(html).replace(/--/g, '%2D%2D'));
                 }
 
                 // 过滤外边来的 html
@@ -185,7 +197,9 @@ KISSY.add(function (S, require) {
                     var childNodes = block.childNodes,
                         lastIndex = childNodes.length,
                         last = childNodes[lastIndex - 1];
-                    while (last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
+                    while (last &&
+                        (last.nodeType === 3 && !S.trim(last.nodeValue) ||
+                            last.nodeType === 1 && isEmptyElement(last))) {
                         last = childNodes[--lastIndex];
                     }
                     return last;
@@ -235,7 +249,6 @@ KISSY.add(function (S, require) {
                 }
 
                 // Find out the list of block-like tags that can contain <br>.
-                var dtd = Editor.XHTML_DTD;
                 var blockLikeTags = S.merge(
                     dtd.$block,
                     dtd.$listItem,

@@ -28,9 +28,8 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('node', function () {
+    KISSY.use('node,dom', function (S,Node,Dom) {
         var doc = document, bd = doc.body,
-                S = KISSY, Dom = S.require('dom'),
                 t = doc.getElementById('test'),
                 t2 = doc.getElementById('test2'),
                 t3 = doc.getElementById('test3'),

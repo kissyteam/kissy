@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var MenuButton = require('menubutton');
     var xhtmlDtd = Editor.XHTML_DTD;
-    var NodeType = S.require('dom').NodeType;
+    var NodeType = require('dom').NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
     var Dialog4E = require('../dialog');
 

@@ -2,12 +2,13 @@
  * Test cross browser Range implementation for Editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Editor) {
+KISSY.add(function (S, require) {
     /*jshint quotmark:false*/
-    
+
     var $ = S.all,
+        Editor = require('editor'),
         UA = S.UA,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         RangeType = Editor.RangeType,
         Node = S.Node;
     var Range = Editor.Range;
@@ -1393,7 +1394,7 @@ KISSY.add(function (S, Editor) {
 
             expect(myHTML(div))
                 .toBe("<div><span>1<span>4</span></span><span>2<span>3</span>4</span></div>" +
-                "<div><span></span><span>2</span></div>");
+                    "<div><span></span><span>2</span></div>");
 
             expect(range.startContainer[0]).toBe(div[0]);
             expect(range.endContainer[0]).toBe(div[0]);
@@ -1599,6 +1600,6 @@ KISSY.add(function (S, Editor) {
         });
 
     });
-},{
-    requires:['editor']
+}, {
+    requires: ['editor']
 });

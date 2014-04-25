@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         ie = UA.ie,
         doc = document,
         Node = S.Node,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         iframe,
         MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding',
         init = function () {

@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
         FALSE = false,
         NULL = null,
         $ = S.all,
-        Dom = S.require('dom'),
+        Dom = require('dom'),
         KER = Editor.RangeType,
         KEP = Editor.PositionType,
         KEST,

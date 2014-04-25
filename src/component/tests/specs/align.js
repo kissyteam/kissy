@@ -1,6 +1,8 @@
-KISSY.add(function (S, AlignExtension, Control) {
+KISSY.add(function (S, require) {
+    var AlignExtension = require('component/extension/align');
+    var Control = require('component/control');
     /*jshint quotmark:false*/
-    var Dom = S.require('dom');
+    var Dom = require('dom');
     var $ = S.all;
 
     var AlignControl = Control.extend([AlignExtension]);
@@ -10,7 +12,7 @@ KISSY.add(function (S, AlignExtension, Control) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 20;
                 },
 
                 toBeEqualRect: function (expect) {
@@ -27,7 +29,7 @@ KISSY.add(function (S, AlignExtension, Control) {
 
 
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
@@ -229,7 +231,7 @@ KISSY.add(function (S, AlignExtension, Control) {
                     );
 
                     expect(target.offset().top).toBeEqual(
-                        containerOffset.top + 30
+                            containerOffset.top + 30
                     );
 
                     obj.align(lower, ['bl', 'tl'], undefined, {
@@ -249,7 +251,7 @@ KISSY.add(function (S, AlignExtension, Control) {
                     );
 
                     expect(target.offset().top).toBeEqual(
-                        containerOffset.top + 30
+                            containerOffset.top + 30
                     );
                 })();
 
@@ -293,7 +295,7 @@ KISSY.add(function (S, AlignExtension, Control) {
                     );
 
                     expect(target.offset().top).toBeEqual(
-                        containerOffset.top - 10
+                            containerOffset.top - 10
                     );
 
                     obj.align(lower, ['tl', 'bl'], undefined, {
@@ -314,7 +316,7 @@ KISSY.add(function (S, AlignExtension, Control) {
                     );
 
                     expect(target.offset().top).toBeEqual(
-                        containerOffset.top + 10
+                            containerOffset.top + 10
                     );
                 })();
 
@@ -322,7 +324,4 @@ KISSY.add(function (S, AlignExtension, Control) {
         });
 
     });
-}, {
-    requires: ['component/extension/align',
-        'component/control']
 });
