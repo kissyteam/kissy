@@ -571,7 +571,7 @@ KISSY.add(function (S, require) {
                     // will not be visible.
                     // opera move out of this element
                     if (range.collapsed &&
-                        ((UA.gecko && UA.gecko < 1.0900) || UA.opera || UA.webkit) &&
+                        ((UA.gecko && UA.gecko < 1.0900) || UA.webkit) &&
                         startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(

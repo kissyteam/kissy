@@ -2,12 +2,12 @@
  * Test Dom for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var Dom = require('dom'),
         $ = S.all;
 
     /*jshint quotmark:false*/
-
+    /*jshint quotmark:false*/
     describe("dom", function () {
         it("_4eIsBlockBoundary works", function () {
             var div = Dom.create("<div>");
@@ -17,12 +17,11 @@ KISSY.add(function (S) {
             expect(Dom._4eIsBlockBoundary(div)).toBe(true);
             expect(Dom._4eIsBlockBoundary(span)).toBe(false);
             expect(Dom._4eIsBlockBoundary(span, {
-                span:1
+                span: 1
             })).toBe(true);
             Dom.remove(div);
             Dom.remove(span);
         });
-
 
         it("_4eIndex works", function () {
             var div = Dom.create("<div><span>1</span><span>2</span></div>");
@@ -46,7 +45,6 @@ KISSY.add(function (S) {
             Dom.remove(div);
             Dom.remove(span);
         });
-
 
         it("nodeName works", function () {
             expect(Dom.nodeName(Dom.create("<div>"))).toBe('div');
@@ -108,28 +106,27 @@ KISSY.add(function (S) {
 
             expect(div.innerHTML.toLowerCase().replace(/=(\w+)/g, "=\"$1\""))
                 .toBe([
-                "<span class='target'>" ,
-                // "1<b>2</b>" ,
-                "<span class='innerlast'>" ,
-                "innerlast1" ,
-                "<span id='s1' _ke_bookmark='1'></span>" ,
-                "<b id='b1'></b>" ,
-                "innerfirst2" ,
-                "</span>" ,
-                "3<b>4</b>" ,
-                "<span class='innerlast'>" ,
-                "innerlast2" ,
-                "<span id='s2' _ke_bookmark='1'></span>" ,
-                "<b id='b2'></b>" ,
-                "innerfirst3" ,
-                "</span>" ,
-                // "5<b>6</b>" ,
-                "</span>"
-            ].join("").replace(/'/g, '"'));
+                    "<span class='target'>" ,
+                    // "1<b>2</b>" ,
+                    "<span class='innerlast'>" ,
+                    "innerlast1" ,
+                    "<span id='s1' _ke_bookmark='1'></span>" ,
+                    "<b id='b1'></b>" ,
+                    "innerfirst2" ,
+                    "</span>" ,
+                    "3<b>4</b>" ,
+                    "<span class='innerlast'>" ,
+                    "innerlast2" ,
+                    "<span id='s2' _ke_bookmark='1'></span>" ,
+                    "<b id='b2'></b>" ,
+                    "innerfirst3" ,
+                    "</span>" ,
+                    // "5<b>6</b>" ,
+                    "</span>"
+                ].join("").replace(/'/g, '"'));
 
             Dom.remove(div);
         });
-
 
         it("_4eAddress works", function () {
             var div = $("<div><span>1<span></span></span></div>");
@@ -139,9 +136,5 @@ KISSY.add(function (S) {
             expect(span._4eAddress()).toEqual([bodyIndex, 0, 0, 1]);
             div.remove();
         });
-
     });
-
-},{
-    requires:['editor']
 });

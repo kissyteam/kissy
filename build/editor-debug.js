@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:21
+build time: Apr 25 13:52
 */
 /*
 combined modules:
@@ -720,7 +720,7 @@ KISSY.add('editor', [
             // which will cause host page scrolling.(#4397)
             setTimeout(function () {
                 // Prefer 'contentEditable' instead of 'designMode'. (#3593)
-                if (UA.gecko || UA.opera) {
+                if (UA.gecko) {
                     body.contentEditable = TRUE;
                 } else if (UA.webkit) {
                     body.parentNode.contentEditable = TRUE;
@@ -740,7 +740,7 @@ KISSY.add('editor', [
             // 2012-01-11 ie 处理装移到 selection.js :
             // IE has an issue where you can't select/move the caret by clicking outside the body if the document is in standards mode
             // doc['documentMode']
-            UA.gecko || UA.opera) {
+            UA.gecko) {
             var htmlElement = doc.documentElement;
             $(htmlElement).on('mousedown', function (evt) {
                 // Setting focus directly on editor doesn't work, we
@@ -870,7 +870,7 @@ KISSY.add('editor', [
             });
         }    // Create an invisible element to grab focus.
         // Create an invisible element to grab focus.
-        if (UA.gecko || UA.ie || UA.opera) {
+        if (UA.gecko || UA.ie) {
             var focusGrabber;
             focusGrabber = new Node(// Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
             '<span ' + 'tabindex="-1" ' + 'style="position:absolute; left:-10000"' + ' role="presentation"' + '></span>').insertAfter(textarea);
@@ -895,8 +895,6 @@ KISSY.add('editor', [
              */
             if (UA.gecko) {
                 blinkCursor(doc, FALSE);
-            } else if (UA.opera) {
-                doc.body.focus();
             }    // focus 后强制刷新自己状态
             // focus 后强制刷新自己状态
             self.notifySelectionChange();
@@ -1328,11 +1326,12 @@ KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
  */
 KISSY.add('editor/utils', [
     'node',
-    './base'
+    './base',
+    'dom'
 ], function (S, require) {
     var Node = require('node');
     var Editor = require('./base');
-    var TRUE = true, FALSE = false, NULL = null, Dom = S.require('dom'), UA = S.UA,
+    var TRUE = true, FALSE = false, NULL = null, Dom = require('dom'), UA = S.UA,
         /**
          * Utilities for Editor.
          * @class KISSY.Editor.Utils
@@ -1539,6 +1538,7 @@ KISSY.add('editor/utils', [
     Editor.Utils = Utils;
     return Utils;
 });
+
 /**
  * focus management
  * @ignore
@@ -1907,7 +1907,7 @@ KISSY.add('editor/clipboard', [
             if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\/)?>)*<\/p>|(\r\n))*$/gi)) {
                 return 0;
             }
-        } else if (UA.gecko || UA.opera) {
+        } else if (UA.gecko) {
             // Text or <br>.
             if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi)) {
                 return 0;
@@ -1936,7 +1936,7 @@ KISSY.add('editor/clipboard', [
             if (html.match(/<\/div><div>/)) {
                 html = html.replace(/<\/div><div>/g, '</p><p>').replace(/^<div>/, '<p>').replace(/^<\/div>/, '</p>');
             }
-        } else if (UA.gecko || UA.opera) {
+        } else if (UA.gecko) {
             // Opera and Firefox and enterMode !== BR.
             //  bogus <br>
             if (UA.gecko) {
@@ -2100,7 +2100,8 @@ KISSY.add('editor/range', [
     './utils',
     './walker',
     './base',
-    './element-path'
+    './element-path',
+    'dom'
 ], function (S, require) {
     require('./dom');
     var Node = require('node');
@@ -2132,7 +2133,7 @@ KISSY.add('editor/range', [
         SHRINK_ELEMENT: 1,
         SHRINK_TEXT: 2
     };
-    var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.require('dom'), UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = { td: 1 }, EMPTY = {
+    var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = require('dom'), UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = { td: 1 }, EMPTY = {
             area: 1,
             base: 1,
             br: 1,
@@ -3555,12 +3556,13 @@ KISSY.add('editor/range', [
 KISSY.add('editor/dom', [
     'node',
     './base',
-    './utils'
+    './utils',
+    'dom'
 ], function (S, require) {
     var Node = require('node');
     var Editor = require('./base');
     var Utils = require('./utils');
-    var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = S.require('dom'), NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {
+    var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = require('dom'), NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {
             a: 1,
             abbr: 1,
             acronym: 1,
@@ -4031,7 +4033,7 @@ KISSY.add('editor/dom', [
                     }
                     break;
                 }
-                if (!UA.ie && !UA.opera) {
+                if (!UA.ie) {
                     child = el.lastChild;
                     if (child && child.nodeType === 1 && Dom.nodeName(child) === 'br') {
                         el.removeChild(child);
@@ -4046,12 +4048,7 @@ KISSY.add('editor/dom', [
                     lastChild = lastChild.previousSibling;
                 }
                 if (!lastChild || lastChild.nodeType === Dom.NodeType.TEXT_NODE || Dom.nodeName(lastChild) !== 'br') {
-                    bogus = UA.opera ? el.ownerDocument.createTextNode('') : el.ownerDocument.createElement('br');    //                    if (UA.gecko) {
-                                                                                                                      //                        bogus.setAttribute('type', '_moz');
-                                                                                                                      //                    }
-                    //                    if (UA.gecko) {
-                    //                        bogus.setAttribute('type', '_moz');
-                    //                    }
+                    bogus = el.ownerDocument.createElement('br');
                     el.appendChild(bogus);
                 }
             },
@@ -4181,10 +4178,11 @@ KISSY.add('editor/dom', [
  */
 KISSY.add('editor/walker', [
     './base',
+    'dom',
     'node'
 ], function (S, require) {
     var Editor = require('./base');
-    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'), dtd = Editor.XHTML_DTD, Node = require('node');
+    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = require('dom'), dtd = Editor.XHTML_DTD, Node = require('node');
     function iterate(rtl, breakOnFalseRetFalse) {
         var self = this;    // Return NULL if we have reached the end.
         // Return NULL if we have reached the end.
@@ -4516,12 +4514,13 @@ KISSY.add('editor/walker', [
 KISSY.add('editor/element-path', [
     'node',
     './base',
-    './dom'
+    './dom',
+    'dom'
 ], function (S, require) {
     require('node');
     var Editor = require('./base');
     require('./dom');
-    var Dom = S.require('dom'), dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null,
+    var Dom = require('dom'), dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null,
         // Elements that may be considered the "Block boundary" in an element path.
         pathBlockElements = {
             address: 1,
@@ -4658,7 +4657,8 @@ KISSY.add('editor/selection', [
     'node',
     './walker',
     './range',
-    './base'
+    './base',
+    'dom'
 ], function (S, require) {
     var Node = require('node');
     var Walker = require('./walker');
@@ -4676,7 +4676,7 @@ KISSY.add('editor/selection', [
         SELECTION_TEXT: 2,
         SELECTION_ELEMENT: 3
     };
-    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'),
+    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = require('dom'),
         //tryThese = Editor.Utils.tryThese,
         KES = Editor.SelectionType, KER = Editor.RangeType,
         // ie9 仍然采用老的 range api，发现新的不稳定
@@ -5144,7 +5144,7 @@ KISSY.add('editor/selection', [
                     // element, we must add something to it otherwise the caret
                     // will not be visible.
                     // opera move out of this element
-                    if (range.collapsed && (UA.gecko && UA.gecko < 1.09 || UA.opera || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+                    if (range.collapsed && (UA.gecko && UA.gecko < 1.09 || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(self.document.createTextNode(UA.webkit ? '\u200B' : ''));
                         range.startOffset++;
@@ -5381,16 +5381,19 @@ KISSY.add('editor/selection', [
  */
 KISSY.add('editor/enter-key', [
     'node',
+    'ua',
     './walker',
     './base',
     './element-path'
 ], function (S, require) {
     var Node = require('node');
+    var $ = Node.all;
+    var UA = require('ua');
     var Walker = require('./walker');
     var Editor = require('./base');
     var ElementPath = require('./element-path');
     var OLD_IE = S.UA.ieMode < 11;
-    var headerTagRegex = /^h[1-6]$/, dtd = Editor.XHTML_DTD;
+    var headerPreTagRegex = /^(?:h[1-6])|(?:pre)$/i, dtd = Editor.XHTML_DTD;
     function getRange(editor) {
         // Get the selection ranges.
         var ranges = editor.getSelection().getRanges();    // Delete the contents of all ranges except the first one.
@@ -5404,11 +5407,11 @@ KISSY.add('editor/enter-key', [
     function enterBlock(editor) {
         // Get the range for the current selection.
         var range = getRange(editor);
-        var doc = range.document;    // Exit the list when we're inside an empty list item block. (#5376)
+        var doc = range.document;
+        var path = new ElementPath(range.startContainer), isStartOfBlock = range.checkStartOfBlock(), isEndOfBlock = range.checkEndOfBlock(), block = path.block;    // Exit the list when we're inside an empty list item block. (#5376)
         // Exit the list when we're inside an empty list item block. (#5376)
-        if (range.checkStartOfBlock() && range.checkEndOfBlock()) {
-            var path = new ElementPath(range.startContainer), block = path.block;    //只有两层？
-            //只有两层？
+        if (isStartOfBlock && isEndOfBlock) {
+            // 只有两层？
             if (block && (block.nodeName() === 'li' || block.parent().nodeName() === 'li')) {
                 if (editor.hasCommand('outdent')) {
                     editor.execCommand('save');
@@ -5418,6 +5421,26 @@ KISSY.add('editor/enter-key', [
                 } else {
                     return false;
                 }
+            }
+        } else if (block && block.nodeName() === 'pre') {
+            // Don't split <pre> if we're in the middle of it, add \r or br
+            if (!isEndOfBlock) {
+                // insert '\r'
+                var lineBreak = UA.ieMode < 9 ? $(doc.createTextNode('\r')) : $(doc.createElement('br'));
+                range.insertNode(lineBreak);
+                if (UA.ieMode < 9) {
+                    // empty character to force wrap line in ie<9
+                    lineBreak = $(doc.createTextNode('\uFEFF')).insertAfter(lineBreak);
+                    range.setStartAt(lineBreak, Editor.RangeType.POSITION_AFTER_START);
+                } else {
+                    range.setStartAfter(lineBreak);
+                }
+                range.collapse(true);
+                range.select();
+                if (UA.ieMode < 9) {
+                    lineBreak[0].nodeValue = '';
+                }
+                return;
             }
         }    // Determine the block element to be used.
         // Determine the block element to be used.
@@ -5429,7 +5452,8 @@ KISSY.add('editor/enter-key', [
         }    // Get the current blocks.
         // Get the current blocks.
         var previousBlock = splitInfo.previousBlock, nextBlock = splitInfo.nextBlock;
-        var isStartOfBlock = splitInfo.wasStartOfBlock, isEndOfBlock = splitInfo.wasEndOfBlock;
+        isStartOfBlock = splitInfo.wasStartOfBlock;
+        isEndOfBlock = splitInfo.wasEndOfBlock;
         var node;    // If this is a block under a list item, split it as well. (#1647)
         // If this is a block under a list item, split it as well. (#1647)
         if (nextBlock) {
@@ -5468,7 +5492,8 @@ KISSY.add('editor/enter-key', [
                 // Do not enter this block if it's a header tag, or we are in
                 // a Shift+Enter (#77). Create a new block element instead
                 // (later in the code).
-                if (previousBlock.nodeName() === 'li' || !headerTagRegex.test(previousBlock.nodeName())) {
+                // end of pre, start p
+                if (previousBlock.nodeName() === 'li' || !headerPreTagRegex.test(previousBlock.nodeName())) {
                     // Otherwise, duplicate the previous block.
                     newBlock = previousBlock.clone();
                 }
@@ -5571,6 +5596,7 @@ KISSY.add('editor/enter-key', [
         }
     };
 });
+
 /**
  * @ignore
  * Process malformed html for kissy editor.
@@ -5581,31 +5607,42 @@ KISSY.add('editor/enter-key', [
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add('editor/html-data-processor', [
-    './base',
-    'html-parser'
+    'html-parser',
+    'node'
 ], function (S, require) {
-    var Editor = require('./base');
     var HtmlParser = require('html-parser');
     var OLD_IE = S.UA.ieMode < 11;
-    return {
-        init: function (editor) {
-            var Node = S.Node, UA = S.UA, htmlFilter = new HtmlParser.Filter(), dataFilter = new HtmlParser.Filter();    // remove empty inline element
-            // remove empty inline element
-            function filterInline(element) {
-                var childNodes = element.childNodes, i, child, allEmpty, l = childNodes.length;
-                if (l) {
-                    allEmpty = 1;
-                    for (i = 0; i < l; i++) {
-                        child = childNodes[i];
-                        if (!(child.nodeType === S.require('dom').NodeType.TEXT_NODE && !child.nodeValue)) {
-                            allEmpty = 0;
-                            break;
-                        }
-                    }
-                    return allEmpty ? false : undefined;
-                } else {
+    var Node = require('node');
+    var dtd = HtmlParser.DTD;
+    var NodeType = Node.NodeType;    // <span></span> <span><span></span></span>
+    // <span></span> <span><span></span></span>
+    function isEmptyElement(el) {
+        if (!dtd.$removeEmpty[el.nodeName]) {
+            return false;
+        }
+        var childNodes = el.childNodes, i, child, l = childNodes.length;
+        if (l) {
+            for (i = 0; i < l; i++) {
+                child = childNodes[i];
+                var nodeType = child.nodeType;
+                if (!(nodeType === NodeType.TEXT_NODE && !child.nodeValue)) {
                     return false;
                 }
+                if (!isEmptyElement(child)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return true;
+        }
+    }
+    return {
+        init: function (editor) {
+            var UA = S.UA, htmlFilter = new HtmlParser.Filter(), dataFilter = new HtmlParser.Filter();    // remove empty inline element
+            // remove empty inline element
+            function filterInline(element) {
+                return !isEmptyElement(element);
             }
             (function () {
                 function wrapAsComment(element) {
@@ -5780,7 +5817,7 @@ KISSY.add('editor/html-data-processor', [
                 // Return the last non-space child node of the block (#4344).
                 function lastNoneSpaceChild(block) {
                     var childNodes = block.childNodes, lastIndex = childNodes.length, last = childNodes[lastIndex - 1];
-                    while (last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
+                    while (last && (last.nodeType === 3 && !S.trim(last.nodeValue) || last.nodeType === 1 && isEmptyElement(last))) {
                         last = childNodes[--lastIndex];
                     }
                     return last;
@@ -5823,7 +5860,6 @@ KISSY.add('editor/html-data-processor', [
                     }
                 }    // Find out the list of block-like tags that can contain <br>.
                 // Find out the list of block-like tags that can contain <br>.
-                var dtd = Editor.XHTML_DTD;
                 var blockLikeTags = S.merge(dtd.$block, dtd.$listItem, dtd.$tableContent), i;
                 for (i in blockLikeTags) {
                     if (!('br' in dtd[i])) {
@@ -5984,12 +6020,13 @@ KISSY.add('editor/html-data-processor', [
 KISSY.add('editor/selection-fix', [
     './base',
     './selection',
-    'node'
+    'node',
+    'dom'
 ], function (S, require) {
     var Editor = require('./base');
     require('./selection');
     var Node = require('node');
-    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'), KES = Editor.SelectionType;    /*
+    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = require('dom'), KES = Editor.SelectionType;    /*
      2012-01-11 借鉴 tinymce
      解决：ie 没有滚动条时，点击窗口空白区域，光标不能正确定位
      */
@@ -6472,14 +6509,15 @@ KISSY.add('editor/styles', [
     './selection',
     './range',
     './base',
-    './element-path'
+    './element-path',
+    'dom'
 ], function (S, require) {
     var Node = require('node');
     var KESelection = require('./selection');
     var KERange = require('./range');
     var Editor = require('./base');
     var ElementPath = require('./element-path');
-    var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = S.require('dom'), KER = Editor.RangeType, KEP = Editor.PositionType, KEST, UA = S.UA, blockElements = {
+    var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = require('dom'), KER = Editor.RangeType, KEP = Editor.PositionType, KEST, UA = S.UA, blockElements = {
             address: 1,
             div: 1,
             h1: 1,
@@ -7627,14 +7665,15 @@ KISSY.add('editor/dom-iterator', [
     './walker',
     './range',
     './base',
-    './element-path'
+    './element-path',
+    'dom'
 ], function (S, require) {
     var Node = require('node');
     var Walker = require('./walker');
     var KERange = require('./range');
     var Editor = require('./base');
     var ElementPath = require('./element-path');
-    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, KER = Editor.RangeType, Dom = S.require('dom');    /**
+    var TRUE = true, FALSE = false, NULL = null, UA = S.UA, KER = Editor.RangeType, Dom = require('dom');    /**
      * iterator for range
      * @class KISSY.Editor.Iterator
      * @param range {KISSY.Editor.Range}

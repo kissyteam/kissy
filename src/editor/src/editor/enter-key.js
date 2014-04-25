@@ -9,11 +9,13 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
+    var $ = Node.all;
+    var UA = require('ua');
     var Walker = require('./walker');
     var Editor = require('./base');
     var ElementPath = require('./element-path');
     var OLD_IE = S.UA.ieMode < 11;
-    var headerTagRegex = /^h[1-6]$/,
+    var headerPreTagRegex = /^(?:h[1-6])|(?:pre)$/i,
         dtd = Editor.XHTML_DTD;
 
     function getRange(editor) {
@@ -31,14 +33,14 @@ KISSY.add(function (S, require) {
         // Get the range for the current selection.
         var range = getRange(editor);
         var doc = range.document;
+        var path = new ElementPath(range.startContainer),
+            isStartOfBlock = range.checkStartOfBlock(),
+            isEndOfBlock = range.checkEndOfBlock(),
+            block = path.block;
         // Exit the list when we're inside an empty list item block. (#5376)
-        if (range.checkStartOfBlock() && range.checkEndOfBlock()) {
-            var path = new ElementPath(range.startContainer),
-                block = path.block;
-            //只有两层？
-            if (block &&
-                (block.nodeName() === 'li' ||
-                    block.parent().nodeName() === 'li')) {
+        if (isStartOfBlock && isEndOfBlock) {
+            // 只有两层？
+            if (block && (block.nodeName() === 'li' || block.parent().nodeName() === 'li')) {
                 if (editor.hasCommand('outdent')) {
                     editor.execCommand('save');
                     editor.execCommand('outdent');
@@ -48,6 +50,26 @@ KISSY.add(function (S, require) {
                     return false;
                 }
             }
+        } else if (block && block.nodeName() === 'pre') {
+            // Don't split <pre> if we're in the middle of it, add \r or br
+            if (!isEndOfBlock) {
+                // insert '\r'
+                var lineBreak = UA.ieMode < 9 ? $(doc.createTextNode('\r')) : $(doc.createElement('br'));
+                range.insertNode(lineBreak);
+                if (UA.ieMode < 9) {
+                    // empty character to force wrap line in ie<9
+                    lineBreak = $(doc.createTextNode('\ufeff')).insertAfter(lineBreak);
+                    range.setStartAt(lineBreak, Editor.RangeType.POSITION_AFTER_START);
+                } else {
+                    range.setStartAfter(lineBreak);
+                }
+                range.collapse(true);
+                range.select();
+                if (UA.ieMode < 9) {
+                    lineBreak[0].nodeValue = '';
+                }
+                return;
+            }
         }
 
         // Determine the block element to be used.
@@ -56,7 +78,7 @@ KISSY.add(function (S, require) {
         // Split the range.
         var splitInfo = range.splitBlock(blockTag);
 
-        if (!splitInfo){
+        if (!splitInfo) {
             return true;
         }
 
@@ -64,8 +86,8 @@ KISSY.add(function (S, require) {
         var previousBlock = splitInfo.previousBlock,
             nextBlock = splitInfo.nextBlock;
 
-        var isStartOfBlock = splitInfo.wasStartOfBlock,
-            isEndOfBlock = splitInfo.wasEndOfBlock;
+        isStartOfBlock = splitInfo.wasStartOfBlock;
+        isEndOfBlock = splitInfo.wasEndOfBlock;
 
         var node;
 
@@ -81,7 +103,7 @@ KISSY.add(function (S, require) {
             range.moveToElementEditablePosition(previousBlock.next());
             previousBlock._4eMove(previousBlock.prev());
         }
-        
+
         var newBlock;
 
         // If we have both the previous and next blocks, it means that the
@@ -93,13 +115,13 @@ KISSY.add(function (S, require) {
             // wouldn't be editable. (#1420)
             if (nextBlock.nodeName() === 'li' &&
                 (node = nextBlock.first(Walker.invisible(true))) &&
-                S.inArray(node.nodeName(), ['ul', 'ol'])){
+                S.inArray(node.nodeName(), ['ul', 'ol'])) {
                 (OLD_IE ? new Node(doc.createTextNode('\xa0')) :
                     new Node(doc.createElement('br'))).insertBefore(node);
             }
 
             // Move the selection to the end block.
-            if (nextBlock){
+            if (nextBlock) {
                 range.moveToElementEditablePosition(nextBlock);
             }
         } else {
@@ -107,15 +129,16 @@ KISSY.add(function (S, require) {
                 // Do not enter this block if it's a header tag, or we are in
                 // a Shift+Enter (#77). Create a new block element instead
                 // (later in the code).
-                if (previousBlock.nodeName() === 'li' || !headerTagRegex.test(previousBlock.nodeName())) {
+                // end of pre, start p
+                if (previousBlock.nodeName() === 'li' || !(headerPreTagRegex.test(previousBlock.nodeName()))) {
                     // Otherwise, duplicate the previous block.
                     newBlock = previousBlock.clone();
                 }
-            } else if (nextBlock){
+            } else if (nextBlock) {
                 newBlock = nextBlock.clone();
             }
 
-            if (!newBlock){
+            if (!newBlock) {
                 newBlock = new Node('<' + blockTag + '>', null, doc);
             }
 
@@ -128,7 +151,7 @@ KISSY.add(function (S, require) {
                     var element = elementPath.elements[ i ];
 
                     if (element.equals(elementPath.block) ||
-                        element.equals(elementPath.blockLimit)){
+                        element.equals(elementPath.blockLimit)) {
                         break;
                     }
                     //<li><strong>^</strong></li>
@@ -140,7 +163,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            if (!OLD_IE){
+            if (!OLD_IE) {
                 newBlock._4eAppendBogus();
             }
 

@@ -337,7 +337,7 @@ KISSY.add(function (S, require) {
             if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\/)?>)*<\/p>|(\r\n))*$/gi)) {
                 return 0;
             }
-        } else if (UA.gecko || UA.opera) {
+        } else if (UA.gecko) {
             // Text or <br>.
             if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi)) {
                 return 0;
@@ -378,7 +378,7 @@ KISSY.add(function (S, require) {
                     .replace(/^<div>/, '<p>')
                     .replace(/^<\/div>/, '</p>');
             }
-        } else if (UA.gecko || UA.opera) {
+        } else if (UA.gecko) {
             // Opera and Firefox and enterMode !== BR.
             //  bogus <br>
             if (UA.gecko) {

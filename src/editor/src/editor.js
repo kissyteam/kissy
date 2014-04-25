@@ -796,7 +796,7 @@ KISSY.add(function (S, require, exports, module) {
             // which will cause host page scrolling.(#4397)
             setTimeout(function () {
                 // Prefer 'contentEditable' instead of 'designMode'. (#3593)
-                if (UA.gecko || UA.opera) {
+                if (UA.gecko) {
                     body.contentEditable = TRUE;
                 } else if (UA.webkit) {
                     body.parentNode.contentEditable = TRUE;
@@ -818,7 +818,7 @@ KISSY.add(function (S, require, exports, module) {
         // 2012-01-11 ie 处理装移到 selection.js :
         // IE has an issue where you can't select/move the caret by clicking outside the body if the document is in standards mode
         // doc['documentMode']
-            UA.gecko || UA.opera
+            UA.gecko
             ) {
             var htmlElement = doc.documentElement;
             $(htmlElement).on('mousedown', function (evt) {
@@ -950,7 +950,7 @@ KISSY.add(function (S, require, exports, module) {
         }
 
         // Create an invisible element to grab focus.
-        if (UA.gecko || UA.ie || UA.opera) {
+        if (UA.gecko || UA.ie) {
             var focusGrabber;
             focusGrabber = new Node(
                 // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
@@ -981,8 +981,6 @@ KISSY.add(function (S, require, exports, module) {
              */
             if (UA.gecko) {
                 blinkCursor(doc, FALSE);
-            } else if (UA.opera) {
-                doc.body.focus();
             }
             // focus 后强制刷新自己状态
             self.notifySelectionChange();

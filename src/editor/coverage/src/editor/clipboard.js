@@ -653,7 +653,7 @@ function visit46_387_1(result) {
 function visit45_384_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['384'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['381'][1].init(1036, 20, 'UA.gecko || UA.opera');
+}_$jscoverage['/editor/clipboard.js'].branchData['381'][1].init(1036, 8, 'UA.gecko');
 function visit44_381_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['381'][1].ranCondition(result);
   return result;
@@ -681,7 +681,7 @@ function visit39_359_1(result) {
 function visit38_342_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['342'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/clipboard.js'].branchData['340'][1].init(566, 20, 'UA.gecko || UA.opera');
+}_$jscoverage['/editor/clipboard.js'].branchData['340'][1].init(566, 8, 'UA.gecko');
 function visit37_340_1(result) {
   _$jscoverage['/editor/clipboard.js'].branchData['340'][1].ranCondition(result);
   return result;
@@ -1194,7 +1194,7 @@ KISSY.add(function(S, require) {
         }
       } else {
         _$jscoverage['/editor/clipboard.js'].lineData[340]++;
-        if (visit37_340_1(UA.gecko || UA.opera)) {
+        if (visit37_340_1(UA.gecko)) {
           _$jscoverage['/editor/clipboard.js'].lineData[342]++;
           if (visit38_342_1(!html.match(/^([^<]|<br( ?\/)?>)*$/gi))) {
             _$jscoverage['/editor/clipboard.js'].lineData[343]++;
@@ -1239,7 +1239,7 @@ KISSY.add(function(S, require) {
       }
     } else {
       _$jscoverage['/editor/clipboard.js'].lineData[381]++;
-      if (visit44_381_1(UA.gecko || UA.opera)) {
+      if (visit44_381_1(UA.gecko)) {
         _$jscoverage['/editor/clipboard.js'].lineData[384]++;
         if (visit45_384_1(UA.gecko)) {
           _$jscoverage['/editor/clipboard.js'].lineData[385]++;

@@ -577,7 +577,7 @@ KISSY.add(function (S, require) {
                     break;
                 }
 
-                if (!UA.ie && !UA.opera) {
+                if (!UA.ie) {
                     child = el.lastChild;
                     if (child &&
                         child.nodeType === 1 &&
@@ -600,12 +600,7 @@ KISSY.add(function (S, require) {
                 if (!lastChild ||
                     lastChild.nodeType === Dom.NodeType.TEXT_NODE ||
                     Dom.nodeName(lastChild) !== 'br') {
-                    bogus = UA.opera ?
-                        el.ownerDocument.createTextNode('') :
-                        el.ownerDocument.createElement('br');
-//                    if (UA.gecko) {
-//                        bogus.setAttribute('type', '_moz');
-//                    }
+                    bogus = el.ownerDocument.createElement('br');
                     el.appendChild(bogus);
                 }
             },

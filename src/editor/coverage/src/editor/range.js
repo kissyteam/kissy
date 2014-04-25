@@ -1351,1007 +1351,1007 @@ if (! _$jscoverage['/editor/range.js'].branchData) {
   _$jscoverage['/editor/range.js'].branchData['1750'][1] = new BranchData();
 }
 _$jscoverage['/editor/range.js'].branchData['1750'][1].init(776, 4, 'last');
-function visit625_1750_1(result) {
+function visit636_1750_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1750'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1740'][1].init(236, 50, 'self.checkStartOfBlock() && self.checkEndOfBlock()');
-function visit624_1740_1(result) {
+function visit635_1740_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1740'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1736'][2].init(131, 32, 'tmpDtd && tmpDtd[elementName]');
-function visit623_1736_2(result) {
+function visit634_1736_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1736'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1736'][1].init(90, 74, '(tmpDtd = dtd[current.nodeName()]) && !(tmpDtd && tmpDtd[elementName])');
-function visit622_1736_1(result) {
+function visit633_1736_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1736'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1734'][1].init(263, 7, 'isBlock');
-function visit621_1734_1(result) {
+function visit632_1734_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1734'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1717'][1].init(118, 43, 'domNode.nodeType === Dom.NodeType.TEXT_NODE');
-function visit620_1717_1(result) {
+function visit631_1717_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1717'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1697'][2].init(493, 44, 'el[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit619_1697_2(result) {
+function visit630_1697_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1697'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1697'][1].init(493, 66, 'el[0].nodeType === Dom.NodeType.ELEMENT_NODE && el._4eIsEditable()');
-function visit618_1697_1(result) {
+function visit629_1697_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1697'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1688'][1].init(87, 41, 'el[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit617_1688_1(result) {
+function visit628_1688_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1688'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1677'][1].init(286, 19, '!childOnly && !next');
-function visit616_1677_1(result) {
+function visit627_1677_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1677'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1672'][2].init(51, 46, 'node[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit615_1672_2(result) {
+function visit626_1672_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1672'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1672'][1].init(51, 91, 'node[0].nodeType === Dom.NodeType.ELEMENT_NODE && node._4eIsEditable()');
-function visit614_1672_1(result) {
+function visit625_1672_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1672'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1641'][1].init(48, 15, '!self.collapsed');
-function visit613_1641_1(result) {
+function visit624_1641_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1641'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1619'][1].init(301, 57, '!UA.ie && !S.inArray(startBlock.nodeName(), [\'ul\', \'ol\'])');
-function visit612_1619_1(result) {
+function visit623_1619_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1619'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1610'][1].init(254, 14, 'isStartOfBlock');
-function visit611_1610_1(result) {
+function visit622_1610_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1610'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1606'][1].init(22, 12, 'isEndOfBlock');
-function visit610_1606_1(result) {
+function visit621_1606_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1606'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1605'][2].init(1291, 29, 'startBlock[0] === endBlock[0]');
-function visit609_1605_2(result) {
+function visit620_1605_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1605'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1605'][1].init(1277, 43, 'startBlock && startBlock[0] === endBlock[0]');
-function visit608_1605_1(result) {
+function visit619_1605_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1605'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1600'][1].init(92, 34, 'endBlock && self.checkEndOfBlock()');
-function visit607_1600_1(result) {
+function visit618_1600_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1600'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1599'][1].init(1067, 38, 'startBlock && self.checkStartOfBlock()');
-function visit606_1599_1(result) {
+function visit617_1599_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1599'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1593'][1].init(218, 9, '!endBlock');
-function visit605_1593_1(result) {
+function visit616_1593_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1593'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1588'][1].init(22, 11, '!startBlock');
-function visit604_1588_1(result) {
+function visit615_1588_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1588'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1587'][1].init(642, 17, 'blockTag !== \'br\'');
-function visit603_1587_1(result) {
+function visit614_1587_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1587'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1582'][1].init(493, 38, '!startBlockLimit.equals(endBlockLimit)');
-function visit602_1582_1(result) {
+function visit613_1582_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1582'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1558'][1].init(362, 6, '!UA.ie');
-function visit601_1558_1(result) {
+function visit612_1558_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1558'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1533'][1].init(2408, 55, 'startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING');
-function visit600_1533_1(result) {
+function visit611_1533_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1533'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1518'][1].init(311, 16, 'childCount === 0');
-function visit599_1518_1(result) {
+function visit610_1518_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1518'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1514'][1].init(82, 22, 'childCount > endOffset');
-function visit598_1514_1(result) {
+function visit609_1514_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1514'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1512'][1].init(1396, 49, 'endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit597_1512_1(result) {
+function visit608_1512_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1512'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1508'][1].init(612, 42, 'startNode._4eNextSourceNode() || startNode');
-function visit596_1508_1(result) {
+function visit607_1508_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1508'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1492'][1].init(215, 16, 'childCount === 0');
-function visit595_1492_1(result) {
+function visit606_1492_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1492'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1490'][1].init(84, 24, 'childCount > startOffset');
-function visit594_1490_1(result) {
+function visit605_1490_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1490'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1488'][1].init(269, 51, 'startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit593_1488_1(result) {
+function visit604_1488_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1488'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1472'][1].init(7, 23, 'checkType === KER.START');
-function visit592_1472_1(result) {
+function visit603_1472_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1472'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1465'][1].init(224, 23, 'checkType === KER.START');
-function visit591_1465_1(result) {
+function visit602_1465_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1465'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1463'][1].init(12, 23, 'checkType === KER.START');
-function visit590_1463_1(result) {
+function visit601_1463_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1463'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1447'][1].init(1138, 29, 'path.block || path.blockLimit');
-function visit589_1447_1(result) {
+function visit600_1447_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1447'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1430'][1].init(111, 16, 'textAfter.length');
-function visit588_1430_1(result) {
+function visit599_1430_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1430'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1428'][1].init(271, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit587_1428_1(result) {
+function visit598_1428_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1428'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1410'][1].init(1197, 29, 'path.block || path.blockLimit');
-function visit586_1410_1(result) {
+function visit597_1410_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1410'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1393'][1].init(119, 17, 'textBefore.length');
-function visit585_1393_1(result) {
+function visit596_1393_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1393'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1391'][2].init(316, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit584_1391_2(result) {
+function visit595_1391_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1391'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1391'][1].init(301, 68, 'startOffset && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit583_1391_1(result) {
+function visit594_1391_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1391'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1373'][1].init(4452, 6, 'tailBr');
-function visit582_1373_1(result) {
+function visit593_1373_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1373'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1368'][3].init(130, 50, 'enlargeable && blockBoundary.contains(enlargeable)');
-function visit581_1368_3(result) {
+function visit592_1368_3(result) {
   _$jscoverage['/editor/range.js'].branchData['1368'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1368'][2].init(88, 38, '!enlargeable && self.checkEndOfBlock()');
-function visit580_1368_2(result) {
+function visit591_1368_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1368'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1368'][1].init(88, 92, '!enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable)');
-function visit579_1368_1(result) {
+function visit590_1368_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1368'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1362'][1].init(3753, 21, 'blockBoundary || body');
-function visit578_1362_1(result) {
+function visit589_1362_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1362'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1354'][1].init(3324, 39, 'unit === KER.ENLARGE_LIST_ITEM_CONTENTS');
-function visit577_1354_1(result) {
+function visit588_1354_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1354'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1343'][3].init(596, 50, 'enlargeable && blockBoundary.contains(enlargeable)');
-function visit576_1343_3(result) {
+function visit587_1343_3(result) {
   _$jscoverage['/editor/range.js'].branchData['1343'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1343'][2].init(552, 40, '!enlargeable && self.checkStartOfBlock()');
-function visit575_1343_2(result) {
+function visit586_1343_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1343'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1343'][1].init(552, 94, '!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable)');
-function visit574_1343_1(result) {
+function visit585_1343_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1343'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1335'][2].init(90, 33, 'blockBoundary.nodeName() !== \'br\'');
-function visit573_1335_2(result) {
+function visit584_1335_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1335'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1335'][1].init(-1, 558, 'blockBoundary.nodeName() !== \'br\' && (!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable))');
-function visit572_1335_1(result) {
+function visit583_1335_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1335'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1329'][1].init(1937, 21, 'blockBoundary || body');
-function visit571_1329_1(result) {
+function visit582_1329_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1329'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1318'][2].init(116, 27, 'Dom.nodeName(node) === \'br\'');
-function visit570_1318_2(result) {
+function visit581_1318_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1318'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1318'][1].init(105, 38, '!retVal && Dom.nodeName(node) === \'br\'');
-function visit569_1318_1(result) {
+function visit580_1318_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1318'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1310'][1].init(104, 7, '!retVal');
-function visit568_1310_1(result) {
+function visit579_1310_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1310'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1305'][1].init(55, 39, 'unit === KER.ENLARGE_LIST_ITEM_CONTENTS');
-function visit567_1305_1(result) {
+function visit578_1305_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1305'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1283'][1].init(430, 18, 'stop[0] && stop[1]');
-function visit566_1283_1(result) {
+function visit577_1283_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1283'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1273'][1].init(57, 14, 'self.collapsed');
-function visit565_1273_1(result) {
+function visit576_1273_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1273'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1254'][1].init(991, 47, 'commonReached || enlarge.equals(commonAncestor)');
-function visit564_1254_1(result) {
+function visit575_1254_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1254'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1250'][1].init(875, 29, 'enlarge.nodeName() === \'body\'');
-function visit563_1250_1(result) {
+function visit574_1250_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1250'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1237'][1].init(69, 14, '!commonReached');
-function visit562_1237_1(result) {
+function visit573_1237_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1237'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1235'][1].init(396, 7, 'sibling');
-function visit561_1235_1(result) {
+function visit572_1235_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1235'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1227'][1].init(30, 44, 'isWhitespace(sibling) || isBookmark(sibling)');
-function visit560_1227_1(result) {
+function visit571_1227_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1227'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1219'][1].init(66, 57, 'container[0].childNodes[offset + (left ? -1 : 1)] || null');
-function visit559_1219_1(result) {
+function visit570_1219_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1219'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1208'][1].init(30, 38, 'offset < container[0].nodeValue.length');
-function visit558_1208_1(result) {
+function visit569_1208_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1208'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1204'][1].init(70, 6, 'offset');
-function visit557_1204_1(result) {
+function visit568_1204_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1204'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1202'][1].init(26, 4, 'left');
-function visit556_1202_1(result) {
+function visit567_1202_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1202'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1201'][1].init(395, 48, 'container[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit555_1201_1(result) {
+function visit566_1201_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1179'][2].init(660, 47, 'ancestor[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit554_1179_2(result) {
+function visit565_1179_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1179'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1179'][1].init(642, 65, 'ignoreTextNode && ancestor[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit553_1179_1(result) {
+function visit564_1179_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1179'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1170'][1].init(71, 39, 'self.startOffset === self.endOffset - 1');
-function visit552_1170_1(result) {
+function visit563_1170_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1169'][2].init(60, 47, 'start[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit551_1169_2(result) {
+function visit562_1169_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1169'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1169'][1].init(35, 111, 'start[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startOffset === self.endOffset - 1');
-function visit550_1169_1(result) {
+function visit561_1169_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1169'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1168'][1].init(22, 147, 'includeSelf && start[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startOffset === self.endOffset - 1');
-function visit549_1168_1(result) {
+function visit560_1168_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1168'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1167'][1].init(165, 19, 'start[0] === end[0]');
-function visit548_1167_1(result) {
+function visit559_1167_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1167'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1147'][1].init(783, 21, 'endNode && endNode[0]');
-function visit547_1147_1(result) {
+function visit558_1147_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1147'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1126'][1].init(565, 12, 'endContainer');
-function visit546_1126_1(result) {
+function visit557_1126_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1126'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1119'][1].init(171, 70, 'bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized)');
-function visit545_1119_1(result) {
+function visit556_1119_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1119'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1115'][1].init(89, 12, 'bookmark.is2');
-function visit544_1115_1(result) {
+function visit555_1115_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1101'][1].init(433, 42, 'startContainer[0] === self.endContainer[0]');
-function visit543_1101_1(result) {
+function visit554_1101_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1101'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1097'][1].init(118, 49, 'startContainer[0].childNodes[startOffset] || null');
-function visit542_1097_1(result) {
+function visit553_1097_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1097'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1070'][1].init(291, 45, 'endOffset >= endContainer[0].nodeValue.length');
-function visit541_1070_1(result) {
+function visit552_1070_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1070'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1067'][1].init(131, 10, '!endOffset');
-function visit540_1067_1(result) {
+function visit551_1067_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1067'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1064'][2].init(2097, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit539_1064_2(result) {
+function visit550_1064_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1064'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1064'][1].init(45, 70, 'endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit538_1064_1(result) {
+function visit549_1064_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1064'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1063'][2].init(2032, 22, 'ignoreEnd || collapsed');
-function visit537_1063_2(result) {
+function visit548_1063_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1063'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1063'][1].init(2030, 116, '!(ignoreEnd || collapsed) && endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit536_1063_1(result) {
+function visit547_1063_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1063'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1054'][1].init(1454, 9, 'collapsed');
-function visit535_1054_1(result) {
+function visit546_1054_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1054'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1047'][1].init(611, 45, 'Dom.equals(startContainer, self.endContainer)');
-function visit534_1047_1(result) {
+function visit545_1047_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1047'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1045'][1].init(441, 50, 'Dom.equals(self.startContainer, self.endContainer)');
-function visit533_1045_1(result) {
+function visit544_1045_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1045'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1031'][1].init(301, 49, 'startOffset >= startContainer[0].nodeValue.length');
-function visit532_1031_1(result) {
+function visit543_1031_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1031'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1028'][1].init(131, 12, '!startOffset');
-function visit531_1028_1(result) {
+function visit542_1028_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1028'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1025'][1].init(37, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit530_1025_1(result) {
+function visit541_1025_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1025'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1024'][1].init(46, 91, 'startContainer[0] && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit529_1024_1(result) {
+function visit540_1024_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1024'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1023'][2].init(200, 25, '!ignoreStart || collapsed');
-function visit528_1023_2(result) {
+function visit539_1023_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1023'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['1023'][1].init(200, 138, '(!ignoreStart || collapsed) && startContainer[0] && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit527_1023_1(result) {
+function visit538_1023_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1023'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['986'][1].init(1257, 7, 'endNode');
-function visit526_986_1(result) {
+function visit537_986_1(result) {
   _$jscoverage['/editor/range.js'].branchData['986'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['972'][1].init(111, 12, 'serializable');
-function visit525_972_1(result) {
+function visit536_972_1(result) {
   _$jscoverage['/editor/range.js'].branchData['972'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['968'][1].init(732, 10, '!collapsed');
-function visit524_968_1(result) {
+function visit535_968_1(result) {
   _$jscoverage['/editor/range.js'].branchData['968'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['962'][1].init(522, 12, 'serializable');
-function visit523_962_1(result) {
+function visit534_962_1(result) {
   _$jscoverage['/editor/range.js'].branchData['962'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['927'][1].init(71, 47, 'previous[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit522_927_1(result) {
+function visit533_927_1(result) {
   _$jscoverage['/editor/range.js'].branchData['927'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['926'][1].init(80, 119, '(previous = endContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit521_926_1(result) {
+function visit532_926_1(result) {
   _$jscoverage['/editor/range.js'].branchData['926'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['925'][2].init(861, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit520_925_2(result) {
+function visit531_925_2(result) {
   _$jscoverage['/editor/range.js'].branchData['925'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['925'][1].init(861, 200, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE && (previous = endContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit519_925_1(result) {
+function visit530_925_1(result) {
   _$jscoverage['/editor/range.js'].branchData['925'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['918'][1].init(45, 60, 'child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit518_918_1(result) {
+function visit529_918_1(result) {
   _$jscoverage['/editor/range.js'].branchData['918'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['917'][4].init(332, 13, 'endOffset > 0');
-function visit517_917_4(result) {
+function visit528_917_4(result) {
   _$jscoverage['/editor/range.js'].branchData['917'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['917'][3].init(47, 106, 'endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit516_917_3(result) {
+function visit527_917_3(result) {
   _$jscoverage['/editor/range.js'].branchData['917'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['917'][2].init(283, 44, 'child[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit515_917_2(result) {
+function visit526_917_2(result) {
   _$jscoverage['/editor/range.js'].branchData['917'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['917'][1].init(40, 154, 'child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit514_917_1(result) {
+function visit525_917_1(result) {
   _$jscoverage['/editor/range.js'].branchData['917'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['916'][2].init(239, 195, 'child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit513_916_2(result) {
+function visit524_916_2(result) {
   _$jscoverage['/editor/range.js'].branchData['916'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['916'][1].init(230, 204, 'child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit512_916_1(result) {
+function visit523_916_1(result) {
   _$jscoverage['/editor/range.js'].branchData['916'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['911'][1].init(148, 54, 'endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit511_911_1(result) {
+function visit522_911_1(result) {
   _$jscoverage['/editor/range.js'].branchData['911'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['908'][1].init(1208, 15, '!self.collapsed');
-function visit510_908_1(result) {
+function visit521_908_1(result) {
   _$jscoverage['/editor/range.js'].branchData['908'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['902'][1].init(69, 47, 'previous[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit509_902_1(result) {
+function visit520_902_1(result) {
   _$jscoverage['/editor/range.js'].branchData['902'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['901'][1].init(78, 117, '(previous = startContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit508_901_1(result) {
+function visit519_901_1(result) {
   _$jscoverage['/editor/range.js'].branchData['901'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['900'][2].init(792, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit507_900_2(result) {
+function visit518_900_2(result) {
   _$jscoverage['/editor/range.js'].branchData['900'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['900'][1].init(792, 196, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE && (previous = startContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit506_900_1(result) {
+function visit517_900_1(result) {
   _$jscoverage['/editor/range.js'].branchData['900'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['892'][3].init(18, 60, 'child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit505_892_3(result) {
+function visit516_892_3(result) {
   _$jscoverage['/editor/range.js'].branchData['892'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['892'][2].init(316, 15, 'startOffset > 0');
-function visit504_892_2(result) {
+function visit515_892_2(result) {
   _$jscoverage['/editor/range.js'].branchData['892'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['892'][1].init(72, 79, 'startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit503_892_1(result) {
+function visit514_892_1(result) {
   _$jscoverage['/editor/range.js'].branchData['892'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['891'][4].init(239, 44, 'child[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit502_891_4(result) {
+function visit513_891_4(result) {
   _$jscoverage['/editor/range.js'].branchData['891'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['891'][3].init(239, 152, 'child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit501_891_3(result) {
+function visit512_891_3(result) {
   _$jscoverage['/editor/range.js'].branchData['891'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['891'][2].init(227, 164, 'child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit500_891_2(result) {
+function visit511_891_2(result) {
   _$jscoverage['/editor/range.js'].branchData['891'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['891'][1].init(218, 173, 'child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit499_891_1(result) {
+function visit510_891_1(result) {
   _$jscoverage['/editor/range.js'].branchData['891'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['886'][1].init(136, 56, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit498_886_1(result) {
+function visit509_886_1(result) {
   _$jscoverage['/editor/range.js'].branchData['886'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['883'][1].init(640, 10, 'normalized');
-function visit497_883_1(result) {
+function visit508_883_1(result) {
   _$jscoverage['/editor/range.js'].branchData['883'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['876'][1].init(465, 32, '!startContainer || !endContainer');
-function visit496_876_1(result) {
+function visit507_876_1(result) {
   _$jscoverage['/editor/range.js'].branchData['876'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['856'][1].init(3718, 20, 'moveStart || moveEnd');
-function visit495_856_1(result) {
+function visit506_856_1(result) {
   _$jscoverage['/editor/range.js'].branchData['856'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['851'][1].init(167, 7, 'textEnd');
-function visit494_851_1(result) {
+function visit505_851_1(result) {
   _$jscoverage['/editor/range.js'].branchData['851'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['850'][1].init(80, 27, 'mode === KER.SHRINK_ELEMENT');
-function visit493_850_1(result) {
+function visit504_850_1(result) {
   _$jscoverage['/editor/range.js'].branchData['850'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['848'][1].init(3346, 7, 'moveEnd');
-function visit492_848_1(result) {
+function visit503_848_1(result) {
   _$jscoverage['/editor/range.js'].branchData['848'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['843'][1].init(127, 9, 'textStart');
-function visit491_843_1(result) {
+function visit502_843_1(result) {
   _$jscoverage['/editor/range.js'].branchData['843'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['842'][1].init(45, 27, 'mode === KER.SHRINK_ELEMENT');
-function visit490_842_1(result) {
+function visit501_842_1(result) {
   _$jscoverage['/editor/range.js'].branchData['842'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['841'][1].init(3005, 9, 'moveStart');
-function visit489_841_1(result) {
+function visit500_841_1(result) {
   _$jscoverage['/editor/range.js'].branchData['841'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['833'][2].init(566, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit488_833_2(result) {
+function visit499_833_2(result) {
   _$jscoverage['/editor/range.js'].branchData['833'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['833'][1].init(552, 57, '!movingOut && node.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit487_833_1(result) {
+function visit498_833_1(result) {
   _$jscoverage['/editor/range.js'].branchData['833'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['830'][2].init(426, 23, 'node === currentElement');
-function visit486_830_2(result) {
+function visit497_830_2(result) {
   _$jscoverage['/editor/range.js'].branchData['830'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['830'][1].init(413, 36, 'movingOut && node === currentElement');
-function visit485_830_1(result) {
+function visit496_830_1(result) {
   _$jscoverage['/editor/range.js'].branchData['830'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['826'][1].init(59, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
-function visit484_826_1(result) {
+function visit495_826_1(result) {
   _$jscoverage['/editor/range.js'].branchData['826'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['825'][2].init(129, 27, 'mode === KER.SHRINK_ELEMENT');
-function visit483_825_2(result) {
+function visit494_825_2(result) {
   _$jscoverage['/editor/range.js'].branchData['825'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['825'][1].init(129, 100, 'mode === KER.SHRINK_ELEMENT && node.nodeType === Dom.NodeType.TEXT_NODE');
-function visit482_825_1(result) {
+function visit493_825_1(result) {
   _$jscoverage['/editor/range.js'].branchData['825'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['819'][2].init(52, 27, 'mode === KER.SHRINK_ELEMENT');
-function visit481_819_2(result) {
+function visit492_819_2(result) {
   _$jscoverage['/editor/range.js'].branchData['819'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['819'][1].init(33, 129, 'node.nodeType === (mode === KER.SHRINK_ELEMENT ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE)');
-function visit480_819_1(result) {
+function visit491_819_1(result) {
   _$jscoverage['/editor/range.js'].branchData['819'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['814'][1].init(1813, 20, 'moveStart || moveEnd');
-function visit479_814_1(result) {
+function visit490_814_1(result) {
   _$jscoverage['/editor/range.js'].branchData['814'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['806'][1].init(138, 45, 'endOffset >= endContainer[0].nodeValue.length');
-function visit478_806_1(result) {
+function visit489_806_1(result) {
   _$jscoverage['/editor/range.js'].branchData['806'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['804'][1].init(26, 10, '!endOffset');
-function visit477_804_1(result) {
+function visit488_804_1(result) {
   _$jscoverage['/editor/range.js'].branchData['804'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['803'][1].init(36, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit476_803_1(result) {
+function visit487_803_1(result) {
   _$jscoverage['/editor/range.js'].branchData['803'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['802'][1].init(1271, 88, 'endContainer && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit475_802_1(result) {
+function visit486_802_1(result) {
   _$jscoverage['/editor/range.js'].branchData['802'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['792'][1].init(144, 49, 'startOffset >= startContainer[0].nodeValue.length');
-function visit474_792_1(result) {
+function visit485_792_1(result) {
   _$jscoverage['/editor/range.js'].branchData['792'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['790'][1].init(26, 12, '!startOffset');
-function visit473_790_1(result) {
+function visit484_790_1(result) {
   _$jscoverage['/editor/range.js'].branchData['790'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['789'][1].init(38, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit472_789_1(result) {
+function visit483_789_1(result) {
   _$jscoverage['/editor/range.js'].branchData['789'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['788'][1].init(545, 92, 'startContainer && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit471_788_1(result) {
+function visit482_788_1(result) {
   _$jscoverage['/editor/range.js'].branchData['788'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['775'][1].init(25, 23, 'mode || KER.SHRINK_TEXT');
-function visit470_775_1(result) {
+function visit481_775_1(result) {
   _$jscoverage['/editor/range.js'].branchData['775'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['774'][1].init(100, 15, '!self.collapsed');
-function visit469_774_1(result) {
+function visit480_774_1(result) {
   _$jscoverage['/editor/range.js'].branchData['774'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['763'][1].init(884, 24, 'node && node.equals(pre)');
-function visit468_763_1(result) {
+function visit479_763_1(result) {
   _$jscoverage['/editor/range.js'].branchData['763'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['752'][1].init(25, 46, 'isNotWhitespaces(node) && isNotBookmarks(node)');
-function visit467_752_1(result) {
+function visit478_752_1(result) {
   _$jscoverage['/editor/range.js'].branchData['752'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['744'][1].init(88, 66, 'walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit466_744_1(result) {
+function visit477_744_1(result) {
   _$jscoverage['/editor/range.js'].branchData['744'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['743'][2].init(194, 68, 'walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit465_743_2(result) {
+function visit476_743_2(result) {
   _$jscoverage['/editor/range.js'].branchData['743'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['743'][1].init(194, 155, 'walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE || walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit464_743_1(result) {
+function visit475_743_1(result) {
   _$jscoverage['/editor/range.js'].branchData['743'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['702'][1].init(48, 7, 'toStart');
-function visit463_702_1(result) {
+function visit474_702_1(result) {
   _$jscoverage['/editor/range.js'].branchData['702'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['657'][1].init(55, 43, 'node[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit462_657_1(result) {
+function visit473_657_1(result) {
   _$jscoverage['/editor/range.js'].branchData['657'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['626'][1].init(55, 43, 'node[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit461_626_1(result) {
+function visit472_626_1(result) {
   _$jscoverage['/editor/range.js'].branchData['626'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['605'][1].init(700, 20, '!self.startContainer');
-function visit460_605_1(result) {
+function visit471_605_1(result) {
   _$jscoverage['/editor/range.js'].branchData['605'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['597'][2].init(399, 49, 'endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit459_597_2(result) {
+function visit470_597_2(result) {
   _$jscoverage['/editor/range.js'].branchData['597'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['597'][1].init(399, 80, 'endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[endNode.nodeName()]');
-function visit458_597_1(result) {
+function visit469_597_1(result) {
   _$jscoverage['/editor/range.js'].branchData['597'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['574'][1].init(717, 18, '!self.endContainer');
-function visit457_574_1(result) {
+function visit468_574_1(result) {
   _$jscoverage['/editor/range.js'].branchData['574'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['566'][2].init(400, 51, 'startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit456_566_2(result) {
+function visit467_566_2(result) {
   _$jscoverage['/editor/range.js'].branchData['566'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['566'][1].init(400, 84, 'startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[startNode.nodeName()]');
-function visit455_566_1(result) {
+function visit466_566_1(result) {
   _$jscoverage['/editor/range.js'].branchData['566'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['545'][2].init(373, 29, 'endNode.nodeName() === \'span\'');
-function visit454_545_2(result) {
+function visit465_545_2(result) {
   _$jscoverage['/editor/range.js'].branchData['545'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['545'][1].init(27, 78, 'endNode.nodeName() === \'span\' && endNode.attr(\'_ke_bookmark\')');
-function visit453_545_1(result) {
+function visit464_545_1(result) {
   _$jscoverage['/editor/range.js'].branchData['545'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['544'][1].init(343, 106, 'endNode && endNode.nodeName() === \'span\' && endNode.attr(\'_ke_bookmark\')');
-function visit452_544_1(result) {
+function visit463_544_1(result) {
   _$jscoverage['/editor/range.js'].branchData['544'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['540'][2].init(178, 31, 'startNode.nodeName() === \'span\'');
-function visit451_540_2(result) {
+function visit462_540_2(result) {
   _$jscoverage['/editor/range.js'].branchData['540'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['540'][1].init(29, 82, 'startNode.nodeName() === \'span\' && startNode.attr(\'_ke_bookmark\')');
-function visit450_540_1(result) {
+function visit461_540_1(result) {
   _$jscoverage['/editor/range.js'].branchData['540'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['539'][1].init(146, 112, 'startNode && startNode.nodeName() === \'span\' && startNode.attr(\'_ke_bookmark\')');
-function visit449_539_1(result) {
+function visit460_539_1(result) {
   _$jscoverage['/editor/range.js'].branchData['539'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['496'][1].init(113, 39, 'offset >= container[0].nodeValue.length');
-function visit448_496_1(result) {
+function visit459_496_1(result) {
   _$jscoverage['/editor/range.js'].branchData['496'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['494'][1].init(22, 7, '!offset');
-function visit447_494_1(result) {
+function visit458_494_1(result) {
   _$jscoverage['/editor/range.js'].branchData['494'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['493'][1].init(544, 51, 'container[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit446_493_1(result) {
+function visit457_493_1(result) {
   _$jscoverage['/editor/range.js'].branchData['493'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['485'][1].init(115, 39, 'offset >= container[0].nodeValue.length');
-function visit445_485_1(result) {
+function visit456_485_1(result) {
   _$jscoverage['/editor/range.js'].branchData['485'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['483'][1].init(22, 7, '!offset');
-function visit444_483_1(result) {
+function visit455_483_1(result) {
   _$jscoverage['/editor/range.js'].branchData['483'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['482'][1].init(144, 51, 'container[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit443_482_1(result) {
+function visit454_482_1(result) {
   _$jscoverage['/editor/range.js'].branchData['482'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['467'][1].init(283, 40, 'endContainer.id || endContainer.nodeName');
-function visit442_467_1(result) {
+function visit453_467_1(result) {
   _$jscoverage['/editor/range.js'].branchData['467'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['466'][1].init(189, 44, 'startContainer.id || startContainer.nodeName');
-function visit441_466_1(result) {
+function visit452_466_1(result) {
   _$jscoverage['/editor/range.js'].branchData['466'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['439'][1].init(67, 35, 'self.startOffset === self.endOffset');
-function visit440_439_1(result) {
+function visit451_439_1(result) {
   _$jscoverage['/editor/range.js'].branchData['439'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['438'][2].init(98, 47, 'self.startContainer[0] === self.endContainer[0]');
-function visit439_438_2(result) {
+function visit450_438_2(result) {
   _$jscoverage['/editor/range.js'].branchData['438'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['438'][1].init(37, 103, 'self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset');
-function visit438_438_1(result) {
+function visit449_438_1(result) {
   _$jscoverage['/editor/range.js'].branchData['438'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['437'][1].init(39, 141, 'self.endContainer && self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset');
-function visit437_437_1(result) {
+function visit448_437_1(result) {
   _$jscoverage['/editor/range.js'].branchData['437'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['436'][1].init(28, 181, 'self.startContainer && self.endContainer && self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset');
-function visit436_436_1(result) {
+function visit447_436_1(result) {
   _$jscoverage['/editor/range.js'].branchData['436'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['428'][1].init(10807, 13, 'removeEndNode');
-function visit435_428_1(result) {
+function visit446_428_1(result) {
   _$jscoverage['/editor/range.js'].branchData['428'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['424'][1].init(10729, 15, 'removeStartNode');
-function visit434_424_1(result) {
+function visit445_424_1(result) {
   _$jscoverage['/editor/range.js'].branchData['424'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['409'][1].init(205, 122, 'removeStartNode && (topStart._4eSameLevel(startNode))');
-function visit433_409_1(result) {
+function visit444_409_1(result) {
   _$jscoverage['/editor/range.js'].branchData['409'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['404'][1].init(31, 66, '!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)');
-function visit432_404_1(result) {
+function visit443_404_1(result) {
   _$jscoverage['/editor/range.js'].branchData['404'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['403'][2].init(260, 99, 'topEnd && (!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd))');
-function visit431_403_2(result) {
+function visit442_403_2(result) {
   _$jscoverage['/editor/range.js'].branchData['403'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['403'][1].init(248, 111, 'topStart && topEnd && (!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd))');
-function visit430_403_1(result) {
+function visit441_403_1(result) {
   _$jscoverage['/editor/range.js'].branchData['403'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['391'][1].init(51, 63, 'endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit429_391_1(result) {
+function visit440_391_1(result) {
   _$jscoverage['/editor/range.js'].branchData['391'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['390'][1].init(71, 115, 'endTextNode.previousSibling && endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit428_390_1(result) {
+function visit439_390_1(result) {
   _$jscoverage['/editor/range.js'].branchData['390'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['389'][2].init(69, 47, 'endTextNode.nodeType === Dom.NodeType.TEXT_NODE');
-function visit427_389_2(result) {
+function visit438_389_2(result) {
   _$jscoverage['/editor/range.js'].branchData['389'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['389'][1].init(69, 187, 'endTextNode.nodeType === Dom.NodeType.TEXT_NODE && endTextNode.previousSibling && endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit426_389_1(result) {
+function visit437_389_1(result) {
   _$jscoverage['/editor/range.js'].branchData['389'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['387'][1].init(645, 11, 'hasSplitEnd');
-function visit425_387_1(result) {
+function visit436_387_1(result) {
   _$jscoverage['/editor/range.js'].branchData['387'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['381'][1].init(115, 61, 'startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit424_381_1(result) {
+function visit435_381_1(result) {
   _$jscoverage['/editor/range.js'].branchData['381'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['379'][3].init(126, 177, 'startTextNode.nextSibling && startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit423_379_3(result) {
+function visit434_379_3(result) {
   _$jscoverage['/editor/range.js'].branchData['379'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['379'][2].init(73, 49, 'startTextNode.nodeType === Dom.NodeType.TEXT_NODE');
-function visit422_379_2(result) {
+function visit433_379_2(result) {
   _$jscoverage['/editor/range.js'].branchData['379'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['379'][1].init(73, 230, 'startTextNode.nodeType === Dom.NodeType.TEXT_NODE && startTextNode.nextSibling && startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE');
-function visit421_379_1(result) {
+function visit432_379_1(result) {
   _$jscoverage['/editor/range.js'].branchData['379'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['377'][1].init(108, 13, 'hasSplitStart');
-function visit420_377_1(result) {
+function visit431_377_1(result) {
   _$jscoverage['/editor/range.js'].branchData['377'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['373'][1].init(8623, 12, 'action === 2');
-function visit419_373_1(result) {
+function visit430_373_1(result) {
   _$jscoverage['/editor/range.js'].branchData['373'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['368'][1].init(1659, 10, 'levelClone');
-function visit418_368_1(result) {
+function visit429_368_1(result) {
   _$jscoverage['/editor/range.js'].branchData['368'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['358'][1].init(242, 12, 'action === 1');
-function visit417_358_1(result) {
+function visit428_358_1(result) {
   _$jscoverage['/editor/range.js'].branchData['358'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['350'][1].init(194, 12, 'action === 2');
-function visit416_350_1(result) {
+function visit427_350_1(result) {
   _$jscoverage['/editor/range.js'].branchData['350'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['341'][1].init(498, 139, '!startParents[k] || !levelStartNode._4eSameLevel(startParents[k])');
-function visit415_341_1(result) {
+function visit426_341_1(result) {
   _$jscoverage['/editor/range.js'].branchData['341'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['332'][2].init(132, 10, 'action > 0');
-function visit414_332_2(result) {
+function visit425_332_2(result) {
   _$jscoverage['/editor/range.js'].branchData['332'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['332'][1].init(132, 45, 'action > 0 && !levelStartNode.equals(endNode)');
-function visit413_332_1(result) {
+function visit424_332_1(result) {
   _$jscoverage['/editor/range.js'].branchData['332'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['328'][1].init(6822, 21, 'k < endParents.length');
-function visit412_328_1(result) {
+function visit423_328_1(result) {
   _$jscoverage['/editor/range.js'].branchData['328'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['319'][1].init(2239, 10, 'levelClone');
-function visit411_319_1(result) {
+function visit422_319_1(result) {
   _$jscoverage['/editor/range.js'].branchData['319'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['310'][1].init(658, 12, 'action === 1');
-function visit410_310_1(result) {
+function visit421_310_1(result) {
   _$jscoverage['/editor/range.js'].branchData['310'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['300'][1].init(159, 48, 'UN_REMOVABLE[currentNode.nodeName.toLowerCase()]');
-function visit409_300_1(result) {
+function visit420_300_1(result) {
   _$jscoverage['/editor/range.js'].branchData['300'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['293'][1].init(448, 12, 'action === 2');
-function visit408_293_1(result) {
+function visit419_293_1(result) {
   _$jscoverage['/editor/range.js'].branchData['293'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['285'][3].init(196, 26, 'domEndNode === currentNode');
-function visit407_285_3(result) {
+function visit418_285_3(result) {
   _$jscoverage['/editor/range.js'].branchData['285'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['285'][2].init(163, 29, 'domEndParentJ === currentNode');
-function visit406_285_2(result) {
+function visit417_285_2(result) {
   _$jscoverage['/editor/range.js'].branchData['285'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['285'][1].init(163, 59, 'domEndParentJ === currentNode || domEndNode === currentNode');
-function visit405_285_1(result) {
+function visit416_285_1(result) {
   _$jscoverage['/editor/range.js'].branchData['285'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['280'][1].init(108, 27, 'endParentJ && endParentJ[0]');
-function visit404_280_1(result) {
+function visit415_280_1(result) {
   _$jscoverage['/editor/range.js'].branchData['280'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['268'][2].init(132, 10, 'action > 0');
-function visit403_268_2(result) {
+function visit414_268_2(result) {
   _$jscoverage['/editor/range.js'].branchData['268'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['268'][1].init(132, 47, 'action > 0 && !levelStartNode.equals(startNode)');
-function visit402_268_1(result) {
+function visit413_268_1(result) {
   _$jscoverage['/editor/range.js'].branchData['268'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['264'][1].init(4323, 23, 'j < startParents.length');
-function visit401_264_1(result) {
+function visit412_264_1(result) {
   _$jscoverage['/editor/range.js'].branchData['264'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['251'][1].init(348, 24, '!topStart.equals(topEnd)');
-function visit400_251_1(result) {
+function visit411_251_1(result) {
   _$jscoverage['/editor/range.js'].branchData['251'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['243'][1].init(3597, 23, 'i < startParents.length');
-function visit399_243_1(result) {
+function visit410_243_1(result) {
   _$jscoverage['/editor/range.js'].branchData['243'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['217'][1].init(608, 45, 'startOffset >= startNode[0].childNodes.length');
-function visit398_217_1(result) {
+function visit409_217_1(result) {
   _$jscoverage['/editor/range.js'].branchData['217'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['211'][1].init(325, 12, '!startOffset');
-function visit397_211_1(result) {
+function visit408_211_1(result) {
   _$jscoverage['/editor/range.js'].branchData['211'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['202'][1].init(1928, 48, 'startNode[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit396_202_1(result) {
+function visit407_202_1(result) {
   _$jscoverage['/editor/range.js'].branchData['202'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['188'][1].init(84, 41, 'endOffset >= endNode[0].childNodes.length');
-function visit395_188_1(result) {
+function visit406_188_1(result) {
   _$jscoverage['/editor/range.js'].branchData['188'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['186'][1].init(153, 32, 'endNode[0].childNodes.length > 0');
-function visit394_186_1(result) {
+function visit405_186_1(result) {
   _$jscoverage['/editor/range.js'].branchData['186'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['180'][1].init(890, 46, 'endNode[0].nodeType === Dom.NodeType.TEXT_NODE');
-function visit393_180_1(result) {
+function visit404_180_1(result) {
   _$jscoverage['/editor/range.js'].branchData['180'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['168'][1].init(483, 14, 'self.collapsed');
-function visit392_168_1(result) {
+function visit403_168_1(result) {
   _$jscoverage['/editor/range.js'].branchData['168'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['164'][1].init(390, 10, 'action > 0');
-function visit391_164_1(result) {
+function visit402_164_1(result) {
   _$jscoverage['/editor/range.js'].branchData['164'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['134'][4].init(179, 17, 'nodeName === \'br\'');
-function visit390_134_4(result) {
+function visit401_134_4(result) {
   _$jscoverage['/editor/range.js'].branchData['134'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['134'][3].init(179, 27, 'nodeName === \'br\' && !hadBr');
-function visit389_134_3(result) {
+function visit400_134_3(result) {
   _$jscoverage['/editor/range.js'].branchData['134'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['134'][2].init(169, 37, '!UA.ie && nodeName === \'br\' && !hadBr');
-function visit388_134_2(result) {
+function visit399_134_2(result) {
   _$jscoverage['/editor/range.js'].branchData['134'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['134'][1].init(157, 49, '!isStart && !UA.ie && nodeName === \'br\' && !hadBr');
-function visit387_134_1(result) {
+function visit398_134_1(result) {
   _$jscoverage['/editor/range.js'].branchData['134'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['131'][1].init(198, 35, '!inlineChildReqElements[nodeName]');
-function visit386_131_1(result) {
+function visit397_131_1(result) {
   _$jscoverage['/editor/range.js'].branchData['131'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['127'][1].init(402, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit385_127_1(result) {
+function visit396_127_1(result) {
   _$jscoverage['/editor/range.js'].branchData['127'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['124'][1].init(100, 29, 'S.trim(node.nodeValue).length');
-function visit384_124_1(result) {
+function visit395_124_1(result) {
   _$jscoverage['/editor/range.js'].branchData['124'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['122'][1].init(147, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
-function visit383_122_1(result) {
+function visit394_122_1(result) {
   _$jscoverage['/editor/range.js'].branchData['122'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['118'][1].init(63, 16, 'isBookmark(node)');
-function visit382_118_1(result) {
+function visit393_118_1(result) {
   _$jscoverage['/editor/range.js'].branchData['118'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['111'][1].init(79, 40, '!isWhitespace(node) && !isBookmark(node)');
-function visit381_111_1(result) {
+function visit392_111_1(result) {
   _$jscoverage['/editor/range.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['106'][2].init(493, 8, 'c2 || c3');
-function visit380_106_2(result) {
+function visit391_106_2(result) {
   _$jscoverage['/editor/range.js'].branchData['106'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['106'][1].init(487, 14, 'c1 || c2 || c3');
-function visit379_106_1(result) {
+function visit390_106_1(result) {
   _$jscoverage['/editor/range.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['103'][2].init(157, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
-function visit378_103_2(result) {
+function visit389_103_2(result) {
   _$jscoverage['/editor/range.js'].branchData['103'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['103'][1].init(157, 67, 'node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue)');
-function visit377_103_1(result) {
+function visit388_103_1(result) {
   _$jscoverage['/editor/range.js'].branchData['103'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['100'][2].init(154, 40, 'node.nodeType !== Dom.NodeType.TEXT_NODE');
-function visit376_100_2(result) {
+function visit387_100_2(result) {
   _$jscoverage['/editor/range.js'].branchData['100'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].branchData['100'][1].init(154, 99, 'node.nodeType !== Dom.NodeType.TEXT_NODE && Dom.nodeName(node) in dtd.$removeEmpty');
-function visit375_100_1(result) {
+function visit386_100_1(result) {
   _$jscoverage['/editor/range.js'].branchData['100'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].lineData[10]++;
@@ -2383,7 +2383,7 @@ KISSY.add(function(S, require) {
   SHRINK_ELEMENT: 1, 
   SHRINK_TEXT: 2};
   _$jscoverage['/editor/range.js'].lineData[35]++;
-  var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.require('dom'), UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {
+  var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = require('dom'), UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {
   td: 1}, EMPTY = {
   area: 1, 
   base: 1, 
@@ -2429,15 +2429,15 @@ KISSY.add(function(S, require) {
   function elementBoundaryEval(node) {
     _$jscoverage['/editor/range.js'].functionData[1]++;
     _$jscoverage['/editor/range.js'].lineData[100]++;
-    var c1 = visit375_100_1(visit376_100_2(node.nodeType !== Dom.NodeType.TEXT_NODE) && Dom.nodeName(node) in dtd.$removeEmpty), c2 = visit377_103_1(visit378_103_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue)), c3 = !!node.parentNode.getAttribute('_ke_bookmark');
+    var c1 = visit386_100_1(visit387_100_2(node.nodeType !== Dom.NodeType.TEXT_NODE) && Dom.nodeName(node) in dtd.$removeEmpty), c2 = visit388_103_1(visit389_103_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue)), c3 = !!node.parentNode.getAttribute('_ke_bookmark');
     _$jscoverage['/editor/range.js'].lineData[106]++;
-    return visit379_106_1(c1 || visit380_106_2(c2 || c3));
+    return visit390_106_1(c1 || visit391_106_2(c2 || c3));
   }
   _$jscoverage['/editor/range.js'].lineData[109]++;
   function nonWhitespaceOrIsBookmark(node) {
     _$jscoverage['/editor/range.js'].functionData[2]++;
     _$jscoverage['/editor/range.js'].lineData[111]++;
-    return visit381_111_1(!isWhitespace(node) && !isBookmark(node));
+    return visit392_111_1(!isWhitespace(node) && !isBookmark(node));
   }
   _$jscoverage['/editor/range.js'].lineData[114]++;
   function getCheckStartEndBlockEvalFunction(isStart) {
@@ -2448,26 +2448,26 @@ KISSY.add(function(S, require) {
     return function(node) {
   _$jscoverage['/editor/range.js'].functionData[4]++;
   _$jscoverage['/editor/range.js'].lineData[118]++;
-  if (visit382_118_1(isBookmark(node))) {
+  if (visit393_118_1(isBookmark(node))) {
     _$jscoverage['/editor/range.js'].lineData[119]++;
     return TRUE;
   }
   _$jscoverage['/editor/range.js'].lineData[122]++;
-  if (visit383_122_1(node.nodeType === Dom.NodeType.TEXT_NODE)) {
+  if (visit394_122_1(node.nodeType === Dom.NodeType.TEXT_NODE)) {
     _$jscoverage['/editor/range.js'].lineData[124]++;
-    if (visit384_124_1(S.trim(node.nodeValue).length)) {
+    if (visit395_124_1(S.trim(node.nodeValue).length)) {
       _$jscoverage['/editor/range.js'].lineData[125]++;
       return FALSE;
     }
   } else {
     _$jscoverage['/editor/range.js'].lineData[127]++;
-    if (visit385_127_1(node.nodeType === Dom.NodeType.ELEMENT_NODE)) {
+    if (visit396_127_1(node.nodeType === Dom.NodeType.ELEMENT_NODE)) {
       _$jscoverage['/editor/range.js'].lineData[128]++;
       var nodeName = Dom.nodeName(node);
       _$jscoverage['/editor/range.js'].lineData[131]++;
-      if (visit386_131_1(!inlineChildReqElements[nodeName])) {
+      if (visit397_131_1(!inlineChildReqElements[nodeName])) {
         _$jscoverage['/editor/range.js'].lineData[134]++;
-        if (visit387_134_1(!isStart && visit388_134_2(!UA.ie && visit389_134_3(visit390_134_4(nodeName === 'br') && !hadBr)))) {
+        if (visit398_134_1(!isStart && visit399_134_2(!UA.ie && visit400_134_3(visit401_134_4(nodeName === 'br') && !hadBr)))) {
           _$jscoverage['/editor/range.js'].lineData[135]++;
           hadBr = TRUE;
         } else {
@@ -2487,28 +2487,28 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[152]++;
     var startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, removeStartNode, hasSplitStart = FALSE, hasSplitEnd = FALSE, t, docFrag, doc = self.document, removeEndNode;
     _$jscoverage['/editor/range.js'].lineData[164]++;
-    if (visit391_164_1(action > 0)) {
+    if (visit402_164_1(action > 0)) {
       _$jscoverage['/editor/range.js'].lineData[165]++;
       docFrag = doc.createDocumentFragment();
     }
     _$jscoverage['/editor/range.js'].lineData[168]++;
-    if (visit392_168_1(self.collapsed)) {
+    if (visit403_168_1(self.collapsed)) {
       _$jscoverage['/editor/range.js'].lineData[169]++;
       return docFrag;
     }
     _$jscoverage['/editor/range.js'].lineData[173]++;
     self.optimizeBookmark();
     _$jscoverage['/editor/range.js'].lineData[180]++;
-    if (visit393_180_1(endNode[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+    if (visit404_180_1(endNode[0].nodeType === Dom.NodeType.TEXT_NODE)) {
       _$jscoverage['/editor/range.js'].lineData[181]++;
       hasSplitEnd = TRUE;
       _$jscoverage['/editor/range.js'].lineData[182]++;
       endNode = endNode._4eSplitText(endOffset);
     } else {
       _$jscoverage['/editor/range.js'].lineData[186]++;
-      if (visit394_186_1(endNode[0].childNodes.length > 0)) {
+      if (visit405_186_1(endNode[0].childNodes.length > 0)) {
         _$jscoverage['/editor/range.js'].lineData[188]++;
-        if (visit395_188_1(endOffset >= endNode[0].childNodes.length)) {
+        if (visit406_188_1(endOffset >= endNode[0].childNodes.length)) {
           _$jscoverage['/editor/range.js'].lineData[190]++;
           endNode = new Node(endNode[0].appendChild(doc.createTextNode('')));
           _$jscoverage['/editor/range.js'].lineData[191]++;
@@ -2520,14 +2520,14 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/range.js'].lineData[202]++;
-    if (visit396_202_1(startNode[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+    if (visit407_202_1(startNode[0].nodeType === Dom.NodeType.TEXT_NODE)) {
       _$jscoverage['/editor/range.js'].lineData[203]++;
       hasSplitStart = TRUE;
       _$jscoverage['/editor/range.js'].lineData[204]++;
       startNode._4eSplitText(startOffset);
     } else {
       _$jscoverage['/editor/range.js'].lineData[211]++;
-      if (visit397_211_1(!startOffset)) {
+      if (visit408_211_1(!startOffset)) {
         _$jscoverage['/editor/range.js'].lineData[213]++;
         t = new Node(doc.createTextNode(''));
         _$jscoverage['/editor/range.js'].lineData[214]++;
@@ -2538,7 +2538,7 @@ KISSY.add(function(S, require) {
         removeStartNode = TRUE;
       } else {
         _$jscoverage['/editor/range.js'].lineData[217]++;
-        if (visit398_217_1(startOffset >= startNode[0].childNodes.length)) {
+        if (visit409_217_1(startOffset >= startNode[0].childNodes.length)) {
           _$jscoverage['/editor/range.js'].lineData[219]++;
           startNode = new Node(startNode[0].appendChild(doc.createTextNode('')));
           _$jscoverage['/editor/range.js'].lineData[221]++;
@@ -2566,13 +2566,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[241]++;
     var i, topStart, topEnd;
     _$jscoverage['/editor/range.js'].lineData[243]++;
-    for (i = 0; visit399_243_1(i < startParents.length); i++) {
+    for (i = 0; visit410_243_1(i < startParents.length); i++) {
       _$jscoverage['/editor/range.js'].lineData[244]++;
       topStart = startParents[i];
       _$jscoverage['/editor/range.js'].lineData[245]++;
       topEnd = endParents[i];
       _$jscoverage['/editor/range.js'].lineData[251]++;
-      if (visit400_251_1(!topStart.equals(topEnd))) {
+      if (visit411_251_1(!topStart.equals(topEnd))) {
         _$jscoverage['/editor/range.js'].lineData[252]++;
         break;
       }
@@ -2580,11 +2580,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[256]++;
     var clone = docFrag, levelStartNode, levelClone, currentNode, currentSibling;
     _$jscoverage['/editor/range.js'].lineData[264]++;
-    for (var j = i; visit401_264_1(j < startParents.length); j++) {
+    for (var j = i; visit412_264_1(j < startParents.length); j++) {
       _$jscoverage['/editor/range.js'].lineData[265]++;
       levelStartNode = startParents[j];
       _$jscoverage['/editor/range.js'].lineData[268]++;
-      if (visit402_268_1(visit403_268_2(action > 0) && !levelStartNode.equals(startNode))) {
+      if (visit413_268_1(visit414_268_2(action > 0) && !levelStartNode.equals(startNode))) {
         _$jscoverage['/editor/range.js'].lineData[270]++;
         levelClone = clone.appendChild(levelStartNode.clone()[0]);
       } else {
@@ -2594,23 +2594,23 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[276]++;
       currentNode = levelStartNode[0].nextSibling;
       _$jscoverage['/editor/range.js'].lineData[278]++;
-      var endParentJ = endParents[j], domEndNode = endNode[0], domEndParentJ = visit404_280_1(endParentJ && endParentJ[0]);
+      var endParentJ = endParents[j], domEndNode = endNode[0], domEndParentJ = visit415_280_1(endParentJ && endParentJ[0]);
       _$jscoverage['/editor/range.js'].lineData[282]++;
       while (currentNode) {
         _$jscoverage['/editor/range.js'].lineData[285]++;
-        if (visit405_285_1(visit406_285_2(domEndParentJ === currentNode) || visit407_285_3(domEndNode === currentNode))) {
+        if (visit416_285_1(visit417_285_2(domEndParentJ === currentNode) || visit418_285_3(domEndNode === currentNode))) {
           _$jscoverage['/editor/range.js'].lineData[286]++;
           break;
         }
         _$jscoverage['/editor/range.js'].lineData[290]++;
         currentSibling = currentNode.nextSibling;
         _$jscoverage['/editor/range.js'].lineData[293]++;
-        if (visit408_293_1(action === 2)) {
+        if (visit419_293_1(action === 2)) {
           _$jscoverage['/editor/range.js'].lineData[295]++;
           clone.appendChild(currentNode.cloneNode(TRUE));
         } else {
           _$jscoverage['/editor/range.js'].lineData[300]++;
-          if (visit409_300_1(UN_REMOVABLE[currentNode.nodeName.toLowerCase()])) {
+          if (visit420_300_1(UN_REMOVABLE[currentNode.nodeName.toLowerCase()])) {
             _$jscoverage['/editor/range.js'].lineData[301]++;
             var tmp = currentNode.cloneNode(TRUE);
             _$jscoverage['/editor/range.js'].lineData[302]++;
@@ -2622,7 +2622,7 @@ KISSY.add(function(S, require) {
             Dom._4eRemove(currentNode);
           }
           _$jscoverage['/editor/range.js'].lineData[310]++;
-          if (visit410_310_1(action === 1)) {
+          if (visit421_310_1(action === 1)) {
             _$jscoverage['/editor/range.js'].lineData[312]++;
             clone.appendChild(currentNode);
           }
@@ -2631,7 +2631,7 @@ KISSY.add(function(S, require) {
         currentNode = currentSibling;
       }
       _$jscoverage['/editor/range.js'].lineData[319]++;
-      if (visit411_319_1(levelClone)) {
+      if (visit422_319_1(levelClone)) {
         _$jscoverage['/editor/range.js'].lineData[320]++;
         clone = levelClone;
       }
@@ -2639,11 +2639,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[324]++;
     clone = docFrag;
     _$jscoverage['/editor/range.js'].lineData[328]++;
-    for (var k = i; visit412_328_1(k < endParents.length); k++) {
+    for (var k = i; visit423_328_1(k < endParents.length); k++) {
       _$jscoverage['/editor/range.js'].lineData[329]++;
       levelStartNode = endParents[k];
       _$jscoverage['/editor/range.js'].lineData[332]++;
-      if (visit413_332_1(visit414_332_2(action > 0) && !levelStartNode.equals(endNode))) {
+      if (visit424_332_1(visit425_332_2(action > 0) && !levelStartNode.equals(endNode))) {
         _$jscoverage['/editor/range.js'].lineData[335]++;
         levelClone = clone.appendChild(levelStartNode.clone()[0]);
       } else {
@@ -2651,7 +2651,7 @@ KISSY.add(function(S, require) {
         levelClone = null;
       }
       _$jscoverage['/editor/range.js'].lineData[341]++;
-      if (visit415_341_1(!startParents[k] || !levelStartNode._4eSameLevel(startParents[k]))) {
+      if (visit426_341_1(!startParents[k] || !levelStartNode._4eSameLevel(startParents[k]))) {
         _$jscoverage['/editor/range.js'].lineData[344]++;
         currentNode = levelStartNode[0].previousSibling;
         _$jscoverage['/editor/range.js'].lineData[345]++;
@@ -2659,14 +2659,14 @@ KISSY.add(function(S, require) {
           _$jscoverage['/editor/range.js'].lineData[347]++;
           currentSibling = currentNode.previousSibling;
           _$jscoverage['/editor/range.js'].lineData[350]++;
-          if (visit416_350_1(action === 2)) {
+          if (visit427_350_1(action === 2)) {
             _$jscoverage['/editor/range.js'].lineData[351]++;
             clone.insertBefore(currentNode.cloneNode(TRUE), clone.firstChild);
           } else {
             _$jscoverage['/editor/range.js'].lineData[355]++;
             Dom._4eRemove(currentNode);
             _$jscoverage['/editor/range.js'].lineData[358]++;
-            if (visit417_358_1(action === 1)) {
+            if (visit428_358_1(action === 1)) {
               _$jscoverage['/editor/range.js'].lineData[360]++;
               clone.insertBefore(currentNode, clone.firstChild);
             }
@@ -2676,19 +2676,19 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/editor/range.js'].lineData[368]++;
-      if (visit418_368_1(levelClone)) {
+      if (visit429_368_1(levelClone)) {
         _$jscoverage['/editor/range.js'].lineData[369]++;
         clone = levelClone;
       }
     }
     _$jscoverage['/editor/range.js'].lineData[373]++;
-    if (visit419_373_1(action === 2)) {
+    if (visit430_373_1(action === 2)) {
       _$jscoverage['/editor/range.js'].lineData[377]++;
-      if (visit420_377_1(hasSplitStart)) {
+      if (visit431_377_1(hasSplitStart)) {
         _$jscoverage['/editor/range.js'].lineData[378]++;
         var startTextNode = startNode[0];
         _$jscoverage['/editor/range.js'].lineData[379]++;
-        if (visit421_379_1(visit422_379_2(startTextNode.nodeType === Dom.NodeType.TEXT_NODE) && visit423_379_3(startTextNode.nextSibling && visit424_381_1(startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE)))) {
+        if (visit432_379_1(visit433_379_2(startTextNode.nodeType === Dom.NodeType.TEXT_NODE) && visit434_379_3(startTextNode.nextSibling && visit435_381_1(startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE)))) {
           _$jscoverage['/editor/range.js'].lineData[382]++;
           startTextNode.data += startTextNode.nextSibling.data;
           _$jscoverage['/editor/range.js'].lineData[383]++;
@@ -2696,11 +2696,11 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/editor/range.js'].lineData[387]++;
-      if (visit425_387_1(hasSplitEnd)) {
+      if (visit436_387_1(hasSplitEnd)) {
         _$jscoverage['/editor/range.js'].lineData[388]++;
         var endTextNode = endNode[0];
         _$jscoverage['/editor/range.js'].lineData[389]++;
-        if (visit426_389_1(visit427_389_2(endTextNode.nodeType === Dom.NodeType.TEXT_NODE) && visit428_390_1(endTextNode.previousSibling && visit429_391_1(endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))) {
+        if (visit437_389_1(visit438_389_2(endTextNode.nodeType === Dom.NodeType.TEXT_NODE) && visit439_390_1(endTextNode.previousSibling && visit440_391_1(endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))) {
           _$jscoverage['/editor/range.js'].lineData[392]++;
           endTextNode.previousSibling.data += endTextNode.data;
           _$jscoverage['/editor/range.js'].lineData[393]++;
@@ -2709,11 +2709,11 @@ KISSY.add(function(S, require) {
       }
     } else {
       _$jscoverage['/editor/range.js'].lineData[403]++;
-      if (visit430_403_1(topStart && visit431_403_2(topEnd && (visit432_404_1(!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)))))) {
+      if (visit441_403_1(topStart && visit442_403_2(topEnd && (visit443_404_1(!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)))))) {
         _$jscoverage['/editor/range.js'].lineData[405]++;
         var startIndex = topStart._4eIndex();
         _$jscoverage['/editor/range.js'].lineData[409]++;
-        if (visit433_409_1(removeStartNode && (topStart._4eSameLevel(startNode)))) {
+        if (visit444_409_1(removeStartNode && (topStart._4eSameLevel(startNode)))) {
           _$jscoverage['/editor/range.js'].lineData[412]++;
           startIndex--;
         }
@@ -2724,12 +2724,12 @@ KISSY.add(function(S, require) {
       self.collapse(TRUE);
     }
     _$jscoverage['/editor/range.js'].lineData[424]++;
-    if (visit434_424_1(removeStartNode)) {
+    if (visit445_424_1(removeStartNode)) {
       _$jscoverage['/editor/range.js'].lineData[425]++;
       startNode.remove();
     }
     _$jscoverage['/editor/range.js'].lineData[428]++;
-    if (visit435_428_1(removeEndNode)) {
+    if (visit446_428_1(removeEndNode)) {
       _$jscoverage['/editor/range.js'].lineData[429]++;
       endNode.remove();
     }
@@ -2740,7 +2740,7 @@ KISSY.add(function(S, require) {
   function updateCollapsed(self) {
     _$jscoverage['/editor/range.js'].functionData[8]++;
     _$jscoverage['/editor/range.js'].lineData[436]++;
-    self.collapsed = (visit436_436_1(self.startContainer && visit437_437_1(self.endContainer && visit438_438_1(visit439_438_2(self.startContainer[0] === self.endContainer[0]) && visit440_439_1(self.startOffset === self.endOffset)))));
+    self.collapsed = (visit447_436_1(self.startContainer && visit448_437_1(self.endContainer && visit449_438_1(visit450_438_2(self.startContainer[0] === self.endContainer[0]) && visit451_439_1(self.startOffset === self.endOffset)))));
   }
   _$jscoverage['/editor/range.js'].lineData[447]++;
   function KERange(document) {
@@ -2767,9 +2767,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[462]++;
   var s = [], self = this, startContainer = self.startContainer[0], endContainer = self.endContainer[0];
   _$jscoverage['/editor/range.js'].lineData[466]++;
-  s.push((visit441_466_1(startContainer.id || startContainer.nodeName)) + ':' + self.startOffset);
+  s.push((visit452_466_1(startContainer.id || startContainer.nodeName)) + ':' + self.startOffset);
   _$jscoverage['/editor/range.js'].lineData[467]++;
-  s.push((visit442_467_1(endContainer.id || endContainer.nodeName)) + ':' + self.endOffset);
+  s.push((visit453_467_1(endContainer.id || endContainer.nodeName)) + ':' + self.endOffset);
   _$jscoverage['/editor/range.js'].lineData[468]++;
   return s.join('<br/>');
 }, 
@@ -2778,14 +2778,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[478]++;
   var self = this, container = self.startContainer, offset = self.startOffset;
   _$jscoverage['/editor/range.js'].lineData[482]++;
-  if (visit443_482_1(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
+  if (visit454_482_1(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
     _$jscoverage['/editor/range.js'].lineData[483]++;
-    if (visit444_483_1(!offset)) {
+    if (visit455_483_1(!offset)) {
       _$jscoverage['/editor/range.js'].lineData[484]++;
       self.setStartBefore(container);
     } else {
       _$jscoverage['/editor/range.js'].lineData[485]++;
-      if (visit445_485_1(offset >= container[0].nodeValue.length)) {
+      if (visit456_485_1(offset >= container[0].nodeValue.length)) {
         _$jscoverage['/editor/range.js'].lineData[486]++;
         self.setStartAfter(container);
       }
@@ -2796,14 +2796,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[491]++;
   offset = self.endOffset;
   _$jscoverage['/editor/range.js'].lineData[493]++;
-  if (visit446_493_1(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
+  if (visit457_493_1(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
     _$jscoverage['/editor/range.js'].lineData[494]++;
-    if (visit447_494_1(!offset)) {
+    if (visit458_494_1(!offset)) {
       _$jscoverage['/editor/range.js'].lineData[495]++;
       self.setEndBefore(container);
     } else {
       _$jscoverage['/editor/range.js'].lineData[496]++;
-      if (visit448_496_1(offset >= container[0].nodeValue.length)) {
+      if (visit459_496_1(offset >= container[0].nodeValue.length)) {
         _$jscoverage['/editor/range.js'].lineData[497]++;
         self.setEndAfter(container);
       }
@@ -2835,12 +2835,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[535]++;
   var self = this, startNode = self.startContainer, endNode = self.endContainer;
   _$jscoverage['/editor/range.js'].lineData[539]++;
-  if (visit449_539_1(startNode && visit450_540_1(visit451_540_2(startNode.nodeName() === 'span') && startNode.attr('_ke_bookmark')))) {
+  if (visit460_539_1(startNode && visit461_540_1(visit462_540_2(startNode.nodeName() === 'span') && startNode.attr('_ke_bookmark')))) {
     _$jscoverage['/editor/range.js'].lineData[542]++;
     self.setStartBefore(startNode);
   }
   _$jscoverage['/editor/range.js'].lineData[544]++;
-  if (visit452_544_1(endNode && visit453_545_1(visit454_545_2(endNode.nodeName() === 'span') && endNode.attr('_ke_bookmark')))) {
+  if (visit463_544_1(endNode && visit464_545_1(visit465_545_2(endNode.nodeName() === 'span') && endNode.attr('_ke_bookmark')))) {
     _$jscoverage['/editor/range.js'].lineData[547]++;
     self.setEndAfter(endNode);
   }
@@ -2850,7 +2850,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[565]++;
   var self = this;
   _$jscoverage['/editor/range.js'].lineData[566]++;
-  if (visit455_566_1(visit456_566_2(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && EMPTY[startNode.nodeName()])) {
+  if (visit466_566_1(visit467_566_2(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && EMPTY[startNode.nodeName()])) {
     _$jscoverage['/editor/range.js'].lineData[567]++;
     startNode = startNode.parent();
     _$jscoverage['/editor/range.js'].lineData[568]++;
@@ -2861,7 +2861,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[572]++;
   self.startOffset = startOffset;
   _$jscoverage['/editor/range.js'].lineData[574]++;
-  if (visit457_574_1(!self.endContainer)) {
+  if (visit468_574_1(!self.endContainer)) {
     _$jscoverage['/editor/range.js'].lineData[575]++;
     self.endContainer = startNode;
     _$jscoverage['/editor/range.js'].lineData[576]++;
@@ -2875,7 +2875,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[596]++;
   var self = this;
   _$jscoverage['/editor/range.js'].lineData[597]++;
-  if (visit458_597_1(visit459_597_2(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && EMPTY[endNode.nodeName()])) {
+  if (visit469_597_1(visit470_597_2(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && EMPTY[endNode.nodeName()])) {
     _$jscoverage['/editor/range.js'].lineData[598]++;
     endNode = endNode.parent();
     _$jscoverage['/editor/range.js'].lineData[599]++;
@@ -2886,7 +2886,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[603]++;
   self.endOffset = endOffset;
   _$jscoverage['/editor/range.js'].lineData[605]++;
-  if (visit460_605_1(!self.startContainer)) {
+  if (visit471_605_1(!self.startContainer)) {
     _$jscoverage['/editor/range.js'].lineData[606]++;
     self.startContainer = endNode;
     _$jscoverage['/editor/range.js'].lineData[607]++;
@@ -2908,7 +2908,7 @@ KISSY.add(function(S, require) {
       break;
     case KER.POSITION_BEFORE_END:
       _$jscoverage['/editor/range.js'].lineData[626]++;
-      if (visit461_626_1(node[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+      if (visit472_626_1(node[0].nodeType === Dom.NodeType.TEXT_NODE)) {
         _$jscoverage['/editor/range.js'].lineData[627]++;
         self.setStart(node, node[0].nodeValue.length);
       } else {
@@ -2942,7 +2942,7 @@ KISSY.add(function(S, require) {
       break;
     case KER.POSITION_BEFORE_END:
       _$jscoverage['/editor/range.js'].lineData[657]++;
-      if (visit462_657_1(node[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+      if (visit473_657_1(node[0].nodeType === Dom.NodeType.TEXT_NODE)) {
         _$jscoverage['/editor/range.js'].lineData[658]++;
         self.setEnd(node, node[0].nodeValue.length);
       } else {
@@ -2983,7 +2983,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[701]++;
   var self = this;
   _$jscoverage['/editor/range.js'].lineData[702]++;
-  if (visit463_702_1(toStart)) {
+  if (visit474_702_1(toStart)) {
     _$jscoverage['/editor/range.js'].lineData[703]++;
     self.endContainer = self.startContainer;
     _$jscoverage['/editor/range.js'].lineData[704]++;
@@ -3021,7 +3021,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[741]++;
   walkerRange.optimize();
   _$jscoverage['/editor/range.js'].lineData[743]++;
-  if (visit464_743_1(visit465_743_2(walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE) || visit466_744_1(walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE))) {
+  if (visit475_743_1(visit476_743_2(walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE) || visit477_744_1(walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE))) {
     _$jscoverage['/editor/range.js'].lineData[745]++;
     return NULL;
   }
@@ -3031,7 +3031,7 @@ KISSY.add(function(S, require) {
   walker.evaluator = function(node) {
   _$jscoverage['/editor/range.js'].functionData[27]++;
   _$jscoverage['/editor/range.js'].lineData[752]++;
-  return visit467_752_1(isNotWhitespaces(node) && isNotBookmarks(node));
+  return visit478_752_1(isNotWhitespaces(node) && isNotBookmarks(node));
 };
   _$jscoverage['/editor/range.js'].lineData[759]++;
   node = walker.next();
@@ -3040,27 +3040,27 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[761]++;
   pre = walker.previous();
   _$jscoverage['/editor/range.js'].lineData[763]++;
-  return visit468_763_1(node && node.equals(pre)) ? node : NULL;
+  return visit479_763_1(node && node.equals(pre)) ? node : NULL;
 }, 
   shrink: function(mode, selectContents) {
   _$jscoverage['/editor/range.js'].functionData[28]++;
   _$jscoverage['/editor/range.js'].lineData[773]++;
   var self = this;
   _$jscoverage['/editor/range.js'].lineData[774]++;
-  if (visit469_774_1(!self.collapsed)) {
+  if (visit480_774_1(!self.collapsed)) {
     _$jscoverage['/editor/range.js'].lineData[775]++;
-    mode = visit470_775_1(mode || KER.SHRINK_TEXT);
+    mode = visit481_775_1(mode || KER.SHRINK_TEXT);
     _$jscoverage['/editor/range.js'].lineData[777]++;
     var walkerRange = self.clone(), startContainer = self.startContainer, endContainer = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, moveStart = TRUE, currentElement, walker, moveEnd = TRUE;
     _$jscoverage['/editor/range.js'].lineData[788]++;
-    if (visit471_788_1(startContainer && visit472_789_1(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
+    if (visit482_788_1(startContainer && visit483_789_1(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
       _$jscoverage['/editor/range.js'].lineData[790]++;
-      if (visit473_790_1(!startOffset)) {
+      if (visit484_790_1(!startOffset)) {
         _$jscoverage['/editor/range.js'].lineData[791]++;
         walkerRange.setStartBefore(startContainer);
       } else {
         _$jscoverage['/editor/range.js'].lineData[792]++;
-        if (visit474_792_1(startOffset >= startContainer[0].nodeValue.length)) {
+        if (visit485_792_1(startOffset >= startContainer[0].nodeValue.length)) {
           _$jscoverage['/editor/range.js'].lineData[793]++;
           walkerRange.setStartAfter(startContainer);
         } else {
@@ -3072,14 +3072,14 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/range.js'].lineData[802]++;
-    if (visit475_802_1(endContainer && visit476_803_1(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
+    if (visit486_802_1(endContainer && visit487_803_1(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
       _$jscoverage['/editor/range.js'].lineData[804]++;
-      if (visit477_804_1(!endOffset)) {
+      if (visit488_804_1(!endOffset)) {
         _$jscoverage['/editor/range.js'].lineData[805]++;
         walkerRange.setEndBefore(endContainer);
       } else {
         _$jscoverage['/editor/range.js'].lineData[806]++;
-        if (visit478_806_1(endOffset >= endContainer[0].nodeValue.length)) {
+        if (visit489_806_1(endOffset >= endContainer[0].nodeValue.length)) {
           _$jscoverage['/editor/range.js'].lineData[807]++;
           walkerRange.setEndAfter(endContainer);
         } else {
@@ -3091,30 +3091,30 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/range.js'].lineData[814]++;
-    if (visit479_814_1(moveStart || moveEnd)) {
+    if (visit490_814_1(moveStart || moveEnd)) {
       _$jscoverage['/editor/range.js'].lineData[816]++;
       walker = new Walker(walkerRange);
       _$jscoverage['/editor/range.js'].lineData[818]++;
       walker.evaluator = function(node) {
   _$jscoverage['/editor/range.js'].functionData[29]++;
   _$jscoverage['/editor/range.js'].lineData[819]++;
-  return visit480_819_1(node.nodeType === (visit481_819_2(mode === KER.SHRINK_ELEMENT) ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE));
+  return visit491_819_1(node.nodeType === (visit492_819_2(mode === KER.SHRINK_ELEMENT) ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE));
 };
       _$jscoverage['/editor/range.js'].lineData[823]++;
       walker.guard = function(node, movingOut) {
   _$jscoverage['/editor/range.js'].functionData[30]++;
   _$jscoverage['/editor/range.js'].lineData[825]++;
-  if (visit482_825_1(visit483_825_2(mode === KER.SHRINK_ELEMENT) && visit484_826_1(node.nodeType === Dom.NodeType.TEXT_NODE))) {
+  if (visit493_825_1(visit494_825_2(mode === KER.SHRINK_ELEMENT) && visit495_826_1(node.nodeType === Dom.NodeType.TEXT_NODE))) {
     _$jscoverage['/editor/range.js'].lineData[827]++;
     return FALSE;
   }
   _$jscoverage['/editor/range.js'].lineData[830]++;
-  if (visit485_830_1(movingOut && visit486_830_2(node === currentElement))) {
+  if (visit496_830_1(movingOut && visit497_830_2(node === currentElement))) {
     _$jscoverage['/editor/range.js'].lineData[831]++;
     return FALSE;
   }
   _$jscoverage['/editor/range.js'].lineData[833]++;
-  if (visit487_833_1(!movingOut && visit488_833_2(node.nodeType === Dom.NodeType.ELEMENT_NODE))) {
+  if (visit498_833_1(!movingOut && visit499_833_2(node.nodeType === Dom.NodeType.ELEMENT_NODE))) {
     _$jscoverage['/editor/range.js'].lineData[834]++;
     currentElement = node;
   }
@@ -3123,29 +3123,29 @@ KISSY.add(function(S, require) {
 };
     }
     _$jscoverage['/editor/range.js'].lineData[841]++;
-    if (visit489_841_1(moveStart)) {
+    if (visit500_841_1(moveStart)) {
       _$jscoverage['/editor/range.js'].lineData[842]++;
-      var textStart = walker[visit490_842_1(mode === KER.SHRINK_ELEMENT) ? 'lastForward' : 'next']();
+      var textStart = walker[visit501_842_1(mode === KER.SHRINK_ELEMENT) ? 'lastForward' : 'next']();
       _$jscoverage['/editor/range.js'].lineData[843]++;
-      if (visit491_843_1(textStart)) {
+      if (visit502_843_1(textStart)) {
         _$jscoverage['/editor/range.js'].lineData[844]++;
         self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
       }
     }
     _$jscoverage['/editor/range.js'].lineData[848]++;
-    if (visit492_848_1(moveEnd)) {
+    if (visit503_848_1(moveEnd)) {
       _$jscoverage['/editor/range.js'].lineData[849]++;
       walker.reset();
       _$jscoverage['/editor/range.js'].lineData[850]++;
-      var textEnd = walker[visit493_850_1(mode === KER.SHRINK_ELEMENT) ? 'lastBackward' : 'previous']();
+      var textEnd = walker[visit504_850_1(mode === KER.SHRINK_ELEMENT) ? 'lastBackward' : 'previous']();
       _$jscoverage['/editor/range.js'].lineData[851]++;
-      if (visit494_851_1(textEnd)) {
+      if (visit505_851_1(textEnd)) {
         _$jscoverage['/editor/range.js'].lineData[852]++;
         self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
       }
     }
     _$jscoverage['/editor/range.js'].lineData[856]++;
-    return visit495_856_1(moveStart || moveEnd);
+    return visit506_856_1(moveStart || moveEnd);
   }
 }, 
   createBookmark2: function(normalized) {
@@ -3153,20 +3153,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[866]++;
   var self = this, startContainer = self.startContainer, endContainer = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, child, previous;
   _$jscoverage['/editor/range.js'].lineData[876]++;
-  if (visit496_876_1(!startContainer || !endContainer)) {
+  if (visit507_876_1(!startContainer || !endContainer)) {
     _$jscoverage['/editor/range.js'].lineData[877]++;
     return {
   start: 0, 
   end: 0};
   }
   _$jscoverage['/editor/range.js'].lineData[883]++;
-  if (visit497_883_1(normalized)) {
+  if (visit508_883_1(normalized)) {
     _$jscoverage['/editor/range.js'].lineData[886]++;
-    if (visit498_886_1(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+    if (visit509_886_1(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
       _$jscoverage['/editor/range.js'].lineData[887]++;
       child = new Node(startContainer[0].childNodes[startOffset]);
       _$jscoverage['/editor/range.js'].lineData[891]++;
-      if (visit499_891_1(child && visit500_891_2(child[0] && visit501_891_3(visit502_891_4(child[0].nodeType === Dom.NodeType.TEXT_NODE) && visit503_892_1(visit504_892_2(startOffset > 0) && visit505_892_3(child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))))) {
+      if (visit510_891_1(child && visit511_891_2(child[0] && visit512_891_3(visit513_891_4(child[0].nodeType === Dom.NodeType.TEXT_NODE) && visit514_892_1(visit515_892_2(startOffset > 0) && visit516_892_3(child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))))) {
         _$jscoverage['/editor/range.js'].lineData[893]++;
         startContainer = child;
         _$jscoverage['/editor/range.js'].lineData[894]++;
@@ -3174,20 +3174,20 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/range.js'].lineData[900]++;
-    while (visit506_900_1(visit507_900_2(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) && visit508_901_1((previous = startContainer.prev(undefined, 1)) && visit509_902_1(previous[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+    while (visit517_900_1(visit518_900_2(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) && visit519_901_1((previous = startContainer.prev(undefined, 1)) && visit520_902_1(previous[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
       _$jscoverage['/editor/range.js'].lineData[903]++;
       startContainer = previous;
       _$jscoverage['/editor/range.js'].lineData[904]++;
       startOffset += previous[0].nodeValue.length;
     }
     _$jscoverage['/editor/range.js'].lineData[908]++;
-    if (visit510_908_1(!self.collapsed)) {
+    if (visit521_908_1(!self.collapsed)) {
       _$jscoverage['/editor/range.js'].lineData[911]++;
-      if (visit511_911_1(endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+      if (visit522_911_1(endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
         _$jscoverage['/editor/range.js'].lineData[912]++;
         child = new Node(endContainer[0].childNodes[endOffset]);
         _$jscoverage['/editor/range.js'].lineData[916]++;
-        if (visit512_916_1(child && visit513_916_2(child[0] && visit514_917_1(visit515_917_2(child[0].nodeType === Dom.NodeType.TEXT_NODE) && visit516_917_3(visit517_917_4(endOffset > 0) && visit518_918_1(child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))))) {
+        if (visit523_916_1(child && visit524_916_2(child[0] && visit525_917_1(visit526_917_2(child[0].nodeType === Dom.NodeType.TEXT_NODE) && visit527_917_3(visit528_917_4(endOffset > 0) && visit529_918_1(child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))))) {
           _$jscoverage['/editor/range.js'].lineData[919]++;
           endContainer = child;
           _$jscoverage['/editor/range.js'].lineData[920]++;
@@ -3195,7 +3195,7 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/editor/range.js'].lineData[925]++;
-      while (visit519_925_1(visit520_925_2(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) && visit521_926_1((previous = endContainer.prev(undefined, 1)) && visit522_927_1(previous[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+      while (visit530_925_1(visit531_925_2(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) && visit532_926_1((previous = endContainer.prev(undefined, 1)) && visit533_927_1(previous[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
         _$jscoverage['/editor/range.js'].lineData[928]++;
         endContainer = previous;
         _$jscoverage['/editor/range.js'].lineData[929]++;
@@ -3225,20 +3225,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[960]++;
   startNode.html('&nbsp;');
   _$jscoverage['/editor/range.js'].lineData[962]++;
-  if (visit523_962_1(serializable)) {
+  if (visit534_962_1(serializable)) {
     _$jscoverage['/editor/range.js'].lineData[963]++;
     baseId = S.guid('ke_bm_');
     _$jscoverage['/editor/range.js'].lineData[964]++;
     startNode.attr('id', baseId + 'S');
   }
   _$jscoverage['/editor/range.js'].lineData[968]++;
-  if (visit524_968_1(!collapsed)) {
+  if (visit535_968_1(!collapsed)) {
     _$jscoverage['/editor/range.js'].lineData[969]++;
     endNode = startNode.clone();
     _$jscoverage['/editor/range.js'].lineData[970]++;
     endNode.html('&nbsp;');
     _$jscoverage['/editor/range.js'].lineData[972]++;
-    if (visit525_972_1(serializable)) {
+    if (visit536_972_1(serializable)) {
       _$jscoverage['/editor/range.js'].lineData[973]++;
       endNode.attr('id', baseId + 'E');
     }
@@ -3256,7 +3256,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[983]++;
   clone.insertNode(startNode);
   _$jscoverage['/editor/range.js'].lineData[986]++;
-  if (visit526_986_1(endNode)) {
+  if (visit537_986_1(endNode)) {
     _$jscoverage['/editor/range.js'].lineData[987]++;
     self.setStartAfter(startNode);
     _$jscoverage['/editor/range.js'].lineData[988]++;
@@ -3286,16 +3286,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1018]++;
   var self = this, startContainer = self.startContainer, startOffset = self.startOffset, collapsed = self.collapsed;
   _$jscoverage['/editor/range.js'].lineData[1023]++;
-  if (visit527_1023_1((visit528_1023_2(!ignoreStart || collapsed)) && visit529_1024_1(startContainer[0] && visit530_1025_1(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+  if (visit538_1023_1((visit539_1023_2(!ignoreStart || collapsed)) && visit540_1024_1(startContainer[0] && visit541_1025_1(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
     _$jscoverage['/editor/range.js'].lineData[1028]++;
-    if (visit531_1028_1(!startOffset)) {
+    if (visit542_1028_1(!startOffset)) {
       _$jscoverage['/editor/range.js'].lineData[1029]++;
       startOffset = startContainer._4eIndex();
       _$jscoverage['/editor/range.js'].lineData[1030]++;
       startContainer = startContainer.parent();
     } else {
       _$jscoverage['/editor/range.js'].lineData[1031]++;
-      if (visit532_1031_1(startOffset >= startContainer[0].nodeValue.length)) {
+      if (visit543_1031_1(startOffset >= startContainer[0].nodeValue.length)) {
         _$jscoverage['/editor/range.js'].lineData[1034]++;
         startOffset = startContainer._4eIndex() + 1;
         _$jscoverage['/editor/range.js'].lineData[1035]++;
@@ -3308,12 +3308,12 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/range.js'].lineData[1042]++;
         startContainer = startContainer.parent();
         _$jscoverage['/editor/range.js'].lineData[1045]++;
-        if (visit533_1045_1(Dom.equals(self.startContainer, self.endContainer))) {
+        if (visit544_1045_1(Dom.equals(self.startContainer, self.endContainer))) {
           _$jscoverage['/editor/range.js'].lineData[1046]++;
           self.setEnd(nextText, self.endOffset - self.startOffset);
         } else {
           _$jscoverage['/editor/range.js'].lineData[1047]++;
-          if (visit534_1047_1(Dom.equals(startContainer, self.endContainer))) {
+          if (visit545_1047_1(Dom.equals(startContainer, self.endContainer))) {
             _$jscoverage['/editor/range.js'].lineData[1048]++;
             self.endOffset += 1;
           }
@@ -3323,7 +3323,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[1052]++;
     self.setStart(startContainer, startOffset);
     _$jscoverage['/editor/range.js'].lineData[1054]++;
-    if (visit535_1054_1(collapsed)) {
+    if (visit546_1054_1(collapsed)) {
       _$jscoverage['/editor/range.js'].lineData[1055]++;
       self.collapse(TRUE);
       _$jscoverage['/editor/range.js'].lineData[1056]++;
@@ -3333,16 +3333,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1060]++;
   var endContainer = self.endContainer, endOffset = self.endOffset;
   _$jscoverage['/editor/range.js'].lineData[1063]++;
-  if (visit536_1063_1(!(visit537_1063_2(ignoreEnd || collapsed)) && visit538_1064_1(endContainer[0] && visit539_1064_2(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+  if (visit547_1063_1(!(visit548_1063_2(ignoreEnd || collapsed)) && visit549_1064_1(endContainer[0] && visit550_1064_2(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
     _$jscoverage['/editor/range.js'].lineData[1067]++;
-    if (visit540_1067_1(!endOffset)) {
+    if (visit551_1067_1(!endOffset)) {
       _$jscoverage['/editor/range.js'].lineData[1068]++;
       endOffset = endContainer._4eIndex();
       _$jscoverage['/editor/range.js'].lineData[1069]++;
       endContainer = endContainer.parent();
     } else {
       _$jscoverage['/editor/range.js'].lineData[1070]++;
-      if (visit541_1070_1(endOffset >= endContainer[0].nodeValue.length)) {
+      if (visit552_1070_1(endOffset >= endContainer[0].nodeValue.length)) {
         _$jscoverage['/editor/range.js'].lineData[1073]++;
         endOffset = endContainer._4eIndex() + 1;
         _$jscoverage['/editor/range.js'].lineData[1074]++;
@@ -3369,11 +3369,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1094]++;
   self.trim(FALSE, TRUE);
   _$jscoverage['/editor/range.js'].lineData[1095]++;
-  var startContainer = self.startContainer, startOffset = self.startOffset, nextNode = visit542_1097_1(startContainer[0].childNodes[startOffset] || null);
+  var startContainer = self.startContainer, startOffset = self.startOffset, nextNode = visit553_1097_1(startContainer[0].childNodes[startOffset] || null);
   _$jscoverage['/editor/range.js'].lineData[1099]++;
   startContainer[0].insertBefore(node[0], nextNode);
   _$jscoverage['/editor/range.js'].lineData[1101]++;
-  if (visit543_1101_1(startContainer[0] === self.endContainer[0])) {
+  if (visit554_1101_1(startContainer[0] === self.endContainer[0])) {
     _$jscoverage['/editor/range.js'].lineData[1102]++;
     self.endOffset++;
   }
@@ -3385,13 +3385,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1113]++;
   var self = this, doc = $(self.document);
   _$jscoverage['/editor/range.js'].lineData[1115]++;
-  if (visit544_1115_1(bookmark.is2)) {
+  if (visit555_1115_1(bookmark.is2)) {
     _$jscoverage['/editor/range.js'].lineData[1117]++;
-    var startContainer = doc._4eGetByAddress(bookmark.start, bookmark.normalized), startOffset = bookmark.startOffset, endContainer = visit545_1119_1(bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized)), endOffset = bookmark.endOffset;
+    var startContainer = doc._4eGetByAddress(bookmark.start, bookmark.normalized), startOffset = bookmark.startOffset, endContainer = visit556_1119_1(bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized)), endOffset = bookmark.endOffset;
     _$jscoverage['/editor/range.js'].lineData[1123]++;
     self.setStart(startContainer, startOffset);
     _$jscoverage['/editor/range.js'].lineData[1126]++;
-    if (visit546_1126_1(endContainer)) {
+    if (visit557_1126_1(endContainer)) {
       _$jscoverage['/editor/range.js'].lineData[1127]++;
       self.setEnd(endContainer, endOffset);
     } else {
@@ -3406,7 +3406,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[1143]++;
     startNode._4eRemove();
     _$jscoverage['/editor/range.js'].lineData[1147]++;
-    if (visit547_1147_1(endNode && endNode[0])) {
+    if (visit558_1147_1(endNode && endNode[0])) {
       _$jscoverage['/editor/range.js'].lineData[1148]++;
       self.setEndBefore(endNode);
       _$jscoverage['/editor/range.js'].lineData[1149]++;
@@ -3422,9 +3422,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1162]++;
   var self = this, start = self.startContainer, end = self.endContainer, ancestor;
   _$jscoverage['/editor/range.js'].lineData[1167]++;
-  if (visit548_1167_1(start[0] === end[0])) {
+  if (visit559_1167_1(start[0] === end[0])) {
     _$jscoverage['/editor/range.js'].lineData[1168]++;
-    if (visit549_1168_1(includeSelf && visit550_1169_1(visit551_1169_2(start[0].nodeType === Dom.NodeType.ELEMENT_NODE) && visit552_1170_1(self.startOffset === self.endOffset - 1)))) {
+    if (visit560_1168_1(includeSelf && visit561_1169_1(visit562_1169_2(start[0].nodeType === Dom.NodeType.ELEMENT_NODE) && visit563_1170_1(self.startOffset === self.endOffset - 1)))) {
       _$jscoverage['/editor/range.js'].lineData[1171]++;
       ancestor = new Node(start[0].childNodes[self.startOffset]);
     } else {
@@ -3436,7 +3436,7 @@ KISSY.add(function(S, require) {
     ancestor = start._4eCommonAncestor(end);
   }
   _$jscoverage['/editor/range.js'].lineData[1179]++;
-  return visit553_1179_1(ignoreTextNode && visit554_1179_2(ancestor[0].nodeType === Dom.NodeType.TEXT_NODE)) ? ancestor.parent() : ancestor;
+  return visit564_1179_1(ignoreTextNode && visit565_1179_2(ancestor[0].nodeType === Dom.NodeType.TEXT_NODE)) ? ancestor.parent() : ancestor;
 }, 
   enlarge: (function() {
   _$jscoverage['/editor/range.js'].functionData[38]++;
@@ -3446,17 +3446,17 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[1193]++;
     var container = self[left ? 'startContainer' : 'endContainer'], enlarge, sibling, index = left ? 0 : 1, commonReached = 0, direction = left ? 'previousSibling' : 'nextSibling', offset = self[left ? 'startOffset' : 'endOffset'];
     _$jscoverage['/editor/range.js'].lineData[1201]++;
-    if (visit555_1201_1(container[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+    if (visit566_1201_1(container[0].nodeType === Dom.NodeType.TEXT_NODE)) {
       _$jscoverage['/editor/range.js'].lineData[1202]++;
-      if (visit556_1202_1(left)) {
+      if (visit567_1202_1(left)) {
         _$jscoverage['/editor/range.js'].lineData[1204]++;
-        if (visit557_1204_1(offset)) {
+        if (visit568_1204_1(offset)) {
           _$jscoverage['/editor/range.js'].lineData[1205]++;
           return;
         }
       } else {
         _$jscoverage['/editor/range.js'].lineData[1208]++;
-        if (visit558_1208_1(offset < container[0].nodeValue.length)) {
+        if (visit569_1208_1(offset < container[0].nodeValue.length)) {
           _$jscoverage['/editor/range.js'].lineData[1209]++;
           return;
         }
@@ -3467,7 +3467,7 @@ KISSY.add(function(S, require) {
       enlarge = container[0].parentNode;
     } else {
       _$jscoverage['/editor/range.js'].lineData[1219]++;
-      sibling = visit559_1219_1(container[0].childNodes[offset + (left ? -1 : 1)] || null);
+      sibling = visit570_1219_1(container[0].childNodes[offset + (left ? -1 : 1)] || null);
       _$jscoverage['/editor/range.js'].lineData[1221]++;
       enlarge = container[0];
     }
@@ -3476,7 +3476,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1226]++;
       while (sibling) {
         _$jscoverage['/editor/range.js'].lineData[1227]++;
-        if (visit560_1227_1(isWhitespace(sibling) || isBookmark(sibling))) {
+        if (visit571_1227_1(isWhitespace(sibling) || isBookmark(sibling))) {
           _$jscoverage['/editor/range.js'].lineData[1228]++;
           sibling = sibling[direction];
         } else {
@@ -3485,9 +3485,9 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/editor/range.js'].lineData[1235]++;
-      if (visit561_1235_1(sibling)) {
+      if (visit572_1235_1(sibling)) {
         _$jscoverage['/editor/range.js'].lineData[1237]++;
-        if (visit562_1237_1(!commonReached)) {
+        if (visit573_1237_1(!commonReached)) {
           _$jscoverage['/editor/range.js'].lineData[1239]++;
           self[left ? 'setStartAfter' : 'setEndBefore']($(sibling));
         }
@@ -3497,12 +3497,12 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1248]++;
       enlarge = $(enlarge);
       _$jscoverage['/editor/range.js'].lineData[1250]++;
-      if (visit563_1250_1(enlarge.nodeName() === 'body')) {
+      if (visit574_1250_1(enlarge.nodeName() === 'body')) {
         _$jscoverage['/editor/range.js'].lineData[1251]++;
         return;
       }
       _$jscoverage['/editor/range.js'].lineData[1254]++;
-      if (visit564_1254_1(commonReached || enlarge.equals(commonAncestor))) {
+      if (visit575_1254_1(commonReached || enlarge.equals(commonAncestor))) {
         _$jscoverage['/editor/range.js'].lineData[1255]++;
         stop[index] = enlarge;
         _$jscoverage['/editor/range.js'].lineData[1256]++;
@@ -3526,7 +3526,7 @@ KISSY.add(function(S, require) {
   switch (unit) {
     case KER.ENLARGE_ELEMENT:
       _$jscoverage['/editor/range.js'].lineData[1273]++;
-      if (visit565_1273_1(self.collapsed)) {
+      if (visit576_1273_1(self.collapsed)) {
         _$jscoverage['/editor/range.js'].lineData[1274]++;
         return;
       }
@@ -3537,7 +3537,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1281]++;
       enlargeElement(self, 0, stop, commonAncestor);
       _$jscoverage['/editor/range.js'].lineData[1283]++;
-      if (visit566_1283_1(stop[0] && stop[1])) {
+      if (visit577_1283_1(stop[0] && stop[1])) {
         _$jscoverage['/editor/range.js'].lineData[1284]++;
         var commonStop = stop[0].contains(stop[1]) ? stop[1] : stop[0];
         _$jscoverage['/editor/range.js'].lineData[1285]++;
@@ -3558,13 +3558,13 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1299]++;
       walkerRange.setEnd(self.startContainer, self.startOffset);
       _$jscoverage['/editor/range.js'].lineData[1301]++;
-      var walker = new Walker(walkerRange), blockBoundary, tailBr, defaultGuard = Walker.blockBoundary((visit567_1305_1(unit === KER.ENLARGE_LIST_ITEM_CONTENTS)) ? {
+      var walker = new Walker(walkerRange), blockBoundary, tailBr, defaultGuard = Walker.blockBoundary((visit578_1305_1(unit === KER.ENLARGE_LIST_ITEM_CONTENTS)) ? {
   br: 1} : NULL), boundaryGuard = function(node) {
   _$jscoverage['/editor/range.js'].functionData[41]++;
   _$jscoverage['/editor/range.js'].lineData[1309]++;
   var retVal = defaultGuard(node);
   _$jscoverage['/editor/range.js'].lineData[1310]++;
-  if (visit568_1310_1(!retVal)) {
+  if (visit579_1310_1(!retVal)) {
     _$jscoverage['/editor/range.js'].lineData[1311]++;
     blockBoundary = $(node);
   }
@@ -3575,7 +3575,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1317]++;
   var retVal = boundaryGuard(node);
   _$jscoverage['/editor/range.js'].lineData[1318]++;
-  if (visit569_1318_1(!retVal && visit570_1318_2(Dom.nodeName(node) === 'br'))) {
+  if (visit580_1318_1(!retVal && visit581_1318_2(Dom.nodeName(node) === 'br'))) {
     _$jscoverage['/editor/range.js'].lineData[1319]++;
     tailBr = $(node);
   }
@@ -3587,9 +3587,9 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1326]++;
       enlargeable = walker.lastBackward();
       _$jscoverage['/editor/range.js'].lineData[1329]++;
-      blockBoundary = visit571_1329_1(blockBoundary || body);
+      blockBoundary = visit582_1329_1(blockBoundary || body);
       _$jscoverage['/editor/range.js'].lineData[1333]++;
-      self.setStartAt(blockBoundary, visit572_1335_1(visit573_1335_2(blockBoundary.nodeName() !== 'br') && (visit574_1343_1(visit575_1343_2(!enlargeable && self.checkStartOfBlock()) || visit576_1343_3(enlargeable && blockBoundary.contains(enlargeable))))) ? KER.POSITION_AFTER_START : KER.POSITION_AFTER_END);
+      self.setStartAt(blockBoundary, visit583_1335_1(visit584_1335_2(blockBoundary.nodeName() !== 'br') && (visit585_1343_1(visit586_1343_2(!enlargeable && self.checkStartOfBlock()) || visit587_1343_3(enlargeable && blockBoundary.contains(enlargeable))))) ? KER.POSITION_AFTER_START : KER.POSITION_AFTER_END);
       _$jscoverage['/editor/range.js'].lineData[1348]++;
       walkerRange = self.clone();
       _$jscoverage['/editor/range.js'].lineData[1349]++;
@@ -3599,17 +3599,17 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1351]++;
       walker = new Walker(walkerRange);
       _$jscoverage['/editor/range.js'].lineData[1354]++;
-      walker.guard = (visit577_1354_1(unit === KER.ENLARGE_LIST_ITEM_CONTENTS)) ? tailBrGuard : boundaryGuard;
+      walker.guard = (visit588_1354_1(unit === KER.ENLARGE_LIST_ITEM_CONTENTS)) ? tailBrGuard : boundaryGuard;
       _$jscoverage['/editor/range.js'].lineData[1356]++;
       blockBoundary = NULL;
       _$jscoverage['/editor/range.js'].lineData[1359]++;
       enlargeable = walker.lastForward();
       _$jscoverage['/editor/range.js'].lineData[1362]++;
-      blockBoundary = visit578_1362_1(blockBoundary || body);
+      blockBoundary = visit589_1362_1(blockBoundary || body);
       _$jscoverage['/editor/range.js'].lineData[1366]++;
-      self.setEndAt(blockBoundary, (visit579_1368_1(visit580_1368_2(!enlargeable && self.checkEndOfBlock()) || visit581_1368_3(enlargeable && blockBoundary.contains(enlargeable)))) ? KER.POSITION_BEFORE_END : KER.POSITION_BEFORE_START);
+      self.setEndAt(blockBoundary, (visit590_1368_1(visit591_1368_2(!enlargeable && self.checkEndOfBlock()) || visit592_1368_3(enlargeable && blockBoundary.contains(enlargeable)))) ? KER.POSITION_BEFORE_END : KER.POSITION_BEFORE_START);
       _$jscoverage['/editor/range.js'].lineData[1373]++;
-      if (visit582_1373_1(tailBr)) {
+      if (visit593_1373_1(tailBr)) {
         _$jscoverage['/editor/range.js'].lineData[1374]++;
         self.setEndAfter(tailBr);
       }
@@ -3621,11 +3621,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1385]++;
   var self = this, startContainer = self.startContainer, startOffset = self.startOffset;
   _$jscoverage['/editor/range.js'].lineData[1391]++;
-  if (visit583_1391_1(startOffset && visit584_1391_2(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
+  if (visit594_1391_1(startOffset && visit595_1391_2(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
     _$jscoverage['/editor/range.js'].lineData[1392]++;
     var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
     _$jscoverage['/editor/range.js'].lineData[1393]++;
-    if (visit585_1393_1(textBefore.length)) {
+    if (visit596_1393_1(textBefore.length)) {
       _$jscoverage['/editor/range.js'].lineData[1394]++;
       return FALSE;
     }
@@ -3639,7 +3639,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1409]++;
   walkerRange.collapse(TRUE);
   _$jscoverage['/editor/range.js'].lineData[1410]++;
-  walkerRange.setStartAt(visit586_1410_1(path.block || path.blockLimit), KER.POSITION_AFTER_START);
+  walkerRange.setStartAt(visit597_1410_1(path.block || path.blockLimit), KER.POSITION_AFTER_START);
   _$jscoverage['/editor/range.js'].lineData[1412]++;
   var walker = new Walker(walkerRange);
   _$jscoverage['/editor/range.js'].lineData[1413]++;
@@ -3652,11 +3652,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1423]++;
   var self = this, endContainer = self.endContainer, endOffset = self.endOffset;
   _$jscoverage['/editor/range.js'].lineData[1428]++;
-  if (visit587_1428_1(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+  if (visit598_1428_1(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE)) {
     _$jscoverage['/editor/range.js'].lineData[1429]++;
     var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
     _$jscoverage['/editor/range.js'].lineData[1430]++;
-    if (visit588_1430_1(textAfter.length)) {
+    if (visit599_1430_1(textAfter.length)) {
       _$jscoverage['/editor/range.js'].lineData[1431]++;
       return FALSE;
     }
@@ -3670,7 +3670,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1446]++;
   walkerRange.collapse(FALSE);
   _$jscoverage['/editor/range.js'].lineData[1447]++;
-  walkerRange.setEndAt(visit589_1447_1(path.block || path.blockLimit), KER.POSITION_BEFORE_END);
+  walkerRange.setEndAt(visit600_1447_1(path.block || path.blockLimit), KER.POSITION_BEFORE_END);
   _$jscoverage['/editor/range.js'].lineData[1449]++;
   var walker = new Walker(walkerRange);
   _$jscoverage['/editor/range.js'].lineData[1450]++;
@@ -3683,29 +3683,29 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1461]++;
   var walkerRange = this.clone();
   _$jscoverage['/editor/range.js'].lineData[1465]++;
-  walkerRange[visit590_1463_1(checkType === KER.START) ? 'setStartAt' : 'setEndAt'](element, visit591_1465_1(checkType === KER.START) ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_END);
+  walkerRange[visit601_1463_1(checkType === KER.START) ? 'setStartAt' : 'setEndAt'](element, visit602_1465_1(checkType === KER.START) ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_END);
   _$jscoverage['/editor/range.js'].lineData[1469]++;
   var walker = new Walker(walkerRange);
   _$jscoverage['/editor/range.js'].lineData[1471]++;
   walker.evaluator = elementBoundaryEval;
   _$jscoverage['/editor/range.js'].lineData[1472]++;
-  return walker[visit592_1472_1(checkType === KER.START) ? 'checkBackward' : 'checkForward']();
+  return walker[visit603_1472_1(checkType === KER.START) ? 'checkBackward' : 'checkForward']();
 }, 
   getBoundaryNodes: function() {
   _$jscoverage['/editor/range.js'].functionData[46]++;
   _$jscoverage['/editor/range.js'].lineData[1481]++;
   var self = this, startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, childCount;
   _$jscoverage['/editor/range.js'].lineData[1488]++;
-  if (visit593_1488_1(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+  if (visit604_1488_1(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
     _$jscoverage['/editor/range.js'].lineData[1489]++;
     childCount = startNode[0].childNodes.length;
     _$jscoverage['/editor/range.js'].lineData[1490]++;
-    if (visit594_1490_1(childCount > startOffset)) {
+    if (visit605_1490_1(childCount > startOffset)) {
       _$jscoverage['/editor/range.js'].lineData[1491]++;
       startNode = $(startNode[0].childNodes[startOffset]);
     } else {
       _$jscoverage['/editor/range.js'].lineData[1492]++;
-      if (visit595_1492_1(childCount === 0)) {
+      if (visit606_1492_1(childCount === 0)) {
         _$jscoverage['/editor/range.js'].lineData[1494]++;
         startNode = startNode._4ePreviousSourceNode();
       } else {
@@ -3719,21 +3719,21 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/range.js'].lineData[1503]++;
         startNode = $(startNode);
         _$jscoverage['/editor/range.js'].lineData[1508]++;
-        startNode = visit596_1508_1(startNode._4eNextSourceNode() || startNode);
+        startNode = visit607_1508_1(startNode._4eNextSourceNode() || startNode);
       }
     }
   }
   _$jscoverage['/editor/range.js'].lineData[1512]++;
-  if (visit597_1512_1(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+  if (visit608_1512_1(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
     _$jscoverage['/editor/range.js'].lineData[1513]++;
     childCount = endNode[0].childNodes.length;
     _$jscoverage['/editor/range.js'].lineData[1514]++;
-    if (visit598_1514_1(childCount > endOffset)) {
+    if (visit609_1514_1(childCount > endOffset)) {
       _$jscoverage['/editor/range.js'].lineData[1515]++;
       endNode = $(endNode[0].childNodes[endOffset])._4ePreviousSourceNode(TRUE);
     } else {
       _$jscoverage['/editor/range.js'].lineData[1518]++;
-      if (visit599_1518_1(childCount === 0)) {
+      if (visit610_1518_1(childCount === 0)) {
         _$jscoverage['/editor/range.js'].lineData[1519]++;
         endNode = endNode._4ePreviousSourceNode();
       } else {
@@ -3750,7 +3750,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/editor/range.js'].lineData[1533]++;
-  if (visit600_1533_1(startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING)) {
+  if (visit611_1533_1(startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING)) {
     _$jscoverage['/editor/range.js'].lineData[1534]++;
     startNode = endNode;
   }
@@ -3772,7 +3772,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1557]++;
   fixedBlock._4eTrim();
   _$jscoverage['/editor/range.js'].lineData[1558]++;
-  if (visit601_1558_1(!UA.ie)) {
+  if (visit612_1558_1(!UA.ie)) {
     _$jscoverage['/editor/range.js'].lineData[1559]++;
     fixedBlock._4eAppendBogus();
   }
@@ -3788,33 +3788,33 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1572]++;
   var self = this, startPath = new ElementPath(self.startContainer), endPath = new ElementPath(self.endContainer), startBlockLimit = startPath.blockLimit, endBlockLimit = endPath.blockLimit, startBlock = startPath.block, endBlock = endPath.block, elementPath = NULL;
   _$jscoverage['/editor/range.js'].lineData[1582]++;
-  if (visit602_1582_1(!startBlockLimit.equals(endBlockLimit))) {
+  if (visit613_1582_1(!startBlockLimit.equals(endBlockLimit))) {
     _$jscoverage['/editor/range.js'].lineData[1583]++;
     return NULL;
   }
   _$jscoverage['/editor/range.js'].lineData[1587]++;
-  if (visit603_1587_1(blockTag !== 'br')) {
+  if (visit614_1587_1(blockTag !== 'br')) {
     _$jscoverage['/editor/range.js'].lineData[1588]++;
-    if (visit604_1588_1(!startBlock)) {
+    if (visit615_1588_1(!startBlock)) {
       _$jscoverage['/editor/range.js'].lineData[1589]++;
       startBlock = self.fixBlock(TRUE, blockTag);
       _$jscoverage['/editor/range.js'].lineData[1590]++;
       endBlock = new ElementPath(self.endContainer).block;
     }
     _$jscoverage['/editor/range.js'].lineData[1593]++;
-    if (visit605_1593_1(!endBlock)) {
+    if (visit616_1593_1(!endBlock)) {
       _$jscoverage['/editor/range.js'].lineData[1594]++;
       endBlock = self.fixBlock(FALSE, blockTag);
     }
   }
   _$jscoverage['/editor/range.js'].lineData[1599]++;
-  var isStartOfBlock = visit606_1599_1(startBlock && self.checkStartOfBlock()), isEndOfBlock = visit607_1600_1(endBlock && self.checkEndOfBlock());
+  var isStartOfBlock = visit617_1599_1(startBlock && self.checkStartOfBlock()), isEndOfBlock = visit618_1600_1(endBlock && self.checkEndOfBlock());
   _$jscoverage['/editor/range.js'].lineData[1603]++;
   self.deleteContents();
   _$jscoverage['/editor/range.js'].lineData[1605]++;
-  if (visit608_1605_1(startBlock && visit609_1605_2(startBlock[0] === endBlock[0]))) {
+  if (visit619_1605_1(startBlock && visit620_1605_2(startBlock[0] === endBlock[0]))) {
     _$jscoverage['/editor/range.js'].lineData[1606]++;
-    if (visit610_1606_1(isEndOfBlock)) {
+    if (visit621_1606_1(isEndOfBlock)) {
       _$jscoverage['/editor/range.js'].lineData[1607]++;
       elementPath = new ElementPath(self.startContainer);
       _$jscoverage['/editor/range.js'].lineData[1608]++;
@@ -3823,7 +3823,7 @@ KISSY.add(function(S, require) {
       endBlock = NULL;
     } else {
       _$jscoverage['/editor/range.js'].lineData[1610]++;
-      if (visit611_1610_1(isStartOfBlock)) {
+      if (visit622_1610_1(isStartOfBlock)) {
         _$jscoverage['/editor/range.js'].lineData[1611]++;
         elementPath = new ElementPath(self.startContainer);
         _$jscoverage['/editor/range.js'].lineData[1612]++;
@@ -3834,7 +3834,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/range.js'].lineData[1615]++;
         endBlock = self.splitElement(startBlock);
         _$jscoverage['/editor/range.js'].lineData[1619]++;
-        if (visit612_1619_1(!UA.ie && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))) {
+        if (visit623_1619_1(!UA.ie && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))) {
           _$jscoverage['/editor/range.js'].lineData[1620]++;
           startBlock._4eAppendBogus();
         }
@@ -3854,7 +3854,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1640]++;
   var self = this;
   _$jscoverage['/editor/range.js'].lineData[1641]++;
-  if (visit613_1641_1(!self.collapsed)) {
+  if (visit624_1641_1(!self.collapsed)) {
     _$jscoverage['/editor/range.js'].lineData[1642]++;
     return NULL;
   }
@@ -3879,12 +3879,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/range.js'].lineData[1670]++;
     var next;
     _$jscoverage['/editor/range.js'].lineData[1672]++;
-    if (visit614_1672_1(visit615_1672_2(node[0].nodeType === Dom.NodeType.ELEMENT_NODE) && node._4eIsEditable())) {
+    if (visit625_1672_1(visit626_1672_2(node[0].nodeType === Dom.NodeType.ELEMENT_NODE) && node._4eIsEditable())) {
       _$jscoverage['/editor/range.js'].lineData[1674]++;
       next = node[isMoveToEnd ? 'last' : 'first'](nonWhitespaceOrIsBookmark, 1);
     }
     _$jscoverage['/editor/range.js'].lineData[1677]++;
-    if (visit616_1677_1(!childOnly && !next)) {
+    if (visit627_1677_1(!childOnly && !next)) {
       _$jscoverage['/editor/range.js'].lineData[1678]++;
       next = node[isMoveToEnd ? 'prev' : 'next'](nonWhitespaceOrIsBookmark, 1);
     }
@@ -3896,7 +3896,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1686]++;
   while (el) {
     _$jscoverage['/editor/range.js'].lineData[1688]++;
-    if (visit617_1688_1(el[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+    if (visit628_1688_1(el[0].nodeType === Dom.NodeType.TEXT_NODE)) {
       _$jscoverage['/editor/range.js'].lineData[1689]++;
       self.moveToPosition(el, isMoveToEnd ? KER.POSITION_AFTER_END : KER.POSITION_BEFORE_START);
       _$jscoverage['/editor/range.js'].lineData[1692]++;
@@ -3905,7 +3905,7 @@ KISSY.add(function(S, require) {
       break;
     }
     _$jscoverage['/editor/range.js'].lineData[1697]++;
-    if (visit618_1697_1(visit619_1697_2(el[0].nodeType === Dom.NodeType.ELEMENT_NODE) && el._4eIsEditable())) {
+    if (visit629_1697_1(visit630_1697_2(el[0].nodeType === Dom.NodeType.ELEMENT_NODE) && el._4eIsEditable())) {
       _$jscoverage['/editor/range.js'].lineData[1698]++;
       self.moveToPosition(el, isMoveToEnd ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_START);
       _$jscoverage['/editor/range.js'].lineData[1701]++;
@@ -3924,7 +3924,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1716]++;
   self.setStart(node, 0);
   _$jscoverage['/editor/range.js'].lineData[1717]++;
-  self.setEnd(node, visit620_1717_1(domNode.nodeType === Dom.NodeType.TEXT_NODE) ? domNode.nodeValue.length : domNode.childNodes.length);
+  self.setEnd(node, visit631_1717_1(domNode.nodeType === Dom.NodeType.TEXT_NODE) ? domNode.nodeValue.length : domNode.childNodes.length);
 }, 
   insertNodeByDtd: function(element) {
   _$jscoverage['/editor/range.js'].functionData[53]++;
@@ -3933,15 +3933,15 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[1733]++;
   self.deleteContents();
   _$jscoverage['/editor/range.js'].lineData[1734]++;
-  if (visit621_1734_1(isBlock)) {
+  if (visit632_1734_1(isBlock)) {
     _$jscoverage['/editor/range.js'].lineData[1735]++;
     current = self.getCommonAncestor(FALSE, TRUE);
     _$jscoverage['/editor/range.js'].lineData[1736]++;
-    while (visit622_1736_1((tmpDtd = dtd[current.nodeName()]) && !(visit623_1736_2(tmpDtd && tmpDtd[elementName])))) {
+    while (visit633_1736_1((tmpDtd = dtd[current.nodeName()]) && !(visit634_1736_2(tmpDtd && tmpDtd[elementName])))) {
       _$jscoverage['/editor/range.js'].lineData[1737]++;
       var parent = current.parent();
       _$jscoverage['/editor/range.js'].lineData[1740]++;
-      if (visit624_1740_1(self.checkStartOfBlock() && self.checkEndOfBlock())) {
+      if (visit635_1740_1(self.checkStartOfBlock() && self.checkEndOfBlock())) {
         _$jscoverage['/editor/range.js'].lineData[1741]++;
         self.setStartBefore(current);
         _$jscoverage['/editor/range.js'].lineData[1742]++;
@@ -3956,7 +3956,7 @@ KISSY.add(function(S, require) {
       current = parent;
     }
     _$jscoverage['/editor/range.js'].lineData[1750]++;
-    if (visit625_1750_1(last)) {
+    if (visit636_1750_1(last)) {
       _$jscoverage['/editor/range.js'].lineData[1751]++;
       self.splitElement(last);
     }

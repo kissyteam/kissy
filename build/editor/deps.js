@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:21
+build time: Apr 25 13:52
 */
 /*jshint indent:false, quotmark:false*/
 (function(S){
@@ -9,7 +9,9 @@ S.config("requires",{
     "editor": [
         "node",
         "html-parser",
-        "component/control"
+        "component/control",
+        "dom",
+        "ua"
     ],
     "editor/plugin/back-color": [
         "editor/plugin/color/btn",

@@ -305,7 +305,7 @@ if (! _$jscoverage['/editor/render-xtpl.js'].branchData) {
   _$jscoverage['/editor/render-xtpl.js'].branchData['8'][1] = new BranchData();
 }
 _$jscoverage['/editor/render-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
-function visit626_8_1(result) {
+function visit637_8_1(result) {
   _$jscoverage['/editor/render-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/render-xtpl.js'].lineData[2]++;
@@ -317,7 +317,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/editor/render-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/editor/render-xtpl.js'].lineData[8]++;
-  if (visit626_8_1("5.0.0" !== S.version)) {
+  if (visit637_8_1("5.0.0" !== S.version)) {
     _$jscoverage['/editor/render-xtpl.js'].lineData[9]++;
     throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }

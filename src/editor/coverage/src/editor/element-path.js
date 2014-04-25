@@ -420,7 +420,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/element-path.js'].lineData[13]++;
   require('./dom');
   _$jscoverage['/editor/element-path.js'].lineData[15]++;
-  var Dom = S.require('dom'), dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null, pathBlockElements = {
+  var Dom = require('dom'), dtd = Editor.XHTML_DTD, TRUE = true, FALSE = false, NULL = null, pathBlockElements = {
   address: 1, 
   blockquote: 1, 
   dl: 1, 

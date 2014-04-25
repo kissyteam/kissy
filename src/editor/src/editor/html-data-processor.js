@@ -16,10 +16,7 @@ KISSY.add(function (S, require) {
 
     // <span></span> <span><span></span></span>
     function isEmptyElement(el) {
-        if (el.nodeName === 'br') {
-            return false;
-        }
-        if (!dtd.$inline[el.nodeName]) {
+        if (!dtd.$removeEmpty[el.nodeName]) {
             return false;
         }
         var childNodes = el.childNodes,

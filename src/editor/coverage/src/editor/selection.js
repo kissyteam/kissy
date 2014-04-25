@@ -716,7 +716,6 @@ if (! _$jscoverage['/editor/selection.js'].branchData) {
   _$jscoverage['/editor/selection.js'].branchData['574'][2] = new BranchData();
   _$jscoverage['/editor/selection.js'].branchData['574'][3] = new BranchData();
   _$jscoverage['/editor/selection.js'].branchData['574'][4] = new BranchData();
-  _$jscoverage['/editor/selection.js'].branchData['574'][5] = new BranchData();
   _$jscoverage['/editor/selection.js'].branchData['575'] = [];
   _$jscoverage['/editor/selection.js'].branchData['575'][1] = new BranchData();
   _$jscoverage['/editor/selection.js'].branchData['575'][2] = new BranchData();
@@ -797,503 +796,499 @@ if (! _$jscoverage['/editor/selection.js'].branchData) {
   _$jscoverage['/editor/selection.js'].branchData['844'][1] = new BranchData();
 }
 _$jscoverage['/editor/selection.js'].branchData['844'][1].init(59, 21, '!sel || sel.isInvalid');
-function visit819_844_1(result) {
+function visit829_844_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['844'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['831'][1].init(473, 9, 'dummySpan');
-function visit818_831_1(result) {
+function visit828_831_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['831'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['822'][1].init(26, 18, 'isStartMarkerAlone');
-function visit817_822_1(result) {
+function visit827_822_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['822'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['821'][1].init(5025, 9, 'collapsed');
-function visit816_821_1(result) {
+function visit826_821_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['821'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['813'][1].init(381, 25, 'startNode[0] || startNode');
-function visit815_813_1(result) {
+function visit825_813_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['813'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['808'][1].init(1775, 18, 'isStartMarkerAlone');
-function visit814_808_1(result) {
+function visit824_808_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['808'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['795'][1].init(72, 51, 'Dom.nodeName(startNode[0].previousSibling) === \'br\'');
-function visit813_795_1(result) {
+function visit823_795_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['795'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['794'][1].init(-1, 124, 'startNode[0].previousSibling && Dom.nodeName(startNode[0].previousSibling) === \'br\'');
-function visit812_794_1(result) {
+function visit822_794_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['794'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['792'][2].init(170, 268, '!startNode[0].previousSibling || (startNode[0].previousSibling && Dom.nodeName(startNode[0].previousSibling) === \'br\')');
-function visit811_792_2(result) {
+function visit821_792_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['792'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['792'][1].init(155, 283, 'forceExpand || !startNode[0].previousSibling || (startNode[0].previousSibling && Dom.nodeName(startNode[0].previousSibling) === \'br\')');
-function visit810_792_1(result) {
+function visit820_792_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['792'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['790'][3].init(58, 55, 'next.nodeValue && next.nodeValue.match(fillerTextRegex)');
-function visit809_790_3(result) {
+function visit819_790_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['790'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['790'][2].init(50, 63, 'next && next.nodeValue && next.nodeValue.match(fillerTextRegex)');
-function visit808_790_2(result) {
+function visit818_790_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['790'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['790'][1].init(-1, 474, '!(next && next.nodeValue && next.nodeValue.match(fillerTextRegex)) && (forceExpand || !startNode[0].previousSibling || (startNode[0].previousSibling && Dom.nodeName(startNode[0].previousSibling) === \'br\'))');
-function visit807_790_1(result) {
+function visit817_790_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['790'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['786'][1].init(433, 29, 'next && !notWhitespaces(next)');
-function visit806_786_1(result) {
+function visit816_786_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['786'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['772'][1].init(2061, 7, 'endNode');
-function visit805_772_1(result) {
+function visit815_772_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['772'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['760'][1].init(1595, 10, '!collapsed');
-function visit804_760_1(result) {
+function visit814_760_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['760'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['751'][2].init(1152, 59, 'self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit803_751_2(result) {
+function visit813_751_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['751'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['751'][1].init(152, 128, 'self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.endContainer.nodeName() in nonCells');
-function visit802_751_1(result) {
+function visit812_751_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['751'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['749'][3].init(997, 61, 'self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit801_749_3(result) {
+function visit811_749_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['749'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['749'][2].init(997, 128, 'self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startContainer.nodeName() in nonCells');
-function visit800_749_2(result) {
+function visit810_749_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['749'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['749'][1].init(997, 281, 'self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startContainer.nodeName() in nonCells || self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.endContainer.nodeName() in nonCells');
-function visit799_749_1(result) {
+function visit809_749_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['749'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['742'][1].init(112, 44, 'selEl.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit798_742_1(result) {
+function visit808_742_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['742'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['740'][3].init(50, 39, 'self.endOffset - self.startOffset === 1');
-function visit797_740_3(result) {
+function visit807_740_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['740'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['740'][2].init(350, 47, 'self.startContainer[0] === self.endContainer[0]');
-function visit796_740_2(result) {
+function visit806_740_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['740'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['740'][1].init(91, 90, 'self.startContainer[0] === self.endContainer[0] && self.endOffset - self.startOffset === 1');
-function visit795_740_1(result) {
+function visit805_740_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['740'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['717'][1].init(280, 51, 'e.toString().indexOf(\'NS_ERROR_ILLEGAL_VALUE\') >= 0');
-function visit794_717_1(result) {
+function visit804_717_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['717'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['699'][2].init(282, 56, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit793_699_2(result) {
+function visit803_699_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['699'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['699'][1].init(34, 96, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
-function visit792_699_1(result) {
+function visit802_699_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['699'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['698'][1].init(245, 131, 'self.collapsed && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
-function visit791_698_1(result) {
+function visit801_698_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['698'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['678'][1].init(22, 3, 'sel');
-function visit790_678_1(result) {
+function visit800_678_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['678'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['674'][1].init(22, 3, 'sel');
-function visit789_674_1(result) {
+function visit799_674_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['674'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['673'][1].init(59, 7, '!OLD_IE');
-function visit788_673_1(result) {
+function visit798_673_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['673'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['663'][1].init(200, 5, 'start');
-function visit787_663_1(result) {
+function visit797_663_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['663'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['642'][1].init(73, 20, 'i < bookmarks.length');
-function visit786_642_1(result) {
+function visit796_642_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['642'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['631'][1].init(646, 42, 'Dom.equals(rangeEnd, bookmarkEnd.parent())');
-function visit785_631_1(result) {
+function visit795_631_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['631'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['628'][1].init(501, 44, 'Dom.equals(rangeEnd, bookmarkStart.parent())');
-function visit784_628_1(result) {
+function visit794_628_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['628'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['625'][1].init(354, 44, 'Dom.equals(rangeStart, bookmarkEnd.parent())');
-function visit783_625_1(result) {
+function visit793_625_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['625'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['622'][1].init(205, 46, 'Dom.equals(rangeStart, bookmarkStart.parent())');
-function visit782_622_1(result) {
+function visit792_622_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['622'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['617'][1].init(500, 10, 'j < length');
-function visit781_617_1(result) {
+function visit791_617_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['617'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['609'][1].init(246, 10, 'i < length');
-function visit780_609_1(result) {
+function visit790_609_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['609'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['607'][1].init(148, 26, 'ranges || self.getRanges()');
-function visit779_607_1(result) {
+function visit789_607_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['607'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['596'][1].init(109, 17, 'i < ranges.length');
-function visit778_596_1(result) {
+function visit788_596_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['596'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection.js'].branchData['575'][2].init(599, 56, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit777_575_2(result) {
+}_$jscoverage['/editor/selection.js'].branchData['575'][2].init(587, 56, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit787_575_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['575'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection.js'].branchData['575'][1].init(84, 96, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
-function visit776_575_1(result) {
+}_$jscoverage['/editor/selection.js'].branchData['575'][1].init(72, 96, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
+function visit786_575_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['575'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection.js'].branchData['574'][5].init(547, 21, 'UA.opera || UA.webkit');
-function visit775_574_5(result) {
-  _$jscoverage['/editor/selection.js'].branchData['574'][5].ranCondition(result);
-  return result;
 }_$jscoverage['/editor/selection.js'].branchData['574'][4].init(525, 17, 'UA.gecko < 1.0900');
-function visit774_574_4(result) {
+function visit785_574_4(result) {
   _$jscoverage['/editor/selection.js'].branchData['574'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['574'][3].init(513, 29, 'UA.gecko && UA.gecko < 1.0900');
-function visit773_574_3(result) {
+function visit784_574_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['574'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection.js'].branchData['574'][2].init(513, 55, '(UA.gecko && UA.gecko < 1.0900) || UA.opera || UA.webkit');
-function visit772_574_2(result) {
+}_$jscoverage['/editor/selection.js'].branchData['574'][2].init(513, 43, '(UA.gecko && UA.gecko < 1.0900) || UA.webkit');
+function visit783_574_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['574'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection.js'].branchData['574'][1].init(45, 181, '((UA.gecko && UA.gecko < 1.0900) || UA.opera || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
-function visit771_574_1(result) {
+}_$jscoverage['/editor/selection.js'].branchData['574'][1].init(45, 169, '((UA.gecko && UA.gecko < 1.0900) || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
+function visit782_574_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['574'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection.js'].branchData['573'][1].init(465, 227, 'range.collapsed && ((UA.gecko && UA.gecko < 1.0900) || UA.opera || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
-function visit770_573_1(result) {
+}_$jscoverage['/editor/selection.js'].branchData['573'][1].init(465, 215, 'range.collapsed && ((UA.gecko && UA.gecko < 1.0900) || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length');
+function visit781_573_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['573'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['564'][1].init(196, 17, 'i < ranges.length');
-function visit769_564_1(result) {
+function visit780_564_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['564'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['560'][1].init(67, 4, '!sel');
-function visit768_560_1(result) {
+function visit779_560_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['560'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['553'][1].init(474, 11, 'ranges[0]');
-function visit767_553_1(result) {
+function visit778_553_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['553'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['544'][1].init(22, 17, 'ranges.length > 1');
-function visit766_544_1(result) {
+function visit777_544_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['544'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['543'][1].init(48, 6, 'OLD_IE');
-function visit765_543_1(result) {
+function visit776_543_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['543'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['511'][1].init(110, 6, 'OLD_IE');
-function visit764_511_1(result) {
+function visit775_511_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['511'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['482'][1].init(130, 97, 'styleObjectElements[enclosed.nodeName()] && (selected = enclosed)');
-function visit763_482_1(result) {
+function visit774_482_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['482'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['480'][2].init(74, 50, 'enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit762_480_2(result) {
+function visit773_480_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['480'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['480'][1].init(69, 228, '(enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE) && styleObjectElements[enclosed.nodeName()] && (selected = enclosed)');
-function visit761_480_1(result) {
+function visit772_480_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['480'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['479'][2].init(368, 298, '(enclosed = range.getEnclosedNode()) && (enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE) && styleObjectElements[enclosed.nodeName()] && (selected = enclosed)');
-function visit760_479_2(result) {
+function visit771_479_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['479'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['479'][1].init(41, 307, 'i && !((enclosed = range.getEnclosedNode()) && (enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE) && styleObjectElements[enclosed.nodeName()] && (selected = enclosed))');
-function visit759_479_1(result) {
+function visit770_479_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['479'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['468'][1].init(584, 5, '!node');
-function visit758_468_1(result) {
+function visit769_468_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['468'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['462'][1].init(86, 27, 'range.item && range.item(0)');
-function visit757_462_1(result) {
+function visit768_462_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['462'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['460'][1].init(288, 6, 'OLD_IE');
-function visit756_460_1(result) {
+function visit767_460_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['460'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['455'][1].init(112, 35, 'cache.selectedElement !== undefined');
-function visit755_455_1(result) {
+function visit766_455_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['455'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['430'][1].init(242, 4, 'node');
-function visit754_430_1(result) {
+function visit765_430_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['430'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['427'][2].init(86, 43, 'node.nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit753_427_2(result) {
+function visit764_427_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['427'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['427'][1].init(78, 51, 'node && node.nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit752_427_1(result) {
+function visit763_427_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['427'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['421'][1].init(2118, 6, 'OLD_IE');
-function visit751_421_1(result) {
+function visit762_421_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['421'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['413'][2].init(1639, 44, 'child.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit750_413_2(result) {
+function visit761_413_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['413'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['413'][1].init(1630, 53, 'child && child.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit749_413_1(result) {
+function visit760_413_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['413'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['408'][2].init(1388, 46, 'node[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit748_408_2(result) {
+function visit759_408_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['408'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['408'][1].init(1376, 58, '!node[0] || node[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit747_408_1(result) {
+function visit758_408_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['408'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['402'][1].init(1118, 46, 'node[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
-function visit746_402_1(result) {
+function visit757_402_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['402'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['392'][3].init(286, 56, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit745_392_3(result) {
+function visit756_392_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['392'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['392'][2].init(269, 186, 'startOffset === (startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ? startContainer[0].childNodes.length : startContainer[0].nodeValue.length)');
-function visit744_392_2(result) {
+function visit755_392_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['392'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['392'][1].init(269, 226, 'startOffset === (startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ? startContainer[0].childNodes.length : startContainer[0].nodeValue.length) && !startContainer._4eIsBlockBoundary()');
-function visit743_392_1(result) {
+function visit754_392_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['392'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['382'][1].init(30, 16, '!range.collapsed');
-function visit742_382_1(result) {
+function visit753_382_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['382'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['381'][1].init(108, 5, 'range');
-function visit741_381_1(result) {
+function visit752_381_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['381'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['366'][1].init(70, 32, 'cache.startElement !== undefined');
-function visit740_366_1(result) {
+function visit751_366_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['366'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['343'][1].init(501, 18, 'i < sel.rangeCount');
-function visit739_343_1(result) {
+function visit750_343_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['343'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['339'][1].init(407, 4, '!sel');
-function visit738_339_1(result) {
+function visit749_339_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['339'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['329'][1].init(78, 22, 'cache.ranges && !force');
-function visit737_329_1(result) {
+function visit748_329_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['329'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['311'][3].init(372, 39, 'parentElement.childNodes[j] !== element');
-function visit736_311_3(result) {
+function visit747_311_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['311'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['311'][2].init(333, 35, 'j < parentElement.childNodes.length');
-function visit735_311_2(result) {
+function visit746_311_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['311'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['311'][1].init(333, 78, 'j < parentElement.childNodes.length && parentElement.childNodes[j] !== element');
-function visit734_311_1(result) {
+function visit745_311_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['311'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['303'][1].init(101, 22, 'i < nativeRange.length');
-function visit733_303_1(result) {
+function visit744_303_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['303'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['300'][1].init(1263, 30, 'type === KES.SELECTION_ELEMENT');
-function visit732_300_1(result) {
+function visit743_300_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['300'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['292'][1].init(694, 27, 'type === KES.SELECTION_TEXT');
-function visit731_292_1(result) {
+function visit742_292_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['292'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['288'][1].init(600, 4, '!sel');
-function visit730_288_1(result) {
+function visit741_288_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['288'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['284'][1].init(66, 24, 'sel && sel.createRange()');
-function visit729_284_1(result) {
+function visit740_284_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['284'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['275'][1].init(86, 22, 'cache.ranges && !force');
-function visit728_275_1(result) {
+function visit739_275_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['275'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['260'][1].init(2989, 14, 'distance === 0');
-function visit727_260_1(result) {
+function visit738_260_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['260'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['248'][1].init(33, 12, 'distance > 0');
-function visit726_248_1(result) {
+function visit737_248_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['248'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['234'][1].init(1757, 10, '!testRange');
-function visit725_234_1(result) {
+function visit736_234_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['234'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['226'][1].init(941, 14, '!comparisonEnd');
-function visit724_226_1(result) {
+function visit735_226_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['226'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['222'][4].init(602, 22, 'comparisonStart === -1');
-function visit723_222_4(result) {
+function visit734_222_4(result) {
   _$jscoverage['/editor/selection.js'].branchData['222'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['222'][3].init(579, 19, 'comparisonEnd === 1');
-function visit722_222_3(result) {
+function visit733_222_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['222'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['222'][2].init(579, 45, 'comparisonEnd === 1 && comparisonStart === -1');
-function visit721_222_2(result) {
+function visit732_222_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['222'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['222'][1].init(559, 65, '!comparisonStart || comparisonEnd === 1 && comparisonStart === -1');
-function visit720_222_1(result) {
+function visit731_222_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['222'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['220'][1].init(455, 19, 'comparisonStart > 0');
-function visit719_220_1(result) {
+function visit730_220_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['210'][1].init(84, 44, 'child.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit718_210_1(result) {
+function visit729_210_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['210'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['207'][1].init(409, 19, 'i < siblings.length');
-function visit717_207_1(result) {
+function visit728_207_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['207'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['183'][1].init(718, 31, 'sel.createRange().parentElement');
-function visit716_183_1(result) {
+function visit727_183_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['174'][1].init(244, 20, 'ieType === \'Control\'');
-function visit715_174_1(result) {
+function visit726_174_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['174'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['170'][1].init(121, 17, 'ieType === \'Text\'');
-function visit714_170_1(result) {
+function visit725_170_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['160'][1].init(78, 10, 'cache.type');
-function visit713_160_1(result) {
+function visit724_160_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['160'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['149'][2].init(414, 49, 'Number(range.endOffset - range.startOffset) === 1');
-function visit712_149_2(result) {
+function visit723_149_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['149'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['149'][1].init(81, 170, 'Number(range.endOffset - range.startOffset) === 1 && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()]');
-function visit711_149_1(result) {
+function visit722_149_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['148'][2].init(331, 53, 'startContainer.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit710_148_2(result) {
+function visit721_148_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['148'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['148'][1].init(65, 252, 'startContainer.nodeType === Dom.NodeType.ELEMENT_NODE && Number(range.endOffset - range.startOffset) === 1 && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()]');
-function visit709_148_1(result) {
+function visit720_148_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['148'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['147'][2].init(263, 37, 'startContainer === range.endContainer');
-function visit708_147_2(result) {
+function visit719_147_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['147'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['147'][1].init(263, 318, 'startContainer === range.endContainer && startContainer.nodeType === Dom.NodeType.ELEMENT_NODE && Number(range.endOffset - range.startOffset) === 1 && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()]');
-function visit707_147_1(result) {
+function visit718_147_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['147'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['140'][1].init(354, 20, 'sel.rangeCount === 1');
-function visit706_140_1(result) {
+function visit717_140_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['140'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['138'][1].init(269, 4, '!sel');
-function visit705_138_1(result) {
+function visit716_138_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['138'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['131'][1].init(78, 10, 'cache.type');
-function visit704_131_1(result) {
+function visit715_131_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['131'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['107'][1].init(81, 62, 'cache.nativeSel || (cache.nativeSel = self.document.selection)');
-function visit703_107_1(result) {
+function visit714_107_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['107'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['102'][1].init(102, 82, 'cache.nativeSel || (cache.nativeSel = Dom.getWindow(self.document).getSelection())');
-function visit702_102_1(result) {
+function visit713_102_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['55'][2].init(103, 48, 'range.parentElement().ownerDocument !== document');
-function visit701_55_2(result) {
+function visit712_55_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['55'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['55'][1].init(80, 71, 'range.parentElement && range.parentElement().ownerDocument !== document');
-function visit700_55_1(result) {
+function visit711_55_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['54'][4].init(108, 40, 'range.item(0).ownerDocument !== document');
-function visit699_54_4(result) {
+function visit710_54_4(result) {
   _$jscoverage['/editor/selection.js'].branchData['54'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['54'][3].init(94, 54, 'range.item && range.item(0).ownerDocument !== document');
-function visit698_54_3(result) {
+function visit709_54_3(result) {
   _$jscoverage['/editor/selection.js'].branchData['54'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['54'][2].init(94, 153, '(range.item && range.item(0).ownerDocument !== document) || (range.parentElement && range.parentElement().ownerDocument !== document)');
-function visit697_54_2(result) {
+function visit708_54_2(result) {
   _$jscoverage['/editor/selection.js'].branchData['54'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['54'][1].init(83, 164, '!range || (range.item && range.item(0).ownerDocument !== document) || (range.parentElement && range.parentElement().ownerDocument !== document)');
-function visit696_54_1(result) {
+function visit707_54_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].branchData['51'][1].init(296, 6, 'OLD_IE');
-function visit695_51_1(result) {
+function visit706_51_1(result) {
   _$jscoverage['/editor/selection.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/selection.js'].lineData[10]++;
@@ -1313,7 +1308,7 @@ KISSY.add(function(S, require) {
   SELECTION_TEXT: 2, 
   SELECTION_ELEMENT: 3};
   _$jscoverage['/editor/selection.js'].lineData[24]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.require('dom'), KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = require('dom'), KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
   _$jscoverage['/editor/selection.js'].lineData[40]++;
   function KESelection(document) {
     _$jscoverage['/editor/selection.js'].functionData[1]++;
@@ -1325,13 +1320,13 @@ KISSY.add(function(S, require) {
     self._ = {
   cache: {}};
     _$jscoverage['/editor/selection.js'].lineData[51]++;
-    if (visit695_51_1(OLD_IE)) {
+    if (visit706_51_1(OLD_IE)) {
       _$jscoverage['/editor/selection.js'].lineData[52]++;
       try {
         _$jscoverage['/editor/selection.js'].lineData[53]++;
         var range = self.getNative().createRange();
         _$jscoverage['/editor/selection.js'].lineData[54]++;
-        if (visit696_54_1(!range || visit697_54_2((visit698_54_3(range.item && visit699_54_4(range.item(0).ownerDocument !== document))) || (visit700_55_1(range.parentElement && visit701_55_2(range.parentElement().ownerDocument !== document)))))) {
+        if (visit707_54_1(!range || visit708_54_2((visit709_54_3(range.item && visit710_54_4(range.item(0).ownerDocument !== document))) || (visit711_55_1(range.parentElement && visit712_55_2(range.parentElement().ownerDocument !== document)))))) {
           _$jscoverage['/editor/selection.js'].lineData[56]++;
           self.isInvalid = TRUE;
         }
@@ -1370,36 +1365,36 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[100]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[102]++;
-  return visit702_102_1(cache.nativeSel || (cache.nativeSel = Dom.getWindow(self.document).getSelection()));
+  return visit713_102_1(cache.nativeSel || (cache.nativeSel = Dom.getWindow(self.document).getSelection()));
 } : function() {
   _$jscoverage['/editor/selection.js'].functionData[3]++;
   _$jscoverage['/editor/selection.js'].lineData[106]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[107]++;
-  return visit703_107_1(cache.nativeSel || (cache.nativeSel = self.document.selection));
+  return visit714_107_1(cache.nativeSel || (cache.nativeSel = self.document.selection));
 }, 
   getType: !OLD_IE ? function() {
   _$jscoverage['/editor/selection.js'].functionData[4]++;
   _$jscoverage['/editor/selection.js'].lineData[130]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[131]++;
-  if (visit704_131_1(cache.type)) {
+  if (visit715_131_1(cache.type)) {
     _$jscoverage['/editor/selection.js'].lineData[132]++;
     return cache.type;
   }
   _$jscoverage['/editor/selection.js'].lineData[135]++;
   var type = KES.SELECTION_TEXT, sel = self.getNative();
   _$jscoverage['/editor/selection.js'].lineData[138]++;
-  if (visit705_138_1(!sel)) {
+  if (visit716_138_1(!sel)) {
     _$jscoverage['/editor/selection.js'].lineData[139]++;
     type = KES.SELECTION_NONE;
   } else {
     _$jscoverage['/editor/selection.js'].lineData[140]++;
-    if (visit706_140_1(sel.rangeCount === 1)) {
+    if (visit717_140_1(sel.rangeCount === 1)) {
       _$jscoverage['/editor/selection.js'].lineData[144]++;
       var range = sel.getRangeAt(0), startContainer = range.startContainer;
       _$jscoverage['/editor/selection.js'].lineData[147]++;
-      if (visit707_147_1(visit708_147_2(startContainer === range.endContainer) && visit709_148_1(visit710_148_2(startContainer.nodeType === Dom.NodeType.ELEMENT_NODE) && visit711_149_1(visit712_149_2(Number(range.endOffset - range.startOffset) === 1) && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()])))) {
+      if (visit718_147_1(visit719_147_2(startContainer === range.endContainer) && visit720_148_1(visit721_148_2(startContainer.nodeType === Dom.NodeType.ELEMENT_NODE) && visit722_149_1(visit723_149_2(Number(range.endOffset - range.startOffset) === 1) && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()])))) {
         _$jscoverage['/editor/selection.js'].lineData[151]++;
         type = KES.SELECTION_ELEMENT;
       }
@@ -1414,7 +1409,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[159]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[160]++;
-  if (visit713_160_1(cache.type)) {
+  if (visit724_160_1(cache.type)) {
     _$jscoverage['/editor/selection.js'].lineData[161]++;
     return cache.type;
   }
@@ -1425,17 +1420,17 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection.js'].lineData[167]++;
     var sel = self.getNative(), ieType = sel.type;
     _$jscoverage['/editor/selection.js'].lineData[170]++;
-    if (visit714_170_1(ieType === 'Text')) {
+    if (visit725_170_1(ieType === 'Text')) {
       _$jscoverage['/editor/selection.js'].lineData[171]++;
       type = KES.SELECTION_TEXT;
     }
     _$jscoverage['/editor/selection.js'].lineData[174]++;
-    if (visit715_174_1(ieType === 'Control')) {
+    if (visit726_174_1(ieType === 'Control')) {
       _$jscoverage['/editor/selection.js'].lineData[175]++;
       type = KES.SELECTION_ELEMENT;
     }
     _$jscoverage['/editor/selection.js'].lineData[183]++;
-    if (visit716_183_1(sel.createRange().parentElement)) {
+    if (visit727_183_1(sel.createRange().parentElement)) {
       _$jscoverage['/editor/selection.js'].lineData[184]++;
       type = KES.SELECTION_TEXT;
     }
@@ -1458,11 +1453,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[204]++;
   var parent = range.parentElement(), siblings = parent.childNodes, testRange;
   _$jscoverage['/editor/selection.js'].lineData[207]++;
-  for (var i = 0; visit717_207_1(i < siblings.length); i++) {
+  for (var i = 0; visit728_207_1(i < siblings.length); i++) {
     _$jscoverage['/editor/selection.js'].lineData[208]++;
     var child = siblings[i];
     _$jscoverage['/editor/selection.js'].lineData[210]++;
-    if (visit718_210_1(child.nodeType === Dom.NodeType.ELEMENT_NODE)) {
+    if (visit729_210_1(child.nodeType === Dom.NodeType.ELEMENT_NODE)) {
       _$jscoverage['/editor/selection.js'].lineData[211]++;
       testRange = range.duplicate();
       _$jscoverage['/editor/selection.js'].lineData[213]++;
@@ -1472,19 +1467,19 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/selection.js'].lineData[218]++;
       testRange.collapse();
       _$jscoverage['/editor/selection.js'].lineData[220]++;
-      if (visit719_220_1(comparisonStart > 0)) {
+      if (visit730_220_1(comparisonStart > 0)) {
         _$jscoverage['/editor/selection.js'].lineData[221]++;
         break;
       } else {
         _$jscoverage['/editor/selection.js'].lineData[222]++;
-        if (visit720_222_1(!comparisonStart || visit721_222_2(visit722_222_3(comparisonEnd === 1) && visit723_222_4(comparisonStart === -1)))) {
+        if (visit731_222_1(!comparisonStart || visit732_222_2(visit733_222_3(comparisonEnd === 1) && visit734_222_4(comparisonStart === -1)))) {
           _$jscoverage['/editor/selection.js'].lineData[225]++;
           return {
   container: parent, 
   offset: i};
         } else {
           _$jscoverage['/editor/selection.js'].lineData[226]++;
-          if (visit724_226_1(!comparisonEnd)) {
+          if (visit735_226_1(!comparisonEnd)) {
             _$jscoverage['/editor/selection.js'].lineData[227]++;
             return {
   container: parent, 
@@ -1497,7 +1492,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/editor/selection.js'].lineData[234]++;
-  if (visit725_234_1(!testRange)) {
+  if (visit736_234_1(!testRange)) {
     _$jscoverage['/editor/selection.js'].lineData[235]++;
     testRange = range.duplicate();
     _$jscoverage['/editor/selection.js'].lineData[236]++;
@@ -1512,7 +1507,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[247]++;
   try {
     _$jscoverage['/editor/selection.js'].lineData[248]++;
-    while (visit726_248_1(distance > 0)) {
+    while (visit737_248_1(distance > 0)) {
       _$jscoverage['/editor/selection.js'].lineData[253]++;
       distance -= siblings[--i].nodeValue.length;
     }
@@ -1521,7 +1516,7 @@ KISSY.add(function(S, require) {
   distance = 0;
 }
   _$jscoverage['/editor/selection.js'].lineData[260]++;
-  if (visit727_260_1(distance === 0)) {
+  if (visit738_260_1(distance === 0)) {
     _$jscoverage['/editor/selection.js'].lineData[261]++;
     return {
   container: parent, 
@@ -1539,19 +1534,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[274]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[275]++;
-  if (visit728_275_1(cache.ranges && !force)) {
+  if (visit739_275_1(cache.ranges && !force)) {
     _$jscoverage['/editor/selection.js'].lineData[276]++;
     return cache.ranges;
   }
   _$jscoverage['/editor/selection.js'].lineData[283]++;
-  var sel = self.getNative(), nativeRange = visit729_284_1(sel && sel.createRange()), type = self.getType(), range;
+  var sel = self.getNative(), nativeRange = visit740_284_1(sel && sel.createRange()), type = self.getType(), range;
   _$jscoverage['/editor/selection.js'].lineData[288]++;
-  if (visit730_288_1(!sel)) {
+  if (visit741_288_1(!sel)) {
     _$jscoverage['/editor/selection.js'].lineData[289]++;
     return [];
   }
   _$jscoverage['/editor/selection.js'].lineData[292]++;
-  if (visit731_292_1(type === KES.SELECTION_TEXT)) {
+  if (visit742_292_1(type === KES.SELECTION_TEXT)) {
     _$jscoverage['/editor/selection.js'].lineData[293]++;
     range = new KERange(self.document);
     _$jscoverage['/editor/selection.js'].lineData[294]++;
@@ -1568,17 +1563,17 @@ KISSY.add(function(S, require) {
     return [range];
   } else {
     _$jscoverage['/editor/selection.js'].lineData[300]++;
-    if (visit732_300_1(type === KES.SELECTION_ELEMENT)) {
+    if (visit743_300_1(type === KES.SELECTION_ELEMENT)) {
       _$jscoverage['/editor/selection.js'].lineData[301]++;
       var retval = cache.ranges = [];
       _$jscoverage['/editor/selection.js'].lineData[303]++;
-      for (var i = 0; visit733_303_1(i < nativeRange.length); i++) {
+      for (var i = 0; visit744_303_1(i < nativeRange.length); i++) {
         _$jscoverage['/editor/selection.js'].lineData[304]++;
         var element = nativeRange.item(i), parentElement = element.parentNode, j = 0;
         _$jscoverage['/editor/selection.js'].lineData[308]++;
         range = new KERange(self.document);
         _$jscoverage['/editor/selection.js'].lineData[311]++;
-        for (; visit734_311_1(visit735_311_2(j < parentElement.childNodes.length) && visit736_311_3(parentElement.childNodes[j] !== element)); j++) {
+        for (; visit745_311_1(visit746_311_2(j < parentElement.childNodes.length) && visit747_311_3(parentElement.childNodes[j] !== element)); j++) {
         }
         _$jscoverage['/editor/selection.js'].lineData[314]++;
         range.setStart(new Node(parentElement), j);
@@ -1601,19 +1596,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[328]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[329]++;
-  if (visit737_329_1(cache.ranges && !force)) {
+  if (visit748_329_1(cache.ranges && !force)) {
     _$jscoverage['/editor/selection.js'].lineData[330]++;
     return cache.ranges;
   }
   _$jscoverage['/editor/selection.js'].lineData[337]++;
   var ranges = [], sel = self.getNative();
   _$jscoverage['/editor/selection.js'].lineData[339]++;
-  if (visit738_339_1(!sel)) {
+  if (visit749_339_1(!sel)) {
     _$jscoverage['/editor/selection.js'].lineData[340]++;
     return [];
   }
   _$jscoverage['/editor/selection.js'].lineData[343]++;
-  for (var i = 0; visit739_343_1(i < sel.rangeCount); i++) {
+  for (var i = 0; visit750_343_1(i < sel.rangeCount); i++) {
     _$jscoverage['/editor/selection.js'].lineData[344]++;
     var nativeRange = sel.getRangeAt(i), range = new KERange(self.document);
     _$jscoverage['/editor/selection.js'].lineData[346]++;
@@ -1633,7 +1628,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[365]++;
   var self = this, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[366]++;
-  if (visit740_366_1(cache.startElement !== undefined)) {
+  if (visit751_366_1(cache.startElement !== undefined)) {
     _$jscoverage['/editor/selection.js'].lineData[367]++;
     return cache.startElement;
   }
@@ -1648,9 +1643,9 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/selection.js'].lineData[379]++;
       var range = self.getRanges()[0];
       _$jscoverage['/editor/selection.js'].lineData[381]++;
-      if (visit741_381_1(range)) {
+      if (visit752_381_1(range)) {
         _$jscoverage['/editor/selection.js'].lineData[382]++;
-        if (visit742_382_1(!range.collapsed)) {
+        if (visit753_382_1(!range.collapsed)) {
           _$jscoverage['/editor/selection.js'].lineData[383]++;
           range.optimize();
           _$jscoverage['/editor/selection.js'].lineData[388]++;
@@ -1658,7 +1653,7 @@ KISSY.add(function(S, require) {
             _$jscoverage['/editor/selection.js'].lineData[389]++;
             var startContainer = range.startContainer, startOffset = range.startOffset;
             _$jscoverage['/editor/selection.js'].lineData[392]++;
-            if (visit743_392_1(visit744_392_2(startOffset === (visit745_392_3(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) ? startContainer[0].childNodes.length : startContainer[0].nodeValue.length)) && !startContainer._4eIsBlockBoundary())) {
+            if (visit754_392_1(visit755_392_2(startOffset === (visit756_392_3(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) ? startContainer[0].childNodes.length : startContainer[0].nodeValue.length)) && !startContainer._4eIsBlockBoundary())) {
               _$jscoverage['/editor/selection.js'].lineData[394]++;
               range.setStartAfter(startContainer);
             } else {
@@ -1669,21 +1664,21 @@ KISSY.add(function(S, require) {
           _$jscoverage['/editor/selection.js'].lineData[400]++;
           node = range.startContainer;
           _$jscoverage['/editor/selection.js'].lineData[402]++;
-          if (visit746_402_1(node[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
+          if (visit757_402_1(node[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
             _$jscoverage['/editor/selection.js'].lineData[403]++;
             return node.parent();
           }
           _$jscoverage['/editor/selection.js'].lineData[406]++;
           node = new Node(node[0].childNodes[range.startOffset]);
           _$jscoverage['/editor/selection.js'].lineData[408]++;
-          if (visit747_408_1(!node[0] || visit748_408_2(node[0].nodeType !== Dom.NodeType.ELEMENT_NODE))) {
+          if (visit758_408_1(!node[0] || visit759_408_2(node[0].nodeType !== Dom.NodeType.ELEMENT_NODE))) {
             _$jscoverage['/editor/selection.js'].lineData[409]++;
             return range.startContainer;
           }
           _$jscoverage['/editor/selection.js'].lineData[412]++;
           var child = node[0].firstChild;
           _$jscoverage['/editor/selection.js'].lineData[413]++;
-          while (visit749_413_1(child && visit750_413_2(child.nodeType === Dom.NodeType.ELEMENT_NODE))) {
+          while (visit760_413_1(child && visit761_413_2(child.nodeType === Dom.NodeType.ELEMENT_NODE))) {
             _$jscoverage['/editor/selection.js'].lineData[414]++;
             node = new Node(child);
             _$jscoverage['/editor/selection.js'].lineData[415]++;
@@ -1694,7 +1689,7 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/editor/selection.js'].lineData[421]++;
-      if (visit751_421_1(OLD_IE)) {
+      if (visit762_421_1(OLD_IE)) {
         _$jscoverage['/editor/selection.js'].lineData[422]++;
         range = sel.createRange();
         _$jscoverage['/editor/selection.js'].lineData[423]++;
@@ -1705,12 +1700,12 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/selection.js'].lineData[426]++;
         node = sel.anchorNode;
         _$jscoverage['/editor/selection.js'].lineData[427]++;
-        if (visit752_427_1(node && visit753_427_2(node.nodeType !== Dom.NodeType.ELEMENT_NODE))) {
+        if (visit763_427_1(node && visit764_427_2(node.nodeType !== Dom.NodeType.ELEMENT_NODE))) {
           _$jscoverage['/editor/selection.js'].lineData[428]++;
           node = node.parentNode;
         }
         _$jscoverage['/editor/selection.js'].lineData[430]++;
-        if (visit754_430_1(node)) {
+        if (visit765_430_1(node)) {
           _$jscoverage['/editor/selection.js'].lineData[431]++;
           node = new Node(node);
         }
@@ -1726,26 +1721,26 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[451]++;
   var self = this, node, cache = self._.cache;
   _$jscoverage['/editor/selection.js'].lineData[455]++;
-  if (visit755_455_1(cache.selectedElement !== undefined)) {
+  if (visit766_455_1(cache.selectedElement !== undefined)) {
     _$jscoverage['/editor/selection.js'].lineData[456]++;
     return cache.selectedElement;
   }
   _$jscoverage['/editor/selection.js'].lineData[460]++;
-  if (visit756_460_1(OLD_IE)) {
+  if (visit767_460_1(OLD_IE)) {
     _$jscoverage['/editor/selection.js'].lineData[461]++;
     var range = self.getNative().createRange();
     _$jscoverage['/editor/selection.js'].lineData[462]++;
-    node = visit757_462_1(range.item && range.item(0));
+    node = visit768_462_1(range.item && range.item(0));
   }
   _$jscoverage['/editor/selection.js'].lineData[468]++;
-  if (visit758_468_1(!node)) {
+  if (visit769_468_1(!node)) {
     _$jscoverage['/editor/selection.js'].lineData[469]++;
     node = (function() {
   _$jscoverage['/editor/selection.js'].functionData[12]++;
   _$jscoverage['/editor/selection.js'].lineData[470]++;
   var range = self.getRanges()[0], enclosed, selected;
   _$jscoverage['/editor/selection.js'].lineData[478]++;
-  for (var i = 2; visit759_479_1(i && !(visit760_479_2((enclosed = range.getEnclosedNode()) && visit761_480_1((visit762_480_2(enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE)) && visit763_482_1(styleObjectElements[enclosed.nodeName()] && (selected = enclosed)))))); i--) {
+  for (var i = 2; visit770_479_1(i && !(visit771_479_2((enclosed = range.getEnclosedNode()) && visit772_480_1((visit773_480_2(enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE)) && visit774_482_1(styleObjectElements[enclosed.nodeName()] && (selected = enclosed)))))); i--) {
     _$jscoverage['/editor/selection.js'].lineData[490]++;
     range.shrink(KER.SHRINK_ELEMENT);
   }
@@ -1771,7 +1766,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[508]++;
   var range, self = this, doc = self.document;
   _$jscoverage['/editor/selection.js'].lineData[511]++;
-  if (visit764_511_1(OLD_IE)) {
+  if (visit775_511_1(OLD_IE)) {
     _$jscoverage['/editor/selection.js'].lineData[515]++;
     try {
       _$jscoverage['/editor/selection.js'].lineData[517]++;
@@ -1812,9 +1807,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[542]++;
   var self = this;
   _$jscoverage['/editor/selection.js'].lineData[543]++;
-  if (visit765_543_1(OLD_IE)) {
+  if (visit776_543_1(OLD_IE)) {
     _$jscoverage['/editor/selection.js'].lineData[544]++;
-    if (visit766_544_1(ranges.length > 1)) {
+    if (visit777_544_1(ranges.length > 1)) {
       _$jscoverage['/editor/selection.js'].lineData[546]++;
       var last = ranges[ranges.length - 1];
       _$jscoverage['/editor/selection.js'].lineData[547]++;
@@ -1823,7 +1818,7 @@ KISSY.add(function(S, require) {
       ranges.length = 1;
     }
     _$jscoverage['/editor/selection.js'].lineData[553]++;
-    if (visit767_553_1(ranges[0])) {
+    if (visit778_553_1(ranges[0])) {
       _$jscoverage['/editor/selection.js'].lineData[554]++;
       ranges[0].select();
     }
@@ -1833,18 +1828,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection.js'].lineData[559]++;
     var sel = self.getNative();
     _$jscoverage['/editor/selection.js'].lineData[560]++;
-    if (visit768_560_1(!sel)) {
+    if (visit779_560_1(!sel)) {
       _$jscoverage['/editor/selection.js'].lineData[561]++;
       return;
     }
     _$jscoverage['/editor/selection.js'].lineData[563]++;
     sel.removeAllRanges();
     _$jscoverage['/editor/selection.js'].lineData[564]++;
-    for (var i = 0; visit769_564_1(i < ranges.length); i++) {
+    for (var i = 0; visit780_564_1(i < ranges.length); i++) {
       _$jscoverage['/editor/selection.js'].lineData[565]++;
       var range = ranges[i], nativeRange = self.document.createRange(), startContainer = range.startContainer;
       _$jscoverage['/editor/selection.js'].lineData[573]++;
-      if (visit770_573_1(range.collapsed && visit771_574_1((visit772_574_2((visit773_574_3(UA.gecko && visit774_574_4(UA.gecko < 1.0900))) || visit775_574_5(UA.opera || UA.webkit))) && visit776_575_1(visit777_575_2(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && !startContainer[0].childNodes.length)))) {
+      if (visit781_573_1(range.collapsed && visit782_574_1((visit783_574_2((visit784_574_3(UA.gecko && visit785_574_4(UA.gecko < 1.0900))) || UA.webkit)) && visit786_575_1(visit787_575_2(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && !startContainer[0].childNodes.length)))) {
         _$jscoverage['/editor/selection.js'].lineData[577]++;
         startContainer[0].appendChild(self.document.createTextNode(UA.webkit ? '\u200b' : ''));
         _$jscoverage['/editor/selection.js'].lineData[580]++;
@@ -1868,7 +1863,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[593]++;
   var bookmarks = [], ranges = this.getRanges();
   _$jscoverage['/editor/selection.js'].lineData[596]++;
-  for (var i = 0; visit778_596_1(i < ranges.length); i++) {
+  for (var i = 0; visit788_596_1(i < ranges.length); i++) {
     _$jscoverage['/editor/selection.js'].lineData[597]++;
     bookmarks.push(ranges[i].createBookmark2(normalized));
   }
@@ -1880,11 +1875,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[603]++;
   var self = this, retval = [], doc = self.document, bookmark;
   _$jscoverage['/editor/selection.js'].lineData[607]++;
-  ranges = visit779_607_1(ranges || self.getRanges());
+  ranges = visit789_607_1(ranges || self.getRanges());
   _$jscoverage['/editor/selection.js'].lineData[608]++;
   var length = ranges.length;
   _$jscoverage['/editor/selection.js'].lineData[609]++;
-  for (var i = 0; visit780_609_1(i < length); i++) {
+  for (var i = 0; visit790_609_1(i < length); i++) {
     _$jscoverage['/editor/selection.js'].lineData[610]++;
     retval.push(bookmark = ranges[i].createBookmark(serializable, TRUE));
     _$jscoverage['/editor/selection.js'].lineData[611]++;
@@ -1892,26 +1887,26 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection.js'].lineData[613]++;
     var bookmarkStart = serializable ? S.one('#' + bookmark.startNode, doc) : bookmark.startNode, bookmarkEnd = serializable ? S.one('#' + bookmark.endNode, doc) : bookmark.endNode;
     _$jscoverage['/editor/selection.js'].lineData[617]++;
-    for (var j = i + 1; visit781_617_1(j < length); j++) {
+    for (var j = i + 1; visit791_617_1(j < length); j++) {
       _$jscoverage['/editor/selection.js'].lineData[618]++;
       var dirtyRange = ranges[j], rangeStart = dirtyRange.startContainer, rangeEnd = dirtyRange.endContainer;
       _$jscoverage['/editor/selection.js'].lineData[622]++;
-      if (visit782_622_1(Dom.equals(rangeStart, bookmarkStart.parent()))) {
+      if (visit792_622_1(Dom.equals(rangeStart, bookmarkStart.parent()))) {
         _$jscoverage['/editor/selection.js'].lineData[623]++;
         dirtyRange.startOffset++;
       }
       _$jscoverage['/editor/selection.js'].lineData[625]++;
-      if (visit783_625_1(Dom.equals(rangeStart, bookmarkEnd.parent()))) {
+      if (visit793_625_1(Dom.equals(rangeStart, bookmarkEnd.parent()))) {
         _$jscoverage['/editor/selection.js'].lineData[626]++;
         dirtyRange.startOffset++;
       }
       _$jscoverage['/editor/selection.js'].lineData[628]++;
-      if (visit784_628_1(Dom.equals(rangeEnd, bookmarkStart.parent()))) {
+      if (visit794_628_1(Dom.equals(rangeEnd, bookmarkStart.parent()))) {
         _$jscoverage['/editor/selection.js'].lineData[629]++;
         dirtyRange.endOffset++;
       }
       _$jscoverage['/editor/selection.js'].lineData[631]++;
-      if (visit785_631_1(Dom.equals(rangeEnd, bookmarkEnd.parent()))) {
+      if (visit795_631_1(Dom.equals(rangeEnd, bookmarkEnd.parent()))) {
         _$jscoverage['/editor/selection.js'].lineData[632]++;
         dirtyRange.endOffset++;
       }
@@ -1925,7 +1920,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[641]++;
   var self = this, ranges = [];
   _$jscoverage['/editor/selection.js'].lineData[642]++;
-  for (var i = 0; visit786_642_1(i < bookmarks.length); i++) {
+  for (var i = 0; visit796_642_1(i < bookmarks.length); i++) {
     _$jscoverage['/editor/selection.js'].lineData[643]++;
     var range = new KERange(self.document);
     _$jscoverage['/editor/selection.js'].lineData[644]++;
@@ -1950,7 +1945,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[662]++;
   var start = this.getStartElement();
   _$jscoverage['/editor/selection.js'].lineData[663]++;
-  if (visit787_663_1(start)) {
+  if (visit797_663_1(start)) {
     _$jscoverage['/editor/selection.js'].lineData[664]++;
     start.scrollIntoView(undefined, {
   alignWithTop: false, 
@@ -1963,15 +1958,15 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[672]++;
   var sel = this.getNative();
   _$jscoverage['/editor/selection.js'].lineData[673]++;
-  if (visit788_673_1(!OLD_IE)) {
+  if (visit798_673_1(!OLD_IE)) {
     _$jscoverage['/editor/selection.js'].lineData[674]++;
-    if (visit789_674_1(sel)) {
+    if (visit799_674_1(sel)) {
       _$jscoverage['/editor/selection.js'].lineData[675]++;
       sel.removeAllRanges();
     }
   } else {
     _$jscoverage['/editor/selection.js'].lineData[678]++;
-    if (visit790_678_1(sel)) {
+    if (visit800_678_1(sel)) {
       _$jscoverage['/editor/selection.js'].lineData[679]++;
       sel.clear();
     }
@@ -1988,7 +1983,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[694]++;
   var self = this, startContainer = self.startContainer;
   _$jscoverage['/editor/selection.js'].lineData[698]++;
-  if (visit791_698_1(self.collapsed && visit792_699_1(visit793_699_2(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && !startContainer[0].childNodes.length))) {
+  if (visit801_698_1(self.collapsed && visit802_699_1(visit803_699_2(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && !startContainer[0].childNodes.length))) {
     _$jscoverage['/editor/selection.js'].lineData[700]++;
     startContainer[0].appendChild(self.document.createTextNode(UA.webkit ? '\u200b' : ''));
     _$jscoverage['/editor/selection.js'].lineData[704]++;
@@ -2006,7 +2001,7 @@ KISSY.add(function(S, require) {
     nativeRange.setEnd(self.endContainer[0], self.endOffset);
   }  catch (e) {
   _$jscoverage['/editor/selection.js'].lineData[717]++;
-  if (visit794_717_1(e.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0)) {
+  if (visit804_717_1(e.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0)) {
     _$jscoverage['/editor/selection.js'].lineData[718]++;
     self.collapse(TRUE);
     _$jscoverage['/editor/selection.js'].lineData[719]++;
@@ -2027,11 +2022,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[731]++;
   var self = this, collapsed = self.collapsed, isStartMarkerAlone, dummySpan;
   _$jscoverage['/editor/selection.js'].lineData[737]++;
-  if (visit795_740_1(visit796_740_2(self.startContainer[0] === self.endContainer[0]) && visit797_740_3(self.endOffset - self.startOffset === 1))) {
+  if (visit805_740_1(visit806_740_2(self.startContainer[0] === self.endContainer[0]) && visit807_740_3(self.endOffset - self.startOffset === 1))) {
     _$jscoverage['/editor/selection.js'].lineData[741]++;
     var selEl = self.startContainer[0].childNodes[self.startOffset];
     _$jscoverage['/editor/selection.js'].lineData[742]++;
-    if (visit798_742_1(selEl.nodeType === Dom.NodeType.ELEMENT_NODE)) {
+    if (visit808_742_1(selEl.nodeType === Dom.NodeType.ELEMENT_NODE)) {
       _$jscoverage['/editor/selection.js'].lineData[743]++;
       new KESelection(self.document).selectElement(new Node(selEl));
       _$jscoverage['/editor/selection.js'].lineData[744]++;
@@ -2039,14 +2034,14 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/editor/selection.js'].lineData[749]++;
-  if (visit799_749_1(visit800_749_2(visit801_749_3(self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && self.startContainer.nodeName() in nonCells) || visit802_751_1(visit803_751_2(self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && self.endContainer.nodeName() in nonCells))) {
+  if (visit809_749_1(visit810_749_2(visit811_749_3(self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && self.startContainer.nodeName() in nonCells) || visit812_751_1(visit813_751_2(self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) && self.endContainer.nodeName() in nonCells))) {
     _$jscoverage['/editor/selection.js'].lineData[753]++;
     self.shrink(KER.SHRINK_ELEMENT, TRUE);
   }
   _$jscoverage['/editor/selection.js'].lineData[756]++;
   var bookmark = self.createBookmark(), startNode = bookmark.startNode, endNode;
   _$jscoverage['/editor/selection.js'].lineData[760]++;
-  if (visit804_760_1(!collapsed)) {
+  if (visit814_760_1(!collapsed)) {
     _$jscoverage['/editor/selection.js'].lineData[761]++;
     endNode = bookmark.endNode;
   }
@@ -2057,7 +2052,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[770]++;
   ieRange.moveStart('character', 1);
   _$jscoverage['/editor/selection.js'].lineData[772]++;
-  if (visit805_772_1(endNode)) {
+  if (visit815_772_1(endNode)) {
     _$jscoverage['/editor/selection.js'].lineData[774]++;
     var ieRangeEnd = self.document.body.createTextRange();
     _$jscoverage['/editor/selection.js'].lineData[776]++;
@@ -2070,12 +2065,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection.js'].lineData[785]++;
     var next = startNode[0].nextSibling;
     _$jscoverage['/editor/selection.js'].lineData[786]++;
-    while (visit806_786_1(next && !notWhitespaces(next))) {
+    while (visit816_786_1(next && !notWhitespaces(next))) {
       _$jscoverage['/editor/selection.js'].lineData[787]++;
       next = next.nextSibling;
     }
     _$jscoverage['/editor/selection.js'].lineData[789]++;
-    isStartMarkerAlone = (visit807_790_1(!(visit808_790_2(next && visit809_790_3(next.nodeValue && next.nodeValue.match(fillerTextRegex)))) && (visit810_792_1(forceExpand || visit811_792_2(!startNode[0].previousSibling || (visit812_794_1(startNode[0].previousSibling && visit813_795_1(Dom.nodeName(startNode[0].previousSibling) === 'br'))))))));
+    isStartMarkerAlone = (visit817_790_1(!(visit818_790_2(next && visit819_790_3(next.nodeValue && next.nodeValue.match(fillerTextRegex)))) && (visit820_792_1(forceExpand || visit821_792_2(!startNode[0].previousSibling || (visit822_794_1(startNode[0].previousSibling && visit823_795_1(Dom.nodeName(startNode[0].previousSibling) === 'br'))))))));
     _$jscoverage['/editor/selection.js'].lineData[805]++;
     dummySpan = new Node(self.document.createElement('span'));
     _$jscoverage['/editor/selection.js'].lineData[806]++;
@@ -2083,9 +2078,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection.js'].lineData[807]++;
     dummySpan.insertBefore(startNode);
     _$jscoverage['/editor/selection.js'].lineData[808]++;
-    if (visit814_808_1(isStartMarkerAlone)) {
+    if (visit824_808_1(isStartMarkerAlone)) {
       _$jscoverage['/editor/selection.js'].lineData[813]++;
-      Dom.insertBefore(self.document.createTextNode('\ufeff'), visit815_813_1(startNode[0] || startNode));
+      Dom.insertBefore(self.document.createTextNode('\ufeff'), visit825_813_1(startNode[0] || startNode));
     }
   }
   _$jscoverage['/editor/selection.js'].lineData[818]++;
@@ -2093,9 +2088,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection.js'].lineData[819]++;
   startNode._4eRemove();
   _$jscoverage['/editor/selection.js'].lineData[821]++;
-  if (visit816_821_1(collapsed)) {
+  if (visit826_821_1(collapsed)) {
     _$jscoverage['/editor/selection.js'].lineData[822]++;
-    if (visit817_822_1(isStartMarkerAlone)) {
+    if (visit827_822_1(isStartMarkerAlone)) {
       _$jscoverage['/editor/selection.js'].lineData[824]++;
       ieRange.moveStart('character', -1);
       _$jscoverage['/editor/selection.js'].lineData[825]++;
@@ -2107,7 +2102,7 @@ KISSY.add(function(S, require) {
       ieRange.select();
     }
     _$jscoverage['/editor/selection.js'].lineData[831]++;
-    if (visit818_831_1(dummySpan)) {
+    if (visit828_831_1(dummySpan)) {
       _$jscoverage['/editor/selection.js'].lineData[832]++;
       self.moveToPosition(dummySpan, KER.POSITION_BEFORE_START);
       _$jscoverage['/editor/selection.js'].lineData[833]++;
@@ -2128,7 +2123,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection.js'].lineData[843]++;
     var sel = new KESelection(doc);
     _$jscoverage['/editor/selection.js'].lineData[844]++;
-    return (visit819_844_1(!sel || sel.isInvalid)) ? NULL : sel;
+    return (visit829_844_1(!sel || sel.isInvalid)) ? NULL : sel;
   }
   _$jscoverage['/editor/selection.js'].lineData[847]++;
   KESelection.getSelection = getSelection;
