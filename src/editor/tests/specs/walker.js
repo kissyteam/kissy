@@ -33,7 +33,7 @@ KISSY.add(function (S, Editor) {
                 "</div>").appendTo('body');
 
             var range = new Range(document);
-            range.setStart(div, 1)
+            range.setStart(div, 1);
             range.setEnd(div, 3);
             var walker = new Walker(range);
             var node = walker.next();

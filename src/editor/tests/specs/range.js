@@ -4,7 +4,6 @@
  */
 KISSY.add(function (S, require) {
     /*jshint quotmark:false*/
-
     var $ = S.all,
         Editor = require('editor'),
         UA = S.UA,
@@ -1600,6 +1599,4 @@ KISSY.add(function (S, require) {
         });
 
     });
-}, {
-    requires: ['editor']
 });
