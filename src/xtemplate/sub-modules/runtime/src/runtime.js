@@ -10,12 +10,12 @@ KISSY.add(function (S, require) {
     var Scope = require('./runtime/scope');
     var LinkedBuffer = require('./runtime/linked-buffer');
 
-    function findCommand(localCommands, name) {
-        if (name.indexOf('.') === -1) {
-            return localCommands && localCommands[name] || commands[name];
+    function findCommand(localCommands, parts) {
+        var name = parts[0];
+        var cmd = localCommands && localCommands[name] || commands[name];
+        if (parts.length === 1) {
+            return cmd;
         }
-        var parts = name.split('.');
-        var cmd = localCommands && localCommands[parts[0]] || commands[parts[0]];
         if (cmd) {
             var len = parts.length;
             for (var i = 1; i < len; i++) {
@@ -60,21 +60,38 @@ KISSY.add(function (S, require) {
         return buffer.end();
     }
 
-    function callCommand(engine, scope, option, buffer, name, line) {
+    function callFn(engine, scope, option, buffer, parts, depth, line, resolveInScope) {
         var commands = engine.config.commands;
-        var error;
-        var command1 = findCommand(commands, name);
+        var error, caller, fn;
+        var command1;
+        if (!depth) {
+            command1 = findCommand(commands, parts);
+        }
         if (command1) {
             return command1.call(engine, scope, option, buffer, line);
         } else {
-            error = 'in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line;
+            error = 'in file: ' + engine.name + ' can not call: ' + parts.join('.') + '" at line ' + line;
+        }
+        if (resolveInScope) {
+            caller = scope.resolve(parts.slice(0, -1), depth);
+            fn = caller[parts[parts.length - 1]];
+            if (fn) {
+                return fn.apply(caller, option.params);
+            }
+        }
+        if (error) {
             S.error(error);
         }
         return buffer;
     }
 
     var utils = {
-        callCommand: callCommand
+        callFn: function (engine, scope, option, buffer, parts, depth, line) {
+            return callFn(engine, scope, option, buffer, parts, depth, line, true);
+        },
+        callCommand: function (engine, scope, option, buffer, parts, line) {
+            return callFn(engine, scope, option, buffer, parts, 0, line, true);
+        }
     };
 
     /**
@@ -217,7 +234,9 @@ KISSY.add(function (S, require) {
             if (!self.name && self.tpl.TPL_NAME) {
                 self.name = self.tpl.TPL_NAME;
             }
-            renderTpl(self, new Scope(data), new LinkedBuffer(callback).head);
+            var scope = new Scope(data),
+                buffer = new LinkedBuffer(callback).head;
+            renderTpl(self, scope, buffer);
             return html;
         }
     };

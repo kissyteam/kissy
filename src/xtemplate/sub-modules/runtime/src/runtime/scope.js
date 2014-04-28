@@ -75,20 +75,24 @@ KISSY.add(function (S) {
                 return self.get(parts[0]);
             }
 
-            var len, i, v;
+            var len = parts.length,
+                i, v;
             var scope = self;
 
             // root keyword for root self
-            if (parts[0] === 'root') {
+            if (len && parts[0] === 'root') {
                 parts.shift();
                 scope = scope.root;
+                len--;
             } else if (depth) {
                 while (scope && depth--) {
                     scope = scope.parent;
                 }
             }
 
-            len = parts.length;
+            if (!len) {
+                return scope.data;
+            }
 
             var part0 = parts[0];
 
@@ -99,9 +103,6 @@ KISSY.add(function (S) {
             if (v && scope) {
                 for (i = 1; v && i < len; i++) {
                     v = v[parts[i]];
-                }
-                if (typeof v === 'function') {
-                    v = v.call(this.data);
                 }
                 return v;
             } else {

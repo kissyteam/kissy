@@ -135,11 +135,11 @@ KISSY.add(function (S, require) {
         it('support cache', function () {
             var tpl = '{{title}}';
             expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
-            expect(new XTemplate(tpl,{
-                cache:true
+            expect(new XTemplate(tpl, {
+                cache: true
             }).tpl).toBe(new XTemplate(tpl).tpl);
-            expect(new XTemplate(tpl,{
-                cache:false
+            expect(new XTemplate(tpl, {
+                cache: false
             }).tpl).not.toBe(new XTemplate(tpl).tpl);
         });
 
@@ -477,7 +477,7 @@ KISSY.add(function (S, require) {
 
         describe('parent scope', function () {
             it('support access root scope', function () {
-                var tpl = '{{#each( children)}}' +
+                var tpl = '{{#each (children)}}' +
                     '{{name}}{{root.name}}' +
                     '{{/each}}';
                 var data = {
@@ -851,20 +851,23 @@ KISSY.add(function (S, require) {
         });
 
         it('support function as property value', function () {
-            var tpl = '{{data.d}}';
+            var tpl = '{{x.y(1,2)}}' +
+                '{{#with(x)}}{{#with(z)}}{{../y(3,4)}}{{/with}}{{/with}}' +
+                '{{#with(x)}}{{#with(z)}}{{../../x["y"](3,4)}}{{/with}}{{/with}}';
 
-            var data = {
-                z: '0',
-                data: {
-                    d: function () {
-                        return this.z + '1';
+            var render = new XTemplate(tpl).render({
+                x: {
+                    y: function (a, b) {
+                        return a + b + this.salt;
+                    },
+                    salt: 1,
+                    z: {
+
                     }
                 }
-            };
+            });
 
-            var render = new XTemplate(tpl).render(data);
-
-            expect(render).toBe('01');
+            expect(render).toBe('488');
         });
 
         describe('汉字', function () {

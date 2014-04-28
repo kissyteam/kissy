@@ -194,7 +194,7 @@ KISSY.add(function (S, require) {
                 pushToArray(source, nextIdNameCode.source);
                 source.push(hashName + '["' + key + '"] = ' + nextIdNameCode.exp + ';');
             });
-            source.push(optionName + '.hash=' + hashName + ';');
+            source.push(optionName + '.hash = ' + hashName + ';');
         }
 
         return {
@@ -210,6 +210,7 @@ KISSY.add(function (S, require) {
             id = command.id,
             idName,
             idString = id.string,
+            idParts = id.parts,
             inverseFn;
 
         commandConfigCode = genOptionFromCommand(command, escape);
@@ -235,7 +236,7 @@ KISSY.add(function (S, require) {
         }
 
         if (!block) {
-            idName = guid('commandRet');
+            idName = guid('callRet');
         }
 
         if (idString in nativeCommands) {
@@ -246,10 +247,18 @@ KISSY.add(function (S, require) {
             }
         } else if (block) {
             source.push('buffer = callCommandUtil(engine, scope, ' + optionName +
-                ', buffer, ' + '"' + idString + '", ' + id.lineNumber + ');');
+                ', buffer, ' + '["' + idParts.join('","') + '"]' + ', ' + id.lineNumber + ');');
         } else {
-            source.push('var ' + idName + ' = callCommandUtil(engine, scope, ' + optionName +
-                ', buffer, ' + '"' + idString + '", ' + id.lineNumber + ');');
+            // x.y(1,2)
+            // {x:{y:function(a,b){}}}
+            var newParts = getIdStringFromIdParts(source, idParts);
+            if (newParts) {
+                source.push('var ' + idName + ' = callFnUtil(engine, scope, ' + optionName +
+                    ', buffer, ' + '[' + newParts.join(',') + ']' + ', ' + id.depth + ',' + id.lineNumber + ');');
+            } else {
+                source.push('var ' + idName + ' = callFnUtil(engine, scope, ' + optionName +
+                    ', buffer, ' + '["' + idParts.join('","') + '"],' + id.depth + ',' + id.lineNumber + ');');
+            }
         }
 
         if (idName) {

@@ -65,6 +65,7 @@ KISSY.add(function (S, require) {
 
         it('escape in inline command', function () {
             var tpl = 'my {{title()}} is {{{title()}}}';
+
             var render = new XTemplate(tpl, {
                 commands: {
                     title: function () {

@@ -14,11 +14,9 @@ KISSY.add(function (S, require) {
             expect(render).toBe('1');
         });
 
-
-        it('distinguish {{}} from {{}}}',function(){
+        it('distinguish {{}} from {{}}}', function () {
             var tpl = '{{1}}}';
 
-            debugger
             var render = new XTemplate(tpl).render();
 
             expect(render).toBe('1}');
