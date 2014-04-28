@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 24 17:47
+build time: Apr 28 22:37
 */
 /*
 combined modules:
@@ -26,12 +26,12 @@ KISSY.add('xtemplate/runtime', [
     var commands = {};
     var Scope = require('./runtime/scope');
     var LinkedBuffer = require('./runtime/linked-buffer');
-    function findCommand(localCommands, name) {
-        if (name.indexOf('.') === -1) {
-            return localCommands && localCommands[name] || commands[name];
+    function findCommand(localCommands, parts) {
+        var name = parts[0];
+        var cmd = localCommands && localCommands[name] || commands[name];
+        if (parts.length === 1) {
+            return cmd;
         }
-        var parts = name.split('.');
-        var cmd = localCommands && localCommands[parts[0]] || commands[parts[0]];
         if (cmd) {
             var len = parts.length;
             for (var i = 1; i < len; i++) {
@@ -73,25 +73,44 @@ KISSY.add('xtemplate/runtime', [
         }
         return buffer.end();
     }
-    function callCommand(engine, scope, option, buffer, name, line) {
+    function callFn(engine, scope, option, buffer, parts, depth, line, resolveInScope) {
         var commands = engine.config.commands;
-        var error;
-        var command1 = findCommand(commands, name);
+        var error, caller, fn;
+        var command1;
+        if (!depth) {
+            command1 = findCommand(commands, parts);
+        }
         if (command1) {
             return command1.call(engine, scope, option, buffer, line);
         } else {
-            error = 'in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line;
+            error = 'in file: ' + engine.name + ' can not call: ' + parts.join('.') + '" at line ' + line;
+        }
+        if (resolveInScope) {
+            caller = scope.resolve(parts.slice(0, -1), depth);
+            fn = caller[parts[parts.length - 1]];
+            if (fn) {
+                return fn.apply(caller, option.params);
+            }
+        }
+        if (error) {
             S.error(error);
         }
         return buffer;
     }
-    var utils = { callCommand: callCommand };    /**
+    var utils = {
+            callFn: function (engine, scope, option, buffer, parts, depth, line) {
+                return callFn(engine, scope, option, buffer, parts, depth, line, true);
+            },
+            callCommand: function (engine, scope, option, buffer, parts, line) {
+                return callFn(engine, scope, option, buffer, parts, 0, line, true);
+            }
+        };    /**
      * template file name for chrome debug
      *
      * @cfg {Boolean} name
      * @member KISSY.XTemplate.Runtime
      */
-                                                 /**
+              /**
      * XTemplate runtime. only accept tpl as function.
      * @class KISSY.XTemplate.Runtime
      */
@@ -219,7 +238,8 @@ KISSY.add('xtemplate/runtime', [
             if (!self.name && self.tpl.TPL_NAME) {
                 self.name = self.tpl.TPL_NAME;
             }
-            renderTpl(self, new Scope(data), new LinkedBuffer(callback).head);
+            var scope = new Scope(data), buffer = new LinkedBuffer(callback).head;
+            renderTpl(self, scope, buffer);
             return html;
         }
     };
@@ -326,6 +346,8 @@ KISSY.add('xtemplate/runtime/commands', ['./scope'], function (S, require) {
                 }
                 return buffer;
             },
+            // lhs does not support property reference
+            // {{set( x[1] = 2 )}}
             set: function (scope, option, buffer) {
                 scope.mix(option.hash);
                 return buffer;
@@ -490,18 +512,21 @@ KISSY.add('xtemplate/runtime/scope', [], function (S) {
             if (!depth && parts.length === 1) {
                 return self.get(parts[0]);
             }
-            var len, i, v;
+            var len = parts.length, i, v;
             var scope = self;    // root keyword for root self
             // root keyword for root self
-            if (parts[0] === 'root') {
+            if (len && parts[0] === 'root') {
                 parts.shift();
                 scope = scope.root;
+                len--;
             } else if (depth) {
                 while (scope && depth--) {
                     scope = scope.parent;
                 }
             }
-            len = parts.length;
+            if (!len) {
+                return scope.data;
+            }
             var part0 = parts[0];
             do {
                 v = scope.get(part0);
@@ -509,9 +534,6 @@ KISSY.add('xtemplate/runtime/scope', [], function (S) {
             if (v && scope) {
                 for (i = 1; v && i < len; i++) {
                     v = v[parts[i]];
-                }
-                if (typeof v === 'function') {
-                    v = v.call(this.data);
                 }
                 return v;
             } else {

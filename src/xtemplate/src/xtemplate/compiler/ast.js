@@ -35,23 +35,23 @@ KISSY.add(function (S) {
 
     ast.ProgramNode.prototype.type = 'program';
 
-    ast.BlockStatement = function (lineNumber, command, program, close, escape) {
+    ast.BlockStatement = function (lineNumber, func, program, close, escape) {
         var closeParts = close.parts,
             self = this,
             e;
         // no close tag
-        if (!sameArray(command.id.parts, closeParts)) {
+        if (!sameArray(func.id.parts, closeParts)) {
             e = ('Syntax error at line ' +
                 lineNumber +
                 ':\n' + 'expect {{/' +
-                command.id.parts +
+                func.id.parts +
                 '}} not {{/' +
                 closeParts + '}}');
             S.error(e);
         }
         self.escape = escape;
         self.lineNumber = lineNumber;
-        self.command = command;
+        self.func = func;
         self.program = program;
     };
 
@@ -87,7 +87,7 @@ KISSY.add(function (S) {
      * @param [hash]
      * @constructor
      */
-    ast.Command = function (lineNumber, id, params, hash) {
+    ast.Function = function (lineNumber, id, params, hash) {
         var self = this;
         self.lineNumber = lineNumber;
         self.id = id;
@@ -95,7 +95,7 @@ KISSY.add(function (S) {
         self.hash = hash;
     };
 
-    ast.Command.prototype.type = 'command';
+    ast.Function.prototype.type = 'function';
 
     ast.UnaryExpression.prototype.type = 'unaryExpression';
 

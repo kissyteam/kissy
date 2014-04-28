@@ -75,6 +75,8 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
+        // lhs does not support property reference
+        // {{set( x[1] = 2 )}}
         set: function (scope, option, buffer) {
             scope.mix(option.hash);
             return buffer;

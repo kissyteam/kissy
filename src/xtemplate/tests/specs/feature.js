@@ -310,7 +310,7 @@ KISSY.add(function (S, require) {
             });
 
             it('support nest array', function () {
-                var tpl = '{{#each (data)}}{{this.0}}{{this.1}}{{this}}{{/each}}';
+                var tpl = '{{#each (data)}}{{this[0]}}{{this[1]}}{{this}}{{/each}}';
                 var data = {
                     data: [
                         [1, 2]

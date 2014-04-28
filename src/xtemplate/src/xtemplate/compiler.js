@@ -163,14 +163,14 @@ KISSY.add(function (S, require) {
         };
     }
 
-    function genOptionFromCommand(command, escape) {
+    function genOptionFromFunction(func, escape) {
         var source = [],
             optionName,
             params,
             hash;
 
-        params = command.params;
-        hash = command.hash;
+        params = func.params;
+        hash = func.hash;
 
         optionName = guid('option');
         source.push('var ' + optionName + ' = {' + (escape ? 'escape:1' : '') + '};');
@@ -203,19 +203,19 @@ KISSY.add(function (S, require) {
         };
     }
 
-    function generateCommand(xtplAstToJs, command, escape, block) {
+    function generateFunction(xtplAstToJs, func, escape, block) {
         var source = [],
-            commandConfigCode,
+            functionConfigCode,
             optionName,
-            id = command.id,
+            id = func.id,
             idName,
             idString = id.string,
             idParts = id.parts,
             inverseFn;
 
-        commandConfigCode = genOptionFromCommand(command, escape);
-        optionName = commandConfigCode.exp;
-        pushToArray(source, commandConfigCode.source);
+        functionConfigCode = genOptionFromFunction(func, escape);
+        optionName = functionConfigCode.exp;
+        pushToArray(source, functionConfigCode.source);
 
         if (block) {
             var programNode = block.program;
@@ -230,7 +230,7 @@ KISSY.add(function (S, require) {
             // require include/extend modules
             if (idString === 'include' || idString === 'extend') {
                 // prevent require parse...
-                source.push('re' + 'quire("' + command.params[0].value + '");' +
+                source.push('re' + 'quire("' + func.params[0].value + '");' +
                     optionName + '.params[0] = module.resolve(' + optionName + '.params[0]);');
             }
         }
@@ -331,12 +331,12 @@ KISSY.add(function (S, require) {
             };
         },
 
-        command: function (command, escape) {
-            return generateCommand(this, command, escape);
+        'function': function (func, escape) {
+            return generateFunction(this, func, escape);
         },
 
         blockStatement: function (block) {
-            return generateCommand(this, block.command, block.escape, block);
+            return generateFunction(this, block.func, block.escape, block);
         },
 
         expressionStatement: function (expressionStatement) {

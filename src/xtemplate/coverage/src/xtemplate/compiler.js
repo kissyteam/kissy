@@ -339,67 +339,70 @@ if (! _$jscoverage['/xtemplate/compiler.js']) {
   _$jscoverage['/xtemplate/compiler.js'].lineData[200] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[206] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[207] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[215] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[216] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[217] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[219] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[218] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[220] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[221] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[222] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[223] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[224] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[228] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[230] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[232] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[237] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[225] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[229] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[231] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[233] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[238] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[241] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[239] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[242] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[243] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[245] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[247] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[244] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[246] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[248] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[251] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[249] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[254] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[255] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[256] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[262] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[268] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[282] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[283] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[259] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[264] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[265] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[271] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[277] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[291] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[292] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[299] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[306] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[311] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[312] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[314] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[301] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[308] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[315] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[317] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[319] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[320] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[321] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[323] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[324] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[326] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[330] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[334] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[341] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[328] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[335] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[339] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[343] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[344] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[346] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[348] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[356] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[363] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[364] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[370] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[377] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[393] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[394] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[406] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[407] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[408] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[409] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[350] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[352] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[353] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[355] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[357] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[365] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[372] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[373] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[379] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[386] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[402] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[403] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[415] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[416] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[417] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[418] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[419] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[421] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[422] = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[424] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[427] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[428] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[430] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[431] = 0;
   _$jscoverage['/xtemplate/compiler.js'].lineData[433] = 0;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[442] = 0;
 }
 if (! _$jscoverage['/xtemplate/compiler.js'].functionData) {
   _$jscoverage['/xtemplate/compiler.js'].functionData = [];
@@ -466,88 +469,94 @@ if (! _$jscoverage['/xtemplate/compiler.js'].branchData) {
   _$jscoverage['/xtemplate/compiler.js'].branchData['178'][1] = new BranchData();
   _$jscoverage['/xtemplate/compiler.js'].branchData['189'] = [];
   _$jscoverage['/xtemplate/compiler.js'].branchData['189'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['219'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['219'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['222'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['222'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['228'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['228'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'][2] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'][3] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['237'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['237'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['241'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['241'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['220'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['220'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['223'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['223'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['229'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['229'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'][2] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'][3] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['238'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['238'][1] = new BranchData();
   _$jscoverage['/xtemplate/compiler.js'].branchData['242'] = [];
   _$jscoverage['/xtemplate/compiler.js'].branchData['242'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['247'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['247'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['243'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['243'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['248'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['248'][1] = new BranchData();
   _$jscoverage['/xtemplate/compiler.js'].branchData['255'] = [];
   _$jscoverage['/xtemplate/compiler.js'].branchData['255'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['314'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['314'][1] = new BranchData();
-  _$jscoverage['/xtemplate/compiler.js'].branchData['418'] = [];
-  _$jscoverage['/xtemplate/compiler.js'].branchData['418'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['264'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['264'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['323'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['323'][1] = new BranchData();
+  _$jscoverage['/xtemplate/compiler.js'].branchData['427'] = [];
+  _$jscoverage['/xtemplate/compiler.js'].branchData['427'][1] = new BranchData();
 }
-_$jscoverage['/xtemplate/compiler.js'].branchData['418'][1].init(18, 5, '!name');
-function visit77_418_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['418'][1].ranCondition(result);
+_$jscoverage['/xtemplate/compiler.js'].branchData['427'][1].init(18, 5, '!name');
+function visit78_427_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['427'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['314'][1].init(379, 8, 'newParts');
-function visit76_314_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['314'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['323'][1].init(379, 8, 'newParts');
+function visit77_323_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['255'][1].init(2058, 6, 'idName');
+}_$jscoverage['/xtemplate/compiler.js'].branchData['264'][1].init(2544, 6, 'idName');
+function visit76_264_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['264'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/xtemplate/compiler.js'].branchData['255'][1].init(152, 8, 'newParts');
 function visit75_255_1(result) {
   _$jscoverage['/xtemplate/compiler.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['247'][1].init(1668, 5, 'block');
-function visit74_247_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['247'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['248'][1].init(1694, 5, 'block');
+function visit74_248_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['242'][1].init(18, 5, 'block');
-function visit73_242_1(result) {
+}_$jscoverage['/xtemplate/compiler.js'].branchData['243'][1].init(18, 5, 'block');
+function visit73_243_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['243'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/xtemplate/compiler.js'].branchData['242'][1].init(1274, 26, 'idString in nativeCommands');
+function visit72_242_1(result) {
   _$jscoverage['/xtemplate/compiler.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['241'][1].init(1248, 26, 'idString in nativeCommands');
-function visit72_241_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['241'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['238'][1].init(1199, 6, '!block');
+function visit71_238_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['237'][1].init(1170, 6, '!block');
-function visit71_237_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['237'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['231'][3].init(91, 21, 'idString === \'extend\'');
+function visit70_231_3(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'][3].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['230'][3].init(91, 21, 'idString === \'extend\'');
-function visit70_230_3(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'][3].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['231'][2].init(65, 22, 'idString === \'include\'');
+function visit69_231_2(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'][2].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['230'][2].init(65, 22, 'idString === \'include\'');
-function visit69_230_2(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'][2].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['231'][1].init(65, 47, 'idString === \'include\' || idString === \'extend\'');
+function visit68_231_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['230'][1].init(65, 47, 'idString === \'include\' || idString === \'extend\'');
-function visit68_230_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['230'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['229'][1].init(798, 20, 'xtplAstToJs.isModule');
+function visit67_229_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['229'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['228'][1].init(766, 20, 'xtplAstToJs.isModule');
-function visit67_228_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['228'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['223'][1].init(166, 19, 'programNode.inverse');
+function visit66_223_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['222'][1].init(166, 19, 'programNode.inverse');
-function visit66_222_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['222'][1].ranCondition(result);
+}_$jscoverage['/xtemplate/compiler.js'].branchData['220'][1].init(412, 5, 'block');
+function visit65_220_1(result) {
+  _$jscoverage['/xtemplate/compiler.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['219'][1].init(380, 5, 'block');
-function visit65_219_1(result) {
-  _$jscoverage['/xtemplate/compiler.js'].branchData['219'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['189'][1].init(787, 4, 'hash');
+}_$jscoverage['/xtemplate/compiler.js'].branchData['189'][1].init(781, 4, 'hash');
 function visit64_189_1(result) {
   _$jscoverage['/xtemplate/compiler.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler.js'].branchData['178'][1].init(301, 6, 'params');
+}_$jscoverage['/xtemplate/compiler.js'].branchData['178'][1].init(295, 6, 'params');
 function visit63_178_1(result) {
   _$jscoverage['/xtemplate/compiler.js'].branchData['178'][1].ranCondition(result);
   return result;
@@ -827,14 +836,14 @@ KISSY.add(function(S, require) {
   source: source};
   }
   _$jscoverage['/xtemplate/compiler.js'].lineData[166]++;
-  function genOptionFromCommand(command, escape) {
+  function genOptionFromFunction(func, escape) {
     _$jscoverage['/xtemplate/compiler.js'].functionData[10]++;
     _$jscoverage['/xtemplate/compiler.js'].lineData[167]++;
     var source = [], optionName, params, hash;
     _$jscoverage['/xtemplate/compiler.js'].lineData[172]++;
-    params = command.params;
+    params = func.params;
     _$jscoverage['/xtemplate/compiler.js'].lineData[173]++;
-    hash = command.hash;
+    hash = func.hash;
     _$jscoverage['/xtemplate/compiler.js'].lineData[175]++;
     optionName = guid('option');
     _$jscoverage['/xtemplate/compiler.js'].lineData[176]++;
@@ -875,7 +884,7 @@ KISSY.add(function(S, require) {
   source.push(hashName + '["' + key + '"] = ' + nextIdNameCode.exp + ';');
 });
       _$jscoverage['/xtemplate/compiler.js'].lineData[197]++;
-      source.push(optionName + '.hash=' + hashName + ';');
+      source.push(optionName + '.hash = ' + hashName + ';');
     }
     _$jscoverage['/xtemplate/compiler.js'].lineData[200]++;
     return {
@@ -883,74 +892,82 @@ KISSY.add(function(S, require) {
   source: source};
   }
   _$jscoverage['/xtemplate/compiler.js'].lineData[206]++;
-  function generateCommand(xtplAstToJs, command, escape, block) {
+  function generateFunction(xtplAstToJs, func, escape, block) {
     _$jscoverage['/xtemplate/compiler.js'].functionData[13]++;
     _$jscoverage['/xtemplate/compiler.js'].lineData[207]++;
-    var source = [], commandConfigCode, optionName, id = command.id, idName, idString = id.string, inverseFn;
-    _$jscoverage['/xtemplate/compiler.js'].lineData[215]++;
-    commandConfigCode = genOptionFromCommand(command, escape);
+    var source = [], functionConfigCode, optionName, id = func.id, idName, idString = id.string, idParts = id.parts, inverseFn;
     _$jscoverage['/xtemplate/compiler.js'].lineData[216]++;
-    optionName = commandConfigCode.exp;
+    functionConfigCode = genOptionFromFunction(func, escape);
     _$jscoverage['/xtemplate/compiler.js'].lineData[217]++;
-    pushToArray(source, commandConfigCode.source);
-    _$jscoverage['/xtemplate/compiler.js'].lineData[219]++;
-    if (visit65_219_1(block)) {
-      _$jscoverage['/xtemplate/compiler.js'].lineData[220]++;
-      var programNode = block.program;
+    optionName = functionConfigCode.exp;
+    _$jscoverage['/xtemplate/compiler.js'].lineData[218]++;
+    pushToArray(source, functionConfigCode.source);
+    _$jscoverage['/xtemplate/compiler.js'].lineData[220]++;
+    if (visit65_220_1(block)) {
       _$jscoverage['/xtemplate/compiler.js'].lineData[221]++;
-      source.push(optionName + '.fn=' + genFunction(programNode.statements).join('\n') + ';');
+      var programNode = block.program;
       _$jscoverage['/xtemplate/compiler.js'].lineData[222]++;
-      if (visit66_222_1(programNode.inverse)) {
-        _$jscoverage['/xtemplate/compiler.js'].lineData[223]++;
-        inverseFn = genFunction(programNode.inverse).join('\n');
+      source.push(optionName + '.fn=' + genFunction(programNode.statements).join('\n') + ';');
+      _$jscoverage['/xtemplate/compiler.js'].lineData[223]++;
+      if (visit66_223_1(programNode.inverse)) {
         _$jscoverage['/xtemplate/compiler.js'].lineData[224]++;
+        inverseFn = genFunction(programNode.inverse).join('\n');
+        _$jscoverage['/xtemplate/compiler.js'].lineData[225]++;
         source.push(optionName + '.inverse=' + inverseFn + ';');
       }
     }
-    _$jscoverage['/xtemplate/compiler.js'].lineData[228]++;
-    if (visit67_228_1(xtplAstToJs.isModule)) {
-      _$jscoverage['/xtemplate/compiler.js'].lineData[230]++;
-      if (visit68_230_1(visit69_230_2(idString === 'include') || visit70_230_3(idString === 'extend'))) {
-        _$jscoverage['/xtemplate/compiler.js'].lineData[232]++;
-        source.push('re' + 'quire("' + command.params[0].value + '");' + optionName + '.params[0] = module.resolve(' + optionName + '.params[0]);');
+    _$jscoverage['/xtemplate/compiler.js'].lineData[229]++;
+    if (visit67_229_1(xtplAstToJs.isModule)) {
+      _$jscoverage['/xtemplate/compiler.js'].lineData[231]++;
+      if (visit68_231_1(visit69_231_2(idString === 'include') || visit70_231_3(idString === 'extend'))) {
+        _$jscoverage['/xtemplate/compiler.js'].lineData[233]++;
+        source.push('re' + 'quire("' + func.params[0].value + '");' + optionName + '.params[0] = module.resolve(' + optionName + '.params[0]);');
       }
     }
-    _$jscoverage['/xtemplate/compiler.js'].lineData[237]++;
-    if (visit71_237_1(!block)) {
-      _$jscoverage['/xtemplate/compiler.js'].lineData[238]++;
-      idName = guid('commandRet');
+    _$jscoverage['/xtemplate/compiler.js'].lineData[238]++;
+    if (visit71_238_1(!block)) {
+      _$jscoverage['/xtemplate/compiler.js'].lineData[239]++;
+      idName = guid('callRet');
     }
-    _$jscoverage['/xtemplate/compiler.js'].lineData[241]++;
-    if (visit72_241_1(idString in nativeCommands)) {
-      _$jscoverage['/xtemplate/compiler.js'].lineData[242]++;
-      if (visit73_242_1(block)) {
-        _$jscoverage['/xtemplate/compiler.js'].lineData[243]++;
+    _$jscoverage['/xtemplate/compiler.js'].lineData[242]++;
+    if (visit72_242_1(idString in nativeCommands)) {
+      _$jscoverage['/xtemplate/compiler.js'].lineData[243]++;
+      if (visit73_243_1(block)) {
+        _$jscoverage['/xtemplate/compiler.js'].lineData[244]++;
         source.push('buffer = ' + idString + 'Command.call(engine, scope, ' + optionName + ', buffer, ' + id.lineNumber + ', payload);');
       } else {
-        _$jscoverage['/xtemplate/compiler.js'].lineData[245]++;
+        _$jscoverage['/xtemplate/compiler.js'].lineData[246]++;
         source.push('var ' + idName + ' = ' + idString + 'Command.call(engine, scope, ' + optionName + ', buffer, ' + id.lineNumber + ', payload);');
       }
     } else {
-      _$jscoverage['/xtemplate/compiler.js'].lineData[247]++;
-      if (visit74_247_1(block)) {
-        _$jscoverage['/xtemplate/compiler.js'].lineData[248]++;
-        source.push('buffer = callCommandUtil(engine, scope, ' + optionName + ', buffer, ' + '"' + idString + '", ' + id.lineNumber + ');');
+      _$jscoverage['/xtemplate/compiler.js'].lineData[248]++;
+      if (visit74_248_1(block)) {
+        _$jscoverage['/xtemplate/compiler.js'].lineData[249]++;
+        source.push('buffer = callCommandUtil(engine, scope, ' + optionName + ', buffer, ' + '["' + idParts.join('","') + '"]' + ', ' + id.lineNumber + ');');
       } else {
-        _$jscoverage['/xtemplate/compiler.js'].lineData[251]++;
-        source.push('var ' + idName + ' = callCommandUtil(engine, scope, ' + optionName + ', buffer, ' + '"' + idString + '", ' + id.lineNumber + ');');
+        _$jscoverage['/xtemplate/compiler.js'].lineData[254]++;
+        var newParts = getIdStringFromIdParts(source, idParts);
+        _$jscoverage['/xtemplate/compiler.js'].lineData[255]++;
+        if (visit75_255_1(newParts)) {
+          _$jscoverage['/xtemplate/compiler.js'].lineData[256]++;
+          source.push('var ' + idName + ' = callFnUtil(engine, scope, ' + optionName + ', buffer, ' + '[' + newParts.join(',') + ']' + ', ' + id.depth + ',' + id.lineNumber + ');');
+        } else {
+          _$jscoverage['/xtemplate/compiler.js'].lineData[259]++;
+          source.push('var ' + idName + ' = callFnUtil(engine, scope, ' + optionName + ', buffer, ' + '["' + idParts.join('","') + '"],' + id.depth + ',' + id.lineNumber + ');');
+        }
       }
     }
-    _$jscoverage['/xtemplate/compiler.js'].lineData[255]++;
-    if (visit75_255_1(idName)) {
-      _$jscoverage['/xtemplate/compiler.js'].lineData[256]++;
+    _$jscoverage['/xtemplate/compiler.js'].lineData[264]++;
+    if (visit76_264_1(idName)) {
+      _$jscoverage['/xtemplate/compiler.js'].lineData[265]++;
       source.push('if(' + idName + ' && ' + idName + '.isBuffer){' + 'buffer = ' + idName + ';' + idName + ' = undefined;' + '}');
     }
-    _$jscoverage['/xtemplate/compiler.js'].lineData[262]++;
+    _$jscoverage['/xtemplate/compiler.js'].lineData[271]++;
     return {
   exp: idName, 
   source: source};
   }
-  _$jscoverage['/xtemplate/compiler.js'].lineData[268]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[277]++;
   var xtplAstToJs = {
   conditionalOrExpression: opExpression, 
   conditionalAndExpression: opExpression, 
@@ -960,127 +977,127 @@ KISSY.add(function(S, require) {
   multiplicativeExpression: opExpression, 
   unaryExpression: function(e) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[14]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[282]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[291]++;
   var code = xtplAstToJs[e.value.type](e.value);
-  _$jscoverage['/xtemplate/compiler.js'].lineData[283]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[292]++;
   return {
   exp: e.unaryType + '(' + code.exp + ')', 
   source: code.source};
 }, 
   string: function(e) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[15]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[292]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[301]++;
   return {
   exp: "'" + escapeString(e.value, true) + "'", 
   source: []};
 }, 
   number: function(e) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[16]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[299]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[308]++;
   return {
   exp: e.value, 
   source: []};
 }, 
   id: function(idNode) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[17]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[306]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[315]++;
   var source = [], depth = idNode.depth, idParts = idNode.parts, idName = guid('id');
-  _$jscoverage['/xtemplate/compiler.js'].lineData[311]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[320]++;
   var newParts = getIdStringFromIdParts(source, idParts);
-  _$jscoverage['/xtemplate/compiler.js'].lineData[312]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[321]++;
   var depthParam = depth ? (',' + depth) : '';
-  _$jscoverage['/xtemplate/compiler.js'].lineData[314]++;
-  if (visit76_314_1(newParts)) {
-    _$jscoverage['/xtemplate/compiler.js'].lineData[315]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[323]++;
+  if (visit77_323_1(newParts)) {
+    _$jscoverage['/xtemplate/compiler.js'].lineData[324]++;
     source.push('var ' + idName + ' = scope.resolve([' + newParts.join(',') + ']' + depthParam + ');');
   } else {
-    _$jscoverage['/xtemplate/compiler.js'].lineData[317]++;
+    _$jscoverage['/xtemplate/compiler.js'].lineData[326]++;
     source.push('var ' + idName + ' = scope.resolve(["' + idParts.join('","') + '"]' + depthParam + ');');
   }
-  _$jscoverage['/xtemplate/compiler.js'].lineData[319]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[328]++;
   return {
   exp: idName, 
   source: source};
 }, 
-  command: function(command, escape) {
+  'function': function(func, escape) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[18]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[326]++;
-  return generateCommand(this, command, escape);
+  _$jscoverage['/xtemplate/compiler.js'].lineData[335]++;
+  return generateFunction(this, func, escape);
 }, 
   blockStatement: function(block) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[19]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[330]++;
-  return generateCommand(this, block.command, block.escape, block);
+  _$jscoverage['/xtemplate/compiler.js'].lineData[339]++;
+  return generateFunction(this, block.func, block.escape, block);
 }, 
   expressionStatement: function(expressionStatement) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[20]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[334]++;
-  var source = [], escape = expressionStatement.escape, code, expression = expressionStatement.value, type = expression.type, expressionOrVariable;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[341]++;
-  code = xtplAstToJs[type](expression, escape);
   _$jscoverage['/xtemplate/compiler.js'].lineData[343]++;
+  var source = [], escape = expressionStatement.escape, code, expression = expressionStatement.value, type = expression.type, expressionOrVariable;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[350]++;
+  code = xtplAstToJs[type](expression, escape);
+  _$jscoverage['/xtemplate/compiler.js'].lineData[352]++;
   pushToArray(source, code.source);
-  _$jscoverage['/xtemplate/compiler.js'].lineData[344]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[353]++;
   expressionOrVariable = code.exp;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[346]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[355]++;
   source.push('buffer.write(' + expressionOrVariable + ',' + !!escape + ');');
-  _$jscoverage['/xtemplate/compiler.js'].lineData[348]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[357]++;
   return {
   exp: '', 
   source: source};
 }, 
   contentStatement: function(contentStatement) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[21]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[356]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[365]++;
   return {
   exp: '', 
   source: ["buffer.write('" + escapeString(contentStatement.value, 0) + "');"]};
 }};
-  _$jscoverage['/xtemplate/compiler.js'].lineData[363]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[372]++;
   xtplAstToJs['boolean'] = function(e) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[22]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[364]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[373]++;
   return {
   exp: e.value, 
   source: []};
 };
-  _$jscoverage['/xtemplate/compiler.js'].lineData[370]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[379]++;
   var compiler;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[377]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[386]++;
   compiler = {
   parse: S.bind(parser.parse, parser), 
   compileToStr: function(tplContent, name, isModule) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[23]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[393]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[402]++;
   var func = compiler.compile(tplContent, name, isModule);
-  _$jscoverage['/xtemplate/compiler.js'].lineData[394]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[403]++;
   return 'function(' + func.params.join(',') + '){\n' + func.source.join('\n') + '}';
 }, 
   compile: function(tplContent, name, isModule) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[24]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[406]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[415]++;
   var root = compiler.parse(tplContent, name);
-  _$jscoverage['/xtemplate/compiler.js'].lineData[407]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[416]++;
   variableId = 0;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[408]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[417]++;
   xtplAstToJs.isModule = isModule;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[409]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[418]++;
   return genTopFunction(xtplAstToJs, root.statements);
 }, 
   compileToFn: function(tplContent, name) {
   _$jscoverage['/xtemplate/compiler.js'].functionData[25]++;
-  _$jscoverage['/xtemplate/compiler.js'].lineData[418]++;
-  if (visit77_418_1(!name)) {
-    _$jscoverage['/xtemplate/compiler.js'].lineData[419]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[427]++;
+  if (visit78_427_1(!name)) {
+    _$jscoverage['/xtemplate/compiler.js'].lineData[428]++;
     name = 'xtemplate' + (xtemplateId++);
   }
-  _$jscoverage['/xtemplate/compiler.js'].lineData[421]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[430]++;
   var code = compiler.compile(tplContent, name);
-  _$jscoverage['/xtemplate/compiler.js'].lineData[422]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[431]++;
   var sourceURL = 'sourceURL=' + name + '.js';
-  _$jscoverage['/xtemplate/compiler.js'].lineData[424]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[433]++;
   return Function.apply(null, [].concat(code.params).concat(code.source.join('\n') + '\n//@ ' + sourceURL + '\n//# ' + sourceURL));
 }};
-  _$jscoverage['/xtemplate/compiler.js'].lineData[433]++;
+  _$jscoverage['/xtemplate/compiler.js'].lineData[442]++;
   return compiler;
 });

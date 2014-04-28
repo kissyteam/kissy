@@ -392,7 +392,7 @@ function visit6_196_1(result) {
 function visit5_194_1(result) {
   _$jscoverage['/xtemplate/compiler/ast.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate/compiler/ast.js'].branchData['43'][1].init(120, 40, '!sameArray(command.id.parts, closeParts)');
+}_$jscoverage['/xtemplate/compiler/ast.js'].branchData['43'][1].init(120, 37, '!sameArray(func.id.parts, closeParts)');
 function visit4_43_1(result) {
   _$jscoverage['/xtemplate/compiler/ast.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -449,14 +449,14 @@ KISSY.add(function(S) {
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[36]++;
   ast.ProgramNode.prototype.type = 'program';
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[38]++;
-  ast.BlockStatement = function(lineNumber, command, program, close, escape) {
+  ast.BlockStatement = function(lineNumber, func, program, close, escape) {
   _$jscoverage['/xtemplate/compiler/ast.js'].functionData[3]++;
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[39]++;
   var closeParts = close.parts, self = this, e;
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[43]++;
-  if (visit4_43_1(!sameArray(command.id.parts, closeParts))) {
+  if (visit4_43_1(!sameArray(func.id.parts, closeParts))) {
     _$jscoverage['/xtemplate/compiler/ast.js'].lineData[44]++;
-    e = ('Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + command.id.parts + '}} not {{/' + closeParts + '}}');
+    e = ('Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + func.id.parts + '}} not {{/' + closeParts + '}}');
     _$jscoverage['/xtemplate/compiler/ast.js'].lineData[50]++;
     S.error(e);
   }
@@ -465,7 +465,7 @@ KISSY.add(function(S) {
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[53]++;
   self.lineNumber = lineNumber;
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[54]++;
-  self.command = command;
+  self.func = func;
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[55]++;
   self.program = program;
 };
@@ -506,7 +506,7 @@ KISSY.add(function(S) {
   this.unaryType = unaryType;
 };
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[90]++;
-  ast.Command = function(lineNumber, id, params, hash) {
+  ast.Function = function(lineNumber, id, params, hash) {
   _$jscoverage['/xtemplate/compiler/ast.js'].functionData[7]++;
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[91]++;
   var self = this;
@@ -520,7 +520,7 @@ KISSY.add(function(S) {
   self.hash = hash;
 };
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[98]++;
-  ast.Command.prototype.type = 'command';
+  ast.Function.prototype.type = 'function';
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[100]++;
   ast.UnaryExpression.prototype.type = 'unaryExpression';
   _$jscoverage['/xtemplate/compiler/ast.js'].lineData[102]++;

@@ -388,20 +388,20 @@ KISSY.add(function (_, undefined) {
         'program': 'ah',
         'statements': 'ai',
         'statement': 'aj',
-        'command': 'ak',
+        'function': 'ak',
         'id': 'al',
         'expression': 'am',
         'params': 'an',
         'hash': 'ao',
         'param': 'ap',
-        'ConditionalOrExpression': 'aq',
-        'ConditionalAndExpression': 'ar',
-        'EqualityExpression': 'as',
-        'RelationalExpression': 'at',
-        'AdditiveExpression': 'au',
-        'MultiplicativeExpression': 'av',
-        'UnaryExpression': 'aw',
-        'PrimaryExpression': 'ax',
+        'conditionalOrExpression': 'aq',
+        'conditionalAndExpression': 'ar',
+        'equalityExpression': 'as',
+        'relationalExpression': 'at',
+        'additiveExpression': 'au',
+        'multiplicativeExpression': 'av',
+        'unaryExpression': 'aw',
+        'primaryExpression': 'ax',
         'hashSegment': 'ay',
         'idSegments': 'az'
     };
@@ -445,22 +445,22 @@ KISSY.add(function (_, undefined) {
         ],
         ['ak', ['al', 'i', 'an', 'g', 'ao', 'j'],
             function () {
-                return new this.yy.Command(this.lexer.lineNumber, this.$1, this.$3, this.$5);
+                return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3, this.$5);
             }
         ],
         ['ak', ['al', 'i', 'an', 'j'],
             function () {
-                return new this.yy.Command(this.lexer.lineNumber, this.$1, this.$3);
+                return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3);
             }
         ],
         ['ak', ['al', 'i', 'ao', 'j'],
             function () {
-                return new this.yy.Command(this.lexer.lineNumber, this.$1, null, this.$3);
+                return new this.yy.Function(this.lexer.lineNumber, this.$1, null, this.$3);
             }
         ],
         ['ak', ['al', 'i', 'j'],
             function () {
-                return new this.yy.Command(this.lexer.lineNumber, this.$1);
+                return new this.yy.Function(this.lexer.lineNumber, this.$1);
             }
         ],
         ['an', ['an', 'g', 'ap'],
@@ -614,11 +614,6 @@ KISSY.add(function (_, undefined) {
                 this.$1.push(this.$3);
             }
         ],
-        ['az', ['az', 'ad', 'aa'],
-            function () {
-                this.$1.push(this.$3);
-            }
-        ],
         ['az', ['ac'],
             function () {
                 return [this.$1];
@@ -711,7 +706,7 @@ KISSY.add(function (_, undefined) {
             },
             '33': {
                 'ak': 17,
-                'am': 62,
+                'am': 61,
                 'aq': 19,
                 'ar': 20,
                 'as': 21,
@@ -725,7 +720,7 @@ KISSY.add(function (_, undefined) {
             },
             '38': {
                 'ak': 17,
-                'ar': 64,
+                'ar': 63,
                 'as': 21,
                 'at': 22,
                 'au': 23,
@@ -737,7 +732,7 @@ KISSY.add(function (_, undefined) {
             },
             '39': {
                 'ak': 17,
-                'as': 65,
+                'as': 64,
                 'at': 22,
                 'au': 23,
                 'av': 24,
@@ -748,7 +743,7 @@ KISSY.add(function (_, undefined) {
             },
             '40': {
                 'ak': 17,
-                'at': 66,
+                'at': 65,
                 'au': 23,
                 'av': 24,
                 'aw': 25,
@@ -758,7 +753,7 @@ KISSY.add(function (_, undefined) {
             },
             '41': {
                 'ak': 17,
-                'at': 67,
+                'at': 66,
                 'au': 23,
                 'av': 24,
                 'aw': 25,
@@ -768,7 +763,7 @@ KISSY.add(function (_, undefined) {
             },
             '42': {
                 'ak': 17,
-                'au': 68,
+                'au': 67,
                 'av': 24,
                 'aw': 25,
                 'ax': 26,
@@ -777,7 +772,7 @@ KISSY.add(function (_, undefined) {
             },
             '43': {
                 'ak': 17,
-                'au': 69,
+                'au': 68,
                 'av': 24,
                 'aw': 25,
                 'ax': 26,
@@ -786,7 +781,7 @@ KISSY.add(function (_, undefined) {
             },
             '44': {
                 'ak': 17,
-                'au': 70,
+                'au': 69,
                 'av': 24,
                 'aw': 25,
                 'ax': 26,
@@ -795,7 +790,7 @@ KISSY.add(function (_, undefined) {
             },
             '45': {
                 'ak': 17,
-                'au': 71,
+                'au': 70,
                 'av': 24,
                 'aw': 25,
                 'ax': 26,
@@ -804,7 +799,7 @@ KISSY.add(function (_, undefined) {
             },
             '46': {
                 'ak': 17,
-                'av': 72,
+                'av': 71,
                 'aw': 25,
                 'ax': 26,
                 'al': 27,
@@ -812,7 +807,7 @@ KISSY.add(function (_, undefined) {
             },
             '47': {
                 'ak': 17,
-                'av': 73,
+                'av': 72,
                 'aw': 25,
                 'ax': 26,
                 'al': 27,
@@ -820,21 +815,21 @@ KISSY.add(function (_, undefined) {
             },
             '48': {
                 'ak': 17,
-                'aw': 74,
+                'aw': 73,
                 'ax': 26,
                 'al': 27,
                 'az': 10
             },
             '49': {
                 'ak': 17,
-                'aw': 75,
+                'aw': 74,
                 'ax': 26,
                 'al': 27,
                 'az': 10
             },
             '50': {
                 'ak': 17,
-                'aw': 76,
+                'aw': 75,
                 'ax': 26,
                 'al': 27,
                 'az': 10
@@ -842,13 +837,13 @@ KISSY.add(function (_, undefined) {
             '51': {
                 'aj': 29
             },
-            '77': {
-                'al': 84,
+            '76': {
+                'al': 83,
                 'az': 10
             },
-            '78': {
+            '77': {
                 'ak': 17,
-                'am': 85,
+                'am': 84,
                 'aq': 19,
                 'ar': 20,
                 'as': 21,
@@ -860,9 +855,9 @@ KISSY.add(function (_, undefined) {
                 'al': 27,
                 'az': 10
             },
-            '79': {
+            '78': {
                 'ak': 17,
-                'ap': 86,
+                'ap': 85,
                 'am': 57,
                 'aq': 19,
                 'ar': 20,
@@ -872,13 +867,13 @@ KISSY.add(function (_, undefined) {
                 'av': 24,
                 'aw': 25,
                 'ax': 26,
-                'ao': 87,
+                'ao': 86,
                 'ay': 59,
                 'al': 27,
                 'az': 10
             },
-            '81': {
-                'ay': 89
+            '80': {
+                'ay': 88
             }
         },
         'action': {
@@ -927,26 +922,26 @@ KISSY.add(function (_, undefined) {
                 'd': [2, 3]
             },
             '7': {
-                'i': [2, 51],
-                'ad': [2, 51],
-                'ae': [2, 51],
-                'h': [2, 51],
-                'k': [2, 51],
-                'l': [2, 51],
-                'm': [2, 51],
-                'n': [2, 51],
-                'o': [2, 51],
-                'p': [2, 51],
-                'q': [2, 51],
-                'r': [2, 51],
-                's': [2, 51],
-                't': [2, 51],
-                'u': [2, 51],
-                'v': [2, 51],
-                'w': [2, 51],
-                'j': [2, 51],
-                'af': [2, 51],
-                'g': [2, 51]
+                'i': [2, 50],
+                'ad': [2, 50],
+                'ae': [2, 50],
+                'h': [2, 50],
+                'k': [2, 50],
+                'l': [2, 50],
+                'm': [2, 50],
+                'n': [2, 50],
+                'o': [2, 50],
+                'p': [2, 50],
+                'q': [2, 50],
+                'r': [2, 50],
+                's': [2, 50],
+                't': [2, 50],
+                'u': [2, 50],
+                'v': [2, 50],
+                'w': [2, 50],
+                'j': [2, 50],
+                'af': [2, 50],
+                'g': [2, 50]
             },
             '8': {
                 'h': [1, undefined, 30]
@@ -1243,8 +1238,7 @@ KISSY.add(function (_, undefined) {
                 'ac': [1, undefined, 54]
             },
             '32': {
-                'aa': [1, undefined, 60],
-                'ac': [1, undefined, 61]
+                'ac': [1, undefined, 60]
             },
             '33': {
                 'i': [1, undefined, 11],
@@ -1256,7 +1250,7 @@ KISSY.add(function (_, undefined) {
                 'ac': [1, undefined, 7]
             },
             '34': {
-                'j': [1, undefined, 63]
+                'j': [1, undefined, 62]
             },
             '35': {
                 'h': [2, 36],
@@ -1429,7 +1423,7 @@ KISSY.add(function (_, undefined) {
                 'f': [1, undefined, 3]
             },
             '52': {
-                'd': [1, undefined, 77]
+                'd': [1, undefined, 76]
             },
             '53': {
                 'h': [2, 11],
@@ -1451,51 +1445,9 @@ KISSY.add(function (_, undefined) {
                 'af': [2, 11]
             },
             '54': {
-                'g': [2, 51],
-                'i': [2, 51],
-                'j': [2, 51],
-                'k': [2, 51],
-                'l': [2, 51],
-                'm': [2, 51],
-                'n': [2, 51],
-                'o': [2, 51],
-                'p': [2, 51],
-                'q': [2, 51],
-                'r': [2, 51],
-                's': [2, 51],
-                't': [2, 51],
-                'u': [2, 51],
-                'v': [2, 51],
-                'w': [2, 51],
-                'ad': [2, 51],
-                'ae': [2, 51],
-                'ab': [1, undefined, 78]
-            },
-            '55': {
-                'g': [1, undefined, 79],
-                'j': [1, undefined, 80]
-            },
-            '56': {
-                'g': [2, 13],
-                'j': [2, 13]
-            },
-            '57': {
-                'g': [2, 14],
-                'j': [2, 14]
-            },
-            '58': {
-                'g': [1, undefined, 81],
-                'j': [1, undefined, 82]
-            },
-            '59': {
-                'j': [2, 45],
-                'g': [2, 45]
-            },
-            '60': {
+                'g': [2, 50],
                 'i': [2, 50],
-                'ad': [2, 50],
-                'ae': [2, 50],
-                'h': [2, 50],
+                'j': [2, 50],
                 'k': [2, 50],
                 'l': [2, 50],
                 'm': [2, 50],
@@ -1509,11 +1461,31 @@ KISSY.add(function (_, undefined) {
                 'u': [2, 50],
                 'v': [2, 50],
                 'w': [2, 50],
-                'j': [2, 50],
-                'g': [2, 50],
-                'af': [2, 50]
+                'ad': [2, 50],
+                'ae': [2, 50],
+                'ab': [1, undefined, 77]
             },
-            '61': {
+            '55': {
+                'g': [1, undefined, 78],
+                'j': [1, undefined, 79]
+            },
+            '56': {
+                'g': [2, 13],
+                'j': [2, 13]
+            },
+            '57': {
+                'g': [2, 14],
+                'j': [2, 14]
+            },
+            '58': {
+                'g': [1, undefined, 80],
+                'j': [1, undefined, 81]
+            },
+            '59': {
+                'j': [2, 45],
+                'g': [2, 45]
+            },
+            '60': {
                 'i': [2, 48],
                 'ad': [2, 48],
                 'ae': [2, 48],
@@ -1535,10 +1507,10 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 48],
                 'af': [2, 48]
             },
-            '62': {
-                'af': [1, undefined, 83]
+            '61': {
+                'af': [1, undefined, 82]
             },
-            '63': {
+            '62': {
                 'h': [2, 43],
                 'k': [2, 43],
                 'l': [2, 43],
@@ -1557,7 +1529,7 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 43],
                 'af': [2, 43]
             },
-            '64': {
+            '63': {
                 'h': [2, 17],
                 'k': [2, 17],
                 'j': [2, 17],
@@ -1565,7 +1537,7 @@ KISSY.add(function (_, undefined) {
                 'af': [2, 17],
                 'l': [1, undefined, 39]
             },
-            '65': {
+            '64': {
                 'h': [2, 19],
                 'k': [2, 19],
                 'l': [2, 19],
@@ -1575,7 +1547,7 @@ KISSY.add(function (_, undefined) {
                 'm': [1, undefined, 40],
                 'n': [1, undefined, 41]
             },
-            '66': {
+            '65': {
                 'h': [2, 21],
                 'k': [2, 21],
                 'l': [2, 21],
@@ -1589,7 +1561,7 @@ KISSY.add(function (_, undefined) {
                 'q': [1, undefined, 44],
                 'r': [1, undefined, 45]
             },
-            '67': {
+            '66': {
                 'h': [2, 22],
                 'k': [2, 22],
                 'l': [2, 22],
@@ -1603,7 +1575,7 @@ KISSY.add(function (_, undefined) {
                 'q': [1, undefined, 44],
                 'r': [1, undefined, 45]
             },
-            '68': {
+            '67': {
                 'h': [2, 27],
                 'k': [2, 27],
                 'l': [2, 27],
@@ -1619,7 +1591,7 @@ KISSY.add(function (_, undefined) {
                 's': [1, undefined, 46],
                 't': [1, undefined, 47]
             },
-            '69': {
+            '68': {
                 'h': [2, 26],
                 'k': [2, 26],
                 'l': [2, 26],
@@ -1635,7 +1607,7 @@ KISSY.add(function (_, undefined) {
                 's': [1, undefined, 46],
                 't': [1, undefined, 47]
             },
-            '70': {
+            '69': {
                 'h': [2, 25],
                 'k': [2, 25],
                 'l': [2, 25],
@@ -1651,7 +1623,7 @@ KISSY.add(function (_, undefined) {
                 's': [1, undefined, 46],
                 't': [1, undefined, 47]
             },
-            '71': {
+            '70': {
                 'h': [2, 24],
                 'k': [2, 24],
                 'l': [2, 24],
@@ -1667,7 +1639,7 @@ KISSY.add(function (_, undefined) {
                 's': [1, undefined, 46],
                 't': [1, undefined, 47]
             },
-            '72': {
+            '71': {
                 'h': [2, 29],
                 'k': [2, 29],
                 'l': [2, 29],
@@ -1686,7 +1658,7 @@ KISSY.add(function (_, undefined) {
                 'v': [1, undefined, 49],
                 'w': [1, undefined, 50]
             },
-            '73': {
+            '72': {
                 'h': [2, 30],
                 'k': [2, 30],
                 'l': [2, 30],
@@ -1705,7 +1677,7 @@ KISSY.add(function (_, undefined) {
                 'v': [1, undefined, 49],
                 'w': [1, undefined, 50]
             },
-            '74': {
+            '73': {
                 'h': [2, 32],
                 'k': [2, 32],
                 'l': [2, 32],
@@ -1724,7 +1696,7 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 32],
                 'af': [2, 32]
             },
-            '75': {
+            '74': {
                 'h': [2, 33],
                 'k': [2, 33],
                 'l': [2, 33],
@@ -1743,7 +1715,7 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 33],
                 'af': [2, 33]
             },
-            '76': {
+            '75': {
                 'h': [2, 34],
                 'k': [2, 34],
                 'l': [2, 34],
@@ -1762,7 +1734,16 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 34],
                 'af': [2, 34]
             },
+            '76': {
+                'ac': [1, undefined, 7]
+            },
             '77': {
+                'i': [1, undefined, 11],
+                't': [1, undefined, 12],
+                'x': [1, undefined, 13],
+                'y': [1, undefined, 14],
+                'z': [1, undefined, 15],
+                'aa': [1, undefined, 16],
                 'ac': [1, undefined, 7]
             },
             '78': {
@@ -1772,18 +1753,9 @@ KISSY.add(function (_, undefined) {
                 'y': [1, undefined, 14],
                 'z': [1, undefined, 15],
                 'aa': [1, undefined, 16],
-                'ac': [1, undefined, 7]
-            },
-            '79': {
-                'i': [1, undefined, 11],
-                't': [1, undefined, 12],
-                'x': [1, undefined, 13],
-                'y': [1, undefined, 14],
-                'z': [1, undefined, 15],
-                'aa': [1, undefined, 16],
                 'ac': [1, undefined, 54]
             },
-            '80': {
+            '79': {
                 'h': [2, 9],
                 'k': [2, 9],
                 'l': [2, 9],
@@ -1802,10 +1774,10 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 9],
                 'af': [2, 9]
             },
-            '81': {
-                'ac': [1, undefined, 88]
+            '80': {
+                'ac': [1, undefined, 87]
             },
-            '82': {
+            '81': {
                 'h': [2, 10],
                 'k': [2, 10],
                 'l': [2, 10],
@@ -1824,7 +1796,7 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 10],
                 'af': [2, 10]
             },
-            '83': {
+            '82': {
                 'i': [2, 49],
                 'ad': [2, 49],
                 'ae': [2, 49],
@@ -1846,29 +1818,29 @@ KISSY.add(function (_, undefined) {
                 'g': [2, 49],
                 'af': [2, 49]
             },
-            '84': {
-                'h': [1, undefined, 90]
+            '83': {
+                'h': [1, undefined, 89]
             },
-            '85': {
+            '84': {
                 'j': [2, 46],
                 'g': [2, 46]
             },
-            '86': {
+            '85': {
                 'g': [2, 12],
                 'j': [2, 12]
             },
+            '86': {
+                'g': [1, undefined, 80],
+                'j': [1, undefined, 90]
+            },
             '87': {
-                'g': [1, undefined, 81],
-                'j': [1, undefined, 91]
+                'ab': [1, undefined, 77]
             },
             '88': {
-                'ab': [1, undefined, 78]
-            },
-            '89': {
                 'j': [2, 44],
                 'g': [2, 44]
             },
-            '90': {
+            '89': {
                 'a': [2, 5],
                 'e': [2, 5],
                 'c': [2, 5],
@@ -1876,7 +1848,7 @@ KISSY.add(function (_, undefined) {
                 'b': [2, 5],
                 'd': [2, 5]
             },
-            '91': {
+            '90': {
                 'h': [2, 8],
                 'k': [2, 8],
                 'l': [2, 8],

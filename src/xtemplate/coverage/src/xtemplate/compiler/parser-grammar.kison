@@ -40,10 +40,10 @@
                 }
             },
 
-            // call block command
+            // call block function
             {
                 symbol: 'statement',
-                rhs: ['OPEN_BLOCK', 'command', 'CLOSE', 'program', 'OPEN_CLOSE_BLOCK', 'id', 'CLOSE'],
+                rhs: ['OPEN_BLOCK', 'function', 'CLOSE', 'program', 'OPEN_CLOSE_BLOCK', 'id', 'CLOSE'],
                 action: function () {
                     return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2,
                         this.$4, this.$6, this.$1.length !== 4);
@@ -69,32 +69,32 @@
             },
 
             {
-                symbol: 'command',
+                symbol: 'function',
                 rhs: ['id', 'LPAREN', 'params', 'COMMA', 'hash', 'RPAREN'],
                 action: function () {
-                    return new this.yy.Command(this.lexer.lineNumber, this.$1, this.$3, this.$5);
+                    return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3, this.$5);
                 }
             },
 
             {
-                symbol: 'command',
+                symbol: 'function',
                 rhs: ['id', 'LPAREN', 'params', 'RPAREN'],
                 action: function () {
-                    return new this.yy.Command(this.lexer.lineNumber, this.$1, this.$3);
+                    return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3);
                 }
             },
             {
-                symbol: 'command',
+                symbol: 'function',
                 rhs: ['id', 'LPAREN', 'hash', 'RPAREN'],
                 action: function () {
-                    return new this.yy.Command(this.lexer.lineNumber, this.$1, null, this.$3);
+                    return new this.yy.Function(this.lexer.lineNumber, this.$1, null, this.$3);
                 }
             },
             {
-                symbol: 'command',
+                symbol: 'function',
                 rhs: ['id', 'LPAREN', 'RPAREN'],
                 action: function () {
-                    return new this.yy.Command(this.lexer.lineNumber, this.$1);
+                    return new this.yy.Function(this.lexer.lineNumber, this.$1);
                 }
             },
 
@@ -122,172 +122,172 @@
             // expression start
             {
                 symbol: 'expression',
-                rhs: ['ConditionalOrExpression']
+                rhs: ['conditionalOrExpression']
             },
             {
-                symbol: 'ConditionalOrExpression',
-                rhs: ['ConditionalAndExpression']
+                symbol: 'conditionalOrExpression',
+                rhs: ['conditionalAndExpression']
             },
             {
-                symbol: 'ConditionalOrExpression',
-                rhs: ['ConditionalOrExpression', 'OR', 'ConditionalAndExpression'],
+                symbol: 'conditionalOrExpression',
+                rhs: ['conditionalOrExpression', 'OR', 'conditionalAndExpression'],
                 action: function () {
                     return new this.yy.ConditionalOrExpression(this.$1, this.$3);
                 }
             },
             {
-                symbol: 'ConditionalAndExpression',
-                rhs: ['EqualityExpression']
+                symbol: 'conditionalAndExpression',
+                rhs: ['equalityExpression']
             },
             {
-                symbol: 'ConditionalAndExpression',
-                rhs: ['ConditionalAndExpression', 'AND', 'EqualityExpression'],
+                symbol: 'conditionalAndExpression',
+                rhs: ['conditionalAndExpression', 'AND', 'equalityExpression'],
                 action: function () {
                     return new this.yy.ConditionalAndExpression(this.$1, this.$3);
                 }
             },
             {
-                symbol: 'EqualityExpression',
-                rhs: ['RelationalExpression']
+                symbol: 'equalityExpression',
+                rhs: ['relationalExpression']
             },
             {
-                symbol: 'EqualityExpression',
-                rhs: ['EqualityExpression', 'LOGIC_EQUALS', 'RelationalExpression'],
+                symbol: 'equalityExpression',
+                rhs: ['equalityExpression', 'LOGIC_EQUALS', 'relationalExpression'],
                 action: function () {
                     return new this.yy.EqualityExpression(this.$1, '===', this.$3);
                 }
             },
             {
-                symbol: 'EqualityExpression',
-                rhs: ['EqualityExpression', 'LOGIC_NOT_EQUALS', 'RelationalExpression'],
+                symbol: 'equalityExpression',
+                rhs: ['equalityExpression', 'LOGIC_NOT_EQUALS', 'relationalExpression'],
                 action: function () {
                     return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
                 }
             },
             {
-                symbol: 'RelationalExpression',
-                rhs: ['AdditiveExpression']
+                symbol: 'relationalExpression',
+                rhs: ['additiveExpression']
             },
             {
-                symbol: 'RelationalExpression',
-                rhs: ['RelationalExpression', 'LT', 'AdditiveExpression'],
+                symbol: 'relationalExpression',
+                rhs: ['relationalExpression', 'LT', 'additiveExpression'],
                 action: function () {
                     return new this.yy.RelationalExpression(this.$1, '<', this.$3);
                 }
             },
             {
-                symbol: 'RelationalExpression',
-                rhs: ['RelationalExpression', 'GT', 'AdditiveExpression'],
+                symbol: 'relationalExpression',
+                rhs: ['relationalExpression', 'GT', 'additiveExpression'],
                 action: function () {
                     return new this.yy.RelationalExpression(this.$1, '>', this.$3);
                 }
             },
             {
-                symbol: 'RelationalExpression',
-                rhs: ['RelationalExpression', 'LE', 'AdditiveExpression'],
+                symbol: 'relationalExpression',
+                rhs: ['relationalExpression', 'LE', 'additiveExpression'],
                 action: function () {
                     return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
                 }
             },
             {
-                symbol: 'RelationalExpression',
-                rhs: ['RelationalExpression', 'GE', 'AdditiveExpression'],
+                symbol: 'relationalExpression',
+                rhs: ['relationalExpression', 'GE', 'additiveExpression'],
                 action: function () {
                     return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
                 }
             },
             {
-                symbol: 'AdditiveExpression',
-                rhs: ['MultiplicativeExpression']
+                symbol: 'additiveExpression',
+                rhs: ['multiplicativeExpression']
             },
             {
-                symbol: 'AdditiveExpression',
-                rhs: ['AdditiveExpression', 'PLUS', 'MultiplicativeExpression'],
+                symbol: 'additiveExpression',
+                rhs: ['additiveExpression', 'PLUS', 'multiplicativeExpression'],
                 action: function () {
                     return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
                 }
             },
             {
-                symbol: 'AdditiveExpression',
-                rhs: ['AdditiveExpression', 'MINUS', 'MultiplicativeExpression'],
+                symbol: 'additiveExpression',
+                rhs: ['additiveExpression', 'MINUS', 'multiplicativeExpression'],
                 action: function () {
                     return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
                 }
             },
             {
-                symbol: 'MultiplicativeExpression',
-                rhs: ['UnaryExpression']
+                symbol: 'multiplicativeExpression',
+                rhs: ['unaryExpression']
             },
             {
-                symbol: 'MultiplicativeExpression',
-                rhs: ['MultiplicativeExpression', 'MULTIPLY', 'UnaryExpression'],
+                symbol: 'multiplicativeExpression',
+                rhs: ['multiplicativeExpression', 'MULTIPLY', 'unaryExpression'],
                 action: function () {
                     return new this.yy.MultiplicativeExpression(this.$1, '*', this.$3);
                 }
             },
             {
-                symbol: 'MultiplicativeExpression',
-                rhs: ['MultiplicativeExpression', 'DIVIDE', 'UnaryExpression'],
+                symbol: 'multiplicativeExpression',
+                rhs: ['multiplicativeExpression', 'DIVIDE', 'unaryExpression'],
                 action: function () {
                     return new this.yy.MultiplicativeExpression(this.$1, '/', this.$3);
                 }
             },
             {
-                symbol: 'MultiplicativeExpression',
-                rhs: ['MultiplicativeExpression', 'MODULUS', 'UnaryExpression'],
+                symbol: 'multiplicativeExpression',
+                rhs: ['multiplicativeExpression', 'MODULUS', 'unaryExpression'],
                 action: function () {
                     return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
                 }
             },
             {
-                symbol: 'UnaryExpression',
-                rhs: ['NOT', 'UnaryExpression'],
+                symbol: 'unaryExpression',
+                rhs: ['NOT', 'unaryExpression'],
                 action: function () {
                     return new this.yy.UnaryExpression(this.$1, this.$2);
                 }
             },
             {
-                symbol: 'UnaryExpression',
-                rhs: ['MINUS', 'UnaryExpression'],
+                symbol: 'unaryExpression',
+                rhs: ['MINUS', 'unaryExpression'],
                 action: function () {
                     return new this.yy.UnaryExpression(this.$1, this.$2);
                 }
             },
             {
-                symbol: 'UnaryExpression',
-                rhs: ['PrimaryExpression']
+                symbol: 'unaryExpression',
+                rhs: ['primaryExpression']
             },
             {
-                symbol: 'PrimaryExpression',
-                rhs: ['command']
+                symbol: 'primaryExpression',
+                rhs: ['function']
             },
             {
-                symbol: 'PrimaryExpression',
+                symbol: 'primaryExpression',
                 rhs: ['STRING'],
                 action: function () {
                     return new this.yy.String(this.lexer.lineNumber, this.$1);
                 }
             },
             {
-                symbol: 'PrimaryExpression',
+                symbol: 'primaryExpression',
                 rhs: ['NUMBER'],
                 action: function () {
                     return new this.yy.Number(this.lexer.lineNumber, this.$1);
                 }
             },
             {
-                symbol: 'PrimaryExpression',
+                symbol: 'primaryExpression',
                 rhs: ['BOOLEAN'],
                 action: function () {
                     return new this.yy.Boolean(this.lexer.lineNumber, this.$1);
                 }
             },
             {
-                symbol: 'PrimaryExpression',
+                symbol: 'primaryExpression',
                 rhs: ['id']
             },
             {
-                symbol: 'PrimaryExpression',
+                symbol: 'primaryExpression',
                 rhs: ['LPAREN', 'expression', 'RPAREN'],
                 action: function () {
                     return this.$2;
@@ -342,13 +342,6 @@
             {
                 symbol: 'idSegments',
                 rhs: ['idSegments', 'REF_START', 'expression', 'REF_END'],
-                action: function () {
-                    this.$1.push(this.$3);
-                }
-            },
-            {
-                symbol: 'idSegments',
-                rhs: ['idSegments', 'SEP', 'NUMBER'],
                 action: function () {
                     this.$1.push(this.$3);
                 }
