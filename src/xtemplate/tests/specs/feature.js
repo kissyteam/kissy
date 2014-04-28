@@ -870,6 +870,24 @@ KISSY.add(function (S, require) {
             expect(render).toBe('488');
         });
 
+        it('support model object with function', function () {
+            function Adder(cfg) {
+                S.mix(this, cfg);
+            }
+
+            Adder.prototype.add = function (a, b) {
+                return a + b + this.salt;
+            };
+            var tpl = '{{x.add(1,2)}}';
+
+            var render = new XTemplate(tpl).render({
+                x: new Adder({
+                    salt: 10
+                })
+            });
+            expect(render).toBe('13');
+        });
+
         describe('汉字', function () {
             it('允许汉字内容', function () {
                 var tpl = '{{t}}出现了';
