@@ -1,60 +1,56 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:46
+build time: Apr 29 15:02
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/font-family
-
 */
 /**
  * @ignore
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/font-family',['editor', './font/ui', './font-family/cmd', './menubutton'], function (S, require) {
+KISSY.add('editor/plugin/font-family', [
+    'editor',
+    './font/ui',
+    './font-family/cmd',
+    './menubutton'
+], function (S, require) {
     var Editor = require('editor');
     var ui = require('./font/ui');
     var cmd = require('./font-family/cmd');
     require('./menubutton');
-
     function FontFamilyPlugin(config) {
         this.config = config || {};
     }
-
     S.augment(FontFamilyPlugin, {
         pluginRenderUI: function (editor) {
-
             cmd.init(editor);
-
             var fontFamilies = this.config;
-
             var menu = {};
-
-
             S.mix(menu, {
                 children: [
                     //ie 不认识中文？？？
                     {
-                        content: '宋体',
+                        content: '\u5B8B\u4F53',
                         value: 'SimSun'
                     },
                     {
-                        content: '黑体',
+                        content: '\u9ED1\u4F53',
                         value: 'SimHei'
                     },
                     {
-                        content: '隶书',
+                        content: '\u96B6\u4E66',
                         value: 'LiSu'
                     },
                     {
-                        content: '楷体',
+                        content: '\u6977\u4F53',
                         value: 'KaiTi_GB2312'
                     },
                     {
-                        content: '微软雅黑',
+                        content: '\u5FAE\u8F6F\u96C5\u9ED1',
                         value: '"Microsoft YaHei"'
                     },
                     {
@@ -88,26 +84,23 @@ KISSY.add('editor/plugin/font-family',['editor', './font/ui', './font-family/cmd
                 ],
                 width: '130px'
             });
-
             S.each(menu.children, function (item) {
-                var attrs = item.elAttrs || {},
-                    value = item.value;
+                var attrs = item.elAttrs || {}, value = item.value;
                 attrs.style = attrs.style || '';
                 attrs.style += ';font-family:' + value;
                 item.elAttrs = attrs;
             });
-
             fontFamilies.menu = S.mix(menu, fontFamilies.menu);
-
             editor.addSelect('fontFamily', S.mix({
                 cmdType: 'fontFamily',
-                defaultCaption: '字体',
+                defaultCaption: '\u5B57\u4F53',
                 width: 130,
                 mode: Editor.Mode.WYSIWYG_MODE
             }, fontFamilies), ui.Select);
         }
     });
-
     return FontFamilyPlugin;
 });
+
+
 

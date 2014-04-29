@@ -1,32 +1,31 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:42
+build time: Apr 29 14:58
 */
 /*
-combined files : 
-
+combined modules:
 component/manager
-
 */
 /**
  * @ignore
  * storage for component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/manager',function (S) {
-
-    var basePriority = 0,
-        Manager,
-    // 不带前缀 prefixCls
-    /*
+KISSY.add('component/manager', [], function (S) {
+    var basePriority = 0, Manager,
+        // 不带前缀 prefixCls
+        /*
      'menu' :{
      constructor:Menu
      }
      */
-        uis = {},
-        componentInstances = {};
-
+        uis = {}, componentInstances = {};    /**
+     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
+     * Manage component metadata.
+     */
     /**
      * @class KISSY.Component.Manager
      * @member Component
@@ -35,7 +34,6 @@ KISSY.add('component/manager',function (S) {
      */
     Manager = {
         __instances: componentInstances,
-
         /**
          * associate id with component
          * @param {KISSY.Component.Control} component
@@ -43,14 +41,12 @@ KISSY.add('component/manager',function (S) {
         addComponent: function (component) {
             componentInstances[component.get('id')] = component;
         },
-
         /**
          * remove association id with component
          */
         removeComponent: function (component) {
             delete componentInstances[component.get('id')];
         },
-
         /**
          * get component by id
          * @param {String} id
@@ -59,7 +55,6 @@ KISSY.add('component/manager',function (S) {
         getComponent: function (id) {
             return componentInstances[id];
         },
-
         /**
          * Create a component instance using json with xclass.
          * @param {Object|KISSY.Component.Control} component Component's json notation with xclass attribute.
@@ -80,8 +75,7 @@ KISSY.add('component/manager',function (S) {
      *      })
          */
         createComponent: function (component, parent) {
-            var ChildConstructor,
-                xclass;
+            var ChildConstructor, xclass;
             if (component) {
                 if (!component.isControl && parent) {
                     if (!component.prefixCls) {
@@ -114,12 +108,7 @@ KISSY.add('component/manager',function (S) {
          * @method
          */
         getConstructorByXClass: function (classNames) {
-            var cs = classNames.split(/\s+/),
-                p = -1,
-                t,
-                i,
-                uic,
-                ui = null;
+            var cs = classNames.split(/\s+/), p = -1, t, i, uic, ui = null;
             for (i = 0; i < cs.length; i++) {
                 uic = uis[cs[i]];
                 if (uic && (t = uic.priority) > p) {
@@ -142,6 +131,5 @@ KISSY.add('component/manager',function (S) {
             };
         }
     };
-
     return Manager;
 });

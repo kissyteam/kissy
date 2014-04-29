@@ -236,7 +236,7 @@ if (! _$jscoverage['/base/observable.js']) {
   _$jscoverage['/base/observable.js'].lineData[10] = 0;
   _$jscoverage['/base/observable.js'].lineData[11] = 0;
   _$jscoverage['/base/observable.js'].lineData[12] = 0;
-  _$jscoverage['/base/observable.js'].lineData[17] = 0;
+  _$jscoverage['/base/observable.js'].lineData[13] = 0;
   _$jscoverage['/base/observable.js'].lineData[18] = 0;
   _$jscoverage['/base/observable.js'].lineData[27] = 0;
   _$jscoverage['/base/observable.js'].lineData[28] = 0;
@@ -883,21 +883,21 @@ function visit101_41_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/base/observable.js'].functionData[0]++;
   _$jscoverage['/base/observable.js'].lineData[7]++;
-  var BaseEvent = require('event/base');
-  _$jscoverage['/base/observable.js'].lineData[8]++;
-  var Dom = require('dom');
-  _$jscoverage['/base/observable.js'].lineData[9]++;
-  var Special = require('./special');
-  _$jscoverage['/base/observable.js'].lineData[10]++;
-  var DomEventUtils = require('./utils');
-  _$jscoverage['/base/observable.js'].lineData[11]++;
-  var DomEventObserver = require('./observer');
-  _$jscoverage['/base/observable.js'].lineData[12]++;
-  var DomEventObject = require('./object');
-  _$jscoverage['/base/observable.js'].lineData[17]++;
-  var BaseUtils = BaseEvent.Utils;
-  _$jscoverage['/base/observable.js'].lineData[18]++;
   var logger = S.getLogger('s/event');
+  _$jscoverage['/base/observable.js'].lineData[8]++;
+  var BaseEvent = require('event/base');
+  _$jscoverage['/base/observable.js'].lineData[9]++;
+  var Dom = require('dom');
+  _$jscoverage['/base/observable.js'].lineData[10]++;
+  var Special = require('./special');
+  _$jscoverage['/base/observable.js'].lineData[11]++;
+  var DomEventUtils = require('./utils');
+  _$jscoverage['/base/observable.js'].lineData[12]++;
+  var DomEventObserver = require('./observer');
+  _$jscoverage['/base/observable.js'].lineData[13]++;
+  var DomEventObject = require('./object');
+  _$jscoverage['/base/observable.js'].lineData[18]++;
+  var BaseUtils = BaseEvent.Utils;
   _$jscoverage['/base/observable.js'].lineData[27]++;
   function DomEventObservable(cfg) {
     _$jscoverage['/base/observable.js'].functionData[1]++;

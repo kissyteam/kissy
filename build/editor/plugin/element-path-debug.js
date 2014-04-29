@@ -1,36 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:46
+build time: Apr 29 15:02
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/element-path
-
 */
 /**
  * @ignore
  * ElementPath for debug.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/element-path',['editor'], function (S, require) {
+KISSY.add('editor/plugin/element-path', ['editor'], function (S, require) {
     var Editor = require('editor');
     var Node = S.Node;
     var CLASS = 'editor-element-path';
-
     function ElementPaths(cfg) {
         var self = this;
         self.cfg = cfg;
         self._cache = [];
         self._init();
     }
-
     S.augment(ElementPaths, {
         _init: function () {
-            var self = this,
-                cfg = self.cfg,
-                editor = cfg.editor;
+            var self = this, cfg = self.cfg, editor = cfg.editor;
             self.holder = new Node('<span>');
             self.holder.appendTo(editor.get('statusBarEl'), undefined);
             editor.on('selectionChange', self._selectionChange, self);
@@ -43,32 +37,17 @@ KISSY.add('editor/plugin/element-path',['editor'], function (S, require) {
             this.holder.css('visibility', '');
         },
         _selectionChange: function (ev) {
-            var self = this,
-                cfg = self.cfg,
-                editor = cfg.editor,
-                prefixCls = editor.get('prefixCls'),
-                statusDom = self.holder,
-                elementPath = ev.path,
-                elements = elementPath.elements,
-                element, i,
-                cache = self._cache;
+            var self = this, cfg = self.cfg, editor = cfg.editor, prefixCls = editor.get('prefixCls'), statusDom = self.holder, elementPath = ev.path, elements = elementPath.elements, element, i, cache = self._cache;
             for (i = 0; i < cache.length; i++) {
                 cache[i].remove();
             }
-            self._cache = [];
+            self._cache = [];    // For each element into the elements path.
             // For each element into the elements path.
             for (i = 0; i < elements.length; i++) {
-                element = elements[i];
+                element = elements[i];    // 考虑 fake objects
                 // 考虑 fake objects
-                var type = element.attr('_ke_real_element_type') || element.nodeName(),
-                    a = new Node('<a ' +
-                        'href="javascript(\'' +
-                        type + '\')" ' +
-                        'class="' +
-                        prefixCls + CLASS + '">' +
-                        type +
-                        '</a>');
-                self._cache.push(a);
+                var type = element.attr('_ke_real_element_type') || element.nodeName(), a = new Node('<a ' + 'href="javascript(\'' + type + '\')" ' + 'class="' + prefixCls + CLASS + '">' + type + '</a>');
+                self._cache.push(a);    /*jshint loopfunc:true*/
                 /*jshint loopfunc:true*/
                 (function (element) {
                     a.on('click', function (ev2) {
@@ -78,7 +57,7 @@ KISSY.add('editor/plugin/element-path',['editor'], function (S, require) {
                             editor.getSelection().selectElement(element);
                         }, 50);
                     });
-                })(element);
+                }(element));
                 statusDom.prepend(a);
             }
         },
@@ -86,21 +65,15 @@ KISSY.add('editor/plugin/element-path',['editor'], function (S, require) {
             this.holder.remove();
         }
     });
-
     function ElementPathPlugin() {
-
     }
-
     S.augment(ElementPathPlugin, {
         pluginRenderUI: function (editor) {
-            var elemPath = new ElementPaths({
-                editor: editor
-            });
+            var elemPath = new ElementPaths({ editor: editor });
             editor.on('destroy', function () {
                 elemPath.destroy();
             });
         }
     });
-
     return ElementPathPlugin;
 });

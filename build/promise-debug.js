@@ -1,32 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:55
+build time: Apr 29 15:11
 */
 /*
-combined files : 
-
+combined modules:
 promise
-
 */
 /**
  * @ignore
  * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('promise',function (S) {
+KISSY.add('promise', [], function (S) {
     var logger = S.getLogger('s/promise');
-    var PROMISE_VALUE = '__promise_value',
-        PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
-        PROMISE_PENDINGS = '__promise_pendings';
-
+    var PROMISE_VALUE = '__promise_value', PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners', PROMISE_PENDINGS = '__promise_pendings';
     function logError(str) {
         /*global console*/
         if (typeof console !== 'undefined' && console.error) {
             console.error(str);
         }
-    }
-
+    }    /*
+     two effects:
+     1. call fulfilled with immediate value
+     2. push fulfilled in right promise
+     */
     /*
      two effects:
      1. call fulfilled with immediate value
@@ -38,17 +36,18 @@ KISSY.add('promise',function (S) {
             // if there is a rejected , should always has! see when()
             rejected.call(promise, promise[PROMISE_VALUE]);
         } else {
-            var v = promise[PROMISE_VALUE],
-                pendings = promise[PROMISE_PENDINGS];
-
+            var v = promise[PROMISE_VALUE], pendings = promise[PROMISE_PENDINGS];
             if (pendings === undefined) {
                 pendings = promise[PROMISE_PENDINGS] = [];
-            }
-
+            }    // unresolved
+                 // pushed to pending list
             // unresolved
             // pushed to pending list
             if (pendings) {
-                pendings.push([fulfilled, rejected]);
+                pendings.push([
+                    fulfilled,
+                    rejected
+                ]);
             } else if (isPromise(v)) {
                 // rejected or nested promise
                 promiseWhen(v, fulfilled, rejected);
@@ -62,8 +61,10 @@ KISSY.add('promise',function (S) {
                 }
             }
         }
-    }
-
+    }    /**
+     * @class KISSY.Defer
+     * Defer constructor For KISSY, implement Promise specification.
+     */
     /**
      * @class KISSY.Defer
      * Defer constructor For KISSY, implement Promise specification.
@@ -72,7 +73,12 @@ KISSY.add('promise',function (S) {
         var self = this;
         if (!(self instanceof Defer)) {
             return new Defer(promise);
-        }
+        }    // http://en.wikipedia.org/wiki/Object-capability_model
+             // principal of least authority
+             /**
+         * defer object's promise
+         * @type {KISSY.Promise}
+         */
         // http://en.wikipedia.org/wiki/Object-capability_model
         // principal of least authority
         /**
@@ -82,7 +88,6 @@ KISSY.add('promise',function (S) {
         self.promise = promise || new Promise();
         self.promise.defer = self;
     }
-
     Defer.prototype = {
         constructor: Defer,
         /**
@@ -92,11 +97,11 @@ KISSY.add('promise',function (S) {
          * @return {KISSY.Promise} defer object's promise
          */
         resolve: function (value) {
-            var promise = this.promise,
-                pendings;
+            var promise = this.promise, pendings;
             if ((pendings = promise[PROMISE_PENDINGS]) === false) {
                 return null;
-            }
+            }    // set current promise 's resolved value
+                 // maybe a promise or instant value
             // set current promise 's resolved value
             // maybe a promise or instant value
             promise[PROMISE_VALUE] = value;
@@ -126,17 +131,20 @@ KISSY.add('promise',function (S) {
             });
         }
     };
-
     function isPromise(obj) {
-        return  obj && obj instanceof Promise;
+        return obj && obj instanceof Promise;
     }
-
     function bind(fn, context) {
         return function () {
             return fn.apply(context, arguments);
         };
-    }
-
+    }    /**
+     * @class KISSY.Promise
+     * Promise constructor.
+     * This class should not be instantiated manually.
+     * Instances will be created and returned as needed by {@link KISSY.Defer#promise}
+     * @param [v] promise 's resolved value
+     */
     /**
      * @class KISSY.Promise
      * Promise constructor.
@@ -158,10 +166,8 @@ KISSY.add('promise',function (S) {
             }
         }
     }
-
     Promise.prototype = {
         constructor: Promise,
-
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
@@ -182,8 +188,7 @@ KISSY.add('promise',function (S) {
          * @param {Function} [progressListener] progress listener
          */
         progress: function (progressListener) {
-            var self = this,
-                listeners = self[PROMISE_PROGRESS_LISTENERS];
+            var self = this, listeners = self[PROMISE_PROGRESS_LISTENERS];
             if (listeners === false) {
                 return self;
             }
@@ -214,7 +219,6 @@ KISSY.add('promise',function (S) {
                 return callback(reason, false);
             });
         },
-
         /**
          * register callbacks when this promise object is resolved,
          * and throw error at next event loop if promise
@@ -227,19 +231,14 @@ KISSY.add('promise',function (S) {
          * return a new reason for the new promise 's error reason
          */
         done: function (fulfilled, rejected) {
-            var self = this,
-                onUnhandledError = function (e) {
+            var self = this, onUnhandledError = function (e) {
                     S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);
-                },
-                promiseToHandle = fulfilled || rejected ?
-                    self.then(fulfilled, rejected) :
-                    self;
+                }, promiseToHandle = fulfilled || rejected ? self.then(fulfilled, rejected) : self;
             promiseToHandle.fail(onUnhandledError);
         },
-
         /**
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
@@ -255,15 +254,23 @@ KISSY.add('promise',function (S) {
         isRejected: function () {
             return isRejected(this);
         }
-    };
-
+    };    /**
+     * Sugar for promise.then(undefined, onRejected)
+     * @method catch
+     * @member {KISSY.Promise}
+     */
     /**
      * Sugar for promise.then(undefined, onRejected)
      * @method catch
      * @member {KISSY.Promise}
      */
-    Promise.prototype['catch'] = Promise.prototype.fail;
-
+    Promise.prototype['catch'] = Promise.prototype.fail;    /**
+     * Reject promise
+     * @param {String|KISSY.Promise.Reject} reason reject reason
+     * @class KISSY.Promise.Reject
+     * @extend KISSY.Promise
+     * @private
+     */
     /**
      * Reject promise
      * @param {String|KISSY.Promise.Reject} reason reject reason
@@ -278,26 +285,23 @@ KISSY.add('promise',function (S) {
         var self = this;
         self[PROMISE_VALUE] = reason;
         self[PROMISE_PENDINGS] = false;
-        self[PROMISE_PROGRESS_LISTENERS] = false;
-//        if (self[PROMISE_VALUE] instanceof Promise) {
-//            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
-//        }
+        self[PROMISE_PROGRESS_LISTENERS] = false;    //        if (self[PROMISE_VALUE] instanceof Promise) {
+                                                     //            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+                                                     //        }
+        //        if (self[PROMISE_VALUE] instanceof Promise) {
+        //            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+        //        }
         return self;
     }
-
-    S.extend(Reject, Promise);
-
+    S.extend(Reject, Promise);    // wrap for promiseWhen
     // wrap for promiseWhen
     function when(value, fulfilled, rejected) {
-        var defer = new Defer(),
-            done = 0;
-
+        var defer = new Defer(), done = 0;    // wrap user's callback to catch exception
         // wrap user's callback to catch exception
         function _fulfilled(value) {
             try {
-                return fulfilled ? fulfilled.call(this, value) :
-                    // propagate
-                    value;
+                return fulfilled ? fulfilled.call(this, value) : // propagate
+                value;
             } catch (e) {
                 // can not use logger.error
                 // must expose to user
@@ -306,21 +310,17 @@ KISSY.add('promise',function (S) {
                 return new Reject(e);
             }
         }
-
         function _rejected(reason) {
             try {
-                return rejected ?
-                    // error recovery
-                    rejected.call(this, reason) :
-                    // propagate
-                    new Reject(reason);
+                return rejected ? // error recovery
+                rejected.call(this, reason) : // propagate
+                new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
                 logError(e.stack || e);
                 return new Reject(e);
             }
         }
-
         function finalFulfill(value) {
             if (done) {
                 logger.error('already done at fulfilled');
@@ -333,53 +333,43 @@ KISSY.add('promise',function (S) {
             done = 1;
             defer.resolve(_fulfilled.call(this, value));
         }
-
-        if (value instanceof  Promise) {
+        if (value instanceof Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
                     logger.error('already done at rejected');
                     return;
                 }
-                done = 1;
+                done = 1;    // _reject may return non-Reject object for error recovery
                 // _reject may return non-Reject object for error recovery
                 defer.resolve(_rejected.call(this, reason));
             });
         } else {
             finalFulfill(value);
-        }
-
+        }    // chained and leveled
+             // wait for value's resolve
         // chained and leveled
         // wait for value's resolve
         return defer.promise;
     }
-
     function isResolved(obj) {
         // exclude Reject at first
-        return obj && !isRejected(obj) &&
-            // implicit by obj[PROMISE_PENDINGS] === false
-            // isPromise(obj) &&
-            // self is resolved
-            (obj[PROMISE_PENDINGS] === false) &&
-            // value is a resolved promise or value is immediate value
-            (
-                // immediate value
-                !isPromise(obj[PROMISE_VALUE]) ||
-                    // resolved with a resolved promise !!! :)
-                    // Reject.__promise_value is string
-                    isResolved(obj[PROMISE_VALUE])
-                );
+        return obj && !isRejected(obj) && // implicit by obj[PROMISE_PENDINGS] === false
+        // isPromise(obj) &&
+        // self is resolved
+        obj[PROMISE_PENDINGS] === false && // value is a resolved promise or value is immediate value
+        // immediate value
+        (!isPromise(obj[PROMISE_VALUE]) || // resolved with a resolved promise !!! :)
+        // Reject.__promise_value is string
+        isResolved(obj[PROMISE_VALUE]));
     }
-
     function isRejected(obj) {
         // implicit by obj[PROMISE_VALUE]
         // isPromise(obj) &&
         return obj && (obj instanceof Reject || obj[PROMISE_VALUE] instanceof Reject);
     }
-
     KISSY.Defer = Defer;
     KISSY.Promise = Promise;
     Promise.Defer = Defer;
-
     S.mix(Promise, {
         /**
          * register callbacks when obj as a promise is resolved
@@ -411,7 +401,6 @@ KISSY.add('promise',function (S) {
          * @member KISSY.Promise
          */
         when: when,
-
         /**
          * Returns promise (only if promise.constructor == Promise)
          * or
@@ -423,14 +412,12 @@ KISSY.add('promise',function (S) {
             }
             return when(obj);
         },
-
         /**
          * Make a promise that fulfills to obj.
          */
         resolve: function (obj) {
             return when(obj);
         },
-
         /**
          * Make a promise that rejects to obj. For consistency and debugging (e.g. stack traces), obj should be an instanceof Error.
          * @param obj
@@ -439,7 +426,6 @@ KISSY.add('promise',function (S) {
         reject: function (obj) {
             return new Reject(obj);
         },
-
         /**
          * whether the given object is a promise
          * @method
@@ -449,7 +435,6 @@ KISSY.add('promise',function (S) {
          * @member KISSY.Promise
          */
         isPromise: isPromise,
-
         /**
          * whether the given object is a resolved promise
          * @method
@@ -459,7 +444,6 @@ KISSY.add('promise',function (S) {
          * @member KISSY.Promise
          */
         isResolved: isResolved,
-
         /**
          * whether the given object is a rejected promise
          * @method
@@ -469,7 +453,6 @@ KISSY.add('promise',function (S) {
          * @member KISSY.Promise
          */
         isRejected: isRejected,
-
         /**
          * return a new promise
          * which is resolved when all promises is resolved
@@ -500,11 +483,10 @@ KISSY.add('promise',function (S) {
                         // then reject final return promise with first reason
                         defer.reject(r);
                     });
-                })(promises[i], i);
+                }(promises[i], i));
             }
             return defer.promise;
         },
-
         /**
          * provide es6 generator
          * @param generatorFunc es6 generator function which has yielded promise
@@ -512,9 +494,8 @@ KISSY.add('promise',function (S) {
         async: function (generatorFunc) {
             return function () {
                 var generator = generatorFunc.apply(this, arguments);
-
                 function doAction(action, arg) {
-                    var result;
+                    var result;    // in case error on first
                     // in case error on first
                     try {
                         result = generator[action](arg);
@@ -526,23 +507,18 @@ KISSY.add('promise',function (S) {
                     }
                     return when(result.value, next, throwEx);
                 }
-
                 function next(v) {
                     return doAction('next', v);
                 }
-
                 function throwEx(e) {
                     return doAction('throw', e);
                 }
-
                 return next();
             };
         }
     });
     return Promise;
-});
-
-/*
+});    /*
  refer:
  - http://wiki.commonjs.org/wiki/Promises
  - http://en.wikipedia.org/wiki/Futures_and_promises#Read-only_views

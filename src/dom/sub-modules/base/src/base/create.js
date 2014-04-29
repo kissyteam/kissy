@@ -4,8 +4,8 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Dom = require('./api');
     var logger = S.getLogger('s/dom');
+    var Dom = require('./api');
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = require('ua'),

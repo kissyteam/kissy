@@ -1,3 +1,1 @@
-{
- "editor/plugin/maximize/cmd": ["editor", "event/dom"] 
-}
+{"editor/plugin/maximize/cmd":["editor","event/dom","dom"]}

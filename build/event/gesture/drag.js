@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:52
+build time: Apr 29 15:09
 */
 KISSY.add("event/gesture/drag",["event/gesture/util","event/dom/base"],function(l,f){function m(b,c){var a=b.lastTouches[0],e=c.timeStamp;e-b.lastTime>n&&(b.lastPos={pageX:a.pageX,pageY:a.pageY},b.lastTime=e)}function g(b,c,a){var e=b.startPos,a=a||{},d=b.lastTouches[0];a.pageX=d.pageX;a.pageY=d.pageY;a.originalEvent=c.originalEvent;a.deltaX=d.pageX-e.pageX;a.deltaY=d.pageY-e.pageY;a.startTime=b.startTime;a.startPos=b.startPos;a.touch=d;a.gestureType=c.gestureType;a.direction=b.direction;return a}
 function h(){}var i=f("event/gesture/util"),o=i.addEvent,j=f("event/dom/base"),n=300,k=document;l.extend(h,i.SingleTouch,{start:function(){h.superclass.start.apply(this,arguments);var b=this.lastTouches[0];this.lastTime=this.startTime;this.dragTarget=b.target;this.startPos=this.lastPos={pageX:b.pageX,pageY:b.pageY};this.direction=null},move:function(b){h.superclass.move.apply(this,arguments);if(this.isStarted)m(this,b),j.fire(this.dragTarget,"ksDrag",g(this,b));else{var c=b,a=this.lastTouches[0],

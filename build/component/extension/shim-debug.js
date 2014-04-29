@@ -1,42 +1,32 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:42
+build time: Apr 29 14:58
 */
 /*
-combined files : 
-
+combined modules:
 component/extension/shim
-
 */
 /**
  * @ignore
  * create iframe shim for flash/select/office plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/shim',['ua'], function (S, require) {
+KISSY.add('component/extension/shim', ['ua'], function (S, require) {
     var UA = require('ua');
     var ie6 = UA.ie === 6;
-
-    var shimTpl = '<' + 'iframe style="position: absolute;' +
-        'border: none;' +
-        // consider border
+    var shimTpl = '<' + 'iframe style="position: absolute;' + 'border: none;' + // consider border
         // bug fix: 2012-11-07
-        'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' +
-        'top: 0;' +
-        'opacity: 0;' +
-        'filter: alpha(opacity=0);' +
-        'left: 0;' +
-        'z-index: -1;' +
-        'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';
-
+        'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' + 'top: 0;' + 'opacity: 0;' + 'filter: alpha(opacity=0);' + 'left: 0;' + 'z-index: -1;' + 'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';    /**
+     * create iframe shim for mixin.
+     * @class KISSY.Component.Extension.Shim
+     */
     /**
      * create iframe shim for mixin.
      * @class KISSY.Component.Extension.Shim
      */
     function Shim() {
     }
-
     Shim.ATTRS = {
         /**
          * whether create shim
@@ -51,12 +41,10 @@ KISSY.add('component/extension/shim',['ua'], function (S, require) {
             value: ie6
         }
     };
-
     Shim.prototype.__createDom = function () {
         if (this.get('shim')) {
             this.get('el').prepend(shimTpl);
         }
     };
-
     return Shim;
 });

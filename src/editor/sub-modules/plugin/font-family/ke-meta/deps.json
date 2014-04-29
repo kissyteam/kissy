@@ -1,3 +1,1 @@
-{
- "editor/plugin/font-family": ["editor", "editor/plugin/font/ui", "editor/plugin/font-family/cmd", "editor/plugin/menubutton"] 
-}
+{"editor/plugin/font-family":["editor","editor/plugin/font/ui","editor/plugin/font-family/cmd","editor/plugin/menubutton"]}

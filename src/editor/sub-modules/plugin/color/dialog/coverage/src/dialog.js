@@ -233,56 +233,55 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[7] = 0;
   _$jscoverage['/dialog.js'].lineData[8] = 0;
   _$jscoverage['/dialog.js'].lineData[9] = 0;
-  _$jscoverage['/dialog.js'].lineData[12] = 0;
   _$jscoverage['/dialog.js'].lineData[13] = 0;
   _$jscoverage['/dialog.js'].lineData[14] = 0;
-  _$jscoverage['/dialog.js'].lineData[16] = 0;
+  _$jscoverage['/dialog.js'].lineData[15] = 0;
   _$jscoverage['/dialog.js'].lineData[17] = 0;
-  _$jscoverage['/dialog.js'].lineData[19] = 0;
+  _$jscoverage['/dialog.js'].lineData[18] = 0;
   _$jscoverage['/dialog.js'].lineData[20] = 0;
-  _$jscoverage['/dialog.js'].lineData[22] = 0;
-  _$jscoverage['/dialog.js'].lineData[24] = 0;
+  _$jscoverage['/dialog.js'].lineData[21] = 0;
+  _$jscoverage['/dialog.js'].lineData[23] = 0;
   _$jscoverage['/dialog.js'].lineData[25] = 0;
-  _$jscoverage['/dialog.js'].lineData[27] = 0;
-  _$jscoverage['/dialog.js'].lineData[29] = 0;
+  _$jscoverage['/dialog.js'].lineData[26] = 0;
+  _$jscoverage['/dialog.js'].lineData[28] = 0;
   _$jscoverage['/dialog.js'].lineData[30] = 0;
-  _$jscoverage['/dialog.js'].lineData[33] = 0;
-  _$jscoverage['/dialog.js'].lineData[39] = 0;
-  _$jscoverage['/dialog.js'].lineData[41] = 0;
+  _$jscoverage['/dialog.js'].lineData[31] = 0;
+  _$jscoverage['/dialog.js'].lineData[34] = 0;
+  _$jscoverage['/dialog.js'].lineData[40] = 0;
   _$jscoverage['/dialog.js'].lineData[42] = 0;
   _$jscoverage['/dialog.js'].lineData[43] = 0;
   _$jscoverage['/dialog.js'].lineData[44] = 0;
   _$jscoverage['/dialog.js'].lineData[45] = 0;
-  _$jscoverage['/dialog.js'].lineData[49] = 0;
+  _$jscoverage['/dialog.js'].lineData[46] = 0;
   _$jscoverage['/dialog.js'].lineData[50] = 0;
   _$jscoverage['/dialog.js'].lineData[51] = 0;
   _$jscoverage['/dialog.js'].lineData[52] = 0;
   _$jscoverage['/dialog.js'].lineData[53] = 0;
-  _$jscoverage['/dialog.js'].lineData[55] = 0;
-  _$jscoverage['/dialog.js'].lineData[57] = 0;
+  _$jscoverage['/dialog.js'].lineData[54] = 0;
+  _$jscoverage['/dialog.js'].lineData[56] = 0;
   _$jscoverage['/dialog.js'].lineData[58] = 0;
   _$jscoverage['/dialog.js'].lineData[59] = 0;
-  _$jscoverage['/dialog.js'].lineData[65] = 0;
-  _$jscoverage['/dialog.js'].lineData[67] = 0;
+  _$jscoverage['/dialog.js'].lineData[60] = 0;
+  _$jscoverage['/dialog.js'].lineData[66] = 0;
   _$jscoverage['/dialog.js'].lineData[68] = 0;
   _$jscoverage['/dialog.js'].lineData[69] = 0;
   _$jscoverage['/dialog.js'].lineData[70] = 0;
   _$jscoverage['/dialog.js'].lineData[71] = 0;
   _$jscoverage['/dialog.js'].lineData[72] = 0;
   _$jscoverage['/dialog.js'].lineData[73] = 0;
-  _$jscoverage['/dialog.js'].lineData[75] = 0;
+  _$jscoverage['/dialog.js'].lineData[74] = 0;
   _$jscoverage['/dialog.js'].lineData[76] = 0;
-  _$jscoverage['/dialog.js'].lineData[78] = 0;
-  _$jscoverage['/dialog.js'].lineData[81] = 0;
+  _$jscoverage['/dialog.js'].lineData[77] = 0;
+  _$jscoverage['/dialog.js'].lineData[79] = 0;
   _$jscoverage['/dialog.js'].lineData[82] = 0;
-  _$jscoverage['/dialog.js'].lineData[84] = 0;
+  _$jscoverage['/dialog.js'].lineData[83] = 0;
   _$jscoverage['/dialog.js'].lineData[85] = 0;
-  _$jscoverage['/dialog.js'].lineData[88] = 0;
-  _$jscoverage['/dialog.js'].lineData[92] = 0;
+  _$jscoverage['/dialog.js'].lineData[86] = 0;
+  _$jscoverage['/dialog.js'].lineData[89] = 0;
   _$jscoverage['/dialog.js'].lineData[93] = 0;
   _$jscoverage['/dialog.js'].lineData[94] = 0;
   _$jscoverage['/dialog.js'].lineData[95] = 0;
-  _$jscoverage['/dialog.js'].lineData[97] = 0;
+  _$jscoverage['/dialog.js'].lineData[96] = 0;
   _$jscoverage['/dialog.js'].lineData[98] = 0;
   _$jscoverage['/dialog.js'].lineData[99] = 0;
   _$jscoverage['/dialog.js'].lineData[100] = 0;
@@ -290,65 +289,66 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[102] = 0;
   _$jscoverage['/dialog.js'].lineData[103] = 0;
   _$jscoverage['/dialog.js'].lineData[104] = 0;
-  _$jscoverage['/dialog.js'].lineData[106] = 0;
-  _$jscoverage['/dialog.js'].lineData[109] = 0;
-  _$jscoverage['/dialog.js'].lineData[113] = 0;
+  _$jscoverage['/dialog.js'].lineData[105] = 0;
+  _$jscoverage['/dialog.js'].lineData[107] = 0;
+  _$jscoverage['/dialog.js'].lineData[110] = 0;
   _$jscoverage['/dialog.js'].lineData[114] = 0;
   _$jscoverage['/dialog.js'].lineData[115] = 0;
   _$jscoverage['/dialog.js'].lineData[116] = 0;
-  _$jscoverage['/dialog.js'].lineData[119] = 0;
+  _$jscoverage['/dialog.js'].lineData[117] = 0;
   _$jscoverage['/dialog.js'].lineData[120] = 0;
   _$jscoverage['/dialog.js'].lineData[121] = 0;
-  _$jscoverage['/dialog.js'].lineData[124] = 0;
-  _$jscoverage['/dialog.js'].lineData[127] = 0;
-  _$jscoverage['/dialog.js'].lineData[129] = 0;
-  _$jscoverage['/dialog.js'].lineData[154] = 0;
+  _$jscoverage['/dialog.js'].lineData[122] = 0;
+  _$jscoverage['/dialog.js'].lineData[125] = 0;
+  _$jscoverage['/dialog.js'].lineData[128] = 0;
+  _$jscoverage['/dialog.js'].lineData[130] = 0;
   _$jscoverage['/dialog.js'].lineData[155] = 0;
   _$jscoverage['/dialog.js'].lineData[156] = 0;
-  _$jscoverage['/dialog.js'].lineData[159] = 0;
-  _$jscoverage['/dialog.js'].lineData[161] = 0;
-  _$jscoverage['/dialog.js'].lineData[163] = 0;
-  _$jscoverage['/dialog.js'].lineData[167] = 0;
-  _$jscoverage['/dialog.js'].lineData[178] = 0;
-  _$jscoverage['/dialog.js'].lineData[187] = 0;
+  _$jscoverage['/dialog.js'].lineData[157] = 0;
+  _$jscoverage['/dialog.js'].lineData[160] = 0;
+  _$jscoverage['/dialog.js'].lineData[162] = 0;
+  _$jscoverage['/dialog.js'].lineData[164] = 0;
+  _$jscoverage['/dialog.js'].lineData[168] = 0;
+  _$jscoverage['/dialog.js'].lineData[179] = 0;
   _$jscoverage['/dialog.js'].lineData[188] = 0;
-  _$jscoverage['/dialog.js'].lineData[190] = 0;
-  _$jscoverage['/dialog.js'].lineData[192] = 0;
+  _$jscoverage['/dialog.js'].lineData[189] = 0;
+  _$jscoverage['/dialog.js'].lineData[191] = 0;
   _$jscoverage['/dialog.js'].lineData[193] = 0;
-  _$jscoverage['/dialog.js'].lineData[196] = 0;
+  _$jscoverage['/dialog.js'].lineData[194] = 0;
   _$jscoverage['/dialog.js'].lineData[197] = 0;
-  _$jscoverage['/dialog.js'].lineData[200] = 0;
-  _$jscoverage['/dialog.js'].lineData[204] = 0;
+  _$jscoverage['/dialog.js'].lineData[198] = 0;
+  _$jscoverage['/dialog.js'].lineData[201] = 0;
   _$jscoverage['/dialog.js'].lineData[205] = 0;
   _$jscoverage['/dialog.js'].lineData[206] = 0;
   _$jscoverage['/dialog.js'].lineData[207] = 0;
   _$jscoverage['/dialog.js'].lineData[208] = 0;
-  _$jscoverage['/dialog.js'].lineData[210] = 0;
-  _$jscoverage['/dialog.js'].lineData[214] = 0;
+  _$jscoverage['/dialog.js'].lineData[209] = 0;
+  _$jscoverage['/dialog.js'].lineData[211] = 0;
   _$jscoverage['/dialog.js'].lineData[215] = 0;
   _$jscoverage['/dialog.js'].lineData[216] = 0;
-  _$jscoverage['/dialog.js'].lineData[218] = 0;
+  _$jscoverage['/dialog.js'].lineData[217] = 0;
   _$jscoverage['/dialog.js'].lineData[219] = 0;
   _$jscoverage['/dialog.js'].lineData[220] = 0;
   _$jscoverage['/dialog.js'].lineData[221] = 0;
   _$jscoverage['/dialog.js'].lineData[222] = 0;
   _$jscoverage['/dialog.js'].lineData[223] = 0;
   _$jscoverage['/dialog.js'].lineData[224] = 0;
-  _$jscoverage['/dialog.js'].lineData[226] = 0;
+  _$jscoverage['/dialog.js'].lineData[225] = 0;
   _$jscoverage['/dialog.js'].lineData[227] = 0;
-  _$jscoverage['/dialog.js'].lineData[230] = 0;
-  _$jscoverage['/dialog.js'].lineData[232] = 0;
+  _$jscoverage['/dialog.js'].lineData[228] = 0;
+  _$jscoverage['/dialog.js'].lineData[231] = 0;
   _$jscoverage['/dialog.js'].lineData[233] = 0;
   _$jscoverage['/dialog.js'].lineData[234] = 0;
   _$jscoverage['/dialog.js'].lineData[235] = 0;
-  _$jscoverage['/dialog.js'].lineData[239] = 0;
-  _$jscoverage['/dialog.js'].lineData[246] = 0;
-  _$jscoverage['/dialog.js'].lineData[248] = 0;
-  _$jscoverage['/dialog.js'].lineData[252] = 0;
+  _$jscoverage['/dialog.js'].lineData[236] = 0;
+  _$jscoverage['/dialog.js'].lineData[240] = 0;
+  _$jscoverage['/dialog.js'].lineData[247] = 0;
+  _$jscoverage['/dialog.js'].lineData[249] = 0;
   _$jscoverage['/dialog.js'].lineData[253] = 0;
-  _$jscoverage['/dialog.js'].lineData[256] = 0;
-  _$jscoverage['/dialog.js'].lineData[259] = 0;
-  _$jscoverage['/dialog.js'].lineData[263] = 0;
+  _$jscoverage['/dialog.js'].lineData[254] = 0;
+  _$jscoverage['/dialog.js'].lineData[257] = 0;
+  _$jscoverage['/dialog.js'].lineData[260] = 0;
+  _$jscoverage['/dialog.js'].lineData[264] = 0;
 }
 if (! _$jscoverage['/dialog.js'].functionData) {
   _$jscoverage['/dialog.js'].functionData = [];
@@ -381,120 +381,120 @@ if (! _$jscoverage['/dialog.js'].functionData) {
 }
 if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData = {};
-  _$jscoverage['/dialog.js'].branchData['13'] = [];
-  _$jscoverage['/dialog.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['17'] = [];
-  _$jscoverage['/dialog.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['22'] = [];
-  _$jscoverage['/dialog.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['27'] = [];
-  _$jscoverage['/dialog.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['30'] = [];
-  _$jscoverage['/dialog.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['49'] = [];
-  _$jscoverage['/dialog.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['69'] = [];
-  _$jscoverage['/dialog.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['14'] = [];
+  _$jscoverage['/dialog.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['18'] = [];
+  _$jscoverage['/dialog.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['23'] = [];
+  _$jscoverage['/dialog.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['28'] = [];
+  _$jscoverage['/dialog.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['31'] = [];
+  _$jscoverage['/dialog.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['50'] = [];
+  _$jscoverage['/dialog.js'].branchData['50'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['70'] = [];
   _$jscoverage['/dialog.js'].branchData['70'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['81'] = [];
-  _$jscoverage['/dialog.js'].branchData['81'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['94'] = [];
-  _$jscoverage['/dialog.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['97'] = [];
-  _$jscoverage['/dialog.js'].branchData['97'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['99'] = [];
-  _$jscoverage['/dialog.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['71'] = [];
+  _$jscoverage['/dialog.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['82'] = [];
+  _$jscoverage['/dialog.js'].branchData['82'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['95'] = [];
+  _$jscoverage['/dialog.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['98'] = [];
+  _$jscoverage['/dialog.js'].branchData['98'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['100'] = [];
   _$jscoverage['/dialog.js'].branchData['100'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['101'] = [];
   _$jscoverage['/dialog.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['103'] = [];
-  _$jscoverage['/dialog.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['190'] = [];
-  _$jscoverage['/dialog.js'].branchData['190'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['206'] = [];
-  _$jscoverage['/dialog.js'].branchData['206'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['221'] = [];
-  _$jscoverage['/dialog.js'].branchData['221'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['223'] = [];
-  _$jscoverage['/dialog.js'].branchData['223'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['102'] = [];
+  _$jscoverage['/dialog.js'].branchData['102'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['104'] = [];
+  _$jscoverage['/dialog.js'].branchData['104'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['191'] = [];
+  _$jscoverage['/dialog.js'].branchData['191'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['207'] = [];
+  _$jscoverage['/dialog.js'].branchData['207'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['222'] = [];
+  _$jscoverage['/dialog.js'].branchData['222'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['224'] = [];
+  _$jscoverage['/dialog.js'].branchData['224'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['223'][1].init(87, 16, 'left.contains(t)');
-function visit19_223_1(result) {
-  _$jscoverage['/dialog.js'].branchData['223'][1].ranCondition(result);
+_$jscoverage['/dialog.js'].branchData['224'][1].init(87, 16, 'left.contains(t)');
+function visit19_224_1(result) {
+  _$jscoverage['/dialog.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['221'][1].init(98, 20, 't.nodeName() === \'a\'');
-function visit18_221_1(result) {
-  _$jscoverage['/dialog.js'].branchData['221'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['222'][1].init(98, 20, 't.nodeName() === \'a\'');
+function visit18_222_1(result) {
+  _$jscoverage['/dialog.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['206'][1].init(77, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
-function visit17_206_1(result) {
-  _$jscoverage['/dialog.js'].branchData['206'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['207'][1].init(77, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
+function visit17_207_1(result) {
+  _$jscoverage['/dialog.js'].branchData['207'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['190'][1].init(140, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
-function visit16_190_1(result) {
-  _$jscoverage['/dialog.js'].branchData['190'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['191'][1].init(140, 35, '!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)');
+function visit16_191_1(result) {
+  _$jscoverage['/dialog.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['103'][1].init(143, 9, 'i < n - 1');
-function visit15_103_1(result) {
-  _$jscoverage['/dialog.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['104'][1].init(143, 9, 'i < n - 1');
+function visit15_104_1(result) {
+  _$jscoverage['/dialog.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['101'][1].init(30, 15, 'step[i] || step');
-function visit14_101_1(result) {
+}_$jscoverage['/dialog.js'].branchData['102'][1].init(30, 15, 'step[i] || step');
+function visit14_102_1(result) {
+  _$jscoverage['/dialog.js'].branchData['102'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['101'][1].init(47, 5, 'i < n');
+function visit13_101_1(result) {
   _$jscoverage['/dialog.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['100'][1].init(47, 5, 'i < n');
-function visit13_100_1(result) {
+}_$jscoverage['/dialog.js'].branchData['100'][1].init(246, 7, 'len > 1');
+function visit12_100_1(result) {
   _$jscoverage['/dialog.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['99'][1].init(246, 7, 'len > 1');
-function visit12_99_1(result) {
-  _$jscoverage['/dialog.js'].branchData['99'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['98'][1].init(148, 9, 'len === 1');
+function visit11_98_1(result) {
+  _$jscoverage['/dialog.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['97'][1].init(148, 9, 'len === 1');
-function visit11_97_1(result) {
-  _$jscoverage['/dialog.js'].branchData['97'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['95'][1].init(66, 18, 'step === undefined');
+function visit10_95_1(result) {
+  _$jscoverage['/dialog.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['94'][1].init(66, 18, 'step === undefined');
-function visit10_94_1(result) {
-  _$jscoverage['/dialog.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['82'][1].init(401, 20, 'document.defaultView');
+function visit9_82_1(result) {
+  _$jscoverage['/dialog.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['81'][1].init(401, 20, 'document.defaultView');
-function visit9_81_1(result) {
-  _$jscoverage['/dialog.js'].branchData['81'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['71'][1].init(22, 5, '!frag');
+function visit8_71_1(result) {
+  _$jscoverage['/dialog.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['70'][1].init(22, 5, '!frag');
-function visit8_70_1(result) {
+}_$jscoverage['/dialog.js'].branchData['70'][1].init(57, 17, 'ret === undefined');
+function visit7_70_1(result) {
   _$jscoverage['/dialog.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['69'][1].init(57, 17, 'ret === undefined');
-function visit7_69_1(result) {
-  _$jscoverage['/dialog.js'].branchData['69'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['50'][1].init(355, 8, 'i < step');
+function visit6_50_1(result) {
+  _$jscoverage['/dialog.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['49'][1].init(355, 8, 'i < step');
-function visit6_49_1(result) {
-  _$jscoverage['/dialog.js'].branchData['49'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['31'][1].init(25, 18, 'x.indexOf(\'%\') > 0');
+function visit5_31_1(result) {
+  _$jscoverage['/dialog.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['30'][1].init(25, 18, 'x.indexOf(\'%\') > 0');
-function visit5_30_1(result) {
-  _$jscoverage['/dialog.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['28'][1].init(557, 38, '/^rgb\\((.*),(.*),(.*)\\)$/i.test(color)');
+function visit4_28_1(result) {
+  _$jscoverage['/dialog.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['27'][1].init(557, 38, '/^rgb\\((.*),(.*),(.*)\\)$/i.test(color)');
-function visit4_27_1(result) {
-  _$jscoverage['/dialog.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['23'][1].init(338, 48, '/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color)');
+function visit3_23_1(result) {
+  _$jscoverage['/dialog.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['22'][1].init(338, 48, '/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color)');
-function visit3_22_1(result) {
-  _$jscoverage['/dialog.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['18'][1].init(111, 57, '/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color)');
+function visit2_18_1(result) {
+  _$jscoverage['/dialog.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['17'][1].init(111, 57, '/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color)');
-function visit2_17_1(result) {
-  _$jscoverage['/dialog.js'].branchData['17'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['13'][1].init(14, 16, 'S.isArray(color)');
-function visit1_13_1(result) {
-  _$jscoverage['/dialog.js'].branchData['13'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['14'][1].init(14, 16, 'S.isArray(color)');
+function visit1_14_1(result) {
+  _$jscoverage['/dialog.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dialog.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -504,209 +504,209 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[8]++;
   var Dialog4E = require('../dialog');
   _$jscoverage['/dialog.js'].lineData[9]++;
-  var map = S.map, Dom = S.require('dom');
-  _$jscoverage['/dialog.js'].lineData[12]++;
+  var map = S.map, Dom = require('dom');
+  _$jscoverage['/dialog.js'].lineData[13]++;
   function getData(color) {
     _$jscoverage['/dialog.js'].functionData[1]++;
-    _$jscoverage['/dialog.js'].lineData[13]++;
-    if (visit1_13_1(S.isArray(color))) {
-      _$jscoverage['/dialog.js'].lineData[14]++;
+    _$jscoverage['/dialog.js'].lineData[14]++;
+    if (visit1_14_1(S.isArray(color))) {
+      _$jscoverage['/dialog.js'].lineData[15]++;
       return color;
     }
-    _$jscoverage['/dialog.js'].lineData[16]++;
-    var re = RegExp;
     _$jscoverage['/dialog.js'].lineData[17]++;
-    if (visit2_17_1(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color))) {
-      _$jscoverage['/dialog.js'].lineData[19]++;
+    var re = RegExp;
+    _$jscoverage['/dialog.js'].lineData[18]++;
+    if (visit2_18_1(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color))) {
+      _$jscoverage['/dialog.js'].lineData[20]++;
       return map([re.$1, re.$2, re.$3], function(x) {
   _$jscoverage['/dialog.js'].functionData[2]++;
-  _$jscoverage['/dialog.js'].lineData[20]++;
+  _$jscoverage['/dialog.js'].lineData[21]++;
   return parseInt(x, 16);
 });
     } else {
-      _$jscoverage['/dialog.js'].lineData[22]++;
-      if (visit3_22_1(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color))) {
-        _$jscoverage['/dialog.js'].lineData[24]++;
+      _$jscoverage['/dialog.js'].lineData[23]++;
+      if (visit3_23_1(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color))) {
+        _$jscoverage['/dialog.js'].lineData[25]++;
         return map([re.$1, re.$2, re.$3], function(x) {
   _$jscoverage['/dialog.js'].functionData[3]++;
-  _$jscoverage['/dialog.js'].lineData[25]++;
+  _$jscoverage['/dialog.js'].lineData[26]++;
   return parseInt(x + x, 16);
 });
       } else {
-        _$jscoverage['/dialog.js'].lineData[27]++;
-        if (visit4_27_1(/^rgb\((.*),(.*),(.*)\)$/i.test(color))) {
-          _$jscoverage['/dialog.js'].lineData[29]++;
+        _$jscoverage['/dialog.js'].lineData[28]++;
+        if (visit4_28_1(/^rgb\((.*),(.*),(.*)\)$/i.test(color))) {
+          _$jscoverage['/dialog.js'].lineData[30]++;
           return map([re.$1, re.$2, re.$3], function(x) {
   _$jscoverage['/dialog.js'].functionData[4]++;
-  _$jscoverage['/dialog.js'].lineData[30]++;
-  return visit5_30_1(x.indexOf('%') > 0) ? parseFloat(x, 10) * 2.55 : x | 0;
+  _$jscoverage['/dialog.js'].lineData[31]++;
+  return visit5_31_1(x.indexOf('%') > 0) ? parseFloat(x, 10) * 2.55 : x | 0;
 });
         }
       }
     }
-    _$jscoverage['/dialog.js'].lineData[33]++;
+    _$jscoverage['/dialog.js'].lineData[34]++;
     return undefined;
   }
-  _$jscoverage['/dialog.js'].lineData[39]++;
+  _$jscoverage['/dialog.js'].lineData[40]++;
   var colorGrads = (function() {
   _$jscoverage['/dialog.js'].functionData[5]++;
-  _$jscoverage['/dialog.js'].lineData[41]++;
+  _$jscoverage['/dialog.js'].lineData[42]++;
   function getStep(start, end, step) {
     _$jscoverage['/dialog.js'].functionData[6]++;
-    _$jscoverage['/dialog.js'].lineData[42]++;
-    var colors = [];
     _$jscoverage['/dialog.js'].lineData[43]++;
-    start = getColor(start);
+    var colors = [];
     _$jscoverage['/dialog.js'].lineData[44]++;
-    end = getColor(end);
+    start = getColor(start);
     _$jscoverage['/dialog.js'].lineData[45]++;
+    end = getColor(end);
+    _$jscoverage['/dialog.js'].lineData[46]++;
     var stepR = (end[0] - start[0]) / step, stepG = (end[1] - start[1]) / step, stepB = (end[2] - start[2]) / step;
-    _$jscoverage['/dialog.js'].lineData[49]++;
-    for (var i = 0, r = start[0], g = start[1], b = start[2]; visit6_49_1(i < step); i++) {
-      _$jscoverage['/dialog.js'].lineData[50]++;
-      colors[i] = [r, g, b];
+    _$jscoverage['/dialog.js'].lineData[50]++;
+    for (var i = 0, r = start[0], g = start[1], b = start[2]; visit6_50_1(i < step); i++) {
       _$jscoverage['/dialog.js'].lineData[51]++;
-      r += stepR;
+      colors[i] = [r, g, b];
       _$jscoverage['/dialog.js'].lineData[52]++;
-      g += stepG;
+      r += stepR;
       _$jscoverage['/dialog.js'].lineData[53]++;
+      g += stepG;
+      _$jscoverage['/dialog.js'].lineData[54]++;
       b += stepB;
     }
-    _$jscoverage['/dialog.js'].lineData[55]++;
+    _$jscoverage['/dialog.js'].lineData[56]++;
     colors[i] = end;
-    _$jscoverage['/dialog.js'].lineData[57]++;
+    _$jscoverage['/dialog.js'].lineData[58]++;
     return map(colors, function(x) {
   _$jscoverage['/dialog.js'].functionData[7]++;
-  _$jscoverage['/dialog.js'].lineData[58]++;
+  _$jscoverage['/dialog.js'].lineData[59]++;
   return map(x, function(x) {
   _$jscoverage['/dialog.js'].functionData[8]++;
-  _$jscoverage['/dialog.js'].lineData[59]++;
+  _$jscoverage['/dialog.js'].lineData[60]++;
   return Math.min(Math.max(0, Math.floor(x)), 255);
 });
 });
   }
-  _$jscoverage['/dialog.js'].lineData[65]++;
+  _$jscoverage['/dialog.js'].lineData[66]++;
   var frag;
-  _$jscoverage['/dialog.js'].lineData[67]++;
+  _$jscoverage['/dialog.js'].lineData[68]++;
   function getColor(color) {
     _$jscoverage['/dialog.js'].functionData[9]++;
-    _$jscoverage['/dialog.js'].lineData[68]++;
-    var ret = getData(color);
     _$jscoverage['/dialog.js'].lineData[69]++;
-    if (visit7_69_1(ret === undefined)) {
-      _$jscoverage['/dialog.js'].lineData[70]++;
-      if (visit8_70_1(!frag)) {
-        _$jscoverage['/dialog.js'].lineData[71]++;
-        frag = document.createElement('textarea');
+    var ret = getData(color);
+    _$jscoverage['/dialog.js'].lineData[70]++;
+    if (visit7_70_1(ret === undefined)) {
+      _$jscoverage['/dialog.js'].lineData[71]++;
+      if (visit8_71_1(!frag)) {
         _$jscoverage['/dialog.js'].lineData[72]++;
-        frag.style.display = 'none';
+        frag = document.createElement('textarea');
         _$jscoverage['/dialog.js'].lineData[73]++;
+        frag.style.display = 'none';
+        _$jscoverage['/dialog.js'].lineData[74]++;
         Dom.prepend(frag, document.body);
       }
-      _$jscoverage['/dialog.js'].lineData[75]++;
+      _$jscoverage['/dialog.js'].lineData[76]++;
       try {
-        _$jscoverage['/dialog.js'].lineData[76]++;
+        _$jscoverage['/dialog.js'].lineData[77]++;
         frag.style.color = color;
       }      catch (e) {
-  _$jscoverage['/dialog.js'].lineData[78]++;
+  _$jscoverage['/dialog.js'].lineData[79]++;
   return [0, 0, 0];
 }
-      _$jscoverage['/dialog.js'].lineData[81]++;
-      if (visit9_81_1(document.defaultView)) {
-        _$jscoverage['/dialog.js'].lineData[82]++;
+      _$jscoverage['/dialog.js'].lineData[82]++;
+      if (visit9_82_1(document.defaultView)) {
+        _$jscoverage['/dialog.js'].lineData[83]++;
         ret = getData(document.defaultView.getComputedStyle(frag, null).color);
       } else {
-        _$jscoverage['/dialog.js'].lineData[84]++;
-        color = frag.createTextRange().queryCommandValue('ForeColor');
         _$jscoverage['/dialog.js'].lineData[85]++;
+        color = frag.createTextRange().queryCommandValue('ForeColor');
+        _$jscoverage['/dialog.js'].lineData[86]++;
         ret = [color & 0x0000ff, (color & 0x00ff00) >>> 8, (color & 0xff0000) >>> 16];
       }
     }
-    _$jscoverage['/dialog.js'].lineData[88]++;
+    _$jscoverage['/dialog.js'].lineData[89]++;
     return ret;
   }
-  _$jscoverage['/dialog.js'].lineData[92]++;
+  _$jscoverage['/dialog.js'].lineData[93]++;
   return function(colors, step) {
   _$jscoverage['/dialog.js'].functionData[10]++;
-  _$jscoverage['/dialog.js'].lineData[93]++;
-  var ret = [], len = colors.length;
   _$jscoverage['/dialog.js'].lineData[94]++;
-  if (visit10_94_1(step === undefined)) {
-    _$jscoverage['/dialog.js'].lineData[95]++;
+  var ret = [], len = colors.length;
+  _$jscoverage['/dialog.js'].lineData[95]++;
+  if (visit10_95_1(step === undefined)) {
+    _$jscoverage['/dialog.js'].lineData[96]++;
     step = 20;
   }
-  _$jscoverage['/dialog.js'].lineData[97]++;
-  if (visit11_97_1(len === 1)) {
-    _$jscoverage['/dialog.js'].lineData[98]++;
+  _$jscoverage['/dialog.js'].lineData[98]++;
+  if (visit11_98_1(len === 1)) {
+    _$jscoverage['/dialog.js'].lineData[99]++;
     ret = getStep(colors[0], colors[0], step);
   } else {
-    _$jscoverage['/dialog.js'].lineData[99]++;
-    if (visit12_99_1(len > 1)) {
-      _$jscoverage['/dialog.js'].lineData[100]++;
-      for (var i = 0, n = len - 1; visit13_100_1(i < n); i++) {
-        _$jscoverage['/dialog.js'].lineData[101]++;
-        var t = visit14_101_1(step[i] || step);
+    _$jscoverage['/dialog.js'].lineData[100]++;
+    if (visit12_100_1(len > 1)) {
+      _$jscoverage['/dialog.js'].lineData[101]++;
+      for (var i = 0, n = len - 1; visit13_101_1(i < n); i++) {
         _$jscoverage['/dialog.js'].lineData[102]++;
-        var steps = getStep(colors[i], colors[i + 1], t);
+        var t = visit14_102_1(step[i] || step);
         _$jscoverage['/dialog.js'].lineData[103]++;
-        if (visit15_103_1(i < n - 1)) {
-          _$jscoverage['/dialog.js'].lineData[104]++;
+        var steps = getStep(colors[i], colors[i + 1], t);
+        _$jscoverage['/dialog.js'].lineData[104]++;
+        if (visit15_104_1(i < n - 1)) {
+          _$jscoverage['/dialog.js'].lineData[105]++;
           steps.pop();
         }
-        _$jscoverage['/dialog.js'].lineData[106]++;
+        _$jscoverage['/dialog.js'].lineData[107]++;
         ret = ret.concat(steps);
       }
     }
   }
-  _$jscoverage['/dialog.js'].lineData[109]++;
+  _$jscoverage['/dialog.js'].lineData[110]++;
   return ret;
 };
 })();
-  _$jscoverage['/dialog.js'].lineData[113]++;
+  _$jscoverage['/dialog.js'].lineData[114]++;
   function padding2(x) {
     _$jscoverage['/dialog.js'].functionData[11]++;
-    _$jscoverage['/dialog.js'].lineData[114]++;
-    x = '0' + x;
     _$jscoverage['/dialog.js'].lineData[115]++;
-    var l = x.length;
+    x = '0' + x;
     _$jscoverage['/dialog.js'].lineData[116]++;
+    var l = x.length;
+    _$jscoverage['/dialog.js'].lineData[117]++;
     return x.slice(l - 2, l);
   }
-  _$jscoverage['/dialog.js'].lineData[119]++;
+  _$jscoverage['/dialog.js'].lineData[120]++;
   function hex(c) {
     _$jscoverage['/dialog.js'].functionData[12]++;
-    _$jscoverage['/dialog.js'].lineData[120]++;
-    c = getData(c);
     _$jscoverage['/dialog.js'].lineData[121]++;
+    c = getData(c);
+    _$jscoverage['/dialog.js'].lineData[122]++;
     return '#' + padding2(c[0].toString(16)) + padding2(c[1].toString(16)) + padding2(c[2].toString(16));
   }
-  _$jscoverage['/dialog.js'].lineData[124]++;
+  _$jscoverage['/dialog.js'].lineData[125]++;
   var pickerHTML = '<ul>' + map(colorGrads(['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple'], 5), function(x) {
   _$jscoverage['/dialog.js'].functionData[13]++;
-  _$jscoverage['/dialog.js'].lineData[127]++;
+  _$jscoverage['/dialog.js'].lineData[128]++;
   return map(colorGrads(['white', 'rgb(' + x.join(',') + ')', 'black'], 5), function(x) {
   _$jscoverage['/dialog.js'].functionData[14]++;
-  _$jscoverage['/dialog.js'].lineData[129]++;
+  _$jscoverage['/dialog.js'].lineData[130]++;
   return '<li><a style="background-color' + ':' + hex(x) + '" href="#"></a></li>';
 }).join('');
 }).join('</ul><ul>') + '</ul>', panelHTML = '<div class="{prefixCls}editor-color-advanced-picker">' + '<div class="ks-clear">' + '<div class="{prefixCls}editor-color-advanced-picker-left">' + pickerHTML + '</div>' + '<div class="{prefixCls}editor-color-advanced-picker-right">' + '</div>' + '</div>' + '<div style="padding:10px;">' + '<label>' + '\u989c\u8272\u503c\uff1a ' + '<input style="width:100px" class="{prefixCls}editor-color-advanced-value"/>' + '</label>' + '<span class="{prefixCls}editor-color-advanced-indicator"></span>' + '</div>' + '</div>', footHTML = '<div style="padding:5px 20px 20px;">' + '<a class="{prefixCls}editor-button {prefixCls}editor-color-advanced-ok ks-inline-block">\u786e\u5b9a</a>' + '&nbsp;&nbsp;&nbsp;' + '<a class="{prefixCls}editor-button  {prefixCls}editor-color-advanced-cancel ks-inline-block">\u53d6\u6d88</a>' + '</div>';
-  _$jscoverage['/dialog.js'].lineData[154]++;
+  _$jscoverage['/dialog.js'].lineData[155]++;
   function ColorPicker(editor) {
     _$jscoverage['/dialog.js'].functionData[15]++;
-    _$jscoverage['/dialog.js'].lineData[155]++;
-    this.editor = editor;
     _$jscoverage['/dialog.js'].lineData[156]++;
+    this.editor = editor;
+    _$jscoverage['/dialog.js'].lineData[157]++;
     this._init();
   }
-  _$jscoverage['/dialog.js'].lineData[159]++;
+  _$jscoverage['/dialog.js'].lineData[160]++;
   var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
-  _$jscoverage['/dialog.js'].lineData[161]++;
+  _$jscoverage['/dialog.js'].lineData[162]++;
   S.augment(ColorPicker, {
   _init: function() {
   _$jscoverage['/dialog.js'].functionData[16]++;
-  _$jscoverage['/dialog.js'].lineData[163]++;
+  _$jscoverage['/dialog.js'].lineData[164]++;
   var self = this, editor = self.editor, prefixCls = editor.get('prefixCls');
-  _$jscoverage['/dialog.js'].lineData[167]++;
+  _$jscoverage['/dialog.js'].lineData[168]++;
   self.dialog = new Dialog4E({
   mask: true, 
   headerContent: '\u989c\u8272\u62fe\u53d6\u5668', 
@@ -715,112 +715,112 @@ KISSY.add(function(S, require) {
   footerContent: S.substitute(footHTML, {
   prefixCls: prefixCls}), 
   width: '550px'}).render();
-  _$jscoverage['/dialog.js'].lineData[178]++;
+  _$jscoverage['/dialog.js'].lineData[179]++;
   var win = self.dialog, body = win.get('body'), foot = win.get('footer'), indicator = body.one('.' + prefixCls + 'editor-color-advanced-indicator'), indicatorValue = body.one('.' + prefixCls + 'editor-color-advanced-value'), left = body.one('.' + prefixCls + 'editor-color-advanced-picker-left'), ok = foot.one('.' + prefixCls + 'editor-color-advanced-ok'), cancel = foot.one('.' + prefixCls + 'editor-color-advanced-cancel');
-  _$jscoverage['/dialog.js'].lineData[187]++;
+  _$jscoverage['/dialog.js'].lineData[188]++;
   ok.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[17]++;
-  _$jscoverage['/dialog.js'].lineData[188]++;
+  _$jscoverage['/dialog.js'].lineData[189]++;
   var v = S.trim(indicatorValue.val()), colorButtonArrow = self.colorButtonArrow;
-  _$jscoverage['/dialog.js'].lineData[190]++;
-  if (visit16_190_1(!/^#([a-f0-9]{1,2}){3,3}$/i.test(v))) {
-    _$jscoverage['/dialog.js'].lineData[192]++;
-    alert('\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u989c\u8272\u4ee3\u7801');
+  _$jscoverage['/dialog.js'].lineData[191]++;
+  if (visit16_191_1(!/^#([a-f0-9]{1,2}){3,3}$/i.test(v))) {
     _$jscoverage['/dialog.js'].lineData[193]++;
+    alert('\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u989c\u8272\u4ee3\u7801');
+    _$jscoverage['/dialog.js'].lineData[194]++;
     return;
   }
-  _$jscoverage['/dialog.js'].lineData[196]++;
-  self.hide();
   _$jscoverage['/dialog.js'].lineData[197]++;
+  self.hide();
+  _$jscoverage['/dialog.js'].lineData[198]++;
   colorButtonArrow.fire('selectColor', {
   color: indicatorValue.val()});
-  _$jscoverage['/dialog.js'].lineData[200]++;
+  _$jscoverage['/dialog.js'].lineData[201]++;
   ev.halt();
 });
-  _$jscoverage['/dialog.js'].lineData[204]++;
+  _$jscoverage['/dialog.js'].lineData[205]++;
   indicatorValue.on('change', function() {
   _$jscoverage['/dialog.js'].functionData[18]++;
-  _$jscoverage['/dialog.js'].lineData[205]++;
-  var v = S.trim(indicatorValue.val());
   _$jscoverage['/dialog.js'].lineData[206]++;
-  if (visit17_206_1(!/^#([a-f0-9]{1,2}){3,3}$/i.test(v))) {
-    _$jscoverage['/dialog.js'].lineData[207]++;
-    alert('\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u989c\u8272\u4ee3\u7801');
+  var v = S.trim(indicatorValue.val());
+  _$jscoverage['/dialog.js'].lineData[207]++;
+  if (visit17_207_1(!/^#([a-f0-9]{1,2}){3,3}$/i.test(v))) {
     _$jscoverage['/dialog.js'].lineData[208]++;
+    alert('\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u989c\u8272\u4ee3\u7801');
+    _$jscoverage['/dialog.js'].lineData[209]++;
     return;
   }
-  _$jscoverage['/dialog.js'].lineData[210]++;
+  _$jscoverage['/dialog.js'].lineData[211]++;
   indicator.css('background-color', v);
 });
-  _$jscoverage['/dialog.js'].lineData[214]++;
+  _$jscoverage['/dialog.js'].lineData[215]++;
   cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[19]++;
-  _$jscoverage['/dialog.js'].lineData[215]++;
-  self.hide();
   _$jscoverage['/dialog.js'].lineData[216]++;
+  self.hide();
+  _$jscoverage['/dialog.js'].lineData[217]++;
   ev.halt();
 });
-  _$jscoverage['/dialog.js'].lineData[218]++;
+  _$jscoverage['/dialog.js'].lineData[219]++;
   body.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[20]++;
-  _$jscoverage['/dialog.js'].lineData[219]++;
-  ev.halt();
   _$jscoverage['/dialog.js'].lineData[220]++;
-  var t = new S.Node(ev.target);
+  ev.halt();
   _$jscoverage['/dialog.js'].lineData[221]++;
-  if (visit18_221_1(t.nodeName() === 'a')) {
-    _$jscoverage['/dialog.js'].lineData[222]++;
-    var c = hex(t.css('background-color'));
+  var t = new S.Node(ev.target);
+  _$jscoverage['/dialog.js'].lineData[222]++;
+  if (visit18_222_1(t.nodeName() === 'a')) {
     _$jscoverage['/dialog.js'].lineData[223]++;
-    if (visit19_223_1(left.contains(t))) {
-      _$jscoverage['/dialog.js'].lineData[224]++;
+    var c = hex(t.css('background-color'));
+    _$jscoverage['/dialog.js'].lineData[224]++;
+    if (visit19_224_1(left.contains(t))) {
+      _$jscoverage['/dialog.js'].lineData[225]++;
       self._detailColor(c);
     }
-    _$jscoverage['/dialog.js'].lineData[226]++;
-    indicatorValue.val(c);
     _$jscoverage['/dialog.js'].lineData[227]++;
+    indicatorValue.val(c);
+    _$jscoverage['/dialog.js'].lineData[228]++;
     indicator.css('background-color', c);
   }
 });
-  _$jscoverage['/dialog.js'].lineData[230]++;
+  _$jscoverage['/dialog.js'].lineData[231]++;
   addRes.call(self, ok, indicatorValue, cancel, body, self.dialog);
-  _$jscoverage['/dialog.js'].lineData[232]++;
-  var defaultColor = '#FF9900';
   _$jscoverage['/dialog.js'].lineData[233]++;
-  self._detailColor(defaultColor);
+  var defaultColor = '#FF9900';
   _$jscoverage['/dialog.js'].lineData[234]++;
-  indicatorValue.val(defaultColor);
+  self._detailColor(defaultColor);
   _$jscoverage['/dialog.js'].lineData[235]++;
+  indicatorValue.val(defaultColor);
+  _$jscoverage['/dialog.js'].lineData[236]++;
   indicator.css('background-color', defaultColor);
 }, 
   _detailColor: function(color) {
   _$jscoverage['/dialog.js'].functionData[21]++;
-  _$jscoverage['/dialog.js'].lineData[239]++;
+  _$jscoverage['/dialog.js'].lineData[240]++;
   var self = this, win = self.dialog, body = win.get('body'), editor = self.editor, prefixCls = editor.get('prefixCls'), detailPanel = body.one('.' + prefixCls + 'editor-color-advanced-picker-right');
-  _$jscoverage['/dialog.js'].lineData[246]++;
+  _$jscoverage['/dialog.js'].lineData[247]++;
   detailPanel.html(map(colorGrads(['#ffffff', color, '#000000'], 40), function(x) {
   _$jscoverage['/dialog.js'].functionData[22]++;
-  _$jscoverage['/dialog.js'].lineData[248]++;
+  _$jscoverage['/dialog.js'].lineData[249]++;
   return '<a style="background-color:' + hex(x) + '"></a>';
 }).join(''));
 }, 
   show: function(colorButtonArrow) {
   _$jscoverage['/dialog.js'].functionData[23]++;
-  _$jscoverage['/dialog.js'].lineData[252]++;
-  this.colorButtonArrow = colorButtonArrow;
   _$jscoverage['/dialog.js'].lineData[253]++;
+  this.colorButtonArrow = colorButtonArrow;
+  _$jscoverage['/dialog.js'].lineData[254]++;
   this.dialog.show();
 }, 
   hide: function() {
   _$jscoverage['/dialog.js'].functionData[24]++;
-  _$jscoverage['/dialog.js'].lineData[256]++;
+  _$jscoverage['/dialog.js'].lineData[257]++;
   this.dialog.hide();
 }, 
   destroy: function() {
   _$jscoverage['/dialog.js'].functionData[25]++;
-  _$jscoverage['/dialog.js'].lineData[259]++;
+  _$jscoverage['/dialog.js'].lineData[260]++;
   destroyRes.call(this);
 }});
-  _$jscoverage['/dialog.js'].lineData[263]++;
+  _$jscoverage['/dialog.js'].lineData[264]++;
   return ColorPicker;
 });

@@ -4,10 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var logger = S.getLogger('s/editor');
     var Overlay = require('overlay');
     var Editor = require('editor');
-    var logger = S.getLogger('s/editor');
-
     var BUBBLE_CFG = {
         zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW),
         elCls: '{prefixCls}editor-bubble',

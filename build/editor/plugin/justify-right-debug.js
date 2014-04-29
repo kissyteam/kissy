@@ -1,20 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:48
+build time: Apr 29 15:04
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/justify-right
-
 */
 /**
  * @ignore
  * justifyRight button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/justify-right',['editor', './justify-right/cmd', './button'], function (S, require) {
+KISSY.add('editor/plugin/justify-right', [
+    'editor',
+    './justify-right/cmd',
+    './button'
+], function (S, require) {
     var Editor = require('editor');
     var justifyCenterCmd = require('./justify-right/cmd');
     require('./button');
@@ -23,18 +25,13 @@ KISSY.add('editor/plugin/justify-right',['editor', './justify-right/cmd', './but
         editor.execCommand('justifyRight');
         editor.focus();
     }
-
     function justifyRight() {
-
     }
-
     S.augment(justifyRight, {
         pluginRenderUI: function (editor) {
-
             justifyCenterCmd.init(editor);
-
             editor.addButton('justifyRight', {
-                tooltip: '右对齐',
+                tooltip: '\u53F3\u5BF9\u9F50',
                 checkable: true,
                 listeners: {
                     click: exec,
@@ -51,11 +48,9 @@ KISSY.add('editor/plugin/justify-right',['editor', './justify-right/cmd', './but
                             }
                         });
                     }
-
                 },
                 mode: Editor.Mode.WYSIWYG_MODE
             });
-
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
                     if (e.ctrlKey && e.keyCode === S.Node.KeyCode.R) {
@@ -66,6 +61,7 @@ KISSY.add('editor/plugin/justify-right',['editor', './justify-right/cmd', './but
             });
         }
     });
-
     return justifyRight;
 });
+
+

@@ -612,12 +612,12 @@ function visit1_21_1(result) {
   _$jscoverage['/list-utils.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/list-utils.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/list-utils.js'].functionData[0]++;
   _$jscoverage['/list-utils.js'].lineData[7]++;
   var listNodeNames = {
   ol: 1, 
-  ul: 1}, Node = S.Node, Dom = S.require('dom'), NodeType = Dom.NodeType, UA = S.UA, list = {
+  ul: 1}, Node = S.Node, Dom = require('dom'), NodeType = Dom.NodeType, UA = S.UA, list = {
   listToArray: function(listNode, database, baseArray, baseIndentLevel, grandparentNode) {
   _$jscoverage['/list-utils.js'].functionData[1]++;
   _$jscoverage['/list-utils.js'].lineData[21]++;

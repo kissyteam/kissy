@@ -271,27 +271,27 @@ if (! _$jscoverage['/xtemplate.js'].branchData) {
   _$jscoverage['/xtemplate.js'].branchData['50'][1] = new BranchData();
 }
 _$jscoverage['/xtemplate.js'].branchData['50'][1].init(14, 23, 'typeof tpl === \'string\'');
-function visit84_50_1(result) {
+function visit80_50_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['22'][1].init(243, 9, 'cacheable');
-function visit83_22_1(result) {
+function visit79_22_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['20'][1].init(204, 21, 'config && config.name');
-function visit82_20_1(result) {
+function visit78_20_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['16'][1].init(93, 30, 'cacheable && (fn = cache[tpl])');
-function visit81_16_1(result) {
+function visit77_16_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['14'][2].init(54, 22, 'config.cache !== false');
-function visit80_14_2(result) {
+function visit76_14_2(result) {
   _$jscoverage['/xtemplate.js'].branchData['14'][2].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['14'][1].init(43, 33, '!config || config.cache !== false');
-function visit79_14_1(result) {
+function visit75_14_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].lineData[6]++;
@@ -311,16 +311,16 @@ KISSY.add(function(S, require) {
     _$jscoverage['/xtemplate.js'].lineData[13]++;
     var fn;
     _$jscoverage['/xtemplate.js'].lineData[14]++;
-    var cacheable = visit79_14_1(!config || visit80_14_2(config.cache !== false));
+    var cacheable = visit75_14_1(!config || visit76_14_2(config.cache !== false));
     _$jscoverage['/xtemplate.js'].lineData[16]++;
-    if (visit81_16_1(cacheable && (fn = cache[tpl]))) {
+    if (visit77_16_1(cacheable && (fn = cache[tpl]))) {
       _$jscoverage['/xtemplate.js'].lineData[17]++;
       return fn;
     }
     _$jscoverage['/xtemplate.js'].lineData[20]++;
-    fn = Compiler.compileToFn(tpl, visit82_20_1(config && config.name));
+    fn = Compiler.compileToFn(tpl, visit78_20_1(config && config.name));
     _$jscoverage['/xtemplate.js'].lineData[22]++;
-    if (visit83_22_1(cacheable)) {
+    if (visit79_22_1(cacheable)) {
       _$jscoverage['/xtemplate.js'].lineData[23]++;
       cache[tpl] = fn;
     }
@@ -331,7 +331,7 @@ KISSY.add(function(S, require) {
   function XTemplate(tpl, config) {
     _$jscoverage['/xtemplate.js'].functionData[2]++;
     _$jscoverage['/xtemplate.js'].lineData[50]++;
-    if (visit84_50_1(typeof tpl === 'string')) {
+    if (visit80_50_1(typeof tpl === 'string')) {
       _$jscoverage['/xtemplate.js'].lineData[51]++;
       tpl = compile(tpl, config);
     }

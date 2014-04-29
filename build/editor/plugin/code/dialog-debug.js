@@ -1,132 +1,154 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:45
+build time: Apr 29 15:01
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/code/dialog
-
 */
 /**
  * @ignore
  * insert program code dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/code/dialog',['editor', 'menubutton', '../dialog'], function (S, require) {
+KISSY.add('editor/plugin/code/dialog', [
+    'editor',
+    'menubutton',
+    'dom',
+    '../dialog'
+], function (S, require) {
     var Editor = require('editor');
     var MenuButton = require('menubutton');
     var xhtmlDtd = Editor.XHTML_DTD;
-    var NodeType = S.require('dom').NodeType;
+    var NodeType = require('dom').NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
     var Dialog4E = require('../dialog');
-
     var codeTypes = [
-            ['ActionScript3', 'as3'],
-            ['Bash/Shell', 'bash'],
-            ['C/C++', 'cpp'],
-            ['Css', 'css'],
-            ['CodeFunction', 'cf'],
-            ['C#', 'c#'],
-            ['Delphi', 'delphi'],
-            ['Diff', 'diff'],
-            ['Erlang', 'erlang'],
-            ['Groovy', 'groovy'],
-            ['HTML', 'html'],
-            ['Java', 'java'],
-            ['JavaFx', 'jfx'],
-            ['Javascript', 'js'],
-            ['Perl', 'pl'],
-            ['Php', 'php'],
-            ['Plain Text', 'plain'],
-            ['PowerShell', 'ps'],
-            ['Python', 'python'],
-            ['Ruby', 'ruby'],
-            ['Scala', 'scala'],
-            ['Sql', 'sql'],
-            ['Vb', 'vb'],
-            ['Xml', 'xml']
-        ],
-        bodyTpl = '<div class="{prefixCls}code-wrap">' +
-            '<table class="{prefixCls}code-table">' +
-            '<tr>' +
-            '<td class="{prefixCls}code-label">' +
-            '<label for="ks-editor-code-type">' +
-            '类型：' +
-            '</label>' +
-            '</td>' +
-            '<td class="{prefixCls}code-content">' +
-            '<select ' +
-            'id="ks-editor-code-type" ' +
-            ' class="{prefixCls}code-type">' +
-            S.map(codeTypes, function (codeType) {
-                return '<option value="' + codeType[1] + '">' + codeType[0] + '</option>';
-            }) +
-            '</select>' +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td>' +
-            '<label for="ks-editor-code-textarea">' +
-            '代码：' +
-            '</label>' +
-            '</td>' +
-            '<td>' +
-            '<textarea ' +
-            'id="ks-editor-code-textarea" ' +
-            ' class="{prefixCls}code-textarea {prefixCls}input">' +
-            '</textarea>' +
-            '</td>' +
-            '</tr>' +
-            '</table>' +
-            '</div>',
-        footTpl = '<div class="{prefixCls}code-table-action">' +
-            '<a href="javascript:void(\'插入\')"' +
-            ' class="{prefixCls}code-insert {prefixCls}button">插入</a>' +
-            '<a href="javascript:void(\'取消\')"' +
-            ' class="{prefixCls}code-cancel {prefixCls}button">取消</a>' +
-            '</td>' +
-            '</div>',
-        codeTpl = '<pre class="prettyprint ks-editor-code brush:{type};toolbar:false;">' +
-            '{code}' +
-            '</pre>';
-
+            [
+                'ActionScript3',
+                'as3'
+            ],
+            [
+                'Bash/Shell',
+                'bash'
+            ],
+            [
+                'C/C++',
+                'cpp'
+            ],
+            [
+                'Css',
+                'css'
+            ],
+            [
+                'CodeFunction',
+                'cf'
+            ],
+            [
+                'C#',
+                'c#'
+            ],
+            [
+                'Delphi',
+                'delphi'
+            ],
+            [
+                'Diff',
+                'diff'
+            ],
+            [
+                'Erlang',
+                'erlang'
+            ],
+            [
+                'Groovy',
+                'groovy'
+            ],
+            [
+                'HTML',
+                'html'
+            ],
+            [
+                'Java',
+                'java'
+            ],
+            [
+                'JavaFx',
+                'jfx'
+            ],
+            [
+                'Javascript',
+                'js'
+            ],
+            [
+                'Perl',
+                'pl'
+            ],
+            [
+                'Php',
+                'php'
+            ],
+            [
+                'Plain Text',
+                'plain'
+            ],
+            [
+                'PowerShell',
+                'ps'
+            ],
+            [
+                'Python',
+                'python'
+            ],
+            [
+                'Ruby',
+                'ruby'
+            ],
+            [
+                'Scala',
+                'scala'
+            ],
+            [
+                'Sql',
+                'sql'
+            ],
+            [
+                'Vb',
+                'vb'
+            ],
+            [
+                'Xml',
+                'xml'
+            ]
+        ], bodyTpl = '<div class="{prefixCls}code-wrap">' + '<table class="{prefixCls}code-table">' + '<tr>' + '<td class="{prefixCls}code-label">' + '<label for="ks-editor-code-type">' + '\u7C7B\u578B\uFF1A' + '</label>' + '</td>' + '<td class="{prefixCls}code-content">' + '<select ' + 'id="ks-editor-code-type" ' + ' class="{prefixCls}code-type">' + S.map(codeTypes, function (codeType) {
+            return '<option value="' + codeType[1] + '">' + codeType[0] + '</option>';
+        }) + '</select>' + '</td>' + '</tr>' + '<tr>' + '<td>' + '<label for="ks-editor-code-textarea">' + '\u4EE3\u7801\uFF1A' + '</label>' + '</td>' + '<td>' + '<textarea ' + 'id="ks-editor-code-textarea" ' + ' class="{prefixCls}code-textarea {prefixCls}input">' + '</textarea>' + '</td>' + '</tr>' + '</table>' + '</div>', footTpl = '<div class="{prefixCls}code-table-action">' + '<a href="javascript:void(\'\u63D2\u5165\')"' + ' class="{prefixCls}code-insert {prefixCls}button">\u63D2\u5165</a>' + '<a href="javascript:void(\'\u53D6\u6D88\')"' + ' class="{prefixCls}code-cancel {prefixCls}button">\u53D6\u6D88</a>' + '</td>' + '</div>', codeTpl = '<pre class="prettyprint ks-editor-code brush:{type};toolbar:false;">' + '{code}' + '</pre>';
     function CodeDialog(editor) {
         this.editor = editor;
     }
-
     S.augment(CodeDialog, {
         initDialog: function () {
-            var self = this,
-                prefixCls = self.editor.get('prefixCls') + 'editor-',
-                el,
-                d;
+            var self = this, prefixCls = self.editor.get('prefixCls') + 'editor-', el, d;
             d = self.dialog = new Dialog4E({
                 width: 500,
                 mask: true,
-                headerContent: '插入代码',
-                bodyContent: S.substitute(bodyTpl, {
-                    prefixCls: prefixCls
-                }),
-                footerContent: S.substitute(footTpl, {
-                    prefixCls: prefixCls
-                })
+                headerContent: '\u63D2\u5165\u4EE3\u7801',
+                bodyContent: S.substitute(bodyTpl, { prefixCls: prefixCls }),
+                footerContent: S.substitute(footTpl, { prefixCls: prefixCls })
             }).render();
             el = d.get('el');
-
             self.insert = el.one('.' + prefixCls + 'code-insert');
             self.cancel = el.one('.' + prefixCls + 'code-cancel');
-            self.type = MenuButton.Select.decorate(el.one('.' + prefixCls + 'code-type'),
-                {
-                    prefixCls: prefixCls + 'big-',
-                    width: 150,
-                    menuCfg: {
-                        prefixCls: prefixCls,
-                        height: 320,
-                        render: d.get('contentEl')
-                    }
-                });
+            self.type = MenuButton.Select.decorate(el.one('.' + prefixCls + 'code-type'), {
+                prefixCls: prefixCls + 'big-',
+                width: 150,
+                menuCfg: {
+                    prefixCls: prefixCls,
+                    height: 320,
+                    render: d.get('contentEl')
+                }
+            });
             self.code = el.one('.' + prefixCls + 'code-textarea');
             self.insert.on('click', self._insert, self);
             self.cancel.on('click', self.hide, self);
@@ -135,20 +157,22 @@ KISSY.add('editor/plugin/code/dialog',['editor', 'menubutton', '../dialog'], fun
             this.dialog.hide();
         },
         _insert: function () {
-            var self = this,
-                val,
-                editor = self.editor,
-                code = self.code;
+            var self = this, val, editor = self.editor, code = self.code;
             if (!S.trim(val = code.val())) {
                 /*global alert*/
-                alert('请输入代码!');
+                alert('\u8BF7\u8F93\u5165\u4EE3\u7801!');
                 return;
             }
             var codeEl = S.all(S.substitute(codeTpl, {
-                type: self.type.get('value'),
-                code: S.escapeHtml(val)
-            }), editor.get('document')[0]);
-            self.dialog.hide();
+                    type: self.type.get('value'),
+                    code: S.escapeHtml(val)
+                }), editor.get('document')[0]);
+            self.dialog.hide();    // chrome:
+                                   // insert 完光标定位在了 pre 文字的末尾，不合适
+                                   // <pre>xxx ^$</pre>
+                                   // 应该是
+                                   // <pre>xxxx</pre>
+                                   // <p>^$</p>
             // chrome:
             // insert 完光标定位在了 pre 文字的末尾，不合适
             // <pre>xxx ^$</pre>
@@ -157,13 +181,10 @@ KISSY.add('editor/plugin/code/dialog',['editor', 'menubutton', '../dialog'], fun
             // <p>^$</p>
             editor.insertElement(codeEl);
             var range = editor.getSelection().getRanges()[0];
-
             var next = codeEl.next(notWhitespaceEval, 1);
-            var nextName = next && next[0].nodeType === NodeType.ELEMENT_NODE&& next.nodeName();
+            var nextName = next && next[0].nodeType === NodeType.ELEMENT_NODE && next.nodeName();    // Check if it's a block element that accepts text.
             // Check if it's a block element that accepts text.
-            if (!(nextName &&
-                xhtmlDtd.$block[ nextName ] &&
-                xhtmlDtd[ nextName ]['#text'])) {
+            if (!(nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName]['#text'])) {
                 next = S.all('<p></p>', editor.get('document')[0]);
                 if (!S.UA.ie) {
                     next._4eAppendBogus();
@@ -180,7 +201,8 @@ KISSY.add('editor/plugin/code/dialog',['editor', 'menubutton', '../dialog'], fun
             this.dialog.show();
         }
     });
-
     return CodeDialog;
 });
+
+
 

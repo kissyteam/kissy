@@ -1,3 +1,1 @@
-{
- "editor/plugin/remove-format/cmd": ["editor"] 
-}
+{"editor/plugin/remove-format/cmd":["editor","dom"]}

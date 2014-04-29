@@ -1,25 +1,20 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:48
+build time: Apr 29 15:04
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/link/utils
-
 */
 /**
  * @ignore
  * link utils
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/link/utils',['editor'], function (S, require) {
+KISSY.add('editor/plugin/link/utils', ['editor'], function (S, require) {
     var Editor = require('editor');
-    var Node = S.Node,
-        KEStyle = Editor.Style,
-        savedHref = '_ke_saved_href',
-        linkStyle = {
+    var Node = S.Node, KEStyle = Editor.Style, savedHref = '_ke_saved_href', linkStyle = {
             element: 'a',
             attributes: {
                 'href': '#(href)',
@@ -33,10 +28,8 @@ KISSY.add('editor/plugin/link/utils',['editor'], function (S, require) {
                 target: '#(target)'
             }
         };
-
     function getAttributes(el) {
-        var attributes = el.attributes,
-            re = {};
+        var attributes = el.attributes, re = {};
         for (var i = 0; i < attributes.length; i++) {
             var a = attributes[i];
             if (a.specified) {
@@ -48,14 +41,11 @@ KISSY.add('editor/plugin/link/utils',['editor'], function (S, require) {
         }
         return re;
     }
-
-
     function removeLink(editor, a) {
         editor.execCommand('save');
-        var sel = editor.getSelection(),
-            range = sel.getRanges()[0];
+        var sel = editor.getSelection(), range = sel.getRanges()[0];
         if (range && range.collapsed) {
-            var bs = sel.createBookmarks();
+            var bs = sel.createBookmarks();    // 不使用核心 styles ，直接清除元素标记即可。
             // 不使用核心 styles ，直接清除元素标记即可。
             a._4eRemove(true);
             sel.selectBookmarks(bs);
@@ -66,21 +56,18 @@ KISSY.add('editor/plugin/link/utils',['editor'], function (S, require) {
         editor.execCommand('save');
         editor.notifySelectionChange();
     }
-
     function applyLink(editor, attr, _selectedEl) {
         // 注意同步，取的话要从 _ke_saved_href 取原始值的
-        attr[savedHref] = attr.href;
+        attr[savedHref] = attr.href;    // 是修改行为
         // 是修改行为
         if (_selectedEl) {
             editor.execCommand('save');
             _selectedEl.attr(attr);
         } else {
-            var sel = editor.getSelection(),
-                range = sel && sel.getRanges()[0];
+            var sel = editor.getSelection(), range = sel && sel.getRanges()[0];    //编辑器没有焦点或没有选择区域时直接插入链接地址
             //编辑器没有焦点或没有选择区域时直接插入链接地址
             if (!range || range.collapsed) {
-                var a = new Node('<a>' + attr.href + '</a>',
-                    attr, editor.get('document')[0]);
+                var a = new Node('<a>' + attr.href + '</a>', attr, editor.get('document')[0]);
                 editor.insertElement(a);
             } else {
                 editor.execCommand('save');
@@ -91,7 +78,6 @@ KISSY.add('editor/plugin/link/utils',['editor'], function (S, require) {
         editor.execCommand('save');
         editor.notifySelectionChange();
     }
-
     return {
         removeLink: removeLink,
         applyLink: applyLink,

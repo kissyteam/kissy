@@ -1,25 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:55
+build time: Apr 29 15:12
 */
 /*
-combined files : 
-
+combined modules:
 scroll-view/plugin/pull-to-refresh
-
 */
 /**
  * @ignore
  * pull-to-refresh plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
+KISSY.add('scroll-view/plugin/pull-to-refresh', ['base'], function (S, require) {
     var Base = require('base');
     var substitute = S.substitute;
     var transformVendorInfo = S.Feature.getCssVendorInfo('transform');
-    var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;
-
+    var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;    /**
+     * pull to refresh plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.PullToRefresh
+     * @extend KISSY.Base
+     */
     /**
      * pull to refresh plugin for ScrollView
      * @class KISSY.ScrollView.Plugin.PullToRefresh
@@ -27,32 +28,23 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
      */
     return Base.extend({
         pluginId: this.getName(),
-
         _onSetState: function (e) {
             if (!this.scrollView) {
                 return;
             }
-            var status = e.newVal,
-                self = this,
-                prefixCls = self.scrollView.get('prefixCls'),
-                $el = self.$el;
-            $el.attr('class', prefixCls +
-                'scroll-view-pull-to-refresh ' +
-                prefixCls + 'scroll-view-' + status);
+            var status = e.newVal, self = this, prefixCls = self.scrollView.get('prefixCls'), $el = self.$el;
+            $el.attr('class', prefixCls + 'scroll-view-pull-to-refresh ' + prefixCls + 'scroll-view-' + status);
             self.labelEl.html(self.get(status + 'Html'));
             self.elHeight = $el.height();
         },
-
         _onScrollMove: function (e) {
-            var self = this,
-                b = e.newVal;
+            var self = this, b = e.newVal;
             if (0 - b > self.elHeight) {
                 self.set('state', 'releasing');
             } else if (b < 0) {
                 self.set('state', 'pulling');
             }
         },
-
         _onDragEnd: function () {
             var self = this;
             var scrollView = self.scrollView;
@@ -61,21 +53,15 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
                 scrollView.minScroll.top = -self.elHeight;
                 var loadFn = self.get('loadFn');
                 self.set('state', 'loading');
-
                 var callback = function () {
                     // will animate to restore
-                    scrollView.scrollTo({
-                        top: -self.elHeight
-                    });
-                    scrollView.scrollTo({
-                        top: scrollView.minScroll.top
-                    }, {
+                    scrollView.scrollTo({ top: -self.elHeight });
+                    scrollView.scrollTo({ top: scrollView.minScroll.top }, {
                         duration: scrollView.get('snapDuration'),
                         easing: scrollView.get('snapEasing')
                     });
                     self.set('state', 'pulling');
                 };
-
                 if (loadFn) {
                     loadFn.call(self, callback);
                 } else {
@@ -83,7 +69,6 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
                 }
             }
         },
-
         _onSetScrollTop: function (v) {
             v = v.newVal;
             if (v < 0) {
@@ -91,28 +76,17 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
                 this.el.style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
             }
         },
-
         pluginRenderUI: function (scrollView) {
             var self = this;
             self.scrollView = scrollView;
             var prefixCls = scrollView.get('prefixCls');
-            var el = S.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' +
-                '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' +
-                '<span class="{prefixCls}scroll-view-pull-icon"></span>' +
-                '<span class="{prefixCls}scroll-view-pull-label"></span>' +
-                '</div>' +
-                '</div>', {
-                prefixCls: prefixCls
-            }));
+            var el = S.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-label"></span>' + '</div>' + '</div>', { prefixCls: prefixCls }));
             self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
             scrollView.get('el').prepend(el);
             self.$el = el;
             self.el = el[0];
-            self._onSetState({
-                newValue: 'pulling'
-            });
+            self._onSetState({ newValue: 'pulling' });
         },
-
         pluginBindUI: function (scrollView) {
             var self = this;
             scrollView.on('afterScrollTopChange', self._onScrollMove, self);
@@ -120,7 +94,6 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
             self.on('afterStateChange', self._onSetState, self);
             scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);
         },
-
         pluginDestructor: function () {
             this.$el.remove();
         }
@@ -134,9 +107,7 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
             /**
              * @ignore
              */
-            pullingHtml: {
-                value: 'Pull down to refresh...'
-            },
+            pullingHtml: { value: 'Pull down to refresh...' },
             /**
              * releasing hint html.
              * Defaults to: release to refresh...
@@ -145,9 +116,7 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
             /**
              * @ignore
              */
-            releasingHtml: {
-                value: 'release to refresh...'
-            },
+            releasingHtml: { value: 'release to refresh...' },
             /**
              * loading hint html.
              * Defaults to: loading...
@@ -156,9 +125,7 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
             /**
              * @ignore
              */
-            loadingHtml: {
-                value: 'loading...'
-            },
+            loadingHtml: { value: 'loading...' },
             /**
              * load function to load data asynchronously
              * @cfg {Function} loadFn
@@ -166,11 +133,8 @@ KISSY.add('scroll-view/plugin/pull-to-refresh',['base'], function (S, require) {
             /**
              * @ignore
              */
-            loadFn: {
-            },
-            state: {
-                value: 'pulling'
-            }
+            loadFn: {},
+            state: { value: 'pulling' }
         }
     });
 });

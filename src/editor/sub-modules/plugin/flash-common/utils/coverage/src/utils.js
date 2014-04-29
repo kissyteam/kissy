@@ -292,7 +292,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/utils.js'].lineData[7]++;
   var SWF = require('swf');
   _$jscoverage['/utils.js'].lineData[8]++;
-  var Dom = S.require('dom'), flashUtils = {
+  var Dom = require('dom'), flashUtils = {
   insertFlash: function(editor, src, attrs, _cls, _type) {
   _$jscoverage['/utils.js'].functionData[1]++;
   _$jscoverage['/utils.js'].lineData[13]++;

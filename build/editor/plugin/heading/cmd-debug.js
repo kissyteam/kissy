@@ -1,13 +1,11 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:47
+build time: Apr 29 15:03
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/heading/cmd
-
 */
 /**
  * @ignore
@@ -15,12 +13,10 @@ editor/plugin/heading/cmd
  * Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6")
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/heading/cmd',['editor'], function (S, require) {
+KISSY.add('editor/plugin/heading/cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
-
     return {
         init: function (editor) {
-
             if (!editor.hasCommand('heading')) {
                 editor.addCommand('heading', {
                     exec: function (editor, tag) {
@@ -32,15 +28,11 @@ KISSY.add('editor/plugin/heading/cmd',['editor'], function (S, require) {
                         if (tag === currentValue) {
                             tag = 'p';
                         }
-                        new Editor.Style({
-                            element: tag
-                        }).apply(editor.get('document')[0]);
+                        new Editor.Style({ element: tag }).apply(editor.get('document')[0]);
                         editor.execCommand('save');
                     }
                 });
-
                 var queryCmd = Editor.Utils.getQueryCmd('heading');
-
                 editor.addCommand(queryCmd, {
                     exec: function (editor) {
                         var selection = editor.getSelection();
@@ -56,8 +48,6 @@ KISSY.add('editor/plugin/heading/cmd',['editor'], function (S, require) {
                     }
                 });
             }
-
-
         }
     };
 });

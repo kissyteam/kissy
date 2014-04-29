@@ -1,35 +1,34 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:50
+build time: Apr 29 15:06
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/underline
-
 */
 /**
  * @ignore
  * underline button
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/underline',['./font/ui', './underline/cmd', './button'], function (S, require) {
+KISSY.add('editor/plugin/underline', [
+    './font/ui',
+    './underline/cmd',
+    './button'
+], function (S, require) {
     var ui = require('./font/ui');
     var cmd = require('./underline/cmd');
     require('./button');
     function Underline() {
     }
-
     S.augment(Underline, {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
-
             editor.addButton('underline', {
                 cmdType: 'underline',
-                tooltip: '下划线'
+                tooltip: '\u4E0B\u5212\u7EBF'
             }, ui.Button);
-
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
                     if (e.ctrlKey && e.keyCode === S.Node.KeyCode.U) {
@@ -40,6 +39,7 @@ KISSY.add('editor/plugin/underline',['./font/ui', './underline/cmd', './button']
             });
         }
     });
-
     return Underline;
 });
+
+

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var logger = S.getLogger('s/event');
     var BaseEvent = require('event/base');
     var Dom = require('dom');
     var Special = require('./special');
@@ -15,7 +16,6 @@ KISSY.add(function (S, require) {
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var BaseUtils = BaseEvent.Utils;
-    var logger = S.getLogger('s/event');
 
     /**
      * custom event for dom

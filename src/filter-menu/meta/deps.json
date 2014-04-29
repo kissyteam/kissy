@@ -1,3 +1,1 @@
-{
- "filter-menu": ["menu", "component/extension/content-xtpl", "component/extension/content-box"] 
-}
+{"filter-menu":["menu","component/extension/content-box","component/extension/content-xtpl"]}

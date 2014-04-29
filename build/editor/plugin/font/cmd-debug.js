@@ -1,23 +1,20 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:47
+build time: Apr 29 15:03
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/font/cmd
-
 */
 /**
  * @ignore
  * font command.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/font/cmd',['editor'], function (S, require) {
+KISSY.add('editor/plugin/font/cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
     var getQueryCmd = Editor.Utils.getQueryCmd;
-
     function getValueFromSingle(element, styleObj) {
         var nodeName = element.nodeName();
         if (styleObj.element !== nodeName) {
@@ -25,35 +22,30 @@ KISSY.add('editor/plugin/font/cmd',['editor'], function (S, require) {
         }
         var styles = styleObj.styles, v;
         for (var s in styles) {
-            if ((v = element.style(s))) {
+            if (v = element.style(s)) {
                 return v;
             }
         }
         var overrides = styleObj.overrides;
         for (var i = 0; i < overrides.length; i++) {
             var override = overrides[i];
-            if( (override.element !== nodeName)) {
+            if (override.element !== nodeName) {
                 continue;
             }
             var attributes = override.attributes;
             for (var a in attributes) {
-                if ((v = element.attr(a))) {
+                if (v = element.attr(a)) {
                     return v;
                 }
             }
         }
         return false;
     }
-
     function getValueFromStyleObj(elementPath, styleObj) {
-        var elements = elementPath.elements,
-            element,
-            i,
-            v;
+        var elements = elementPath.elements, element, i, v;
         for (i = 0; i < elements.length; i++) {
-            element = elements[ i ];
-            if (elementPath.block && element[0] === elementPath.block[0] ||
-                elementPath.blockLimit && element[0] === elementPath.blockLimit[0]) {
+            element = elements[i];
+            if (elementPath.block && element[0] === elementPath.block[0] || elementPath.blockLimit && element[0] === elementPath.blockLimit[0]) {
                 continue;
             }
             v = getValueFromSingle(element, styleObj);
@@ -63,7 +55,6 @@ KISSY.add('editor/plugin/font/cmd',['editor'], function (S, require) {
         }
         return v;
     }
-
     return {
         addButtonCmd: function (editor, cmdType, style) {
             var queryCmd = getQueryCmd(cmdType);
@@ -82,20 +73,17 @@ KISSY.add('editor/plugin/font/cmd',['editor'], function (S, require) {
                         editor.notifySelectionChange();
                     }
                 });
-
                 editor.addCommand(queryCmd, {
                     exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
-                            var startElement = selection.getStartElement(),
-                                currentPath = new Editor.ElementPath(startElement);
-                            return  style.checkActive(currentPath);
+                            var startElement = selection.getStartElement(), currentPath = new Editor.ElementPath(startElement);
+                            return style.checkActive(currentPath);
                         }
                     }
                 });
             }
         },
-
         addSelectCmd: function (editor, cmdType, styleObj) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {
@@ -103,10 +91,7 @@ KISSY.add('editor/plugin/font/cmd',['editor'], function (S, require) {
                     exec: function (editor, value) {
                         editor.focus();
                         var currentValue = editor.queryCommandValue(cmdType) || '';
-                        var style = new Editor.Style(styleObj, {
-                                value: value
-                            }),
-                            doc = editor.get('document')[0];
+                        var style = new Editor.Style(styleObj, { value: value }), doc = editor.get('document')[0];
                         editor.execCommand('save');
                         if (value.toLowerCase() === currentValue.toLowerCase()) {
                             style.remove(doc);

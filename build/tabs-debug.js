@@ -1,420 +1,108 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:56
+build time: Apr 29 15:13
 */
 /*
-combined files : 
-
+combined modules:
+tabs
 tabs/bar
 tabs/body
 tabs/tab
 tabs/panel
-tabs
-
 */
-/**
- * @ignore
- * TabBar for KISSY.
- * @author yiminghe@gmail.com
- */
-KISSY.add('tabs/bar',['toolbar'], function (S, require) {
-    var Toolbar = require('toolbar');
-    /**
-     * tab bar container for tab tabs.xclass: 'tabs-bar'.
-     * @class  KISSY.Tabs.Bar
-     * @extends KISSY.Toolbar
-     */
-    var TabBar = Toolbar.extend({
-        beforeCreateDom: function (renderData) {
-            renderData.elAttrs.role = 'tablist';
-        },
-
-        bindUI: function () {
-            var self = this;
-            self.on('afterSelectedChange', function (e) {
-                if (e.newVal && e.target.isTabsTab) {
-                    self.set('selectedTab', e.target);
-                }
-            });
-        },
-
-        syncUI: function () {
-            var self = this,
-                children = self.get('children');
-            S.each(children, function (c) {
-                if (c.get('selected')) {
-                    self.setInternal('selectedTab', c);
-                    return false;
-                }
-                return undefined;
-            });
-        },
-
-        handleKeyDownInternal: function (e) {
-            var self = this;
-            var current = self.get('selectedTab');
-            var next = self.getNextItemByKeyDown(e, current);
-            if (typeof next === 'boolean') {
-                return next;
-            } else {
-                next.set('selected', true);
-                return true;
-            }
-        },
-
-        _onSetSelectedTab: function (v, e) {
-            var prev;
-            if (v) {
-                if (e && (prev = e.prevVal)) {
-                    prev.set('selected', false);
-                }
-                v.set('selected', true);
-            }
-        },
-
-        _onSetHighlightedItem: function (v, e) {
-            var self = this;
-            self.callSuper(v, e);
-            if (self.get('changeType') === 'mouse') {
-                self._onSetSelectedTab.apply(self, arguments);
-            }
-        }
-
-    }, {
-        ATTRS: {
-            selectedTab: {
-            },
-            changeType: {
-                value: 'click'
-            },
-            defaultChildCfg: {
-                value: {
-                    xclass: 'tabs-tab'
-                }
-            }
-        },
-        xclass: 'tabs-bar'
-    });
-
-    /**
-     * tabs change type
-     * @enum {String}  KISSY.Tabs.ChangeType
-     */
-    TabBar.ChangeType = {
-        /**
-         * click
-         */
-        CLICK: 'click',
-        /**
-         * mouse
-         */
-        MOUSE: 'mouse'
-    };
-
-    return TabBar;
-});
-/**
- * @ignore
- * Body for tab panels.
- * @author yiminghe@gmail.com
- */
-KISSY.add('tabs/body',['component/container'], function (S, require) {
-    var Container = require('component/container');
-    /**
-     * tab body container for tab panels.xclass: 'tabs-body'.
-     * @class  KISSY.Tabs.Body
-     * @extends KISSY.Component.Container
-     */
-    var TabBody = Container.extend({
-        bindUI: function () {
-            var self = this;
-            self.on('afterSelectedPanelIndexChange', function (e) {
-                var children = self.get('children'),
-                    newIndex = e.newVal,
-                    hidePanel;
-                if (children[newIndex]) {
-                    if ((hidePanel = children[e.prevVal])) {
-                        hidePanel.set('selected', false);
-                    }
-                    self.selectPanelByIndex(newIndex);
-                }
-            });
-        },
-
-        syncUI: function () {
-            var self = this,
-                children = self.get('children');
-            S.each(children, function (c, i) {
-                if (c.get('selected')) {
-                    self.set('selectedPanelIndex', i);
-                    return false;
-                }
-                return undefined;
-            });
-        },
-
-        createChild: function (index) {
-            return checkLazy(this, 'createChild', index);
-        },
-
-        renderChild: function (index) {
-            return checkLazy(this, 'renderChild', index);
-        },
-
-        selectPanelByIndex: function (newIndex) {
-            this.get('children')[newIndex].set('selected', true);
-            if (this.get('lazyRender')) {
-                // lazy render
-                this.renderChild(newIndex);
-            }
-        }
-    }, {
-        ATTRS: {
-            selectedPanelIndex: {
-            },
-            allowTextSelection: {
-                value: true
-            },
-            focusable: {
-                value: false
-            },
-            lazyRender: {
-            },
-            handleGestureEvents: {
-                value: false
-            },
-            defaultChildCfg: {
-                value: {
-                    xclass: 'tabs-panel'
-                }
-            }
-        },
-        xclass: 'tabs-body'
-    });
-
-    function checkLazy(self, method, index) {
-        if (self.get('lazyRender')) {
-            var c = self.get('children')[index];
-            if (!c.get('selected')) {
-                return c;
-            }
-        }
-        return TabBody.superclass[method].call(self, index);
-    }
-
-    return TabBody;
-});
-/**
- * @ignore
- * Single tab in tab bar.
- * @author yiminghe@gmail.com
- */
-KISSY.add('tabs/tab',['button'], function (S, require) {
-    var Button = require('button');
-
-    /**
-     * KISSY.Tabs.Tab. xclass:'tabs-tab'
-     * @class KISSY.Tabs.Tab
-     * @extends KISSY.Button
-     */
-    return Button.extend({
-        isTabsTab: true,
-
-        beforeCreateDom: function (renderData) {
-            var attrs = renderData.elAttrs;
-            attrs.role = 'tab';
-            if (renderData.selected) {
-                attrs['aria-selected'] = true;
-                renderData.elCls.push(this.getBaseCssClasses('selected'));
-            }
-        },
-
-        handleClickInternal: function (e) {
-            this.callSuper(e);
-            this.set('selected', true);
-        },
-
-        _onSetSelected: function (v) {
-            var el = this.$el;
-            var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? 'addClass' : 'removeClass'](selectedCls)
-                .attr('aria-selected', !!v);
-        }
-    }, {
-        ATTRS: {
-            handleGestureEvents: {
-                value: false
-            },
-            focusable: {
-                value: false
-            },
-            /**
-             * whether selected
-             * @cfg {Boolean} selected
-             */
-            /**
-             * @ignore
-             */
-            selected: {
-                render: 1,
-                sync: 0,
-                parse: function (el) {
-                    return el.hasClass(this.getBaseCssClass('selected'));
-                }
-            }
-        },
-        xclass: 'tabs-tab'
-    });
-});
-/**
- * @ignore
- * single tab panel.
- * @author yiminghe@gmail.com
- */
-KISSY.add('tabs/panel',['component/container'], function (S, require) {
-    var Container = require('component/container');
-    /**
-     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
-     * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Container
-     */
-    return Container.extend({
-        isTabsPanel: 1,
-
-        beforeCreateDom: function (renderData) {
-            var self = this;
-            renderData.elAttrs.role = 'tabpanel';
-            if (renderData.selected) {
-                renderData.elCls.push(self.getBaseCssClasses('selected'));
-            } else {
-                renderData.elAttrs['aria-hidden'] = false;
-            }
-        },
-
-        _onSetSelected: function (v) {
-            var el = this.$el;
-            var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? 'addClass' : 'removeClass'](selectedCls)
-                .attr('aria-hidden', !v);
-        }
-    }, {
-        ATTRS: {
-            /**
-             * whether selected
-             * @cfg {Boolean} selected
-             */
-            /**
-             * @ignore
-             */
-            selected: {
-                render: 1,
-                sync: 0,
-                parse: function (el) {
-                    return el.hasClass(this.getBaseCssClass('selected'));
-                }
-            },
-            focusable: {
-                value: false
-            },
-            allowTextSelection: {
-                value: true
-            }
-        },
-        xclass: 'tabs-panel'
-    });
-});
 /**
  * @ignore
  * KISSY Tabs Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add('tabs',['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel'], function (S, require) {
+KISSY.add('tabs', [
+    'component/container',
+    'tabs/bar',
+    'tabs/body',
+    'tabs/tab',
+    'tabs/panel'
+], function (S, require) {
     var Container = require('component/container');
     var Bar = require('tabs/bar');
     var Body = require('tabs/body');
     require('tabs/tab');
     var Panel = require('tabs/panel');
     var CLS = 'top bottom left right';
-
     function setBar(children, barOrientation, bar) {
         children[BarIndexMap[barOrientation]] = bar;
     }
-
     function setBody(children, barOrientation, body) {
         children[1 - BarIndexMap[barOrientation]] = body;
-    }
-
+    }    /**
+     * Tabs for KISSY
+     * @class KISSY.Tabs
+     * @extends KISSY.Component.Container
+     */
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
      * @extends KISSY.Component.Container
      */
     var Tabs = Container.extend({
-        initializer: function () {
-            var self = this,
-                items = self.get('items');
-
-            // items sugar
-            if (items) {
-                var children = self.get('children'),
-                    barOrientation = self.get('barOrientation'),
-                    selected,
-                    prefixCls = self.get('prefixCls'),
-                    tabItem,
-                    panelItem,
-                    bar = {
-                        prefixCls: prefixCls,
-                        xclass: 'tabs-bar',
-                        changeType: self.get('changeType'),
-                        children: []
-                    },
-                    body = {
-                        prefixCls: prefixCls,
-                        xclass: 'tabs-body',
-                        lazyRender: self.get('lazyRender'),
-                        children: []
-                    },
-                    barChildren = bar.children,
-                    panels = body.children;
-
-                S.each(items, function (item) {
-                    selected = selected || item.selected;
-                    barChildren.push(tabItem = {
-                        content: item.title,
-                        selected: item.selected
+            initializer: function () {
+                var self = this, items = self.get('items');    // items sugar
+                // items sugar
+                if (items) {
+                    var children = self.get('children'), barOrientation = self.get('barOrientation'), selected, prefixCls = self.get('prefixCls'), tabItem, panelItem, bar = {
+                            prefixCls: prefixCls,
+                            xclass: 'tabs-bar',
+                            changeType: self.get('changeType'),
+                            children: []
+                        }, body = {
+                            prefixCls: prefixCls,
+                            xclass: 'tabs-body',
+                            lazyRender: self.get('lazyRender'),
+                            children: []
+                        }, barChildren = bar.children, panels = body.children;
+                    S.each(items, function (item) {
+                        selected = selected || item.selected;
+                        barChildren.push(tabItem = {
+                            content: item.title,
+                            selected: item.selected
+                        });
+                        panels.push(panelItem = {
+                            content: item.content,
+                            selected: item.selected
+                        });
                     });
-                    panels.push(panelItem = {
-                        content: item.content,
-                        selected: item.selected
-                    });
-
-                });
-
-                if (!selected && barChildren.length) {
-                    barChildren[0].selected = true;
-                    panels[0].selected = true;
+                    if (!selected && barChildren.length) {
+                        barChildren[0].selected = true;
+                        panels[0].selected = true;
+                    }
+                    setBar(children, barOrientation, bar);
+                    setBody(children, barOrientation, body);
                 }
-
-                setBar(children, barOrientation, bar);
-                setBody(children, barOrientation, body);
-            }
-        },
-
-        beforeCreateDom: function (renderData) {
-            renderData.elCls
-                .push(this.getBaseCssClass(this.get('barOrientation')));
-        },
-
-        decorateDom: function () {
-            this.get('bar').set('changeType', this.get('changeType'));
-        },
-
-        bindUI: function () {
-            this.on('afterSelectedTabChange', function (e) {
-                this.setSelectedTab(e.newVal);
-            });
-
+            },
+            beforeCreateDom: function (renderData) {
+                renderData.elCls.push(this.getBaseCssClass(this.get('barOrientation')));
+            },
+            decorateDom: function () {
+                this.get('bar').set('changeType', this.get('changeType'));
+            },
+            bindUI: function () {
+                this.on('afterSelectedTabChange', function (e) {
+                    this.setSelectedTab(e.newVal);
+                });    /**
+             * fired when selected tab is changed
+             * @event afterSelectedTabChange
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.newVal selected tab
+             */
+                       /**
+             * fired before selected tab is changed
+             * @event beforeSelectedTabChange
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
+             */
+            },
             /**
              * fired when selected tab is changed
              * @event afterSelectedTabChange
@@ -422,7 +110,6 @@ KISSY.add('tabs',['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 't
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal selected tab
              */
-
             /**
              * fired before selected tab is changed
              * @event beforeSelectedTabChange
@@ -430,9 +117,7 @@ KISSY.add('tabs',['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 't
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
              */
-        },
-
-        /**
+            /**
          * add one item to tabs
          * @param {Object} item item description
          * @param {String} item.content tab panel html
@@ -440,274 +125,213 @@ KISSY.add('tabs',['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 't
          * @param {Number} index insert index
          * @chainable
          */
-        addItem: function (item, index) {
-            var self = this,
-                bar = self.get('bar'),
-                selectedTab,
-                tabItem,
-                panelItem,
-                barChildren = bar.get('children'),
-                body = self.get('body');
-
-            if (typeof index === 'undefined') {
-                index = barChildren.length;
-            }
-
-            tabItem = {
-                content: item.title
-            };
-
-            panelItem = {
-                content: item.content
-            };
-
-            bar.addChild(tabItem, index);
-
-            selectedTab = barChildren[index];
-
-            body.addChild(panelItem, index);
-
-            if (item.selected) {
-                bar.set('selectedTab', selectedTab);
-                body.set('selectedPanelIndex', index);
-            }
-
-            return self;
-        },
-
-        /**
+            addItem: function (item, index) {
+                var self = this, bar = self.get('bar'), selectedTab, tabItem, panelItem, barChildren = bar.get('children'), body = self.get('body');
+                if (typeof index === 'undefined') {
+                    index = barChildren.length;
+                }
+                tabItem = { content: item.title };
+                panelItem = { content: item.content };
+                bar.addChild(tabItem, index);
+                selectedTab = barChildren[index];
+                body.addChild(panelItem, index);
+                if (item.selected) {
+                    bar.set('selectedTab', selectedTab);
+                    body.set('selectedPanelIndex', index);
+                }
+                return self;
+            },
+            /**
          * remove specified tab from current tabs
          * @param {Number} index
          * @param {Boolean} destroy whether destroy specified tab and panel
          * @chainable
          */
-        removeItemAt: function (index, destroy) {
-            var self = this,
-                bar = /**
+            removeItemAt: function (index, destroy) {
+                var self = this, bar = /**
                  @ignore
                  @type KISSY.Component.Control
-                 */self.get('bar'),
-                barCs = bar.get('children'),
-                tab = bar.getChildAt(index),
-                body = /**
+                 */
+                    self.get('bar'), barCs = bar.get('children'), tab = bar.getChildAt(index), body = /**
                  @ignore
                  @type KISSY.Component.Control
-                 */self.get('body');
-            if (tab.get('selected')) {
-                if (barCs.length === 1) {
-                    bar.set('selectedTab', null);
-                } else if (index === 0) {
-                    bar.set('selectedTab', bar.getChildAt(index + 1));
-                } else {
-                    bar.set('selectedTab', bar.getChildAt(index - 1));
+                 */
+                    self.get('body');
+                if (tab.get('selected')) {
+                    if (barCs.length === 1) {
+                        bar.set('selectedTab', null);
+                    } else if (index === 0) {
+                        bar.set('selectedTab', bar.getChildAt(index + 1));
+                    } else {
+                        bar.set('selectedTab', bar.getChildAt(index - 1));
+                    }
                 }
-            }
-            bar.removeChild(bar.getChildAt(index), destroy);
-            body.removeChild(body.getChildAt(index), destroy);
-            return self;
-        },
-
-        /**
+                bar.removeChild(bar.getChildAt(index), destroy);
+                body.removeChild(body.getChildAt(index), destroy);
+                return self;
+            },
+            /**
          * remove item by specified tab
          * @param {KISSY.Tabs.Tab} tab
          * @param {Boolean} destroy whether destroy specified tab and panel
          * @chainable
          */
-        removeItemByTab: function (tab, destroy) {
-            var index = S.indexOf(tab, this.get('bar').get('children'));
-            return this.removeItemAt(index, destroy);
-        },
-
-        /**
+            removeItemByTab: function (tab, destroy) {
+                var index = S.indexOf(tab, this.get('bar').get('children'));
+                return this.removeItemAt(index, destroy);
+            },
+            /**
          * remove item by specified panel
          * @param {KISSY.Tabs.Panel} panel
          * @param {Boolean} destroy whether destroy specified tab and panel
          * @chainable
          */
-        removeItemByPanel: function (panel, destroy) {
-            var index = S.indexOf(panel, this.get('body').get('children'));
-            return this.removeItemAt(index, destroy);
-        },
-
-        /**
+            removeItemByPanel: function (panel, destroy) {
+                var index = S.indexOf(panel, this.get('body').get('children'));
+                return this.removeItemAt(index, destroy);
+            },
+            /**
          * get selected tab instance
          * @return {KISSY.Tabs.Tab}
          */
-        getSelectedTab: function () {
-            var self = this,
-                bar = self.get('bar'),
-                child = null;
-
-            S.each(bar.get('children'), function (c) {
-                if (c.get('selected')) {
-                    child = c;
-                    return false;
-                }
-                return undefined;
-            });
-
-            return child;
-        },
-
-        /**
+            getSelectedTab: function () {
+                var self = this, bar = self.get('bar'), child = null;
+                S.each(bar.get('children'), function (c) {
+                    if (c.get('selected')) {
+                        child = c;
+                        return false;
+                    }
+                    return undefined;
+                });
+                return child;
+            },
+            /**
          * get selected tab instance
          * @return {KISSY.Tabs.Tab}
          */
-        getSelectedPanel: function () {
-            var self = this,
-                body = self.get('body'),
-                child = null;
-
-            S.each(body.get('children'), function (c) {
-                if (c.get('selected')) {
-                    child = c;
-                    return false;
-                }
-                return undefined;
-            });
-
-            return child;
-        },
-
-        /**
+            getSelectedPanel: function () {
+                var self = this, body = self.get('body'), child = null;
+                S.each(body.get('children'), function (c) {
+                    if (c.get('selected')) {
+                        child = c;
+                        return false;
+                    }
+                    return undefined;
+                });
+                return child;
+            },
+            /**
          * get all tabs
          * @return {KISSY.Tabs.Tab[]}
          */
-        getTabs: function () {
-            return   this.get('bar').get('children');
-        },
-
-        /**
+            getTabs: function () {
+                return this.get('bar').get('children');
+            },
+            /**
          * get all tabs
          * @return {KISSY.Tabs.Panel[]}
          */
-        getPanels: function () {
-            return   this.get('body').get('children');
-        },
-
-        /**
+            getPanels: function () {
+                return this.get('body').get('children');
+            },
+            /**
          * @ignore
          */
-        getTabAt: function (index) {
-            return this.get('bar').get('children')[index];
-        },
-
-        /**
+            getTabAt: function (index) {
+                return this.get('bar').get('children')[index];
+            },
+            /**
          * @ignore
          */
-        getPanelAt: function (index) {
-            return this.get('body').get('children')[index];
-        },
-
-        /**
+            getPanelAt: function (index) {
+                return this.get('body').get('children')[index];
+            },
+            /**
          * set tab as selected
          * @param {KISSY.Tabs.Tab} tab
          * @chainable
          */
-        setSelectedTab: function (tab) {
-            var self = this,
-                bar = self.get('bar'),
-                body = self.get('body');
-            bar.set('selectedTab', tab);
-            body.set('selectedPanelIndex', S.indexOf(tab, bar.get('children')));
-            return this;
-        },
-
-        /**
+            setSelectedTab: function (tab) {
+                var self = this, bar = self.get('bar'), body = self.get('body');
+                bar.set('selectedTab', tab);
+                body.set('selectedPanelIndex', S.indexOf(tab, bar.get('children')));
+                return this;
+            },
+            /**
          * set panel as selected
          * @param {KISSY.Tabs.Panel} panel
          * @chainable
          */
-        setSelectedPanel: function (panel) {
-            var self = this,
-                bar = self.get('bar'),
-                body = self.get('body'),
-                selectedPanelIndex = S.indexOf(panel, body.get('children'));
-            body.set('selectedPanelIndex', selectedPanelIndex);
-            bar.set('selectedTab', self.getTabAt(selectedPanelIndex));
-            return this;
-        },
-
-        _onSetBarOrientation: function (v) {
-            var self = this,
-                el = self.$el;
-            el.removeClass(self.getBaseCssClass(CLS))
-                .addClass(self.getBaseCssClass(v));
-        }
-    }, {
-        ATTRS: {
-            /**
+            setSelectedPanel: function (panel) {
+                var self = this, bar = self.get('bar'), body = self.get('body'), selectedPanelIndex = S.indexOf(panel, body.get('children'));
+                body.set('selectedPanelIndex', selectedPanelIndex);
+                bar.set('selectedTab', self.getTabAt(selectedPanelIndex));
+                return this;
+            },
+            _onSetBarOrientation: function (v) {
+                var self = this, el = self.$el;
+                el.removeClass(self.getBaseCssClass(CLS)).addClass(self.getBaseCssClass(v));
+            }
+        }, {
+            ATTRS: {
+                /**
              *  tabs config, eg: {title:'',content:''}
              * @cfg {Object} item
              */
-            /**
+                /**
              * @ignore
              */
-            items: {
-            },
-            /**
+                items: {},
+                /**
              * tabs trigger event type, mouse or click
              * @cfg {String} changeType
              */
-            /**
+                /**
              * @ignore
              */
-            changeType: {
-            },
-
-            /**
+                changeType: {},
+                /**
              * whether allow tab to lazy render
              * @cfg {Boolean} lazyRender
              */
-            /**
+                /**
              * @ignore
              */
-            lazyRender: {
-                value: false
-            },
-
-            // real attribute
-            handleGestureEvents: {
-                value: false
-            },
-
-            allowTextSelection: {
-                value: true
-            },
-
-            focusable: {
-                value: false
-            },
-
-            bar: {
-                getter: function () {
-                    return this.get('children')[BarIndexMap[this.get('barOrientation')]];
-                }
-            },
-            body: {
-                getter: function () {
-                    return this.get('children')[1 - BarIndexMap[this.get('barOrientation')]];
-                }
-            },
-
-            /**
+                lazyRender: { value: false },
+                // real attribute
+                handleGestureEvents: { value: false },
+                allowTextSelection: { value: true },
+                focusable: { value: false },
+                bar: {
+                    getter: function () {
+                        return this.get('children')[BarIndexMap[this.get('barOrientation')]];
+                    }
+                },
+                body: {
+                    getter: function () {
+                        return this.get('children')[1 - BarIndexMap[this.get('barOrientation')]];
+                    }
+                },
+                /**
              * tab bar orientation.
              * eg: 'left' 'right' 'top' 'bottom'
              * @cfg {String} barOrientation
              */
-            barOrientation: {
-                render: 1,
-                sync: 0,
-                value: 'top',
-                parse: function (el) {
-                    var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
-                    return orientation && orientation[1] || undefined;
+                barOrientation: {
+                    render: 1,
+                    sync: 0,
+                    value: 'top',
+                    parse: function (el) {
+                        var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
+                        return orientation && orientation[1] || undefined;
+                    }
                 }
-            }
-        },
-        xclass: 'tabs'
-    });
-
+            },
+            xclass: 'tabs'
+        });    /**
+     * Tab bar orientation.
+     * @enum {String} KISSY.Tabs.Orientation
+     */
     /**
      * Tab bar orientation.
      * @enum {String} KISSY.Tabs.Orientation
@@ -730,19 +354,295 @@ KISSY.add('tabs',['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 't
          */
         RIGHT: 'right'
     };
-
     var BarIndexMap = {
-        top: 0,
-        left: 0,
-        bottom: 1,
-        right: 0
-    };
-
+            top: 0,
+            left: 0,
+            bottom: 1,
+            right: 0
+        };
     Tabs.ChangeType = Bar.ChangeType;
-
     Tabs.Bar = Bar;
     Tabs.Body = Body;
     Tabs.Panel = Panel;
-
     return Tabs;
+});
+
+/**
+ * @ignore
+ * TabBar for KISSY.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('tabs/bar', ['toolbar'], function (S, require) {
+    var Toolbar = require('toolbar');    /**
+     * tab bar container for tab tabs.xclass: 'tabs-bar'.
+     * @class  KISSY.Tabs.Bar
+     * @extends KISSY.Toolbar
+     */
+    /**
+     * tab bar container for tab tabs.xclass: 'tabs-bar'.
+     * @class  KISSY.Tabs.Bar
+     * @extends KISSY.Toolbar
+     */
+    var TabBar = Toolbar.extend({
+            beforeCreateDom: function (renderData) {
+                renderData.elAttrs.role = 'tablist';
+            },
+            bindUI: function () {
+                var self = this;
+                self.on('afterSelectedChange', function (e) {
+                    if (e.newVal && e.target.isTabsTab) {
+                        self.set('selectedTab', e.target);
+                    }
+                });
+            },
+            syncUI: function () {
+                var self = this, children = self.get('children');
+                S.each(children, function (c) {
+                    if (c.get('selected')) {
+                        self.setInternal('selectedTab', c);
+                        return false;
+                    }
+                    return undefined;
+                });
+            },
+            handleKeyDownInternal: function (e) {
+                var self = this;
+                var current = self.get('selectedTab');
+                var next = self.getNextItemByKeyDown(e, current);
+                if (typeof next === 'boolean') {
+                    return next;
+                } else {
+                    next.set('selected', true);
+                    return true;
+                }
+            },
+            _onSetSelectedTab: function (v, e) {
+                var prev;
+                if (v) {
+                    if (e && (prev = e.prevVal)) {
+                        prev.set('selected', false);
+                    }
+                    v.set('selected', true);
+                }
+            },
+            _onSetHighlightedItem: function (v, e) {
+                var self = this;
+                self.callSuper(v, e);
+                if (self.get('changeType') === 'mouse') {
+                    self._onSetSelectedTab.apply(self, arguments);
+                }
+            }
+        }, {
+            ATTRS: {
+                selectedTab: {},
+                changeType: { value: 'click' },
+                defaultChildCfg: { value: { xclass: 'tabs-tab' } }
+            },
+            xclass: 'tabs-bar'
+        });    /**
+     * tabs change type
+     * @enum {String}  KISSY.Tabs.ChangeType
+     */
+    /**
+     * tabs change type
+     * @enum {String}  KISSY.Tabs.ChangeType
+     */
+    TabBar.ChangeType = {
+        /**
+         * click
+         */
+        CLICK: 'click',
+        /**
+         * mouse
+         */
+        MOUSE: 'mouse'
+    };
+    return TabBar;
+});
+
+/**
+ * @ignore
+ * Body for tab panels.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('tabs/body', ['component/container'], function (S, require) {
+    var Container = require('component/container');    /**
+     * tab body container for tab panels.xclass: 'tabs-body'.
+     * @class  KISSY.Tabs.Body
+     * @extends KISSY.Component.Container
+     */
+    /**
+     * tab body container for tab panels.xclass: 'tabs-body'.
+     * @class  KISSY.Tabs.Body
+     * @extends KISSY.Component.Container
+     */
+    var TabBody = Container.extend({
+            bindUI: function () {
+                var self = this;
+                self.on('afterSelectedPanelIndexChange', function (e) {
+                    var children = self.get('children'), newIndex = e.newVal, hidePanel;
+                    if (children[newIndex]) {
+                        if (hidePanel = children[e.prevVal]) {
+                            hidePanel.set('selected', false);
+                        }
+                        self.selectPanelByIndex(newIndex);
+                    }
+                });
+            },
+            syncUI: function () {
+                var self = this, children = self.get('children');
+                S.each(children, function (c, i) {
+                    if (c.get('selected')) {
+                        self.set('selectedPanelIndex', i);
+                        return false;
+                    }
+                    return undefined;
+                });
+            },
+            createChild: function (index) {
+                return checkLazy(this, 'createChild', index);
+            },
+            renderChild: function (index) {
+                return checkLazy(this, 'renderChild', index);
+            },
+            selectPanelByIndex: function (newIndex) {
+                this.get('children')[newIndex].set('selected', true);
+                if (this.get('lazyRender')) {
+                    // lazy render
+                    this.renderChild(newIndex);
+                }
+            }
+        }, {
+            ATTRS: {
+                selectedPanelIndex: {},
+                allowTextSelection: { value: true },
+                focusable: { value: false },
+                lazyRender: {},
+                handleGestureEvents: { value: false },
+                defaultChildCfg: { value: { xclass: 'tabs-panel' } }
+            },
+            xclass: 'tabs-body'
+        });
+    function checkLazy(self, method, index) {
+        if (self.get('lazyRender')) {
+            var c = self.get('children')[index];
+            if (!c.get('selected')) {
+                return c;
+            }
+        }
+        return TabBody.superclass[method].call(self, index);
+    }
+    return TabBody;
+});
+/**
+ * @ignore
+ * Single tab in tab bar.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('tabs/tab', ['button'], function (S, require) {
+    var Button = require('button');    /**
+     * KISSY.Tabs.Tab. xclass:'tabs-tab'
+     * @class KISSY.Tabs.Tab
+     * @extends KISSY.Button
+     */
+    /**
+     * KISSY.Tabs.Tab. xclass:'tabs-tab'
+     * @class KISSY.Tabs.Tab
+     * @extends KISSY.Button
+     */
+    return Button.extend({
+        isTabsTab: true,
+        beforeCreateDom: function (renderData) {
+            var attrs = renderData.elAttrs;
+            attrs.role = 'tab';
+            if (renderData.selected) {
+                attrs['aria-selected'] = true;
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
+            }
+        },
+        handleClickInternal: function (e) {
+            this.callSuper(e);
+            this.set('selected', true);
+        },
+        _onSetSelected: function (v) {
+            var el = this.$el;
+            var selectedCls = this.getBaseCssClasses('selected');
+            el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-selected', !!v);
+        }
+    }, {
+        ATTRS: {
+            handleGestureEvents: { value: false },
+            focusable: { value: false },
+            /**
+             * whether selected
+             * @cfg {Boolean} selected
+             */
+            /**
+             * @ignore
+             */
+            selected: {
+                render: 1,
+                sync: 0,
+                parse: function (el) {
+                    return el.hasClass(this.getBaseCssClass('selected'));
+                }
+            }
+        },
+        xclass: 'tabs-tab'
+    });
+});
+
+/**
+ * @ignore
+ * single tab panel.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('tabs/panel', ['component/container'], function (S, require) {
+    var Container = require('component/container');    /**
+     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
+     * @class  KISSY.Tabs.Panel
+     * @extends KISSY.Component.Container
+     */
+    /**
+     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
+     * @class  KISSY.Tabs.Panel
+     * @extends KISSY.Component.Container
+     */
+    return Container.extend({
+        isTabsPanel: 1,
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            renderData.elAttrs.role = 'tabpanel';
+            if (renderData.selected) {
+                renderData.elCls.push(self.getBaseCssClasses('selected'));
+            } else {
+                renderData.elAttrs['aria-hidden'] = false;
+            }
+        },
+        _onSetSelected: function (v) {
+            var el = this.$el;
+            var selectedCls = this.getBaseCssClasses('selected');
+            el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-hidden', !v);
+        }
+    }, {
+        ATTRS: {
+            /**
+             * whether selected
+             * @cfg {Boolean} selected
+             */
+            /**
+             * @ignore
+             */
+            selected: {
+                render: 1,
+                sync: 0,
+                parse: function (el) {
+                    return el.hasClass(this.getBaseCssClass('selected'));
+                }
+            },
+            focusable: { value: false },
+            allowTextSelection: { value: true }
+        },
+        xclass: 'tabs-panel'
+    });
 });

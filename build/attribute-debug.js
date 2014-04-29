@@ -1,24 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:41
+build time: Apr 29 14:56
 */
 /*
-combined files : 
-
+combined modules:
 attribute
-
 */
 /**!
  * @ignore
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
+KISSY.add('attribute', [
+    'util',
+    'event/custom'
+], function (S, require) {
     require('util');
-
     var CustomEvent = require('event/custom');
-
     function bind(v) {
         if (v === S.noop) {
             return function () {
@@ -26,28 +25,22 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         } else {
             return S.bind(v);
         }
-    }
-
+    }    // atomic flag
     // atomic flag
     var INVALID = {};
-
     var FALSE = false;
-
     function normalFn(host, method) {
         if (typeof method === 'string') {
             return host[method];
         }
         return method;
     }
-
     function getAttrVals(self) {
         return self.__attrVals || (self.__attrVals = {});
     }
-
     function whenAttrChangeEventName(when, name) {
         return when + S.ucfirst(name) + 'Change';
-    }
-
+    }    // fire attribute value change
     // fire attribute value change
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName, data) {
         attrName = attrName || name;
@@ -58,33 +51,31 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             newVal: newVal
         }, data));
     }
-
     function ensureNonEmpty(obj, name, doNotCreate) {
         var ret = obj[name];
         if (!doNotCreate && !ret) {
             obj[name] = ret = {};
         }
         return ret || {};
-    }
-
+    }    /*
+     o, [x,y,z] => o[x][y][z]
+     */
     /*
      o, [x,y,z] => o[x][y][z]
      */
     function getValueByPath(o, path) {
-        for (var i = 0, len = path.length;
-             o !== undefined && i < len;
-             i++) {
+        for (var i = 0, len = path.length; o !== undefined && i < len; i++) {
             o = o[path[i]];
         }
         return o;
-    }
-
+    }    /*
+     o, [x,y,z], val => o[x][y][z]=val
+     */
     /*
      o, [x,y,z], val => o[x][y][z]=val
      */
     function setValueByPath(o, path, val) {
-        var len = path.length - 1,
-            s = o;
+        var len = path.length - 1, s = o;
         if (len >= 0) {
             for (var i = 0; i < len; i++) {
                 o = o[path[i]];
@@ -97,21 +88,17 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         }
         return s;
     }
-
     function getPathNamePair(name) {
         var path;
-
         if (name.indexOf('.') !== -1) {
             path = name.split('.');
             name = path.shift();
         }
-
         return {
             path: path,
             name: name
         };
     }
-
     function getValueBySubValue(prevVal, path, value) {
         var tmp = value;
         if (path) {
@@ -124,7 +111,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         }
         return tmp;
     }
-
     function prepareDefaultSetFn(self, name) {
         var defaultBeforeFns = ensureNonEmpty(self, '__defaultBeforeFns');
         if (defaultBeforeFns[name]) {
@@ -138,24 +124,16 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             defaultTargetOnly: true
         });
     }
-
     function setInternal(self, name, value, opts, attrs) {
-        var path,
-            subVal,
-            prevVal,
-            pathNamePair = getPathNamePair(name),
-            fullName = name;
-
+        var path, subVal, prevVal, pathNamePair = getPathNamePair(name), fullName = name;
         name = pathNamePair.name;
         path = pathNamePair.path;
         prevVal = self.get(name);
-
         prepareDefaultSetFn(self, name);
-
         if (path) {
             subVal = getValueByPath(prevVal, path);
-        }
-
+        }    // if no change, just return
+             // pass equal check to fire change event
         // if no change, just return
         // pass equal check to fire change event
         if (!opts.force) {
@@ -165,19 +143,16 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                 return undefined;
             }
         }
-
         value = getValueBySubValue(prevVal, path, value);
-
         var beforeEventObject = S.mix({
-            attrName: name,
-            subAttrName: fullName,
-            prevVal: prevVal,
-            newVal: value,
-            _opts: opts,
-            _attrs: attrs,
-            target: self
-        }, opts.data);
-
+                attrName: name,
+                subAttrName: fullName,
+                prevVal: prevVal,
+                newVal: value,
+                _opts: opts,
+                _attrs: attrs,
+                target: self
+            }, opts.data);    // check before event
         // check before event
         if (opts.silent) {
             if (FALSE === defaultSetFn.call(self, beforeEventObject)) {
@@ -188,26 +163,15 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                 return FALSE;
             }
         }
-
         return self;
     }
-
     function defaultSetFn(e) {
-        var self = this,
-            value = e.newVal,
-            prevVal = e.prevVal,
-            name = e.attrName,
-            fullName = e.subAttrName,
-            attrs = e._attrs,
-            opts = e._opts;
-
+        var self = this, value = e.newVal, prevVal = e.prevVal, name = e.attrName, fullName = e.subAttrName, attrs = e._attrs, opts = e._opts;    // set it
         // set it
         var ret = self.setInternal(name, value);
-
         if (ret === FALSE) {
             return ret;
-        }
-
+        }    // fire after event
         // fire after event
         if (!opts.silent) {
             value = getAttrVals(self)[name];
@@ -220,37 +184,32 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                     subAttrName: fullName
                 });
             } else {
-                __fireAttrChange(self,
-                    '', '*',
-                    [prevVal], [value],
-                    [fullName], [name],
-                    opts.data);
+                __fireAttrChange(self, '', '*', [prevVal], [value], [fullName], [name], opts.data);
             }
         }
-
         return undefined;
-    }
-
+    }    /**
+     * attribute management
+     * @class KISSY.Attribute
+     */
     /**
      * attribute management
      * @class KISSY.Attribute
      */
     function Attribute(config) {
-        var self = this,
-            c = self.constructor;
+        var self = this, c = self.constructor;    // save user config
         // save user config
-        self.userConfig = config;
+        self.userConfig = config;    // define
         // define
         while (c) {
             addAttrs(self, c.ATTRS);
             c = c.superclass ? c.superclass.constructor : null;
-        }
+        }    // initial attr
         // initial attr
         initAttrs(self, config);
     }
-
     function wrapProtoForSuper(px, SubClass) {
-        var hooks = SubClass.__hooks__;
+        var hooks = SubClass.__hooks__;    // in case px contains toString
         // in case px contains toString
         if (hooks) {
             for (var p in hooks) {
@@ -282,22 +241,18 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             }
         });
     }
-
     function addMembers(px) {
         var self = this;
         wrapProtoForSuper(px, self);
         S.mix(self.prototype, px);
     }
-
     Attribute.extend = function extend(px, sx) {
-        var SubClass,
-            self = this;
-        sx = S.merge(sx);
+        var SubClass, self = this;
+        sx = S.merge(sx);    // px is shared among classes
         // px is shared among classes
         px = S.merge(px);
-        var hooks,
-            sxHooks = sx.__hooks__;
-        if ((hooks = self.__hooks__)) {
+        var hooks, sxHooks = sx.__hooks__;
+        if (hooks = self.__hooks__) {
             sxHooks = sx.__hooks__ = sx.__hooks__ || {};
             S.mix(sxHooks, hooks, false);
         }
@@ -308,9 +263,7 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             // debug mode, give the right name for constructor
             if ('@DEBUG@') {
                 /*jshint evil: true*/
-                SubClass = new Function('return function ' + S.camelCase(name) + '(){ ' +
-                    'this.callSuper.apply(this, arguments);' +
-                    '}')();
+                SubClass = new Function('return function ' + S.camelCase(name) + '(){ ' + 'this.callSuper.apply(this, arguments);' + '}')();
             } else {
                 SubClass = function () {
                     this.callSuper.apply(this, arguments);
@@ -320,9 +273,8 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         px.constructor = SubClass;
         SubClass.__hooks__ = sxHooks;
         wrapProtoForSuper(px, SubClass);
-        var inheritedStatics,
-            sxInheritedStatics = sx.inheritedStatics;
-        if ((inheritedStatics = self.inheritedStatics)) {
+        var inheritedStatics, sxInheritedStatics = sx.inheritedStatics;
+        if (inheritedStatics = self.inheritedStatics) {
             sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
             S.mix(sxInheritedStatics, inheritedStatics, false);
         }
@@ -334,7 +286,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         SubClass.addMembers = addMembers;
         return SubClass;
     };
-
     function addAttrs(host, attrs) {
         if (attrs) {
             for (var attr in attrs) {
@@ -349,7 +300,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             }
         }
     }
-
     function initAttrs(host, config) {
         if (config) {
             for (var attr in config) {
@@ -358,15 +308,10 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             }
         }
     }
-
     S.augment(Attribute, CustomEvent.Target, {
         INVALID: INVALID,
-
         callSuper: function () {
-            var method, obj,
-                self = this,
-                args = arguments;
-
+            var method, obj, self = this, args = arguments;
             if (typeof self === 'function' && self.__name__) {
                 method = self;
                 obj = args[0];
@@ -379,7 +324,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                 }
                 obj = self;
             }
-
             var name = method.__name__;
             if (!name) {
                 //S.log('can not find method name for callSuper [' + self.constructor.name + ']: ' + method.toString());
@@ -390,10 +334,8 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                 //S.log('can not find method [' + name + '] for callSuper: ' + method.__owner__.name);
                 return undefined;
             }
-
             return member.apply(obj, args || []);
         },
-
         /**
          * get un-cloned attr config collections
          * @return {Object}
@@ -402,22 +344,17 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         getAttrs: function () {
             return this.__attrs || (this.__attrs = {});
         },
-
         /**
          * get un-cloned attr value collections
          * @return {Object}
          */
         getAttrVals: function () {
-            var self = this,
-                o = {},
-                a,
-                attrs = self.getAttrs();
+            var self = this, o = {}, a, attrs = self.getAttrs();
             for (a in attrs) {
                 o[a] = self.get(a);
             }
             return o;
         },
-
         /**
          * Adds an attribute with the provided configuration to the host object.
          * @param {String} name attrName
@@ -436,18 +373,14 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
          * @chainable
          */
         addAttr: function (name, attrConfig, override) {
-            var self = this,
-                attrs = self.getAttrs(),
-                attr,
-                cfg = S.clone(attrConfig);
-            if ((attr = attrs[name])) {
+            var self = this, attrs = self.getAttrs(), attr, cfg = S.clone(attrConfig);
+            if (attr = attrs[name]) {
                 S.mix(attr, cfg, override);
             } else {
                 attrs[name] = cfg;
             }
             return self;
         },
-
         /**
          * Configures a group of attributes, and sets initial values.
          * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
@@ -464,7 +397,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             }
             return self;
         },
-
         /**
          * Checks if the given attribute has been added to the host.
          * @param {String} name attribute name
@@ -473,7 +405,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         hasAttr: function (name) {
             return this.getAttrs().hasOwnProperty(name);
         },
-
         /**
          * Removes an attribute from the host object.
          * @chainable
@@ -482,15 +413,12 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             var self = this;
             var __attrVals = getAttrVals(self);
             var __attrs = self.getAttrs();
-
             if (self.hasAttr(name)) {
                 delete __attrs[name];
                 delete __attrVals[name];
             }
-
             return self;
         },
-
         /**
          * Sets the value of an attribute.
          * @param {String|Object} name attribute 's name or attribute name and value map
@@ -505,9 +433,7 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             if (S.isPlainObject(name)) {
                 opts = value;
                 opts = opts || {};
-                var all = Object(name),
-                    attrs = [],
-                    errors = [];
+                var all = Object(name), attrs = [], errors = [];
                 for (name in all) {
                     // bulk validation
                     // if any one failed,all values are not set
@@ -524,10 +450,7 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                 for (name in all) {
                     setInternal(self, name, all[name], opts, attrs);
                 }
-                var attrNames = [],
-                    prevVals = [],
-                    newVals = [],
-                    subAttrNames = [];
+                var attrNames = [], prevVals = [], newVals = [], subAttrNames = [];
                 S.each(attrs, function (attr) {
                     prevVals.push(attr.prevVal);
                     newVals.push(attr.newVal);
@@ -535,21 +458,13 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                     subAttrNames.push(attr.subAttrName);
                 });
                 if (attrNames.length) {
-                    __fireAttrChange(self,
-                        '',
-                        '*',
-                        prevVals,
-                        newVals,
-                        subAttrNames,
-                        attrNames,
-                        opts.data);
+                    __fireAttrChange(self, '', '*', prevVals, newVals, subAttrNames, attrNames, opts.data);
                 }
                 return self;
             }
-            opts = opts || {};
+            opts = opts || {};    // validator check
             // validator check
             e = validate(self, name, value);
-
             if (e !== undefined) {
                 if (opts.error) {
                     opts.error(e);
@@ -558,7 +473,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
             }
             return setInternal(self, name, value, opts);
         },
-
         /**
          * internal use, no event involved, just set.
          * override by model
@@ -566,75 +480,54 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
          */
         setInternal: function (name, value) {
             var self = this, setValue,
-            // if host does not have meta info corresponding to (name,value)
-            // then register on demand in order to collect all data meta info
-            // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-            // 因为属性在声明注册前可以直接设置值
-                attrConfig = ensureNonEmpty(self.getAttrs(), name),
-                setter = attrConfig.setter;
-
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
+                attrConfig = ensureNonEmpty(self.getAttrs(), name), setter = attrConfig.setter;    // if setter has effect
             // if setter has effect
             if (setter && (setter = normalFn(self, setter))) {
                 setValue = setter.call(self, value, name);
             }
-
             if (setValue === INVALID) {
                 return FALSE;
             }
-
             if (setValue !== undefined) {
                 value = setValue;
-            }
-
+            }    // finally set
             // finally set
             getAttrVals(self)[name] = value;
-
             return undefined;
         },
-
         /**
          * Gets the current value of the attribute.
          * @param {String} name attribute 's name
          * @return {*}
          */
         get: function (name) {
-            var self = this,
-                dot = '.',
-                path,
-                attrVals = getAttrVals(self),
-                attrConfig,
-                getter, ret;
-
+            var self = this, dot = '.', path, attrVals = getAttrVals(self), attrConfig, getter, ret;
             if (name.indexOf(dot) !== -1) {
                 path = name.split(dot);
                 name = path.shift();
             }
-
             attrConfig = ensureNonEmpty(self.getAttrs(), name, 1);
-            getter = attrConfig.getter;
-
+            getter = attrConfig.getter;    // get user-set value or default value
+                                           //user-set value takes privilege
             // get user-set value or default value
             //user-set value takes privilege
-            ret = name in attrVals ?
-                attrVals[name] :
-                getDefAttrVal(self, name);
-
+            ret = name in attrVals ? attrVals[name] : getDefAttrVal(self, name);    // invoke getter for this attribute
             // invoke getter for this attribute
             if (getter && (getter = normalFn(self, getter))) {
                 ret = getter.call(self, ret, name);
             }
-
             if (!(name in attrVals) && ret !== undefined) {
                 attrVals[name] = ret;
             }
-
             if (path) {
                 ret = getValueByPath(ret, path);
             }
-
             return ret;
         },
-
         /**
          * Resets the value of an attribute.just reset what addAttr set
          * (not what invoker set when call new Xx(cfg))
@@ -645,7 +538,6 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
          */
         reset: function (name, opts) {
             var self = this;
-
             if (typeof name === 'string') {
                 if (self.hasAttr(name)) {
                     // if attribute does not have default value, then set to undefined
@@ -654,62 +546,47 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
                     return self;
                 }
             }
-
             opts = /**@type Object
-             @ignore*/(name);
-
-            var attrs = self.getAttrs(),
-                values = {};
-
+             @ignore*/
+            name;
+            var attrs = self.getAttrs(), values = {};    // reset all
             // reset all
             for (name in attrs) {
                 values[name] = getDefAttrVal(self, name);
             }
-
             self.set(values, opts);
             return self;
         }
-    });
-
+    });    // get default attribute value from valueFn/value
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
-        var attrs = self.getAttrs(),
-            attrConfig = ensureNonEmpty(attrs, name, 1),
-            valFn = attrConfig.valueFn,
-            val;
-
+        var attrs = self.getAttrs(), attrConfig = ensureNonEmpty(attrs, name, 1), valFn = attrConfig.valueFn, val;
         if (valFn && (valFn = normalFn(self, valFn))) {
             val = valFn.call(self);
             if (val !== /**
              @ignore
              @type Function
-             */undefined) {
+             */
+                undefined) {
                 attrConfig.value = val;
             }
             delete attrConfig.valueFn;
             attrs[name] = attrConfig;
         }
-
         return attrConfig.value;
     }
-
     function validate(self, name, value, all) {
         var path, prevVal, pathNamePair;
-
         pathNamePair = getPathNamePair(name);
-
         name = pathNamePair.name;
         path = pathNamePair.path;
-
         if (path) {
             prevVal = self.get(name);
             value = getValueBySubValue(prevVal, path, value);
         }
-        var attrConfig = ensureNonEmpty(self.getAttrs(), name),
-            e,
-            validator = attrConfig.validator;
+        var attrConfig = ensureNonEmpty(self.getAttrs(), name), e, validator = attrConfig.validator;
         if (validator && (validator = normalFn(self, validator))) {
-            e = validator.call(self, value, name, all);
+            e = validator.call(self, value, name, all);    // undefined and true validate successfully
             // undefined and true validate successfully
             if (e !== undefined && e !== true) {
                 return e;
@@ -717,11 +594,8 @@ KISSY.add('attribute',['util', 'event/custom'], function (S, require) {
         }
         return undefined;
     }
-
     return Attribute;
-});
-
-/*
+});    /*
  2011-10-18
  get/set sub attribute value ,set('x.y',val) x 最好为 {} ，不要是 new Clz() 出来的
  add validator

@@ -1,3 +1,1 @@
-{
- "editor/plugin/justify-right": ["editor", "editor/plugin/justify-right/cmd", "editor/plugin/button"] 
-}
+{"editor/plugin/justify-right":["editor","editor/plugin/justify-right/cmd","editor/plugin/button"]}

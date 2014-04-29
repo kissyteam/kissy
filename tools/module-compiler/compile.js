@@ -63,8 +63,9 @@ function compileModule(modName, codes, requires) {
     codes[modName] = escodegen.generate(ast, {
         comment: ast.comments
     });
-    requires[modName] = modRequires.concat();
     S.Loader.Utils.normalDepModuleName(modName, modRequires);
+    // record after normalize
+    requires[modName] = modRequires.concat();
     modRequires.forEach(function (requireName) {
         compileModule(requireName, codes, requires);
     });
@@ -141,4 +142,14 @@ if (require.main === module) {
         compile(main, packages, 'e:/tmp/combine.js', 'e:/tmp/combine.json');
     })();
 }
+
+/*
+ note:
+ esprima bug:
+ x represents *
+ return /xx@type String x/y;
+ become
+ return /xx@type String x/
+ y;
+ */
 

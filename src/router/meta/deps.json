@@ -1,3 +1,1 @@
-{
- "router": ["event/dom", "uri", "event/custom"] 
-}
+{"router":["uri","event/dom","event/custom"]}

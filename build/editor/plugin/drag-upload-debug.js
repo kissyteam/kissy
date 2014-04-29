@@ -1,50 +1,37 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:45
+build time: Apr 29 15:02
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/drag-upload
-
 */
 /**
  * @ignore
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/drag-upload',['editor', 'event/dom'], function (S, require) {
+KISSY.add('editor/plugin/drag-upload', [
+    'editor',
+    'event/dom',
+    'dom'
+], function (S, require) {
     var Editor = require('editor');
     var Event = require('event/dom');
-    var Node = S.Node,
-        Utils = Editor.Utils,
-        Dom = S.require('dom');
-
+    var Node = S.Node, Utils = Editor.Utils, Dom = require('dom');
     function dragUpload(config) {
         this.config = config || {};
     }
-
     S.augment(dragUpload, {
         pluginRenderUI: function (editor) {
-            var cfg = this.config,
-                fileInput = cfg.fileInput || 'Filedata',
-                sizeLimit = cfg.sizeLimit || Number.MAX_VALUE,
-                serverParams = cfg.serverParams || {},
-                serverUrl = cfg.serverUrl || '',
-                suffix = cfg.suffix || 'png,jpg,jpeg,gif',
-                suffixReg = new RegExp(suffix.split(/,/).join('|') + '$', 'i'),
-
-                inserted = {}, startMonitor = false;
-
+            var cfg = this.config, fileInput = cfg.fileInput || 'Filedata', sizeLimit = cfg.sizeLimit || Number.MAX_VALUE, serverParams = cfg.serverParams || {}, serverUrl = cfg.serverUrl || '', suffix = cfg.suffix || 'png,jpg,jpeg,gif', suffixReg = new RegExp(suffix.split(/,/).join('|') + '$', 'i'), inserted = {}, startMonitor = false;
             function nodeInsert(ev) {
-                var oe = ev.originalEvent,
-                    t = oe.target;
+                var oe = ev.originalEvent, t = oe.target;
                 if (Dom.nodeName(t) === 'img' && t.src.match(/^file:\/\//)) {
                     inserted[t.src] = t;
                 }
             }
-
             editor.docReady(function () {
                 var document = editor.get('document')[0];
                 Event.on(document, 'dragenter', function () {
@@ -54,13 +41,12 @@ KISSY.add('editor/plugin/drag-upload',['editor', 'event/dom'], function (S, requ
                         startMonitor = true;
                     }
                 });
-
                 Event.on(document, 'drop', function (ev) {
                     Event.remove(document, 'DOMNodeInserted', nodeInsert);
                     startMonitor = false;
                     ev.halt();
                     ev = ev.originalEvent;
-                    var archor, ap;
+                    var archor, ap;    // firefox 会自动添加节点
                     // firefox 会自动添加节点
                     if (!S.isEmptyObject(inserted)) {
                         S.each(inserted, function (el) {
@@ -76,7 +62,6 @@ KISSY.add('editor/plugin/drag-upload',['editor', 'event/dom'], function (S, requ
                         ap = document.elementFromPoint(ev.clientX, ev.clientY);
                         archor = ap.lastChild;
                     }
-
                     var dt = ev.dataTransfer;
                     dt.dropEffect = 'copy';
                     var files = dt.files;
@@ -91,22 +76,18 @@ KISSY.add('editor/plugin/drag-upload',['editor', 'event/dom'], function (S, requ
                         if (size / 1000 > sizeLimit) {
                             continue;
                         }
-                        var img = new Node('<img ' + 'src="' +
-                            Utils.debugUrl('theme/tao-loading.gif') + '"/>');
+                        var img = new Node('<img ' + 'src="' + Utils.debugUrl('theme/tao-loading.gif') + '"/>');
                         var nakeImg = img[0];
                         ap.insertBefore(nakeImg, archor);
-                        var np = nakeImg.parentNode, npName = Dom.nodeName(np);
+                        var np = nakeImg.parentNode, npName = Dom.nodeName(np);    // 防止拖放导致插入到 body 以外
                         // 防止拖放导致插入到 body 以外
                         if (npName === 'head' || npName === 'html') {
                             Dom.insertBefore(nakeImg, document.body.firstChild);
                         }
-
                         fileUpload(file, img);
                     }
                 });
             });
-
-
             if (window.XMLHttpRequest && !XMLHttpRequest.prototype.sendAsBinary) {
                 XMLHttpRequest.prototype.sendAsBinary = function (dataStr, contentType) {
                     // chrome12 引入 WebKitBlobBuilder
@@ -125,16 +106,11 @@ KISSY.add('editor/plugin/drag-upload',['editor', 'event/dom'], function (S, requ
                     this.send(bb.getBlob(contentType));
                 };
             }
-
             function fileUpload(file, img) {
-                var reader = new window.FileReader();
+                var reader = new window.FileReader();    //chrome 不支持 addEventListener('load')
                 //chrome 不支持 addEventListener('load')
                 reader.onload = function (ev) {
-                    var fileName = file.name,
-                        fileData = ev.target.result,
-                        boundary = '----kissy-editor-yiminghe',
-                        xhr = new XMLHttpRequest();
-
+                    var fileName = file.name, fileData = ev.target.result, boundary = '----kissy-editor-yiminghe', xhr = new XMLHttpRequest();
                     xhr.open('POST', serverUrl, true);
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4) {
@@ -144,47 +120,38 @@ KISSY.add('editor/plugin/drag-upload',['editor', 'event/dom'], function (S, requ
                                     img[0].src = info.imgUrl;
                                 }
                             } else {
-                                window.alert('服务器端出错！');
+                                window.alert('\u670D\u52A1\u5668\u7AEF\u51FA\u9519\uFF01');
                                 img.remove();
                             }
                             xhr.onreadystatechange = null;
                         }
                     };
-
                     var body = '\r\n--' + boundary + '\r\n';
-                    body += 'Content-Disposition: form-data; name=\'' +
-                        fileInput + '\'; filename=\'' + encodeURIComponent(fileName) + '\'\r\n';
+                    body += 'Content-Disposition: form-data; name=\'' + fileInput + '\'; filename=\'' + encodeURIComponent(fileName) + '\'\r\n';
                     body += 'Content-Type: ' + (file.type || 'application/octet-stream') + '\r\n\r\n';
                     body += fileData + '\r\n';
                     serverParams = Editor.Utils.normParams(serverParams);
                     for (var p in serverParams) {
-
                         body += '--' + boundary + '\r\n';
-                        body += 'Content-Disposition: form-data; name=\'' +
-                            p + '\'\r\n\r\n';
+                        body += 'Content-Disposition: form-data; name=\'' + p + '\'\r\n\r\n';
                         body += serverParams[p] + '\r\n';
-
                     }
                     body += '--' + boundary + '--';
-
-                    xhr.setRequestHeader('Content-Type',
-                        'multipart/form-data, boundary=' + boundary);
+                    xhr.setRequestHeader('Content-Type', 'multipart/form-data, boundary=' + boundary);    // simulate a file MIME POST request.
                     // simulate a file MIME POST request.
-
-                    xhr.sendAsBinary('Content-Type: multipart/form-data; boundary=' +
-                        boundary + '\r\nContent-Length: ' + body.length + '\r\n' + body + '\r\n');
+                    xhr.sendAsBinary('Content-Type: multipart/form-data; boundary=' + boundary + '\r\nContent-Length: ' + body.length + '\r\n' + body + '\r\n');
                     reader.onload = null;
                 };
                 reader.readAsBinaryString(file);
             }
         }
     });
-
     return dragUpload;
-});
-/**
+});    /**
  * @ignore
  * refer:
  * - http://www.html5rocks.com/tutorials/file/filesystem/
  * - http://yiminghe.iteye.com/blog/848613
  */
+
+

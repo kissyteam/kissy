@@ -1,31 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:56
+build time: Apr 29 15:13
 */
 /*
-combined files : 
-
+combined modules:
 toolbar
-
 */
 /**
  * @ignore
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add('toolbar',['component/container', 'component/extension/delegate-children', 'node'], function (S, require) {
+KISSY.add('toolbar', [
+    'component/container',
+    'component/extension/delegate-children',
+    'node'
+], function (S, require) {
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
     var Node = require('node');
-
     var KeyCode = Node.KeyCode;
-
     function getNextEnabledItem(index, direction, self) {
-        var children = self.get('children'),
-            count = 0,
-            childrenLength = children.length;
-
+        var children = self.get('children'), count = 0, childrenLength = children.length;
         if (index === undefined) {
             if (direction === 1) {
                 index = 0;
@@ -36,19 +33,15 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
                 return children[index];
             }
         }
-
         do {
             count++;
             index = (index + childrenLength + direction) % childrenLength;
         } while (count < childrenLength && children[index].get('disabled'));
-
         if (count !== childrenLength) {
             return children[index];
         }
-
         return null;
     }
-
     function afterCollapsedChange(e) {
         var self = this;
         if (e.newVal) {
@@ -57,14 +50,9 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
             self.set('expandedItem', e.target);
         }
     }
-
     function afterHighlightedChange(e) {
-        var self = this,
-            expandedItem,
-            children,
-            target = e.target;
+        var self = this, expandedItem, children, target = e.target;
         if (self !== target && (target.isMenuItem || target.isButton)) {
-
             if (e.newVal) {
                 children = self.get('children');
                 if ((expandedItem = self.get('expandedItem')) && S.inArray(target, children)) {
@@ -79,18 +67,20 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
             }
         }
     }
-
     function getChildByHighlightedItem(toolbar) {
         var children = toolbar.get('children'), i, child;
         for (i = 0; i < children.length; i++) {
             child = children[i];
-            if (child.get('highlighted') || (child.isMenuButton && !child.get('collapsed'))) {
+            if (child.get('highlighted') || child.isMenuButton && !child.get('collapsed')) {
                 return child;
             }
         }
         return null;
-    }
-
+    }    /**
+     * Toolbar component for KISSY. xclass: 'toolbar'.
+     * @class KISSY.Toolbar
+     * @extends KISSY.Component.Container
+     */
     /**
      * Toolbar component for KISSY. xclass: 'toolbar'.
      * @class KISSY.Toolbar
@@ -100,7 +90,6 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'toolbar';
         },
-
         /**
          * Protected.
          */
@@ -109,100 +98,71 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
             self.on('afterCollapsedChange', afterCollapsedChange, self);
             self.on('afterHighlightedChange', afterHighlightedChange, self);
         },
-
         handleBlurInternal: function (e) {
-            var self = this,
-                highlightedItem;
+            var self = this, highlightedItem;
             self.callSuper(e);
-            self.set('expandedItem', null);
+            self.set('expandedItem', null);    // clear for afterHighlightedChange
             // clear for afterHighlightedChange
-            if ((highlightedItem = self.get('highlightedItem'))) {
+            if (highlightedItem = self.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);
             }
         },
-
         getNextItemByKeyDown: function (e, current) {
-            var self = this,
-                children = self.get('children'),
-                childIndex = current && S.indexOf(current, children);
-
+            var self = this, children = self.get('children'), childIndex = current && S.indexOf(current, children);
             if (current) {
                 if (current.handleKeyDownInternal(e)) {
                     return true;
                 }
-            }
-
+            }    // Do not handle the key event if any modifier key is pressed.
             // Do not handle the key event if any modifier key is pressed.
             if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) {
                 return false;
-            }
-
+            }    // Either nothing is highlighted, or the highlighted control didn't handle
+                 // the key event, so attempt to handle it here.
             // Either nothing is highlighted, or the highlighted control didn't handle
             // the key event, so attempt to handle it here.
             switch (e.keyCode) {
-                case KeyCode.ESC:
-                    self.getKeyEventTarget().fire('blur');
-                    return true;
-
-                case KeyCode.HOME:
-                    current = getNextEnabledItem(undefined, 1, self);
-                    break;
-
-                case KeyCode.END:
-                    current = getNextEnabledItem(undefined, -1, self);
-                    break;
-
-                case KeyCode.UP:
-                    current = getNextEnabledItem(childIndex, -1, self);
-                    break;
-
-                case KeyCode.LEFT:
-                    current = getNextEnabledItem(childIndex, -1, self);
-                    break;
-
-                case KeyCode.DOWN:
-                    current = getNextEnabledItem(childIndex, 1, self);
-                    break;
-
-                case KeyCode.RIGHT:
-                    current = getNextEnabledItem(childIndex, 1, self);
-                    break;
-
-                default:
-                    return false;
+            case KeyCode.ESC:
+                self.getKeyEventTarget().fire('blur');
+                return true;
+            case KeyCode.HOME:
+                current = getNextEnabledItem(undefined, 1, self);
+                break;
+            case KeyCode.END:
+                current = getNextEnabledItem(undefined, -1, self);
+                break;
+            case KeyCode.UP:
+                current = getNextEnabledItem(childIndex, -1, self);
+                break;
+            case KeyCode.LEFT:
+                current = getNextEnabledItem(childIndex, -1, self);
+                break;
+            case KeyCode.DOWN:
+                current = getNextEnabledItem(childIndex, 1, self);
+                break;
+            case KeyCode.RIGHT:
+                current = getNextEnabledItem(childIndex, 1, self);
+                break;
+            default:
+                return false;
             }
             return current;
         },
-
         handleKeyDownInternal: function (e) {
-            var self = this,
-                currentChild = getChildByHighlightedItem(self),
-                nextHighlightedItem = self.getNextItemByKeyDown(e, currentChild);
-
+            var self = this, currentChild = getChildByHighlightedItem(self), nextHighlightedItem = self.getNextItemByKeyDown(e, currentChild);
             if (typeof nextHighlightedItem === 'boolean') {
                 return nextHighlightedItem;
             }
-
             if (nextHighlightedItem) {
                 nextHighlightedItem.set('highlighted', true);
             }
-
             return true;
         },
-
         _onSetHighlightedItem: function (item, e) {
-            var id, itemEl,
-                self = this,
-                prevVal = e && e.prevVal,
-                children = self.get('children'),
-                el = self.el;
+            var id, itemEl, self = this, prevVal = e && e.prevVal, children = self.get('children'), el = self.el;    // only clear children's status
             // only clear children's status
             if (prevVal && S.inArray(prevVal, children)) {
-                prevVal.set('highlighted', false, {
-                    data: {
-                        byPassSetToolbarHighlightedItem: 1
-                    }
-                });
+                prevVal.set('highlighted', false, { data: { byPassSetToolbarHighlightedItem: 1 } });
             }
             if (item) {
                 if (el.ownerDocument.activeElement !== el) {
@@ -218,7 +178,6 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
                 el.setAttribute('aria-activedescendant', '');
             }
         },
-
         _onSetExpandedItem: function (v, e) {
             if (e && e.prevVal) {
                 e.prevVal.set('collapsed', true);
@@ -244,3 +203,5 @@ KISSY.add('toolbar',['component/container', 'component/extension/delegate-childr
         }
     });
 });
+
+

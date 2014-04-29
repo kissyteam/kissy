@@ -4,11 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var logger = S.getLogger('dd/ddm');
     var Node = require('node'),
         Base = require('base');
-
-    var logger = S.getLogger('dd/ddm');
-
     var UA = require('ua'),
         $ = Node.all,
         win = S.Env.host,

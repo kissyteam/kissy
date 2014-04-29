@@ -1,29 +1,31 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:45
+build time: Apr 29 15:01
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/dialog-loader
-
 */
 /**
  * @ignore
  * load editor's dialog dynamically
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/dialog-loader',['editor', 'overlay'], function (S, require) {
+KISSY.add('editor/plugin/dialog-loader', [
+    'editor',
+    'overlay',
+    'dom'
+], function (S, require) {
     var Editor = require('editor');
     var Overlay = require('overlay');
-    var globalMask,
-        loadMask = {
+    var Dom = require('dom');
+    var globalMask, loadMask = {
             loading: function (prefixCls) {
                 if (!globalMask) {
                     globalMask = new Overlay({
                         x: 0,
-                        width: S.UA.ie === 6 ? S.require('dom').docWidth() : '100%',
+                        width: S.UA.ie === 6 ? Dom.docWidth() : '100%',
                         y: 0,
                         // 指定全局 loading zIndex 值
                         'zIndex': Editor.baseZIndex(Editor.ZIndexManager.LOADING),
@@ -31,7 +33,7 @@ KISSY.add('editor/plugin/dialog-loader',['editor', 'overlay'], function (S, requ
                         elCls: prefixCls + 'editor-global-loading'
                     });
                 }
-                globalMask.set('height', S.require('dom').docHeight());
+                globalMask.set('height', Dom.docHeight());
                 globalMask.show();
                 globalMask.loading();
             },
@@ -39,7 +41,6 @@ KISSY.add('editor/plugin/dialog-loader',['editor', 'overlay'], function (S, requ
                 globalMask.hide();
             }
         };
-
     return {
         useDialog: function (editor, name, config, args) {
             // restore focus in editor
@@ -61,3 +62,5 @@ KISSY.add('editor/plugin/dialog-loader',['editor', 'overlay'], function (S, requ
         }
     };
 });
+
+

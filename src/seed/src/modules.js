@@ -6,8 +6,7 @@ S.config("requires",{
         "promise"
     ],
     "anim/timer": [
-        "dom",
-        "./base"
+        "anim/base"
     ],
     "anim/transition": [
         "anim/base"
@@ -64,10 +63,7 @@ S.config("requires",{
         "resizable"
     ],
     "date/format": [
-        "i18n!date",
-        "./gregorian/utils",
-        "./gregorian/const",
-        "./const"
+        "date/gregorian"
     ],
     "date/gregorian": [
         "i18n!date"
@@ -75,11 +71,8 @@ S.config("requires",{
     "date/picker": [
         "i18n!date/picker",
         "component/control",
-        "date/picker-xtpl",
-        "./gregorian/utils",
-        "i18n!date",
-        "./gregorian/const",
-        "./const"
+        "date/format",
+        "date/picker-xtpl"
     ],
     "date/popup-picker": [
         "date/picker",
@@ -219,8 +212,8 @@ S.config("requires",{
         "base"
     ],
     "router": [
-        "event/dom",
         "uri",
+        "event/dom",
         "event/custom"
     ],
     "scroll-view/base": [

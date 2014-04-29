@@ -359,9 +359,9 @@ function visit1_61_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/timer/color.js'].functionData[0]++;
   _$jscoverage['/timer/color.js'].lineData[7]++;
-  var Fx = require('./fx');
-  _$jscoverage['/timer/color.js'].lineData[8]++;
   var logger = S.getLogger('s/anim/timer/color');
+  _$jscoverage['/timer/color.js'].lineData[8]++;
+  var Fx = require('./fx');
   _$jscoverage['/timer/color.js'].lineData[9]++;
   var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {
   black: [0, 0, 0], 

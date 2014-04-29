@@ -1,49 +1,44 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:46
+build time: Apr 29 15:02
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/flash-bridge
-
 */
 /**
  * @ignore
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/flash-bridge',['editor', 'swf', 'event/custom'], function (S, require) {
+KISSY.add('editor/plugin/flash-bridge', [
+    'editor',
+    'swf',
+    'event/custom'
+], function (S, require) {
+    var logger = S.getLogger('s/editor/plugin/flash-bridge');
     var Editor = require('editor');
     var SWF = require('swf');
     var CustomEvent = require('event/custom');
-
     var instances = {};
-    var logger = S.getLogger('s/editor/plugin/flash-bridge');
-
     function FlashBridge(cfg) {
         this._init(cfg);
     }
-
     S.augment(FlashBridge, CustomEvent.Target, {
         _init: function (cfg) {
-            var self = this,
-                id = S.guid('flash-bridge-'),
-                callback = 'KISSY.require(\'editor\').FlashBridge.EventHandler';
+            var self = this, id = S.guid('flash-bridge-'), callback = 'KISSY.require(\'editor\').FlashBridge.EventHandler';
             cfg.id = id;
             cfg.attrs = cfg.attrs || {};
             cfg.params = cfg.params || {};
-            var attrs = cfg.attrs,
-                params = cfg.params,
-                flashVars = params.flashVars = params.flashVars || {};
+            var attrs = cfg.attrs, params = cfg.params, flashVars = params.flashVars = params.flashVars || {};
             S.mix(attrs, {
                 //http://yiminghe.javaeye.com/blog/764872
                 //firefox 必须使创建的flash以及容器可见，才会触发contentReady
                 //默认给flash自身很大的宽高，容器小点就可以了，
                 width: 1,
                 height: 1
-            }, false);
+            }, false);    //这几个要放在 param 里面，主要是允许 flash js沟通
             //这几个要放在 param 里面，主要是允许 flash js沟通
             S.mix(params, {
                 allowScriptAccess: 'always',
@@ -55,9 +50,9 @@ KISSY.add('editor/plugin/flash-bridge',['editor', 'swf', 'event/custom'], functi
                 useCompression: false
             }, false);
             var swfCore = {
-                YUISwfId: id,
-                YUIBridgeCallback: callback
-            };
+                    YUISwfId: id,
+                    YUIBridgeCallback: callback
+                };
             if (cfg.ajbridge) {
                 swfCore = {
                     swfID: id,
@@ -73,21 +68,20 @@ KISSY.add('editor/plugin/flash-bridge',['editor', 'swf', 'event/custom'], functi
         _expose: function (methods) {
             var self = this;
             for (var i = 0; i < methods.length; i++) {
-                var m = methods[i];
+                var m = methods[i];    /*jshint loopfunc:true*/
                 /*jshint loopfunc:true*/
                 (function (m) {
                     self[m] = function () {
                         return self._callSWF(m, S.makeArray(arguments));
                     };
-                })(m);
+                }(m));
             }
         },
         _callSWF: function (func, args) {
             return this.swf.callSWF(func, args);
         },
         _eventHandler: function (event) {
-            var self = this,
-                type = event.type;
+            var self = this, type = event.type;
             if (type === 'log') {
                 logger.debug(event.message);
             } else if (type) {
@@ -107,7 +101,6 @@ KISSY.add('editor/plugin/flash-bridge',['editor', 'swf', 'event/custom'], functi
             delete instances[this.id];
         }
     });
-
     FlashBridge.EventHandler = function (id, event) {
         logger.debug('fire event: ' + event.type);
         var instance = instances[id];
@@ -119,8 +112,8 @@ KISSY.add('editor/plugin/flash-bridge',['editor', 'swf', 'event/custom'], functi
             }, 100);
         }
     };
-
     Editor.FlashBridge = FlashBridge;
-
     return FlashBridge;
 });
+
+

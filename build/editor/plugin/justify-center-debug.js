@@ -1,20 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:47
+build time: Apr 29 15:04
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/justify-center
-
 */
 /**
  * @ignore
  * justifyCenter button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/justify-center',['editor', './justify-center/cmd', './button'], function (S, require) {
+KISSY.add('editor/plugin/justify-center', [
+    'editor',
+    './justify-center/cmd',
+    './button'
+], function (S, require) {
     var Editor = require('editor');
     var justifyCenterCmd = require('./justify-center/cmd');
     require('./button');
@@ -23,15 +25,13 @@ KISSY.add('editor/plugin/justify-center',['editor', './justify-center/cmd', './b
         editor.execCommand('justifyCenter');
         editor.focus();
     }
-
     function justifyCenter() {
     }
-
     S.augment(justifyCenter, {
         pluginRenderUI: function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton('justifyCenter', {
-                tooltip: '居中对齐',
+                tooltip: '\u5C45\u4E2D\u5BF9\u9F50',
                 checkable: true,
                 listeners: {
                     click: exec,
@@ -51,8 +51,6 @@ KISSY.add('editor/plugin/justify-center',['editor', './justify-center/cmd', './b
                 },
                 mode: Editor.Mode.WYSIWYG_MODE
             });
-
-
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
                     if (e.ctrlKey && e.keyCode === S.Node.KeyCode.E) {
@@ -63,6 +61,7 @@ KISSY.add('editor/plugin/justify-center',['editor', './justify-center/cmd', './b
             });
         }
     });
-
     return justifyCenter;
 });
+
+

@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var logger = S.getLogger('s/aim/timer/fx');
     var Dom = require('dom');
+    var undef;
 
     function load(self, cfg) {
         S.mix(self, cfg);
@@ -53,7 +54,7 @@ KISSY.add(function (S, require) {
                 propData = self.propData,
                 to = self.to;
 
-            if (pos === undefined) {
+            if (pos === undef) {
                 pos = getPos(anim, propData);
             }
 
@@ -71,7 +72,7 @@ KISSY.add(function (S, require) {
                 propData.frame.call(self, anim, self);
             } else if (!self.isCustomFx) {
                 // in case completed in frame
-                if (val === /**@type Number @ignore*/undefined) {
+                if (val === undef) {
                     // 插值出错，直接设置为最终值
                     self.pos = 1;
                     val = to;
@@ -81,7 +82,7 @@ KISSY.add(function (S, require) {
                 }
                 self.val = val;
                 if (self.type === 'attr') {
-                    Dom.attr(node, prop, val, true);
+                    Dom.attr(node, prop, val, 1);
                 } else {
                     Dom.css(node, prop, val);
                 }
@@ -100,9 +101,9 @@ KISSY.add(function (S, require) {
             // 默认只对数字进行 easing
             if ((typeof from === 'number') &&
                 (typeof to === 'number')) {
-                return /**@type Number @ignore*/Math.round((from + (to - from) * pos) * 1e5) / 1e5;
+                return Math.round((from + (to - from) * pos) * 1e5) / 1e5;
             } else {
-                return /**@type Number @ignore*/undefined;
+                return null;
             }
         },
 
@@ -125,7 +126,7 @@ KISSY.add(function (S, require) {
                 type = self.type = isAttr(node, prop) ? 'attr' : 'css';
             }
             if (type === 'attr') {
-                r = Dom.attr(node, prop, undefined, 1);
+                r = Dom.attr(node, prop, undef, 1);
             } else {
                 r = Dom.css(node, prop);
             }
@@ -133,7 +134,7 @@ KISSY.add(function (S, require) {
             // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
             // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === 'auto' ? 0 : r
+                    !r || r === 'auto' ? 0 : r
                 : parsed;
         }
     };
@@ -141,7 +142,7 @@ KISSY.add(function (S, require) {
     function isAttr(node, prop) {
         // support scrollTop/Left now!
         if ((!node.style || node.style[ prop ] == null) &&
-            Dom.attr(node, prop, undefined, 1) != null) {
+            Dom.attr(node, prop, undef, 1) != null) {
             return 1;
         }
         return 0;

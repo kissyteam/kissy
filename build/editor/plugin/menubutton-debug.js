@@ -1,22 +1,29 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:49
+build time: Apr 29 15:05
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/menubutton
-
 */
 /**
  * @ignore
  * select component for kissy editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/menubutton',['editor', 'menubutton'], function (S, require) {
+KISSY.add('editor/plugin/menubutton', [
+    'editor',
+    'menubutton'
+], function (S, require) {
     var Editor = require('editor');
-    var MenuButton = require('menubutton');
+    var MenuButton = require('menubutton');    /**
+     * add select to editor toolbar
+     * @param {String} id control id
+     * @param {Object} cfg select config
+     * @param {Function} SelectType Select constructor. needs to extend {@link KISSY.MenuButton.Select}, Defaults to {@link KISSY.MenuButton.Select}.
+     * @member KISSY.Editor
+     */
     /**
      * add select to editor toolbar
      * @param {String} id control id
@@ -26,9 +33,7 @@ KISSY.add('editor/plugin/menubutton',['editor', 'menubutton'], function (S, requ
      */
     Editor.prototype.addSelect = function (id, cfg, SelectType) {
         SelectType = SelectType || MenuButton.Select;
-
         var self = this, prefixCls = self.get('prefixCls') + 'editor-';
-
         if (cfg) {
             cfg.editor = self;
             if (cfg.menu) {
@@ -38,12 +43,10 @@ KISSY.add('editor/plugin/menubutton',['editor', 'menubutton'], function (S, requ
                 cfg.elCls = prefixCls + cfg.elCls;
             }
         }
-
         var s = new SelectType(S.mix({
-            render: self.get('toolBarEl'),
-            prefixCls: prefixCls
-        }, cfg)).render();
-
+                render: self.get('toolBarEl'),
+                prefixCls: prefixCls
+            }, cfg)).render();
         if (cfg.mode === Editor.Mode.WYSIWYG_MODE) {
             self.on('wysiwygMode', function () {
                 s.set('disabled', false);
@@ -54,8 +57,7 @@ KISSY.add('editor/plugin/menubutton',['editor', 'menubutton'], function (S, requ
         }
         self.addControl(id + '/select', s);
         return s;
-
     };
-
     return MenuButton;
 });
+

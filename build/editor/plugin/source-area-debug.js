@@ -1,32 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:50
+build time: Apr 29 15:06
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/source-area
-
 */
 /**
  * @ignore
  * source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/source-area',['editor', './button'], function (S, require) {
+KISSY.add('editor/plugin/source-area', [
+    'editor',
+    './button'
+], function (S, require) {
     var Editor = require('editor');
     require('./button');
-    var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
-        WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
-
+    var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
     function sourceArea() {
     }
-
     S.augment(sourceArea, {
         pluginRenderUI: function (editor) {
             editor.addButton('sourceArea', {
-                tooltip: '源码',
+                tooltip: '\u6E90\u7801',
                 listeners: {
                     afterSyncUI: function () {
                         var self = this;
@@ -36,7 +34,6 @@ KISSY.add('editor/plugin/source-area',['editor', './button'], function (S, requi
                         editor.on('sourceMode', function () {
                             self.set('checked', true);
                         });
-
                     },
                     click: function () {
                         var self = this;
@@ -52,7 +49,6 @@ KISSY.add('editor/plugin/source-area',['editor', './button'], function (S, requi
             });
         }
     });
-
     return sourceArea;
 });
 

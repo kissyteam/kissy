@@ -233,71 +233,72 @@ if (! _$jscoverage['/bubble.js']) {
   _$jscoverage['/bubble.js'].lineData[7] = 0;
   _$jscoverage['/bubble.js'].lineData[8] = 0;
   _$jscoverage['/bubble.js'].lineData[9] = 0;
-  _$jscoverage['/bubble.js'].lineData[11] = 0;
+  _$jscoverage['/bubble.js'].lineData[10] = 0;
+  _$jscoverage['/bubble.js'].lineData[20] = 0;
   _$jscoverage['/bubble.js'].lineData[21] = 0;
-  _$jscoverage['/bubble.js'].lineData[22] = 0;
+  _$jscoverage['/bubble.js'].lineData[26] = 0;
   _$jscoverage['/bubble.js'].lineData[27] = 0;
-  _$jscoverage['/bubble.js'].lineData[28] = 0;
-  _$jscoverage['/bubble.js'].lineData[33] = 0;
+  _$jscoverage['/bubble.js'].lineData[32] = 0;
+  _$jscoverage['/bubble.js'].lineData[38] = 0;
   _$jscoverage['/bubble.js'].lineData[39] = 0;
-  _$jscoverage['/bubble.js'].lineData[40] = 0;
+  _$jscoverage['/bubble.js'].lineData[42] = 0;
   _$jscoverage['/bubble.js'].lineData[43] = 0;
-  _$jscoverage['/bubble.js'].lineData[44] = 0;
+  _$jscoverage['/bubble.js'].lineData[47] = 0;
   _$jscoverage['/bubble.js'].lineData[48] = 0;
   _$jscoverage['/bubble.js'].lineData[49] = 0;
   _$jscoverage['/bubble.js'].lineData[50] = 0;
-  _$jscoverage['/bubble.js'].lineData[51] = 0;
-  _$jscoverage['/bubble.js'].lineData[55] = 0;
-  _$jscoverage['/bubble.js'].lineData[58] = 0;
-  _$jscoverage['/bubble.js'].lineData[60] = 0;
+  _$jscoverage['/bubble.js'].lineData[54] = 0;
+  _$jscoverage['/bubble.js'].lineData[57] = 0;
+  _$jscoverage['/bubble.js'].lineData[59] = 0;
+  _$jscoverage['/bubble.js'].lineData[62] = 0;
   _$jscoverage['/bubble.js'].lineData[63] = 0;
-  _$jscoverage['/bubble.js'].lineData[64] = 0;
-  _$jscoverage['/bubble.js'].lineData[67] = 0;
-  _$jscoverage['/bubble.js'].lineData[78] = 0;
-  _$jscoverage['/bubble.js'].lineData[80] = 0;
-  _$jscoverage['/bubble.js'].lineData[82] = 0;
-  _$jscoverage['/bubble.js'].lineData[90] = 0;
-  _$jscoverage['/bubble.js'].lineData[93] = 0;
-  _$jscoverage['/bubble.js'].lineData[98] = 0;
-  _$jscoverage['/bubble.js'].lineData[100] = 0;
+  _$jscoverage['/bubble.js'].lineData[66] = 0;
+  _$jscoverage['/bubble.js'].lineData[77] = 0;
+  _$jscoverage['/bubble.js'].lineData[79] = 0;
+  _$jscoverage['/bubble.js'].lineData[81] = 0;
+  _$jscoverage['/bubble.js'].lineData[89] = 0;
+  _$jscoverage['/bubble.js'].lineData[92] = 0;
+  _$jscoverage['/bubble.js'].lineData[97] = 0;
+  _$jscoverage['/bubble.js'].lineData[99] = 0;
+  _$jscoverage['/bubble.js'].lineData[102] = 0;
   _$jscoverage['/bubble.js'].lineData[103] = 0;
-  _$jscoverage['/bubble.js'].lineData[104] = 0;
+  _$jscoverage['/bubble.js'].lineData[107] = 0;
   _$jscoverage['/bubble.js'].lineData[108] = 0;
   _$jscoverage['/bubble.js'].lineData[109] = 0;
   _$jscoverage['/bubble.js'].lineData[110] = 0;
-  _$jscoverage['/bubble.js'].lineData[111] = 0;
+  _$jscoverage['/bubble.js'].lineData[113] = 0;
   _$jscoverage['/bubble.js'].lineData[114] = 0;
-  _$jscoverage['/bubble.js'].lineData[115] = 0;
-  _$jscoverage['/bubble.js'].lineData[117] = 0;
+  _$jscoverage['/bubble.js'].lineData[116] = 0;
+  _$jscoverage['/bubble.js'].lineData[119] = 0;
   _$jscoverage['/bubble.js'].lineData[120] = 0;
-  _$jscoverage['/bubble.js'].lineData[121] = 0;
-  _$jscoverage['/bubble.js'].lineData[125] = 0;
-  _$jscoverage['/bubble.js'].lineData[127] = 0;
-  _$jscoverage['/bubble.js'].lineData[129] = 0;
-  _$jscoverage['/bubble.js'].lineData[131] = 0;
-  _$jscoverage['/bubble.js'].lineData[135] = 0;
-  _$jscoverage['/bubble.js'].lineData[139] = 0;
-  _$jscoverage['/bubble.js'].lineData[141] = 0;
-  _$jscoverage['/bubble.js'].lineData[143] = 0;
+  _$jscoverage['/bubble.js'].lineData[124] = 0;
+  _$jscoverage['/bubble.js'].lineData[126] = 0;
+  _$jscoverage['/bubble.js'].lineData[128] = 0;
+  _$jscoverage['/bubble.js'].lineData[130] = 0;
+  _$jscoverage['/bubble.js'].lineData[134] = 0;
+  _$jscoverage['/bubble.js'].lineData[138] = 0;
+  _$jscoverage['/bubble.js'].lineData[140] = 0;
+  _$jscoverage['/bubble.js'].lineData[142] = 0;
+  _$jscoverage['/bubble.js'].lineData[145] = 0;
   _$jscoverage['/bubble.js'].lineData[146] = 0;
-  _$jscoverage['/bubble.js'].lineData[147] = 0;
+  _$jscoverage['/bubble.js'].lineData[150] = 0;
   _$jscoverage['/bubble.js'].lineData[151] = 0;
   _$jscoverage['/bubble.js'].lineData[152] = 0;
   _$jscoverage['/bubble.js'].lineData[153] = 0;
-  _$jscoverage['/bubble.js'].lineData[154] = 0;
+  _$jscoverage['/bubble.js'].lineData[155] = 0;
   _$jscoverage['/bubble.js'].lineData[156] = 0;
   _$jscoverage['/bubble.js'].lineData[157] = 0;
-  _$jscoverage['/bubble.js'].lineData[158] = 0;
-  _$jscoverage['/bubble.js'].lineData[160] = 0;
-  _$jscoverage['/bubble.js'].lineData[162] = 0;
-  _$jscoverage['/bubble.js'].lineData[164] = 0;
+  _$jscoverage['/bubble.js'].lineData[159] = 0;
+  _$jscoverage['/bubble.js'].lineData[161] = 0;
+  _$jscoverage['/bubble.js'].lineData[163] = 0;
+  _$jscoverage['/bubble.js'].lineData[170] = 0;
   _$jscoverage['/bubble.js'].lineData[171] = 0;
   _$jscoverage['/bubble.js'].lineData[172] = 0;
-  _$jscoverage['/bubble.js'].lineData[173] = 0;
+  _$jscoverage['/bubble.js'].lineData[174] = 0;
   _$jscoverage['/bubble.js'].lineData[175] = 0;
   _$jscoverage['/bubble.js'].lineData[176] = 0;
-  _$jscoverage['/bubble.js'].lineData[177] = 0;
-  _$jscoverage['/bubble.js'].lineData[181] = 0;
+  _$jscoverage['/bubble.js'].lineData[180] = 0;
+  _$jscoverage['/bubble.js'].lineData[182] = 0;
   _$jscoverage['/bubble.js'].lineData[183] = 0;
   _$jscoverage['/bubble.js'].lineData[184] = 0;
   _$jscoverage['/bubble.js'].lineData[185] = 0;
@@ -305,20 +306,19 @@ if (! _$jscoverage['/bubble.js']) {
   _$jscoverage['/bubble.js'].lineData[187] = 0;
   _$jscoverage['/bubble.js'].lineData[188] = 0;
   _$jscoverage['/bubble.js'].lineData[189] = 0;
-  _$jscoverage['/bubble.js'].lineData[190] = 0;
+  _$jscoverage['/bubble.js'].lineData[191] = 0;
   _$jscoverage['/bubble.js'].lineData[192] = 0;
-  _$jscoverage['/bubble.js'].lineData[193] = 0;
-  _$jscoverage['/bubble.js'].lineData[195] = 0;
-  _$jscoverage['/bubble.js'].lineData[200] = 0;
+  _$jscoverage['/bubble.js'].lineData[194] = 0;
+  _$jscoverage['/bubble.js'].lineData[199] = 0;
+  _$jscoverage['/bubble.js'].lineData[201] = 0;
   _$jscoverage['/bubble.js'].lineData[202] = 0;
   _$jscoverage['/bubble.js'].lineData[203] = 0;
-  _$jscoverage['/bubble.js'].lineData[204] = 0;
+  _$jscoverage['/bubble.js'].lineData[205] = 0;
   _$jscoverage['/bubble.js'].lineData[206] = 0;
-  _$jscoverage['/bubble.js'].lineData[207] = 0;
+  _$jscoverage['/bubble.js'].lineData[209] = 0;
   _$jscoverage['/bubble.js'].lineData[210] = 0;
   _$jscoverage['/bubble.js'].lineData[211] = 0;
   _$jscoverage['/bubble.js'].lineData[212] = 0;
-  _$jscoverage['/bubble.js'].lineData[213] = 0;
 }
 if (! _$jscoverage['/bubble.js'].functionData) {
   _$jscoverage['/bubble.js'].functionData = [];
@@ -337,237 +337,237 @@ if (! _$jscoverage['/bubble.js'].functionData) {
 }
 if (! _$jscoverage['/bubble.js'].branchData) {
   _$jscoverage['/bubble.js'].branchData = {};
-  _$jscoverage['/bubble.js'].branchData['22'] = [];
-  _$jscoverage['/bubble.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['22'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['22'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['33'] = [];
-  _$jscoverage['/bubble.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['21'] = [];
+  _$jscoverage['/bubble.js'].branchData['21'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['21'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['21'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['32'] = [];
+  _$jscoverage['/bubble.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['43'] = [];
+  _$jscoverage['/bubble.js'].branchData['43'][1] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['44'] = [];
   _$jscoverage['/bubble.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['44'][2] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['45'] = [];
   _$jscoverage['/bubble.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['45'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['46'] = [];
-  _$jscoverage['/bubble.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['48'] = [];
-  _$jscoverage['/bubble.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['50'] = [];
-  _$jscoverage['/bubble.js'].branchData['50'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['63'] = [];
-  _$jscoverage['/bubble.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['47'] = [];
+  _$jscoverage['/bubble.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['49'] = [];
+  _$jscoverage['/bubble.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['62'] = [];
+  _$jscoverage['/bubble.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['89'] = [];
+  _$jscoverage['/bubble.js'].branchData['89'][1] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['90'] = [];
   _$jscoverage['/bubble.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['90'][2] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['91'] = [];
   _$jscoverage['/bubble.js'].branchData['91'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['91'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['92'] = [];
-  _$jscoverage['/bubble.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['98'] = [];
-  _$jscoverage['/bubble.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['98'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['98'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['103'] = [];
-  _$jscoverage['/bubble.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['103'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['103'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['108'] = [];
-  _$jscoverage['/bubble.js'].branchData['108'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['108'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['108'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['110'] = [];
-  _$jscoverage['/bubble.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['110'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['110'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['114'] = [];
-  _$jscoverage['/bubble.js'].branchData['114'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['114'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['114'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['125'] = [];
-  _$jscoverage['/bubble.js'].branchData['125'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['151'] = [];
-  _$jscoverage['/bubble.js'].branchData['151'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['153'] = [];
-  _$jscoverage['/bubble.js'].branchData['153'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['157'] = [];
-  _$jscoverage['/bubble.js'].branchData['157'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['175'] = [];
-  _$jscoverage['/bubble.js'].branchData['175'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['185'] = [];
-  _$jscoverage['/bubble.js'].branchData['185'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['188'] = [];
-  _$jscoverage['/bubble.js'].branchData['188'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['192'] = [];
-  _$jscoverage['/bubble.js'].branchData['192'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['203'] = [];
-  _$jscoverage['/bubble.js'].branchData['203'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['97'] = [];
+  _$jscoverage['/bubble.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['97'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['97'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['102'] = [];
+  _$jscoverage['/bubble.js'].branchData['102'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['102'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['102'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['107'] = [];
+  _$jscoverage['/bubble.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['107'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['107'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['109'] = [];
+  _$jscoverage['/bubble.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['109'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['109'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['113'] = [];
+  _$jscoverage['/bubble.js'].branchData['113'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['113'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['113'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['124'] = [];
+  _$jscoverage['/bubble.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['150'] = [];
+  _$jscoverage['/bubble.js'].branchData['150'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['152'] = [];
+  _$jscoverage['/bubble.js'].branchData['152'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['156'] = [];
+  _$jscoverage['/bubble.js'].branchData['156'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['174'] = [];
+  _$jscoverage['/bubble.js'].branchData['174'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['184'] = [];
+  _$jscoverage['/bubble.js'].branchData['184'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['187'] = [];
+  _$jscoverage['/bubble.js'].branchData['187'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['191'] = [];
+  _$jscoverage['/bubble.js'].branchData['191'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['202'] = [];
+  _$jscoverage['/bubble.js'].branchData['202'][1] = new BranchData();
 }
-_$jscoverage['/bubble.js'].branchData['203'][1].init(18, 31, '!bubble.get(\'editorSelectedEl\')');
-function visit39_203_1(result) {
-  _$jscoverage['/bubble.js'].branchData['203'][1].ranCondition(result);
+_$jscoverage['/bubble.js'].branchData['202'][1].init(18, 31, '!bubble.get(\'editorSelectedEl\')');
+function visit39_202_1(result) {
+  _$jscoverage['/bubble.js'].branchData['202'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['192'][1].init(297, 22, '!bubble.get(\'visible\')');
-function visit38_192_1(result) {
-  _$jscoverage['/bubble.js'].branchData['192'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['191'][1].init(297, 22, '!bubble.get(\'visible\')');
+function visit38_191_1(result) {
+  _$jscoverage['/bubble.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['188'][1].init(120, 6, 'archor');
-function visit37_188_1(result) {
-  _$jscoverage['/bubble.js'].branchData['188'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['187'][1].init(120, 6, 'archor');
+function visit37_187_1(result) {
+  _$jscoverage['/bubble.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['185'][1].init(55, 2, 'xy');
-function visit36_185_1(result) {
-  _$jscoverage['/bubble.js'].branchData['185'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['184'][1].init(55, 2, 'xy');
+function visit36_184_1(result) {
+  _$jscoverage['/bubble.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['175'][1].init(138, 9, 'editorWin');
-function visit35_175_1(result) {
-  _$jscoverage['/bubble.js'].branchData['175'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['174'][1].init(138, 9, 'editorWin');
+function visit35_174_1(result) {
+  _$jscoverage['/bubble.js'].branchData['174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['157'][1].init(205, 1, 'a');
-function visit34_157_1(result) {
-  _$jscoverage['/bubble.js'].branchData['157'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['156'][1].init(205, 1, 'a');
+function visit34_156_1(result) {
+  _$jscoverage['/bubble.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['153'][1].init(78, 12, '!lastElement');
-function visit33_153_1(result) {
-  _$jscoverage['/bubble.js'].branchData['153'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['152'][1].init(78, 12, '!lastElement');
+function visit33_152_1(result) {
+  _$jscoverage['/bubble.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['151'][1].init(158, 23, 'elementPath && elements');
-function visit32_151_1(result) {
-  _$jscoverage['/bubble.js'].branchData['151'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['150'][1].init(158, 23, 'elementPath && elements');
+function visit32_150_1(result) {
+  _$jscoverage['/bubble.js'].branchData['150'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['125'][1].init(117, 9, 'cfg || {}');
-function visit31_125_1(result) {
-  _$jscoverage['/bubble.js'].branchData['125'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['124'][1].init(117, 9, 'cfg || {}');
+function visit31_124_1(result) {
+  _$jscoverage['/bubble.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['114'][3].init(1547, 15, 'y !== undefined');
-function visit30_114_3(result) {
-  _$jscoverage['/bubble.js'].branchData['114'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['113'][3].init(1547, 15, 'y !== undefined');
+function visit30_113_3(result) {
+  _$jscoverage['/bubble.js'].branchData['113'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['114'][2].init(1528, 15, 'x !== undefined');
-function visit29_114_2(result) {
-  _$jscoverage['/bubble.js'].branchData['114'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['113'][2].init(1528, 15, 'x !== undefined');
+function visit29_113_2(result) {
+  _$jscoverage['/bubble.js'].branchData['113'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['114'][1].init(1528, 34, 'x !== undefined && y !== undefined');
-function visit28_114_1(result) {
-  _$jscoverage['/bubble.js'].branchData['114'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['113'][1].init(1528, 34, 'x !== undefined && y !== undefined');
+function visit28_113_1(result) {
+  _$jscoverage['/bubble.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['110'][3].init(1460, 14, 'elLeft < right');
-function visit27_110_3(result) {
-  _$jscoverage['/bubble.js'].branchData['110'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['109'][3].init(1460, 14, 'elLeft < right');
+function visit27_109_3(result) {
+  _$jscoverage['/bubble.js'].branchData['109'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['110'][2].init(1443, 13, 'elLeft > left');
-function visit26_110_2(result) {
-  _$jscoverage['/bubble.js'].branchData['110'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['109'][2].init(1443, 13, 'elLeft > left');
+function visit26_109_2(result) {
+  _$jscoverage['/bubble.js'].branchData['109'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['110'][1].init(1443, 31, 'elLeft > left && elLeft < right');
-function visit25_110_1(result) {
-  _$jscoverage['/bubble.js'].branchData['110'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['109'][1].init(1443, 31, 'elLeft > left && elLeft < right');
+function visit25_109_1(result) {
+  _$jscoverage['/bubble.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['108'][3].init(1382, 13, 'elLeft < left');
-function visit24_108_3(result) {
-  _$jscoverage['/bubble.js'].branchData['108'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['107'][3].init(1382, 13, 'elLeft < left');
+function visit24_107_3(result) {
+  _$jscoverage['/bubble.js'].branchData['107'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['108'][2].init(1364, 14, 'elRight > left');
-function visit23_108_2(result) {
-  _$jscoverage['/bubble.js'].branchData['108'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['107'][2].init(1364, 14, 'elRight > left');
+function visit23_107_2(result) {
+  _$jscoverage['/bubble.js'].branchData['107'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['108'][1].init(1364, 31, 'elRight > left && elLeft < left');
-function visit22_108_1(result) {
-  _$jscoverage['/bubble.js'].branchData['108'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['107'][1].init(1364, 31, 'elRight > left && elLeft < left');
+function visit22_107_1(result) {
+  _$jscoverage['/bubble.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['103'][3].init(1271, 17, 'elBottom < bottom');
-function visit21_103_3(result) {
-  _$jscoverage['/bubble.js'].branchData['103'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['102'][3].init(1271, 17, 'elBottom < bottom');
+function visit21_102_3(result) {
+  _$jscoverage['/bubble.js'].branchData['102'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['103'][2].init(1253, 14, 'elBottom > top');
-function visit20_103_2(result) {
-  _$jscoverage['/bubble.js'].branchData['103'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['102'][2].init(1253, 14, 'elBottom > top');
+function visit20_102_2(result) {
+  _$jscoverage['/bubble.js'].branchData['102'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['103'][1].init(1253, 35, 'elBottom > top && elBottom < bottom');
-function visit19_103_1(result) {
-  _$jscoverage['/bubble.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['102'][1].init(1253, 35, 'elBottom > top && elBottom < bottom');
+function visit19_102_1(result) {
+  _$jscoverage['/bubble.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['98'][3].init(1123, 14, 'elTop < bottom');
-function visit18_98_3(result) {
-  _$jscoverage['/bubble.js'].branchData['98'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['97'][3].init(1123, 14, 'elTop < bottom');
+function visit18_97_3(result) {
+  _$jscoverage['/bubble.js'].branchData['97'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['98'][2].init(1102, 17, 'elBottom > bottom');
-function visit17_98_2(result) {
-  _$jscoverage['/bubble.js'].branchData['98'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['97'][2].init(1102, 17, 'elBottom > bottom');
+function visit17_97_2(result) {
+  _$jscoverage['/bubble.js'].branchData['97'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['98'][1].init(1102, 35, 'elBottom > bottom && elTop < bottom');
-function visit16_98_1(result) {
-  _$jscoverage['/bubble.js'].branchData['98'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['97'][1].init(1102, 35, 'elBottom > bottom && elTop < bottom');
+function visit16_97_1(result) {
+  _$jscoverage['/bubble.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['92'][1].init(54, 17, 'elBottom > bottom');
-function visit15_92_1(result) {
-  _$jscoverage['/bubble.js'].branchData['92'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/bubble.js'].branchData['91'][2].init(919, 38, 'el[0].nodeName.toLowerCase() === \'img\'');
-function visit14_91_2(result) {
-  _$jscoverage['/bubble.js'].branchData['91'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/bubble.js'].branchData['91'][1].init(23, 72, 'el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
-function visit13_91_1(result) {
+}_$jscoverage['/bubble.js'].branchData['91'][1].init(54, 17, 'elBottom > bottom');
+function visit15_91_1(result) {
   _$jscoverage['/bubble.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['90'][1].init(893, 96, 'S.UA.ie && el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
-function visit12_90_1(result) {
+}_$jscoverage['/bubble.js'].branchData['90'][2].init(919, 38, 'el[0].nodeName.toLowerCase() === \'img\'');
+function visit14_90_2(result) {
+  _$jscoverage['/bubble.js'].branchData['90'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/bubble.js'].branchData['90'][1].init(23, 72, 'el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
+function visit13_90_1(result) {
   _$jscoverage['/bubble.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['63'][1].init(70, 3, '!el');
-function visit11_63_1(result) {
-  _$jscoverage['/bubble.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['89'][1].init(893, 96, 'S.UA.ie && el[0].nodeName.toLowerCase() === \'img\' && elBottom > bottom');
+function visit12_89_1(result) {
+  _$jscoverage['/bubble.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['50'][1].init(100, 33, 'archor.get(\'y\') < bubble.get(\'y\')');
-function visit10_50_1(result) {
-  _$jscoverage['/bubble.js'].branchData['50'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['62'][1].init(70, 3, '!el');
+function visit11_62_1(result) {
+  _$jscoverage['/bubble.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['48'][1].init(22, 7, '!archor');
-function visit9_48_1(result) {
-  _$jscoverage['/bubble.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['49'][1].init(100, 33, 'archor.get(\'y\') < bubble.get(\'y\')');
+function visit10_49_1(result) {
+  _$jscoverage['/bubble.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['46'][1].init(35, 63, 'bubble.get(\'visible\') && overlap(self, bubble)');
-function visit8_46_1(result) {
-  _$jscoverage['/bubble.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['47'][1].init(22, 7, '!archor');
+function visit9_47_1(result) {
+  _$jscoverage['/bubble.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['45'][2].init(58, 15, 'bubble !== self');
-function visit7_45_2(result) {
-  _$jscoverage['/bubble.js'].branchData['45'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/bubble.js'].branchData['45'][1].init(37, 99, 'bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
-function visit6_45_1(result) {
+}_$jscoverage['/bubble.js'].branchData['45'][1].init(35, 63, 'bubble.get(\'visible\') && overlap(self, bubble)');
+function visit8_45_1(result) {
   _$jscoverage['/bubble.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['44'][1].init(18, 137, 'bubble.isKeBubble && bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
-function visit5_44_1(result) {
+}_$jscoverage['/bubble.js'].branchData['44'][2].init(58, 15, 'bubble !== self');
+function visit7_44_2(result) {
+  _$jscoverage['/bubble.js'].branchData['44'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/bubble.js'].branchData['44'][1].init(37, 99, 'bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
+function visit6_44_1(result) {
   _$jscoverage['/bubble.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['33'][1].init(207, 82, 'inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top)');
-function visit4_33_1(result) {
-  _$jscoverage['/bubble.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['43'][1].init(18, 137, 'bubble.isKeBubble && bubble !== self && bubble.get(\'visible\') && overlap(self, bubble)');
+function visit5_43_1(result) {
+  _$jscoverage['/bubble.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['22'][3].init(27, 6, 'b >= r');
-function visit3_22_3(result) {
-  _$jscoverage['/bubble.js'].branchData['22'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['32'][1].init(207, 82, 'inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top)');
+function visit4_32_1(result) {
+  _$jscoverage['/bubble.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['22'][2].init(17, 6, 't <= r');
-function visit2_22_2(result) {
-  _$jscoverage['/bubble.js'].branchData['22'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['21'][3].init(27, 6, 'b >= r');
+function visit3_21_3(result) {
+  _$jscoverage['/bubble.js'].branchData['21'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['22'][1].init(17, 16, 't <= r && b >= r');
-function visit1_22_1(result) {
-  _$jscoverage['/bubble.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['21'][2].init(17, 6, 't <= r');
+function visit2_21_2(result) {
+  _$jscoverage['/bubble.js'].branchData['21'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/bubble.js'].branchData['21'][1].init(17, 16, 't <= r && b >= r');
+function visit1_21_1(result) {
+  _$jscoverage['/bubble.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bubble.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/bubble.js'].functionData[0]++;
   _$jscoverage['/bubble.js'].lineData[7]++;
-  var Overlay = require('overlay');
-  _$jscoverage['/bubble.js'].lineData[8]++;
-  var Editor = require('editor');
-  _$jscoverage['/bubble.js'].lineData[9]++;
   var logger = S.getLogger('s/editor');
-  _$jscoverage['/bubble.js'].lineData[11]++;
+  _$jscoverage['/bubble.js'].lineData[8]++;
+  var Overlay = require('overlay');
+  _$jscoverage['/bubble.js'].lineData[9]++;
+  var Editor = require('editor');
+  _$jscoverage['/bubble.js'].lineData[10]++;
   var BUBBLE_CFG = {
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW), 
   elCls: '{prefixCls}editor-bubble', 
@@ -575,220 +575,220 @@ KISSY.add(function(S, require) {
   effect: {
   effect: 'fade', 
   duration: 0.3}};
-  _$jscoverage['/bubble.js'].lineData[21]++;
+  _$jscoverage['/bubble.js'].lineData[20]++;
   function inRange(t, b, r) {
     _$jscoverage['/bubble.js'].functionData[1]++;
-    _$jscoverage['/bubble.js'].lineData[22]++;
-    return visit1_22_1(visit2_22_2(t <= r) && visit3_22_3(b >= r));
+    _$jscoverage['/bubble.js'].lineData[21]++;
+    return visit1_21_1(visit2_21_2(t <= r) && visit3_21_3(b >= r));
   }
-  _$jscoverage['/bubble.js'].lineData[27]++;
+  _$jscoverage['/bubble.js'].lineData[26]++;
   function overlap(b1, b2) {
     _$jscoverage['/bubble.js'].functionData[2]++;
-    _$jscoverage['/bubble.js'].lineData[28]++;
+    _$jscoverage['/bubble.js'].lineData[27]++;
     var b1Top = b1.get('y'), b1Bottom = b1Top + b1.get('el').outerHeight(), b2Top = b2.get('y'), b2Bottom = b2Top + b2.get('el').outerHeight();
-    _$jscoverage['/bubble.js'].lineData[33]++;
-    return visit4_33_1(inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top));
+    _$jscoverage['/bubble.js'].lineData[32]++;
+    return visit4_32_1(inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top));
   }
-  _$jscoverage['/bubble.js'].lineData[39]++;
+  _$jscoverage['/bubble.js'].lineData[38]++;
   function getTopPosition(self) {
     _$jscoverage['/bubble.js'].functionData[3]++;
-    _$jscoverage['/bubble.js'].lineData[40]++;
+    _$jscoverage['/bubble.js'].lineData[39]++;
     var archor = null, editor = self.get('editor'), myBubbles = editor.getControls();
-    _$jscoverage['/bubble.js'].lineData[43]++;
+    _$jscoverage['/bubble.js'].lineData[42]++;
     S.each(myBubbles, function(bubble) {
   _$jscoverage['/bubble.js'].functionData[4]++;
-  _$jscoverage['/bubble.js'].lineData[44]++;
-  if (visit5_44_1(bubble.isKeBubble && visit6_45_1(visit7_45_2(bubble !== self) && visit8_46_1(bubble.get('visible') && overlap(self, bubble))))) {
-    _$jscoverage['/bubble.js'].lineData[48]++;
-    if (visit9_48_1(!archor)) {
-      _$jscoverage['/bubble.js'].lineData[49]++;
+  _$jscoverage['/bubble.js'].lineData[43]++;
+  if (visit5_43_1(bubble.isKeBubble && visit6_44_1(visit7_44_2(bubble !== self) && visit8_45_1(bubble.get('visible') && overlap(self, bubble))))) {
+    _$jscoverage['/bubble.js'].lineData[47]++;
+    if (visit9_47_1(!archor)) {
+      _$jscoverage['/bubble.js'].lineData[48]++;
       archor = bubble;
     } else {
-      _$jscoverage['/bubble.js'].lineData[50]++;
-      if (visit10_50_1(archor.get('y') < bubble.get('y'))) {
-        _$jscoverage['/bubble.js'].lineData[51]++;
+      _$jscoverage['/bubble.js'].lineData[49]++;
+      if (visit10_49_1(archor.get('y') < bubble.get('y'))) {
+        _$jscoverage['/bubble.js'].lineData[50]++;
         archor = bubble;
       }
     }
   }
 });
-    _$jscoverage['/bubble.js'].lineData[55]++;
+    _$jscoverage['/bubble.js'].lineData[54]++;
     return archor;
   }
-  _$jscoverage['/bubble.js'].lineData[58]++;
+  _$jscoverage['/bubble.js'].lineData[57]++;
   function getXy(bubble) {
     _$jscoverage['/bubble.js'].functionData[5]++;
-    _$jscoverage['/bubble.js'].lineData[60]++;
+    _$jscoverage['/bubble.js'].lineData[59]++;
     var el = bubble.get('editorSelectedEl');
-    _$jscoverage['/bubble.js'].lineData[63]++;
-    if (visit11_63_1(!el)) {
-      _$jscoverage['/bubble.js'].lineData[64]++;
+    _$jscoverage['/bubble.js'].lineData[62]++;
+    if (visit11_62_1(!el)) {
+      _$jscoverage['/bubble.js'].lineData[63]++;
       return undefined;
     }
-    _$jscoverage['/bubble.js'].lineData[67]++;
+    _$jscoverage['/bubble.js'].lineData[66]++;
     var editor = bubble.get('editor'), editorWin = editor.get('window'), iframeXY = editor.get('iframe').offset(), top = iframeXY.top, left = iframeXY.left, right = left + editorWin.width(), bottom = top + editorWin.height();
-    _$jscoverage['/bubble.js'].lineData[78]++;
+    _$jscoverage['/bubble.js'].lineData[77]++;
     var elXY = el.offset();
-    _$jscoverage['/bubble.js'].lineData[80]++;
+    _$jscoverage['/bubble.js'].lineData[79]++;
     elXY = Editor.Utils.getXY(elXY, editor);
-    _$jscoverage['/bubble.js'].lineData[82]++;
+    _$jscoverage['/bubble.js'].lineData[81]++;
     var elTop = elXY.top, elLeft = elXY.left, elRight = elLeft + el.width(), elBottom = elTop + el.height(), x, y;
-    _$jscoverage['/bubble.js'].lineData[90]++;
-    if (visit12_90_1(S.UA.ie && visit13_91_1(visit14_91_2(el[0].nodeName.toLowerCase() === 'img') && visit15_92_1(elBottom > bottom)))) {
-      _$jscoverage['/bubble.js'].lineData[93]++;
+    _$jscoverage['/bubble.js'].lineData[89]++;
+    if (visit12_89_1(S.UA.ie && visit13_90_1(visit14_90_2(el[0].nodeName.toLowerCase() === 'img') && visit15_91_1(elBottom > bottom)))) {
+      _$jscoverage['/bubble.js'].lineData[92]++;
       return undefined;
     }
-    _$jscoverage['/bubble.js'].lineData[98]++;
-    if (visit16_98_1(visit17_98_2(elBottom > bottom) && visit18_98_3(elTop < bottom))) {
-      _$jscoverage['/bubble.js'].lineData[100]++;
+    _$jscoverage['/bubble.js'].lineData[97]++;
+    if (visit16_97_1(visit17_97_2(elBottom > bottom) && visit18_97_3(elTop < bottom))) {
+      _$jscoverage['/bubble.js'].lineData[99]++;
       y = bottom - 30;
     } else {
-      _$jscoverage['/bubble.js'].lineData[103]++;
-      if (visit19_103_1(visit20_103_2(elBottom > top) && visit21_103_3(elBottom < bottom))) {
-        _$jscoverage['/bubble.js'].lineData[104]++;
+      _$jscoverage['/bubble.js'].lineData[102]++;
+      if (visit19_102_1(visit20_102_2(elBottom > top) && visit21_102_3(elBottom < bottom))) {
+        _$jscoverage['/bubble.js'].lineData[103]++;
         y = elBottom;
       }
     }
-    _$jscoverage['/bubble.js'].lineData[108]++;
-    if (visit22_108_1(visit23_108_2(elRight > left) && visit24_108_3(elLeft < left))) {
-      _$jscoverage['/bubble.js'].lineData[109]++;
+    _$jscoverage['/bubble.js'].lineData[107]++;
+    if (visit22_107_1(visit23_107_2(elRight > left) && visit24_107_3(elLeft < left))) {
+      _$jscoverage['/bubble.js'].lineData[108]++;
       x = left;
     } else {
-      _$jscoverage['/bubble.js'].lineData[110]++;
-      if (visit25_110_1(visit26_110_2(elLeft > left) && visit27_110_3(elLeft < right))) {
-        _$jscoverage['/bubble.js'].lineData[111]++;
+      _$jscoverage['/bubble.js'].lineData[109]++;
+      if (visit25_109_1(visit26_109_2(elLeft > left) && visit27_109_3(elLeft < right))) {
+        _$jscoverage['/bubble.js'].lineData[110]++;
         x = elLeft;
       }
     }
-    _$jscoverage['/bubble.js'].lineData[114]++;
-    if (visit28_114_1(visit29_114_2(x !== undefined) && visit30_114_3(y !== undefined))) {
-      _$jscoverage['/bubble.js'].lineData[115]++;
+    _$jscoverage['/bubble.js'].lineData[113]++;
+    if (visit28_113_1(visit29_113_2(x !== undefined) && visit30_113_3(y !== undefined))) {
+      _$jscoverage['/bubble.js'].lineData[114]++;
       return [x, y];
     }
-    _$jscoverage['/bubble.js'].lineData[117]++;
+    _$jscoverage['/bubble.js'].lineData[116]++;
     return undefined;
   }
-  _$jscoverage['/bubble.js'].lineData[120]++;
+  _$jscoverage['/bubble.js'].lineData[119]++;
   Editor.prototype.addBubble = function(id, filter, cfg) {
   _$jscoverage['/bubble.js'].functionData[6]++;
-  _$jscoverage['/bubble.js'].lineData[121]++;
+  _$jscoverage['/bubble.js'].lineData[120]++;
   var editor = this, prefixCls = editor.get('prefixCls'), bubble;
-  _$jscoverage['/bubble.js'].lineData[125]++;
-  cfg = visit31_125_1(cfg || {});
-  _$jscoverage['/bubble.js'].lineData[127]++;
+  _$jscoverage['/bubble.js'].lineData[124]++;
+  cfg = visit31_124_1(cfg || {});
+  _$jscoverage['/bubble.js'].lineData[126]++;
   cfg.editor = editor;
-  _$jscoverage['/bubble.js'].lineData[129]++;
+  _$jscoverage['/bubble.js'].lineData[128]++;
   S.mix(cfg, BUBBLE_CFG);
-  _$jscoverage['/bubble.js'].lineData[131]++;
+  _$jscoverage['/bubble.js'].lineData[130]++;
   cfg.elCls = S.substitute(cfg.elCls, {
   prefixCls: prefixCls});
-  _$jscoverage['/bubble.js'].lineData[135]++;
+  _$jscoverage['/bubble.js'].lineData[134]++;
   cfg.prefixCls = S.substitute(cfg.prefixCls, {
   prefixCls: prefixCls});
-  _$jscoverage['/bubble.js'].lineData[139]++;
+  _$jscoverage['/bubble.js'].lineData[138]++;
   bubble = new Overlay(cfg);
-  _$jscoverage['/bubble.js'].lineData[141]++;
+  _$jscoverage['/bubble.js'].lineData[140]++;
   bubble.isKeBubble = 1;
-  _$jscoverage['/bubble.js'].lineData[143]++;
+  _$jscoverage['/bubble.js'].lineData[142]++;
   editor.addControl(id + '/bubble', bubble);
-  _$jscoverage['/bubble.js'].lineData[146]++;
+  _$jscoverage['/bubble.js'].lineData[145]++;
   editor.on('selectionChange', function(ev) {
   _$jscoverage['/bubble.js'].functionData[7]++;
-  _$jscoverage['/bubble.js'].lineData[147]++;
+  _$jscoverage['/bubble.js'].lineData[146]++;
   var elementPath = ev.path, elements = elementPath.elements, a, lastElement;
-  _$jscoverage['/bubble.js'].lineData[151]++;
-  if (visit32_151_1(elementPath && elements)) {
-    _$jscoverage['/bubble.js'].lineData[152]++;
+  _$jscoverage['/bubble.js'].lineData[150]++;
+  if (visit32_150_1(elementPath && elements)) {
+    _$jscoverage['/bubble.js'].lineData[151]++;
     lastElement = elementPath.lastElement;
-    _$jscoverage['/bubble.js'].lineData[153]++;
-    if (visit33_153_1(!lastElement)) {
-      _$jscoverage['/bubble.js'].lineData[154]++;
+    _$jscoverage['/bubble.js'].lineData[152]++;
+    if (visit33_152_1(!lastElement)) {
+      _$jscoverage['/bubble.js'].lineData[153]++;
       return;
     }
-    _$jscoverage['/bubble.js'].lineData[156]++;
+    _$jscoverage['/bubble.js'].lineData[155]++;
     a = filter(lastElement);
-    _$jscoverage['/bubble.js'].lineData[157]++;
-    if (visit34_157_1(a)) {
-      _$jscoverage['/bubble.js'].lineData[158]++;
+    _$jscoverage['/bubble.js'].lineData[156]++;
+    if (visit34_156_1(a)) {
+      _$jscoverage['/bubble.js'].lineData[157]++;
       bubble.set('editorSelectedEl', a);
-      _$jscoverage['/bubble.js'].lineData[160]++;
+      _$jscoverage['/bubble.js'].lineData[159]++;
       bubble.hide();
-      _$jscoverage['/bubble.js'].lineData[162]++;
+      _$jscoverage['/bubble.js'].lineData[161]++;
       S.later(onShow, 10);
     } else {
-      _$jscoverage['/bubble.js'].lineData[164]++;
+      _$jscoverage['/bubble.js'].lineData[163]++;
       onHide();
     }
   }
 });
-  _$jscoverage['/bubble.js'].lineData[171]++;
+  _$jscoverage['/bubble.js'].lineData[170]++;
   function onHide() {
     _$jscoverage['/bubble.js'].functionData[8]++;
-    _$jscoverage['/bubble.js'].lineData[172]++;
+    _$jscoverage['/bubble.js'].lineData[171]++;
     bubble.hide();
-    _$jscoverage['/bubble.js'].lineData[173]++;
+    _$jscoverage['/bubble.js'].lineData[172]++;
     var editorWin = editor.get('window');
-    _$jscoverage['/bubble.js'].lineData[175]++;
-    if (visit35_175_1(editorWin)) {
-      _$jscoverage['/bubble.js'].lineData[176]++;
+    _$jscoverage['/bubble.js'].lineData[174]++;
+    if (visit35_174_1(editorWin)) {
+      _$jscoverage['/bubble.js'].lineData[175]++;
       editorWin.detach('scroll', onScroll);
-      _$jscoverage['/bubble.js'].lineData[177]++;
+      _$jscoverage['/bubble.js'].lineData[176]++;
       bufferScroll.stop();
     }
   }
-  _$jscoverage['/bubble.js'].lineData[181]++;
+  _$jscoverage['/bubble.js'].lineData[180]++;
   editor.on('sourceMode', onHide);
-  _$jscoverage['/bubble.js'].lineData[183]++;
+  _$jscoverage['/bubble.js'].lineData[182]++;
   function showImmediately() {
     _$jscoverage['/bubble.js'].functionData[9]++;
-    _$jscoverage['/bubble.js'].lineData[184]++;
+    _$jscoverage['/bubble.js'].lineData[183]++;
     var xy = getXy(bubble);
-    _$jscoverage['/bubble.js'].lineData[185]++;
-    if (visit36_185_1(xy)) {
-      _$jscoverage['/bubble.js'].lineData[186]++;
+    _$jscoverage['/bubble.js'].lineData[184]++;
+    if (visit36_184_1(xy)) {
+      _$jscoverage['/bubble.js'].lineData[185]++;
       bubble.move(xy[0], xy[1]);
-      _$jscoverage['/bubble.js'].lineData[187]++;
+      _$jscoverage['/bubble.js'].lineData[186]++;
       var archor = getTopPosition(bubble);
-      _$jscoverage['/bubble.js'].lineData[188]++;
-      if (visit37_188_1(archor)) {
-        _$jscoverage['/bubble.js'].lineData[189]++;
+      _$jscoverage['/bubble.js'].lineData[187]++;
+      if (visit37_187_1(archor)) {
+        _$jscoverage['/bubble.js'].lineData[188]++;
         xy[1] = archor.get('y') + archor.get('el').outerHeight();
-        _$jscoverage['/bubble.js'].lineData[190]++;
+        _$jscoverage['/bubble.js'].lineData[189]++;
         bubble.move(xy[0], xy[1]);
       }
-      _$jscoverage['/bubble.js'].lineData[192]++;
-      if (visit38_192_1(!bubble.get('visible'))) {
-        _$jscoverage['/bubble.js'].lineData[193]++;
+      _$jscoverage['/bubble.js'].lineData[191]++;
+      if (visit38_191_1(!bubble.get('visible'))) {
+        _$jscoverage['/bubble.js'].lineData[192]++;
         bubble.show();
       } else {
-        _$jscoverage['/bubble.js'].lineData[195]++;
+        _$jscoverage['/bubble.js'].lineData[194]++;
         logger.debug('already show by selectionChange');
       }
     }
   }
-  _$jscoverage['/bubble.js'].lineData[200]++;
+  _$jscoverage['/bubble.js'].lineData[199]++;
   var bufferScroll = S.buffer(showImmediately, 350);
-  _$jscoverage['/bubble.js'].lineData[202]++;
+  _$jscoverage['/bubble.js'].lineData[201]++;
   function onScroll() {
     _$jscoverage['/bubble.js'].functionData[10]++;
-    _$jscoverage['/bubble.js'].lineData[203]++;
-    if (visit39_203_1(!bubble.get('editorSelectedEl'))) {
-      _$jscoverage['/bubble.js'].lineData[204]++;
+    _$jscoverage['/bubble.js'].lineData[202]++;
+    if (visit39_202_1(!bubble.get('editorSelectedEl'))) {
+      _$jscoverage['/bubble.js'].lineData[203]++;
       return;
     }
-    _$jscoverage['/bubble.js'].lineData[206]++;
+    _$jscoverage['/bubble.js'].lineData[205]++;
     bubble.hide();
-    _$jscoverage['/bubble.js'].lineData[207]++;
+    _$jscoverage['/bubble.js'].lineData[206]++;
     bufferScroll();
   }
-  _$jscoverage['/bubble.js'].lineData[210]++;
+  _$jscoverage['/bubble.js'].lineData[209]++;
   function onShow() {
     _$jscoverage['/bubble.js'].functionData[11]++;
-    _$jscoverage['/bubble.js'].lineData[211]++;
+    _$jscoverage['/bubble.js'].lineData[210]++;
     var editorWin = editor.get('window');
-    _$jscoverage['/bubble.js'].lineData[212]++;
+    _$jscoverage['/bubble.js'].lineData[211]++;
     editorWin.on('scroll', onScroll);
-    _$jscoverage['/bubble.js'].lineData[213]++;
+    _$jscoverage['/bubble.js'].lineData[212]++;
     showImmediately();
   }
 };

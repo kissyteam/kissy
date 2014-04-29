@@ -1,33 +1,58 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:54
+build time: Apr 29 15:11
 */
 /*
-combined files : 
-
+combined modules:
+node
 node/base
 node/attach
 node/override
 node/anim
-node
-
 */
+/**
+ * @ignore
+ * node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('node', [
+    'node/base',
+    'node/attach',
+    'node/override',
+    'node/anim'
+], function (S, require) {
+    var Node = require('node/base');
+    require('node/attach');
+    require('node/override');
+    require('node/anim');    // bad! compatibility
+    // bad! compatibility
+    S.Node = Node;
+    S.all = Node.all;
+    S.one = Node.one;
+    return Node;
+});
 /**
  * @ignore
  * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
+KISSY.add('node/base', [
+    'dom',
+    'event/dom'
+], function (S, require) {
     var Dom = require('dom');
     var Event = require('event/dom');
-    var AP = Array.prototype,
-        slice = AP.slice,
-        NodeType = Dom.NodeType,
-        push = AP.push,
-        makeArray = S.makeArray,
-        isDomNodeList = Dom.isDomNodeList;
-
+    var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList;    /**
+     * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
+     * use KISSY.all/one to retrieve NodeList instances.
+     *
+     *
+     *      @example
+     *      KISSY.all('a').attr('href','http://docs.kissyui.com');
+     *
+     * @class KISSY.Node
+     */
     /**
      * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
@@ -39,25 +64,22 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
      * @class KISSY.Node
      */
     function Node(html, props, ownerDocument) {
-        var self = this,
-            domNode;
-
+        var self = this, domNode;
         if (html instanceof Node) {
             return html.slice();
         }
-
         if (!(self instanceof Node)) {
             return new Node(html, props, ownerDocument);
-        }
-
+        }    // handle Node(''), Node(null), or Node(undefined)
         // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
             return self;
         } else if (typeof html === 'string') {
             // create from html
-            domNode = Dom.create(html, props, ownerDocument);
+            domNode = Dom.create(html, props, ownerDocument);    // ('<p>1</p><p>2</p>') 转换为 Node
             // ('<p>1</p><p>2</p>') 转换为 Node
-            if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
+            if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
+                // fragment
                 push.apply(this, makeArray(domNode.childNodes));
                 return self;
             }
@@ -68,23 +90,18 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
             // node, document, window
             domNode = html;
         }
-
         self[0] = domNode;
         self.length = 1;
         return self;
     }
-
     Node.prototype = {
         constructor: Node,
-
         isNode: true,
-
         /**
          * length of Node
          * @type {Number}
          */
         length: 0,
-
         /**
          * Get one node at index
          * @param {Number} index Index position.
@@ -102,7 +119,6 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
                 return new Node(index);
             }
         },
-
         /**
          * return a new Node object which consists of current node list and parameter node list.
          * @param {KISSY.Node} selector Selector string or html string or common dom node.
@@ -115,18 +131,19 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
                 index = context;
                 context = undefined;
             }
-            var list = Node.all(selector, context).getDOMNodes(),
-                ret = new Node(this);
+            var list = Node.all(selector, context).getDOMNodes(), ret = new Node(this);
             if (index === undefined) {
                 push.apply(ret, list);
             } else {
-                var args = [index, 0];
+                var args = [
+                        index,
+                        0
+                    ];
                 args.push.apply(args, list);
                 AP.splice.apply(ret, args);
             }
             return ret;
         },
-
         /**
          * Get part of node list.
          * Arguments are same with Array.prototype.slice
@@ -138,14 +155,12 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
             // fix #85
             return new Node(slice.apply(this, arguments));
         },
-
         /**
          * Retrieves the DOMNodes.
          */
         getDOMNodes: function () {
             return slice.call(this);
         },
-
         /**
          * Applies the given function to each Node in the Node.
          * @param {Function} fn The function to apply. It receives 3 arguments:
@@ -157,12 +172,10 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
          */
         each: function (fn, context) {
             var self = this;
-
             S.each(self, function (n, i) {
                 n = new Node(n);
                 return fn.call(context || n, n, i, self);
             });
-
             return self;
         },
         /**
@@ -172,7 +185,6 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
         getDOMNode: function () {
             return this[0];
         },
-
         /**
          * return last stack node list.
          * @return {KISSY.Node}
@@ -181,7 +193,6 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
             var self = this;
             return self.__parent || self;
         },
-
         /**
          * return new Node which contains only nodes which passes filter
          * @param {String|Function} filter
@@ -190,15 +201,13 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
         filter: function (filter) {
             return new Node(Dom.filter(this, filter));
         },
-
         /**
          * Get node list which are descendants of current node list.
          * @param {String} selector Selector string
          * @return {KISSY.Node}
          */
         all: function (selector) {
-            var ret,
-                self = this;
+            var ret, self = this;
             if (self.length > 0) {
                 ret = Node.all(selector, self);
             } else {
@@ -207,23 +216,19 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
             ret.__parent = self;
             return ret;
         },
-
         /**
          * Get node list which match selector under current node list sub tree.
          * @param {String} selector
          * @return {KISSY.Node}
          */
         one: function (selector) {
-            var self = this,
-                all = self.all(selector),
-                ret = all.length ? all.slice(0, 1) : null;
+            var self = this, all = self.all(selector), ret = all.length ? all.slice(0, 1) : null;
             if (ret) {
                 ret.__parent = self;
             }
             return ret;
         }
     };
-
     S.mix(Node, {
         /**
          * Get node list from selector or construct new node list from html string.
@@ -237,11 +242,7 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
         all: function (selector, context) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
-            if (typeof selector === 'string' &&
-                (selector = S.trim(selector)) &&
-                selector.length >= 3 &&
-                S.startsWith(selector, '<') &&
-                S.endsWith(selector, '>')) {
+            if (typeof selector === 'string' && (selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, '<') && S.endsWith(selector, '>')) {
                 if (context) {
                     if (context.getDOMNode) {
                         context = context[0];
@@ -252,7 +253,6 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
             }
             return new Node(Dom.query(selector, context));
         },
-
         /**
          * Get node list with length of one
          * from selector or construct new node list from html string.
@@ -266,8 +266,12 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
             var all = Node.all(selector, context);
             return all.length ? all.slice(0, 1) : null;
         }
-    });
-
+    });    /**
+     * Same with {@link KISSY.DOM.NodeType}
+     * @member KISSY.Node
+     * @property NodeType
+     * @static
+     */
     /**
      * Same with {@link KISSY.DOM.NodeType}
      * @member KISSY.Node
@@ -275,15 +279,10 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
      * @static
      */
     Node.NodeType = NodeType;
-
     Node.KeyCode = Event.KeyCode;
-
     Node.REPLACE_HISTORY = Event.REPLACE_HISTORY;
-
     return Node;
-});
-
-/*
+});    /*
  Notes:
  2011-05-25
  - yiminghe@gmail.com：参考 jquery，只有一个 Node 对象
@@ -298,19 +297,23 @@ KISSY.add('node/base',['dom', 'event/dom'], function (S, require) {
  以说，技术成本会制约 api 设计。
  */
 
+
 /**
  * @ignore
  * import methods from Dom to NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
+KISSY.add('node/attach', [
+    'dom',
+    'event/dom',
+    './base'
+], function (S, require) {
     var Dom = require('dom');
     var Event = require('event/dom');
     var NodeList = require('./base');
-    var NLP = NodeList.prototype,
-        makeArray = S.makeArray,
-    // Dom 添加到 NP 上的方法
-    // if Dom methods return undefined , Node methods need to transform result to itself
+    var NLP = NodeList.prototype, makeArray = S.makeArray,
+        // Dom 添加到 NP 上的方法
+        // if Dom methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
             'nodeName',
             'isCustomDomain',
@@ -345,9 +348,9 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
             'hasAttr',
             'hasProp',
             // anim override
-//            'show',
-//            'hide',
-//            'toggle',
+            //            'show',
+            //            'hide',
+            //            'toggle',
             'scrollIntoView',
             'remove',
             'empty',
@@ -360,7 +363,7 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
             'wrapInner',
             'unwrap'
         ],
-    // if return array ,need transform to nodelist
+        // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
             'getWindow',
             'getDocument',
@@ -376,7 +379,7 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
             'contents',
             'children'
         ],
-    // if set return this else if get return true value ,no nodelist transform
+        // if set return this else if get return true value ,no nodelist transform
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
             attr: 1,
@@ -391,20 +394,17 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
             outerHtml: 0,
             data: 1
         },
-    // Event 添加到 NP 上的方法
+        // Event 添加到 NP 上的方法
         EVENT_INCLUDES_SELF = [
             'on',
             'detach',
             'delegate',
             'undelegate'
-        ],
-        EVENT_INCLUDES_RET = [
+        ], EVENT_INCLUDES_RET = [
             'fire',
             'fireHandler'
         ];
-
     NodeList.KeyCode = Event.KeyCode;
-
     function accessNorm(fn, self, args) {
         args.unshift(self);
         var ret = Dom[fn].apply(Dom, args);
@@ -413,7 +413,6 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
         }
         return ret;
     }
-
     function accessNormList(fn, self, args) {
         args.unshift(self);
         var ret = Dom[fn].apply(Dom, args);
@@ -424,59 +423,49 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
         }
         return new NodeList(ret);
     }
-
     function accessNormIf(fn, self, index, args) {
         // get
         if (args[index] === undefined && !S.isObject(args[0])) {
             args.unshift(self);
             return Dom[fn].apply(Dom, args);
-        }
+        }    // set
         // set
         return accessNorm(fn, self, args);
     }
-
     S.each(DOM_INCLUDES_NORM, function (k) {
         NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
-
     S.each(DOM_INCLUDES_NORM_NODE_LIST, function (k) {
         NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
-
     S.each(DOM_INCLUDES_NORM_IF, function (index, k) {
         NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
-
     S.each(EVENT_INCLUDES_SELF, function (k) {
         NLP[k] = function () {
-            var self = this,
-                args = makeArray(arguments);
+            var self = this, args = makeArray(arguments);
             args.unshift(self);
             Event[k].apply(Event, args);
             return self;
         };
     });
-
     S.each(EVENT_INCLUDES_RET, function (k) {
         NLP[k] = function () {
-            var self = this,
-                args = makeArray(arguments);
+            var self = this, args = makeArray(arguments);
             args.unshift(self);
             return Event[k].apply(Event, args);
         };
     });
-});
-
-/*
+});    /*
  2011-05-24
  - yiminghe@gmail.com：
  - 将 Dom 中的方法包装成 NodeList 方法
@@ -485,19 +474,35 @@ KISSY.add('node/attach',['dom', 'event/dom', './base'], function (S, require) {
  - 实际上可以完全使用 NodeList 来代替 Dom，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
-
 /**
  * @ignore
  * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override',['dom', './base', './attach'], function (S, require) {
+KISSY.add('node/override', [
+    'dom',
+    './base',
+    './attach'
+], function (S, require) {
     var Dom = require('dom');
     var NodeList = require('./base');
     require('./attach');
-
-    var NLP = NodeList.prototype;
-
+    var NLP = NodeList.prototype;    /**
+     * Insert every element in the set of newNodes to the end of every element in the set of current node list.
+     * @param {KISSY.Node} newNodes Nodes to be inserted
+     * @return {KISSY.Node} this
+     * @method append
+     * @member KISSY.Node
+     */
+                                     /**
+     * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
+     * @param {KISSY.Node} newNodes Nodes to be inserted
+     * @return {KISSY.Node} this
+     * @method prepend
+     * @member KISSY.Node
+     */
+                                     // append(node ,parent): reverse param order
+                                     // appendTo(parent,node): normal
     /**
      * Insert every element in the set of newNodes to the end of every element in the set of current node list.
      * @param {KISSY.Node} newNodes Nodes to be inserted
@@ -505,7 +510,6 @@ KISSY.add('node/override',['dom', './base', './attach'], function (S, require) {
      * @method append
      * @member KISSY.Node
      */
-
     /**
      * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
      * @param {KISSY.Node} newNodes Nodes to be inserted
@@ -513,12 +517,16 @@ KISSY.add('node/override',['dom', './base', './attach'], function (S, require) {
      * @method prepend
      * @member KISSY.Node
      */
-
-        // append(node ,parent): reverse param order
-        // appendTo(parent,node): normal
-    S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
+    // append(node ,parent): reverse param order
+    // appendTo(parent,node): normal
+    S.each([
+        'append',
+        'prepend',
+        'before',
+        'after'
+    ], function (insertType) {
         NLP[insertType] = function (html) {
-            var newNode = html, self = this;
+            var newNode = html, self = this;    // create
             // create
             if (typeof newNode !== 'object') {
                 newNode = Dom.create(newNode + '');
@@ -529,8 +537,12 @@ KISSY.add('node/override',['dom', './base', './attach'], function (S, require) {
             return self;
         };
     });
-
-    S.each(['wrap', 'wrapAll', 'replaceWith', 'wrapInner'], function (fixType) {
+    S.each([
+        'wrap',
+        'wrapAll',
+        'replaceWith',
+        'wrapInner'
+    ], function (fixType) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
@@ -540,9 +552,7 @@ KISSY.add('node/override',['dom', './base', './attach'], function (S, require) {
             return orig.call(self, others);
         };
     });
-});
-
-/*
+});    /*
  2011-04-05 yiminghe@gmail.com
  - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
 
@@ -561,23 +571,36 @@ KISSY.add('node/override',['dom', './base', './attach'], function (S, require) {
  *         qiaohua@taobao.com,
  *
  */
-KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
+KISSY.add('node/anim', [
+    './base',
+    'dom',
+    'anim'
+], function (S, require) {
     var Node = require('./base');
     var Dom = require('dom');
     var Anim = require('anim');
-
     var FX = [
-        // height animations
-        ['height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom'],
-        // width animations
-        ['width', 'margin-left', 'margin-right', 'padding-left', 'padding-right'],
-        // opacity animations
-        ['opacity']
-    ];
-
+            // height animations
+            [
+                'height',
+                'margin-top',
+                'margin-bottom',
+                'padding-top',
+                'padding-bottom'
+            ],
+            // width animations
+            [
+                'width',
+                'margin-left',
+                'margin-right',
+                'padding-left',
+                'padding-right'
+            ],
+            // opacity animations
+            ['opacity']
+        ];
     function getFxs(type, num, from) {
-        var ret = [],
-            obj = {};
+        var ret = [], obj = {};
         for (var i = from || 0; i < num; i++) {
             ret.push.apply(ret, FX[i]);
         }
@@ -586,7 +609,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
         }
         return obj;
     }
-
     S.augment(Node, {
         /**
          * animate for current node list.
@@ -594,10 +616,7 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
          * @member KISSY.Node
          */
         animate: function () {
-            var self = this,
-                l = self.length,
-                needClone = self.length > 1,
-                originArgs = S.makeArray(arguments);
+            var self = this, l = self.length, needClone = self.length > 1, originArgs = S.makeArray(arguments);
             var cfg = originArgs[0];
             var AnimConstructor = Anim;
             if (cfg.to) {
@@ -608,11 +627,9 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
                     AnimConstructor = cfg.Anim || Anim;
                 }
             }
-
             for (var i = 0; i < l; i++) {
                 var elem = self[i];
-                var args = needClone ? S.clone(originArgs) : originArgs,
-                    arg0 = args[0];
+                var args = needClone ? S.clone(originArgs) : originArgs, arg0 = args[0];
                 if (arg0.to) {
                     arg0.node = elem;
                     new AnimConstructor(arg0).run();
@@ -693,8 +710,87 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
             }
             return false;
         }
-    });
-
+    });    /**
+     * animate show effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method show
+     */
+           /**
+     * animate hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method hide
+     */
+           /**
+     * toggle show and hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method toggle
+     */
+           /**
+     * animate fadeIn effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method fadeIn
+     */
+           /**
+     * animate fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method fadeOut
+     */
+           /**
+     * toggle fadeIn and fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method fadeToggle
+     */
+           /**
+     * animate slideUp effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method slideUp
+     */
+           /**
+     * animate slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method slideDown
+     */
+           /**
+     * toggle slideUp and slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.Node
+     * @method slideToggle
+     */
     /**
      * animate show effect for current node list.
      * @param {Number} duration duration of effect
@@ -704,7 +800,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method show
      */
-
     /**
      * animate hide effect for current node list.
      * @param {Number} duration duration of effect
@@ -714,7 +809,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method hide
      */
-
     /**
      * toggle show and hide effect for current node list.
      * @param {Number} duration duration of effect
@@ -724,7 +818,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method toggle
      */
-
     /**
      * animate fadeIn effect for current node list.
      * @param {Number} duration duration of effect
@@ -734,7 +827,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method fadeIn
      */
-
     /**
      * animate fadeOut effect for current node list.
      * @param {Number} duration duration of effect
@@ -744,7 +836,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method fadeOut
      */
-
     /**
      * toggle fadeIn and fadeOut effect for current node list.
      * @param {Number} duration duration of effect
@@ -754,7 +845,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method fadeToggle
      */
-
     /**
      * animate slideUp effect for current node list.
      * @param {Number} duration duration of effect
@@ -764,7 +854,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method slideUp
      */
-
     /**
      * animate slideDown effect for current node list.
      * @param {Number} duration duration of effect
@@ -774,7 +863,6 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method slideDown
      */
-
     /**
      * toggle slideUp and slideDown effect for current node list.
      * @param {Number} duration duration of effect
@@ -784,61 +872,38 @@ KISSY.add('node/anim',['./base', 'dom', 'anim'], function (S, require) {
      * @member KISSY.Node
      * @method slideToggle
      */
-
     S.each({
-            show: getFxs('show', 3),
-            hide: getFxs('hide', 3),
-            toggle: getFxs('toggle', 3),
-            fadeIn: getFxs('show', 3, 2),
-            fadeOut: getFxs('hide', 3, 2),
-            fadeToggle: getFxs('toggle', 3, 2),
-            slideDown: getFxs('show', 1),
-            slideUp: getFxs('hide', 1),
-            slideToggle: getFxs('toggle', 1)
-        },
-        function (v, k) {
-            Node.prototype[k] = function (duration, complete, easing) {
-                var self = this;
-                // 没有参数时，调用 Dom 中的对应方法
-                if (Dom[k] && !duration) {
-                    Dom[k](self);
-                } else {
-                    var AnimConstructor = Anim;
-                    if (typeof duration === 'object') {
-                        AnimConstructor = duration.Anim || Anim;
-                    }
-                    S.each(self, function (elem) {
-                        new AnimConstructor(elem, v, duration, easing, complete).run();
-                    });
+        show: getFxs('show', 3),
+        hide: getFxs('hide', 3),
+        toggle: getFxs('toggle', 3),
+        fadeIn: getFxs('show', 3, 2),
+        fadeOut: getFxs('hide', 3, 2),
+        fadeToggle: getFxs('toggle', 3, 2),
+        slideDown: getFxs('show', 1),
+        slideUp: getFxs('hide', 1),
+        slideToggle: getFxs('toggle', 1)
+    }, function (v, k) {
+        Node.prototype[k] = function (duration, complete, easing) {
+            var self = this;    // 没有参数时，调用 Dom 中的对应方法
+            // 没有参数时，调用 Dom 中的对应方法
+            if (Dom[k] && !duration) {
+                Dom[k](self);
+            } else {
+                var AnimConstructor = Anim;
+                if (typeof duration === 'object') {
+                    AnimConstructor = duration.Anim || Anim;
                 }
-                return self;
-            };
-        });
-});
-/*
+                S.each(self, function (elem) {
+                    new AnimConstructor(elem, v, duration, easing, complete).run();
+                });
+            }
+            return self;
+        };
+    });
+});    /*
  2011-11-10
  - 重写，逻辑放到 Anim 模块，这边只进行转发
 
  2011-05-17
  - yiminghe@gmail.com：添加 stop ，随时停止动画
  */
-
-/**
- * @ignore
- * node
- * @author yiminghe@gmail.com
- */
-KISSY.add('node',['node/base', 'node/attach', 'node/override', 'node/anim'], function (S, require) {
-    var Node = require('node/base');
-
-    require('node/attach');
-    require('node/override');
-    require('node/anim');
-
-    // bad! compatibility
-    S.Node = Node;
-    S.all = Node.all;
-    S.one = Node.one;
-
-    return Node;
-});

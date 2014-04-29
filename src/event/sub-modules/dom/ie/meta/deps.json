@@ -1,3 +1,1 @@
-{
- "event/dom/ie": ["event/dom/base", "dom"] 
-}
+{"event/dom/ie":["event/dom/base","dom"]}

@@ -1,3 +1,1 @@
-{
- "editor/plugin/link": ["editor/plugin/button", "editor/plugin/bubble", "editor", "editor/plugin/link/utils", "editor/plugin/dialog-loader"] 
-}
+{"editor/plugin/link":["editor/plugin/button","editor/plugin/bubble","editor","editor/plugin/link/utils","editor/plugin/dialog-loader"]}

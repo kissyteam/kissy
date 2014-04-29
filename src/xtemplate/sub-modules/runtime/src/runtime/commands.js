@@ -83,14 +83,22 @@ KISSY.add(function (S, require) {
         },
 
         include: function (scope, option, buffer, lineNumber, payload) {
-            var params = option.params;
+            var params = option.params,
+                i, newScope,
+                l = params.length;
+
+            newScope = scope;
             // sub template scope
             if (option.hash) {
-                var newScope = new Scope(option.hash);
+                newScope = new Scope(option.hash);
                 newScope.setParent(scope);
-                scope = newScope;
             }
-            return this.include(params[0], scope, buffer, payload);
+
+            for (i = 0; i < l; i++) {
+                buffer = this.include(params[i], newScope, buffer, payload);
+            }
+
+            return buffer;
         },
 
         parse: function (scope, option, buffer, lineNumber, payload) {

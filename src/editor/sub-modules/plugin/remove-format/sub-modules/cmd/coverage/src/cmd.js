@@ -351,7 +351,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
-  var KER = Editor.RangeType, ElementPath = Editor.ElementPath, Dom = S.require('dom'), removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' + 'q,samp,small,span,strike,strong,sub,sup,tt,u,var,s', removeFormatAttributes = ('class,style,lang,width,height,' + 'align,hspace,valign').split(/,/), tagsRegex = new RegExp('^(?:' + removeFormatTags.replace(/,/g, '|') + ')$', 'i');
+  var KER = Editor.RangeType, ElementPath = Editor.ElementPath, Dom = require('dom'), removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' + 'q,samp,small,span,strike,strong,sub,sup,tt,u,var,s', removeFormatAttributes = ('class,style,lang,width,height,' + 'align,hspace,valign').split(/,/), tagsRegex = new RegExp('^(?:' + removeFormatTags.replace(/,/g, '|') + ')$', 'i');
   _$jscoverage['/cmd.js'].lineData[30]++;
   function removeAttrs(el, attrs) {
     _$jscoverage['/cmd.js'].functionData[1]++;

@@ -1,30 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:51
+build time: Apr 29 15:07
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/unordered-list
-
 */
 /**
  * @ignore
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/unordered-list',['./list-utils/btn', './unordered-list/cmd'], function (S, require) {
+KISSY.add('editor/plugin/unordered-list', [
+    './list-utils/btn',
+    './unordered-list/cmd'
+], function (S, require) {
     var ListButton = require('./list-utils/btn');
     var ListCmd = require('./unordered-list/cmd');
-
     function unorderedList() {
     }
-
     S.augment(unorderedList, {
         pluginRenderUI: function (editor) {
             ListCmd.init(editor);
-
             ListButton.init(editor, {
                 cmdType: 'insertUnorderedList',
                 buttonId: 'unorderedList',
@@ -32,23 +30,23 @@ KISSY.add('editor/plugin/unordered-list',['./list-utils/btn', './unordered-list/
                     width: 75,
                     children: [
                         {
-                            content: '● 圆点',
+                            content: '\u25CF \u5706\u70B9',
                             value: 'disc'
                         },
                         {
-                            content: '○ 圆圈',
+                            content: '\u25CB \u5706\u5708',
                             value: 'circle'
                         },
                         {
-                            content: '■ 方块',
+                            content: '\u25A0 \u65B9\u5757',
                             value: 'square'
                         }
                     ]
                 },
-                tooltip: '无序列表'
+                tooltip: '\u65E0\u5E8F\u5217\u8868'
             });
         }
     });
-
     return unorderedList;
 });
+

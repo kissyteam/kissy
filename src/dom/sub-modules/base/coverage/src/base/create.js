@@ -929,9 +929,9 @@ function visit110_15_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].functionData[0]++;
   _$jscoverage['/base/create.js'].lineData[7]++;
-  var Dom = require('./api');
-  _$jscoverage['/base/create.js'].lineData[8]++;
   var logger = S.getLogger('s/dom');
+  _$jscoverage['/base/create.js'].lineData[8]++;
+  var Dom = require('./api');
   _$jscoverage['/base/create.js'].lineData[9]++;
   var doc = S.Env.host.document, NodeType = Dom.NodeType, UA = require('ua'), ie = UA.ieMode, DIV = 'div', PARENT_NODE = 'parentNode', DEFAULT_DIV = visit110_15_1(doc && doc.createElement(DIV)), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(visit111_20_1(ie && visit112_20_2(ie < 9))), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = visit113_23_1(doc && 'outerHTML' in doc.documentElement), RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
   _$jscoverage['/base/create.js'].lineData[27]++;

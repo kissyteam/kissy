@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require, exports, module) {
+    var logger = S.getLogger('s/editor');
     var Node = require('node');
     var iframeContentTpl = require('editor/iframe-content-tpl');
     var Editor = require('editor/base');
@@ -17,7 +18,6 @@ KISSY.add(function (S, require, exports, module) {
     require('editor/dom-iterator');
     require('editor/z-index-manager');
     module.exports = Editor;
-    var logger = S.getLogger('s/editor');
     var TRUE = true,
         FALSE = false,
         NULL = null,

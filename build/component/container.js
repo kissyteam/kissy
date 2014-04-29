@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:41
+build time: Apr 29 14:57
 */
 KISSY.add("component/container",["component/control","component/manager"],function(h,f){function i(a){var b=a.component,c=this.get("children"),a=a.index;c.splice(a,0,b);c=this.get("children");b=c[a];b.setInternal("parent",this);this.get("rendered")&&this.renderChild(a);this.fire("afterAddChild",{component:b,index:a})}function j(a){var b=a.component,c,d,e=a.destroy,g=this.get("children"),a=a.index;-1!==a&&g.splice(a,1);b.setInternal("parent",null);if(e)b.destroy&&b.destroy();else if(b.get&&(d=b.el))(c=
 d.parentNode)&&c.removeChild(d);this.fire("afterRemoveChild",{component:b,index:a})}var k=f("component/control"),l=f("component/manager");return k.extend({isContainer:!0,initializer:function(){var a=this.get("prefixCls"),b=this.get("defaultChildCfg");this.publish("beforeAddChild",{defaultFn:i,defaultTargetOnly:!0});this.publish("beforeRemoveChild",{defaultFn:j,defaultTargetOnly:!0});b.prefixCls=b.prefixCls||a},decorateDom:function(){var a=this,b=a.getChildrenContainerEl(),c=a.get("defaultChildCfg"),

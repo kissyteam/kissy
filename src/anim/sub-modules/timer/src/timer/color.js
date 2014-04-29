@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Fx = require('./fx');
     var logger = S.getLogger('s/anim/timer/color');
+    var Fx = require('./fx');
     var HEX_BASE = 16,
         floor = Math.floor,
         KEYWORDS = {

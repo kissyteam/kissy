@@ -168,9 +168,7 @@ KISSY.add(function (S, require) {
 
             path = path.concat(toParts.slice(sameIndex2));
 
-            path = path.join('/');
-
-            return /**@type String  @ignore*/path;
+            return path.join('/');
         },
 
         /**

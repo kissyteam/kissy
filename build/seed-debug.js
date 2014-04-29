@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:26
+build time: Apr 29 15:14
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:26
+build time: Apr 29 15:14
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140423182620' will replace with current timestamp when compressing.
+         * NOTICE: '20140429151359' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140423182620',
+        __BUILD_TIME: '20140429151359',
 
         /**
          * KISSY Environment.
@@ -953,6 +953,10 @@ var KISSY = (function (undefined) {
         self.require = function (moduleName) {
             return S.require(moduleName, self.name);
         };
+
+        self.require.resolve = function (relativeName) {
+            return self.resolve(relativeName);
+        };
     }
 
     Module.prototype = {
@@ -960,7 +964,6 @@ var KISSY = (function (undefined) {
 
         constructor: Module,
 
-        // use by xtemplate include
         resolve: function (relativeName) {
             return Utils.normalizePath(this.name, relativeName);
         },
@@ -2384,7 +2387,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140423182620';
+    var TIMESTAMP = '20140429151359';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2509,7 +2512,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:26
+build time: Apr 29 15:14
 */
 /*
 combined modules:
@@ -4100,7 +4103,7 @@ KISSY.add('util/web', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:26
+build time: Apr 29 15:14
 */
 /*
 combined modules:
@@ -4493,7 +4496,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 18:26
+build time: Apr 29 15:14
 */
 /*
 combined modules:
@@ -4752,8 +4755,7 @@ S.config("requires",{
         "promise"
     ],
     "anim/timer": [
-        "dom",
-        "./base"
+        "anim/base"
     ],
     "anim/transition": [
         "anim/base"
@@ -4810,10 +4812,7 @@ S.config("requires",{
         "resizable"
     ],
     "date/format": [
-        "i18n!date",
-        "./gregorian/utils",
-        "./gregorian/const",
-        "./const"
+        "date/gregorian"
     ],
     "date/gregorian": [
         "i18n!date"
@@ -4821,11 +4820,8 @@ S.config("requires",{
     "date/picker": [
         "i18n!date/picker",
         "component/control",
-        "date/picker-xtpl",
-        "./gregorian/utils",
-        "i18n!date",
-        "./gregorian/const",
-        "./const"
+        "date/format",
+        "date/picker-xtpl"
     ],
     "date/popup-picker": [
         "date/picker",
@@ -4965,8 +4961,8 @@ S.config("requires",{
         "base"
     ],
     "router": [
-        "event/dom",
         "uri",
+        "event/dom",
         "event/custom"
     ],
     "scroll-view/base": [

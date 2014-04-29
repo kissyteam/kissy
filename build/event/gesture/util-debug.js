@@ -1,52 +1,63 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:53
+build time: Apr 29 15:09
 */
 /*
-combined files : 
-
+combined modules:
+event/gesture/util
 event/gesture/util/add-event
 event/gesture/util/touch
 event/gesture/util/single-touch
 event/gesture/util/double-touch
-event/gesture/util
-
 */
+/**
+ * utils for gesture events
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/gesture/util', [
+    './util/add-event',
+    './util/touch',
+    './util/single-touch',
+    './util/double-touch'
+], function (S, require) {
+    var addGestureEvent = require('./util/add-event');
+    return {
+        addEvent: addGestureEvent,
+        Touch: require('./util/touch'),
+        SingleTouch: require('./util/single-touch'),
+        DoubleTouch: require('./util/double-touch')
+    };
+});
 /**
  * @ignore
  * base handle for touch gesture, mouse and touch normalization
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], function (S, require) {
+KISSY.add('event/gesture/util/add-event', [
+    'dom',
+    'ua',
+    'event/dom/base'
+], function (S, require) {
     var Dom = require('dom');
     var eventHandleMap = {};
     var UA = require('ua');
     var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special;
-    var key = S.guid('touch-handle'),
-        Feature = S.Feature,
-        gestureStartEvent,
-        gestureMoveEvent,
-        gestureEndEvent;
-
+    var key = S.guid('touch-handle'), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
     function isTouchEvent(type) {
         return S.startsWith(type, 'touch');
     }
-
     function isMouseEvent(type) {
         return S.startsWith(type, 'mouse');
     }
-
     function isPointerEvent(type) {
         return S.startsWith(type, 'MSPointer') || S.startsWith(type, 'pointer');
-    }
-
+    }    // This should be long enough to ignore compatible mouse events made by touch
     // This should be long enough to ignore compatible mouse events made by touch
-    var DUP_TIMEOUT = 2500;
+    var DUP_TIMEOUT = 2500;    // radius around touchend that swallows mouse events
     // radius around touchend that swallows mouse events
     var DUP_DIST = 25;
-
     if (Feature.isTouchEventSupported()) {
         if (UA.ios) {
             // ios mousedown is buggy
@@ -54,7 +65,7 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
             gestureStartEvent = 'touchstart';
             gestureMoveEvent = 'touchmove';
         } else {
-            gestureEndEvent = 'touchend touchcancel mouseup';
+            gestureEndEvent = 'touchend touchcancel mouseup';    // allow touch and mouse both!
             // allow touch and mouse both!
             gestureStartEvent = 'touchstart mousedown';
             gestureMoveEvent = 'touchmove mousemove';
@@ -74,47 +85,35 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
         gestureMoveEvent = 'mousemove';
         gestureEndEvent = 'mouseup';
     }
-
     function DocumentHandler(doc) {
         var self = this;
         self.doc = doc;
         self.eventHandles = [];
-        self.init();
+        self.init();    // normalize pointer event to touch event
         // normalize pointer event to touch event
-        self.touches = [];
+        self.touches = [];    // touches length of touch event
         // touches length of touch event
         self.inTouch = 0;
     }
-
     DocumentHandler.prototype = {
         constructor: DocumentHandler,
-
         lastTouches: [],
-
         firstTouch: null,
-
         init: function () {
-            var self = this,
-                doc = self.doc;
-            DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);
+            var self = this, doc = self.doc;
+            DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);    // pointermove will be fired regardless of pointerdown
             // pointermove will be fired regardless of pointerdown
             if (!isPointerEvent(gestureMoveEvent)) {
                 DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
             }
             DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self);
         },
-
         addTouch: function (originalEvent) {
             originalEvent.identifier = originalEvent.pointerId;
             this.touches.push(originalEvent);
         },
-
         removeTouch: function (originalEvent) {
-            var i = 0,
-                touch,
-                pointerId = originalEvent.pointerId,
-                touches = this.touches,
-                l = touches.length;
+            var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
             for (; i < l; i++) {
                 touch = touches[i];
                 if (touch.pointerId === pointerId) {
@@ -123,13 +122,8 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 }
             }
         },
-
         updateTouch: function (originalEvent) {
-            var i = 0,
-                touch,
-                pointerId = originalEvent.pointerId,
-                touches = this.touches,
-                l = touches.length;
+            var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
             for (; i < l; i++) {
                 touch = touches[i];
                 if (touch.pointerId === pointerId) {
@@ -137,31 +131,30 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 }
             }
         },
-
         isPrimaryTouch: function (inTouch) {
             return this.firstTouch === inTouch.identifier;
         },
-
         setPrimaryTouch: function (inTouch) {
             if (this.firstTouch === null) {
                 this.firstTouch = inTouch.identifier;
             }
         },
-
         removePrimaryTouch: function (inTouch) {
             if (this.isPrimaryTouch(inTouch)) {
                 this.firstTouch = null;
             }
         },
-
         // prevent mouse events from creating pointer events
         dupMouse: function (inEvent) {
             var lts = this.lastTouches;
-            var t = inEvent.changedTouches[0];
+            var t = inEvent.changedTouches[0];    // only the primary finger will dup mouse events
             // only the primary finger will dup mouse events
             if (this.isPrimaryTouch(t)) {
                 // remember x/y of last touch
-                var lt = {x: t.clientX, y: t.clientY};
+                var lt = {
+                        x: t.clientX,
+                        y: t.clientY
+                    };
                 lts.push(lt);
                 setTimeout(function () {
                     var i = lts.indexOf(lt);
@@ -171,32 +164,23 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 }, DUP_TIMEOUT);
             }
         },
-
         // collide with the touch event
         isEventSimulatedFromTouch: function (inEvent) {
             var lts = this.lastTouches;
-            var x = inEvent.clientX,
-                y = inEvent.clientY;
+            var x = inEvent.clientX, y = inEvent.clientY;
             for (var i = 0, l = lts.length, t; i < l && (t = lts[i]); i++) {
                 // simulated mouse events will be swallowed near a primary touchend
-                var dx = Math.abs(x - t.x),
-                    dy = Math.abs(y - t.y);
+                var dx = Math.abs(x - t.x), dy = Math.abs(y - t.y);
                 if (dx <= DUP_DIST && dy <= DUP_DIST) {
                     return true;
                 }
             }
             return 0;
         },
-
         normalize: function (e) {
-            var type = e.type,
-                notUp,
-                touchEvent,
-                touchList;
-            if ((touchEvent = isTouchEvent(type))) {
-                touchList = (type === 'touchend' || type === 'touchcancel') ?
-                    e.changedTouches :
-                    e.touches;
+            var type = e.type, notUp, touchEvent, touchList;
+            if (touchEvent = isTouchEvent(type)) {
+                touchList = type === 'touchend' || type === 'touchcancel' ? e.changedTouches : e.touches;
                 e.gestureType = 'touch';
             } else {
                 if (isPointerEvent(type)) {
@@ -220,12 +204,8 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
             e.changedTouches = touchList;
             return e;
         },
-
         onTouchStart: function (event) {
-            var e, h,
-                self = this,
-                type = event.type,
-                eventHandles = self.eventHandles;
+            var e, h, self = this, type = event.type, eventHandles = self.eventHandles;
             if (isTouchEvent(type)) {
                 self.setPrimaryTouch(event.changedTouches[0]);
                 self.dupMouse(event);
@@ -242,19 +222,16 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
             } else {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
-
             for (var i = 0, l = eventHandles.length; i < l; i++) {
                 e = eventHandles[i];
                 h = eventHandles[e].handle;
                 h.isActive = 1;
-            }
+            }    // if preventDefault, will not trigger click event
             // if preventDefault, will not trigger click event
             self.callEventHandle('onTouchStart', event);
         },
-
         onTouchMove: function (event) {
-            var self = this,
-                type = event.type;
+            var self = this, type = event.type;
             if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(type)) {
                     return;
@@ -264,20 +241,17 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 self.updateTouch(event.originalEvent);
             } else if (!isTouchEvent(type)) {
                 throw new Error('unrecognized touch event: ' + event.type);
-            }
+            }    // no throttle! to allow preventDefault
             // no throttle! to allow preventDefault
             self.callEventHandle('onTouchMove', event);
         },
-
         onTouchEnd: function (event) {
-            var self = this,
-                type = event.type;
+            var self = this, type = event.type;
             if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(event)) {
                     return;
                 }
             }
-
             self.callEventHandle('onTouchEnd', event);
             if (isTouchEvent(type)) {
                 self.dupMouse(event);
@@ -293,15 +267,10 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 }
             }
         },
-
         callEventHandle: function (method, event) {
-            var self = this,
-                eventHandles = self.eventHandles,
-                handleArray = eventHandles.concat(),
-                e,
-                h;
+            var self = this, eventHandles = self.eventHandles, handleArray = eventHandles.concat(), e, h;
             event = self.normalize(event);
-            var gestureType = event.gestureType;
+            var gestureType = event.gestureType;    // ie touchstart on iframe then touchend on parent
             // ie touchstart on iframe then touchend on parent
             if (!event.changedTouches.length) {
                 return;
@@ -310,13 +279,11 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 e = handleArray[i];
                 if (eventHandles[e]) {
                     // event processor shared by multiple events
-                    h = eventHandles[e].handle;
-
+                    h = eventHandles[e].handle;    // touch only gesture
                     // touch only gesture
                     if (h.requiredGestureType && gestureType !== h.requiredGestureType) {
                         continue;
                     }
-
                     if (h.processed) {
                         continue;
                     }
@@ -326,7 +293,6 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                     }
                 }
             }
-
             for (i = 0, l = handleArray.length; i < l; i++) {
                 e = eventHandles[i];
                 if (eventHandles[e]) {
@@ -335,11 +301,8 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 }
             }
         },
-
         addEventHandle: function (event) {
-            var self = this,
-                eventHandles = self.eventHandles,
-                handle = eventHandleMap[event].handle;
+            var self = this, eventHandles = self.eventHandles, handle = eventHandleMap[event].handle;
             if (eventHandles[event]) {
                 eventHandles[event].count++;
             } else {
@@ -351,7 +314,6 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 };
             }
         },
-
         sortEventHandles: function () {
             this.eventHandles.sort(function (e1, e2) {
                 var e1Config = eventHandleMap[e1];
@@ -359,7 +321,6 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 return e1Config.order - e2Config.order;
             });
         },
-
         removeEventHandle: function (event) {
             var eventHandles = this.eventHandles;
             if (eventHandles[event]) {
@@ -370,37 +331,29 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
                 }
             }
         },
-
         destroy: function () {
-            var self = this,
-                doc = self.doc;
+            var self = this, doc = self.doc;
             DomEvent.detach(doc, gestureStartEvent, self.onTouchStart, self);
             DomEvent.detach(doc, gestureMoveEvent, self.onTouchMove, self);
             DomEvent.detach(doc, gestureEndEvent, self.onTouchEnd, self);
         }
     };
-
     function setup(event) {
         addDocumentHandle(this, event);
     }
-
     function tearDown(event) {
         removeDocumentHandle(this, event);
     }
-
     function setupExtra(event) {
         setup.call(this, event);
         eventHandleMap[event].setup.apply(this, arguments);
     }
-
     function tearDownExtra(event) {
         tearDown.call(this, event);
         eventHandleMap[event].tearDown.apply(this, arguments);
     }
-
     function addDocumentHandle(el, event) {
-        var doc = Dom.getDocument(el),
-            handle = Dom.data(doc, key);
+        var doc = Dom.getDocument(el), handle = Dom.data(doc, key);
         if (!handle) {
             Dom.data(doc, key, handle = new DocumentHandler(doc));
         }
@@ -408,10 +361,8 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
             handle.addEventHandle(event);
         }
     }
-
     function removeDocumentHandle(el, event) {
-        var doc = Dom.getDocument(el),
-            handle = Dom.data(doc, key);
+        var doc = Dom.getDocument(el), handle = Dom.data(doc, key);
         if (handle) {
             if (event) {
                 handle.removeEventHandle(event);
@@ -422,7 +373,6 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
             }
         }
     }
-
     return function (events, config) {
         if (typeof events === 'string') {
             events = [events];
@@ -433,14 +383,13 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
             specialEvent.tearDown = config.tearDown ? tearDownExtra : tearDown;
             specialEvent.add = config.add;
             specialEvent.remove = config.remove;
-            config.order = config.order || 100;
+            config.order = config.order || 100;    // specialEvent.preFire = config.preFire;
             // specialEvent.preFire = config.preFire;
             eventHandleMap[event] = config;
             Special[event] = specialEvent;
         });
     };
-});
-/*
+});    /*
  2013-08-29 yiminghe@gmail.com
  - ios bug
  create new element on touchend handler
@@ -466,32 +415,28 @@ KISSY.add('event/gesture/util/add-event',['dom', 'ua', 'event/dom/base'], functi
  in order to make tap/doubleTap bubbling same with native event.
  register event on document and then bubble
  */
+
+
+
 /**
  * @ignore
  * touch base
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/util/touch',function (S) {
+KISSY.add('event/gesture/util/touch', [], function (S) {
     var noop = S.noop;
-
     function Touch() {
     }
-
     Touch.prototype = {
         constructor: Touch,
-
         requiredTouchCount: 0,
-
         onTouchStart: function (e) {
-            var self = this,
-                requiredTouchesCount = self.requiredTouchCount,
-                touches = e.touches,
-                touchesCount = touches.length;
+            var self = this, requiredTouchesCount = self.requiredTouchCount, touches = e.touches, touchesCount = touches.length;
             if (touchesCount === requiredTouchesCount) {
                 if (!self.isTracking) {
                     self.isTracking = true;
                     self.isStarted = false;
-                }
+                }    // record valid touches
                 // record valid touches
                 self.lastTouches = e.touches;
                 self.startTime = e.timeStamp;
@@ -502,19 +447,20 @@ KISSY.add('event/gesture/util/touch',function (S) {
             }
             return undefined;
         },
-
         onTouchMove: function (e) {
             var self = this;
             if (!self.isTracking) {
                 return undefined;
-            }
+            }    // record valid touches
             // record valid touches
             self.lastTouches = e.touches;
             return self.move(e);
         },
-
         onTouchEnd: function (e, moreTouches) {
-            var self = this;
+            var self = this;    // finger1 down, finger2 down -> start multi touch
+                                // move finger1 or finger2 -> double-touch move
+                                // finger2 up -> end multi touch
+                                // finger1 move -> ignore
             // finger1 down, finger2 down -> start multi touch
             // move finger1 or finger2 -> double-touch move
             // finger2 up -> end multi touch
@@ -527,14 +473,10 @@ KISSY.add('event/gesture/util/touch',function (S) {
                 }
             }
         },
-
         start: noop,
-
         move: noop,
-
         end: noop
     };
-
     return Touch;
 });
 /**
@@ -542,19 +484,15 @@ KISSY.add('event/gesture/util/touch',function (S) {
  * touch count guard
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/util/single-touch',['./touch'], function (S, require) {
+KISSY.add('event/gesture/util/single-touch', ['./touch'], function (S, require) {
     var Touch = require('./touch');
-
     function SingleTouch() {
     }
-
     S.extend(SingleTouch, Touch, {
         requiredTouchCount: 1,
-
         start: function () {
             SingleTouch.superclass.start.apply(this, arguments);
-            var self = this,
-                touches = self.lastTouches;
+            var self = this, touches = self.lastTouches;    // ios will share touches with touchmove...
             // ios will share touches with touchmove...
             self.lastXY = {
                 pageX: touches[0].pageX,
@@ -562,7 +500,6 @@ KISSY.add('event/gesture/util/single-touch',['./touch'], function (S, require) {
             };
         }
     });
-
     return SingleTouch;
 });
 /**
@@ -570,27 +507,24 @@ KISSY.add('event/gesture/util/single-touch',['./touch'], function (S, require) {
  * double-touch base
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/util/double-touch',['dom', './touch'], function (S, require) {
+KISSY.add('event/gesture/util/double-touch', [
+    'dom',
+    './touch'
+], function (S, require) {
     var Dom = require('dom');
     var Touch = require('./touch');
-
     function DoubleTouch() {
     }
-
     S.extend(DoubleTouch, Touch, {
         requiredTouchCount: 2,
-
         getCommonTarget: function (e) {
-            var touches = e.touches,
-                t1 = touches[0].target,
-                t2 = touches[1].target;
+            var touches = e.touches, t1 = touches[0].target, t2 = touches[1].target;
             if (t1 === t2) {
                 return t1;
             }
             if (Dom.contains(t1, t2)) {
                 return t1;
             }
-
             while (1) {
                 if (Dom.contains(t2, t1)) {
                     return t2;
@@ -601,20 +535,5 @@ KISSY.add('event/gesture/util/double-touch',['dom', './touch'], function (S, req
             return undefined;
         }
     });
-
     return DoubleTouch;
-});
-/**
- * utils for gesture events
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/gesture/util',['./util/add-event', './util/touch', './util/single-touch', './util/double-touch'], function (S, require) {
-    var addGestureEvent = require('./util/add-event');
-
-    return {
-        addEvent: addGestureEvent,
-        Touch: require('./util/touch'),
-        SingleTouch: require('./util/single-touch'),
-        DoubleTouch: require('./util/double-touch')
-    };
 });

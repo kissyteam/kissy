@@ -1,28 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:51
+build time: Apr 29 15:07
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/unordered-list/cmd
-
 */
 /**
  * @ignore
  * ol command
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/unordered-list/cmd',['editor', '../list-utils/cmd'], function (S, require) {
+KISSY.add('editor/plugin/unordered-list/cmd', [
+    'editor',
+    '../list-utils/cmd'
+], function (S, require) {
     var Editor = require('editor');
     var listCmd = require('../list-utils/cmd');
-
-    var insertUnorderedList = 'insertUnorderedList',
-        ListCommand = listCmd.ListCommand,
-        queryActive = listCmd.queryActive,
-        ulCmd = new ListCommand('ul');
-
+    var insertUnorderedList = 'insertUnorderedList', ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, ulCmd = new ListCommand('ul');
     return {
         init: function (editor) {
             if (!editor.hasCommand(insertUnorderedList)) {
@@ -33,9 +29,7 @@ KISSY.add('editor/plugin/unordered-list/cmd',['editor', '../list-utils/cmd'], fu
                     }
                 });
             }
-
             var queryUl = Editor.Utils.getQueryCmd(insertUnorderedList);
-
             if (!editor.hasCommand(queryUl)) {
                 editor.addCommand(queryUl, {
                     exec: function (editor) {
@@ -51,3 +45,4 @@ KISSY.add('editor/plugin/unordered-list/cmd',['editor', '../list-utils/cmd'], fu
         }
     };
 });
+

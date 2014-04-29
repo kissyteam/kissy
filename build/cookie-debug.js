@@ -1,53 +1,45 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:42
+build time: Apr 29 14:58
 */
 /*
-combined files : 
-
+combined modules:
 cookie
-
 */
 /**
  * @ignore
  * cookie
  * @author lifesinger@gmail.com
  */
-KISSY.add('cookie',function (S) {
-
-    var doc = S.Env.host.document,
-        MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
-        encode = encodeURIComponent,
-        decode = S.urlDecode;
-
+KISSY.add('cookie', [], function (S) {
+    var doc = S.Env.host.document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000, encode = encodeURIComponent, decode = S.urlDecode;
     function isNotEmptyString(val) {
-        return (typeof val === 'string') && val !== '';
-    }
-
+        return typeof val === 'string' && val !== '';
+    }    /**
+     * Provide Cookie utilities.
+     * @class KISSY.Cookie
+     * @singleton
+     */
     /**
      * Provide Cookie utilities.
      * @class KISSY.Cookie
      * @singleton
      */
     S.Cookie = {
-
         /**
          * Returns the cookie value for given name
          * @return {String} name The name of the cookie to retrieve
          */
         get: function (name) {
             var ret, m;
-
             if (isNotEmptyString(name)) {
-                if ((m = String(doc.cookie).match(
-                    new RegExp('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)')))) {
+                if (m = String(doc.cookie).match(new RegExp('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
                     ret = m[1] ? decode(m[1]) : '';
                 }
             }
             return ret;
         },
-
         /**
          * Set a cookie with a given name and value
          * @param {String} name The name of the cookie to set
@@ -59,36 +51,30 @@ KISSY.add('cookie',function (S) {
          * @param {Boolean} secure whether this cookie can only be sent to server on https
          */
         set: function (name, val, expires, domain, path, secure) {
-            var text = String(encode(val)), date = expires;
-
+            var text = String(encode(val)), date = expires;    // 从当前时间开始，多少天后过期
             // 从当前时间开始，多少天后过期
             if (typeof date === 'number') {
                 date = new Date();
                 date.setTime(date.getTime() + expires * MILLISECONDS_OF_DAY);
-            }
+            }    // expiration date
             // expiration date
             if (date instanceof Date) {
                 text += '; expires=' + date.toUTCString();
-            }
-
+            }    // domain
             // domain
             if (isNotEmptyString(domain)) {
                 text += '; domain=' + domain;
-            }
-
+            }    // path
             // path
             if (isNotEmptyString(path)) {
                 text += '; path=' + path;
-            }
-
+            }    // secure
             // secure
             if (secure) {
                 text += '; secure';
             }
-
             doc.cookie = name + '=' + text;
         },
-
         /**
          * Remove a cookie from the machine by setting its expiration date to sometime in the past
          * @param {String} name The name of the cookie to remove.
@@ -100,11 +86,8 @@ KISSY.add('cookie',function (S) {
             this.set(name, '', -1, domain, path, secure);
         }
     };
-
     return S.Cookie;
-});
-
-/*
+});    /*
  2012.02.14 yiminghe@gmail.com
  - jsdoc added
 
@@ -115,4 +98,3 @@ KISSY.add('cookie',function (S) {
  - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  独立成静态工具类的方式更优。
  */
-

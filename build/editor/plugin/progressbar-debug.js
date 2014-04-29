@@ -1,22 +1,19 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:49
+build time: Apr 29 15:06
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/progressbar
-
 */
 /**
  * @ignore
  * progressbar ui
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/progressbar',['base'], function (S, require) {
+KISSY.add('editor/plugin/progressbar', ['base'], function (S, require) {
     var Base = require('base');
-
     return Base.extend({
         destroy: function () {
             var self = this;
@@ -24,32 +21,7 @@ KISSY.add('editor/plugin/progressbar',['base'], function (S, require) {
             self.el.remove();
         },
         initializer: function () {
-            var self = this,
-                h = self.get('height'),
-                prefixCls = self.get('prefixCls'),
-                el = new Node(
-
-                    S.substitute('<div' +
-                        ' class="{prefixCls}editor-progressbar" ' +
-                        ' style="width:' +
-                        self.get('width') +
-                        ';' +
-                        'height:' +
-                        h +
-                        ';"' +
-                        '></div>', {prefixCls: prefixCls
-                    })),
-                container = self.get('container'),
-                p = new Node(
-                    S.substitute('<div style="overflow:hidden;">' +
-                        '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h,10) - 4) + 'px">' +
-                        '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' +
-                        '</div>' +
-                        '</div>', {  prefixCls: prefixCls
-                    })
-                ).appendTo(el),
-                title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>')
-                    .appendTo(el);
+            var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = new Node(S.substitute('<div' + ' class="{prefixCls}editor-progressbar" ' + ' style="width:' + self.get('width') + ';' + 'height:' + h + ';"' + '></div>', { prefixCls: prefixCls })), container = self.get('container'), p = new Node(S.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h, 10) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + '</div>' + '</div>', { prefixCls: prefixCls })).appendTo(el), title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>').appendTo(el);
             if (container) {
                 el.appendTo(container);
             }
@@ -57,12 +29,10 @@ KISSY.add('editor/plugin/progressbar',['base'], function (S, require) {
             self._title = title;
             self._p = p;
             self.on('afterProgressChange', self._progressChange, self);
-            self._progressChange({newVal: self.get('progress')});
+            self._progressChange({ newVal: self.get('progress') });
         },
-
         _progressChange: function (ev) {
-            var self = this,
-                v = ev.newVal;
+            var self = this, v = ev.newVal;
             self._p.css('width', v + '%');
             self._title.html(v + '%');
         }
@@ -72,12 +42,8 @@ KISSY.add('editor/plugin/progressbar',['base'], function (S, require) {
             width: {},
             height: {},
             //0-100
-            progress: {
-                value: 0
-            },
-            prefixCls: {
-                value: 'ks-'
-            }
+            progress: { value: 0 },
+            prefixCls: { value: 'ks-' }
         }
     });
 });

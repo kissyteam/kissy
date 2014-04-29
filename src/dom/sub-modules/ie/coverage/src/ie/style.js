@@ -441,9 +441,9 @@ function visit61_14_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/ie/style.js'].functionData[0]++;
   _$jscoverage['/ie/style.js'].lineData[7]++;
-  var Dom = require('dom/base');
-  _$jscoverage['/ie/style.js'].lineData[8]++;
   var logger = S.getLogger('s/dom');
+  _$jscoverage['/ie/style.js'].lineData[8]++;
+  var Dom = require('dom/base');
   _$jscoverage['/ie/style.js'].lineData[9]++;
   var cssProps = Dom._cssProps, UA = require('ua'), FLOAT = 'float', HUNDRED = 100, doc = S.Env.host.document, docElem = visit61_14_1(doc && doc.documentElement), OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
   _$jscoverage['/ie/style.js'].lineData[29]++;

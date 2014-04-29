@@ -1,32 +1,32 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:50
+build time: Apr 29 15:06
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/remove-format
-
 */
 /**
  * @ignore
  * removeFormat for selection.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/remove-format',['editor', './button', './remove-format/cmd'], function (S, require) {
+KISSY.add('editor/plugin/remove-format', [
+    'editor',
+    './button',
+    './remove-format/cmd'
+], function (S, require) {
     var Editor = require('editor');
     require('./button');
     var formatCmd = require('./remove-format/cmd');
-
     function removeFormat() {
     }
-
     S.augment(removeFormat, {
         pluginRenderUI: function (editor) {
             formatCmd.init(editor);
             editor.addButton('removeFormat', {
-                tooltip: '清除格式',
+                tooltip: '\u6E05\u9664\u683C\u5F0F',
                 listeners: {
                     click: function () {
                         editor.execCommand('removeFormat');
@@ -36,6 +36,7 @@ KISSY.add('editor/plugin/remove-format',['editor', './button', './remove-format/
             });
         }
     });
-
     return removeFormat;
 });
+
+

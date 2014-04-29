@@ -233,14 +233,14 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js']) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[4] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[5] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[8] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[9] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[11] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[22] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[20] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[21] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[23] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[24] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[27] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[29] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[31] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[35] = 0;
@@ -248,8 +248,9 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js']) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[37] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[38] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[39] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[40] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[41] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[42] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[45] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[46] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[47] = 0;
@@ -267,15 +268,17 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js']) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[62] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[63] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[64] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[66] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[65] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[67] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[68] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[69] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[71] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[72] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[74] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[73] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[75] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[76] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[77] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[78] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[80] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[81] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[82] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[83] = 0;
@@ -290,16 +293,16 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js']) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[95] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[96] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[97] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[98] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[99] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[100] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[101] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[102] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[104] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[105] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[106] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[107] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[108] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[110] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[111] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[109] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-xtpl.js'].functionData) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData = [];
@@ -311,30 +314,30 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/overlay-xtpl.js'].branchData) {
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData = {};
-  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'] = [];
-  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['20'] = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['20'][1] = new BranchData();
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData['49'] = [];
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['62'] = [];
-  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['63'] = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['63'][1] = new BranchData();
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData['85'] = [];
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData['85'][1] = new BranchData();
 }
-_$jscoverage['/overlay/overlay-xtpl.js'].branchData['85'][1].init(3616, 37, 'commandRet13 && commandRet13.isBuffer');
+_$jscoverage['/overlay/overlay-xtpl.js'].branchData['85'][1].init(3748, 31, 'callRet13 && callRet13.isBuffer');
 function visit39_85_1(result) {
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['62'][1].init(1131, 37, 'commandRet10 && commandRet10.isBuffer');
-function visit38_62_1(result) {
-  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['63'][1].init(1174, 31, 'callRet10 && callRet10.isBuffer');
+function visit38_63_1(result) {
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['49'][1].init(465, 35, 'commandRet7 && commandRet7.isBuffer');
+}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['49'][1].init(493, 29, 'callRet7 && callRet7.isBuffer');
 function visit37_49_1(result) {
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][1].init(142, 21, '"5.0.0" !== S.version');
-function visit36_8_1(result) {
-  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][1].ranCondition(result);
+}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['20'][1].init(802, 21, '"5.0.0" !== S.version');
+function visit36_20_1(result) {
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/overlay-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
@@ -345,35 +348,35 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[5]++;
   var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[8]++;
-  if (visit36_8_1("5.0.0" !== S.version)) {
-    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[9]++;
+  var callFnUtil = utils["callFn"], callCommandUtil = utils["callCommand"], eachCommand = nativeCommands["each"], withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands["set"], includeCommand = nativeCommands["include"], parseCommand = nativeCommands["parse"], extendCommand = nativeCommands["extend"], blockCommand = nativeCommands["block"], macroCommand = nativeCommands["macro"], debuggerCommand = nativeCommands["debugger"];
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[20]++;
+  if (visit36_20_1("5.0.0" !== S.version)) {
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[21]++;
     throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[11]++;
-  var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[22]++;
-  buffer.write('');
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[23]++;
+  buffer.write('', 0);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[24]++;
   var option0 = {
   escape: 1};
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[26]++;
-  var params1 = [];
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[27]++;
-  params1.push('ks-overlay-closable');
+  var params1 = [];
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[28]++;
-  option0.params = params1;
+  params1.push('ks-overlay-closable');
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[29]++;
+  option0.params = params1;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[30]++;
   option0.fn = function(scope, buffer) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData[2]++;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[31]++;
-  buffer.write('\r\n    ');
+  buffer.write('\r\n    ', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[32]++;
   var option2 = {
   escape: 1};
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[35]++;
   var params3 = [];
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[36]++;
-  var id4 = scope.resolve(["closable"]);
+  var id4 = scope.resolve(["closable"], 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[37]++;
   params3.push(id4);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[38]++;
@@ -381,30 +384,32 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[39]++;
   option2.fn = function(scope, buffer) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData[3]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[40]++;
+  buffer.write('\r\n        <a href="javascript:void(\'close\')"\r\n           class="', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[41]++;
-  buffer.write('\r\n        <a href="javascript:void(\'close\')"\r\n           class="');
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[42]++;
   var option5 = {
   escape: 1};
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[45]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[44]++;
   var params6 = [];
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[46]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[45]++;
   params6.push('close');
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[47]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[46]++;
   option5.params = params6;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[47]++;
+  var callRet7;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[48]++;
-  var commandRet7 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 4);
+  callRet7 = callFnUtil(engine, scope, option5, buffer, ["getBaseCssClasses"], 0, 4);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[49]++;
-  if (visit37_49_1(commandRet7 && commandRet7.isBuffer)) {
+  if (visit37_49_1(callRet7 && callRet7.isBuffer)) {
     _$jscoverage['/overlay/overlay-xtpl.js'].lineData[50]++;
-    buffer = commandRet7;
+    buffer = callRet7;
     _$jscoverage['/overlay/overlay-xtpl.js'].lineData[51]++;
-    commandRet7 = undefined;
+    callRet7 = undefined;
   }
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[53]++;
-  buffer.write(commandRet7, true);
+  buffer.write(callRet7, true);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[54]++;
-  buffer.write('"\r\n           role=\'button\'>\r\n            <span class="');
+  buffer.write('"\r\n           role=\'button\'>\r\n            <span class="', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[55]++;
   var option8 = {
   escape: 1};
@@ -415,54 +420,58 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[60]++;
   option8.params = params9;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[61]++;
-  var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 6);
+  var callRet10;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[62]++;
-  if (visit38_62_1(commandRet10 && commandRet10.isBuffer)) {
-    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[63]++;
-    buffer = commandRet10;
+  callRet10 = callFnUtil(engine, scope, option8, buffer, ["getBaseCssClasses"], 0, 6);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[63]++;
+  if (visit38_63_1(callRet10 && callRet10.isBuffer)) {
     _$jscoverage['/overlay/overlay-xtpl.js'].lineData[64]++;
-    commandRet10 = undefined;
+    buffer = callRet10;
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[65]++;
+    callRet10 = undefined;
   }
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[66]++;
-  buffer.write(commandRet10, true);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[67]++;
-  buffer.write('">close</span>\r\n        </a>\r\n    ');
+  buffer.write(callRet10, true);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[68]++;
+  buffer.write('">close</span>\r\n        </a>\r\n    ', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[69]++;
   return buffer;
 };
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[71]++;
   buffer = ifCommand.call(engine, scope, option2, buffer, 2, payload);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[72]++;
-  buffer.write('\r\n');
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[74]++;
+  buffer.write('\r\n', 0);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[73]++;
   return buffer;
 };
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[76]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[75]++;
   buffer = blockCommand.call(engine, scope, option0, buffer, 1, payload);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[76]++;
+  buffer.write('\r\n\r\n<div class="', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[77]++;
-  buffer.write('\r\n\r\n<div class="');
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[78]++;
   var option11 = {
   escape: 1};
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[81]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[80]++;
   var params12 = [];
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[82]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[81]++;
   params12.push('content');
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[83]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[82]++;
   option11.params = params12;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[83]++;
+  var callRet13;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[84]++;
-  var commandRet13 = callCommandUtil(engine, scope, option11, buffer, "getBaseCssClasses", 11);
+  callRet13 = callFnUtil(engine, scope, option11, buffer, ["getBaseCssClasses"], 0, 11);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[85]++;
-  if (visit39_85_1(commandRet13 && commandRet13.isBuffer)) {
+  if (visit39_85_1(callRet13 && callRet13.isBuffer)) {
     _$jscoverage['/overlay/overlay-xtpl.js'].lineData[86]++;
-    buffer = commandRet13;
+    buffer = callRet13;
     _$jscoverage['/overlay/overlay-xtpl.js'].lineData[87]++;
-    commandRet13 = undefined;
+    callRet13 = undefined;
   }
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[89]++;
-  buffer.write(commandRet13, true);
+  buffer.write(callRet13, true);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[90]++;
-  buffer.write('">\r\n    ');
+  buffer.write('">\r\n    ', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[91]++;
   var option14 = {
   escape: 1};
@@ -475,26 +484,26 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[97]++;
   option14.fn = function(scope, buffer) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData[4]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[98]++;
+  buffer.write('\r\n        ', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[99]++;
-  buffer.write('\r\n        ');
+  var id16 = scope.resolve(["content"], 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[100]++;
-  var id16 = scope.resolve(["content"]);
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[101]++;
   buffer.write(id16, false);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[101]++;
+  buffer.write('\r\n    ', 0);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[102]++;
-  buffer.write('\r\n    ');
+  return buffer;
+};
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[104]++;
-  return buffer;
-};
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[106]++;
   buffer = blockCommand.call(engine, scope, option14, buffer, 12, payload);
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[107]++;
-  buffer.write('\r\n</div>');
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[108]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[105]++;
+  buffer.write('\r\n</div>', 0);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[106]++;
   return buffer;
 };
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[110]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[108]++;
   t.TPL_NAME = module.name;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[111]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[109]++;
   return t;
 });

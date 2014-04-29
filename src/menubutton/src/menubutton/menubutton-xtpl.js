@@ -1,64 +1,67 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
-        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
+        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
         var t = function (scope, buffer, payload, undefined) {
             var engine = this,
                 nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
+            var callFnUtil = utils["callFn"],
+                callCommandUtil = utils["callCommand"],
+                eachCommand = nativeCommands["each"],
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands["set"],
+                includeCommand = nativeCommands["include"],
+                parseCommand = nativeCommands["parse"],
+                extendCommand = nativeCommands["extend"],
+                blockCommand = nativeCommands["block"],
+                macroCommand = nativeCommands["macro"],
+                debuggerCommand = nativeCommands["debugger"];
             if ("5.0.0" !== S.version) {
                 throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
             }
-            var callCommandUtil = utils.callCommand,
-                eachCommand = nativeCommands.each,
-                withCommand = nativeCommands["with"],
-                ifCommand = nativeCommands["if"],
-                setCommand = nativeCommands.set,
-                includeCommand = nativeCommands.include,
-                parseCommand = nativeCommands.parse,
-                extendCommand = nativeCommands.extend,
-                blockCommand = nativeCommands.block,
-                macroCommand = nativeCommands.macro,
-                debuggerCommand = nativeCommands["debugger"];
-            buffer.write('');
+            buffer.write('', 0);
             var option0 = {};
             var params1 = [];
             params1.push('component/extension/content-xtpl');
             option0.params = params1;
             require("component/extension/content-xtpl");
-            option0.params[0] = module.resolve(option0.params[0]);
-            var commandRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);
-            if (commandRet2 && commandRet2.isBuffer) {
-                buffer = commandRet2;
-                commandRet2 = undefined;
+            var callRet2
+            callRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);
+            if (callRet2 && callRet2.isBuffer) {
+                buffer = callRet2;
+                callRet2 = undefined;
             }
-            buffer.write(commandRet2, false);
-            buffer.write('\r\n<div class="');
+            buffer.write(callRet2, false);
+            buffer.write('\r\n<div class="', 0);
             var option3 = {
                 escape: 1
             };
             var params4 = [];
             params4.push('dropdown');
             option3.params = params4;
-            var commandRet5 = callCommandUtil(engine, scope, option3, buffer, "getBaseCssClasses", 2);
-            if (commandRet5 && commandRet5.isBuffer) {
-                buffer = commandRet5;
-                commandRet5 = undefined;
+            var callRet5
+            callRet5 = callFnUtil(engine, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
+            if (callRet5 && callRet5.isBuffer) {
+                buffer = callRet5;
+                callRet5 = undefined;
             }
-            buffer.write(commandRet5, true);
-            buffer.write('">\r\n    <div class="');
+            buffer.write(callRet5, true);
+            buffer.write('">\r\n    <div class="', 0);
             var option6 = {
                 escape: 1
             };
             var params7 = [];
             params7.push('dropdown-inner');
             option6.params = params7;
-            var commandRet8 = callCommandUtil(engine, scope, option6, buffer, "getBaseCssClasses", 3);
-            if (commandRet8 && commandRet8.isBuffer) {
-                buffer = commandRet8;
-                commandRet8 = undefined;
+            var callRet8
+            callRet8 = callFnUtil(engine, scope, option6, buffer, ["getBaseCssClasses"], 0, 3);
+            if (callRet8 && callRet8.isBuffer) {
+                buffer = callRet8;
+                callRet8 = undefined;
             }
-            buffer.write(commandRet8, true);
-            buffer.write('">\r\n    </div>\r\n</div>');
+            buffer.write(callRet8, true);
+            buffer.write('">\r\n    </div>\r\n</div>', 0);
             return buffer;
         };
 t.TPL_NAME = module.name;

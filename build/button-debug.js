@@ -1,24 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:41
+build time: Apr 29 14:57
 */
 /*
-combined files : 
-
+combined modules:
 button
-
 */
 /**
  * @ignore
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add('button',['node', 'component/control'], function (S, require) {
-    var Node = require('node'),
-        Control = require('component/control');
-
-    var KeyCode = Node.KeyCode;
+KISSY.add('button', [
+    'node',
+    'component/control'
+], function (S, require) {
+    var Node = require('node'), Control = require('component/control');
+    var KeyCode = Node.KeyCode;    /**
+     * KISSY Button.
+     * @extends KISSY.Component.Control
+     * @class KISSY.Button
+     */
     /**
      * KISSY Button.
      * @extends KISSY.Component.Control
@@ -26,7 +29,6 @@ KISSY.add('button',['node', 'component/control'], function (S, require) {
      */
     return Control.extend({
         isButton: 1,
-
         beforeCreateDom: function (renderData) {
             var self = this;
             S.mix(renderData.elAttrs, {
@@ -38,44 +40,36 @@ KISSY.add('button',['node', 'component/control'], function (S, require) {
                 renderData.elCls.push(self.getBaseCssClasses('checked'));
             }
         },
-
         bindUI: function () {
             this.$el.on('keyup', this.handleKeyDownInternal, this);
         },
-
         handleKeyDownInternal: function (e) {
-            if (e.keyCode === KeyCode.ENTER &&
-                e.type === 'keydown' ||
-                e.keyCode === KeyCode.SPACE &&
-                e.type === 'keyup') {
+            if (e.keyCode === KeyCode.ENTER && e.type === 'keydown' || e.keyCode === KeyCode.SPACE && e.type === 'keyup') {
                 return this.handleClickInternal(e);
-            }
+            }    // Return true for space keypress (even though the event is handled on keyup)
+                 // as preventDefault needs to be called up keypress to take effect in IE and
+                 // WebKit.
             // Return true for space keypress (even though the event is handled on keyup)
             // as preventDefault needs to be called up keypress to take effect in IE and
             // WebKit.
             return e.keyCode === KeyCode.SPACE;
         },
-
         handleClickInternal: function () {
             var self = this;
             self.callSuper();
             if (self.get('checkable')) {
                 self.set('checked', !self.get('checked'));
-            }
+            }    // button 的默认行为就是触发 click
             // button 的默认行为就是触发 click
             self.fire('click');
         },
-
         _onSetChecked: function (v) {
-            var self = this,
-                cls = self.getBaseCssClasses('checked');
+            var self = this, cls = self.getBaseCssClasses('checked');
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         },
-
         _onSetTooltip: function (title) {
             this.el.setAttribute('title', title);
         },
-
         _onSetDescribedby: function (describedby) {
             this.el.setAttribute('aria-describedby', describedby);
         }
@@ -127,7 +121,6 @@ KISSY.add('button',['node', 'component/control'], function (S, require) {
                 render: 1,
                 sync: 0
             },
-
             /**
              * Whether button can be checkable(toggle).
              * Defaults to: false.
@@ -136,9 +129,7 @@ KISSY.add('button',['node', 'component/control'], function (S, require) {
             /**
              * @ignore
              */
-            checkable: {
-            },
-
+            checkable: {},
             /**
              * Whether button is checked(toggle).
              * Defaults to: false.
@@ -161,3 +152,4 @@ KISSY.add('button',['node', 'component/control'], function (S, require) {
         xclass: 'button'
     });
 });
+

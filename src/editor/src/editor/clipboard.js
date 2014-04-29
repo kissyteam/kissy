@@ -4,11 +4,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var logger = S.getLogger('s/editor');
     var Node = require('node');
     var Editor = require('./base');
     var KERange = require('./range');
     var KES = require('./selection');
-    var logger = S.getLogger('s/editor');
     var $ = Node.all,
         UA = S.UA,
         OLD_IE = UA.ieMode < 11,

@@ -1,3 +1,1 @@
-{
- "tree": ["node", "component/container", "component/extension/content-xtpl", "component/extension/content-box", "component/extension/delegate-children", "event/gesture/tap"] 
-}
+{"tree":["node","component/container","component/extension/content-box","component/extension/content-xtpl","component/extension/delegate-children","event/gesture/tap"]}

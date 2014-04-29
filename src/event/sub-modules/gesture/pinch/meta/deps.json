@@ -1,3 +1,1 @@
-{
- "event/gesture/pinch": ["event/gesture/util", "event/dom/base"] 
-}
+{"event/gesture/pinch":["event/gesture/util","event/dom/base"]}

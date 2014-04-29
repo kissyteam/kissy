@@ -833,15 +833,15 @@ function visit1_14_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/editor/clipboard.js'].functionData[0]++;
   _$jscoverage['/editor/clipboard.js'].lineData[7]++;
-  var Node = require('node');
-  _$jscoverage['/editor/clipboard.js'].lineData[8]++;
-  var Editor = require('./base');
-  _$jscoverage['/editor/clipboard.js'].lineData[9]++;
-  var KERange = require('./range');
-  _$jscoverage['/editor/clipboard.js'].lineData[10]++;
-  var KES = require('./selection');
-  _$jscoverage['/editor/clipboard.js'].lineData[11]++;
   var logger = S.getLogger('s/editor');
+  _$jscoverage['/editor/clipboard.js'].lineData[8]++;
+  var Node = require('node');
+  _$jscoverage['/editor/clipboard.js'].lineData[9]++;
+  var Editor = require('./base');
+  _$jscoverage['/editor/clipboard.js'].lineData[10]++;
+  var KERange = require('./range');
+  _$jscoverage['/editor/clipboard.js'].lineData[11]++;
+  var KES = require('./selection');
   _$jscoverage['/editor/clipboard.js'].lineData[12]++;
   var $ = Node.all, UA = S.UA, OLD_IE = visit1_14_1(UA.ieMode < 11), pasteEvent = OLD_IE ? 'beforepaste' : 'paste', KER = Editor.RangeType;
   _$jscoverage['/editor/clipboard.js'].lineData[18]++;

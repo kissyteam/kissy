@@ -1,3 +1,1 @@
-{
- "component/container": ["component/control", "component/manager"] 
-}
+{"component/container":["component/control","component/manager"]}

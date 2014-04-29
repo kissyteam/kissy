@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 23 13:04
+build time: Apr 29 15:10
 */
 KISSY.add("kison",["kison/grammar","kison/production","kison/lexer","kison/utils"],function(S,require){var Grammar=require("kison/grammar");var Production=require("kison/production");var Lexer=require("kison/lexer");var Utils=require("kison/utils");var Kison={};Kison.Grammar=Grammar;Kison.Production=Production;Kison.Lexer=Lexer;Kison.Utils=Utils;return Kison});
 KISSY.add("kison/grammar",["base","./utils","./item","./item-set","./non-terminal","./lexer","./production"],function(S,require){var Base=require("base");var Utils=require("./utils");var Item=require("./item");var ItemSet=require("./item-set");var NonTerminal=require("./non-terminal");var Lexer=require("./lexer");var Production=require("./production");var logger=S.getLogger("s/kison");var GrammarConst={SHIFT_TYPE:1,REDUCE_TYPE:2,ACCEPT_TYPE:0,TYPE_INDEX:0,PRODUCTION_INDEX:1,TO_INDEX:2},serializeObject=

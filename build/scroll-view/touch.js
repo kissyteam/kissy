@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:55
+build time: Apr 29 15:12
 */
 KISSY.add("scroll-view/touch",["./base","anim/timer","event/gesture/base","event/gesture/drag"],function(v,s){function x(a,c,b){if(!y(a,b)){var d=a.startScroll[b]-("left"===b?c.deltaX:c.deltaY),c=a.minScroll,g=a.maxScroll;a._bounce||(d=Math.min(Math.max(d,c[b]),g[b]));d<c[b]?(d=c[b]-d,d*=z,d=c[b]-d):d>g[b]&&(d-=g[b],d*=z,d=g[b]+d);a.set("scroll"+v.ucfirst(b),d)}}function y(a,c){return!a.allowScroll[c]&&a["_"+("left"===c?"lockX":"lockY")]?1:0}function A(a,c,b,d){if(y(a,b))d();else{var g="scroll"+v.ucfirst(b),
 h=a.get(g),i=a.minScroll,k=a.maxScroll,j;h<i[b]?j=i[b]:h>k[b]&&(j=k[b]);void 0!==j?(h={},h[b]=j,a.scrollTo(h,{duration:a.get("bounceDuration"),easing:a.get("bounceEasing"),queue:!1,complete:d})):a.pagesOffset?d():(j="left"===b?-c.velocityX:-c.velocityY,j=Math.min(Math.max(j,-B),B),d={node:{},to:{},duration:9999,queue:!1,complete:d,frame:E(a,j,h,g,k[b],i[b])},d.node[b]=h,d.to[b]=null,a.scrollAnims.push((new F(d)).run()))}}function E(a,c,b,d,g,h){var i=c*w,k=1,j=0;return function(c,t){var e=v.now(),

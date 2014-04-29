@@ -1,57 +1,40 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:46
+build time: Apr 29 15:02
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/flash-common/utils
-
 */
 /**
  * @ignore
  * flash utilities
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/flash-common/utils',['swf'], function (S, require) {
+KISSY.add('editor/plugin/flash-common/utils', [
+    'swf',
+    'dom'
+], function (S, require) {
     var SWF = require('swf');
-    var Dom = S.require('dom'),
-
-        flashUtils = {
-
+    var Dom = require('dom'), flashUtils = {
             insertFlash: function (editor, src, attrs, _cls, _type) {
                 var nodeInfo = flashUtils.createSWF({
                         src: src,
                         attrs: attrs,
                         document: editor.get('document')[0]
-                    }),
-                    real = nodeInfo.el,
-                    substitute = editor.createFakeElement(real,
-                        _cls || 'ke_flash',
-                        _type || 'flash',
-                        true,
-                        nodeInfo.html,
-                        attrs);
+                    }), real = nodeInfo.el, substitute = editor.createFakeElement(real, _cls || 'ke_flash', _type || 'flash', true, nodeInfo.html, attrs);
                 editor.insertElement(substitute);
                 return substitute;
             },
-
             isFlashEmbed: function (element) {
-                return (
-                    Dom.attr(element, 'type') === 'application/x-shockwave-flash' ||
-                        /\.swf(?:$|\?)/i.test(Dom.attr(element, 'src') || '')
-                    );
+                return Dom.attr(element, 'type') === 'application/x-shockwave-flash' || /\.swf(?:$|\?)/i.test(Dom.attr(element, 'src') || '');
             },
-
             getUrl: function (r) {
                 return SWF.getSrc(r);
             },
-
             createSWF: function (cfg) {
-                var render = Dom.create('<div style="' +
-                    'position:absolute;left:-9999px;top:-9999px;' +
-                    '"></div>', undefined, cfg.document);
+                var render = Dom.create('<div style="' + 'position:absolute;left:-9999px;top:-9999px;' + '"></div>', undefined, cfg.document);
                 cfg.htmlMode = 'full';
                 Dom.append(render, cfg.document.body);
                 cfg.render = render;
@@ -63,6 +46,6 @@ KISSY.add('editor/plugin/flash-common/utils',['swf'], function (S, require) {
                 };
             }
         };
-
     return flashUtils;
 });
+

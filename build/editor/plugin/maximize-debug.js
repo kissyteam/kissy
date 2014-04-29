@@ -1,33 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:49
+build time: Apr 29 15:05
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/maximize
-
 */
 /**
  * @ignore
  * Maximize plugin
  * @author yiminghe@gmail.com
  */
-
-KISSY.add('editor/plugin/maximize',['./maximize/cmd', './button'], function (S, require) {
+KISSY.add('editor/plugin/maximize', [
+    './maximize/cmd',
+    './button'
+], function (S, require) {
     var maximizeCmd = require('./maximize/cmd');
     require('./button');
-
-    var MAXIMIZE_CLASS = 'maximize',
-        RESTORE_CLASS = 'restore',
-        MAXIMIZE_TIP = '全屏',
-        RESTORE_TIP = '取消全屏';
-
+    var MAXIMIZE_CLASS = 'maximize', RESTORE_CLASS = 'restore', MAXIMIZE_TIP = '\u5168\u5C4F', RESTORE_TIP = '\u53D6\u6D88\u5168\u5C4F';
     function maximizePlugin() {
-
     }
-
     S.augment(maximizePlugin, {
         pluginRenderUI: function (editor) {
             maximizeCmd.init(editor);
@@ -46,15 +39,13 @@ KISSY.add('editor/plugin/maximize',['./maximize/cmd', './button'], function (S, 
                             self.set('tooltip', MAXIMIZE_TIP);
                             self.set('contentCls', MAXIMIZE_CLASS);
                         }
-
                         editor.focus();
                     }
-
                 },
                 checkable: true
             });
         }
     });
-
     return maximizePlugin;
 });
+

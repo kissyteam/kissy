@@ -1,3 +1,1 @@
-{
- "component/extension/delegate-children": ["component/manager", "event/gesture/base", "event/gesture/tap"] 
-}
+{"component/extension/delegate-children":["component/manager","event/gesture/base","event/gesture/tap"]}

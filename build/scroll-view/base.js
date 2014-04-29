@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:55
+build time: Apr 29 15:11
 */
 KISSY.add("scroll-view/base",["node","anim/timer","component/container","component/extension/content-box"],function(j,k){function r(){var a=this.el,c=a.scrollTop,b=a.scrollLeft;c&&this.set("scrollTop",c+this.get("scrollTop"));b&&this.set("scrollLeft",b+this.get("scrollLeft"));a.scrollTop=a.scrollLeft=0}function s(a,c){a.scrollView.set(c.prop,c.val)}var l=k("node"),t=k("anim/timer"),u=k("component/container"),v=k("component/extension/content-box"),p=j.all,i=l.KeyCode,l=j.Feature.getCssVendorInfo("transform"),
 m=Math.floor,n,q=j.Feature.isTransform3dSupported(),o={initializer:function(){this.scrollAnims=[]},bindUI:function(){this.$el.on("mousewheel",this.handleMouseWheel,this).on("scroll",r,this)},syncUI:function(){this.sync()},sync:function(){var a=this.el,c=this.contentEl,b=Math.max(c.offsetHeight,c.scrollHeight),c=Math.max(c.offsetWidth,c.scrollWidth);this.set("dimension",{scrollHeight:b,scrollWidth:c,clientWidth:a.clientWidth,clientHeight:a.clientHeight})},_onSetDimension:function(a,c){var b=this.$contentEl,

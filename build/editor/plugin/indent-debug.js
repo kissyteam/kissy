@@ -1,32 +1,32 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:47
+build time: Apr 29 15:03
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/indent
-
 */
 /**
  * @ignore
  * Add indent button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/indent',['editor', './indent/cmd', './button'], function (S, require) {
+KISSY.add('editor/plugin/indent', [
+    'editor',
+    './indent/cmd',
+    './button'
+], function (S, require) {
     var Editor = require('editor');
     var indexCmd = require('./indent/cmd');
     require('./button');
     function Indent() {
-
     }
-
     S.augment(Indent, {
         pluginRenderUI: function (editor) {
             indexCmd.init(editor);
             editor.addButton('indent', {
-                tooltip: '增加缩进量',
+                tooltip: '\u589E\u52A0\u7F29\u8FDB\u91CF',
                 listeners: {
                     click: function () {
                         editor.execCommand('indent');
@@ -37,6 +37,7 @@ KISSY.add('editor/plugin/indent',['editor', './indent/cmd', './button'], functio
             });
         }
     });
-
     return Indent;
 });
+
+

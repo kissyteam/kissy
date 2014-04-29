@@ -1,3 +1,1 @@
-{
- "editor/plugin/color/btn": ["editor", "editor/plugin/button", "editor/plugin/overlay", "editor/plugin/dialog-loader"] 
-}
+{"editor/plugin/color/btn":["editor","editor/plugin/button","editor/plugin/overlay","editor/plugin/dialog-loader"]}

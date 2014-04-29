@@ -1,68 +1,58 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:56
+build time: Apr 29 15:13
 */
 /*
-combined files : 
-
+combined modules:
 stylesheet
-
 */
 /**
  * @ignore
  * Normalize operation about stylesheet
  * @author yiminghe@gmail.com
  */
-KISSY.add('stylesheet',['dom'], function (S, require) {
-    var Dom = require('dom');
-
+KISSY.add('stylesheet', ['dom'], function (S, require) {
+    var Dom = require('dom');    /**
+     * Normalize operation about stylesheet
+     * @class KISSY.StyleSheet
+     * @param el {HTMLElement} style/link element
+     */
     /**
      * Normalize operation about stylesheet
      * @class KISSY.StyleSheet
      * @param el {HTMLElement} style/link element
      */
     function StyleSheet(el) {
-
         /**
          * style/link element or selector
          * @cfg {HTMLElement|String} el
          */
-
         /**
          * style/link element
          * @type {HTMLElement}
          * @property el
          */
-
         if (el.el) {
             el = el.el;
         }
-
-        el = this.el = Dom.get(el);
+        el = this.el = Dom.get(el);    // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
+                                       // firefox 跨域时抛出异常
         // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
         // firefox 跨域时抛出异常
         var sheet = el.sheet || el.styleSheet;
-
         this.sheet = sheet;
-
         var cssRules = {};
-
         this.cssRules = cssRules;
-
-        var rulesName = sheet && ('cssRules' in sheet) ? 'cssRules' : 'rules';
-
+        var rulesName = sheet && 'cssRules' in sheet ? 'cssRules' : 'rules';
         this.rulesName = rulesName;
-
         var domCssRules = sheet[rulesName];
-
         var i, rule, selectorText, styleDeclaration;
-
         for (i = domCssRules.length - 1; i >= 0; i--) {
             rule = domCssRules[i];
-            selectorText = rule.selectorText;
+            selectorText = rule.selectorText;    // 去重
             // 去重
-            if ((styleDeclaration = cssRules[selectorText])) {
+            if (styleDeclaration = cssRules[selectorText]) {
                 styleDeclaration.style.cssText += ';' + styleDeclaration.style.cssText;
                 deleteRule(sheet, i);
             } else {
@@ -70,11 +60,8 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
             }
         }
     }
-
     StyleSheet.prototype = {
-
         constructor: StyleSheet,
-
         /**
          * Make current stylesheet enabled.
          * @chainable
@@ -83,7 +70,6 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
             this.sheet.disabled = false;
             return this;
         },
-
         /**
          * Make current stylesheet disabled.
          * @chainable
@@ -92,7 +78,6 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
             this.sheet.disabled = true;
             return this;
         },
-
         /**
          * Whether current stylesheet is enabled.
          * @return {Boolean}
@@ -100,7 +85,6 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
         isEnabled: function () {
             return !this.sheet.disabled;
         },
-
         /**
          * Set sheet's rule by selectorText and css.
          * @param {String} selectorText selector text separated by ,
@@ -120,14 +104,12 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
             var rule = cssRules[selectorText];
             var multiSelector = selectorText.split(/\s*,\s*/);
             var i;
-
             if (multiSelector.length > 1) {
                 for (i = 0; i < multiSelector.length - 1; i++) {
                     this.set(multiSelector[i], css);
                 }
                 return this;
             }
-
             if (rule) {
                 css = toCssText(css, rule.style.cssText);
                 if (css) {
@@ -150,10 +132,8 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
                     cssRules[selectorText] = sheet[rulesName][len];
                 }
             }
-
             return this;
         },
-
         /**
          * Get cssText corresponding to specified selectorText
          * @param {String} selectorText specified selector as string
@@ -161,34 +141,26 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
          */
         get: function (selectorText) {
             var rule, css, selector, cssRules = this.cssRules;
-
             if (selectorText) {
                 rule = cssRules[selectorText];
-
                 return rule ? rule.style.cssText : null;
             } else {
                 css = [];
                 for (selector in cssRules) {
-
                     rule = cssRules[selector];
                     css.push(rule.selectorText + ' {' + rule.style.cssText + '}');
-
                 }
                 return css.join('\n');
             }
         }
-    };
-
+    };    // # ------------------ private start
     // # ------------------ private start
-
     var workerElement = document.createElement('p');
-
     function toCssText(css, base) {
         workerElement.style.cssText = base || '';
         Dom.css(workerElement, css);
         return workerElement.style.cssText;
     }
-
     function deleteRule(sheet, i) {
         if (sheet.deleteRule) {
             sheet.deleteRule(i);
@@ -196,20 +168,16 @@ KISSY.add('stylesheet',['dom'], function (S, require) {
             sheet.removeRule(i);
         }
     }
-
     function insertRule(sheet, sel, css, i) {
         if (sheet.insertRule) {
             sheet.insertRule(sel + ' {' + css + '}', i);
         } else if (sheet.addRule) {
             sheet.addRule(sel, css, i);
         }
-    }
-
+    }    // # ------------------ private end
     // # ------------------ private end
-
     return StyleSheet;
-});
-/**
+});    /**
  * @ignore
  * Refer
  *  - http://www.w3.org/TR/Dom-Level-2-Style/css.html

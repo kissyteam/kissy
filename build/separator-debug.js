@@ -1,22 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:56
+build time: Apr 29 15:12
 */
 /*
-combined files : 
-
+combined modules:
 separator
-
 */
 /**
  * @ignore
  * separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add('separator',['component/control'], function (S, require) {
-    var Control = require('component/control');
-
+KISSY.add('separator', ['component/control'], function (S, require) {
+    var Control = require('component/control');    /**
+     * separator component for KISSY. xclass: 'separator'.
+     * @extends KISSY.Component.Control
+     * @class KISSY.Separator
+     */
     /**
      * separator component for KISSY. xclass: 'separator'.
      * @extends KISSY.Component.Control
@@ -28,23 +29,14 @@ KISSY.add('separator',['component/control'], function (S, require) {
         }
     }, {
         ATTRS: {
-
             /**
              * Un-focusable.
              * readonly.
              * Defaults to: false.
              */
-            focusable: {
-                value: false
-            },
-
-            disabled: {
-                value: true
-            },
-
-            handleGestureEvents: {
-                value: false
-            }
+            focusable: { value: false },
+            disabled: { value: true },
+            handleGestureEvents: { value: false }
         },
         xclass: 'separator'
     });

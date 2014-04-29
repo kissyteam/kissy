@@ -485,7 +485,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].lineData[9]++;
   var HtmlParser = require('html-parser');
   _$jscoverage['/fake-objects.js'].lineData[11]++;
-  var Node = S.Node, Dom = S.require('dom'), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
+  var Node = S.Node, Dom = require('dom'), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
   _$jscoverage['/fake-objects.js'].lineData[16]++;
   Editor.addMembers({
   createFakeElement: function(realElement, className, realElementType, isResizable, outerHTML, attrs) {

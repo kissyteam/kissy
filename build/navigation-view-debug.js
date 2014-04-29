@@ -1,37 +1,33 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:54
+build time: Apr 29 15:11
 */
 /*
-combined files : 
-
+combined modules:
 navigation-view
-
 */
 /**
  * navigation view to accommodate multiple views
  * @author yiminghe@gmail.com
  */
-KISSY.add('navigation-view',['component/container', 'component/control', 'component/extension/content-xtpl', 'component/extension/content-box'], function (S, require) {
+KISSY.add('navigation-view', [
+    'component/container',
+    'component/control',
+    'component/extension/content-xtpl',
+    'component/extension/content-box'
+], function (S, require) {
     var vendorInfo = S.Feature.getCssVendorInfo('animation');
     var vendorPrefix = vendorInfo && vendorInfo.propertyNamePrefix;
-    var ANIMATION_END_EVENT = vendorPrefix ?
-        (vendorPrefix.toLowerCase() + 'AnimationEnd') :
-        // https://github.com/kissyteam/kissy/issues/538
+    var ANIMATION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + 'AnimationEnd' : // https://github.com/kissyteam/kissy/issues/538
         'animationend webkitAnimationEnd';
-
     var Container = require('component/container');
     var Control = require('component/control');
     var ContentTpl = require('component/extension/content-xtpl');
     var ContentBox = require('component/extension/content-box');
-
     function getAnimCss(prefixCls, animation, enter) {
-        return prefixCls + 'navigation-view-' +
-            ('anim-' + animation + '-' + (enter ? 'enter' : 'leave')) + ' ' +
-            prefixCls + 'navigation-view-anim-ing';
+        return prefixCls + 'navigation-view-' + ('anim-' + animation + '-' + (enter ? 'enter' : 'leave')) + ' ' + prefixCls + 'navigation-view-anim-ing';
     }
-
     function getAnimValueFromView(view, enter, backward) {
         var animation = view.get('animation');
         if (typeof animation === 'string') {
@@ -45,7 +41,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         }
         return animationValue;
     }
-
     function transition(view, enter, backward) {
         clearAnimCss(view);
         var animationValue = getAnimValueFromView(view, enter, backward);
@@ -60,7 +55,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         view.show();
         view.$el.addClass(view._viewAnimCss = getAnimCss(view.get('prefixCls'), animationValue, enter));
     }
-
     function loadingTransition(loadingView, view, enter, backward) {
         clearAnimCss(loadingView);
         var animationValue = getAnimValueFromView(view, enter, backward);
@@ -75,43 +69,34 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         loadingView.show();
         loadingView.$el.addClass(loadingView._viewAnimCss = getAnimCss(view.get('prefixCls'), animationValue, enter));
     }
-
     function clearAnimCss(self) {
         if (self._viewAnimCss) {
             self.$el.removeClass(self._viewAnimCss);
             self._viewAnimCss = null;
         }
     }
-
     var LoadingView = Control.extend({
-        bindUI: function () {
-            var self = this;
-            self.$el.on(ANIMATION_END_EVENT, function () {
-                clearAnimCss(self);
-                if (!self.active) {
-                    self.hide();
-                }
-            });
-        },
-
-        transition: function (enter, backward) {
-            var self = this;
-            self.active = enter;
-            loadingTransition(self, self.navigationView.get('activeView'), enter, backward);
-        }
-    }, {
-        xclass: 'navigation-view-loading',
-
-        ATTRS: {
-            handleGestureEvents: {
-                value: false
+            bindUI: function () {
+                var self = this;
+                self.$el.on(ANIMATION_END_EVENT, function () {
+                    clearAnimCss(self);
+                    if (!self.active) {
+                        self.hide();
+                    }
+                });
             },
-            visible: {
-                value: false
+            transition: function (enter, backward) {
+                var self = this;
+                self.active = enter;
+                loadingTransition(self, self.navigationView.get('activeView'), enter, backward);
             }
-        }
-    });
-
+        }, {
+            xclass: 'navigation-view-loading',
+            ATTRS: {
+                handleGestureEvents: { value: false },
+                visible: { value: false }
+            }
+        });
     function getViewInstance(navigationView, config) {
         var children = navigationView.get('children');
         var viewId = config.viewId;
@@ -128,32 +113,23 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         }
         return null;
     }
-
     function switchTo(navigationView, viewConfig, backward) {
         var loadingView = navigationView.loadingView;
         var view = viewConfig.view;
         var fromCache = viewConfig.fromCache;
-
         var oldView = navigationView.get('activeView');
-
         navigationView.fire('beforeInnerViewChange', {
             oldView: oldView,
             newView: view,
             backward: backward
         });
-
         if (oldView && oldView.leave) {
             oldView.leave();
         }
-
         navigationView.set('activeView', view);
-
         if (view.enter) {
-            view.enter({
-                fromCache: fromCache
-            });
+            view.enter({ fromCache: fromCache });
         }
-
         var promise = view.promise;
         if (promise) {
             if (oldView) {
@@ -192,7 +168,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         }
         gc(navigationView);
     }
-
     function gc(navigationView) {
         var children = navigationView.get('children').concat();
         var viewCacheSize = navigationView.get('viewCacheSize');
@@ -207,7 +182,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
             navigationView.removeChild(children[i]);
         }
     }
-
     function onViewAnimEnd() {
         var self = this;
         clearAnimCss(self);
@@ -217,7 +191,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
             self.hide();
         }
     }
-
     function createView(self, config) {
         var view = getViewInstance(self, config);
         var fromCache = !!view;
@@ -233,12 +206,10 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
             fromCache: fromCache
         };
     }
-
-    return Container.extend([ContentBox],{
+    return Container.extend([ContentBox], {
         initializer: function () {
             this.viewStack = [];
         },
-
         createDom: function () {
             var self = this;
             var loadingHtml = self.get('loadingHtml');
@@ -250,32 +221,25 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
                 self.loadingView.navigationView = self;
             }
         },
-
         _onSetLoadingHtml: function (v) {
             if (this.loadingView) {
                 this.loadingView.set('content', v);
             }
         },
-
         push: function (config) {
-            var self = this,
-                viewStack = self.viewStack;
+            var self = this, viewStack = self.viewStack;
             config.animation = config.animation || self.get('animation');
             config.navigationView = self;
             viewStack.push(config);
             switchTo(self, createView(self, config));
         },
-
         replace: function (config) {
-            var self = this,
-                viewStack = self.viewStack;
+            var self = this, viewStack = self.viewStack;
             S.mix(viewStack[viewStack.length - 1], config);
             self.get('activeView').set(config);
         },
-
         pop: function (config) {
-            var self = this,
-                viewStack = self.viewStack;
+            var self = this, viewStack = self.viewStack;
             if (viewStack.length > 1) {
                 viewStack.pop();
                 config = viewStack[viewStack.length - 1];
@@ -284,7 +248,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         }
     }, {
         xclass: 'navigation-view',
-
         ATTRS: {
             /**
              * default animation for view switch when pushed enter or pushed leave
@@ -294,33 +257,17 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
                 // push leave: slide-left-leave
                 // pop enter: slide-left-enter
                 // pop leave: slide-right-leave
-                value: ['slide-right', 'slide-left']
+                value: [
+                    'slide-right',
+                    'slide-left'
+                ]
             },
-
-            loadingHtml: {
-                sync: 0
-            },
-
-            handleGestureEvents: {
-                value: false
-            },
-
-            viewCacheSize: {
-                value: 10
-            },
-
-            focusable: {
-                value: false
-            },
-
-            allowTextSelection: {
-                value: true
-            },
-
-            contentTpl: {
-                value: ContentTpl
-            },
-
+            loadingHtml: { sync: 0 },
+            handleGestureEvents: { value: false },
+            viewCacheSize: { value: 10 },
+            focusable: { value: false },
+            allowTextSelection: { value: true },
+            contentTpl: { value: ContentTpl },
             defaultChildCfg: {
                 value: {
                     handleGestureEvents: false,
@@ -331,3 +278,6 @@ KISSY.add('navigation-view',['component/container', 'component/control', 'compon
         }
     });
 });
+
+
+

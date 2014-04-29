@@ -144,7 +144,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
         return Math.abs(actual - expected) < 1e-4;
     }
 
-
     var $ = Node.all;
 
     describe("anim-simple", function () {
@@ -412,7 +411,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
             });
         });
     });
-
 }, {
     requires: ['dom', 'anim', 'node']
 });

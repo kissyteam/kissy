@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:41
+build time: Apr 29 14:56
 */
 KISSY.add("attribute",["util","event/custom"],function(g,s){function t(d){return d===g.noop?function(){}:g.bind(d)}function n(d,a){return"string"===typeof a?d[a]:a}function o(d){return d.__attrVals||(d.__attrVals={})}function p(d,a,b,c,e,f,h,i){h=h||b;return d.fire(a+g.ucfirst(b)+"Change",g.mix({attrName:h,subAttrName:f,prevVal:c,newVal:e},i))}function k(d,a,b){var c=d[a];!b&&!c&&(d[a]=c={});return c||{}}function u(d,a){for(var b=0,c=a.length;void 0!==d&&b<c;b++)d=d[a[b]];return d}function v(d){var a;
 -1!==d.indexOf(".")&&(a=d.split("."),d=a.shift());return{path:a,name:d}}function w(d,a,b){var c=b;if(a){var d=c=void 0===d?{}:g.clone(d),e=a.length-1;if(0<=e){for(var f=0;f<e;f++)d=d[a[f]];void 0!==d&&(d[a[f]]=b)}}return c}function x(d,a,b,c,e){var f,h,i;f=v(a);var C=a,a=f.name;f=f.path;i=d.get(a);var l=a,m=k(d,"__defaultBeforeFns");m[l]||(m[l]=1,l="before"+g.ucfirst(l)+"Change",d.publish(l,{defaultFn:y,defaultTargetOnly:!0}));f&&(h=u(i,f));if(c.force||!(!f&&i===b||f&&h===b)){b=w(i,f,b);b=g.mix({attrName:a,

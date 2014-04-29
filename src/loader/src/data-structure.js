@@ -118,6 +118,10 @@
         self.require = function (moduleName) {
             return S.require(moduleName, self.name);
         };
+
+        self.require.resolve = function (relativeName) {
+            return self.resolve(relativeName);
+        };
     }
 
     Module.prototype = {
@@ -125,7 +129,6 @@
 
         constructor: Module,
 
-        // use by xtemplate include
         resolve: function (relativeName) {
             return Utils.normalizePath(this.name, relativeName);
         },

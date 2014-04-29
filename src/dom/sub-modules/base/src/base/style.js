@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Dom = require('./api');
     var logger = S.getLogger('s/dom');
+    var Dom = require('./api');
     var globalWindow = S.Env.host,
         getCssVendorInfo = S.Feature.getCssVendorInfo,
         UA = require('ua'),

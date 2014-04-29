@@ -1,121 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:42
+build time: Apr 29 14:57
 */
 /*
-combined files : 
-
-component/control/render-xtpl
+combined modules:
 component/control
-
+component/control/render-xtpl
 */
-/** Compiled By kissy-xtemplate */
-KISSY.add('component/control/render-xtpl',function (S, require, exports, module) {
-        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
-            var callCommandUtil = utils.callCommand,
-                eachCommand = nativeCommands.each,
-                withCommand = nativeCommands["with"],
-                ifCommand = nativeCommands["if"],
-                setCommand = nativeCommands.set,
-                includeCommand = nativeCommands.include,
-                parseCommand = nativeCommands.parse,
-                extendCommand = nativeCommands.extend,
-                blockCommand = nativeCommands.block,
-                macroCommand = nativeCommands.macro,
-                debuggerCommand = nativeCommands["debugger"];
-            buffer.write('<div id="');
-            var id0 = scope.resolve(["id"]);
-            buffer.write(id0, true);
-            buffer.write('"\r\n class="');
-            var option1 = {
-                escape: 1
-            };
-            var commandRet2 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
-            if (commandRet2 && commandRet2.isBuffer) {
-                buffer = commandRet2;
-                commandRet2 = undefined;
-            }
-            buffer.write(commandRet2, true);
-            buffer.write('\r\n');
-            var option3 = {
-                escape: 1
-            };
-            var params4 = [];
-            var id5 = scope.resolve(["elCls"]);
-            params4.push(id5);
-            option3.params = params4;
-            option3.fn = function (scope, buffer) {
-
-                buffer.write('\r\n ');
-                var id6 = scope.resolve(["this"]);
-                buffer.write(id6, true);
-                buffer.write('\r\n');
-
-                return buffer;
-            };
-            buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
-            buffer.write('\r\n"\r\n\r\n');
-            var option7 = {
-                escape: 1
-            };
-            var params8 = [];
-            var id9 = scope.resolve(["elAttrs"]);
-            params8.push(id9);
-            option7.params = params8;
-            option7.fn = function (scope, buffer) {
-
-                buffer.write('\r\n ');
-                var id10 = scope.resolve(["xindex"]);
-                buffer.write(id10, true);
-                buffer.write('="');
-                var id11 = scope.resolve(["this"]);
-                buffer.write(id11, true);
-                buffer.write('"\r\n');
-
-                return buffer;
-            };
-            buffer = eachCommand.call(engine, scope, option7, buffer, 8, payload);
-            buffer.write('\r\n\r\nstyle="\r\n');
-            var option12 = {
-                escape: 1
-            };
-            var params13 = [];
-            var id14 = scope.resolve(["elStyle"]);
-            params13.push(id14);
-            option12.params = params13;
-            option12.fn = function (scope, buffer) {
-
-                buffer.write('\r\n ');
-                var id15 = scope.resolve(["xindex"]);
-                buffer.write(id15, true);
-                buffer.write(':');
-                var id16 = scope.resolve(["this"]);
-                buffer.write(id16, true);
-                buffer.write(';\r\n');
-
-                return buffer;
-            };
-            buffer = eachCommand.call(engine, scope, option12, buffer, 13, payload);
-            buffer.write('\r\n">');
-            return buffer;
-        };
-t.TPL_NAME = module.name;
-return t;
-});
 /**
  * @ignore
  * Base Control class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap', 'component/manager', 'base', './control/render-xtpl', 'ua', 'xtemplate/runtime'], function (S, require) {
+KISSY.add('component/control', [
+    'node',
+    'event/gesture/base',
+    'event/gesture/tap',
+    'component/manager',
+    'base',
+    './control/render-xtpl',
+    'ua',
+    'xtemplate/runtime'
+], function (S, require) {
     var Node = require('node');
     var BaseGesture = require('event/gesture/base');
     var TapGesture = require('event/gesture/tap');
@@ -133,7 +40,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
     var trim = S.trim;
     var $ = Node.all;
     var doc = S.Env.host.document;
-
     function normalExtras(extras) {
         if (!extras) {
             extras = [''];
@@ -143,38 +49,29 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
         }
         return extras;
     }
-
     function prefixExtra(prefixCls, componentCls, extras) {
-        var cls = '',
-            i = 0,
-            l = extras.length,
-            e,
-            prefix = prefixCls + componentCls;
+        var cls = '', i = 0, l = extras.length, e, prefix = prefixCls + componentCls;
         for (; i < l; i++) {
             e = extras[i];
-            e = e ? ('-' + e) : e;
+            e = e ? '-' + e : e;
             cls += ' ' + prefix + e;
         }
         return cls;
     }
-
     function pxSetter(v) {
         if (typeof v === 'number') {
             v += 'px';
         }
         return v;
     }
-
     function applyParser(srcNode) {
-        var self = this,
-            attr, attrName, ret;
-
-        var attrs = self.getAttrs();
-
+        var self = this, attr, attrName, ret;
+        var attrs = self.getAttrs();    // 从 parser 中，默默设置属性，不触发事件
+                                        // html parser 优先，超过 js 配置值
         // 从 parser 中，默默设置属性，不触发事件
         // html parser 优先，超过 js 配置值
         for (attrName in attrs) {
-            attr = attrs[attrName];
+            attr = attrs[attrName];    // dom node retriever
             // dom node retriever
             if (attr.parse) {
                 // html parser 放弃
@@ -184,17 +81,18 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 }
             }
         }
-    }
-
+    }    // scope option
     // scope option
     function getBaseCssClassesCmd(_, options) {
         return this.config.control.getBaseCssClasses(options && options.params && options.params[0]);
     }
-
     function getBaseCssClassCmd() {
         return this.config.control.getBaseCssClass(arguments[1].params[0]);
-    }
-
+    }    /**
+     * Base Control class for KISSY Component.
+     * @extends KISSY.Base
+     * @class KISSY.Component.Control
+     */
     /**
      * Base Control class for KISSY Component.
      * @extends KISSY.Base
@@ -214,11 +112,8 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
              * @member KISSY.Component.Control
              */
             isControl: true,
-
             bindInternal: noop,
-
             syncInternal: noop,
-
             initializer: function () {
                 var self = this;
                 var attrName, attr;
@@ -230,40 +125,25 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     getBaseCssClass: getBaseCssClassCmd
                 };
                 for (attrName in attrs) {
-                    attr = attrs[attrName];
+                    attr = attrs[attrName];    // dom node retriever
                     // dom node retriever
                     if (attr.selector) {
                         self.childrenElSelectors[attrName] = attr.selector;
                     }
                 }
             },
-
             beforeCreateDom: function (renderData) {
-                var self = this,
-                    width,
-                    height,
-                    visible,
-                    elAttrs = self.get('elAttrs'),
-                    disabled,
-                    attrs = self.getAttrs(),
-                    attrName,
-                    attr,
-                    elStyle = self.get('elStyle'),
-                    zIndex,
-                    elCls = self.get('elCls');
-
+                var self = this, width, height, visible, elAttrs = self.get('elAttrs'), disabled, attrs = self.getAttrs(), attrName, attr, elStyle = self.get('elStyle'), zIndex, elCls = self.get('elCls');
                 for (attrName in attrs) {
                     attr = attrs[attrName];
                     if (attr.render) {
                         renderData[attrName] = self.get(attrName);
                     }
                 }
-
                 width = renderData.width;
                 height = renderData.height;
                 visible = renderData.visible;
                 zIndex = renderData.zIndex;
-
                 if (width) {
                     elStyle.width = pxSetter(width);
                 }
@@ -273,12 +153,10 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 if (zIndex) {
                     elStyle['z-index'] = zIndex;
                 }
-
                 if (!visible) {
                     elCls.push(self.getBaseCssClasses('hidden'));
                 }
-
-                if ((disabled = self.get('disabled'))) {
+                if (disabled = self.get('disabled')) {
                     elCls.push(self.getBaseCssClasses('disabled'));
                     elAttrs['aria-disabled'] = 'true';
                 }
@@ -293,13 +171,13 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     elAttrs.tabindex = disabled ? '-1' : '0';
                 }
             },
-
             /**
              * Constructor(or get) view object to create ui elements.
              * @protected
              */
             createDom: function () {
-                var self = this;
+                var self = this;    // initialize view
+                                    // allow custom view instance
                 // initialize view
                 // allow custom view instance
                 var html = self.renderTpl(startTpl) + self.renderTpl(self.get('contentTpl')) + endTpl;
@@ -307,32 +185,29 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 self.el = self.$el[0];
                 self.fillChildrenElsBySelectors();
             },
-
             decorateDom: function (srcNode) {
                 var self = this;
                 self.$el = srcNode;
-                self.el = srcNode[0];
+                self.el = srcNode[0];    // retrieve dom node first
                 // retrieve dom node first
                 self.fillChildrenElsBySelectors();
                 applyParser.call(self, srcNode);
             },
-
             /**
              * Call view object to render ui elements.
              * @protected
              */
             renderUI: function () {
-                var self = this;
+                var self = this;    // after create
                 // after create
                 Manager.addComponent(self);
                 var $el = self.$el;
                 if (!self.get('allowTextSelection')) {
                     $el.unselectable();
-                }
+                }    // need to insert created dom into body
                 // need to insert created dom into body
                 if (!self.get('srcNode')) {
-                    var render = self.get('render'),
-                        renderBefore = self.get('elBefore');
+                    var render = self.get('render'), renderBefore = self.get('elBefore');
                     if (renderBefore) {
                         $el.insertBefore(renderBefore, undefined);
                     } else if (render) {
@@ -342,33 +217,20 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     }
                 }
             },
-
             bindUI: function () {
                 var self = this;
-
                 if (self.get('focusable')) {
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    self.getKeyEventTarget()
-                        .on('focus', self.handleFocus, self)
-                        .on('blur', self.handleBlur, self)
-                        .on('keydown', self.handleKeydown, self);
+                    self.getKeyEventTarget().on('focus', self.handleFocus, self).on('blur', self.handleBlur, self).on('keydown', self.handleKeydown, self);
                 }
-
                 if (self.get('handleGestureEvents')) {
                     // chrome on windows8 has both mouse and touch event
-                    self.$el.on('mouseenter', self.handleMouseEnter, self)
-                        .on('mouseleave', self.handleMouseLeave, self)
-                        .on('contextmenu', self.handleContextMenu, self)
-                        .on(BaseGesture.START, self.handleMouseDown, self)
-                        .on(BaseGesture.END, self.handleMouseUp, self)
-                        // consider touch environment
-                        .on(TapGesture.TAP, self.handleClick, self);
+                    self.$el.on('mouseenter', self.handleMouseEnter, self).on('mouseleave', self.handleMouseLeave, self).on('contextmenu', self.handleContextMenu, self).on(BaseGesture.START, self.handleMouseDown, self).on(BaseGesture.END, self.handleMouseUp, self)    // consider touch environment
+.on(TapGesture.TAP, self.handleClick, self);
                 }
             },
-
             syncUI: noop,
-
             /**
              * create dom structure of this component
              * (control will delegate to render).
@@ -383,18 +245,22 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                      * @param {KISSY.Event.CustomEvent.Object} e
                      */
                     self.fire('beforeCreateDom');
-                    var srcNode = self.get('srcNode');
+                    var srcNode = self.get('srcNode');    // collect attr value from dom nodes
                     // collect attr value from dom nodes
                     if (srcNode) {
                         self.decorateDom(srcNode);
-                    }
+                    }    // prepare render info from attr value
                     // prepare render info from attr value
-                    self.beforeCreateDom(self.renderData, self.renderCommands, self.childrenElSelectors);
+                    self.beforeCreateDom(self.renderData, self.renderCommands, self.childrenElSelectors);    // render dom nodes if not created from srcNode
                     // render dom nodes if not created from srcNode
                     if (!srcNode) {
                         self.createDom();
                     }
-                    self.__callPluginsMethod('pluginCreateDom');
+                    self.__callPluginsMethod('pluginCreateDom');    /**
+                     * @event afterCreateDom
+                     * fired when root node is created
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event afterCreateDom
                      * fired when root node is created
@@ -405,51 +271,64 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 }
                 return self;
             },
-
             /**
              * Put dom structure of this component to document, bind event and sync attribute.
              * @chainable
              */
             render: function () {
-                var self = this;
+                var self = this;    // 是否已经渲染过
                 // 是否已经渲染过
                 if (!self.get('rendered')) {
-                    self.create();
-
+                    self.create();    /**
+                     * @event beforeRenderUI
+                     * fired when root node is ready
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event beforeRenderUI
                      * fired when root node is ready
                      * @param {KISSY.Event.CustomEvent.Object} e
                      */
-
                     self.fire('beforeRenderUI');
                     self.renderUI();
-                    self.__callPluginsMethod('pluginRenderUI');
-
+                    self.__callPluginsMethod('pluginRenderUI');    /**
+                     * @event afterRenderUI
+                     * fired after root node is rendered into dom
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event afterRenderUI
                      * fired after root node is rendered into dom
                      * @param {KISSY.Event.CustomEvent.Object} e
                      */
-                    self.fire('afterRenderUI');
-
+                    self.fire('afterRenderUI');    /**
+                     * @event beforeBindUI
+                     * fired before component 's internal event is bind.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event beforeBindUI
                      * fired before component 's internal event is bind.
                      * @param {KISSY.Event.CustomEvent.Object} e
                      */
-
                     self.fire('beforeBindUI');
                     Control.superclass.bindInternal.call(self);
                     self.bindUI();
-                    self.__callPluginsMethod('pluginBindUI');
+                    self.__callPluginsMethod('pluginBindUI');    /**
+                     * @event afterBindUI
+                     * fired when component 's internal event is bind.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event afterBindUI
                      * fired when component 's internal event is bind.
                      * @param {KISSY.Event.CustomEvent.Object} e
                      */
-                    self.fire('afterBindUI');
-
+                    self.fire('afterBindUI');    /**
+                     * @event beforeSyncUI
+                     * fired before component 's internal state is synchronized.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event beforeSyncUI
                      * fired before component 's internal state is synchronized.
@@ -458,23 +337,23 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     self.fire('beforeSyncUI');
                     Control.superclass.syncInternal.call(self);
                     self.syncUI();
-                    self.__callPluginsMethod('pluginSyncUI');
+                    self.__callPluginsMethod('pluginSyncUI');    /**
+                     * @event afterSyncUI
+                     * fired after component 's internal state is synchronized.
+                     * @param {KISSY.Event.CustomEvent.Object} e
+                     */
                     /**
                      * @event afterSyncUI
                      * fired after component 's internal state is synchronized.
                      * @param {KISSY.Event.CustomEvent.Object} e
                      */
                     self.fire('afterSyncUI');
-
                     self.setInternal('rendered', true);
                 }
                 return self;
             },
-
             plug: function (plugin) {
-                var self = this,
-                    p,
-                    plugins = self.get('plugins');
+                var self = this, p, plugins = self.get('plugins');
                 self.callSuper(plugin);
                 p = plugins[plugins.length - 1];
                 if (self.get('rendered')) {
@@ -498,7 +377,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 }
                 return self;
             },
-
             /**
              * Returns the dom element which is responsible for listening keyboard events.
              * @return {KISSY.Node}
@@ -507,13 +385,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
             getKeyEventTarget: function () {
                 return this.$el;
             },
-
             handleMouseEnter: function (ev) {
                 if (!this.get('disabled')) {
                     this.handleMouseEnterInternal(ev);
                 }
             },
-
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
@@ -522,13 +398,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
             handleMouseEnterInternal: function (ev) {
                 this.set('highlighted', !!ev);
             },
-
             handleMouseLeave: function (ev) {
                 if (!this.get('disabled')) {
                     this.handleMouseLeaveInternal(ev);
                 }
             },
-
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
@@ -539,13 +413,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 self.set('active', false);
                 self.set('highlighted', !ev);
             },
-
             handleMouseDown: function (ev) {
                 if (!this.get('disabled')) {
                     this.handleMouseDownInternal(ev);
                 }
             },
-
             /**
              * Handles mousedown events. If the component is not disabled,
              * If the component is activeable, then activate it.
@@ -555,23 +427,22 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
              * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseDownInternal: function (ev) {
-                var self = this,
-                    n,
-                    isMouseActionButton = ev.which === 1;
+                var self = this, n, isMouseActionButton = ev.which === 1;
                 if (isMouseActionButton || isTouchGestureSupported) {
                     if (self.get('activeable')) {
                         self.set('active', true);
                     }
                     if (self.get('focusable')) {
                         self.focus();
-                    }
+                    }    // touch does not need this
+                         // https://github.com/kissyteam/kissy/issues/574
                     // touch does not need this
                     // https://github.com/kissyteam/kissy/issues/574
                     if (!self.get('allowTextSelection') && ev.gestureType === 'mouse') {
                         // firefox /chrome/ie9/i10 不会引起焦点转移
                         // invalid for ie10 buggy?
                         n = ev.target.nodeName;
-                        n = n && n.toLowerCase();
+                        n = n && n.toLowerCase();    // do not prevent focus when click on editable element
                         // do not prevent focus when click on editable element
                         if (n !== 'input' && n !== 'textarea' && n !== 'button') {
                             ev.preventDefault();
@@ -579,13 +450,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     }
                 }
             },
-
             handleMouseUp: function (ev) {
                 if (!this.get('disabled')) {
                     this.handleMouseUpInternal(ev);
                 }
             },
-
             /**
              * Handles mouseup events.
              * If this component is not disabled, performs its associated action by calling
@@ -594,32 +463,28 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
              * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseUpInternal: function (ev) {
-                var self = this;
+                var self = this;    // 左键
                 // 左键
                 if (self.get('active') && (ev.which === 1 || isTouchGestureSupported)) {
                     self.set('active', false);
                 }
             },
-
             handleContextMenu: function (ev) {
                 if (!this.get('disabled')) {
                     this.handleContextMenuInternal(ev);
                 }
             },
-
             /**
              * Handles context menu.
              * @protected
              */
             handleContextMenuInternal: function () {
             },
-
             handleFocus: function () {
                 if (!this.get('disabled')) {
                     this.handleFocusInternal();
                 }
             },
-
             /**
              * Handles focus events. Style focused class.
              * @protected
@@ -628,13 +493,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 this.focus();
                 this.fire('focus');
             },
-
             handleBlur: function () {
                 if (!this.get('disabled')) {
                     this.handleBlurInternal();
                 }
             },
-
             /**
              * Handles blur events. Remove focused class.
              * @protected
@@ -643,7 +506,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 this.blur();
                 this.fire('blur');
             },
-
             handleKeydown: function (ev) {
                 var self = this;
                 if (!this.get('disabled') && self.handleKeyDownInternal(ev)) {
@@ -652,7 +514,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 }
                 return undefined;
             },
-
             /**
              * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
@@ -664,13 +525,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 }
                 return undefined;
             },
-
             handleClick: function (ev) {
                 if (!this.get('disabled')) {
                     this.handleClickInternal(ev);
                 }
             },
-
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
@@ -682,18 +541,12 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     self.focus();
                 }
             },
-
             $: function (selector) {
                 return this.$el.all(selector);
             },
-
             fillChildrenElsBySelectors: function (childrenElSelectors) {
-                var self = this,
-                    el = self.$el,
-                    childName, selector;
-
+                var self = this, el = self.$el, childName, selector;
                 childrenElSelectors = childrenElSelectors || self.childrenElSelectors;
-
                 for (childName in childrenElSelectors) {
                     selector = childrenElSelectors[childName];
                     var node = selector.call(self, el);
@@ -703,7 +556,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     self.setInternal(childName, node);
                 }
             },
-
             renderTpl: function (tpl, renderData, renderCommands) {
                 var self = this;
                 renderData = renderData || self.renderData;
@@ -714,14 +566,13 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     commands: renderCommands
                 }).render(renderData);
             },
-
             /**
              * Get component's constructor from KISSY Node.
              * @param prefixCls
              * @param {KISSY.Node} childNode Child component's root node.
              */
             getComponentConstructorByNode: function (prefixCls, childNode) {
-                var cls = childNode[0].className;
+                var cls = childNode[0].className;    // 过滤掉特定前缀
                 // 过滤掉特定前缀
                 if (cls) {
                     cls = cls.replace(new RegExp('\\b' + prefixCls, 'ig'), '');
@@ -729,15 +580,12 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 }
                 return null;
             },
-
             getComponentCssClasses: function () {
                 var self = this;
                 if (self.componentCssClasses) {
                     return self.componentCssClasses;
                 }
-                var constructor = self.constructor,
-                    xclass,
-                    re = [];
+                var constructor = self.constructor, xclass, re = [];
                 while (constructor && !constructor.prototype.hasOwnProperty('isControl')) {
                     xclass = constructor.xclass;
                     if (xclass) {
@@ -748,7 +596,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 self.componentCssClasses = re;
                 return re;
             },
-
             /**
              * Get all css class name to be applied to the root element of this component for given extra class names.
              * the css class names are prefixed with component name.
@@ -756,17 +603,12 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
              */
             getBaseCssClasses: function (extras) {
                 extras = normalExtras(extras);
-                var componentCssClasses = this.getComponentCssClasses(),
-                    i = 0,
-                    cls = '',
-                    l = componentCssClasses.length,
-                    prefixCls = this.get('prefixCls');
+                var componentCssClasses = this.getComponentCssClasses(), i = 0, cls = '', l = componentCssClasses.length, prefixCls = this.get('prefixCls');
                 for (; i < l; i++) {
                     cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
                 }
                 return trim(cls);
             },
-
             /**
              * Get full class name (with prefix) for current component
              * @param extras {String[]|String} class names without prefixCls and current component class name.
@@ -774,16 +616,11 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
              * @return {String} class name with prefixCls and current component class name.
              */
             getBaseCssClass: function (extras) {
-                return trim(prefixExtra(this.get('prefixCls'),
-                    this.getComponentCssClasses()[0],
-                    normalExtras(extras)
-                ));
+                return trim(prefixExtra(this.get('prefixCls'), this.getComponentCssClasses()[0], normalExtras(extras)));
             },
-
             createComponent: function (cfg, parent) {
                 return Manager.createComponent(cfg, parent || this);
             },
-
             /**
              * show component
              * @chainable
@@ -794,7 +631,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 self.set('visible', true);
                 return self;
             },
-
             /**
              * hide component
              * @chainable
@@ -804,75 +640,59 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 self.set('visible', false);
                 return self;
             },
-
             focus: function () {
                 if (this.get('focusable')) {
                     this.set('focused', true);
                 }
             },
-
             blur: function () {
                 if (this.get('focusable')) {
                     this.set('focused', false);
                 }
             },
-
             move: function (x, y) {
                 this.set({
                     x: x,
                     y: y
                 });
             },
-
             _onSetWidth: function (w) {
                 this.$el.width(w);
             },
-
             _onSetHeight: function (h) {
                 this.$el.height(h);
             },
-
             _onSetContent: function (c) {
                 var el = this.$el;
-                el.html(c);
+                el.html(c);    // ie needs to set unselectable attribute recursively
                 // ie needs to set unselectable attribute recursively
                 if (!this.get('allowTextSelection')) {
                     el.unselectable();
                 }
             },
-
             _onSetVisible: function (visible) {
-                var self = this,
-                    el = self.$el,
-                    hiddenCls = self.getBaseCssClasses('hidden');
+                var self = this, el = self.$el, hiddenCls = self.getBaseCssClasses('hidden');
                 if (visible) {
                     el.removeClass(hiddenCls);
                 } else {
                     el.addClass(hiddenCls);
-                }
+                }    // do not fire event at render phrase
                 // do not fire event at render phrase
                 this.fire(visible ? 'show' : 'hide');
             },
-
             /**
              * @ignore
              */
             _onSetHighlighted: function (v) {
-                var self = this,
-                    componentCls = self.getBaseCssClasses('hover'),
-                    el = self.$el;
+                var self = this, componentCls = self.getBaseCssClasses('hover'), el = self.$el;
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
-
             /**
              * @ignore
              */
             _onSetDisabled: function (v) {
-                var self = this,
-                    componentCls = self.getBaseCssClasses('disabled'),
-                    el = self.$el;
-                el[v ? 'addClass' : 'removeClass'](componentCls)
-                    .attr('aria-disabled', v);
+                var self = this, componentCls = self.getBaseCssClasses('disabled'), el = self.$el;
+                el[v ? 'addClass' : 'removeClass'](componentCls).attr('aria-disabled', v);
                 if (self.get('focusable')) {
                     //不能被 tab focus 到
                     self.getKeyEventTarget().attr('tabindex', v ? -1 : 0);
@@ -882,16 +702,12 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
              * @ignore
              */
             _onSetActive: function (v) {
-                var self = this,
-                    componentCls = self.getBaseCssClasses('active');
-                self.$el[v ? 'addClass' : 'removeClass'](componentCls)
-                    .attr('aria-pressed', !!v);
+                var self = this, componentCls = self.getBaseCssClasses('active');
+                self.$el[v ? 'addClass' : 'removeClass'](componentCls).attr('aria-pressed', !!v);
             },
-
             _onSetZIndex: function (v) {
                 this.$el.css('z-index', v);
             },
-
             _onSetFocused: function (v) {
                 var target = this.getKeyEventTarget()[0];
                 if (v) {
@@ -908,37 +724,27 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         target.ownerDocument.body.focus();
                     }
                 }
-                var self = this,
-                    el = self.$el,
-                    componentCls = self.getBaseCssClasses('focused');
+                var self = this, el = self.$el, componentCls = self.getBaseCssClasses('focused');
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
-
             _onSetX: function (x) {
-                this.$el.offset({
-                    left: x
-                });
+                this.$el.offset({ left: x });
             },
-
             _onSetY: function (y) {
-                this.$el.offset({
-                    top: y
-                });
+                this.$el.offset({ top: y });
             },
-
             /**
              * @protected
              */
             destructor: function () {
-                var self = this;
+                var self = this;    // remove instance from manager
                 // remove instance from manager
                 Manager.removeComponent(self);
                 if (self.$el) {
                     self.$el.remove();
                 }
             }
-        },
-        {
+        }, {
             __hooks__: {
                 beforeCreateDom: __getHook('__beforeCreateDom'),
                 createDom: __getHook('__createDom'),
@@ -947,16 +753,13 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 bindUI: __getHook('__bindUI'),
                 syncUI: __getHook('__syncUI')
             },
-
             name: 'control',
-
             ATTRS: {
                 contentTpl: {
                     value: function (scope, buffer) {
                         return buffer.write(scope.get('content'));
                     }
                 },
-
                 /**
                  * component's html content. Note: content and srcNode can not be set both!
                  * @type {String|KISSY.Node}
@@ -977,7 +780,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     sync: 0,
                     value: ''
                 },
-
                 /**
                  * component's width
                  * @type {Number|String}
@@ -994,7 +796,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     render: 1,
                     sync: 0
                 },
-
                 /**
                  * component's height
                  * @type {Number|String}
@@ -1011,7 +812,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     render: 1,
                     sync: 0
                 },
-
                 /**
                  * css class of component's root element
                  * @cfg {String} elCls
@@ -1029,7 +829,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         return v || [];
                     }
                 },
-
                 /**
                  * name-value pair css style of component's root element
                  * @cfg {Object} elStyle
@@ -1041,7 +840,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     render: 1,
                     value: {}
                 },
-
                 /**
                  * name-value pair attribute of component's root element
                  * @cfg {Object} elAttrs
@@ -1053,7 +851,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     render: 1,
                     value: {}
                 },
-
                 /**
                  * Horizontal axis
                  * @type {Number}
@@ -1066,9 +863,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                x: {
-                },
-
+                x: {},
                 /**
                  * Vertical axis
                  * @type {Number}
@@ -1081,9 +876,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                y: {
-                },
-
+                y: {},
                 /**
                  * Horizontal and vertical axis.
                  * @ignore
@@ -1094,8 +887,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                  */
                 xy: {
                     setter: function (v) {
-                        var self = this,
-                            xy = S.makeArray(v);
+                        var self = this, xy = S.makeArray(v);
                         if (xy.length) {
                             if (xy[0] !== undefined) {
                                 self.set('x', xy[0]);
@@ -1107,10 +899,12 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         return v;
                     },
                     getter: function () {
-                        return [this.get('x'), this.get('y')];
+                        return [
+                            this.get('x'),
+                            this.get('y')
+                        ];
                     }
                 },
-
                 /**
                  * z-index value.
                  * @type {Number}
@@ -1127,7 +921,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     render: 1,
                     sync: 0
                 },
-
                 /**
                  * whether this component is visible after created.
                  *
@@ -1151,7 +944,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     sync: 0,
                     value: true
                 },
-
                 /**
                  * Whether this component can be activated.
                  *
@@ -1163,10 +955,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                activeable: {
-                    value: true
-                },
-
+                activeable: { value: true },
                 /**
                  * Whether this component has focus.
                  * @type {Boolean}
@@ -1179,9 +968,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                focused: {
-                },
-
+                focused: {},
                 /**
                  * Whether this component is activated.
                  * @type {Boolean}
@@ -1190,10 +977,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                active: {
-                    value: false
-                },
-
+                active: { value: false },
                 /**
                  * Whether this component is highlighted.
                  * @type {Boolean}
@@ -1207,7 +991,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     sync: 0,
                     value: false
                 },
-
                 /**
                  * Whether this component is disabled.
                  * @type {Boolean}
@@ -1228,7 +1011,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         return el.hasClass(this.getBaseCssClass('disabled'));
                     }
                 },
-
                 /**
                  * Whether this component is rendered.
                  * @type {Boolean}
@@ -1238,10 +1020,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                rendered: {
-                    value: false
-                },
-
+                rendered: { value: false },
                 /**
                  * Whether this component 's dom structure is created.
                  * @type {Boolean}
@@ -1251,10 +1030,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                created: {
-                    value: false
-                },
-
+                created: { value: false },
                 /**
                  * archor element where component append to
                  * @cfg {KISSY.Node} render
@@ -1262,9 +1038,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                render: {
-                },
-
+                render: {},
                 /**
                  * component id
                  * @cfg {String} id
@@ -1283,7 +1057,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         return S.guid('ks-component');
                     }
                 },
-
                 /**
                  * archor element where component insert before
                  * @cfg {KISSY.Node} elBefore
@@ -1291,9 +1064,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                elBefore: {
-                },
-
+                elBefore: {},
                 /**
                  * root element of current component
                  * @type {KISSY.Node}
@@ -1308,7 +1079,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         return this.$el;
                     }
                 },
-
                 /**
                  * kissy node or css selector to find the first match node
                  * parsed for configuration values.
@@ -1323,7 +1093,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         return $(v);
                     }
                 },
-
                 /**
                  * Enables or disables gesture event(mouse/gestureStart/gestureEnd) handling for the component.
                  * Containers may set this attribute to disable gesture event handling
@@ -1337,10 +1106,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                handleGestureEvents: {
-                    value: true
-                },
-
+                handleGestureEvents: { value: true },
                 /**
                  * Whether this component can get focus.
                  *
@@ -1352,10 +1118,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                focusable: {
-                    value: true
-                },
-
+                focusable: { value: true },
                 /**
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
@@ -1373,7 +1136,6 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                     // grid 需求：容器允许选择里面内容
                     value: false
                 },
-
                 /**
                  * This component's prefix css class.
                  * @cfg {String} prefixCls
@@ -1393,9 +1155,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                 /**
                  * @ignore
                  */
-                prefixXClass: {
-                },
-
+                prefixXClass: {},
                 /**
                  * This component's parent component.
                  * @type {KISSY.Component.Control}
@@ -1411,7 +1171,7 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                  */
                 parent: {
                     setter: function (p, prev) {
-                        if ((prev = this.get('parent'))) {
+                        if (prev = this.get('parent')) {
                             this.removeTarget(prev);
                         }
                         if (p) {
@@ -1419,13 +1179,27 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
                         }
                     }
                 },
-
-                XTemplate: {
-                    value: XTemplateRuntime
-                }
+                XTemplate: { value: XTemplateRuntime }
             }
-        });
-
+        });    /**
+     * create a new control extend component/control, extensions and static/prototype properties/methods.
+     * @param {Function[]} [extensions] extension classes
+     * @param {Object} [px] key-value map for prototype properties/methods.
+     * @param {Object} [sx] key-value map for static properties/methods.
+     * @param {String} [sx.xclass] new Control 's xclass.
+     * @return {Function} new control which extend called, it also has a static extend method
+     * @static
+     *
+     * for example:
+     *
+     *      var Parent = Control.extend({
+     *          isParent: 1
+     *      });
+     *      var Child = Parent.extend({
+     *          isChild: 1,
+     *          isParent: 0
+     *      })
+     */
     /**
      * create a new control extend component/control, extensions and static/prototype properties/methods.
      * @param {Function[]} [extensions] extension classes
@@ -1447,30 +1221,19 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
      */
     Control.extend = function extend(extensions, px, sx) {
         /*jshint unused: false*/
-        var args = S.makeArray(arguments),
-            self = this,
-            xclass,
-            argsLen = args.length,
-            last = args[argsLen - 1];
-
+        var args = S.makeArray(arguments), self = this, xclass, argsLen = args.length, last = args[argsLen - 1];
         if (last && (xclass = last.xclass)) {
             last.name = xclass;
         }
-
         var NewClass = Base.extend.apply(self, arguments);
-
         NewClass.extend = extend;
-
         if (xclass) {
             Manager.setConstructorByXClass(xclass, NewClass);
         }
-
         return NewClass;
     };
-
     return Control;
-});
-/*
+});    /*
  yiminghe@gmail.com - 2014.04.08
  - use event modules: event/gesture/base, event/gesture/tap
  - remove render layer
@@ -1518,3 +1281,84 @@ KISSY.add('component/control',['node', 'event/gesture/base', 'event/gesture/tap'
  Refer
  - http://martinfowler.com/eaaDev/uiArchs.html
  */
+
+
+
+
+
+/** Compiled By kissy-xtemplate */
+KISSY.add('component/control/render-xtpl', [], function (S, require, exports, module) {
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    var t = function (scope, buffer, payload, undefined) {
+        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        if ('5.0.0' !== S.version) {
+            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
+        }
+        buffer.write('<div id="', 0);
+        var id0 = scope.resolve(['id'], 0);
+        buffer.write(id0, true);
+        buffer.write('"\r\n class="', 0);
+        var option1 = { escape: 1 };
+        var callRet2;
+        callRet2 = callFnUtil(engine, scope, option1, buffer, ['getBaseCssClasses'], 0, 2);
+        if (callRet2 && callRet2.isBuffer) {
+            buffer = callRet2;
+            callRet2 = undefined;
+        }
+        buffer.write(callRet2, true);
+        buffer.write('\r\n', 0);
+        var option3 = { escape: 1 };
+        var params4 = [];
+        var id5 = scope.resolve(['elCls'], 0);
+        params4.push(id5);
+        option3.params = params4;
+        option3.fn = function (scope, buffer) {
+            buffer.write('\r\n ', 0);
+            var id6 = scope.resolve(['this'], 0);
+            buffer.write(id6, true);
+            buffer.write('\r\n', 0);
+            return buffer;
+        };
+        buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+        buffer.write('\r\n"\r\n\r\n', 0);
+        var option7 = { escape: 1 };
+        var params8 = [];
+        var id9 = scope.resolve(['elAttrs'], 0);
+        params8.push(id9);
+        option7.params = params8;
+        option7.fn = function (scope, buffer) {
+            buffer.write('\r\n ', 0);
+            var id10 = scope.resolve(['xindex'], 0);
+            buffer.write(id10, true);
+            buffer.write('="', 0);
+            var id11 = scope.resolve(['this'], 0);
+            buffer.write(id11, true);
+            buffer.write('"\r\n', 0);
+            return buffer;
+        };
+        buffer = eachCommand.call(engine, scope, option7, buffer, 8, payload);
+        buffer.write('\r\n\r\nstyle="\r\n', 0);
+        var option12 = { escape: 1 };
+        var params13 = [];
+        var id14 = scope.resolve(['elStyle'], 0);
+        params13.push(id14);
+        option12.params = params13;
+        option12.fn = function (scope, buffer) {
+            buffer.write('\r\n ', 0);
+            var id15 = scope.resolve(['xindex'], 0);
+            buffer.write(id15, true);
+            buffer.write(':', 0);
+            var id16 = scope.resolve(['this'], 0);
+            buffer.write(id16, true);
+            buffer.write(';\r\n', 0);
+            return buffer;
+        };
+        buffer = eachCommand.call(engine, scope, option12, buffer, 13, payload);
+        buffer.write('\r\n">', 0);
+        return buffer;
+    };
+    t.TPL_NAME = module.name;
+    return t;
+});
+

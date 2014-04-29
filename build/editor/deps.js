@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 25 13:52
+build time: Apr 29 15:08
 */
 /*jshint indent:false, quotmark:false*/
 (function(S){
@@ -115,7 +115,8 @@ S.config("requires",{
         "editor/plugin/contextmenu"
     ],
     "editor/plugin/flash-common/utils": [
-        "swf"
+        "swf",
+        "dom"
     ],
     "editor/plugin/focus-fix": [
         "editor"
@@ -217,6 +218,9 @@ S.config("requires",{
     ],
     "editor/plugin/link/utils": [
         "editor"
+    ],
+    "editor/plugin/list-utils": [
+        "dom"
     ],
     "editor/plugin/list-utils/btn": [
         "editor/plugin/button",

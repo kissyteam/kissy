@@ -1,30 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:46
+build time: Apr 29 15:02
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/focus-fix
-
 */
 /**
  * @ignore
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/focus-fix',['editor'], function (S, require) {
+KISSY.add('editor/plugin/focus-fix', ['editor'], function (S, require) {
     var Editor = require('editor');
-    var UA = S.UA,
-        focusManager = Editor.focusManager;
-
+    var UA = S.UA, focusManager = Editor.focusManager;
     function _show4FocusExt() {
-        var self = this;
+        var self = this;    // 保存当前焦点editor
         // 保存当前焦点editor
-
         self._focusEditor = focusManager.currentInstance();
-        var editor = self._focusEditor;
+        var editor = self._focusEditor;    /*
+         * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
+         * then IE would still leave the caret inside the editing area.
+         */
+                                           // ie9 图片resize框，仍然会突出
+                                           // ie11 still lose selection when editor is blurred
         /*
          * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
          * then IE would still leave the caret inside the editing area.
@@ -37,9 +37,8 @@ KISSY.add('editor/plugin/focus-fix',['editor'], function (S, require) {
             // chrome 需要下面两句
             window.focus();
             document.body.focus();
-
-            var $selection = editor.get('document')[0].selection,
-                $range;
+            var $selection = editor.get('document')[0].selection, $range;    // 中途更改了 domain，编辑器失去焦点，不能取得 range
+                                                                             // 拒绝访问错误
             // 中途更改了 domain，编辑器失去焦点，不能取得 range
             // 拒绝访问错误
             try {
@@ -48,12 +47,11 @@ KISSY.add('editor/plugin/focus-fix',['editor'], function (S, require) {
                 $range = 0;
             }
             if ($range) {
-                if (
-                // 如果单纯选择文字就不用管了
-                // $range.parentElement &&
-                // $range.parentElement().ownerDocument == editor.document
-                // ||
-                // 缩放图片那个框在ie下会突出浮动层来
+                if (// 如果单纯选择文字就不用管了
+                    // $range.parentElement &&
+                    // $range.parentElement().ownerDocument == editor.document
+                    // ||
+                    // 缩放图片那个框在ie下会突出浮动层来
                     $range.item && $range.item(0).ownerDocument === editor.get('document')[0]) {
                     var $myRange = document.body.createTextRange();
                     $myRange.moveToElementText(self.get('el').first()[0]);
@@ -63,15 +61,12 @@ KISSY.add('editor/plugin/focus-fix',['editor'], function (S, require) {
             }
         }
     }
-
     function _hide4FocusExt() {
-        var self = this,
-            editor = self._focusEditor;
+        var self = this, editor = self._focusEditor;
         if (editor) {
             editor.focus();
         }
     }
-
     return {
         init: function (self) {
             self.on('beforeVisibleChange', function (e) {

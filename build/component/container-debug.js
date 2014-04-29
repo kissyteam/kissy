@@ -1,38 +1,31 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:41
+build time: Apr 29 14:57
 */
 /*
-combined files : 
-
+combined modules:
 component/container
-
 */
 /**
  * @ignore
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container',['component/control', 'component/manager'], function (S, require) {
+KISSY.add('component/container', [
+    'component/control',
+    'component/manager'
+], function (S, require) {
     var Control = require('component/control');
     var Manager = require('component/manager');
-
     function defAddChild(e) {
         var self = this;
-        var c = e.component,
-            children = self.get('children'),
-            index = e.index;
-
-        children.splice(index, 0, c);
-
+        var c = e.component, children = self.get('children'), index = e.index;
+        children.splice(index, 0, c);    // construct
         // construct
         children = self.get('children');
-
         c = children[index];
-
         c.setInternal('parent', self);
-
         if (self.get('rendered')) {
             self.renderChild(index);
         }
@@ -41,22 +34,13 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
             index: index
         });
     }
-
     function defRemoveChild(e) {
         var self = this;
-        var c = e.component,
-            cDOMParentEl,
-            cDOMEl,
-            destroy = e.destroy,
-            children = self.get('children'),
-            index = e.index;
-
+        var c = e.component, cDOMParentEl, cDOMEl, destroy = e.destroy, children = self.get('children'), index = e.index;
         if (index !== -1) {
             children.splice(index, 1);
         }
-
         c.setInternal('parent', null);
-
         if (destroy) {
             // c is still json
             if (c.destroy) {
@@ -64,18 +48,20 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
             }
         } else {
             if (c.get && (cDOMEl = c.el)) {
-                if ((cDOMParentEl = cDOMEl.parentNode)) {
+                if (cDOMParentEl = cDOMEl.parentNode) {
                     cDOMParentEl.removeChild(cDOMEl);
                 }
             }
         }
-
         self.fire('afterRemoveChild', {
             component: c,
             index: index
         });
-    }
-
+    }    /**
+     * Base Container class for KISSY Component.
+     * @extends KISSY.Component.Control
+     * @class KISSY.Component.Container
+     */
     /**
      * Base Container class for KISSY Component.
      * @extends KISSY.Component.Control
@@ -83,75 +69,49 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
      */
     return Control.extend({
         isContainer: true,
-
         initializer: function () {
-            var self = this,
-                prefixCls = self.get('prefixCls'),
-                defaultChildCfg = self.get('defaultChildCfg');
-
+            var self = this, prefixCls = self.get('prefixCls'), defaultChildCfg = self.get('defaultChildCfg');
             self.publish('beforeAddChild', {
                 defaultFn: defAddChild,
                 // only process its own default function
                 defaultTargetOnly: true
             });
-
             self.publish('beforeRemoveChild', {
                 defaultFn: defRemoveChild,
                 // only process its own default function
                 defaultTargetOnly: true
             });
-
             defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || prefixCls;
         },
-
         // decorate child element from parent component's root element.
         decorateDom: function () {
-            var self = this,
-                childrenContainerEl = self.getChildrenContainerEl(),
-                defaultChildCfg = self.get('defaultChildCfg'),
-                prefixCls = defaultChildCfg.prefixCls,
-                defaultChildXClass = defaultChildCfg.xclass,
-                childrenComponents = [],
-                children = childrenContainerEl.children();
+            var self = this, childrenContainerEl = self.getChildrenContainerEl(), defaultChildCfg = self.get('defaultChildCfg'), prefixCls = defaultChildCfg.prefixCls, defaultChildXClass = defaultChildCfg.xclass, childrenComponents = [], children = childrenContainerEl.children();
             children.each(function (c) {
-                var ChildUI = self.getComponentConstructorByNode(prefixCls, c) ||
-                    defaultChildXClass &&
-                    Manager.getConstructorByXClass(defaultChildXClass);
+                var ChildUI = self.getComponentConstructorByNode(prefixCls, c) || defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
                 if (ChildUI) {
-                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
-                        srcNode: c
-                    })));
+                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, { srcNode: c })));
                 }
             });
             self.set('children', childrenComponents);
         },
-
         createDom: function () {
             this.createChildren();
         },
-
         renderUI: function () {
             this.renderChildren();
         },
-
         renderChildren: function () {
-            var i,
-                self = this,
-                children = self.get('children');
+            var i, self = this, children = self.get('children');
             for (i = 0; i < children.length; i++) {
                 self.renderChild(i);
             }
         },
-
         createChildren: function () {
-            var i,
-                self = this,
-                children = self.get('children');
+            var i, self = this, children = self.get('children');
             for (i = 0; i < children.length; i++) {
                 self.createChild(i);
             }
         },
-
         /**
          * Add the specified component as a child of current component
          * at the given 0-based index.
@@ -165,8 +125,7 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
          * If not specified , the new child component will be inserted at last position.
          */
         addChild: function (c, index) {
-            var self = this,
-                children = self.get('children');
+            var self = this, children = self.get('children');
             if (index === undefined) {
                 index = children.length;
             }
@@ -176,27 +135,16 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
             });
             return children[index];
         },
-
         renderChild: function (childIndex) {
-            var self = this,
-                children = self.get('children');
-
+            var self = this, children = self.get('children');
             self.createChild(childIndex).render();
-
             self.fire('afterRenderChild', {
                 component: children[childIndex],
                 index: childIndex
             });
         },
-
         createChild: function (childIndex) {
-            var self = this,
-                c,
-                elBefore,
-                domContentEl,
-                children = self.get('children'),
-                cEl,
-                contentEl;
+            var self = this, c, elBefore, domContentEl, children = self.get('children'), cEl, contentEl;
             c = children[childIndex];
             contentEl = self.getChildrenContainerEl();
             domContentEl = contentEl[0];
@@ -218,10 +166,8 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
                 component: c,
                 index: childIndex
             });
-
             return c;
         },
-
         /**
          * Removed the given child from this component,and returns it.
          *
@@ -244,7 +190,6 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
                 destroy: destroy
             });
         },
-
         /**
          * Removes every child component attached to current component.
          * see {@link KISSY.Component.Container#removeChild}
@@ -253,15 +198,12 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
          * @chainable
          */
         removeChildren: function (destroy) {
-            var self = this,
-                i,
-                t = [].concat(self.get('children'));
+            var self = this, i, t = [].concat(self.get('children'));
             for (i = 0; i < t.length; i++) {
                 self.removeChild(t[i], destroy);
             }
             return self;
         },
-
         /**
          * Returns the child at the given index, or null if the index is out of bounds.
          * @param {Number} index 0-based index.
@@ -271,19 +213,16 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
             var children = this.get('children');
             return children[index] || null;
         },
-
         // Return the dom element into which child component to be rendered.
         getChildrenContainerEl: function () {
             return this.$el;
         },
-
         /**
          * destroy children
          * @protected
          */
         destructor: function () {
-            var i,
-                children = this.get('children');
+            var i, children = this.get('children');
             for (i = 0; i < children.length; i++) {
                 if (children[i].destroy) {
                     children[i].destroy();
@@ -302,10 +241,7 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
             children: {
                 value: [],
                 getter: function (v) {
-                    var defaultChildCfg = null,
-                        i,
-                        c,
-                        self = this;
+                    var defaultChildCfg = null, i, c, self = this;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
                         if (!c.isControl) {
@@ -317,9 +253,7 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
                     return v;
                 },
                 setter: function (v) {
-                    var
-                        i,
-                        c;
+                    var i, c;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
                         if (c.isControl) {
@@ -336,15 +270,13 @@ KISSY.add('component/container',['component/control', 'component/manager'], func
             /**
              * @ignore
              */
-            defaultChildCfg: {
-                value: {}
-            }
+            defaultChildCfg: { value: {} }
         },
         name: 'container'
     });
-});
-/**
+});    /**
  * @ignore
  * 2014-01-26 yimingnhe@gmail.com need to use innerHTML
  * - http://jsperf.com/fragment-innnerhtml
  */
+

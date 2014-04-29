@@ -504,7 +504,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[8]++;
   var Event = require('event/dom');
   _$jscoverage['/cmd.js'].lineData[10]++;
-  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = S.require('dom'), iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function() {
+  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = require('dom'), iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function() {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[18]++;
   if (visit1_18_1(!iframe)) {

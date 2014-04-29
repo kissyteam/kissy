@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Dom = require('dom/base');
     var logger = S.getLogger('s/dom');
+    var Dom = require('dom/base');
     var cssProps = Dom._cssProps,
         UA = require('ua'),
         FLOAT = 'float',

@@ -1,32 +1,31 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:45
+build time: Apr 29 15:01
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/code
-
 */
 /**
  * @ignore
  * insert program code
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/code',['editor', './button', './dialog-loader'], function (S, require) {
+KISSY.add('editor/plugin/code', [
+    'editor',
+    './button',
+    './dialog-loader'
+], function (S, require) {
     var Editor = require('editor');
     require('./button');
     var DialogLoader = require('./dialog-loader');
-
     function CodePlugin() {
-
     }
-
     S.augment(CodePlugin, {
         pluginRenderUI: function (editor) {
             editor.addButton('code', {
-                tooltip: '插入代码',
+                tooltip: '\u63D2\u5165\u4EE3\u7801',
                 listeners: {
                     click: function () {
                         DialogLoader.useDialog(editor, 'code');
@@ -36,7 +35,7 @@ KISSY.add('editor/plugin/code',['editor', './button', './dialog-loader'], functi
             });
         }
     });
-
     return CodePlugin;
 });
+
 

@@ -1,27 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:52
+build time: Apr 29 15:08
 */
 /*
-combined files : 
-
+combined modules:
 event/dom/focusin
-
 */
 /**
  * @ignore
  * event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/focusin',['event/dom/base'], function (S, require) {
+KISSY.add('event/dom/focusin', ['event/dom/base'], function (S, require) {
     var DomEvent = require('event/dom/base');
-    var Special = DomEvent.Special;
-
+    var Special = DomEvent.Special;    // 让非 IE 浏览器支持 focusin/focusout
     // 让非 IE 浏览器支持 focusin/focusout
     S.each([
-        {name: 'focusin', fix: 'focus'},
-        {name: 'focusout', fix: 'blur'}
+        {
+            name: 'focusin',
+            fix: 'focus'
+        },
+        {
+            name: 'focusout',
+            fix: 'blur'
+        }
     ], function (o) {
         var key = S.guid('attaches_' + S.now() + '_');
         Special[o.name] = {
@@ -39,7 +42,6 @@ KISSY.add('event/dom/focusin',['event/dom/base'], function (S, require) {
                     doc.addEventListener(o.fix, handler, true);
                 }
             },
-
             tearDown: function () {
                 var doc = this.ownerDocument || this;
                 doc[key] -= 1;
@@ -48,18 +50,13 @@ KISSY.add('event/dom/focusin',['event/dom/base'], function (S, require) {
                 }
             }
         };
-
         function handler(event) {
             var target = event.target;
             return DomEvent.fire(target, o.name);
         }
-
     });
-
     return DomEvent;
-});
-
-/*
+});    /*
  yiminghe@gmail.com: 2013-06-06
  - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
  - ie: div2 focusin input1 blur
@@ -68,4 +65,3 @@ KISSY.add('event/dom/focusin',['event/dom/base'], function (S, require) {
  yiminghe@gmail.com: 2011-06-07
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
-

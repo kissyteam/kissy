@@ -1,63 +1,49 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:48
+build time: Apr 29 15:05
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/list-utils/cmd
-
 */
 /**
  * @ignore
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (S, require) {
+KISSY.add('editor/plugin/list-utils/cmd', [
+    'editor',
+    '../list-utils',
+    'dom'
+], function (S, require) {
     var Editor = require('editor');
     var ListUtils = require('../list-utils');
-
-    var insertUnorderedList = 'insertUnorderedList',
-        insertOrderedList = 'insertOrderedList',
-        listNodeNames = {'ol': insertOrderedList, 'ul': insertUnorderedList},
-        KER = Editor.RangeType,
-        ElementPath = Editor.ElementPath,
-        Walker = Editor.Walker,
-        UA = S.UA,
-        Node = S.Node,
-        Dom = S.require('dom'),
-        headerTagRegex = /^h[1-6]$/;
-
+    var insertUnorderedList = 'insertUnorderedList', insertOrderedList = 'insertOrderedList', listNodeNames = {
+            'ol': insertOrderedList,
+            'ul': insertUnorderedList
+        }, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = require('dom'), headerTagRegex = /^h[1-6]$/;
     function ListCommand(type) {
         this.type = type;
     }
-
     ListCommand.prototype = {
-
         constructor: ListCommand,
-
         changeListType: function (editor, groupObj, database, listsCreated, listStyleType) {
             // This case is easy...
             // 1. Convert the whole list into a one-dimensional array.
             // 2. Change the list type by modifying the array.
             // 3. Recreate the whole list by converting the array to a list.
             // 4. Replace the original list with the recreated list.
-            var listArray = ListUtils.listToArray(groupObj.root, database,
-                    undefined, undefined, undefined),
-                selectedListItems = [];
-
+            var listArray = ListUtils.listToArray(groupObj.root, database, undefined, undefined, undefined), selectedListItems = [];
             for (var i = 0; i < groupObj.contents.length; i++) {
                 var itemNode = groupObj.contents[i];
                 itemNode = itemNode.closest('li', undefined);
-                if ((!itemNode || !itemNode[0]) ||
-                    itemNode.data('list_item_processed')) {
+                if (!itemNode || !itemNode[0] || itemNode.data('list_item_processed')) {
                     continue;
                 }
                 selectedListItems.push(itemNode);
                 itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
             }
-
             var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
             fakeParent.css('list-style-type', listStyleType);
             for (i = 0; i < selectedListItems.length; i++) {
@@ -66,8 +52,7 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
             }
             var newList = ListUtils.arrayToList(listArray, database, null, 'p');
             var child, length = newList.listNode.childNodes.length;
-            for (i = 0; i < length &&
-                ( child = new Node(newList.listNode.childNodes[i]) ); i++) {
+            for (i = 0; i < length && (child = new Node(newList.listNode.childNodes[i])); i++) {
                 if (child.nodeName() === this.type) {
                     listsCreated.push(child);
                 }
@@ -75,12 +60,10 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
             groupObj.root.before(newList.listNode);
             groupObj.root.remove();
         },
-
         createList: function (editor, groupObj, listsCreated, listStyleType) {
-            var contents = groupObj.contents,
-                doc = groupObj.root[0].ownerDocument,
-                listContents = [];
-
+            var contents = groupObj.contents, doc = groupObj.root[0].ownerDocument, listContents = [];    // It is possible to have the contents returned by DomRangeIterator to be the same as the root.
+                                                                                                          // e.g. when we're running into table cells.
+                                                                                                          // In such a case, enclose the childNodes of contents[0] into a <div>.
             // It is possible to have the contents returned by DomRangeIterator to be the same as the root.
             // e.g. when we're running into table cells.
             // In such a case, enclose the childNodes of contents[0] into a <div>.
@@ -91,22 +74,20 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                 }
                 contents[0][0].appendChild(divBlock[0]);
                 contents[0] = divBlock;
-            }
-
+            }    // Calculate the common parent node of all content blocks.
             // Calculate the common parent node of all content blocks.
             var commonParent = groupObj.contents[0].parent();
-
             for (var i = 0; i < contents.length; i++) {
                 commonParent = commonParent._4eCommonAncestor(contents[i].parent(), undefined);
-            }
-
+            }    // We want to insert things that are in the same tree level only,
+                 // so calculate the contents again
+                 // by expanding the selected blocks to the same tree level.
             // We want to insert things that are in the same tree level only,
             // so calculate the contents again
             // by expanding the selected blocks to the same tree level.
             for (i = 0; i < contents.length; i++) {
-                var contentNode = contents[i],
-                    parentNode;
-                while (( parentNode = contentNode.parent() )) {
+                var contentNode = contents[i], parentNode;
+                while (parentNode = contentNode.parent()) {
                     if (parentNode[0] === commonParent[0]) {
                         listContents.push(contentNode);
                         break;
@@ -114,22 +95,15 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                     contentNode = parentNode;
                 }
             }
-
             if (listContents.length < 1) {
                 return;
-            }
-
+            }    // Insert the list to the Dom tree.
             // Insert the list to the Dom tree.
-            var insertAnchor = new Node(listContents[ listContents.length - 1 ][0].nextSibling),
-                listNode = new Node(doc.createElement(this.type));
-
+            var insertAnchor = new Node(listContents[listContents.length - 1][0].nextSibling), listNode = new Node(doc.createElement(this.type));
             listNode.css('list-style-type', listStyleType);
-
             listsCreated.push(listNode);
             while (listContents.length) {
-                var contentBlock = listContents.shift(),
-                    listItem = new Node(doc.createElement('li'));
-
+                var contentBlock = listContents.shift(), listItem = new Node(doc.createElement('li'));    // Preserve heading structure when converting to list item. (#5271)
                 // Preserve heading structure when converting to list item. (#5271)
                 if (headerTagRegex.test(contentBlock.nodeName())) {
                     listItem[0].appendChild(contentBlock[0]);
@@ -138,8 +112,7 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                     contentBlock._4eMoveChildren(listItem, undefined, undefined);
                     contentBlock.remove();
                 }
-                listNode[0].appendChild(listItem[0]);
-
+                listNode[0].appendChild(listItem[0]);    // Append a bogus BR to force the LI to render at full height
                 // Append a bogus BR to force the LI to render at full height
                 if (!UA.ie) {
                     listItem._4eAppendBogus(undefined);
@@ -151,14 +124,10 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                 commonParent.append(listNode);
             }
         },
-
         removeList: function (editor, groupObj, database) {
             // This is very much like the change list type operation.
             // Except that we're changing the selected items' indent to -1 in the list array.
-            var listArray = ListUtils.listToArray(groupObj.root, database,
-                    undefined, undefined, undefined),
-                selectedListItems = [];
-
+            var listArray = ListUtils.listToArray(groupObj.root, database, undefined, undefined, undefined), selectedListItems = [];
             for (var i = 0; i < groupObj.contents.length; i++) {
                 var itemNode = groupObj.contents[i];
                 itemNode = itemNode.closest('li', undefined);
@@ -168,15 +137,14 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                 selectedListItems.push(itemNode);
                 itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
             }
-
             var lastListIndex = null;
-
             for (i = 0; i < selectedListItems.length; i++) {
                 var listIndex = selectedListItems[i].data('listarray_index');
                 listArray[listIndex].indent = -1;
                 lastListIndex = listIndex;
-            }
-
+            }    // After cutting parts of the list out with indent=-1, we still have to maintain the array list
+                 // model's nextItem.indent <= currentItem.indent + 1 invariant. Otherwise the array model of the
+                 // list cannot be converted back to a real Dom list.
             // After cutting parts of the list out with indent=-1, we still have to maintain the array list
             // model's nextItem.indent <= currentItem.indent + 1 invariant. Otherwise the array model of the
             // list cannot be converted back to a real Dom list.
@@ -184,8 +152,7 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                 //if (listArray[i].indent > listArray[i - 1].indent + 1) {
                 //modified by yiminghe
                 if (listArray[i].indent > Math.max(listArray[i - 1].indent, 0)) {
-                    var indentOffset = listArray[i - 1].indent + 1 -
-                        listArray[i].indent;
+                    var indentOffset = listArray[i - 1].indent + 1 - listArray[i].indent;
                     var oldIndent = listArray[i].indent;
                     while (listArray[i] && listArray[i].indent >= oldIndent) {
                         listArray[i].indent += indentOffset;
@@ -194,107 +161,72 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                     i--;
                 }
             }
-
-            var newList = ListUtils.arrayToList(listArray, database, null, 'p');
-
+            var newList = ListUtils.arrayToList(listArray, database, null, 'p');    // Compensate <br> before/after the list node if the surrounds are non-blocks.(#3836)
             // Compensate <br> before/after the list node if the surrounds are non-blocks.(#3836)
             var docFragment = newList.listNode, boundaryNode, siblingNode;
-
             function compensateBrs(isStart) {
-                if (( boundaryNode = new Node(docFragment[ isStart ? 'firstChild' : 'lastChild' ]) ) && !( boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
-                    boundaryNode._4eIsBlockBoundary(undefined, undefined) ) && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
-                    (Walker.whitespaces(true), 1) ) && !( boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
-                    siblingNode._4eIsBlockBoundary({ br: 1 }, undefined) )) {
-                    boundaryNode[ isStart ? 'before' : 'after' ](editor.get('document')[0].createElement('br'));
+                if ((boundaryNode = new Node(docFragment[isStart ? 'firstChild' : 'lastChild'])) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? 'prev' : 'next'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({ br: 1 }, undefined))) {
+                    boundaryNode[isStart ? 'before' : 'after'](editor.get('document')[0].createElement('br'));
                 }
             }
-
             compensateBrs(true);
             compensateBrs(undefined);
             groupObj.root.before(docFragment);
             groupObj.root.remove();
         },
-
         exec: function (editor, listStyleType) {
-            var selection = editor.getSelection(),
-                ranges = selection && selection.getRanges();
-
+            var selection = editor.getSelection(), ranges = selection && selection.getRanges();    // There should be at least one selected range.
             // There should be at least one selected range.
             if (!ranges || ranges.length < 1) {
                 return;
             }
-
-
-            var startElement = selection.getStartElement(), groupObj, i,
-                currentPath = new Editor.ElementPath(startElement);
-
+            var startElement = selection.getStartElement(), groupObj, i, currentPath = new Editor.ElementPath(startElement);
             var state = queryActive(this.type, currentPath);
-
-            var bookmarks = selection.createBookmarks(true);
-
+            var bookmarks = selection.createBookmarks(true);    // Group the blocks up because there are many cases where multiple lists have to be created,
+                                                                // or multiple lists have to be cancelled.
             // Group the blocks up because there are many cases where multiple lists have to be created,
             // or multiple lists have to be cancelled.
-            var listGroups = [],
-                database = {};
+            var listGroups = [], database = {};
             while (ranges.length > 0) {
                 var range = ranges.shift();
-
-                var boundaryNodes = range.getBoundaryNodes(),
-                    startNode = boundaryNodes.startNode,
-                    endNode = boundaryNodes.endNode;
-
+                var boundaryNodes = range.getBoundaryNodes(), startNode = boundaryNodes.startNode, endNode = boundaryNodes.endNode;
                 if (startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && startNode.nodeName() === 'td') {
                     range.setStartAt(boundaryNodes.startNode, KER.POSITION_AFTER_START);
                 }
-
                 if (endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && endNode.nodeName() === 'td') {
                     range.setEndAt(boundaryNodes.endNode, KER.POSITION_BEFORE_END);
                 }
-
-                var iterator = range.createIterator(),
-
-                    block;
-
+                var iterator = range.createIterator(), block;
                 iterator.forceBrBreak = false;
-
-                while (( block = iterator.getNextParagraph() )) {
-
+                while (block = iterator.getNextParagraph()) {
                     // Avoid duplicate blocks get processed across ranges.
                     if (block.data('list_block')) {
                         continue;
-                    }
-                    else {
+                    } else {
                         block._4eSetMarker(database, 'list_block', 1, undefined);
                     }
-
-
-                    var path = new ElementPath(block),
-                        pathElements = path.elements,
-                        pathElementsCount = pathElements.length,
-
-                        processedFlag = false,
-                        blockLimit = path.blockLimit,
-                        element;
-
+                    var path = new ElementPath(block), pathElements = path.elements, pathElementsCount = pathElements.length, processedFlag = false, blockLimit = path.blockLimit, element;    // First, try to group by a list ancestor.
+                                                                                                                                                                                               //2010-11-17 :
+                                                                                                                                                                                               //注意从上往下，从body开始找到最早的list祖先，从那里开始重建!!!
                     // First, try to group by a list ancestor.
                     //2010-11-17 :
                     //注意从上往下，从body开始找到最早的list祖先，从那里开始重建!!!
-                    for (i = pathElementsCount - 1; i >= 0 &&
-                        ( element = pathElements[ i ] ); i--) {
-                        if (listNodeNames[ element.nodeName() ] && blockLimit.contains(element)) {
+                    for (i = pathElementsCount - 1; i >= 0 && (element = pathElements[i]); i--) {
+                        if (listNodeNames[element.nodeName()] && blockLimit.contains(element)) {
                             // If we've encountered a list inside a block limit
                             // The last group object of the block limit element should
                             // no longer be valid. Since paragraphs after the list
                             // should belong to a different group of paragraphs before
                             // the list. (Bug #1309)
                             blockLimit.removeData('list_group_object');
-
                             groupObj = element.data('list_group_object');
                             if (groupObj) {
                                 groupObj.contents.push(block);
-                            }
-                            else {
-                                groupObj = { root: element, contents: [ block ] };
+                            } else {
+                                groupObj = {
+                                    root: element,
+                                    contents: [block]
+                                };
                                 listGroups.push(groupObj);
                                 element._4eSetMarker(database, 'list_group_object', groupObj, undefined);
                             }
@@ -302,23 +234,25 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                             break;
                         }
                     }
-
                     if (processedFlag) {
                         continue;
-                    }
-
+                    }    // No list ancestor? Group by block limit.
                     // No list ancestor? Group by block limit.
                     var root = blockLimit || path.block;
                     if (root.data('list_group_object')) {
                         root.data('list_group_object').contents.push(block);
                     } else {
-                        groupObj = { root: root, contents: [ block ] };
+                        groupObj = {
+                            root: root,
+                            contents: [block]
+                        };
                         root._4eSetMarker(database, 'list_group_object', groupObj, undefined);
                         listGroups.push(groupObj);
                     }
                 }
-            }
-
+            }    // Now we have two kinds of list groups, groups rooted at a list, and groups rooted at a block limit element.
+                 // We either have to build lists or remove lists, for removing a list does not makes sense when we are looking
+                 // at the group that's not rooted at lists. So we have three cases to handle.
             // Now we have two kinds of list groups, groups rooted at a list, and groups rooted at a block limit element.
             // We either have to build lists or remove lists, for removing a list does not makes sense when we are looking
             // at the group that's not rooted at lists. So we have three cases to handle.
@@ -326,7 +260,7 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
             while (listGroups.length > 0) {
                 groupObj = listGroups.shift();
                 if (!state) {
-                    if (listNodeNames[ groupObj.root.nodeName() ]) {
+                    if (listNodeNames[groupObj.root.nodeName()]) {
                         this.changeListType(editor, groupObj, database, listsCreated, listStyleType);
                     } else {
                         //2010-11-17
@@ -335,7 +269,7 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                         Editor.Utils.clearAllMarkers(database);
                         this.createList(editor, groupObj, listsCreated, listStyleType);
                     }
-                } else if (listNodeNames[ groupObj.root.nodeName() ]) {
+                } else if (listNodeNames[groupObj.root.nodeName()]) {
                     if (groupObj.root.css('list-style-type') === listStyleType) {
                         this.removeList(editor, groupObj, database);
                     } else {
@@ -343,55 +277,40 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
                     }
                 }
             }
-
-            var self = this;
-
+            var self = this;    // For all new lists created, merge adjacent, same type lists.
             // For all new lists created, merge adjacent, same type lists.
             for (i = 0; i < listsCreated.length; i++) {
-                var listNode = listsCreated[i];
-
+                var listNode = listsCreated[i];    // note by yiminghe,why not use merge sibling directly
+                                                   // listNode._4eMergeSiblings();
+                                                   /*jshint loopfunc:true*/
                 // note by yiminghe,why not use merge sibling directly
                 // listNode._4eMergeSiblings();
                 /*jshint loopfunc:true*/
                 var mergeSibling = function (rtl, listNode) {
-                    var sibling = listNode[ rtl ?
-                        'prev' : 'next' ](Walker.whitespaces(true), 1);
-                    if (sibling &&
-                        sibling[0] &&
-                        sibling.nodeName() === self.type &&
-                        // consider list-style-type @ 2012-11-07
+                    var sibling = listNode[rtl ? 'prev' : 'next'](Walker.whitespaces(true), 1);
+                    if (sibling && sibling[0] && sibling.nodeName() === self.type && // consider list-style-type @ 2012-11-07
                         sibling.css('list-style-type') === listStyleType) {
-                        sibling.remove();
+                        sibling.remove();    // Move children order by merge direction.(#3820)
                         // Move children order by merge direction.(#3820)
                         sibling._4eMoveChildren(listNode, rtl ? true : false, undefined);
                     }
                 };
-
                 mergeSibling(undefined, listNode);
                 mergeSibling(true, listNode);
-            }
-
+            }    // Clean up, restore selection and update toolbar button states.
             // Clean up, restore selection and update toolbar button states.
             Editor.Utils.clearAllMarkers(database);
             selection.selectBookmarks(bookmarks);
         }
     };
-
     function queryActive(type, elementPath) {
-        var element,
-            name,
-            i,
-            blockLimit = elementPath.blockLimit,
-            elements = elementPath.elements;
+        var element, name, i, blockLimit = elementPath.blockLimit, elements = elementPath.elements;
         if (!blockLimit) {
             return false;
-        }
+        }    // Grouping should only happen under blockLimit.(#3940).
         // Grouping should only happen under blockLimit.(#3940).
         if (elements) {
-            for (i = 0; i < elements.length &&
-                ( element = elements[ i ] ) &&
-                element[0] !== blockLimit[0];
-                 i++) {
+            for (i = 0; i < elements.length && (element = elements[i]) && element[0] !== blockLimit[0]; i++) {
                 if (listNodeNames[name = element.nodeName()]) {
                     if (name === type) {
                         return element.css('list-style-type');
@@ -401,9 +320,10 @@ KISSY.add('editor/plugin/list-utils/cmd',['editor', '../list-utils'], function (
         }
         return false;
     }
-
     return {
         ListCommand: ListCommand,
         queryActive: queryActive
     };
 });
+
+

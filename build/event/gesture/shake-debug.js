@@ -1,33 +1,20 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:53
+build time: Apr 29 15:09
 */
 /*
-combined files : 
-
+combined modules:
 event/gesture/shake
-
 */
 /**
  * @ignore
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/shake',['event/dom/base'], function (S, require) {
+KISSY.add('event/gesture/shake', ['event/dom/base'], function (S, require) {
     var DomEvent = require('event/dom/base');
-
-    var Special = DomEvent.Special,
-        start = 5,
-        enough = 20,
-        shaking = 0,
-        SHAKE = 'shake',
-        lastX, lastY, lastZ,
-        max = Math.max,
-        abs = Math.abs,
-        win = S.Env.host,
-        devicemotion = 'devicemotion',
-        checkShake = S.buffer(function () {
+    var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = S.buffer(function () {
             if (shaking) {
                 DomEvent.fireHandler(win, SHAKE, {
                     accelerationIncludingGravity: {
@@ -38,8 +25,7 @@ KISSY.add('event/gesture/shake',['event/dom/base'], function (S, require) {
                 });
                 clear();
             }
-        }, 250);
-
+        }, 250);    // only for window
     // only for window
     Special.shake = {
         setup: function () {
@@ -57,18 +43,12 @@ KISSY.add('event/gesture/shake',['event/dom/base'], function (S, require) {
             win.removeEventListener(devicemotion, shake, false);
         }
     };
-
     function clear() {
         lastX = undefined;
         shaking = 0;
     }
-
     function shake(e) {
-        var accelerationIncludingGravity = e.accelerationIncludingGravity,
-            x = accelerationIncludingGravity.x,
-            y = accelerationIncludingGravity.y,
-            z = accelerationIncludingGravity.z,
-            diff;
+        var accelerationIncludingGravity = e.accelerationIncludingGravity, x = accelerationIncludingGravity.x, y = accelerationIncludingGravity.y, z = accelerationIncludingGravity.z, diff;
         if (lastX !== undefined) {
             diff = max(abs(x - lastX), abs(y - lastY), abs(z - lastZ));
             if (diff > start) {
@@ -78,19 +58,15 @@ KISSY.add('event/gesture/shake',['event/dom/base'], function (S, require) {
                 // console.log(diff);
                 // console.log(x,lastX,y,lastY,z,lastZ);
                 shaking = 1;
-            }
-            // console.log(x);
+            }    // console.log(x);
         }
+        // console.log(x);
         lastX = x;
         lastY = y;
         lastZ = z;
     }
-
-    return {
-        SHAKE: SHAKE
-    };
-});
-/**
+    return { SHAKE: SHAKE };
+});    /**
  * @ignore
  * refer:
  *  - http://www.mobilexweb.com/blog/safari-ios-accelerometer-websockets-html5

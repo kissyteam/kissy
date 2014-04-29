@@ -4,12 +4,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var logger = S.getLogger('s/editor/plugin/flash-bridge');
     var Editor = require('editor');
     var SWF = require('swf');
     var CustomEvent = require('event/custom');
-
     var instances = {};
-    var logger = S.getLogger('s/editor/plugin/flash-bridge');
 
     function FlashBridge(cfg) {
         this._init(cfg);

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 24 14:40
+build time: Apr 29 15:00
 */
 /*
 combined modules:
@@ -45,8 +45,8 @@ KISSY.add('dd/ddm', [
     'base',
     'ua'
 ], function (S, require) {
-    var Node = require('node'), Base = require('base');
     var logger = S.getLogger('dd/ddm');
+    var Node = require('node'), Base = require('base');
     var UA = require('ua'), $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;    /*
      负责拖动涉及的全局事件：
      1.全局统一的鼠标移动监控

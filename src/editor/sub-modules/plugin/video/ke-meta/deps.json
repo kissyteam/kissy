@@ -1,3 +1,1 @@
-{
- "editor/plugin/video": ["editor", "editor/plugin/flash-common/utils", "editor/plugin/flash-common/base-class", "editor/plugin/fake-objects", "editor/plugin/button"] 
-}
+{"editor/plugin/video":["editor","editor/plugin/flash-common/utils","editor/plugin/flash-common/base-class","editor/plugin/fake-objects","editor/plugin/button"]}

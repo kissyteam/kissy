@@ -1217,9 +1217,9 @@ function visit403_18_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].functionData[0]++;
   _$jscoverage['/base/style.js'].lineData[7]++;
-  var Dom = require('./api');
-  _$jscoverage['/base/style.js'].lineData[8]++;
   var logger = S.getLogger('s/dom');
+  _$jscoverage['/base/style.js'].lineData[8]++;
+  var Dom = require('./api');
   _$jscoverage['/base/style.js'].lineData[9]++;
   var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = require('ua'), BOX_MODELS = ['margin', 'border', 'padding'], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = visit403_18_1(globalWindow.document || {}), RE_MARGIN = /^margin/, WIDTH = 'width', HEIGHT = 'height', DISPLAY = 'display', OLD_DISPLAY = DISPLAY + S.now(), NONE = 'none', cssNumber = {
   fillOpacity: 1, 

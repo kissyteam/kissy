@@ -1,3 +1,1 @@
-{
- "scroll-view/touch": ["scroll-view/base", "anim/timer", "event/gesture/base", "event/gesture/drag"] 
-}
+{"scroll-view/touch":["scroll-view/base","anim/timer","event/gesture/base","event/gesture/drag"]}

@@ -1,28 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:49
+build time: Apr 29 15:05
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/ordered-list/cmd
-
 */
 /**
  * @ignore
  * orderedList command
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/ordered-list/cmd',['editor', '../list-utils/cmd'], function (S, require) {
+KISSY.add('editor/plugin/ordered-list/cmd', [
+    'editor',
+    '../list-utils/cmd'
+], function (S, require) {
     var Editor = require('editor');
     var listCmd = require('../list-utils/cmd');
-
-    var insertOrderedList = 'insertOrderedList',
-        ListCommand = listCmd.ListCommand,
-        queryActive = listCmd.queryActive,
-        olCmd = new ListCommand('ol');
-
+    var insertOrderedList = 'insertOrderedList', ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, olCmd = new ListCommand('ol');
     return {
         init: function (editor) {
             if (!editor.hasCommand(insertOrderedList)) {
@@ -33,9 +29,7 @@ KISSY.add('editor/plugin/ordered-list/cmd',['editor', '../list-utils/cmd'], func
                     }
                 });
             }
-
             var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
-
             if (!editor.hasCommand(queryOl)) {
                 editor.addCommand(queryOl, {
                     exec: function (editor) {
@@ -51,3 +45,4 @@ KISSY.add('editor/plugin/ordered-list/cmd',['editor', '../list-utils/cmd'], func
         }
     };
 });
+

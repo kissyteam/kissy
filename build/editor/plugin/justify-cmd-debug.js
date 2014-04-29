@@ -1,36 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:48
+build time: Apr 29 15:04
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/justify-cmd
-
 */
 /**
  * @ignore
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/justify-cmd',['editor'], function (S, require) {
+KISSY.add('editor/plugin/justify-cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
-    var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi,
-        defaultAlign = 'left';
-
+    var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi, defaultAlign = 'left';
     function exec(editor, textAlign) {
         editor.focus();
         editor.execCommand('save');
-        var selection = editor.getSelection(),
-            bookmarks = selection.createBookmarks(),
-            ranges = selection.getRanges(),
-            iterator,
-            block;
+        var selection = editor.getSelection(), bookmarks = selection.createBookmarks(), ranges = selection.getRanges(), iterator, block;
         for (var i = ranges.length - 1; i >= 0; i--) {
-            iterator = ranges[ i ].createIterator();
+            iterator = ranges[i].createIterator();
             iterator.enlargeBr = true;
-            while (( block = iterator.getNextParagraph() )) {
+            while (block = iterator.getNextParagraph()) {
                 block.removeAttr('align');
                 if (isAlign(block, textAlign)) {
                     block.css('text-align', '');
@@ -43,23 +35,18 @@ KISSY.add('editor/plugin/justify-cmd',['editor'], function (S, require) {
         editor.execCommand('save');
         editor.notifySelectionChange();
     }
-
     function isAlign(block, textAlign) {
-        var align = block.css('text-align')
-            .replace(alignRemoveRegex, '')|| defaultAlign;
+        var align = block.css('text-align').replace(alignRemoveRegex, '') || defaultAlign;
         return align === textAlign;
     }
-
     return {
         addCommand: function (editor, command, textAlign) {
             if (!editor.hasCommand(command)) {
-
                 editor.addCommand(command, {
                     exec: function (editor) {
                         exec(editor, textAlign);
                     }
                 });
-
                 editor.addCommand(Editor.Utils.getQueryCmd(command), {
                     exec: function (editor) {
                         var selection = editor.getSelection();
@@ -74,7 +61,6 @@ KISSY.add('editor/plugin/justify-cmd',['editor'], function (S, require) {
                         }
                     }
                 });
-
             }
         }
     };

@@ -1,23 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:49
+build time: Apr 29 15:05
 */
 /*
-combined files : 
-
+combined modules:
 editor/plugin/outdent/cmd
-
 */
 /**
  * @ignore
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/outdent/cmd',['editor', '../dent-cmd'], function (S, require) {
+KISSY.add('editor/plugin/outdent/cmd', [
+    'editor',
+    '../dent-cmd'
+], function (S, require) {
     var Editor = require('editor');
     var dentUtils = require('../dent-cmd');
-
     var addCommand = dentUtils.addCommand;
     var checkOutdentActive = dentUtils.checkOutdentActive;
     return {
@@ -39,3 +39,4 @@ KISSY.add('editor/plugin/outdent/cmd',['editor', '../dent-cmd'], function (S, re
         }
     };
 });
+

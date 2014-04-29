@@ -1,34 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 15 17:44
+build time: Apr 29 15:00
 */
 /*
-combined files : 
-
+combined modules:
 dom/class-list
-
 */
 /**
  * implement class-list for ie<10
  * @ignore
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/class-list',['dom/base'], function (S, require) {
+KISSY.add('dom/class-list', ['dom/base'], function (S, require) {
     var Dom = require('dom/base');
-    var SPACE = ' ',
-        RE_CLASS = /[\n\t\r]/g;
-
+    var SPACE = ' ', RE_CLASS = /[\n\t\r]/g;
     function norm(elemClass) {
         return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
     }
-
     return S.mix(Dom, {
         _hasClass: function (elem, classNames) {
-            var elemClass = elem.className,
-                className,
-                cl,
-                j;
+            var elemClass = elem.className, className, cl, j;
             if (elemClass) {
                 className = norm(elemClass);
                 for (j = 0, cl = classNames.length; j < cl; j++) {
@@ -40,13 +32,8 @@ KISSY.add('dom/class-list',['dom/base'], function (S, require) {
             }
             return false;
         },
-
         _addClass: function (elem, classNames) {
-            var elemClass = elem.className,
-                normClassName,
-                cl = classNames.length,
-                setClass,
-                j;
+            var elemClass = elem.className, normClassName, cl = classNames.length, setClass, j;
             if (elemClass) {
                 normClassName = norm(elemClass);
                 setClass = elemClass;
@@ -62,18 +49,13 @@ KISSY.add('dom/class-list',['dom/base'], function (S, require) {
             }
             elem.className = setClass;
         },
-
         _removeClass: function (elem, classNames) {
-            var elemClass = elem.className,
-                className,
-                cl = classNames.length,
-                j,
-                needle;
+            var elemClass = elem.className, className, cl = classNames.length, j, needle;
             if (elemClass && cl) {
                 className = norm(elemClass);
                 j = 0;
                 for (; j < cl; j++) {
-                    needle = SPACE + classNames[j] + SPACE;
+                    needle = SPACE + classNames[j] + SPACE;    // 一个 cls 有可能多次出现：'link link2 link link3 link'
                     // 一个 cls 有可能多次出现：'link link2 link link3 link'
                     while (className.indexOf(needle) >= 0) {
                         className = className.replace(needle, SPACE);
@@ -82,20 +64,12 @@ KISSY.add('dom/class-list',['dom/base'], function (S, require) {
                 elem.className = S.trim(className);
             }
         },
-
         _toggleClass: function (elem, classNames, force) {
-            var j, className,
-                result,
-                method,
-                self = this,
-                removed = [],
-                added = [],
-                cl = classNames.length;
+            var j, className, result, method, self = this, removed = [], added = [], cl = classNames.length;
             for (j = 0; j < cl; j++) {
                 className = classNames[j];
                 result = self._hasClass(elem, [className]);
-                method = result ? force !== true && 'remove' :
-                    force !== false && 'add';
+                method = result ? force !== true && 'remove' : force !== false && 'add';
                 if (method === 'remove') {
                     removed.push(className);
                 } else if (method === 'add') {
