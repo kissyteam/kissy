@@ -231,18 +231,32 @@ if (! _$jscoverage['/tabs/tab.js']) {
   _$jscoverage['/tabs/tab.js'].lineData = [];
   _$jscoverage['/tabs/tab.js'].lineData[6] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[7] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[14] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[18] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[19] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[8] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[9] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[11] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[12] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[20] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[21] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[22] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[27] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[28] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[31] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[32] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[33] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[34] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[35] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[37] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[38] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[43] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[44] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[45] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[46] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[47] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[50] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[51] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[55] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[56] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[58] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[76] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[81] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[95] = 0;
 }
 if (! _$jscoverage['/tabs/tab.js'].functionData) {
   _$jscoverage['/tabs/tab.js'].functionData = [];
@@ -251,65 +265,138 @@ if (! _$jscoverage['/tabs/tab.js'].functionData) {
   _$jscoverage['/tabs/tab.js'].functionData[2] = 0;
   _$jscoverage['/tabs/tab.js'].functionData[3] = 0;
   _$jscoverage['/tabs/tab.js'].functionData[4] = 0;
+  _$jscoverage['/tabs/tab.js'].functionData[5] = 0;
+  _$jscoverage['/tabs/tab.js'].functionData[6] = 0;
+  _$jscoverage['/tabs/tab.js'].functionData[7] = 0;
+  _$jscoverage['/tabs/tab.js'].functionData[8] = 0;
 }
 if (! _$jscoverage['/tabs/tab.js'].branchData) {
   _$jscoverage['/tabs/tab.js'].branchData = {};
-  _$jscoverage['/tabs/tab.js'].branchData['20'] = [];
-  _$jscoverage['/tabs/tab.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/tabs/tab.js'].branchData['33'] = [];
+  _$jscoverage['/tabs/tab.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/tabs/tab.js'].branchData['37'] = [];
+  _$jscoverage['/tabs/tab.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/tabs/tab.js'].branchData['44'] = [];
+  _$jscoverage['/tabs/tab.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/tabs/tab.js'].branchData['45'] = [];
+  _$jscoverage['/tabs/tab.js'].branchData['45'][1] = new BranchData();
 }
-_$jscoverage['/tabs/tab.js'].branchData['20'][1].init(96, 19, 'renderData.selected');
-function visit13_20_1(result) {
-  _$jscoverage['/tabs/tab.js'].branchData['20'][1].ranCondition(result);
+_$jscoverage['/tabs/tab.js'].branchData['45'][1].init(22, 36, 'e.target === self.get(\'closeBtn\')[0]');
+function visit19_45_1(result) {
+  _$jscoverage['/tabs/tab.js'].branchData['45'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tabs/tab.js'].branchData['44'][1].init(48, 20, 'self.get(\'closable\')');
+function visit18_44_1(result) {
+  _$jscoverage['/tabs/tab.js'].branchData['44'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tabs/tab.js'].branchData['37'][1].init(275, 19, 'renderData.closable');
+function visit17_37_1(result) {
+  _$jscoverage['/tabs/tab.js'].branchData['37'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tabs/tab.js'].branchData['33'][1].init(96, 19, 'renderData.selected');
+function visit16_33_1(result) {
+  _$jscoverage['/tabs/tab.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/tabs/tab.js'].functionData[0]++;
   _$jscoverage['/tabs/tab.js'].lineData[7]++;
   var Button = require('button');
-  _$jscoverage['/tabs/tab.js'].lineData[14]++;
-  return Button.extend({
+  _$jscoverage['/tabs/tab.js'].lineData[8]++;
+  var TabTpl = require('./tab-xtpl');
+  _$jscoverage['/tabs/tab.js'].lineData[9]++;
+  var ContentBox = require('component/extension/content-box');
+  _$jscoverage['/tabs/tab.js'].lineData[11]++;
+  function close() {
+    _$jscoverage['/tabs/tab.js'].functionData[1]++;
+    _$jscoverage['/tabs/tab.js'].lineData[12]++;
+    this.fire('afterTabClose');
+  }
+  _$jscoverage['/tabs/tab.js'].lineData[20]++;
+  return Button.extend([ContentBox], {
+  initializer: function() {
+  _$jscoverage['/tabs/tab.js'].functionData[2]++;
+  _$jscoverage['/tabs/tab.js'].lineData[22]++;
+  this.publish('beforeTabClose', {
+  defaultFn: close, 
+  defaultTargetOnly: true});
+}, 
   isTabsTab: true, 
   beforeCreateDom: function(renderData) {
-  _$jscoverage['/tabs/tab.js'].functionData[1]++;
-  _$jscoverage['/tabs/tab.js'].lineData[18]++;
+  _$jscoverage['/tabs/tab.js'].functionData[3]++;
+  _$jscoverage['/tabs/tab.js'].lineData[31]++;
   var attrs = renderData.elAttrs;
-  _$jscoverage['/tabs/tab.js'].lineData[19]++;
+  _$jscoverage['/tabs/tab.js'].lineData[32]++;
   attrs.role = 'tab';
-  _$jscoverage['/tabs/tab.js'].lineData[20]++;
-  if (visit13_20_1(renderData.selected)) {
-    _$jscoverage['/tabs/tab.js'].lineData[21]++;
+  _$jscoverage['/tabs/tab.js'].lineData[33]++;
+  if (visit16_33_1(renderData.selected)) {
+    _$jscoverage['/tabs/tab.js'].lineData[34]++;
     attrs['aria-selected'] = true;
-    _$jscoverage['/tabs/tab.js'].lineData[22]++;
+    _$jscoverage['/tabs/tab.js'].lineData[35]++;
     renderData.elCls.push(this.getBaseCssClasses('selected'));
+  }
+  _$jscoverage['/tabs/tab.js'].lineData[37]++;
+  if (visit17_37_1(renderData.closable)) {
+    _$jscoverage['/tabs/tab.js'].lineData[38]++;
+    renderData.elCls.push(this.getBaseCssClasses('closable'));
   }
 }, 
   handleClickInternal: function(e) {
-  _$jscoverage['/tabs/tab.js'].functionData[2]++;
-  _$jscoverage['/tabs/tab.js'].lineData[27]++;
-  this.callSuper(e);
-  _$jscoverage['/tabs/tab.js'].lineData[28]++;
-  this.set('selected', true);
+  _$jscoverage['/tabs/tab.js'].functionData[4]++;
+  _$jscoverage['/tabs/tab.js'].lineData[43]++;
+  var self = this;
+  _$jscoverage['/tabs/tab.js'].lineData[44]++;
+  if (visit18_44_1(self.get('closable'))) {
+    _$jscoverage['/tabs/tab.js'].lineData[45]++;
+    if (visit19_45_1(e.target === self.get('closeBtn')[0])) {
+      _$jscoverage['/tabs/tab.js'].lineData[46]++;
+      self.fire('beforeTabClose');
+      _$jscoverage['/tabs/tab.js'].lineData[47]++;
+      return;
+    }
+  }
+  _$jscoverage['/tabs/tab.js'].lineData[50]++;
+  self.callSuper(e);
+  _$jscoverage['/tabs/tab.js'].lineData[51]++;
+  self.set('selected', true);
 }, 
   _onSetSelected: function(v) {
-  _$jscoverage['/tabs/tab.js'].functionData[3]++;
-  _$jscoverage['/tabs/tab.js'].lineData[32]++;
+  _$jscoverage['/tabs/tab.js'].functionData[5]++;
+  _$jscoverage['/tabs/tab.js'].lineData[55]++;
   var el = this.$el;
-  _$jscoverage['/tabs/tab.js'].lineData[33]++;
+  _$jscoverage['/tabs/tab.js'].lineData[56]++;
   var selectedCls = this.getBaseCssClasses('selected');
-  _$jscoverage['/tabs/tab.js'].lineData[35]++;
+  _$jscoverage['/tabs/tab.js'].lineData[58]++;
   el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-selected', !!v);
 }}, {
   ATTRS: {
+  contentTpl: {
+  value: TabTpl}, 
   handleGestureEvents: {
   value: false}, 
   focusable: {
   value: false}, 
+  closable: {
+  value: false, 
+  render: 1, 
+  sync: 0, 
+  parse: function() {
+  _$jscoverage['/tabs/tab.js'].functionData[6]++;
+  _$jscoverage['/tabs/tab.js'].lineData[76]++;
+  return !!this.get('closeBtn');
+}}, 
+  closeBtn: {
+  selector: function() {
+  _$jscoverage['/tabs/tab.js'].functionData[7]++;
+  _$jscoverage['/tabs/tab.js'].lineData[81]++;
+  return '.' + this.getBaseCssClass('close');
+}}, 
   selected: {
   render: 1, 
   sync: 0, 
   parse: function(el) {
-  _$jscoverage['/tabs/tab.js'].functionData[4]++;
-  _$jscoverage['/tabs/tab.js'].lineData[56]++;
+  _$jscoverage['/tabs/tab.js'].functionData[8]++;
+  _$jscoverage['/tabs/tab.js'].lineData[95]++;
   return el.hasClass(this.getBaseCssClass('selected'));
 }}}, 
   xclass: 'tabs-tab'});

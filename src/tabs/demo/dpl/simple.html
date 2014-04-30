@@ -40,16 +40,22 @@
     KISSY.use("tabs", function (S, Tabs) {
         var tabs = new Tabs({
             render: "#tabs",
-            listeners:{
-                afterSelectedTabChange:function(e){
-                    S.log('1 changed to: '+ e.newVal.get('content'))
+            listeners: {
+                afterSelectedTabChange: function (e) {
+                    S.log('1 changed to: ' + e.newVal.get('content'))
+                },
+                beforeTabClose: function (e) {
+                    if (!confirm('confirmed to delete ' + e.target.get('content'))) {
+                        e.preventDefault();
+                    }
                 }
             },
             items: [
                 {
                     title: 'tab-1',
                     selected: true,
-                    content: '<p>panel-1</p>'
+                    content: '<p>panel-1</p>',
+                    closable: true
                 },
                 {
                     title: 'tab-2',
@@ -62,16 +68,17 @@
         var tabs2 = new Tabs({
             render: "#tabs2",
             changeType: 'mouse',
-            listeners:{
-                afterSelectedTabChange:function(e){
-                    S.log('2 changed to: '+ e.newVal.get('content'))
+            listeners: {
+                afterSelectedTabChange: function (e) {
+                    S.log('2 changed to: ' + e.newVal.get('content'))
                 }
             },
             items: [
                 {
                     title: 'tab-1',
                     selected: true,
-                    content: '<p>panel-1</p>'
+                    content: '<p>panel-1</p>',
+                    closable: true
                 },
                 {
                     title: 'tab-2',

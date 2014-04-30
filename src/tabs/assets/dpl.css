@@ -144,3 +144,24 @@
   border-color: #bbbbbb #bbbbbb #bbbbbb transparent;
   *border-left-color: white;
 }
+.ks-tabs-tab {
+  position: relative;
+}
+.ks-tabs-tab .ks-tabs-tab-close {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  vertical-align: text-top;
+  background-image: url(http://img04.taobaocdn.com/tps/i4/T1bxYzXmxeXXcIVv2D-469-159.png);
+  background-repeat: no-repeat;
+  background-position: -312px 0;
+  text-indent: -9999px;
+  font-size: 0;
+  top: 2px;
+  right: 2px;
+  position: absolute;
+  cursor: pointer;
+}
+.ks-tabs-tab-closable .ks-tabs-tab-content {
+  padding-right: 15px;
+}

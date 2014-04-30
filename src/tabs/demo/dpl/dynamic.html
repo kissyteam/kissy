@@ -47,6 +47,18 @@
         </div>
 
         <div class="control-group">
+            <label class="control-label" for="closable">是否可关闭</label>
+
+            <div class="controls">
+                <label class="checkbox control-inline">
+                    <input type="checkbox" value="option1" id="closable"> 是
+                </label>
+
+                <p class="help-block">添加操作时起作用</p>
+            </div>
+        </div>
+
+        <div class="control-group">
             <label class="control-label" for="tab">tab title</label>
 
             <div class="controls">
@@ -79,7 +91,6 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use("tabs", function (S, Tabs) {
-
         var $ = S.all;
 
         var tabs = new Tabs({
@@ -97,7 +108,6 @@
             ]
         }).render();
 
-
         $("#add").on("click", function () {
             var index = parseInt($("#index").val()),
                     tabContent = S.trim($("#tab").val()),
@@ -111,7 +121,8 @@
                 tabs.addItem({
                     title: tabContent,
                     content: panelContent,
-                    selected: $("#selected").attr("checked")
+                    selected: $("#selected").attr("checked"),
+                    closable: $("#closable").attr("checked")
                 }, index);
             }
         });
@@ -122,7 +133,7 @@
                 index = undefined;
             }
             if (index !== undefined) {
-                tabs.removeItemAt(index, true);
+                tabs.removeItemAt(index);
             }
         });
 
@@ -132,7 +143,6 @@
             S.log("title: " + tab.get("content"));
             S.log("panel: " + panel.get("content"));
         });
-
     });
 </script>
 </body>

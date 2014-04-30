@@ -19,6 +19,22 @@ KISSY.add(function (S, require) {
         children[1 - BarIndexMap[barOrientation]] = body;
     }
 
+    function afterTabClose(e) {
+        this.removeItemByTab(e.target);
+    }
+
+    function afterSelectedTabChange(e) {
+        this.setSelectedTab(e.newVal);
+    }
+
+    function fromTabItemConfigToTabConfig(item) {
+        var ret = {};
+        ret.content = item.title;
+        ret.selected = item.selected;
+        ret.closable = item.closable;
+        return ret;
+    }
+
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
@@ -54,15 +70,11 @@ KISSY.add(function (S, require) {
 
                 S.each(items, function (item) {
                     selected = selected || item.selected;
-                    barChildren.push(tabItem = {
-                        content: item.title,
-                        selected: item.selected
-                    });
+                    barChildren.push(tabItem = fromTabItemConfigToTabConfig(item));
                     panels.push(panelItem = {
                         content: item.content,
                         selected: item.selected
                     });
-
                 });
 
                 if (!selected && barChildren.length) {
@@ -85,9 +97,8 @@ KISSY.add(function (S, require) {
         },
 
         bindUI: function () {
-            this.on('afterSelectedTabChange', function (e) {
-                this.setSelectedTab(e.newVal);
-            });
+            this.on('afterSelectedTabChange', afterSelectedTabChange);
+            this.on('afterTabClose', afterTabClose);
 
             /**
              * fired when selected tab is changed
@@ -111,6 +122,7 @@ KISSY.add(function (S, require) {
          * @param {Object} item item description
          * @param {String} item.content tab panel html
          * @param {String} item.title tab bar html
+         * @param {String} item.closable whether this tab is closable
          * @param {Number} index insert index
          * @chainable
          */
@@ -127,9 +139,7 @@ KISSY.add(function (S, require) {
                 index = barChildren.length;
             }
 
-            tabItem = {
-                content: item.title
-            };
+            tabItem = fromTabItemConfigToTabConfig(item);
 
             panelItem = {
                 content: item.content

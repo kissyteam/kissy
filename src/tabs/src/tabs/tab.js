@@ -5,13 +5,26 @@
  */
 KISSY.add(function (S, require) {
     var Button = require('button');
+    var TabTpl = require('./tab-xtpl');
+    var ContentBox = require('component/extension/content-box');
+
+    function close() {
+        this.fire('afterTabClose');
+    }
 
     /**
      * KISSY.Tabs.Tab. xclass:'tabs-tab'
      * @class KISSY.Tabs.Tab
      * @extends KISSY.Button
      */
-    return Button.extend({
+    return Button.extend([ContentBox], {
+        initializer: function () {
+            this.publish('beforeTabClose', {
+                defaultFn: close,
+                defaultTargetOnly: true
+            });
+        },
+
         isTabsTab: true,
 
         beforeCreateDom: function (renderData) {
@@ -21,11 +34,21 @@ KISSY.add(function (S, require) {
                 attrs['aria-selected'] = true;
                 renderData.elCls.push(this.getBaseCssClasses('selected'));
             }
+            if (renderData.closable) {
+                renderData.elCls.push(this.getBaseCssClasses('closable'));
+            }
         },
 
         handleClickInternal: function (e) {
-            this.callSuper(e);
-            this.set('selected', true);
+            var self = this;
+            if (self.get('closable')) {
+                if (e.target === self.get('closeBtn')[0]) {
+                    self.fire('beforeTabClose');
+                    return;
+                }
+            }
+            self.callSuper(e);
+            self.set('selected', true);
         },
 
         _onSetSelected: function (v) {
@@ -36,11 +59,27 @@ KISSY.add(function (S, require) {
         }
     }, {
         ATTRS: {
+            contentTpl: {
+                value: TabTpl
+            },
             handleGestureEvents: {
                 value: false
             },
             focusable: {
                 value: false
+            },
+            closable: {
+                value: false,
+                render: 1,
+                sync: 0,
+                parse: function () {
+                    return !!this.get('closeBtn');
+                }
+            },
+            closeBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('close');
+                }
             },
             /**
              * whether selected

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:13
+build time: Apr 30 15:04
 */
 /*
 combined modules:
@@ -9,6 +9,7 @@ tabs
 tabs/bar
 tabs/body
 tabs/tab
+tabs/tab-xtpl
 tabs/panel
 */
 /**
@@ -34,6 +35,19 @@ KISSY.add('tabs', [
     }
     function setBody(children, barOrientation, body) {
         children[1 - BarIndexMap[barOrientation]] = body;
+    }
+    function afterTabClose(e) {
+        this.removeItemByTab(e.target);
+    }
+    function afterSelectedTabChange(e) {
+        this.setSelectedTab(e.newVal);
+    }
+    function fromTabItemConfigToTabConfig(item) {
+        var ret = {};
+        ret.content = item.title;
+        ret.selected = item.selected;
+        ret.closable = item.closable;
+        return ret;
     }    /**
      * Tabs for KISSY
      * @class KISSY.Tabs
@@ -62,10 +76,7 @@ KISSY.add('tabs', [
                         }, barChildren = bar.children, panels = body.children;
                     S.each(items, function (item) {
                         selected = selected || item.selected;
-                        barChildren.push(tabItem = {
-                            content: item.title,
-                            selected: item.selected
-                        });
+                        barChildren.push(tabItem = fromTabItemConfigToTabConfig(item));
                         panels.push(panelItem = {
                             content: item.content,
                             selected: item.selected
@@ -86,16 +97,15 @@ KISSY.add('tabs', [
                 this.get('bar').set('changeType', this.get('changeType'));
             },
             bindUI: function () {
-                this.on('afterSelectedTabChange', function (e) {
-                    this.setSelectedTab(e.newVal);
-                });    /**
+                this.on('afterSelectedTabChange', afterSelectedTabChange);
+                this.on('afterTabClose', afterTabClose);    /**
              * fired when selected tab is changed
              * @event afterSelectedTabChange
              * @member KISSY.Tabs
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal selected tab
              */
-                       /**
+                                                            /**
              * fired before selected tab is changed
              * @event beforeSelectedTabChange
              * @member KISSY.Tabs
@@ -122,6 +132,7 @@ KISSY.add('tabs', [
          * @param {Object} item item description
          * @param {String} item.content tab panel html
          * @param {String} item.title tab bar html
+         * @param {String} item.closable whether this tab is closable
          * @param {Number} index insert index
          * @chainable
          */
@@ -130,7 +141,7 @@ KISSY.add('tabs', [
                 if (typeof index === 'undefined') {
                     index = barChildren.length;
                 }
-                tabItem = { content: item.title };
+                tabItem = fromTabItemConfigToTabConfig(item);
                 panelItem = { content: item.content };
                 bar.addChild(tabItem, index);
                 selectedTab = barChildren[index];
@@ -539,8 +550,17 @@ KISSY.add('tabs/body', ['component/container'], function (S, require) {
  * Single tab in tab bar.
  * @author yiminghe@gmail.com
  */
-KISSY.add('tabs/tab', ['button'], function (S, require) {
-    var Button = require('button');    /**
+KISSY.add('tabs/tab', [
+    'button',
+    './tab-xtpl',
+    'component/extension/content-box'
+], function (S, require) {
+    var Button = require('button');
+    var TabTpl = require('./tab-xtpl');
+    var ContentBox = require('component/extension/content-box');
+    function close() {
+        this.fire('afterTabClose');
+    }    /**
      * KISSY.Tabs.Tab. xclass:'tabs-tab'
      * @class KISSY.Tabs.Tab
      * @extends KISSY.Button
@@ -550,7 +570,13 @@ KISSY.add('tabs/tab', ['button'], function (S, require) {
      * @class KISSY.Tabs.Tab
      * @extends KISSY.Button
      */
-    return Button.extend({
+    return Button.extend([ContentBox], {
+        initializer: function () {
+            this.publish('beforeTabClose', {
+                defaultFn: close,
+                defaultTargetOnly: true
+            });
+        },
         isTabsTab: true,
         beforeCreateDom: function (renderData) {
             var attrs = renderData.elAttrs;
@@ -559,10 +585,20 @@ KISSY.add('tabs/tab', ['button'], function (S, require) {
                 attrs['aria-selected'] = true;
                 renderData.elCls.push(this.getBaseCssClasses('selected'));
             }
+            if (renderData.closable) {
+                renderData.elCls.push(this.getBaseCssClasses('closable'));
+            }
         },
         handleClickInternal: function (e) {
-            this.callSuper(e);
-            this.set('selected', true);
+            var self = this;
+            if (self.get('closable')) {
+                if (e.target === self.get('closeBtn')[0]) {
+                    self.fire('beforeTabClose');
+                    return;
+                }
+            }
+            self.callSuper(e);
+            self.set('selected', true);
         },
         _onSetSelected: function (v) {
             var el = this.$el;
@@ -571,8 +607,22 @@ KISSY.add('tabs/tab', ['button'], function (S, require) {
         }
     }, {
         ATTRS: {
+            contentTpl: { value: TabTpl },
             handleGestureEvents: { value: false },
             focusable: { value: false },
+            closable: {
+                value: false,
+                render: 1,
+                sync: 0,
+                parse: function () {
+                    return !!this.get('closeBtn');
+                }
+            },
+            closeBtn: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('close');
+                }
+            },
             /**
              * whether selected
              * @cfg {Boolean} selected
@@ -590,6 +640,59 @@ KISSY.add('tabs/tab', ['button'], function (S, require) {
         },
         xclass: 'tabs-tab'
     });
+});
+
+/** Compiled By kissy-xtemplate */
+KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    var t = function (scope, buffer, payload, undefined) {
+        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        if ('5.0.0' !== S.version) {
+            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
+        }
+        buffer.write('<div class="', 0);
+        var option0 = { escape: 1 };
+        var params1 = [];
+        params1.push('content');
+        option0.params = params1;
+        var callRet2;
+        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        if (callRet2 && callRet2.isBuffer) {
+            buffer = callRet2;
+            callRet2 = undefined;
+        }
+        buffer.write(callRet2, true);
+        buffer.write('">', 0);
+        var id3 = scope.resolve(['content'], 0);
+        buffer.write(id3, false);
+        buffer.write('</div>\r\n', 0);
+        var option4 = { escape: 1 };
+        var params5 = [];
+        var id6 = scope.resolve(['closable'], 0);
+        params5.push(id6);
+        option4.params = params5;
+        option4.fn = function (scope, buffer) {
+            buffer.write('\r\n<span class="', 0);
+            var option7 = { escape: 1 };
+            var params8 = [];
+            params8.push('close');
+            option7.params = params8;
+            var callRet9;
+            callRet9 = callFnUtil(engine, scope, option7, buffer, ['getBaseCssClasses'], 0, 3);
+            if (callRet9 && callRet9.isBuffer) {
+                buffer = callRet9;
+                callRet9 = undefined;
+            }
+            buffer.write(callRet9, true);
+            buffer.write('">close</span>\r\n', 0);
+            return buffer;
+        };
+        buffer = ifCommand.call(engine, scope, option4, buffer, 2, payload);
+        return buffer;
+    };
+    t.TPL_NAME = module.name;
+    return t;
 });
 
 /**
