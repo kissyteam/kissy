@@ -115,6 +115,22 @@ KISSY.add(function (S, require) {
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
              */
+
+            /**
+             * fired when tab is closed
+             * @event afterTabClose
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.target closed tab
+             */
+
+            /**
+             * fired before tab is closed
+             * @event beforeTabClose
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.target tab to be closed
+             */
         },
 
         /**
@@ -321,7 +337,7 @@ KISSY.add(function (S, require) {
     }, {
         ATTRS: {
             /**
-             *  tabs config, eg: {title:'',content:''}
+             * tabs config, eg: {title:'', content:'', selected:false, closable:false}
              * @cfg {Object} item
              */
             /**

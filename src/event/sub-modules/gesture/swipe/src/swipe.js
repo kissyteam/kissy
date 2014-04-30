@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     var SingleTouch = GestureUtil.SingleTouch;
     var SWIPE = 'swipe',
         SWIPE_START = 'swipeStart',
-        SWIPING = 'swiping',
+        SWIPE_END = 'swipeEnd',
         MAX_DURATION = 1000,
         MAX_OFFSET = 35,
         MIN_DISTANCE = 50;
@@ -71,13 +71,52 @@ KISSY.add(function (S, require) {
         var event;
 
         if (!ing) {
-            event = SWIPE;
+            event = SWIPE_END;
         } else if (direction && !self.isStarted) {
             self.isStarted = 1;
             event = SWIPE_START;
         } else {
-            event = SWIPING;
+            event = SWIPE;
         }
+
+        /**
+         * fired when swipe.
+         * preventDefault this event to prevent native behavior
+         * @event SWIPE
+         * @member KISSY.Event.Gesture.Swipe
+         * @param {KISSY.Event.DomEvent.Object} e
+         * @param {Number} e.pageX drag point pageX
+         * @param {Number} e.pageY drag point pageY
+         * @param {Number} e.distance distance between current touch point and start touch point
+         * @param {Number} e.duration time duration(s) between current touch point and start touch point
+         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+         */
+
+        /**
+         * fired when swipe gesture is finished.
+         * preventDefault this event to prevent native behavior
+         * @event SWIPE_END
+         * @member KISSY.Event.Gesture.Swipe
+         * @param {KISSY.Event.DomEvent.Object} e
+         * @param {Number} e.pageX drag point pageX
+         * @param {Number} e.pageY drag point pageY
+         * @param {Number} e.distance distance between current touch point and start touch point
+         * @param {Number} e.duration time duration(s) between current touch point and start touch point
+         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+         */
+
+        /**
+         * fired when swipe started.
+         * preventDefault this event to prevent native behavior
+         * @event SWIPE_START
+         * @member KISSY.Event.Gesture.Swipe
+         * @param {KISSY.Event.DomEvent.Object} e
+         * @param {Number} e.pageX drag point pageX
+         * @param {Number} e.pageY drag point pageY
+         * @param {Number} e.distance distance between current touch point and start touch point
+         * @param {Number} e.duration time duration(s) between current touch point and start touch point
+         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+         */
 
         DomEvent.fire(touch.target, event, {
             originalEvent: e.originalEvent,
@@ -87,40 +126,11 @@ KISSY.add(function (S, require) {
             pageY: touch.pageY,
 
             which: 1,
-            /**
-             *
-             * native touch property **only for touch event**.
-             *
-             * @property touch
-             * @member KISSY.Event.DomEvent.Object
-             */
-            touch: touch,
-            /**
-             *
-             * direction property **only for event swipe/singleTap/doubleTap**.
-             *
-             * can be one of 'up' 'down' 'left' 'right'
-             * @property {String} direction
-             * @member KISSY.Event.DomEvent.Object
-             */
+
             direction: direction,
-            /**
-             *
-             * distance property **only for event swipe**.
-             *
-             * the distance swipe gesture costs
-             * @property {Number} distance
-             * @member KISSY.Event.DomEvent.Object
-             */
+
             distance: distance,
-            /**
-             *
-             * duration property **only for touch event**.
-             *
-             * the duration swipe gesture costs
-             * @property {Number} duration
-             * @member KISSY.Event.DomEvent.Object
-             */
+
             duration: (e.timeStamp - self.startTime) / 1000
         });
 
@@ -163,6 +173,7 @@ KISSY.add(function (S, require) {
 
     return {
         SWIPE: SWIPE,
-        SWIPING: SWIPING
+        SWIPE_START: SWIPE_START,
+        SWIPE_END: SWIPE_END
     };
 });

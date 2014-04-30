@@ -38,8 +38,7 @@
         t.on('dragstart', function (e) {
             e.preventDefault();
         });
-        log(DragGesture.DRAGGING);
-        t.on(DragGesture.DRAGGING, function (e) {
+        t.on(DragGesture.DRAG_PRE, function (e) {
            e.preventDefault();
         });
         t.on(DragGesture.DRAG_START, function () {

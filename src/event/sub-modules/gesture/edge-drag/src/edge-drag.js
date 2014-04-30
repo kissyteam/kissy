@@ -77,6 +77,48 @@ KISSY.add(function (S, require) {
             self.startTime = e.timeStamp;
         }
 
+        /**
+         * fired when edge drag started
+         * @event EDGE_DRAG_START
+         * @member KISSY.Event.Gesture.EdgeDrag
+         * @param {KISSY.Event.DomEvent.Object} e
+         * @param {Number} e.pageX drag point pageX
+         * @param {Number} e.pageY drag point pageY
+         * @param {Number} e.distance distance between current touch and start touch
+         * @param {Number} e.duration time duration between current touch and start touch
+         * @param {Number} e.velocityX velocity at x-axis
+         * @param {Number} e.velocityY velocity at y-axis
+         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+         */
+
+        /**
+         * fired when edge drag
+         * @event EDGE_DRAG
+         * @member KISSY.Event.Gesture.EdgeDrag
+         * @param {KISSY.Event.DomEvent.Object} e
+         * @param {Number} e.pageX drag point pageX
+         * @param {Number} e.pageY drag point pageY
+         * @param {Number} e.distance distance between current touch and start touch
+         * @param {Number} e.duration time duration between current touch and start touch
+         * @param {Number} e.velocityX velocity at x-axis
+         * @param {Number} e.velocityY velocity at y-axis
+         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+         */
+
+        /**
+         * fired when edge drag gesture is finished
+         * @event EDGE_DRAG_END
+         * @member KISSY.Event.Gesture.EdgeDrag
+         * @param {KISSY.Event.DomEvent.Object} e
+         * @param {Number} e.pageX drag point pageX
+         * @param {Number} e.pageY drag point pageY
+         * @param {Number} e.distance distance between current touch and start touch
+         * @param {Number} e.duration time duration between current touch and start touch
+         * @param {Number} e.velocityX velocity at x-axis
+         * @param {Number} e.velocityY velocity at y-axis
+         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+         */
+
         DomEvent.fire(touch.target, event, {
             originalEvent: e.originalEvent,
 
@@ -86,43 +128,10 @@ KISSY.add(function (S, require) {
 
             which: 1,
 
-            /**
-             *
-             * native touch property **only for touch event**.
-             *
-             * @property touch
-             * @member KISSY.Event.DomEvent.Object
-             */
-            touch: touch,
-
-            /**
-             *
-             * direction property **only for event swipe/singleTap/doubleTap**.
-             *
-             * can be one of 'up' 'down' 'left' 'right'
-             * @property {String} direction
-             * @member KISSY.Event.DomEvent.Object
-             */
             direction: direction,
 
-            /**
-             *
-             * distance property **only for event swipe**.
-             *
-             * the distance swipe gesture costs
-             * @property {Number} distance
-             * @member KISSY.Event.DomEvent.Object
-             */
             distance: distance,
 
-            /**
-             *
-             * duration property **only for touch event**.
-             *
-             * the duration swipe gesture costs
-             * @property {Number} duration
-             * @member KISSY.Event.DomEvent.Object
-             */
             duration: duration / 1000,
 
             velocityX: velocityX,

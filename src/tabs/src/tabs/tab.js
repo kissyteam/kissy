@@ -68,6 +68,13 @@ KISSY.add(function (S, require) {
             focusable: {
                 value: false
             },
+            /**
+             * whether closable
+             * @cfg {Boolean} closable
+             */
+            /**
+             * @ignore
+             */
             closable: {
                 value: false,
                 render: 1,

@@ -38,6 +38,33 @@ KISSY.add(function (S, require) {
 
             var distance = getDistance(touches[0], touches[1]);
 
+            /**
+             * fired when pinch started
+             * @event PINCH_START
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+
+            /**
+             * fired when pinch
+             * @event PINCH
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+
+            /**
+             * fired when pinch ended
+             * @event PINCH_END
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+
             if (!self.isStarted) {
                 self.isStarted = true;
                 self.startDistance = distance;

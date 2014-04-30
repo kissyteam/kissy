@@ -8,9 +8,68 @@ KISSY.add(function (S, require) {
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
+
+    /**
+     * fired when drag started
+     * @event DRAG_START
+     * @member KISSY.Event.Gesture.Drag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+     * @param {Number} e.startTime drag start time
+     * @param {String} e.gestureType 'mouse' or 'touch'
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
+
+    /**
+     * fired when touchmove started but drag is not started.
+     * preventDefault this event to prevent native behavior
+     * @event DRAG_PRE
+     * @member KISSY.Event.Gesture.Drag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+     * @param {Number} e.startTime drag start time
+     * @param {String} e.gestureType 'mouse' or 'touch'
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
+
+    /**
+     * fired when drag.
+     * preventDefault this event to prevent native behavior
+     * @event DRAG
+     * @member KISSY.Event.Gesture.Drag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+     * @param {Number} e.startTime drag start time
+     * @param {String} e.gestureType 'mouse' or 'touch'
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
+
+    /**
+     * fired when drag gesture is finished
+     * @event DRAG_END
+     * @member KISSY.Event.Gesture.Drag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+     * @param {Number} e.startTime drag start time
+     * @param {String} e.gestureType 'mouse' or 'touch'
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
+
     var DRAG_START = 'ksDragStart',
         DRAG_END = 'ksDragEnd',
-        DRAGGING = 'ksDragging',
+        DRAG_PRE = 'ksDragging',
         DRAG = 'ksDrag',
         SAMPLE_INTERVAL = 300,
         MIN_DISTANCE = 3;
@@ -36,8 +95,7 @@ KISSY.add(function (S, require) {
                 self.direction = deltaY < 0 ? 'up' : 'down';
             }
         }
-        // call e.preventDefault() to prevent native browser behavior for android chrome
-        DomEvent.fire(self.dragTarget, DRAGGING, getEventObject(self, e));
+
         // fire dragstart after moving at least 3px
         if (getDistance(currentTouch, startPos) > MIN_DISTANCE) {
             if (self.isStarted) {
@@ -51,6 +109,9 @@ KISSY.add(function (S, require) {
                 self.isStarted = true;
             }
             DomEvent.fire(self.dragTarget, DRAG_START, getEventObject(self, e));
+        } else {
+            // call e.preventDefault() to prevent native browser behavior for android chrome
+            DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
         }
     }
 
@@ -70,6 +131,7 @@ KISSY.add(function (S, require) {
         var startPos = self.startPos;
         ret = ret || {};
         var currentTouch = self.lastTouches[0];
+        ret.which = 1;
         ret.pageX = currentTouch.pageX;
         ret.pageY = currentTouch.pageY;
         ret.originalEvent = e.originalEvent;
@@ -77,7 +139,6 @@ KISSY.add(function (S, require) {
         ret.deltaY = currentTouch.pageY - startPos.pageY;
         ret.startTime = self.startTime;
         ret.startPos = self.startPos;
-        ret.touch = currentTouch;
         ret.gestureType = e.gestureType;
         ret.direction = self.direction;
         return ret;
@@ -133,7 +194,7 @@ KISSY.add(function (S, require) {
     });
 
     return {
-        DRAGGING: DRAGGING,
+        DRAG_PRE: DRAG_PRE,
         DRAG_START: DRAG_START,
         DRAG: DRAG,
         DRAG_END: DRAG_END

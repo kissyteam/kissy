@@ -171,7 +171,7 @@ KISSY.add(function (S, require) {
         self.startScroll.top = self.get('scrollTop');
     }
 
-    function onDraggingHandler(e) {
+    function onDragPreHandler(e) {
         var self = this;
 
         if (e.gestureType !== 'touch') {
@@ -374,7 +374,7 @@ KISSY.add(function (S, require) {
         self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)
             // click
             [action](BaseGesture.START, onGestureStart, self)
-            [action](DragGesture.DRAGGING, onDraggingHandler, self)
+            [action](DragGesture.DRAG_PRE, onDragPreHandler, self)
             [action](DragGesture.DRAG, onDragHandler, self)
             [action](DragGesture.DRAG_END, onDragEndHandler, self);
     }

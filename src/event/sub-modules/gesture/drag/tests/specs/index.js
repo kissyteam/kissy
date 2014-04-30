@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAGGING, function (e) {
+                d.on(DragGesture.DRAG_PRE, function (e) {
                     e.preventDefault();
                 });
                 d.on(DragGesture.DRAG_START, function (e) {
@@ -34,6 +34,7 @@ KISSY.add(function (S, require) {
                     move = 1;
                     expect(e.pageX).toBe(16);
                     expect(e.pageY).toBe(16);
+                    e.preventDefault();
                 });
 
                 d.on(DragGesture.DRAG_END, function (e) {
@@ -103,7 +104,7 @@ KISSY.add(function (S, require) {
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAGGING, function (e) {
+                d.on(DragGesture.DRAG_PRE, function (e) {
                     e.preventDefault();
                 });
                 d.on(DragGesture.DRAG_START, function (e) {
@@ -117,6 +118,7 @@ KISSY.add(function (S, require) {
                     move = 1;
                     expect(e.pageX).toBe(16);
                     expect(e.pageY).toBe(16);
+                    e.preventDefault();
                 });
 
                 d.on(DragGesture.DRAG_END, function (e) {
@@ -262,7 +264,7 @@ KISSY.add(function (S, require) {
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAGGING, function (e) {
+                d.on(DragGesture.DRAG_PRE, function (e) {
                     e.preventDefault();
                 });
                 d.on(DragGesture.DRAG_START, function (e) {
@@ -276,6 +278,7 @@ KISSY.add(function (S, require) {
                     move = 1;
                     expect(e.pageX).toBe(16);
                     expect(e.pageY).toBe(16);
+                    e.preventDefault();
                 });
 
                 d.on(DragGesture.DRAG_END, function (e) {

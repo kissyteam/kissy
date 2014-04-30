@@ -9,10 +9,50 @@ KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
     var UA = require('ua');
-    var SINGLE_TAP_EVENT = 'singleTap',
-        DOUBLE_TAP_EVENT = 'doubleTap',
-        TAP_HOLD_EVENT = 'tapHold',
-        TAP_EVENT = 'tap',
+
+    /**
+     * fired when tap.
+     * @event TAP
+     * @member KISSY.Event.Gesture.Tap
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX tap pageX
+     * @param {Number} e.pageY tap pageY
+     */
+
+    /**
+     * fired when singleTap.
+     * @event SINGLE_TAP
+     * @member KISSY.Event.Gesture.Tap
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX tap pageX
+     * @param {Number} e.pageY tap pageY
+     * @param {Number} e.duration time duration(s) between current time and last touch start
+     */
+
+    /**
+     * fired when doubleTap.
+     * @event DOUBLE_TAP
+     * @member KISSY.Event.Gesture.Tap
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX tap pageX
+     * @param {Number} e.pageY tap pageY
+     * @param {Number} e.duration time duration(s) between current time and last touch up
+     */
+
+    /**
+     * fired when tapHold.
+     * @event TAP_HOLD
+     * @member KISSY.Event.Gesture.Tap
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX tap pageX
+     * @param {Number} e.pageY tap pageY
+     * @param {Number} e.duration time duration(s) between current time and current touch start
+     */
+
+    var SINGLE_TAP = 'singleTap',
+        DOUBLE_TAP = 'doubleTap',
+        TAP_HOLD = 'tapHold',
+        TAP = 'tap',
         TAP_HOLD_DELAY = 1000,
     // same with native click delay
         SINGLE_TAP_DELAY = 300,
@@ -49,13 +89,12 @@ KISSY.add(function (S, require) {
 
             self.tapHoldTimer = setTimeout(function () {
                 var eventObj = S.mix({
-                    touch: currentTouch,
                     which: 1,
-                    TAP_HOLD_DELAY: (S.now() - e.timeStamp) / 1000
+                    duration: (S.now() - e.timeStamp) / 1000
                 }, self.lastXY);
                 self.tapHoldTimer = 0;
                 self.lastXY = 0;
-                DomEvent.fire(currentTouch.target, TAP_HOLD_EVENT, eventObj);
+                DomEvent.fire(currentTouch.target, TAP_HOLD, eventObj);
             }, TAP_HOLD_DELAY);
 
             self.isStarted = true;
@@ -104,7 +143,7 @@ KISSY.add(function (S, require) {
             var eventObject = new DomEventObject(e.originalEvent);
 
             S.mix(eventObject, {
-                type: TAP_EVENT,
+                type: TAP,
                 which: 1,
                 pageX: lastXY.pageX,
                 pageY: lastXY.pageY,
@@ -112,8 +151,7 @@ KISSY.add(function (S, require) {
                 currentTarget: target
             });
 
-            eventObject.touch = touch;
-            DomEvent.fire(target, TAP_EVENT, eventObject);
+            DomEvent.fire(target, TAP, eventObject);
 
             // call e.preventDefault on tap event to prevent tap penetration in real touch device
             if (eventObject.isDefaultPrevented() && UA.mobile) {
@@ -140,8 +178,7 @@ KISSY.add(function (S, require) {
                 if (duration < SINGLE_TAP_DELAY) {
                     // a new double tap cycle
                     self.lastEndTime = 0;
-                    DomEvent.fire(target, DOUBLE_TAP_EVENT, {
-                        touch: touch,
+                    DomEvent.fire(target, DOUBLE_TAP, {
                         pageX: lastXY.pageX,
                         pageY: lastXY.pageY,
                         which: 1,
@@ -156,8 +193,7 @@ KISSY.add(function (S, require) {
             // then a singleTap
             duration = time - self.startTime;
             if (duration > SINGLE_TAP_DELAY) {
-                DomEvent.fire(target, SINGLE_TAP_EVENT, {
-                    touch: touch,
+                DomEvent.fire(target, SINGLE_TAP, {
                     pageX: lastXY.pageX,
                     pageY: lastXY.pageY,
                     which: 1,
@@ -167,27 +203,26 @@ KISSY.add(function (S, require) {
                 // buffer singleTap
                 // wait for a second tap
                 self.singleTapTimer = setTimeout(function () {
-                    DomEvent.fire(target, SINGLE_TAP_EVENT, {
-                        touch: touch,
+                    DomEvent.fire(target, SINGLE_TAP, {
                         pageX: lastXY.pageX,
                         pageY: lastXY.pageY,
                         which: 1,
-                        duration: duration / 1000
+                        duration: (S.now() - self.startTime) / 1000
                     });
                 }, SINGLE_TAP_DELAY);
             }
         }
     });
 
-    addGestureEvent([TAP_EVENT, DOUBLE_TAP_EVENT, SINGLE_TAP_EVENT, TAP_HOLD_EVENT], {
+    addGestureEvent([TAP, DOUBLE_TAP, SINGLE_TAP, TAP_HOLD], {
         handle: new Tap()
     });
 
     return {
-        TAP: TAP_EVENT,
-        SINGLE_TAP: SINGLE_TAP_EVENT,
-        DOUBLE_TAP: DOUBLE_TAP_EVENT,
-        TAP_HOLD: TAP_HOLD_EVENT
+        TAP: TAP,
+        SINGLE_TAP: SINGLE_TAP,
+        DOUBLE_TAP: DOUBLE_TAP,
+        TAP_HOLD: TAP_HOLD
     };
 });
 /**

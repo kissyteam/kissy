@@ -18,6 +18,13 @@ KISSY.add(function (S, require) {
         devicemotion = 'devicemotion',
         checkShake = S.buffer(function () {
             if (shaking) {
+                /**
+                 * fired when shake ended
+                 * @event SHAKE
+                 * @member KISSY.Event.Gesture.Shake
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Object} e.accelerationIncludingGravity last devicemotion event's accelerationIncludingGravity
+                 */
                 DomEvent.fireHandler(win, SHAKE, {
                     accelerationIncludingGravity: {
                         x: lastX,
