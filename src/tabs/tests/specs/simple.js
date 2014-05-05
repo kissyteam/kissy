@@ -8,7 +8,6 @@ KISSY.add(function (S, Tabs) {
     describe("tabs", function () {
 
         it("simple works", function () {
-
             var tabs = new Tabs({
                 items: [
                     {
@@ -26,7 +25,7 @@ KISSY.add(function (S, Tabs) {
             expect($(".ks-tabs").length).toBe(1);
             expect($(".ks-tabs-tab").length).toBe(2);
             expect($(".ks-tabs-panel").length).toBe(2);
-            expect($(".ks-tabs-tab").item(1).html()).toBe('tab-2');
+            expect($(".ks-tabs-tab").item(1).one('.ks-tabs-tab-content').html()).toBe('tab-2');
             expect($(".ks-tabs-panel").item(1).html().toLowerCase())
                 .toBe('<p>panel-2</p>');
 
