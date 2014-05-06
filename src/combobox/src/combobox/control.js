@@ -116,6 +116,7 @@ KISSY.add(function (S, require) {
         // buffer/bridge between check timer and change logic
         _onSetValue: function (v, e) {
             var self = this,
+                clearEl = self.get('clearEl'),
                 value;
             // only trigger menu when timer cause change
             if (e.causedByInputEvent) {
@@ -129,6 +130,12 @@ KISSY.add(function (S, require) {
                 self.sendRequest(value);
             } else {
                 self.get('input').val(v);
+            }
+
+            if (v && clearEl) {
+                clearEl.show();
+            } else if (!v && clearEl) {
+                clearEl.hide();
             }
         },
 
@@ -190,6 +197,7 @@ KISSY.add(function (S, require) {
                         causedByInputEvent: 1
                     }
                 });
+                clearEl.hide();
             }
         },
 

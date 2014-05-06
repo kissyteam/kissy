@@ -36,6 +36,9 @@
 
     <div class="{{getBaseCssClasses ('clear')}}"
          unselectable="on"
+         {{#if(!value)}}
+         style="display:none"
+         {{/if}}
          onmousedown="return false;"><div
             class="{{getBaseCssClasses ('clear-inner')}}">clear</div></div>
 </div>

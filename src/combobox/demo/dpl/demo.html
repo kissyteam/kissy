@@ -35,8 +35,11 @@
                     <div class="ks-combobox" id="J_AutoComplete" style="width: 200px; ">
                         <div class="ks-combobox-input-wrap">
                             <input class="ks-combobox-input" id="inp">
-                            <div class="ks-combobox-clear" unselectable="on" onmousedown="return false"
-                                    ></div>
+                            <div class="ks-combobox-clear" unselectable="on"
+                                 style="display: none"
+                                 onmousedown="return false">
+                                <div class="ks-combobox-clear-inner"></div>
+                                 </div>
                         </div>
                     </div>
                 </div>
@@ -165,6 +168,7 @@
         var basicComboBox = new ComboBox({
             render: "#inp_container",
             width: 200,
+            value:'c',
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),

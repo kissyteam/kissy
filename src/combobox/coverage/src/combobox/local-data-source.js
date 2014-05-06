@@ -260,11 +260,11 @@ if (! _$jscoverage['/combobox/local-data-source.js'].branchData) {
   _$jscoverage['/combobox/local-data-source.js'].branchData['58'][1] = new BranchData();
 }
 _$jscoverage['/combobox/local-data-source.js'].branchData['58'][1].init(18, 26, 'd.indexOf(inputVal) !== -1');
-function visit81_58_1(result) {
+function visit83_58_1(result) {
   _$jscoverage['/combobox/local-data-source.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/local-data-source.js'].branchData['54'][1].init(61, 9, '!inputVal');
-function visit80_54_1(result) {
+function visit82_54_1(result) {
   _$jscoverage['/combobox/local-data-source.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/local-data-source.js'].lineData[6]++;
@@ -294,7 +294,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/combobox/local-data-source.js'].lineData[52]++;
     var ret = [], count = 0;
     _$jscoverage['/combobox/local-data-source.js'].lineData[54]++;
-    if (visit80_54_1(!inputVal)) {
+    if (visit82_54_1(!inputVal)) {
       _$jscoverage['/combobox/local-data-source.js'].lineData[55]++;
       return data;
     }
@@ -302,7 +302,7 @@ KISSY.add(function(S, require) {
     S.each(data, function(d) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[3]++;
   _$jscoverage['/combobox/local-data-source.js'].lineData[58]++;
-  if (visit81_58_1(d.indexOf(inputVal) !== -1)) {
+  if (visit83_58_1(d.indexOf(inputVal) !== -1)) {
     _$jscoverage['/combobox/local-data-source.js'].lineData[59]++;
     ret.push(d);
   }

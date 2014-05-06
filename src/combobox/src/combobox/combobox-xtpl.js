@@ -187,20 +187,33 @@ KISSY.add(function (S, require, exports, module) {
                 callRet36 = undefined;
             }
             buffer.write(callRet36, true);
-            buffer.write('"\r\n         unselectable="on"\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+            buffer.write('"\r\n         unselectable="on"\r\n         ', 0);
             var option37 = {
                 escape: 1
             };
             var params38 = [];
-            params38.push('clear-inner');
+            var id39 = scope.resolve(["value"], 0);
+            params38.push(!(id39));
             option37.params = params38;
-            var callRet39
-            callRet39 = callFnUtil(engine, scope, option37, buffer, ["getBaseCssClasses"], 0, 40);
-            if (callRet39 && callRet39.isBuffer) {
-                buffer = callRet39;
-                callRet39 = undefined;
+            option37.fn = function (scope, buffer) {
+                buffer.write('\r\n         style="display:none"\r\n         ', 0);
+                return buffer;
+            };
+            buffer = ifCommand.call(engine, scope, option37, buffer, 39, payload);
+            buffer.write('\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+            var option40 = {
+                escape: 1
+            };
+            var params41 = [];
+            params41.push('clear-inner');
+            option40.params = params41;
+            var callRet42
+            callRet42 = callFnUtil(engine, scope, option40, buffer, ["getBaseCssClasses"], 0, 43);
+            if (callRet42 && callRet42.isBuffer) {
+                buffer = callRet42;
+                callRet42 = undefined;
             }
-            buffer.write(callRet39, true);
+            buffer.write(callRet42, true);
             buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
             return buffer;
         };

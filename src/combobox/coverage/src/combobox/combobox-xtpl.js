@@ -377,12 +377,22 @@ if (! _$jscoverage['/combobox/combobox-xtpl.js']) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[198] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[199] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[200] = 0;
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[201] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[202] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[203] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[204] = 0;
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[205] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[207] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[208] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[209] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[210] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[211] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[212] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[213] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[214] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[216] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[217] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[218] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[220] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[221] = 0;
 }
 if (! _$jscoverage['/combobox/combobox-xtpl.js'].functionData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData = [];
@@ -392,6 +402,7 @@ if (! _$jscoverage['/combobox/combobox-xtpl.js'].functionData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData[3] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData[4] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData[5] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].functionData[6] = 0;
 }
 if (! _$jscoverage['/combobox/combobox-xtpl.js'].branchData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData = {};
@@ -413,12 +424,12 @@ if (! _$jscoverage['/combobox/combobox-xtpl.js'].branchData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1] = new BranchData();
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'] = [];
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'][1] = new BranchData();
-  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'] = [];
-  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['212'] = [];
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['212'][1] = new BranchData();
 }
-_$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'][1].init(8409, 31, 'callRet39 && callRet39.isBuffer');
-function visit10_199_1(result) {
-  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'][1].ranCondition(result);
+_$jscoverage['/combobox/combobox-xtpl.js'].branchData['212'][1].init(8949, 31, 'callRet42 && callRet42.isBuffer');
+function visit10_212_1(result) {
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['212'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'][1].init(7786, 31, 'callRet36 && callRet36.isBuffer');
 function visit9_185_1(result) {
@@ -765,36 +776,59 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[189]++;
   buffer.write(callRet36, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[190]++;
-  buffer.write('"\r\n         unselectable="on"\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+  buffer.write('"\r\n         unselectable="on"\r\n         ', 0);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[191]++;
   var option37 = {
   escape: 1};
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[194]++;
   var params38 = [];
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[195]++;
-  params38.push('clear-inner');
+  var id39 = scope.resolve(["value"], 0);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[196]++;
-  option37.params = params38;
+  params38.push(!(id39));
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[197]++;
-  var callRet39;
+  option37.params = params38;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[198]++;
-  callRet39 = callFnUtil(engine, scope, option37, buffer, ["getBaseCssClasses"], 0, 40);
+  option37.fn = function(scope, buffer) {
+  _$jscoverage['/combobox/combobox-xtpl.js'].functionData[6]++;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[199]++;
-  if (visit10_199_1(callRet39 && callRet39.isBuffer)) {
-    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[200]++;
-    buffer = callRet39;
-    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[201]++;
-    callRet39 = undefined;
-  }
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[203]++;
-  buffer.write(callRet39, true);
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[204]++;
-  buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[205]++;
+  buffer.write('\r\n         style="display:none"\r\n         ', 0);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[200]++;
   return buffer;
 };
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[202]++;
+  buffer = ifCommand.call(engine, scope, option37, buffer, 39, payload);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[203]++;
+  buffer.write('\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[204]++;
+  var option40 = {
+  escape: 1};
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[207]++;
-  t.TPL_NAME = module.name;
+  var params41 = [];
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[208]++;
+  params41.push('clear-inner');
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[209]++;
+  option40.params = params41;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[210]++;
+  var callRet42;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[211]++;
+  callRet42 = callFnUtil(engine, scope, option40, buffer, ["getBaseCssClasses"], 0, 43);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[212]++;
+  if (visit10_212_1(callRet42 && callRet42.isBuffer)) {
+    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[213]++;
+    buffer = callRet42;
+    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[214]++;
+    callRet42 = undefined;
+  }
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[216]++;
+  buffer.write(callRet42, true);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[217]++;
+  buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[218]++;
+  return buffer;
+};
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[220]++;
+  t.TPL_NAME = module.name;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[221]++;
   return t;
 });
