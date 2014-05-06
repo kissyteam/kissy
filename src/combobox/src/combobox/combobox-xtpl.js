@@ -173,7 +173,35 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('">\r\n    ', 0);
             var id33 = scope.resolve(["placeholder"], 0);
             buffer.write(id33, true);
-            buffer.write('\r\n    </label>\r\n</div>\r\n', 0);
+            buffer.write('\r\n    </label>\r\n\r\n    <div class="', 0);
+            var option34 = {
+                escape: 1
+            };
+            var params35 = [];
+            params35.push('clear');
+            option34.params = params35;
+            var callRet36
+            callRet36 = callFnUtil(engine, scope, option34, buffer, ["getBaseCssClasses"], 0, 37);
+            if (callRet36 && callRet36.isBuffer) {
+                buffer = callRet36;
+                callRet36 = undefined;
+            }
+            buffer.write(callRet36, true);
+            buffer.write('"\r\n         unselectable="on"\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+            var option37 = {
+                escape: 1
+            };
+            var params38 = [];
+            params38.push('clear-inner');
+            option37.params = params38;
+            var callRet39
+            callRet39 = callFnUtil(engine, scope, option37, buffer, ["getBaseCssClasses"], 0, 40);
+            if (callRet39 && callRet39.isBuffer) {
+                buffer = callRet39;
+                callRet39 = undefined;
+            }
+            buffer.write(callRet39, true);
+            buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
             return buffer;
         };
 t.TPL_NAME = module.name;

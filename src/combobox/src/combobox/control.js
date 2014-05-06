@@ -167,11 +167,11 @@ KISSY.add(function (S, require) {
 
         handleMouseDownInternal: function (e) {
             var self = this,
-                target,
-                trigger;
+                target, clearEl, trigger;
             self.callSuper(e);
             target = e.target;
             trigger = self.get('trigger');
+            clearEl = self.get('clearEl');
             if (trigger && (trigger[0] === target || trigger.contains(target))) {
                 if (self.get('collapsed')) {
                     // fetch data
@@ -182,6 +182,14 @@ KISSY.add(function (S, require) {
                     self.set('collapsed', true);
                 }
                 e.preventDefault();
+            } else if (clearEl && (clearEl[0] === target || clearEl.contains(target))) {
+                self.get('input').val('');
+                // re send request
+                self.setCurrentValue('', {
+                    data: {
+                        causedByInputEvent: 1
+                    }
+                });
             }
         },
 
@@ -386,6 +394,12 @@ KISSY.add(function (S, require) {
             placeholderEl: {
                 selector: function () {
                     return ('.' + this.getBaseCssClass('placeholder'));
+                }
+            },
+
+            clearEl: {
+                selector: function () {
+                    return ('.' + this.getBaseCssClass('clear'));
                 }
             },
 
@@ -690,7 +704,7 @@ KISSY.add(function (S, require) {
     }
 
     function onValueChange(e) {
-        this.set('value', e.target.value, {
+        this.setCurrentValue(e.target.value, {
             data: {
                 causedByInputEvent: 1
             }

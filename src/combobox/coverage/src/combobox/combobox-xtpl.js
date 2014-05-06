@@ -359,8 +359,30 @@ if (! _$jscoverage['/combobox/combobox-xtpl.js']) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[175] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[176] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[177] = 0;
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[179] = 0;
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[180] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[181] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[182] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[183] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[184] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[185] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[186] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[187] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[189] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[190] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[191] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[194] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[195] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[196] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[197] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[198] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[199] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[200] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[201] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[203] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[204] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[205] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[207] = 0;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[208] = 0;
 }
 if (! _$jscoverage['/combobox/combobox-xtpl.js'].functionData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].functionData = [];
@@ -389,8 +411,20 @@ if (! _$jscoverage['/combobox/combobox-xtpl.js'].branchData) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['131'][1] = new BranchData();
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'] = [];
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1] = new BranchData();
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'] = [];
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'][1] = new BranchData();
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'] = [];
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'][1] = new BranchData();
 }
-_$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1].init(7089, 31, 'callRet32 && callRet32.isBuffer');
+_$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'][1].init(8409, 31, 'callRet39 && callRet39.isBuffer');
+function visit10_199_1(result) {
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['199'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'][1].init(7786, 31, 'callRet36 && callRet36.isBuffer');
+function visit9_185_1(result) {
+  _$jscoverage['/combobox/combobox-xtpl.js'].branchData['185'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1].init(7089, 31, 'callRet32 && callRet32.isBuffer');
 function visit8_168_1(result) {
   _$jscoverage['/combobox/combobox-xtpl.js'].branchData['168'][1].ranCondition(result);
   return result;
@@ -707,12 +741,60 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[175]++;
   buffer.write(id33, true);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[176]++;
-  buffer.write('\r\n    </label>\r\n</div>\r\n', 0);
+  buffer.write('\r\n    </label>\r\n\r\n    <div class="', 0);
   _$jscoverage['/combobox/combobox-xtpl.js'].lineData[177]++;
+  var option34 = {
+  escape: 1};
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[180]++;
+  var params35 = [];
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[181]++;
+  params35.push('clear');
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[182]++;
+  option34.params = params35;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[183]++;
+  var callRet36;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[184]++;
+  callRet36 = callFnUtil(engine, scope, option34, buffer, ["getBaseCssClasses"], 0, 37);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[185]++;
+  if (visit9_185_1(callRet36 && callRet36.isBuffer)) {
+    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[186]++;
+    buffer = callRet36;
+    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[187]++;
+    callRet36 = undefined;
+  }
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[189]++;
+  buffer.write(callRet36, true);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[190]++;
+  buffer.write('"\r\n         unselectable="on"\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[191]++;
+  var option37 = {
+  escape: 1};
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[194]++;
+  var params38 = [];
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[195]++;
+  params38.push('clear-inner');
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[196]++;
+  option37.params = params38;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[197]++;
+  var callRet39;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[198]++;
+  callRet39 = callFnUtil(engine, scope, option37, buffer, ["getBaseCssClasses"], 0, 40);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[199]++;
+  if (visit10_199_1(callRet39 && callRet39.isBuffer)) {
+    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[200]++;
+    buffer = callRet39;
+    _$jscoverage['/combobox/combobox-xtpl.js'].lineData[201]++;
+    callRet39 = undefined;
+  }
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[203]++;
+  buffer.write(callRet39, true);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[204]++;
+  buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[205]++;
   return buffer;
 };
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[179]++;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[207]++;
   t.TPL_NAME = module.name;
-  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[180]++;
+  _$jscoverage['/combobox/combobox-xtpl.js'].lineData[208]++;
   return t;
 });

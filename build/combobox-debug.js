@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:57
+build time: May 6 15:53
 */
 /*
 combined modules:
@@ -186,10 +186,11 @@ KISSY.add('combobox/control', [
             }
         },
         handleMouseDownInternal: function (e) {
-            var self = this, target, trigger;
+            var self = this, target, clearEl, trigger;
             self.callSuper(e);
             target = e.target;
             trigger = self.get('trigger');
+            clearEl = self.get('clearEl');
             if (trigger && (trigger[0] === target || trigger.contains(target))) {
                 if (self.get('collapsed')) {
                     // fetch data
@@ -200,6 +201,10 @@ KISSY.add('combobox/control', [
                     self.set('collapsed', true);
                 }
                 e.preventDefault();
+            } else if (clearEl && (clearEl[0] === target || clearEl.contains(target))) {
+                self.get('input').val('');    // re send request
+                // re send request
+                self.setCurrentValue('', { data: { causedByInputEvent: 1 } });
             }
         },
         handleKeyDownInternal: function (e) {
@@ -367,6 +372,11 @@ KISSY.add('combobox/control', [
             placeholderEl: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('placeholder');
+                }
+            },
+            clearEl: {
+                selector: function () {
+                    return '.' + this.getBaseCssClass('clear');
                 }
             },
             /**
@@ -629,7 +639,7 @@ KISSY.add('combobox/control', [
         }
     }
     function onValueChange(e) {
-        this.set('value', e.target.value, { data: { causedByInputEvent: 1 } });
+        this.setCurrentValue(e.target.value, { data: { causedByInputEvent: 1 } });
     }
     function renderData(data) {
         var self = this, v, children = [], val, matchVal, highlightedItem, i, menu = self.get('menu');
@@ -838,7 +848,31 @@ KISSY.add('combobox/combobox-xtpl', [], function (S, require, exports, module) {
         buffer.write('">\r\n    ', 0);
         var id33 = scope.resolve(['placeholder'], 0);
         buffer.write(id33, true);
-        buffer.write('\r\n    </label>\r\n</div>\r\n', 0);
+        buffer.write('\r\n    </label>\r\n\r\n    <div class="', 0);
+        var option34 = { escape: 1 };
+        var params35 = [];
+        params35.push('clear');
+        option34.params = params35;
+        var callRet36;
+        callRet36 = callFnUtil(engine, scope, option34, buffer, ['getBaseCssClasses'], 0, 37);
+        if (callRet36 && callRet36.isBuffer) {
+            buffer = callRet36;
+            callRet36 = undefined;
+        }
+        buffer.write(callRet36, true);
+        buffer.write('"\r\n         unselectable="on"\r\n         onmousedown="return false;"><div\r\n            class="', 0);
+        var option37 = { escape: 1 };
+        var params38 = [];
+        params38.push('clear-inner');
+        option37.params = params38;
+        var callRet39;
+        callRet39 = callFnUtil(engine, scope, option37, buffer, ['getBaseCssClasses'], 0, 40);
+        if (callRet39 && callRet39.isBuffer) {
+            buffer = callRet39;
+            callRet39 = undefined;
+        }
+        buffer.write(callRet39, true);
+        buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
         return buffer;
     };
     t.TPL_NAME = module.name;

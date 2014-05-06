@@ -532,6 +532,41 @@ li {
     width: 100%;
     color: #bbb
 }
+
+.search-combobox-clear {
+    position: absolute;
+    width: 35px;
+    top:0;
+    height: 100%;
+    right: 22px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.search-combobox-clear-inner {
+    width: 16px;
+    height: 16px;
+    -webkit-border-radius: 1em;
+    background-color: #ccc;
+    text-indent: -9999px;
+    margin: 0 auto;
+    margin-top: 8px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.search-combobox-clear-inner:after {
+    width: 16px;
+    height: 16px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACeSURBVHjapFNBDoAwCCM+xJP72txl4fEedkQ3IZnKQGOTHtCWJRSAiIC5HIxdPWJkbavl43yw0IlsmDNrCntAXt7oimyYBdWz1B+JdGTDLEgiwIFgZWrAfgZWk6H53uBtE+w92qSTYU53/QR/4UTlpQNfzY8mbs7enlhDwxfptEUKyiqjkg4qqxy0Y0LjmFA7JmHgtfXOeWVtq3cBBgBIaEg6ARaR/wAAAABJRU5ErkJggg==);
+    -webkit-background-size: 8px 8px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    content: " ";
+}
 </style>
 </head>
 <body>
@@ -567,6 +602,9 @@ li {
                                class="search-combobox-placeholder">
                             click me
                         </label>
+                        <div class="search-combobox-clear" unselectable='on' onmousedown="return false">
+                            <div class="search-combobox-clear-inner"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -616,7 +654,7 @@ li {
     if (location.search.indexOf('del') !== -1) {
         xclass = 'del-menuitem';
     }
-    KISSY.use("event,dom,combobox,search/menuitem,search/del-menuitem", function (S, Event, Dom, ComboBox) {
+    KISSY.use("event/dom,dom,combobox,search/menuitem,search/del-menuitem", function (S, Event, Dom, ComboBox) {
         /*
          remote dataSource
          */

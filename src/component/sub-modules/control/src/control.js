@@ -173,13 +173,6 @@ KISSY.add(function (S, require) {
                 if (self.get('highlighted')) {
                     elCls.push(self.getBaseCssClasses('hover'));
                 }
-                if (self.get('focusable')) {
-                    // ie9 support outline
-                    if (UA.ieMode < 9) {
-                        elAttrs.hideFocus = 'true';
-                    }
-                    elAttrs.tabindex = disabled ? '-1' : '0';
-                }
             },
 
             /**
@@ -235,12 +228,17 @@ KISSY.add(function (S, require) {
                 var self = this;
 
                 if (self.get('focusable')) {
+                    var keyEventTarget = self.getKeyEventTarget();
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    self.getKeyEventTarget()
-                        .on('focus', self.handleFocus, self)
+                    keyEventTarget.on('focus', self.handleFocus, self)
                         .on('blur', self.handleBlur, self)
                         .on('keydown', self.handleKeydown, self);
+                    // ie9 support outline
+                    if (UA.ieMode < 9) {
+                        keyEventTarget.attr('hideFocus', true);
+                    }
+                    keyEventTarget.attr('tabindex', self.get('disabled') ? '-1' : '0');
                 }
 
                 if (self.get('handleGestureEvents')) {
