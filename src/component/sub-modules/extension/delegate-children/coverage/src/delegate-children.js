@@ -317,7 +317,7 @@ function visit1_13_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/delegate-children.js'].functionData[0]++;
   _$jscoverage['/delegate-children.js'].lineData[7]++;
-  var Manager = require('component/manager');
+  var Manager = require('component/control').Manager;
   _$jscoverage['/delegate-children.js'].lineData[9]++;
   var BaseGesture = require('event/gesture/base');
   _$jscoverage['/delegate-children.js'].lineData[10]++;

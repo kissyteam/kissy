@@ -300,10 +300,10 @@ KISSY.add(function(S, require) {
   return true;
 }}, {
   ATTRS: {
+  contentTpl: {
+  value: CheckMenuItemTpl}, 
   checked: {
   render: 1, 
-  sync: 0}, 
-  contentTpl: {
-  value: CheckMenuItemTpl}}, 
+  sync: 0}}, 
   xclass: 'check-menuitem'});
 });

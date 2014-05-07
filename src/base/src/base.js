@@ -56,8 +56,10 @@ KISSY.add(function (S, require) {
             self.callSuper.apply(self, arguments);
             // setup listeners
             var listeners = self.get('listeners');
-            for (var n in listeners) {
-                self.on(n, listeners[n]);
+            if (listeners) {
+                for (var n in listeners) {
+                    self.on(n, listeners[n]);
+                }
             }
             // initializer
             self.initializer();
@@ -214,10 +216,11 @@ KISSY.add(function (S, require) {
         destructor: noop,
 
         destroy: function () {
-            var self = this;
+            var self = this,
+                args = S.makeArray(arguments);
             if (!self.get('destroyed')) {
-                callPluginsMethod.call(self, 'pluginDestructor');
-                self.destructor();
+                callPluginsMethod.call(self, 'pluginDestructor', args);
+                self.destructor.apply(self, args);
                 self.set('destroyed', true);
                 self.fire('destroy');
                 self.detach();
@@ -240,7 +243,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             plugins: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
 
             destroyed: {
@@ -273,7 +278,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             listeners: {
-                value: []
             }
         },
 
@@ -412,14 +416,17 @@ KISSY.add(function (S, require) {
         });
     }
 
-    function callPluginsMethod(method) {
-        var len,
+    function callPluginsMethod(method, args) {
+        var len, fn,
             self = this,
             plugins = self.get('plugins');
+        args = args || [];
+        args = [self].concat(args);
         if ((len = plugins.length)) {
             for (var i = 0; i < len; i++) {
-                if (plugins[i][method]) {
-                    plugins[i][method](self);
+                fn = plugins[i][method];
+                if (fn) {
+                    fn.apply(plugins[i], args);
                 }
             }
         }

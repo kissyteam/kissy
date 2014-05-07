@@ -11,7 +11,7 @@
     <div class="{{getBaseCssClasses ('icon')}}">
 
     </div>
-    {{{include ("component/extension/content-xtpl")}}}
+    <div class="{{getBaseCssClasses ('content')}}">{{{content}}}</div>
 </div>
 <div class="{{getBaseCssClasses ('children')}}"
 {{#if (!expanded)}}

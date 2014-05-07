@@ -57,7 +57,8 @@ KISSY.add(function (S, require) {
         }
     }, {
         ATTRS: {
-            contentEl: {
+            contentTpl: {
+                value: OverlayTpl
             },
 
             /**
@@ -161,10 +162,6 @@ KISSY.add(function (S, require) {
 
             visible: {
                 value: false
-            },
-
-            contentTpl: {
-                value: OverlayTpl
             }
         },
         xclass: 'overlay'

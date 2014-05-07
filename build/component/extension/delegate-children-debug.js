@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:58
+build time: May 8 11:53
 */
 /*
 combined modules:
@@ -13,11 +13,11 @@ component/extension/delegate-children
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/extension/delegate-children', [
-    'component/manager',
+    'component/control',
     'event/gesture/base',
     'event/gesture/tap'
 ], function (S, require) {
-    var Manager = require('component/manager');
+    var Manager = require('component/control').Manager;
     var BaseGesture = require('event/gesture/base');
     var TapGesture = require('event/gesture/tap');
     function onRenderChild(e) {

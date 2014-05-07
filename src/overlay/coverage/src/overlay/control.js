@@ -248,8 +248,8 @@ if (! _$jscoverage['/overlay/control.js']) {
   _$jscoverage['/overlay/control.js'].lineData[54] = 0;
   _$jscoverage['/overlay/control.js'].lineData[55] = 0;
   _$jscoverage['/overlay/control.js'].lineData[56] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[83] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[98] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[84] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[99] = 0;
 }
 if (! _$jscoverage['/overlay/control.js'].functionData) {
   _$jscoverage['/overlay/control.js'].functionData = [];
@@ -326,20 +326,21 @@ KISSY.add(function(S, require) {
   return self;
 }}, {
   ATTRS: {
-  contentEl: {}, 
+  contentTpl: {
+  value: OverlayTpl}, 
   closable: {
   value: false, 
   sync: 0, 
   render: 1, 
   parse: function() {
   _$jscoverage['/overlay/control.js'].functionData[4]++;
-  _$jscoverage['/overlay/control.js'].lineData[83]++;
+  _$jscoverage['/overlay/control.js'].lineData[84]++;
   return !!this.get('closeBtn');
 }}, 
   closeBtn: {
   selector: function() {
   _$jscoverage['/overlay/control.js'].functionData[5]++;
-  _$jscoverage['/overlay/control.js'].lineData[98]++;
+  _$jscoverage['/overlay/control.js'].lineData[99]++;
   return '.' + this.getBaseCssClass('close');
 }}, 
   closeAction: {
@@ -351,8 +352,6 @@ KISSY.add(function(S, require) {
   handleGestureEvents: {
   value: false}, 
   visible: {
-  value: false}, 
-  contentTpl: {
-  value: OverlayTpl}}, 
+  value: false}}, 
   xclass: 'overlay'});
 });

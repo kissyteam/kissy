@@ -31,6 +31,10 @@ KISSY.add(function (S, require) {
         }
     }, {
         ATTRS: {
+            contentTpl: {
+                value: CheckMenuItemTpl
+            },
+
             /**
              * Whether the menu item is checked.
              * @cfg {Boolean} checked
@@ -41,9 +45,6 @@ KISSY.add(function (S, require) {
             checked: {
                 render: 1,
                 sync: 0
-            },
-            contentTpl: {
-                value: CheckMenuItemTpl
             }
         },
         xclass: 'check-menuitem'

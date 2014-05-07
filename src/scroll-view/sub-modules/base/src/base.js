@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var TimerAnim = require('anim/timer');
     var Container = require('component/container');
     var ContentBox = require('component/extension/content-box');
-    var $ = S.all,
+    var $ = Node.all,
         KeyCode = Node.KeyCode;
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Feature = S.Feature,
@@ -405,16 +405,6 @@ KISSY.add(function (S, require) {
      */
     return Container.extend([ContentBox], methods, {
         ATTRS: {
-            /**
-             * content element of scroll view component
-             * @property contentEl
-             * @type {KISSY.Node}
-             */
-            /**
-             * @ignore
-             */
-            contentEl: {
-            },
             /**
              * scrollLeft of scroll view
              * @property scrollLeft

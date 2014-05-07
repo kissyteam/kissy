@@ -2,13 +2,51 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
+KISSY.add(function (S, require) {
+    var Control = require('component/control');
+    var Container = require('component/container');
+
     /*jshint quotmark:false*/
     function invalidNode(n) {
         return n == null || n.nodeType === 11;
     }
 
-    describe("component", function () {
+    describe("container", function () {
+        describe('container.destroy', function () {
+            it('will remove node by default', function () {
+                var my = new Container({
+                    children: [
+                        new Control({
+                            content: '1'
+                        }),
+                        new Control({
+                            content: '2'
+                        })
+                    ]
+                }).render();
+                expect(my.$el.text()).toBe('12');
+                my.destroy();
+                expect(my.$el.html()).toBe('');
+                expect(invalidNode(my.el.parentNode)).toBe(true);
+            });
+
+            it('can keep node', function () {
+                var my = new Container({
+                    children: [
+                        new Control({
+                            content: '1'
+                        }),
+                        new Control({
+                            content: '2'
+                        })
+                    ]
+                }).render();
+                my.destroy(false);
+                expect(my.$el.text()).toBe('12');
+                expect(invalidNode(my.el.parentNode)).toBe(false);
+            });
+        });
+
         describe('addChild/removeChild event', function () {
 
             it('can listen and preventDefault', function () {
@@ -283,178 +321,83 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
 
         });
 
-        describe("delegate children works", function () {
-            var MyContainer = Container.extend([DelegateChildrenExtension], {}, {
-                xclass: 'MyContainer'
-            });
+        describe("xclass", function () {
+            var A = Container.extend({
 
-            it("should attach its methods", function () {
-                var c = new MyContainer({
-                    content: "xx"
-                });
-                c.render();
-                expect(c.getOwnerControl).not.toBeUndefined();
-                expect(c.get('el')[0].parentNode).toBe(document.body);
-                expect(c.get('el').html()).toBe("xx");
-                c.destroy();
-                expect(invalidNode(c.get('el')[0].parentNode)).toBe(true);
-            });
-
-            if (S.Feature.isTouchEventSupported()) {
-
-            } else {
-                it("should delegate events", function () {
-                    var c = new MyContainer({
-                        content: "xx"
-                    });
-
-                    var child1 = new Control({
-                        content: "yy",
-                        handleGestureEvents: false,
-                        focusable: false
-                    });
-
-                    c.addChild(child1);
-
-                    var child2 = new Control({
-                        content: "yy",
-                        handleGestureEvents: false,
-                        focusable: false
-                    });
-
-                    c.addChild(child2);
-                    c.render();
-
-                    // ie11 bug
-                    if (S.UA.ieMode === 11) {
-                        return;
-                    }
-
-                    waits(100);
-                    runs(function () {
-                        jasmine.simulate(c.get('el')[0], 'mousedown');
-                    });
-                    waits(100);
-                    runs(function () {
-                        expect(c.get('active')).toBe(true);
-                    });
-                    runs(function () {
-                        jasmine.simulate(c.get('el')[0], "mouseup");
-                    });
-                    waits(100);
-                    runs(function () {
-                        expect(c.get('active')).toBe(false);
-                    });
-
-                    runs(function () {
-                        jasmine.simulate(child1.get('el')[0], 'mousedown');
-                    });
-                    waits(100);
-                    runs(function () {
-                        // do not stop bubble
-                        expect(c.get('active')).toBe(true);
-                        expect(child1.get('active')).toBe(true);
-                        expect(child2.get('active')).toBeFalsy();
-                    });
-                    runs(function () {
-                        jasmine.simulate(child1.get('el')[0], "mouseup");
-                    });
-
-                    waits(100);
-
-                    runs(function () {
-                        expect(c.get('active')).toBeFalsy();
-                        expect(child1.get('active')).toBeFalsy();
-                        expect(child2.get('active')).toBeFalsy();
-                    });
-
-                    runs(function () {
-                        c.destroy();
-                        expect(invalidNode(child1.get('el')[0].parentNode)).toBe(true);
-                    });
-                });
-            }
-        });
-    });
-
-    describe("xclass", function () {
-
-        var A = Container.extend({
-
-        }, {
-            ATTRS: {
-                defaultChildCfg: {
-                    value: {
-                        prefixXClass: 'a-b'
+            }, {
+                ATTRS: {
+                    defaultChildCfg: {
+                        valueFn: function () {
+                            return {
+                                prefixXClass: 'a-b'
+                            };
+                        }
                     }
                 }
-            }
-        }, {
-            xclass: 'a'
-        });
-
-        var B = Container.extend({}, {
-            xclass: 'a-b'
-        });
-
-        var C = B.extend({
-
-        }, {
-            xclass: 'a-b-c'
-        });
-
-        var D = B.extend({
-
-        }, {
-            xclass: 'a-b-d'
-        });
-
-
-        it('only xclass', function () {
-            var a = new A({
-                children: [
-                    {xclass: 'a-b-d'}
-                ]
+            }, {
+                xclass: 'a'
             });
-            a.render();
-            var children = a.get('children');
-            expect(children[0] instanceof D).toBe(true);
-        });
 
-        it('only prefixXClass', function () {
-            var a = new A({
-                children: [
-                    {}
-                ]
+            var B = Container.extend({}, {
+                xclass: 'a-b'
             });
-            a.render();
-            var children = a.get('children');
-            expect(children[0] instanceof B).toBe(true);
-        });
 
-        it('prefixXClass + xtype', function () {
-            var a = new A({
-                children: [
-                    {xtype: 'c'}
-                ]
-            });
-            a.render();
-            var children = a.get('children');
-            expect(children[0] instanceof C).toBe(true);
-        });
+            var C = B.extend({
 
-        it('xclass and prefixXClass + xtype', function () {
-            var a = new A({
-                children: [
-                    {xtype: 'c', xclass: 'a-b-d'}
-                ]
+            }, {
+                xclass: 'a-b-c'
             });
-            a.render();
-            var children = a.get('children');
-            expect(children[0] instanceof D).toBe(true);
+
+            var D = B.extend({
+
+            }, {
+                xclass: 'a-b-d'
+            });
+
+
+            it('only xclass', function () {
+                var a = new A({
+                    children: [
+                        {xclass: 'a-b-d'}
+                    ]
+                });
+                a.render();
+                var children = a.get('children');
+                expect(children[0] instanceof D).toBe(true);
+            });
+
+            it('only prefixXClass', function () {
+                var a = new A({
+                    children: [
+                        {}
+                    ]
+                });
+                a.render();
+                var children = a.get('children');
+                expect(children[0] instanceof B).toBe(true);
+            });
+
+            it('prefixXClass + xtype', function () {
+                var a = new A({
+                    children: [
+                        {xtype: 'c'}
+                    ]
+                });
+                a.render();
+                var children = a.get('children');
+                expect(children[0] instanceof C).toBe(true);
+            });
+
+            it('xclass and prefixXClass + xtype', function () {
+                var a = new A({
+                    children: [
+                        {xtype: 'c', xclass: 'a-b-d'}
+                    ]
+                });
+                a.render();
+                var children = a.get('children');
+                expect(children[0] instanceof D).toBe(true);
+            });
         });
     });
-}, {
-    requires: ['component/control', 'component/container',
-        'component/extension/delegate-children']
 });

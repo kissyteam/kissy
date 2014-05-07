@@ -224,10 +224,12 @@ KISSY.add(function (S, require) {
             // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
             expandedItem: {},
             defaultChildCfg: {
-                value: {
-                    xclass: 'button',
-                    handleGestureEvents: false,
-                    focusable: false
+                valueFn: function () {
+                    return {
+                        xclass: 'button',
+                        handleGestureEvents: false,
+                        focusable: false
+                    };
                 }
             }
         }

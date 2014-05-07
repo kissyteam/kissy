@@ -591,7 +591,7 @@ KISSY.add(function (S, IO) {
                 // ie 9 10 send 报异常 error: 未指明错误
                 // ch
                 IO({
-                    url: 'http://www.g.cn/',
+                    url: 'http://m.taobao.com/',
                     type: 'post',
                     error: function () {
                         var args = S.makeArray(arguments);
@@ -609,7 +609,7 @@ KISSY.add(function (S, IO) {
                 var ret = 0;
 
                 IO({
-                    url: 'http://www.g.cn/',
+                    url: 'http://m.taobao.com/',
                     type: 'get',
                     error: function () {
                         var args = S.makeArray(arguments);

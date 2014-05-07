@@ -65,19 +65,24 @@ KISSY.add(function (S, require, exports, module) {
                 callRet9 = undefined;
             }
             buffer.write(callRet9, true);
-            buffer.write('"\r\n            autocomplete="off"/>\r\n</div>\r\n', 0);
-            var option10 = {};
+            buffer.write('"\r\n            autocomplete="off"/>\r\n</div>\r\n<div class="', 0);
+            var option10 = {
+                escape: 1
+            };
             var params11 = [];
-            params11.push('component/extension/content-xtpl');
+            params11.push('content');
             option10.params = params11;
-            require("component/extension/content-xtpl");
             var callRet12
-            callRet12 = includeCommand.call(engine, scope, option10, buffer, 8, payload);
+            callRet12 = callFnUtil(engine, scope, option10, buffer, ["getBaseCssClasses"], 0, 8);
             if (callRet12 && callRet12.isBuffer) {
                 buffer = callRet12;
                 callRet12 = undefined;
             }
-            buffer.write(callRet12, false);
+            buffer.write(callRet12, true);
+            buffer.write('">', 0);
+            var id13 = scope.resolve(["content"], 0);
+            buffer.write(id13, false);
+            buffer.write('</div>', 0);
             return buffer;
         };
 t.TPL_NAME = module.name;

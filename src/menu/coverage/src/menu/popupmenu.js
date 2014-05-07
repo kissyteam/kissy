@@ -363,7 +363,6 @@ KISSY.add(function(S, require) {
   focusable: {
   value: false}, 
   autoHideOnMouseLeave: {}, 
-  contentEl: {}, 
   visible: {
   value: false}}, 
   xclass: 'popupmenu'});

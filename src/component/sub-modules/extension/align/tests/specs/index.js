@@ -8,7 +8,6 @@ KISSY.add(function (S, require) {
     var AlignControl = Control.extend([AlignExtension]);
 
     describe("extension-align", function () {
-
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
@@ -322,6 +321,5 @@ KISSY.add(function (S, require) {
 
             });
         });
-
     });
 });

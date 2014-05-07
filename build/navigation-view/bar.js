@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:10
+build time: May 8 11:54
 */
 KISSY.add("navigation-view/bar",["component/control","button","./bar/bar-xtpl"],function(p,j){function q(a){var b;b=a.clone(!0);b[0].id=a[0].id+"-proxy";a.parent().append(b);var e=a.offset();b.css("position","absolute");b.offset(e);b.css({width:a.css("width"),height:a.css("height")});return b}function k(a,b,e){a.animate(b,{duration:0.25,easing:"ease-in-out",complete:e})}function l(a,b,e,g){var c=a.get("el"),h=a.get("titleEl"),a=Math.min(c[0].offsetWidth/3,200),f=b[0].offsetWidth,b=c[0].offsetWidth,
 c=h.offset().left-c.offset().left,h=h[0].offsetWidth,n=e.width,d;g?(e=-n,n=Math.min(c-n,a)):(n=-n,e=Math.min(c,a));a={element:{from:{transform:"translateX("+e+"px) translateZ(0)"},to:{transform:"translateX(0) translateZ(0)",opacity:1}},ghost:{to:{transform:"translateX("+n+"px) translateZ(0)",opacity:0}}};f=-c+f;h>c&&(d=-c-h);g?(n=b-c-h,e=void 0!==d?d:f):(n=void 0!==d?d:f,e=Math.max(0,b-c-h));return{back:a,title:{element:{from:{transform:"translateX("+e+"px) translateZ(0)"},to:{transform:"translateX(0) translateZ(0)",

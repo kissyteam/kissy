@@ -105,3 +105,28 @@
     *zoom: 1;
     display: none;
 }
+
+.ks-combobox-clear {
+    position: absolute;
+    width: 35px;
+    top: 0;
+    height: 100%;
+    right: 0px;
+    background: transparent;
+    cursor: pointer;
+}
+.ks-combobox-clear-inner {
+    width: 14px;
+    height: 14px;
+    background-image: url(http://img04.taobaocdn.com/tps/i4/T1bxYzXmxeXXcIVv2D-469-159.png);
+    background-repeat: no-repeat;
+    background-position: -48px -96px;
+    text-indent: -9999px;
+    font-size: 0;
+    margin: 0 auto;
+    margin-top: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

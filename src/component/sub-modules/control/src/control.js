@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var BaseGesture = require('event/gesture/base');
     var TapGesture = require('event/gesture/tap');
-    var Manager = require('component/manager');
+    var Manager = require('./control/manager');
     var Base = require('base');
     var RenderTpl = require('./control/render-xtpl');
     var UA = require('ua');
@@ -815,11 +815,11 @@ KISSY.add(function (S, require) {
             /**
              * @protected
              */
-            destructor: function () {
+            destructor: function (destroy) {
                 var self = this;
                 // remove instance from manager
                 Manager.removeComponent(self);
-                if (self.$el) {
+                if (destroy !== false && self.$el) {
                     self.$el.remove();
                 }
             }
@@ -907,7 +907,9 @@ KISSY.add(function (S, require) {
                  */
                 elCls: {
                     render: 1,
-                    value: [],
+                    valueFn: function () {
+                        return [];
+                    },
                     setter: function (v) {
                         if (typeof v === 'string') {
                             v = v.split(/\s+/);
@@ -925,7 +927,9 @@ KISSY.add(function (S, require) {
                  */
                 elStyle: {
                     render: 1,
-                    value: {}
+                    valueFn: function () {
+                        return {};
+                    }
                 },
 
                 /**
@@ -937,7 +941,9 @@ KISSY.add(function (S, require) {
                  */
                 elAttrs: {
                     render: 1,
-                    value: {}
+                    valueFn: function () {
+                        return {};
+                    }
                 },
 
                 /**
@@ -1353,6 +1359,8 @@ KISSY.add(function (S, require) {
 
         return NewClass;
     };
+
+    Control.Manager = Manager;
 
     return Control;
 });

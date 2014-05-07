@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Manager = require('component/manager');
+    var Manager = require('component/control').Manager;
 
     var BaseGesture = require('event/gesture/base');
     var TapGesture = require('event/gesture/tap');

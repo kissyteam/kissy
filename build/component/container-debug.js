@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:57
+build time: May 8 11:52
 */
 /*
 combined modules:
@@ -12,12 +12,9 @@ component/container
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container', [
-    'component/control',
-    'component/manager'
-], function (S, require) {
+KISSY.add('component/container', ['component/control'], function (S, require) {
     var Control = require('component/control');
-    var Manager = require('component/manager');
+    var Manager = Control.Manager;
     function defAddChild(e) {
         var self = this;
         var c = e.component, children = self.get('children'), index = e.index;
@@ -36,22 +33,14 @@ KISSY.add('component/container', [
     }
     function defRemoveChild(e) {
         var self = this;
-        var c = e.component, cDOMParentEl, cDOMEl, destroy = e.destroy, children = self.get('children'), index = e.index;
+        var c = e.component, destroy = e.destroy, children = self.get('children'), index = e.index;
         if (index !== -1) {
             children.splice(index, 1);
         }
-        c.setInternal('parent', null);
-        if (destroy) {
-            // c is still json
-            if (c.destroy) {
-                c.destroy();
-            }
-        } else {
-            if (c.get && (cDOMEl = c.el)) {
-                if (cDOMParentEl = cDOMEl.parentNode) {
-                    cDOMParentEl.removeChild(cDOMEl);
-                }
-            }
+        c.setInternal('parent', null);    // c is still json
+        // c is still json
+        if (c.destroy) {
+            c.destroy(destroy);
         }
         self.fire('afterRemoveChild', {
             component: c,
@@ -168,6 +157,13 @@ KISSY.add('component/container', [
             });
             return c;
         },
+        addChildren: function (children) {
+            // TODO optimize by batch insert
+            var i, l = children.length;
+            for (i = 0; i < l; i++) {
+                this.addChild(children[i]);
+            }
+        },
         /**
          * Removed the given child from this component,and returns it.
          *
@@ -200,7 +196,10 @@ KISSY.add('component/container', [
         removeChildren: function (destroy) {
             var self = this, i, t = [].concat(self.get('children'));
             for (i = 0; i < t.length; i++) {
-                self.removeChild(t[i], destroy);
+                self.removeChild(t[i], false);
+            }
+            if (destroy !== false && self.$el) {
+                self.getChildrenContainerEl()[0].innerHTML = '';
             }
             return self;
         },
@@ -221,13 +220,8 @@ KISSY.add('component/container', [
          * destroy children
          * @protected
          */
-        destructor: function () {
-            var i, children = this.get('children');
-            for (i = 0; i < children.length; i++) {
-                if (children[i].destroy) {
-                    children[i].destroy();
-                }
-            }
+        destructor: function (destroy) {
+            this.removeChildren(destroy);
         }
     }, {
         ATTRS: {
@@ -239,7 +233,9 @@ KISSY.add('component/container', [
              * @ignore
              */
             children: {
-                value: [],
+                valueFn: function () {
+                    return [];
+                },
                 getter: function (v) {
                     var defaultChildCfg = null, i, c, self = this;
                     for (i = 0; i < v.length; i++) {
@@ -270,7 +266,11 @@ KISSY.add('component/container', [
             /**
              * @ignore
              */
-            defaultChildCfg: { value: {} }
+            defaultChildCfg: {
+                valueFn: function () {
+                    return {};
+                }
+            }
         },
         name: 'container'
     });
@@ -279,4 +279,3 @@ KISSY.add('component/container', [
  * 2014-01-26 yimingnhe@gmail.com need to use innerHTML
  * - http://jsperf.com/fragment-innnerhtml
  */
-

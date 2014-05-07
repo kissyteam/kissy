@@ -89,9 +89,9 @@ KISSY.add(function (S, require) {
                 visibleRect.top = Math.max(visibleRect.top, pos.top);
                 visibleRect.right = Math.min(visibleRect.right,
                     // consider area without scrollBar
-                    pos.left + el.clientWidth);
+                        pos.left + el.clientWidth);
                 visibleRect.bottom = Math.min(visibleRect.bottom,
-                    pos.top + el.clientHeight);
+                        pos.top + el.clientHeight);
                 visibleRect.left = Math.max(visibleRect.left, pos.left);
             }
         }
@@ -248,7 +248,9 @@ KISSY.add(function (S, require) {
          * @ignore
          */
         align: {
-            value: {}
+            valueFn: function () {
+                return {};
+            }
         }
     };
 

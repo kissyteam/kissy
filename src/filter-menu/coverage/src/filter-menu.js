@@ -293,11 +293,11 @@ if (! _$jscoverage['/filter-menu.js']) {
   _$jscoverage['/filter-menu.js'].lineData[171] = 0;
   _$jscoverage['/filter-menu.js'].lineData[172] = 0;
   _$jscoverage['/filter-menu.js'].lineData[173] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[184] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[190] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[205] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[206] = 0;
-  _$jscoverage['/filter-menu.js'].lineData[212] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[188] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[194] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[209] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[210] = 0;
+  _$jscoverage['/filter-menu.js'].lineData[216] = 0;
 }
 if (! _$jscoverage['/filter-menu.js'].functionData) {
   _$jscoverage['/filter-menu.js'].functionData = [];
@@ -354,12 +354,12 @@ if (! _$jscoverage['/filter-menu.js'].branchData) {
   _$jscoverage['/filter-menu.js'].branchData['142'][1] = new BranchData();
   _$jscoverage['/filter-menu.js'].branchData['149'] = [];
   _$jscoverage['/filter-menu.js'].branchData['149'][1] = new BranchData();
-  _$jscoverage['/filter-menu.js'].branchData['206'] = [];
-  _$jscoverage['/filter-menu.js'].branchData['206'][1] = new BranchData();
+  _$jscoverage['/filter-menu.js'].branchData['210'] = [];
+  _$jscoverage['/filter-menu.js'].branchData['210'][1] = new BranchData();
 }
-_$jscoverage['/filter-menu.js'].branchData['206'][1].init(105, 37, 'placeholderEl && placeholderEl.html()');
-function visit25_206_1(result) {
-  _$jscoverage['/filter-menu.js'].branchData['206'][1].ranCondition(result);
+_$jscoverage['/filter-menu.js'].branchData['210'][1].init(105, 37, 'placeholderEl && placeholderEl.html()');
+function visit25_210_1(result) {
+  _$jscoverage['/filter-menu.js'].branchData['210'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['149'][1].init(30, 25, 'content.indexOf(str) > -1');
 function visit24_149_1(result) {
@@ -612,18 +612,20 @@ KISSY.add(function(S, require) {
   self.get('filterInput').val('');
 }}, {
   ATTRS: {
+  contentTpl: {
+  value: FilterMenuTpl}, 
   allowTextSelection: {
   value: true}, 
   filterInput: {
   selector: function() {
   _$jscoverage['/filter-menu.js'].functionData[11]++;
-  _$jscoverage['/filter-menu.js'].lineData[184]++;
+  _$jscoverage['/filter-menu.js'].lineData[188]++;
   return ('.' + this.getBaseCssClass('input'));
 }}, 
   filterInputWrap: {
   selector: function() {
   _$jscoverage['/filter-menu.js'].functionData[12]++;
-  _$jscoverage['/filter-menu.js'].lineData[190]++;
+  _$jscoverage['/filter-menu.js'].lineData[194]++;
   return ('.' + this.getBaseCssClass('input-wrap'));
 }}, 
   placeholder: {
@@ -631,23 +633,21 @@ KISSY.add(function(S, require) {
   sync: 0, 
   parse: function() {
   _$jscoverage['/filter-menu.js'].functionData[13]++;
-  _$jscoverage['/filter-menu.js'].lineData[205]++;
+  _$jscoverage['/filter-menu.js'].lineData[209]++;
   var placeholderEl = this.get('placeholderEl');
-  _$jscoverage['/filter-menu.js'].lineData[206]++;
-  return visit25_206_1(placeholderEl && placeholderEl.html());
+  _$jscoverage['/filter-menu.js'].lineData[210]++;
+  return visit25_210_1(placeholderEl && placeholderEl.html());
 }}, 
   placeholderEl: {
   selector: function() {
   _$jscoverage['/filter-menu.js'].functionData[14]++;
-  _$jscoverage['/filter-menu.js'].lineData[212]++;
+  _$jscoverage['/filter-menu.js'].lineData[216]++;
   return ('.' + this.getBaseCssClass('placeholder'));
 }}, 
   filterStr: {}, 
   enteredItems: {
   value: []}, 
   allowMultiple: {
-  value: false}, 
-  contentTpl: {
-  value: FilterMenuTpl}}, 
+  value: false}}, 
   xclass: 'filter-menu'});
 });

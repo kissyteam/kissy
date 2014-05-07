@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 30 15:04
+build time: May 8 11:55
 */
 /*
 combined modules:
@@ -112,6 +112,20 @@ KISSY.add('tabs', [
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
              */
+                                                            /**
+             * fired when tab is closed
+             * @event afterTabClose
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.target closed tab
+             */
+                                                            /**
+             * fired before tab is closed
+             * @event beforeTabClose
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.target tab to be closed
+             */
             },
             /**
              * fired when selected tab is changed
@@ -126,6 +140,20 @@ KISSY.add('tabs', [
              * @member KISSY.Tabs
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
+             */
+            /**
+             * fired when tab is closed
+             * @event afterTabClose
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.target closed tab
+             */
+            /**
+             * fired before tab is closed
+             * @event beforeTabClose
+             * @member KISSY.Tabs
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.Tabs.Tab} e.target tab to be closed
              */
             /**
          * add one item to tabs
@@ -286,7 +314,7 @@ KISSY.add('tabs', [
         }, {
             ATTRS: {
                 /**
-             *  tabs config, eg: {title:'',content:''}
+             * tabs config, eg: {title:'', content:'', selected:false, closable:false}
              * @cfg {Object} item
              */
                 /**
@@ -447,7 +475,11 @@ KISSY.add('tabs/bar', ['toolbar'], function (S, require) {
             ATTRS: {
                 selectedTab: {},
                 changeType: { value: 'click' },
-                defaultChildCfg: { value: { xclass: 'tabs-tab' } }
+                defaultChildCfg: {
+                    valueFn: function () {
+                        return { xclass: 'tabs-tab' };
+                    }
+                }
             },
             xclass: 'tabs-bar'
         });    /**
@@ -530,7 +562,11 @@ KISSY.add('tabs/body', ['component/container'], function (S, require) {
                 focusable: { value: false },
                 lazyRender: {},
                 handleGestureEvents: { value: false },
-                defaultChildCfg: { value: { xclass: 'tabs-panel' } }
+                defaultChildCfg: {
+                    valueFn: function () {
+                        return { xclass: 'tabs-panel' };
+                    }
+                }
             },
             xclass: 'tabs-body'
         });
@@ -610,6 +646,13 @@ KISSY.add('tabs/tab', [
             contentTpl: { value: TabTpl },
             handleGestureEvents: { value: false },
             focusable: { value: false },
+            /**
+             * whether closable
+             * @cfg {Boolean} closable
+             */
+            /**
+             * @ignore
+             */
             closable: {
                 value: false,
                 render: 1,

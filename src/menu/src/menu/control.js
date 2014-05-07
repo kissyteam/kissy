@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
         },
 
         _onSetVisible: function (v, e) {
-            this.callSuper(v,e);
+            this.callSuper(v, e);
             var highlightedItem;
             if (!v && (highlightedItem = this.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
@@ -226,8 +226,10 @@ KISSY.add(function (S, require) {
             },
 
             defaultChildCfg: {
-                value: {
-                    xclass: 'menuitem'
+                valueFn: function () {
+                    return {
+                        xclass: 'menuitem'
+                    };
                 }
             }
         },

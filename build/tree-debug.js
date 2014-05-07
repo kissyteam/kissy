@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:13
+build time: May 8 11:55
 */
 /*
 combined modules:
@@ -82,7 +82,13 @@ KISSY.add('tree/control', [
             }
         }
     }, {
-        ATTRS: { defaultChildCfg: { value: { xclass: 'tree-node' } } },
+        ATTRS: {
+            defaultChildCfg: {
+                valueFn: function () {
+                    return { xclass: 'tree-node' };
+                }
+            }
+        },
         xclass: 'tree'
     });
 });    /*
@@ -441,7 +447,11 @@ KISSY.add('tree/node', [
                 sync: 0
             },
             focusable: { value: false },
-            defaultChildCfg: { value: { xclass: 'tree-node' } }
+            defaultChildCfg: {
+                valueFn: function () {
+                    return { xclass: 'tree-node' };
+                }
+            }
         },
         xclass: 'tree-node'
     });    // # ------------------- private start
@@ -561,7 +571,7 @@ KISSY.add('tree/node', [
 
 
 /** Compiled By kissy-xtemplate */
-KISSY.add('tree/node-xtpl', ['component/extension/content-xtpl'], function (S, require, exports, module) {
+KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     var t = function (scope, buffer, payload, undefined) {
         var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
@@ -666,49 +676,50 @@ KISSY.add('tree/node-xtpl', ['component/extension/content-xtpl'], function (S, r
             callRet25 = undefined;
         }
         buffer.write(callRet25, true);
-        buffer.write('">\r\n\r\n    </div>\r\n    ', 0);
-        var option26 = {};
+        buffer.write('">\r\n\r\n    </div>\r\n    <div class="', 0);
+        var option26 = { escape: 1 };
         var params27 = [];
-        params27.push('component/extension/content-xtpl');
+        params27.push('content');
         option26.params = params27;
-        require('component/extension/content-xtpl');
         var callRet28;
-        callRet28 = includeCommand.call(engine, scope, option26, buffer, 14, payload);
+        callRet28 = callFnUtil(engine, scope, option26, buffer, ['getBaseCssClasses'], 0, 14);
         if (callRet28 && callRet28.isBuffer) {
             buffer = callRet28;
             callRet28 = undefined;
         }
-        buffer.write(callRet28, false);
-        buffer.write('\r\n</div>\r\n<div class="', 0);
-        var option29 = { escape: 1 };
-        var params30 = [];
-        params30.push('children');
-        option29.params = params30;
-        var callRet31;
-        callRet31 = callFnUtil(engine, scope, option29, buffer, ['getBaseCssClasses'], 0, 16);
-        if (callRet31 && callRet31.isBuffer) {
-            buffer = callRet31;
-            callRet31 = undefined;
+        buffer.write(callRet28, true);
+        buffer.write('">', 0);
+        var id29 = scope.resolve(['content'], 0);
+        buffer.write(id29, false);
+        buffer.write('</div>\r\n</div>\r\n<div class="', 0);
+        var option30 = { escape: 1 };
+        var params31 = [];
+        params31.push('children');
+        option30.params = params31;
+        var callRet32;
+        callRet32 = callFnUtil(engine, scope, option30, buffer, ['getBaseCssClasses'], 0, 16);
+        if (callRet32 && callRet32.isBuffer) {
+            buffer = callRet32;
+            callRet32 = undefined;
         }
-        buffer.write(callRet31, true);
+        buffer.write(callRet32, true);
         buffer.write('"\r\n', 0);
-        var option32 = { escape: 1 };
-        var params33 = [];
-        var id34 = scope.resolve(['expanded'], 0);
-        params33.push(!id34);
-        option32.params = params33;
-        option32.fn = function (scope, buffer) {
+        var option33 = { escape: 1 };
+        var params34 = [];
+        var id35 = scope.resolve(['expanded'], 0);
+        params34.push(!id35);
+        option33.params = params34;
+        option33.fn = function (scope, buffer) {
             buffer.write('\r\nstyle="display:none"\r\n', 0);
             return buffer;
         };
-        buffer = ifCommand.call(engine, scope, option32, buffer, 17, payload);
+        buffer = ifCommand.call(engine, scope, option33, buffer, 17, payload);
         buffer.write('\r\n>\r\n</div>', 0);
         return buffer;
     };
     t.TPL_NAME = module.name;
     return t;
 });
-
 
 /**
  * @ignore
@@ -898,7 +909,11 @@ KISSY.add('tree/check-node', [
                         return undefined;
                     }
                 },
-                defaultChildCfg: { value: { xclass: 'check-tree-node' } }
+                defaultChildCfg: {
+                    valueFn: function () {
+                        return { xclass: 'check-tree-node' };
+                    }
+                }
             },
             xclass: 'check-tree-node'
         });    /**
@@ -966,7 +981,13 @@ KISSY.add('tree/check-tree', [
             }
         }
     }, {
-        ATTRS: { defaultChildCfg: { value: { xclass: 'check-tree-node' } } },
+        ATTRS: {
+            defaultChildCfg: {
+                valueFn: function () {
+                    return { xclass: 'check-tree-node' };
+                }
+            }
+        },
         xclass: 'check-tree'
     });
 });

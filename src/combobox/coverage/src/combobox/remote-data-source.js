@@ -255,12 +255,14 @@ if (! _$jscoverage['/combobox/remote-data-source.js']) {
   _$jscoverage['/combobox/remote-data-source.js'].lineData[53] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[55] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[56] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[108] = 0;
 }
 if (! _$jscoverage['/combobox/remote-data-source.js'].functionData) {
   _$jscoverage['/combobox/remote-data-source.js'].functionData = [];
   _$jscoverage['/combobox/remote-data-source.js'].functionData[0] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].functionData[1] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].functionData[2] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/combobox/remote-data-source.js'].branchData) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData = {};
@@ -383,5 +385,9 @@ KISSY.add(function(S, require) {
   cache: {}, 
   parse: {}, 
   xhrCfg: {
-  value: {}}}});
+  valueFn: function() {
+  _$jscoverage['/combobox/remote-data-source.js'].functionData[3]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[108]++;
+  return {};
+}}}});
 });

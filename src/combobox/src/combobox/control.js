@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var logger = S.getLogger('combobox');
     var Node = require('node');
     var Control = require('component/control');
     var ComboboxTpl = require('./combobox-xtpl');
@@ -463,9 +464,8 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             menu: {
-                value: {
-                },
                 getter: function (v) {
+                    v = v || {};
                     if (!v.isControl) {
                         v.xclass = v.xclass || 'popupmenu';
                         v = this.createComponent(v);
@@ -721,11 +721,10 @@ KISSY.add(function (S, require) {
 
     function renderData(data) {
         var self = this,
-            v,
+            start,
             children = [],
             val,
             matchVal,
-            highlightedItem,
             i,
             menu = self.get('menu');
 
@@ -733,15 +732,10 @@ KISSY.add(function (S, require) {
 
         menu.removeChildren(true);
 
-        if ((highlightedItem = menu.get('highlightedItem'))) {
-            highlightedItem.set('highlighted', false);
-        }
-
         if (data && data.length) {
-            for (i = 0; i < data.length; i++) {
-                v = data[i];
-                menu.addChild(v);
-            }
+            start = S.now();
+            menu.addChildren(data);
+            logger.info('render menu cost: ' + (S.now() - start) + ' ms');
 
             children = menu.get('children');
 

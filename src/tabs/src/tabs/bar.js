@@ -74,8 +74,10 @@ KISSY.add(function (S, require) {
                 value: 'click'
             },
             defaultChildCfg: {
-                value: {
-                    xclass: 'tabs-tab'
+                valueFn: function () {
+                    return {
+                        xclass: 'tabs-tab'
+                    };
                 }
             }
         },

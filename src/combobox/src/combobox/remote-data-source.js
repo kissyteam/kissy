@@ -104,7 +104,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             xhrCfg: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             }
         }
     });

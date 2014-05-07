@@ -215,6 +215,10 @@ KISSY.add(function (S, require) {
 
     }, {
         ATTRS: {
+            contentTpl: {
+                value: MenuButtonTpl
+            },
+
             /**
              * Whether drop down menu is same width with button.
              * Defaults to: true.
@@ -253,8 +257,8 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             menu: {
-                value: {},
                 getter: function (v) {
+                    v = v || {};
                     if (!v.isControl) {
                         v.xclass = v.xclass || 'popupmenu';
                         v = this.createComponent(v);
@@ -280,10 +284,6 @@ KISSY.add(function (S, require) {
                 value: true,
                 render: 1,
                 sync: 0
-            },
-
-            contentTpl: {
-                value: MenuButtonTpl
             }
         },
         xclass: 'menu-button'

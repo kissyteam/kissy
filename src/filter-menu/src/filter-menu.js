@@ -175,6 +175,10 @@ KISSY.add(function (S, require) {
         },
         {
             ATTRS: {
+                contentTpl: {
+                    value: FilterMenuTpl
+                },
+
                 allowTextSelection: {
                     value: true
                 },
@@ -241,10 +245,6 @@ KISSY.add(function (S, require) {
                  */
                 allowMultiple: {
                     value: false
-                },
-
-                contentTpl: {
-                    value: FilterMenuTpl
                 }
             },
             xclass: 'filter-menu'

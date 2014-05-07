@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:10
+build time: May 8 11:54
 */
 /*
 combined modules:
@@ -231,6 +231,7 @@ KISSY.add('menubutton/control', [
         }
     }, {
         ATTRS: {
+            contentTpl: { value: MenuButtonTpl },
             /**
              * Whether drop down menu is same width with button.
              * Defaults to: true.
@@ -262,8 +263,8 @@ KISSY.add('menubutton/control', [
              * @ignore
              */
             menu: {
-                value: {},
                 getter: function (v) {
+                    v = v || {};
                     if (!v.isControl) {
                         v.xclass = v.xclass || 'popupmenu';
                         v = this.createComponent(v);
@@ -288,8 +289,7 @@ KISSY.add('menubutton/control', [
                 value: true,
                 render: 1,
                 sync: 0
-            },
-            contentTpl: { value: MenuButtonTpl }
+            }
         },
         xclass: 'menu-button'
     });
@@ -309,7 +309,7 @@ KISSY.add('menubutton/control', [
 
 
 /** Compiled By kissy-xtemplate */
-KISSY.add('menubutton/menubutton-xtpl', ['component/extension/content-xtpl'], function (S, require, exports, module) {
+KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     var t = function (scope, buffer, payload, undefined) {
         var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
@@ -317,50 +317,51 @@ KISSY.add('menubutton/menubutton-xtpl', ['component/extension/content-xtpl'], fu
         if ('5.0.0' !== S.version) {
             throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
         }
-        buffer.write('', 0);
-        var option0 = {};
+        buffer.write('<div class="', 0);
+        var option0 = { escape: 1 };
         var params1 = [];
-        params1.push('component/extension/content-xtpl');
+        params1.push('content');
         option0.params = params1;
-        require('component/extension/content-xtpl');
         var callRet2;
-        callRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);
+        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, false);
-        buffer.write('\r\n<div class="', 0);
-        var option3 = { escape: 1 };
-        var params4 = [];
-        params4.push('dropdown');
-        option3.params = params4;
-        var callRet5;
-        callRet5 = callFnUtil(engine, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
-        if (callRet5 && callRet5.isBuffer) {
-            buffer = callRet5;
-            callRet5 = undefined;
+        buffer.write(callRet2, true);
+        buffer.write('">', 0);
+        var id3 = scope.resolve(['content'], 0);
+        buffer.write(id3, false);
+        buffer.write('</div>\r\n<div class="', 0);
+        var option4 = { escape: 1 };
+        var params5 = [];
+        params5.push('dropdown');
+        option4.params = params5;
+        var callRet6;
+        callRet6 = callFnUtil(engine, scope, option4, buffer, ['getBaseCssClasses'], 0, 2);
+        if (callRet6 && callRet6.isBuffer) {
+            buffer = callRet6;
+            callRet6 = undefined;
         }
-        buffer.write(callRet5, true);
+        buffer.write(callRet6, true);
         buffer.write('">\r\n    <div class="', 0);
-        var option6 = { escape: 1 };
-        var params7 = [];
-        params7.push('dropdown-inner');
-        option6.params = params7;
-        var callRet8;
-        callRet8 = callFnUtil(engine, scope, option6, buffer, ['getBaseCssClasses'], 0, 3);
-        if (callRet8 && callRet8.isBuffer) {
-            buffer = callRet8;
-            callRet8 = undefined;
+        var option7 = { escape: 1 };
+        var params8 = [];
+        params8.push('dropdown-inner');
+        option7.params = params8;
+        var callRet9;
+        callRet9 = callFnUtil(engine, scope, option7, buffer, ['getBaseCssClasses'], 0, 3);
+        if (callRet9 && callRet9.isBuffer) {
+            buffer = callRet9;
+            callRet9 = undefined;
         }
-        buffer.write(callRet8, true);
+        buffer.write(callRet9, true);
         buffer.write('">\r\n    </div>\r\n</div>', 0);
         return buffer;
     };
     t.TPL_NAME = module.name;
     return t;
 });
-
 /**
  * @ignore
  * manage a list of single-select options

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:10
+build time: May 8 11:54
 */
 /*
 combined modules:
@@ -235,7 +235,11 @@ KISSY.add('menu/control', [
              * @ignore
              */
             highlightedItem: { value: null },
-            defaultChildCfg: { value: { xclass: 'menuitem' } }
+            defaultChildCfg: {
+                valueFn: function () {
+                    return { xclass: 'menuitem' };
+                }
+            }
         },
         xclass: 'menu'
     });    // capture bubbling
@@ -450,6 +454,7 @@ KISSY.add('menu/check-menuitem', [
         }
     }, {
         ATTRS: {
+            contentTpl: { value: CheckMenuItemTpl },
             /**
              * Whether the menu item is checked.
              * @cfg {Boolean} checked
@@ -460,15 +465,14 @@ KISSY.add('menu/check-menuitem', [
             checked: {
                 render: 1,
                 sync: 0
-            },
-            contentTpl: { value: CheckMenuItemTpl }
+            }
         },
         xclass: 'check-menuitem'
     });
 });
 
 /** Compiled By kissy-xtemplate */
-KISSY.add('menu/check-menuitem-xtpl', ['component/extension/content-xtpl'], function (S, require, exports, module) {
+KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     var t = function (scope, buffer, payload, undefined) {
         var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
@@ -488,25 +492,27 @@ KISSY.add('menu/check-menuitem-xtpl', ['component/extension/content-xtpl'], func
             callRet2 = undefined;
         }
         buffer.write(callRet2, true);
-        buffer.write('">\r\n</div>\r\n', 0);
-        var option3 = {};
+        buffer.write('">\r\n</div>\r\n<div class="', 0);
+        var option3 = { escape: 1 };
         var params4 = [];
-        params4.push('component/extension/content-xtpl');
+        params4.push('content');
         option3.params = params4;
-        require('component/extension/content-xtpl');
         var callRet5;
-        callRet5 = includeCommand.call(engine, scope, option3, buffer, 3, payload);
+        callRet5 = callFnUtil(engine, scope, option3, buffer, ['getBaseCssClasses'], 0, 3);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
-        buffer.write(callRet5, false);
+        buffer.write(callRet5, true);
+        buffer.write('">', 0);
+        var id6 = scope.resolve(['content'], 0);
+        buffer.write(id6, false);
+        buffer.write('</div>', 0);
         return buffer;
     };
     t.TPL_NAME = module.name;
     return t;
 });
-
 /**
  * @ignore
  * submenu control for kissy, transfer item's keyCode to menu
@@ -678,6 +684,7 @@ KISSY.add('menu/submenu', [
         }
     }, {
         ATTRS: {
+            contentTpl: { value: SubMenuTpl },
             /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
@@ -702,8 +709,8 @@ KISSY.add('menu/submenu', [
                  * @ignore
                  */
             menu: {
-                value: {},
                 getter: function (v) {
+                    v = v || {};
                     if (!v.isControl) {
                         v.xclass = v.xclass || 'popupmenu';
                         v = this.createComponent(v);
@@ -716,8 +723,7 @@ KISSY.add('menu/submenu', [
                         m.setInternal('parent', this);
                     }
                 }
-            },
-            contentTpl: { value: SubMenuTpl }
+            }
         },
         xclass: 'submenu'
     });    // # -------------------------------- private start
@@ -878,7 +884,6 @@ KISSY.add('menu/popupmenu', [
              * @ignore
              */
             autoHideOnMouseLeave: {},
-            contentEl: {},
             visible: { value: false }
         },
         xclass: 'popupmenu'

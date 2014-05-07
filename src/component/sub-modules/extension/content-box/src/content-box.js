@@ -4,13 +4,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var ContentTpl = require('component/extension/content-xtpl');
-
     function shortcut(self) {
         var contentEl = self.get('contentEl');
         self.$contentEl = self.$contentEl = contentEl;
         self.contentEl = self.contentEl = contentEl[0];
     }
+
+    var contentTpl = require('./content-box/content-xtpl');
 
     /**
      * content-render extension for component system
@@ -46,7 +46,7 @@ KISSY.add(function (S, require) {
     S.mix(ContentBox, {
         ATTRS: {
             contentTpl: {
-                value: ContentTpl
+                value: contentTpl
             },
             contentEl: {
                 selector: function () {

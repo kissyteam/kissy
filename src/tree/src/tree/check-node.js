@@ -144,8 +144,10 @@ KISSY.add(function (S, require) {
             },
 
             defaultChildCfg: {
-                value: {
-                    xclass: 'check-tree-node'
+                valueFn: function () {
+                    return {
+                        xclass: 'check-tree-node'
+                    };
                 }
             }
         },

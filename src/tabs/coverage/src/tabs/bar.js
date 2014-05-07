@@ -259,8 +259,9 @@ if (! _$jscoverage['/tabs/bar.js']) {
   _$jscoverage['/tabs/bar.js'].lineData[63] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[64] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[65] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[89] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[100] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[78] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[91] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[102] = 0;
 }
 if (! _$jscoverage['/tabs/bar.js'].functionData) {
   _$jscoverage['/tabs/bar.js'].functionData = [];
@@ -273,6 +274,7 @@ if (! _$jscoverage['/tabs/bar.js'].functionData) {
   _$jscoverage['/tabs/bar.js'].functionData[6] = 0;
   _$jscoverage['/tabs/bar.js'].functionData[7] = 0;
   _$jscoverage['/tabs/bar.js'].functionData[8] = 0;
+  _$jscoverage['/tabs/bar.js'].functionData[9] = 0;
 }
 if (! _$jscoverage['/tabs/bar.js'].branchData) {
   _$jscoverage['/tabs/bar.js'].branchData = {};
@@ -408,13 +410,17 @@ KISSY.add(function(S, require) {
   changeType: {
   value: 'click'}, 
   defaultChildCfg: {
-  value: {
-  xclass: 'tabs-tab'}}}, 
+  valueFn: function() {
+  _$jscoverage['/tabs/bar.js'].functionData[9]++;
+  _$jscoverage['/tabs/bar.js'].lineData[78]++;
+  return {
+  xclass: 'tabs-tab'};
+}}}, 
   xclass: 'tabs-bar'});
-  _$jscoverage['/tabs/bar.js'].lineData[89]++;
+  _$jscoverage['/tabs/bar.js'].lineData[91]++;
   TabBar.ChangeType = {
   CLICK: 'click', 
   MOUSE: 'mouse'};
-  _$jscoverage['/tabs/bar.js'].lineData[100]++;
+  _$jscoverage['/tabs/bar.js'].lineData[102]++;
   return TabBar;
 });

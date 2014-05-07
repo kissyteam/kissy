@@ -203,6 +203,10 @@ KISSY.add(function (S, require) {
         },
         {
             ATTRS: {
+                contentTpl: {
+                    value: SubMenuTpl
+                },
+
                 /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
@@ -229,8 +233,8 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 menu: {
-                    value: {},
                     getter: function (v) {
+                        v = v || {};
                         if (!v.isControl) {
                             v.xclass = v.xclass || 'popupmenu';
                             v = this.createComponent(v);
@@ -243,10 +247,6 @@ KISSY.add(function (S, require) {
                             m.setInternal('parent', this);
                         }
                     }
-                },
-
-                contentTpl: {
-                    value: SubMenuTpl
                 }
             },
             xclass: 'submenu'

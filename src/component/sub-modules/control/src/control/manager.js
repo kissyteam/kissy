@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-
     var basePriority = 0,
         Manager,
     // 不带前缀 prefixCls

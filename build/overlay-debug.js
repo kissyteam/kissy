@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:11
+build time: May 8 11:54
 */
 /*
 combined modules:
@@ -110,7 +110,7 @@ KISSY.add('overlay/control', [
         }
     }, {
         ATTRS: {
-            contentEl: {},
+            contentTpl: { value: OverlayTpl },
             /**
              * Whether close button is visible.
              *
@@ -196,8 +196,7 @@ KISSY.add('overlay/control', [
              * @ignore
              */
             handleGestureEvents: { value: false },
-            visible: { value: false },
-            contentTpl: { value: OverlayTpl }
+            visible: { value: false }
         },
         xclass: 'overlay'
     });

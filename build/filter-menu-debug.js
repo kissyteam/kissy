@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:09
+build time: May 8 11:54
 */
 /*
 combined modules:
@@ -171,6 +171,7 @@ KISSY.add('filter-menu', [
         }
     }, {
         ATTRS: {
+            contentTpl: { value: FilterMenuTpl },
             allowTextSelection: { value: true },
             filterInput: {
                 selector: function () {
@@ -223,15 +224,14 @@ KISSY.add('filter-menu', [
             /**
                  * @ignore
                  */
-            allowMultiple: { value: false },
-            contentTpl: { value: FilterMenuTpl }
+            allowMultiple: { value: false }
         },
         xclass: 'filter-menu'
     });
 });
 
 /** Compiled By kissy-xtemplate */
-KISSY.add('filter-menu/render-xtpl', ['component/extension/content-xtpl'], function (S, require, exports, module) {
+KISSY.add('filter-menu/render-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     var t = function (scope, buffer, payload, undefined) {
         var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
@@ -278,22 +278,24 @@ KISSY.add('filter-menu/render-xtpl', ['component/extension/content-xtpl'], funct
             callRet9 = undefined;
         }
         buffer.write(callRet9, true);
-        buffer.write('"\r\n            autocomplete="off"/>\r\n</div>\r\n', 0);
-        var option10 = {};
+        buffer.write('"\r\n            autocomplete="off"/>\r\n</div>\r\n<div class="', 0);
+        var option10 = { escape: 1 };
         var params11 = [];
-        params11.push('component/extension/content-xtpl');
+        params11.push('content');
         option10.params = params11;
-        require('component/extension/content-xtpl');
         var callRet12;
-        callRet12 = includeCommand.call(engine, scope, option10, buffer, 8, payload);
+        callRet12 = callFnUtil(engine, scope, option10, buffer, ['getBaseCssClasses'], 0, 8);
         if (callRet12 && callRet12.isBuffer) {
             buffer = callRet12;
             callRet12 = undefined;
         }
-        buffer.write(callRet12, false);
+        buffer.write(callRet12, true);
+        buffer.write('">', 0);
+        var id13 = scope.resolve(['content'], 0);
+        buffer.write(id13, false);
+        buffer.write('</div>', 0);
         return buffer;
     };
     t.TPL_NAME = module.name;
     return t;
 });
-

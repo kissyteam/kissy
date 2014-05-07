@@ -215,7 +215,7 @@ KISSY.add(function (S, require) {
     function getAttr(el, name) {
         var ret = el && el.getAttributeNode(name);
         if (ret && ret.specified) {
-            return ret.nodeValue;
+            return 'value' in ret ? ret.value : ret.nodeValue;
         }
         return undefined;
     }

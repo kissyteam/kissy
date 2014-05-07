@@ -241,12 +241,14 @@ if (! _$jscoverage['/tree/check-tree.js']) {
   _$jscoverage['/tree/check-tree.js'].lineData[26] = 0;
   _$jscoverage['/tree/check-tree.js'].lineData[29] = 0;
   _$jscoverage['/tree/check-tree.js'].lineData[30] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[37] = 0;
 }
 if (! _$jscoverage['/tree/check-tree.js'].functionData) {
   _$jscoverage['/tree/check-tree.js'].functionData = [];
   _$jscoverage['/tree/check-tree.js'].functionData[0] = 0;
   _$jscoverage['/tree/check-tree.js'].functionData[1] = 0;
   _$jscoverage['/tree/check-tree.js'].functionData[2] = 0;
+  _$jscoverage['/tree/check-tree.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/tree/check-tree.js'].branchData) {
   _$jscoverage['/tree/check-tree.js'].branchData = {};
@@ -304,7 +306,11 @@ KISSY.add(function(S, require) {
 }}, {
   ATTRS: {
   defaultChildCfg: {
-  value: {
-  xclass: 'check-tree-node'}}}, 
+  valueFn: function() {
+  _$jscoverage['/tree/check-tree.js'].functionData[3]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[37]++;
+  return {
+  xclass: 'check-tree-node'};
+}}}, 
   xclass: 'check-tree'});
 });

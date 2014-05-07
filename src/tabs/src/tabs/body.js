@@ -69,8 +69,10 @@ KISSY.add(function (S, require) {
                 value: false
             },
             defaultChildCfg: {
-                value: {
-                    xclass: 'tabs-panel'
+                valueFn: function () {
+                    return {
+                        xclass: 'tabs-panel'
+                    };
                 }
             }
         },

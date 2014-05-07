@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:11
+build time: May 8 11:54
 */
 /*
 combined modules:
@@ -14,7 +14,6 @@ navigation-view
 KISSY.add('navigation-view', [
     'component/container',
     'component/control',
-    'component/extension/content-xtpl',
     'component/extension/content-box'
 ], function (S, require) {
     var vendorInfo = S.Feature.getCssVendorInfo('animation');
@@ -23,7 +22,6 @@ KISSY.add('navigation-view', [
         'animationend webkitAnimationEnd';
     var Container = require('component/container');
     var Control = require('component/control');
-    var ContentTpl = require('component/extension/content-xtpl');
     var ContentBox = require('component/extension/content-box');
     function getAnimCss(prefixCls, animation, enter) {
         return prefixCls + 'navigation-view-' + ('anim-' + animation + '-' + (enter ? 'enter' : 'leave')) + ' ' + prefixCls + 'navigation-view-anim-ing';
@@ -257,27 +255,29 @@ KISSY.add('navigation-view', [
                 // push leave: slide-left-leave
                 // pop enter: slide-left-enter
                 // pop leave: slide-right-leave
-                value: [
-                    'slide-right',
-                    'slide-left'
-                ]
+                valueFn: function () {
+                    return [
+                        'slide-right',
+                        'slide-left'
+                    ];
+                }
             },
             loadingHtml: { sync: 0 },
             handleGestureEvents: { value: false },
             viewCacheSize: { value: 10 },
             focusable: { value: false },
             allowTextSelection: { value: true },
-            contentTpl: { value: ContentTpl },
             defaultChildCfg: {
-                value: {
-                    handleGestureEvents: false,
-                    visible: false,
-                    allowTextSelection: true
+                valueFn: function () {
+                    return {
+                        handleGestureEvents: false,
+                        visible: false,
+                        allowTextSelection: true
+                    };
                 }
             }
         }
     });
 });
-
 
 

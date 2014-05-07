@@ -12,7 +12,6 @@ KISSY.add(function (S, require) {
 
     var Container = require('component/container');
     var Control = require('component/control');
-    var ContentTpl = require('component/extension/content-xtpl');
     var ContentBox = require('component/extension/content-box');
 
     function getAnimCss(prefixCls, animation, enter) {
@@ -223,7 +222,7 @@ KISSY.add(function (S, require) {
         };
     }
 
-    return Container.extend([ContentBox],{
+    return Container.extend([ContentBox], {
         initializer: function () {
             this.viewStack = [];
         },
@@ -283,7 +282,9 @@ KISSY.add(function (S, require) {
                 // push leave: slide-left-leave
                 // pop enter: slide-left-enter
                 // pop leave: slide-right-leave
-                value: ['slide-right', 'slide-left']
+                valueFn: function () {
+                    return ['slide-right', 'slide-left'];
+                }
             },
 
             loadingHtml: {
@@ -306,15 +307,13 @@ KISSY.add(function (S, require) {
                 value: true
             },
 
-            contentTpl: {
-                value: ContentTpl
-            },
-
             defaultChildCfg: {
-                value: {
-                    handleGestureEvents: false,
-                    visible: false,
-                    allowTextSelection: true
+                valueFn: function () {
+                    return {
+                        handleGestureEvents: false,
+                        visible: false,
+                        allowTextSelection: true
+                    };
                 }
             }
         }

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 6 16:12
+build time: May 7 20:29
 */
 /*
 combined modules:
@@ -39,6 +39,7 @@ KISSY.add('combobox/control', [
     './combobox-xtpl',
     'menu'
 ], function (S, require) {
+    var logger = S.getLogger('combobox');
     var Node = require('node');
     var Control = require('component/control');
     var ComboboxTpl = require('./combobox-xtpl');    // provide popupmenu xclass
@@ -430,8 +431,8 @@ KISSY.add('combobox/control', [
              * @ignore
              */
             menu: {
-                value: {},
                 getter: function (v) {
+                    v = v || {};
                     if (!v.isControl) {
                         v.xclass = v.xclass || 'popupmenu';
                         v = this.createComponent(v);
@@ -648,17 +649,13 @@ KISSY.add('combobox/control', [
         this.setCurrentValue(e.target.value, { data: { causedByInputEvent: 1 } });
     }
     function renderData(data) {
-        var self = this, v, children = [], val, matchVal, highlightedItem, i, menu = self.get('menu');
+        var self = this, start, children = [], val, matchVal, i, menu = self.get('menu');
         data = self.normalizeData(data);
         menu.removeChildren(true);
-        if (highlightedItem = menu.get('highlightedItem')) {
-            highlightedItem.set('highlighted', false);
-        }
         if (data && data.length) {
-            for (i = 0; i < data.length; i++) {
-                v = data[i];
-                menu.addChild(v);
-            }
+            start = S.now();
+            menu.addChildren(data);
+            logger.info('render menu cost: ' + (S.now() - start) + ' ms');
             children = menu.get('children');    // make menu item (which textContent is same as input) active
             // make menu item (which textContent is same as input) active
             val = self.getCurrentValue();
@@ -1061,7 +1058,11 @@ KISSY.add('combobox/remote-data-source', [
             /**
              * @ignore
              */
-            xhrCfg: { value: {} }
+            xhrCfg: {
+                valueFn: function () {
+                    return {};
+                }
+            }
         }
     });
 });

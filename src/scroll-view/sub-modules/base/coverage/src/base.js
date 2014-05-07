@@ -627,7 +627,7 @@ function visit51_298_1(result) {
 function visit50_295_1(result) {
   _$jscoverage['/base.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['274'][1].init(9974, 11, 'supportCss3');
+}_$jscoverage['/base.js'].branchData['274'][1].init(9977, 11, 'supportCss3');
 function visit49_274_1(result) {
   _$jscoverage['/base.js'].branchData['274'][1].ranCondition(result);
   return result;
@@ -835,7 +835,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[10]++;
   var ContentBox = require('component/extension/content-box');
   _$jscoverage['/base.js'].lineData[11]++;
-  var $ = S.all, KeyCode = Node.KeyCode;
+  var $ = Node.all, KeyCode = Node.KeyCode;
   _$jscoverage['/base.js'].lineData[14]++;
   var Feature = S.Feature, transformVendorInfo = Feature.getCssVendorInfo('transform'), floor = Math.floor, transformProperty;
   _$jscoverage['/base.js'].lineData[19]++;
@@ -1312,7 +1312,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[406]++;
   return Container.extend([ContentBox], methods, {
   ATTRS: {
-  contentEl: {}, 
   scrollLeft: {
   render: 1, 
   value: 0}, 

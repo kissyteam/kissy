@@ -92,9 +92,6 @@ KISSY.add(function (S, require) {
              */
             autoHideOnMouseLeave: {},
 
-            contentEl: {
-            },
-
             visible: {
                 value: false
             }

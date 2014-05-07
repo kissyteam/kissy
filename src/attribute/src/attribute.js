@@ -428,7 +428,12 @@ KISSY.add(function (S, require) {
             var self = this,
                 attrs = self.getAttrs(),
                 attr,
-                cfg = S.clone(attrConfig);
+            // shadow clone
+                cfg = S.merge(attrConfig);
+            if (cfg.value && typeof cfg.value === 'object') {
+                cfg.value = S.clone(cfg.value);
+                S.log('please use valueFn instead of value for ' + name + ' attribute','warn');
+            }
             if ((attr = attrs[name])) {
                 S.mix(attr, cfg, override);
             } else {
@@ -491,7 +496,7 @@ KISSY.add(function (S, require) {
          */
         set: function (name, value, opts) {
             var self = this, e;
-            if (S.isPlainObject(name)) {
+            if (typeof name !== 'string') {
                 opts = value;
                 opts = opts || {};
                 var all = Object(name),
@@ -669,10 +674,7 @@ KISSY.add(function (S, require) {
 
         if (valFn && (valFn = normalFn(self, valFn))) {
             val = valFn.call(self);
-            if (val !== /**
-             @ignore
-             @type Function
-             */undefined) {
+            if (val !== undefined) {
                 attrConfig.value = val;
             }
             delete attrConfig.valueFn;

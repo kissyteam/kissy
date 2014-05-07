@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var Manager = require('component/manager');
+    var Manager = Control.Manager;
 
     function defAddChild(e) {
         var self = this;
@@ -34,8 +34,6 @@ KISSY.add(function (S, require) {
     function defRemoveChild(e) {
         var self = this;
         var c = e.component,
-            cDOMParentEl,
-            cDOMEl,
             destroy = e.destroy,
             children = self.get('children'),
             index = e.index;
@@ -46,17 +44,9 @@ KISSY.add(function (S, require) {
 
         c.setInternal('parent', null);
 
-        if (destroy) {
-            // c is still json
-            if (c.destroy) {
-                c.destroy();
-            }
-        } else {
-            if (c.get && (cDOMEl = c.el)) {
-                if ((cDOMParentEl = cDOMEl.parentNode)) {
-                    cDOMParentEl.removeChild(cDOMEl);
-                }
-            }
+        // c is still json
+        if (c.destroy) {
+            c.destroy(destroy);
         }
 
         self.fire('afterRemoveChild', {
@@ -211,6 +201,15 @@ KISSY.add(function (S, require) {
             return c;
         },
 
+        addChildren: function (children) {
+            // TODO optimize by batch insert
+            var i,
+                l = children.length;
+            for (i = 0; i < l; i++) {
+                this.addChild(children[i]);
+            }
+        },
+
         /**
          * Removed the given child from this component,and returns it.
          *
@@ -243,10 +242,12 @@ KISSY.add(function (S, require) {
          */
         removeChildren: function (destroy) {
             var self = this,
-                i,
-                t = [].concat(self.get('children'));
+                i, t = [].concat(self.get('children'));
             for (i = 0; i < t.length; i++) {
-                self.removeChild(t[i], destroy);
+                self.removeChild(t[i], false);
+            }
+            if (destroy !== false && self.$el) {
+                self.getChildrenContainerEl()[0].innerHTML = '';
             }
             return self;
         },
@@ -270,14 +271,8 @@ KISSY.add(function (S, require) {
          * destroy children
          * @protected
          */
-        destructor: function () {
-            var i,
-                children = this.get('children');
-            for (i = 0; i < children.length; i++) {
-                if (children[i].destroy) {
-                    children[i].destroy();
-                }
-            }
+        destructor: function (destroy) {
+            this.removeChildren(destroy);
         }
     }, {
         ATTRS: {
@@ -289,11 +284,12 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             children: {
-                value: [],
+                valueFn: function () {
+                    return [];
+                },
                 getter: function (v) {
                     var defaultChildCfg = null,
-                        i,
-                        c,
+                        i, c,
                         self = this;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
@@ -326,7 +322,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             defaultChildCfg: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             }
         },
         name: 'container'

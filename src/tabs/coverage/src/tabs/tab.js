@@ -254,9 +254,9 @@ if (! _$jscoverage['/tabs/tab.js']) {
   _$jscoverage['/tabs/tab.js'].lineData[55] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[56] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[58] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[76] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[81] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[95] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[83] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[88] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[102] = 0;
 }
 if (! _$jscoverage['/tabs/tab.js'].functionData) {
   _$jscoverage['/tabs/tab.js'].functionData = [];
@@ -382,13 +382,13 @@ KISSY.add(function(S, require) {
   sync: 0, 
   parse: function() {
   _$jscoverage['/tabs/tab.js'].functionData[6]++;
-  _$jscoverage['/tabs/tab.js'].lineData[76]++;
+  _$jscoverage['/tabs/tab.js'].lineData[83]++;
   return !!this.get('closeBtn');
 }}, 
   closeBtn: {
   selector: function() {
   _$jscoverage['/tabs/tab.js'].functionData[7]++;
-  _$jscoverage['/tabs/tab.js'].lineData[81]++;
+  _$jscoverage['/tabs/tab.js'].lineData[88]++;
   return '.' + this.getBaseCssClass('close');
 }}, 
   selected: {
@@ -396,7 +396,7 @@ KISSY.add(function(S, require) {
   sync: 0, 
   parse: function(el) {
   _$jscoverage['/tabs/tab.js'].functionData[8]++;
-  _$jscoverage['/tabs/tab.js'].lineData[95]++;
+  _$jscoverage['/tabs/tab.js'].lineData[102]++;
   return el.hasClass(this.getBaseCssClass('selected'));
 }}}, 
   xclass: 'tabs-tab'});

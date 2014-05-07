@@ -1,11 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:57
+build time: May 8 11:52
 */
 /*
 combined modules:
 component/control
+component/control/manager
 component/control/render-xtpl
 */
 /**
@@ -17,7 +18,7 @@ KISSY.add('component/control', [
     'node',
     'event/gesture/base',
     'event/gesture/tap',
-    'component/manager',
+    './control/manager',
     'base',
     './control/render-xtpl',
     'ua',
@@ -26,7 +27,7 @@ KISSY.add('component/control', [
     var Node = require('node');
     var BaseGesture = require('event/gesture/base');
     var TapGesture = require('event/gesture/tap');
-    var Manager = require('component/manager');
+    var Manager = require('./control/manager');
     var Base = require('base');
     var RenderTpl = require('./control/render-xtpl');
     var UA = require('ua');
@@ -163,13 +164,6 @@ KISSY.add('component/control', [
                 if (self.get('highlighted')) {
                     elCls.push(self.getBaseCssClasses('hover'));
                 }
-                if (self.get('focusable')) {
-                    // ie9 support outline
-                    if (UA.ieMode < 9) {
-                        elAttrs.hideFocus = 'true';
-                    }
-                    elAttrs.tabindex = disabled ? '-1' : '0';
-                }
             },
             /**
              * Constructor(or get) view object to create ui elements.
@@ -220,9 +214,16 @@ KISSY.add('component/control', [
             bindUI: function () {
                 var self = this;
                 if (self.get('focusable')) {
+                    var keyEventTarget = self.getKeyEventTarget();    // remove smart outline in ie
+                                                                      // set outline in style for other standard browser
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    self.getKeyEventTarget().on('focus', self.handleFocus, self).on('blur', self.handleBlur, self).on('keydown', self.handleKeydown, self);
+                    keyEventTarget.on('focus', self.handleFocus, self).on('blur', self.handleBlur, self).on('keydown', self.handleKeydown, self);    // ie9 support outline
+                    // ie9 support outline
+                    if (UA.ieMode < 9) {
+                        keyEventTarget.attr('hideFocus', true);
+                    }
+                    keyEventTarget.attr('tabindex', self.get('disabled') ? '-1' : '0');
                 }
                 if (self.get('handleGestureEvents')) {
                     // chrome on windows8 has both mouse and touch event
@@ -736,11 +737,11 @@ KISSY.add('component/control', [
             /**
              * @protected
              */
-            destructor: function () {
+            destructor: function (destroy) {
                 var self = this;    // remove instance from manager
                 // remove instance from manager
                 Manager.removeComponent(self);
-                if (self.$el) {
+                if (destroy !== false && self.$el) {
                     self.$el.remove();
                 }
             }
@@ -821,7 +822,9 @@ KISSY.add('component/control', [
                  */
                 elCls: {
                     render: 1,
-                    value: [],
+                    valueFn: function () {
+                        return [];
+                    },
                     setter: function (v) {
                         if (typeof v === 'string') {
                             v = v.split(/\s+/);
@@ -838,7 +841,9 @@ KISSY.add('component/control', [
                  */
                 elStyle: {
                     render: 1,
-                    value: {}
+                    valueFn: function () {
+                        return {};
+                    }
                 },
                 /**
                  * name-value pair attribute of component's root element
@@ -849,7 +854,9 @@ KISSY.add('component/control', [
                  */
                 elAttrs: {
                     render: 1,
-                    value: {}
+                    valueFn: function () {
+                        return {};
+                    }
                 },
                 /**
                  * Horizontal axis
@@ -1232,6 +1239,7 @@ KISSY.add('component/control', [
         }
         return NewClass;
     };
+    Control.Manager = Manager;
     return Control;
 });    /*
  yiminghe@gmail.com - 2014.04.08
@@ -1284,7 +1292,132 @@ KISSY.add('component/control', [
 
 
 
-
+/**
+ * @ignore
+ * storage for component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/control/manager', [], function (S) {
+    var basePriority = 0, Manager,
+        // 不带前缀 prefixCls
+        /*
+     'menu' :{
+     constructor:Menu
+     }
+     */
+        uis = {}, componentInstances = {};    /**
+     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
+     * Manage component metadata.
+     */
+    /**
+     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
+     * Manage component metadata.
+     */
+    Manager = {
+        __instances: componentInstances,
+        /**
+         * associate id with component
+         * @param {KISSY.Component.Control} component
+         */
+        addComponent: function (component) {
+            componentInstances[component.get('id')] = component;
+        },
+        /**
+         * remove association id with component
+         */
+        removeComponent: function (component) {
+            delete componentInstances[component.get('id')];
+        },
+        /**
+         * get component by id
+         * @param {String} id
+         * @return {KISSY.Component.Control}
+         */
+        getComponent: function (id) {
+            return componentInstances[id];
+        },
+        /**
+         * Create a component instance using json with xclass.
+         * @param {Object|KISSY.Component.Control} component Component's json notation with xclass attribute.
+         * @param {String} component.xclass Component to be newed 's xclass.
+         * @param {KISSY.Component.Control} parent Component From which new component generated will inherit prefixCls
+         * if component 's prefixCls is undefined.
+         * @member KISSY.Component
+         * @return KISSY.Component.Control
+         *
+         *  for example:
+         *
+         *      create({
+     *          xclass:'menu',
+     *          children:[{
+     *              xclass:'menuitem',
+     *              content:"1"
+     *          }]
+     *      })
+         */
+        createComponent: function (component, parent) {
+            var ChildConstructor, xclass;
+            if (component) {
+                if (!component.isControl && parent) {
+                    if (!component.prefixCls) {
+                        component.prefixCls = parent.get('prefixCls');
+                    }
+                    if (!component.xclass && component.prefixXClass) {
+                        component.xclass = component.prefixXClass;
+                        if (component.xtype) {
+                            component.xclass += '-' + component.xtype;
+                        }
+                    }
+                }
+                if (!component.isControl && (xclass = component.xclass)) {
+                    ChildConstructor = Manager.getConstructorByXClass(xclass);
+                    if (!ChildConstructor) {
+                        S.error('can not find class by xclass desc : ' + xclass);
+                    }
+                    component = new ChildConstructor(component);
+                }
+                if (component.isControl && parent) {
+                    component.setInternal('parent', parent);
+                }
+            }
+            return component;
+        },
+        /**
+         * Get component constructor by css class name.
+         * @param {String} classNames Class names separated by space.
+         * @return {Function}
+         * @method
+         */
+        getConstructorByXClass: function (classNames) {
+            var cs = classNames.split(/\s+/), p = -1, t, i, uic, ui = null;
+            for (i = 0; i < cs.length; i++) {
+                uic = uis[cs[i]];
+                if (uic && (t = uic.priority) > p) {
+                    p = t;
+                    ui = uic.constructor;
+                }
+            }
+            return ui;
+        },
+        /**
+         * Associate css class with component constructor.
+         * @param {String} className Component's class name.
+         * @param {Function} ComponentConstructor Component's constructor.
+         * @method
+         */
+        setConstructorByXClass: function (className, ComponentConstructor) {
+            uis[className] = {
+                constructor: ComponentConstructor,
+                priority: basePriority++
+            };
+        }
+    };
+    return Manager;
+});
 
 /** Compiled By kissy-xtemplate */
 KISSY.add('component/control/render-xtpl', [], function (S, require, exports, module) {

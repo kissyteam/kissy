@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:11
+build time: May 8 11:55
 */
 /*
 combined modules:
@@ -22,7 +22,7 @@ KISSY.add('scroll-view/base', [
     var TimerAnim = require('anim/timer');
     var Container = require('component/container');
     var ContentBox = require('component/extension/content-box');
-    var $ = S.all, KeyCode = Node.KeyCode;    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var $ = Node.all, KeyCode = Node.KeyCode;    // http://www.html5rocks.com/en/tutorials/speed/html5/
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Feature = S.Feature,
         //        MARKER_CLS = 'ks-scroll-view-marker',
@@ -338,15 +338,6 @@ KISSY.add('scroll-view/base', [
      */
     return Container.extend([ContentBox], methods, {
         ATTRS: {
-            /**
-             * content element of scroll view component
-             * @property contentEl
-             * @type {KISSY.Node}
-             */
-            /**
-             * @ignore
-             */
-            contentEl: {},
             /**
              * scrollLeft of scroll view
              * @property scrollLeft

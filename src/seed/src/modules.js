@@ -37,7 +37,6 @@ S.config("requires",{
         "node",
         "event/gesture/base",
         "event/gesture/tap",
-        "component/manager",
         "base",
         "xtemplate/runtime"
     ],
@@ -45,13 +44,8 @@ S.config("requires",{
         "node",
         "ua"
     ],
-    "component/extension/content-box": [
-        "component/extension/content-xtpl"
-    ],
     "component/extension/delegate-children": [
-        "component/manager",
-        "event/gesture/base",
-        "event/gesture/tap"
+        "component/control"
     ],
     "component/extension/shim": [
         "ua"
@@ -248,7 +242,8 @@ S.config("requires",{
     ],
     "tabs": [
         "toolbar",
-        "button"
+        "button",
+        "component/extension/content-box"
     ],
     "toolbar": [
         "component/container",

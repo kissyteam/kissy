@@ -45,10 +45,6 @@
     <h2>从已知元素生成</h2>
 
     <div id="exist" class="ks-button">渐进增强</div>
-
-    <h2>从 json 描述生成</h2>
-
-    <div id="button_container3"></div>
 </div>
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
@@ -104,20 +100,6 @@
         exist.on("click", function () {
             log("渐进增强 click");
         });
-
-        Manager.createComponent({
-            xclass: 'button',
-            content: 'json',
-            render: "#button_container3",
-            listeners: {
-                click: {
-                    fn: function () {
-                        log('json');
-                    }
-                }
-            }
-        }).render();
-
     });
 </script>
 </body>

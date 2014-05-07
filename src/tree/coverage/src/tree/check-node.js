@@ -277,8 +277,9 @@ if (! _$jscoverage['/tree/check-node.js']) {
   _$jscoverage['/tree/check-node.js'].lineData[137] = 0;
   _$jscoverage['/tree/check-node.js'].lineData[138] = 0;
   _$jscoverage['/tree/check-node.js'].lineData[142] = 0;
-  _$jscoverage['/tree/check-node.js'].lineData[159] = 0;
-  _$jscoverage['/tree/check-node.js'].lineData[174] = 0;
+  _$jscoverage['/tree/check-node.js'].lineData[148] = 0;
+  _$jscoverage['/tree/check-node.js'].lineData[161] = 0;
+  _$jscoverage['/tree/check-node.js'].lineData[176] = 0;
 }
 if (! _$jscoverage['/tree/check-node.js'].functionData) {
   _$jscoverage['/tree/check-node.js'].functionData = [];
@@ -288,6 +289,7 @@ if (! _$jscoverage['/tree/check-node.js'].functionData) {
   _$jscoverage['/tree/check-node.js'].functionData[3] = 0;
   _$jscoverage['/tree/check-node.js'].functionData[4] = 0;
   _$jscoverage['/tree/check-node.js'].functionData[5] = 0;
+  _$jscoverage['/tree/check-node.js'].functionData[6] = 0;
 }
 if (! _$jscoverage['/tree/check-node.js'].branchData) {
   _$jscoverage['/tree/check-node.js'].branchData = {};
@@ -512,14 +514,18 @@ KISSY.add(function(S, require) {
   return undefined;
 }}, 
   defaultChildCfg: {
-  value: {
-  xclass: 'check-tree-node'}}}, 
+  valueFn: function() {
+  _$jscoverage['/tree/check-node.js'].functionData[6]++;
+  _$jscoverage['/tree/check-node.js'].lineData[148]++;
+  return {
+  xclass: 'check-tree-node'};
+}}}, 
   xclass: 'check-tree-node'});
-  _$jscoverage['/tree/check-node.js'].lineData[159]++;
+  _$jscoverage['/tree/check-node.js'].lineData[161]++;
   CheckNode.CheckState = {
   PARTIAL_CHECK: PARTIAL_CHECK, 
   CHECK: CHECK, 
   EMPTY: EMPTY};
-  _$jscoverage['/tree/check-node.js'].lineData[174]++;
+  _$jscoverage['/tree/check-node.js'].lineData[176]++;
   return CheckNode;
 });

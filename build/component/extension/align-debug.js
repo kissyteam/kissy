@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:57
+build time: May 8 11:52
 */
 /*
 combined modules:
@@ -210,7 +210,11 @@ KISSY.add('component/extension/align', [
         /**
          * @ignore
          */
-        align: { value: {} }
+        align: {
+            valueFn: function () {
+                return {};
+            }
+        }
     };
     function getRegion(node) {
         var offset, w, h, domNode = node[0];

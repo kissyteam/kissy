@@ -28,11 +28,11 @@ KISSY.add(function (S, require) {
         return el.getElementsByTagName(tag);
     }
 
-    function getHolderDiv(ownerDoc) {
+    function getHolderDiv(ownerDoc, clear) {
         var holder = ownerDoc && ownerDoc !== doc ?
             ownerDoc.createElement(DIV) :
             DEFAULT_DIV;
-        if (holder === DEFAULT_DIV) {
+        if (clear && holder === DEFAULT_DIV) {
             holder.innerHTML = '';
         }
         return holder;
@@ -220,7 +220,7 @@ KISSY.add(function (S, require) {
                     if (el.nodeType === NodeType.ELEMENT_NODE) {
                         return el.innerHTML;
                     } else if (el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
-                        var holder = getHolderDiv(el.ownerDocument);
+                        var holder = getHolderDiv(el.ownerDocument, 1);
                         holder.appendChild(el);
                         return holder.innerHTML;
                     } else {
@@ -282,7 +282,7 @@ KISSY.add(function (S, require) {
                     if (supportOuterHTML && el.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE) {
                         return el.outerHTML;
                     } else {
-                        holder = getHolderDiv(el.ownerDocument);
+                        holder = getHolderDiv(el.ownerDocument, 1);
                         holder.appendChild(Dom.clone(el, true));
                         return holder.innerHTML;
                     }
@@ -527,7 +527,7 @@ KISSY.add(function (S, require) {
         (function (tag) {
             creators[p] = function (html, ownerDoc) {
                 return create('<' + tag + '>' +
-                    html + '<' + '/' + tag + '>',
+                        html + '<' + '/' + tag + '>',
                     undefined, ownerDoc);
             };
         })(creatorsMap[p]);

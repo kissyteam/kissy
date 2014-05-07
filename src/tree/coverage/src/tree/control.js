@@ -241,12 +241,14 @@ if (! _$jscoverage['/tree/control.js']) {
   _$jscoverage['/tree/control.js'].lineData[32] = 0;
   _$jscoverage['/tree/control.js'].lineData[35] = 0;
   _$jscoverage['/tree/control.js'].lineData[36] = 0;
+  _$jscoverage['/tree/control.js'].lineData[43] = 0;
 }
 if (! _$jscoverage['/tree/control.js'].functionData) {
   _$jscoverage['/tree/control.js'].functionData = [];
   _$jscoverage['/tree/control.js'].functionData[0] = 0;
   _$jscoverage['/tree/control.js'].functionData[1] = 0;
   _$jscoverage['/tree/control.js'].functionData[2] = 0;
+  _$jscoverage['/tree/control.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/tree/control.js'].branchData) {
   _$jscoverage['/tree/control.js'].branchData = {};
@@ -304,7 +306,11 @@ KISSY.add(function(S, require) {
 }}, {
   ATTRS: {
   defaultChildCfg: {
-  value: {
-  xclass: 'tree-node'}}}, 
+  valueFn: function() {
+  _$jscoverage['/tree/control.js'].functionData[3]++;
+  _$jscoverage['/tree/control.js'].lineData[43]++;
+  return {
+  xclass: 'tree-node'};
+}}}, 
   xclass: 'tree'});
 });

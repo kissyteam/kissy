@@ -231,10 +231,10 @@ if (! _$jscoverage['/content-box.js']) {
   _$jscoverage['/content-box.js'].lineData = [];
   _$jscoverage['/content-box.js'].lineData[6] = 0;
   _$jscoverage['/content-box.js'].lineData[7] = 0;
+  _$jscoverage['/content-box.js'].lineData[8] = 0;
   _$jscoverage['/content-box.js'].lineData[9] = 0;
   _$jscoverage['/content-box.js'].lineData[10] = 0;
-  _$jscoverage['/content-box.js'].lineData[11] = 0;
-  _$jscoverage['/content-box.js'].lineData[12] = 0;
+  _$jscoverage['/content-box.js'].lineData[13] = 0;
   _$jscoverage['/content-box.js'].lineData[19] = 0;
   _$jscoverage['/content-box.js'].lineData[22] = 0;
   _$jscoverage['/content-box.js'].lineData[24] = 0;
@@ -267,24 +267,24 @@ if (! _$jscoverage['/content-box.js'].branchData) {
   _$jscoverage['/content-box.js'].branchData['40'][1] = new BranchData();
 }
 _$jscoverage['/content-box.js'].branchData['40'][1].init(163, 31, '!this.get(\'allowTextSelection\')');
-function visit1_40_1(result) {
+function visit3_40_1(result) {
   _$jscoverage['/content-box.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/content-box.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/content-box.js'].functionData[0]++;
   _$jscoverage['/content-box.js'].lineData[7]++;
-  var ContentTpl = require('component/extension/content-xtpl');
-  _$jscoverage['/content-box.js'].lineData[9]++;
   function shortcut(self) {
     _$jscoverage['/content-box.js'].functionData[1]++;
-    _$jscoverage['/content-box.js'].lineData[10]++;
+    _$jscoverage['/content-box.js'].lineData[8]++;
     var contentEl = self.get('contentEl');
-    _$jscoverage['/content-box.js'].lineData[11]++;
+    _$jscoverage['/content-box.js'].lineData[9]++;
     self.$contentEl = self.$contentEl = contentEl;
-    _$jscoverage['/content-box.js'].lineData[12]++;
+    _$jscoverage['/content-box.js'].lineData[10]++;
     self.contentEl = self.contentEl = contentEl[0];
   }
+  _$jscoverage['/content-box.js'].lineData[13]++;
+  var contentTpl = require('./content-box/content-xtpl');
   _$jscoverage['/content-box.js'].lineData[19]++;
   function ContentBox() {
     _$jscoverage['/content-box.js'].functionData[2]++;
@@ -313,7 +313,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/content-box.js'].lineData[38]++;
   contentEl.html(v);
   _$jscoverage['/content-box.js'].lineData[40]++;
-  if (visit1_40_1(!this.get('allowTextSelection'))) {
+  if (visit3_40_1(!this.get('allowTextSelection'))) {
     _$jscoverage['/content-box.js'].lineData[41]++;
     contentEl.unselectable();
   }
@@ -322,7 +322,7 @@ KISSY.add(function(S, require) {
   S.mix(ContentBox, {
   ATTRS: {
   contentTpl: {
-  value: ContentTpl}, 
+  value: contentTpl}, 
   contentEl: {
   selector: function() {
   _$jscoverage['/content-box.js'].functionData[7]++;

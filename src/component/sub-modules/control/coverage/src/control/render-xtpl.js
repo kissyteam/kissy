@@ -312,11 +312,11 @@ if (! _$jscoverage['/control/render-xtpl.js'].branchData) {
   _$jscoverage['/control/render-xtpl.js'].branchData['32'][1] = new BranchData();
 }
 _$jscoverage['/control/render-xtpl.js'].branchData['32'][1].init(1371, 29, 'callRet2 && callRet2.isBuffer');
-function visit2_32_1(result) {
+function visit13_32_1(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/render-xtpl.js'].branchData['20'][1].init(802, 21, '"5.0.0" !== S.version');
-function visit1_20_1(result) {
+function visit12_20_1(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/render-xtpl.js'].lineData[2]++;
@@ -330,7 +330,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[8]++;
   var callFnUtil = utils["callFn"], callCommandUtil = utils["callCommand"], eachCommand = nativeCommands["each"], withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands["set"], includeCommand = nativeCommands["include"], parseCommand = nativeCommands["parse"], extendCommand = nativeCommands["extend"], blockCommand = nativeCommands["block"], macroCommand = nativeCommands["macro"], debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/control/render-xtpl.js'].lineData[20]++;
-  if (visit1_20_1("5.0.0" !== S.version)) {
+  if (visit12_20_1("5.0.0" !== S.version)) {
     _$jscoverage['/control/render-xtpl.js'].lineData[21]++;
     throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
   }
@@ -350,7 +350,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[31]++;
   callRet2 = callFnUtil(engine, scope, option1, buffer, ["getBaseCssClasses"], 0, 2);
   _$jscoverage['/control/render-xtpl.js'].lineData[32]++;
-  if (visit2_32_1(callRet2 && callRet2.isBuffer)) {
+  if (visit13_32_1(callRet2 && callRet2.isBuffer)) {
     _$jscoverage['/control/render-xtpl.js'].lineData[33]++;
     buffer = callRet2;
     _$jscoverage['/control/render-xtpl.js'].lineData[34]++;

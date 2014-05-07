@@ -33,8 +33,10 @@ KISSY.add(function (S, require) {
     }, {
         ATTRS: {
             defaultChildCfg: {
-                value: {
-                    xclass: 'check-tree-node'
+                valueFn: function () {
+                    return {
+                        xclass: 'check-tree-node'
+                    };
                 }
             }
         },
