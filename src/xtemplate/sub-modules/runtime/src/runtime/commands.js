@@ -20,12 +20,10 @@ KISSY.add(function (S, require) {
                 if (S.isArray(param0)) {
                     xcount = param0.length;
                     for (var xindex = 0; xindex < xcount; xindex++) {
-                        opScope = new Scope();
+                        opScope = new Scope(param0[xindex]);
                         affix = opScope.affix = {
                             xcount: xcount
                         };
-                        // two more variable scope for array looping
-                        opScope.data = param0[xindex];
                         affix[xindexName] = xindex;
                         if (valueName) {
                             affix[valueName] = param0[xindex];
@@ -35,9 +33,8 @@ KISSY.add(function (S, require) {
                     }
                 } else {
                     for (var name in param0) {
-                        opScope = new Scope();
+                        opScope = new Scope(param0[name]);
                         affix = opScope.affix = {};
-                        opScope.data = param0[name];
                         affix[xindexName] = name;
                         if (valueName) {
                             affix[valueName] = param0[name];
@@ -82,7 +79,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        include: function (scope, option, buffer, lineNumber, payload) {
+        include: function (scope, option, buffer, lineNumber, session) {
             var params = option.params,
                 i, newScope,
                 l = params.length;
@@ -95,23 +92,23 @@ KISSY.add(function (S, require) {
             }
 
             for (i = 0; i < l; i++) {
-                buffer = this.include(params[i], newScope, buffer, payload);
+                buffer = this.include(params[i], newScope, buffer, session);
             }
 
             return buffer;
         },
 
-        parse: function (scope, option, buffer, lineNumber, payload) {
+        parse: function (scope, option, buffer, lineNumber, session) {
             // abandon scope
-            return commands.include.call(this, new Scope(), option, buffer, payload);
+            return commands.include.call(this, new Scope(), option, buffer, lineNumber, session);
         },
 
-        extend: function (scope, option, buffer, lineNumber, payload) {
-            payload.extendTplName = option.params[0];
+        extend: function (scope, option, buffer, lineNumber, session) {
+            session.extendTplName = option.params[0];
             return buffer;
         },
 
-        block: function (scope, option, buffer, lineNumber, payload) {
+        block: function (scope, option, buffer, lineNumber, session) {
             var self = this;
             var params = option.params;
             var blockName = params[0];
@@ -120,7 +117,7 @@ KISSY.add(function (S, require) {
                 type = params[0];
                 blockName = params[1];
             }
-            var blocks = payload.blocks = payload.blocks || {};
+            var blocks = session.blocks = session.blocks || {};
             var head = blocks[blockName],
                 cursor;
             var current = {
@@ -145,7 +142,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            if (!payload.extendTplName) {
+            if (!session.extendTplName) {
                 cursor = blocks[blockName];
                 while (cursor) {
                     if (cursor.fn) {
@@ -158,12 +155,12 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        macro: function (scope, option, buffer, lineNumber, payload) {
+        macro: function (scope, option, buffer, lineNumber, session) {
             var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);
             var self = this;
-            var macros = payload.macros = payload.macros || {};
+            var macros = session.macros = session.macros || {};
             // definition
             if (option.fn) {
                 macros[macroName] = {

@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     require('util');
 
     // codeTemplates --------------------------- start
-    var CALL_NATIVE_COMMAND = '{lhs} = {name}Command.call(engine, scope, {option}, buffer, {lineNumber}, payload);';
+    var CALL_NATIVE_COMMAND = '{lhs} = {name}Command.call(engine, scope, {option}, buffer, {lineNumber}, session);';
 
     var CALL_CUSTOM_COMMAND = 'buffer = callCommandUtil(engine, scope, {option}, buffer, [{idParts}], {lineNumber});';
 
@@ -207,7 +207,7 @@ KISSY.add(function (S, require) {
         }
         source.push('return buffer;');
         return {
-            params: ['scope', 'buffer', 'payload', 'undefined'],
+            params: ['scope', 'buffer', 'session', 'undefined'],
             source: source.join('\n')
         };
     }

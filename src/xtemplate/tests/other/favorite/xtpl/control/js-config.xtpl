@@ -1,0 +1,38 @@
+{{#if (pageInfo.totalCount > pageInfo.bigPageSize) }}
+    {{set (totalItem = pageInfo.bigPageSize) }}
+{{else}}
+    {{set (totalItem = pageInfo.totalCount - queryData.startrow) }}
+{{/if}}
+
+<script>
+    window._alimm_spmact_on_ = 1;
+    window.g_config = {
+        toolbar: false,
+        appId: 2222,
+        collectedItemIndex: 1,
+        loadItemUrl: '{{{ queryUrl("/nodejs/item_collect_chunk.htm", "needNav=false") }}}',
+        _tb_token_: '{{_tb_token_}}',
+        deleteItemUrl: '/json/DeleteCollection.htm?_tb_token_={{_tb_token_}}',
+        restoreItemUrl: '/json/restoreCollection.htm',
+        delRemarkUrl: '/json/DeleteNote.htm?_tb_token_={{_tb_token_}}',
+        delUPUrl: '/json/CancelTop.htm?_tb_token_={{_tb_token_}}',
+        getAddClassUrl: '/json/detail_class_list.htm',
+        postAddClassUrl: '/json/add_class.htm',
+        editClassUrl: '/json/edit_class.htm',
+        classdelUrl: '/json/del_class.htm',
+        imgListRec: '/itemapi/tabInfos.htm',
+        classPoint:3,
+        totalItem: {{totalItem}},
+        pageName: '{{info.jsmod}}',
+        bigPageSize: {{pageInfo.bigPageSize}}, 
+        spmHongbao : '{{spm.hongbao}}',
+        spmHongbaoHb : '{{spm.hongbaoHb}}',
+        spmHongbaoYh : '{{spm.hongbaoYh}}',
+        favType : '1',
+        postExitClassUrl : '/json/del_item_class.htm',
+        ap_mods:{
+            jstracker:[ .01 ]
+        },
+        isAsyncPage: true
+    };
+</script>

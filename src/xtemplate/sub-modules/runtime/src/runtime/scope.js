@@ -2,7 +2,7 @@
  * scope resolution for xtemplate like function in javascript but keep original data unmodified
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function () {
     function Scope(data, affix) {
         // {}
         this.data = data || {};
@@ -36,10 +36,13 @@ KISSY.add(function (S) {
         },
 
         mix: function (v) {
-            if (!this.affix) {
-                this.affix = {};
+            var affix = this.affix;
+            if (!affix) {
+                affix = this.affix = {};
             }
-            S.mix(this.affix, v);
+            for (var name in v) {
+                affix[name] = v[name];
+            }
         },
 
         get: function (name) {
@@ -53,15 +56,15 @@ KISSY.add(function (S) {
 
             var affix = this.affix;
 
-            if (affix && (name in affix)) {
-                return affix[name];
+            v = affix && affix[name];
+
+            if (v !== undefined) {
+                return v;
             }
 
             if (name === 'this') {
                 return data;
-            }
-
-            if (name === 'root') {
+            } else if (name === 'root') {
                 return this.root.data;
             }
 
@@ -76,8 +79,8 @@ KISSY.add(function (S) {
             }
 
             var len = parts.length,
+                scope = self,
                 i, v;
-            var scope = self;
 
             // root keyword for root self
             if (len && parts[0] === 'root') {

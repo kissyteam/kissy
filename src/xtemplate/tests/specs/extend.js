@@ -21,9 +21,11 @@ KISSY.add(function (S, require) {
 
             KISSY.add('template_extend/base', base);
 
-            var result = new XTemplate(sub).render({
-                content: 1
-            });
+            var result = new XTemplate(sub, {
+                cache: false
+            }).render({
+                    content: 1
+                });
 
             expect(result).toBe('title sub 1');
         });
@@ -39,9 +41,11 @@ KISSY.add(function (S, require) {
 
             var sub = '{{extend ("template_extend/base2")}}{{#block ("append", "name")}} append sub {{/block}}';
 
-            var result = new XTemplate(sub).render({
-                content: 1
-            });
+            var result = new XTemplate(sub, {
+                cache: false
+            }).render({
+                    content: 1
+                });
 
             expect(result).toBe('title 1 append base2  append sub ');
         });
@@ -57,9 +61,11 @@ KISSY.add(function (S, require) {
 
             var sub = '{{extend ("template_extend/base2")}}{{#block( "prepend", "name")}} prepend sub {{/block}}';
 
-            var result = new XTemplate(sub).render({
-                content: 1
-            });
+            var result = new XTemplate(sub, {
+                cache: false
+            }).render({
+                    content: 1
+                });
 
             expect(result).toBe('title  prepend sub  prepend base2 1');
         });
@@ -79,9 +85,11 @@ KISSY.add(function (S, require) {
 
             var sub = '{{extend( "template_extend/base3")}}{{#block ("prepend", "name")}} prepend sub< {{/block}}';
 
-            var result = new XTemplate(sub).render({
-                content: 1
-            });
+            var result = new XTemplate(sub, {
+                cache: false
+            }).render({
+                    content: 1
+                });
 
             expect(result).toBe('title  prepend sub<  prepend base2 1 append base3 ');
         });

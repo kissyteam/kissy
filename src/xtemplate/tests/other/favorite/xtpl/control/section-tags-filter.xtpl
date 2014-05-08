@@ -1,0 +1,133 @@
+{{set (frontCategoryCount = 0) }}
+{{set (tagCount = 0) }}
+
+{{#if (frontCategoryList && frontCategoryList.length) }}
+    {{set (frontCategoryCount= count(frontCategoryList, "favCount" ) ) }}
+{{/if}}
+
+{{#if (tagList && tagList.length) }}
+    {{set (tagCount= count(tagList, "favCount" ) ) }}
+{{/if}}
+
+{{set (pageTypeFlag = 1) }}
+{{#if (info.pageType === "shop") }}
+    {{set (pageTypeFlag = 2) }}
+{{/if}}
+
+<div id="fav-class">
+    <div class="mercury-map clearfix" data-spm="{{spm.tag}}">
+        <div class="mercury-map-wrap">
+            <div class="mod mod-a" style="height: 24px">
+                <div class="mod-wrap">
+                    <a data-spm="{{spm.tagAll}}"
+                        class="mod-link {{#if (!queryData.tagname && queryData.frontCategory < 1) }}active{{/if}}"
+                        href="{{{resetUrl(pageLink)}}}">
+                        <span>全部分类</span>
+
+                        {{#if (frontCategoryCount) }}
+                            <b>{{frontCategoryCount}}</b>
+                        {{else}}
+                            <b>{{tagCount}}</b>
+                        {{/if}}
+
+                    </a>
+                </div>
+            </div>
+
+            {{#if (!tagCount) }}
+            <div class="mod mod-b" style="height:24px;width:80%">
+            {{else}}
+            <div class="mod mod-b border-right" style="height:24px">
+            {{/if}}
+
+                <div class="mod-wrap">
+                    <ul>
+                        {{#each (frontCategoryList) }}
+                            <li>
+                                {{set (query="frontCategory=" + vtdId) }}
+                                <a data-spm="{{spm.tagCategory}}"
+                                    class="mod-link {{#if (queryData.frontCategory===vtdId)}}active{{/if}}"
+                                    href="{{{resetUrl (root.pageLink, query) }}}"
+                                    title="{{vtdName}}">
+                                    <span>{{vtdName}}</span>
+                                    <b>{{favCount}}</b>
+                                </a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+
+            {{#if (tagCount)}}
+                <div class="mod mod-c {{#if (frontCategoryCount) }}border-left{{/if}}"
+                    style="height:24px">
+                    <div class="mod-wrap">
+                        <ul>
+                            {{#each (tagList) }}
+                                <li>
+                                    {{#if (favCount > 0) }}
+                                        {{set (subempty="false") }}
+                                    {{else}}
+                                        {{set (subempty="true") }}
+                                    {{/if}}
+
+                                    {{#if (tagDisplayName) }}
+                                        {{#if (root.queryData.tagname === tagname) }}
+                                            <span class="mod-link active"
+                                                data-tagname="{{tagDisplayName}}"
+                                                data-type="{{root.pageTypeFlag}}"
+                                                data-empty="{{subempty}}">
+                                                <span class="tagname">{{tagDisplayName}}</span>
+                                                <span class="J_CatEditTrigger edit nmiconfont">&#x3453;</span>
+                                                <span class="J_CatDelTrigger del nmiconfont">&#x3570;</span>
+                                            </span>
+                                        {{else}}
+                                            {{set (query="tagname=" + tagname) }}
+                                            <a  data-spm="{{spm.tagTag}}"
+                                                class="mod-link"
+                                                href="{{resetUrl (root.pageLink, query)}}"
+                                                title="{{tagDisplayName}}"
+                                                data-tagname="{{tagDisplayName}}"
+                                                data-type="{{root.pageTypeFlag}}"
+                                                data-empty="{{subempty}}">
+                                                <span>{{tagDisplayName}}</span>
+                                                <b>{{favCount}}</b>
+                                            </a>
+                                        {{/if}}
+                                    {{else}}
+                                     <a  data-spm="{{spm.tagTag}}"
+                                         class="mod-link {{#if (!queryData.tagname) }}active{{/if}}"
+                                         href="{{{ resetUrl(root.pageLink) }}}"
+                                         title="{{tagDisplayName}}">
+                                        <span>无标签</span><b>{{favCount}}</b>
+                                    </a>
+                                    {{/if}}
+                                </li>
+                            {{/each}}
+
+
+                        </ul>
+                    </div>
+                </div>
+            {{/if}}
+
+            <div class="mod mod-d" style="height:24px">
+                <div class="mod-wrap">
+                    {{#if (frontCategoryCount < 7 && tagCount < 10) }}
+                        {{set (style="display:none") }}
+                    {{else}}
+                        {{set (style="") }}
+                    {{/if}}
+
+                    <a pointname="{{spm.mmstattagmore}}"
+                        class="mod-more J_TopCatMapMore J_NewPoint"
+                        style="{{style}}"
+                        href="#">
+                        <span>更多</span><b></b><s></s>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

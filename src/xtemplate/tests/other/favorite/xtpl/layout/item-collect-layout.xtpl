@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<!--Node.js-->
+<head>
+    {{{include ("../control/js-config") }}}
+    {{{include ("../control/layout-head") }}}
+
+    <link rel="stylesheet" type="text/css" href="http://a.tbcdn.cn/apps/smf/utils/applyCoupon-min.css?t=20140105.css" />
+
+</head>
+
+<body data-spm="{{spm.body}}">
+
+    <script src="{{config.server}}/{{config.version}}/c/responsive/index.js"></script>
+    <script src="http://a.tbcdn.cn/apps/smf/utils/applyCouponWidget-min.js?t=20140107.js"></script>
+
+    {{vmcommon ("global/header.html") }}
+    <script>TB.Global.init();</script>
+
+    <div id="page">
+        {{tms ("mercury/topbanner2013.php") }}
+
+        <div id="content">
+            <div id="mercury">
+                {{{include ("../control/layout-nav") }}}
+
+                {{{block ("content") }}}
+            </div>
+        </div>
+    </div>
+
+    {{{include ("../control/widget-to-top") }}}
+
+    <div class="page-footer-hidden">
+        {{vmcommon ("global/footer.html") }}
+    </div>
+
+    <script>
+    KISSY.use('mercury/p/{{info.jsmod}}/index', function (S, mod) {
+        new mod();
+    });
+    </script>
+
+    {{{tms ("mercury/1212css.php") }}}
+    <div id="appendBox" data-spm="{{spm.appendBox}}"></div>
+
+</body>
+</html>

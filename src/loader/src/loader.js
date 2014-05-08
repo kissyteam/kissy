@@ -140,17 +140,15 @@
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
-         * @param {String} refName internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName, refName) {
-            moduleName = Utils.normalizePath(refName, moduleName);
+        require: function (moduleName) {
             // cache module read
             if (mods[moduleName] && mods[moduleName].status === Loader.Status.ATTACHED) {
                 return mods[moduleName].exports;
             }
-            var moduleNames = Utils.normalizeModNames([moduleName], refName);
+            var moduleNames = Utils.normalizeModNames([moduleName]);
             Utils.attachModsRecursively(moduleNames);
             return Utils.getModules(moduleNames)[1];
         }

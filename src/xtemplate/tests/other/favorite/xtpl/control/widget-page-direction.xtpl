@@ -1,0 +1,38 @@
+{{set (totalpage = pageInfo.bigTotalPage) }}
+{{#if (totalpage > 100) }}
+    {{set (totalpage = 100) }}
+{{/if}}
+
+{{set (currentpage = pageInfo.bigPageNum) }}
+{{set (prepage  = currentpage - 1)}}
+{{set (nextpage = currentpage + 1)}}
+{{set (pagesize = pageInfo.bigPageSize) }}
+
+{{#if (nextpage > totalpage )}}
+    {{set (defaultpage = totalpage) }}
+{{else}}
+    {{set (defaultpage = nextpage) }}
+{{/if}}
+
+<div class="page-nav-top" data-spm="{{spm.page}}">
+
+    {{#if (prepage > 0) }}
+        <a  data-spm="{{spm.pagePrevious}}"
+            class="J_PrevPage  page-pre "
+            href="{{{ pageUrl(prepage) }}}">上一页</a>
+
+    {{else}}
+        <a class="J_PrevPage  page-pre disabled" href="#">上一页</a>
+    {{/if}}
+
+    {{#if (nextpage < totalpage + 1) }}
+        <a  data-spm="{{spm.pageNext}}"
+            class="J_NextPage page-next"
+            href="{{{ pageUrl(nextpage) }}}">下一页</a>
+
+    {{else}}
+        <a class="J_NextPage page-next disabled" href="#">下一页</a>
+    {{/if}}
+
+</div>
+

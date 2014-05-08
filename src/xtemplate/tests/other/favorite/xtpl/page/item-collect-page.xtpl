@@ -1,0 +1,75 @@
+<div class="mercury-cont">
+    {{#if (!info.hasData && !info.hasQuery) }}
+        <div class="fav-list">
+            <div class="no-fav-result clearfix">
+                <div class="no-pic">
+                    <img src="http://img01.taobaocdn.com/tps/i1/T141OmXtFXXXXfNwfm-71-78.png">
+                </div>
+                <div class="no-result-tips">
+                    <p class="big-font">你还没收藏过宝贝哦</p>
+                    <p><a target="_blank" href="http://guang.taobao.com">去随便逛逛吧</a>，看看有没有喜欢的</p>
+                </div>
+            </div>
+        </div>
+    {{else}}
+
+        {{include ("../control/section-tags-filter") }}
+        {{include ("../control/section-item-nav") }}
+
+        {{#if (!info.hasData) }}
+            <div class="no-fav-result clearfix">
+                <div class="no-pic">
+                    <img src="http://img01.taobaocdn.com/tps/i1/T141OmXtFXXXXfNwfm-71-78.png">
+                </div>
+                <div class="no-result-tips">
+                    {{#if (queryData.isPromotion) }}
+                        <p class="big-font">今天没有宝贝在优惠哦</p>
+                        <p>去看看<a target="_blank" href="/shop_collect_list.htm">店铺</a>都上了哪些新款吧</p>
+                    {{else}} {{#if (queryData.invalid)}}
+                        <p class="big-font">没有失效的宝贝哦</p>
+                        <p>去看看<a target="_blank" href="/item_collect_list.htm">收藏</a>的其他宝贝吧</p>
+                    {{else}} {{#if (queryData.tagname !== "" || queryData.frontCategory > 0 )}}
+                        <p class="big-font">这个分类里还没有宝贝哦</p>
+                        <p>赶紧去<a target="_blank" href="/item_collect_list.htm">全部宝贝</a>里添加</p>
+
+                    {{else}} {{#if (queryData.keyword !== "") }}
+                        <p class="big-font">你的收藏夹没有与"{{queryData.keyword}}"相关的宝贝哦</p>
+
+                        <p>看看输入的文字是否有误</p>
+
+                        <p>去掉不必要的字或词，如“的”、“什么”等</p>
+
+                        <p>调整关键字，如“移动充值”改为“移动 充值”或“移动”</p>
+
+                        <p>去看看<a target="_blank" href="/shop_collect_list.htm">店铺</a>都上了哪些新款吧</p>
+
+                    {{/if}}{{/if}}{{/if}}
+
+                    {{/if}}
+                </div>
+            </div>
+
+        {{else}}
+            <div id="fav-list">
+                <ul class="img-item-list J_FavList clearfix">
+
+                    {{! 使用pageName做切換, 如：}}
+                    {{! if (pageName === "item-collect" )}}
+
+                    {{include ("../control/item-collect-li") }}
+                </ul>
+                <div id="loading-img">正在加载</div>
+            </div>
+        {{/if}}
+
+        {{#if (pageInfo.totalCount > pageInfo.bigPageSize) }}
+            {{include ("../control/widget-page-feed") }}
+        {{else}}
+            <div class="page-nav-box-none"></div>
+        {{/if}}
+
+    {{/if}}
+
+    {{! 广告 }}
+    {{{include ("../control/ad-area") }}}
+</div>

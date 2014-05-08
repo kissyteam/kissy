@@ -613,7 +613,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/xtemplate/compiler.js'].lineData[7]++;
   require('util');
   _$jscoverage['/xtemplate/compiler.js'].lineData[10]++;
-  var CALL_NATIVE_COMMAND = '{lhs} = {name}Command.call(engine, scope, {option}, buffer, {lineNumber}, payload);';
+  var CALL_NATIVE_COMMAND = '{lhs} = {name}Command.call(engine, scope, {option}, buffer, {lineNumber}, session);';
   _$jscoverage['/xtemplate/compiler.js'].lineData[12]++;
   var CALL_CUSTOM_COMMAND = 'buffer = callCommandUtil(engine, scope, {option}, buffer, [{idParts}], {lineNumber});';
   _$jscoverage['/xtemplate/compiler.js'].lineData[14]++;
@@ -854,7 +854,7 @@ KISSY.add(function(S, require) {
     source.push('return buffer;');
     _$jscoverage['/xtemplate/compiler.js'].lineData[209]++;
     return {
-  params: ['scope', 'buffer', 'payload', 'undefined'], 
+  params: ['scope', 'buffer', 'session', 'undefined'], 
   source: source.join('\n')};
   }
   _$jscoverage['/xtemplate/compiler.js'].lineData[215]++;

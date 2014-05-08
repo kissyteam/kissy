@@ -101,6 +101,10 @@ S.config("requires",{
     "dom/selector": [
         "dom/basic"
     ],
+    "event": [
+        "event/dom",
+        "event/custom"
+    ],
     "event/base": [
         "util"
     ],

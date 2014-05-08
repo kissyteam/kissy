@@ -231,19 +231,17 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData = [];
   _$jscoverage['/modules.js'].lineData[2] = 0;
   _$jscoverage['/modules.js'].lineData[3] = 0;
-  _$jscoverage['/modules.js'].lineData[267] = 0;
-  _$jscoverage['/modules.js'].lineData[274] = 0;
-  _$jscoverage['/modules.js'].lineData[275] = 0;
-  _$jscoverage['/modules.js'].lineData[276] = 0;
-  _$jscoverage['/modules.js'].lineData[277] = 0;
+  _$jscoverage['/modules.js'].lineData[271] = 0;
   _$jscoverage['/modules.js'].lineData[278] = 0;
+  _$jscoverage['/modules.js'].lineData[279] = 0;
   _$jscoverage['/modules.js'].lineData[280] = 0;
+  _$jscoverage['/modules.js'].lineData[281] = 0;
   _$jscoverage['/modules.js'].lineData[282] = 0;
-  _$jscoverage['/modules.js'].lineData[285] = 0;
+  _$jscoverage['/modules.js'].lineData[284] = 0;
   _$jscoverage['/modules.js'].lineData[286] = 0;
-  _$jscoverage['/modules.js'].lineData[297] = 0;
-  _$jscoverage['/modules.js'].lineData[304] = 0;
-  _$jscoverage['/modules.js'].lineData[305] = 0;
+  _$jscoverage['/modules.js'].lineData[289] = 0;
+  _$jscoverage['/modules.js'].lineData[290] = 0;
+  _$jscoverage['/modules.js'].lineData[301] = 0;
   _$jscoverage['/modules.js'].lineData[308] = 0;
   _$jscoverage['/modules.js'].lineData[309] = 0;
   _$jscoverage['/modules.js'].lineData[312] = 0;
@@ -253,6 +251,8 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[320] = 0;
   _$jscoverage['/modules.js'].lineData[321] = 0;
   _$jscoverage['/modules.js'].lineData[324] = 0;
+  _$jscoverage['/modules.js'].lineData[325] = 0;
+  _$jscoverage['/modules.js'].lineData[328] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -261,12 +261,10 @@ if (! _$jscoverage['/modules.js'].functionData) {
 }
 if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData = {};
-  _$jscoverage['/modules.js'].branchData['276'] = [];
-  _$jscoverage['/modules.js'].branchData['276'][1] = new BranchData();
-  _$jscoverage['/modules.js'].branchData['289'] = [];
-  _$jscoverage['/modules.js'].branchData['289'][1] = new BranchData();
-  _$jscoverage['/modules.js'].branchData['300'] = [];
-  _$jscoverage['/modules.js'].branchData['300'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['280'] = [];
+  _$jscoverage['/modules.js'].branchData['280'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['293'] = [];
+  _$jscoverage['/modules.js'].branchData['293'][1] = new BranchData();
   _$jscoverage['/modules.js'].branchData['304'] = [];
   _$jscoverage['/modules.js'].branchData['304'][1] = new BranchData();
   _$jscoverage['/modules.js'].branchData['308'] = [];
@@ -277,38 +275,40 @@ if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData['316'][1] = new BranchData();
   _$jscoverage['/modules.js'].branchData['320'] = [];
   _$jscoverage['/modules.js'].branchData['320'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['324'] = [];
+  _$jscoverage['/modules.js'].branchData['324'][1] = new BranchData();
 }
-_$jscoverage['/modules.js'].branchData['320'][1].init(6342, 24, '!isTouchGestureSupported');
-function visit17_320_1(result) {
+_$jscoverage['/modules.js'].branchData['324'][1].init(6408, 24, '!isTouchGestureSupported');
+function visit17_324_1(result) {
+  _$jscoverage['/modules.js'].branchData['324'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/modules.js'].branchData['320'][1].init(6327, 22, '!win.DeviceMotionEvent');
+function visit16_320_1(result) {
   _$jscoverage['/modules.js'].branchData['320'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['316'][1].init(6261, 22, '!win.DeviceMotionEvent');
-function visit16_316_1(result) {
+}_$jscoverage['/modules.js'].branchData['316'][1].init(6243, 24, '!isTouchGestureSupported');
+function visit15_316_1(result) {
   _$jscoverage['/modules.js'].branchData['316'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['312'][1].init(6177, 24, '!isTouchGestureSupported');
-function visit15_312_1(result) {
+}_$jscoverage['/modules.js'].branchData['312'][1].init(6160, 24, '!isTouchGestureSupported');
+function visit14_312_1(result) {
   _$jscoverage['/modules.js'].branchData['312'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['308'][1].init(6094, 24, '!isTouchGestureSupported');
-function visit14_308_1(result) {
+}_$jscoverage['/modules.js'].branchData['308'][1].init(6073, 24, '!isTouchGestureSupported');
+function visit13_308_1(result) {
   _$jscoverage['/modules.js'].branchData['308'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['304'][1].init(6007, 24, '!isTouchGestureSupported');
-function visit13_304_1(result) {
+}_$jscoverage['/modules.js'].branchData['304'][1].init(101, 13, 'UA.ieMode < 9');
+function visit12_304_1(result) {
   _$jscoverage['/modules.js'].branchData['304'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['300'][1].init(101, 13, 'UA.ieMode < 9');
-function visit12_300_1(result) {
-  _$jscoverage['/modules.js'].branchData['300'][1].ranCondition(result);
+}_$jscoverage['/modules.js'].branchData['293'][1].init(31, 13, 'UA.ieMode < 9');
+function visit11_293_1(result) {
+  _$jscoverage['/modules.js'].branchData['293'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['289'][1].init(31, 13, 'UA.ieMode < 9');
-function visit11_289_1(result) {
-  _$jscoverage['/modules.js'].branchData['289'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/modules.js'].branchData['276'][1].init(19, 23, 'typeof name === "string"');
-function visit10_276_1(result) {
-  _$jscoverage['/modules.js'].branchData['276'][1].ranCondition(result);
+}_$jscoverage['/modules.js'].branchData['280'][1].init(19, 23, 'typeof name === "string"');
+function visit10_280_1(result) {
+  _$jscoverage['/modules.js'].branchData['280'][1].ranCondition(result);
   return result;
 }_$jscoverage['/modules.js'].lineData[2]++;
 (function(S) {
@@ -343,6 +343,7 @@ function visit10_276_1(result) {
   "dom/class-list": ["dom/base"], 
   "dom/ie": ["dom/base"], 
   "dom/selector": ["dom/basic"], 
+  "event": ["event/dom", "event/custom"], 
   "event/base": ["util"], 
   "event/custom": ["event/base"], 
   "event/dom/base": ["event/base", "dom", "ua"], 
@@ -386,59 +387,59 @@ function visit10_276_1(result) {
   "uri": ["path"], 
   "xtemplate": ["xtemplate/runtime"], 
   "xtemplate/runtime": ["util"]});
-  _$jscoverage['/modules.js'].lineData[267]++;
+  _$jscoverage['/modules.js'].lineData[271]++;
   var Feature = S.Feature, UA = S.UA, win = window, isTouchGestureSupported = Feature.isTouchGestureSupported(), add = S.add, emptyObject = {};
-  _$jscoverage['/modules.js'].lineData[274]++;
+  _$jscoverage['/modules.js'].lineData[278]++;
   function alias(name, aliasName) {
     _$jscoverage['/modules.js'].functionData[1]++;
-    _$jscoverage['/modules.js'].lineData[275]++;
+    _$jscoverage['/modules.js'].lineData[279]++;
     var cfg;
-    _$jscoverage['/modules.js'].lineData[276]++;
-    if (visit10_276_1(typeof name === "string")) {
-      _$jscoverage['/modules.js'].lineData[277]++;
+    _$jscoverage['/modules.js'].lineData[280]++;
+    if (visit10_280_1(typeof name === "string")) {
+      _$jscoverage['/modules.js'].lineData[281]++;
       cfg = {};
-      _$jscoverage['/modules.js'].lineData[278]++;
+      _$jscoverage['/modules.js'].lineData[282]++;
       cfg[name] = aliasName;
     } else {
-      _$jscoverage['/modules.js'].lineData[280]++;
+      _$jscoverage['/modules.js'].lineData[284]++;
       cfg = name;
     }
-    _$jscoverage['/modules.js'].lineData[282]++;
+    _$jscoverage['/modules.js'].lineData[286]++;
     S.config("alias", cfg);
   }
-  _$jscoverage['/modules.js'].lineData[285]++;
+  _$jscoverage['/modules.js'].lineData[289]++;
   alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
-  _$jscoverage['/modules.js'].lineData[286]++;
+  _$jscoverage['/modules.js'].lineData[290]++;
   alias({
-  'dom/basic': ['dom/base', visit11_289_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list'], 
+  'dom/basic': ['dom/base', visit11_293_1(UA.ieMode < 9) ? 'dom/ie' : '', Feature.isClassListSupported() ? '' : 'dom/class-list'], 
   dom: ['dom/basic', Feature.isQuerySelectorSupported() ? '' : 'dom/selector']});
-  _$jscoverage['/modules.js'].lineData[297]++;
-  alias('event/dom', ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit12_300_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']);
-  _$jscoverage['/modules.js'].lineData[304]++;
-  if (visit13_304_1(!isTouchGestureSupported)) {
-    _$jscoverage['/modules.js'].lineData[305]++;
+  _$jscoverage['/modules.js'].lineData[301]++;
+  alias('event/dom', ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit12_304_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']);
+  _$jscoverage['/modules.js'].lineData[308]++;
+  if (visit13_308_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[309]++;
     add('event/gesture/edge-drag', emptyObject);
   }
-  _$jscoverage['/modules.js'].lineData[308]++;
-  if (visit14_308_1(!isTouchGestureSupported)) {
-    _$jscoverage['/modules.js'].lineData[309]++;
+  _$jscoverage['/modules.js'].lineData[312]++;
+  if (visit14_312_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[313]++;
     add('event/gesture/pinch', emptyObject);
   }
-  _$jscoverage['/modules.js'].lineData[312]++;
-  if (visit15_312_1(!isTouchGestureSupported)) {
-    _$jscoverage['/modules.js'].lineData[313]++;
+  _$jscoverage['/modules.js'].lineData[316]++;
+  if (visit15_316_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[317]++;
     add('event/gesture/rotate', emptyObject);
   }
-  _$jscoverage['/modules.js'].lineData[316]++;
-  if (visit16_316_1(!win.DeviceMotionEvent)) {
-    _$jscoverage['/modules.js'].lineData[317]++;
+  _$jscoverage['/modules.js'].lineData[320]++;
+  if (visit16_320_1(!win.DeviceMotionEvent)) {
+    _$jscoverage['/modules.js'].lineData[321]++;
     add('event/gesture/shake', emptyObject);
   }
-  _$jscoverage['/modules.js'].lineData[320]++;
-  if (visit17_320_1(!isTouchGestureSupported)) {
-    _$jscoverage['/modules.js'].lineData[321]++;
+  _$jscoverage['/modules.js'].lineData[324]++;
+  if (visit17_324_1(!isTouchGestureSupported)) {
+    _$jscoverage['/modules.js'].lineData[325]++;
     add('event/gesture/swipe', emptyObject);
   }
-  _$jscoverage['/modules.js'].lineData[324]++;
+  _$jscoverage['/modules.js'].lineData[328]++;
   alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 })(KISSY);

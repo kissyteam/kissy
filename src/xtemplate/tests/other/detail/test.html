@@ -1,6 +1,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="command.js"></script>
 <script src="/kissy/src/package.js"></script>
+<button id="render">render</button>
 <textarea id="content" style="width: 100%;height: 400px"></textarea>
 <script>
     var data;
@@ -10,7 +11,8 @@
         }
     });
 
-    KISSY.use(['io', 'xtemplate/runtime', 'xtpl/screen/detail'], function (S, IO, XTemplate, detailXtpl) {
+    KISSY.use(['io', 'xtemplate/runtime',
+        'xtpl/screen/detail'], function (S, IO, XTemplate, detailXtpl) {
         var num = 1000;
 
         IO({
@@ -25,14 +27,15 @@
 
         var t = new XTemplate(detailXtpl);
 
-        var start = S.now();
+        document.getElementById('render').onclick = function () {
+            var start = S.now();
 
-        for (var i = 0; i < num; i++) {
-            var ret = t.render(data);
-        }
+            for (var i = 0; i < num; i++) {
+                var ret = t.render(data);
+            }
 
-        S.log(S.now() - start);
-
-        document.getElementById('content').value = ret;
+            S.log(S.now() - start);
+            document.getElementById('content').value = ret;
+        };
     });
 </script>

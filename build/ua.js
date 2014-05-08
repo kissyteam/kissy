@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 00:33
 */
 KISSY.add("ua",[],function(g){function f(b){var d=0;return parseFloat(b.replace(/\./g,function(){return 0===d++?".":""}))}function o(b,d){var e;d.trident=0.1;if((e=b.match(/Trident\/([\d.]*)/))&&e[1])d.trident=f(e[1]);d.core="trident"}function p(b){var d,e;return(d=b.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/))&&(e=d[1]||d[2])?f(e):0}function q(b){var e,g="",i="",a,h=[6,9],j,m=l&&l.createElement("div"),k=[],c={webkit:d,trident:d,gecko:d,presto:d,chrome:d,safari:d,firefox:d,ie:d,ieMode:d,
 opera:d,mobile:d,core:d,shell:d,phantomjs:d,os:d,ipad:d,iphone:d,ipod:d,ios:d,android:d,nodejs:d};m&&m.getElementsByTagName&&(m.innerHTML="<\!--[if IE {{version}}]><s></s><![endif]--\>".replace("{{version}}",""),k=m.getElementsByTagName("s"));if(0<k.length){o(b,c);a=h[0];for(h=h[1];a<=h;a++)if(m.innerHTML="<\!--[if IE {{version}}]><s></s><![endif]--\>".replace("{{version}}",a),0<k.length){c[i="ie"]=a;break}if(!c.ie&&(j=p(b)))c[i="ie"]=j}else if(((a=b.match(/AppleWebKit\/([\d.]*)/))||(a=b.match(/Safari\/([\d.]*)/)))&&

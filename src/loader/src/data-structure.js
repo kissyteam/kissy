@@ -116,12 +116,15 @@
         self.waits = {};
 
         self.require = function (moduleName) {
-            return S.require(moduleName, self.name);
+            return S.require(self.resolve(moduleName));
         };
 
         self.require.resolve = function (relativeName) {
             return self.resolve(relativeName);
         };
+
+        // relative name resolve cache
+        self.resolveCache = {};
     }
 
     Module.prototype = {
@@ -130,7 +133,15 @@
         constructor: Module,
 
         resolve: function (relativeName) {
-            return Utils.normalizePath(this.name, relativeName);
+            if (relativeName.charAt(0) !== '.') {
+                return relativeName;
+            }
+            var resolveCache = this.resolveCache;
+            if (resolveCache[relativeName]) {
+                return resolveCache[relativeName];
+            }
+            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
+            return resolveCache[relativeName];
         },
 
         add: function (loader) {

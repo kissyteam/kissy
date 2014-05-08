@@ -1,4 +1,0 @@
-##批量模块的导入
-#foreach($frontModule in $frontModules)
-$control.setTemplate("modulet.vm").setParameter("frontModule",$frontModule)
-#end

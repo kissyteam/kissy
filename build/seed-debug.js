@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 00:34
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 00:33
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140508115519' will replace with current timestamp when compressing.
+         * NOTICE: '20140509003338' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140508115519',
+        __BUILD_TIME: '20140509003338',
 
         /**
          * KISSY Environment.
@@ -951,12 +951,14 @@ var KISSY = (function (undefined) {
         self.waits = {};
 
         self.require = function (moduleName) {
-            return S.require(moduleName, self.name);
+            return S.require(self.resolve(moduleName));
         };
 
         self.require.resolve = function (relativeName) {
             return self.resolve(relativeName);
         };
+
+        self.resolveCache = {};
     }
 
     Module.prototype = {
@@ -965,7 +967,15 @@ var KISSY = (function (undefined) {
         constructor: Module,
 
         resolve: function (relativeName) {
-            return Utils.normalizePath(this.name, relativeName);
+            if (relativeName.charAt(0) !== '.') {
+                return relativeName;
+            }
+            var resolveCache = this.resolveCache;
+            if (resolveCache[relativeName]) {
+                return resolveCache[relativeName];
+            }
+            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
+            return resolveCache[relativeName];
         },
 
         add: function (loader) {
@@ -2348,17 +2358,15 @@ var KISSY = (function (undefined) {
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
-         * @param {String} refName internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName, refName) {
-            moduleName = Utils.normalizePath(refName, moduleName);
+        require: function (moduleName) {
             // cache module read
             if (mods[moduleName] && mods[moduleName].status === Loader.Status.ATTACHED) {
                 return mods[moduleName].exports;
             }
-            var moduleNames = Utils.normalizeModNames([moduleName], refName);
+            var moduleNames = Utils.normalizeModNames([moduleName]);
             Utils.attachModsRecursively(moduleNames);
             return Utils.getModules(moduleNames)[1];
         }
@@ -2387,7 +2395,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140508115519';
+    var TIMESTAMP = '20140509003338';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2512,7 +2520,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 00:34
 */
 /*
 combined modules:
@@ -4103,7 +4111,7 @@ KISSY.add('util/web', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 00:33
 */
 /*
 combined modules:
@@ -4496,7 +4504,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 00:33
 */
 /*
 combined modules:
@@ -4849,6 +4857,10 @@ S.config("requires",{
     ],
     "dom/selector": [
         "dom/basic"
+    ],
+    "event": [
+        "event/dom",
+        "event/custom"
     ],
     "event/base": [
         "util"

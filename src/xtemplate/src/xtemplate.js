@@ -11,6 +11,11 @@ KISSY.add(function (S, require) {
 
     function compile(tpl, config) {
         var fn;
+
+        if (config && config.root) {
+            config = config.root.config;
+        }
+
         var cacheable = !config || config.cache !== false;
 
         if (cacheable && (fn = cache[tpl])) {
@@ -56,6 +61,8 @@ KISSY.add(function (S, require) {
     S.extend(XTemplate, XTemplateRuntime, {
     }, {
         Compiler: Compiler,
+
+        pool: XTemplateRuntime.pool,
 
         Scope: XTemplateRuntime.Scope,
 

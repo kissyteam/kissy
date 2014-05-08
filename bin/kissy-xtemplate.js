@@ -48,6 +48,19 @@ function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
 }
 
+function getFunctionName(path) {
+    var name = path;
+    if (name.indexOf('/') !== -1) {
+        name = name.substring(name.lastIndexOf('/') + 1);
+    }
+    name = name.replace(/-([a-z])/ig, function () {
+        return arguments[1].toUpperCase();
+    });
+    name = name.replace(/\..+$/, '');
+    return name;
+}
+
+
 function myJsBeautify(str) {
     var opts = {
         'indent_size': '4',
@@ -62,13 +75,15 @@ function myJsBeautify(str) {
 
 function compile(tplFilePath, modulePath) {
     var tplContent = fs.readFileSync(tplFilePath, encoding);
+    var functionName = getFunctionName(tplFilePath);
     var moduleCode = myJsBeautify(
             '/** Compiled By kissy-xtemplate */\n' +
             'KISSY.add(function(S,require,exports,module){\n' +
             jshint +
-            'var t = ' + XTemplateCompiler.compileToStr(tplContent, tplFilePath, true)) + ';\n' +
-        't.TPL_NAME = module.name;\n' +
-        'return t;\n' +
+            'var ' + functionName + ' = ' +
+            XTemplateCompiler.compileToStr(tplContent, tplFilePath, true)) + ';\n' +
+        functionName + '.TPL_NAME = module.name;\n' +
+        'return ' + functionName + '\n' +
         '});';
     fs.writeFileSync(modulePath, moduleCode, encoding);
     console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
