@@ -9,7 +9,6 @@ KISSY.add(function (S, require) {
     var commands = {};
     var Scope = require('./runtime/scope');
     var LinkedBuffer = require('./runtime/linked-buffer');
-    var pool = require('./runtime/pool');
 
     function findCommand(localCommands, parts) {
         var name = parts[0];
@@ -45,32 +44,34 @@ KISSY.add(function (S, require) {
         return parts.join('/');
     }
 
-    function renderTpl(self, scope, buffer, session) {
-        var tpl = self.tpl;
-        session.extendTplName = null;
-        if (tpl.TPL_NAME && !self.name) {
-            self.name = tpl.TPL_NAME;
+    function renderTpl(tpl, scope, buffer) {
+        var fn = tpl.fn;
+        if (fn.version && S.version !== fn.version) {
+            throw new Error('current xtemplate file(' + tpl.name +
+                ')(v' + fn.version + ')need to be recompiled using current kissy(v' +
+                S.version + ')!');
         }
-        buffer = tpl.call(self, scope, buffer, session);
-        var extendTplName = session.extendTplName;
+        buffer = tpl.fn.call(tpl, scope, buffer);
+        var extendTplName = tpl.session.extendTplName;
         // if has extend statement, only parse
         if (extendTplName) {
-            buffer = self.include(extendTplName, scope, buffer, session);
+            delete tpl.session.extendTplName;
+            buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
         }
         return buffer.end();
     }
 
-    function callFn(engine, scope, option, buffer, parts, depth, line, resolveInScope) {
-        var commands = engine.getRoot().config.commands;
+    function callFn(tpl, scope, option, buffer, parts, depth, line, resolveInScope) {
+        var commands = tpl.root.config.commands;
         var error, caller, fn;
         var command1;
         if (!depth) {
             command1 = findCommand(commands, parts);
         }
         if (command1) {
-            return command1.call(engine, scope, option, buffer, line);
+            return command1.call(tpl, scope, option, buffer, line);
         } else {
-            error = 'in file: ' + engine.name + ' can not call: ' + parts.join('.') + '" at line ' + line;
+            error = 'in file: ' + tpl.name + ' can not call: ' + parts.join('.') + '" at line ' + line;
         }
         if (resolveInScope) {
             caller = scope.resolve(parts.slice(0, -1), depth);
@@ -86,11 +87,11 @@ KISSY.add(function (S, require) {
     }
 
     var utils = {
-        callFn: function (engine, scope, option, buffer, parts, depth, line) {
-            return callFn(engine, scope, option, buffer, parts, depth, line, true);
+        callFn: function (tpl, scope, option, buffer, parts, depth, line) {
+            return callFn(tpl, scope, option, buffer, parts, depth, line, true);
         },
-        callCommand: function (engine, scope, option, buffer, parts, line) {
-            return callFn(engine, scope, option, buffer, parts, 0, line, true);
+        callCommand: function (tpl, scope, option, buffer, parts, line) {
+            return callFn(tpl, scope, option, buffer, parts, 0, line, true);
         }
     };
 
@@ -105,20 +106,15 @@ KISSY.add(function (S, require) {
      * XTemplate runtime. only accept tpl as function.
      * @class KISSY.XTemplate.Runtime
      */
-    function XTemplateRuntime(tpl, config) {
+    function XTemplateRuntime(fn, config) {
         var self = this;
-        self.tpl = tpl;
+        self.fn = fn;
         config = config || {};
-        self.name = config.name;
         self.config = config;
-        self.subNameResolveCache = {};
-        config.root = config.root || self;
     }
 
     S.mix(XTemplateRuntime, {
         nativeCommands: nativeCommands,
-
-        pool: pool,
 
         utils: utils,
 
@@ -146,6 +142,26 @@ KISSY.add(function (S, require) {
         }
     });
 
+    var subNameResolveCache = {};
+
+    function resolve(subName, parentName) {
+        if (subName.charAt(0) !== '.') {
+            return subName;
+        }
+        if (!parentName) {
+            var error = 'parent template does not have name' +
+                ' for relative sub tpl name: ' + subName;
+            throw new Error(error);
+        }
+        var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
+        if (cache[subName]) {
+            return cache[subName];
+        }
+        subName = cache[subName] = getSubNameFromParentName(parentName, subName);
+        //console.log('resolve: ' + name + ' : ' + subName);
+        return subName;
+    }
+
     XTemplateRuntime.prototype = {
         constructor: XTemplateRuntime,
 
@@ -155,38 +171,15 @@ KISSY.add(function (S, require) {
 
         utils: utils,
 
-        getRoot: function () {
-            return this.config.root;
-        },
-
-        resolve: function (subName) {
-            if (subName.charAt(0) !== '.') {
-                return subName;
-            }
-            var cache = this.subNameResolveCache;
-            if (cache[subName]) {
-                return cache[subName];
-            }
-            var name = this.name;
-            if (!name) {
-                var error = 'parent template does not have name' +
-                    ' for relative sub tpl name: ' + subName;
-                throw new Error(error);
-            }
-            subName = cache[subName] = getSubNameFromParentName(name, subName);
-            //console.log('resolve: ' + name + ' : ' + subName);
-            return subName;
-        },
-
-        loadContent: function (subTplName, callback) {
-            var tpl = S.require(subTplName);
+        getTplContent: function (name, callback) {
+            var tpl = S.require(name);
             if (tpl) {
-                callback(undefined, tpl);
+                return callback(undefined, tpl);
             } else {
-                var warning = 'template "' + subTplName + '" does not exist, ' +
+                var error = 'template "' + name + '" does not exist, ' +
                     'better required or used first for performance!';
-                S.log(warning, 'error');
-                callback(warning, undefined);
+                S.log(error, 'error');
+                callback(error);
             }
         },
 
@@ -195,38 +188,8 @@ KISSY.add(function (S, require) {
          * @cfg {Function} loader
          * @member KISSY.XTemplate.Runtime
          */
-        load: function (subTplName, session, callback) {
-            var self = this,
-                engine,
-                cache = self.getRoot().config.cache;
-            if (cache !== false && pool.hasInstance(subTplName)) {
-                engine = pool.getInstance(undefined, {
-                    name: subTplName,
-                    root: self.getRoot()
-                }, self.constructor);
-                session.descendants.push(engine);
-                return callback(undefined, engine);
-            }
-            self.loadContent(subTplName, function (error, tpl) {
-                if (error) {
-                    callback(error);
-                } else {
-                    var engine;
-                    if (cache !== false) {
-                        engine = pool.getInstance(tpl, {
-                            name: subTplName,
-                            root: self.getRoot()
-                        }, self.constructor);
-                        session.descendants.push(engine);
-                    } else {
-                        engine = new self.constructor(tpl, {
-                            name: subTplName,
-                            root: self.getRoot()
-                        });
-                    }
-                    callback(undefined, engine);
-                }
-            });
+        load: function (name, callback) {
+            this.getTplContent(name, callback);
         },
 
         /**
@@ -251,15 +214,20 @@ KISSY.add(function (S, require) {
             config.commands[commandName] = fn;
         },
 
-        include: function (subTplName, scope, buffer, session) {
+        include: function (subTplName, tpl, scope, buffer) {
             var self = this;
-            subTplName = self.resolve(subTplName);
+            subTplName = resolve(subTplName, tpl.name);
             return buffer.async(function (newBuffer) {
-                self.load(subTplName, session, function (error, engine) {
+                self.load(subTplName, function (error, tplFn) {
                     if (error) {
                         newBuffer.error(error);
                     } else {
-                        renderTpl(engine, scope, newBuffer, session);
+                        renderTpl({
+                            root: tpl.root,
+                            fn: tplFn,
+                            name: subTplName,
+                            session: tpl.session
+                        }, scope, newBuffer);
                     }
                 });
             });
@@ -274,28 +242,22 @@ KISSY.add(function (S, require) {
         render: function (data, callback) {
             var html = '';
             var self = this;
+            var fn = self.fn;
             callback = callback || function (error, ret) {
                 html = ret;
             };
-            var session = {
-                descendants: []
-            };
-            var finalCallback = callback;
-            if (self.config.cache !== false) {
-                finalCallback = function (error, ret) {
-                    var len = session.descendants.length;
-                    for (var i = 0; i < len; i++) {
-                        pool.recycle(session.descendants[i]);
-                    }
-                    callback(error, ret);
-                };
-            }
-            if (!self.name && self.tpl.TPL_NAME) {
-                self.name = self.tpl.TPL_NAME;
+            var name = self.config.name;
+            if (!name && fn.TPL_NAME) {
+                name = fn.TPL_NAME;
             }
             var scope = new Scope(data),
-                buffer = new LinkedBuffer(finalCallback).head;
-            renderTpl(self, scope, buffer, session);
+                buffer = new LinkedBuffer(callback).head;
+            renderTpl({
+                name: name,
+                fn: fn,
+                session: {},
+                root: self
+            }, scope, buffer);
             return html;
         }
     };

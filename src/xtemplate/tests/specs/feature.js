@@ -134,13 +134,13 @@ KISSY.add(function (S, require) {
 
         it('support cache', function () {
             var tpl = '{{title}}';
-            expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
+            expect(new XTemplate(tpl).fn).toBe(new XTemplate(tpl).fn);
             expect(new XTemplate(tpl, {
                 cache: true
-            }).tpl).toBe(new XTemplate(tpl).tpl);
+            }).fn).toBe(new XTemplate(tpl).fn);
             expect(new XTemplate(tpl, {
                 cache: false
-            }).tpl).not.toBe(new XTemplate(tpl).tpl);
+            }).fn).not.toBe(new XTemplate(tpl).fn);
         });
 
         it('support {{#if}} {{@', function () {

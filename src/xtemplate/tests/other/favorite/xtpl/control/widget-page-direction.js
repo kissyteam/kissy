@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var widgetPageDirection = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var widgetPageDirection = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('', 0);
             var option0 = {
                 escape: 1
@@ -29,13 +26,13 @@ KISSY.add(function (S, require, exports, module) {
             hash1["totalpage"] = id2;
             option0.hash = hash1;
             var callRet3
-            callRet3 = setCommand.call(engine, scope, option0, buffer, 1, session);
+            callRet3 = setCommand.call(tpl, scope, option0, buffer, 1);
             if (callRet3 && callRet3.isBuffer) {
                 buffer = callRet3;
                 callRet3 = undefined;
             }
             buffer.write(callRet3, true);
-            buffer.write('\n', 0);
+            buffer.write('\r\n', 0);
             var option4 = {
                 escape: 1
             };
@@ -46,7 +43,7 @@ KISSY.add(function (S, require, exports, module) {
             params5.push(exp7);
             option4.params = params5;
             option4.fn = function (scope, buffer) {
-                buffer.write('\n    ', 0);
+                buffer.write('\r\n    ', 0);
                 var option8 = {
                     escape: 1
                 };
@@ -54,17 +51,17 @@ KISSY.add(function (S, require, exports, module) {
                 hash9["totalpage"] = 100;
                 option8.hash = hash9;
                 var callRet10
-                callRet10 = setCommand.call(engine, scope, option8, buffer, 3, session);
+                callRet10 = setCommand.call(tpl, scope, option8, buffer, 3);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
                 }
                 buffer.write(callRet10, true);
-                buffer.write('\n', 0);
+                buffer.write('\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option4, buffer, 2, session);
-            buffer.write('\n\n', 0);
+            buffer = ifCommand.call(tpl, scope, option4, buffer, 2);
+            buffer.write('\r\n\r\n', 0);
             var option11 = {
                 escape: 1
             };
@@ -73,13 +70,13 @@ KISSY.add(function (S, require, exports, module) {
             hash12["currentpage"] = id13;
             option11.hash = hash12;
             var callRet14
-            callRet14 = setCommand.call(engine, scope, option11, buffer, 6, session);
+            callRet14 = setCommand.call(tpl, scope, option11, buffer, 6);
             if (callRet14 && callRet14.isBuffer) {
                 buffer = callRet14;
                 callRet14 = undefined;
             }
             buffer.write(callRet14, true);
-            buffer.write('\n', 0);
+            buffer.write('\r\n', 0);
             var option15 = {
                 escape: 1
             };
@@ -90,13 +87,13 @@ KISSY.add(function (S, require, exports, module) {
             hash16["prepage"] = exp18;
             option15.hash = hash16;
             var callRet19
-            callRet19 = setCommand.call(engine, scope, option15, buffer, 7, session);
+            callRet19 = setCommand.call(tpl, scope, option15, buffer, 7);
             if (callRet19 && callRet19.isBuffer) {
                 buffer = callRet19;
                 callRet19 = undefined;
             }
             buffer.write(callRet19, true);
-            buffer.write('\n', 0);
+            buffer.write('\r\n', 0);
             var option20 = {
                 escape: 1
             };
@@ -107,13 +104,13 @@ KISSY.add(function (S, require, exports, module) {
             hash21["nextpage"] = exp23;
             option20.hash = hash21;
             var callRet24
-            callRet24 = setCommand.call(engine, scope, option20, buffer, 8, session);
+            callRet24 = setCommand.call(tpl, scope, option20, buffer, 8);
             if (callRet24 && callRet24.isBuffer) {
                 buffer = callRet24;
                 callRet24 = undefined;
             }
             buffer.write(callRet24, true);
-            buffer.write('\n', 0);
+            buffer.write('\r\n', 0);
             var option25 = {
                 escape: 1
             };
@@ -122,13 +119,13 @@ KISSY.add(function (S, require, exports, module) {
             hash26["pagesize"] = id27;
             option25.hash = hash26;
             var callRet28
-            callRet28 = setCommand.call(engine, scope, option25, buffer, 9, session);
+            callRet28 = setCommand.call(tpl, scope, option25, buffer, 9);
             if (callRet28 && callRet28.isBuffer) {
                 buffer = callRet28;
                 callRet28 = undefined;
             }
             buffer.write(callRet28, true);
-            buffer.write('\n\n', 0);
+            buffer.write('\r\n\r\n', 0);
             var option29 = {
                 escape: 1
             };
@@ -140,7 +137,7 @@ KISSY.add(function (S, require, exports, module) {
             params30.push(exp33);
             option29.params = params30;
             option29.fn = function (scope, buffer) {
-                buffer.write('\n    ', 0);
+                buffer.write('\r\n    ', 0);
                 var option34 = {
                     escape: 1
                 };
@@ -149,17 +146,17 @@ KISSY.add(function (S, require, exports, module) {
                 hash35["defaultpage"] = id36;
                 option34.hash = hash35;
                 var callRet37
-                callRet37 = setCommand.call(engine, scope, option34, buffer, 12, session);
+                callRet37 = setCommand.call(tpl, scope, option34, buffer, 12);
                 if (callRet37 && callRet37.isBuffer) {
                     buffer = callRet37;
                     callRet37 = undefined;
                 }
                 buffer.write(callRet37, true);
-                buffer.write('\n', 0);
+                buffer.write('\r\n', 0);
                 return buffer;
             };
             option29.inverse = function (scope, buffer) {
-                buffer.write('\n    ', 0);
+                buffer.write('\r\n    ', 0);
                 var option38 = {
                     escape: 1
                 };
@@ -168,20 +165,20 @@ KISSY.add(function (S, require, exports, module) {
                 hash39["defaultpage"] = id40;
                 option38.hash = hash39;
                 var callRet41
-                callRet41 = setCommand.call(engine, scope, option38, buffer, 14, session);
+                callRet41 = setCommand.call(tpl, scope, option38, buffer, 14);
                 if (callRet41 && callRet41.isBuffer) {
                     buffer = callRet41;
                     callRet41 = undefined;
                 }
                 buffer.write(callRet41, true);
-                buffer.write('\n', 0);
+                buffer.write('\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option29, buffer, 11, session);
-            buffer.write('\n\n<div class="page-nav-top" data-spm="', 0);
+            buffer = ifCommand.call(tpl, scope, option29, buffer, 11);
+            buffer.write('\r\n\r\n<div class="page-nav-top" data-spm="', 0);
             var id42 = scope.resolve(["spm", "page"], 0);
             buffer.write(id42, true);
-            buffer.write('">\n\n    ', 0);
+            buffer.write('">\r\n\r\n    ', 0);
             var option43 = {
                 escape: 1
             };
@@ -192,31 +189,31 @@ KISSY.add(function (S, require, exports, module) {
             params44.push(exp46);
             option43.params = params44;
             option43.fn = function (scope, buffer) {
-                buffer.write('\n        <a  data-spm="', 0);
+                buffer.write('\r\n        <a  data-spm="', 0);
                 var id47 = scope.resolve(["spm", "pagePrevious"], 0);
                 buffer.write(id47, true);
-                buffer.write('"\n            class="J_PrevPage  page-pre "\n            href="', 0);
+                buffer.write('"\r\n            class="J_PrevPage  page-pre "\r\n            href="', 0);
                 var option48 = {};
                 var params49 = [];
                 var id50 = scope.resolve(["prepage"], 0);
                 params49.push(id50);
                 option48.params = params49;
                 var callRet51
-                callRet51 = callFnUtil(engine, scope, option48, buffer, ["pageUrl"], 0, 22);
+                callRet51 = callFnUtil(tpl, scope, option48, buffer, ["pageUrl"], 0, 22);
                 if (callRet51 && callRet51.isBuffer) {
                     buffer = callRet51;
                     callRet51 = undefined;
                 }
                 buffer.write(callRet51, false);
-                buffer.write('">上一页</a>\n\n    ', 0);
+                buffer.write('">上一页</a>\r\n\r\n    ', 0);
                 return buffer;
             };
             option43.inverse = function (scope, buffer) {
-                buffer.write('\n        <a class="J_PrevPage  page-pre disabled" href="#">上一页</a>\n    ', 0);
+                buffer.write('\r\n        <a class="J_PrevPage  page-pre disabled" href="#">上一页</a>\r\n    ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option43, buffer, 19, session);
-            buffer.write('\n\n    ', 0);
+            buffer = ifCommand.call(tpl, scope, option43, buffer, 19);
+            buffer.write('\r\n\r\n    ', 0);
             var option52 = {
                 escape: 1
             };
@@ -230,33 +227,34 @@ KISSY.add(function (S, require, exports, module) {
             params53.push(exp57);
             option52.params = params53;
             option52.fn = function (scope, buffer) {
-                buffer.write('\n        <a  data-spm="', 0);
+                buffer.write('\r\n        <a  data-spm="', 0);
                 var id58 = scope.resolve(["spm", "pageNext"], 0);
                 buffer.write(id58, true);
-                buffer.write('"\n            class="J_NextPage page-next"\n            href="', 0);
+                buffer.write('"\r\n            class="J_NextPage page-next"\r\n            href="', 0);
                 var option59 = {};
                 var params60 = [];
                 var id61 = scope.resolve(["nextpage"], 0);
                 params60.push(id61);
                 option59.params = params60;
                 var callRet62
-                callRet62 = callFnUtil(engine, scope, option59, buffer, ["pageUrl"], 0, 31);
+                callRet62 = callFnUtil(tpl, scope, option59, buffer, ["pageUrl"], 0, 31);
                 if (callRet62 && callRet62.isBuffer) {
                     buffer = callRet62;
                     callRet62 = undefined;
                 }
                 buffer.write(callRet62, false);
-                buffer.write('">下一页</a>\n\n    ', 0);
+                buffer.write('">下一页</a>\r\n\r\n    ', 0);
                 return buffer;
             };
             option52.inverse = function (scope, buffer) {
-                buffer.write('\n        <a class="J_NextPage page-next disabled" href="#">下一页</a>\n    ', 0);
+                buffer.write('\r\n        <a class="J_NextPage page-next disabled" href="#">下一页</a>\r\n    ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option52, buffer, 28, session);
-            buffer.write('\n\n</div>\n\n', 0);
+            buffer = ifCommand.call(tpl, scope, option52, buffer, 28);
+            buffer.write('\r\n\r\n</div>\r\n\r\n', 0);
             return buffer;
         };
 widgetPageDirection.TPL_NAME = module.name;
+widgetPageDirection.version = "5.0.0";
 return widgetPageDirection
 });

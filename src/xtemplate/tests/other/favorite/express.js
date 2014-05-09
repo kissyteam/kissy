@@ -18,15 +18,4 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/pool', function (req, res) {
-    res.render('item-collect', data, function (err, content) {
-        var count = {};
-        var poolCache = xtpl.XTemplate.pool.getCache();
-        for (var name in poolCache) {
-            count[name] = poolCache[name].length;
-        }
-        res.send(JSON.stringify(count));
-    });
-});
-
 app.listen(8001);

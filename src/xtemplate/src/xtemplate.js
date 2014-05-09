@@ -9,12 +9,8 @@ KISSY.add(function (S, require) {
     var Compiler = require('xtemplate/compiler');
     var cache = XTemplate.cache = {};
 
-    function compile(tpl, config) {
+    function compile(tpl, name, config) {
         var fn;
-
-        if (config && config.root) {
-            config = config.root.config;
-        }
 
         var cacheable = !config || config.cache !== false;
 
@@ -22,7 +18,7 @@ KISSY.add(function (S, require) {
             return fn;
         }
 
-        fn = Compiler.compileToFn(tpl, config && config.name);
+        fn = Compiler.compileToFn(tpl, name);
 
         if (cacheable) {
             cache[tpl] = fn;
@@ -53,20 +49,38 @@ KISSY.add(function (S, require) {
      */
     function XTemplate(tpl, config) {
         if (typeof tpl === 'string') {
-            tpl = compile(tpl, config);
+            tpl = compile(tpl, config && config.name, config);
         }
         XTemplate.superclass.constructor.call(this, tpl, config);
     }
 
     S.extend(XTemplate, XTemplateRuntime, {
+        load: function (name, callback) {
+            var tplModule = this.getTplContent(name, function (error, fn) {
+                if (error) {
+                    return  callback(tplModule.error);
+                } else {
+                    if (typeof fn === 'string') {
+                        try {
+                            fn = compile(fn, name, this.config);
+                        } catch (e) {
+                            return callback(e);
+                        }
+                    }
+                    callback(undefined, fn);
+                }
+            });
+        }
     }, {
         Compiler: Compiler,
-
-        pool: XTemplateRuntime.pool,
 
         Scope: XTemplateRuntime.Scope,
 
         RunTime: XTemplateRuntime,
+
+        clearCache: function (content) {
+            delete cache[content];
+        },
 
         /**
          * add command to all template

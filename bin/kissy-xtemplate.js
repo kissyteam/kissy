@@ -83,6 +83,7 @@ function compile(tplFilePath, modulePath) {
             'var ' + functionName + ' = ' +
             XTemplateCompiler.compileToStr(tplContent, tplFilePath, true)) + ';\n' +
         functionName + '.TPL_NAME = module.name;\n' +
+        functionName + '.version = "' + S.version + '";\n' +
         'return ' + functionName + '\n' +
         '});';
     fs.writeFileSync(modulePath, moduleCode, encoding);

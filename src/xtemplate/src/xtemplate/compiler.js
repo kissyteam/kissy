@@ -7,11 +7,15 @@ KISSY.add(function (S, require) {
     require('util');
 
     // codeTemplates --------------------------- start
-    var CALL_NATIVE_COMMAND = '{lhs} = {name}Command.call(engine, scope, {option}, buffer, {lineNumber}, session);';
+    var TOP_DECLARATION = ['var tpl = this,',
+        'nativeCommands = tpl.root.nativeCommands,',
+        'utils = tpl.root.utils;'].join('\n');
 
-    var CALL_CUSTOM_COMMAND = 'buffer = callCommandUtil(engine, scope, {option}, buffer, [{idParts}], {lineNumber});';
+    var CALL_NATIVE_COMMAND = '{lhs} = {name}Command.call(tpl, scope, {option}, buffer, {lineNumber});';
 
-    var CALL_FUNCTION = '{lhs} = callFnUtil(engine, scope, {option}, buffer, [{idParts}], {depth},{lineNumber});';
+    var CALL_CUSTOM_COMMAND = 'buffer = callCommandUtil(tpl, scope, {option}, buffer, [{idParts}], {lineNumber});';
+
+    var CALL_FUNCTION = '{lhs} = callFnUtil(tpl, scope, {option}, buffer, [{idParts}], {depth},{lineNumber});';
 
     var SCOPE_RESOLVE = 'var {lhs} = scope.resolve([{idParts}],{depth});';
 
@@ -20,11 +24,6 @@ KISSY.add(function (S, require) {
     var CHECK_BUFFER = ['if({name} && {name}.isBuffer){',
         'buffer = {name};',
         '{name} = undefined;',
-        '}'].join('\n');
-
-    var CHECK_VERSION = ['if("{version}" !== S.version){',
-            'throw new Error("current xtemplate file(" + engine.name + ")(v{version}) ' +
-            'need to be recompiled using current kissy(v"+ S.version+")!");',
         '}'].join('\n');
 
     var FUNC = ['function({params}){',
@@ -41,6 +40,8 @@ KISSY.add(function (S, require) {
     var DECLARE_UTILS = '{name}Util = utils["{name}"]';
 
     var BUFFER_WRITE = 'buffer.write({value},{escape});';
+
+    var RETURN_BUFFER = 'return buffer;';
     // codeTemplates ---------------------------- end
 
     var XTemplateRuntime = require('./runtime');
@@ -186,28 +187,22 @@ KISSY.add(function (S, require) {
         for (var i = 0, len = statements.length; i < len; i++) {
             pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
         }
-        source.push('return buffer; }');
+        source.push(RETURN_BUFFER);
+        source.push('}');
         return source;
     }
 
     function genTopFunction(xtplAstToJs, statements) {
         var source = [
-            'var engine = this,',
-            'nativeCommands = engine.nativeCommands,',
-            'utils = engine.utils;',
+            TOP_DECLARATION,
             nativeCode
         ];
-        if (xtplAstToJs.isModule) {
-            source.push(substitute(CHECK_VERSION, {
-                version: S.version
-            }));
-        }
         for (var i = 0, len = statements.length; i < len; i++) {
             pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
         }
-        source.push('return buffer;');
+        source.push(RETURN_BUFFER);
         return {
-            params: ['scope', 'buffer', 'session', 'undefined'],
+            params: ['scope', 'buffer', 'undefined'],
             source: source.join('\n')
         };
     }

@@ -197,7 +197,7 @@ KISSY.add(function (S, require) {
             expect(new XTemplate(tpl, {
                 commands: {
                     async: function (scope, option, buffer) {
-                        var newScope = new this.Scope();
+                        var newScope = new XTemplate.Scope();
                         newScope.setParent(scope);
                         return buffer.async(function (asyncBuffer) {
                             setTimeout(function () {

@@ -79,7 +79,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        include: function (scope, option, buffer, lineNumber, session) {
+        include: function (scope, option, buffer) {
             var params = option.params,
                 i, newScope,
                 l = params.length;
@@ -92,24 +92,25 @@ KISSY.add(function (S, require) {
             }
 
             for (i = 0; i < l; i++) {
-                buffer = this.include(params[i], newScope, buffer, session);
+                buffer = this.root.include(params[i], this, newScope, buffer);
             }
 
             return buffer;
         },
 
-        parse: function (scope, option, buffer, lineNumber, session) {
+        parse: function (scope, option, buffer) {
             // abandon scope
-            return commands.include.call(this, new Scope(), option, buffer, lineNumber, session);
+            return commands.include.call(this, new Scope(), option, buffer);
         },
 
-        extend: function (scope, option, buffer, lineNumber, session) {
-            session.extendTplName = option.params[0];
+        extend: function (scope, option, buffer) {
+            this.session.extendTplName = option.params[0];
             return buffer;
         },
 
-        block: function (scope, option, buffer, lineNumber, session) {
+        block: function (scope, option, buffer) {
             var self = this;
+            var session = self.session;
             var params = option.params;
             var blockName = params[0];
             var type;
@@ -155,11 +156,12 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        macro: function (scope, option, buffer, lineNumber, session) {
+        macro: function (scope, option, buffer, lineNumber) {
             var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);
             var self = this;
+            var session = self.session;
             var macros = session.macros = session.macros || {};
             // definition
             if (option.fn) {
