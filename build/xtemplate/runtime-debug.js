@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:08
+build time: May 9 18:20
 */
 /*
 combined modules:
@@ -177,7 +177,7 @@ KISSY.add('xtemplate/runtime', [
         nativeCommands: nativeCommands,
         utils: utils,
         getTplContent: function (name, callback) {
-            var tpl = S.require(name);
+            var tpl = S.require(name, true);
             if (tpl) {
                 return callback(undefined, tpl);
             } else {

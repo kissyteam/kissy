@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:08
+build time: May 9 18:20
 */
 KISSY.add("xtemplate",["util","xtemplate/runtime","xtemplate/compiler"],function(b,a){function h(a,c,h){var b;if((h=!h||!1!==h.cache)&&(b=g[a]))return b;b=i.compileToFn(a,c);h&&(g[a]=b);return b}function e(a,c){"string"===typeof a&&(a=h(a,c&&c.name,c));e.superclass.constructor.call(this,a,c)}a("util");var f=a("xtemplate/runtime"),i=a("xtemplate/compiler"),g=e.cache={};b.extend(e,f,{load:function(a,c){var g=this.getTplContent(a,function(b,e){if(b)return c(g.error);if("string"===typeof e)try{e=h(e,
 a,this.config)}catch(f){return c(f)}c(void 0,e)})}},{Compiler:i,Scope:f.Scope,RunTime:f,clearCache:function(a){delete g[a]},addCommand:f.addCommand,removeCommand:f.removeCommand});return e});

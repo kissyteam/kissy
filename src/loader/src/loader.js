@@ -6,6 +6,7 @@
 (function (S) {
     var Loader = S.Loader,
         Env = S.Env,
+        Status = Loader.Status,
         Utils = Loader.Utils,
         ComboLoader = Loader.ComboLoader;
     var logger = S.getLogger('s/loader');
@@ -140,17 +141,22 @@
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
+         * @param {Boolean} attach internal usage
+         * @param {Boolean} insideRequire internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName) {
+        require: function (moduleName, attach, insideRequire) {
             // cache module read
-            if (mods[moduleName] && mods[moduleName].status === Loader.Status.ATTACHED) {
+            if (mods[moduleName] && mods[moduleName].status === Status.ATTACHED) {
                 return mods[moduleName].exports;
             }
             var moduleNames = Utils.normalizeModNames([moduleName]);
-            Utils.attachModsRecursively(moduleNames);
-            return Utils.getModules(moduleNames)[1];
+            if (attach) {
+                Utils.attachModsRecursively(moduleNames);
+            }
+            var mod = S.getModule(moduleNames[0]);
+            return mod.status === Status.ATTACHED || insideRequire ? mod.exports : undefined;
         }
     });
 })(KISSY);

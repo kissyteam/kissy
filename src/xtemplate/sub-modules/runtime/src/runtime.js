@@ -172,7 +172,7 @@ KISSY.add(function (S, require) {
         utils: utils,
 
         getTplContent: function (name, callback) {
-            var tpl = S.require(name);
+            var tpl = S.require(name,true);
             if (tpl) {
                 return callback(undefined, tpl);
             } else {

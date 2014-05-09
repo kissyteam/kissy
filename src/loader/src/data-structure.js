@@ -116,7 +116,7 @@
         self.waits = {};
 
         self.require = function (moduleName) {
-            return S.require(self.resolve(moduleName));
+            return S.require(self.resolve(moduleName),true,true);
         };
 
         self.require.resolve = function (relativeName) {
@@ -133,14 +133,13 @@
         constructor: Module,
 
         resolve: function (relativeName) {
-            if (relativeName.charAt(0) !== '.') {
-                return relativeName;
-            }
             var resolveCache = this.resolveCache;
             if (resolveCache[relativeName]) {
                 return resolveCache[relativeName];
             }
-            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
+            resolveCache[relativeName] = Utils.normalizeModNames(
+                [Utils.normalizePath(this.name, relativeName)]
+            )[0];
             return resolveCache[relativeName];
         },
 
@@ -186,6 +185,9 @@
                 name = self.name,
                 packageInfo,
                 alias = self.alias;
+            if (typeof alias === 'string') {
+                alias = [alias];
+            }
             if (alias) {
                 return alias;
             }
@@ -203,9 +205,6 @@
                 return self.normalizedAlias;
             }
             var alias = self.getAlias();
-            if (typeof alias === 'string') {
-                alias = [alias];
-            }
             var ret = [];
             for (var i = 0, l = alias.length; i < l; i++) {
                 if (alias[i]) {

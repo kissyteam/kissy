@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:09
+build time: May 9 18:20
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:08
+build time: May 9 18:19
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140509140833' will replace with current timestamp when compressing.
+         * NOTICE: '20140509181951' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140509140833',
+        __BUILD_TIME: '20140509181951',
 
         /**
          * KISSY Environment.
@@ -951,7 +951,7 @@ var KISSY = (function (undefined) {
         self.waits = {};
 
         self.require = function (moduleName) {
-            return S.require(self.resolve(moduleName));
+            return S.require(self.resolve(moduleName),true,true);
         };
 
         self.require.resolve = function (relativeName) {
@@ -968,14 +968,13 @@ var KISSY = (function (undefined) {
         constructor: Module,
 
         resolve: function (relativeName) {
-            if (relativeName.charAt(0) !== '.') {
-                return relativeName;
-            }
             var resolveCache = this.resolveCache;
             if (resolveCache[relativeName]) {
                 return resolveCache[relativeName];
             }
-            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
+            resolveCache[relativeName] = Utils.normalizeModNames(
+                [Utils.normalizePath(this.name, relativeName)]
+            )[0];
             return resolveCache[relativeName];
         },
 
@@ -1021,6 +1020,9 @@ var KISSY = (function (undefined) {
                 name = self.name,
                 packageInfo,
                 alias = self.alias;
+            if (typeof alias === 'string') {
+                alias = [alias];
+            }
             if (alias) {
                 return alias;
             }
@@ -1038,9 +1040,6 @@ var KISSY = (function (undefined) {
                 return self.normalizedAlias;
             }
             var alias = self.getAlias();
-            if (typeof alias === 'string') {
-                alias = [alias];
-            }
             var ret = [];
             for (var i = 0, l = alias.length; i < l; i++) {
                 if (alias[i]) {
@@ -2225,6 +2224,7 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Env = S.Env,
+        Status = Loader.Status,
         Utils = Loader.Utils,
         ComboLoader = Loader.ComboLoader;
     var logger = S.getLogger('s/loader');
@@ -2359,17 +2359,22 @@ var KISSY = (function (undefined) {
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
+         * @param {Boolean} attach internal usage
+         * @param {Boolean} insideRequire internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName) {
+        require: function (moduleName, attach, insideRequire) {
             // cache module read
-            if (mods[moduleName] && mods[moduleName].status === Loader.Status.ATTACHED) {
+            if (mods[moduleName] && mods[moduleName].status === Status.ATTACHED) {
                 return mods[moduleName].exports;
             }
             var moduleNames = Utils.normalizeModNames([moduleName]);
-            Utils.attachModsRecursively(moduleNames);
-            return Utils.getModules(moduleNames)[1];
+            if (attach) {
+                Utils.attachModsRecursively(moduleNames);
+            }
+            var mod = S.getModule(moduleNames[0]);
+            return mod.status === Status.ATTACHED || insideRequire ? mod.exports : undefined;
         }
     });
 })(KISSY);
@@ -2396,7 +2401,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140509140833';
+    var TIMESTAMP = '20140509181951';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2521,7 +2526,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:08
+build time: May 9 18:20
 */
 /*
 combined modules:
@@ -4112,7 +4117,7 @@ KISSY.add('util/web', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:08
+build time: May 9 18:20
 */
 /*
 combined modules:
@@ -4505,7 +4510,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:08
+build time: May 9 18:20
 */
 /*
 combined modules:

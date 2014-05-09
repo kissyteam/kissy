@@ -443,7 +443,7 @@ function visit78_213_1(result) {
 function visit77_201_1(result) {
   _$jscoverage['/runtime.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime.js'].branchData['176'][1].init(58, 3, 'tpl');
+}_$jscoverage['/runtime.js'].branchData['176'][1].init(63, 3, 'tpl');
 function visit76_176_1(result) {
   _$jscoverage['/runtime.js'].branchData['176'][1].ranCondition(result);
   return result;
@@ -749,7 +749,7 @@ KISSY.add(function(S, require) {
   getTplContent: function(name, callback) {
   _$jscoverage['/runtime.js'].functionData[11]++;
   _$jscoverage['/runtime.js'].lineData[175]++;
-  var tpl = S.require(name);
+  var tpl = S.require(name, true);
   _$jscoverage['/runtime.js'].lineData[176]++;
   if (visit76_176_1(tpl)) {
     _$jscoverage['/runtime.js'].lineData[177]++;

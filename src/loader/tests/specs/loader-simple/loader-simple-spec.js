@@ -16,6 +16,31 @@
             afterEach(function () {
                 KISSY.clearLoader();
             });
+
+            describe('kissy.require', function () {
+                it('can be set to not to attach', function () {
+                    var runned = 0;
+                    S.add('z', ['d'], function (S, require) {
+                        require('d');
+                        runned = 1;
+                        return 1;
+                    });
+                    expect(S.require('z')).toBe(undefined);
+                    expect(runned).toBe(0);
+                });
+
+                it('can be set  to attach', function () {
+                    var runned = 0;
+                    S.add('z', ['d'], function (S, require) {
+                        expect(require('d')).toBe(undefined);
+                        runned = 1;
+                        return 1;
+                    });
+                    expect(S.require('z', true)).toBe(1);
+                    expect(runned).toBe(1);
+                });
+            });
+
             it("should load and attach custom mods correctly", function () {
                 KISSY.config({
                     packages: {
