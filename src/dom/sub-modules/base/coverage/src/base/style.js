@@ -746,471 +746,471 @@ if (! _$jscoverage['/base/style.js'].branchData) {
   _$jscoverage['/base/style.js'].branchData['674'][1] = new BranchData();
 }
 _$jscoverage['/base/style.js'].branchData['674'][1].init(53, 46, 'Dom.css(offsetParent, \'position\') === \'static\'');
-function visit519_674_1(result) {
+function visit520_674_1(result) {
   _$jscoverage['/base/style.js'].branchData['674'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['673'][2].init(112, 100, '!ROOT_REG.test(offsetParent.nodeName) && Dom.css(offsetParent, \'position\') === \'static\'');
-function visit518_673_2(result) {
+function visit519_673_2(result) {
   _$jscoverage['/base/style.js'].branchData['673'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['673'][1].init(96, 116, 'offsetParent && !ROOT_REG.test(offsetParent.nodeName) && Dom.css(offsetParent, \'position\') === \'static\'');
-function visit517_673_1(result) {
+function visit518_673_1(result) {
   _$jscoverage['/base/style.js'].branchData['673'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['672'][2].init(49, 23, 'el.ownerDocument || doc');
-function visit516_672_2(result) {
+function visit517_672_2(result) {
   _$jscoverage['/base/style.js'].branchData['672'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['672'][1].init(29, 49, 'el.offsetParent || (el.ownerDocument || doc).body');
-function visit515_672_1(result) {
+function visit516_672_1(result) {
   _$jscoverage['/base/style.js'].branchData['672'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['661'][1].init(825, 42, 'parseFloat(Dom.css(el, \'marginLeft\')) || 0');
-function visit514_661_1(result) {
+function visit515_661_1(result) {
   _$jscoverage['/base/style.js'].branchData['661'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['660'][1].init(758, 41, 'parseFloat(Dom.css(el, \'marginTop\')) || 0');
-function visit513_660_1(result) {
+function visit514_660_1(result) {
   _$jscoverage['/base/style.js'].branchData['660'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['657'][1].init(446, 57, 'parseFloat(Dom.css(offsetParent, \'borderLeftWidth\')) || 0');
-function visit512_657_1(result) {
+function visit513_657_1(result) {
   _$jscoverage['/base/style.js'].branchData['657'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['656'][1].init(354, 56, 'parseFloat(Dom.css(offsetParent, \'borderTopWidth\')) || 0');
-function visit511_656_1(result) {
+function visit512_656_1(result) {
   _$jscoverage['/base/style.js'].branchData['656'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['647'][1].init(111, 35, 'Dom.css(el, \'position\') === \'fixed\'');
-function visit510_647_1(result) {
+function visit511_647_1(result) {
   _$jscoverage['/base/style.js'].branchData['647'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['631'][1].init(46, 23, 'extra === PADDING_INDEX');
-function visit509_631_1(result) {
+function visit510_631_1(result) {
   _$jscoverage['/base/style.js'].branchData['631'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['630'][1].init(28, 22, 'extra === BORDER_INDEX');
-function visit508_630_1(result) {
+function visit509_630_1(result) {
   _$jscoverage['/base/style.js'].branchData['630'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['629'][1].init(1630, 27, 'borderBoxValueOrIsBorderBox');
-function visit507_629_1(result) {
+function visit508_629_1(result) {
   _$jscoverage['/base/style.js'].branchData['629'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['623'][1].init(18, 27, 'borderBoxValueOrIsBorderBox');
-function visit506_623_1(result) {
+function visit507_623_1(result) {
   _$jscoverage['/base/style.js'].branchData['623'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['622'][1].init(1345, 23, 'extra === CONTENT_INDEX');
-function visit505_622_1(result) {
+function visit506_622_1(result) {
   _$jscoverage['/base/style.js'].branchData['622'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['621'][1].init(1301, 29, 'borderBoxValue || cssBoxValue');
-function visit504_621_1(result) {
+function visit505_621_1(result) {
   _$jscoverage['/base/style.js'].branchData['621'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['620'][2].init(1237, 28, 'borderBoxValue !== undefined');
-function visit503_620_2(result) {
+function visit504_620_2(result) {
   _$jscoverage['/base/style.js'].branchData['620'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['620'][1].init(1237, 43, 'borderBoxValue !== undefined || isBorderBox');
-function visit502_620_1(result) {
+function visit503_620_1(result) {
   _$jscoverage['/base/style.js'].branchData['620'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['617'][1].init(1095, 19, 'extra === undefined');
-function visit501_617_1(result) {
+function visit502_617_1(result) {
   _$jscoverage['/base/style.js'].branchData['617'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['615'][1].init(416, 28, 'parseFloat(cssBoxValue) || 0');
-function visit500_615_1(result) {
+function visit501_615_1(result) {
   _$jscoverage['/base/style.js'].branchData['615'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['612'][1].init(32, 23, 'elem.style[name] || 0');
-function visit499_612_1(result) {
+function visit500_612_1(result) {
   _$jscoverage['/base/style.js'].branchData['612'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['611'][3].init(232, 24, '(Number(cssBoxValue)) < 0');
-function visit498_611_3(result) {
+function visit499_611_3(result) {
   _$jscoverage['/base/style.js'].branchData['611'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['611'][2].init(208, 19, 'cssBoxValue == null');
-function visit497_611_2(result) {
+function visit498_611_2(result) {
   _$jscoverage['/base/style.js'].branchData['611'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['611'][1].init(208, 48, 'cssBoxValue == null || (Number(cssBoxValue)) < 0');
-function visit496_611_1(result) {
+function visit497_611_1(result) {
   _$jscoverage['/base/style.js'].branchData['611'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['607'][3].init(603, 19, 'borderBoxValue <= 0');
-function visit495_607_3(result) {
+function visit496_607_3(result) {
   _$jscoverage['/base/style.js'].branchData['607'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['607'][2].init(577, 22, 'borderBoxValue == null');
-function visit494_607_2(result) {
+function visit495_607_2(result) {
   _$jscoverage['/base/style.js'].branchData['607'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['607'][1].init(577, 45, 'borderBoxValue == null || borderBoxValue <= 0');
-function visit493_607_1(result) {
+function visit494_607_1(result) {
   _$jscoverage['/base/style.js'].branchData['607'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['603'][1].init(97, 14, 'name === WIDTH');
-function visit492_603_1(result) {
+function visit493_603_1(result) {
   _$jscoverage['/base/style.js'].branchData['603'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['602'][1].init(277, 14, 'name === WIDTH');
-function visit491_602_1(result) {
+function visit492_602_1(result) {
   _$jscoverage['/base/style.js'].branchData['602'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['600'][1].init(21, 14, 'name === WIDTH');
-function visit490_600_1(result) {
+function visit491_600_1(result) {
   _$jscoverage['/base/style.js'].branchData['600'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['599'][1].init(144, 19, 'elem.nodeType === 9');
-function visit489_599_1(result) {
+function visit490_599_1(result) {
   _$jscoverage['/base/style.js'].branchData['599'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['598'][1].init(21, 14, 'name === WIDTH');
-function visit488_598_1(result) {
+function visit489_598_1(result) {
   _$jscoverage['/base/style.js'].branchData['598'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['597'][1].init(14, 16, 'S.isWindow(elem)');
-function visit487_597_1(result) {
+function visit488_597_1(result) {
   _$jscoverage['/base/style.js'].branchData['597'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['581'][1].init(81, 15, 'doc.defaultView');
-function visit486_581_1(result) {
+function visit487_581_1(result) {
   _$jscoverage['/base/style.js'].branchData['581'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['575'][1].init(17, 72, 'Dom._getComputedStyle(elem, \'boxSizing\', computedStyle) === \'border-box\'');
-function visit485_575_1(result) {
+function visit486_575_1(result) {
   _$jscoverage['/base/style.js'].branchData['575'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['567'][1].init(278, 68, 'parseFloat(Dom._getComputedStyle(elem, cssProp, computedStyle)) || 0');
-function visit484_567_1(result) {
+function visit485_567_1(result) {
   _$jscoverage['/base/style.js'].branchData['567'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['562'][1].init(60, 17, 'prop === \'border\'');
-function visit483_562_1(result) {
+function visit484_562_1(result) {
   _$jscoverage['/base/style.js'].branchData['562'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['560'][1].init(30, 16, 'i < which.length');
-function visit482_560_1(result) {
+function visit483_560_1(result) {
   _$jscoverage['/base/style.js'].branchData['560'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['559'][1].init(48, 4, 'prop');
-function visit481_559_1(result) {
+function visit482_559_1(result) {
   _$jscoverage['/base/style.js'].branchData['559'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['557'][1].init(58, 16, 'j < props.length');
-function visit480_557_1(result) {
+function visit481_557_1(result) {
   _$jscoverage['/base/style.js'].branchData['557'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['545'][1].init(128, 22, 'elem.offsetWidth !== 0');
-function visit479_545_1(result) {
+function visit480_545_1(result) {
   _$jscoverage['/base/style.js'].branchData['545'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['536'][1].init(333, 17, 'ret === undefined');
-function visit478_536_1(result) {
+function visit479_536_1(result) {
   _$jscoverage['/base/style.js'].branchData['536'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['532'][1].init(34, 42, '(ret = hook.get(elem, false)) !== undefined');
-function visit477_532_1(result) {
+function visit478_532_1(result) {
   _$jscoverage['/base/style.js'].branchData['532'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['531'][3].init(105, 77, '\'get\' in hook && (ret = hook.get(elem, false)) !== undefined');
-function visit476_531_3(result) {
+function visit477_531_3(result) {
   _$jscoverage['/base/style.js'].branchData['531'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['531'][2].init(97, 85, 'hook && \'get\' in hook && (ret = hook.get(elem, false)) !== undefined');
-function visit475_531_2(result) {
+function visit476_531_2(result) {
   _$jscoverage['/base/style.js'].branchData['531'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['531'][1].init(95, 88, '!(hook && \'get\' in hook && (ret = hook.get(elem, false)) !== undefined)');
-function visit474_531_1(result) {
+function visit475_531_1(result) {
   _$jscoverage['/base/style.js'].branchData['531'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['523'][1].init(140, 9, 'UA.webkit');
-function visit473_523_1(result) {
+function visit474_523_1(result) {
   _$jscoverage['/base/style.js'].branchData['523'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['520'][1].init(873, 16, '!elStyle.cssText');
-function visit472_520_1(result) {
+function visit473_520_1(result) {
   _$jscoverage['/base/style.js'].branchData['520'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['516'][2].init(310, 13, 'val === EMPTY');
-function visit471_516_2(result) {
+function visit472_516_2(result) {
   _$jscoverage['/base/style.js'].branchData['516'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['516'][1].init(310, 40, 'val === EMPTY && elStyle.removeAttribute');
-function visit470_516_1(result) {
+function visit471_516_1(result) {
   _$jscoverage['/base/style.js'].branchData['516'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['507'][1].init(396, 17, 'val !== undefined');
-function visit469_507_1(result) {
+function visit470_507_1(result) {
   _$jscoverage['/base/style.js'].branchData['507'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['504'][1].init(300, 16, 'hook && hook.set');
-function visit468_504_1(result) {
+function visit469_504_1(result) {
   _$jscoverage['/base/style.js'].branchData['504'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['500'][1].init(138, 39, '!isNaN(Number(val)) && !cssNumber[name]');
-function visit467_500_1(result) {
+function visit468_500_1(result) {
   _$jscoverage['/base/style.js'].branchData['500'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['498'][3].init(66, 13, 'val === EMPTY');
-function visit466_498_3(result) {
+function visit467_498_3(result) {
   _$jscoverage['/base/style.js'].branchData['498'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['498'][2].init(50, 12, 'val === null');
-function visit465_498_2(result) {
+function visit466_498_2(result) {
   _$jscoverage['/base/style.js'].branchData['498'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['498'][1].init(50, 29, 'val === null || val === EMPTY');
-function visit464_498_1(result) {
+function visit465_498_1(result) {
   _$jscoverage['/base/style.js'].branchData['498'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['496'][1].init(342, 17, 'val !== undefined');
-function visit463_496_1(result) {
+function visit464_496_1(result) {
   _$jscoverage['/base/style.js'].branchData['496'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['489'][2].init(111, 19, 'elem.nodeType === 8');
-function visit462_489_2(result) {
+function visit463_489_2(result) {
   _$jscoverage['/base/style.js'].branchData['489'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['489'][1].init(35, 46, 'elem.nodeType === 8 || !(elStyle = elem.style)');
-function visit461_489_1(result) {
+function visit462_489_1(result) {
   _$jscoverage['/base/style.js'].branchData['489'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['488'][2].init(73, 19, 'elem.nodeType === 3');
-function visit460_488_2(result) {
+function visit461_488_2(result) {
   _$jscoverage['/base/style.js'].branchData['488'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['488'][1].init(73, 82, 'elem.nodeType === 3 || elem.nodeType === 8 || !(elStyle = elem.style)');
-function visit459_488_1(result) {
+function visit460_488_1(result) {
   _$jscoverage['/base/style.js'].branchData['488'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['456'][1].init(512, 37, 'isAutoPosition || NO_PX_REG.test(val)');
-function visit458_456_1(result) {
+function visit459_456_1(result) {
   _$jscoverage['/base/style.js'].branchData['456'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['452'][2].init(328, 23, 'position === \'relative\'');
-function visit457_452_2(result) {
+function visit458_452_2(result) {
   _$jscoverage['/base/style.js'].branchData['452'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['452'][1].init(310, 41, 'isAutoPosition && position === \'relative\'');
-function visit456_452_1(result) {
+function visit457_452_1(result) {
   _$jscoverage['/base/style.js'].branchData['452'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['451'][1].init(269, 14, 'val === \'auto\'');
-function visit455_451_1(result) {
+function visit456_451_1(result) {
   _$jscoverage['/base/style.js'].branchData['451'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['447'][1].init(83, 21, 'position === \'static\'');
-function visit454_447_1(result) {
+function visit455_447_1(result) {
   _$jscoverage['/base/style.js'].branchData['447'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['445'][1].init(116, 8, 'computed');
-function visit453_445_1(result) {
+function visit454_445_1(result) {
   _$jscoverage['/base/style.js'].branchData['445'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['429'][1].init(48, 8, 'computed');
-function visit452_429_1(result) {
+function visit453_429_1(result) {
   _$jscoverage['/base/style.js'].branchData['429'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['417'][1].init(553, 53, 'elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX)');
-function visit451_417_1(result) {
+function visit452_417_1(result) {
   _$jscoverage['/base/style.js'].branchData['417'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['410'][1].init(166, 11, 'isBorderBox');
-function visit450_410_1(result) {
+function visit451_410_1(result) {
   _$jscoverage['/base/style.js'].branchData['410'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['407'][1].init(22, 4, 'elem');
-function visit449_407_1(result) {
+function visit450_407_1(result) {
   _$jscoverage['/base/style.js'].branchData['407'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['406'][1].init(61, 17, 'val !== undefined');
-function visit448_406_1(result) {
+function visit449_406_1(result) {
   _$jscoverage['/base/style.js'].branchData['406'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['402'][1].init(445, 14, 'name === WIDTH');
-function visit447_402_1(result) {
+function visit448_402_1(result) {
   _$jscoverage['/base/style.js'].branchData['402'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['400'][1].init(62, 79, 'el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX)');
-function visit446_400_1(result) {
+function visit447_400_1(result) {
   _$jscoverage['/base/style.js'].branchData['400'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['395'][1].init(62, 49, 'el && getWHIgnoreDisplay(el, name, PADDING_INDEX)');
-function visit445_395_1(result) {
+function visit446_395_1(result) {
   _$jscoverage['/base/style.js'].branchData['395'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['333'][1].init(95, 6, 'j >= 0');
-function visit444_333_1(result) {
+function visit445_333_1(result) {
   _$jscoverage['/base/style.js'].branchData['333'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['326'][1].init(30, 36, '!S.inArray(getNodeName(e), excludes)');
-function visit443_326_1(result) {
+function visit444_326_1(result) {
   _$jscoverage['/base/style.js'].branchData['326'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['319'][1].init(281, 6, 'j >= 0');
-function visit442_319_1(result) {
+function visit443_319_1(result) {
   _$jscoverage['/base/style.js'].branchData['319'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['299'][1].init(769, 15, 'elem.styleSheet');
-function visit441_299_1(result) {
+function visit442_299_1(result) {
   _$jscoverage['/base/style.js'].branchData['299'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['290'][1].init(505, 4, 'elem');
-function visit440_290_1(result) {
+function visit441_290_1(result) {
   _$jscoverage['/base/style.js'].branchData['290'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['285'][1].init(340, 35, 'id && (id = id.replace(\'#\', EMPTY))');
-function visit439_285_1(result) {
+function visit440_285_1(result) {
   _$jscoverage['/base/style.js'].branchData['285'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['275'][1].init(22, 26, 'typeof refWin === \'string\'');
-function visit438_275_1(result) {
+function visit439_275_1(result) {
   _$jscoverage['/base/style.js'].branchData['275'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['258'][1].init(62, 31, 'Dom.css(elem, DISPLAY) === NONE');
-function visit437_258_1(result) {
+function visit438_258_1(result) {
   _$jscoverage['/base/style.js'].branchData['258'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['256'][1].init(121, 6, 'i >= 0');
-function visit436_256_1(result) {
+function visit437_256_1(result) {
   _$jscoverage['/base/style.js'].branchData['256'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['241'][1].init(30, 3, 'old');
-function visit435_241_1(result) {
+function visit436_241_1(result) {
   _$jscoverage['/base/style.js'].branchData['241'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['240'][1].init(154, 12, 'old !== NONE');
-function visit434_240_1(result) {
+function visit435_240_1(result) {
   _$jscoverage['/base/style.js'].branchData['240'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['236'][1].init(121, 6, 'i >= 0');
-function visit433_236_1(result) {
+function visit434_236_1(result) {
   _$jscoverage['/base/style.js'].branchData['236'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['220'][1].init(205, 31, 'Dom.css(elem, DISPLAY) === NONE');
-function visit432_220_1(result) {
+function visit433_220_1(result) {
   _$jscoverage['/base/style.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['218'][1].init(80, 36, 'Dom.data(elem, OLD_DISPLAY) || EMPTY');
-function visit431_218_1(result) {
+function visit432_218_1(result) {
   _$jscoverage['/base/style.js'].branchData['218'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['216'][1].init(177, 6, 'i >= 0');
-function visit430_216_1(result) {
+function visit431_216_1(result) {
   _$jscoverage['/base/style.js'].branchData['216'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['200'][1].init(47, 6, 'i >= 0');
-function visit429_200_1(result) {
+function visit430_200_1(result) {
   _$jscoverage['/base/style.js'].branchData['200'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['198'][1].init(493, 26, 'typeof ret === \'undefined\'');
-function visit428_198_1(result) {
+function visit429_198_1(result) {
   _$jscoverage['/base/style.js'].branchData['198'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['193'][1].init(46, 41, '(ret = hook.get(elem, true)) !== undefined');
-function visit427_193_1(result) {
+function visit428_193_1(result) {
   _$jscoverage['/base/style.js'].branchData['193'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['192'][3].init(125, 88, '\'get\' in hook && (ret = hook.get(elem, true)) !== undefined');
-function visit426_192_3(result) {
+function visit427_192_3(result) {
   _$jscoverage['/base/style.js'].branchData['192'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['192'][2].init(117, 96, 'hook && \'get\' in hook && (ret = hook.get(elem, true)) !== undefined');
-function visit425_192_2(result) {
+function visit426_192_2(result) {
   _$jscoverage['/base/style.js'].branchData['192'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['192'][1].init(115, 99, '!(hook && \'get\' in hook && (ret = hook.get(elem, true)) !== undefined)');
-function visit424_192_1(result) {
+function visit425_192_1(result) {
   _$jscoverage['/base/style.js'].branchData['192'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['190'][1].init(117, 4, 'elem');
-function visit423_190_1(result) {
+function visit424_190_1(result) {
   _$jscoverage['/base/style.js'].branchData['190'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['187'][1].init(665, 17, 'val === undefined');
-function visit422_187_1(result) {
+function visit423_187_1(result) {
   _$jscoverage['/base/style.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['177'][1].init(51, 6, 'i >= 0');
-function visit421_177_1(result) {
+function visit422_177_1(result) {
   _$jscoverage['/base/style.js'].branchData['177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['175'][1].init(241, 21, 'S.isPlainObject(name)');
-function visit420_175_1(result) {
+function visit421_175_1(result) {
   _$jscoverage['/base/style.js'].branchData['175'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['151'][1].init(47, 6, 'i >= 0');
-function visit419_151_1(result) {
+function visit420_151_1(result) {
   _$jscoverage['/base/style.js'].branchData['151'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['146'][1].init(57, 4, 'elem');
-function visit418_146_1(result) {
+function visit419_146_1(result) {
   _$jscoverage['/base/style.js'].branchData['146'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['144'][1].init(507, 17, 'val === undefined');
-function visit417_144_1(result) {
+function visit418_144_1(result) {
   _$jscoverage['/base/style.js'].branchData['144'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['138'][1].init(51, 6, 'i >= 0');
-function visit416_138_1(result) {
+function visit417_138_1(result) {
   _$jscoverage['/base/style.js'].branchData['138'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['136'][1].init(193, 21, 'S.isPlainObject(name)');
-function visit415_136_1(result) {
+function visit416_136_1(result) {
   _$jscoverage['/base/style.js'].branchData['136'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['104'][1].init(779, 51, 'Dom._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name)');
-function visit414_104_1(result) {
+function visit415_104_1(result) {
   _$jscoverage['/base/style.js'].branchData['104'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['99'][2].init(591, 10, 'val === \'\'');
-function visit413_99_2(result) {
+function visit414_99_2(result) {
   _$jscoverage['/base/style.js'].branchData['99'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['99'][1].init(591, 36, 'val === \'\' && !Dom.contains(d, elem)');
-function visit412_99_1(result) {
+function visit413_99_1(result) {
   _$jscoverage['/base/style.js'].branchData['99'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['95'][1].init(28, 59, 'computedStyle.getPropertyValue(name) || computedStyle[name]');
-function visit411_95_1(result) {
+function visit412_95_1(result) {
   _$jscoverage['/base/style.js'].branchData['95'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['94'][1].init(355, 59, 'computedStyle || d.defaultView.getComputedStyle(elem, null)');
-function visit410_94_1(result) {
+function visit411_94_1(result) {
   _$jscoverage['/base/style.js'].branchData['94'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['60'][1].init(21, 31, 'doc.body || doc.documentElement');
-function visit409_60_1(result) {
+function visit410_60_1(result) {
   _$jscoverage['/base/style.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['59'][1].init(105, 26, '!defaultDisplay[tagName]');
-function visit408_59_1(result) {
+function visit409_59_1(result) {
   _$jscoverage['/base/style.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['52'][2].init(141, 29, 'vendor && vendor.propertyName');
-function visit407_52_2(result) {
+function visit408_52_2(result) {
   _$jscoverage['/base/style.js'].branchData['52'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['52'][1].init(141, 37, 'vendor && vendor.propertyName || name');
-function visit406_52_1(result) {
+function visit407_52_1(result) {
   _$jscoverage['/base/style.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['48'][1].init(14, 14, 'cssProps[name]');
-function visit405_48_1(result) {
+function visit406_48_1(result) {
   _$jscoverage['/base/style.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['42'][1].init(1048, 57, 'userSelectVendorInfo && userSelectVendorInfo.propertyName');
-function visit404_42_1(result) {
+function visit405_42_1(result) {
   _$jscoverage['/base/style.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].branchData['18'][1].init(333, 27, 'globalWindow.document || {}');
-function visit403_18_1(result) {
+function visit404_18_1(result) {
   _$jscoverage['/base/style.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/style.js'].lineData[6]++;
@@ -1221,7 +1221,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[8]++;
   var Dom = require('./api');
   _$jscoverage['/base/style.js'].lineData[9]++;
-  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = require('ua'), BOX_MODELS = ['margin', 'border', 'padding'], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = visit403_18_1(globalWindow.document || {}), RE_MARGIN = /^margin/, WIDTH = 'width', HEIGHT = 'height', DISPLAY = 'display', OLD_DISPLAY = DISPLAY + S.now(), NONE = 'none', cssNumber = {
+  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = require('ua'), BOX_MODELS = ['margin', 'border', 'padding'], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = visit404_18_1(globalWindow.document || {}), RE_MARGIN = /^margin/, WIDTH = 'width', HEIGHT = 'height', DISPLAY = 'display', OLD_DISPLAY = DISPLAY + S.now(), NONE = 'none', cssNumber = {
   fillOpacity: 1, 
   fontWeight: 1, 
   lineHeight: 1, 
@@ -1229,21 +1229,21 @@ KISSY.add(function(S, require) {
   orphans: 1, 
   widows: 1, 
   zIndex: 1, 
-  zoom: 1}, EMPTY = '', DEFAULT_UNIT = 'px', NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, defaultDisplay = {}, userSelectVendorInfo = getCssVendorInfo('userSelect'), userSelectProperty = visit404_42_1(userSelectVendorInfo && userSelectVendorInfo.propertyName), camelCase = S.camelCase;
+  zoom: 1}, EMPTY = '', DEFAULT_UNIT = 'px', NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, defaultDisplay = {}, userSelectVendorInfo = getCssVendorInfo('userSelect'), userSelectProperty = visit405_42_1(userSelectVendorInfo && userSelectVendorInfo.propertyName), camelCase = S.camelCase;
   _$jscoverage['/base/style.js'].lineData[45]++;
   cssProps['float'] = 'cssFloat';
   _$jscoverage['/base/style.js'].lineData[47]++;
   function normalizeCssPropName(name) {
     _$jscoverage['/base/style.js'].functionData[1]++;
     _$jscoverage['/base/style.js'].lineData[48]++;
-    if (visit405_48_1(cssProps[name])) {
+    if (visit406_48_1(cssProps[name])) {
       _$jscoverage['/base/style.js'].lineData[49]++;
       return cssProps[name];
     }
     _$jscoverage['/base/style.js'].lineData[51]++;
     var vendor = getCssVendorInfo(name);
     _$jscoverage['/base/style.js'].lineData[52]++;
-    return visit406_52_1(visit407_52_2(vendor && vendor.propertyName) || name);
+    return visit407_52_1(visit408_52_2(vendor && vendor.propertyName) || name);
   }
   _$jscoverage['/base/style.js'].lineData[55]++;
   function getDefaultDisplay(tagName) {
@@ -1251,9 +1251,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[56]++;
     var body, oldDisplay = defaultDisplay[tagName], elem;
     _$jscoverage['/base/style.js'].lineData[59]++;
-    if (visit408_59_1(!defaultDisplay[tagName])) {
+    if (visit409_59_1(!defaultDisplay[tagName])) {
       _$jscoverage['/base/style.js'].lineData[60]++;
-      body = visit409_60_1(doc.body || doc.documentElement);
+      body = visit410_60_1(doc.body || doc.documentElement);
       _$jscoverage['/base/style.js'].lineData[61]++;
       elem = doc.createElement(tagName);
       _$jscoverage['/base/style.js'].lineData[63]++;
@@ -1279,17 +1279,17 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[91]++;
   name = normalizeCssPropName(name);
   _$jscoverage['/base/style.js'].lineData[94]++;
-  if ((computedStyle = (visit410_94_1(computedStyle || d.defaultView.getComputedStyle(elem, null))))) {
+  if ((computedStyle = (visit411_94_1(computedStyle || d.defaultView.getComputedStyle(elem, null))))) {
     _$jscoverage['/base/style.js'].lineData[95]++;
-    val = visit411_95_1(computedStyle.getPropertyValue(name) || computedStyle[name]);
+    val = visit412_95_1(computedStyle.getPropertyValue(name) || computedStyle[name]);
   }
   _$jscoverage['/base/style.js'].lineData[99]++;
-  if (visit412_99_1(visit413_99_2(val === '') && !Dom.contains(d, elem))) {
+  if (visit413_99_1(visit414_99_2(val === '') && !Dom.contains(d, elem))) {
     _$jscoverage['/base/style.js'].lineData[100]++;
     val = elem.style[name];
   }
   _$jscoverage['/base/style.js'].lineData[104]++;
-  if (visit414_104_1(Dom._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name))) {
+  if (visit415_104_1(Dom._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name))) {
     _$jscoverage['/base/style.js'].lineData[105]++;
     style = elem.style;
     _$jscoverage['/base/style.js'].lineData[106]++;
@@ -1317,11 +1317,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[131]++;
   var els = Dom.query(selector), k, ret, elem = els[0], i;
   _$jscoverage['/base/style.js'].lineData[136]++;
-  if (visit415_136_1(S.isPlainObject(name))) {
+  if (visit416_136_1(S.isPlainObject(name))) {
     _$jscoverage['/base/style.js'].lineData[137]++;
     for (k in name) {
       _$jscoverage['/base/style.js'].lineData[138]++;
-      for (i = els.length - 1; visit416_138_1(i >= 0); i--) {
+      for (i = els.length - 1; visit417_138_1(i >= 0); i--) {
         _$jscoverage['/base/style.js'].lineData[139]++;
         style(els[i], k, name[k]);
       }
@@ -1330,11 +1330,11 @@ KISSY.add(function(S, require) {
     return undefined;
   }
   _$jscoverage['/base/style.js'].lineData[144]++;
-  if (visit417_144_1(val === undefined)) {
+  if (visit418_144_1(val === undefined)) {
     _$jscoverage['/base/style.js'].lineData[145]++;
     ret = '';
     _$jscoverage['/base/style.js'].lineData[146]++;
-    if (visit418_146_1(elem)) {
+    if (visit419_146_1(elem)) {
       _$jscoverage['/base/style.js'].lineData[147]++;
       ret = style(elem, name, val);
     }
@@ -1342,7 +1342,7 @@ KISSY.add(function(S, require) {
     return ret;
   } else {
     _$jscoverage['/base/style.js'].lineData[151]++;
-    for (i = els.length - 1; visit419_151_1(i >= 0); i--) {
+    for (i = els.length - 1; visit420_151_1(i >= 0); i--) {
       _$jscoverage['/base/style.js'].lineData[152]++;
       style(els[i], name, val);
     }
@@ -1355,11 +1355,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[168]++;
   var els = Dom.query(selector), elem = els[0], k, hook, ret, i;
   _$jscoverage['/base/style.js'].lineData[175]++;
-  if (visit420_175_1(S.isPlainObject(name))) {
+  if (visit421_175_1(S.isPlainObject(name))) {
     _$jscoverage['/base/style.js'].lineData[176]++;
     for (k in name) {
       _$jscoverage['/base/style.js'].lineData[177]++;
-      for (i = els.length - 1; visit421_177_1(i >= 0); i--) {
+      for (i = els.length - 1; visit422_177_1(i >= 0); i--) {
         _$jscoverage['/base/style.js'].lineData[178]++;
         style(els[i], k, name[k]);
       }
@@ -1372,22 +1372,22 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[185]++;
   hook = cssHooks[name];
   _$jscoverage['/base/style.js'].lineData[187]++;
-  if (visit422_187_1(val === undefined)) {
+  if (visit423_187_1(val === undefined)) {
     _$jscoverage['/base/style.js'].lineData[189]++;
     ret = '';
     _$jscoverage['/base/style.js'].lineData[190]++;
-    if (visit423_190_1(elem)) {
+    if (visit424_190_1(elem)) {
       _$jscoverage['/base/style.js'].lineData[192]++;
-      if (visit424_192_1(!(visit425_192_2(hook && visit426_192_3('get' in hook && visit427_193_1((ret = hook.get(elem, true)) !== undefined)))))) {
+      if (visit425_192_1(!(visit426_192_2(hook && visit427_192_3('get' in hook && visit428_193_1((ret = hook.get(elem, true)) !== undefined)))))) {
         _$jscoverage['/base/style.js'].lineData[195]++;
         ret = Dom._getComputedStyle(elem, name);
       }
     }
     _$jscoverage['/base/style.js'].lineData[198]++;
-    return (visit428_198_1(typeof ret === 'undefined')) ? '' : ret;
+    return (visit429_198_1(typeof ret === 'undefined')) ? '' : ret;
   } else {
     _$jscoverage['/base/style.js'].lineData[200]++;
-    for (i = els.length - 1; visit429_200_1(i >= 0); i--) {
+    for (i = els.length - 1; visit430_200_1(i >= 0); i--) {
       _$jscoverage['/base/style.js'].lineData[201]++;
       style(els[i], name, val);
     }
@@ -1400,13 +1400,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[212]++;
   var els = Dom.query(selector), tagName, old, elem, i;
   _$jscoverage['/base/style.js'].lineData[216]++;
-  for (i = els.length - 1; visit430_216_1(i >= 0); i--) {
+  for (i = els.length - 1; visit431_216_1(i >= 0); i--) {
     _$jscoverage['/base/style.js'].lineData[217]++;
     elem = els[i];
     _$jscoverage['/base/style.js'].lineData[218]++;
-    elem.style[DISPLAY] = visit431_218_1(Dom.data(elem, OLD_DISPLAY) || EMPTY);
+    elem.style[DISPLAY] = visit432_218_1(Dom.data(elem, OLD_DISPLAY) || EMPTY);
     _$jscoverage['/base/style.js'].lineData[220]++;
-    if (visit432_220_1(Dom.css(elem, DISPLAY) === NONE)) {
+    if (visit433_220_1(Dom.css(elem, DISPLAY) === NONE)) {
       _$jscoverage['/base/style.js'].lineData[221]++;
       tagName = elem.tagName.toLowerCase();
       _$jscoverage['/base/style.js'].lineData[222]++;
@@ -1423,15 +1423,15 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[234]++;
   var els = Dom.query(selector), elem, i;
   _$jscoverage['/base/style.js'].lineData[236]++;
-  for (i = els.length - 1; visit433_236_1(i >= 0); i--) {
+  for (i = els.length - 1; visit434_236_1(i >= 0); i--) {
     _$jscoverage['/base/style.js'].lineData[237]++;
     elem = els[i];
     _$jscoverage['/base/style.js'].lineData[238]++;
     var style = elem.style, old = style[DISPLAY];
     _$jscoverage['/base/style.js'].lineData[240]++;
-    if (visit434_240_1(old !== NONE)) {
+    if (visit435_240_1(old !== NONE)) {
       _$jscoverage['/base/style.js'].lineData[241]++;
-      if (visit435_241_1(old)) {
+      if (visit436_241_1(old)) {
         _$jscoverage['/base/style.js'].lineData[242]++;
         Dom.data(elem, OLD_DISPLAY, old);
       }
@@ -1445,11 +1445,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[254]++;
   var els = Dom.query(selector), elem, i;
   _$jscoverage['/base/style.js'].lineData[256]++;
-  for (i = els.length - 1; visit436_256_1(i >= 0); i--) {
+  for (i = els.length - 1; visit437_256_1(i >= 0); i--) {
     _$jscoverage['/base/style.js'].lineData[257]++;
     elem = els[i];
     _$jscoverage['/base/style.js'].lineData[258]++;
-    if (visit437_258_1(Dom.css(elem, DISPLAY) === NONE)) {
+    if (visit438_258_1(Dom.css(elem, DISPLAY) === NONE)) {
       _$jscoverage['/base/style.js'].lineData[259]++;
       Dom.show(elem);
     } else {
@@ -1461,7 +1461,7 @@ KISSY.add(function(S, require) {
   addStyleSheet: function(refWin, cssText, id) {
   _$jscoverage['/base/style.js'].functionData[9]++;
   _$jscoverage['/base/style.js'].lineData[275]++;
-  if (visit438_275_1(typeof refWin === 'string')) {
+  if (visit439_275_1(typeof refWin === 'string')) {
     _$jscoverage['/base/style.js'].lineData[276]++;
     id = cssText;
     _$jscoverage['/base/style.js'].lineData[277]++;
@@ -1472,12 +1472,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[282]++;
   var doc = Dom.getDocument(refWin), elem;
   _$jscoverage['/base/style.js'].lineData[285]++;
-  if (visit439_285_1(id && (id = id.replace('#', EMPTY)))) {
+  if (visit440_285_1(id && (id = id.replace('#', EMPTY)))) {
     _$jscoverage['/base/style.js'].lineData[286]++;
     elem = Dom.get('#' + id, doc);
   }
   _$jscoverage['/base/style.js'].lineData[290]++;
-  if (visit440_290_1(elem)) {
+  if (visit441_290_1(elem)) {
     _$jscoverage['/base/style.js'].lineData[291]++;
     return;
   }
@@ -1487,7 +1487,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[297]++;
   Dom.get('head', doc).appendChild(elem);
   _$jscoverage['/base/style.js'].lineData[299]++;
-  if (visit441_299_1(elem.styleSheet)) {
+  if (visit442_299_1(elem.styleSheet)) {
     _$jscoverage['/base/style.js'].lineData[300]++;
     elem.styleSheet.cssText = cssText;
   } else {
@@ -1500,7 +1500,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[311]++;
   var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
   _$jscoverage['/base/style.js'].lineData[319]++;
-  for (j = _els.length - 1; visit442_319_1(j >= 0); j--) {
+  for (j = _els.length - 1; visit443_319_1(j >= 0); j--) {
     _$jscoverage['/base/style.js'].lineData[320]++;
     elem = _els[j];
     _$jscoverage['/base/style.js'].lineData[321]++;
@@ -1514,7 +1514,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[325]++;
     while ((e = els[i++])) {
       _$jscoverage['/base/style.js'].lineData[326]++;
-      if (visit443_326_1(!S.inArray(getNodeName(e), excludes))) {
+      if (visit444_326_1(!S.inArray(getNodeName(e), excludes))) {
         _$jscoverage['/base/style.js'].lineData[327]++;
         e.setAttribute('unselectable', 'on');
       }
@@ -1525,7 +1525,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[332]++;
   var els = Dom.query(selector);
   _$jscoverage['/base/style.js'].lineData[333]++;
-  for (var j = els.length - 1; visit444_333_1(j >= 0); j--) {
+  for (var j = els.length - 1; visit445_333_1(j >= 0); j--) {
     _$jscoverage['/base/style.js'].lineData[334]++;
     els[j].style[userSelectProperty] = 'none';
   }
@@ -1545,7 +1545,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[394]++;
   var el = Dom.get(selector);
   _$jscoverage['/base/style.js'].lineData[395]++;
-  return visit445_395_1(el && getWHIgnoreDisplay(el, name, PADDING_INDEX));
+  return visit446_395_1(el && getWHIgnoreDisplay(el, name, PADDING_INDEX));
 };
   _$jscoverage['/base/style.js'].lineData[398]++;
   Dom['outer' + S.ucfirst(name)] = function(selector, includeMargin) {
@@ -1553,25 +1553,25 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[399]++;
   var el = Dom.get(selector);
   _$jscoverage['/base/style.js'].lineData[400]++;
-  return visit446_400_1(el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX));
+  return visit447_400_1(el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX));
 };
   _$jscoverage['/base/style.js'].lineData[402]++;
-  var which = visit447_402_1(name === WIDTH) ? ['Left', 'Right'] : ['Top', 'Bottom'];
+  var which = visit448_402_1(name === WIDTH) ? ['Left', 'Right'] : ['Top', 'Bottom'];
   _$jscoverage['/base/style.js'].lineData[404]++;
   Dom[name] = function(selector, val) {
   _$jscoverage['/base/style.js'].functionData[15]++;
   _$jscoverage['/base/style.js'].lineData[405]++;
   var elem = Dom.get(selector);
   _$jscoverage['/base/style.js'].lineData[406]++;
-  if (visit448_406_1(val !== undefined)) {
+  if (visit449_406_1(val !== undefined)) {
     _$jscoverage['/base/style.js'].lineData[407]++;
-    if (visit449_407_1(elem)) {
+    if (visit450_407_1(elem)) {
       _$jscoverage['/base/style.js'].lineData[408]++;
       var computedStyle = getComputedStyle(elem);
       _$jscoverage['/base/style.js'].lineData[409]++;
       var isBorderBox = isBorderBoxFn(elem, computedStyle);
       _$jscoverage['/base/style.js'].lineData[410]++;
-      if (visit450_410_1(isBorderBox)) {
+      if (visit451_410_1(isBorderBox)) {
         _$jscoverage['/base/style.js'].lineData[411]++;
         val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
       }
@@ -1582,7 +1582,7 @@ KISSY.add(function(S, require) {
     return undefined;
   }
   _$jscoverage['/base/style.js'].lineData[417]++;
-  return visit451_417_1(elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX));
+  return visit452_417_1(elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX));
 };
   _$jscoverage['/base/style.js'].lineData[423]++;
   cssHooks[name] = {
@@ -1591,7 +1591,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[428]++;
   var val;
   _$jscoverage['/base/style.js'].lineData[429]++;
-  if (visit452_429_1(computed)) {
+  if (visit453_429_1(computed)) {
     _$jscoverage['/base/style.js'].lineData[430]++;
     val = getWHIgnoreDisplay(elem, name) + 'px';
   }
@@ -1614,25 +1614,25 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[442]++;
   var val, isAutoPosition, position;
   _$jscoverage['/base/style.js'].lineData[445]++;
-  if (visit453_445_1(computed)) {
+  if (visit454_445_1(computed)) {
     _$jscoverage['/base/style.js'].lineData[446]++;
     position = Dom.css(el, 'position');
     _$jscoverage['/base/style.js'].lineData[447]++;
-    if (visit454_447_1(position === 'static')) {
+    if (visit455_447_1(position === 'static')) {
       _$jscoverage['/base/style.js'].lineData[448]++;
       return 'auto';
     }
     _$jscoverage['/base/style.js'].lineData[450]++;
     val = Dom._getComputedStyle(el, name);
     _$jscoverage['/base/style.js'].lineData[451]++;
-    isAutoPosition = visit455_451_1(val === 'auto');
+    isAutoPosition = visit456_451_1(val === 'auto');
     _$jscoverage['/base/style.js'].lineData[452]++;
-    if (visit456_452_1(isAutoPosition && visit457_452_2(position === 'relative'))) {
+    if (visit457_452_1(isAutoPosition && visit458_452_2(position === 'relative'))) {
       _$jscoverage['/base/style.js'].lineData[453]++;
       return '0px';
     }
     _$jscoverage['/base/style.js'].lineData[456]++;
-    if (visit458_456_1(isAutoPosition || NO_PX_REG.test(val))) {
+    if (visit459_456_1(isAutoPosition || NO_PX_REG.test(val))) {
       _$jscoverage['/base/style.js'].lineData[457]++;
       val = getPosition(el)[name] + 'px';
     }
@@ -1667,7 +1667,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[485]++;
     var elStyle, ret, hook;
     _$jscoverage['/base/style.js'].lineData[488]++;
-    if (visit459_488_1(visit460_488_2(elem.nodeType === 3) || visit461_489_1(visit462_489_2(elem.nodeType === 8) || !(elStyle = elem.style)))) {
+    if (visit460_488_1(visit461_488_2(elem.nodeType === 3) || visit462_489_1(visit463_489_2(elem.nodeType === 8) || !(elStyle = elem.style)))) {
       _$jscoverage['/base/style.js'].lineData[490]++;
       return undefined;
     }
@@ -1678,25 +1678,25 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[494]++;
     name = normalizeCssPropName(name);
     _$jscoverage['/base/style.js'].lineData[496]++;
-    if (visit463_496_1(val !== undefined)) {
+    if (visit464_496_1(val !== undefined)) {
       _$jscoverage['/base/style.js'].lineData[498]++;
-      if (visit464_498_1(visit465_498_2(val === null) || visit466_498_3(val === EMPTY))) {
+      if (visit465_498_1(visit466_498_2(val === null) || visit467_498_3(val === EMPTY))) {
         _$jscoverage['/base/style.js'].lineData[499]++;
         val = EMPTY;
       } else {
         _$jscoverage['/base/style.js'].lineData[500]++;
-        if (visit467_500_1(!isNaN(Number(val)) && !cssNumber[name])) {
+        if (visit468_500_1(!isNaN(Number(val)) && !cssNumber[name])) {
           _$jscoverage['/base/style.js'].lineData[502]++;
           val += DEFAULT_UNIT;
         }
       }
       _$jscoverage['/base/style.js'].lineData[504]++;
-      if (visit468_504_1(hook && hook.set)) {
+      if (visit469_504_1(hook && hook.set)) {
         _$jscoverage['/base/style.js'].lineData[505]++;
         val = hook.set(elem, val);
       }
       _$jscoverage['/base/style.js'].lineData[507]++;
-      if (visit469_507_1(val !== undefined)) {
+      if (visit470_507_1(val !== undefined)) {
         _$jscoverage['/base/style.js'].lineData[509]++;
         try {
           _$jscoverage['/base/style.js'].lineData[511]++;
@@ -1706,15 +1706,15 @@ KISSY.add(function(S, require) {
   logger.warn('css set error:' + e);
 }
         _$jscoverage['/base/style.js'].lineData[516]++;
-        if (visit470_516_1(visit471_516_2(val === EMPTY) && elStyle.removeAttribute)) {
+        if (visit471_516_1(visit472_516_2(val === EMPTY) && elStyle.removeAttribute)) {
           _$jscoverage['/base/style.js'].lineData[517]++;
           elStyle.removeAttribute(name);
         }
       }
       _$jscoverage['/base/style.js'].lineData[520]++;
-      if (visit472_520_1(!elStyle.cssText)) {
+      if (visit473_520_1(!elStyle.cssText)) {
         _$jscoverage['/base/style.js'].lineData[523]++;
-        if (visit473_523_1(UA.webkit)) {
+        if (visit474_523_1(UA.webkit)) {
           _$jscoverage['/base/style.js'].lineData[524]++;
           elStyle = elem.outerHTML;
         }
@@ -1725,12 +1725,12 @@ KISSY.add(function(S, require) {
       return undefined;
     } else {
       _$jscoverage['/base/style.js'].lineData[531]++;
-      if (visit474_531_1(!(visit475_531_2(hook && visit476_531_3('get' in hook && visit477_532_1((ret = hook.get(elem, false)) !== undefined)))))) {
+      if (visit475_531_1(!(visit476_531_2(hook && visit477_531_3('get' in hook && visit478_532_1((ret = hook.get(elem, false)) !== undefined)))))) {
         _$jscoverage['/base/style.js'].lineData[534]++;
         ret = elStyle[name];
       }
       _$jscoverage['/base/style.js'].lineData[536]++;
-      return visit478_536_1(ret === undefined) ? '' : ret;
+      return visit479_536_1(ret === undefined) ? '' : ret;
     }
   }
   _$jscoverage['/base/style.js'].lineData[541]++;
@@ -1739,7 +1739,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[542]++;
     var val, args = arguments;
     _$jscoverage['/base/style.js'].lineData[545]++;
-    if (visit479_545_1(elem.offsetWidth !== 0)) {
+    if (visit480_545_1(elem.offsetWidth !== 0)) {
       _$jscoverage['/base/style.js'].lineData[546]++;
       val = getWH.apply(undefined, args);
     } else {
@@ -1759,17 +1759,17 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[556]++;
     var value = 0, prop, j, i;
     _$jscoverage['/base/style.js'].lineData[557]++;
-    for (j = 0; visit480_557_1(j < props.length); j++) {
+    for (j = 0; visit481_557_1(j < props.length); j++) {
       _$jscoverage['/base/style.js'].lineData[558]++;
       prop = props[j];
       _$jscoverage['/base/style.js'].lineData[559]++;
-      if (visit481_559_1(prop)) {
+      if (visit482_559_1(prop)) {
         _$jscoverage['/base/style.js'].lineData[560]++;
-        for (i = 0; visit482_560_1(i < which.length); i++) {
+        for (i = 0; visit483_560_1(i < which.length); i++) {
           _$jscoverage['/base/style.js'].lineData[561]++;
           var cssProp;
           _$jscoverage['/base/style.js'].lineData[562]++;
-          if (visit483_562_1(prop === 'border')) {
+          if (visit484_562_1(prop === 'border')) {
             _$jscoverage['/base/style.js'].lineData[563]++;
             cssProp = prop + which[i] + 'Width';
           } else {
@@ -1777,7 +1777,7 @@ KISSY.add(function(S, require) {
             cssProp = prop + which[i];
           }
           _$jscoverage['/base/style.js'].lineData[567]++;
-          value += visit484_567_1(parseFloat(Dom._getComputedStyle(elem, cssProp, computedStyle)) || 0);
+          value += visit485_567_1(parseFloat(Dom._getComputedStyle(elem, cssProp, computedStyle)) || 0);
         }
       }
     }
@@ -1788,7 +1788,7 @@ KISSY.add(function(S, require) {
   function isBorderBoxFn(elem, computedStyle) {
     _$jscoverage['/base/style.js'].functionData[24]++;
     _$jscoverage['/base/style.js'].lineData[575]++;
-    return visit485_575_1(Dom._getComputedStyle(elem, 'boxSizing', computedStyle) === 'border-box');
+    return visit486_575_1(Dom._getComputedStyle(elem, 'boxSizing', computedStyle) === 'border-box');
   }
   _$jscoverage['/base/style.js'].lineData[578]++;
   function getComputedStyle(elem) {
@@ -1796,7 +1796,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[579]++;
     var doc = elem.ownerDocument, computedStyle;
     _$jscoverage['/base/style.js'].lineData[581]++;
-    if (visit486_581_1(doc.defaultView)) {
+    if (visit487_581_1(doc.defaultView)) {
       _$jscoverage['/base/style.js'].lineData[583]++;
       computedStyle = doc.defaultView.getComputedStyle(elem, null);
     }
@@ -1807,18 +1807,18 @@ KISSY.add(function(S, require) {
   function getWH(elem, name, extra) {
     _$jscoverage['/base/style.js'].functionData[26]++;
     _$jscoverage['/base/style.js'].lineData[597]++;
-    if (visit487_597_1(S.isWindow(elem))) {
+    if (visit488_597_1(S.isWindow(elem))) {
       _$jscoverage['/base/style.js'].lineData[598]++;
-      return visit488_598_1(name === WIDTH) ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
+      return visit489_598_1(name === WIDTH) ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
     } else {
       _$jscoverage['/base/style.js'].lineData[599]++;
-      if (visit489_599_1(elem.nodeType === 9)) {
+      if (visit490_599_1(elem.nodeType === 9)) {
         _$jscoverage['/base/style.js'].lineData[600]++;
-        return visit490_600_1(name === WIDTH) ? Dom.docWidth(elem) : Dom.docHeight(elem);
+        return visit491_600_1(name === WIDTH) ? Dom.docWidth(elem) : Dom.docHeight(elem);
       }
     }
     _$jscoverage['/base/style.js'].lineData[602]++;
-    var which = visit491_602_1(name === WIDTH) ? ['Left', 'Right'] : ['Top', 'Bottom'], borderBoxValue = visit492_603_1(name === WIDTH) ? elem.offsetWidth : elem.offsetHeight;
+    var which = visit492_602_1(name === WIDTH) ? ['Left', 'Right'] : ['Top', 'Bottom'], borderBoxValue = visit493_603_1(name === WIDTH) ? elem.offsetWidth : elem.offsetHeight;
     _$jscoverage['/base/style.js'].lineData[604]++;
     var computedStyle = getComputedStyle(elem);
     _$jscoverage['/base/style.js'].lineData[605]++;
@@ -1826,32 +1826,32 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[606]++;
     var cssBoxValue = 0;
     _$jscoverage['/base/style.js'].lineData[607]++;
-    if (visit493_607_1(visit494_607_2(borderBoxValue == null) || visit495_607_3(borderBoxValue <= 0))) {
+    if (visit494_607_1(visit495_607_2(borderBoxValue == null) || visit496_607_3(borderBoxValue <= 0))) {
       _$jscoverage['/base/style.js'].lineData[608]++;
       borderBoxValue = undefined;
       _$jscoverage['/base/style.js'].lineData[610]++;
       cssBoxValue = Dom._getComputedStyle(elem, name, computedStyle);
       _$jscoverage['/base/style.js'].lineData[611]++;
-      if (visit496_611_1(visit497_611_2(cssBoxValue == null) || visit498_611_3((Number(cssBoxValue)) < 0))) {
+      if (visit497_611_1(visit498_611_2(cssBoxValue == null) || visit499_611_3((Number(cssBoxValue)) < 0))) {
         _$jscoverage['/base/style.js'].lineData[612]++;
-        cssBoxValue = visit499_612_1(elem.style[name] || 0);
+        cssBoxValue = visit500_612_1(elem.style[name] || 0);
       }
       _$jscoverage['/base/style.js'].lineData[615]++;
-      cssBoxValue = visit500_615_1(parseFloat(cssBoxValue) || 0);
+      cssBoxValue = visit501_615_1(parseFloat(cssBoxValue) || 0);
     }
     _$jscoverage['/base/style.js'].lineData[617]++;
-    if (visit501_617_1(extra === undefined)) {
+    if (visit502_617_1(extra === undefined)) {
       _$jscoverage['/base/style.js'].lineData[618]++;
       extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
     }
     _$jscoverage['/base/style.js'].lineData[620]++;
-    var borderBoxValueOrIsBorderBox = visit502_620_1(visit503_620_2(borderBoxValue !== undefined) || isBorderBox);
+    var borderBoxValueOrIsBorderBox = visit503_620_1(visit504_620_2(borderBoxValue !== undefined) || isBorderBox);
     _$jscoverage['/base/style.js'].lineData[621]++;
-    var val = visit504_621_1(borderBoxValue || cssBoxValue);
+    var val = visit505_621_1(borderBoxValue || cssBoxValue);
     _$jscoverage['/base/style.js'].lineData[622]++;
-    if (visit505_622_1(extra === CONTENT_INDEX)) {
+    if (visit506_622_1(extra === CONTENT_INDEX)) {
       _$jscoverage['/base/style.js'].lineData[623]++;
-      if (visit506_623_1(borderBoxValueOrIsBorderBox)) {
+      if (visit507_623_1(borderBoxValueOrIsBorderBox)) {
         _$jscoverage['/base/style.js'].lineData[624]++;
         return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
       } else {
@@ -1860,9 +1860,9 @@ KISSY.add(function(S, require) {
       }
     } else {
       _$jscoverage['/base/style.js'].lineData[629]++;
-      if (visit507_629_1(borderBoxValueOrIsBorderBox)) {
+      if (visit508_629_1(borderBoxValueOrIsBorderBox)) {
         _$jscoverage['/base/style.js'].lineData[630]++;
-        return val + (visit508_630_1(extra === BORDER_INDEX) ? 0 : (visit509_631_1(extra === PADDING_INDEX) ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle)));
+        return val + (visit509_630_1(extra === BORDER_INDEX) ? 0 : (visit510_631_1(extra === PADDING_INDEX) ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle)));
       } else {
         _$jscoverage['/base/style.js'].lineData[635]++;
         return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
@@ -1879,7 +1879,7 @@ KISSY.add(function(S, require) {
   top: 0, 
   left: 0};
     _$jscoverage['/base/style.js'].lineData[647]++;
-    if (visit510_647_1(Dom.css(el, 'position') === 'fixed')) {
+    if (visit511_647_1(Dom.css(el, 'position') === 'fixed')) {
       _$jscoverage['/base/style.js'].lineData[648]++;
       offset = el.getBoundingClientRect();
     } else {
@@ -1890,14 +1890,14 @@ KISSY.add(function(S, require) {
       _$jscoverage['/base/style.js'].lineData[655]++;
       parentOffset = Dom.offset(offsetParent);
       _$jscoverage['/base/style.js'].lineData[656]++;
-      parentOffset.top += visit511_656_1(parseFloat(Dom.css(offsetParent, 'borderTopWidth')) || 0);
+      parentOffset.top += visit512_656_1(parseFloat(Dom.css(offsetParent, 'borderTopWidth')) || 0);
       _$jscoverage['/base/style.js'].lineData[657]++;
-      parentOffset.left += visit512_657_1(parseFloat(Dom.css(offsetParent, 'borderLeftWidth')) || 0);
+      parentOffset.left += visit513_657_1(parseFloat(Dom.css(offsetParent, 'borderLeftWidth')) || 0);
     }
     _$jscoverage['/base/style.js'].lineData[660]++;
-    offset.top -= visit513_660_1(parseFloat(Dom.css(el, 'marginTop')) || 0);
+    offset.top -= visit514_660_1(parseFloat(Dom.css(el, 'marginTop')) || 0);
     _$jscoverage['/base/style.js'].lineData[661]++;
-    offset.left -= visit514_661_1(parseFloat(Dom.css(el, 'marginLeft')) || 0);
+    offset.left -= visit515_661_1(parseFloat(Dom.css(el, 'marginLeft')) || 0);
     _$jscoverage['/base/style.js'].lineData[665]++;
     return {
   top: offset.top - parentOffset.top, 
@@ -1907,9 +1907,9 @@ KISSY.add(function(S, require) {
   function getOffsetParent(el) {
     _$jscoverage['/base/style.js'].functionData[28]++;
     _$jscoverage['/base/style.js'].lineData[672]++;
-    var offsetParent = visit515_672_1(el.offsetParent || (visit516_672_2(el.ownerDocument || doc)).body);
+    var offsetParent = visit516_672_1(el.offsetParent || (visit517_672_2(el.ownerDocument || doc)).body);
     _$jscoverage['/base/style.js'].lineData[673]++;
-    while (visit517_673_1(offsetParent && visit518_673_2(!ROOT_REG.test(offsetParent.nodeName) && visit519_674_1(Dom.css(offsetParent, 'position') === 'static')))) {
+    while (visit518_673_1(offsetParent && visit519_673_2(!ROOT_REG.test(offsetParent.nodeName) && visit520_674_1(Dom.css(offsetParent, 'position') === 'static')))) {
       _$jscoverage['/base/style.js'].lineData[675]++;
       offsetParent = offsetParent.offsetParent;
     }

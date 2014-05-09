@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:09
+build time: May 9 14:04
 */
 /*
 combined modules:
@@ -37,7 +37,54 @@ KISSY.add('event/gesture/pinch', [
             if (!(touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0)) {
                 return;
             }
-            var distance = getDistance(touches[0], touches[1]);
+            var distance = getDistance(touches[0], touches[1]);    /**
+             * fired when pinch started
+             * @event PINCH_START
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+                                                                   /**
+             * fired when pinch
+             * @event PINCH
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+                                                                   /**
+             * fired when pinch ended
+             * @event PINCH_END
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+            /**
+             * fired when pinch started
+             * @event PINCH_START
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+            /**
+             * fired when pinch
+             * @event PINCH
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
+            /**
+             * fired when pinch ended
+             * @event PINCH_END
+             * @member KISSY.Event.Gesture.Pinch
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Number} e.distance distance between two touch points
+             * @param {Number} scale current scale relative to pinch start
+             */
             if (!self.isStarted) {
                 self.isStarted = true;
                 self.startDistance = distance;

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:09
+build time: May 9 14:04
 */
 /*
 combined modules:
@@ -16,6 +16,13 @@ KISSY.add('event/gesture/shake', ['event/dom/base'], function (S, require) {
     var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = S.buffer(function () {
             if (shaking) {
+                /**
+                 * fired when shake ended
+                 * @event SHAKE
+                 * @member KISSY.Event.Gesture.Shake
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Object} e.accelerationIncludingGravity last devicemotion event's accelerationIncludingGravity
+                 */
                 DomEvent.fireHandler(win, SHAKE, {
                     accelerationIncludingGravity: {
                         x: lastX,

@@ -275,23 +275,23 @@ if (! _$jscoverage['/menu/popupmenu.js'].branchData) {
   _$jscoverage['/menu/popupmenu.js'].branchData['47'][1] = new BranchData();
 }
 _$jscoverage['/menu/popupmenu.js'].branchData['47'][1].init(74, 8, 'rootMenu');
-function visit42_47_1(result) {
+function visit41_47_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['45'][1].init(284, 32, 'self.get(\'autoHideOnMouseLeave\')');
-function visit41_45_1(result) {
+function visit40_45_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['34'][1].init(293, 13, 'last === self');
-function visit40_34_1(result) {
+function visit39_34_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['33'][2].init(242, 28, 'cur.isMenuItem || cur.isMenu');
-function visit39_33_2(result) {
+function visit38_33_2(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['33'][2].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['33'][1].init(136, 37, 'cur && (cur.isMenuItem || cur.isMenu)');
-function visit38_33_1(result) {
+function visit37_33_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].lineData[6]++;
@@ -317,9 +317,9 @@ KISSY.add(function(S, require) {
     last = cur;
     _$jscoverage['/menu/popupmenu.js'].lineData[32]++;
     cur = cur.get('parent');
-  } while (visit38_33_1(cur && (visit39_33_2(cur.isMenuItem || cur.isMenu))));
+  } while (visit37_33_1(cur && (visit38_33_2(cur.isMenuItem || cur.isMenu))));
   _$jscoverage['/menu/popupmenu.js'].lineData[34]++;
-  return visit40_34_1(last === self) ? null : last;
+  return visit39_34_1(last === self) ? null : last;
 }, 
   handleMouseLeaveInternal: function(e) {
   _$jscoverage['/menu/popupmenu.js'].functionData[2]++;
@@ -328,11 +328,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/popupmenu.js'].lineData[39]++;
   self.callSuper(e);
   _$jscoverage['/menu/popupmenu.js'].lineData[45]++;
-  if (visit41_45_1(self.get('autoHideOnMouseLeave'))) {
+  if (visit40_45_1(self.get('autoHideOnMouseLeave'))) {
     _$jscoverage['/menu/popupmenu.js'].lineData[46]++;
     var rootMenu = self.getRootMenu();
     _$jscoverage['/menu/popupmenu.js'].lineData[47]++;
-    if (visit42_47_1(rootMenu)) {
+    if (visit41_47_1(rootMenu)) {
       _$jscoverage['/menu/popupmenu.js'].lineData[48]++;
       clearTimeout(rootMenu._popupAutoHideTimer);
       _$jscoverage['/menu/popupmenu.js'].lineData[49]++;

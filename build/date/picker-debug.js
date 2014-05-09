@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:59
+build time: May 9 13:54
 */
 /*
 combined modules:
@@ -1026,19 +1026,16 @@ KISSY.add('date/picker/decade-panel/control', [
 /** Compiled By kissy-xtemplate */
 KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var decadePanel = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -1050,7 +1047,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         params4.push('prev-century-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(engine, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
@@ -1065,7 +1062,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         params8.push('century');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(engine, scope, option7, buffer, ['getBaseCssClasses'], 0, 8);
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 8);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
@@ -1083,7 +1080,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         params13.push('next-century-btn');
         option12.params = params13;
         var callRet14;
-        callRet14 = callFnUtil(engine, scope, option12, buffer, ['getBaseCssClasses'], 0, 11);
+        callRet14 = callFnUtil(tpl, scope, option12, buffer, ['getBaseCssClasses'], 0, 11);
         if (callRet14 && callRet14.isBuffer) {
             buffer = callRet14;
             callRet14 = undefined;
@@ -1098,7 +1095,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         params17.push('body');
         option16.params = params17;
         var callRet18;
-        callRet18 = callFnUtil(engine, scope, option16, buffer, ['getBaseCssClasses'], 0, 18);
+        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 18);
         if (callRet18 && callRet18.isBuffer) {
             buffer = callRet18;
             callRet18 = undefined;
@@ -1110,7 +1107,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         params20.push('table');
         option19.params = params20;
         var callRet21;
-        callRet21 = callFnUtil(engine, scope, option19, buffer, ['getBaseCssClasses'], 0, 19);
+        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 19);
         if (callRet21 && callRet21.isBuffer) {
             buffer = callRet21;
             callRet21 = undefined;
@@ -1122,7 +1119,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         params23.push('tbody');
         option22.params = params23;
         var callRet24;
-        callRet24 = callFnUtil(engine, scope, option22, buffer, ['getBaseCssClasses'], 0, 20);
+        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 0, 20);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
@@ -1135,7 +1132,7 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         option25.params = params26;
         require('./decades-xtpl');
         var callRet27;
-        callRet27 = includeCommand.call(engine, scope, option25, buffer, 21, payload);
+        callRet27 = includeCommand.call(tpl, scope, option25, buffer, 21);
         if (callRet27 && callRet27.isBuffer) {
             buffer = callRet27;
             callRet27 = undefined;
@@ -1144,18 +1141,16 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    decadePanel.TPL_NAME = module.name;
+    decadePanel.version = '5.0.0';
+    return decadePanel;
 });
 /** Compiled By kissy-xtemplate */
 KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var decades = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -1180,7 +1175,7 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                 params8.push('cell');
                 option7.params = params8;
                 var callRet9;
-                callRet9 = callFnUtil(engine, scope, option7, buffer, ['getBaseCssClasses'], 0, 5);
+                callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 5);
                 if (callRet9 && callRet9.isBuffer) {
                     buffer = callRet9;
                     callRet9 = undefined;
@@ -1210,7 +1205,7 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                     params20.push('selected-cell');
                     option19.params = params20;
                     var callRet21;
-                    callRet21 = callFnUtil(engine, scope, option19, buffer, ['getBaseCssClasses'], 0, 7);
+                    callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 7);
                     if (callRet21 && callRet21.isBuffer) {
                         buffer = callRet21;
                         callRet21 = undefined;
@@ -1219,7 +1214,7 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option10, buffer, 6, payload);
+                buffer = ifCommand.call(tpl, scope, option10, buffer, 6);
                 buffer.write('\r\n        ', 0);
                 var option22 = { escape: 1 };
                 var params23 = [];
@@ -1236,7 +1231,7 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                     params28.push('last-century-cell');
                     option27.params = params28;
                     var callRet29;
-                    callRet29 = callFnUtil(engine, scope, option27, buffer, ['getBaseCssClasses'], 0, 10);
+                    callRet29 = callFnUtil(tpl, scope, option27, buffer, ['getBaseCssClasses'], 0, 10);
                     if (callRet29 && callRet29.isBuffer) {
                         buffer = callRet29;
                         callRet29 = undefined;
@@ -1245,7 +1240,7 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option22, buffer, 9, payload);
+                buffer = ifCommand.call(tpl, scope, option22, buffer, 9);
                 buffer.write('\r\n        ', 0);
                 var option30 = { escape: 1 };
                 var params31 = [];
@@ -1262,7 +1257,7 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                     params36.push('next-century-cell');
                     option35.params = params36;
                     var callRet37;
-                    callRet37 = callFnUtil(engine, scope, option35, buffer, ['getBaseCssClasses'], 0, 13);
+                    callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 0, 13);
                     if (callRet37 && callRet37.isBuffer) {
                         buffer = callRet37;
                         callRet37 = undefined;
@@ -1271,14 +1266,14 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option30, buffer, 12, payload);
+                buffer = ifCommand.call(tpl, scope, option30, buffer, 12);
                 buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
                 var option38 = { escape: 1 };
                 var params39 = [];
                 params39.push('decade');
                 option38.params = params39;
                 var callRet40;
-                callRet40 = callFnUtil(engine, scope, option38, buffer, ['getBaseCssClasses'], 0, 19);
+                callRet40 = callFnUtil(tpl, scope, option38, buffer, ['getBaseCssClasses'], 0, 19);
                 if (callRet40 && callRet40.isBuffer) {
                     buffer = callRet40;
                     callRet40 = undefined;
@@ -1293,26 +1288,24 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                 buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+            buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
             buffer.write('\r\n</tr>\r\n', 0);
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option0, buffer, 1, payload);
+        buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    decades.TPL_NAME = module.name;
+    decades.version = '5.0.0';
+    return decades;
 });
 
 /** Compiled By kissy-xtemplate */
 KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var years = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -1340,7 +1333,7 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                 params9.push('cell');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(engine, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
@@ -1362,7 +1355,7 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                     params17.push('selected-cell');
                     option16.params = params17;
                     var callRet18;
-                    callRet18 = callFnUtil(engine, scope, option16, buffer, ['getBaseCssClasses'], 0, 8);
+                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 8);
                     if (callRet18 && callRet18.isBuffer) {
                         buffer = callRet18;
                         callRet18 = undefined;
@@ -1371,7 +1364,7 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option11, buffer, 7, payload);
+                buffer = ifCommand.call(tpl, scope, option11, buffer, 7);
                 buffer.write('\r\n        ', 0);
                 var option19 = { escape: 1 };
                 var params20 = [];
@@ -1388,7 +1381,7 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                     params25.push('last-decade-cell');
                     option24.params = params25;
                     var callRet26;
-                    callRet26 = callFnUtil(engine, scope, option24, buffer, ['getBaseCssClasses'], 0, 11);
+                    callRet26 = callFnUtil(tpl, scope, option24, buffer, ['getBaseCssClasses'], 0, 11);
                     if (callRet26 && callRet26.isBuffer) {
                         buffer = callRet26;
                         callRet26 = undefined;
@@ -1397,7 +1390,7 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option19, buffer, 10, payload);
+                buffer = ifCommand.call(tpl, scope, option19, buffer, 10);
                 buffer.write('\r\n        ', 0);
                 var option27 = { escape: 1 };
                 var params28 = [];
@@ -1414,7 +1407,7 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                     params33.push('next-decade-cell');
                     option32.params = params33;
                     var callRet34;
-                    callRet34 = callFnUtil(engine, scope, option32, buffer, ['getBaseCssClasses'], 0, 14);
+                    callRet34 = callFnUtil(tpl, scope, option32, buffer, ['getBaseCssClasses'], 0, 14);
                     if (callRet34 && callRet34.isBuffer) {
                         buffer = callRet34;
                         callRet34 = undefined;
@@ -1423,14 +1416,14 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option27, buffer, 13, payload);
+                buffer = ifCommand.call(tpl, scope, option27, buffer, 13);
                 buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
                 var option35 = { escape: 1 };
                 var params36 = [];
                 params36.push('year');
                 option35.params = params36;
                 var callRet37;
-                callRet37 = callFnUtil(engine, scope, option35, buffer, ['getBaseCssClasses'], 0, 20);
+                callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 0, 20);
                 if (callRet37 && callRet37.isBuffer) {
                     buffer = callRet37;
                     callRet37 = undefined;
@@ -1442,32 +1435,30 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                 buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+            buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
             buffer.write('\r\n</tr>\r\n', 0);
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option0, buffer, 1, payload);
+        buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    years.TPL_NAME = module.name;
+    years.version = '5.0.0';
+    return years;
 });
 /** Compiled By kissy-xtemplate */
 KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var yearPanel = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -1479,7 +1470,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params4.push('prev-decade-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(engine, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
@@ -1494,7 +1485,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params8.push('decade-select');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(engine, scope, option7, buffer, ['getBaseCssClasses'], 0, 9);
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 9);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
@@ -1509,7 +1500,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params12.push('decade-select-content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(engine, scope, option11, buffer, ['getBaseCssClasses'], 0, 14);
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 0, 14);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
@@ -1527,7 +1518,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params17.push('decade-select-arrow');
         option16.params = params17;
         var callRet18;
-        callRet18 = callFnUtil(engine, scope, option16, buffer, ['getBaseCssClasses'], 0, 17);
+        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 17);
         if (callRet18 && callRet18.isBuffer) {
             buffer = callRet18;
             callRet18 = undefined;
@@ -1539,7 +1530,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params20.push('next-decade-btn');
         option19.params = params20;
         var callRet21;
-        callRet21 = callFnUtil(engine, scope, option19, buffer, ['getBaseCssClasses'], 0, 20);
+        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 20);
         if (callRet21 && callRet21.isBuffer) {
             buffer = callRet21;
             callRet21 = undefined;
@@ -1554,7 +1545,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params24.push('body');
         option23.params = params24;
         var callRet25;
-        callRet25 = callFnUtil(engine, scope, option23, buffer, ['getBaseCssClasses'], 0, 27);
+        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 0, 27);
         if (callRet25 && callRet25.isBuffer) {
             buffer = callRet25;
             callRet25 = undefined;
@@ -1566,7 +1557,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params27.push('table');
         option26.params = params27;
         var callRet28;
-        callRet28 = callFnUtil(engine, scope, option26, buffer, ['getBaseCssClasses'], 0, 28);
+        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 0, 28);
         if (callRet28 && callRet28.isBuffer) {
             buffer = callRet28;
             callRet28 = undefined;
@@ -1578,7 +1569,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         params30.push('tbody');
         option29.params = params30;
         var callRet31;
-        callRet31 = callFnUtil(engine, scope, option29, buffer, ['getBaseCssClasses'], 0, 29);
+        callRet31 = callFnUtil(tpl, scope, option29, buffer, ['getBaseCssClasses'], 0, 29);
         if (callRet31 && callRet31.isBuffer) {
             buffer = callRet31;
             callRet31 = undefined;
@@ -1591,7 +1582,7 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         option32.params = params33;
         require('./years-xtpl');
         var callRet34;
-        callRet34 = includeCommand.call(engine, scope, option32, buffer, 30, payload);
+        callRet34 = includeCommand.call(tpl, scope, option32, buffer, 30);
         if (callRet34 && callRet34.isBuffer) {
             buffer = callRet34;
             callRet34 = undefined;
@@ -1600,18 +1591,16 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    yearPanel.TPL_NAME = module.name;
+    yearPanel.version = '5.0.0';
+    return yearPanel;
 });
 /** Compiled By kissy-xtemplate */
 KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var months = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -1639,7 +1628,7 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
                 params9.push('cell');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(engine, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
@@ -1661,7 +1650,7 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
                     params17.push('selected-cell');
                     option16.params = params17;
                     var callRet18;
-                    callRet18 = callFnUtil(engine, scope, option16, buffer, ['getBaseCssClasses'], 0, 8);
+                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 8);
                     if (callRet18 && callRet18.isBuffer) {
                         buffer = callRet18;
                         callRet18 = undefined;
@@ -1670,14 +1659,14 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option11, buffer, 7, payload);
+                buffer = ifCommand.call(tpl, scope, option11, buffer, 7);
                 buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
                 var option19 = { escape: 1 };
                 var params20 = [];
                 params20.push('month');
                 option19.params = params20;
                 var callRet21;
-                callRet21 = callFnUtil(engine, scope, option19, buffer, ['getBaseCssClasses'], 0, 14);
+                callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 14);
                 if (callRet21 && callRet21.isBuffer) {
                     buffer = callRet21;
                     callRet21 = undefined;
@@ -1689,32 +1678,30 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
                 buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+            buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
             buffer.write('\r\n</tr>\r\n', 0);
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option0, buffer, 1, payload);
+        buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    months.TPL_NAME = module.name;
+    months.version = '5.0.0';
+    return months;
 });
 /** Compiled By kissy-xtemplate */
 KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var monthPanel = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -1726,7 +1713,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params4.push('prev-year-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(engine, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
@@ -1741,7 +1728,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params8.push('year-select');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(engine, scope, option7, buffer, ['getBaseCssClasses'], 0, 9);
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 9);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
@@ -1756,7 +1743,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params12.push('year-select-content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(engine, scope, option11, buffer, ['getBaseCssClasses'], 0, 14);
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 0, 14);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
@@ -1771,7 +1758,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params16.push('year-select-arrow');
         option15.params = params16;
         var callRet17;
-        callRet17 = callFnUtil(engine, scope, option15, buffer, ['getBaseCssClasses'], 0, 15);
+        callRet17 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 0, 15);
         if (callRet17 && callRet17.isBuffer) {
             buffer = callRet17;
             callRet17 = undefined;
@@ -1783,7 +1770,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params19.push('next-year-btn');
         option18.params = params19;
         var callRet20;
-        callRet20 = callFnUtil(engine, scope, option18, buffer, ['getBaseCssClasses'], 0, 18);
+        callRet20 = callFnUtil(tpl, scope, option18, buffer, ['getBaseCssClasses'], 0, 18);
         if (callRet20 && callRet20.isBuffer) {
             buffer = callRet20;
             callRet20 = undefined;
@@ -1798,7 +1785,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params23.push('body');
         option22.params = params23;
         var callRet24;
-        callRet24 = callFnUtil(engine, scope, option22, buffer, ['getBaseCssClasses'], 0, 25);
+        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 0, 25);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
@@ -1810,7 +1797,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params26.push('table');
         option25.params = params26;
         var callRet27;
-        callRet27 = callFnUtil(engine, scope, option25, buffer, ['getBaseCssClasses'], 0, 26);
+        callRet27 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses'], 0, 26);
         if (callRet27 && callRet27.isBuffer) {
             buffer = callRet27;
             callRet27 = undefined;
@@ -1822,7 +1809,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         params29.push('tbody');
         option28.params = params29;
         var callRet30;
-        callRet30 = callFnUtil(engine, scope, option28, buffer, ['getBaseCssClasses'], 0, 27);
+        callRet30 = callFnUtil(tpl, scope, option28, buffer, ['getBaseCssClasses'], 0, 27);
         if (callRet30 && callRet30.isBuffer) {
             buffer = callRet30;
             callRet30 = undefined;
@@ -1835,7 +1822,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         option31.params = params32;
         require('./months-xtpl');
         var callRet33;
-        callRet33 = includeCommand.call(engine, scope, option31, buffer, 28, payload);
+        callRet33 = includeCommand.call(tpl, scope, option31, buffer, 28);
         if (callRet33 && callRet33.isBuffer) {
             buffer = callRet33;
             callRet33 = undefined;
@@ -1844,6 +1831,7 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    monthPanel.TPL_NAME = module.name;
+    monthPanel.version = '5.0.0';
+    return monthPanel;
 });

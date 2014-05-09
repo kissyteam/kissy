@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:12
+build time: May 9 14:07
 */
 /*
 combined modules:
@@ -165,7 +165,7 @@ KISSY.add('scroll-view/touch', [
         self.startScroll.left = self.get('scrollLeft');
         self.startScroll.top = self.get('scrollTop');
     }
-    function onDraggingHandler(e) {
+    function onDragPreHandler(e) {
         var self = this;
         if (e.gestureType !== 'touch') {
             return;
@@ -341,7 +341,7 @@ KISSY.add('scroll-view/touch', [
         var action = self.get('disabled') ? 'detach' : 'on';
         self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)    // click
 [// click
-        action](BaseGesture.START, onGestureStart, self)[action](DragGesture.DRAGGING, onDraggingHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
+        action](BaseGesture.START, onGestureStart, self)[action](DragGesture.DRAG_PRE, onDragPreHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
     }    /**
      * allow touch drag for scroll view.
      * module scroll-view will be this class on touch device

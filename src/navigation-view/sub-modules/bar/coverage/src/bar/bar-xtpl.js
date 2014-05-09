@@ -235,67 +235,66 @@ if (! _$jscoverage['/bar/bar-xtpl.js']) {
   _$jscoverage['/bar/bar-xtpl.js'].lineData[8] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[20] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[23] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[24] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[25] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[26] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[27] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[30] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[31] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[33] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[34] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[35] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[37] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[38] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[39] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[40] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[41] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[42] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[43] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[45] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[46] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[47] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[48] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[49] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[50] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[51] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[52] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[53] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[54] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[55] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[56] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[57] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[58] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[59] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[60] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[61] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[62] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[63] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[64] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[66] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[67] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[65] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[68] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[69] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[70] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[71] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[72] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[73] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[74] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[75] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[76] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[77] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[78] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[80] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[81] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[79] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[82] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[83] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[84] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[85] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[86] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[87] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[88] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[89] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[90] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[91] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[92] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[94] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[93] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[95] = 0;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[96] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[98] = 0;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[99] = 0;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[97] = 0;
 }
 if (! _$jscoverage['/bar/bar-xtpl.js'].functionData) {
   _$jscoverage['/bar/bar-xtpl.js'].functionData = [];
@@ -305,184 +304,175 @@ if (! _$jscoverage['/bar/bar-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/bar/bar-xtpl.js'].branchData) {
   _$jscoverage['/bar/bar-xtpl.js'].branchData = {};
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['20'] = [];
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['41'] = [];
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['41'][1] = new BranchData();
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['55'] = [];
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['55'][1] = new BranchData();
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['76'] = [];
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['90'] = [];
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['38'] = [];
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['52'] = [];
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['73'] = [];
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['87'] = [];
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['87'][1] = new BranchData();
 }
-_$jscoverage['/bar/bar-xtpl.js'].branchData['90'][1].init(3690, 31, 'callRet15 && callRet15.isBuffer');
-function visit5_90_1(result) {
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['90'][1].ranCondition(result);
+_$jscoverage['/bar/bar-xtpl.js'].branchData['87'][1].init(3461, 31, 'callRet15 && callRet15.isBuffer');
+function visit4_87_1(result) {
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar/bar-xtpl.js'].branchData['76'][1].init(3150, 31, 'callRet12 && callRet12.isBuffer');
-function visit4_76_1(result) {
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/bar/bar-xtpl.js'].branchData['73'][1].init(2924, 31, 'callRet12 && callRet12.isBuffer');
+function visit3_73_1(result) {
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar/bar-xtpl.js'].branchData['55'][1].init(986, 29, 'callRet8 && callRet8.isBuffer');
-function visit3_55_1(result) {
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['55'][1].ranCondition(result);
+}_$jscoverage['/bar/bar-xtpl.js'].branchData['52'][1].init(980, 29, 'callRet8 && callRet8.isBuffer');
+function visit2_52_1(result) {
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bar/bar-xtpl.js'].branchData['41'][1].init(404, 29, 'callRet5 && callRet5.isBuffer');
-function visit2_41_1(result) {
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['41'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/bar/bar-xtpl.js'].branchData['20'][1].init(802, 21, '"5.0.0" !== S.version');
-function visit1_20_1(result) {
-  _$jscoverage['/bar/bar-xtpl.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/bar/bar-xtpl.js'].branchData['38'][1].init(401, 29, 'callRet5 && callRet5.isBuffer');
+function visit1_38_1(result) {
+  _$jscoverage['/bar/bar-xtpl.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bar/bar-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/bar/bar-xtpl.js'].functionData[0]++;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[4]++;
-  var t = function(scope, buffer, payload, undefined) {
+  var bar = function(scope, buffer, undefined) {
   _$jscoverage['/bar/bar-xtpl.js'].functionData[1]++;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[5]++;
-  var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
   _$jscoverage['/bar/bar-xtpl.js'].lineData[8]++;
   var callFnUtil = utils["callFn"], callCommandUtil = utils["callCommand"], eachCommand = nativeCommands["each"], withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands["set"], includeCommand = nativeCommands["include"], parseCommand = nativeCommands["parse"], extendCommand = nativeCommands["extend"], blockCommand = nativeCommands["block"], macroCommand = nativeCommands["macro"], debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/bar/bar-xtpl.js'].lineData[20]++;
-  if (visit1_20_1("5.0.0" !== S.version)) {
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[21]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-  }
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[23]++;
   buffer.write('', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[24]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[21]++;
   var option0 = {
   escape: 1};
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[27]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[24]++;
   var params1 = [];
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[28]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[25]++;
   var id2 = scope.resolve(["withTitle"], 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[29]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[26]++;
   params1.push(id2);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[30]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[27]++;
   option0.params = params1;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[31]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[28]++;
   option0.fn = function(scope, buffer) {
   _$jscoverage['/bar/bar-xtpl.js'].functionData[2]++;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[32]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[29]++;
   buffer.write('\r\n<div class="', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[33]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[30]++;
   var option3 = {
   escape: 1};
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[36]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[33]++;
   var params4 = [];
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[37]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[34]++;
   params4.push('title-wrap');
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[38]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[35]++;
   option3.params = params4;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[39]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[36]++;
   var callRet5;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[40]++;
-  callRet5 = callFnUtil(engine, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[41]++;
-  if (visit2_41_1(callRet5 && callRet5.isBuffer)) {
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[42]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[37]++;
+  callRet5 = callFnUtil(tpl, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[38]++;
+  if (visit1_38_1(callRet5 && callRet5.isBuffer)) {
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[39]++;
     buffer = callRet5;
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[43]++;
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[40]++;
     callRet5 = undefined;
   }
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[45]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[42]++;
   buffer.write(callRet5, true);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[46]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[43]++;
   buffer.write('">\r\n    <div class="', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[47]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[44]++;
   var option6 = {
   escape: 1};
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[50]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[47]++;
   var params7 = [];
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[51]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[48]++;
   params7.push('title');
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[52]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[49]++;
   option6.params = params7;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[53]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[50]++;
   var callRet8;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[54]++;
-  callRet8 = callFnUtil(engine, scope, option6, buffer, ["getBaseCssClasses"], 0, 3);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[55]++;
-  if (visit3_55_1(callRet8 && callRet8.isBuffer)) {
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[56]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[51]++;
+  callRet8 = callFnUtil(tpl, scope, option6, buffer, ["getBaseCssClasses"], 0, 3);
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[52]++;
+  if (visit2_52_1(callRet8 && callRet8.isBuffer)) {
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[53]++;
     buffer = callRet8;
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[57]++;
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[54]++;
     callRet8 = undefined;
   }
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[59]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[56]++;
   buffer.write(callRet8, true);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[60]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[57]++;
   buffer.write('">', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[61]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[58]++;
   var id9 = scope.resolve(["title"], 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[62]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[59]++;
   buffer.write(id9, true);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[63]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[60]++;
   buffer.write('</div>\r\n</div>\r\n', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[64]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[61]++;
   return buffer;
 };
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[66]++;
-  buffer = ifCommand.call(engine, scope, option0, buffer, 1, payload);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[67]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[63]++;
+  buffer = ifCommand.call(tpl, scope, option0, buffer, 1);
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[64]++;
   buffer.write('\r\n<div class="', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[68]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[65]++;
   var option10 = {
   escape: 1};
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[71]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[68]++;
   var params11 = [];
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[72]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[69]++;
   params11.push('content');
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[73]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[70]++;
   option10.params = params11;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[74]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[71]++;
   var callRet12;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[75]++;
-  callRet12 = callFnUtil(engine, scope, option10, buffer, ["getBaseCssClasses"], 0, 6);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[76]++;
-  if (visit4_76_1(callRet12 && callRet12.isBuffer)) {
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[77]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[72]++;
+  callRet12 = callFnUtil(tpl, scope, option10, buffer, ["getBaseCssClasses"], 0, 6);
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[73]++;
+  if (visit3_73_1(callRet12 && callRet12.isBuffer)) {
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[74]++;
     buffer = callRet12;
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[78]++;
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[75]++;
     callRet12 = undefined;
   }
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[80]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[77]++;
   buffer.write(callRet12, true);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[81]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[78]++;
   buffer.write('">\r\n    <div class="', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[82]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[79]++;
   var option13 = {
   escape: 1};
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[85]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[82]++;
   var params14 = [];
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[86]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[83]++;
   params14.push('center');
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[87]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[84]++;
   option13.params = params14;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[88]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[85]++;
   var callRet15;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[89]++;
-  callRet15 = callFnUtil(engine, scope, option13, buffer, ["getBaseCssClasses"], 0, 7);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[90]++;
-  if (visit5_90_1(callRet15 && callRet15.isBuffer)) {
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[91]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[86]++;
+  callRet15 = callFnUtil(tpl, scope, option13, buffer, ["getBaseCssClasses"], 0, 7);
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[87]++;
+  if (visit4_87_1(callRet15 && callRet15.isBuffer)) {
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[88]++;
     buffer = callRet15;
-    _$jscoverage['/bar/bar-xtpl.js'].lineData[92]++;
+    _$jscoverage['/bar/bar-xtpl.js'].lineData[89]++;
     callRet15 = undefined;
   }
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[94]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[91]++;
   buffer.write(callRet15, true);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[95]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[92]++;
   buffer.write('"></div>\r\n</div>', 0);
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[96]++;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[93]++;
   return buffer;
 };
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[98]++;
-  t.TPL_NAME = module.name;
-  _$jscoverage['/bar/bar-xtpl.js'].lineData[99]++;
-  return t;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[95]++;
+  bar.TPL_NAME = module.name;
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[96]++;
+  bar.version = "5.0.0";
+  _$jscoverage['/bar/bar-xtpl.js'].lineData[97]++;
+  return bar;
 });

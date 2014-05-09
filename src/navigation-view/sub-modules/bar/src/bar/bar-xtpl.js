@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var bar = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('', 0);
             var option0 = {
                 escape: 1
@@ -37,7 +34,7 @@ KISSY.add(function (S, require, exports, module) {
                 params4.push('title-wrap');
                 option3.params = params4;
                 var callRet5
-                callRet5 = callFnUtil(engine, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
+                callRet5 = callFnUtil(tpl, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
                 if (callRet5 && callRet5.isBuffer) {
                     buffer = callRet5;
                     callRet5 = undefined;
@@ -51,7 +48,7 @@ KISSY.add(function (S, require, exports, module) {
                 params7.push('title');
                 option6.params = params7;
                 var callRet8
-                callRet8 = callFnUtil(engine, scope, option6, buffer, ["getBaseCssClasses"], 0, 3);
+                callRet8 = callFnUtil(tpl, scope, option6, buffer, ["getBaseCssClasses"], 0, 3);
                 if (callRet8 && callRet8.isBuffer) {
                     buffer = callRet8;
                     callRet8 = undefined;
@@ -63,7 +60,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('</div>\r\n</div>\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 1, payload);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 1);
             buffer.write('\r\n<div class="', 0);
             var option10 = {
                 escape: 1
@@ -72,7 +69,7 @@ KISSY.add(function (S, require, exports, module) {
             params11.push('content');
             option10.params = params11;
             var callRet12
-            callRet12 = callFnUtil(engine, scope, option10, buffer, ["getBaseCssClasses"], 0, 6);
+            callRet12 = callFnUtil(tpl, scope, option10, buffer, ["getBaseCssClasses"], 0, 6);
             if (callRet12 && callRet12.isBuffer) {
                 buffer = callRet12;
                 callRet12 = undefined;
@@ -86,7 +83,7 @@ KISSY.add(function (S, require, exports, module) {
             params14.push('center');
             option13.params = params14;
             var callRet15
-            callRet15 = callFnUtil(engine, scope, option13, buffer, ["getBaseCssClasses"], 0, 7);
+            callRet15 = callFnUtil(tpl, scope, option13, buffer, ["getBaseCssClasses"], 0, 7);
             if (callRet15 && callRet15.isBuffer) {
                 buffer = callRet15;
                 callRet15 = undefined;
@@ -95,6 +92,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('"></div>\r\n</div>', 0);
             return buffer;
         };
-t.TPL_NAME = module.name;
-return t;
+bar.TPL_NAME = module.name;
+bar.version = "5.0.0";
+return bar
 });

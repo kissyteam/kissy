@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:52
+build time: May 9 13:53
 */
 /*
 combined modules:
@@ -1422,19 +1422,16 @@ KISSY.add('component/control/manager', [], function (S) {
 /** Compiled By kissy-xtemplate */
 KISSY.add('component/control/render-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var render = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div id="', 0);
         var id0 = scope.resolve(['id'], 0);
         buffer.write(id0, true);
         buffer.write('"\r\n class="', 0);
         var option1 = { escape: 1 };
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option1, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet2 = callFnUtil(tpl, scope, option1, buffer, ['getBaseCssClasses'], 0, 2);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -1453,7 +1450,7 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
             buffer.write('\r\n', 0);
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+        buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
         buffer.write('\r\n"\r\n\r\n', 0);
         var option7 = { escape: 1 };
         var params8 = [];
@@ -1470,7 +1467,7 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
             buffer.write('"\r\n', 0);
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option7, buffer, 8, payload);
+        buffer = eachCommand.call(tpl, scope, option7, buffer, 8);
         buffer.write('\r\n\r\nstyle="\r\n', 0);
         var option12 = { escape: 1 };
         var params13 = [];
@@ -1487,11 +1484,12 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
             buffer.write(';\r\n', 0);
             return buffer;
         };
-        buffer = eachCommand.call(engine, scope, option12, buffer, 13, payload);
+        buffer = eachCommand.call(tpl, scope, option12, buffer, 13);
         buffer.write('\r\n">', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    render.TPL_NAME = module.name;
+    render.version = '5.0.0';
+    return render;
 });
 

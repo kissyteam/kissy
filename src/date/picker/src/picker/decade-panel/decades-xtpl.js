@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var decades = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('', 0);
             var option0 = {
                 escape: 1
@@ -47,7 +44,7 @@ KISSY.add(function (S, require, exports, module) {
                     params8.push('cell');
                     option7.params = params8;
                     var callRet9
-                    callRet9 = callFnUtil(engine, scope, option7, buffer, ["getBaseCssClasses"], 0, 5);
+                    callRet9 = callFnUtil(tpl, scope, option7, buffer, ["getBaseCssClasses"], 0, 5);
                     if (callRet9 && callRet9.isBuffer) {
                         buffer = callRet9;
                         callRet9 = undefined;
@@ -81,7 +78,7 @@ KISSY.add(function (S, require, exports, module) {
                         params20.push('selected-cell');
                         option19.params = params20;
                         var callRet21
-                        callRet21 = callFnUtil(engine, scope, option19, buffer, ["getBaseCssClasses"], 0, 7);
+                        callRet21 = callFnUtil(tpl, scope, option19, buffer, ["getBaseCssClasses"], 0, 7);
                         if (callRet21 && callRet21.isBuffer) {
                             buffer = callRet21;
                             callRet21 = undefined;
@@ -90,7 +87,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('\r\n        ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option10, buffer, 6, payload);
+                    buffer = ifCommand.call(tpl, scope, option10, buffer, 6);
                     buffer.write('\r\n        ', 0);
                     var option22 = {
                         escape: 1
@@ -111,7 +108,7 @@ KISSY.add(function (S, require, exports, module) {
                         params28.push('last-century-cell');
                         option27.params = params28;
                         var callRet29
-                        callRet29 = callFnUtil(engine, scope, option27, buffer, ["getBaseCssClasses"], 0, 10);
+                        callRet29 = callFnUtil(tpl, scope, option27, buffer, ["getBaseCssClasses"], 0, 10);
                         if (callRet29 && callRet29.isBuffer) {
                             buffer = callRet29;
                             callRet29 = undefined;
@@ -120,7 +117,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('\r\n        ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option22, buffer, 9, payload);
+                    buffer = ifCommand.call(tpl, scope, option22, buffer, 9);
                     buffer.write('\r\n        ', 0);
                     var option30 = {
                         escape: 1
@@ -141,7 +138,7 @@ KISSY.add(function (S, require, exports, module) {
                         params36.push('next-century-cell');
                         option35.params = params36;
                         var callRet37
-                        callRet37 = callFnUtil(engine, scope, option35, buffer, ["getBaseCssClasses"], 0, 13);
+                        callRet37 = callFnUtil(tpl, scope, option35, buffer, ["getBaseCssClasses"], 0, 13);
                         if (callRet37 && callRet37.isBuffer) {
                             buffer = callRet37;
                             callRet37 = undefined;
@@ -150,7 +147,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('\r\n        ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option30, buffer, 12, payload);
+                    buffer = ifCommand.call(tpl, scope, option30, buffer, 12);
                     buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
                     var option38 = {
                         escape: 1
@@ -159,7 +156,7 @@ KISSY.add(function (S, require, exports, module) {
                     params39.push('decade');
                     option38.params = params39;
                     var callRet40
-                    callRet40 = callFnUtil(engine, scope, option38, buffer, ["getBaseCssClasses"], 0, 19);
+                    callRet40 = callFnUtil(tpl, scope, option38, buffer, ["getBaseCssClasses"], 0, 19);
                     if (callRet40 && callRet40.isBuffer) {
                         buffer = callRet40;
                         callRet40 = undefined;
@@ -174,13 +171,14 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
                     return buffer;
                 };
-                buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+                buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
                 buffer.write('\r\n</tr>\r\n', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option0, buffer, 1, payload);
+            buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
             return buffer;
         };
-t.TPL_NAME = module.name;
-return t;
+decades.TPL_NAME = module.name;
+decades.version = "5.0.0";
+return decades
 });

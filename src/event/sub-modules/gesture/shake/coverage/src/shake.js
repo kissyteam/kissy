@@ -233,32 +233,32 @@ if (! _$jscoverage['/shake.js']) {
   _$jscoverage['/shake.js'].lineData[7] = 0;
   _$jscoverage['/shake.js'].lineData[9] = 0;
   _$jscoverage['/shake.js'].lineData[20] = 0;
-  _$jscoverage['/shake.js'].lineData[21] = 0;
   _$jscoverage['/shake.js'].lineData[28] = 0;
-  _$jscoverage['/shake.js'].lineData[33] = 0;
   _$jscoverage['/shake.js'].lineData[35] = 0;
-  _$jscoverage['/shake.js'].lineData[36] = 0;
-  _$jscoverage['/shake.js'].lineData[38] = 0;
-  _$jscoverage['/shake.js'].lineData[41] = 0;
+  _$jscoverage['/shake.js'].lineData[40] = 0;
   _$jscoverage['/shake.js'].lineData[42] = 0;
-  _$jscoverage['/shake.js'].lineData[44] = 0;
+  _$jscoverage['/shake.js'].lineData[43] = 0;
   _$jscoverage['/shake.js'].lineData[45] = 0;
-  _$jscoverage['/shake.js'].lineData[46] = 0;
-  _$jscoverage['/shake.js'].lineData[50] = 0;
+  _$jscoverage['/shake.js'].lineData[48] = 0;
+  _$jscoverage['/shake.js'].lineData[49] = 0;
   _$jscoverage['/shake.js'].lineData[51] = 0;
   _$jscoverage['/shake.js'].lineData[52] = 0;
-  _$jscoverage['/shake.js'].lineData[55] = 0;
-  _$jscoverage['/shake.js'].lineData[56] = 0;
-  _$jscoverage['/shake.js'].lineData[61] = 0;
+  _$jscoverage['/shake.js'].lineData[53] = 0;
+  _$jscoverage['/shake.js'].lineData[57] = 0;
+  _$jscoverage['/shake.js'].lineData[58] = 0;
+  _$jscoverage['/shake.js'].lineData[59] = 0;
   _$jscoverage['/shake.js'].lineData[62] = 0;
   _$jscoverage['/shake.js'].lineData[63] = 0;
-  _$jscoverage['/shake.js'].lineData[64] = 0;
-  _$jscoverage['/shake.js'].lineData[66] = 0;
+  _$jscoverage['/shake.js'].lineData[68] = 0;
   _$jscoverage['/shake.js'].lineData[69] = 0;
+  _$jscoverage['/shake.js'].lineData[70] = 0;
+  _$jscoverage['/shake.js'].lineData[71] = 0;
   _$jscoverage['/shake.js'].lineData[73] = 0;
-  _$jscoverage['/shake.js'].lineData[74] = 0;
-  _$jscoverage['/shake.js'].lineData[75] = 0;
-  _$jscoverage['/shake.js'].lineData[78] = 0;
+  _$jscoverage['/shake.js'].lineData[76] = 0;
+  _$jscoverage['/shake.js'].lineData[80] = 0;
+  _$jscoverage['/shake.js'].lineData[81] = 0;
+  _$jscoverage['/shake.js'].lineData[82] = 0;
+  _$jscoverage['/shake.js'].lineData[85] = 0;
 }
 if (! _$jscoverage['/shake.js'].functionData) {
   _$jscoverage['/shake.js'].functionData = [];
@@ -273,36 +273,36 @@ if (! _$jscoverage['/shake.js'].branchData) {
   _$jscoverage['/shake.js'].branchData = {};
   _$jscoverage['/shake.js'].branchData['20'] = [];
   _$jscoverage['/shake.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['35'] = [];
-  _$jscoverage['/shake.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['41'] = [];
-  _$jscoverage['/shake.js'].branchData['41'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['61'] = [];
-  _$jscoverage['/shake.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['63'] = [];
-  _$jscoverage['/shake.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/shake.js'].branchData['66'] = [];
-  _$jscoverage['/shake.js'].branchData['66'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['42'] = [];
+  _$jscoverage['/shake.js'].branchData['42'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['48'] = [];
+  _$jscoverage['/shake.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['68'] = [];
+  _$jscoverage['/shake.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['70'] = [];
+  _$jscoverage['/shake.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/shake.js'].branchData['73'] = [];
+  _$jscoverage['/shake.js'].branchData['73'][1] = new BranchData();
 }
-_$jscoverage['/shake.js'].branchData['66'][1].init(170, 13, 'diff > enough');
-function visit6_66_1(result) {
-  _$jscoverage['/shake.js'].branchData['66'][1].ranCondition(result);
+_$jscoverage['/shake.js'].branchData['73'][1].init(170, 13, 'diff > enough');
+function visit6_73_1(result) {
+  _$jscoverage['/shake.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['63'][1].init(91, 12, 'diff > start');
-function visit5_63_1(result) {
-  _$jscoverage['/shake.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['70'][1].init(91, 12, 'diff > start');
+function visit5_70_1(result) {
+  _$jscoverage['/shake.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['61'][1].init(256, 19, 'lastX !== undefined');
-function visit4_61_1(result) {
-  _$jscoverage['/shake.js'].branchData['61'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['68'][1].init(256, 19, 'lastX !== undefined');
+function visit4_68_1(result) {
+  _$jscoverage['/shake.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['41'][1].init(18, 12, 'this !== win');
-function visit3_41_1(result) {
-  _$jscoverage['/shake.js'].branchData['41'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['48'][1].init(18, 12, 'this !== win');
+function visit3_48_1(result) {
+  _$jscoverage['/shake.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['35'][1].init(18, 12, 'this !== win');
-function visit2_35_1(result) {
-  _$jscoverage['/shake.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/shake.js'].branchData['42'][1].init(18, 12, 'this !== win');
+function visit2_42_1(result) {
+  _$jscoverage['/shake.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/shake.js'].branchData['20'][1].init(18, 7, 'shaking');
 function visit1_20_1(result) {
@@ -318,78 +318,78 @@ KISSY.add(function(S, require) {
   _$jscoverage['/shake.js'].functionData[1]++;
   _$jscoverage['/shake.js'].lineData[20]++;
   if (visit1_20_1(shaking)) {
-    _$jscoverage['/shake.js'].lineData[21]++;
+    _$jscoverage['/shake.js'].lineData[28]++;
     DomEvent.fireHandler(win, SHAKE, {
   accelerationIncludingGravity: {
   x: lastX, 
   y: lastY, 
   z: lastZ}});
-    _$jscoverage['/shake.js'].lineData[28]++;
+    _$jscoverage['/shake.js'].lineData[35]++;
     clear();
   }
 }, 250);
-  _$jscoverage['/shake.js'].lineData[33]++;
+  _$jscoverage['/shake.js'].lineData[40]++;
   Special.shake = {
   setup: function() {
   _$jscoverage['/shake.js'].functionData[2]++;
-  _$jscoverage['/shake.js'].lineData[35]++;
-  if (visit2_35_1(this !== win)) {
-    _$jscoverage['/shake.js'].lineData[36]++;
+  _$jscoverage['/shake.js'].lineData[42]++;
+  if (visit2_42_1(this !== win)) {
+    _$jscoverage['/shake.js'].lineData[43]++;
     return;
   }
-  _$jscoverage['/shake.js'].lineData[38]++;
+  _$jscoverage['/shake.js'].lineData[45]++;
   win.addEventListener(devicemotion, shake, false);
 }, 
   tearDown: function() {
   _$jscoverage['/shake.js'].functionData[3]++;
-  _$jscoverage['/shake.js'].lineData[41]++;
-  if (visit3_41_1(this !== win)) {
-    _$jscoverage['/shake.js'].lineData[42]++;
+  _$jscoverage['/shake.js'].lineData[48]++;
+  if (visit3_48_1(this !== win)) {
+    _$jscoverage['/shake.js'].lineData[49]++;
     return;
   }
-  _$jscoverage['/shake.js'].lineData[44]++;
+  _$jscoverage['/shake.js'].lineData[51]++;
   checkShake.stop();
-  _$jscoverage['/shake.js'].lineData[45]++;
+  _$jscoverage['/shake.js'].lineData[52]++;
   clear();
-  _$jscoverage['/shake.js'].lineData[46]++;
+  _$jscoverage['/shake.js'].lineData[53]++;
   win.removeEventListener(devicemotion, shake, false);
 }};
-  _$jscoverage['/shake.js'].lineData[50]++;
+  _$jscoverage['/shake.js'].lineData[57]++;
   function clear() {
     _$jscoverage['/shake.js'].functionData[4]++;
-    _$jscoverage['/shake.js'].lineData[51]++;
+    _$jscoverage['/shake.js'].lineData[58]++;
     lastX = undefined;
-    _$jscoverage['/shake.js'].lineData[52]++;
+    _$jscoverage['/shake.js'].lineData[59]++;
     shaking = 0;
   }
-  _$jscoverage['/shake.js'].lineData[55]++;
+  _$jscoverage['/shake.js'].lineData[62]++;
   function shake(e) {
     _$jscoverage['/shake.js'].functionData[5]++;
-    _$jscoverage['/shake.js'].lineData[56]++;
+    _$jscoverage['/shake.js'].lineData[63]++;
     var accelerationIncludingGravity = e.accelerationIncludingGravity, x = accelerationIncludingGravity.x, y = accelerationIncludingGravity.y, z = accelerationIncludingGravity.z, diff;
-    _$jscoverage['/shake.js'].lineData[61]++;
-    if (visit4_61_1(lastX !== undefined)) {
-      _$jscoverage['/shake.js'].lineData[62]++;
+    _$jscoverage['/shake.js'].lineData[68]++;
+    if (visit4_68_1(lastX !== undefined)) {
+      _$jscoverage['/shake.js'].lineData[69]++;
       diff = max(abs(x - lastX), abs(y - lastY), abs(z - lastZ));
-      _$jscoverage['/shake.js'].lineData[63]++;
-      if (visit5_63_1(diff > start)) {
-        _$jscoverage['/shake.js'].lineData[64]++;
+      _$jscoverage['/shake.js'].lineData[70]++;
+      if (visit5_70_1(diff > start)) {
+        _$jscoverage['/shake.js'].lineData[71]++;
         checkShake();
       }
-      _$jscoverage['/shake.js'].lineData[66]++;
-      if (visit6_66_1(diff > enough)) {
-        _$jscoverage['/shake.js'].lineData[69]++;
+      _$jscoverage['/shake.js'].lineData[73]++;
+      if (visit6_73_1(diff > enough)) {
+        _$jscoverage['/shake.js'].lineData[76]++;
         shaking = 1;
       }
     }
-    _$jscoverage['/shake.js'].lineData[73]++;
+    _$jscoverage['/shake.js'].lineData[80]++;
     lastX = x;
-    _$jscoverage['/shake.js'].lineData[74]++;
+    _$jscoverage['/shake.js'].lineData[81]++;
     lastY = y;
-    _$jscoverage['/shake.js'].lineData[75]++;
+    _$jscoverage['/shake.js'].lineData[82]++;
     lastZ = z;
   }
-  _$jscoverage['/shake.js'].lineData[78]++;
+  _$jscoverage['/shake.js'].lineData[85]++;
   return {
   SHAKE: SHAKE};
 });

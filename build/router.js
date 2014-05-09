@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:11
+build time: May 9 14:06
 */
 KISSY.add("router","./router/utils,./router/route,uri,./router/request,event/dom,event/custom".split(","),function(d,i,a){function g(c,b){var e=l.addVid("#!"+c+(A?"":b?s.REPLACE_HISTORY:""),p);b?location.replace(e):location.hash=e}function j(c){var c=c||location.href,b=new x(c);if(!m.useHash&&n){c=b.query;return b.getPath().substr(m.urlRoot.length)+(c.has()?"?"+c.toString():"")}return l.getHash(c)}function f(c,b,e){function a(){g++;if(g===k)e(c,b);else{var j=v[g];if(d.startsWith(c.path+"/",j[0]+"/")){var h=
 j[0].length;c.url=c.url.slice(h);var f=c.path;c.path=c.path.slice(h);j[1](c,a);c.url=c.originalUrl;c.path=f}else a()}}var g=-1,k=v.length;a()}function b(c,b){function e(){a++;if(a!==g){var j=h[a];if(c.params=j.match(c.path)){var k=-1,f=j.callbacks,d=f.length,i=function(a){if(a==="route"){i=null;e()}else{k++;if(k!==d){c.route=j;f[k](c,b,i)}}};i("")}else e()}}var a=-1,g=h.length;e()}function k(c,g){var e=j(),k=new x(e),h=k.query.get();k.query.reset();e=new B({query:h,backward:c===true,replace:g===true,

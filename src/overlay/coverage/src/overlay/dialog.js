@@ -330,47 +330,47 @@ if (! _$jscoverage['/overlay/dialog.js'].branchData) {
   _$jscoverage['/overlay/dialog.js'].branchData['304'][1] = new BranchData();
 }
 _$jscoverage['/overlay/dialog.js'].branchData['304'][1].init(67, 38, 'node.equals($el) || $el.contains(node)');
-function visit18_304_1(result) {
+function visit17_304_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['304'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['298'][1].init(945, 41, 'node.equals(lastFocusItem) && !e.shiftKey');
-function visit17_298_1(result) {
+function visit16_298_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['298'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['295'][1].init(761, 30, 'node.equals($el) && e.shiftKey');
-function visit16_295_1(result) {
+function visit15_295_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['295'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['278'][1].init(76, 19, 'keyCode !== KEY_TAB');
-function visit15_278_1(result) {
+function visit14_278_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['278'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['76'][1].init(26, 17, 'self.__lastActive');
-function visit14_76_1(result) {
+function visit13_76_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['65'][1].init(114, 1, 'v');
-function visit13_65_1(result) {
+function visit12_65_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['51'][3].init(24, 44, 'e.target.nodeName.toLowerCase() === \'select\'');
-function visit12_51_3(result) {
+function visit11_51_3(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][3].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['51'][2].init(24, 66, 'e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled');
-function visit11_51_2(result) {
+function visit10_51_2(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][2].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['51'][1].init(22, 69, '!(e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled)');
-function visit10_51_1(result) {
+function visit9_51_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['50'][1].init(45, 30, 'e.keyCode === Node.KeyCode.ESC');
-function visit9_50_1(result) {
+function visit8_50_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].branchData['49'][1].init(18, 76, 'this.get(\'escapeToClose\') && e.keyCode === Node.KeyCode.ESC');
-function visit8_49_1(result) {
+function visit7_49_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].lineData[6]++;
@@ -418,9 +418,9 @@ KISSY.add(function(S, require) {
   handleKeyDownInternal: function(e) {
   _$jscoverage['/overlay/dialog.js'].functionData[5]++;
   _$jscoverage['/overlay/dialog.js'].lineData[49]++;
-  if (visit8_49_1(this.get('escapeToClose') && visit9_50_1(e.keyCode === Node.KeyCode.ESC))) {
+  if (visit7_49_1(this.get('escapeToClose') && visit8_50_1(e.keyCode === Node.KeyCode.ESC))) {
     _$jscoverage['/overlay/dialog.js'].lineData[51]++;
-    if (visit10_51_1(!(visit11_51_2(visit12_51_3(e.target.nodeName.toLowerCase() === 'select') && !e.target.disabled)))) {
+    if (visit9_51_1(!(visit10_51_2(visit11_51_3(e.target.nodeName.toLowerCase() === 'select') && !e.target.disabled)))) {
       _$jscoverage['/overlay/dialog.js'].lineData[53]++;
       this.close();
       _$jscoverage['/overlay/dialog.js'].lineData[54]++;
@@ -439,7 +439,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/dialog.js'].lineData[64]++;
   self.callSuper(v, e);
   _$jscoverage['/overlay/dialog.js'].lineData[65]++;
-  if (visit13_65_1(v)) {
+  if (visit12_65_1(v)) {
     _$jscoverage['/overlay/dialog.js'].lineData[66]++;
     self.__lastActive = el.ownerDocument.activeElement;
     _$jscoverage['/overlay/dialog.js'].lineData[67]++;
@@ -452,7 +452,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/overlay/dialog.js'].lineData[75]++;
     try {
       _$jscoverage['/overlay/dialog.js'].lineData[76]++;
-      if (visit14_76_1(self.__lastActive)) {
+      if (visit13_76_1(self.__lastActive)) {
         _$jscoverage['/overlay/dialog.js'].lineData[77]++;
         self.__lastActive.focus();
       }
@@ -547,7 +547,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/overlay/dialog.js'].lineData[275]++;
     var self = this, keyCode = e.keyCode;
     _$jscoverage['/overlay/dialog.js'].lineData[278]++;
-    if (visit15_278_1(keyCode !== KEY_TAB)) {
+    if (visit14_278_1(keyCode !== KEY_TAB)) {
       _$jscoverage['/overlay/dialog.js'].lineData[279]++;
       return;
     }
@@ -558,21 +558,21 @@ KISSY.add(function(S, require) {
     _$jscoverage['/overlay/dialog.js'].lineData[290]++;
     var lastFocusItem = $el.last();
     _$jscoverage['/overlay/dialog.js'].lineData[295]++;
-    if (visit16_295_1(node.equals($el) && e.shiftKey)) {
+    if (visit15_295_1(node.equals($el) && e.shiftKey)) {
       _$jscoverage['/overlay/dialog.js'].lineData[296]++;
       lastFocusItem[0].focus();
       _$jscoverage['/overlay/dialog.js'].lineData[297]++;
       e.halt();
     } else {
       _$jscoverage['/overlay/dialog.js'].lineData[298]++;
-      if (visit17_298_1(node.equals(lastFocusItem) && !e.shiftKey)) {
+      if (visit16_298_1(node.equals(lastFocusItem) && !e.shiftKey)) {
         _$jscoverage['/overlay/dialog.js'].lineData[300]++;
         self.focus();
         _$jscoverage['/overlay/dialog.js'].lineData[301]++;
         e.halt();
       } else {
         _$jscoverage['/overlay/dialog.js'].lineData[304]++;
-        if (visit18_304_1(node.equals($el) || $el.contains(node))) {
+        if (visit17_304_1(node.equals($el) || $el.contains(node))) {
           _$jscoverage['/overlay/dialog.js'].lineData[305]++;
           return;
         }

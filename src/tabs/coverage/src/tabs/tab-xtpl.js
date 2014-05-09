@@ -235,44 +235,43 @@ if (! _$jscoverage['/tabs/tab-xtpl.js']) {
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[8] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[20] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[23] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[24] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[25] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[26] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[27] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[31] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[34] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[35] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[37] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[38] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[39] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[40] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[41] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[42] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[43] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[45] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[46] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[47] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[48] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[49] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[50] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[51] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[52] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[53] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[54] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[55] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[56] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[57] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[58] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[59] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[60] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[62] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[61] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[63] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[64] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[66] = 0;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[67] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[69] = 0;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[70] = 0;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[68] = 0;
 }
 if (! _$jscoverage['/tabs/tab-xtpl.js'].functionData) {
   _$jscoverage['/tabs/tab-xtpl.js'].functionData = [];
@@ -282,122 +281,113 @@ if (! _$jscoverage['/tabs/tab-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/tabs/tab-xtpl.js'].branchData) {
   _$jscoverage['/tabs/tab-xtpl.js'].branchData = {};
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['20'] = [];
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['32'] = [];
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['58'] = [];
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/tabs/tab-xtpl.js'].branchData['29'] = [];
+  _$jscoverage['/tabs/tab-xtpl.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/tabs/tab-xtpl.js'].branchData['55'] = [];
+  _$jscoverage['/tabs/tab-xtpl.js'].branchData['55'][1] = new BranchData();
 }
-_$jscoverage['/tabs/tab-xtpl.js'].branchData['58'][1].init(400, 29, 'callRet9 && callRet9.isBuffer');
-function visit15_58_1(result) {
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['58'][1].ranCondition(result);
+_$jscoverage['/tabs/tab-xtpl.js'].branchData['55'][1].init(397, 29, 'callRet9 && callRet9.isBuffer');
+function visit14_55_1(result) {
+  _$jscoverage['/tabs/tab-xtpl.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/tab-xtpl.js'].branchData['32'][1].init(1348, 29, 'callRet2 && callRet2.isBuffer');
-function visit14_32_1(result) {
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['32'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/tabs/tab-xtpl.js'].branchData['20'][1].init(802, 21, '"5.0.0" !== S.version');
-function visit13_20_1(result) {
-  _$jscoverage['/tabs/tab-xtpl.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/tabs/tab-xtpl.js'].branchData['29'][1].init(1140, 29, 'callRet2 && callRet2.isBuffer');
+function visit13_29_1(result) {
+  _$jscoverage['/tabs/tab-xtpl.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/tabs/tab-xtpl.js'].functionData[0]++;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[4]++;
-  var t = function(scope, buffer, payload, undefined) {
+  var tabXtpl = function(scope, buffer, undefined) {
   _$jscoverage['/tabs/tab-xtpl.js'].functionData[1]++;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[5]++;
-  var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[8]++;
   var callFnUtil = utils["callFn"], callCommandUtil = utils["callCommand"], eachCommand = nativeCommands["each"], withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands["set"], includeCommand = nativeCommands["include"], parseCommand = nativeCommands["parse"], extendCommand = nativeCommands["extend"], blockCommand = nativeCommands["block"], macroCommand = nativeCommands["macro"], debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[20]++;
-  if (visit13_20_1("5.0.0" !== S.version)) {
-    _$jscoverage['/tabs/tab-xtpl.js'].lineData[21]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-  }
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[23]++;
   buffer.write('<div class="', 0);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[24]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[21]++;
   var option0 = {
   escape: 1};
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[27]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[24]++;
   var params1 = [];
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[28]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[25]++;
   params1.push('content');
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[29]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[26]++;
   option0.params = params1;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[30]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[27]++;
   var callRet2;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[31]++;
-  callRet2 = callFnUtil(engine, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[32]++;
-  if (visit14_32_1(callRet2 && callRet2.isBuffer)) {
-    _$jscoverage['/tabs/tab-xtpl.js'].lineData[33]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[28]++;
+  callRet2 = callFnUtil(tpl, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[29]++;
+  if (visit13_29_1(callRet2 && callRet2.isBuffer)) {
+    _$jscoverage['/tabs/tab-xtpl.js'].lineData[30]++;
     buffer = callRet2;
-    _$jscoverage['/tabs/tab-xtpl.js'].lineData[34]++;
+    _$jscoverage['/tabs/tab-xtpl.js'].lineData[31]++;
     callRet2 = undefined;
   }
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[36]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[33]++;
   buffer.write(callRet2, true);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[37]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[34]++;
   buffer.write('">', 0);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[38]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[35]++;
   var id3 = scope.resolve(["content"], 0);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[39]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[36]++;
   buffer.write(id3, false);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[40]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[37]++;
   buffer.write('</div>\r\n', 0);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[41]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[38]++;
   var option4 = {
   escape: 1};
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[44]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[41]++;
   var params5 = [];
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[45]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[42]++;
   var id6 = scope.resolve(["closable"], 0);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[46]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[43]++;
   params5.push(id6);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[47]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[44]++;
   option4.params = params5;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[48]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[45]++;
   option4.fn = function(scope, buffer) {
   _$jscoverage['/tabs/tab-xtpl.js'].functionData[2]++;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[49]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[46]++;
   buffer.write('\r\n<span class="', 0);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[50]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[47]++;
   var option7 = {
   escape: 1};
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[53]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[50]++;
   var params8 = [];
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[54]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[51]++;
   params8.push('close');
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[55]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[52]++;
   option7.params = params8;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[56]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[53]++;
   var callRet9;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[57]++;
-  callRet9 = callFnUtil(engine, scope, option7, buffer, ["getBaseCssClasses"], 0, 3);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[58]++;
-  if (visit15_58_1(callRet9 && callRet9.isBuffer)) {
-    _$jscoverage['/tabs/tab-xtpl.js'].lineData[59]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[54]++;
+  callRet9 = callFnUtil(tpl, scope, option7, buffer, ["getBaseCssClasses"], 0, 3);
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[55]++;
+  if (visit14_55_1(callRet9 && callRet9.isBuffer)) {
+    _$jscoverage['/tabs/tab-xtpl.js'].lineData[56]++;
     buffer = callRet9;
-    _$jscoverage['/tabs/tab-xtpl.js'].lineData[60]++;
+    _$jscoverage['/tabs/tab-xtpl.js'].lineData[57]++;
     callRet9 = undefined;
   }
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[62]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[59]++;
   buffer.write(callRet9, true);
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[63]++;
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[60]++;
   buffer.write('">close</span>\r\n', 0);
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[61]++;
+  return buffer;
+};
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[63]++;
+  buffer = ifCommand.call(tpl, scope, option4, buffer, 2);
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[64]++;
   return buffer;
 };
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[66]++;
-  buffer = ifCommand.call(engine, scope, option4, buffer, 2, payload);
+  tabXtpl.TPL_NAME = module.name;
   _$jscoverage['/tabs/tab-xtpl.js'].lineData[67]++;
-  return buffer;
-};
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[69]++;
-  t.TPL_NAME = module.name;
-  _$jscoverage['/tabs/tab-xtpl.js'].lineData[70]++;
-  return t;
+  tabXtpl.version = "5.0.0";
+  _$jscoverage['/tabs/tab-xtpl.js'].lineData[68]++;
+  return tabXtpl;
 });

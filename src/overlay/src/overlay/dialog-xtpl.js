@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var dialogXtpl = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('', 0);
             var option0 = {};
             var params1 = [];
@@ -27,7 +24,7 @@ KISSY.add(function (S, require, exports, module) {
             option0.params = params1;
             require("./overlay-xtpl");
             var callRet2
-            callRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);
+            callRet2 = extendCommand.call(tpl, scope, option0, buffer, 1);
             if (callRet2 && callRet2.isBuffer) {
                 buffer = callRet2;
                 callRet2 = undefined;
@@ -49,7 +46,7 @@ KISSY.add(function (S, require, exports, module) {
                 params6.push('header');
                 option5.params = params6;
                 var callRet7
-                callRet7 = callFnUtil(engine, scope, option5, buffer, ["getBaseCssClasses"], 0, 3);
+                callRet7 = callFnUtil(tpl, scope, option5, buffer, ["getBaseCssClasses"], 0, 3);
                 if (callRet7 && callRet7.isBuffer) {
                     buffer = callRet7;
                     callRet7 = undefined;
@@ -73,7 +70,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write(';\r\n', 0);
                     return buffer;
                 };
-                buffer = eachCommand.call(engine, scope, option8, buffer, 5, payload);
+                buffer = eachCommand.call(tpl, scope, option8, buffer, 5);
                 buffer.write('\r\n">', 0);
                 var id13 = scope.resolve(["headerContent"], 0);
                 buffer.write(id13, false);
@@ -85,7 +82,7 @@ KISSY.add(function (S, require, exports, module) {
                 params15.push('body');
                 option14.params = params15;
                 var callRet16
-                callRet16 = callFnUtil(engine, scope, option14, buffer, ["getBaseCssClasses"], 0, 10);
+                callRet16 = callFnUtil(tpl, scope, option14, buffer, ["getBaseCssClasses"], 0, 10);
                 if (callRet16 && callRet16.isBuffer) {
                     buffer = callRet16;
                     callRet16 = undefined;
@@ -109,7 +106,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write(';\r\n', 0);
                     return buffer;
                 };
-                buffer = eachCommand.call(engine, scope, option17, buffer, 12, payload);
+                buffer = eachCommand.call(tpl, scope, option17, buffer, 12);
                 buffer.write('\r\n">', 0);
                 var id22 = scope.resolve(["bodyContent"], 0);
                 buffer.write(id22, false);
@@ -121,7 +118,7 @@ KISSY.add(function (S, require, exports, module) {
                 params24.push('footer');
                 option23.params = params24;
                 var callRet25
-                callRet25 = callFnUtil(engine, scope, option23, buffer, ["getBaseCssClasses"], 0, 17);
+                callRet25 = callFnUtil(tpl, scope, option23, buffer, ["getBaseCssClasses"], 0, 17);
                 if (callRet25 && callRet25.isBuffer) {
                     buffer = callRet25;
                     callRet25 = undefined;
@@ -145,16 +142,17 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write(';\r\n', 0);
                     return buffer;
                 };
-                buffer = eachCommand.call(engine, scope, option26, buffer, 19, payload);
+                buffer = eachCommand.call(tpl, scope, option26, buffer, 19);
                 buffer.write('\r\n">', 0);
                 var id31 = scope.resolve(["footerContent"], 0);
                 buffer.write(id31, false);
                 buffer.write('</div>\r\n    <div tabindex="0"></div>\r\n', 0);
                 return buffer;
             };
-            buffer = blockCommand.call(engine, scope, option3, buffer, 2, payload);
+            buffer = blockCommand.call(tpl, scope, option3, buffer, 2);
             return buffer;
         };
-t.TPL_NAME = module.name;
-return t;
+dialogXtpl.TPL_NAME = module.name;
+dialogXtpl.version = "5.0.0";
+return dialogXtpl
 });

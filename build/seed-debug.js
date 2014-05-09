@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 00:34
+build time: May 9 14:09
 */
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 00:33
+build time: May 9 14:08
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140509003338' will replace with current timestamp when compressing.
+         * NOTICE: '20140509140833' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140509003338',
+        __BUILD_TIME: '20140509140833',
 
         /**
          * KISSY Environment.
@@ -958,6 +958,7 @@ var KISSY = (function (undefined) {
             return self.resolve(relativeName);
         };
 
+        // relative name resolve cache
         self.resolveCache = {};
     }
 
@@ -2395,7 +2396,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140509003338';
+    var TIMESTAMP = '20140509140833';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2520,7 +2521,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 00:34
+build time: May 9 14:08
 */
 /*
 combined modules:
@@ -4111,7 +4112,7 @@ KISSY.add('util/web', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 00:33
+build time: May 9 14:08
 */
 /*
 combined modules:
@@ -4504,7 +4505,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 00:33
+build time: May 9 14:08
 */
 /*
 combined modules:

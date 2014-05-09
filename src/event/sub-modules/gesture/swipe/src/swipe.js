@@ -167,7 +167,7 @@ KISSY.add(function (S, require) {
         }
     });
 
-    addGestureEvent([SWIPE, SWIPING], {
+    addGestureEvent([SWIPE, SWIPE_START, SWIPE_END], {
         handle: new Swipe()
     });
 

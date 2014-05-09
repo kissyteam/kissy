@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:05
+build time: May 9 14:00
 */
 KISSY.add("editor/plugin/maximize/cmd",["editor","event/dom","dom"],function(e,f){function o(a){this.editor=a}var k=f("editor"),l=f("event/dom"),m=e.UA,n=m.ie,g=document,p=e.Node,h=f("dom"),i;e.augment(o,{restoreWindow:function(){var a=this,b=a.editor;!1!==b.fire("beforeRestoreWindow")&&a._resize&&(l.remove(window,"resize",a._resize),a._resize.stop(),a._resize=0,a._saveEditorStatus(),a._restoreState(),setTimeout(function(){a._restoreEditorStatus();b.notifySelectionChange();b.fire("afterRestoreWindow")},
 30))},_restoreState:function(){var a=this.editor,b=a.get("textarea"),c=this._savedParents;if(c){for(var d=0;d<c.length;d++){var j=c[d];j.el.css("position",j.position)}this._savedParents=null}b.parent().css({height:this.iframeHeight});b.css({height:this.iframeHeight});h.css(g.body,{width:"",height:"",overflow:""});g.documentElement.style.overflow="";b=a.get("el")[0].style;b.position="static";b.width=this.editorElWidth;i.css({left:"-99999px",top:"-99999px"});window.scrollTo(this.scrollLeft,this.scrollTop);

@@ -392,51 +392,51 @@ if (! _$jscoverage['/tabs.js'].branchData) {
   _$jscoverage['/tabs.js'].branchData['404'][2] = new BranchData();
 }
 _$jscoverage['/tabs.js'].branchData['404'][2].init(120, 29, 'orientation && orientation[1]');
-function visit31_404_2(result) {
+function visit30_404_2(result) {
   _$jscoverage['/tabs.js'].branchData['404'][2].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['404'][1].init(120, 42, 'orientation && orientation[1] || undefined');
-function visit30_404_1(result) {
+function visit29_404_1(result) {
   _$jscoverage['/tabs.js'].branchData['404'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['262'][1].init(22, 17, 'c.get(\'selected\')');
-function visit29_262_1(result) {
+function visit28_262_1(result) {
   _$jscoverage['/tabs.js'].branchData['262'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['242'][1].init(22, 17, 'c.get(\'selected\')');
-function visit28_242_1(result) {
+function visit27_242_1(result) {
   _$jscoverage['/tabs.js'].branchData['242'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['199'][1].init(124, 11, 'index === 0');
-function visit27_199_1(result) {
+function visit26_199_1(result) {
   _$jscoverage['/tabs.js'].branchData['199'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['197'][1].init(22, 18, 'barCs.length === 1');
-function visit26_197_1(result) {
+function visit25_197_1(result) {
   _$jscoverage['/tabs.js'].branchData['197'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['196'][1].init(418, 19, 'tab.get(\'selected\')');
-function visit25_196_1(result) {
+function visit24_196_1(result) {
   _$jscoverage['/tabs.js'].branchData['196'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['170'][1].init(666, 13, 'item.selected');
-function visit24_170_1(result) {
+function visit23_170_1(result) {
   _$jscoverage['/tabs.js'].branchData['170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['154'][1].init(268, 28, 'typeof index === \'undefined\'');
-function visit23_154_1(result) {
+function visit22_154_1(result) {
   _$jscoverage['/tabs.js'].branchData['154'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['80'][1].init(1262, 31, '!selected && barChildren.length');
-function visit22_80_1(result) {
+function visit21_80_1(result) {
   _$jscoverage['/tabs.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['72'][1].init(33, 25, 'selected || item.selected');
-function visit21_72_1(result) {
+function visit20_72_1(result) {
   _$jscoverage['/tabs.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['49'][1].init(122, 5, 'items');
-function visit20_49_1(result) {
+function visit19_49_1(result) {
   _$jscoverage['/tabs.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].lineData[6]++;
@@ -499,7 +499,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[45]++;
   var self = this, items = self.get('items');
   _$jscoverage['/tabs.js'].lineData[49]++;
-  if (visit20_49_1(items)) {
+  if (visit19_49_1(items)) {
     _$jscoverage['/tabs.js'].lineData[50]++;
     var children = self.get('children'), barOrientation = self.get('barOrientation'), selected, prefixCls = self.get('prefixCls'), tabItem, panelItem, bar = {
   prefixCls: prefixCls, 
@@ -514,7 +514,7 @@ KISSY.add(function(S, require) {
     S.each(items, function(item) {
   _$jscoverage['/tabs.js'].functionData[7]++;
   _$jscoverage['/tabs.js'].lineData[72]++;
-  selected = visit21_72_1(selected || item.selected);
+  selected = visit20_72_1(selected || item.selected);
   _$jscoverage['/tabs.js'].lineData[73]++;
   barChildren.push(tabItem = fromTabItemConfigToTabConfig(item));
   _$jscoverage['/tabs.js'].lineData[74]++;
@@ -523,7 +523,7 @@ KISSY.add(function(S, require) {
   selected: item.selected});
 });
     _$jscoverage['/tabs.js'].lineData[80]++;
-    if (visit22_80_1(!selected && barChildren.length)) {
+    if (visit21_80_1(!selected && barChildren.length)) {
       _$jscoverage['/tabs.js'].lineData[81]++;
       barChildren[0].selected = true;
       _$jscoverage['/tabs.js'].lineData[82]++;
@@ -557,7 +557,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[146]++;
   var self = this, bar = self.get('bar'), selectedTab, tabItem, panelItem, barChildren = bar.get('children'), body = self.get('body');
   _$jscoverage['/tabs.js'].lineData[154]++;
-  if (visit23_154_1(typeof index === 'undefined')) {
+  if (visit22_154_1(typeof index === 'undefined')) {
     _$jscoverage['/tabs.js'].lineData[155]++;
     index = barChildren.length;
   }
@@ -573,7 +573,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[168]++;
   body.addChild(panelItem, index);
   _$jscoverage['/tabs.js'].lineData[170]++;
-  if (visit24_170_1(item.selected)) {
+  if (visit23_170_1(item.selected)) {
     _$jscoverage['/tabs.js'].lineData[171]++;
     bar.set('selectedTab', selectedTab);
     _$jscoverage['/tabs.js'].lineData[172]++;
@@ -587,14 +587,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[185]++;
   var self = this, bar = self.get('bar'), barCs = bar.get('children'), tab = bar.getChildAt(index), body = self.get('body');
   _$jscoverage['/tabs.js'].lineData[196]++;
-  if (visit25_196_1(tab.get('selected'))) {
+  if (visit24_196_1(tab.get('selected'))) {
     _$jscoverage['/tabs.js'].lineData[197]++;
-    if (visit26_197_1(barCs.length === 1)) {
+    if (visit25_197_1(barCs.length === 1)) {
       _$jscoverage['/tabs.js'].lineData[198]++;
       bar.set('selectedTab', null);
     } else {
       _$jscoverage['/tabs.js'].lineData[199]++;
-      if (visit27_199_1(index === 0)) {
+      if (visit26_199_1(index === 0)) {
         _$jscoverage['/tabs.js'].lineData[200]++;
         bar.set('selectedTab', bar.getChildAt(index + 1));
       } else {
@@ -632,7 +632,7 @@ KISSY.add(function(S, require) {
   S.each(bar.get('children'), function(c) {
   _$jscoverage['/tabs.js'].functionData[16]++;
   _$jscoverage['/tabs.js'].lineData[242]++;
-  if (visit28_242_1(c.get('selected'))) {
+  if (visit27_242_1(c.get('selected'))) {
     _$jscoverage['/tabs.js'].lineData[243]++;
     child = c;
     _$jscoverage['/tabs.js'].lineData[244]++;
@@ -652,7 +652,7 @@ KISSY.add(function(S, require) {
   S.each(body.get('children'), function(c) {
   _$jscoverage['/tabs.js'].functionData[18]++;
   _$jscoverage['/tabs.js'].lineData[262]++;
-  if (visit29_262_1(c.get('selected'))) {
+  if (visit28_262_1(c.get('selected'))) {
     _$jscoverage['/tabs.js'].lineData[263]++;
     child = c;
     _$jscoverage['/tabs.js'].lineData[264]++;
@@ -745,7 +745,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[403]++;
   var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
   _$jscoverage['/tabs.js'].lineData[404]++;
-  return visit30_404_1(visit31_404_2(orientation && orientation[1]) || undefined);
+  return visit29_404_1(visit30_404_2(orientation && orientation[1]) || undefined);
 }}}, 
   xclass: 'tabs'});
   _$jscoverage['/tabs.js'].lineData[415]++;

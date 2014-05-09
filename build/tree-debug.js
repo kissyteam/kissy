@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:55
+build time: May 9 14:08
 */
 /*
 combined modules:
@@ -573,19 +573,16 @@ KISSY.add('tree/node', [
 /** Compiled By kissy-xtemplate */
 KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var node = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('row');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -604,7 +601,7 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
             params7.push('selected');
             option6.params = params7;
             var callRet8;
-            callRet8 = callFnUtil(engine, scope, option6, buffer, ['getBaseCssClasses'], 0, 3);
+            callRet8 = callFnUtil(tpl, scope, option6, buffer, ['getBaseCssClasses'], 0, 3);
             if (callRet8 && callRet8.isBuffer) {
                 buffer = callRet8;
                 callRet8 = undefined;
@@ -613,14 +610,14 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
             buffer.write('\r\n     ', 0);
             return buffer;
         };
-        buffer = ifCommand.call(engine, scope, option3, buffer, 2, payload);
+        buffer = ifCommand.call(tpl, scope, option3, buffer, 2);
         buffer.write('\r\n     ">\r\n    <div class="', 0);
         var option9 = { escape: 1 };
         var params10 = [];
         params10.push('expand-icon');
         option9.params = params10;
         var callRet11;
-        callRet11 = callFnUtil(engine, scope, option9, buffer, ['getBaseCssClasses'], 0, 6);
+        callRet11 = callFnUtil(tpl, scope, option9, buffer, ['getBaseCssClasses'], 0, 6);
         if (callRet11 && callRet11.isBuffer) {
             buffer = callRet11;
             callRet11 = undefined;
@@ -642,7 +639,7 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
             params16.push(exp18);
             option15.params = params16;
             var callRet19;
-            callRet19 = callFnUtil(engine, scope, option15, buffer, ['getBaseCssClasses'], 0, 9);
+            callRet19 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 0, 9);
             if (callRet19 && callRet19.isBuffer) {
                 buffer = callRet19;
                 callRet19 = undefined;
@@ -654,7 +651,7 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
             params21.push('checked');
             option20.params = params21;
             var callRet22;
-            callRet22 = callFnUtil(engine, scope, option20, buffer, ['getBaseCssClasses'], 0, 9);
+            callRet22 = callFnUtil(tpl, scope, option20, buffer, ['getBaseCssClasses'], 0, 9);
             if (callRet22 && callRet22.isBuffer) {
                 buffer = callRet22;
                 callRet22 = undefined;
@@ -663,14 +660,14 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
             buffer.write('"></div>\r\n    ', 0);
             return buffer;
         };
-        buffer = ifCommand.call(engine, scope, option12, buffer, 8, payload);
+        buffer = ifCommand.call(tpl, scope, option12, buffer, 8);
         buffer.write('\r\n    <div class="', 0);
         var option23 = { escape: 1 };
         var params24 = [];
         params24.push('icon');
         option23.params = params24;
         var callRet25;
-        callRet25 = callFnUtil(engine, scope, option23, buffer, ['getBaseCssClasses'], 0, 11);
+        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 0, 11);
         if (callRet25 && callRet25.isBuffer) {
             buffer = callRet25;
             callRet25 = undefined;
@@ -682,7 +679,7 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
         params27.push('content');
         option26.params = params27;
         var callRet28;
-        callRet28 = callFnUtil(engine, scope, option26, buffer, ['getBaseCssClasses'], 0, 14);
+        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 0, 14);
         if (callRet28 && callRet28.isBuffer) {
             buffer = callRet28;
             callRet28 = undefined;
@@ -697,7 +694,7 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
         params31.push('children');
         option30.params = params31;
         var callRet32;
-        callRet32 = callFnUtil(engine, scope, option30, buffer, ['getBaseCssClasses'], 0, 16);
+        callRet32 = callFnUtil(tpl, scope, option30, buffer, ['getBaseCssClasses'], 0, 16);
         if (callRet32 && callRet32.isBuffer) {
             buffer = callRet32;
             callRet32 = undefined;
@@ -713,12 +710,13 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
             buffer.write('\r\nstyle="display:none"\r\n', 0);
             return buffer;
         };
-        buffer = ifCommand.call(engine, scope, option33, buffer, 17, payload);
+        buffer = ifCommand.call(tpl, scope, option33, buffer, 17);
         buffer.write('\r\n>\r\n</div>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    node.TPL_NAME = module.name;
+    node.version = '5.0.0';
+    return node;
 });
 
 /**

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:57
+build time: May 9 13:53
 */
 KISSY.add("combobox/multi-word",["./multi-word/cursor","combobox"],function(o,f){function j(a,c){return c&&-1!==a.indexOf(c)}function g(a){a.newVal&&a.target===this.get("menu")&&this.alignWithCursor()}function m(a){var c=a.get("input"),b=a.get("value"),d=[],e=[],q=a.get("literal"),r=a.get("separator"),a=a.get("separatorType"),k=!1,l=a!==h,c=c.prop("selectionStart"),g,i,f=-1;for(g=0;g<b.length;g++)(i=b.charAt(g),q&&i===q&&(k=!k),k)?e.push(i):(g===c&&(f=d.length),l&&n.test(i))?(e.length&&d.push(e.join("")),
 e=[],e.push(i)):j(r,i)?a===h?(e.push(i),e.length&&d.push(e.join("")),e=[]):(e.length&&d.push(e.join("")),e=[],e.push(i)):e.push(i);e.length&&d.push(e.join(""));d.length||d.push("");-1===f&&(a===h&&j(r,i)&&d.push(""),f=d.length-1);return{tokens:d,cursorPosition:c,tokenIndex:f}}var h="suffix",n=/\s|\xa0/,b=f("./multi-word/cursor");return f("combobox").extend({syncUI:function(){var a;this.get("alignWithCursor")&&(a=this.get("menu"),a.setInternal("align",null),a.on("beforeVisibleChange",g,this))},getCurrentValue:function(){var a=

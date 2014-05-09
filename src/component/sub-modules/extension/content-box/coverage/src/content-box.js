@@ -267,7 +267,7 @@ if (! _$jscoverage['/content-box.js'].branchData) {
   _$jscoverage['/content-box.js'].branchData['40'][1] = new BranchData();
 }
 _$jscoverage['/content-box.js'].branchData['40'][1].init(163, 31, '!this.get(\'allowTextSelection\')');
-function visit3_40_1(result) {
+function visit2_40_1(result) {
   _$jscoverage['/content-box.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/content-box.js'].lineData[6]++;
@@ -313,7 +313,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/content-box.js'].lineData[38]++;
   contentEl.html(v);
   _$jscoverage['/content-box.js'].lineData[40]++;
-  if (visit3_40_1(!this.get('allowTextSelection'))) {
+  if (visit2_40_1(!this.get('allowTextSelection'))) {
     _$jscoverage['/content-box.js'].lineData[41]++;
     contentEl.unselectable();
   }

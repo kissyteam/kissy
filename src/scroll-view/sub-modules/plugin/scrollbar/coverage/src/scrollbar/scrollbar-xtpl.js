@@ -235,8 +235,9 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[8] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[20] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[23] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[24] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[25] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[26] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[27] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[29] = 0;
@@ -245,12 +246,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[34] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[35] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[37] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[39] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[40] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[38] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[41] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[42] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[43] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[45] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[46] = 0;
@@ -259,12 +260,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[49] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[50] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[51] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[52] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[53] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[54] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[56] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[57] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[55] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[58] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[59] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[60] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[61] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[62] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[63] = 0;
@@ -273,12 +274,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[66] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[67] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[68] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[69] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[70] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[71] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[73] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[74] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[72] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[75] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[76] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[77] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[78] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[79] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[80] = 0;
@@ -287,12 +288,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[83] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[84] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[85] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[86] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[87] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[88] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[90] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[91] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[89] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[92] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[93] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[94] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[95] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[96] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[97] = 0;
@@ -301,12 +302,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[100] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[101] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[102] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[103] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[104] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[105] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[107] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[108] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[106] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[109] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[110] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[111] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[112] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[113] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[114] = 0;
@@ -315,12 +316,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[117] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[118] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[119] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[120] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[121] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[122] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[124] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[125] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[123] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[126] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[127] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[128] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[129] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[130] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[131] = 0;
@@ -329,14 +330,12 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js']) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[134] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[135] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[136] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[137] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[138] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[139] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[141] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[140] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[142] = 0;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[143] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[145] = 0;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[146] = 0;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[144] = 0;
 }
 if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js'].functionData) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].functionData = [];
@@ -345,287 +344,278 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData = {};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['20'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['35'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['52'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['69'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['69'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['86'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['103'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['120'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['120'][1] = new BranchData();
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['137'] = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['32'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['66'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['66'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['83'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['83'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['100'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['117'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['117'][1] = new BranchData();
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['134'] = [];
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['134'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['137'][1].init(5561, 31, 'callRet34 && callRet34.isBuffer');
-function visit29_137_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['137'][1].ranCondition(result);
+_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['134'][1].init(5335, 31, 'callRet34 && callRet34.isBuffer');
+function visit28_134_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['120'][1].init(4889, 31, 'callRet29 && callRet29.isBuffer');
-function visit28_120_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['120'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['117'][1].init(4666, 31, 'callRet29 && callRet29.isBuffer');
+function visit27_117_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['103'][1].init(4217, 31, 'callRet24 && callRet24.isBuffer');
-function visit27_103_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['100'][1].init(3997, 31, 'callRet24 && callRet24.isBuffer');
+function visit26_100_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['86'][1].init(3559, 31, 'callRet19 && callRet19.isBuffer');
-function visit26_86_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['83'][1].init(3342, 31, 'callRet19 && callRet19.isBuffer');
+function visit25_83_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['69'][1].init(2900, 31, 'callRet14 && callRet14.isBuffer');
-function visit25_69_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['69'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['66'][1].init(2686, 31, 'callRet14 && callRet14.isBuffer');
+function visit24_66_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['52'][1].init(2182, 29, 'callRet9 && callRet9.isBuffer');
-function visit24_52_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['52'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'][1].init(1971, 29, 'callRet9 && callRet9.isBuffer');
+function visit23_49_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['35'][1].init(1472, 29, 'callRet4 && callRet4.isBuffer');
-function visit23_35_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['35'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['20'][1].init(802, 21, '"5.0.0" !== S.version');
-function visit22_20_1(result) {
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['32'][1].init(1264, 29, 'callRet4 && callRet4.isBuffer');
+function visit22_32_1(result) {
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].functionData[0]++;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[4]++;
-  var t = function(scope, buffer, payload, undefined) {
+  var scrollbar = function(scope, buffer, undefined) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].functionData[1]++;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[5]++;
-  var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[8]++;
   var callFnUtil = utils["callFn"], callCommandUtil = utils["callCommand"], eachCommand = nativeCommands["each"], withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands["set"], includeCommand = nativeCommands["include"], parseCommand = nativeCommands["parse"], extendCommand = nativeCommands["extend"], blockCommand = nativeCommands["block"], macroCommand = nativeCommands["macro"], debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[20]++;
-  if (visit22_20_1("5.0.0" !== S.version)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[21]++;
-    throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-  }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[23]++;
   buffer.write('<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[24]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[21]++;
   var option0 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[27]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[24]++;
   var params1 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[28]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[25]++;
   var id2 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[29]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[26]++;
   var exp3 = id2;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[30]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[27]++;
   exp3 = (id2) + ('-arrow-up arrow-up');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[31]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[28]++;
   params1.push(exp3);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[32]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[29]++;
   option0.params = params1;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[33]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[30]++;
   var callRet4;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[34]++;
-  callRet4 = callFnUtil(engine, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[35]++;
-  if (visit23_35_1(callRet4 && callRet4.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[36]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[31]++;
+  callRet4 = callFnUtil(tpl, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[32]++;
+  if (visit22_32_1(callRet4 && callRet4.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[33]++;
     buffer = callRet4;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[37]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[34]++;
     callRet4 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[39]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[36]++;
   buffer.write(callRet4, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[40]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[37]++;
   buffer.write('">\r\n    <a href="javascript:void(\'up\')">up</a>\r\n</div>\r\n<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[41]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[38]++;
   var option5 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[44]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[41]++;
   var params6 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[45]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[42]++;
   var id7 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[46]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[43]++;
   var exp8 = id7;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[47]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[44]++;
   exp8 = (id7) + ('-arrow-down arrow-down');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[48]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[45]++;
   params6.push(exp8);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[49]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[46]++;
   option5.params = params6;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[50]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[47]++;
   var callRet9;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[51]++;
-  callRet9 = callFnUtil(engine, scope, option5, buffer, ["getBaseCssClasses"], 0, 4);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[52]++;
-  if (visit24_52_1(callRet9 && callRet9.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[53]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[48]++;
+  callRet9 = callFnUtil(tpl, scope, option5, buffer, ["getBaseCssClasses"], 0, 4);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[49]++;
+  if (visit23_49_1(callRet9 && callRet9.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[50]++;
     buffer = callRet9;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[54]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[51]++;
     callRet9 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[56]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[53]++;
   buffer.write(callRet9, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[57]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[54]++;
   buffer.write('">\r\n    <a href="javascript:void(\'down\')">down</a>\r\n</div>\r\n<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[58]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[55]++;
   var option10 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[61]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[58]++;
   var params11 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[62]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[59]++;
   var id12 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[63]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[60]++;
   var exp13 = id12;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[64]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[61]++;
   exp13 = (id12) + ('-track track');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[65]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[62]++;
   params11.push(exp13);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[66]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[63]++;
   option10.params = params11;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[67]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[64]++;
   var callRet14;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[68]++;
-  callRet14 = callFnUtil(engine, scope, option10, buffer, ["getBaseCssClasses"], 0, 7);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[69]++;
-  if (visit25_69_1(callRet14 && callRet14.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[70]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[65]++;
+  callRet14 = callFnUtil(tpl, scope, option10, buffer, ["getBaseCssClasses"], 0, 7);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[66]++;
+  if (visit24_66_1(callRet14 && callRet14.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[67]++;
     buffer = callRet14;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[71]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[68]++;
     callRet14 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[73]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[70]++;
   buffer.write(callRet14, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[74]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[71]++;
   buffer.write('">\r\n<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[75]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[72]++;
   var option15 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[78]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[75]++;
   var params16 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[79]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[76]++;
   var id17 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[80]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[77]++;
   var exp18 = id17;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[81]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[78]++;
   exp18 = (id17) + ('-drag drag');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[82]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[79]++;
   params16.push(exp18);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[83]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[80]++;
   option15.params = params16;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[84]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[81]++;
   var callRet19;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[85]++;
-  callRet19 = callFnUtil(engine, scope, option15, buffer, ["getBaseCssClasses"], 0, 8);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[86]++;
-  if (visit26_86_1(callRet19 && callRet19.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[87]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[82]++;
+  callRet19 = callFnUtil(tpl, scope, option15, buffer, ["getBaseCssClasses"], 0, 8);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[83]++;
+  if (visit25_83_1(callRet19 && callRet19.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[84]++;
     buffer = callRet19;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[88]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[85]++;
     callRet19 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[90]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[87]++;
   buffer.write(callRet19, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[91]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[88]++;
   buffer.write('">\r\n<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[92]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[89]++;
   var option20 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[95]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[92]++;
   var params21 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[96]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[93]++;
   var id22 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[97]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[94]++;
   var exp23 = id22;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[98]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[95]++;
   exp23 = (id22) + ('-drag-top');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[99]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[96]++;
   params21.push(exp23);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[100]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[97]++;
   option20.params = params21;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[101]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[98]++;
   var callRet24;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[102]++;
-  callRet24 = callFnUtil(engine, scope, option20, buffer, ["getBaseCssClasses"], 0, 9);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[103]++;
-  if (visit27_103_1(callRet24 && callRet24.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[104]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[99]++;
+  callRet24 = callFnUtil(tpl, scope, option20, buffer, ["getBaseCssClasses"], 0, 9);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[100]++;
+  if (visit26_100_1(callRet24 && callRet24.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[101]++;
     buffer = callRet24;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[105]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[102]++;
     callRet24 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[107]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[104]++;
   buffer.write(callRet24, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[108]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[105]++;
   buffer.write('">\r\n</div>\r\n<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[109]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[106]++;
   var option25 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[112]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[109]++;
   var params26 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[113]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[110]++;
   var id27 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[114]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[111]++;
   var exp28 = id27;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[115]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[112]++;
   exp28 = (id27) + ('-drag-center');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[116]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[113]++;
   params26.push(exp28);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[117]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[114]++;
   option25.params = params26;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[118]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[115]++;
   var callRet29;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[119]++;
-  callRet29 = callFnUtil(engine, scope, option25, buffer, ["getBaseCssClasses"], 0, 11);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[120]++;
-  if (visit28_120_1(callRet29 && callRet29.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[121]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[116]++;
+  callRet29 = callFnUtil(tpl, scope, option25, buffer, ["getBaseCssClasses"], 0, 11);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[117]++;
+  if (visit27_117_1(callRet29 && callRet29.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[118]++;
     buffer = callRet29;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[122]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[119]++;
     callRet29 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[124]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[121]++;
   buffer.write(callRet29, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[125]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[122]++;
   buffer.write('">\r\n</div>\r\n<div class="', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[126]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[123]++;
   var option30 = {
   escape: 1};
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[129]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[126]++;
   var params31 = [];
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[130]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[127]++;
   var id32 = scope.resolve(["axis"], 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[131]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[128]++;
   var exp33 = id32;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[132]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[129]++;
   exp33 = (id32) + ('-drag-bottom');
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[133]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[130]++;
   params31.push(exp33);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[134]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[131]++;
   option30.params = params31;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[135]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[132]++;
   var callRet34;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[136]++;
-  callRet34 = callFnUtil(engine, scope, option30, buffer, ["getBaseCssClasses"], 0, 13);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[137]++;
-  if (visit29_137_1(callRet34 && callRet34.isBuffer)) {
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[138]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[133]++;
+  callRet34 = callFnUtil(tpl, scope, option30, buffer, ["getBaseCssClasses"], 0, 13);
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[134]++;
+  if (visit28_134_1(callRet34 && callRet34.isBuffer)) {
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[135]++;
     buffer = callRet34;
-    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[139]++;
+    _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[136]++;
     callRet34 = undefined;
   }
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[141]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[138]++;
   buffer.write(callRet34, true);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[142]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[139]++;
   buffer.write('">\r\n</div>\r\n</div>\r\n</div>', 0);
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[143]++;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[140]++;
   return buffer;
 };
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[145]++;
-  t.TPL_NAME = module.name;
-  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[146]++;
-  return t;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[142]++;
+  scrollbar.TPL_NAME = module.name;
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[143]++;
+  scrollbar.version = "5.0.0";
+  _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[144]++;
+  return scrollbar;
 });

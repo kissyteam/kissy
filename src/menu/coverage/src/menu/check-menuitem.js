@@ -257,7 +257,7 @@ if (! _$jscoverage['/menu/check-menuitem.js'].branchData) {
   _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1] = new BranchData();
 }
 _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].init(18, 18, 'renderData.checked');
-function visit4_16_1(result) {
+function visit3_16_1(result) {
   _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/check-menuitem.js'].lineData[6]++;
@@ -274,7 +274,7 @@ KISSY.add(function(S, require) {
   beforeCreateDom: function(renderData) {
   _$jscoverage['/menu/check-menuitem.js'].functionData[1]++;
   _$jscoverage['/menu/check-menuitem.js'].lineData[16]++;
-  if (visit4_16_1(renderData.checked)) {
+  if (visit3_16_1(renderData.checked)) {
     _$jscoverage['/menu/check-menuitem.js'].lineData[17]++;
     renderData.elCls.push(this.getBaseCssClasses('checked'));
   }

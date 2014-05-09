@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 14:56
+build time: May 9 13:52
 */
 KISSY.add("anim/base",["dom","./base/utils","./base/queue","promise"],function(c,l){function i(g,d,f,e,j){if(g.node)j=g;else{"string"===typeof d&&(d=c.unparam(""+d,";",":"),c.each(d,function(g,a){var b=c.trim(a);b&&(d[b]=c.trim(g));(!b||b!==a)&&delete d[a]}));if(c.isPlainObject(f))j=c.clone(f);else if(j={complete:j},f&&(j.duration=f),e)j.easing=e;j.node=g;j.to=d}j=c.merge(n,j);i.superclass.constructor.call(this);a.Defer(this);this.config=j;g=j.node;c.isPlainObject(g)||(g=h.get(j.node));this.node=
 this.el=g;this._backupProps={};this._propsData={};var g={},d=j.to,m;for(m in d)g[b(m)]=d[m];j.to=g}var h=l("dom"),e=l("./base/utils"),k=l("./base/queue"),a=l("promise"),d=h.NodeType,b=c.camelCase,f=c.noop,m={toggle:1,hide:1,show:1},n={duration:1,easing:"linear"};c.extend(i,a,{prepareFx:f,runInternal:function(){var g=this,a=g.config,b=g.node,f,j=g._backupProps,k=g._propsData,i=a.to,l=a.delay||0,n=a.duration;e.saveRunningAnim(g);c.each(i,function(g,b){c.isPlainObject(g)||(g={value:g});k[b]=c.mix({delay:l,

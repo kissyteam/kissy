@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:08
+build time: May 9 14:03
 */
 KISSY.add("event/base",["./base/utils","./base/object","./base/observer","./base/observable"],function(f,c){var d=c("./base/utils"),a=c("./base/object"),b=c("./base/observer"),g=c("./base/observable");return{Utils:d,Object:a,Observer:b,Observable:g}});
 KISSY.add("event/base/utils",["util"],function(f,c){function d(g){if(0>g.indexOf("."))return[g,""];var a=g.match(/([^.]+)?(\..+)?$/),g=[a[1]];(a=a[2])?(a=a.split(".").sort(),g.push(a.join("."))):g.push("");return g}var a,b;c("util");return{splitAndRun:a=function(g,a){f.isArray(g)?f.each(g,a):(g=f.trim(g),-1===g.indexOf(" ")?a(g):f.each(g.split(/\s+/),a))},normalizeParam:function(a,b,c){var e=b||{},e="function"===typeof b?{fn:b,context:c}:f.merge(e),b=d(a),a=b[0];e.groups=b[1];e.type=a;return e},batchForType:function(b,

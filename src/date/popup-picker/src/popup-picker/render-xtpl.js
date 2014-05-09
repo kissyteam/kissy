@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var render = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<div class="', 0);
             var option0 = {
                 escape: 1
@@ -28,7 +25,7 @@ KISSY.add(function (S, require, exports, module) {
             params1.push('content');
             option0.params = params1;
             var callRet2
-            callRet2 = callFnUtil(engine, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
+            callRet2 = callFnUtil(tpl, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
             if (callRet2 && callRet2.isBuffer) {
                 buffer = callRet2;
                 callRet2 = undefined;
@@ -41,7 +38,7 @@ KISSY.add(function (S, require, exports, module) {
             option3.params = params4;
             require("date/picker-xtpl");
             var callRet5
-            callRet5 = includeCommand.call(engine, scope, option3, buffer, 2, payload);
+            callRet5 = includeCommand.call(tpl, scope, option3, buffer, 2);
             if (callRet5 && callRet5.isBuffer) {
                 buffer = callRet5;
                 callRet5 = undefined;
@@ -50,6 +47,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('\r\n</div>', 0);
             return buffer;
         };
-t.TPL_NAME = module.name;
-return t;
+render.TPL_NAME = module.name;
+render.version = "5.0.0";
+return render
 });

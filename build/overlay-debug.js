@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:54
+build time: May 9 14:06
 */
 /*
 combined modules:
@@ -557,12 +557,9 @@ KISSY.add('overlay/extension/overlay-effect', [], function (S) {
 /** Compiled By kissy-xtemplate */
 KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var overlayXtpl = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -582,7 +579,7 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
                 params6.push('close');
                 option5.params = params6;
                 var callRet7;
-                callRet7 = callFnUtil(engine, scope, option5, buffer, ['getBaseCssClasses'], 0, 4);
+                callRet7 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses'], 0, 4);
                 if (callRet7 && callRet7.isBuffer) {
                     buffer = callRet7;
                     callRet7 = undefined;
@@ -594,7 +591,7 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
                 params9.push('close-x');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(engine, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
@@ -603,18 +600,18 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
                 buffer.write('">close</span>\r\n        </a>\r\n    ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option2, buffer, 2, payload);
+            buffer = ifCommand.call(tpl, scope, option2, buffer, 2);
             buffer.write('\r\n', 0);
             return buffer;
         };
-        buffer = blockCommand.call(engine, scope, option0, buffer, 1, payload);
+        buffer = blockCommand.call(tpl, scope, option0, buffer, 1);
         buffer.write('\r\n\r\n<div class="', 0);
         var option11 = { escape: 1 };
         var params12 = [];
         params12.push('content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(engine, scope, option11, buffer, ['getBaseCssClasses'], 0, 11);
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 0, 11);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
@@ -632,12 +629,13 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
             buffer.write('\r\n    ', 0);
             return buffer;
         };
-        buffer = blockCommand.call(engine, scope, option14, buffer, 12, payload);
+        buffer = blockCommand.call(tpl, scope, option14, buffer, 12);
         buffer.write('\r\n</div>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    overlayXtpl.TPL_NAME = module.name;
+    overlayXtpl.version = '5.0.0';
+    return overlayXtpl;
 });
 /**
  * @ignore
@@ -951,12 +949,9 @@ KISSY.add('overlay/dialog', [
 /** Compiled By kissy-xtemplate */
 KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var dialogXtpl = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('', 0);
         var option0 = {};
         var params1 = [];
@@ -964,7 +959,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
         option0.params = params1;
         require('./overlay-xtpl');
         var callRet2;
-        callRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);
+        callRet2 = extendCommand.call(tpl, scope, option0, buffer, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -982,7 +977,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
             params6.push('header');
             option5.params = params6;
             var callRet7;
-            callRet7 = callFnUtil(engine, scope, option5, buffer, ['getBaseCssClasses'], 0, 3);
+            callRet7 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses'], 0, 3);
             if (callRet7 && callRet7.isBuffer) {
                 buffer = callRet7;
                 callRet7 = undefined;
@@ -1004,7 +999,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
                 buffer.write(';\r\n', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option8, buffer, 5, payload);
+            buffer = eachCommand.call(tpl, scope, option8, buffer, 5);
             buffer.write('\r\n">', 0);
             var id13 = scope.resolve(['headerContent'], 0);
             buffer.write(id13, false);
@@ -1014,7 +1009,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
             params15.push('body');
             option14.params = params15;
             var callRet16;
-            callRet16 = callFnUtil(engine, scope, option14, buffer, ['getBaseCssClasses'], 0, 10);
+            callRet16 = callFnUtil(tpl, scope, option14, buffer, ['getBaseCssClasses'], 0, 10);
             if (callRet16 && callRet16.isBuffer) {
                 buffer = callRet16;
                 callRet16 = undefined;
@@ -1036,7 +1031,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
                 buffer.write(';\r\n', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option17, buffer, 12, payload);
+            buffer = eachCommand.call(tpl, scope, option17, buffer, 12);
             buffer.write('\r\n">', 0);
             var id22 = scope.resolve(['bodyContent'], 0);
             buffer.write(id22, false);
@@ -1046,7 +1041,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
             params24.push('footer');
             option23.params = params24;
             var callRet25;
-            callRet25 = callFnUtil(engine, scope, option23, buffer, ['getBaseCssClasses'], 0, 17);
+            callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 0, 17);
             if (callRet25 && callRet25.isBuffer) {
                 buffer = callRet25;
                 callRet25 = undefined;
@@ -1068,18 +1063,19 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
                 buffer.write(';\r\n', 0);
                 return buffer;
             };
-            buffer = eachCommand.call(engine, scope, option26, buffer, 19, payload);
+            buffer = eachCommand.call(tpl, scope, option26, buffer, 19);
             buffer.write('\r\n">', 0);
             var id31 = scope.resolve(['footerContent'], 0);
             buffer.write(id31, false);
             buffer.write('</div>\r\n    <div tabindex="0"></div>\r\n', 0);
             return buffer;
         };
-        buffer = blockCommand.call(engine, scope, option3, buffer, 2, payload);
+        buffer = blockCommand.call(tpl, scope, option3, buffer, 2);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    dialogXtpl.TPL_NAME = module.name;
+    dialogXtpl.version = '5.0.0';
+    return dialogXtpl;
 });
 /**
  * @ignore

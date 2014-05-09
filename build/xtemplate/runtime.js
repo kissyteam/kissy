@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 13:02
+build time: May 9 14:08
 */
 KISSY.add("xtemplate/runtime",["util","./runtime/commands","./runtime/scope","./runtime/linked-buffer"],function(l,a){function f(b,d,c){var a=b.fn;if(a.version&&l.version!==a.version)throw Error("current xtemplate file("+b.name+")(v"+a.version+")need to be recompiled using current kissy(v"+l.version+")!");c=b.fn.call(b,d,c);if(a=b.session.extendTplName)delete b.session.extendTplName,c=b.root.include(a,b,d,c);return c.end()}function c(b,d,c,a,h,e,f,g){var i=b.root.config.commands,j;if(!e){j=h[0];i=
 i&&i[j]||k[j];if(1!==h.length&&i){j=h.length;for(var l=1;l<j&&!(i=i[h[l]],!i);l++);}j=i}if(j)return j.call(b,d,c,a,f);h.join(".");return g&&(b=d.resolve(h.slice(0,-1),e),h=b[h[h.length-1]])?h.apply(b,c.params):a}function b(b,d){this.fn=b;this.config=d=d||{}}function d(b,d){if("."!==b.charAt(0))return b;if(!d)throw Error("parent template does not have name for relative sub tpl name: "+b);var c=i[d]=i[d]||{};if(c[b])return c[b];var h=b,a,e=b;a=d.split("/");e=e.split("/");a.pop();for(var f=0,k=e.length;f<

@@ -635,167 +635,167 @@ if (! _$jscoverage['/picker.js'].branchData) {
   _$jscoverage['/picker.js'].branchData['466'][1] = new BranchData();
 }
 _$jscoverage['/picker.js'].branchData['466'][1].init(44, 7, 'ctrlKey');
-function visit102_466_1(result) {
+function visit96_466_1(result) {
   _$jscoverage['/picker.js'].branchData['466'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['459'][1].init(43, 7, 'ctrlKey');
-function visit101_459_1(result) {
+function visit95_459_1(result) {
   _$jscoverage['/picker.js'].branchData['459'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['432'][1].init(48, 8, '!ctrlKey');
-function visit100_432_1(result) {
+function visit94_432_1(result) {
   _$jscoverage['/picker.js'].branchData['432'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['426'][1].init(302, 17, 'this.get(\'clear\')');
-function visit99_426_1(result) {
+function visit93_426_1(result) {
   _$jscoverage['/picker.js'].branchData['426'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['401'][2].init(340, 42, 'disabledDate && disabledDate(value, value)');
-function visit98_401_2(result) {
+function visit92_401_2(result) {
   _$jscoverage['/picker.js'].branchData['401'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['401'][1].init(338, 45, '!(disabledDate && disabledDate(value, value))');
-function visit97_401_1(result) {
+function visit91_401_1(result) {
   _$jscoverage['/picker.js'].branchData['401'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['395'][1].init(87, 28, 'isSameMonth(preValue, value)');
-function visit96_395_1(result) {
+function visit90_395_1(result) {
   _$jscoverage['/picker.js'].branchData['395'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['380'][1].init(253, 1, 'v');
-function visit95_380_1(result) {
+function visit89_380_1(result) {
   _$jscoverage['/picker.js'].branchData['380'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['351'][2].init(1045, 53, 'dateRender && (dateHtml = dateRender(current, value))');
-function visit94_351_2(result) {
+function visit88_351_2(result) {
   _$jscoverage['/picker.js'].branchData['351'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['351'][1].init(1043, 56, '!(dateRender && (dateHtml = dateRender(current, value)))');
-function visit93_351_1(result) {
+function visit87_351_1(result) {
   _$jscoverage['/picker.js'].branchData['351'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['345'][1].init(810, 44, 'disabledDate && disabledDate(current, value)');
-function visit92_345_1(result) {
+function visit86_345_1(result) {
   _$jscoverage['/picker.js'].branchData['345'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['342'][1].init(664, 37, 'afterCurrentMonthYear(current, value)');
-function visit91_342_1(result) {
+function visit85_342_1(result) {
   _$jscoverage['/picker.js'].branchData['342'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['339'][1].init(517, 38, 'beforeCurrentMonthYear(current, value)');
-function visit90_339_1(result) {
+function visit84_339_1(result) {
   _$jscoverage['/picker.js'].branchData['339'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['335'][1].init(333, 37, '!isClear && isSameDay(current, value)');
-function visit89_335_1(result) {
+function visit83_335_1(result) {
   _$jscoverage['/picker.js'].branchData['335'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['332'][1].init(206, 25, 'isSameDay(current, today)');
-function visit88_332_1(result) {
+function visit82_332_1(result) {
   _$jscoverage['/picker.js'].branchData['332'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['326'][1].init(346, 18, 'j < DATE_COL_COUNT');
-function visit87_326_1(result) {
+function visit81_326_1(result) {
   _$jscoverage['/picker.js'].branchData['326'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['320'][1].init(70, 14, 'showWeekNumber');
-function visit86_320_1(result) {
+function visit80_320_1(result) {
   _$jscoverage['/picker.js'].branchData['320'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['318'][1].init(2126, 18, 'i < DATE_ROW_COUNT');
-function visit85_318_1(result) {
+function visit79_318_1(result) {
   _$jscoverage['/picker.js'].branchData['318'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['308'][1].init(69, 6, 'passed');
-function visit84_308_1(result) {
+function visit78_308_1(result) {
   _$jscoverage['/picker.js'].branchData['308'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['306'][1].init(30, 18, 'j < DATE_COL_COUNT');
-function visit83_306_1(result) {
+function visit77_306_1(result) {
   _$jscoverage['/picker.js'].branchData['306'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['305'][1].init(1640, 18, 'i < DATE_ROW_COUNT');
-function visit82_305_1(result) {
+function visit76_305_1(result) {
   _$jscoverage['/picker.js'].branchData['305'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['213'][1].init(333, 18, 'i < DATE_COL_COUNT');
-function visit81_213_1(result) {
+function visit75_213_1(result) {
   _$jscoverage['/picker.js'].branchData['213'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['191'][1].init(43, 18, '!this.get(\'clear\')');
-function visit80_191_1(result) {
+function visit74_191_1(result) {
   _$jscoverage['/picker.js'].branchData['191'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['180'][1].init(77, 2, '!v');
-function visit79_180_1(result) {
+function visit73_180_1(result) {
   _$jscoverage['/picker.js'].branchData['180'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['135'][1].init(270, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
-function visit78_135_1(result) {
+function visit72_135_1(result) {
   _$jscoverage['/picker.js'].branchData['135'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['65'][1].init(53, 37, 'current.getMonth() > today.getMonth()');
-function visit77_65_1(result) {
+function visit71_65_1(result) {
   _$jscoverage['/picker.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['64'][2].init(103, 37, 'current.getYear() === today.getYear()');
-function visit76_64_2(result) {
+function visit70_64_2(result) {
   _$jscoverage['/picker.js'].branchData['64'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['64'][1].init(103, 91, 'current.getYear() === today.getYear() && current.getMonth() > today.getMonth()');
-function visit75_64_1(result) {
+function visit69_64_1(result) {
   _$jscoverage['/picker.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['61'][1].init(14, 35, 'current.getYear() > today.getYear()');
-function visit74_61_1(result) {
+function visit68_61_1(result) {
   _$jscoverage['/picker.js'].branchData['61'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['57'][1].init(53, 37, 'current.getMonth() < today.getMonth()');
-function visit73_57_1(result) {
+function visit67_57_1(result) {
   _$jscoverage['/picker.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['56'][2].init(103, 37, 'current.getYear() === today.getYear()');
-function visit72_56_2(result) {
+function visit66_56_2(result) {
   _$jscoverage['/picker.js'].branchData['56'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['56'][1].init(103, 91, 'current.getYear() === today.getYear() && current.getMonth() < today.getMonth()');
-function visit71_56_1(result) {
+function visit65_56_1(result) {
   _$jscoverage['/picker.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['53'][1].init(14, 35, 'current.getYear() < today.getYear()');
-function visit70_53_1(result) {
+function visit64_53_1(result) {
   _$jscoverage['/picker.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['49'][1].init(47, 33, 'one.getMonth() === two.getMonth()');
-function visit69_49_1(result) {
+function visit63_49_1(result) {
   _$jscoverage['/picker.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['48'][2].init(17, 31, 'one.getYear() === two.getYear()');
-function visit68_48_2(result) {
+function visit62_48_2(result) {
   _$jscoverage['/picker.js'].branchData['48'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['48'][1].init(17, 81, 'one.getYear() === two.getYear() && one.getMonth() === two.getMonth()');
-function visit67_48_1(result) {
+function visit61_48_1(result) {
   _$jscoverage['/picker.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['44'][1].init(49, 43, 'one.getDayOfMonth() === two.getDayOfMonth()');
-function visit66_44_1(result) {
+function visit60_44_1(result) {
   _$jscoverage['/picker.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['43'][2].init(67, 33, 'one.getMonth() === two.getMonth()');
-function visit65_43_2(result) {
+function visit59_43_2(result) {
   _$jscoverage['/picker.js'].branchData['43'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['43'][1].init(47, 93, 'one.getMonth() === two.getMonth() && one.getDayOfMonth() === two.getDayOfMonth()');
-function visit64_43_1(result) {
+function visit58_43_1(result) {
   _$jscoverage['/picker.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['42'][2].init(17, 31, 'one.getYear() === two.getYear()');
-function visit63_42_2(result) {
+function visit57_42_2(result) {
   _$jscoverage['/picker.js'].branchData['42'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].branchData['42'][1].init(17, 141, 'one.getYear() === two.getYear() && one.getMonth() === two.getMonth() && one.getDayOfMonth() === two.getDayOfMonth()');
-function visit62_42_1(result) {
+function visit56_42_1(result) {
   _$jscoverage['/picker.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker.js'].lineData[6]++;
@@ -837,35 +837,35 @@ KISSY.add(function(S, require) {
   function isSameDay(one, two) {
     _$jscoverage['/picker.js'].functionData[2]++;
     _$jscoverage['/picker.js'].lineData[42]++;
-    return visit62_42_1(visit63_42_2(one.getYear() === two.getYear()) && visit64_43_1(visit65_43_2(one.getMonth() === two.getMonth()) && visit66_44_1(one.getDayOfMonth() === two.getDayOfMonth())));
+    return visit56_42_1(visit57_42_2(one.getYear() === two.getYear()) && visit58_43_1(visit59_43_2(one.getMonth() === two.getMonth()) && visit60_44_1(one.getDayOfMonth() === two.getDayOfMonth())));
   }
   _$jscoverage['/picker.js'].lineData[47]++;
   function isSameMonth(one, two) {
     _$jscoverage['/picker.js'].functionData[3]++;
     _$jscoverage['/picker.js'].lineData[48]++;
-    return visit67_48_1(visit68_48_2(one.getYear() === two.getYear()) && visit69_49_1(one.getMonth() === two.getMonth()));
+    return visit61_48_1(visit62_48_2(one.getYear() === two.getYear()) && visit63_49_1(one.getMonth() === two.getMonth()));
   }
   _$jscoverage['/picker.js'].lineData[52]++;
   function beforeCurrentMonthYear(current, today) {
     _$jscoverage['/picker.js'].functionData[4]++;
     _$jscoverage['/picker.js'].lineData[53]++;
-    if (visit70_53_1(current.getYear() < today.getYear())) {
+    if (visit64_53_1(current.getYear() < today.getYear())) {
       _$jscoverage['/picker.js'].lineData[54]++;
       return 1;
     }
     _$jscoverage['/picker.js'].lineData[56]++;
-    return visit71_56_1(visit72_56_2(current.getYear() === today.getYear()) && visit73_57_1(current.getMonth() < today.getMonth()));
+    return visit65_56_1(visit66_56_2(current.getYear() === today.getYear()) && visit67_57_1(current.getMonth() < today.getMonth()));
   }
   _$jscoverage['/picker.js'].lineData[60]++;
   function afterCurrentMonthYear(current, today) {
     _$jscoverage['/picker.js'].functionData[5]++;
     _$jscoverage['/picker.js'].lineData[61]++;
-    if (visit74_61_1(current.getYear() > today.getYear())) {
+    if (visit68_61_1(current.getYear() > today.getYear())) {
       _$jscoverage['/picker.js'].lineData[62]++;
       return 1;
     }
     _$jscoverage['/picker.js'].lineData[64]++;
-    return visit75_64_1(visit76_64_2(current.getYear() === today.getYear()) && visit77_65_1(current.getMonth() > today.getMonth()));
+    return visit69_64_1(visit70_64_2(current.getYear() === today.getYear()) && visit71_65_1(current.getMonth() > today.getMonth()));
   }
   _$jscoverage['/picker.js'].lineData[68]++;
   function renderDatesCmd() {
@@ -981,7 +981,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker.js'].lineData[134]++;
     var value = self.dateTable[parseInt(td.attr('data-index'), 10)];
     _$jscoverage['/picker.js'].lineData[135]++;
-    if (visit78_135_1(disabledDate && disabledDate(value, self.get('value')))) {
+    if (visit72_135_1(disabledDate && disabledDate(value, self.get('value')))) {
       _$jscoverage['/picker.js'].lineData[136]++;
       return;
     }
@@ -1049,7 +1049,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker.js'].lineData[178]++;
     var self = this, v = !self.get('clear');
     _$jscoverage['/picker.js'].lineData[180]++;
-    if (visit79_180_1(!v)) {
+    if (visit73_180_1(!v)) {
       _$jscoverage['/picker.js'].lineData[181]++;
       var value = self.get('value');
       _$jscoverage['/picker.js'].lineData[182]++;
@@ -1067,7 +1067,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker.js'].lineData[190]++;
     e.preventDefault();
     _$jscoverage['/picker.js'].lineData[191]++;
-    if (visit80_191_1(!this.get('clear'))) {
+    if (visit74_191_1(!this.get('clear'))) {
       _$jscoverage['/picker.js'].lineData[192]++;
       toggleClear.call(this);
     }
@@ -1094,7 +1094,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker.js'].lineData[212]++;
   var firstDayOfWeek = value.getFirstDayOfWeek();
   _$jscoverage['/picker.js'].lineData[213]++;
-  for (var i = 0; visit81_213_1(i < DATE_COL_COUNT); i++) {
+  for (var i = 0; visit75_213_1(i < DATE_COL_COUNT); i++) {
     _$jscoverage['/picker.js'].lineData[214]++;
     var index = (firstDayOfWeek + i) % DATE_COL_COUNT;
     _$jscoverage['/picker.js'].lineData[215]++;
@@ -1195,13 +1195,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker.js'].lineData[304]++;
   var passed = 0;
   _$jscoverage['/picker.js'].lineData[305]++;
-  for (i = 0; visit82_305_1(i < DATE_ROW_COUNT); i++) {
+  for (i = 0; visit76_305_1(i < DATE_ROW_COUNT); i++) {
     _$jscoverage['/picker.js'].lineData[306]++;
-    for (j = 0; visit83_306_1(j < DATE_COL_COUNT); j++) {
+    for (j = 0; visit77_306_1(j < DATE_COL_COUNT); j++) {
       _$jscoverage['/picker.js'].lineData[307]++;
       current = lastMonth1;
       _$jscoverage['/picker.js'].lineData[308]++;
-      if (visit84_308_1(passed)) {
+      if (visit78_308_1(passed)) {
         _$jscoverage['/picker.js'].lineData[309]++;
         current = current.clone();
         _$jscoverage['/picker.js'].lineData[310]++;
@@ -1218,18 +1218,18 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker.js'].lineData[317]++;
   passed = 0;
   _$jscoverage['/picker.js'].lineData[318]++;
-  for (i = 0; visit85_318_1(i < DATE_ROW_COUNT); i++) {
+  for (i = 0; visit79_318_1(i < DATE_ROW_COUNT); i++) {
     _$jscoverage['/picker.js'].lineData[319]++;
     var rowHtml = dateRowTplStart;
     _$jscoverage['/picker.js'].lineData[320]++;
-    if (visit86_320_1(showWeekNumber)) {
+    if (visit80_320_1(showWeekNumber)) {
       _$jscoverage['/picker.js'].lineData[321]++;
       rowHtml += S.substitute(weekNumberCellTpl, {
   cls: weekNumberCellClass, 
   content: dateTable[passed].getWeekOfYear()});
     }
     _$jscoverage['/picker.js'].lineData[326]++;
-    for (j = 0; visit87_326_1(j < DATE_COL_COUNT); j++) {
+    for (j = 0; visit81_326_1(j < DATE_COL_COUNT); j++) {
       _$jscoverage['/picker.js'].lineData[327]++;
       current = dateTable[passed];
       _$jscoverage['/picker.js'].lineData[328]++;
@@ -1239,29 +1239,29 @@ KISSY.add(function(S, require) {
       _$jscoverage['/picker.js'].lineData[330]++;
       var selected = false;
       _$jscoverage['/picker.js'].lineData[332]++;
-      if (visit88_332_1(isSameDay(current, today))) {
+      if (visit82_332_1(isSameDay(current, today))) {
         _$jscoverage['/picker.js'].lineData[333]++;
         cls += ' ' + todayClass;
       }
       _$jscoverage['/picker.js'].lineData[335]++;
-      if (visit89_335_1(!isClear && isSameDay(current, value))) {
+      if (visit83_335_1(!isClear && isSameDay(current, value))) {
         _$jscoverage['/picker.js'].lineData[336]++;
         cls += ' ' + selectedClass;
         _$jscoverage['/picker.js'].lineData[337]++;
         selected = true;
       }
       _$jscoverage['/picker.js'].lineData[339]++;
-      if (visit90_339_1(beforeCurrentMonthYear(current, value))) {
+      if (visit84_339_1(beforeCurrentMonthYear(current, value))) {
         _$jscoverage['/picker.js'].lineData[340]++;
         cls += ' ' + lastMonthDayClass;
       }
       _$jscoverage['/picker.js'].lineData[342]++;
-      if (visit91_342_1(afterCurrentMonthYear(current, value))) {
+      if (visit85_342_1(afterCurrentMonthYear(current, value))) {
         _$jscoverage['/picker.js'].lineData[343]++;
         cls += ' ' + nextMonthDayClass;
       }
       _$jscoverage['/picker.js'].lineData[345]++;
-      if (visit92_345_1(disabledDate && disabledDate(current, value))) {
+      if (visit86_345_1(disabledDate && disabledDate(current, value))) {
         _$jscoverage['/picker.js'].lineData[346]++;
         cls += ' ' + disabledClass;
         _$jscoverage['/picker.js'].lineData[347]++;
@@ -1270,7 +1270,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/picker.js'].lineData[350]++;
       var dateHtml = '';
       _$jscoverage['/picker.js'].lineData[351]++;
-      if (visit93_351_1(!(visit94_351_2(dateRender && (dateHtml = dateRender(current, value)))))) {
+      if (visit87_351_1(!(visit88_351_2(dateRender && (dateHtml = dateRender(current, value)))))) {
         _$jscoverage['/picker.js'].lineData[352]++;
         dateHtml = S.substitute(dateTpl, {
   cls: dateClass, 
@@ -1309,7 +1309,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker.js'].lineData[379]++;
   var currentA = this.$('#' + id);
   _$jscoverage['/picker.js'].lineData[380]++;
-  if (visit95_380_1(v)) {
+  if (visit89_380_1(v)) {
     _$jscoverage['/picker.js'].lineData[381]++;
     currentA.parent().removeClass(selectedCls);
     _$jscoverage['/picker.js'].lineData[382]++;
@@ -1332,7 +1332,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/picker.js'].lineData[394]++;
   var preValue = e.prevVal;
   _$jscoverage['/picker.js'].lineData[395]++;
-  if (visit96_395_1(isSameMonth(preValue, value))) {
+  if (visit90_395_1(isSameMonth(preValue, value))) {
     _$jscoverage['/picker.js'].lineData[396]++;
     var disabledDate = self.get('disabledDate');
     _$jscoverage['/picker.js'].lineData[397]++;
@@ -1344,7 +1344,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker.js'].lineData[400]++;
     prevA.attr('aria-selected', false);
     _$jscoverage['/picker.js'].lineData[401]++;
-    if (visit97_401_1(!(visit98_401_2(disabledDate && disabledDate(value, value))))) {
+    if (visit91_401_1(!(visit92_401_2(disabledDate && disabledDate(value, value))))) {
       _$jscoverage['/picker.js'].lineData[402]++;
       var currentA = self.$('#' + getIdFromDate(value));
       _$jscoverage['/picker.js'].lineData[403]++;
@@ -1386,7 +1386,7 @@ KISSY.add(function(S, require) {
       return true;
   }
   _$jscoverage['/picker.js'].lineData[426]++;
-  if (visit99_426_1(this.get('clear'))) {
+  if (visit93_426_1(this.get('clear'))) {
     _$jscoverage['/picker.js'].lineData[427]++;
     switch (keyCode) {
       case KeyCode.DOWN:
@@ -1394,7 +1394,7 @@ KISSY.add(function(S, require) {
       case KeyCode.LEFT:
       case KeyCode.RIGHT:
         _$jscoverage['/picker.js'].lineData[432]++;
-        if (visit100_432_1(!ctrlKey)) {
+        if (visit94_432_1(!ctrlKey)) {
           _$jscoverage['/picker.js'].lineData[433]++;
           toggleClear.call(self);
         }
@@ -1436,7 +1436,7 @@ KISSY.add(function(S, require) {
       return true;
     case KeyCode.LEFT:
       _$jscoverage['/picker.js'].lineData[459]++;
-      if (visit101_459_1(ctrlKey)) {
+      if (visit95_459_1(ctrlKey)) {
         _$jscoverage['/picker.js'].lineData[460]++;
         goYear(self, -1);
       } else {
@@ -1447,7 +1447,7 @@ KISSY.add(function(S, require) {
       return true;
     case KeyCode.RIGHT:
       _$jscoverage['/picker.js'].lineData[466]++;
-      if (visit102_466_1(ctrlKey)) {
+      if (visit96_466_1(ctrlKey)) {
         _$jscoverage['/picker.js'].lineData[467]++;
         goYear(self, 1);
       } else {

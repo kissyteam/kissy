@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var monthPanel = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<div class="', 0);
             var option0 = {
                 escape: 1
@@ -28,7 +25,7 @@ KISSY.add(function (S, require, exports, module) {
             params1.push('header');
             option0.params = params1;
             var callRet2
-            callRet2 = callFnUtil(engine, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
+            callRet2 = callFnUtil(tpl, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
             if (callRet2 && callRet2.isBuffer) {
                 buffer = callRet2;
                 callRet2 = undefined;
@@ -42,7 +39,7 @@ KISSY.add(function (S, require, exports, module) {
             params4.push('prev-year-btn');
             option3.params = params4;
             var callRet5
-            callRet5 = callFnUtil(engine, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
+            callRet5 = callFnUtil(tpl, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
             if (callRet5 && callRet5.isBuffer) {
                 buffer = callRet5;
                 callRet5 = undefined;
@@ -59,7 +56,7 @@ KISSY.add(function (S, require, exports, module) {
             params8.push('year-select');
             option7.params = params8;
             var callRet9
-            callRet9 = callFnUtil(engine, scope, option7, buffer, ["getBaseCssClasses"], 0, 9);
+            callRet9 = callFnUtil(tpl, scope, option7, buffer, ["getBaseCssClasses"], 0, 9);
             if (callRet9 && callRet9.isBuffer) {
                 buffer = callRet9;
                 callRet9 = undefined;
@@ -76,7 +73,7 @@ KISSY.add(function (S, require, exports, module) {
             params12.push('year-select-content');
             option11.params = params12;
             var callRet13
-            callRet13 = callFnUtil(engine, scope, option11, buffer, ["getBaseCssClasses"], 0, 14);
+            callRet13 = callFnUtil(tpl, scope, option11, buffer, ["getBaseCssClasses"], 0, 14);
             if (callRet13 && callRet13.isBuffer) {
                 buffer = callRet13;
                 callRet13 = undefined;
@@ -93,7 +90,7 @@ KISSY.add(function (S, require, exports, module) {
             params16.push('year-select-arrow');
             option15.params = params16;
             var callRet17
-            callRet17 = callFnUtil(engine, scope, option15, buffer, ["getBaseCssClasses"], 0, 15);
+            callRet17 = callFnUtil(tpl, scope, option15, buffer, ["getBaseCssClasses"], 0, 15);
             if (callRet17 && callRet17.isBuffer) {
                 buffer = callRet17;
                 callRet17 = undefined;
@@ -107,7 +104,7 @@ KISSY.add(function (S, require, exports, module) {
             params19.push('next-year-btn');
             option18.params = params19;
             var callRet20
-            callRet20 = callFnUtil(engine, scope, option18, buffer, ["getBaseCssClasses"], 0, 18);
+            callRet20 = callFnUtil(tpl, scope, option18, buffer, ["getBaseCssClasses"], 0, 18);
             if (callRet20 && callRet20.isBuffer) {
                 buffer = callRet20;
                 callRet20 = undefined;
@@ -124,7 +121,7 @@ KISSY.add(function (S, require, exports, module) {
             params23.push('body');
             option22.params = params23;
             var callRet24
-            callRet24 = callFnUtil(engine, scope, option22, buffer, ["getBaseCssClasses"], 0, 25);
+            callRet24 = callFnUtil(tpl, scope, option22, buffer, ["getBaseCssClasses"], 0, 25);
             if (callRet24 && callRet24.isBuffer) {
                 buffer = callRet24;
                 callRet24 = undefined;
@@ -138,7 +135,7 @@ KISSY.add(function (S, require, exports, module) {
             params26.push('table');
             option25.params = params26;
             var callRet27
-            callRet27 = callFnUtil(engine, scope, option25, buffer, ["getBaseCssClasses"], 0, 26);
+            callRet27 = callFnUtil(tpl, scope, option25, buffer, ["getBaseCssClasses"], 0, 26);
             if (callRet27 && callRet27.isBuffer) {
                 buffer = callRet27;
                 callRet27 = undefined;
@@ -152,7 +149,7 @@ KISSY.add(function (S, require, exports, module) {
             params29.push('tbody');
             option28.params = params29;
             var callRet30
-            callRet30 = callFnUtil(engine, scope, option28, buffer, ["getBaseCssClasses"], 0, 27);
+            callRet30 = callFnUtil(tpl, scope, option28, buffer, ["getBaseCssClasses"], 0, 27);
             if (callRet30 && callRet30.isBuffer) {
                 buffer = callRet30;
                 callRet30 = undefined;
@@ -165,7 +162,7 @@ KISSY.add(function (S, require, exports, module) {
             option31.params = params32;
             require("./months-xtpl");
             var callRet33
-            callRet33 = includeCommand.call(engine, scope, option31, buffer, 28, payload);
+            callRet33 = includeCommand.call(tpl, scope, option31, buffer, 28);
             if (callRet33 && callRet33.isBuffer) {
                 buffer = callRet33;
                 callRet33 = undefined;
@@ -174,6 +171,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
             return buffer;
         };
-t.TPL_NAME = module.name;
-return t;
+monthPanel.TPL_NAME = module.name;
+monthPanel.version = "5.0.0";
+return monthPanel
 });

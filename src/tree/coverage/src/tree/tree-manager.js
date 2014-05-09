@@ -256,7 +256,7 @@ if (! _$jscoverage['/tree/tree-manager.js'].branchData) {
   _$jscoverage['/tree/tree-manager.js'].branchData['65'][1] = new BranchData();
 }
 _$jscoverage['/tree/tree-manager.js'].branchData['65'][1].init(41, 15, 'n && ev.prevVal');
-function visit70_65_1(result) {
+function visit69_65_1(result) {
   _$jscoverage['/tree/tree-manager.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tree/tree-manager.js'].lineData[6]++;
@@ -293,7 +293,7 @@ KISSY.add(function(S, require) {
   _onSetSelectedItem: function(n, ev) {
   _$jscoverage['/tree/tree-manager.js'].functionData[3]++;
   _$jscoverage['/tree/tree-manager.js'].lineData[65]++;
-  if (visit70_65_1(n && ev.prevVal)) {
+  if (visit69_65_1(n && ev.prevVal)) {
     _$jscoverage['/tree/tree-manager.js'].lineData[66]++;
     ev.prevVal.set('selected', false, {
   data: {

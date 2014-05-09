@@ -358,83 +358,83 @@ if (! _$jscoverage['/filter-menu.js'].branchData) {
   _$jscoverage['/filter-menu.js'].branchData['210'][1] = new BranchData();
 }
 _$jscoverage['/filter-menu.js'].branchData['210'][1].init(105, 37, 'placeholderEl && placeholderEl.html()');
-function visit25_210_1(result) {
+function visit24_210_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['210'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['149'][1].init(30, 25, 'content.indexOf(str) > -1');
-function visit24_149_1(result) {
+function visit23_149_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['142'][1].init(79, 4, '!str');
-function visit23_142_1(result) {
+function visit22_142_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['142'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['137'][1].init(66, 44, 'str && new RegExp(S.escapeRegExp(str), \'ig\')');
-function visit22_137_1(result) {
+function visit21_137_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['137'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['129'][1].init(1832, 46, 'oldEnteredItems.length !== enteredItems.length');
-function visit21_129_1(result) {
+function visit20_129_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['119'][1].init(36, 14, 'match[2] || \'\'');
-function visit20_119_1(result) {
+function visit19_119_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['119'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['118'][1].init(80, 5, 'match');
-function visit19_118_1(result) {
+function visit18_118_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['118'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['110'][3].init(386, 30, 'content.indexOf(lastWord) > -1');
-function visit18_110_3(result) {
+function visit17_110_3(result) {
   _$jscoverage['/filter-menu.js'].branchData['110'][3].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['110'][2].init(386, 42, 'content.indexOf(lastWord) > -1 && lastWord');
-function visit17_110_2(result) {
+function visit16_110_2(result) {
   _$jscoverage['/filter-menu.js'].branchData['110'][2].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['110'][1].init(375, 53, 'content && content.indexOf(lastWord) > -1 && lastWord');
-function visit16_110_1(result) {
+function visit15_110_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['108'][1].init(82, 27, 'item && item.get(\'content\')');
-function visit15_108_1(result) {
+function visit14_108_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['103'][1].init(74, 5, 'match');
-function visit14_103_1(result) {
+function visit13_103_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['103'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['101'][1].init(523, 22, '/[,\\uff0c]$/.test(str)');
-function visit13_101_1(result) {
+function visit12_101_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['101'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['95'][1].init(326, 5, 'match');
-function visit12_95_1(result) {
+function visit11_95_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['95'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['85'][1].init(336, 25, 'self.get(\'allowMultiple\')');
-function visit11_85_1(result) {
+function visit10_85_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['85'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['53'][1].init(219, 15, 'highlightedItem');
-function visit10_53_1(result) {
+function visit9_53_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['48'][2].init(594, 51, '!highlightedItem || !highlightedItem.get(\'visible\')');
-function visit9_48_2(result) {
+function visit8_48_2(result) {
   _$jscoverage['/filter-menu.js'].branchData['48'][2].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['48'][1].init(586, 60, 'str && (!highlightedItem || !highlightedItem.get(\'visible\'))');
-function visit8_48_1(result) {
+function visit7_48_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['46'][1].init(466, 23, '!str && highlightedItem');
-function visit7_46_1(result) {
+function visit6_46_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].branchData['42'][1].init(343, 25, 'self.get(\'allowMultiple\')');
-function visit6_42_1(result) {
+function visit5_42_1(result) {
   _$jscoverage['/filter-menu.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/filter-menu.js'].lineData[6]++;
@@ -475,21 +475,21 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu.js'].lineData[41]++;
   str = filterInput.val();
   _$jscoverage['/filter-menu.js'].lineData[42]++;
-  if (visit6_42_1(self.get('allowMultiple'))) {
+  if (visit5_42_1(self.get('allowMultiple'))) {
     _$jscoverage['/filter-menu.js'].lineData[43]++;
     str = str.replace(/^.+,/, '');
   }
   _$jscoverage['/filter-menu.js'].lineData[46]++;
-  if (visit7_46_1(!str && highlightedItem)) {
+  if (visit6_46_1(!str && highlightedItem)) {
     _$jscoverage['/filter-menu.js'].lineData[47]++;
     highlightedItem.set('highlighted', false);
   } else {
     _$jscoverage['/filter-menu.js'].lineData[48]++;
-    if (visit8_48_1(str && (visit9_48_2(!highlightedItem || !highlightedItem.get('visible'))))) {
+    if (visit7_48_1(str && (visit8_48_2(!highlightedItem || !highlightedItem.get('visible'))))) {
       _$jscoverage['/filter-menu.js'].lineData[52]++;
       highlightedItem = self._getNextEnabledHighlighted(0, 1);
       _$jscoverage['/filter-menu.js'].lineData[53]++;
-      if (visit10_53_1(highlightedItem)) {
+      if (visit9_53_1(highlightedItem)) {
         _$jscoverage['/filter-menu.js'].lineData[54]++;
         highlightedItem.set('highlighted', true);
       }
@@ -518,7 +518,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu.js'].lineData[83]++;
   _placeholderEl[str ? 'hide' : 'show']();
   _$jscoverage['/filter-menu.js'].lineData[85]++;
-  if (visit11_85_1(self.get('allowMultiple'))) {
+  if (visit10_85_1(self.get('allowMultiple'))) {
     _$jscoverage['/filter-menu.js'].lineData[86]++;
     var enteredItems = [], lastWord;
     _$jscoverage['/filter-menu.js'].lineData[89]++;
@@ -526,24 +526,24 @@ KISSY.add(function(S, require) {
     _$jscoverage['/filter-menu.js'].lineData[93]++;
     var items = [];
     _$jscoverage['/filter-menu.js'].lineData[95]++;
-    if (visit12_95_1(match)) {
+    if (visit11_95_1(match)) {
       _$jscoverage['/filter-menu.js'].lineData[96]++;
       items = match[1].split(/[,\uff0c]/);
     }
     _$jscoverage['/filter-menu.js'].lineData[101]++;
-    if (visit13_101_1(/[,\uff0c]$/.test(str))) {
+    if (visit12_101_1(/[,\uff0c]$/.test(str))) {
       _$jscoverage['/filter-menu.js'].lineData[102]++;
       enteredItems = [];
       _$jscoverage['/filter-menu.js'].lineData[103]++;
-      if (visit14_103_1(match)) {
+      if (visit13_103_1(match)) {
         _$jscoverage['/filter-menu.js'].lineData[104]++;
         enteredItems = items;
         _$jscoverage['/filter-menu.js'].lineData[106]++;
         lastWord = items[items.length - 1];
         _$jscoverage['/filter-menu.js'].lineData[107]++;
-        var item = self.get('highlightedItem'), content = visit15_108_1(item && item.get('content'));
+        var item = self.get('highlightedItem'), content = visit14_108_1(item && item.get('content'));
         _$jscoverage['/filter-menu.js'].lineData[110]++;
-        if (visit16_110_1(content && visit17_110_2(visit18_110_3(content.indexOf(lastWord) > -1) && lastWord))) {
+        if (visit15_110_1(content && visit16_110_2(visit17_110_3(content.indexOf(lastWord) > -1) && lastWord))) {
           _$jscoverage['/filter-menu.js'].lineData[111]++;
           enteredItems[enteredItems.length - 1] = content;
         }
@@ -554,9 +554,9 @@ KISSY.add(function(S, require) {
       str = '';
     } else {
       _$jscoverage['/filter-menu.js'].lineData[118]++;
-      if (visit19_118_1(match)) {
+      if (visit18_118_1(match)) {
         _$jscoverage['/filter-menu.js'].lineData[119]++;
-        str = visit20_119_1(match[2] || '');
+        str = visit19_119_1(match[2] || '');
       }
       _$jscoverage['/filter-menu.js'].lineData[125]++;
       enteredItems = items;
@@ -564,27 +564,27 @@ KISSY.add(function(S, require) {
     _$jscoverage['/filter-menu.js'].lineData[127]++;
     var oldEnteredItems = self.get('enteredItems');
     _$jscoverage['/filter-menu.js'].lineData[129]++;
-    if (visit21_129_1(oldEnteredItems.length !== enteredItems.length)) {
+    if (visit20_129_1(oldEnteredItems.length !== enteredItems.length)) {
       _$jscoverage['/filter-menu.js'].lineData[132]++;
       self.set('enteredItems', enteredItems);
     }
   }
   _$jscoverage['/filter-menu.js'].lineData[136]++;
-  var children = self.get('children'), strExp = visit22_137_1(str && new RegExp(S.escapeRegExp(str), 'ig'));
+  var children = self.get('children'), strExp = visit21_137_1(str && new RegExp(S.escapeRegExp(str), 'ig'));
   _$jscoverage['/filter-menu.js'].lineData[140]++;
   S.each(children, function(c) {
   _$jscoverage['/filter-menu.js'].functionData[8]++;
   _$jscoverage['/filter-menu.js'].lineData[141]++;
   var content = c.get('content');
   _$jscoverage['/filter-menu.js'].lineData[142]++;
-  if (visit23_142_1(!str)) {
+  if (visit22_142_1(!str)) {
     _$jscoverage['/filter-menu.js'].lineData[146]++;
     c.get('el').html(content);
     _$jscoverage['/filter-menu.js'].lineData[147]++;
     c.set('visible', true);
   } else {
     _$jscoverage['/filter-menu.js'].lineData[149]++;
-    if (visit24_149_1(content.indexOf(str) > -1)) {
+    if (visit23_149_1(content.indexOf(str) > -1)) {
       _$jscoverage['/filter-menu.js'].lineData[152]++;
       c.set('visible', true);
       _$jscoverage['/filter-menu.js'].lineData[154]++;
@@ -636,7 +636,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu.js'].lineData[209]++;
   var placeholderEl = this.get('placeholderEl');
   _$jscoverage['/filter-menu.js'].lineData[210]++;
-  return visit25_210_1(placeholderEl && placeholderEl.html());
+  return visit24_210_1(placeholderEl && placeholderEl.html());
 }}, 
   placeholderEl: {
   selector: function() {

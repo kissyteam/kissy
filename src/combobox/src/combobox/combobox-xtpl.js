@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var t = function (scope, buffer, payload, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var combobox = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<div class="', 0);
             var option0 = {
                 escape: 1
@@ -28,7 +25,7 @@ KISSY.add(function (S, require, exports, module) {
             params1.push('invalid-el');
             option0.params = params1;
             var callRet2
-            callRet2 = callFnUtil(engine, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
+            callRet2 = callFnUtil(tpl, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
             if (callRet2 && callRet2.isBuffer) {
                 buffer = callRet2;
                 callRet2 = undefined;
@@ -42,7 +39,7 @@ KISSY.add(function (S, require, exports, module) {
             params4.push('invalid-inner');
             option3.params = params4;
             var callRet5
-            callRet5 = callFnUtil(engine, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
+            callRet5 = callFnUtil(tpl, scope, option3, buffer, ["getBaseCssClasses"], 0, 2);
             if (callRet5 && callRet5.isBuffer) {
                 buffer = callRet5;
                 callRet5 = undefined;
@@ -65,7 +62,7 @@ KISSY.add(function (S, require, exports, module) {
                 params10.push('trigger');
                 option9.params = params10;
                 var callRet11
-                callRet11 = callFnUtil(engine, scope, option9, buffer, ["getBaseCssClasses"], 0, 6);
+                callRet11 = callFnUtil(tpl, scope, option9, buffer, ["getBaseCssClasses"], 0, 6);
                 if (callRet11 && callRet11.isBuffer) {
                     buffer = callRet11;
                     callRet11 = undefined;
@@ -79,7 +76,7 @@ KISSY.add(function (S, require, exports, module) {
                 params13.push('trigger-inner');
                 option12.params = params13;
                 var callRet14
-                callRet14 = callFnUtil(engine, scope, option12, buffer, ["getBaseCssClasses"], 0, 7);
+                callRet14 = callFnUtil(tpl, scope, option12, buffer, ["getBaseCssClasses"], 0, 7);
                 if (callRet14 && callRet14.isBuffer) {
                     buffer = callRet14;
                     callRet14 = undefined;
@@ -88,7 +85,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('">&#x25BC;</div>\r\n</div>\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option6, buffer, 5, payload);
+            buffer = ifCommand.call(tpl, scope, option6, buffer, 5);
             buffer.write('\r\n\r\n<div class="', 0);
             var option15 = {
                 escape: 1
@@ -97,7 +94,7 @@ KISSY.add(function (S, require, exports, module) {
             params16.push('input-wrap');
             option15.params = params16;
             var callRet17
-            callRet17 = callFnUtil(engine, scope, option15, buffer, ["getBaseCssClasses"], 0, 11);
+            callRet17 = callFnUtil(tpl, scope, option15, buffer, ["getBaseCssClasses"], 0, 11);
             if (callRet17 && callRet17.isBuffer) {
                 buffer = callRet17;
                 callRet17 = undefined;
@@ -118,7 +115,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('\r\n    disabled\r\n    ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option19, buffer, 20, payload);
+            buffer = ifCommand.call(tpl, scope, option19, buffer, 20);
             buffer.write('\r\n\r\n    autocomplete="off"\r\n    class="', 0);
             var option22 = {
                 escape: 1
@@ -127,7 +124,7 @@ KISSY.add(function (S, require, exports, module) {
             params23.push('input');
             option22.params = params23;
             var callRet24
-            callRet24 = callFnUtil(engine, scope, option22, buffer, ["getBaseCssClasses"], 0, 25);
+            callRet24 = callFnUtil(tpl, scope, option22, buffer, ["getBaseCssClasses"], 0, 25);
             if (callRet24 && callRet24.isBuffer) {
                 buffer = callRet24;
                 callRet24 = undefined;
@@ -155,7 +152,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('block', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option27, buffer, 32, payload);
+            buffer = ifCommand.call(tpl, scope, option27, buffer, 32);
             buffer.write(';\'\r\n    class="', 0);
             var option30 = {
                 escape: 1
@@ -164,7 +161,7 @@ KISSY.add(function (S, require, exports, module) {
             params31.push('placeholder');
             option30.params = params31;
             var callRet32
-            callRet32 = callFnUtil(engine, scope, option30, buffer, ["getBaseCssClasses"], 0, 33);
+            callRet32 = callFnUtil(tpl, scope, option30, buffer, ["getBaseCssClasses"], 0, 33);
             if (callRet32 && callRet32.isBuffer) {
                 buffer = callRet32;
                 callRet32 = undefined;
@@ -181,7 +178,7 @@ KISSY.add(function (S, require, exports, module) {
             params35.push('clear');
             option34.params = params35;
             var callRet36
-            callRet36 = callFnUtil(engine, scope, option34, buffer, ["getBaseCssClasses"], 0, 37);
+            callRet36 = callFnUtil(tpl, scope, option34, buffer, ["getBaseCssClasses"], 0, 37);
             if (callRet36 && callRet36.isBuffer) {
                 buffer = callRet36;
                 callRet36 = undefined;
@@ -199,7 +196,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('\r\n         style="display:none"\r\n         ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option37, buffer, 39, payload);
+            buffer = ifCommand.call(tpl, scope, option37, buffer, 39);
             buffer.write('\r\n         onmousedown="return false;"><div\r\n            class="', 0);
             var option40 = {
                 escape: 1
@@ -208,7 +205,7 @@ KISSY.add(function (S, require, exports, module) {
             params41.push('clear-inner');
             option40.params = params41;
             var callRet42
-            callRet42 = callFnUtil(engine, scope, option40, buffer, ["getBaseCssClasses"], 0, 43);
+            callRet42 = callFnUtil(tpl, scope, option40, buffer, ["getBaseCssClasses"], 0, 43);
             if (callRet42 && callRet42.isBuffer) {
                 buffer = callRet42;
                 callRet42 = undefined;
@@ -217,6 +214,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
             return buffer;
         };
-t.TPL_NAME = module.name;
-return t;
+combobox.TPL_NAME = module.name;
+combobox.version = "5.0.0";
+return combobox
 });

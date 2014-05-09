@@ -325,6 +325,7 @@ if (! _$jscoverage['/toolbar.js']) {
   _$jscoverage['/toolbar.js'].lineData[213] = 0;
   _$jscoverage['/toolbar.js'].lineData[215] = 0;
   _$jscoverage['/toolbar.js'].lineData[216] = 0;
+  _$jscoverage['/toolbar.js'].lineData[228] = 0;
 }
 if (! _$jscoverage['/toolbar.js'].functionData) {
   _$jscoverage['/toolbar.js'].functionData = [];
@@ -340,6 +341,7 @@ if (! _$jscoverage['/toolbar.js'].functionData) {
   _$jscoverage['/toolbar.js'].functionData[9] = 0;
   _$jscoverage['/toolbar.js'].functionData[10] = 0;
   _$jscoverage['/toolbar.js'].functionData[11] = 0;
+  _$jscoverage['/toolbar.js'].functionData[12] = 0;
 }
 if (! _$jscoverage['/toolbar.js'].branchData) {
   _$jscoverage['/toolbar.js'].branchData = {};
@@ -790,8 +792,12 @@ KISSY.add(function(S, require) {
   highlightedItem: {}, 
   expandedItem: {}, 
   defaultChildCfg: {
-  value: {
+  valueFn: function() {
+  _$jscoverage['/toolbar.js'].functionData[12]++;
+  _$jscoverage['/toolbar.js'].lineData[228]++;
+  return {
   xclass: 'button', 
   handleGestureEvents: false, 
-  focusable: false}}}});
+  focusable: false};
+}}}});
 });

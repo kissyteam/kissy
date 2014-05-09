@@ -342,11 +342,11 @@ if (! _$jscoverage['/picker/year-panel/control.js'].branchData) {
   _$jscoverage['/picker/year-panel/control.js'].branchData['31'][1] = new BranchData();
 }
 _$jscoverage['/picker/year-panel/control.js'].branchData['31'][1].init(58, 5, 'j < 4');
-function visit41_31_1(result) {
+function visit37_31_1(result) {
   _$jscoverage['/picker/year-panel/control.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/control.js'].branchData['29'][1].init(498, 5, 'i < 3');
-function visit40_29_1(result) {
+function visit36_29_1(result) {
   _$jscoverage['/picker/year-panel/control.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/control.js'].lineData[6]++;
@@ -388,11 +388,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker/year-panel/control.js'].lineData[28]++;
     var index = 0;
     _$jscoverage['/picker/year-panel/control.js'].lineData[29]++;
-    for (var i = 0; visit40_29_1(i < 3); i++) {
+    for (var i = 0; visit36_29_1(i < 3); i++) {
       _$jscoverage['/picker/year-panel/control.js'].lineData[30]++;
       years[i] = [];
       _$jscoverage['/picker/year-panel/control.js'].lineData[31]++;
-      for (var j = 0; visit41_31_1(j < 4); j++) {
+      for (var j = 0; visit37_31_1(j < 4); j++) {
         _$jscoverage['/picker/year-panel/control.js'].lineData[32]++;
         current.setYear(preYear + index);
         _$jscoverage['/picker/year-panel/control.js'].lineData[33]++;

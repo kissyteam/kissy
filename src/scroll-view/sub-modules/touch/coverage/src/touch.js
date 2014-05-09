@@ -1073,7 +1073,7 @@ KISSY.add(function(S, require) {
     self.startScroll.top = self.get('scrollTop');
   }
   _$jscoverage['/touch.js'].lineData[174]++;
-  function onDraggingHandler(e) {
+  function onDragPreHandler(e) {
     _$jscoverage['/touch.js'].functionData[7]++;
     _$jscoverage['/touch.js'].lineData[175]++;
     var self = this;
@@ -1358,7 +1358,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/touch.js'].lineData[373]++;
     var action = self.get('disabled') ? 'detach' : 'on';
     _$jscoverage['/touch.js'].lineData[379]++;
-    self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](BaseGesture.START, onGestureStart, self)[action](DragGesture.DRAGGING, onDraggingHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
+    self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](BaseGesture.START, onGestureStart, self)[action](DragGesture.DRAG_PRE, onDragPreHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
   }
   _$jscoverage['/touch.js'].lineData[388]++;
   return ScrollViewBase.extend({

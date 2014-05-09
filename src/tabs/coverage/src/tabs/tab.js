@@ -282,19 +282,19 @@ if (! _$jscoverage['/tabs/tab.js'].branchData) {
   _$jscoverage['/tabs/tab.js'].branchData['45'][1] = new BranchData();
 }
 _$jscoverage['/tabs/tab.js'].branchData['45'][1].init(22, 36, 'e.target === self.get(\'closeBtn\')[0]');
-function visit19_45_1(result) {
+function visit18_45_1(result) {
   _$jscoverage['/tabs/tab.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab.js'].branchData['44'][1].init(48, 20, 'self.get(\'closable\')');
-function visit18_44_1(result) {
+function visit17_44_1(result) {
   _$jscoverage['/tabs/tab.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab.js'].branchData['37'][1].init(275, 19, 'renderData.closable');
-function visit17_37_1(result) {
+function visit16_37_1(result) {
   _$jscoverage['/tabs/tab.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab.js'].branchData['33'][1].init(96, 19, 'renderData.selected');
-function visit16_33_1(result) {
+function visit15_33_1(result) {
   _$jscoverage['/tabs/tab.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab.js'].lineData[6]++;
@@ -329,14 +329,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/tab.js'].lineData[32]++;
   attrs.role = 'tab';
   _$jscoverage['/tabs/tab.js'].lineData[33]++;
-  if (visit16_33_1(renderData.selected)) {
+  if (visit15_33_1(renderData.selected)) {
     _$jscoverage['/tabs/tab.js'].lineData[34]++;
     attrs['aria-selected'] = true;
     _$jscoverage['/tabs/tab.js'].lineData[35]++;
     renderData.elCls.push(this.getBaseCssClasses('selected'));
   }
   _$jscoverage['/tabs/tab.js'].lineData[37]++;
-  if (visit17_37_1(renderData.closable)) {
+  if (visit16_37_1(renderData.closable)) {
     _$jscoverage['/tabs/tab.js'].lineData[38]++;
     renderData.elCls.push(this.getBaseCssClasses('closable'));
   }
@@ -346,9 +346,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/tab.js'].lineData[43]++;
   var self = this;
   _$jscoverage['/tabs/tab.js'].lineData[44]++;
-  if (visit18_44_1(self.get('closable'))) {
+  if (visit17_44_1(self.get('closable'))) {
     _$jscoverage['/tabs/tab.js'].lineData[45]++;
-    if (visit19_45_1(e.target === self.get('closeBtn')[0])) {
+    if (visit18_45_1(e.target === self.get('closeBtn')[0])) {
       _$jscoverage['/tabs/tab.js'].lineData[46]++;
       self.fire('beforeTabClose');
       _$jscoverage['/tabs/tab.js'].lineData[47]++;

@@ -267,22 +267,22 @@ if (! _$jscoverage['/edge-drag.js']) {
   _$jscoverage['/edge-drag.js'].lineData[74] = 0;
   _$jscoverage['/edge-drag.js'].lineData[76] = 0;
   _$jscoverage['/edge-drag.js'].lineData[77] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[80] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[133] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[136] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[139] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[143] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[144] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[122] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[142] = 0;
   _$jscoverage['/edge-drag.js'].lineData[145] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[146] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[147] = 0;
   _$jscoverage['/edge-drag.js'].lineData[148] = 0;
   _$jscoverage['/edge-drag.js'].lineData[152] = 0;
   _$jscoverage['/edge-drag.js'].lineData[153] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[154] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[155] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[156] = 0;
   _$jscoverage['/edge-drag.js'].lineData[157] = 0;
-  _$jscoverage['/edge-drag.js'].lineData[158] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[161] = 0;
   _$jscoverage['/edge-drag.js'].lineData[162] = 0;
   _$jscoverage['/edge-drag.js'].lineData[166] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[167] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[171] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[175] = 0;
 }
 if (! _$jscoverage['/edge-drag.js'].functionData) {
   _$jscoverage['/edge-drag.js'].functionData = [];
@@ -528,61 +528,60 @@ KISSY.add(function(S, require) {
         self.startTime = e.timeStamp;
       }
     }
-    _$jscoverage['/edge-drag.js'].lineData[80]++;
+    _$jscoverage['/edge-drag.js'].lineData[122]++;
     DomEvent.fire(touch.target, event, {
   originalEvent: e.originalEvent, 
   pageX: touch.pageX, 
   pageY: touch.pageY, 
   which: 1, 
-  touch: touch, 
   direction: direction, 
   distance: distance, 
   duration: duration / 1000, 
   velocityX: velocityX, 
   velocityY: velocityY});
-    _$jscoverage['/edge-drag.js'].lineData[133]++;
+    _$jscoverage['/edge-drag.js'].lineData[142]++;
     return undefined;
   }
-  _$jscoverage['/edge-drag.js'].lineData[136]++;
+  _$jscoverage['/edge-drag.js'].lineData[145]++;
   function EdgeDrag() {
     _$jscoverage['/edge-drag.js'].functionData[2]++;
   }
-  _$jscoverage['/edge-drag.js'].lineData[139]++;
+  _$jscoverage['/edge-drag.js'].lineData[148]++;
   S.extend(EdgeDrag, SingleTouch, {
   requiredGestureType: 'touch', 
   start: function() {
   _$jscoverage['/edge-drag.js'].functionData[3]++;
-  _$jscoverage['/edge-drag.js'].lineData[143]++;
+  _$jscoverage['/edge-drag.js'].lineData[152]++;
   var self = this;
-  _$jscoverage['/edge-drag.js'].lineData[144]++;
+  _$jscoverage['/edge-drag.js'].lineData[153]++;
   EdgeDrag.superclass.start.apply(self, arguments);
-  _$jscoverage['/edge-drag.js'].lineData[145]++;
+  _$jscoverage['/edge-drag.js'].lineData[154]++;
   var touch = self.lastTouches[0];
-  _$jscoverage['/edge-drag.js'].lineData[146]++;
+  _$jscoverage['/edge-drag.js'].lineData[155]++;
   self.direction = null;
-  _$jscoverage['/edge-drag.js'].lineData[147]++;
+  _$jscoverage['/edge-drag.js'].lineData[156]++;
   self.startX = touch.pageX;
-  _$jscoverage['/edge-drag.js'].lineData[148]++;
+  _$jscoverage['/edge-drag.js'].lineData[157]++;
   self.startY = touch.pageY;
 }, 
   move: function(e) {
   _$jscoverage['/edge-drag.js'].functionData[4]++;
-  _$jscoverage['/edge-drag.js'].lineData[152]++;
+  _$jscoverage['/edge-drag.js'].lineData[161]++;
   EdgeDrag.superclass.move.apply(this, arguments);
-  _$jscoverage['/edge-drag.js'].lineData[153]++;
+  _$jscoverage['/edge-drag.js'].lineData[162]++;
   return fire(this, e, 1);
 }, 
   end: function(e) {
   _$jscoverage['/edge-drag.js'].functionData[5]++;
-  _$jscoverage['/edge-drag.js'].lineData[157]++;
+  _$jscoverage['/edge-drag.js'].lineData[166]++;
   EdgeDrag.superclass.end.apply(this, arguments);
-  _$jscoverage['/edge-drag.js'].lineData[158]++;
+  _$jscoverage['/edge-drag.js'].lineData[167]++;
   return fire(this, e, 0);
 }});
-  _$jscoverage['/edge-drag.js'].lineData[162]++;
+  _$jscoverage['/edge-drag.js'].lineData[171]++;
   addGestureEvent([EDGE_DRAG, EDGE_DRAG_END, EDGE_DRAG_START], {
   handle: new EdgeDrag()});
-  _$jscoverage['/edge-drag.js'].lineData[166]++;
+  _$jscoverage['/edge-drag.js'].lineData[175]++;
   return {
   EDGE_DRAG: EDGE_DRAG, 
   EDGE_DRAG_START: EDGE_DRAG_START, 

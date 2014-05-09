@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:54
+build time: May 9 14:05
 */
 /*
 combined modules:
@@ -474,19 +474,16 @@ KISSY.add('menu/check-menuitem', [
 /** Compiled By kissy-xtemplate */
 KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var checkMenuitem = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('checkbox');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -498,7 +495,7 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
         params4.push('content');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(engine, scope, option3, buffer, ['getBaseCssClasses'], 0, 3);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 3);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
@@ -510,8 +507,9 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    checkMenuitem.TPL_NAME = module.name;
+    checkMenuitem.version = '5.0.0';
+    return checkMenuitem;
 });
 /**
  * @ignore
@@ -755,19 +753,16 @@ KISSY.add('menu/submenu', [
 /** Compiled By kissy-xtemplate */
 KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var t = function (scope, buffer, payload, undefined) {
-        var engine = this, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    var submenu = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        if ('5.0.0' !== S.version) {
-            throw new Error('current xtemplate file(' + engine.name + ')(v5.0.0) need to be recompiled using current kissy(v' + S.version + ')!');
-        }
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('content');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(engine, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
@@ -782,8 +777,9 @@ KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
         buffer.write('submenu-arrow">\u25BA</span>', 0);
         return buffer;
     };
-    t.TPL_NAME = module.name;
-    return t;
+    submenu.TPL_NAME = module.name;
+    submenu.version = '5.0.0';
+    return submenu;
 });
 /**
  * @ignore

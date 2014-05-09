@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 8 11:54
+build time: May 9 14:05
 */
 KISSY.add("navigation-view",["component/container","component/control","component/extension/content-box"],function(j,k){function l(a,c,b){return a+"navigation-view-"+("anim-"+c+"-"+(b?"enter":"leave"))+" "+a+"navigation-view-anim-ing"}function m(a,c,b){a=a.get("animation");return"string"===typeof a?a:b?c?a[1]:a[0]:c?a[0]:a[1]}function h(a,c,b){i(a);b=m(a,c,b);"none"===b?c?a.show():a.hide():(a.show(),a.$el.addClass(a._viewAnimCss=l(a.get("prefixCls"),b,c)))}function i(a){a._viewAnimCss&&(a.$el.removeClass(a._viewAnimCss),
 a._viewAnimCss=null)}function n(a,c,b){var e=a.loadingView,d=c.view,c=c.fromCache,f=a.get("activeView");a.fire("beforeInnerViewChange",{oldView:f,newView:d,backward:b});f&&f.leave&&f.leave();a.set("activeView",d);d.enter&&d.enter({fromCache:c});(c=d.promise)?(f?(h(f,!1,b),e.transition(!0,b)):e.show(),c.then(function(){if(a.get("activeView")===d){e.hide();d.show();a.fire("afterInnerViewChange",{newView:d,oldView:f,backward:b})}})):(e.get("visible")?(e.transition(!1,b),h(d,!0,b)):f?(h(f,!1,b),h(d,!0,

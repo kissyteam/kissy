@@ -335,11 +335,11 @@ if (! _$jscoverage['/picker/month-panel/control.js'].branchData) {
   _$jscoverage['/picker/month-panel/control.js'].branchData['30'][1] = new BranchData();
 }
 _$jscoverage['/picker/month-panel/control.js'].branchData['30'][1].init(59, 5, 'j < 4');
-function visit23_30_1(result) {
+function visit21_30_1(result) {
   _$jscoverage['/picker/month-panel/control.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/control.js'].branchData['28'][1].init(467, 5, 'i < 3');
-function visit22_28_1(result) {
+function visit20_28_1(result) {
   _$jscoverage['/picker/month-panel/control.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/control.js'].lineData[6]++;
@@ -379,11 +379,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker/month-panel/control.js'].lineData[27]++;
     var index = 0;
     _$jscoverage['/picker/month-panel/control.js'].lineData[28]++;
-    for (var i = 0; visit22_28_1(i < 3); i++) {
+    for (var i = 0; visit20_28_1(i < 3); i++) {
       _$jscoverage['/picker/month-panel/control.js'].lineData[29]++;
       months[i] = [];
       _$jscoverage['/picker/month-panel/control.js'].lineData[30]++;
-      for (var j = 0; visit23_30_1(j < 4); j++) {
+      for (var j = 0; visit21_30_1(j < 4); j++) {
         _$jscoverage['/picker/month-panel/control.js'].lineData[31]++;
         current.setMonth(index);
         _$jscoverage['/picker/month-panel/control.js'].lineData[32]++;

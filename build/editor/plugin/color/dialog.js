@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:01
+build time: May 9 13:56
 */
 KISSY.add("editor/plugin/color/dialog",["editor","../dialog","dom"],function(e,g){function j(a){if(e.isArray(a))return a;var b=RegExp;if(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a,16)});if(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a+a,16)});if(/^rgb\((.*),(.*),(.*)\)$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return 0<a.indexOf("%")?2.55*parseFloat(a,10):a|0})}function m(a){var a=
 "0"+a,b=a.length;return a.slice(b-2,b)}function n(a){a=j(a);return"#"+m(a[0].toString(16))+m(a[1].toString(16))+m(a[2].toString(16))}function p(a){this.editor=a;this._init()}var q=g("editor"),r=g("../dialog"),f=e.map,s=g("dom"),o=function(){function a(a,i,c){for(var d=[],a=b(a),i=b(i),h=(i[0]-a[0])/c,k=(i[1]-a[1])/c,e=(i[2]-a[2])/c,l=0,g=a[0],j=a[1],a=a[2];l<c;l++)d[l]=[g,j,a],g+=h,j+=k,a+=e;d[l]=i;return f(d,function(a){return f(a,function(a){return Math.min(Math.max(0,Math.floor(a)),255)})})}function b(a){var b=

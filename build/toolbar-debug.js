@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:13
+build time: May 9 14:08
 */
 /*
 combined modules:
@@ -194,10 +194,12 @@ KISSY.add('toolbar', [
             // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
             expandedItem: {},
             defaultChildCfg: {
-                value: {
-                    xclass: 'button',
-                    handleGestureEvents: false,
-                    focusable: false
+                valueFn: function () {
+                    return {
+                        xclass: 'button',
+                        handleGestureEvents: false,
+                        focusable: false
+                    };
                 }
             }
         }

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Apr 29 15:09
+build time: May 9 14:04
 */
 /*
 combined modules:
@@ -48,7 +48,54 @@ KISSY.add('event/gesture/rotate', [
             if (!self.isStarted) {
                 self.isStarted = true;
                 self.startAngle = angle;
-                self.target = self.getCommonTarget(e);
+                self.target = self.getCommonTarget(e);    /**
+                 * fired when rotate started
+                 * @event ROTATE_START
+                 * @member KISSY.Event.Gesture.Rotate
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Number} e.rotation -360~360 rotate angle relative to pinch start
+                 * @param {Number} e.angle -360~360 current rotate absolute angle
+                 */
+                                                          /**
+                 * fired when rotate
+                 * @event ROTATE
+                 * @member KISSY.Event.Gesture.Rotate
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Number} e.rotation -360~360 rotate angle relative to pinch start
+                 * @param {Number} e.angle -360~360 current rotate absolute angle
+                 */
+                                                          /**
+                 * fired when rotate ended
+                 * @event ROTATE_END
+                 * @member KISSY.Event.Gesture.Rotate
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Number} e.rotation -360~360 rotate angle relative to pinch start
+                 * @param {Number} e.angle -360~360 current rotate absolute angle
+                 */
+                /**
+                 * fired when rotate started
+                 * @event ROTATE_START
+                 * @member KISSY.Event.Gesture.Rotate
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Number} e.rotation -360~360 rotate angle relative to pinch start
+                 * @param {Number} e.angle -360~360 current rotate absolute angle
+                 */
+                /**
+                 * fired when rotate
+                 * @event ROTATE
+                 * @member KISSY.Event.Gesture.Rotate
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Number} e.rotation -360~360 rotate angle relative to pinch start
+                 * @param {Number} e.angle -360~360 current rotate absolute angle
+                 */
+                /**
+                 * fired when rotate ended
+                 * @event ROTATE_END
+                 * @member KISSY.Event.Gesture.Rotate
+                 * @param {KISSY.Event.DomEvent.Object} e
+                 * @param {Number} e.rotation -360~360 rotate angle relative to pinch start
+                 * @param {Number} e.angle -360~360 current rotate absolute angle
+                 */
                 DomEvent.fire(self.target, ROTATE_START, S.mix(e, {
                     angle: angle,
                     rotation: 0
