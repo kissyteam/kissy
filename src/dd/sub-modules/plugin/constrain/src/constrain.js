@@ -6,8 +6,9 @@
 KISSY.add(function (S, require, exports, module) {
     var Node = require('node'),
         Base = require('base');
+    var util = require('util');
     var $ = Node.all,
-        CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
+        CONSTRAIN_EVENT = '.-ks-constrain' + util.now(),
         WIN = S.Env.host;
 
     function onDragStart(e) {
@@ -17,7 +18,7 @@ KISSY.add(function (S, require, exports, module) {
             dragNode = drag.get('dragNode'),
             constrain = self.get('constrain');
         if (constrain) {
-            if (S.isWindow(constrain[0])) {
+            if (util.isWindow(constrain[0])) {
                 self.__constrainRegion = {
                     left: l = constrain.scrollLeft(),
                     top: t = constrain.scrollTop(),
@@ -32,7 +33,7 @@ KISSY.add(function (S, require, exports, module) {
                     right: lt.left + constrain.outerWidth(),
                     bottom: lt.top + constrain.outerHeight()
                 };
-            } else if (S.isPlainObject(constrain)) {
+            } else if (util.isPlainObject(constrain)) {
                 self.__constrainRegion = constrain;
             }
             if (self.__constrainRegion) {
@@ -115,7 +116,7 @@ KISSY.add(function (S, require, exports, module) {
                     if (v) {
                         if (v === true) {
                             return $(WIN);
-                        } else if (v.nodeType || S.isWindow(v) ||
+                        } else if (v.nodeType || util.isWindow(v) ||
                             typeof v === 'string') {
                             return $(v);
                         }

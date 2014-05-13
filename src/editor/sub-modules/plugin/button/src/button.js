@@ -4,9 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     // 'editor', '../font/cmd'
-    var Editor=require('editor');
-    var Button=require('button');
+    var Editor = require('editor');
+    var Button = require('button');
     /**
      * add button to editor
      * @param {String} id control id
@@ -28,7 +29,7 @@ KISSY.add(function (S, require) {
 
         cfg.elCls = prefixCls + 'button ' + (cfg.elCls || '');
 
-        var b = new ButtonType(S.mix({
+        var b = new ButtonType(util.mix({
             render: self.get('toolBarEl'),
             content: '<span ' +
                 'class="' + prefixCls + 'item ' +

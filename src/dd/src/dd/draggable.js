@@ -9,11 +9,11 @@ KISSY.add(function (S, require) {
         DDM = require('./ddm'),
         Base = require('base'),
         DragGesture = require('event/gesture/drag');
-
+    var util = require('util');
     var UA = require('ua'),
         $ = Node.all,
         $doc = $(document),
-        each = S.each,
+        each = util.each,
         ie = UA.ie,
         PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
@@ -241,7 +241,7 @@ KISSY.add(function (S, require) {
                     .on(DragGesture.DRAG_END, onDragEnd, self)
                     .on(BasicGesture.START, onGestureStart, self)
                     // android need to prevent on touchmove
-                    .on(['dragstart','touchmove'], preventDefault);
+                    .on(['dragstart', 'touchmove'], preventDefault);
             }
         },
 
@@ -253,7 +253,7 @@ KISSY.add(function (S, require) {
                     .detach(DragGesture.DRAG, onDrag, self)
                     .detach(DragGesture.DRAG_END, onDragEnd, self)
                     .detach(BasicGesture.START, onGestureStart, self)
-                    .detach(['dragstart','touchmove'], preventDefault);
+                    .detach(['dragstart', 'touchmove'], preventDefault);
             }
         },
 

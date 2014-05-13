@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom/base');
     var cssHooks = Dom._cssHooks;
     var rMatrix = /progid:DXImageTransform.Microsoft.Matrix\(([^)]*)\)/;
@@ -78,7 +79,7 @@ KISSY.add(function (S, require) {
             }
             filter = currentStyle && currentStyle.filter || elemStyle.filter || '';
 
-            if (!matrixVal && !S.trim(filter.replace(rMatrix, ''))) {
+            if (!matrixVal && !util.trim(filter.replace(rMatrix, ''))) {
                 // Setting style.filter to null, '' & ' ' still leave 'filter:' in the cssText
                 // if 'filter:' is present at all, clearType is disabled, we want to avoid this
                 // style.removeAttribute is IE Only, but so apparently is this code path...
@@ -137,7 +138,7 @@ KISSY.add(function (S, require) {
         }
         for (var i = 0; i < origin.length; i++) {
             var val = parseFloat(origin[i]);
-            if (S.endsWith(origin[i], '%')) {
+            if (util.endsWith(origin[i], '%')) {
                 origin[i] = val * region[i ? 'height' : 'width'] / 100;
             } else {
                 origin[i] = val;
@@ -149,7 +150,7 @@ KISSY.add(function (S, require) {
     // turn transform string into standard matrix form
     function matrix(transform) {
         transform = transform.split(')');
-        var trim = S.trim,
+        var trim = util.trim,
             i = -1,
             l = transform.length - 1,
             split, prop, val,

@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Container = require('component/container');
+    var util = require('util');
     /**
      * tab body container for tab panels.xclass: 'tabs-body'.
      * @class  KISSY.Tabs.Body
@@ -29,7 +30,7 @@ KISSY.add(function (S, require) {
         syncUI: function () {
             var self = this,
                 children = self.get('children');
-            S.each(children, function (c, i) {
+            util.each(children, function (c, i) {
                 if (c.get('selected')) {
                     self.set('selectedPanelIndex', i);
                     return false;

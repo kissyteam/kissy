@@ -4,11 +4,12 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('./api');
     var NodeType = Dom.NodeType,
         CONTAIN_MASK = 16;
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -176,10 +177,10 @@ KISSY.add(function (S, require) {
                 els2 = Dom.query(s2);
 
                 if (typeof s2 === 'string') {
-                    return S.indexOf(el, els2);
+                    return util.indexOf(el, els2);
                 }
 
-                return S.indexOf(els2[0], els);
+                return util.indexOf(els2[0], els);
             },
 
             /**
@@ -228,7 +229,7 @@ KISSY.add(function (S, require) {
             filter = 1;
         }
         var ret = [],
-            isArray = S.isArray(filter),
+            isArray = util.isArray(filter),
             fi,
             filterLength;
 
@@ -263,7 +264,7 @@ KISSY.add(function (S, require) {
         if (!filter) {
             return true;
         }
-        if (S.isArray(filter)) {
+        if (util.isArray(filter)) {
             var i, l = filter.length;
             if (!l) {
                 return true;
@@ -293,7 +294,7 @@ KISSY.add(function (S, require) {
         }
 
         if (parentNode) {
-            tmp = S.makeArray(parentNode.childNodes);
+            tmp = util.makeArray(parentNode.childNodes);
             for (i = 0; i < tmp.length; i++) {
                 el = tmp[i];
                 if (!allowText && el.nodeType !== NodeType.ELEMENT_NODE) {

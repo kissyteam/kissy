@@ -6,9 +6,9 @@
 KISSY.add(function (S, require) {
     /*jshint loopfunc:true*/
     var HtmlParser = require('html-parser');
-
-    var $ = S.all,
-        UA = S.UA,
+    var util = require('util');
+    var $ = require('node').all,
+        UA = require('ua'),
         dtd = HtmlParser.DTD,
         wordFilter = new HtmlParser.Filter(),
         cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i,
@@ -456,7 +456,7 @@ KISSY.add(function (S, require) {
                     lastListItem = listItem;
                     lastIndent = listItemIndent;
                 }
-                else if (list && !(child.nodeType === 3 && !S.trim(child.nodeValue))) {
+                else if (list && !(child.nodeType === 3 && !util.trim(child.nodeValue))) {
                     list = lastIndent = lastListItem = null;
                 }
             }
@@ -686,7 +686,7 @@ KISSY.add(function (S, require) {
                     element.setAttribute('ke:indent', 1);
                 }
 
-                S.each(listMarker.attributes, function (a) {
+                util.each(listMarker.attributes, function (a) {
                     element.setAttribute(a.name, a.value);
                 });
 
@@ -720,7 +720,7 @@ KISSY.add(function (S, require) {
     };
 
     (function () {
-        var blockLike = S.merge(dtd.$block, dtd.$listItem, dtd.$tableContent),
+        var blockLike = util.merge(dtd.$block, dtd.$listItem, dtd.$tableContent),
             falsyFilter = filters.falsyFilter,
             stylesFilter = filters.stylesFilter,
             createListBulletMarker = utils.createListBulletMarker,
@@ -831,7 +831,7 @@ KISSY.add(function (S, require) {
                                     for (var i = 0; i < length; i++) {
                                         // Assume MS-Word mostly generate only simple
                                         // selector( [Type selector][Class selector]).
-                                        S.trim(selectors[ i ])
+                                        util.trim(selectors[ i ])
                                             .replace(/^(\w+)(\.[\w-]+)?$/g,
                                             function (match, tagName, className) {
                                                 tagName = tagName || '*';
@@ -901,7 +901,7 @@ KISSY.add(function (S, require) {
                     if (singleChild && singleChild.nodeName === 'table') {
                         var attrs = element.attributes;
 
-                        S.each(attrs, function (attr) {
+                        util.each(attrs, function (attr) {
                             singleChild.setAttribute(attr.name, attr.value);
                         });
 
@@ -943,7 +943,7 @@ KISSY.add(function (S, require) {
 
                     if ('font' === parent.name)     // Merge nested <font> tags.
                     {
-                        S.each(element.attributes, function (attr) {
+                        util.each(element.attributes, function (attr) {
                             parent.setAttribute(attr.name, attr.value);
                         });
                         if (styleText) {

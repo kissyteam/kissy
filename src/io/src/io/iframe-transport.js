@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom'),
         IO = require('./base'),
         Event = require('event/dom');
@@ -14,7 +15,7 @@ KISSY.add(function (S, require) {
 
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
-        iframeConverter = S.clone(IO.getConfig().converters.text);
+        iframeConverter = util.clone(IO.getConfig().converters.text);
 
     // https://github.com/kissyteam/kissy/issues/304
     // returned data must be escaped by server for json dataType
@@ -28,7 +29,7 @@ KISSY.add(function (S, require) {
     // text or html dataType is of same effect.
     // same as normal ajax or html5 FileData
     iframeConverter.json = function (str) {
-        return S.parseJson(S.unEscapeHtml(str));
+        return util.parseJson(util.unEscapeHtml(str));
     };
 
     // iframe 内的内容就是 body.innerText
@@ -52,7 +53,7 @@ KISSY.add(function (S, require) {
     });
 
     function createIframe(xhr) {
-        var id = S.guid('io-iframe'),
+        var id = util.guid('io-iframe'),
             iframe,
         // empty src, so no history
             src = Dom.getEmptyIframeSrc();
@@ -71,9 +72,9 @@ KISSY.add(function (S, require) {
 
     function addDataToForm(query, form, serializeArray) {
         var ret = [], isArray, vs, i, e;
-        S.each(query, function (data, k) {
-            isArray = S.isArray(data);
-            vs = S.makeArray(data);
+        util.each(query, function (data, k) {
+            isArray = util.isArray(data);
+            vs = util.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
             for (i = 0; i < vs.length; i++) {
                 e = doc.createElement('input');
@@ -96,7 +97,7 @@ KISSY.add(function (S, require) {
         logger.info('use IframeTransport for: ' + io.config.url);
     }
 
-    S.augment(IframeTransport, {
+    util.augment(IframeTransport, {
         send: function () {
 
             var self = this,
@@ -131,7 +132,7 @@ KISSY.add(function (S, require) {
 
             // unparam to kv map
             if (data) {
-                query = S.unparam(data);
+                query = util.unparam(data);
             }
 
             if (query) {
@@ -199,7 +200,7 @@ KISSY.add(function (S, require) {
                         // https://github.com/kissyteam/kissy/issues/304
                         io.responseText = Dom.html(iframeDoc.body);
                         // ie still can retrieve xml 's responseText
-                        if (S.startsWith(io.responseText, '<?xml')) {
+                        if (util.startsWith(io.responseText, '<?xml')) {
                             io.responseText = undefined;
                         }
                     }

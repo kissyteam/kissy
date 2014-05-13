@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var ContentBox = require('component/extension/content-box');
     var KeyCode = Node.KeyCode;
     var MenuButtonTpl = require('./menubutton-xtpl');
-
+    var util = require('util');
     /**
      * A menu button component, consist of a button and a drop down popup menu.
      * xclass: 'menu-button'.
@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
         },
 
         beforeCreateDom: function (renderData) {
-            S.mix(renderData.elAttrs, {
+            util.mix(renderData.elAttrs, {
                 'aria-expanded': false,
                 'aria-haspopup': true
             });
@@ -60,7 +60,7 @@ KISSY.add(function (S, require) {
                             adjustY: 1
                         }
                     };
-                    S.mix(menu.get('align'), align, false);
+                    util.mix(menu.get('align'), align, false);
                     if (self.get('matchElWidth')) {
                         menu.render();
                         var menuEl = menu.get('el');

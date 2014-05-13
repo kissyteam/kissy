@@ -5,8 +5,9 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
-    var substitute = S.substitute;
-    var transformVendorInfo = S.Feature.getCssVendorInfo('transform');
+    var Node = require('node');
+    var substitute = require('util').substitute;
+    var transformVendorInfo = require('feature').getCssVendorInfo('transform');
     var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;
 
     /**
@@ -85,7 +86,7 @@ KISSY.add(function (S, require) {
             var self = this;
             self.scrollView = scrollView;
             var prefixCls = scrollView.get('prefixCls');
-            var el = S.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' +
+            var el = Node.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' +
                 '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' +
                 '<span class="{prefixCls}scroll-view-pull-icon"></span>' +
                 '<span class="{prefixCls}scroll-view-pull-label"></span>' +

@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var BaseEvent = require('event/base');
     var Special = require('./special');
-
+    var util = require('util');
     /**
      * observer for dom event
      * @class KISSY.Event.DomEvent.Observer
@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
          */
     }
 
-    S.extend(DomEventObserver, BaseEvent.Observer, {
+    util.extend(DomEventObserver, BaseEvent.Observer, {
         keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
         notifyInternal: function (event, ce) {

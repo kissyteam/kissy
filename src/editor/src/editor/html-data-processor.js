@@ -9,10 +9,12 @@
  */
 KISSY.add(function (S, require) {
     var HtmlParser = require('html-parser');
-    var OLD_IE = S.UA.ieMode < 11;
+    var UA = require('ua');
+    var OLD_IE = UA.ieMode < 11;
     var Node = require('node');
     var dtd = HtmlParser.DTD;
     var NodeType = Node.NodeType;
+    var util = require('util');
 
     // <span></span> <span><span></span></span>
     function isEmptyElement(el) {
@@ -41,8 +43,7 @@ KISSY.add(function (S, require) {
 
     return {
         init: function (editor) {
-            var UA = S.UA,
-                htmlFilter = new HtmlParser.Filter(),
+            var htmlFilter = new HtmlParser.Filter(),
                 dataFilter = new HtmlParser.Filter();
 
             // remove empty inline element
@@ -135,7 +136,7 @@ KISSY.add(function (S, require) {
                     attributes: {
                         // 清除空style
                         style: function (v) {
-                            if (!S.trim(v)) {
+                            if (!util.trim(v)) {
                                 return false;
                             }
                             return undefined;
@@ -155,7 +156,7 @@ KISSY.add(function (S, require) {
                     comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker) {
-                            contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
+                            contents = util.trim(util.urlDecode(contents.substr(protectedSourceMarker.length)));
                             return HtmlParser.parse(contents).childNodes[0];
                         }
                         return undefined;
@@ -195,7 +196,7 @@ KISSY.add(function (S, require) {
                         lastIndex = childNodes.length,
                         last = childNodes[lastIndex - 1];
                     while (last &&
-                        (last.nodeType === 3 && !S.trim(last.nodeValue) ||
+                        (last.nodeType === 3 && !util.trim(last.nodeValue) ||
                             last.nodeType === 1 && isEmptyElement(last))) {
                         last = childNodes[--lastIndex];
                     }
@@ -246,7 +247,7 @@ KISSY.add(function (S, require) {
                 }
 
                 // Find out the list of block-like tags that can contain <br>.
-                var blockLikeTags = S.merge(
+                var blockLikeTags = util.merge(
                     dtd.$block,
                     dtd.$listItem,
                     dtd.$tableContent), i;
@@ -322,7 +323,7 @@ KISSY.add(function (S, require) {
 
             function unprotectElements(html) {
                 return html.replace(encodedElementsRegex, function (match, encoded) {
-                    return S.urlDecode(encoded);
+                    return util.urlDecode(encoded);
                 });
             }
 

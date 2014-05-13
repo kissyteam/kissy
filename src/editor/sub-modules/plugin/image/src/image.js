@@ -9,8 +9,8 @@ KISSY.add(function (S, require) {
     require('./bubble');
     require('./contextmenu');
     var DialogLoader = require('./dialog-loader');
-
-    var UA = S.UA,
+    var util = require('util');
+    var UA = require('ua'),
         Node = require('node'),
         $ = Node.all,
         checkImg = function (node) {
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(ImagePlugin, {
+    (ImagePlugin.prototype = {
         pluginRenderUI: function (editor) {
 
             var self = this;
@@ -89,7 +89,7 @@ KISSY.add(function (S, require) {
 
             var children = [];
 
-            S.each(handlers, function (h) {
+            util.each(handlers, function (h) {
                 children.push({
                     content: h.content
                 });
@@ -101,7 +101,7 @@ KISSY.add(function (S, require) {
                 listeners: {
                     click: function (e) {
                         var self = this, content = e.target.get('content');
-                        S.each(handlers, function (h) {
+                        util.each(handlers, function (h) {
                             if (h.content === content) {
                                 h.fn.call(self);
                             }
@@ -126,7 +126,7 @@ KISSY.add(function (S, require) {
                     afterRenderUI: function () {
                         var bubble = this,
                             el = bubble.get('contentEl');
-                        el.html(S.substitute(tipHTML, {
+                        el.html(util.substitute(tipHTML, {
                             prefixCls: prefixCls
                         }));
                         var tipUrlEl = el.one('.' + prefixCls + 'editor-bubble-url'),

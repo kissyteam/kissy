@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     function StrikeThrough() {
     }
 
-    S.augment(StrikeThrough, {
+    (StrikeThrough.prototype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
             editor.addButton('strikeThrough', {

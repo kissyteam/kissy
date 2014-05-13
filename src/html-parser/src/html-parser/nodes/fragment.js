@@ -5,14 +5,14 @@
  */
 KISSY.add(function (S, require) {
     var Tag = require('./tag');
-
+    var util = require('util');
     function Fragment() {
         this.childNodes = [];
         this.nodeType = 9;
         this.nodeName = '#fragment';
     }
 
-    S.extend(Fragment, Tag, {
+    util.extend(Fragment, Tag, {
         writeHtml: function (writer, filter) {
             this.__filter = filter;
             this.isChildrenFiltered = 0;

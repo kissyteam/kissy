@@ -14,6 +14,7 @@ KISSY.add(function (S, require) {
     var Walker = require('./walker');
     var Editor = require('./base');
     var ElementPath = require('./element-path');
+    var util = require('util');
     /**
      * Enum for range
      * @enum {number} KISSY.Editor.RangeType
@@ -38,7 +39,7 @@ KISSY.add(function (S, require) {
         KER = Editor.RangeType,
         KEP = Editor.PositionType,
         Dom = require('dom'),
-        UA = S.UA,
+        UA = require('ua'),
         dtd = Editor.XHTML_DTD,
         $ = Node.all,
         UN_REMOVABLE = {
@@ -100,7 +101,7 @@ KISSY.add(function (S, require) {
         var c1 = node.nodeType !== Dom.NodeType.TEXT_NODE &&
                 Dom.nodeName(node) in dtd.$removeEmpty,
         // 文本为空，可以继续取下一个判断边界
-            c2 = node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue),
+            c2 = node.nodeType === Dom.NodeType.TEXT_NODE && !util.trim(node.nodeValue),
         // 恩，进去了书签，可以继续取下一个判断边界
             c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
@@ -121,7 +122,7 @@ KISSY.add(function (S, require) {
 
             if (node.nodeType === Dom.NodeType.TEXT_NODE) {
                 // If there's any visible text, then we're not at the start.
-                if (S.trim(node.nodeValue).length) {
+                if (util.trim(node.nodeValue).length) {
                     return FALSE;
                 }
             } else if (node.nodeType === Dom.NodeType.ELEMENT_NODE) {
@@ -454,7 +455,7 @@ KISSY.add(function (S, require) {
         self.document = document;
     }
 
-    S.augment(KERange, {
+    util.augment(KERange, {
         /**
          * Range string representation.
          */
@@ -960,7 +961,7 @@ KISSY.add(function (S, require) {
             startNode.html('&nbsp;');
 
             if (serializable) {
-                baseId = S.guid('ke_bm_');
+                baseId = util.guid('ke_bm_');
                 startNode.attr('id', baseId + 'S');
             }
 
@@ -1131,9 +1132,9 @@ KISSY.add(function (S, require) {
             } else {
                 // Created with createBookmark().
                 var serializable = bookmark.serializable,
-                    startNode = serializable ? S.one('#' + bookmark.startNode,
+                    startNode = serializable ? $('#' + bookmark.startNode,
                         doc) : bookmark.startNode,
-                    endNode = serializable ? S.one('#' + bookmark.endNode,
+                    endNode = serializable ? $('#' + bookmark.endNode,
                         doc) : bookmark.endNode;
 
                 // Set the range start at the bookmark start node position.
@@ -1389,7 +1390,7 @@ KISSY.add(function (S, require) {
             // If the starting node is a text node, and non-empty before the offset,
             // then we're surely not at the start of block.
             if (startOffset && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
-                var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
+                var textBefore = util.trim(startContainer[0].nodeValue.substring(0, startOffset));
                 if (textBefore.length) {
                     return FALSE;
                 }
@@ -1426,7 +1427,7 @@ KISSY.add(function (S, require) {
             // If the ending node is a text node, and non-empty after the offset,
             // then we're surely not at the end of block.
             if (endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
-                var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
+                var textAfter = util.trim(endContainer[0].nodeValue.substring(endOffset));
                 if (textAfter.length) {
                     return FALSE;
                 }
@@ -1616,7 +1617,7 @@ KISSY.add(function (S, require) {
                     // In Gecko, the last child node must be a bogus <br>.
                     // Note: bogus <br> added under <ul> or <ol> would cause
                     // lists to be incorrectly rendered.
-                    if (!UA.ie && !S.inArray(startBlock.nodeName(), ['ul', 'ol'])) {
+                    if (!UA.ie && !util.inArray(startBlock.nodeName(), ['ul', 'ol'])) {
                         startBlock._4eAppendBogus();
                     }
                 }

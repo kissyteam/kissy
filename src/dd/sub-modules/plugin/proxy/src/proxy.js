@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
         Base = require('base');
 
     var DDM = DD.DDM,
-        PROXY_EVENT = '.-ks-proxy' + S.now();
+        PROXY_EVENT = '.-ks-proxy' + (+new Date());
 
     /**
      * @extends KISSY.Base

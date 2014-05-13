@@ -5,17 +5,17 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
-    var OLD_IE = S.UA.ieMode < 11;
     var Walker = Editor.Walker;
     var DialogLoader = require('./dialog-loader');
     require('./contextmenu');
     require('./button');
-    var UA = S.UA,
+    var util = require('util');
+    var UA = require('ua'),
         Dom = require('dom'),
-        Node = S.Node,
+        Node = require('node'),
         tableRules = ['tr', 'th', 'td', 'tbody', 'table'],
         cellNodeRegex = /^(?:td|th)$/;
-
+    var OLD_IE = UA.ieMode < 11;
     function getSelectedCells(selection) {
         // Walker will try to split text nodes, which will make the current selection
         // invalid. So save bookmarks before doing anything.
@@ -374,7 +374,7 @@ KISSY.add(function (S, require) {
                         border = parseInt(element.getAttribute('border'), 10);
 
                     if (!border || border <= 0) {
-                        element.setAttribute('class', S.trim((cssClass || '') +
+                        element.setAttribute('class', util.trim((cssClass || '') +
                             ' ' + showBorderClassName));
                     }
                 }
@@ -387,7 +387,7 @@ KISSY.add(function (S, require) {
                     var cssClass = table.getAttribute('class'), v;
 
                     if (cssClass) {
-                        v = S.trim(cssClass.replace(showBorderClassName, ''));
+                        v = util.trim(cssClass.replace(showBorderClassName, ''));
                         if (v) {
                             table.setAttribute('class', v);
                         } else {
@@ -405,7 +405,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(TablePlugin, {
+    util.augment(TablePlugin, {
         pluginRenderUI: function (editor) {
             // 动态加入显表格 border css，便于编辑
             editor.addCustomStyle(cssStyleText);
@@ -517,14 +517,14 @@ KISSY.add(function (S, require) {
                 };
 
             var children = [];
-            S.each(handlers, function (h, name) {
+            util.each(handlers, function (h, name) {
                 children.push({
                     content: name
                 });
             });
 
             editor.addContextMenu('table', function (node) {
-                if (S.inArray(Dom.nodeName(node), tableRules)) {
+                if (util.inArray(Dom.nodeName(node), tableRules)) {
                     return true;
                 }
             }, {
@@ -542,7 +542,7 @@ KISSY.add(function (S, require) {
                         if (e.newVal) {
                             var self = this, children = self.get('children');
                             var editor = self.get('editor');
-                            S.each(children, function (c) {
+                            util.each(children, function (c) {
                                 var content = c.get('content');
                                 if (!statusChecker[content] ||
                                     statusChecker[content].call(self, editor)) {

@@ -3,7 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var vendorInfo = S.Feature.getCssVendorInfo('animation');
+    var util = require('util');
+    var vendorInfo = require('feature').getCssVendorInfo('animation');
     var vendorPrefix = vendorInfo && vendorInfo.propertyNamePrefix;
     var ANIMATION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'AnimationEnd') :
@@ -215,7 +216,7 @@ KISSY.add(function (S, require) {
             view = self.addChild(config);
             view.$el.on(ANIMATION_END_EVENT, onViewAnimEnd, view);
         }
-        view.timeStamp = S.now();
+        view.timeStamp = util.now();
         return {
             view: view,
             fromCache: fromCache
@@ -257,7 +258,7 @@ KISSY.add(function (S, require) {
         replace: function (config) {
             var self = this,
                 viewStack = self.viewStack;
-            S.mix(viewStack[viewStack.length - 1], config);
+            util.mix(viewStack[viewStack.length - 1], config);
             self.get('activeView').set(config);
         },
 

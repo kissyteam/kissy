@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Quote = require('./quote');
+    var util = require('util');
 
     function padding2(n) {
         return n < 10 ? '0' + n : n;
@@ -42,7 +43,7 @@ KISSY.add(function (S, require) {
                 if (!value) {
                     return 'null';
                 }
-                if (S.isArray(value)) {
+                if (util.isArray(value)) {
                     return ja(value, replacerFunction, propertyList, gap, stack, indent);
                 }
                 return jo(value, replacerFunction, propertyList, gap, stack, indent);
@@ -54,7 +55,7 @@ KISSY.add(function (S, require) {
 
     function jo(value, replacerFunction, propertyList, gap, stack, indent) {
         if ('@DEBUG@') {
-            if (S.inArray(value, stack)) {
+            if (util.inArray(value, stack)) {
                 throw new TypeError('cyclic json');
             }
             stack[stack.length] = value;
@@ -66,7 +67,7 @@ KISSY.add(function (S, require) {
         if (propertyList !== undefined) {
             k = propertyList;
         } else {
-            k = S.keys(value);
+            k = util.keys(value);
         }
         var partial = [];
         for (i = 0, kl = k.length; i < kl; i++) {
@@ -102,7 +103,7 @@ KISSY.add(function (S, require) {
 
     function ja(value, replacerFunction, propertyList, gap, stack, indent) {
         if ('@DEBUG@') {
-            if (S.inArray(value, stack)) {
+            if (util.inArray(value, stack)) {
                 throw new TypeError('cyclic json');
             }
             stack[stack.length] = value;
@@ -146,7 +147,7 @@ KISSY.add(function (S, require) {
         if (replacer) {
             if (typeof replacer === 'function') {
                 replacerFunction = replacer;
-            } else if (S.isArray(replacer)) {
+            } else if (util.isArray(replacer)) {
                 propertyList = replacer;
             }
         }

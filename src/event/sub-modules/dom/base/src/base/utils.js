@@ -6,7 +6,7 @@
 
 KISSY.add(function (S, require) {
     var Dom = require('dom');
-    var EVENT_GUID = 'ksEventTargetId_' + S.now(),
+    var EVENT_GUID = 'ksEventTargetId_' + (+new Date()),
         doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {

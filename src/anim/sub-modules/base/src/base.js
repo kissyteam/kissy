@@ -8,9 +8,10 @@ KISSY.add(function (S, require) {
         Utils = require('./base/utils'),
         Q = require('./base/queue'),
         Promise = require('promise'),
+        util = require('util'),
         NodeType = Dom.NodeType,
-        camelCase = S.camelCase,
-        noop = S.noop,
+        camelCase = util.camelCase,
+        noop = util.noop,
         specialVals = {
             toggle: 1,
             hide: 1,
@@ -26,7 +27,7 @@ KISSY.add(function (S, require) {
     function syncComplete(self) {
         var _backupProps, complete = self.config.complete;
         // only recover after complete anim
-        if (!S.isEmptyObject(_backupProps = self._backupProps)) {
+        if (!util.isEmptyObject(_backupProps = self._backupProps)) {
             Dom.css(self.node, _backupProps);
         }
         if (complete) {
@@ -68,11 +69,11 @@ KISSY.add(function (S, require) {
         } else {
             // the transition properties
             if (typeof to === 'string') {
-                to = S.unparam(String(to), ';', ':');
-                S.each(to, function (value, prop) {
-                    var trimProp = S.trim(prop);
+                to = util.unparam(String(to), ';', ':');
+                util.each(to, function (value, prop) {
+                    var trimProp = util.trim(prop);
                     if (trimProp) {
-                        to[trimProp] = S.trim(value);
+                        to[trimProp] = util.trim(value);
                     }
                     if (!trimProp || trimProp !== prop) {
                         delete to[prop];
@@ -80,8 +81,8 @@ KISSY.add(function (S, require) {
                 });
             }
             // animation config
-            if (S.isPlainObject(duration)) {
-                config = S.clone(duration);
+            if (util.isPlainObject(duration)) {
+                config = util.clone(duration);
             } else {
                 config = {
                     complete: complete
@@ -97,7 +98,7 @@ KISSY.add(function (S, require) {
             config.to = to;
         }
 
-        config = S.merge(defaultConfig, config);
+        config = util.merge(defaultConfig, config);
 
         // Promise.call(self);
         AnimBase.superclass.constructor.call(self);
@@ -111,7 +112,7 @@ KISSY.add(function (S, require) {
 
         node = config.node;
 
-        if (!S.isPlainObject(node)) {
+        if (!util.isPlainObject(node)) {
             node = Dom.get(config.node);
         }
         self.node = self.el = node;
@@ -127,7 +128,7 @@ KISSY.add(function (S, require) {
         config.to = newTo;
     }
 
-    S.extend(AnimBase, Promise, {
+    util.extend(AnimBase, Promise, {
         /**
          * prepare fx hook
          * @protected
@@ -150,13 +151,13 @@ KISSY.add(function (S, require) {
             Utils.saveRunningAnim(self);
 
             // 分离 easing
-            S.each(to, function (val, prop) {
-                if (!S.isPlainObject(val)) {
+            util.each(to, function (val, prop) {
+                if (!util.isPlainObject(val)) {
                     val = {
                         value: val
                     };
                 }
-                _propsData[prop] = S.mix({
+                _propsData[prop] = util.mix({
                     // simulate css3
                     delay: defaultDelay,
                     //// timing-function
@@ -175,7 +176,7 @@ KISSY.add(function (S, require) {
                     // change the overflow attribute when overflowX and
                     // overflowY are set to the same value
                     var elStyle = node.style;
-                    S.mix(_backupProps, {
+                    util.mix(_backupProps, {
                         overflow: elStyle.overflow,
                         'overflow-x': elStyle.overflowX,
                         'overflow-y': elStyle.overflowY
@@ -191,7 +192,7 @@ KISSY.add(function (S, require) {
 
                 var exit, hidden;
                 hidden = (Dom.css(node, 'display') === 'none');
-                S.each(_propsData, function (_propData, prop) {
+                util.each(_propsData, function (_propData, prop) {
                     val = _propData.value;
                     // 直接结束
                     if (specialVals[val]) {
@@ -225,8 +226,8 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            self.startTime = S.now();
-            if (S.isEmptyObject(_propsData)) {
+            self.startTime = util.now();
+            if (util.isEmptyObject(_propsData)) {
                 self.__totalTime = defaultDuration * 1000;
                 self.__waitTimeout = setTimeout(function () {
                     self.stop(true);
@@ -261,7 +262,7 @@ KISSY.add(function (S, require) {
             var self = this;
             if (self.isRunning()) {
                 // already run time
-                self._runTime = S.now() - self.startTime;
+                self._runTime = util.now() - self.startTime;
                 self.__totalTime -= self._runTime;
                 Utils.removeRunningAnim(self);
                 Utils.savePausedAnim(self);
@@ -296,7 +297,7 @@ KISSY.add(function (S, require) {
             var self = this;
             if (self.isPaused()) {
                 // adjust time by run time caused by pause
-                self.startTime = S.now() - self._runTime;
+                self.startTime = util.now() - self._runTime;
                 Utils.removePausedAnim(self);
                 Utils.saveRunningAnim(self);
                 if (self.__waitTimeout) {
@@ -398,15 +399,15 @@ KISSY.add(function (S, require) {
         Q: Q
     };
 
-    S.each(['pause', 'resume'], function (action) {
+    util.each(['pause', 'resume'], function (action) {
         Statics[action] = function (node, queue) {
             if (
             // default queue
                 queue === null ||
-                    // name of specified queue
-                    typeof queue === 'string' ||
-                    // anims not belong to any queue
-                    queue === false
+                // name of specified queue
+                typeof queue === 'string' ||
+                // anims not belong to any queue
+                queue === false
                 ) {
                 return Utils.pauseOrResumeQueue(node, queue, action);
             }

@@ -11,8 +11,8 @@ KISSY.add(function (S, require) {
     var Overlay = require('overlay');
     var MenuButton = require('./menubutton');
 
-
-    var Node = S.Node,
+    var util = require('util');
+    var Node = require('node'),
         LIMIT = 5,
         INTERVAL = 5,
         DRAFT_SAVE = 'ks-editor-draft-save20110503';
@@ -61,7 +61,7 @@ KISSY.add(function (S, require) {
     var addRes = Editor.Utils.addRes,
         destroyRes = Editor.Utils.destroyRes;
 
-    S.augment(Draft, {
+    util.augment(Draft, {
         _getSaveKey: function () {
             var self = this,
                 cfg = self.config;
@@ -78,7 +78,7 @@ KISSY.add(function (S, require) {
                 if (str) {
                     // 原生 localStorage 必须串行化
                     drafts = (localStorage === window.localStorage) ?
-                        Json.parse(S.urlDecode(str)) : str;
+                        Json.parse(util.urlDecode(str)) : str;
                 }
                 self.drafts = drafts;
             }
@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
                 .appendTo(holder);
 
             var save = new Node(
-                    S.substitute('<a href="#" ' +
+                    util.substitute('<a href="#" ' +
                         'onclick="return false;" ' +
                         'class="{prefixCls}editor-button ' +
                         '{prefixCls}editor-draft-save-btn ks-inline-block" ' +
@@ -367,7 +367,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(DraftPlugin, {
+    util.augment(DraftPlugin, {
         pluginRenderUI: function (editor) {
             var config = this.config;
             if (localStorage.ready) {

@@ -4,6 +4,7 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/dom');
     var Dom = require('./api');
     var doc = S.Env.host.document,
@@ -78,7 +79,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -115,7 +116,7 @@ KISSY.add(function (S, require) {
                 }
 
                 if (_trim) {
-                    html = S.trim(html);
+                    html = util.trim(html);
                 }
 
                 var creators = Dom._creators,
@@ -319,7 +320,7 @@ KISSY.add(function (S, require) {
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
-                        all = S.makeArray(getElementsByTagName(el, '*'));
+                        all = util.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
                         Dom.removeData(all);
                         if (DOMEvent) {
@@ -475,7 +476,7 @@ KISSY.add(function (S, require) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (S.isPlainObject(props)) {
+        if (util.isPlainObject(props)) {
             if (elem.nodeType === NodeType.ELEMENT_NODE) {
                 Dom.attr(elem, props, true);
             } else if (elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
@@ -495,7 +496,7 @@ KISSY.add(function (S, require) {
         if (nodes && (nodes.push || nodes.item) && nodes[0]) {
             ownerDoc = nodes[0].ownerDocument;
             ret = ownerDoc.createDocumentFragment();
-            nodes = S.makeArray(nodes);
+            nodes = util.makeArray(nodes);
             for (i = 0, len = nodes.length; i < len; i++) {
                 ret.appendChild(nodes[i]);
             }

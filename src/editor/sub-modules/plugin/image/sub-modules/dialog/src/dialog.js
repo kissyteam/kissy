@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     /*global alert*/
+    var util = require('util');
     var Editor = require('editor');
     var IO = require('io');
     var Dialog4E = require('../dialog');
@@ -12,7 +13,7 @@ KISSY.add(function (S, require) {
     var MenuButton = require('../menubutton');
     var bodyTpl = require('./dialog/dialog-tpl');
     var dtd = Editor.XHTML_DTD,
-        UA = S.UA,
+        UA = require('ua'),
         Node = require('node'),
         HTTP_TIP = 'http://',
         AUTOMATIC_TIP = '自动',
@@ -58,7 +59,7 @@ KISSY.add(function (S, require) {
         self.suffixWarning = '只允许后缀名为' + self.suffix + '的图片';
     }
 
-    S.augment(ImageDialog, {
+    (ImageDialog.prototype = {
         _prepare: function () {
             var self = this;
             var editor = self.editor,
@@ -66,10 +67,10 @@ KISSY.add(function (S, require) {
             self.dialog = self.d = new Dialog4E({
                 width: 500,
                 headerContent: '图片',
-                bodyContent: S.substitute(IMAGE_DIALOG_BODY_HTML, {
+                bodyContent: util.substitute(IMAGE_DIALOG_BODY_HTML, {
                     prefixCls: prefixCls
                 }),
-                footerContent: S.substitute(IMAGE_DIALOG_FOOT_HTML, {
+                footerContent: util.substitute(IMAGE_DIALOG_FOOT_HTML, {
                     prefixCls: prefixCls
                 }),
                 mask: true
@@ -158,7 +159,7 @@ KISSY.add(function (S, require) {
             ok.on('click', function (ev) {
                 ev.halt();
                 if ((self.imageCfg.remote === false ||
-                    S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) === 1) &&
+                    util.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) === 1) &&
                     self.cfg) {
 
                     if (!verifyInputs(commonSettingTable.all('input'))) {
@@ -292,7 +293,7 @@ KISSY.add(function (S, require) {
                 self.tab.removeItemAt(1, 1);
             }
 
-            self._prepare = S.noop;
+            self._prepare = util.noop;
         },
 
         _insert: function () {
@@ -352,7 +353,7 @@ KISSY.add(function (S, require) {
             // else insertElement(img); img[0].parentNode==null
             setTimeout(function () {
                 var link = findAWithImg(img),
-                    linkVal = S.trim(valInput(self.imgLink)),
+                    linkVal = util.trim(valInput(self.imgLink)),
                     sel = self.editor.getSelection(),
                     target = self.imgLinkBlank.attr('checked') ? '_blank' : '_self',
                     linkTarget,

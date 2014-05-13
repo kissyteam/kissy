@@ -8,7 +8,9 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
+    var $ = Node.all;
     var Walker = require('./walker');
     var KERange = require('./range');
     var Editor = require('./base');
@@ -24,7 +26,7 @@ KISSY.add(function (S, require) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        UA = S.UA,
+        UA = require('ua'),
         Dom = require('dom'),
     //tryThese = Editor.Utils.tryThese,
         KES = Editor.SelectionType,
@@ -87,7 +89,7 @@ KISSY.add(function (S, require) {
         tfoot: 1
     };
 
-    S.augment(KESelection, {
+    util.augment(KESelection, {
         /**
          * Gets the native selection object from the browser.
          * @return {Object} The native selection object.
@@ -610,8 +612,8 @@ KISSY.add(function (S, require) {
                 retval.push(bookmark = ranges[ i ].createBookmark(serializable, TRUE));
                 serializable = bookmark.serializable;
 
-                var bookmarkStart = serializable ? S.one('#' + bookmark.startNode, doc) : bookmark.startNode,
-                    bookmarkEnd = serializable ? S.one('#' + bookmark.endNode, doc) : bookmark.endNode;
+                var bookmarkStart = serializable ? $('#' + bookmark.startNode, doc) : bookmark.startNode,
+                    bookmarkEnd = serializable ? $('#' + bookmark.endNode, doc) : bookmark.endNode;
 
                 // Updating the offset values for rest of ranges which have been mangled(#3256).
                 for (var j = i + 1; j < length; j++) {
@@ -749,7 +751,7 @@ KISSY.add(function (S, require) {
                 if (self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
                     self.startContainer.nodeName() in nonCells ||
                     self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
-                        self.endContainer.nodeName() in nonCells) {
+                    self.endContainer.nodeName() in nonCells) {
                     self.shrink(KER.SHRINK_ELEMENT, TRUE);
                 }
 
@@ -788,13 +790,13 @@ KISSY.add(function (S, require) {
                     }
                     isStartMarkerAlone = (
                         !(next && next.nodeValue && next.nodeValue.match(fillerTextRegex)) &&
-                            // already a filler there?
-                            (forceExpand || !startNode[0].previousSibling ||
-                                (
-                                    startNode[0].previousSibling &&
-                                        Dom.nodeName(startNode[0].previousSibling) === 'br'
-                                    )
+                        // already a filler there?
+                        (forceExpand || !startNode[0].previousSibling ||
+                            (
+                                startNode[0].previousSibling &&
+                                Dom.nodeName(startNode[0].previousSibling) === 'br'
                                 )
+                            )
                         );
 
                     // Append a temporary <span>&#65279;</span> before the selection.

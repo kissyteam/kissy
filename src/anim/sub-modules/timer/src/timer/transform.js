@@ -4,14 +4,16 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
+    var Feature = require('feature');
     var Dom = require('dom');
     var Fx = require('./fx');
-    var translateTpl = S.Feature.isTransform3dSupported() ?
+    var translateTpl = Feature.isTransform3dSupported() ?
         'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
 
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);
-        matrix = S.map(matrix, function (v) {
+        matrix = util.map(matrix, function (v) {
             return myParse(v);
         });
         return matrix;
@@ -73,7 +75,7 @@ KISSY.add(function (S, require) {
 
     function getTransformInfo(transform) {
         transform = transform.split(')');
-        var trim = S.trim,
+        var trim = util.trim,
             i = -1,
             l = transform.length - 1,
             split, prop, val,
@@ -96,7 +98,7 @@ KISSY.add(function (S, require) {
                 case 'skewX':
                 case 'skewY':
                     var v = myParse(val);
-                    if (!S.endsWith(val, 'deg')) {
+                    if (!util.endsWith(val, 'deg')) {
                         v = v * 180 / Math.PI;
                     }
                     ret[prop] = v;
@@ -127,7 +129,7 @@ KISSY.add(function (S, require) {
         TransformFx.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(TransformFx, Fx, {
+    util.extend(TransformFx, Fx, {
         load: function () {
             var self = this;
             TransformFx.superclass.load.apply(self, arguments);
@@ -155,7 +157,7 @@ KISSY.add(function (S, require) {
             ret.skewY = interpolate(from.skewY, to.skewY, pos);
             ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
             ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
-            return S.substitute(translateTpl + ' ' +
+            return util.substitute(translateTpl + ' ' +
                 'rotate({rotate}deg) ' +
                 'skewX({skewX}deg) ' +
                 'skewY({skewY}deg) ' +

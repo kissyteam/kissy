@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var ui = require('./font/ui');
     var cmd = require('./font-family/cmd');
@@ -13,7 +14,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(FontFamilyPlugin, {
+    util.augment(FontFamilyPlugin, {
         pluginRenderUI: function (editor) {
 
             cmd.init(editor);
@@ -23,7 +24,7 @@ KISSY.add(function (S, require) {
             var menu = {};
 
 
-            S.mix(menu, {
+            util.mix(menu, {
                 children: [
                     //ie 不认识中文？？？
                     {
@@ -78,7 +79,7 @@ KISSY.add(function (S, require) {
                 width: '130px'
             });
 
-            S.each(menu.children, function (item) {
+            util.each(menu.children, function (item) {
                 var attrs = item.elAttrs || {},
                     value = item.value;
                 attrs.style = attrs.style || '';
@@ -86,9 +87,9 @@ KISSY.add(function (S, require) {
                 item.elAttrs = attrs;
             });
 
-            fontFamilies.menu = S.mix(menu, fontFamilies.menu);
+            fontFamilies.menu = util.mix(menu, fontFamilies.menu);
 
-            editor.addSelect('fontFamily', S.mix({
+            editor.addSelect('fontFamily', util.mix({
                 cmdType: 'fontFamily',
                 defaultCaption: '字体',
                 width: 130,

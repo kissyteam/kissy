@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Attribute = require('attribute');
+    var util = require('util');
 
     /**
      * Local dataSource for comboBox.
@@ -54,7 +55,7 @@ KISSY.add(function (S, require) {
         if (!inputVal) {
             return data;
         }
-        S.each(data, function (d) {
+        util.each(data, function (d) {
             if (d.indexOf(inputVal) !== -1) {
                 ret.push(d);
             }

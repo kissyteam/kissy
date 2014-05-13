@@ -6,16 +6,14 @@ var program = require(path.join(root, 'bin/lib/commander.js'));
 
 program.option('--suffix [suffix]')
     .option('--dir [dir]')
-    .option('--module')
     .option('--output <output>')
     .parse(process.argv);
 
 var suffix = program.suffix || '/meta';
-var isModule = program.module;
 var output = program.output;
 var dir = program.dir || path.join(root, 'src/');
-var HEAD = isModule ? 'KISSY.add(function(S){' : '(function(S){';
-var FOOT = isModule ? '});' : '})(KISSY);';
+var HEAD = 'KISSY.use(\'ua, feature\', function(S, UA, Feature){';
+var FOOT = '});';
 var requireFiles = [];
 var jsFiles = [];
 
@@ -80,9 +78,7 @@ jsFiles.forEach(function (r) {
 var code = ['S.config("requires",' + JSON.stringify(requires, undefined, 4) + ');'];
 
 if (jsCode.length > 1) {
-    code = code.concat(['var Feature = S.Feature,',
-        '    UA = S.UA,',
-        '    win = window,',
+    code = code.concat(['var win = window,',
         '    isTouchGestureSupported = Feature.isTouchGestureSupported(),',
         '    add = S.add,',
         '    emptyObject = {};',

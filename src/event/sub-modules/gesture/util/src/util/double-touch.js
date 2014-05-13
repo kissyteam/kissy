@@ -6,11 +6,11 @@
 KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Touch = require('./touch');
-
+    var util = require('util');
     function DoubleTouch() {
     }
 
-    S.extend(DoubleTouch, Touch, {
+    util.extend(DoubleTouch, Touch, {
         requiredTouchCount: 2,
 
         getCommonTarget: function (e) {

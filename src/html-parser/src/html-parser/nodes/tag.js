@@ -7,11 +7,12 @@ KISSY.add(function (S, require) {
     var Node = require('./node');
     var Attribute = require('./attribute');
     var Dtd = require('../dtd');
+    var util = require('util');
 
     function createTag(self, tagName, attrs) {
         self.nodeName = self.tagName = tagName.toLowerCase();
         self._updateSelfClosed();
-        S.each(attrs, function (v, n) {
+        util.each(attrs, function (v, n) {
             self.setAttribute(n, v);
         });
     }
@@ -34,7 +35,7 @@ KISSY.add(function (S, require) {
         self.nodeType = 1;
 
         if (typeof page === 'string') {
-            createTag.apply(null, [self].concat(S.makeArray(arguments)));
+            createTag.apply(null, [self].concat(util.makeArray(arguments)));
         } else {
             Tag.superclass.constructor.apply(self, arguments);
 
@@ -85,7 +86,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    S.extend(Tag, Node, {
+    util.extend(Tag, Node, {
         _updateSelfClosed: function () {
             var self = this;
             // <br> <img> <input> , just recognize them immediately
@@ -99,10 +100,10 @@ KISSY.add(function (S, require) {
         clone: function () {
             var ret = new Tag(),
                 attrs = [];
-            S.each(this.attributes, function (a) {
+            util.each(this.attributes, function (a) {
                 attrs.push(a.clone());
             });
-            S.mix(ret, {
+            util.mix(ret, {
                 childNodes: [],
                 firstChild: null,
                 lastChild: null,
@@ -155,7 +156,7 @@ KISSY.add(function (S, require) {
 
         replace: function (ref) {
             var sibling = ref.parentNode.childNodes,
-                index = S.indexOf(ref, sibling);
+                index = util.indexOf(ref, sibling);
             sibling[index] = this;
             refreshChildNodes(ref.parentNode);
         },
@@ -163,7 +164,7 @@ KISSY.add(function (S, require) {
         replaceChild: function (newC, refC) {
             var self = this,
                 childNodes = self.childNodes;
-            var index = S.indexOf(refC, childNodes);
+            var index = util.indexOf(refC, childNodes);
             childNodes[index] = newC;
             refreshChildNodes(self);
         },
@@ -175,14 +176,14 @@ KISSY.add(function (S, require) {
 
         insertBefore: function (ref) {
             var sibling = ref.parentNode.childNodes,
-                index = S.indexOf(ref, sibling);
+                index = util.indexOf(ref, sibling);
             sibling.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
         },
 
         insertAfter: function (ref) {
             var sibling = ref.parentNode.childNodes,
-                index = S.indexOf(ref, sibling);
+                index = util.indexOf(ref, sibling);
             if (index === sibling.length - 1) {
                 ref.parentNode.appendChild(this);
             } else {
@@ -197,7 +198,7 @@ KISSY.add(function (S, require) {
 
         removeChild: function (node) {
             var sibling = node.parentNode.childNodes,
-                index = S.indexOf(node, sibling);
+                index = util.indexOf(node, sibling);
             sibling.splice(index, 1);
             refreshChildNodes(node.parentNode);
         },
@@ -219,7 +220,7 @@ KISSY.add(function (S, require) {
         removeAttribute: function (name) {
             var attr = findAttributeByName(this.attributes, name);
             if (attr) {
-                var index = S.indexOf(attr, this.attributes);
+                var index = util.indexOf(attr, this.attributes);
                 this.attributes.splice(index, 1);
             }
         },
@@ -235,7 +236,7 @@ KISSY.add(function (S, require) {
                 var parser = new (S.require('html-parser/parser'))(writer.getHtml()),
                     children = parser.parse().childNodes;
                 self.empty();
-                S.each(children, function (c) {
+                util.each(children, function (c) {
                     self.appendChild(c);
                 });
                 self.isChildrenFiltered = 1;
@@ -334,7 +335,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 filter = self.isChildrenFiltered ? 0 : self.__filter;
             // process its children recursively
-            S.each(self.childNodes, function (child) {
+            util.each(self.childNodes, function (child) {
                 child.writeHtml(writer, filter);
             });
         },

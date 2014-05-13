@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var fakeObjects = require('./fake-objects');
     require('./button');
-    var Node = S.Node,
+    var Node = require('node'),
         CLS = 'ke_pagebreak',
         TYPE = 'div',
         PAGE_BREAK_MARKUP = '<div' +
@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
     function pageBreak() {
     }
 
-    S.augment(pageBreak, {
+    (pageBreak.prototype = {
         pluginRenderUI: function (editor) {
             fakeObjects.init(editor);
 

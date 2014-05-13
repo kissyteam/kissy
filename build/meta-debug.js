@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 17:44
+build time: May 13 23:31
 */
 /**
  * @ignore
@@ -27,7 +27,7 @@ KISSY.config({
 });
 
 KISSY.use('ua,feature');/*jshint indent:false, quotmark:false*/
-(function(S){
+KISSY.use('ua, feature', function(S, UA, Feature){
 S.config("requires",{
     "anim/base": [
         "dom",
@@ -295,9 +295,7 @@ S.config("requires",{
         "util"
     ]
 });
-var Feature = S.Feature,
-    UA = S.UA,
-    win = window,
+var win = window,
     isTouchGestureSupported = Feature.isTouchGestureSupported(),
     add = S.add,
     emptyObject = {};
@@ -353,4 +351,4 @@ if (!isTouchGestureSupported) {
 }
 
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
-})(KISSY);
+});

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require, exports, module) {
+    var util = require('util');
     var rgbaRe = /\s*rgba?\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*(?:,\s*([\d\.]+))?\)\s*/,
         hexRe = /\s*#([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/;
 
@@ -125,7 +126,7 @@ KISSY.add(function (S, require, exports, module) {
                 current;
             if (!('h' in cfg && 's' in cfg && 'v' in cfg)) {
                 current = self.getHSV();
-                S.each(['h', 's', 'v'], function (x) {
+                util.each(['h', 's', 'v'], function (x) {
                     if (x in cfg) {
                         current[x] = cfg[x];
                     }
@@ -147,7 +148,7 @@ KISSY.add(function (S, require, exports, module) {
                 current;
             if (!('h' in cfg && 's' in cfg && 'l' in cfg)) {
                 current = self.getHSL();
-                S.each(['h', 's', 'l'], function (x) {
+                util.each(['h', 's', 'l'], function (x) {
                     if (x in cfg) {
                         current[x] = cfg[x];
                     }
@@ -158,7 +159,7 @@ KISSY.add(function (S, require, exports, module) {
         }
     });
 
-    S.mix(Color, {
+    util.mix(Color, {
         ATTRS: {
             /**
              * Red.
@@ -447,7 +448,7 @@ KISSY.add(function (S, require, exports, module) {
             }
             rgb = [rgb[0] + m, rgb[1] + m, rgb[2] + m];
         }
-        S.each(rgb, function (v, index) {
+        util.each(rgb, function (v, index) {
             rgb[index] = to255(v);
         });
         return {

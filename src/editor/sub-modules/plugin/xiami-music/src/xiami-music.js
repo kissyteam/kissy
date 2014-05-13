@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var flashUtils = require('./flash-common/utils');
     var fakeObjects = require('./fake-objects');
     require('./button');
-
+    var util = require('util');
     var CLS_XIAMI = 'ke_xiami',
         TYPE_XIAMI = 'xiami-music';
 
@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
         XiamiMusic.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(XiamiMusic, FlashBaseClass, {
+    util.extend(XiamiMusic, FlashBaseClass, {
         _updateTip: function (tipUrlEl, selectedFlash) {
             var self = this,
                 editor = self.get('editor'),
@@ -33,7 +33,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(XiamiMusicPlugin, {
+    (XiamiMusicPlugin.prototype = {
         pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);

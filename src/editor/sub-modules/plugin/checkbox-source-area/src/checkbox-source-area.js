@@ -6,8 +6,8 @@
 KISSY.add(function (S, require) {
     // 'editor', '../font/cmd'
     var Editor = require('editor');
-
-    var Node = S.Node;
+    var util = require('util');
+    var Node = require('node');
 
     var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
         self._init();
     }
 
-    S.augment(CheckboxSourceArea, {
+    util.augment(CheckboxSourceArea, {
         _init: function () {
             var self = this,
                 editor = self.editor,
@@ -59,7 +59,7 @@ KISSY.add(function (S, require) {
 
     }
 
-    S.augment(CheckboxSourceAreaPlugin, {
+    util.augment(CheckboxSourceAreaPlugin, {
         pluginRenderUI: function (editor) {
             var c = new CheckboxSourceArea(editor);
             editor.on('destroy', function () {

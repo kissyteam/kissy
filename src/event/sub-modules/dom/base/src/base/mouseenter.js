@@ -6,8 +6,8 @@
 KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Special = require('./special');
-
-    S.each([
+    var util = require('util');
+    util.each([
         {name: 'mouseenter', fix: 'mouseover'},
         {name: 'mouseleave', fix: 'mouseout'}
     ], function (o) {

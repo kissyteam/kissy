@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
-    var Node = S.Node,
+    var Node = require('node'),
         KEStyle = Editor.Style,
         savedHref = '_ke_saved_href',
         linkStyle = {

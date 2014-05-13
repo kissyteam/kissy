@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var dtd = require('../dtd');
     var Tag = require('../nodes/tag');
     var SpecialScanners = require('./special-scanners');
-
+    var util = require('util');
     var /*
      will create ul when encounter li and li's parent is not ul
      */
@@ -51,7 +51,7 @@ KISSY.add(function (S, require) {
         var valid = 1,
             childNodes = [].concat(tag.childNodes);
 
-        S.each(childNodes, function (c) {
+        util.each(childNodes, function (c) {
             if (!canHasNodeAsChild(tag, c)) {
                 valid = 0;
                 return false;
@@ -108,7 +108,7 @@ KISSY.add(function (S, require) {
                     while (i < childNodes.length) {
                         if (childNodes[i].tagName === currentChildName) {
                             pTag.appendChild(childNodes[i]);
-                        } else if (childNodes[i].nodeType === 3 && S.trim(childNodes[i].toHtml())) {
+                        } else if (childNodes[i].nodeType === 3 && util.trim(childNodes[i].toHtml())) {
                             // non-empty text leave it to outer loop
                             break;
                         }
@@ -129,7 +129,7 @@ KISSY.add(function (S, require) {
                     if (canHasNodeAsChild(c, holder)) {
                         holder = tag.clone();
                         /*jshint loopfunc:true*/
-                        S.each(c.childNodes, function (cc) {
+                        util.each(c.childNodes, function (cc) {
                             holder.appendChild(cc);
                         });
                         c.empty();
@@ -166,7 +166,7 @@ KISSY.add(function (S, require) {
         // <div><a><div>1</div></a></div>
 
         // => fixCloseTagByDtd('<a><div>1</div></a>')
-        S.each(recursives, function (r) {
+        util.each(recursives, function (r) {
             fixCloseTagByDtd(r, opts);
         });
 

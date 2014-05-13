@@ -5,13 +5,13 @@
  */
 KISSY.add(function (S, require) {
     var DD = require('dd');
-    var Node = S.Node;
-
+    var Node = require('node');
+    var util = require('util');
     function Resize(config) {
         this.config = config || {};
     }
 
-    S.augment(Resize, {
+    (Resize.prototype = {
         pluginRenderUI: function (editor) {
             var Draggable = DD.Draggable,
                 statusBarEl = editor.get('statusBarEl'),
@@ -57,10 +57,10 @@ KISSY.add(function (S, require) {
             });
 
             d.on('drag', function (e) {
-                if (S.inArray('y', direction)) {
+                if (util.inArray('y', direction)) {
                     editor.set('height', height + e.deltaY);
                 }
-                if (S.inArray('x', direction)) {
+                if (util.inArray('x', direction)) {
                     editor.set('width', width + e.deltaX);
                 }
                 editor.fire('resize');

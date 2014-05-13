@@ -5,9 +5,9 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
-    var UA = S.UA,
+    var UA = require('ua'),
         LIMIT = 30;
-
+    var util = require('util');
     /**
      * current editor status(including html and cursor position)
      * @param editor
@@ -27,7 +27,7 @@ KISSY.add(function (S, require) {
         self.bookmarks = selection && selection.createBookmarks2(true);
     }
 
-    S.augment(Snapshot, {
+    (Snapshot.prototype = {
         equals: function (otherImage) {
             var self = this,
                 thisContents = self.contents,
@@ -55,7 +55,7 @@ KISSY.add(function (S, require) {
         self.index = -1;
         self.editor = editor;
         //键盘输入做延迟处理
-        self.bufferRunner = S.buffer(self.save, 500, self);
+        self.bufferRunner = util.buffer(self.save, 500, self);
         self._init();
     }
 
@@ -66,7 +66,7 @@ KISSY.add(function (S, require) {
         zKeyCode = 90,
         yKeyCode = 89;
 
-    S.augment(UndoManager, {
+    (UndoManager.prototype = {
         _keyMonitor: function () {
             var self = this,
                 editor = self.editor;

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node'),
         Control = require('component/control'),
         YearPanel = require('../year-panel/control');
@@ -37,7 +38,7 @@ KISSY.add(function (S, require) {
                 index++;
             }
         }
-        S.mix(self.renderData, {
+        util.mix(self.renderData, {
             months: months,
             year: value.getYear(),
             month: currentMonth
@@ -101,7 +102,7 @@ KISSY.add(function (S, require) {
         beforeCreateDom: function (renderData) {
             var self = this;
             var locale = self.get('locale');
-            S.mix(renderData, {
+            util.mix(renderData, {
                 yearSelectLabel: locale.yearSelect,
                 previousYearLabel: locale.previousYear,
                 nextYearLabel: locale.nextYear

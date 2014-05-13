@@ -4,6 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
+
     // if combined into loader
     var Path = require('path');
     var logger = S.getLogger('s/uri');
@@ -77,7 +79,7 @@ KISSY.add(function (S, require) {
 
     function parseQuery(self) {
         if (!self._queryMap) {
-            self._queryMap = S.unparam(self._query);
+            self._queryMap = util.unparam(self._query);
         }
     }
 
@@ -126,7 +128,7 @@ KISSY.add(function (S, require) {
             _queryMap = self._queryMap;
             for (k in _queryMap) {
 
-                if (S.isArray(_queryMap[k])) {
+                if (util.isArray(_queryMap[k])) {
                     count += _queryMap[k].length;
                 } else {
                     count++;
@@ -147,7 +149,7 @@ KISSY.add(function (S, require) {
             if (key) {
                 return key in _queryMap;
             } else {
-                return !S.isEmptyObject(_queryMap);
+                return !util.isEmptyObject(_queryMap);
             }
         },
 
@@ -173,7 +175,7 @@ KISSY.add(function (S, require) {
         keys: function () {
             var self = this;
             parseQuery(self);
-            return S.keys(self._queryMap);
+            return util.keys(self._queryMap);
         },
 
         /**
@@ -192,7 +194,7 @@ KISSY.add(function (S, require) {
                 if (key instanceof Query) {
                     key = key.get();
                 }
-                S.each(key, function (v, k) {
+                util.each(key, function (v, k) {
                     _queryMap[k] = v;
                 });
             }
@@ -255,7 +257,7 @@ KISSY.add(function (S, require) {
         toString: function (serializeArray) {
             var self = this;
             parseQuery(self);
-            return S.param(self._queryMap, undefined, undefined, serializeArray);
+            return util.param(self._queryMap, undefined, undefined, serializeArray);
         }
     };
 
@@ -295,7 +297,7 @@ KISSY.add(function (S, require) {
         var components,
             self = this;
 
-        S.mix(self,
+        util.mix(self,
             {
                 /**
                  * scheme such as 'http:'. aka protocol without colon
@@ -335,7 +337,7 @@ KISSY.add(function (S, require) {
 
         components = Uri.getComponents(uriStr);
 
-        S.each(components, function (v, key) {
+        util.each(components, function (v, key) {
             v = v || '';
             if (key === 'query') {
                 // need encoded content
@@ -343,7 +345,7 @@ KISSY.add(function (S, require) {
             } else {
                 // https://github.com/kissyteam/kissy/issues/298
                 try {
-                    v = S.urlDecode(v);
+                    v = util.urlDecode(v);
                 } catch (e) {
                     logger.error(e + 'urlDecode error : ' + v);
                 }
@@ -364,7 +366,7 @@ KISSY.add(function (S, require) {
          */
         clone: function () {
             var uri = new Uri(), self = this;
-            S.each(REG_INFO, function (index, key) {
+            util.each(REG_INFO, function (index, key) {
                 uri[key] = self[key];
             });
             uri.query = uri.query.clone();
@@ -400,7 +402,7 @@ KISSY.add(function (S, require) {
                 order = ['scheme', 'userInfo', 'hostname', 'port', 'path', 'query', 'fragment'],
                 target = self.clone();
 
-            S.each(order, function (o) {
+            util.each(order, function (o) {
                 if (o === 'path') {
                     // relativeUri does not set for scheme/userInfo/hostname/port
                     if (override) {
@@ -410,7 +412,7 @@ KISSY.add(function (S, require) {
                         if (path) {
                             // force to override target 's query with relative
                             override = 1;
-                            if (!S.startsWith(path, '/')) {
+                            if (!util.startsWith(path, '/')) {
                                 if (target.hostname && !target.path) {
                                     // RFC 3986, section 5.2.3, case 1
                                     path = '/' + path;
@@ -537,7 +539,7 @@ KISSY.add(function (S, require) {
          */
         setQuery: function (query) {
             if (typeof query === 'string') {
-                if (S.startsWith(query, '?')) {
+                if (util.startsWith(query, '?')) {
                     query = query.slice(1);
                 }
                 query = new Query(encodeSpecialChars(query, reDisallowedInQuery));
@@ -569,7 +571,7 @@ KISSY.add(function (S, require) {
          */
         setFragment: function (fragment) {
             var self = this;
-            if (S.startsWith(fragment, '#')) {
+            if (util.startsWith(fragment, '#')) {
                 fragment = fragment.slice(1);
             }
             self.fragment = fragment;
@@ -629,7 +631,7 @@ KISSY.add(function (S, require) {
             }
 
             if ((path = self.path)) {
-                if (hostname && !S.startsWith(path, '/')) {
+                if (hostname && !util.startsWith(path, '/')) {
                     path = '/' + path;
                 }
                 path = Path.normalize(path);
@@ -656,7 +658,7 @@ KISSY.add(function (S, require) {
         url = url || '';
         var m = url.match(URI_SPLIT_REG) || [],
             ret = {};
-        S.each(REG_INFO, function (index, key) {
+        util.each(REG_INFO, function (index, key) {
             ret[key] = m[index];
         });
         return ret;

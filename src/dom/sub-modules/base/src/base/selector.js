@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('./api');
+    var util = require('util');
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
         matches = docElem.matches ||
@@ -13,8 +14,8 @@ KISSY.add(function (S, require) {
             docElem.oMatchesSelector ||
             docElem.msMatchesSelector,
         supportGetElementsByClassName = 'getElementsByClassName' in doc,
-        isArray = S.isArray,
-        makeArray = S.makeArray,
+        isArray = util.isArray,
+        makeArray = util.makeArray,
         isDomNodeList = Dom.isDomNodeList,
         SPACE = ' ',
         push = Array.prototype.push,
@@ -23,7 +24,7 @@ KISSY.add(function (S, require) {
         rTagSelector = /^([\w-])+$/,
         rTagIdSelector = /^([\w-]+)#([\w-]+)$/,
         rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
-        trim = S.trim;
+        trim = util.trim;
 
     function queryEach(f) {
         var self = this,
@@ -161,7 +162,7 @@ KISSY.add(function (S, require) {
             // 1.常见的单个元素
             // Dom.query(document.getElementById('xx'))
             // do not pass form.elements to this function ie678 bug
-            if (selector.nodeType || S.isWindow(selector)) {
+            if (selector.nodeType || util.isWindow(selector)) {
                 ret = [selector];
             } else if (selector.getDOMNodes) {
                 // 2.KISSY NodeList 特殊点直接返回，提高性能
@@ -176,7 +177,7 @@ KISSY.add(function (S, require) {
                 // Dom.query(document.getElementsByTagName('a'))
                 // note:
                 // document.createElement('select').item 已经在 1 处理了
-                // S.all().item 已经在 2 处理了
+                // .all().item 已经在 2 处理了
                 ret = makeArray(selector);
             } else {
                 ret = [selector];
@@ -224,7 +225,7 @@ KISSY.add(function (S, require) {
         return value === '*' || el.nodeName.toLowerCase() === value.toLowerCase();
     }
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -397,7 +398,7 @@ KISSY.add(function (S, require) {
                 }
 
                 if (typeof filter === 'function') {
-                    ret = S.filter(elems, filter);
+                    ret = util.filter(elems, filter);
                 } else {
                     ret = Dom._matchesInternal(filter, elems);
                 }

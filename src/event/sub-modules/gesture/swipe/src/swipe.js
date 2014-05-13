@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
         MAX_DURATION = 1000,
         MAX_OFFSET = 35,
         MIN_DISTANCE = 50;
-
+    var util = require('util');
     function fire(self, e, ing) {
         var touches = self.lastTouches,
             touch = touches[0],
@@ -140,7 +140,7 @@ KISSY.add(function (S, require) {
     function Swipe() {
     }
 
-    S.extend(Swipe, SingleTouch, {
+    util.extend(Swipe, SingleTouch, {
         requiredGestureType: 'touch',
 
         start: function () {

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom');
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
@@ -26,20 +27,20 @@ KISSY.add(function (S, require) {
          */
         serialize: function (forms, serializeArray) {
             // 名值键值对序列化,数组元素名字前不加 []
-            return S.param(FormSerializer.getFormData(forms), undefined, undefined,
+            return util.param(FormSerializer.getFormData(forms), undefined, undefined,
                 serializeArray || false);
         },
 
         getFormData: function (forms) {
             var elements = [], data = {};
-            S.each(Dom.query(forms), function (el) {
+            util.each(Dom.query(forms), function (el) {
                 // form 取其表单元素集合
                 // 其他直接取自身
                 var subs = el.elements ? elementsToArray(el.elements) : [el];
                 elements.push.apply(elements, subs);
             });
             // 对表单元素进行过滤，具备有效值的才保留
-            elements = S.filter(elements, function (el) {
+            elements = util.filter(elements, function (el) {
                 // 有名字
                 return el.name &&
                     // 不被禁用
@@ -55,7 +56,7 @@ KISSY.add(function (S, require) {
 
                 // 这样子才取值
             });
-            S.each(elements, function (el) {
+            util.each(elements, function (el) {
                 var val = Dom.val(el), vs;
 
                 // <select></select> select nothing!
@@ -65,8 +66,8 @@ KISSY.add(function (S, require) {
                 }
 
                 // 字符串换行平台归一化
-                if (S.isArray(val)) {
-                    val = S.map(val, normalizeCRLF);
+                if (util.isArray(val)) {
+                    val = util.map(val, normalizeCRLF);
                 } else {
                     val = normalizeCRLF(val);
                 }
@@ -76,11 +77,11 @@ KISSY.add(function (S, require) {
                     data[el.name] = val;
                     return;
                 }
-                if (vs && !S.isArray(vs)) {
+                if (vs && !util.isArray(vs)) {
                     // 多个元素重名时搞成数组
                     vs = data[el.name] = [vs];
                 }
-                vs.push.apply(vs, S.makeArray(val));
+                vs.push.apply(vs, util.makeArray(val));
             });
             return data;
         }

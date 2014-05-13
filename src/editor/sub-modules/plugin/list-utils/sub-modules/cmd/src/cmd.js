@@ -13,8 +13,8 @@ KISSY.add(function (S, require) {
         KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
         Walker = Editor.Walker,
-        UA = S.UA,
-        Node = S.Node,
+        UA = require('ua'),
+        Node = require('node'),
         Dom = require('dom'),
         headerTagRegex = /^h[1-6]$/;
 

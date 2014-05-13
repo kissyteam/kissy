@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
     var UA = require('ua'),
@@ -68,10 +69,10 @@ KISSY.add(function (S, require) {
 
         hashChange = ie && ie < 8 ? function (hash, replaceHistory) {
             // S.log('set iframe html :' + hash);
-            var html = S.substitute(IFRAME_TEMPLATE, {
+            var html = util.substitute(IFRAME_TEMPLATE, {
                     // 防止 hash 里有代码造成 xss
                     // 后面通过 innerText，相当于 unEscapeHtml
-                    hash: S.escapeHtml(hash),
+                    hash: util.escapeHtml(hash),
                     // 一定要加哦
                     head: Dom.isCustomDomain() ? ('<script>' +
                         'document.' +
@@ -188,7 +189,7 @@ KISSY.add(function (S, require) {
                     // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
 
                     // S.log('set loc hash :' + c);
-                    location.hash = S.trim(getIframeDoc(iframe).body.innerText);
+                    location.hash = util.trim(getIframeDoc(iframe).body.innerText);
                     // 使 last hash 为 iframe 历史， 不然重新写iframe，
                     // 会导致最新状态（丢失前进状态）
 

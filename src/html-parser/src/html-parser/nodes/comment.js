@@ -5,14 +5,14 @@
  */
 KISSY.add(function (S, require) {
     var Text = require('./text');
-
+    var util = require('util');
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
         this.nodeType = 8;
         this.nodeName = '#comment';
     }
 
-    S.extend(Comment, Text, {
+    util.extend(Comment, Text, {
         writeHtml: function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onComment(this)) !== false) {

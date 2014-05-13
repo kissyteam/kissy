@@ -8,6 +8,7 @@ KISSY.add(function (S, require) {
     var FilterMenuTpl = require('./filter-menu/render-xtpl');
     var HIT_CLS = 'menuitem-hit';
     var ContentBox = require('component/extension/content-box');
+    var util = require('util');
 
     /**
      * Filter Menu for KISSY.
@@ -134,10 +135,10 @@ KISSY.add(function (S, require) {
                 }
 
                 var children = self.get('children'),
-                    strExp = str && new RegExp(S.escapeRegExp(str), 'ig');
+                    strExp = str && new RegExp(util.escapeRegExp(str), 'ig');
 
                 // 过滤所有子组件
-                S.each(children, function (c) {
+                util.each(children, function (c) {
                     var content = c.get('content');
                     if (!str) {
                         // 没有过滤条件

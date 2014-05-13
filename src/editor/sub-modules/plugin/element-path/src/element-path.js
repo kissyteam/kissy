@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
-    var Node = S.Node;
+    var Node = require('node');
     var CLASS = 'editor-element-path';
 
     function ElementPaths(cfg) {
@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         self._init();
     }
 
-    S.augment(ElementPaths, {
+    ElementPaths.prototype = {
         _init: function () {
             var self = this,
                 cfg = self.cfg,
@@ -74,13 +74,13 @@ KISSY.add(function (S, require) {
         destroy: function () {
             this.holder.remove();
         }
-    });
+    };
 
     function ElementPathPlugin() {
 
     }
 
-    S.augment(ElementPathPlugin, {
+    ElementPathPlugin.prototype = {
         pluginRenderUI: function (editor) {
             var elemPath = new ElementPaths({
                 editor: editor
@@ -89,7 +89,7 @@ KISSY.add(function (S, require) {
                 elemPath.destroy();
             });
         }
-    });
+    };
 
     return ElementPathPlugin;
 });

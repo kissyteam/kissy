@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     function orderedList() {
     }
 
-    S.augment(orderedList, {
+    (orderedList.prototype = {
         pluginRenderUI: function (editor) {
             ListCmd.init(editor);
 

@@ -44,9 +44,21 @@ tests.push('/kissy/src/combobox/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/combobox/tests/runner/test.jss?coverage');
 
-tests.push('/kissy/src/component/tests/runner');
+tests.push('/kissy/src/component/sub-modules/container/tests/runner');
 
-tests.push('/kissy/src/component/tests/runner?build');
+tests.push('/kissy/src/component/sub-modules/container/tests/runner?build');
+
+tests.push('/kissy/src/component/sub-modules/control/tests/runner');
+
+tests.push('/kissy/src/component/sub-modules/control/tests/runner?build');
+
+tests.push('/kissy/src/component/sub-modules/extension/align/tests/runner');
+
+tests.push('/kissy/src/component/sub-modules/extension/align/tests/runner?build');
+
+tests.push('/kissy/src/component/sub-modules/extension/delegate-children/tests/runner');
+
+tests.push('/kissy/src/component/sub-modules/extension/delegate-children/tests/runner?build');
 
 tests.push('/kissy/src/cookie/tests/runner');
 
@@ -150,9 +162,9 @@ tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?build');
 
 tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner');
+tests.push('/kissy/src/event/sub-modules/gesture/basic/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/gesture/basic/tests/runner?build');
 
 tests.push('/kissy/src/event/sub-modules/gesture/drag/tests/runner');
 
@@ -199,12 +211,6 @@ tests.push('/kissy/src/json/tests/runner');
 tests.push('/kissy/src/json/tests/runner?build');
 
 tests.push('/kissy/src/json/tests/runner?coverage');
-
-tests.push('/kissy/src/kison/tests/runner');
-
-tests.push('/kissy/src/kison/tests/runner?build');
-
-tests.push('/kissy/src/kison/tests/runner?coverage');
 
 tests.push('/kissy/src/loader/tests/runner/test.html');
 

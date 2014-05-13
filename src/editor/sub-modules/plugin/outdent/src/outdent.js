@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
 
     }
 
-    S.augment(outdent, {
+    (outdent.prototype = {
         pluginRenderUI: function (editor) {
 
             indexCmd.init(editor);

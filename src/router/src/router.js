@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require, exports) {
+    var util = require('util');
     var middlewares = [];
     var routes = [];
     var utils = require('./router/utils');
@@ -14,7 +15,7 @@ KISSY.add(function (S, require, exports) {
     var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
     var win = S.Env.host;
     var history = win.history;
-    var supportNativeHashChange = S.Feature.isHashChangeSupported();
+    var supportNativeHashChange = require('feature').isHashChangeSupported();
     var supportHistoryPushState = !!(history && history.pushState);
     // take a breath to avoid duplicate hashchange
     var BREATH_INTERVAL = 100;
@@ -60,7 +61,7 @@ KISSY.add(function (S, require, exports) {
                 cb(request, response);
             } else {
                 var middleware = middlewares[index];
-                if (S.startsWith(request.path + '/', middleware[0] + '/')) {
+                if (util.startsWith(request.path + '/', middleware[0] + '/')) {
                     var prefixLen = middleware[0].length;
                     request.url = request.url.slice(prefixLen);
                     var path = request.path;
@@ -145,7 +146,7 @@ KISSY.add(function (S, require, exports) {
      * @singleton
      */
 
-    S.mix(exports, CustomEvent.Target);
+    util.mix(exports, CustomEvent.Target);
 
     /**
      * config middleware for router
@@ -206,7 +207,7 @@ KISSY.add(function (S, require, exports) {
      * @param {String|RegExp} routePath route string or regexp
      */
     exports.get = function (routePath) {
-        var callbacks = S.makeArray(arguments).slice(1);
+        var callbacks = util.makeArray(arguments).slice(1);
         routes.push(new Route(routePath, callbacks, globalConfig));
     };
 
@@ -319,7 +320,7 @@ KISSY.add(function (S, require, exports) {
         if (opts.urlRoot) {
             opts.urlRoot = opts.urlRoot.replace(/\/$/, '');
         }
-        S.mix(globalConfig, opts);
+        util.mix(globalConfig, opts);
     };
 
     var started;

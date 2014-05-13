@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var io = require('io');
     var FlashDialog = require('../flash/dialog');
@@ -77,7 +78,7 @@ KISSY.add(function (S, require) {
         VideoDialog.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(VideoDialog, FlashDialog, {
+    util.extend(VideoDialog, FlashDialog, {
         _config: function () {
             var self = this,
                 editor = self.editor,
@@ -86,10 +87,10 @@ KISSY.add(function (S, require) {
             self._cls = CLS_VIDEO;
             self._type = TYPE_VIDEO;
             self._title = '视频';//属性';
-            self._bodyHTML = S.substitute(bodyHTML, {
+            self._bodyHTML = util.substitute(bodyHTML, {
                 prefixCls: prefixCls
             });
-            self._footHTML = S.substitute(footHTML, {
+            self._footHTML = util.substitute(footHTML, {
                 prefixCls: prefixCls
             });
             self.urlCfg = cfg.urlCfg;

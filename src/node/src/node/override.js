@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom');
     var NodeList = require('./base');
     require('./attach');
@@ -28,7 +29,7 @@ KISSY.add(function (S, require) {
 
         // append(node ,parent): reverse param order
         // appendTo(parent,node): normal
-    S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
+    util.each(['append', 'prepend', 'before', 'after'], function (insertType) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
             // create
@@ -42,7 +43,7 @@ KISSY.add(function (S, require) {
         };
     });
 
-    S.each(['wrap', 'wrapAll', 'replaceWith', 'wrapInner'], function (fixType) {
+    util.each(['wrap', 'wrapAll', 'replaceWith', 'wrapInner'], function (fixType) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;

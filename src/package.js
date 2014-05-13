@@ -51,17 +51,11 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "component/extension/content-box": {
             "base": "/kissy/src/component/sub-modules/extension/content-box/src/content-box"
         },
-        "component/extension/content-xtpl": {
-            "base": "/kissy/src/component/sub-modules/extension/content-xtpl/src/content-xtpl"
-        },
         "component/extension/delegate-children": {
             "base": "/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children"
         },
         "component/extension/shim": {
             "base": "/kissy/src/component/sub-modules/extension/shim/src/shim"
-        },
-        "component/manager": {
-            "base": "/kissy/src/component/sub-modules/manager/src/manager"
         },
         "component/plugin/drag": {
             "base": "/kissy/src/component/sub-modules/plugin/drag/src/drag"
@@ -393,6 +387,9 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "editor/plugin/xiami-music/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog"
         },
+        "event": {
+            "base": "/kissy/src/event/src/event"
+        },
         "event/base": {
             "base": "/kissy/src/event/sub-modules/base/src/base"
         },
@@ -415,7 +412,7 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
             "base": "/kissy/src/event/sub-modules/dom/input/src/input"
         },
         "event/gesture/basic": {
-            "base": "/kissy/src/event/sub-modules/gesture/basic/src/base"
+            "base": "/kissy/src/event/sub-modules/gesture/basic/src/basic"
         },
         "event/gesture/drag": {
             "base": "/kissy/src/event/sub-modules/gesture/drag/src/drag"
@@ -459,9 +456,6 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "json": {
             "base": "/kissy/src/json/src/json"
         },
-        "kison": {
-            "base": "/kissy/src/kison/src/kison"
-        },
         "loader": {
             "base": "/kissy/src/loader/src/loader"
         },
@@ -470,6 +464,9 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         },
         "menubutton": {
             "base": "/kissy/src/menubutton/src/menubutton"
+        },
+        "meta": {
+            "base": "/kissy/src/meta/src/meta"
         },
         "navigation-view": {
             "base": "/kissy/src/navigation-view/src/navigation-view"
@@ -509,9 +506,6 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         },
         "scroll-view/touch": {
             "base": "/kissy/src/scroll-view/sub-modules/touch/src/touch"
-        },
-        "seed": {
-            "base": "/kissy/src/seed/src/seed"
         },
         "separator": {
             "base": "/kissy/src/separator/src/separator"

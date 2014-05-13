@@ -8,6 +8,7 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var KESelection = require('./selection');
     var KERange = require('./range');
@@ -17,12 +18,12 @@ KISSY.add(function (S, require) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        $ = S.all,
+        $ = Node.all,
         Dom = require('dom'),
         KER = Editor.RangeType,
         KEP = Editor.PositionType,
         KEST,
-        UA = S.UA,
+        UA = require('ua'),
         blockElements = {
             address: 1,
             div: 1,
@@ -104,7 +105,7 @@ KISSY.add(function (S, require) {
      */
     function KEStyle(styleDefinition, variablesValues) {
         if (variablesValues) {
-            styleDefinition = S.clone(styleDefinition);
+            styleDefinition = util.clone(styleDefinition);
             replaceVariables(styleDefinition, variablesValues);
         }
 
@@ -1134,7 +1135,7 @@ KISSY.add(function (S, require) {
         if (definition) {
             // The override description can be a string, object or array.
             // Internally, well handle arrays only, so transform it if needed.
-            if (!S.isArray(definition)) {
+            if (!util.isArray(definition)) {
                 definition = [definition];
             }
 
@@ -1199,13 +1200,13 @@ KISSY.add(function (S, require) {
     function removeFromElement(style, element) {
         var def = style._.definition,
             overrides = getOverrides(style),
-            attributes = S.merge(def.attributes,
+            attributes = util.merge(def.attributes,
                 (overrides[element.nodeName()] || overrides['*'] || {}).attributes),
-            styles = S.merge(def.styles,
+            styles = util.merge(def.styles,
                 (overrides[element.nodeName()] || overrides['*'] || {}).styles),
         // If the style is only about the element itself, we have to remove the element.
-            removeEmpty = S.isEmptyObject(attributes) &&
-                S.isEmptyObject(styles);
+            removeEmpty = util.isEmptyObject(attributes) &&
+                util.isEmptyObject(styles);
 
         // Remove definition attributes/style from the element.
         for (var attName in attributes) {

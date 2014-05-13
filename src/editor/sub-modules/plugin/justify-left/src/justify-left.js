@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var justifyCenterCmd = require('./justify-left/cmd');
     require('./button');
+    var Node = require('node');
     function exec() {
         var editor = this.get('editor');
         editor.execCommand('justifyLeft');
@@ -16,7 +17,7 @@ KISSY.add(function (S, require) {
     function justifyLeft() {
     }
 
-    S.augment(justifyLeft, {
+    (justifyLeft.prototype = {
         pluginRenderUI: function (editor) {
             justifyCenterCmd.init(editor);
 
@@ -44,7 +45,7 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.L) {
+                    if (e.ctrlKey && e.keyCode === Node.KeyCode.L) {
                         editor.execCommand('justifyLeft');
                         e.preventDefault();
                     }

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var IO = require('./base'),
         XhrTransportBase = require('./xhr-transport-base'),
         XdrFlashTransport = require('./xdr-flash-transport'),
@@ -17,7 +18,7 @@ KISSY.add(function (S, require) {
     // express: subdomain offset
     function isSubDomain(hostname) {
         // phonegap does not have doc.domain
-        return doc.domain && S.endsWith(hostname, doc.domain);
+        return doc.domain && util.endsWith(hostname, doc.domain);
     }
 
     /**
@@ -64,7 +65,7 @@ KISSY.add(function (S, require) {
         return self;
     }
 
-    S.augment(XhrTransport, XhrTransportBase.proto, {
+    util.augment(XhrTransport, XhrTransportBase.proto, {
         send: function () {
             this.sendInternal();
         }

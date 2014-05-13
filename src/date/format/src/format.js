@@ -5,6 +5,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/date/format');
     var GregorianCalendar = require('date/gregorian');
     var defaultLocale = require('i18n!date');
@@ -76,7 +77,7 @@ KISSY.add(function (S, require) {
     patternChars[GregorianCalendar.DAY_OF_YEAR] = 'D';
     patternChars[GregorianCalendar.DAY_OF_WEEK_IN_MONTH] = 'F';
 
-    S.each(patternChars, function (v, index) {
+    util.each(patternChars, function (v, index) {
         calendarIndexMap[v] = index;
     });
 
@@ -607,7 +608,7 @@ KISSY.add(function (S, require) {
         return startIndex;
     }
 
-    S.augment(DateTimeFormat, {
+    util.augment(DateTimeFormat, {
         /**
          * format a GregorianDate instance according to specified pattern
          * @param {KISSY.Date.Gregorian} calendar GregorianDate instance
@@ -707,7 +708,7 @@ KISSY.add(function (S, require) {
         }
     });
 
-    S.mix(DateTimeFormat, {
+    util.mix(DateTimeFormat, {
         Style: DateTimeStyle,
 
         /**
@@ -757,7 +758,7 @@ KISSY.add(function (S, require) {
             var pattern = datePattern;
             if (timePattern) {
                 if (datePattern) {
-                    pattern = S.substitute(locale.dateTimePattern, {
+                    pattern = util.substitute(locale.dateTimePattern, {
                         date: datePattern,
                         time: timePattern
                     });

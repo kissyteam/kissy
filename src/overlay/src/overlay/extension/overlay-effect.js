@@ -3,8 +3,12 @@
  * effect for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var effects = {fade: ['Out', 'In'], slide: ['Up', 'Down']};
+KISSY.add(function (S, require) {
+    var effects = {
+        fade: ['Out', 'In'],
+        slide: ['Up', 'Down']
+    };
+    var util = require('util');
 
     function getGhost(self) {
         var el = self.$el,
@@ -24,7 +28,7 @@ KISSY.add(function (S) {
         }
 
         var el = self.$el,
-            $ = S.all,
+            $ = require('node').all,
             effectCfg = self.get('effect'),
             target = $(effectCfg.target),
             duration = effectCfg.duration,
@@ -58,7 +62,7 @@ KISSY.add(function (S) {
         // get css left top value
         // in case overlay is inside a relative container
         ghost.offset(toOffset);
-        S.mix(to, {
+        util.mix(to, {
             left: ghost.css('left'),
             top: ghost.css('top')
         });

@@ -20,5 +20,3 @@ KISSY.config({
         }
     }
 });
-
-KISSY.use('ua,feature');

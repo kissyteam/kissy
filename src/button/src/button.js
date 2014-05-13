@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node'),
         Control = require('component/control');
 
@@ -18,7 +19,7 @@ KISSY.add(function (S, require) {
 
         beforeCreateDom: function (renderData) {
             var self = this;
-            S.mix(renderData.elAttrs, {
+            util.mix(renderData.elAttrs, {
                 role: 'button',
                 title: renderData.tooltip,
                 'aria-describedby': renderData.describedby

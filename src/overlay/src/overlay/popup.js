@@ -5,6 +5,8 @@
  */
 KISSY.add(function (S, require) {
     var Overlay = require('./control');
+    var util = require('util');
+    var Node = require('node');
 
     function bindTriggerMouse() {
         var self = this,
@@ -13,7 +15,7 @@ KISSY.add(function (S, require) {
 
         self.__mouseEnterPopup = function (ev) {
             clearHiddenTimer.call(self);
-            timer = S.later(function () {
+            timer = util.later(function () {
                 showing.call(self, ev);
                 timer = undefined;
             }, self.get('mouseDelay') * 1000);
@@ -35,7 +37,7 @@ KISSY.add(function (S, require) {
     function setHiddenTimer() {
         var self = this;
         var delay = self.get('mouseDelay') * 1000;
-        self._hiddenTimer = S.later(function () {
+        self._hiddenTimer = util.later(function () {
             hiding.call(self);
         }, delay);
     }
@@ -64,7 +66,7 @@ KISSY.add(function (S, require) {
 
     function showing(ev) {
         var self = this;
-        self.set('currentTrigger', S.one(ev.target));
+        self.set('currentTrigger', Node.one(ev.target));
         self.show();
     }
 
@@ -138,7 +140,7 @@ KISSY.add(function (S, require) {
              */
             trigger: {
                 setter: function (v) {
-                    return S.all(v);
+                    return Node.all(v);
                 }
             },
             /**

@@ -4,6 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
+    var UA = require('ua');
     var HtmlParser = require('html-parser');
     var Control = require('component/control');
     var RenderTpl = require('./render-xtpl');
@@ -14,8 +16,8 @@ KISSY.add(function (S, require) {
      */
     return Control.extend({
         beforeCreateDom: function (renderData) {
-            S.mix(renderData, {
-                mobile: S.UA.mobile
+            util.mix(renderData, {
+                mobile: UA.mobile
             });
         }
     }, {

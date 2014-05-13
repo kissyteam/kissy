@@ -22,6 +22,23 @@
                 inheritall="false"/>
     </target>
 
+    <target name="build-seed">
+        <concat destfile="${kissy.build.dir}/seed-debug.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <path location="${kissy.build.dir}/loader-debug.js"/>
+            <path location="${kissy.build.dir}/ua-debug.js"/>
+            <path location="${kissy.build.dir}/feature-debug.js"/>
+            <path location="${kissy.build.dir}/meta-debug.js"/>
+        </concat>
+        <concat destfile="${kissy.build.dir}/seed.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <path location="${kissy.build.dir}/loader.js"/>
+            <path location="${kissy.build.dir}/ua.js"/>
+            <path location="${kissy.build.dir}/feature.js"/>
+            <path location="${kissy.build.dir}/meta.js"/>
+        </concat>
+    </target>
+
     <!--jshint all js-->
     <target name="jshint">
         <subant target="jshint" failonerror="true" inheritall="false">

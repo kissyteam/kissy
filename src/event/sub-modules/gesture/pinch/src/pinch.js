@@ -8,10 +8,11 @@ KISSY.add(function (S, require) {
     var DoubleTouch = GestureUtil.DoubleTouch;
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
+    var Feature = require('feature');
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
         PINCH_END = 'pinchEnd';
-
+    var util = require('util');
     function getDistance(p1, p2) {
         var deltaX = p1.pageX - p2.pageX,
             deltaY = p1.pageY - p2.pageY;
@@ -21,7 +22,7 @@ KISSY.add(function (S, require) {
     function Pinch() {
     }
 
-    S.extend(Pinch, DoubleTouch, {
+    util.extend(Pinch, DoubleTouch, {
         requiredGestureType: 'touch',
 
         move: function (e) {
@@ -70,13 +71,13 @@ KISSY.add(function (S, require) {
                 self.startDistance = distance;
                 var target = self.target = self.getCommonTarget(e);
                 DomEvent.fire(target,
-                    PINCH_START, S.mix(e, {
+                    PINCH_START, util.mix(e, {
                         distance: distance,
                         scale: 1
                     }));
             } else {
                 DomEvent.fire(self.target,
-                    PINCH, S.mix(e, {
+                    PINCH, util.mix(e, {
                         distance: distance,
                         scale: distance / self.startDistance
                     }));
@@ -86,7 +87,7 @@ KISSY.add(function (S, require) {
         end: function (e) {
             var self = this;
             Pinch.superclass.end.apply(self, arguments);
-            DomEvent.fire(self.target, PINCH_END, S.mix(e, {
+            DomEvent.fire(self.target, PINCH_END, util.mix(e, {
                 touches: self.lastTouches
             }));
         }
@@ -107,7 +108,7 @@ KISSY.add(function (S, require) {
     var config = {
         handle: p
     };
-    if (S.Feature.isTouchEventSupported()) {
+    if (Feature.isTouchEventSupported()) {
         config.setup = function () {
             this.addEventListener('touchmove', prevent, false);
         };

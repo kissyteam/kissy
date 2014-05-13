@@ -7,8 +7,8 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Overlay = require('overlay');
     var FlashBridge = require('./flash-bridge');
-
-    var ie = S.UA.ieMode;
+    var util = require('util');
+    var ie = require('ua').ieMode;
 
     // 原生或者已经定义过立即返回
     // ie 使用 flash 模拟的 localStorage，序列化性能不行
@@ -58,7 +58,7 @@ KISSY.add(function (S, require) {
     });
 
     // 必须在视窗范围内才可以初始化，触发 contentReady 事件
-    S.ready(function () {
+    util.ready(function () {
         setTimeout(function () {
             o.center();
         }, 0);
@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
 
     var oldSet = store.setItem;
 
-    S.mix(store, {
+    util.mix(store, {
         _ke: 1,
         getItem: function (k) {
             return this.getValueOf(k);

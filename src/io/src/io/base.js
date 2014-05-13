@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var CustomEvent = require('event/custom'),
         Promise = require('promise');
     var Uri = require('uri');
@@ -35,10 +36,10 @@ KISSY.add(function (S, require) {
             },
             converters: {
                 text: {
-                    json: S.parseJson,
+                    json: util.parseJson,
                     html: mirror,
                     text: mirror,
-                    xml: S.parseXML
+                    xml: util.parseXML
                 }
             },
             headers: {
@@ -58,7 +59,7 @@ KISSY.add(function (S, require) {
         // deep mix,exclude context!
         var context = c.context;
         delete c.context;
-        c = S.mix(S.clone(defaultConfig), c, {
+        c = util.mix(util.clone(defaultConfig), c, {
             deep: true
         });
         c.context = context || c;
@@ -81,22 +82,22 @@ KISSY.add(function (S, require) {
 
         if (c.processData && (data = c.data) && typeof data !== 'string') {
             // normalize to string
-            c.data = S.param(data, undefined, undefined, c.serializeArray);
+            c.data = util.param(data, undefined, undefined, c.serializeArray);
         }
 
         // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-        dataType = c.dataType = S.trim(dataType || '*').split(rspace);
+        dataType = c.dataType = util.trim(dataType || '*').split(rspace);
 
-        if (!('cache' in c) && S.inArray(dataType[0], ['script', 'jsonp'])) {
+        if (!('cache' in c) && util.inArray(dataType[0], ['script', 'jsonp'])) {
             c.cache = false;
         }
 
         if (!c.hasContent) {
             if (c.data) {
-                uri.query.add(S.unparam(c.data));
+                uri.query.add(util.unparam(c.data));
             }
             if (c.cache === false) {
-                uri.query.set('_ksTS', (S.now() + '_' + S.guid()));
+                uri.query.set('_ksTS', (util.now() + '_' + util.guid()));
             }
         }
         return c;
@@ -289,7 +290,7 @@ KISSY.add(function (S, require) {
 
         c = setUpConfig(c);
 
-        S.mix(self, {
+        util.mix(self, {
             // 结构化数据，如 json
             responseData: null,
             /**
@@ -437,9 +438,9 @@ KISSY.add(function (S, require) {
         return self;
     }
 
-    S.mix(IO, CustomEvent.Target);
+    util.mix(IO, CustomEvent.Target);
 
-    S.mix(IO, {
+    util.mix(IO, {
         /**
          * whether current application is a local application
          * (protocal is file://,widget://,about://)
@@ -455,7 +456,7 @@ KISSY.add(function (S, require) {
          * @static
          */
         setupConfig: function (setting) {
-            S.mix(defaultConfig, setting, {
+            util.mix(defaultConfig, setting, {
                 deep: true
             });
         },

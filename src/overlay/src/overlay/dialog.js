@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Overlay = require('./control');
     var Node = require('node');
     var DialogTpl = require('./dialog-xtpl');
@@ -20,7 +21,7 @@ KISSY.add(function (S, require) {
      */
     var Dialog = Overlay.extend({
         beforeCreateDom: function (renderData) {
-            S.mix(renderData.elAttrs, {
+            util.mix(renderData.elAttrs, {
                 role: 'dialog',
                 'aria-labelledby': 'ks-stdmod-header-' + this.get('id')
             });

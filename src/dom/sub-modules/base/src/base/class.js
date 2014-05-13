@@ -5,12 +5,13 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('./api');
+    var util = require('util');
     var slice = [].slice,
         NodeType = Dom.NodeType,
         RE_SPLIT = /[\.\s]\s*\.?/;
 
     function strToArray(str) {
-        str = S.trim(str || '');
+        str = util.trim(str || '');
         var arr = str.split(RE_SPLIT),
             newArr = [], v,
             l = arr.length,
@@ -49,7 +50,7 @@ KISSY.add(function (S, require) {
         };
     }
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class

@@ -5,11 +5,12 @@
  */
 KISSY.add(function (S, require) {
     var Touch = require('./touch');
+    var util = require('util');
 
     function SingleTouch() {
     }
 
-    S.extend(SingleTouch, Touch, {
+    util.extend(SingleTouch, Touch, {
         requiredTouchCount: 1,
 
         start: function () {

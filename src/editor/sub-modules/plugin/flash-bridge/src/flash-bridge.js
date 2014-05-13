@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/editor/plugin/flash-bridge');
     var Editor = require('editor');
     var SWF = require('swf');
@@ -14,10 +15,10 @@ KISSY.add(function (S, require) {
         this._init(cfg);
     }
 
-    S.augment(FlashBridge, CustomEvent.Target, {
+    util.augment(FlashBridge, CustomEvent.Target, {
         _init: function (cfg) {
             var self = this,
-                id = S.guid('flash-bridge-'),
+                id = util.guid('flash-bridge-'),
                 callback = 'KISSY.require(\'editor\').FlashBridge.EventHandler';
             cfg.id = id;
             cfg.attrs = cfg.attrs || {};
@@ -25,7 +26,7 @@ KISSY.add(function (S, require) {
             var attrs = cfg.attrs,
                 params = cfg.params,
                 flashVars = params.flashVars = params.flashVars || {};
-            S.mix(attrs, {
+            util.mix(attrs, {
                 //http://yiminghe.javaeye.com/blog/764872
                 //firefox 必须使创建的flash以及容器可见，才会触发contentReady
                 //默认给flash自身很大的宽高，容器小点就可以了，
@@ -33,12 +34,12 @@ KISSY.add(function (S, require) {
                 height: 1
             }, false);
             //这几个要放在 param 里面，主要是允许 flash js沟通
-            S.mix(params, {
+            util.mix(params, {
                 allowScriptAccess: 'always',
                 allowNetworking: 'all',
                 scale: 'noScale'
             }, false);
-            S.mix(flashVars, {
+            util.mix(flashVars, {
                 shareData: false,
                 useCompression: false
             }, false);
@@ -52,7 +53,7 @@ KISSY.add(function (S, require) {
                     jsEntry: callback
                 };
             }
-            S.mix(flashVars, swfCore);
+            util.mix(flashVars, swfCore);
             instances[id] = self;
             self.id = id;
             self.swf = new SWF(cfg);
@@ -65,7 +66,7 @@ KISSY.add(function (S, require) {
                 /*jshint loopfunc:true*/
                 (function (m) {
                     self[m] = function () {
-                        return self._callSWF(m, S.makeArray(arguments));
+                        return self._callSWF(m, util.makeArray(arguments));
                     };
                 })(m);
             }

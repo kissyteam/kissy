@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var IO = require('./base');
     var UA = require('ua');
     var logger = S.getLogger('s/io');
@@ -73,7 +74,7 @@ KISSY.add(function (S, require) {
         return ifModifiedKey;
     }
 
-    S.mix(XhrTransportBase.proto, {
+    util.mix(XhrTransportBase.proto, {
         sendInternal: function () {
             var self = this,
                 io = self.io,
@@ -153,13 +154,13 @@ KISSY.add(function (S, require) {
                 var originalSentContent = sendContent,
                     data = {};
                 if (originalSentContent) {
-                    data = S.unparam(originalSentContent);
+                    data = util.unparam(originalSentContent);
                 }
-                data = S.mix(data, files);
+                data = util.mix(data, files);
                 sendContent = new FormData();
-                S.each(data, function (vs, k) {
-                    if (S.isArray(vs)) {
-                        S.each(vs, function (v) {
+                util.each(data, function (vs, k) {
+                    if (util.isArray(vs)) {
+                        util.each(vs, function (v) {
                             sendContent.append(k + (c.serializeArray ? '[]' : ''), v);
                         });
                     } else {
@@ -215,11 +216,11 @@ KISSY.add(function (S, require) {
                 if (abort || nativeXhr.readyState === 4) {
                     // ie6 ActiveObject 设置不恰当属性导致出错
                     if (isInstanceOfXDomainRequest(nativeXhr)) {
-                        nativeXhr.onerror = S.noop;
-                        nativeXhr.onload = S.noop;
+                        nativeXhr.onerror = util.noop;
+                        nativeXhr.onload = util.noop;
                     } else {
                         // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
-                        nativeXhr.onreadystatechange = S.noop;
+                        nativeXhr.onreadystatechange = util.noop;
                     }
 
                     if (abort) {
@@ -270,7 +271,7 @@ KISSY.add(function (S, require) {
                                 text = text.slice(bodyIndex + 6, lastBodyIndex);
                             }
                             // same with old-ie logic
-                            io.responseText = S.unEscapeHtml(text);
+                            io.responseText = util.unEscapeHtml(text);
                         }
 
                         // Firefox throws an exception when accessing
@@ -303,7 +304,7 @@ KISSY.add(function (S, require) {
                 setTimeout(function () {
                     throw e;
                 }, 0);
-                nativeXhr.onreadystatechange = S.noop;
+                nativeXhr.onreadystatechange = util.noop;
                 if (!abort) {
                     io._ioReady(0 - 1, e);
                 }

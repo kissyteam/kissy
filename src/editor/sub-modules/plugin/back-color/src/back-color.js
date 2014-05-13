@@ -10,7 +10,7 @@ KISSY.add(function (S,require) {
         this.config = config || {};
     }
 
-    S.augment(backColor, {
+    backColor.protoype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
@@ -19,7 +19,7 @@ KISSY.add(function (S,require) {
                 tooltip: '背景颜色'
             });
         }
-    });
+    };
 
     return backColor;
 });

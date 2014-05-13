@@ -8,13 +8,14 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var $ = Node.all;
     var UA = require('ua');
     var Walker = require('./walker');
     var Editor = require('./base');
     var ElementPath = require('./element-path');
-    var OLD_IE = S.UA.ieMode < 11;
+    var OLD_IE = UA.ieMode < 11;
     var headerPreTagRegex = /^(?:h[1-6])|(?:pre)$/i,
         dtd = Editor.XHTML_DTD;
 
@@ -115,7 +116,7 @@ KISSY.add(function (S, require) {
             // wouldn't be editable. (#1420)
             if (nextBlock.nodeName() === 'li' &&
                 (node = nextBlock.first(Walker.invisible(true))) &&
-                S.inArray(node.nodeName(), ['ul', 'ol'])) {
+                util.inArray(node.nodeName(), ['ul', 'ol'])) {
                 (OLD_IE ? new Node(doc.createTextNode('\xa0')) :
                     new Node(doc.createElement('br'))).insertBefore(node);
             }

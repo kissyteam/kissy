@@ -4,16 +4,17 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node'),
         DD = require('dd'),
         Base = require('base');
     var DDM = DD.DDM,
         win = S.Env.host,
-        SCROLL_EVENT = '.-ks-dd-scroll' + S.now(),
+        SCROLL_EVENT = '.-ks-dd-scroll' + util.now(),
         RATE = [10, 10],
         ADJUST_DELAY = 100,
         DIFF = [20, 20],
-        isWin = S.isWindow;
+        isWin = util.isWindow;
 
     /**
      * @class KISSY.DD.Plugin.Scroll
@@ -134,7 +135,7 @@ KISSY.add(function (S, require) {
 
                 // 更新当前鼠标相对于拖节点的相对位置
                 event = ev;
-                dxy = S.clone(drag.mousePos);
+                dxy = util.clone(drag.mousePos);
                 var offset = self.getOffset(node);
                 dxy.left -= offset.left;
                 dxy.top -= offset.top;
@@ -165,7 +166,7 @@ KISSY.add(function (S, require) {
                     nw = r.width,
                     nh = r.height,
                     scroll = self.getScroll(node),
-                    origin = S.clone(scroll),
+                    origin = util.clone(scroll),
                     diffY = dxy.top - nh,
                     adjust = false;
 

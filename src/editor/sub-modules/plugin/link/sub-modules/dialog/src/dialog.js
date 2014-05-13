@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var Dialog4E = require('../dialog');
     var Utils = require('./utils');
@@ -54,7 +55,7 @@ KISSY.add(function (S, require) {
         Editor.Utils.lazyRun(self, '_prepareShow', '_real');
     }
 
-    S.augment(LinkDialog, {
+    util.augment(LinkDialog, {
         _prepareShow: function () {
             var self = this,
                 editor = self.editor,
@@ -62,10 +63,10 @@ KISSY.add(function (S, require) {
                 d = new Dialog4E({
                     width: 500,
                     headerContent: '链接',
-                    bodyContent: S.substitute(bodyHTML, {
+                    bodyContent: util.substitute(bodyHTML, {
                         prefixCls: prefixCls
                     }),
-                    footerContent: S.substitute(footHTML, {
+                    footerContent: util.substitute(footHTML, {
                         prefixCls: prefixCls
                     }),
                     mask: true
@@ -98,7 +99,7 @@ KISSY.add(function (S, require) {
             var attr = {
                 href: url,
                 target: d.targetEl[0].checked ? '_blank' : '_self',
-                title: S.trim(d.urlTitle.val())
+                title: util.trim(d.urlTitle.val())
             };
             // ie9 focus 不同步，hide后等会才能恢复焦点
             setTimeout(function () {

@@ -4,11 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var FlashDialog = require('../flash/dialog');
     var MenuButton = require('../menubutton');
     var Dom = require('dom'),
-        Node = S.Node,
+        Node = require('node'),
         Utils = Editor.Utils,
         loading = Utils.debugUrl('theme/tao-loading.gif'),
         XIAMI_URL = 'http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}',
@@ -73,7 +74,7 @@ KISSY.add(function (S, require) {
         XiamiMusicDialog.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(XiamiMusicDialog, FlashDialog, {
+    util.extend(XiamiMusicDialog, FlashDialog, {
         _config: function () {
             var self = this,
                 editor = self.editor,
@@ -81,10 +82,10 @@ KISSY.add(function (S, require) {
             self._cls = CLS_XIAMI;
             self._type = TYPE_XIAMI;
             self._title = '虾米音乐';//属性';
-            self._bodyHTML = S.substitute(bodyHTML, {
+            self._bodyHTML = util.substitute(bodyHTML, {
                 prefixCls: prefixCls
             });
-            self._footHTML = S.substitute(footHTML, {
+            self._footHTML = util.substitute(footHTML, {
                 prefixCls: prefixCls
             });
         },
@@ -155,12 +156,12 @@ KISSY.add(function (S, require) {
                 if (query.replace(/[^\x00-\xff]/g, '@@').length > 30) {
                     window.alert('长度上限30个字符（1个汉字=2个字符）');
                     return;
-                } else if (!S.trim(query) || query === TIP) {
+                } else if (!util.trim(query) || query === TIP) {
                     window.alert('不能为空！');
                     return;
                 }
                 self._xiamiSubmit.addClass(prefixCls + 'editor-button-disabled', undefined);
-                var req = S.substitute(XIAMI_URL, {
+                var req = util.substitute(XIAMI_URL, {
                     key: encodeURIComponent(input.val()),
                     page: page
                 });
@@ -232,7 +233,7 @@ KISSY.add(function (S, require) {
                 re = data.results,
                 html = '';
             // xiami 返回结果自动trim了
-            if (data.key === S.trim(self._xiamiInput.val())) {
+            if (data.key === util.trim(self._xiamiInput.val())) {
                 self._xiamiSubmit.removeClass(prefixCls + 'editor-button-disabled', undefined);
                 if (re && re.length) {
                     html = '<ul>';
@@ -297,7 +298,7 @@ KISSY.add(function (S, require) {
                         '不好意思，没有找到结果！' +
                         '</p>';
                 }
-                self._xiamiaList.html(S.substitute(html, {
+                self._xiamiaList.html(util.substitute(html, {
                     prefixCls: prefixCls
                 }));
             }
@@ -331,7 +332,7 @@ KISSY.add(function (S, require) {
 
         _getDInfo: function () {
             var self = this;
-            S.mix(self._dinfo.attrs, {
+            util.mix(self._dinfo.attrs, {
                 width: 257,
                 height: 33
             });
@@ -348,7 +349,7 @@ KISSY.add(function (S, require) {
 
     function getDisplayName(r) {
         /*jshint camelcase:false*/
-        return S.urlDecode(r.song_name) + ' - ' + S.urlDecode(r.artist_name);
+        return util.urlDecode(r.song_name) + ' - ' + util.urlDecode(r.artist_name);
     }
 
     return XiamiMusicDialog;

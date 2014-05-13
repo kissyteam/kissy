@@ -3,10 +3,11 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Q = require('./queue'),
+        util = require('util'),
         Dom = require('dom');
-    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
+    var runningKey = util.guid('ks-anim-unqueued-' + util.now() + '-');
 
     function saveRunningAnim(anim) {
         var node = anim.node,
@@ -14,15 +15,15 @@ KISSY.add(function (S,require) {
         if (!allRunning) {
             Dom.data(node, runningKey, allRunning = {});
         }
-        allRunning[S.stamp(anim)] = anim;
+        allRunning[util.stamp(anim)] = anim;
     }
 
     function removeRunningAnim(anim) {
         var node = anim.node,
             allRunning = Dom.data(node, runningKey);
         if (allRunning) {
-            delete allRunning[S.stamp(anim)];
-            if (S.isEmptyObject(allRunning)) {
+            delete allRunning[util.stamp(anim)];
+            if (util.isEmptyObject(allRunning)) {
                 Dom.removeData(node, runningKey);
             }
         }
@@ -32,12 +33,12 @@ KISSY.add(function (S,require) {
         var node = anim.node,
             allRunning = Dom.data(node, runningKey);
         if (allRunning) {
-            return !!allRunning[S.stamp(anim)];
+            return !!allRunning[util.stamp(anim)];
         }
         return 0;
     }
 
-    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
+    var pausedKey = util.guid('ks-anim-paused-' + util.now() + '-');
 
     function savePausedAnim(anim) {
         var node = anim.node,
@@ -45,15 +46,15 @@ KISSY.add(function (S,require) {
         if (!paused) {
             Dom.data(node, pausedKey, paused = {});
         }
-        paused[S.stamp(anim)] = anim;
+        paused[util.stamp(anim)] = anim;
     }
 
     function removePausedAnim(anim) {
         var node = anim.node,
             paused = Dom.data(node, pausedKey);
         if (paused) {
-            delete paused[S.stamp(anim)];
-            if (S.isEmptyObject(paused)) {
+            delete paused[util.stamp(anim)];
+            if (util.isEmptyObject(paused)) {
                 Dom.removeData(node, pausedKey);
             }
         }
@@ -63,7 +64,7 @@ KISSY.add(function (S,require) {
         var node = anim.node,
             paused = Dom.data(node, pausedKey);
         if (paused) {
-            return !!paused[S.stamp(anim)];
+            return !!paused[util.stamp(anim)];
         }
         return 0;
     }
@@ -71,9 +72,9 @@ KISSY.add(function (S,require) {
     function pauseOrResumeQueue(node, queue, action) {
         var allAnims = Dom.data(node, action === 'resume' ? pausedKey : runningKey),
         // can not stop in for/in , stop will modified allRunning too
-            anims = S.merge(allAnims);
+            anims = util.merge(allAnims);
 
-        S.each(anims, function (anim) {
+        util.each(anims, function (anim) {
             if (queue === undefined ||
                 anim.config.queue === queue) {
                 anim[action]();
@@ -91,12 +92,12 @@ KISSY.add(function (S,require) {
         // whether node has paused anim
         isElPaused: function (node) {
             var paused = Dom.data(node, pausedKey);
-            return paused && !S.isEmptyObject(paused);
+            return paused && !util.isEmptyObject(paused);
         },
         // whether node is running anim
         isElRunning: function (node) {
             var allRunning = Dom.data(node, runningKey);
-            return allRunning && !S.isEmptyObject(allRunning);
+            return allRunning && !util.isEmptyObject(allRunning);
         },
         pauseOrResumeQueue: pauseOrResumeQueue,
         stopEl: function (node, end, clearQueue, queue) {
@@ -109,8 +110,8 @@ KISSY.add(function (S,require) {
             }
             var allRunning = Dom.data(node, runningKey),
             // can not stop in for/in , stop will modified allRunning too
-                anims = S.merge(allRunning);
-            S.each(anims, function (anim) {
+                anims = util.merge(allRunning);
+            util.each(anims, function (anim) {
                 if (queue === undefined || anim.config.queue === queue) {
                     anim.stop(end);
                 }

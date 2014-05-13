@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var DelegateChildrenExtension = require('component/extension/delegate-children');
     var TapGesture = require('event/gesture/tap');
+    var util = require('util');
 
     /**
      * Manage tree node for tree root
@@ -47,7 +48,7 @@ KISSY.add(function (S, require) {
         }
     };
 
-    S.augment(TreeManager, DelegateChildrenExtension, {
+    util.augment(TreeManager, DelegateChildrenExtension, {
         isTree: 1,
 
         __bindUI: function () {

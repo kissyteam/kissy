@@ -8,6 +8,7 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var Editor = require('./base');
     var Utils = require('./utils');
@@ -17,7 +18,7 @@ KISSY.add(function (S, require) {
         xhtmlDtd = Editor.XHTML_DTD,
         Dom = require('dom'),
         NodeType = Dom.NodeType,
-        UA = S.UA,
+        UA = require('ua'),
         REMOVE_EMPTY = {
             a: 1,
             abbr: 1,
@@ -99,7 +100,7 @@ KISSY.add(function (S, require) {
 
             // 是否是块状元素或块状元素边界
             _4eIsBlockBoundary: function (el, customNodeNames) {
-                var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
+                var nodeNameMatches = util.merge(blockBoundaryNodeNameMatch, customNodeNames);
                 return !!(blockBoundaryDisplayMatch[ Dom.css(el, 'display') ] || nodeNameMatches[ Dom.nodeName(el) ]);
             },
 
@@ -205,7 +206,7 @@ KISSY.add(function (S, require) {
                     }
 
                     if (nodeType === NodeType.ELEMENT_NODE && !Dom._4eIsEmptyInlineRemovable(child) ||
-                        nodeType === Dom.NodeType.TEXT_NODE && S.trim(child.nodeValue)) {
+                        nodeType === Dom.NodeType.TEXT_NODE && util.trim(child.nodeValue)) {
                         return FALSE;
                     }
                 }
@@ -593,7 +594,7 @@ KISSY.add(function (S, require) {
 
                 // Ignore empty/spaces text.
                 while (lastChild &&
-                    lastChild.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(lastChild.nodeValue)) {
+                    lastChild.nodeType === Dom.NodeType.TEXT_NODE && !util.trim(lastChild.nodeValue)) {
                     lastChild = lastChild.previousSibling;
                 }
 
@@ -609,7 +610,7 @@ KISSY.add(function (S, require) {
             _4eSetMarker: function (element, database, name, value) {
                 element = normalEl(element);
                 var id = element.data('list_marker_id') ||
-                        (element.data('list_marker_id', S.guid()).data('list_marker_id')),
+                        (element.data('list_marker_id', util.guid()).data('list_marker_id')),
                     markerNames = element.data('list_marker_names') ||
                         (element.data('list_marker_names', {}).data('list_marker_names'));
                 database[id] = element;

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Promise = require('promise'),
         IO = require('./base');
     var Uri = require('uri');
@@ -65,7 +66,7 @@ KISSY.add(function (S, require) {
             if (!responseData) {
                 var rawData = {text: text, xml: xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
-                S.each(['text', 'xml'], function (prevType) {
+                util.each(['text', 'xml'], function (prevType) {
                     var type = dataType[0],
                         converter = converts[prevType] && converts[prevType][type];
                     if (converter && rawData[prevType]) {
@@ -96,7 +97,7 @@ KISSY.add(function (S, require) {
         io.responseData = responseData;
     }
 
-    S.extend(IO, Promise, {
+    util.extend(IO, Promise, {
             // Caches the header
             setRequestHeader: function (name, value) {
                 var self = this;

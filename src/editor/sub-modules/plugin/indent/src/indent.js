@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
 
     }
 
-    S.augment(Indent, {
+    (Indent.prototype = {
         pluginRenderUI: function (editor) {
             indexCmd.init(editor);
             editor.addButton('indent', {

@@ -8,6 +8,7 @@ KISSY.add(function (S, require) {
     var Json = require('json');
     var Attribute = require('attribute');
     var FlashUA = require('swf/ua');
+    var util = require('util');
 
     var OLD_IE = !!S.Env.host.ActiveXObject,
         TYPE = 'application/x-shockwave-flash',
@@ -74,10 +75,10 @@ KISSY.add(function (S, require) {
                 idRegExp,
                 version = self.get('version');
 
-            id = attrs.id = attrs.id || S.guid('ks-swf-');
+            id = attrs.id = attrs.id || util.guid('ks-swf-');
 
             if (hasNoId) {
-                idRegExp = new RegExp('\\s+id\\s*=\\s*[\'"]?' + S.escapeRegExp(id) + '[\'"]?', 'i');
+                idRegExp = new RegExp('\\s+id\\s*=\\s*[\'"]?' + util.escapeRegExp(id) + '[\'"]?', 'i');
             }
 
             // 2. flash 插件没有安装
@@ -107,7 +108,7 @@ KISSY.add(function (S, require) {
 
                     flashVars = params.flashVars = params.flashVars || {};
                     // location.toString() crash ie6
-                    S.mix(flashVars, {
+                    util.mix(flashVars, {
                         MMredirectURL: location.href,
                         MMplayerType: OLD_IE ? 'ActiveX' : 'PlugIn',
                         MMdoctitle: doc.title.slice(0, 47) + ' - Flash Player Installation'
@@ -475,7 +476,7 @@ KISSY.add(function (S, require) {
     // setSrc ie 不重新渲染
     function collectionParams(params) {
         var par = EMPTY;
-        S.each(params, function (v, k) {
+        util.each(params, function (v, k) {
             k = k.toLowerCase();
             if (k in PARAMS) {
                 par += stringParam(k, v);
@@ -497,7 +498,7 @@ KISSY.add(function (S, require) {
             par = EMPTY;
 
         // 普通属性
-        S.each(attrs, function (v, k) {
+        util.each(attrs, function (v, k) {
             attr += stringAttr(k, v);
         });
 
@@ -542,7 +543,7 @@ KISSY.add(function (S, require) {
     function toFlashVars(obj) {
         var arr = [],
             ret;
-        S.each(obj, function (data, prop) {
+        util.each(obj, function (data, prop) {
             if (typeof data !== 'string') {
                 data = Json.stringify(data);
             }

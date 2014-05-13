@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var Node = require('node');
     var Container = require('component/container');
+    var util = require('util');
 
     var $ = Node.all,
         KeyCode = Node.KeyCode;
@@ -35,7 +36,7 @@ KISSY.add(function (S, require) {
      */
     return Container.extend([ContentBox], {
         beforeCreateDom: function (renderData) {
-            S.mix(renderData.elAttrs, {
+            util.mix(renderData.elAttrs, {
                 role: 'tree-node',
                 'aria-labelledby': 'ks-content' + renderData.id,
                 'aria-expanded': renderData.expanded ? 'true' : 'false',
@@ -141,7 +142,7 @@ KISSY.add(function (S, require) {
                 return null;
             }
             siblings = parent.get('children');
-            index = S.indexOf(self, siblings);
+            index = util.indexOf(self, siblings);
             if (index === siblings.length - 1) {
                 return null;
             }
@@ -157,7 +158,7 @@ KISSY.add(function (S, require) {
                 return null;
             }
             siblings = parent.get('children');
-            index = S.indexOf(self, siblings);
+            index = util.indexOf(self, siblings);
             if (index === 0) {
                 return null;
             }
@@ -227,7 +228,7 @@ KISSY.add(function (S, require) {
             expandIconEl[0].className = self.getBaseCssClasses(
                 [
                     EXPAND_EL_CLS,
-                    S.substitute(expandElCss, {
+                    util.substitute(expandElCss, {
                         t: isNodeSingleOrLast ? 'l' : 't'
                     })
                 ]
@@ -271,7 +272,7 @@ KISSY.add(function (S, require) {
         expandAll: function () {
             var self = this;
             self.set('expanded', true);
-            S.each(self.get('children'), function (c) {
+            util.each(self.get('children'), function (c) {
                 c.expandAll();
             });
         },
@@ -282,7 +283,7 @@ KISSY.add(function (S, require) {
         collapseAll: function () {
             var self = this;
             self.set('expanded', false);
-            S.each(self.get('children'), function (c) {
+            util.each(self.get('children'), function (c) {
                 c.collapseAll();
             });
         }
@@ -521,7 +522,7 @@ KISSY.add(function (S, require) {
         if (setDepth !== undefined) {
             c.set('depth', setDepth);
         }
-        S.each(c.get('children'), function (child) {
+        util.each(c.get('children'), function (child) {
             if (typeof setDepth === 'number') {
                 recursiveSetDepth(tree, child, setDepth + 1);
             } else {

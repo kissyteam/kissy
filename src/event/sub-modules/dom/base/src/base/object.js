@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var BaseEvent = require('event/base');
-
+    var util = require('util');
     var DOCUMENT = S.Env.host.document,
         TRUE = true,
         FALSE = false,
@@ -415,7 +415,7 @@ KISSY.add(function (S, require) {
             prop,
             props = commonProps.concat();
 
-        S.each(eventNormalizers, function (normalizer) {
+        util.each(eventNormalizers, function (normalizer) {
             if (type.match(normalizer.reg)) {
                 props = props.concat(normalizer.props);
                 if (normalizer.fix) {
@@ -450,10 +450,10 @@ KISSY.add(function (S, require) {
             fixFn(self, originalEvent);
         }
 
-        self.timeStamp = originalEvent.timeStamp || S.now();
+        self.timeStamp = originalEvent.timeStamp || util.now();
     }
 
-    S.extend(DomEventObject, BaseEvent.Object, {
+    util.extend(DomEventObject, BaseEvent.Object, {
         constructor: DomEventObject,
 
         preventDefault: function () {

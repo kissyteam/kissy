@@ -27,18 +27,20 @@ KISSY.add(function (S, require) {
         }
     }
 
+    var guid = 1;
+
     /**
      * delegate events for component's children. for mixin.
      * @class KISSY.Component.Extension.DelegateChildren
      */
     function DelegateChildren() {
         var self = this;
-        self.__childClsTag = S.guid('ks-component-child');
+        self.__childClsTag = ('ks-component-child') + (guid++);
         self.on('afterRenderChild', onRenderChild, self)
             .on('afterRemoveChild', onRemoveChild, self);
     }
 
-    S.augment(DelegateChildren, {
+    DelegateChildren.prototype = {
         handleChildrenEvents: function (e) {
             if (!this.get('disabled')) {
                 var control = this.getOwnerControl(e);
@@ -92,7 +94,7 @@ KISSY.add(function (S, require) {
         getOwnerControl: function (e) {
             return Manager.getComponent(e.currentTarget.id);
         }
-    });
+    };
 
     return DelegateChildren;
 });

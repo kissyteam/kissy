@@ -6,11 +6,11 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Event = require('event/dom');
-
-    var UA = S.UA,
+    var util = require('util');
+    var UA = require('ua'),
         ie = UA.ie,
         doc = document,
-        Node = S.Node,
+        Node = require('node'),
         Dom = require('dom'),
         iframe,
         MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding',
@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         this.editor = editor;
     }
 
-    S.augment(MaximizeCmd, {
+    util.augment(MaximizeCmd, {
 
         restoreWindow: function () {
             var self = this,
@@ -271,7 +271,7 @@ KISSY.add(function (S, require) {
             self._saveSate();
             self._maximize();
             if (!self._resize) {
-                self._resize = S.buffer(function () {
+                self._resize = util.buffer(function () {
                     self._maximize();
                     editor.fire('afterMaximizeWindow');
                 }, 100);

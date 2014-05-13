@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var Base = require('base');
     var DD = require('dd');
-
+    var util = require('util');
     var $ = Node.all,
         i,
         j,
@@ -92,7 +92,7 @@ KISSY.add(function (S, require) {
                     '-' + hc +
                     '"></div>')
                     .prependTo(node, undefined),
-                dd = dds[hc] = new Draggable(S.mix({
+                dd = dds[hc] = new Draggable(util.mix({
                     node: el,
                     cursor: null,
                     groups: false
@@ -175,7 +175,7 @@ KISSY.add(function (S, require) {
 
         _onSetDisabled: function (v) {
             var dds = this.dds;
-            S.each(dds, function (d) {
+            util.each(dds, function (d) {
                 d.set('disabled', v);
             });
         },

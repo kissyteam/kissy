@@ -3,12 +3,12 @@
  * cookie
  * @author lifesinger@gmail.com
  */
-KISSY.add(function (S) {
-
+KISSY.add(function (S, require) {
+    var util = require('util');
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
-        decode = S.urlDecode;
+        decode = util.urlDecode;
 
     function isNotEmptyString(val) {
         return (typeof val === 'string') && val !== '';

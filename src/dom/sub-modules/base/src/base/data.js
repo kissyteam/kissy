@@ -4,11 +4,12 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     /*jshint eqeqeq:false*/
     // cannot use === for window in ie8
     var Dom = require('./api');
     var win = S.Env.host,
-        EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
+        EXPANDO = '_ks_data_' + util.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = {}, // 存储 node 节点的 data
         winDataCache = {}, // 避免污染全局
     // The following elements throw uncatchable exceptions if you
@@ -25,7 +26,7 @@ KISSY.add(function (S, require) {
                     if (name in cache) {
                         return true;
                     }
-                } else if (!S.isEmptyObject(cache)) {
+                } else if (!util.isEmptyObject(cache)) {
                     return true;
                 }
             }
@@ -68,7 +69,7 @@ KISSY.add(function (S, require) {
             var cache = ob[EXPANDO];
             if (name !== undefined) {
                 delete cache[name];
-                if (S.isEmptyObject(cache)) {
+                if (util.isEmptyObject(cache)) {
                     objectOps.removeData(ob);
                 }
             } else {
@@ -105,7 +106,7 @@ KISSY.add(function (S, require) {
                     return undefined;
                 }
                 // 节点上关联键值也可以
-                key = elem[EXPANDO] = S.guid();
+                key = elem[EXPANDO] = util.guid();
             }
             cache = dataCache[key];
             if (value !== undefined) {
@@ -131,7 +132,7 @@ KISSY.add(function (S, require) {
             cache = dataCache[key];
             if (name !== undefined) {
                 delete cache[name];
-                if (S.isEmptyObject(cache)) {
+                if (util.isEmptyObject(cache)) {
                     domOps.removeData(elem);
                 }
             } else {
@@ -148,7 +149,7 @@ KISSY.add(function (S, require) {
         }
     };
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -197,7 +198,7 @@ KISSY.add(function (S, require) {
                 var elems = Dom.query(selector), elem = elems[0];
 
                 // supports hash
-                if (S.isPlainObject(name)) {
+                if (util.isPlainObject(name)) {
                     for (var k in name) {
                         Dom.data(elems, k, name[k]);
                     }
@@ -258,7 +259,7 @@ KISSY.add(function (S, require) {
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType) {
-                        var descendants = deep && S.makeArray(elem.getElementsByTagName('*')) || [];
+                        var descendants = deep && util.makeArray(elem.getElementsByTagName('*')) || [];
                         descendants.push(elem);
                         for (var j = 0, len = descendants.length; j < len; j++) {
                             domOps.removeData(descendants[j]);

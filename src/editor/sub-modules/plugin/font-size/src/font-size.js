@@ -8,19 +8,19 @@ KISSY.add(function (S, require) {
     var ui = require('./font/ui');
     var cmd = require('./font-size/cmd');
     require('./menubutton');
-
+    var util = require('util');
     function FontSizePlugin(config) {
         this.config = config || {};
     }
 
-    S.augment(FontSizePlugin, {
+    util.augment(FontSizePlugin, {
         pluginRenderUI: function (editor) {
 
             cmd.init(editor);
 
             function wrapFont(vs) {
                 var v = [];
-                S.each(vs, function (n) {
+                util.each(vs, function (n) {
                     v.push({
                         content: n,
                         value: n
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
 
             var fontSizeConfig = this.config;
 
-            fontSizeConfig.menu = S.mix({
+            fontSizeConfig.menu = util.mix({
                 children: wrapFont([
                     '8px', '10px', '12px',
                     '14px', '18px', '24px',
@@ -40,7 +40,7 @@ KISSY.add(function (S, require) {
                 ])
             }, fontSizeConfig.menu);
 
-            editor.addSelect('fontSize', S.mix({
+            editor.addSelect('fontSize', util.mix({
                 cmdType: 'fontSize',
                 defaultCaption: '大小',
                 width: '70px',

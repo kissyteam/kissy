@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
-
+    var util = require('util');
     return Base.extend({
         destroy: function () {
             var self = this;
@@ -17,8 +17,7 @@ KISSY.add(function (S, require) {
                 h = self.get('height'),
                 prefixCls = self.get('prefixCls'),
                 el = new Node(
-
-                    S.substitute('<div' +
+                    util.substitute('<div' +
                         ' class="{prefixCls}editor-progressbar" ' +
                         ' style="width:' +
                         self.get('width') +
@@ -30,7 +29,7 @@ KISSY.add(function (S, require) {
                     })),
                 container = self.get('container'),
                 p = new Node(
-                    S.substitute('<div style="overflow:hidden;">' +
+                    util.substitute('<div style="overflow:hidden;">' +
                         '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h,10) - 4) + 'px">' +
                         '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' +
                         '</div>' +

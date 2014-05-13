@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     var Special = require('./special');
     var DomEventObservable = require('./observable');
     var DomEventObject = require('./object');
-
+    var util = require('util');
     var BaseUtils = BaseEvent.Utils;
 
     function fixType(cfg, type) {
@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
             domEventObservables,
             handle;
 
-        cfg = S.merge(cfg);
+        cfg = util.merge(cfg);
         type = fixType(cfg, type);
 
         // 获取事件描述
@@ -87,7 +87,7 @@ KISSY.add(function (S, require) {
 
     function removeInternal(currentTarget, type, cfg) {
         // copy
-        cfg = S.merge(cfg);
+        cfg = util.merge(cfg);
 
         var customEvent;
 
@@ -334,8 +334,8 @@ KISSY.add(function (S, require) {
                 DomEventUtils.removeData(dest);
             }
             domEventObservables = domEventObservablesHolder.observables;
-            S.each(domEventObservables, function (customEvent, type) {
-                S.each(customEvent.observers, function (observer) {
+            util.each(domEventObservables, function (customEvent, type) {
+                util.each(customEvent.observers, function (observer) {
                     // context undefined
                     // 不能 this 写死在 handlers 中
                     // 否则不能保证 clone 时的 this

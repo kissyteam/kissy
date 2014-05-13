@@ -74,7 +74,7 @@ KISSY.add(function (S, require) {
         SAMPLE_INTERVAL = 300,
         MIN_DISTANCE = 3;
     var doc = document;
-
+    var util = require('util');
     function getDistance(p1, p2) {
         var deltaX = p1.pageX - p2.pageX,
             deltaY = p1.pageY - p2.pageY;
@@ -147,7 +147,7 @@ KISSY.add(function (S, require) {
     function Drag() {
     }
 
-    S.extend(Drag, SingleTouch, {
+    util.extend(Drag, SingleTouch, {
         start: function () {
             var self = this;
             Drag.superclass.start.apply(self, arguments);

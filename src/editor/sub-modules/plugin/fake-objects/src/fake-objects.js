@@ -7,8 +7,8 @@ KISSY.add(function (S, require) {
     /*jshint camelcase:false*/
     var Editor = require('editor');
     var HtmlParser = require('html-parser');
-
-    var Node = S.Node,
+    var util = require('util');
+    var Node = require('node'),
         Dom = require('dom'),
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
             }
             var self = this,
             // add current class to fake element
-                existClass = S.trim(realElement.attr('class')),
+                existClass = util.trim(realElement.attr('class')),
                 attributes = {
                     'class': className + ' ' + existClass,
                     src: SPACER_GIF,
@@ -37,7 +37,7 @@ KISSY.add(function (S, require) {
             if (attrs) {
                 delete attrs.width;
                 delete attrs.height;
-                S.mix(attributes, attrs, false);
+                util.mix(attributes, attrs, false);
             }
 
             if (realElementType) {
@@ -55,7 +55,7 @@ KISSY.add(function (S, require) {
                 return null;
             }
 
-            var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
+            var html = (util.urlDecode(fakeElement.attr('_ke_real_element')));
 
             var temp = new Node('<div>', null, this.get('document')[0]);
             temp.html(html);
@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
                 var realFragment;
 
                 if (realHTML) {
-                    realFragment = new HtmlParser.Parser(S.urlDecode(realHTML)).parse();
+                    realFragment = new HtmlParser.Parser(util.urlDecode(realHTML)).parse();
                 }
 
                 var realElement = realFragment && realFragment.childNodes[ 0 ];
@@ -119,13 +119,13 @@ KISSY.add(function (S, require) {
                 htmlFilter.addRules(htmlFilterRules);
             }
 
-            S.mix(dataProcessor, {
+            util.mix(dataProcessor, {
                 restoreRealElement: function (fakeElement) {
                     if (parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 
-                    var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
+                    var html = (util.urlDecode(fakeElement.attr('_ke_real_element')));
 
                     var temp = new Node('<div>', null, editor.get('document')[0]);
                     temp.html(html);
@@ -145,7 +145,7 @@ KISSY.add(function (S, require) {
                         style = 'height:' + realElement.getAttribute('height') + 'px;' + style;
                     }
                     // add current class to fake element
-                    var existClass = S.trim(realElement.getAttribute('class')),
+                    var existClass = util.trim(realElement.getAttribute('class')),
                         attributes = {
                             'class': className + ' ' + existClass,
                             src: SPACER_GIF,
@@ -158,7 +158,7 @@ KISSY.add(function (S, require) {
                     if (attrs) {
                         delete attrs.width;
                         delete attrs.height;
-                        S.mix(attributes, attrs, false);
+                        util.mix(attributes, attrs, false);
                     }
 
                     if (realElementType) {

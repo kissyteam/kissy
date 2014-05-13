@@ -5,7 +5,9 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
+    var $ = Node.all;
     var MenuButton = require('./control');
+    var util = require('util');
 
     function getSelectedItem(self) {
         var menu = self.get('menu'),
@@ -46,7 +48,7 @@ KISSY.add(function (S, require) {
         var menu = self.get('menu'),
             value = self.get('value'),
             cs = menu && menu.get && menu.get('children');
-        S.each(cs, function (c) {
+        util.each(cs, function (c) {
             if (c && c.set) {
                 c.set('selected', getItemValue(c) === value);
             }
@@ -175,7 +177,7 @@ KISSY.add(function (S, require) {
              * @member KISSY.MenuButton.Select
              */
             decorate: function (element, cfg) {
-                element = S.one(element);
+                element = $(element);
                 cfg = cfg || {};
                 cfg.elBefore = element;
 
@@ -202,15 +204,15 @@ KISSY.add(function (S, require) {
                     allItems.push(item);
                 });
 
-                S.mix(cfg, {
-                    menu: S.mix({
+                util.mix(cfg, {
+                    menu: util.mix({
                         children: allItems
                     }, cfg.menuCfg)
                 });
 
                 delete cfg.menuCfg;
 
-                select = new Select(S.mix(cfg, selectedItem)).render();
+                select = new Select(util.mix(cfg, selectedItem)).render();
 
                 if ((name = element.attr('name'))) {
                     var input = new Node('<input' +

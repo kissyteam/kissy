@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var noop = S.noop;
+    var noop = function () {
+    };
 
     function Touch() {
     }

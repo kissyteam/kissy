@@ -3,7 +3,7 @@
  * storage for component
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function () {
     var basePriority = 0,
         Manager,
     // 不带前缀 prefixCls
@@ -85,7 +85,7 @@ KISSY.add(function (S) {
                 if (!component.isControl && (xclass = component.xclass)) {
                     ChildConstructor = Manager.getConstructorByXClass(xclass);
                     if (!ChildConstructor) {
-                        S.error('can not find class by xclass desc : ' + xclass);
+                        throw new Error('can not find class by xclass desc : ' + xclass);
                     }
                     component = new ChildConstructor(component);
                 }

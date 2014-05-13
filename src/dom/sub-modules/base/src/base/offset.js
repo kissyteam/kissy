@@ -4,6 +4,7 @@
  *          yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('./api');
     var win = S.Env.host,
         UA = require('ua'),
@@ -27,7 +28,7 @@ KISSY.add(function (S, require) {
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top';
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -104,7 +105,7 @@ KISSY.add(function (S, require) {
                     container = getWindow(container);
                 }
 
-                if (S.isPlainObject(alignWithTop)) {
+                if (util.isPlainObject(alignWithTop)) {
                     allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
                     onlyScrollIfNeeded = alignWithTop.onlyScrollIfNeeded;
                     alignWithTop = alignWithTop.alignWithTop;
@@ -112,7 +113,7 @@ KISSY.add(function (S, require) {
 
                 allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
 
-                var isWin = S.isWindow(container),
+                var isWin = util.isWindow(container),
                     elemOffset = Dom.offset(elem),
                     eh = Dom.outerHeight(elem),
                     ew = Dom.outerWidth(elem),
@@ -271,7 +272,7 @@ KISSY.add(function (S, require) {
 // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
 // http://www.quirksmode.org/dom/w3c_cssom.html
 // add ScrollLeft/ScrollTop getter/setter methods
-    S.each(['Left', 'Top'], function (name, i) {
+    util.each(['Left', 'Top'], function (name, i) {
         var method = SCROLL + name;
 
         Dom[method] = function (elem, v) {
@@ -320,7 +321,7 @@ KISSY.add(function (S, require) {
     });
 
 // add docWidth/Height, viewportWidth/Height getter methods
-    S.each(['Width', 'Height'], function (name) {
+    util.each(['Width', 'Height'], function (name) {
         Dom['doc' + name] = function (refWin) {
             refWin = Dom.get(refWin);
             var d = Dom.getDocument(refWin);

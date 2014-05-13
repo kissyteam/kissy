@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
 
     }
 
-    S.augment(maximizePlugin, {
+    (maximizePlugin.prototype = {
         pluginRenderUI: function (editor) {
             maximizeCmd.init(editor);
             editor.addButton('maximize', {

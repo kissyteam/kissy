@@ -4,13 +4,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var Editor = require('./base');
     var TRUE = true,
         FALSE = false,
         NULL = null,
         Dom = require('dom'),
-        UA = S.UA,
+        UA = require('ua'),
 
         /**
          * Utilities for Editor.
@@ -90,13 +91,13 @@ KISSY.add(function (S, require) {
             },
 
             isNumber: function (n) {
-                return (/^\d+(.\d+)?$/).test(S.trim(n));
+                return (/^\d+(.\d+)?$/).test(util.trim(n));
             },
 
             verifyInputs: function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
-                        v = S.trim(Utils.valInput(input)),
+                        v = util.trim(Utils.valInput(input)),
                         verify = input.attr('data-verify'),
                         warning = input.attr('data-warning');
                     if (verify && !new RegExp(verify).test(v)) {
@@ -143,14 +144,14 @@ KISSY.add(function (S, require) {
                     return;
                 }
                 inp.on('blur', function () {
-                    if (!S.trim(inp.val())) {
+                    if (!util.trim(inp.val())) {
                         inp.addClass('ks-editor-input-tip');
                         inp.val(tip);
                     }
                 });
                 inp.on('focus', function () {
                     inp.removeClass('ks-editor-input-tip');
-                    if (S.trim(inp.val()) === tip) {
+                    if (util.trim(inp.val()) === tip) {
                         inp.val('');
                     }
                 });
@@ -162,7 +163,7 @@ KISSY.add(function (S, require) {
              * @return {Object}
              */
             normParams: function (params) {
-                params = S.clone(params);
+                params = util.clone(params);
                 for (var p in params) {
 
                     var v = params[p];
@@ -188,7 +189,7 @@ KISSY.add(function (S, require) {
             },
 
             injectDom: function (editorDom) {
-                S.mix(Dom, editorDom);
+                util.mix(Dom, editorDom);
                 for (var dm in editorDom) {
                     /*jshint loopfunc:true*/
                     (function (dm) {
@@ -196,10 +197,10 @@ KISSY.add(function (S, require) {
                             var args = [].slice.call(arguments, 0);
                             args.unshift(this[0]);
                             var ret = editorDom[dm].apply(NULL, args);
-                            if (ret && (ret.nodeType || S.isWindow(ret))) {
+                            if (ret && (ret.nodeType || util.isWindow(ret))) {
                                 return new Node(ret);
                             } else {
-                                if (S.isArray(ret)) {
+                                if (util.isArray(ret)) {
                                     if (ret.__IS_NODELIST || (ret[0] && ret[0].nodeType)) {
                                         return new Node(ret);
                                     }
@@ -214,7 +215,7 @@ KISSY.add(function (S, require) {
             addRes: function () {
                 this.__res = this.__res || [];
                 var res = this.__res;
-                res.push.apply(res, S.makeArray(arguments));
+                res.push.apply(res, util.makeArray(arguments));
             },
 
             destroyRes: function () {

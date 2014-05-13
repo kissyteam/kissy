@@ -4,6 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
+    var UA = require('ua');
     var logger = S.getLogger('s/editor');
     var Overlay = require('overlay');
     var Editor = require('editor');
@@ -39,7 +41,7 @@ KISSY.add(function (S, require) {
         var archor = null,
             editor = self.get('editor'),
             myBubbles = editor.getControls();
-        S.each(myBubbles, function (bubble) {
+        util.each(myBubbles, function (bubble) {
             if (bubble.isKeBubble &&
                 bubble !== self &&
                 bubble.get('visible') &&
@@ -86,7 +88,7 @@ KISSY.add(function (S, require) {
             y;
 
         // ie 图片缩放框大于编辑区域底部，bubble 点击不了了，干脆不显示
-        if (S.UA.ie &&
+        if (UA.ie &&
             el[0].nodeName.toLowerCase() === 'img' &&
             elBottom > bottom) {
             return undefined;
@@ -125,13 +127,13 @@ KISSY.add(function (S, require) {
 
         cfg.editor = editor;
 
-        S.mix(cfg, BUBBLE_CFG);
+        util.mix(cfg, BUBBLE_CFG);
 
-        cfg.elCls = S.substitute(cfg.elCls, {
+        cfg.elCls = util.substitute(cfg.elCls, {
             prefixCls: prefixCls
         });
 
-        cfg.prefixCls = S.substitute(cfg.prefixCls, {
+        cfg.prefixCls = util.substitute(cfg.prefixCls, {
             prefixCls: prefixCls
         });
 
@@ -158,7 +160,7 @@ KISSY.add(function (S, require) {
                     // 重新触发 bubble show 事件
                     bubble.hide();
                     // 等所有 bubble hide 再show
-                    S.later(onShow, 10);
+                    util.later(onShow, 10);
                 } else {
                     onHide();
                 }
@@ -196,7 +198,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        var bufferScroll = S.buffer(showImmediately, 350);
+        var bufferScroll = util.buffer(showImmediately, 350);
 
         function onScroll() {
             if (!bubble.get('editorSelectedEl')) {

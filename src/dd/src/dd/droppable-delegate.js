@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Node = require('node'),
         DDM = require('./ddm'),
         Droppable = require('./droppable');
-
+    var util = require('util');
     function dragStart() {
         var self = this,
             container = self.get('container'),
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
                 vArea = Number.MAX_VALUE;
 
             if (allNodes) {
-                S.each(allNodes, function (n) {
+                util.each(allNodes, function (n) {
                     var domNode = n[0];
                     // 排除当前拖放的元素以及代理节点
                     if (domNode === proxyNode || domNode === dragNode) {

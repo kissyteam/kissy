@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var parser = require('./parser'),
         Quote = require('./quote');
+    var util = require('util');
     parser.yy = {
         unQuote: Quote.unQuote
     };
@@ -15,7 +16,7 @@ KISSY.add(function (S, require) {
             i, len, newElement;
 
         if (typeof val === 'object') {
-            if (S.isArray(val)) {
+            if (util.isArray(val)) {
                 i = 0;
                 len = val.length;
                 var newVal = [];
@@ -27,7 +28,7 @@ KISSY.add(function (S, require) {
                 }
                 val = newVal;
             } else {
-                var keys = S.keys(val);
+                var keys = util.keys(val);
                 for (i = 0, len = keys.length; i < len; i++) {
                     var p = keys[i];
                     newElement = walk(val, p, reviver);

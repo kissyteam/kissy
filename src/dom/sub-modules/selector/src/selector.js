@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/dom');
     var parser = require('./selector/parser');
     var Dom = require('dom/basic');
@@ -324,10 +325,10 @@ KISSY.add(function (S, require) {
             return (' ' + elValue).indexOf(' ' + value + '-') !== -1;
         },
         '^=': function (elValue, value) {
-            return value && S.startsWith(elValue, value);
+            return value && util.startsWith(elValue, value);
         },
         '$=': function (elValue, value) {
-            return value && S.endsWith(elValue, value);
+            return value && util.endsWith(elValue, value);
         },
         '*=': function (elValue, value) {
             return value && elValue.indexOf(value) !== -1;

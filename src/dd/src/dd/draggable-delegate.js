@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
      */
     return Draggable.extend({
             // override Draggable
-            _onSetNode: S.noop,
+            _onSetNode: function(){},
 
             _onSetDisabled: function (d) {
                 var self = this;

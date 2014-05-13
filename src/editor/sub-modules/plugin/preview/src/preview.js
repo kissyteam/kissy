@@ -8,8 +8,8 @@ KISSY.add(function (S, require) {
     require('./button');
     function Preview() {
     }
-
-    S.augment(Preview, {
+    var util = require('util');
+    (Preview.prototype = {
         pluginRenderUI: function (editor) {
             editor.addButton('preview', {
                 tooltip: '预览',
@@ -26,7 +26,7 @@ KISSY.add(function (S, require) {
                             iHeight = 420; // 600 * 0.7,
                             iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
                         }
-                        var sHTML = S.substitute(editor.getDocHtml(), {
+                        var sHTML = util.substitute(editor.getDocHtml(), {
                                 title: '预览'
                             }),
                             sOpenUrl = '',

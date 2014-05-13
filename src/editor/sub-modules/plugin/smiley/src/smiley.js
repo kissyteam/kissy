@@ -7,6 +7,8 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Overlay4E = require('./overlay');
     require('./button');
+    var $ = require('node').all;
+    var util = require('util');
     var smileyMarkup = '<div class="{prefixCls}editor-smiley-sprite">';
     for (var i = 0; i <= 98; i++) {
         smileyMarkup += '<a href="javascript:void(0)" ' +
@@ -18,7 +20,7 @@ KISSY.add(function (S, require) {
     function Smiley() {
     }
 
-    S.augment(Smiley, {
+    (Smiley.prototype = {
         pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
@@ -32,7 +34,7 @@ KISSY.add(function (S, require) {
                         self.on('blur', function () {
                             // make click event fire
                             setTimeout(function () {
-                                if(self.smiley){
+                                if (self.smiley) {
                                     self.smiley.hide();
                                 }
                             }, 150);
@@ -44,7 +46,7 @@ KISSY.add(function (S, require) {
                         if (checked) {
                             if (!(smiley = self.smiley)) {
                                 smiley = self.smiley = new Overlay4E({
-                                    content: S.substitute(smileyMarkup, {
+                                    content: util.substitute(smileyMarkup, {
                                         prefixCls: prefixCls
                                     }),
                                     focus4e: false,
@@ -54,13 +56,13 @@ KISSY.add(function (S, require) {
                                     mask: false
                                 }).render();
                                 smiley.get('el').on('click', function (ev) {
-                                    var t = new S.Node(ev.target),
+                                    var t = $(ev.target),
                                         icon;
                                     if (t.nodeName() === 'a' &&
                                         (icon = t.attr('data-icon'))) {
-                                        var img = new S.Node('<img ' +
-                                            'alt="" src="' +
-                                            icon + '"/>', null,
+                                        var img = $('<img ' +
+                                                'alt="" src="' +
+                                                icon + '"/>', null,
                                             editor.get('document')[0]);
                                         editor.insertElement(img);
                                     }
@@ -79,7 +81,7 @@ KISSY.add(function (S, require) {
                             });
                             smiley.show();
                         } else {
-                            if(self.smiley){
+                            if (self.smiley) {
                                 self.smiley.hide();
                             }
                         }

@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('dom');
+    var util = require('util');
     var AnimBase = require('./base');
     var Easing = require('./timer/easing');
     var AM = require('./timer/manager');
@@ -23,13 +24,13 @@ KISSY.add(function (S, require) {
         TimerAnim.superclass.constructor.apply(self, arguments);
     }
 
-    S.extend(TimerAnim, AnimBase, {
+    util.extend(TimerAnim, AnimBase, {
         prepareFx: function () {
             var self = this,
                 node = self.node,
                 _propsData = self._propsData;
 
-            S.each(_propsData, function (_propData) {
+            util.each(_propsData, function (_propData) {
                 // ms
                 _propData.duration *= 1000;
                 _propData.delay *= 1000;
@@ -39,22 +40,22 @@ KISSY.add(function (S, require) {
             });
 
             // 扩展分属性
-            S.each(SHORT_HANDS, function (shortHands, p) {
+            util.each(SHORT_HANDS, function (shortHands, p) {
                 var origin,
                     _propData = _propsData[p],
                     val;
                 if (_propData) {
                     val = _propData.value;
                     origin = {};
-                    S.each(shortHands, function (sh) {
+                    util.each(shortHands, function (sh) {
                         // 得到原始分属性之前值
                         origin[sh] = Dom.css(node, sh);
                     });
                     Dom.css(node, p, val);
-                    S.each(origin, function (val, sh) {
+                    util.each(origin, function (val, sh) {
                         // 如果分属性没有显式设置过，得到期待的分属性最后值
                         if (!(sh in _propsData)) {
-                            _propsData[sh] = S.merge(_propData, {
+                            _propsData[sh] = util.merge(_propData, {
                                 value: Dom.css(node, sh)
                             });
                         }
@@ -77,7 +78,7 @@ KISSY.add(function (S, require) {
                 unit,
                 parts;
 
-            if (S.isPlainObject(node)) {
+            if (util.isPlainObject(node)) {
                 isCustomFx = 1;
             }
 
@@ -153,10 +154,10 @@ KISSY.add(function (S, require) {
                 }
                 end &= fx.pos === 1;
             }
-            var currentTime = S.now(),
+            var currentTime = util.now(),
                 duration = self.config.duration * 1000,
                 remaining = Math.max(0,
-                    self.startTime + duration - currentTime),
+                        self.startTime + duration - currentTime),
                 temp = remaining / duration || 0,
                 percent = 1 - temp;
             self.defer.notify([self, percent, remaining]);
@@ -196,7 +197,7 @@ KISSY.add(function (S, require) {
     // for test
     TimerAnim.Fx = Fx;
 
-    S.mix(TimerAnim, AnimBase.Statics);
+    util.mix(TimerAnim, AnimBase.Statics);
 
     // bad
     S.Anim = TimerAnim;

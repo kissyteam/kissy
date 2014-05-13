@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var toInt = parseInt;
     var Utils = require('./gregorian/utils');
     var defaultLocale = require('i18n!date');
@@ -41,7 +42,7 @@ KISSY.add(function (S, require) {
      */
     function GregorianCalendar(timezoneOffset, locale) {
 
-        var args = S.makeArray(arguments);
+        var args = util.makeArray(arguments);
 
         if (typeof timezoneOffset === 'object') {
             locale = timezoneOffset;
@@ -90,9 +91,9 @@ KISSY.add(function (S, require) {
         }
     }
 
-    S.mix(GregorianCalendar, Const);
+    util.mix(GregorianCalendar, Const);
 
-    S.mix(GregorianCalendar, {
+    util.mix(GregorianCalendar, {
         Utils: Utils,
 
         /**
@@ -1275,7 +1276,7 @@ KISSY.add(function (S, require) {
                     GregorianCalendarProto.getWeekOfMonth =
                         GregorianCalendarProto.getDayOfYear =
                             GregorianCalendarProto.getDayOfWeek =
-                                GregorianCalendarProto.getDayOfWeekInMonth = S.noop;
+                                GregorianCalendarProto.getDayOfWeekInMonth = util.noop;
 
         GregorianCalendarProto.addDayOfMonth =
             GregorianCalendarProto.addMonth =
@@ -1287,7 +1288,7 @@ KISSY.add(function (S, require) {
                                     GregorianCalendarProto.addWeekOfMonth =
                                         GregorianCalendarProto.addDayOfYear =
                                             GregorianCalendarProto.addDayOfWeek =
-                                                GregorianCalendarProto.addDayOfWeekInMonth = S.noop;
+                                                GregorianCalendarProto.addDayOfWeekInMonth = util.noop;
 
         GregorianCalendarProto.isSetDayOfMonth =
             GregorianCalendarProto.isSetMonth =
@@ -1299,7 +1300,7 @@ KISSY.add(function (S, require) {
                                     GregorianCalendarProto.isSetWeekOfMonth =
                                         GregorianCalendarProto.isSetDayOfYear =
                                             GregorianCalendarProto.isSetDayOfWeek =
-                                                GregorianCalendarProto.isSetDayOfWeekInMonth = S.noop;
+                                                GregorianCalendarProto.isSetDayOfWeekInMonth = util.noop;
 
         GregorianCalendarProto.setDayOfMonth =
             GregorianCalendarProto.setHourOfDay =
@@ -1307,7 +1308,7 @@ KISSY.add(function (S, require) {
                     GregorianCalendarProto.setWeekOfMonth =
                         GregorianCalendarProto.setDayOfYear =
                             GregorianCalendarProto.setDayOfWeek =
-                                GregorianCalendarProto.setDayOfWeekInMonth = S.noop;
+                                GregorianCalendarProto.setDayOfWeekInMonth = util.noop;
 
         GregorianCalendarProto.rollDayOfMonth =
             GregorianCalendarProto.rollMonth =
@@ -1319,10 +1320,10 @@ KISSY.add(function (S, require) {
                                     GregorianCalendarProto.rollWeekOfMonth =
                                         GregorianCalendarProto.rollDayOfYear =
                                             GregorianCalendarProto.rollDayOfWeek =
-                                                GregorianCalendarProto.rollDayOfWeekInMonth = S.noop;
+                                                GregorianCalendarProto.rollDayOfWeekInMonth = util.noop;
     }
 
-    S.each(fields, function (f, index) {
+    util.each(fields, function (f, index) {
         if (f) {
             GregorianCalendarProto['get' + f] = function () {
                 return this.get(index);

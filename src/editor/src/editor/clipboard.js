@@ -4,13 +4,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/editor');
     var Node = require('node');
     var Editor = require('./base');
     var KERange = require('./range');
     var KES = require('./selection');
     var $ = Node.all,
-        UA = S.UA,
+        UA = require('ua'),
         OLD_IE = UA.ieMode < 11,
         pasteEvent = OLD_IE ? 'beforepaste' : 'paste',
         KER = Editor.RangeType;
@@ -21,7 +22,7 @@ KISSY.add(function (S, require) {
         self._init();
     }
 
-    S.augment(Paste, {
+    util.augment(Paste, {
         _init: function () {
             var self = this,
                 editor = self.editor,

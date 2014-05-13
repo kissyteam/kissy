@@ -4,12 +4,13 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S,require) {
+    var util = require('util');
     var Dom = require('./api');
     var PARENT_NODE = 'parentNode',
         NodeType = Dom.NodeType,
         RE_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
         getNodeName = Dom.nodeName,
-        makeArray = S.makeArray,
+        makeArray = util.makeArray,
         splice = [].splice,
         NEXT_SIBLING = 'nextSibling',
         R_SCRIPT_TYPE = /\/(java|ecma)script/i;
@@ -61,9 +62,9 @@ KISSY.add(function (S,require) {
         if (el.src) {
             S.getScript(el.src);
         } else {
-            var code = S.trim(el.text || el.textContent || el.innerHTML || '');
+            var code = util.trim(el.text || el.textContent || el.innerHTML || '');
             if (code) {
-                S.globalEval(code);
+                util.globalEval(code);
             }
         }
     }
@@ -106,7 +107,7 @@ KISSY.add(function (S,require) {
         //fragment 一旦插入里面就空了，先复制下
         if (refNodesLength > 1) {
             clonedNode = Dom.clone(newNode, true);
-            refNodes = S.makeArray(refNodes);
+            refNodes = util.makeArray(refNodes);
         }
 
         for (i = 0; i < refNodesLength; i++) {
@@ -117,13 +118,13 @@ KISSY.add(function (S,require) {
                 fn(node, refNode);
             }
             if (scripts && scripts.length) {
-                S.each(scripts, evalScript);
+                util.each(scripts, evalScript);
             }
         }
     }
 
     // loadScripts default to false to prevent xss
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -212,7 +213,7 @@ KISSY.add(function (S,require) {
             wrap: function (wrappedNodes, wrapperNode) {
                 wrappedNodes = Dom.query(wrappedNodes);
                 wrapperNode = Dom.get(wrapperNode);
-                S.each(wrappedNodes, function (w) {
+                util.each(wrappedNodes, function (w) {
                     Dom.wrapAll(w, wrapperNode);
                 });
             },
@@ -225,7 +226,7 @@ KISSY.add(function (S,require) {
             wrapInner: function (wrappedNodes, wrapperNode) {
                 wrappedNodes = Dom.query(wrappedNodes);
                 wrapperNode = Dom.get(wrapperNode);
-                S.each(wrappedNodes, function (w) {
+                util.each(wrappedNodes, function (w) {
                     var contents = w.childNodes;
                     if (contents.length) {
                         Dom.wrapAll(contents, wrapperNode);
@@ -242,7 +243,7 @@ KISSY.add(function (S,require) {
              */
             unwrap: function (wrappedNodes) {
                 wrappedNodes = Dom.query(wrappedNodes);
-                S.each(wrappedNodes, function (w) {
+                util.each(wrappedNodes, function (w) {
                     var p = w.parentNode;
                     Dom.replaceWith(p, p.childNodes);
                 });
@@ -261,7 +262,7 @@ KISSY.add(function (S,require) {
                 Dom.remove(nodes);
             }
         });
-    S.each({
+    util.each({
         prepend: 'prependTo',
         append: 'appendTo',
         before: 'insertBefore',

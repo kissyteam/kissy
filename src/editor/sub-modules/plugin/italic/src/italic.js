@@ -7,11 +7,12 @@ KISSY.add(function (S, require) {
     var ui = require('./font/ui');
     var cmd = require('./italic/cmd');
     require('./button');
-    function italic() {
+    var Node = require('node');
+    function Italic() {
 
     }
 
-    S.augment(italic, {
+    (Italic.prototype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
 
@@ -22,7 +23,7 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.I) {
+                    if (e.ctrlKey && e.keyCode === Node.KeyCode.I) {
                         editor.execCommand('italic');
                         e.preventDefault();
                     }
@@ -31,5 +32,5 @@ KISSY.add(function (S, require) {
         }
     });
 
-    return italic;
+    return Italic;
 });

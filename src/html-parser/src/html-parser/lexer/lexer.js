@@ -182,7 +182,7 @@ KISSY.add(function (S, require) {
                 ch,
                 cfg = this.cfg,
                 strict = cfg.strict,
-                checkError = S.noop,
+                checkError = function(){},
                 page = this.page,
                 state = 0,
                 cursor = this.cursor;

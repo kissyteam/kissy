@@ -9,7 +9,8 @@ KISSY.add(function (S, require) {
     var KeyCode = require('./base/key-codes');
     var Special = require('./base/special-events');
     require('./base/mouseenter');
-    return S.merge({
+    var util = require('util');
+    return util.merge({
         add: DomEvent.on,
         remove: DomEvent.detach,
         KeyCode: KeyCode,

@@ -7,10 +7,11 @@ KISSY.add(function (S, require) {
     var ui = require('./font/ui');
     var cmd = require('./underline/cmd');
     require('./button');
+    var Node = require('node');
     function Underline() {
     }
 
-    S.augment(Underline, {
+    (Underline.prototype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
 
@@ -21,7 +22,7 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.U) {
+                    if (e.ctrlKey && e.keyCode === Node.KeyCode.U) {
                         editor.execCommand('underline');
                         e.preventDefault();
                     }

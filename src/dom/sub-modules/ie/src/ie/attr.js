@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom/base');
     var attrHooks = Dom._attrHooks,
         attrNodeHook = Dom._attrNodeHook,
@@ -20,7 +21,7 @@ KISSY.add(function (S, require) {
         };
 
         // get attribute value from attribute node for ie
-        S.mix(attrNodeHook, {
+        util.mix(attrNodeHook, {
             get: function (elem, name) {
                 var ret = elem.getAttributeNode(name);
                 // Return undefined if attribute node specified by user
@@ -53,14 +54,14 @@ KISSY.add(function (S, require) {
         });
 
         // ie6,7 不区分 attribute 与 property
-        S.mix(Dom._attrFix, propFix);
+        util.mix(Dom._attrFix, propFix);
 
         // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
         attrHooks.tabIndex = attrHooks.tabindex;
 
         // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
         // 注意 colSpan rowSpan 已经由 propFix 转为大写
-        S.each([HREF, 'src', 'width', 'height', 'colSpan', 'rowSpan'], function (name) {
+        util.each([HREF, 'src', 'width', 'height', 'colSpan', 'rowSpan'], function (name) {
             attrHooks[ name ] = {
                 get: function (elem) {
                     var ret = elem.getAttribute(name, 2);

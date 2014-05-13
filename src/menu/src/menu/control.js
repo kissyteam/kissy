@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
@@ -151,7 +152,7 @@ KISSY.add(function (S, require) {
                     if (!highlightedItem) {
                         destIndex = len - 1;
                     } else {
-                        index = S.indexOf(highlightedItem, children);
+                        index = util.indexOf(highlightedItem, children);
                         destIndex = (index - 1 + len) % len;
                     }
                     nextHighlighted = self._getNextEnabledHighlighted(destIndex, -1);
@@ -161,7 +162,7 @@ KISSY.add(function (S, require) {
                     if (!highlightedItem) {
                         destIndex = 0;
                     } else {
-                        index = S.indexOf(highlightedItem, children);
+                        index = util.indexOf(highlightedItem, children);
                         destIndex = (index + 1 + len) % len;
                     }
                     nextHighlighted = self._getNextEnabledHighlighted(destIndex, 1);

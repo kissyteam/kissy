@@ -67,7 +67,7 @@ KISSY.add(function (S, require) {
             var args = util.makeArray(arguments),
                 types = args[2 + num];
             // in case null
-            // S.isObject([]) === false
+            // util.isObject([]) === false
             if (types && util.isObject(types)) {
                 util.each(types, function (value, type) {
                     var args2 = [].concat(args);

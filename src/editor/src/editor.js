@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require, exports, module) {
+    var util = require('util');
     var logger = S.getLogger('s/editor');
     var Node = require('node');
     var iframeContentTpl = require('editor/iframe-content-tpl');
@@ -23,7 +24,7 @@ KISSY.add(function (S, require, exports, module) {
         NULL = null,
         window = S.Env.host,
         document = window.document,
-        UA = S.UA,
+        UA = require('ua'),
         IS_IE = UA.ieMode < 11,
     // ie11 = UA.ieMode === 11,
         NodeType = Node.NodeType,
@@ -197,7 +198,7 @@ KISSY.add(function (S, require, exports, module) {
         execCommand: function (name) {
             var self = this,
                 cmd = self.__commands[name],
-                args = S.makeArray(arguments);
+                args = util.makeArray(arguments);
             args.shift();
             args.unshift(self);
             if (cmd) {
@@ -259,7 +260,7 @@ KISSY.add(function (S, require, exports, module) {
             } else {
                 html = htmlDataProcessor.toServer(html);
             }
-            html = S.trim(html);
+            html = util.trim(html);
             /*
              如果内容为空，对 parser 自动加的空行滤掉
              */
@@ -420,7 +421,7 @@ KISSY.add(function (S, require, exports, module) {
                 }
             });
             var cls = self.get('customLink'),
-                ind = S.indexOf(link, cls);
+                ind = util.indexOf(link, cls);
             if (ind !== -1) {
                 cls.splice(ind, 1);
             }
@@ -702,7 +703,7 @@ KISSY.add(function (S, require, exports, module) {
                 win.detach();
             }
 
-            S.each(self.__controls, function (control) {
+            util.each(self.__controls, function (control) {
                 if (control.destroy) {
                     control.destroy();
                 }
@@ -936,14 +937,14 @@ KISSY.add(function (S, require, exports, module) {
         if (UA.webkit) {
             $doc.on('click', function (ev) {
                 var control = new Node(ev.target);
-                if (S.inArray(control.nodeName(), ['input', 'select'])) {
+                if (util.inArray(control.nodeName(), ['input', 'select'])) {
                     ev.preventDefault();
                 }
             });
             // Prevent from editing textfield/textarea value.
             $doc.on('mouseup', function (ev) {
                 var control = new Node(ev.target);
-                if (S.inArray(control.nodeName(), ['input', 'textarea'])) {
+                if (util.inArray(control.nodeName(), ['input', 'textarea'])) {
                     ev.preventDefault();
                 }
             });
@@ -1043,7 +1044,7 @@ KISSY.add(function (S, require, exports, module) {
         if (UA.webkit) {
             $doc.on('mousedown', function (ev) {
                 var control = new Node(ev.target);
-                if (S.inArray(control.nodeName(), ['img', 'hr', 'input', 'textarea', 'select'])) {
+                if (util.inArray(control.nodeName(), ['img', 'hr', 'input', 'textarea', 'select'])) {
                     self.getSelection().selectElement(control);
                 }
             });
@@ -1070,15 +1071,15 @@ KISSY.add(function (S, require, exports, module) {
         customLink = customLink.concat([]);
         customLink.unshift(innerCssFile);
         for (i = 0; i < customLink.length; i++) {
-            links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
+            links += util.substitute('<link href="' + '{href}" rel="stylesheet" />', {
                 href: customLink[i]
             });
         }
-        return S.substitute(iframeContentTpl, {
+        return util.substitute(iframeContentTpl, {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.
-            doctype: S.UA.ieMode === 8 ?
+            doctype: UA.ieMode === 8 ?
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 '',
             title: '{title}',
@@ -1101,7 +1102,7 @@ KISSY.add(function (S, require, exports, module) {
         });
     }
 
-    var saveLater = S.buffer(function () {
+    var saveLater = util.buffer(function () {
         this.execCommand('save');
     }, 50);
 
@@ -1156,7 +1157,7 @@ KISSY.add(function (S, require, exports, module) {
         if (iframeSrc) {
             iframeSrc = ' src="' + iframeSrc + '" ';
         }
-        var iframe = new Node(S.substitute(IFRAME_TPL, {
+        var iframe = new Node(util.substitute(IFRAME_TPL, {
                 iframeSrc: iframeSrc,
                 prefixCls: self.get('prefixCls')
             })),
@@ -1188,7 +1189,7 @@ KISSY.add(function (S, require, exports, module) {
             domDoc = doc[0],
             documentElement = $(domDoc.documentElement),
             body = $(domDoc.body);
-        S.each([doc, documentElement, body, win], function (el) {
+        util.each([doc, documentElement, body, win], function (el) {
             el.detach();
         });
         iframe.remove();

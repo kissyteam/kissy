@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(FlashPlugin, {
+    (FlashPlugin.prototype = {
         pluginRenderUI: function (editor) {
             fakeObjects.init(editor);
 

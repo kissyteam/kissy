@@ -6,13 +6,13 @@
 KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special;
-
+    var util = require('util');
     // 让非 IE 浏览器支持 focusin/focusout
-    S.each([
+    util.each([
         {name: 'focusin', fix: 'focus'},
         {name: 'focusout', fix: 'blur'}
     ], function (o) {
-        var key = S.guid('attaches_' + S.now() + '_');
+        var key = util.guid('attaches_' + util.now() + '_');
         Special[o.name] = {
             // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
             // 达到和 focusin 一样的效果 focusin -> focus

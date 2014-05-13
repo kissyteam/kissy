@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
         this.config = config;
     }
 
-    S.augment(video, {
+    (video.prototype = {
         pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);

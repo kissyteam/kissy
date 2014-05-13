@@ -3,8 +3,8 @@
  * quote and unQuote for json
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-
+KISSY.add(function (S, require) {
+    var util = require('util');
     var CONTROL_MAP = {
             '\b': '\\b',
             '\f': '\\f',
@@ -17,7 +17,7 @@ KISSY.add(function (S) {
         QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g,
         UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
 
-    S.each(CONTROL_MAP, function (original, encoded) {
+    util.each(CONTROL_MAP, function (original, encoded) {
         REVERSE_CONTROL_MAP[encoded] = original;
     });
 

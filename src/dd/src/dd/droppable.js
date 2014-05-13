@@ -8,6 +8,7 @@ KISSY.add(function (S, require) {
         DDM = require('./ddm'),
         Base = require('base'),
         PREFIX_CLS = DDM.PREFIX_CLS;
+    var util = require('util');
 
     function validDrop(dropGroups, dragGroups) {
         if (dragGroups === true) {
@@ -147,7 +148,7 @@ KISSY.add(function (S, require) {
         },
 
         __getCustomEvt: function (ev) {
-            return S.mix({
+            return util.mix({
                 drag: DDM.get('activeDrag'),
                 drop: this
             }, ev);

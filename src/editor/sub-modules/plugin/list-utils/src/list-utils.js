@@ -5,10 +5,10 @@
  */
 KISSY.add(function (S, require) {
     var listNodeNames = {ol: 1, ul: 1},
-        Node = S.Node,
+        Node = require('node'),
         Dom = require('dom'),
         NodeType = Dom.NodeType,
-        UA = S.UA,
+        UA = require('ua'),
         list = {
             /*
              * Convert a Dom list tree into a data structure that is easier to

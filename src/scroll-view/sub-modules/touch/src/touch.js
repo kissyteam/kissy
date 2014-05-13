@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var ScrollViewBase = require('./base');
     var TimerAnim = require('anim/timer');
     var OUT_OF_BOUND_FACTOR = 0.5;
@@ -35,7 +36,7 @@ KISSY.add(function (S, require) {
             scroll = maxScroll[scrollType] + bound;
         }
 
-        self.set('scroll' + S.ucfirst(scrollType), scroll);
+        self.set('scroll' + util.ucfirst(scrollType), scroll);
     }
 
     function forbidDrag(self, scrollType) {
@@ -51,7 +52,7 @@ KISSY.add(function (S, require) {
             endCallback();
             return;
         }
-        var scrollAxis = 'scroll' + S.ucfirst(scrollType),
+        var scrollAxis = 'scroll' + util.ucfirst(scrollType),
             scroll = self.get(scrollAxis),
             minScroll = self.minScroll,
             maxScroll = self.maxScroll,
@@ -111,7 +112,7 @@ KISSY.add(function (S, require) {
         var inertia = 1;
         var bounceStartTime = 0;
         return function (anim, fx) {
-            var now = S.now(),
+            var now = util.now(),
                 deltaTime,
                 value;
             if (inertia) {

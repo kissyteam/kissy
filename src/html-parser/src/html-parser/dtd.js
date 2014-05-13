@@ -8,7 +8,8 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require, exports, module) {
-    var merge = S.merge,
+    var util = require('util');
+    var merge = util.merge,
         A = {isindex: 1, fieldset: 1},
         B = {input: 1, button: 1, select: 1, textarea: 1, label: 1},
         C = merge({a: 1}, B),

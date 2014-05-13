@@ -4,10 +4,11 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/dom');
     var Dom = require('./api');
     var globalWindow = S.Env.host,
-        getCssVendorInfo = S.Feature.getCssVendorInfo,
+        getCssVendorInfo = require('feature').getCssVendorInfo,
         UA = require('ua'),
         BOX_MODELS = ['margin', 'border', 'padding'],
         CONTENT_INDEX = -1,
@@ -20,7 +21,7 @@ KISSY.add(function (S, require) {
         WIDTH = 'width',
         HEIGHT = 'height',
         DISPLAY = 'display',
-        OLD_DISPLAY = DISPLAY + S.now(),
+        OLD_DISPLAY = DISPLAY + util.now(),
         NONE = 'none',
         cssNumber = {
             fillOpacity: 1,
@@ -40,7 +41,7 @@ KISSY.add(function (S, require) {
         defaultDisplay = {},
         userSelectVendorInfo = getCssVendorInfo('userSelect'),
         userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName,
-        camelCase = S.camelCase;
+        camelCase = util.camelCase;
 
     cssProps['float'] = 'cssFloat';
 
@@ -69,7 +70,7 @@ KISSY.add(function (S, require) {
         return oldDisplay;
     }
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -133,7 +134,7 @@ KISSY.add(function (S, require) {
                     ret,
                     elem = els[0], i;
                 // supports hash
-                if (S.isPlainObject(name)) {
+                if (util.isPlainObject(name)) {
                     for (k in name) {
                         for (i = els.length - 1; i >= 0; i--) {
                             style(els[i], k, name[k]);
@@ -172,7 +173,7 @@ KISSY.add(function (S, require) {
                     ret,
                     i;
                 // supports hash
-                if (S.isPlainObject(name)) {
+                if (util.isPlainObject(name)) {
                     for (k in name) {
                         for (i = els.length - 1; i >= 0; i--) {
                             style(els[i], k, name[k]);
@@ -323,7 +324,7 @@ KISSY.add(function (S, require) {
                     elem.setAttribute('unselectable', 'on');
                     excludes = ['iframe', 'textarea', 'input', 'select'];
                     while ((e = els[i++])) {
-                        if (!S.inArray(getNodeName(e), excludes)) {
+                        if (!util.inArray(getNodeName(e), excludes)) {
                             e.setAttribute('unselectable', 'on');
                         }
                     }
@@ -389,13 +390,13 @@ KISSY.add(function (S, require) {
             height: 0
         });
 
-    S.each([WIDTH, HEIGHT], function (name) {
-        Dom['inner' + S.ucfirst(name)] = function (selector) {
+    util.each([WIDTH, HEIGHT], function (name) {
+        Dom['inner' + util.ucfirst(name)] = function (selector) {
             var el = Dom.get(selector);
             return el && getWHIgnoreDisplay(el, name, PADDING_INDEX);
         };
 
-        Dom['outer' + S.ucfirst(name)] = function (selector, includeMargin) {
+        Dom['outer' + util.ucfirst(name)] = function (selector, includeMargin) {
             var el = Dom.get(selector);
             return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
         };
@@ -436,7 +437,7 @@ KISSY.add(function (S, require) {
 
     var cssShow = {position: 'absolute', visibility: 'hidden', display: 'block'};
 
-    S.each(['left', 'top'], function (name) {
+    util.each(['left', 'top'], function (name) {
         cssHooks[ name ] = {
             get: function (el, computed) {
                 var val,
@@ -594,7 +595,7 @@ KISSY.add(function (S, require) {
      'margin' : (css width) + padding + border + margin
      */
     function getWH(elem, name, extra) {
-        if (S.isWindow(elem)) {
+        if (util.isWindow(elem)) {
             return name === WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
         } else if (elem.nodeType === 9) {
             return name === WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem);

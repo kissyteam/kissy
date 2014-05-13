@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
-
+    var util = require('util');
     var Special = DomEvent.Special,
         start = 5,
         enough = 20,
@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
         abs = Math.abs,
         win = S.Env.host,
         devicemotion = 'devicemotion',
-        checkShake = S.buffer(function () {
+        checkShake = util.buffer(function () {
             if (shaking) {
                 /**
                  * fired when shake ended

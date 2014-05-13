@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Event = require('event/dom'),
         Uri = require('uri'),
         Dom = require('dom'),
@@ -22,7 +23,7 @@ KISSY.add(function (S, require) {
         logger.info('use SubDomainTransport for: ' + c.url);
     }
 
-    S.augment(SubDomainTransport, XhrTransportBase.proto, {
+    util.augment(SubDomainTransport, XhrTransportBase.proto, {
         // get nativeXhr from iframe document
         // not from current document directly like XhrTransport
         send: function () {

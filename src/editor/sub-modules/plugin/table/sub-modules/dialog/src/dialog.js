@@ -5,13 +5,14 @@
  */
 KISSY.add(function (S, require) {
     /*global alert*/
+    var util = require('util');
     var Editor = require('editor');
     var Dialog4E = require('../dialog');
     var MenuButton = require('../menubutton');
-    var OLD_IE = S.UA.ieMode < 11;
-    var Node = S.Node,
+    var OLD_IE = require('ua').ieMode < 11;
+    var Node = require('node'),
         Dom = require('dom'),
-        trim = S.trim,
+        trim = util.trim,
         showBorderClassName = 'ke_show_border',
         collapseTableClass = 'k-e-collapse-table',
         IN_SIZE = 6,
@@ -156,7 +157,7 @@ KISSY.add(function (S, require) {
         destroyRes = Editor.Utils.destroyRes;
 
     function replacePrefix(str, prefix) {
-        return S.substitute(str, {
+        return util.substitute(str, {
             prefixCls: prefix
         });
     }
@@ -171,7 +172,7 @@ KISSY.add(function (S, require) {
         Editor.Utils.lazyRun(self, '_prepareTableShow', '_realTableShow');
     }
 
-    S.augment(TableDialog, {
+    util.augment(TableDialog, {
         _tableInit: function () {
             var self = this,
                 prefixCls = self.editor.get('prefixCls'),
@@ -311,7 +312,7 @@ KISSY.add(function (S, require) {
                 self.selectedTd.css('padding', d.cellpadding.val());
             }
             if (valid(d.tcaption.val())) {
-                var tcv = S.escapeHtml(trim(d.tcaption.val()));
+                var tcv = util.escapeHtml(trim(d.tcaption.val()));
                 if (caption && caption[0]) {
                     caption.html(tcv);
                 }
@@ -378,7 +379,7 @@ KISSY.add(function (S, require) {
 
             html += '>';
             if (valid(d.tcaption.val())) {
-                html += '<caption><span>' + S.escapeHtml(trim(d.tcaption.val())) + '</span></caption>';
+                html += '<caption><span>' + util.escapeHtml(trim(d.tcaption.val())) + '</span></caption>';
             }
             if (d.thead.get('value')) {
                 html += '<thead>';
@@ -477,7 +478,7 @@ KISSY.add(function (S, require) {
         },
         show: function (cfg) {
             var self = this;
-            S.mix(self, cfg);
+            util.mix(self, cfg);
             self._prepareTableShow();
         },
         destroy: function () {

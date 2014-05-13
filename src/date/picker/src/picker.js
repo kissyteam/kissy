@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node'),
         GregorianCalendar = require('date/gregorian'),
         locale = require('i18n!date/picker'),
@@ -66,7 +67,7 @@ KISSY.add(function (S, require) {
     }
 
     function renderDatesCmd() {
-        return this.config.control.renderDates();
+        return this.root.config.control.renderDates();
     }
 
     function goStartMonth(self) {
@@ -170,7 +171,7 @@ KISSY.add(function (S, require) {
         e.preventDefault();
         this.set('clear', false);
         var today = this.get('value').clone();
-        today.setTime(S.now());
+        today.setTime(util.now());
         this.set('value', today);
     }
 
@@ -215,7 +216,7 @@ KISSY.add(function (S, require) {
                 veryShortWeekdays[i] = locale.veryShortWeekdays[index];
                 weekDays[i] = dateLocale.weekdays[index];
             }
-            S.mix(renderData, {
+            util.mix(renderData, {
                 monthSelectLabel: locale.monthSelect,
                 monthYearLabel: self.getMonthYearLabel(),
                 previousMonthLabel: locale.previousMonth,
@@ -266,7 +267,7 @@ KISSY.add(function (S, require) {
             var value = self.get('value');
             var dateLocale = value.getLocale();
             var today = value.clone();
-            today.setTime(S.now());
+            today.setTime(util.now());
             return new DateTimeFormat(locale.dateFormat, dateLocale).format(today);
         },
 
@@ -293,7 +294,7 @@ KISSY.add(function (S, require) {
                 nextMonthDayClass = self.getBaseCssClasses('next-month-btn-day'),
                 disabledClass = self.getBaseCssClasses('disabled-cell');
 
-            today.setTime(S.now());
+            today.setTime(util.now());
             var month1 = value.clone();
             month1.set(value.getYear(), value.getMonth(), 1);
             var day = month1.getDayOfWeek();
@@ -318,7 +319,7 @@ KISSY.add(function (S, require) {
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 var rowHtml = dateRowTplStart;
                 if (showWeekNumber) {
-                    rowHtml += S.substitute(weekNumberCellTpl, {
+                    rowHtml += util.substitute(weekNumberCellTpl, {
                         cls: weekNumberCellClass,
                         content: dateTable[passed].getWeekOfYear()
                     });
@@ -349,7 +350,7 @@ KISSY.add(function (S, require) {
 
                     var dateHtml = '';
                     if (!(dateRender && (dateHtml = dateRender(current, value)))) {
-                        dateHtml = S.substitute(dateTpl, {
+                        dateHtml = util.substitute(dateTpl, {
                             cls: dateClass,
                             id: getIdFromDate(current),
                             selected: selected,
@@ -357,7 +358,7 @@ KISSY.add(function (S, require) {
                             content: current.getDayOfMonth()
                         });
                     }
-                    rowHtml += S.substitute(dateCellTpl, {
+                    rowHtml += util.substitute(dateCellTpl, {
                         cls: cls,
                         index: passed,
                         title: dateFormatter.format(current),
@@ -511,7 +512,7 @@ KISSY.add(function (S, require) {
                 sync: 0,
                 valueFn: function () {
                     var date = new GregorianCalendar();
-                    date.setTime(S.now());
+                    date.setTime(util.now());
                     return date;
                 }
             },

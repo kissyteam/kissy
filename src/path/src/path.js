@@ -5,13 +5,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    require('util');
+    var util = require('util');
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
     function filter(arr, fn, context) {
         var ret = [];
-        S.each(arr, function (item, i, arr) {
+        util.each(arr, function (item, i, arr) {
             if (fn.call(context || this, item, i, arr)) {
                 ret.push(item);
             }

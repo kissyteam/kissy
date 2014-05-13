@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
-    var UA = S.UA,
+    var UA = require('ua'),
         focusManager = Editor.focusManager;
 
     function _show4FocusExt() {

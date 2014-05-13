@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom/base');
     var SPACE = ' ',
         RE_CLASS = /[\n\t\r]/g;
@@ -12,7 +13,7 @@ KISSY.add(function (S, require) {
         return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
     }
 
-    return S.mix(Dom, {
+    return util.mix(Dom, {
         _hasClass: function (elem, classNames) {
             var elemClass = elem.className,
                 className,
@@ -45,7 +46,7 @@ KISSY.add(function (S, require) {
                         setClass += SPACE + classNames[j];
                     }
                 }
-                setClass = S.trim(setClass);
+                setClass = util.trim(setClass);
             } else {
                 setClass = classNames.join(' ');
             }
@@ -68,7 +69,7 @@ KISSY.add(function (S, require) {
                         className = className.replace(needle, SPACE);
                     }
                 }
-                elem.className = S.trim(className);
+                elem.className = util.trim(className);
             }
         },
 

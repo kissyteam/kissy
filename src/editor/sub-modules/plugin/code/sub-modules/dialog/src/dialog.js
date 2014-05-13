@@ -4,13 +4,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var MenuButton = require('menubutton');
     var xhtmlDtd = Editor.XHTML_DTD;
     var NodeType = require('dom').NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
     var Dialog4E = require('../dialog');
-
+    var $ = require('node').all;
+    var UA = require('ua');
     var codeTypes = [
             ['ActionScript3', 'as3'],
             ['Bash/Shell', 'bash'],
@@ -49,7 +51,7 @@ KISSY.add(function (S, require) {
             '<select ' +
             'id="ks-editor-code-type" ' +
             ' class="{prefixCls}code-type">' +
-            S.map(codeTypes, function (codeType) {
+            util.map(codeTypes, function (codeType) {
                 return '<option value="' + codeType[1] + '">' + codeType[0] + '</option>';
             }) +
             '</select>' +
@@ -85,7 +87,7 @@ KISSY.add(function (S, require) {
         this.editor = editor;
     }
 
-    S.augment(CodeDialog, {
+    util.augment(CodeDialog, {
         initDialog: function () {
             var self = this,
                 prefixCls = self.editor.get('prefixCls') + 'editor-',
@@ -95,10 +97,10 @@ KISSY.add(function (S, require) {
                 width: 500,
                 mask: true,
                 headerContent: '插入代码',
-                bodyContent: S.substitute(bodyTpl, {
+                bodyContent: util.substitute(bodyTpl, {
                     prefixCls: prefixCls
                 }),
-                footerContent: S.substitute(footTpl, {
+                footerContent: util.substitute(footTpl, {
                     prefixCls: prefixCls
                 })
             }).render();
@@ -128,14 +130,14 @@ KISSY.add(function (S, require) {
                 val,
                 editor = self.editor,
                 code = self.code;
-            if (!S.trim(val = code.val())) {
+            if (!util.trim(val = code.val())) {
                 /*global alert*/
                 alert('请输入代码!');
                 return;
             }
-            var codeEl = S.all(S.substitute(codeTpl, {
+            var codeEl = $(util.substitute(codeTpl, {
                 type: self.type.get('value'),
-                code: S.escapeHtml(val)
+                code: util.escapeHtml(val)
             }), editor.get('document')[0]);
             self.dialog.hide();
             // chrome:
@@ -153,8 +155,8 @@ KISSY.add(function (S, require) {
             if (!(nextName &&
                 xhtmlDtd.$block[ nextName ] &&
                 xhtmlDtd[ nextName ]['#text'])) {
-                next = S.all('<p></p>', editor.get('document')[0]);
-                if (!S.UA.ie) {
+                next = $('<p></p>', editor.get('document')[0]);
+                if (!UA.ie) {
                     next._4eAppendBogus();
                 }
                 codeEl.after(next);

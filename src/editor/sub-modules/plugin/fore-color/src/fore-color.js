@@ -7,12 +7,11 @@ KISSY.add(function (S, require) {
     var Button = require('./color/btn');
     var cmd = require('./fore-color/cmd');
 
-
     function ForeColorPlugin(config) {
         this.config = config || {};
     }
 
-    S.augment(ForeColorPlugin, {
+    (ForeColorPlugin.prototype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {

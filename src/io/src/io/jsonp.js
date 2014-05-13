@@ -4,13 +4,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var IO = require('./base');
     var win = S.Env.host;
     IO.setupConfig({
         jsonp: 'callback',
         jsonpCallback: function () {
             // 不使用 now() ，极端情况下可能重复
-            return S.guid('jsonp');
+            return util.guid('jsonp');
         }
     });
     IO.on('start', function (e) {
@@ -36,7 +37,7 @@ KISSY.add(function (S, require) {
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
                 // jsonp 返回了数组
                 if (arguments.length > 1) {
-                    r = S.makeArray(arguments);
+                    r = util.makeArray(arguments);
                 }
                 // 先存在内存里, onload 后再读出来处理
                 response = [r];

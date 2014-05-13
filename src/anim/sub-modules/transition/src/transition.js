@@ -4,9 +4,10 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom');
     var AnimBase = require('./base');
-    var Feature = S.Feature;
+    var Feature = require('feature');
     var getCssVendorInfo = Feature.getCssVendorInfo;
     var transitionVendorInfo = getCssVendorInfo('transition');
     var TRANSITION = transitionVendorInfo.propertyName;
@@ -21,7 +22,7 @@ KISSY.add(function (S, require) {
 
     function genTransition(propsData) {
         var str = '';
-        S.each(propsData, function (propData, prop) {
+        util.each(propsData, function (propData, prop) {
             if (str) {
                 str += ',';
             }
@@ -45,7 +46,7 @@ KISSY.add(function (S, require) {
         TransitionAnim.superclass.constructor.apply(self, arguments);
     }
 
-    S.extend(TransitionAnim, AnimBase, {
+    util.extend(TransitionAnim, AnimBase, {
         prepareFx: function () {
             var self = this,
                 propsData = self._propsData;
@@ -55,7 +56,7 @@ KISSY.add(function (S, require) {
             for (var propertyName in propsData) {
                 val = propsData[propertyName];
                 if (typeof val.easing === 'string') {
-                    if (!S.startsWith(val.easing, 'cubic-bezier') && !css3Anim[val.easing]) {
+                    if (!util.startsWith(val.easing, 'cubic-bezier') && !css3Anim[val.easing]) {
                         val.easing = DEFAULT_EASING;
                     }
                 } else {
@@ -79,7 +80,7 @@ KISSY.add(function (S, require) {
                 totalDuration = 0,
                 propsCss = {};
 
-            S.each(_propsData, function (propData, prop) {
+            util.each(_propsData, function (propData, prop) {
                 var v = propData.value;
                 // hack, for to reflow?
                 Dom.css(node, prop, Dom.css(node, prop));
@@ -113,9 +114,9 @@ KISSY.add(function (S, require) {
             // already run time before pause
             var self = this,
                 propsData = self._propsData,
-                tmpPropsData = S.merge(propsData),
+                tmpPropsData = util.merge(propsData),
                 runTime = self._runTime / 1000;
-            S.each(tmpPropsData, function (propData, prop) {
+            util.each(tmpPropsData, function (propData, prop) {
                 var tRunTime = runTime;
                 if (propData.delay >= tRunTime) {
                     propData.delay -= tRunTime;
@@ -145,7 +146,7 @@ KISSY.add(function (S, require) {
                 self._transitionEndTimer = null;
             }
 
-            S.each(_propsData, function (propData, prop) {
+            util.each(_propsData, function (propData, prop) {
                 if (!finish) {
                     propsCss[prop] = Dom.css(node, prop);
                 }
@@ -153,7 +154,7 @@ KISSY.add(function (S, require) {
             });
 
             // firefox need set transition and need set none
-            clear = S.trim(elStyle[TRANSITION]
+            clear = util.trim(elStyle[TRANSITION]
                     .replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'),
                         '$1'))
                 .replace(/^,|,,|,$/g, '') || 'none';
@@ -163,7 +164,7 @@ KISSY.add(function (S, require) {
         }
     });
 
-    S.mix(TransitionAnim, AnimBase.Statics);
+    util.mix(TransitionAnim, AnimBase.Statics);
 
     // bad
     S.Anim = TransitionAnim;

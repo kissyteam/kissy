@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var UA = require('ua');
+    var util = require('util');
     var Control = require('component/control');
     var BasicGesture = require('event/gesture/basic');
     var DragGesture = require('event/gesture/drag');
@@ -182,7 +183,7 @@ KISSY.add(function (S, require) {
             self.$dragEl[action](['dragstart', 'mousedown', 'touchmove'], preventDefault)
                 [action](DragGesture.DRAG_START, onDragStartHandler, self)
                 [action](DragGesture.DRAG, onDragHandler, self);
-            S.each([self.$downBtn, self.$upBtn], function (b) {
+            util.each([self.$downBtn, self.$upBtn], function (b) {
                 b[action](BasicGesture.START, onUpDownBtnMouseDown, self)
                     [action](BasicGesture.END, onUpDownBtnMouseUp, self);
             });
@@ -190,7 +191,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    var Feature = S.Feature;
+    var Feature = require('feature');
     var isTransform3dSupported = Feature.isTransform3dSupported();
     var transformVendorInfo = Feature.getCssVendorInfo('transform');
     // http://www.html5rocks.com/en/tutorials/speed/html5/
@@ -200,10 +201,10 @@ KISSY.add(function (S, require) {
         initializer: function () {
             var self = this;
             var scrollType = self.scrollType = self.get('axis') === 'x' ? 'left' : 'top';
-            var ucScrollType = S.ucfirst(scrollType);
+            var ucScrollType = util.ucfirst(scrollType);
             self.pageXyProperty = scrollType === 'left' ? 'pageX' : 'pageY';
             var wh = self.whProperty = scrollType === 'left' ? 'width' : 'height';
-            var ucWH = S.ucfirst(wh);
+            var ucWH = util.ucfirst(wh);
             self.afterScrollChangeEvent = 'afterScroll' + ucScrollType + 'Change';
             self.scrollProperty = 'scroll' + ucScrollType;
 
@@ -237,7 +238,7 @@ KISSY.add(function (S, require) {
                 autoHide = self.get('autoHide'),
                 scrollView = self.scrollView;
             if (autoHide) {
-                self.hideFn = S.bind(self.hide, self);
+                self.hideFn = util.bind(self.hide, self);
             }
             scrollView
                 .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self)

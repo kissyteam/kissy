@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
+    var util = require('util');
     var MenuButton = require('menubutton');
     /**
      * add select to editor toolbar
@@ -28,7 +29,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        var s = new SelectType(S.mix({
+        var s = new SelectType(util.mix({
             render: self.get('toolBarEl'),
             prefixCls: prefixCls
         }, cfg)).render();

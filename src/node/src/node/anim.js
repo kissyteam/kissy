@@ -10,6 +10,7 @@ KISSY.add(function (S, require) {
     var Node = require('./base');
     var Dom = require('dom');
     var Anim = require('anim');
+    var util = require('util');
 
     var FX = [
         // height animations
@@ -32,7 +33,7 @@ KISSY.add(function (S, require) {
         return obj;
     }
 
-    S.augment(Node, {
+    util.augment(Node, {
         /**
          * animate for current node list.
          * @chainable
@@ -42,7 +43,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 l = self.length,
                 needClone = self.length > 1,
-                originArgs = S.makeArray(arguments);
+                originArgs = util.makeArray(arguments);
             var cfg = originArgs[0];
             var AnimConstructor = Anim;
             if (cfg.to) {
@@ -56,7 +57,7 @@ KISSY.add(function (S, require) {
 
             for (var i = 0; i < l; i++) {
                 var elem = self[i];
-                var args = needClone ? S.clone(originArgs) : originArgs,
+                var args = needClone ? util.clone(originArgs) : originArgs,
                     arg0 = args[0];
                 if (arg0.to) {
                     arg0.node = elem;
@@ -77,7 +78,7 @@ KISSY.add(function (S, require) {
          */
         stop: function (end, clearQueue, queue) {
             var self = this;
-            S.each(self, function (elem) {
+            util.each(self, function (elem) {
                 Anim.stop(elem, end, clearQueue, queue);
             });
             return self;
@@ -91,7 +92,7 @@ KISSY.add(function (S, require) {
          */
         pause: function (end, queue) {
             var self = this;
-            S.each(self, function (elem) {
+            util.each(self, function (elem) {
                 Anim.pause(elem, queue);
             });
             return self;
@@ -105,7 +106,7 @@ KISSY.add(function (S, require) {
          */
         resume: function (end, queue) {
             var self = this;
-            S.each(self, function (elem) {
+            util.each(self, function (elem) {
                 Anim.resume(elem, queue);
             });
             return self;
@@ -230,7 +231,7 @@ KISSY.add(function (S, require) {
      * @method slideToggle
      */
 
-    S.each({
+    util.each({
             show: getFxs('show', 3),
             hide: getFxs('hide', 3),
             toggle: getFxs('toggle', 3),
@@ -252,7 +253,7 @@ KISSY.add(function (S, require) {
                     if (typeof duration === 'object') {
                         AnimConstructor = duration.Anim || Anim;
                     }
-                    S.each(self, function (elem) {
+                    util.each(self, function (elem) {
                         new AnimConstructor(elem, v, duration, easing, complete).run();
                     });
                 }

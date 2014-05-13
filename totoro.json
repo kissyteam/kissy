@@ -52,8 +52,29 @@
             ]
         },
         {
-            "name": "component",
-            "runner": "http://dev.kissyui.com/kissy/src/component/tests/runner",
+            "name": "component/container",
+            "runner": "http://dev.kissyui.com/kissy/src/component/sub-modules/container/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
+            "name": "component/control",
+            "runner": "http://dev.kissyui.com/kissy/src/component/sub-modules/control/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
+            "name": "component/extension/align",
+            "runner": "http://dev.kissyui.com/kissy/src/component/sub-modules/extension/align/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
+            "name": "component/extension/delegate-children",
+            "runner": "http://dev.kissyui.com/kissy/src/component/sub-modules/extension/delegate-children/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
@@ -178,8 +199,8 @@
             ]
         },
         {
-            "name": "event/gesture/base",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/base/tests/runner",
+            "name": "event/gesture/basic",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/basic/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
@@ -250,13 +271,6 @@
         {
             "name": "json",
             "runner": "http://dev.kissyui.com/kissy/src/json/tests/runner",
-            "email": [
-                "yiminghe@gmail.com"
-            ]
-        },
-        {
-            "name": "kison",
-            "runner": "http://dev.kissyui.com/kissy/src/kison/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var flashUtils = require('../flash-common/utils');
     var Dialog4E = require('../dialog');
@@ -79,7 +80,7 @@ KISSY.add(function (S, require) {
         self._config();
     }
 
-    S.augment(FlashDialog, {
+    util.augment(FlashDialog, {
         addRes: Editor.Utils.addRes,
 
         destroyRes: Editor.Utils.destroyRes,
@@ -93,10 +94,10 @@ KISSY.add(function (S, require) {
             self._cls = CLS_FLASH;
             self._configDWidth = '400px';
             self._title = 'Flash';//属性';
-            self._bodyHTML = S.substitute(bodyHTML, {
+            self._bodyHTML = util.substitute(bodyHTML, {
                 prefixCls: prefixCls
             });
-            self._footHTML = S.substitute(footHTML, {
+            self._footHTML = util.substitute(footHTML, {
                 prefixCls: prefixCls
             });
         },
@@ -217,7 +218,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 editor = self.editor,
                 dinfo = self._getDInfo(),
-                url = dinfo && S.trim(dinfo.url),
+                url = dinfo && util.trim(dinfo.url),
                 attrs = dinfo && dinfo.attrs;
             if (!dinfo) {
                 return;

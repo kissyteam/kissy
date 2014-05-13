@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/dom');
     var Dom = require('dom/base');
     var cssProps = Dom._cssProps,
@@ -63,14 +64,14 @@ KISSY.add(function (S, require) {
                     var style = elem[STYLE],
                         currentStyle = elem[CURRENT_STYLE],
                         opacity = isNaN(val) ? '' : 'alpha(' + OPACITY + '=' + val * HUNDRED + ')',
-                        filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || '');
+                        filter = util.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || '');
 
                     // ie  has layout
                     style.zoom = 1;
 
                     // if setting opacity to 1, and no other filters exist - attempt to remove filter attribute
                     // https://github.com/kissyteam/kissy/issues/231
-                    if ((val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, ''))) {
+                    if ((val >= 1 || !opacity) && !util.trim(filter.replace(R_ALPHA, ''))) {
 
                         // Setting style.filter to null, '' & ' ' still leave 'filter:' in the cssText
                         // if 'filter:' is present at all, clearType is disabled, we want to avoid this
@@ -109,7 +110,7 @@ KISSY.add(function (S, require) {
     BORDER_MAP.medium = IE8 ? '3px' : '4px';
     BORDER_MAP.thick = IE8 ? '5px' : '6px';
 
-    S.each(BORDERS, function (b) {
+    util.each(BORDERS, function (b) {
         var name = 'border' + b + 'Width',
             styleName = 'border' + b + 'Style';
 

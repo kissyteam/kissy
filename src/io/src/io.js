@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var serializer = require('io/form-serializer'),
         IO = require('io/base');
-
+    var util = require('util');
     require('io/xhr-transport');
     require('io/script-transport');
     require('io/jsonp');
@@ -32,7 +32,7 @@ KISSY.add(function (S, require) {
     }
 
     // some shortcut
-    S.mix(IO, {
+    util.mix(IO, {
         serialize: serializer.serialize,
 
         /**

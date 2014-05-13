@@ -4,11 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom');
     var Event = require('event/dom');
     var NodeList = require('./base');
     var NLP = NodeList.prototype,
-        makeArray = S.makeArray,
+        makeArray = util.makeArray,
     // Dom 添加到 NP 上的方法
     // if Dom methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -127,7 +128,7 @@ KISSY.add(function (S, require) {
 
     function accessNormIf(fn, self, index, args) {
         // get
-        if (args[index] === undefined && !S.isObject(args[0])) {
+        if (args[index] === undefined && !util.isObject(args[0])) {
             args.unshift(self);
             return Dom[fn].apply(Dom, args);
         }
@@ -135,28 +136,28 @@ KISSY.add(function (S, require) {
         return accessNorm(fn, self, args);
     }
 
-    S.each(DOM_INCLUDES_NORM, function (k) {
+    util.each(DOM_INCLUDES_NORM, function (k) {
         NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
-    S.each(DOM_INCLUDES_NORM_NODE_LIST, function (k) {
+    util.each(DOM_INCLUDES_NORM_NODE_LIST, function (k) {
         NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
-    S.each(DOM_INCLUDES_NORM_IF, function (index, k) {
+    util.each(DOM_INCLUDES_NORM_IF, function (index, k) {
         NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
-    S.each(EVENT_INCLUDES_SELF, function (k) {
+    util.each(EVENT_INCLUDES_SELF, function (k) {
         NLP[k] = function () {
             var self = this,
                 args = makeArray(arguments);
@@ -166,7 +167,7 @@ KISSY.add(function (S, require) {
         };
     });
 
-    S.each(EVENT_INCLUDES_RET, function (k) {
+    util.each(EVENT_INCLUDES_RET, function (k) {
         NLP[k] = function () {
             var self = this,
                 args = makeArray(arguments);

@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
     var UA = require('ua');
-
+    var util = require('util');
     /**
      * fired when tap.
      * @event TAP
@@ -78,7 +78,7 @@ KISSY.add(function (S, require) {
         Tap.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(Tap, SingleTouch, {
+    util.extend(Tap, SingleTouch, {
         start: function (e) {
             var self = this;
             Tap.superclass.start.call(self, e);
@@ -88,9 +88,9 @@ KISSY.add(function (S, require) {
             var currentTouch = self.lastTouches[0];
 
             self.tapHoldTimer = setTimeout(function () {
-                var eventObj = S.mix({
+                var eventObj = util.mix({
                     which: 1,
-                    duration: (S.now() - e.timeStamp) / 1000
+                    duration: (util.now() - e.timeStamp) / 1000
                 }, self.lastXY);
                 self.tapHoldTimer = 0;
                 self.lastXY = 0;
@@ -142,7 +142,7 @@ KISSY.add(function (S, require) {
             // fire tap
             var eventObject = new DomEventObject(e.originalEvent);
 
-            S.mix(eventObject, {
+            util.mix(eventObject, {
                 type: TAP,
                 which: 1,
                 pageX: lastXY.pageX,
@@ -207,7 +207,7 @@ KISSY.add(function (S, require) {
                         pageX: lastXY.pageX,
                         pageY: lastXY.pageY,
                         which: 1,
-                        duration: (S.now() - self.startTime) / 1000
+                        duration: (util.now() - self.startTime) / 1000
                     });
                 }, SINGLE_TAP_DELAY);
             }

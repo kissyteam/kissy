@@ -12,11 +12,13 @@ KISSY.add(function (S, require) {
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
         ROTATE_END = 'rotateEnd';
+    var util = require('util');
+    var Feature = require('feature');
 
     function Rotate() {
     }
 
-    S.extend(Rotate, DoubleTouch, {
+    util.extend(Rotate, DoubleTouch, {
         requiredGestureType: 'touch',
 
         move: function (e) {
@@ -82,12 +84,12 @@ KISSY.add(function (S, require) {
                  * @param {Number} e.angle -360~360 current rotate absolute angle
                  */
 
-                DomEvent.fire(self.target, ROTATE_START, S.mix(e, {
+                DomEvent.fire(self.target, ROTATE_START, util.mix(e, {
                     angle: angle,
                     rotation: 0
                 }));
             } else {
-                DomEvent.fire(self.target, ROTATE, S.mix(e, {
+                DomEvent.fire(self.target, ROTATE, util.mix(e, {
                     angle: angle,
                     rotation: angle - self.startAngle
                 }));
@@ -98,7 +100,7 @@ KISSY.add(function (S, require) {
             var self = this;
             Rotate.superclass.end.apply(self, arguments);
             self.lastAngle = undefined;
-            DomEvent.fire(self.target, ROTATE_END, S.mix(e, {
+            DomEvent.fire(self.target, ROTATE_END, util.mix(e, {
                 touches: self.lastTouches
             }));
         }
@@ -121,7 +123,7 @@ KISSY.add(function (S, require) {
     var config = {
         handle: r
     };
-    if (S.Feature.isTouchEventSupported()) {
+    if (Feature.isTouchEventSupported()) {
         config.setup = function () {
             this.addEventListener('touchmove', prevent, false);
         };

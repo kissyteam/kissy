@@ -4,12 +4,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/aim/timer/fx');
     var Dom = require('dom');
     var undef;
 
     function load(self, cfg) {
-        S.mix(self, cfg);
+        util.mix(self, cfg);
         self.pos = 0;
         self.unit = self.unit || '';
     }
@@ -149,7 +150,7 @@ KISSY.add(function (S, require) {
     }
 
     function getPos(anim, propData) {
-        var t = S.now(),
+        var t = util.now(),
             runTime,
             startTime = anim.startTime,
             delay = propData.delay,

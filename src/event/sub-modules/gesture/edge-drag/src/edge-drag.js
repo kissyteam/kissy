@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         EDGE_DRAG = 'edgeDrag',
         EDGE_DRAG_END = 'edgeDragEnd',
         MIN_EDGE_DISTANCE = 60;
-
+    var util = require('util');
     function fire(self, e, move) {
         var touches = self.lastTouches,
             touch = touches[0],
@@ -145,7 +145,7 @@ KISSY.add(function (S, require) {
     function EdgeDrag() {
     }
 
-    S.extend(EdgeDrag, SingleTouch, {
+    util.extend(EdgeDrag, SingleTouch, {
         requiredGestureType: 'touch',
 
         start: function () {

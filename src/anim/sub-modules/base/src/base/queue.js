@@ -4,10 +4,11 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('dom');
+    var util = require('util');
     var // 队列集合容器
-        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
+        queueCollectionKey = util.guid('ks-queue-' + util.now() + '-'),
     // 默认队列
-        queueKey = S.guid('ks-queue-' + S.now() + '-'),
+        queueKey = util.guid('ks-queue-' + util.now() + '-'),
         Q;
 
     function getQueue(node, name, readOnly) {
@@ -43,7 +44,7 @@ KISSY.add(function (S, require) {
             var qu = getQueue(node, queue, 1),
                 index;
             if (qu) {
-                index = S.indexOf(item, qu);
+                index = util.indexOf(item, qu);
                 if (index > -1) {
                     qu.splice(index, 1);
                 }
@@ -65,7 +66,7 @@ KISSY.add(function (S, require) {
             if (quCollection) {
                 delete quCollection[queue];
             }
-            if (S.isEmptyObject(quCollection)) {
+            if (util.isEmptyObject(quCollection)) {
                 Dom.removeData(node, queueCollectionKey);
             }
         },

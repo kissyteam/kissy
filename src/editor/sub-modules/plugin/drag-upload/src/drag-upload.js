@@ -4,9 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Editor = require('editor');
     var Event = require('event/dom');
-    var Node = S.Node,
+    var Node = require('node'),
         Utils = Editor.Utils,
         Dom = require('dom');
 
@@ -14,7 +15,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(dragUpload, {
+    util.augment(dragUpload, {
         pluginRenderUI: function (editor) {
             var cfg = this.config,
                 fileInput = cfg.fileInput || 'Filedata',
@@ -51,8 +52,8 @@ KISSY.add(function (S, require) {
                     ev = ev.originalEvent;
                     var archor, ap;
                     // firefox 会自动添加节点
-                    if (!S.isEmptyObject(inserted)) {
-                        S.each(inserted, function (el) {
+                    if (!util.isEmptyObject(inserted)) {
+                        util.each(inserted, function (el) {
                             if (Dom.nodeName(el) === 'img') {
                                 archor = el.nextSibling;
                                 ap = el.parentNode;
@@ -129,7 +130,7 @@ KISSY.add(function (S, require) {
                         if (xhr.readyState === 4) {
                             if (xhr.status === 200 || xhr.status === 304) {
                                 if (xhr.responseText !== '') {
-                                    var info = S.parseJson(xhr.responseText);
+                                    var info = util.parseJson(xhr.responseText);
                                     img[0].src = info.imgUrl;
                                 }
                             } else {

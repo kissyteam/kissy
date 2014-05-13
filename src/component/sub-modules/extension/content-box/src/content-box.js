@@ -43,23 +43,21 @@ KISSY.add(function (S, require) {
         }
     };
 
-    S.mix(ContentBox, {
-        ATTRS: {
-            contentTpl: {
-                value: contentTpl
-            },
-            contentEl: {
-                selector: function () {
-                    return '.' + this.getBaseCssClass('content');
-                }
-            },
-            content: {
-                parse: function () {
-                    return this.get('contentEl').html();
-                }
+    ContentBox.ATTRS = {
+        contentTpl: {
+            value: contentTpl
+        },
+        contentEl: {
+            selector: function () {
+                return '.' + this.getBaseCssClass('content');
+            }
+        },
+        content: {
+            parse: function () {
+                return this.get('contentEl').html();
             }
         }
-    });
+    };
 
     return ContentBox;
 });

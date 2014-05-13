@@ -1,6 +1,6 @@
-(function (S) {
+KISSY.use('util, node', function (S, util, Node) {
     /*jshint quotmark:false*/
-    var cfg = S.mix({
+    var cfg = util.mix({
         // 是否初始聚焦
         focused: true,
         attachForm: true,
@@ -52,7 +52,7 @@
 
     var fullPlugins = [];
 
-    S.each(plugins, function (p, i) {
+    util.each(plugins, function (p, i) {
         fullPlugins[i] = "editor/plugin/" + p;
     });
 
@@ -67,7 +67,7 @@
                 serverUrl: window.UPLOAD_SINGLE_URL || "upload.jss",
                 serverParams: {
                     waterMark: function () {
-                        return S.one("#ke_img_up_watermark_1")[0].checked;
+                        return Node.one("#ke_img_up_watermark_1")[0].checked;
                     }
                 },
                 suffix: "png,jpg,jpeg,gif",
@@ -233,12 +233,12 @@
     };
 
     S.use(['editor'].concat(fullPlugins), function (S, Editor) {
-        var args = S.makeArray(arguments);
+        var args = util.makeArray(arguments);
 
         args.shift();
         args.shift();
 
-        S.each(args, function (Arg, i) {
+        util.each(args, function (Arg, i) {
             var argStr = plugins[i],
                 cfg = pluginConfig[argStr];
             if (cfg) {
@@ -270,4 +270,4 @@
 //                return 'x';
 //            });
     });
-})(KISSY);
+});

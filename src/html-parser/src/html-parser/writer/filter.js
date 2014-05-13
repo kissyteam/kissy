@@ -3,7 +3,8 @@
  * filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('util');
 
     /**
      * Filter for Html Parse Writer
@@ -34,7 +35,7 @@ KISSY.add(function (S) {
         for (var i = 0; arr && i < arr.length; i++) {
             var items = arr[i].value;
             /*jshint loopfunc:true*/
-            S.each(items, function (item) {
+            util.each(items, function (item) {
                 v = v.replace(item[0], item[1]);
             });
         }

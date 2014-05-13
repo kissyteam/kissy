@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
 
     }
 
-    S.augment(CodePlugin, {
+    CodePlugin.prototype = {
         pluginRenderUI: function (editor) {
             editor.addButton('code', {
                 tooltip: '插入代码',
@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
                 mode: Editor.Mode.WYSIWYG_MODE
             });
         }
-    });
+    };
 
     return CodePlugin;
 });

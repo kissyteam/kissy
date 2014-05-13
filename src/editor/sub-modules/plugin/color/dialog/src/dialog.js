@@ -5,13 +5,15 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
+    var util = require('util');
     var Dialog4E = require('../dialog');
-    var map = S.map,
+    var map = util.map,
         Dom = require('dom');
+    var $ = Node.all;
 
     //获取颜色数组
     function getData(color) {
-        if (S.isArray(color)) {
+        if (util.isArray(color)) {
             return color;
         }
         var re = RegExp;
@@ -159,7 +161,7 @@ KISSY.add(function (S, require) {
 
     var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
 
-    S.augment(ColorPicker, {
+    util.augment(ColorPicker, {
         _init: function () {
             var self = this,
                 editor = self.editor,
@@ -168,10 +170,10 @@ KISSY.add(function (S, require) {
             self.dialog = new Dialog4E({
                 mask: true,
                 headerContent: '颜色拾取器',
-                bodyContent: S.substitute(panelHTML, {
+                bodyContent: util.substitute(panelHTML, {
                     prefixCls: prefixCls
                 }),
-                footerContent: S.substitute(footHTML, {
+                footerContent: util.substitute(footHTML, {
                     prefixCls: prefixCls
                 }),
                 width: '550px'
@@ -186,7 +188,7 @@ KISSY.add(function (S, require) {
                 cancel = foot.one('.' + prefixCls + 'editor-color-advanced-cancel');
 
             ok.on('click', function (ev) {
-                var v = S.trim(indicatorValue.val()),
+                var v = util.trim(indicatorValue.val()),
                     colorButtonArrow = self.colorButtonArrow;
                 if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
                     /*global alert*/
@@ -203,7 +205,7 @@ KISSY.add(function (S, require) {
 
 
             indicatorValue.on('change', function () {
-                var v = S.trim(indicatorValue.val());
+                var v = util.trim(indicatorValue.val());
                 if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
                     alert('请输入正确的颜色代码');
                     return;
@@ -218,7 +220,7 @@ KISSY.add(function (S, require) {
             });
             body.on('click', function (ev) {
                 ev.halt();
-                var t = new S.Node(ev.target);
+                var t = $(ev.target);
                 if (t.nodeName() === 'a') {
                     var c = hex(t.css('background-color'));
                     if (left.contains(t)) {

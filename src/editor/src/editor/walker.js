@@ -10,11 +10,11 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('./base');
-
+    var util = require('util');
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        UA = S.UA,
+        UA = require('ua'),
         Dom = require('dom'),
         dtd = Editor.XHTML_DTD,
         Node = require('node');
@@ -190,7 +190,7 @@ KISSY.add(function (S, require) {
         this._ = {};
     }
 
-    S.augment(Walker, {
+    util.augment(Walker, {
         /**
          * Stop walking. No more nodes are retrieved if this function gets
          * called.
@@ -267,7 +267,7 @@ KISSY.add(function (S, require) {
 
     });
 
-    S.mix(Walker, {
+    util.mix(Walker, {
         /**
          * Whether the to-be-evaluated node is not a block node and does not match given node name map.
          * @param {Object} customNodeNames Given node name map.
@@ -315,7 +315,7 @@ KISSY.add(function (S, require) {
          */
         whitespaces: function (isReject) {
             return function (node) {
-                var isWhitespace = node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue);
+                var isWhitespace = node.nodeType === Dom.NodeType.TEXT_NODE && !util.trim(node.nodeValue);
                 return !!(isReject ^ isWhitespace);
             };
         },

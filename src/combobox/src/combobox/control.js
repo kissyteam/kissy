@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('combobox');
     var Node = require('node');
     var Control = require('component/control');
@@ -85,7 +86,7 @@ KISSY.add(function (S, require) {
                 }
                 for (i = 0; i < data.length; i++) {
                     v = data[i];
-                    c = contents[i] = S.mix({
+                    c = contents[i] = util.mix({
                         content: v,
                         textContent: v,
                         value: v
@@ -250,7 +251,7 @@ KISSY.add(function (S, require) {
                 }
 
                 if (updateInputOnDownUp &&
-                    S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
+                    util.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
                     // update menu's active value to input just for show
                     self.setCurrentValue(highlightedItem.get('textContent'));
                 }
@@ -484,7 +485,7 @@ KISSY.add(function (S, require) {
                                 adjustY: 1
                             }
                         };
-                        S.mix(m.get('align'), align, false);
+                        util.mix(m.get('align'), align, false);
                     }
                 }
             },
@@ -733,9 +734,9 @@ KISSY.add(function (S, require) {
         menu.removeChildren(true);
 
         if (data && data.length) {
-            start = S.now();
+            start = util.now();
             menu.addChildren(data);
-            logger.info('render menu cost: ' + (S.now() - start) + ' ms');
+            logger.info('render menu cost: ' + (util.now() - start) + ' ms');
 
             children = menu.get('children');
 

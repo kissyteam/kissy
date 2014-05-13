@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom/base');
     // wierd ie cloneNode fix from jq
     Dom._fixCloneAttributes = function (src, dest) {
@@ -80,8 +81,8 @@ KISSY.add(function (S, require) {
                 return frag;
             }
             var table = frag.firstChild,
-                tableChildren = S.makeArray(table.childNodes);
-            S.each(tableChildren, function (c) {
+                tableChildren = util.makeArray(table.childNodes);
+            util.each(tableChildren, function (c) {
                 if (Dom.nodeName(c) === 'tbody' && !c.childNodes.length) {
                     table.removeChild(c);
                 }

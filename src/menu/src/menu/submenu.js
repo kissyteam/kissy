@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var SubMenuTpl = require('./submenu-xtpl');
     var MenuItem = require('./menuitem');
@@ -87,7 +88,7 @@ KISSY.add(function (S, require) {
                 var menu = self.get('menu');
                 if (menu.get('visible')) {
                     // 延迟 highlighted
-                    self._dismissTimer = S.later(hideMenu,
+                    self._dismissTimer = util.later(hideMenu,
                             self.get('menuDelay') * 1000, false, self);
                 }
             },
@@ -102,7 +103,7 @@ KISSY.add(function (S, require) {
                 self.clearSubMenuTimers();
                 var menu = self.get('menu');
                 if (!menu.get('visible')) {
-                    self._showTimer = S.later(showMenu, self.get('menuDelay') * 1000, false, self);
+                    self._showTimer = util.later(showMenu, self.get('menuDelay') * 1000, false, self);
                 }
             },
 
@@ -267,7 +268,7 @@ KISSY.add(function (S, require) {
                 adjustY: 1
             }
         };
-        S.mix(menu.get('align'), align, false);
+        util.mix(menu.get('align'), align, false);
         menu.show();
         self.el.setAttribute('aria-haspopup', menu.get('el').attr('id'));
     }

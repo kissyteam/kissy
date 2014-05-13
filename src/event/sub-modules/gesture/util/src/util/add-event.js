@@ -4,27 +4,28 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom');
     var eventHandleMap = {};
     var UA = require('ua');
     var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special;
-    var key = S.guid('touch-handle'),
-        Feature = S.Feature,
+    var key = util.guid('touch-handle'),
+        Feature = require('feature'),
         gestureStartEvent,
         gestureMoveEvent,
         gestureEndEvent;
 
     function isTouchEvent(type) {
-        return S.startsWith(type, 'touch');
+        return util.startsWith(type, 'touch');
     }
 
     function isMouseEvent(type) {
-        return S.startsWith(type, 'mouse');
+        return util.startsWith(type, 'mouse');
     }
 
     function isPointerEvent(type) {
-        return S.startsWith(type, 'MSPointer') || S.startsWith(type, 'pointer');
+        return util.startsWith(type, 'MSPointer') || util.startsWith(type, 'pointer');
     }
 
     // This should be long enough to ignore compatible mouse events made by touch
@@ -266,7 +267,7 @@ KISSY.add(function (S, require) {
             self.callEventHandle('onTouchEnd', event);
             if (isTouchEvent(type)) {
                 self.dupMouse(event);
-                S.makeArray(event.changedTouches).forEach(function (touch) {
+                util.makeArray(event.changedTouches).forEach(function (touch) {
                     self.removePrimaryTouch(touch);
                 });
             } else if (isMouseEvent(type)) {
@@ -350,7 +351,7 @@ KISSY.add(function (S, require) {
             if (eventHandles[event]) {
                 eventHandles[event].count--;
                 if (!eventHandles[event].count) {
-                    eventHandles.splice(S.indexOf(event, eventHandles), 1);
+                    eventHandles.splice(util.indexOf(event, eventHandles), 1);
                     delete eventHandles[event];
                 }
             }
@@ -412,7 +413,7 @@ KISSY.add(function (S, require) {
         if (typeof events === 'string') {
             events = [events];
         }
-        S.each(events, function (event) {
+        util.each(events, function (event) {
             var specialEvent = {};
             specialEvent.setup = config.setup ? setupExtra : setup;
             specialEvent.tearDown = config.tearDown ? tearDownExtra : tearDown;

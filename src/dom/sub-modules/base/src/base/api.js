@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var WINDOW = S.Env.host || {},
         DOCUMENT = WINDOW.document,
         UA = require('ua'),
@@ -121,7 +122,7 @@ KISSY.add(function (S, require) {
 
                 elem = Dom.get(elem);
 
-                if (S.isWindow(elem)) {
+                if (util.isWindow(elem)) {
                     return elem;
                 }
 
@@ -144,7 +145,7 @@ KISSY.add(function (S, require) {
                     return DOCUMENT;
                 }
                 elem = Dom.get(elem);
-                return S.isWindow(elem) ?
+                return util.isWindow(elem) ?
                     elem.document :
                     (elem.nodeType === NodeType.DOCUMENT_NODE ?
                         elem :

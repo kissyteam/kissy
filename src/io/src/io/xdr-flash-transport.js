@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var IO = require('./base'),
         Dom = require('dom');
     var logger = S.getLogger('s/io');
@@ -44,7 +45,7 @@ KISSY.add(function (S, require) {
         this.io = io;
     }
 
-    S.augment(XdrFlashTransport, {
+    util.augment(XdrFlashTransport, {
         // rewrite send to support flash xdr
         send: function () {
             var self = this,
@@ -60,7 +61,7 @@ KISSY.add(function (S, require) {
                 }, 200);
                 return;
             }
-            self._uid = S.guid();
+            self._uid = util.guid();
             maps[self._uid] = self;
 
             // ie67 send 出错？
@@ -120,7 +121,7 @@ KISSY.add(function (S, require) {
     IO.applyTo = function (_, cmd, args) {
         var cmds = cmd.split('.').slice(1),
             func = IO;
-        S.each(cmds, function (c) {
+        util.each(cmds, function (c) {
             func = func[c];
         });
         func.apply(null, args);

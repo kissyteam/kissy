@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var BasicGesture = require('event/gesture/basic');
     var TapGesture = require('event/gesture/tap');
@@ -11,14 +12,14 @@ KISSY.add(function (S, require) {
     var Base = require('base');
     var RenderTpl = require('./control/render-xtpl');
     var UA = require('ua');
-    var Feature = S.Feature;
+    var Feature = require('feature');
     var __getHook = Base.prototype.__getHook;
     var startTpl = RenderTpl;
     var endTpl = '</div>';
     var isTouchGestureSupported = Feature.isTouchGestureSupported();
-    var noop = S.noop;
+    var noop = util.noop;
     var XTemplateRuntime = require('xtemplate/runtime');
-    var trim = S.trim;
+    var trim = util.trim;
     var $ = Node.all;
     var doc = S.Env.host.document;
 
@@ -76,11 +77,11 @@ KISSY.add(function (S, require) {
 
     // scope option
     function getBaseCssClassesCmd(_, options) {
-        return this.config.control.getBaseCssClasses(options && options.params && options.params[0]);
+        return this.root.config.control.getBaseCssClasses(options && options.params && options.params[0]);
     }
 
     function getBaseCssClassCmd() {
-        return this.config.control.getBaseCssClass(arguments[1].params[0]);
+        return this.root.config.control.getBaseCssClass(arguments[1].params[0]);
     }
 
     /**
@@ -987,7 +988,7 @@ KISSY.add(function (S, require) {
                 xy: {
                     setter: function (v) {
                         var self = this,
-                            xy = S.makeArray(v);
+                            xy = util.makeArray(v);
                         if (xy.length) {
                             if (xy[0] !== undefined) {
                                 self.set('x', xy[0]);
@@ -1166,13 +1167,13 @@ KISSY.add(function (S, require) {
                     parse: function (el) {
                         var id = el.attr('id');
                         if (!id) {
-                            id = S.guid('ks-component');
+                            id = util.guid('ks-component');
                             el.attr('id', id);
                         }
                         return id;
                     },
                     valueFn: function () {
-                        return S.guid('ks-component');
+                        return util.guid('ks-component');
                     }
                 },
 
@@ -1339,7 +1340,7 @@ KISSY.add(function (S, require) {
      */
     Control.extend = function extend(extensions, px, sx) {
         /*jshint unused: false*/
-        var args = S.makeArray(arguments),
+        var args = util.makeArray(arguments),
             self = this,
             xclass,
             argsLen = args.length,

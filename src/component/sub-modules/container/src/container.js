@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Control = require('component/control');
     var Manager = Control.Manager;
 
@@ -97,7 +98,7 @@ KISSY.add(function (S, require) {
                     defaultChildXClass &&
                     Manager.getConstructorByXClass(defaultChildXClass);
                 if (ChildUI) {
-                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
+                    childrenComponents.push(new ChildUI(util.merge(defaultChildCfg, {
                         srcNode: c
                     })));
                 }
@@ -228,7 +229,7 @@ KISSY.add(function (S, require) {
             }
             this.fire('beforeRemoveChild', {
                 component: c,
-                index: S.indexOf(c, this.get('children')),
+                index: util.indexOf(c, this.get('children')),
                 destroy: destroy
             });
         },
@@ -295,7 +296,7 @@ KISSY.add(function (S, require) {
                         c = v[i];
                         if (!c.isControl) {
                             defaultChildCfg = defaultChildCfg || self.get('defaultChildCfg');
-                            S.mix(c, defaultChildCfg, false);
+                            util.mix(c, defaultChildCfg, false);
                             v[i] = this.createComponent(c);
                         }
                     }

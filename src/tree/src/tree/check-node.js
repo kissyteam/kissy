@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var Node = require('node');
     var TreeNode = require('./node');
+    var util = require('util');
 
     var $ = Node.all,
         PARTIAL_CHECK = 2,
@@ -66,7 +67,7 @@ KISSY.add(function (S, require) {
                 .addClass(checkCls);
 
             if (s === CHECK || s === EMPTY) {
-                S.each(self.get('children'), function (c) {
+                util.each(self.get('children'), function (c) {
                     c.set('checkState', s);
                 });
             }

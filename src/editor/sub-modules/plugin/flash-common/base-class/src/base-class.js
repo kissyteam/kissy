@@ -7,7 +7,9 @@ KISSY.add(function (S, require) {
     var flashUtils = require('./utils');
     var Base = require('base');
     var Editor = require('editor');
-    var Node = S.Node;
+    var Node = require('node');
+    var UA = require('ua');
+    var util = require('util');
     var DialogLoader = require('../dialog-loader');
     require('../bubble');
     require('../contextmenu');
@@ -30,7 +32,7 @@ KISSY.add(function (S, require) {
                 contextMenuId = self.get('contextMenuId'),
                 contextMenuHandlers = self.get('contextMenuHandlers');
 
-            S.each(contextMenuHandlers, function (h, content) {
+            util.each(contextMenuHandlers, function (h, content) {
                 children.push({
                     content: content
                 });
@@ -57,7 +59,7 @@ KISSY.add(function (S, require) {
                         function () {
                             var bubble = this,
                                 el = bubble.get('contentEl');
-                            el.html(S.substitute(tipHTML, {
+                            el.html(util.substitute(tipHTML, {
                                 label: self.get('label'),
                                 prefixCls: prefixCls
                             }));
@@ -76,7 +78,7 @@ KISSY.add(function (S, require) {
 
                             tipRemoveEl.on('click', function (ev) {
                                 // chrome remove 后会没有焦点
-                                if (S.UA.webkit) {
+                                if (UA.webkit) {
                                     var r = editor.getSelection().getRanges(),
                                         r0 = r && r[0];
                                     if (r0) {

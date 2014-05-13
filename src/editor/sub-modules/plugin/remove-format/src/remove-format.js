@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
     function removeFormat() {
     }
 
-    S.augment(removeFormat, {
+    (removeFormat.prototype = {
         pluginRenderUI: function (editor) {
             formatCmd.init(editor);
             editor.addButton('removeFormat', {

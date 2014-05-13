@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        UA = S.UA,
+        UA = require('ua'),
         Dom = require('dom'),
         KES = Editor.SelectionType;
 
@@ -119,7 +119,7 @@ KISSY.add(function (S, require) {
         // In IE6/7 the blinking cursor appears, but contents are
         // not editable. (#5634)
         if (//ie8 的 7 兼容模式
-            S.UA.ieMode < 8) {
+            UA.ieMode < 8) {
             // The 'click' event is not fired when clicking the
             // scrollbars, so we can use it to check whether
             // the empty space following <body> has been clicked.

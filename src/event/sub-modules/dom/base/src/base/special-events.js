@@ -6,11 +6,11 @@
 KISSY.add(function (S, require) {
     var DomEvent = require('./dom-event');
     var Special = require('./special');
-
+    var util = require('util');
     var UA = require('ua'),
         MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
-    return S.mix(Special, {
+    return util.mix(Special, {
         mousewheel: {
             typeFix: MOUSE_WHEEL
         },

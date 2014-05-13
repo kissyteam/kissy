@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
-    var noop = S.noop;
+    var noop = function(){};
     var Special = DomEvent.Special;
 
     function canFireInput(n) {

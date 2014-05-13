@@ -6,10 +6,11 @@
 KISSY.add(function (S, require) {
     require('./button');
     require('./bubble');
+    var util = require('util');
     var Editor = require('editor');
     var Utils = require('./link/utils');
     var DialogLoader = require('./dialog-loader');
-    var $ = S.all,
+    var $ = require('node').all,
         tipHTML = '<a ' +
             'href="" ' + ' target="_blank" ' +
             'class="{prefixCls}editor-bubble-url">' +
@@ -31,7 +32,7 @@ KISSY.add(function (S, require) {
         this.config = config || {};
     }
 
-    S.augment(LinkPlugin, {
+    (LinkPlugin.prototype = {
         pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
@@ -60,7 +61,7 @@ KISSY.add(function (S, require) {
                         var bubble = this,
                             el = bubble.get('contentEl');
 
-                        el.html(S.substitute(tipHTML, {
+                        el.html(util.substitute(tipHTML, {
                             prefixCls: prefixCls
                         }));
 

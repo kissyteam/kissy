@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
     function undo() {
     }
 
-    S.augment(undo, {
+    (undo.prototype = {
         pluginRenderUI: function (editor) {
             // 先 button 绑定事件
             editor.addButton('undo', {

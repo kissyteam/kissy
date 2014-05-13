@@ -9,7 +9,8 @@ KISSY.add(function (S, require) {
     var Overlay4E = require('../overlay');
     var DialogLoader = require('../dialog-loader');
 
-    var Node = S.Node;
+    var Node = require('node');
+    var util = require('util');
 
     var COLORS = [
         ['000', '444', '666', '999', 'CCC', 'EEE', 'F3F3F3', 'FFF'],
@@ -93,7 +94,7 @@ KISSY.add(function (S, require) {
                     tabindex: 0
                 },
                 elCls: prefixCls + 'editor-popup',
-                content: S.substitute(html, {
+                content: util.substitute(html, {
                     prefixCls: prefixCls
                 }),
                 width: 172,
@@ -184,7 +185,7 @@ KISSY.add(function (S, require) {
 
         var button = editor.addButton(cmdType, {
             elCls: cmdType + 'Btn',
-            content: S.substitute(tpl, {
+            content: util.substitute(tpl, {
                 defaultColor: defaultColor,
                 icon: prefix + 'item ' + prefix + cmdType,
                 indicator: prefix + 'color-indicator'

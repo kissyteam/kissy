@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var IO = require('./base');
     var Dom = require('dom');
     var FormSerializer = require('./form-serializer');
@@ -43,7 +44,7 @@ KISSY.add(function (S, require) {
 
             if (isUpload && FormData) {
                 c.files = c.files || {};
-                S.mix(c.files, files);
+                util.mix(c.files, files);
                 // browser set contentType automatically for FileData
                 delete c.contentType;
             }
@@ -54,7 +55,7 @@ KISSY.add(function (S, require) {
                 // when FormData exists, only collect non-file type input
                 formParam = FormSerializer.getFormData(form);
                 if (c.hasContent) {
-                    formParam = S.param(formParam, undefined, undefined, c.serializeArray);
+                    formParam = util.param(formParam, undefined, undefined, c.serializeArray);
                     if (data) {
                         c.data += '&' + formParam;
                     } else {

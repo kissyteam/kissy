@@ -6,12 +6,13 @@
 KISSY.add(function (S, require) {
     var BasicWriter = require('./basic');
     var Utils = require('../utils');
+    var util = require('util');
 
-    var trim = S.trim,
+    var trim = util.trim,
         isBooleanAttribute = Utils.isBooleanAttribute,
         collapseWhitespace = Utils.collapseWhitespace,
         reEmptyAttribute = new RegExp(
-            '^(?:class|id|style|title|lang|dir|on' +
+                '^(?:class|id|style|title|lang|dir|on' +
                 '(?:focus|blur|change|click|dblclick|mouse(' +
                 '?:down|up|over|move|out)|key(?:press|down|up)))$');
 
@@ -45,25 +46,25 @@ KISSY.add(function (S, require) {
                 attrName === 'language' &&
                 attrValue === 'javascript') ||
 
-                (tag === 'form' &&
-                    attrName === 'method' &&
-                    attrValue === 'get') ||
+            (tag === 'form' &&
+                attrName === 'method' &&
+                attrValue === 'get') ||
 
-                (tag === 'input' &&
-                    attrName === 'type' &&
-                    attrValue === 'text') ||
+            (tag === 'input' &&
+                attrName === 'type' &&
+                attrValue === 'text') ||
 
-                (tag === 'script' &&
-                    attrName === 'type' &&
-                    attrValue === 'text/javascript') ||
+            (tag === 'script' &&
+                attrName === 'type' &&
+                attrValue === 'text/javascript') ||
 
-                (tag === 'style' &&
-                    attrName === 'type' &&
-                    attrValue === 'text/css') ||
+            (tag === 'style' &&
+                attrName === 'type' &&
+                attrValue === 'text/css') ||
 
-                (tag === 'area' &&
-                    attrName === 'shape' &&
-                    attrValue === 'rect')
+            (tag === 'area' &&
+                attrName === 'shape' &&
+                attrValue === 'rect')
             );
     }
 
@@ -78,27 +79,27 @@ KISSY.add(function (S, require) {
     function isUriTypeAttribute(attrName, tag) {
         return (
             ((/^(?:a|area|link|base)$/).test(tag) && attrName === 'href') ||
-                (tag === 'img' && (/^(?:src|longdesc|usemap)$/).test(attrName)) ||
-                (tag === 'object' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) ||
-                (tag === 'q' && attrName === 'cite') ||
-                (tag === 'blockquote' && attrName === 'cite') ||
-                ((tag === 'ins' || tag === 'del') && attrName === 'cite') ||
-                (tag === 'form' && attrName === 'action') ||
-                (tag === 'input' && (attrName === 'src' || attrName === 'usemap')) ||
-                (tag === 'head' && attrName === 'profile') ||
-                (tag === 'script' && (attrName === 'src' || attrName === 'for'))
+            (tag === 'img' && (/^(?:src|longdesc|usemap)$/).test(attrName)) ||
+            (tag === 'object' && (/^(?:classid|codebase|data|usemap)$/).test(attrName)) ||
+            (tag === 'q' && attrName === 'cite') ||
+            (tag === 'blockquote' && attrName === 'cite') ||
+            ((tag === 'ins' || tag === 'del') && attrName === 'cite') ||
+            (tag === 'form' && attrName === 'action') ||
+            (tag === 'input' && (attrName === 'src' || attrName === 'usemap')) ||
+            (tag === 'head' && attrName === 'profile') ||
+            (tag === 'script' && (attrName === 'src' || attrName === 'for'))
             );
     }
 
     function isNumberTypeAttribute(attrName, tag) {
         return (
             ((/^(?:a|area|object|button)$/).test(tag) && attrName === 'tabindex') ||
-                (tag === 'input' && (attrName === 'maxlength' || attrName === 'tabindex')) ||
-                (tag === 'select' && (attrName === 'size' || attrName === 'tabindex')) ||
-                (tag === 'textarea' && (/^(?:rows|cols|tabindex)$/).test(attrName)) ||
-                (tag === 'colgroup' && attrName === 'span') ||
-                (tag === 'col' && attrName === 'span') ||
-                ((tag === 'th' || tag === 'td') && (attrName === 'rowspan' || attrName === 'colspan'))
+            (tag === 'input' && (attrName === 'maxlength' || attrName === 'tabindex')) ||
+            (tag === 'select' && (attrName === 'size' || attrName === 'tabindex')) ||
+            (tag === 'textarea' && (/^(?:rows|cols|tabindex)$/).test(attrName)) ||
+            (tag === 'colgroup' && attrName === 'span') ||
+            (tag === 'col' && attrName === 'span') ||
+            ((tag === 'th' || tag === 'td') && (attrName === 'rowspan' || attrName === 'colspan'))
             );
     }
 
@@ -146,7 +147,7 @@ KISSY.add(function (S, require) {
         self.inPre = 0;
     }
 
-    S.extend(MinifyWriter, BasicWriter, {
+    util.extend(MinifyWriter, BasicWriter, {
         /**
          * remove non-conditional comment
          */

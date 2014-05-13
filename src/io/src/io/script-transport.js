@@ -6,6 +6,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var IO = require('./base');
     var logger = S.getLogger('s/io');
     var OK_CODE = 200,
@@ -28,7 +29,7 @@ KISSY.add(function (S, require) {
                 // 否则直接 script node 不需要，引擎自己执行了，
                 // 不需要手动 eval
                 script: function (text) {
-                    S.globalEval(text);
+                    util.globalEval(text);
                     return text;
                 }
             }
@@ -47,7 +48,7 @@ KISSY.add(function (S, require) {
         return self;
     }
 
-    S.augment(ScriptTransport, {
+    util.augment(ScriptTransport, {
         send: function () {
             var self = this,
                 io = self.io,

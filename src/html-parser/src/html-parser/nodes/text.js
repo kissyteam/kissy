@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('./node');
-
+    var util = require('util');
     function Text(v) {
         if (typeof v === 'string') {
             this.nodeValue = v;
@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
         this.nodeName = '#text';
     }
 
-    S.extend(Text, Node, {
+    util.extend(Text, Node, {
         writeHtml: function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onText(this)) !== false) {

@@ -8,6 +8,7 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var Walker = require('./walker');
     var KERange = require('./range');
@@ -16,7 +17,7 @@ KISSY.add(function (S, require) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        UA = S.UA,
+        UA = require('ua'),
         KER = Editor.RangeType,
         Dom = require('dom');
 
@@ -43,7 +44,7 @@ KISSY.add(function (S, require) {
 
     var beginWhitespaceRegex = /^[\r\n\t ]*$/;///^[\r\n\t ]+$/,//+:*??不匹配空串
 
-    S.augment(Iterator, {
+    util.augment(Iterator, {
         //奇怪点：
         //<ul>
         // <li>
@@ -97,7 +98,7 @@ KISSY.add(function (S, require) {
                 // If that node is the lastNode, it would cause our logic to leak to the
                 // next block.(#3887)
                 if (self._.lastNode &&
-                    self._.lastNode[0].nodeType === Dom.NodeType.TEXT_NODE && !S.trim(self._.lastNode[0].nodeValue) &&
+                    self._.lastNode[0].nodeType === Dom.NodeType.TEXT_NODE && !util.trim(self._.lastNode[0].nodeValue) &&
                     self._.lastNode.parent()._4eIsBlockBoundary()) {
                     var testRange = new KERange(range.document);
                     testRange.moveToPosition(self._.lastNode, KER.POSITION_AFTER_END);

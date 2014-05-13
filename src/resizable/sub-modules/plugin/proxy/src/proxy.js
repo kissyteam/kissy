@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var Base = require('base');
 
     var $ = Node.all,
-        PROXY_EVENT = '.-ks-proxy' + S.now();
+        PROXY_EVENT = '.-ks-proxy' + (+new Date());
 
     /**
      * proxy plugin for resizable

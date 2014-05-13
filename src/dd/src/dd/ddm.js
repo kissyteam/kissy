@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('dd/ddm');
     var Node = require('node'),
         Base = require('base');
@@ -44,7 +45,7 @@ KISSY.add(function (S, require) {
         removeDrop: function (d) {
             var self = this,
                 drops = self.get('drops'),
-                index = S.indexOf(d, drops);
+                index = util.indexOf(d, drops);
             if (index !== -1) {
                 drops.splice(index, 1);
             }
@@ -91,7 +92,7 @@ KISSY.add(function (S, require) {
                 dragRegion = region(activeDrag.get('node')),
                 dragArea = area(dragRegion);
 
-            S.each(drops, function (drop) {
+            util.each(drops, function (drop) {
                 if (drop.get('disabled')) {
                     return undefined;
                 }
@@ -289,7 +290,7 @@ KISSY.add(function (S, require) {
         showShim(self);
     };
 
-    var adjustShimSize = S.throttle(function () {
+    var adjustShimSize = util.throttle(function () {
         var self = this,
             activeDrag;
         if ((activeDrag = self.get('activeDrag')) && activeDrag.get('shim')) {
@@ -323,7 +324,7 @@ KISSY.add(function (S, require) {
         var drops = self.get('drops');
         self.setInternal('validDrops', []);
         if (drops.length) {
-            S.each(drops, function (d) {
+            util.each(drops, function (d) {
                 d._active();
             });
         }
@@ -333,7 +334,7 @@ KISSY.add(function (S, require) {
         var drops = self.get('drops');
         self.setInternal('validDrops', []);
         if (drops.length) {
-            S.each(drops, function (d) {
+            util.each(drops, function (d) {
                 d._deActive();
             });
         }

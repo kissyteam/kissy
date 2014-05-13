@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var logger = S.getLogger('s/anim/timer/color');
+    var util = require('util');
     var Fx = require('./fx');
     var HEX_BASE = 16,
         floor = Math.floor,
@@ -82,7 +83,7 @@ KISSY.add(function (S, require) {
         ColorFx.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(ColorFx, Fx, {
+    util.extend(ColorFx, Fx, {
         load: function () {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
@@ -117,7 +118,7 @@ KISSY.add(function (S, require) {
         }
     });
 
-    S.each(COLORS, function (color) {
+    util.each(COLORS, function (color) {
         Fx.Factories[color] = ColorFx;
     });
 

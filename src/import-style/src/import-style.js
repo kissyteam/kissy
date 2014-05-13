@@ -7,6 +7,18 @@
 (function (S) {
     var isDebug;
 
+    function each(arr, fn) {
+        for (var i = 0; i < arr.length; i++) {
+            if (fn(arr[i], i, arr) === false) {
+                return;
+            }
+        }
+    }
+
+    function startsWith(str, prefix) {
+        return str.lastIndexOf(prefix, 0) === 0;
+    }
+
     /**
      * use document.write to load module's css dependency or css module in block loading ways.
      * @param {String[]} modNames css/js module names
@@ -26,7 +38,7 @@
             stackCache = {},
             processed = {};
         isDebug = Config.debug;
-        S.each(modNames, function (modName) {
+        each(modNames, function (modName) {
             var mod = S.Loader.Utils.getOrCreateModuleInfo(S, modName);
             collectCss(mod, cssList, stack, cssCache, stackCache, processed);
         });
@@ -46,7 +58,7 @@
                     var packagePath = currentPackage.getBase();
                     // map individual module
                     var fullpath = currentCss.getPath();
-                    if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {
+                    if (!currentPackage.isCombine() || !startsWith(fullpath, packagePath)) {
                         doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
                         continue;
                     }
@@ -80,7 +92,7 @@
                         '"  rel="stylesheet"/>');
                 }
             } else {
-                S.each(cssList, function (css) {
+                each(cssList, function (css) {
                     doc.writeln('<link href="' + css.Path() + '"  rel="stylesheet"/>');
                 });
             }
@@ -110,7 +122,7 @@
             stackCache[name] = 1;
             stack.push(name);
         }
-        S.each(requires, function (r) {
+        each(requires, function (r) {
             collectCss(r, cssList, stack, cssCache, stackCache, processed);
         });
         if (isDebug) {

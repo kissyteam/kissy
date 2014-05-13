@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
     var Node = require('node');
+    var util = require('util');
 
     var KeyCode = Node.KeyCode;
 
@@ -56,7 +57,7 @@ KISSY.add(function (S, require) {
 
             if (e.newVal) {
                 children = self.get('children');
-                if ((expandedItem = self.get('expandedItem')) && S.inArray(target, children)) {
+                if ((expandedItem = self.get('expandedItem')) && util.inArray(target, children)) {
                     // in case collapse false modify highlightedItem
                     self.set('expandedItem', target.isMenuButton ? target : null);
                 }
@@ -113,7 +114,7 @@ KISSY.add(function (S, require) {
         getNextItemByKeyDown: function (e, current) {
             var self = this,
                 children = self.get('children'),
-                childIndex = current && S.indexOf(current, children);
+                childIndex = current && util.indexOf(current, children);
 
             if (current) {
                 if (current.handleKeyDownInternal(e)) {
@@ -186,7 +187,7 @@ KISSY.add(function (S, require) {
                 children = self.get('children'),
                 el = self.el;
             // only clear children's status
-            if (prevVal && S.inArray(prevVal, children)) {
+            if (prevVal && util.inArray(prevVal, children)) {
                 prevVal.set('highlighted', false, {
                     data: {
                         byPassSetToolbarHighlightedItem: 1
@@ -200,7 +201,7 @@ KISSY.add(function (S, require) {
                 itemEl = item.el;
                 id = itemEl.id;
                 if (!id) {
-                    itemEl.id = id = S.guid('ks-toolbar-item');
+                    itemEl.id = id = util.guid('ks-toolbar-item');
                 }
                 el.setAttribute('aria-activedescendant', id);
             } else {

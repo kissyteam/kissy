@@ -11,15 +11,15 @@ KISSY.add(function (S, require) {
     var $ = Node.all,
         KeyCode = Node.KeyCode;
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var Feature = S.Feature,
+    var Feature = require('feature'),
 //        MARKER_CLS = 'ks-scroll-view-marker',
         transformVendorInfo = Feature.getCssVendorInfo('transform'),
         floor = Math.floor,
         transformProperty;
-    var isTransform3dSupported = S.Feature.isTransform3dSupported();
+    var isTransform3dSupported = Feature.isTransform3dSupported();
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = !!transformVendorInfo;
-
+    var util = require('util');
     var methods = {
         initializer: function () {
             this.scrollAnims = [];
@@ -168,7 +168,7 @@ KISSY.add(function (S, require) {
         stopAnimation: function () {
             var self = this;
             if (self.scrollAnims.length) {
-                S.each(self.scrollAnims, function (scrollAnim) {
+                util.each(self.scrollAnims, function (scrollAnim) {
                     scrollAnim.stop();
                 });
                 self.scrollAnims = [];

@@ -4,13 +4,14 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('dom');
     var Event = require('event/dom');
     var AP = Array.prototype,
         slice = AP.slice,
         NodeType = Dom.NodeType,
         push = AP.push,
-        makeArray = S.makeArray,
+        makeArray = util.makeArray,
         isDomNodeList = Dom.isDomNodeList;
 
     /**
@@ -46,7 +47,7 @@ KISSY.add(function (S, require) {
                 push.apply(this, makeArray(domNode.childNodes));
                 return self;
             }
-        } else if (S.isArray(html) || isDomNodeList(html)) {
+        } else if (util.isArray(html) || isDomNodeList(html)) {
             push.apply(self, makeArray(html));
             return self;
         } else {
@@ -143,7 +144,7 @@ KISSY.add(function (S, require) {
         each: function (fn, context) {
             var self = this;
 
-            S.each(self, function (n, i) {
+            util.each(self, function (n, i) {
                 n = new Node(n);
                 return fn.call(context || n, n, i, self);
             });
@@ -209,7 +210,7 @@ KISSY.add(function (S, require) {
         }
     };
 
-    S.mix(Node, {
+    util.mix(Node, {
         /**
          * Get node list from selector or construct new node list from html string.
          * Can also called from KISSY.all
@@ -223,10 +224,10 @@ KISSY.add(function (S, require) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
             if (typeof selector === 'string' &&
-                (selector = S.trim(selector)) &&
+                (selector = util.trim(selector)) &&
                 selector.length >= 3 &&
-                S.startsWith(selector, '<') &&
-                S.endsWith(selector, '>')) {
+                util.startsWith(selector, '<') &&
+                util.endsWith(selector, '>')) {
                 if (context) {
                     if (context.getDOMNode) {
                         context = context[0];

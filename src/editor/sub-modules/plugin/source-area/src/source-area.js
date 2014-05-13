@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     function sourceArea() {
     }
 
-    S.augment(sourceArea, {
+    (sourceArea.prototype = {
         pluginRenderUI: function (editor) {
             editor.addButton('sourceArea', {
                 tooltip: '源码',

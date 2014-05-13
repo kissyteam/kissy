@@ -6,11 +6,12 @@
 KISSY.add(function (S, require) {
     var ui = require('./font/ui');
     var cmd = require('./bold/cmd');
+    var Node = require('node');
     require('./button');
-    function bold() {
+    function Bold() {
     }
 
-    S.augment(bold, {
+    Bold.prototype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
             editor.addButton('bold', {
@@ -20,14 +21,14 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.B) {
+                    if (e.ctrlKey && e.keyCode === Node.KeyCode.B) {
                         editor.execCommand('bold');
                         e.preventDefault();
                     }
                 });
             });
         }
-    });
+    };
 
-    return bold;
+    return Bold;
 });

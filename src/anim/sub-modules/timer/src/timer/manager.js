@@ -3,8 +3,9 @@
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var stamp = S.stamp,
+KISSY.add(function (S, require) {
+    var util = require('util');
+    var stamp = util.stamp,
         win = S.Env.host,
     // note in background tab, interval is set to 1s in chrome/firefox
     // no interval change in ie for 15, if interval is less than 15
@@ -56,7 +57,7 @@ KISSY.add(function (S) {
             var self = this,
                 kv = stamp(anim);
             delete self.runnings[kv];
-            if (S.isEmptyObject(self.runnings)) {
+            if (util.isEmptyObject(self.runnings)) {
                 self.stopTimer();
             }
         },

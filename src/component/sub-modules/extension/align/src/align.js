@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var win = S.Env.host,
         $ = Node.all,
@@ -146,7 +147,7 @@ KISSY.add(function (S, require) {
     }
 
     function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
-        var pos = S.clone(elFuturePos),
+        var pos = util.clone(elFuturePos),
             size = {
                 width: elRegion.width,
                 height: elRegion.height
@@ -187,12 +188,12 @@ KISSY.add(function (S, require) {
             pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
         }
 
-        return S.mix(pos, size);
+        return util.mix(pos, size);
     }
 
     function flip(points, reg, map) {
         var ret = [];
-        S.each(points, function (p) {
+        util.each(points, function (p) {
             ret.push(p.replace(reg, function (m) {
                 return map[m];
             }));
@@ -257,7 +258,7 @@ KISSY.add(function (S, require) {
     function getRegion(node) {
         var offset, w, h,
             domNode = node[0];
-        if (!S.isWindow(domNode)) {
+        if (!util.isWindow(domNode)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
@@ -363,7 +364,7 @@ KISSY.add(function (S, require) {
             var elFuturePos = getElFuturePos(elRegion,
                 refNodeRegion, points, offset);
             // 当前节点将要所处的区域
-            var newElRegion = S.merge(elRegion, elFuturePos);
+            var newElRegion = util.merge(elRegion, elFuturePos);
 
             // 如果可视区域不能完全放置当前节点时允许调整
             if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
@@ -395,7 +396,7 @@ KISSY.add(function (S, require) {
                 // 如果失败，重新计算当前节点将要被放置的位置
                 if (fail) {
                     elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset);
-                    S.mix(newElRegion, elFuturePos);
+                    util.mix(newElRegion, elFuturePos);
                 }
 
                 var newOverflowCfg = {};

@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Toolbar = require('toolbar');
+    var util = require('util');
     /**
      * tab bar container for tab tabs.xclass: 'tabs-bar'.
      * @class  KISSY.Tabs.Bar
@@ -27,7 +28,7 @@ KISSY.add(function (S, require) {
         syncUI: function () {
             var self = this,
                 children = self.get('children');
-            S.each(children, function (c) {
+            util.each(children, function (c) {
                 if (c.get('selected')) {
                     self.setInternal('selectedTab', c);
                     return false;

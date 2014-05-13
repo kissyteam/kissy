@@ -3,7 +3,8 @@
  * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/promise');
     var PROMISE_VALUE = '__promise_value',
         PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
@@ -92,7 +93,7 @@ KISSY.add(function (S) {
             pendings = pendings ? [].concat(pendings) : [];
             promise[PROMISE_PENDINGS] = false;
             promise[PROMISE_PROGRESS_LISTENERS] = false;
-            S.each(pendings, function (p) {
+            util.each(pendings, function (p) {
                 promiseWhen(promise, p[0], p[1]);
             });
             return value;
@@ -110,7 +111,7 @@ KISSY.add(function (S) {
          * @param message
          */
         notify: function (message) {
-            S.each(this.promise[PROMISE_PROGRESS_LISTENERS], function (listener) {
+            util.each(this.promise[PROMISE_PROGRESS_LISTENERS], function (listener) {
                 listener(message);
             });
         }
@@ -274,7 +275,7 @@ KISSY.add(function (S) {
         return self;
     }
 
-    S.extend(Reject, Promise);
+    util.extend(Reject, Promise);
 
     // wrap for promiseWhen
     function when(value, fulfilled, rejected) {
@@ -353,9 +354,9 @@ KISSY.add(function (S) {
             (
                 // immediate value
                 !isPromise(obj[PROMISE_VALUE]) ||
-                    // resolved with a resolved promise !!! :)
-                    // Reject.__promise_value is string
-                    isResolved(obj[PROMISE_VALUE])
+                // resolved with a resolved promise !!! :)
+                // Reject.__promise_value is string
+                isResolved(obj[PROMISE_VALUE])
                 );
     }
 
@@ -369,7 +370,7 @@ KISSY.add(function (S) {
     KISSY.Promise = Promise;
     Promise.Defer = Defer;
 
-    S.mix(Promise, {
+    util.mix(Promise, {
         /**
          * register callbacks when obj as a promise is resolved
          * or call fulfilled callback directly when obj is not a promise object

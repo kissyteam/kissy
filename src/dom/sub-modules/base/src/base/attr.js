@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Dom = require('./api');
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
@@ -134,10 +135,10 @@ KISSY.add(function (S, require) {
                 },
 
                 set: function (elem, value) {
-                    var values = S.makeArray(value),
+                    var values = util.makeArray(value),
                         opts = elem.options;
-                    S.each(opts, function (opt) {
-                        opt.selected = S.inArray(Dom.val(opt), values);
+                    util.each(opts, function (opt) {
+                        opt.selected = util.inArray(Dom.val(opt), values);
                     });
 
                     if (!values.length) {
@@ -150,7 +151,7 @@ KISSY.add(function (S, require) {
         };
 
     // Radios and checkboxes getter/setter
-    S.each(['radio', 'checkbox'], function (r) {
+    util.each(['radio', 'checkbox'], function (r) {
         valHooks[r] = {
             get: function (elem) {
                 // Handle the case where in Webkit '' is returned instead of 'on'
@@ -158,8 +159,8 @@ KISSY.add(function (S, require) {
                 return elem.getAttribute('value') === null ? 'on' : elem.value;
             },
             set: function (elem, value) {
-                if (S.isArray(value)) {
-                    elem.checked = S.inArray(Dom.val(elem), value);
+                if (util.isArray(value)) {
+                    elem.checked = util.inArray(Dom.val(elem), value);
                     return 1;
                 }
                 return undefined;
@@ -190,7 +191,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    S.mix(Dom,
+    util.mix(Dom,
         /**
          * @override KISSY.DOM
          * @class
@@ -226,8 +227,8 @@ KISSY.add(function (S, require) {
                     hook;
 
                 // supports hash
-                if (S.isPlainObject(name)) {
-                    S.each(name, function (v, k) {
+                if (util.isPlainObject(name)) {
+                    util.each(name, function (v, k) {
                         Dom.prop(elems, k, v);
                     });
                     return undefined;
@@ -342,7 +343,7 @@ KISSY.add(function (S, require) {
                     ret;
 
                 // supports hash
-                if (S.isPlainObject(name)) {
+                if (util.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
                         Dom.attr(els, k, name[k], pass);
@@ -527,8 +528,8 @@ KISSY.add(function (S, require) {
                         val = '';
                     } else if (typeof val === 'number') {
                         val += '';
-                    } else if (S.isArray(val)) {
-                        val = S.map(val, toStr);
+                    } else if (util.isArray(val)) {
+                        val = util.map(val, toStr);
                     }
 
                     hook = valHooks[nodeName(elem)] || valHooks[elem.type];

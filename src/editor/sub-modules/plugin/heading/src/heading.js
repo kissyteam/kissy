@@ -5,14 +5,14 @@
  */
 KISSY.add(function (S, require) {
     require('./menubutton');
-    var Editor=require('editor');
+    var Editor = require('editor');
     var headingCmd = require('./heading/cmd');
 
     function HeadingPlugin() {
 
     }
 
-    S.augment(HeadingPlugin, {
+    (HeadingPlugin.prototype = {
         pluginRenderUI: function (editor) {
             headingCmd.init(editor);
 

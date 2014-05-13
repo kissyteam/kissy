@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var logger = S.getLogger('s/event');
     var BaseEvent = require('event/base');
     var Dom = require('dom');
@@ -26,7 +27,7 @@ KISSY.add(function (S, require) {
      */
     function DomEventObservable(cfg) {
         var self = this;
-        S.mix(self, cfg);
+        util.mix(self, cfg);
         self.reset();
         /**
          * html node which binds current custom event
@@ -34,7 +35,7 @@ KISSY.add(function (S, require) {
          */
     }
 
-    S.extend(DomEventObservable, BaseEvent.Observable, {
+    util.extend(DomEventObservable, BaseEvent.Observable, {
         setup: function () {
             var self = this,
                 type = self.type,
@@ -190,7 +191,7 @@ KISSY.add(function (S, require) {
                     type: eventType,
                     target: currentTarget
                 });
-                S.mix(event, eventData);
+                util.mix(event, eventData);
             }
 
             if (specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false) {
@@ -244,7 +245,7 @@ KISSY.add(function (S, require) {
                 try {
                     // execute default action on dom node
                     // exclude window
-                    if (currentTarget[ eventType ] && !S.isWindow(currentTarget)) {
+                    if (currentTarget[ eventType ] && !util.isWindow(currentTarget)) {
                         // 记录当前 trigger 触发
                         DomEventObservable.triggeredEvent = eventType;
 
@@ -407,7 +408,7 @@ KISSY.add(function (S, require) {
                 }
 
                 // remove currentTarget's  all domEventObservables description
-                if (S.isEmptyObject(domEventObservables)) {
+                if (util.isEmptyObject(domEventObservables)) {
                     eventDesc.handle = null;
                     DomEventUtils.removeData(currentTarget);
                 }

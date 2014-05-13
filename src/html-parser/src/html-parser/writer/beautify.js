@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var BasicWriter = require('./basic');
     var dtd = require('../dtd');
     var Utils = require('../utils');
+    var util = require('util');
 
     function BeautifyWriter() {
         var self = this;
@@ -21,7 +22,7 @@ KISSY.add(function (S, require) {
         self.allowIndent = 0;
         self.rules = {};
 
-        var beauty = S.merge(
+        var beauty = util.merge(
             dtd.$nonBodyContent,
             dtd.$block,
             dtd.$listItem,
@@ -43,7 +44,7 @@ KISSY.add(function (S, require) {
             });
         }
 
-        S.each(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], function (e) {
+        util.each(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], function (e) {
             // text paragraph does not allow
             self.setRules(e, {
                 allowIndent: 0,
@@ -77,7 +78,7 @@ KISSY.add(function (S, require) {
         });
     }
 
-    S.extend(BeautifyWriter, BasicWriter, {
+    util.extend(BeautifyWriter, BasicWriter, {
         indentation: function () {
             if (!this.inPre) {
                 this.append(new Array(this.indentLevel + 1).join(this.indentChar));
@@ -108,7 +109,7 @@ KISSY.add(function (S, require) {
             if (!this.rules[tagName]) {
                 this.rules[tagName] = {};
             }
-            S.mix(this.rules[tagName], rule);
+            util.mix(this.rules[tagName], rule);
         },
 
         openTag: function (el) {
@@ -195,7 +196,7 @@ KISSY.add(function (S, require) {
             if (this.allowIndent) {
                 this.indentation();
             }
-            this.append(S.trim(text));
+            this.append(util.trim(text));
         }
     });
 

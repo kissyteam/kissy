@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var dtd = require('./dtd');
     var Tag = require('./nodes/tag');
     var Fragment = require('./nodes/fragment');
@@ -19,7 +20,7 @@ KISSY.add(function (S, require) {
      */
     function Parser(html, opts) {
         // fake root node
-        html = S.trim(html);
+        html = util.trim(html);
         this.originalHTML = html;
         // only allow condition
         // 1. start with <!doctype
@@ -72,7 +73,7 @@ KISSY.add(function (S, require) {
             } else {
                 cs = body.childNodes;
             }
-            S.each(cs, function (c) {
+            util.each(cs, function (c) {
                 fragment.appendChild(c);
             });
             return fragment;
@@ -98,14 +99,14 @@ KISSY.add(function (S, require) {
              */
             var parent = body.parentNode,
                 sibling = parent.childNodes,
-                bodyIndex = S.indexOf(body, sibling);
+                bodyIndex = util.indexOf(body, sibling);
             if (bodyIndex !== sibling.length - 1) {
                 var fixes = sibling.slice(bodyIndex + 1, sibling.length);
                 for (var i = 0; i < fixes.length; i++) {
                     parent.removeChild(fixes[i]);
                     if (fixes[i].tagName === 'body') {
                         /*jshint loopfunc:true*/
-                        S.each(fixes[i].childNodes, function (c) {
+                        util.each(fixes[i].childNodes, function (c) {
                             body.appendChild(c);
                         });
                     } else {
@@ -190,12 +191,12 @@ KISSY.add(function (S, require) {
             if (childNodes[i].nodeName === 'html') {
                 var html = childNodes[i];
                 for (var j = 0; j < i; j++) {
-                    if (childNodes[j].nodeType === 3 && !S.trim(childNodes[j].toHtml())) {
+                    if (childNodes[j].nodeType === 3 && !util.trim(childNodes[j].toHtml())) {
                         doc.removeChild(childNodes[j]);
                     }
                 }
                 while (html.firstChild &&
-                    html.firstChild.nodeType === 3 && !S.trim(html.firstChild.toHtml())) {
+                    html.firstChild.nodeType === 3 && !util.trim(html.firstChild.toHtml())) {
                     html.removeChild(html.firstChild);
                 }
                 break;

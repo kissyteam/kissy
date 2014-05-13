@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node'),
         Control = require('component/control'),
         DecadePanel = require('../decade-panel/control');
@@ -101,7 +102,7 @@ KISSY.add(function (S, require) {
             var startYear = parseInt(currentYear / 10, 10) * 10;
             var endYear = startYear + 9;
             var locale = self.get('locale');
-            S.mix(renderData, {
+            util.mix(renderData, {
                 decadeSelectLabel: locale.decadeSelect,
                 years: prepareYears(self),
                 startYear: startYear,
@@ -130,7 +131,7 @@ KISSY.add(function (S, require) {
             var currentYear = value.getYear();
             var startYear = parseInt(currentYear / 10, 10) * 10;
             var endYear = startYear + 9;
-            S.mix(self.renderData, {
+            util.mix(self.renderData, {
                 startYear: startYear,
                 endYear: endYear,
                 years: prepareYears(self),

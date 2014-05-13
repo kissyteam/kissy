@@ -1,5 +1,5 @@
 /*jshint indent:false, quotmark:false*/
-(function(S){
+KISSY.use('ua, feature', function(S, UA, Feature){
 S.config("requires",{
     "anim/base": [
         "dom",
@@ -267,9 +267,7 @@ S.config("requires",{
         "util"
     ]
 });
-var Feature = S.Feature,
-    UA = S.UA,
-    win = window,
+var win = window,
     isTouchGestureSupported = Feature.isTouchGestureSupported(),
     add = S.add,
     emptyObject = {};
@@ -325,4 +323,4 @@ if (!isTouchGestureSupported) {
 }
 
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
-})(KISSY);
+});

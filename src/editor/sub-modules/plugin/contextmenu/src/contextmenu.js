@@ -8,6 +8,7 @@ KISSY.add(function (S, require) {
     var Menu = require('menu');
     var focusFix = require('./focus-fix');
     var Event = require('event/dom');
+    var $ = require('node').all;
 
     Editor.prototype.addContextMenu = function (id, filter, cfg) {
 
@@ -52,7 +53,7 @@ KISSY.add(function (S, require) {
         });
 
         function showNow(ev) {
-            var t = S.all(ev.target);
+            var t = $(ev.target);
 
             // ie 右键作用中，不会发生焦点转移，光标移动
             // 只能右键作用完后才能，才会发生光标移动,range变化

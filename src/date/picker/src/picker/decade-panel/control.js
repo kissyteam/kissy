@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
@@ -31,7 +32,7 @@ KISSY.add(function (S, require) {
             }
         }
         self.decades = decades;
-        S.mix(view.renderData, {
+        util.mix(view.renderData, {
             startYear: startYear,
             endYear: endYear,
             year: currentYear,
@@ -75,11 +76,11 @@ KISSY.add(function (S, require) {
             var self = this;
             var locale = self.get('locale');
             prepareYears(self, this);
-            S.mix(renderData, {
+            util.mix(renderData, {
                 previousCenturyLabel: locale.previousCentury,
                 nextCenturyLabel: locale.nextCentury
             });
-            S.mix(childrenSelectors, {
+            util.mix(childrenSelectors, {
                 tbodyEl: '#ks-date-picker-decade-panel-tbody-{id}',
                 previousCenturyBtn: '#ks-date-picker-decade-panel-previous-century-btn-{id}',
                 centuryEl: '#ks-date-picker-decade-panel-century-{id}',
