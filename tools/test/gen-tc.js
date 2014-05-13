@@ -6,7 +6,7 @@ var path = require('path');
 var fs = require('fs');
 var cwd = process.cwd().replace(/\\/g, '/');
 var srcDir = path.resolve(cwd, 'src');
-var S = global.KISSY = global.S = require(cwd + '/lib/seed');
+var util =  require(cwd + '/lib/util');
 
 function collectTc(baseDir, codes) {
     var files = fs.readdirSync(baseDir);
@@ -14,7 +14,7 @@ function collectTc(baseDir, codes) {
     files.forEach(function (f) {
         f = baseDir + '/' + f;
 
-        if (S.endsWith(f, ts)) {
+        if (util.endsWith(f, ts)) {
             f = f.replace(/\\/g, '/');
             var coverDir = path.resolve(f, '../../coverage/runner');
             var cover = 0;

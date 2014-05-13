@@ -414,8 +414,8 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         "event/dom/input": {
             "base": "/kissy/src/event/sub-modules/dom/input/src/input"
         },
-        "event/gesture/base": {
-            "base": "/kissy/src/event/sub-modules/gesture/base/src/base"
+        "event/gesture/basic": {
+            "base": "/kissy/src/event/sub-modules/gesture/basic/src/base"
         },
         "event/gesture/drag": {
             "base": "/kissy/src/event/sub-modules/gesture/drag/src/drag"

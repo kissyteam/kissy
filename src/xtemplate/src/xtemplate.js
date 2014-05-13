@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    require('util');
+    var util = require('util');
     var XTemplateRuntime = require('xtemplate/runtime');
     var Compiler = require('xtemplate/compiler');
     var cache = XTemplate.cache = {};
@@ -54,7 +54,7 @@ KISSY.add(function (S, require) {
         XTemplate.superclass.constructor.call(this, tpl, config);
     }
 
-    S.extend(XTemplate, XTemplateRuntime, {
+    util.extend(XTemplate, XTemplateRuntime, {
         load: function (name, callback) {
             var tplModule = this.getTplContent(name, function (error, fn) {
                 if (error) {

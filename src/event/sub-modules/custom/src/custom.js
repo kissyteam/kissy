@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Target = require('./custom/target');
+    var util = require('util');
     return {
         Target: Target,
 
@@ -13,6 +14,6 @@ KISSY.add(function (S, require) {
          * @property {KISSY.Event.CustomEvent.Target} global
          * @member KISSY.Event.CustomEvent
          */
-        global: S.mix({}, Target)
+        global: util.mix({}, Target)
     };
 });

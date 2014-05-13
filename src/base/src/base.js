@@ -4,11 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Attribute = require('attribute');
 
-    var ucfirst = S.ucfirst,
+    var ucfirst = util.ucfirst,
         ON_SET = '_onSet',
-        noop = S.noop;
+        noop = util.noop;
 
     function __getHook(method, reverse) {
         return function (origFn) {
@@ -167,7 +168,7 @@ KISSY.add(function (S, require) {
                 self = this,
                 isString = typeof plugin === 'string';
 
-            S.each(self.get('plugins'), function (p) {
+            util.each(self.get('plugins'), function (p) {
                 var keep = 0, pluginId;
                 if (plugin) {
                     if (isString) {
@@ -201,7 +202,7 @@ KISSY.add(function (S, require) {
          */
         getPlugin: function (id) {
             var plugin = null;
-            S.each(this.get('plugins'), function (p) {
+            util.each(this.get('plugins'), function (p) {
                 // user defined takes priority
                 var pluginId = p.get && p.get('pluginId') || p.pluginId;
                 if (pluginId === id) {
@@ -217,7 +218,7 @@ KISSY.add(function (S, require) {
 
         destroy: function () {
             var self = this,
-                args = S.makeArray(arguments);
+                args = util.makeArray(arguments);
             if (!self.get('destroyed')) {
                 callPluginsMethod.call(self, 'pluginDestructor', args);
                 self.destructor.apply(self, args);
@@ -228,7 +229,7 @@ KISSY.add(function (S, require) {
         }
     });
 
-    S.mix(Base, {
+    util.mix(Base, {
         __hooks__: {
             initializer: __getHook(),
             destructor: __getHook('__destructor', true)
@@ -301,7 +302,7 @@ KISSY.add(function (S, require) {
          *      })
          */
         extend: function extend(extensions, px, sx) {
-            if (!S.isArray(extensions)) {
+            if (!util.isArray(extensions)) {
                 sx = px;
                 px = /**@type {Object} @ignore*/extensions;
                 extensions = [];
@@ -316,7 +317,7 @@ KISSY.add(function (S, require) {
                     prototype = {};
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                 // 主类最优先
-                S.each(extensions.concat(SubClass), function (ext) {
+                util.each(extensions.concat(SubClass), function (ext) {
                     if (ext) {
                         // 合并 ATTRS 到主类
                         // 不覆盖主类上的定义(主类位于 constructors 最后)
@@ -327,9 +328,9 @@ KISSY.add(function (S, require) {
                         // b is a extension of a
                         // =>
                         // a {y:{value:2,getter:fn}}
-                        S.each(ext.ATTRS, function (v, name) {
+                        util.each(ext.ATTRS, function (v, name) {
                             var av = attrs[name] = attrs[name] || {};
-                            S.mix(av, v);
+                            util.mix(av, v);
                         });
                         // 方法合并
                         var exp = ext.prototype,
@@ -344,7 +345,7 @@ KISSY.add(function (S, require) {
                 });
                 SubClass.ATTRS = attrs;
                 prototype.constructor = SubClass;
-                S.augment(SubClass, prototype);
+                util.augment(SubClass, prototype);
             }
             SubClass.extend = sx && sx.extend || extend;
             SubClass.addMembers = baseAddMembers;
@@ -408,7 +409,7 @@ KISSY.add(function (S, require) {
 
     function constructPlugins(self) {
         var plugins = self.get('plugins'), Plugin;
-        S.each(plugins, function (plugin, i) {
+        util.each(plugins, function (plugin, i) {
             if (typeof plugin === 'function') {
                 Plugin = plugin;
                 plugins[i] = new Plugin();
@@ -447,8 +448,6 @@ KISSY.add(function (S, require) {
             }
         }
     }
-
-    S.Base = Base;
 
     return Base;
 });

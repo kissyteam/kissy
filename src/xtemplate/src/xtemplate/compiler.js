@@ -4,7 +4,7 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
-    require('util');
+    var util = require('util');
 
     // codeTemplates --------------------------- start
     var TOP_DECLARATION = ['var tpl = this,',
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
     var parser = require('./compiler/parser');
     parser.yy = require('./compiler/ast');
     var nativeCode = [];
-    var substitute = S.substitute;
+    var substitute = util.substitute;
     var nativeCommands = XTemplateRuntime.nativeCommands;
     var nativeUtils = XTemplateRuntime.utils;
 
@@ -217,7 +217,7 @@ KISSY.add(function (S, require) {
         if (params) {
             var paramsName = guid('params');
             source.push('var ' + paramsName + ' = [];');
-            S.each(params, function (param) {
+            util.each(params, function (param) {
                 var nextIdNameCode = xtplAstToJs[param.type](param);
                 pushToArray(source, nextIdNameCode.source);
                 source.push(paramsName + '.push(' + nextIdNameCode.exp + ');');
@@ -228,7 +228,7 @@ KISSY.add(function (S, require) {
         if (hash) {
             var hashName = guid('hash');
             source.push('var ' + hashName + ' = {};');
-            S.each(hash.value, function (v, key) {
+            util.each(hash.value, function (v, key) {
                 var nextIdNameCode = xtplAstToJs[v.type](v);
                 pushToArray(source, nextIdNameCode.source);
                 source.push(hashName + '[' + wrapByDoubleQuote(key) + '] = ' + nextIdNameCode.exp + ';');

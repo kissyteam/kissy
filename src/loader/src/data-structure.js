@@ -6,13 +6,15 @@
 (function (S) {
     var Loader = S.Loader,
         Config = S.Config,
+        Status = Loader.Status,
+        ATTACHED = Status.ATTACHED,
+        ATTACHING = Status.ATTACHING,
         Utils = Loader.Utils,
+        createModule = Utils.createModule,
         mix = Utils.mix;
 
     function checkGlobalIfNotExist(self, property) {
-        return property in self ?
-            self[property] :
-            Config[property];
+        return property in self ? self[property] : Config[property];
     }
 
     /**
@@ -93,12 +95,12 @@
         /**
          * exports of this module
          */
-        self.exports = {};
+        self.exports = undefined;
 
         /**
          * status of current modules
          */
-        self.status = Loader.Status.INIT;
+        self.status = Status.INIT;
 
         /**
          * name of this module
@@ -112,11 +114,15 @@
 
         // lazy initialize and commonjs module format
         self.cjs = 1;
+
         mix(self, cfg);
+
         self.waits = {};
 
         self.require = function (moduleName) {
-            return S.require(self.resolve(moduleName),true,true);
+            var requiresModule = createModule(self.resolve(moduleName));
+            Utils.attachModules(requiresModule.getNormalizedModules());
+            return requiresModule.getExports();
         };
 
         self.require.resolve = function (relativeName) {
@@ -137,9 +143,7 @@
             if (resolveCache[relativeName]) {
                 return resolveCache[relativeName];
             }
-            resolveCache[relativeName] = Utils.normalizeModNames(
-                [Utils.normalizePath(this.name, relativeName)]
-            )[0];
+            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
             return resolveCache[relativeName];
         },
 
@@ -180,48 +184,48 @@
             return v;
         },
 
-        getAlias: function () {
-            var self = this,
-                name = self.name,
-                packageInfo,
-                alias = self.alias;
-            if (typeof alias === 'string') {
-                alias = [alias];
-            }
-            if (alias) {
-                return alias;
-            }
-            packageInfo = self.getPackage();
-            if (packageInfo.alias) {
-                alias = packageInfo.alias(name);
-            }
-            alias = self.alias = alias || [];
-            return alias;
+        getExports: function () {
+            return this.getNormalizedModules()[0].exports;
         },
 
-        getNormalizedAlias: function () {
-            var self = this;
+        getAlias: function () {
+            var self = this,
+                name = self.name;
             if (self.normalizedAlias) {
                 return self.normalizedAlias;
             }
-            var alias = self.getAlias();
+            var alias = getShallowAlias(self);
             var ret = [];
-            for (var i = 0, l = alias.length; i < l; i++) {
-                if (alias[i]) {
-                    var mod = Utils.getOrCreateModuleInfo(alias[i]);
-                    var normalAlias = mod.getNormalizedAlias();
-                    if (normalAlias) {
-                        ret.push.apply(ret, normalAlias);
-                    } else {
-                        ret.push(alias[i]);
+            if (alias[0] === name) {
+                ret = alias;
+            } else {
+                for (var i = 0, l = alias.length; i < l; i++) {
+                    var aliasItem = alias[i];
+                    if (aliasItem && aliasItem !== name) {
+                        aliasItem = pluginAlias(aliasItem);
+                        var mod = createModule(aliasItem);
+                        var normalAlias = mod.getAlias();
+                        if (normalAlias) {
+                            ret.push.apply(ret, normalAlias);
+                        } else {
+                            ret.push(aliasItem);
+                        }
                     }
                 }
             }
-            if (!ret.length) {
-                ret.push(self.name);
-            }
             self.normalizedAlias = ret;
             return ret;
+        },
+
+        getNormalizedModules: function () {
+            var self = this;
+            if (self.normalizedModules) {
+                return self.normalizedModules;
+            }
+            self.normalizedModules = Utils.map(self.getAlias(), function (alias) {
+                return createModule(alias);
+            });
+            return self.normalizedModules;
         },
 
         /**
@@ -284,54 +288,138 @@
             return self.charset || self.getPackage().getCharset();
         },
 
-        /**
-         * get alias required module names
-         * @returns {String[]} alias required module names
-         */
-        getRequiresWithAlias: function () {
-            var self = this,
-                requiresWithAlias = self.requiresWithAlias,
-                requires = self.requires;
-            if (!requires || requires.length === 0) {
-                return requires || [];
-            } else if (!requiresWithAlias) {
-                self.requiresWithAlias = requiresWithAlias =
-                    Utils.normalizeModNamesWithAlias(requires, self.name);
+        setRequiresModules: function (requires) {
+            var self = this;
+            var requiredModules = self.requiredModules = Utils.map(normalizeRequires(requires, self), function (m) {
+                return createModule(m);
+            });
+            var normalizedRequiredModules = [];
+            Utils.each(requiredModules, function (mod) {
+                normalizedRequiredModules.push.apply(normalizedRequiredModules, mod.getNormalizedModules());
+            });
+            self.normalizedRequiredModules = normalizedRequiredModules;
+        },
+
+        getNormalizedRequiredModules: function () {
+            var self = this;
+            if (self.normalizedRequiredModules) {
+                return self.normalizedRequiredModules;
             }
-            return requiresWithAlias;
+            self.setRequiresModules(self.requires);
+            return self.normalizedRequiredModules;
         },
 
-        /**
-         * Get module objects required by this module
-         * @return {KISSY.Loader.Module[]}
-         */
-        getRequiredMods: function () {
-            return Utils.getOrCreateModulesInfo(this.getNormalizedRequires());
+        getRequiredModules: function () {
+            var self = this;
+            if (self.requiredModules) {
+                return self.requiredModules;
+            }
+            self.setRequiresModules(self.requires);
+            return self.requiredModules;
         },
 
-        /**
-         * Get module names required by this module
-         * @return {String[]}
-         */
-        getNormalizedRequires: function () {
+        attachSelf: function () {
             var self = this,
-                normalizedRequires,
-                normalizedRequiresStatus = self.normalizedRequiresStatus,
-                status = self.status,
-                requires = self.requires;
-            if (!requires || requires.length === 0) {
-                return requires || [];
-            } else if ((normalizedRequires = self.normalizedRequires) &&
-                // 事先声明的依赖不能当做 loaded 状态下真正的依赖
-                (normalizedRequiresStatus === status)) {
-                return normalizedRequires;
+                factory = self.factory,
+                exports;
+
+            if (typeof factory === 'function') {
+                self.exports = {};
+                // compatible and efficiency
+                // KISSY.add(function(S,undefined){})
+                // 需要解开 index，相对路径
+                // 但是需要保留 alias，防止值不对应
+                //noinspection JSUnresolvedFunction
+                var requires = self.requires;
+                exports = factory.apply(self,
+                    // KISSY.add(function(S){module.require}) lazy initialize
+                    (
+                        self.cjs ? [S,
+                                requires && requires.length ?
+                                self.require :
+                                undefined,
+                            self.exports,
+                            self] :
+                            [S].concat(Utils.map(self.getRequiredModules(), function (m) {
+                                return m.getExports();
+                            }))
+                        )
+                );
+                if (exports !== undefined) {
+                    // noinspection JSUndefinedPropertyAssignment
+                    self.exports = exports;
+                }
             } else {
-                self.normalizedRequiresStatus = status;
-                self.normalizedRequires = Utils.normalizeModNames(requires, self.name);
-                return self.normalizedRequires;
+                //noinspection JSUndefinedPropertyAssignment
+                self.exports = factory;
+            }
+
+            self.status = ATTACHED;
+        },
+
+        attach: function () {
+            var self = this,
+                status;
+            status = self.status;
+            // attached or circular dependency
+            if (status >= ATTACHING) {
+                self.status = ATTACHED;
+                return;
+            }
+            self.status = ATTACHING;
+            if (self.cjs) {
+                // commonjs format will call require in module code again
+                self.attachSelf();
+            } else {
+                Utils.each(self.getNormalizedRequiredModules(), function (m) {
+                    m.attach();
+                });
+                self.attachSelf();
             }
         }
     };
+
+    function pluginAlias(name) {
+        var index = name.indexOf('!');
+        if (index !== -1) {
+            var pluginName = name.substring(0, index);
+            name = name.substring(index + 1);
+            var Plugin = createModule(name).attach();
+            if (Plugin.alias) {
+                name = Plugin.alias(S, name, pluginName);
+            }
+        }
+        return name;
+    }
+
+    function normalizeRequires(requires, self) {
+        requires = requires || [];
+        var l = requires.length;
+        for (var i = 0; i < l; i++) {
+            requires[i] = self.resolve(requires[i]);
+        }
+        return requires;
+    }
+
+    function getShallowAlias(mod) {
+        var name = mod.name,
+            packageInfo,
+            alias = mod.alias;
+        if (typeof alias === 'string') {
+            mod.alias = alias = [alias];
+        }
+        if (alias) {
+            return alias;
+        }
+        packageInfo = mod.getPackage();
+        if (packageInfo.alias) {
+            alias = packageInfo.alias(name);
+        }
+        alias = mod.alias = alias || [
+            pluginAlias(name)
+        ];
+        return alias;
+    }
 
     Loader.Module = Module;
 })(KISSY);

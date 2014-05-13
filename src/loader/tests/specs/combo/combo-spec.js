@@ -1,6 +1,7 @@
 /*jshint quotmark:false*/
 describe("ComboLoader", function () {
     var S = KISSY,
+        Utils= S.Loader.Utils,
         host = location.host;
 
     beforeEach(function () {
@@ -132,7 +133,7 @@ describe("ComboLoader", function () {
             });
 
             var r;
-            r = l.calculate((["test/a", "test/h"]));
+            r = l.calculate(Utils.createModules(["test/a", "test/h"]));
             var c = l.getComboUrls(r);
             expect(c.js[0].url).toBe("http://a/??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
         });
@@ -163,7 +164,7 @@ describe("ComboLoader", function () {
             });
 
             var r;
-            r = l.calculate((["a/a", "a/b"]));
+            r = l.calculate(Utils.createModules(["a/a", "a/b"]));
             var c = l.getComboUrls(r);
             var js = c.js;
             expect(js.length).toBe(3);
@@ -201,7 +202,7 @@ describe("ComboLoader", function () {
                 ret.push('y' + i);
             }
             var r;
-            r = l.calculate((ret));
+            r = l.calculate(Utils.createModules(ret));
             var c = l.getComboUrls(r);
             var cjs = c.js;
             expect(cjs.length).toBe(5);
@@ -233,7 +234,7 @@ describe("ComboLoader", function () {
             });
 
             var loader = new S.Loader.ComboLoader();
-            var mods = loader.calculate((["tests/a"]));
+            var mods = loader.calculate(Utils.createModules(["tests/a"]));
             var urls = loader.getComboUrls(mods);
             var host = location.host;
 
@@ -340,7 +341,7 @@ describe("ComboLoader", function () {
         runs(function () {
             var loader = new S.Loader.ComboLoader();
 
-            var allMods = loader.calculate((["timestamp/y"]));
+            var allMods = loader.calculate(Utils.createModules(["timestamp/y"]));
 
             var comboUrls = loader.getComboUrls(allMods);
 
@@ -412,7 +413,7 @@ describe("ComboLoader", function () {
             }
         });
         var loader = new S.Loader.ComboLoader();
-        var mods = loader.calculate((['t/a/b/a','t/a/b/b','t/a/b/c']));
+        var mods = loader.calculate(Utils.createModules(['t/a/b/a','t/a/b/b','t/a/b/c']));
         var urls = loader.getComboUrls(mods);
         var host = location.host;
         expect(urls.js[0].url)

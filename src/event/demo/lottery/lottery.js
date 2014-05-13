@@ -5,7 +5,7 @@ KISSY.add(function (S, require) {
     var Overlay = require('overlay');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
-    var BaseGesture = require('event/gesture/base');
+    var BasicGesture = require('event/gesture/basic');
 
     var $ = Node.all;
 
@@ -104,13 +104,13 @@ KISSY.add(function (S, require) {
 
                 touchEnd = function (ev) {
                     ev.preventDefault();
-                    canvas.detach(BaseGesture.MOVE, touchMove);
-                    canvas.detach(BaseGesture.END, touchEnd);
+                    canvas.detach(BasicGesture.MOVE, touchMove);
+                    canvas.detach(BasicGesture.END, touchEnd);
                     ctx.closePath();
                     isOver();
                 };
 
-            canvas.on(BaseGesture.START, function (ev) {
+            canvas.on(BasicGesture.START, function (ev) {
                 ev.preventDefault();
                 var pageX = ev.changedTouches ? ev.changedTouches[0].pageX : ev.pageX,
                     pageY = ev.changedTouches ? ev.changedTouches[0].pageY : ev.pageY;
@@ -130,8 +130,8 @@ KISSY.add(function (S, require) {
                 ctx.moveTo(oldX, oldY);
 
 
-                canvas.on(BaseGesture.MOVE, touchMove);
-                canvas.on(BaseGesture.END, touchEnd);
+                canvas.on(BasicGesture.MOVE, touchMove);
+                canvas.on(BasicGesture.END, touchEnd);
             });
         },
         reset: function () {

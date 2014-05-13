@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
+
     /**
      * non-terminal symbol for grammar
      * @class KISSY.Kison.NonTerminal
@@ -12,10 +13,14 @@ KISSY.add(function (S, require) {
     return Base.extend({}, {
         ATTRS: {
             productions: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
             firsts: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             },
             symbol: {
 

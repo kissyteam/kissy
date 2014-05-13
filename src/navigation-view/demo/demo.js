@@ -12,11 +12,11 @@ KISSY.use('navigation-view,' +
         'navigation-view/bar,' +
         'node,' +
         'event/gesture/tap,' +
-        'event/gesture/base,' +
+        'event/gesture/basic,' +
         'router,' +
         'promise,' +
         window.PAGE_VIEW,
-    function (S, NavigationView, Bar, Node,TapGesture, BaseGesture,router, Promise, pageViewFactory) {
+    function (S, NavigationView, Bar, Node,TapGesture, BasicGesture,router, Promise, pageViewFactory) {
         var PageView = pageViewFactory();
         var tap = TapGesture.TAP;
 
@@ -255,10 +255,10 @@ KISSY.use('navigation-view,' +
 
             bindUI: function () {
                 this.$el.delegate(tap, '.list-item', this.onMenuItemClick, this);
-                this.$el.delegate(BaseGesture.START, '.list-item', function (e) {
+                this.$el.delegate(BasicGesture.START, '.list-item', function (e) {
                     e.currentTarget.classList.add('list-item-active');
                 });
-                this.$el.delegate(BaseGesture.END, '.list-item', function (e) {
+                this.$el.delegate(BasicGesture.END, '.list-item', function (e) {
                     e.currentTarget.classList.remove('list-item-active');
                 });
 

@@ -3,7 +3,8 @@
  * @ignore
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('./base');
     var logger = S.getLogger('s/web');
     var win = S.Env.host,
         undef,
@@ -36,7 +37,7 @@ KISSY.add(function (S) {
             el.detachEvent('on' + type, fn);
         };
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * A crude way of determining if an object is a window
          * @member KISSY
@@ -74,7 +75,7 @@ KISSY.add(function (S) {
                 xml = undef;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                S.error('Invalid XML: ' + data);
+                util.error('Invalid XML: ' + data);
             }
             return xml;
         },
@@ -109,7 +110,7 @@ KISSY.add(function (S) {
                 try {
                     fn(S);
                 } catch (e) {
-                    S.log(e.stack || e, 'error');
+                    util.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -129,7 +130,7 @@ KISSY.add(function (S) {
         available: function (id, fn) {
             id = (id + EMPTY).match(RE_ID_STR)[1];
             var retryCount = 1;
-            var timer = S.later(function () {
+            var timer = util.later(function () {
                 if (++retryCount > POLL_RETIRES) {
                     timer.cancel();
                     return;
@@ -156,7 +157,7 @@ KISSY.add(function (S) {
             try {
                 callbacks[i](S);
             } catch (e) {
-                S.log(e.stack || e, 'error');
+                util.log(e.stack || e, 'error');
                 /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;

@@ -5,6 +5,8 @@
  */
 KISSY.add(function (S, require) {
     var BaseEvent = require('event/base');
+    var util = require('util');
+
     /**
      * Do not new by yourself.
      *
@@ -16,7 +18,7 @@ KISSY.add(function (S, require) {
      */
     function CustomEventObject(data) {
         CustomEventObject.superclass.constructor.call(this);
-        S.mix(this, data);
+        util.mix(this, data);
         /**
          * source target of current event
          * @property  target
@@ -29,7 +31,7 @@ KISSY.add(function (S, require) {
          */
     }
 
-    S.extend(CustomEventObject, BaseEvent.Object);
+    util.extend(CustomEventObject, BaseEvent.Object);
 
     return CustomEventObject;
 });

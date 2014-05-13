@@ -9,6 +9,7 @@ KISSY.add(function (S, require) {
     var CustomEventObserver = require('./observer');
     var CustomEventObject = require('./object');
     var Utils = BaseEvent.Utils;
+    var util = require('util');
 
     /**
      * custom event for registering and un-registering observer for specified event on normal object.
@@ -34,7 +35,7 @@ KISSY.add(function (S, require) {
          */
     }
 
-    S.extend(CustomEventObservable, BaseEvent.Observable, {
+    util.extend(CustomEventObservable, BaseEvent.Observable, {
         /**
          * add a observer to custom event's observers
          * @param {Object} cfg {@link KISSY.Event.CustomEvent.Observer} 's config
@@ -42,11 +43,6 @@ KISSY.add(function (S, require) {
         on: function (cfg) {
             var observer = /**@ignore
              @type KISSY.Event.CustomEvent.Observer*/new CustomEventObserver(cfg);
-            if (S.Config.debug) {
-                if (!observer.fn) {
-                    S.error('lack event handler for ' + this.type);
-                }
-            }
             if (this.findObserver(observer) === -1) {
                 this.observers.push(observer);
             }

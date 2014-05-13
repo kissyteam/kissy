@@ -2,9 +2,9 @@
  * @ignore
  * string utilities of lang
  * @author yiminghe@gmail.com
- *
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('./base');
     var undef;
     var logger = S.getLogger('s/util');
     // IE doesn't include non-breaking-space (0xa0) in their \s character
@@ -12,7 +12,7 @@ KISSY.add(function (S) {
     // include it in the regexp to enforce consistent cross-browser behavior.
     var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
         EMPTY = '';
-    var RE_DASH = /-([a-z])/ig;
+
     var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         trim = String.prototype.trim;
     var SEP = '&',
@@ -25,11 +25,12 @@ KISSY.add(function (S) {
         return val == null || (t !== 'object' && t !== 'function');
     }
 
+    var RE_DASH = /-([a-z])/ig;
     function upperCase() {
         return arguments[1].toUpperCase();
     }
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * Creates a serialized string of an array or object.
          *
@@ -55,7 +56,7 @@ KISSY.add(function (S) {
                 serializeArray = TRUE;
             }
             var buf = [], key, i, v, len, val,
-                encode = S.urlEncode;
+                encode = util.urlEncode;
             for (key in o) {
 
                 val = o[key];
@@ -68,7 +69,7 @@ KISSY.add(function (S) {
                         buf.push(eq, encode(val + EMPTY));
                     }
                     buf.push(sep);
-                } else if (S.isArray(val) && val.length) {
+                } else if (util.isArray(val) && val.length) {
                     // val is not empty array
                     for (i = 0, len = val.length; i < len; ++i) {
                         v = val[i];
@@ -104,14 +105,14 @@ KISSY.add(function (S) {
          * @member KISSY
          */
         unparam: function (str, sep, eq) {
-            if (typeof str !== 'string' || !(str = S.trim(str))) {
+            if (typeof str !== 'string' || !(str = util.trim(str))) {
                 return {};
             }
             sep = sep || SEP;
             eq = eq || EQ;
             var ret = {},
                 eqIndex,
-                decode = S.urlDecode,
+                decode = util.urlDecode,
                 pairs = str.split(sep),
                 key, val,
                 i = 0, len = pairs.length;
@@ -131,12 +132,12 @@ KISSY.add(function (S) {
                         logger.error('decodeURIComponent error : ' + val);
                         logger.error(e);
                     }
-                    if (S.endsWith(key, '[]')) {
+                    if (util.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);
                     }
                 }
                 if (key in ret) {
-                    if (S.isArray(ret[key])) {
+                    if (util.isArray(ret[key])) {
                         ret[key].push(val);
                     } else {
                         ret[key] = [ret[key], val];

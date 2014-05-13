@@ -5,18 +5,18 @@
  */
 (function (S) {
     var Loader = S.Loader,
-        Env = S.Env,
-        Status = Loader.Status,
         Utils = Loader.Utils,
+        createModule = Utils.createModule,
         ComboLoader = Loader.ComboLoader;
     var logger = S.getLogger('s/loader');
-    var mods = Env.mods = {};
 
     Utils.mix(S, {
+        // internal usage
         getModule: function (modName) {
-            return Utils.getOrCreateModuleInfo(modName);
+            return createModule(modName);
         },
 
+        // internal usage
         getPackage: function (packageName) {
             return S.Config.packages[packageName];
         },
@@ -57,8 +57,7 @@
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
         use: function (modNames, success) {
-            var normalizedModNames,
-                loader,
+            var loader,
                 error,
                 tryCount = 0;
 
@@ -69,12 +68,15 @@
                 success = success.success;
             }
 
-            modNames = Utils.getModNamesAsArray(modNames);
-            modNames = Utils.normalizeModNamesWithAlias(modNames);
+            var mods = Utils.createModules(modNames);
 
-            normalizedModNames = Utils.unalias(modNames);
+            var unloadedMods = [];
 
-            var unloadedModNames = normalizedModNames;
+            Utils.each(mods, function (mod) {
+                unloadedMods.push.apply(unloadedMods, mod.getNormalizedModules());
+            });
+
+            var normalizedMods = unloadedMods;
 
             function loadReady() {
                 ++tryCount;
@@ -85,7 +87,7 @@
                     start = +new Date();
                 }
 
-                var unloadedMods = loader.calculate(unloadedModNames, errorList);
+                unloadedMods = loader.calculate(unloadedMods, errorList);
                 var unloadModsLen = unloadedMods.length;
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
                 if (errorList.length) {
@@ -103,10 +105,10 @@
                     S.log(errorList, 'error');
                     S.log('loader: load above modules error', 'error');
                 } else if (loader.isCompleteLoading()) {
-                    Utils.attachModsRecursively(normalizedModNames);
+                    Utils.attachModules(normalizedMods);
                     if (success) {
                         try {
-                            success.apply(S, Utils.getModules(modNames));
+                            success.apply(S, [S].concat(Utils.getModulesExports(mods)));
                         } catch (e) {
                             S.log(e.stack || e, 'error');
                             /*jshint loopfunc:true*/
@@ -120,10 +122,6 @@
                     loader.callback = loadReady;
                     if (unloadModsLen) {
                         logger.debug(tryCount + ' reload ');
-                        unloadedModNames = [];
-                        for (var i = 0; i < unloadModsLen; i++) {
-                            unloadedModNames.push(unloadedMods[i].name);
-                        }
                         loader.use(unloadedMods);
                     }
                 }
@@ -141,22 +139,11 @@
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
-         * @param {Boolean} attach internal usage
-         * @param {Boolean} insideRequire internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName, attach, insideRequire) {
-            // cache module read
-            if (mods[moduleName] && mods[moduleName].status === Status.ATTACHED) {
-                return mods[moduleName].exports;
-            }
-            var moduleNames = Utils.normalizeModNames([moduleName]);
-            if (attach) {
-                Utils.attachModsRecursively(moduleNames);
-            }
-            var mod = S.getModule(moduleNames[0]);
-            return mod.status === Status.ATTACHED || insideRequire ? mod.exports : undefined;
+        require: function (moduleName) {
+            return createModule(moduleName).getExports();
         }
     });
 })(KISSY);

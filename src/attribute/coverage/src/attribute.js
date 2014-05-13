@@ -792,15 +792,15 @@ function visit64_571_1(result) {
 function visit63_548_1(result) {
   _$jscoverage['/attribute.js'].branchData['548'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['547'][1].init(1833, 15, 'e !== undefined');
+}_$jscoverage['/attribute.js'].branchData['547'][1].init(1836, 15, 'e !== undefined');
 function visit62_547_1(result) {
   _$jscoverage['/attribute.js'].branchData['547'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['543'][1].init(1724, 10, 'opts || {}');
+}_$jscoverage['/attribute.js'].branchData['543'][1].init(1727, 10, 'opts || {}');
 function visit61_543_1(result) {
   _$jscoverage['/attribute.js'].branchData['543'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['531'][1].init(1258, 16, 'attrNames.length');
+}_$jscoverage['/attribute.js'].branchData['531'][1].init(1261, 16, 'attrNames.length');
 function visit60_531_1(result) {
   _$jscoverage['/attribute.js'].branchData['531'][1].ranCondition(result);
   return result;
@@ -828,15 +828,15 @@ function visit55_499_1(result) {
 function visit54_480_1(result) {
   _$jscoverage['/attribute.js'].branchData['480'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['456'][1].init(177, 13, 'initialValues');
+}_$jscoverage['/attribute.js'].branchData['456'][1].init(180, 13, 'initialValues');
 function visit53_456_1(result) {
   _$jscoverage['/attribute.js'].branchData['456'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['433'][2].init(199, 29, 'typeof cfg.value === \'object\'');
+}_$jscoverage['/attribute.js'].branchData['433'][2].init(202, 29, 'typeof cfg.value === \'object\'');
 function visit52_433_2(result) {
   _$jscoverage['/attribute.js'].branchData['433'][2].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['433'][1].init(186, 42, 'cfg.value && typeof cfg.value === \'object\'');
+}_$jscoverage['/attribute.js'].branchData['433'][1].init(189, 42, 'cfg.value && typeof cfg.value === \'object\'');
 function visit51_433_1(result) {
   _$jscoverage['/attribute.js'].branchData['433'][1].ranCondition(result);
   return result;
@@ -876,11 +876,11 @@ function visit43_343_1(result) {
 function visit42_328_1(result) {
   _$jscoverage['/attribute.js'].branchData['328'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['322'][1].init(1585, 19, 'sx.extend || extend');
+}_$jscoverage['/attribute.js'].branchData['322'][1].init(1606, 19, 'sx.extend || extend');
 function visit41_322_1(result) {
   _$jscoverage['/attribute.js'].branchData['322'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['319'][1].init(1475, 18, 'sxInheritedStatics');
+}_$jscoverage['/attribute.js'].branchData['319'][1].init(1493, 18, 'sxInheritedStatics');
 function visit40_319_1(result) {
   _$jscoverage['/attribute.js'].branchData['319'][1].ranCondition(result);
   return result;
@@ -892,11 +892,11 @@ function visit39_315_1(result) {
 function visit38_298_1(result) {
   _$jscoverage['/attribute.js'].branchData['298'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['294'][1].init(417, 32, 'px.hasOwnProperty(\'constructor\')');
+}_$jscoverage['/attribute.js'].branchData['294'][1].init(426, 32, 'px.hasOwnProperty(\'constructor\')');
 function visit37_294_1(result) {
   _$jscoverage['/attribute.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['293'][1].init(373, 29, 'sx.name || \'AttributeDerived\'');
+}_$jscoverage['/attribute.js'].branchData['293'][1].init(382, 29, 'sx.name || \'AttributeDerived\'');
 function visit36_293_1(result) {
   _$jscoverage['/attribute.js'].branchData['293'][1].ranCondition(result);
   return result;
@@ -948,7 +948,7 @@ function visit25_176_1(result) {
 function visit24_172_1(result) {
   _$jscoverage['/attribute.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['171'][1].init(1073, 11, 'opts.silent');
+}_$jscoverage['/attribute.js'].branchData['171'][1].init(1076, 11, 'opts.silent');
 function visit23_171_1(result) {
   _$jscoverage['/attribute.js'].branchData['171'][1].ranCondition(result);
   return result;
@@ -1036,7 +1036,7 @@ function visit3_33_1(result) {
 function visit2_26_1(result) {
   _$jscoverage['/attribute.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/attribute.js'].branchData['12'][1].init(14, 12, 'v === S.noop');
+}_$jscoverage['/attribute.js'].branchData['12'][1].init(14, 15, 'v === util.noop');
 function visit1_12_1(result) {
   _$jscoverage['/attribute.js'].branchData['12'][1].ranCondition(result);
   return result;
@@ -1044,21 +1044,21 @@ function visit1_12_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/attribute.js'].functionData[0]++;
   _$jscoverage['/attribute.js'].lineData[7]++;
-  require('util');
+  var util = require('util');
   _$jscoverage['/attribute.js'].lineData[9]++;
   var CustomEvent = require('event/custom');
   _$jscoverage['/attribute.js'].lineData[11]++;
   function bind(v) {
     _$jscoverage['/attribute.js'].functionData[1]++;
     _$jscoverage['/attribute.js'].lineData[12]++;
-    if (visit1_12_1(v === S.noop)) {
+    if (visit1_12_1(v === util.noop)) {
       _$jscoverage['/attribute.js'].lineData[13]++;
       return function() {
   _$jscoverage['/attribute.js'].functionData[2]++;
 };
     } else {
       _$jscoverage['/attribute.js'].lineData[16]++;
-      return S.bind(v);
+      return util.bind(v);
     }
   }
   _$jscoverage['/attribute.js'].lineData[21]++;
@@ -1086,7 +1086,7 @@ KISSY.add(function(S, require) {
   function whenAttrChangeEventName(when, name) {
     _$jscoverage['/attribute.js'].functionData[5]++;
     _$jscoverage['/attribute.js'].lineData[37]++;
-    return when + S.ucfirst(name) + 'Change';
+    return when + util.ucfirst(name) + 'Change';
   }
   _$jscoverage['/attribute.js'].lineData[41]++;
   function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName, data) {
@@ -1094,7 +1094,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[42]++;
     attrName = visit4_42_1(attrName || name);
     _$jscoverage['/attribute.js'].lineData[43]++;
-    return self.fire(whenAttrChangeEventName(when, name), S.mix({
+    return self.fire(whenAttrChangeEventName(when, name), util.mix({
   attrName: attrName, 
   subAttrName: subAttrName, 
   prevVal: prevVal, 
@@ -1178,7 +1178,7 @@ KISSY.add(function(S, require) {
         tmp = {};
       } else {
         _$jscoverage['/attribute.js'].lineData[110]++;
-        tmp = S.clone(prevVal);
+        tmp = util.clone(prevVal);
       }
       _$jscoverage['/attribute.js'].lineData[112]++;
       setValueByPath(tmp, path, value);
@@ -1240,7 +1240,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[158]++;
     value = getValueBySubValue(prevVal, path, value);
     _$jscoverage['/attribute.js'].lineData[160]++;
-    var beforeEventObject = S.mix({
+    var beforeEventObject = util.mix({
   attrName: name, 
   subAttrName: fullName, 
   prevVal: prevVal, 
@@ -1333,7 +1333,7 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/attribute.js'].lineData[251]++;
-    S.each(px, function(v, p) {
+    util.each(px, function(v, p) {
   _$jscoverage['/attribute.js'].functionData[17]++;
   _$jscoverage['/attribute.js'].lineData[252]++;
   if (visit31_252_1(typeof v === 'function')) {
@@ -1384,7 +1384,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[277]++;
     wrapProtoForSuper(px, self);
     _$jscoverage['/attribute.js'].lineData[278]++;
-    S.mix(self.prototype, px);
+    util.mix(self.prototype, px);
   }
   _$jscoverage['/attribute.js'].lineData[281]++;
   Attribute.extend = function extend(px, sx) {
@@ -1392,9 +1392,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/attribute.js'].lineData[282]++;
   var SubClass, self = this;
   _$jscoverage['/attribute.js'].lineData[284]++;
-  sx = S.merge(sx);
+  sx = util.merge(sx);
   _$jscoverage['/attribute.js'].lineData[286]++;
-  px = S.merge(px);
+  px = util.merge(px);
   _$jscoverage['/attribute.js'].lineData[287]++;
   var hooks, sxHooks = sx.__hooks__;
   _$jscoverage['/attribute.js'].lineData[289]++;
@@ -1402,7 +1402,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[290]++;
     sxHooks = sx.__hooks__ = visit35_290_1(sx.__hooks__ || {});
     _$jscoverage['/attribute.js'].lineData[291]++;
-    S.mix(sxHooks, hooks, false);
+    util.mix(sxHooks, hooks, false);
   }
   _$jscoverage['/attribute.js'].lineData[293]++;
   var name = visit36_293_1(sx.name || 'AttributeDerived');
@@ -1414,7 +1414,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[298]++;
     if (visit38_298_1('@DEBUG@')) {
       _$jscoverage['/attribute.js'].lineData[300]++;
-      SubClass = new Function('return function ' + S.camelCase(name) + '(){ ' + 'this.callSuper.apply(this, arguments);' + '}')();
+      SubClass = new Function('return function ' + util.camelCase(name) + '(){ ' + 'this.callSuper.apply(this, arguments);' + '}')();
     } else {
       _$jscoverage['/attribute.js'].lineData[304]++;
       SubClass = function() {
@@ -1437,14 +1437,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[315]++;
     sxInheritedStatics = sx.inheritedStatics = visit39_315_1(sx.inheritedStatics || {});
     _$jscoverage['/attribute.js'].lineData[316]++;
-    S.mix(sxInheritedStatics, inheritedStatics, false);
+    util.mix(sxInheritedStatics, inheritedStatics, false);
   }
   _$jscoverage['/attribute.js'].lineData[318]++;
-  S.extend(SubClass, self, px, sx);
+  util.extend(SubClass, self, px, sx);
   _$jscoverage['/attribute.js'].lineData[319]++;
   if (visit40_319_1(sxInheritedStatics)) {
     _$jscoverage['/attribute.js'].lineData[320]++;
-    S.mix(SubClass, sxInheritedStatics);
+    util.mix(SubClass, sxInheritedStatics);
   }
   _$jscoverage['/attribute.js'].lineData[322]++;
   SubClass.extend = visit41_322_1(sx.extend || extend);
@@ -1478,7 +1478,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/attribute.js'].lineData[351]++;
-  S.augment(Attribute, CustomEvent.Target, {
+  util.augment(Attribute, CustomEvent.Target, {
   INVALID: INVALID, 
   callSuper: function() {
   _$jscoverage['/attribute.js'].functionData[23]++;
@@ -1540,18 +1540,18 @@ KISSY.add(function(S, require) {
   addAttr: function(name, attrConfig, override) {
   _$jscoverage['/attribute.js'].functionData[26]++;
   _$jscoverage['/attribute.js'].lineData[428]++;
-  var self = this, attrs = self.getAttrs(), attr, cfg = S.merge(attrConfig);
+  var self = this, attrs = self.getAttrs(), attr, cfg = util.merge(attrConfig);
   _$jscoverage['/attribute.js'].lineData[433]++;
   if (visit51_433_1(cfg.value && visit52_433_2(typeof cfg.value === 'object'))) {
     _$jscoverage['/attribute.js'].lineData[434]++;
-    cfg.value = S.clone(cfg.value);
+    cfg.value = util.clone(cfg.value);
     _$jscoverage['/attribute.js'].lineData[435]++;
     S.log('please use valueFn instead of value for ' + name + ' attribute', 'warn');
   }
   _$jscoverage['/attribute.js'].lineData[437]++;
   if ((attr = attrs[name])) {
     _$jscoverage['/attribute.js'].lineData[438]++;
-    S.mix(attr, cfg, override);
+    util.mix(attr, cfg, override);
   } else {
     _$jscoverage['/attribute.js'].lineData[440]++;
     attrs[name] = cfg;
@@ -1564,7 +1564,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/attribute.js'].lineData[452]++;
   var self = this;
   _$jscoverage['/attribute.js'].lineData[453]++;
-  S.each(attrConfigs, function(attrConfig, name) {
+  util.each(attrConfigs, function(attrConfig, name) {
   _$jscoverage['/attribute.js'].functionData[28]++;
   _$jscoverage['/attribute.js'].lineData[454]++;
   self.addAttr(name, attrConfig);
@@ -1638,7 +1638,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/attribute.js'].lineData[521]++;
     var attrNames = [], prevVals = [], newVals = [], subAttrNames = [];
     _$jscoverage['/attribute.js'].lineData[525]++;
-    S.each(attrs, function(attr) {
+    util.each(attrs, function(attr) {
   _$jscoverage['/attribute.js'].functionData[32]++;
   _$jscoverage['/attribute.js'].lineData[526]++;
   prevVals.push(attr.prevVal);

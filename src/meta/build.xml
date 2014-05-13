@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<project name="meta.build" default="build" basedir=".">
+    <property name="component.name" value="meta"/>
+
+    <import file="../common.xml"/>
+
+    <target name="compress-css"/>
+
+    <target name="tpl2mod"/>
+
+    <target name="merge-dependency">
+        <exec executable="node" failonerror="true">
+            <arg value="${tools.dir}/gen-meta/gen-meta"/>
+            <arg value="--output"/>
+            <arg value="${component.src.dir}/modules.js"/>
+        </exec>
+    </target>
+
+    <target name="concat" depends="merge-dependency">
+        <concat destfile="${component.src.dir.tmp}/meta-pkg-debug.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <path location="${component.src.dir}/base.js"/>
+            <path location="${component.src.dir}/modules.js"/>
+        </concat>
+    </target>
+</project>

@@ -1,1 +1,0 @@
-KISSY.use('ua, util');

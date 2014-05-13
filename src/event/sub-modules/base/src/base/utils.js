@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var splitAndRun, getGroupsRe;
-
+    var util = require('util');
     require('util');
 
     function getTypedGroups(type) {
@@ -27,15 +27,15 @@ KISSY.add(function (S, require) {
 
     return {
         splitAndRun: splitAndRun = function (type, fn) {
-            if (S.isArray(type)) {
-                S.each(type, fn);
+            if (util.isArray(type)) {
+                util.each(type, fn);
                 return;
             }
-            type = S.trim(type);
+            type = util.trim(type);
             if (type.indexOf(' ') === -1) {
                 fn(type);
             } else {
-                S.each(type.split(/\s+/), fn);
+                util.each(type.split(/\s+/), fn);
             }
         },
 
@@ -49,7 +49,7 @@ KISSY.add(function (S, require) {
                 };
             } else {
                 // copy
-                cfg = S.merge(cfg);
+                cfg = util.merge(cfg);
             }
 
             var typedGroups = getTypedGroups(type);
@@ -64,12 +64,12 @@ KISSY.add(function (S, require) {
         },
 
         batchForType: function (fn, num) {
-            var args = S.makeArray(arguments),
+            var args = util.makeArray(arguments),
                 types = args[2 + num];
             // in case null
             // S.isObject([]) === false
-            if (types && S.isObject(types)) {
-                S.each(types, function (value, type) {
+            if (types && util.isObject(types)) {
+                util.each(types, function (value, type) {
                     var args2 = [].concat(args);
                     args2.splice(0, 2);
                     args2[num] = type;

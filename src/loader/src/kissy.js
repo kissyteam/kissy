@@ -25,9 +25,7 @@
 /*jshint -W079 */
 var KISSY = (function (undefined) {
     var self = this,
-        S,
-        guid = 0,
-        EMPTY = '';
+        S;
 
     function getLogger(logger) {
         var obj = {};
@@ -64,7 +62,8 @@ var KISSY = (function (undefined) {
          * @type {Object}
          */
         Env: {
-            host: self
+            host: self,
+            mods: {}
         },
 
         /**
@@ -240,15 +239,6 @@ var KISSY = (function (undefined) {
                 // with stack info!
                 throw msg instanceof  Error ? msg : new Error(msg);
             }
-        },
-
-        /*
-         * Generate a global unique id.
-         * @param {String} [pre] guid prefix
-         * @return {String} the guid
-         */
-        guid: function (pre) {
-            return (pre || EMPTY) + guid++;
         }
     };
 
@@ -295,6 +285,27 @@ var KISSY = (function (undefined) {
          * @param {String} str log str
          */
     }
+
+    var Loader = S.Loader = {};
+
+    /**
+     * Loader Status Enum
+     * @enum {Number} KISSY.Loader.Status
+     */
+    Loader.Status = {
+        /** error */
+        ERROR: -1,
+        /** init */
+        INIT: 0,
+        /** loading */
+        LOADING: 1,
+        /** loaded */
+        LOADED: 2,
+        /** attaching */
+        ATTACHING: 3,
+        /** attached */
+        ATTACHED: 4
+    };
 
     return S;
 })();

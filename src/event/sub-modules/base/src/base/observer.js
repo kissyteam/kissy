@@ -3,9 +3,9 @@
  * observer for event.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var undef;
-
+    var util = require('util');
     /**
      * KISSY 's base observer for handle user-specified function
      * @private
@@ -13,7 +13,7 @@ KISSY.add(function (S) {
      * @param {Object} cfg
      */
     function Observer(cfg) {
-        S.mix(this, cfg);
+        util.mix(this, cfg);
 
         /**
          * context in which observer's fn runs
@@ -44,7 +44,7 @@ KISSY.add(function (S) {
          */
         equals: function (s2) {
             var self = this;
-            return !!S.reduce(self.keys, function (v, k) {
+            return !!util.reduce(self.keys, function (v, k) {
                 return v && (self[k] === s2[k]);
             }, 1);
         },

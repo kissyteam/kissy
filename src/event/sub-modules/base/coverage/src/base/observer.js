@@ -231,6 +231,7 @@ if (! _$jscoverage['/base/observer.js']) {
   _$jscoverage['/base/observer.js'].lineData = [];
   _$jscoverage['/base/observer.js'].lineData[6] = 0;
   _$jscoverage['/base/observer.js'].lineData[7] = 0;
+  _$jscoverage['/base/observer.js'].lineData[8] = 0;
   _$jscoverage['/base/observer.js'].lineData[15] = 0;
   _$jscoverage['/base/observer.js'].lineData[16] = 0;
   _$jscoverage['/base/observer.js'].lineData[36] = 0;
@@ -306,15 +307,17 @@ function visit6_48_1(result) {
   _$jscoverage['/base/observer.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observer.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base/observer.js'].functionData[0]++;
   _$jscoverage['/base/observer.js'].lineData[7]++;
   var undef;
+  _$jscoverage['/base/observer.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/base/observer.js'].lineData[15]++;
   function Observer(cfg) {
     _$jscoverage['/base/observer.js'].functionData[1]++;
     _$jscoverage['/base/observer.js'].lineData[16]++;
-    S.mix(this, cfg);
+    util.mix(this, cfg);
   }
   _$jscoverage['/base/observer.js'].lineData[36]++;
   Observer.prototype = {
@@ -324,7 +327,7 @@ KISSY.add(function(S) {
   _$jscoverage['/base/observer.js'].lineData[46]++;
   var self = this;
   _$jscoverage['/base/observer.js'].lineData[47]++;
-  return !!S.reduce(self.keys, function(v, k) {
+  return !!util.reduce(self.keys, function(v, k) {
   _$jscoverage['/base/observer.js'].functionData[3]++;
   _$jscoverage['/base/observer.js'].lineData[48]++;
   return visit6_48_1(v && (visit7_48_2(self[k] === s2[k])));

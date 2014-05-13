@@ -5,7 +5,7 @@
  */
 
 // global
-var S = require('../../' + 'lib/seed.js');
+var S = require('../../' + 'lib/loader');
 
 var sys = require('sys');
 
@@ -15,9 +15,9 @@ var jasmineExports = require('../jasmine/jasmine');
 
 var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
 
-S.each(jasmineExports, function (v, k) {
-    global[k] = v;
-});
+for(var k in jasmineExports){
+    global[k] = jasmineExports[k];
+}
 
 var jasmineEnv = jasmineExports.jasmine.getEnv();
 

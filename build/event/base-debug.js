@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 14:03
+build time: May 12 22:32
 */
 /*
 combined modules:
@@ -64,8 +64,12 @@ KISSY.add('event/base', [
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/utils', ['util'], function (S, require) {
+KISSY.add('event/base/utils', [
+    'util',
+    'util'
+], function (S, require) {
     var splitAndRun, getGroupsRe;
+    var util = require('util');
     require('util');
     function getTypedGroups(type) {
         if (type.indexOf('.') < 0) {
@@ -85,15 +89,15 @@ KISSY.add('event/base/utils', ['util'], function (S, require) {
     }
     return {
         splitAndRun: splitAndRun = function (type, fn) {
-            if (S.isArray(type)) {
-                S.each(type, fn);
+            if (util.isArray(type)) {
+                util.each(type, fn);
                 return;
             }
-            type = S.trim(type);
+            type = util.trim(type);
             if (type.indexOf(' ') === -1) {
                 fn(type);
             } else {
-                S.each(type.split(/\s+/), fn);
+                util.each(type.split(/\s+/), fn);
             }
         },
         normalizeParam: function (type, fn, context) {
@@ -105,7 +109,7 @@ KISSY.add('event/base/utils', ['util'], function (S, require) {
                 };
             } else {
                 // copy
-                cfg = S.merge(cfg);
+                cfg = util.merge(cfg);
             }
             var typedGroups = getTypedGroups(type);
             type = typedGroups[0];
@@ -114,12 +118,12 @@ KISSY.add('event/base/utils', ['util'], function (S, require) {
             return cfg;
         },
         batchForType: function (fn, num) {
-            var args = S.makeArray(arguments), types = args[2 + num];    // in case null
-                                                                         // S.isObject([]) === false
+            var args = util.makeArray(arguments), types = args[2 + num];    // in case null
+                                                                            // S.isObject([]) === false
             // in case null
             // S.isObject([]) === false
-            if (types && S.isObject(types)) {
-                S.each(types, function (value, type) {
+            if (types && util.isObject(types)) {
+                util.each(types, function (value, type) {
                     var args2 = [].concat(args);
                     args2.splice(0, 2);
                     args2[num] = type;
@@ -154,12 +158,13 @@ KISSY.add('event/base/utils', ['util'], function (S, require) {
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/object', [], function (S) {
+KISSY.add('event/base/object', ['util'], function (S, require) {
     var returnFalse = function () {
             return false;
         }, returnTrue = function () {
             return true;
-        }, undef;    /**
+        }, undef;
+    var util = require('util');    /**
      * @class KISSY.Event.Object
      * @private
      * KISSY 's base event object for custom and dom event.
@@ -171,7 +176,7 @@ KISSY.add('event/base/object', [], function (S) {
      */
     function EventObject() {
         var self = this;
-        self.timeStamp = S.now();    /**
+        self.timeStamp = util.now();    /**
          * target
          * @property target
          * @member KISSY.Event.Object
@@ -275,8 +280,9 @@ KISSY.add('event/base/object', [], function (S) {
  * observer for event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/observer', [], function (S) {
-    var undef;    /**
+KISSY.add('event/base/observer', ['util'], function (S, require) {
+    var undef;
+    var util = require('util');    /**
      * KISSY 's base observer for handle user-specified function
      * @private
      * @class KISSY.Event.Observer
@@ -289,19 +295,19 @@ KISSY.add('event/base/observer', [], function (S) {
      * @param {Object} cfg
      */
     function Observer(cfg) {
-        S.mix(this, cfg);    /**
+        util.mix(this, cfg);    /**
          * context in which observer's fn runs
          * @cfg {Object} context
          */
-                             /**
+                                /**
          * current observer's user-defined function
          * @cfg {Function} fn
          */
-                             /**
+                                /**
          * whether un-observer current observer once after running observer's user-defined function
          * @cfg {Boolean} once
          */
-                             /**
+                                /**
          * groups separated by '.' which current observer belongs
          * @cfg {String} groups
          */
@@ -331,7 +337,7 @@ KISSY.add('event/base/observer', [], function (S) {
          */
         equals: function (s2) {
             var self = this;
-            return !!S.reduce(self.keys, function (v, k) {
+            return !!util.reduce(self.keys, function (v, k) {
                 return v && self[k] === s2[k];
             }, 1);
         },
@@ -385,7 +391,13 @@ KISSY.add('event/base/observer', [], function (S) {
  * base custom event mechanism for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/observable', [], function (S) {
+KISSY.add('event/base/observable', ['util'], function (S, require) {
+    var util = require('util');    /**
+     * base custom event for registering and un-registering observer for specified event.
+     * @class KISSY.Event.Observable
+     * @private
+     * @param {Object} cfg custom event's attribute
+     */
     /**
      * base custom event for registering and un-registering observer for specified event.
      * @class KISSY.Event.Observable
@@ -395,7 +407,7 @@ KISSY.add('event/base/observable', [], function (S) {
     function Observable(cfg) {
         var self = this;
         self.currentTarget = null;
-        S.mix(self, cfg);
+        util.mix(self, cfg);
         self.reset();    /**
          * current event type
          * @cfg {String} type

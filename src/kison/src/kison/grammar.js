@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     /*jshint loopfunc: true*/
+    var util = require('util');
     var Base = require('base');
     var Utils = require('./utils');
     var Item = require('./item');
@@ -23,9 +24,14 @@ KISSY.add(function (S, require) {
         },
 
         serializeObject = Utils.serializeObject,
-        mix = S.mix,
         END_TAG = Lexer.STATIC.END_TAG,
         START_TAG = '$START';
+
+    function mix(to, from) {
+        for (var f in from) {
+            to[f] = from[f];
+        }
+    }
 
     function setSize(set3) {
         var count = 0, i;
@@ -85,10 +91,10 @@ KISSY.add(function (S, require) {
                 rhs: [vs[0].symbol]
             });
 
-            S.each(vs, function (v, index) {
+            util.each(vs, function (v, index) {
                 v.symbol = lexer.mapSymbol(v.symbol);
                 var rhs = v.rhs;
-                S.each(rhs, function (r, index) {
+                util.each(rhs, function (r, index) {
                     rhs[index] = lexer.mapSymbol(r);
                 });
                 vs[index] = new Production(v);
@@ -109,7 +115,7 @@ KISSY.add(function (S, require) {
                 rules = lexer && lexer.rules,
                 terminals = self.get('terminals');
             terminals[lexer.mapSymbol(END_TAG)] = 1;
-            S.each(rules, function (rule) {
+            util.each(rules, function (rule) {
                 var token = rule.token || rule[0];
                 if (token) {
                     terminals[token] = 1;
@@ -123,7 +129,7 @@ KISSY.add(function (S, require) {
                 nonTerminals = self.get('nonTerminals'),
                 productions = self.get('productions');
 
-            S.each(productions, function (production) {
+            util.each(productions, function (production) {
                 var symbol = production.get('symbol'),
                     nonTerminal = nonTerminals[symbol];
 
@@ -135,7 +141,7 @@ KISSY.add(function (S, require) {
 
                 nonTerminal.get('productions').push(production);
 
-                S.each(production.get('handles'), function (handle) {
+                util.each(production.get('handles'), function (handle) {
                     if (!terminals[handle] && !nonTerminals[handle]) {
                         nonTerminals[handle] = new NonTerminal({
                             symbol: handle
@@ -164,7 +170,7 @@ KISSY.add(function (S, require) {
                 // S -> T
                 // T -> t
                 // check if each production is null able
-                S.each(self.get('productions'), function (production) {
+                util.each(self.get('productions'), function (production) {
                     if (!production.get('nullable')) {
                         rhs = production.get('rhs');
                         for (i = 0, n = 0; (t = rhs[i]); ++i) {
@@ -260,7 +266,7 @@ KISSY.add(function (S, require) {
 
                 // S -> S y
                 // S -> t
-                S.each(self.get('productions'), function (production) {
+                util.each(self.get('productions'), function (production) {
                     var firsts = self.findFirst(production.get('rhs'));
                     if (setSize(firsts) !== setSize(production.get('firsts'))) {
                         production.set('firsts', firsts);
@@ -272,7 +278,7 @@ KISSY.add(function (S, require) {
 
                     nonTerminal = nonTerminals[symbol];
                     firsts = {};
-                    S.each(nonTerminal.get('productions'), function (production) {
+                    util.each(nonTerminal.get('productions'), function (production) {
                         mix(firsts, production.get('firsts'));
                     });
                     if (setSize(firsts) !== setSize(nonTerminal.get('firsts'))) {
@@ -293,7 +299,7 @@ KISSY.add(function (S, require) {
             while (cont) {
                 cont = false;
 
-                S.each(items, function (item) {
+                util.each(items, function (item) {
 
                     var dotPosition = item.get('dotPosition'),
                         production = item.get('production'),
@@ -302,13 +308,13 @@ KISSY.add(function (S, require) {
                         lookAhead = item.get('lookAhead'),
                         finalFirsts = {};
 
-                    S.each(lookAhead, function (_, ahead) {
+                    util.each(lookAhead, function (_, ahead) {
                         var rightRhs = rhs.slice(dotPosition + 1);
                         rightRhs.push(ahead);
-                        S.mix(finalFirsts, self.findFirst(rightRhs));
+                        util.mix(finalFirsts, self.findFirst(rightRhs));
                     });
 
-                    S.each(productions, function (p2) {
+                    util.each(productions, function (p2) {
                         if (p2.get('symbol') === dotSymbol) {
 
                             var newItem = new Item({
@@ -346,7 +352,7 @@ KISSY.add(function (S, require) {
         gotos: function (i, x) {
             var j = new ItemSet(),
                 iItems = i.get('items');
-            S.each(iItems, function (item) {
+            util.each(iItems, function (item) {
                 var production = item.get('production'),
                     dotPosition = item.get('dotPosition'),
                     markSymbol = production.get('rhs')[dotPosition];
@@ -403,15 +409,15 @@ KISSY.add(function (S, require) {
             itemSets.push(initItemSet);
 
             var condition = true,
-                symbols = S.merge(self.get('terminals'), self.get('nonTerminals'));
+                symbols = util.merge(self.get('terminals'), self.get('nonTerminals'));
 
             delete  symbols[lexer.mapSymbol(END_TAG)];
 
             while (condition) {
                 condition = false;
                 var itemSets2 = itemSets.concat();
-                S.each(itemSets2, function (itemSet) {
-                    S.each(symbols, function (v, symbol) {
+                util.each(itemSets2, function (itemSet) {
+                    util.each(symbols, function (v, symbol) {
 
                         if (!itemSet.__cache) {
                             itemSet.__cache = {};
@@ -465,13 +471,13 @@ KISSY.add(function (S, require) {
 
                         var oneGotos = one.get('gotos');
 
-                        S.each(two.get('gotos'), function (item, symbol) {
+                        util.each(two.get('gotos'), function (item, symbol) {
                             oneGotos[symbol] = item;
                             item.addReverseGoto(symbol, one);
                         });
 
-                        S.each(two.get('reverseGotos'), function (items, symbol) {
-                            S.each(items, function (item) {
+                        util.each(two.get('reverseGotos'), function (items, symbol) {
+                            util.each(items, function (item) {
                                 item.get('gotos')[symbol] = one;
                                 one.addReverseGoto(symbol, item);
                             });
@@ -506,7 +512,7 @@ KISSY.add(function (S, require) {
 
                 itemSet = itemSets[i];
 
-                S.each(itemSet.get('items'), function (item) {
+                util.each(itemSet.get('items'), function (item) {
                     var production = item.get('production');
                     var val;
                     if (item.get('dotPosition') === production.get('rhs').length) {
@@ -535,11 +541,11 @@ KISSY.add(function (S, require) {
                             // 1+ 2*3
                             // 2 -> f, f 's lookahead contains *
                             // f !-> e, e 's lookahead does not contain *
-                            S.each(item.get('lookAhead'), function (_, l) {
+                            util.each(item.get('lookAhead'), function (_, l) {
                                 t = action[i][l];
                                 val = [];
                                 val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
-                                val[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
+                                val[GrammarConst.PRODUCTION_INDEX] = util.indexOf(production, productions);
                                 if (t && t.toString() !== val.toString()) {
                                     logger.debug(new Array(29).join('*'));
                                     logger.debug('conflict in reduce: action already defined ->',
@@ -558,7 +564,7 @@ KISSY.add(function (S, require) {
                 });
 
                 // shift over reduce
-                S.each(itemSet.get('gotos'), function (anotherItemSet, symbol) {
+                util.each(itemSet.get('gotos'), function (anotherItemSet, symbol) {
                     var val;
                     if (!nonTerminals[symbol]) {
                         action[i] = action[i] || {};
@@ -616,7 +622,7 @@ KISSY.add(function (S, require) {
                 productions = self.get('productions'),
                 ret = [];
 
-            S.each(self.get('itemSets'), function (itemSet, i) {
+            util.each(self.get('itemSets'), function (itemSet, i) {
                 ret.push(new Array(70).join('*') + ' itemSet : ' + i);
                 ret.push(itemSet.toString());
                 ret.push('');
@@ -626,8 +632,8 @@ KISSY.add(function (S, require) {
 
             ret.push(new Array(70).join('*') + ' table : ');
 
-            S.each(action, function (av, index) {
-                S.each(av, function (v, s) {
+            util.each(action, function (av, index) {
+                util.each(av, function (v, s) {
                     var str, type = v[GrammarConst.TYPE_INDEX];
                     if (type === GrammarConst.ACCEPT_TYPE) {
                         str = 'acc';
@@ -644,8 +650,8 @@ KISSY.add(function (S, require) {
 
             ret.push('');
 
-            S.each(gotos, function (sv, index) {
-                S.each(sv, function (v, s) {
+            util.each(gotos, function (sv, index) {
+                util.each(sv, function (v, s) {
                     ret.push('goto[' + index + ']' + '[' + s + '] = ' + v);
                 });
             });
@@ -665,7 +671,7 @@ KISSY.add(function (S, require) {
 
             var productions = [];
 
-            S.each(self.get('productions'), function (p) {
+            util.each(self.get('productions'), function (p) {
                 var action = p.get('action'),
                     ret = [p.get('symbol'), p.get('rhs')];
                 if (action) {
@@ -701,16 +707,24 @@ KISSY.add(function (S, require) {
     }, {
         ATTRS: {
             table: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             },
             itemSets: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
             productions: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
             nonTerminals: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             },
             lexer: {
                 setter: function (v) {
@@ -722,7 +736,9 @@ KISSY.add(function (S, require) {
                 }
             },
             terminals: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             }
         }
     });
@@ -771,7 +787,7 @@ KISSY.add(function (S, require) {
                 error = prefix + 'syntax error at line ' + lexer.lineNumber +
                     ':\n' + lexer.showDebugInfo() +
                     '\n' + 'expect ' + expected.join(', ');
-                return S.error(error);
+                throw new Error(error);
             }
 
             switch (action[GrammarConst.TYPE_INDEX]) {

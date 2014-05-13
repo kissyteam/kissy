@@ -5,6 +5,7 @@
 /*jshint quotmark:false*/
 describe("modules and groups", function () {
     var S = KISSY,
+        Utils= S.Loader.Utils,
         ComboLoader = S.Loader.ComboLoader;
 
     beforeEach(function () {
@@ -37,7 +38,7 @@ describe("modules and groups", function () {
             }
         });
         var l = new ComboLoader();
-        var r = l.calculate((["pkg-a/a", "pkg-c/c"]));
+        var r = l.calculate(Utils.createModules(["pkg-a/a", "pkg-c/c"]));
         var c = l.getComboUrls(r);
         var js = c.js;
         expect(js.length).toBe(2);
@@ -100,7 +101,7 @@ describe("modules and groups", function () {
             }
         });
 
-        var r = l.calculate((["pkg-a/a", "test/x"]));
+        var r = l.calculate(Utils.createModules(["pkg-a/a", "test/x"]));
         var c = l.getComboUrls(r);
         var js = c.js;
         expect(js.length).toBe(2);
@@ -132,7 +133,7 @@ describe("modules and groups", function () {
             }
         });
 
-        var r = l.calculate((["pkg-a/a"]));
+        var r = l.calculate(Utils.createModules(["pkg-a/a"]));
         var c = l.getComboUrls(r);
         var js = c.js;
         expect(js.length).toBe(2);
@@ -164,7 +165,7 @@ describe("modules and groups", function () {
         });
 
         var l = new ComboLoader();
-        var r = l.calculate((["pkg-a/a", "pkg-c/c"]));
+        var r = l.calculate(Utils.createModules(["pkg-a/a", "pkg-c/c"]));
         var c = l.getComboUrls(r);
         var size = 0;
         for (var i in c) {
@@ -206,7 +207,7 @@ describe("modules and groups", function () {
             }
         });
         var l = new ComboLoader();
-        var r = l.calculate((["pkg-a/a"]));
+        var r = l.calculate(Utils.createModules(["pkg-a/a"]));
         var c = l.getComboUrls(r);
         expect(c.js.length).toBe(2);
         var js = c.js;

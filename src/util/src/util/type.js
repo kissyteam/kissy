@@ -2,14 +2,14 @@
  * @ignore
  * type judgement
  * @author yiminghe@gmail.com, lifesinger@gmail.com
- *
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('./base');
     // [[Class]] -> type pairs
     var class2type = {},
         FALSE = false,
         undef,
-        noop = S.noop,
+        noop = util.noop,
         OP = Object.prototype,
         toString = OP.toString;
 
@@ -17,7 +17,7 @@ KISSY.add(function (S) {
         return OP.hasOwnProperty.call(o, p);
     }
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          * @member KISSY
@@ -37,7 +37,7 @@ KISSY.add(function (S) {
             // Must be an Object.
             // Because of IE, we also have to check the presence of the constructor property.
             // Make sure that Dom nodes and window objects don't pass through, as well
-            if (!obj || S.type(obj) !== 'object' || obj.nodeType ||
+            if (!obj || util.type(obj) !== 'object' || obj.nodeType ||
                 /*jshint eqeqeq:false*/
                 // must == for ie8
                 obj.window == obj) {
@@ -67,7 +67,7 @@ KISSY.add(function (S) {
     });
 
     if ('@DEBUG@') {
-        S.mix(S, {
+        util.mix(util, {
             /**
              * test whether o is boolean
              * @method
@@ -143,11 +143,11 @@ KISSY.add(function (S) {
             class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 
             // add isBoolean/isNumber/...
-            S['is' + name] = function (o) {
-                return S.type(o) === lc;
+            util['is' + name] = function (o) {
+                return util.type(o) === lc;
             };
         })(types[i], i);
     }
 
-    S.isArray = Array.isArray || S.isArray;
+    util.isArray = Array.isArray || util.isArray;
 });

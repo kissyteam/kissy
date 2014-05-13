@@ -287,42 +287,42 @@ if (! _$jscoverage['/xtemplate.js'].branchData) {
   _$jscoverage['/xtemplate.js'].branchData['63'][1] = new BranchData();
 }
 _$jscoverage['/xtemplate.js'].branchData['63'][1].init(26, 22, 'typeof fn === \'string\'');
-function visit81_63_1(result) {
+function visit90_63_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['60'][1].init(22, 5, 'error');
-function visit80_60_1(result) {
+function visit89_60_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['52'][1].init(33, 21, 'config && config.name');
-function visit79_52_1(result) {
+function visit88_52_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['51'][1].init(14, 23, 'typeof tpl === \'string\'');
-function visit78_51_1(result) {
+function visit87_51_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['23'][1].init(228, 9, 'cacheable');
-function visit77_23_1(result) {
+function visit86_23_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['17'][1].init(95, 30, 'cacheable && (fn = cache[tpl])');
-function visit76_17_1(result) {
+function visit85_17_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['15'][2].init(56, 22, 'config.cache !== false');
-function visit75_15_2(result) {
+function visit84_15_2(result) {
   _$jscoverage['/xtemplate.js'].branchData['15'][2].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].branchData['15'][1].init(45, 33, '!config || config.cache !== false');
-function visit74_15_1(result) {
+function visit83_15_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/xtemplate.js'].functionData[0]++;
   _$jscoverage['/xtemplate.js'].lineData[7]++;
-  require('util');
+  var util = require('util');
   _$jscoverage['/xtemplate.js'].lineData[8]++;
   var XTemplateRuntime = require('xtemplate/runtime');
   _$jscoverage['/xtemplate.js'].lineData[9]++;
@@ -335,16 +335,16 @@ KISSY.add(function(S, require) {
     _$jscoverage['/xtemplate.js'].lineData[13]++;
     var fn;
     _$jscoverage['/xtemplate.js'].lineData[15]++;
-    var cacheable = visit74_15_1(!config || visit75_15_2(config.cache !== false));
+    var cacheable = visit83_15_1(!config || visit84_15_2(config.cache !== false));
     _$jscoverage['/xtemplate.js'].lineData[17]++;
-    if (visit76_17_1(cacheable && (fn = cache[tpl]))) {
+    if (visit85_17_1(cacheable && (fn = cache[tpl]))) {
       _$jscoverage['/xtemplate.js'].lineData[18]++;
       return fn;
     }
     _$jscoverage['/xtemplate.js'].lineData[21]++;
     fn = Compiler.compileToFn(tpl, name);
     _$jscoverage['/xtemplate.js'].lineData[23]++;
-    if (visit77_23_1(cacheable)) {
+    if (visit86_23_1(cacheable)) {
       _$jscoverage['/xtemplate.js'].lineData[24]++;
       cache[tpl] = fn;
     }
@@ -355,27 +355,27 @@ KISSY.add(function(S, require) {
   function XTemplate(tpl, config) {
     _$jscoverage['/xtemplate.js'].functionData[2]++;
     _$jscoverage['/xtemplate.js'].lineData[51]++;
-    if (visit78_51_1(typeof tpl === 'string')) {
+    if (visit87_51_1(typeof tpl === 'string')) {
       _$jscoverage['/xtemplate.js'].lineData[52]++;
-      tpl = compile(tpl, visit79_52_1(config && config.name), config);
+      tpl = compile(tpl, visit88_52_1(config && config.name), config);
     }
     _$jscoverage['/xtemplate.js'].lineData[54]++;
     XTemplate.superclass.constructor.call(this, tpl, config);
   }
   _$jscoverage['/xtemplate.js'].lineData[57]++;
-  S.extend(XTemplate, XTemplateRuntime, {
+  util.extend(XTemplate, XTemplateRuntime, {
   load: function(name, callback) {
   _$jscoverage['/xtemplate.js'].functionData[3]++;
   _$jscoverage['/xtemplate.js'].lineData[59]++;
   var tplModule = this.getTplContent(name, function(error, fn) {
   _$jscoverage['/xtemplate.js'].functionData[4]++;
   _$jscoverage['/xtemplate.js'].lineData[60]++;
-  if (visit80_60_1(error)) {
+  if (visit89_60_1(error)) {
     _$jscoverage['/xtemplate.js'].lineData[61]++;
     return callback(tplModule.error);
   } else {
     _$jscoverage['/xtemplate.js'].lineData[63]++;
-    if (visit81_63_1(typeof fn === 'string')) {
+    if (visit90_63_1(typeof fn === 'string')) {
       _$jscoverage['/xtemplate.js'].lineData[64]++;
       try {
         _$jscoverage['/xtemplate.js'].lineData[65]++;

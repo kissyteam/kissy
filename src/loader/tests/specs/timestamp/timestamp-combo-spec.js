@@ -1,6 +1,7 @@
 /*jshint quotmark:false*/
 describe("timestamp for individual module works in combine mode", function () {
     var S = KISSY;
+    var Utils = S.Loader.Utils;
     var host = location.host;
 
     beforeEach(function () {
@@ -43,7 +44,7 @@ describe("timestamp for individual module works in combine mode", function () {
 
         var loader = new S.Loader.ComboLoader();
 
-        var allMods = loader.calculate((["timestamp/y"]));
+        var allMods = loader.calculate(Utils.createModules(["timestamp/y"]));
 
         var comboUrls = loader.getComboUrls(allMods);
 
@@ -122,7 +123,7 @@ describe("timestamp for individual module works in combine mode", function () {
 
         var loader = new S.Loader.ComboLoader();
 
-        var allMods = loader.calculate(["timestamp/y"]);
+        var allMods = loader.calculate(Utils.createModules(["timestamp/y"]));
 
         var comboUrls = loader.getComboUrls(allMods);
 

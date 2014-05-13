@@ -229,6 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/util/escape.js']) {
   _$jscoverage['/util/escape.js'] = {};
   _$jscoverage['/util/escape.js'].lineData = [];
+  _$jscoverage['/util/escape.js'].lineData[6] = 0;
   _$jscoverage['/util/escape.js'].lineData[7] = 0;
   _$jscoverage['/util/escape.js'].lineData[12] = 0;
   _$jscoverage['/util/escape.js'].lineData[32] = 0;
@@ -289,24 +290,26 @@ if (! _$jscoverage['/util/escape.js'].branchData) {
   _$jscoverage['/util/escape.js'].branchData['110'][1] = new BranchData();
 }
 _$jscoverage['/util/escape.js'].branchData['110'][1].init(25, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
-function visit61_110_1(result) {
+function visit62_110_1(result) {
   _$jscoverage['/util/escape.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].branchData['82'][1].init(128, 32, '!possibleEscapeHtmlReg.test(str)');
-function visit60_82_1(result) {
+function visit61_82_1(result) {
   _$jscoverage['/util/escape.js'].branchData['82'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].branchData['78'][2].init(26, 9, 'str !== 0');
-function visit59_78_2(result) {
+function visit60_78_2(result) {
   _$jscoverage['/util/escape.js'].branchData['78'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].branchData['78'][1].init(18, 17, '!str && str !== 0');
-function visit58_78_1(result) {
+function visit59_78_1(result) {
   _$jscoverage['/util/escape.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/escape.js'].lineData[7]++;
-KISSY.add(function(S) {
+}_$jscoverage['/util/escape.js'].lineData[6]++;
+KISSY.add(function(S, require) {
   _$jscoverage['/util/escape.js'].functionData[0]++;
+  _$jscoverage['/util/escape.js'].lineData[7]++;
+  var util = require('./base');
   _$jscoverage['/util/escape.js'].lineData[12]++;
   var EMPTY = '', htmlEntities = {
   '&amp;': '&', 
@@ -368,18 +371,18 @@ KISSY.add(function(S) {
     return unEscapeHtmlReg;
   }
   _$jscoverage['/util/escape.js'].lineData[63]++;
-  S.mix(S, {
+  util.mix(util, {
   escapeHtml: function(str) {
   _$jscoverage['/util/escape.js'].functionData[4]++;
   _$jscoverage['/util/escape.js'].lineData[78]++;
-  if (visit58_78_1(!str && visit59_78_2(str !== 0))) {
+  if (visit59_78_1(!str && visit60_78_2(str !== 0))) {
     _$jscoverage['/util/escape.js'].lineData[79]++;
     return '';
   }
   _$jscoverage['/util/escape.js'].lineData[81]++;
   str = '' + str;
   _$jscoverage['/util/escape.js'].lineData[82]++;
-  if (visit60_82_1(!possibleEscapeHtmlReg.test(str))) {
+  if (visit61_82_1(!possibleEscapeHtmlReg.test(str))) {
     _$jscoverage['/util/escape.js'].lineData[83]++;
     return str;
   }
@@ -401,11 +404,11 @@ KISSY.add(function(S) {
   return str.replace(unEscapeHtmlReg, function(m, n) {
   _$jscoverage['/util/escape.js'].functionData[8]++;
   _$jscoverage['/util/escape.js'].lineData[110]++;
-  return visit61_110_1(htmlEntities[m] || String.fromCharCode(+n));
+  return visit62_110_1(htmlEntities[m] || String.fromCharCode(+n));
 });
 }});
   _$jscoverage['/util/escape.js'].lineData[115]++;
-  S.escapeHTML = S.escapeHtml;
+  util.escapeHTML = util.escapeHtml;
   _$jscoverage['/util/escape.js'].lineData[116]++;
-  S.unEscapeHTML = S.unEscapeHtml;
+  util.unEscapeHTML = util.unEscapeHtml;
 });

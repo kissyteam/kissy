@@ -28,7 +28,6 @@
   "directories": {
     "lib": "./lib/"
   },
-  "main": "./lib/seed.js",
   "scripts": {
     "test": "node ./tools/test/jasmine-node",
     "start": "node ./tools/server/start",

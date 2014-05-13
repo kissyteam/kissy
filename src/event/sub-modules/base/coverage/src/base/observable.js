@@ -230,6 +230,7 @@ if (! _$jscoverage['/base/observable.js']) {
   _$jscoverage['/base/observable.js'] = {};
   _$jscoverage['/base/observable.js'].lineData = [];
   _$jscoverage['/base/observable.js'].lineData[6] = 0;
+  _$jscoverage['/base/observable.js'].lineData[7] = 0;
   _$jscoverage['/base/observable.js'].lineData[14] = 0;
   _$jscoverage['/base/observable.js'].lineData[15] = 0;
   _$jscoverage['/base/observable.js'].lineData[16] = 0;
@@ -290,8 +291,10 @@ function visit2_54_1(result) {
   _$jscoverage['/base/observable.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observable.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base/observable.js'].functionData[0]++;
+  _$jscoverage['/base/observable.js'].lineData[7]++;
+  var util = require('util');
   _$jscoverage['/base/observable.js'].lineData[14]++;
   function Observable(cfg) {
     _$jscoverage['/base/observable.js'].functionData[1]++;
@@ -300,7 +303,7 @@ KISSY.add(function(S) {
     _$jscoverage['/base/observable.js'].lineData[16]++;
     self.currentTarget = null;
     _$jscoverage['/base/observable.js'].lineData[17]++;
-    S.mix(self, cfg);
+    util.mix(self, cfg);
     _$jscoverage['/base/observable.js'].lineData[18]++;
     self.reset();
   }

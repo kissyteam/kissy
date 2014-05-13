@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 9 18:19
+build time: May 12 22:21
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140509181951' will replace with current timestamp when compressing.
+         * NOTICE: '20140512222119' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140509181951',
+        __BUILD_TIME: '20140512222119',
 
         /**
          * KISSY Environment.
@@ -69,7 +69,8 @@ var KISSY = (function (undefined) {
          * @type {Object}
          */
         Env: {
-            host: self
+            host: self,
+            mods: {}
         },
 
         /**
@@ -301,13 +302,6 @@ var KISSY = (function (undefined) {
          */
     }
 
-    return S;
-})();/**
- * @ignore
- * setup data structure for kissy loader
- * @author yiminghe@gmail.com
- */
-(function (S) {
     var Loader = S.Loader = {};
 
     /**
@@ -328,7 +322,9 @@ var KISSY = (function (undefined) {
         /** attached */
         ATTACHED: 4
     };
-})(KISSY);/**
+
+    return S;
+})();/**
  * @ignore
  * Utils for kissy loader
  * @author yiminghe@gmail.com
@@ -336,11 +332,9 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Env = S.Env,
+        mods = Env.mods,
+        map = Array.prototype.map,
         host = Env.host,
-        data = Loader.Status,
-        ATTACHED = data.ATTACHED,
-        LOADED = data.LOADED,
-        ATTACHING = data.ATTACHING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -349,47 +343,6 @@ var KISSY = (function (undefined) {
          */
         Utils = Loader.Utils = {},
         doc = host.document;
-
-    // http://wiki.commonjs.org/wiki/Packages/Mappings/A
-    // 如果模块名以 / 结尾，自动加 index
-    function addIndexAndRemoveJsExt(s) {
-        if (typeof s === 'string') {
-            return addIndexAndRemoveJsExtFromName(s);
-        } else {
-            var ret = [],
-                i = 0,
-                l = s.length;
-            for (; i < l; i++) {
-                ret[i] = addIndexAndRemoveJsExtFromName(s[i]);
-            }
-            return ret;
-        }
-    }
-
-    function addIndexAndRemoveJsExtFromName(name) {
-        // 'x/' 'x/y/z/'
-        if (name.charAt(name.length - 1) === '/') {
-            name += 'index';
-        }
-        if (Utils.endsWith(name, '.js')) {
-            name = name.slice(0, -3);
-        }
-        return name;
-    }
-
-    function pluginAlias(name) {
-        var index = name.indexOf('!');
-        if (index !== -1) {
-            var pluginName = name.substring(0, index);
-            name = name.substring(index + 1);
-            var Plugin = S.require(pluginName);
-            if (Plugin.alias) {
-                //noinspection JSReferencingMutableVariableFromClosure
-                name = Plugin.alias(S, name, pluginName);
-            }
-        }
-        return name;
-    }
 
     function numberify(s) {
         var c = 0;
@@ -421,7 +374,30 @@ var KISSY = (function (undefined) {
         Utils.trident = Utils.trident || 1;
     }
 
-    var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/;
+    var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/,
+        commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
+        requireRegExp = /[^.'"]\s*require\s*\(([^)]+)\)/g;
+
+    function getRequireVal(str) {
+        var m;
+        // simple string
+        if (!(m = str.match(/^\s*["']([^'"\s]+)["']\s*$/))) {
+            S.error('can not find required mod in require call: ' + str);
+        }
+        return  m[1];
+    }
+
+    function normalizeName(name) {
+        // 'x/' 'x/y/z/'
+        if (name.charAt(name.length - 1) === '/') {
+            name += 'index';
+        }
+        // x.js === x
+        if (Utils.endsWith(name, '.js')) {
+            name = name.slice(0, -3);
+        }
+        return name;
+    }
 
     function each(obj, fn) {
         var i = 0,
@@ -469,6 +445,24 @@ var KISSY = (function (undefined) {
         noop: function () {
         },
 
+        map: map ?
+            function (arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    var el = typeof arr === 'string' ? arr.charAt(i) : arr[i];
+                    if (el ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
+                    }
+                }
+                return res;
+            },
+
         startsWith: function (str, prefix) {
             return str.lastIndexOf(prefix, 0) === 0;
         },
@@ -496,6 +490,15 @@ var KISSY = (function (undefined) {
         keys: keys,
 
         isArray: isArray,
+
+        indexOf: function (item, arr) {
+            for (var i = 0, l = arr.length; i < l; i++) {
+                if (arr[i] === item) {
+                    return i;
+                }
+            }
+            return -1;
+        },
 
         normalizeSlash: function (str) {
             return str.replace(/\\/g, '/');
@@ -536,259 +539,6 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
-         * @param {String} moduleName current module 's name
-         * @param {String|String[]} depName dependency module 's name
-         * @return {String|String[]} normalized dependency module 's name
-         */
-        normalDepModuleName: function (moduleName, depName) {
-            if (typeof depName === 'string') {
-                return Utils.normalizePath(moduleName, depName);
-            }
-
-            var i = 0, l;
-
-            for (l = depName.length; i < l; i++) {
-                depName[i] = Utils.normalizePath(moduleName, depName[i]);
-            }
-            return depName;
-        },
-
-        /**
-         * create modules info
-         * @param {String[]} modNames to be created module names
-         */
-        getOrCreateModulesInfo: function (modNames) {
-            var ret = [];
-            Utils.each(modNames, function (m, i) {
-                ret[i] = Utils.getOrCreateModuleInfo(m);
-            });
-            return ret;
-        },
-
-        /**
-         * create single module info
-         * @param {String} modName to be created module name
-         * @param {Object} [cfg] module config
-         * @return {KISSY.Loader.Module}
-         */
-        getOrCreateModuleInfo: function (modName, cfg) {
-            modName = addIndexAndRemoveJsExtFromName(modName);
-
-            var mods = Env.mods,
-                module = mods[modName];
-
-            if (module) {
-                return module;
-            }
-
-            // 防止 cfg 里有 tag，构建 fullpath 需要
-            mods[modName] = module = new Loader.Module(mix({
-                name: modName
-            }, cfg));
-
-            return module;
-        },
-
-        /**
-         * Get modules exports
-         * @param {String[]} modNames module names
-         * @return {Array} modules exports
-         */
-        getModules: function (modNames) {
-            var mods = [S], module,
-                unalias,
-                allOk,
-                m,
-                runtimeMods = Env.mods;
-
-            Utils.each(modNames, function (modName) {
-                module = runtimeMods[modName];
-                if (module && module.getType() !== 'css') {
-                    unalias = module.getNormalizedAlias();
-                    allOk = true;
-                    for (var i = 0; allOk && i < unalias.length; i++) {
-                        m = runtimeMods[unalias[i]];
-                        // allow partial module (circular dependency)
-                        allOk = m && m.status >= ATTACHING;
-                    }
-                    if (allOk) {
-                        mods.push(runtimeMods[unalias[0]].exports);
-                    } else {
-                        mods.push(null);
-                    }
-                } else {
-                    mods.push(undefined);
-                }
-            });
-
-            return mods;
-        },
-
-        /**
-         * attach modules and their dependency modules recursively
-         * @param {String[]} modNames module names
-         */
-        attachModsRecursively: function (modNames) {
-            var i,
-                l = modNames.length;
-            for (i = 0; i < l; i++) {
-                Utils.attachModRecursively(modNames[i]);
-            }
-        },
-
-        /**
-         * attach module and its dependency modules recursively
-         * @param {String} modName module name
-         */
-        attachModRecursively: function (modName) {
-            var mods = Env.mods,
-                status,
-                m = mods[modName];
-            status = m.status;
-            // attached or circular dependency
-            if (status >= ATTACHING) {
-                return;
-            }
-            m.status = ATTACHING;
-            if (m.cjs) {
-                // commonjs format will call require in module code again
-                Utils.attachMod(m);
-            } else {
-                Utils.attachModsRecursively(m.getNormalizedRequires());
-                Utils.attachMod(m);
-            }
-        },
-
-        /**
-         * Attach specified module.
-         * @param {KISSY.Loader.Module} module module instance
-         */
-        attachMod: function (module) {
-            var factory = module.factory,
-                exports;
-
-            if (typeof factory === 'function') {
-                // compatible and efficiency
-                // KISSY.add(function(S,undefined){})
-                // 需要解开 index，相对路径
-                // 但是需要保留 alias，防止值不对应
-                //noinspection JSUnresolvedFunction
-                var requires = module.requires;
-                exports = factory.apply(module,
-                    // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [S,
-                            requires && requires.length ? module.require : undefined,
-                        module.exports,
-                        module] :
-                        Utils.getModules(module.getRequiresWithAlias())));
-                if (exports !== undefined) {
-                    //noinspection JSUndefinedPropertyAssignment
-                    module.exports = exports;
-                }
-            } else {
-                //noinspection JSUndefinedPropertyAssignment
-                module.exports = factory;
-            }
-
-            module.status = ATTACHED;
-        },
-
-        /**
-         * Get module names as array.
-         * @param {String|String[]} modNames module names array or  module names string separated by ','
-         * @return {String[]}
-         */
-        getModNamesAsArray: function (modNames) {
-            if (typeof modNames === 'string') {
-                modNames = modNames.replace(/\s+/g, '').split(',');
-            }
-            return modNames;
-        },
-
-        /**
-         * normalize module names
-         * 1. add index : / => /index
-         * 2. unalias : core => dom,event,ua
-         * 3. relative to absolute : ./x => y/x
-         * @param {String|String[]} modNames Array of module names
-         *  or module names string separated by comma
-         * @param {String} [refModName]
-         * @return {String[]} normalized module names
-         */
-        normalizeModNames: function (modNames, refModName) {
-            return Utils.unalias(Utils.normalizeModNamesWithAlias(modNames, refModName));
-        },
-
-        unalias: function (modNames) {
-            var ret = [];
-            for (var i = 0; i < modNames.length; i++) {
-                var mod = Utils.getOrCreateModuleInfo(modNames[i]);
-                ret.push.apply(ret, mod.getNormalizedAlias());
-            }
-            return ret;
-        },
-
-        /**
-         * normalize module names with alias
-         * @param {String[]} modNames module names
-         * @param [refModName] module to be referred if module name path is relative
-         * @return {String[]} normalize module names with alias
-         */
-        normalizeModNamesWithAlias: function (modNames, refModName) {
-            var ret = [],
-                i, l;
-            if (modNames) {
-                // 1. index map
-                for (i = 0, l = modNames.length; i < l; i++) {
-                    // conditional loader
-                    // requires:[window.localStorage?"local-storage":""]
-                    if (modNames[i]) {
-                        ret.push(pluginAlias(addIndexAndRemoveJsExt(modNames[i])));
-                    }
-                }
-            }
-            // 2. relative to absolute (optional)
-            if (refModName) {
-                ret = Utils.normalDepModuleName(refModName, ret);
-            }
-            return ret;
-        },
-
-        /**
-         * register module with factory
-         * @param {String} name module name
-         * @param {Function|*} factory module's factory or exports
-         * @param [config] module config, such as dependency
-         */
-        registerModule: function (name, factory, config) {
-            name = addIndexAndRemoveJsExtFromName(name);
-
-            var mods = Env.mods,
-                module = mods[name];
-
-            if (module && module.factory !== undefined) {
-                S.log(name + ' is defined more than once', 'warn');
-                return;
-            }
-
-            // 没有 use，静态载入的 add 可能执行
-            Utils.getOrCreateModuleInfo(name);
-
-            module = mods[name];
-
-            // 注意：通过 S.add(name[, factory[, config]]) 注册的代码，无论是页面中的代码，
-            // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            mix(module, {
-                name: name,
-                status: LOADED,
-                factory: factory
-            });
-
-            mix(module, config);
-        },
-
-        /**
          * Returns hash code of a string djb2 algorithm
          * @param {String} str
          * @returns {String} hash code
@@ -803,6 +553,8 @@ var KISSY = (function (undefined) {
             return hash + '';
         },
 
+        // ---------------------------------- for modules
+
         getRequiresFromFn: function (fn) {
             var requires = [];
             // Remove comments from the callback string,
@@ -814,21 +566,75 @@ var KISSY = (function (undefined) {
                     requires.push(getRequireVal(dep));
                 });
             return requires;
+        },
+
+        // get a module from cache or create a module instance
+        createModule: function (name, cfg) {
+            var module = mods[name];
+
+            if (!module) {
+                name = normalizeName(name);
+                module = mods[name];
+            }
+
+            if (module) {
+                mix(module, cfg);
+                // module definition changes requires
+                if (cfg && cfg.requires) {
+                    module.setRequiresModules(cfg.requires);
+                }
+                return module;
+            }
+
+            // 防止 cfg 里有 tag，构建 fullpath 需要
+            mods[name] = module = new Loader.Module(mix({
+                name: name
+            }, cfg));
+
+            return module;
+        },
+
+        createModules: function (names) {
+            if (typeof names === 'string') {
+                names = names.replace(/\s+/g, '').split(',');
+            }
+            return Utils.map(names, function (name) {
+                return Utils.createModule(name);
+            });
+        },
+
+        attachModules: function (mods) {
+            var l = mods.length, i;
+            for (i = 0; i < l; i++) {
+                mods[i].attach();
+            }
+        },
+
+        getModulesExports: function (mods) {
+            var l = mods.length, i,
+                ret = [];
+            for (i = 0; i < l; i++) {
+                ret.push(mods[i].getExports());
+            }
+            return ret;
+        },
+
+        addModule: function (name, factory, config) {
+            var module = mods[name];
+            if (module && module.factory !== undefined) {
+                S.log(name + ' is defined more than once', 'warn');
+                return;
+            }
+            Utils.createModule(name, mix({
+                name: name,
+                status: Loader.Status.LOADED,
+                factory: factory
+            }, config));
+
         }
     });
-
-    var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*require\s*\(([^)]+)\)/g;
-
-    function getRequireVal(str) {
-        var m;
-        // simple string
-        if (!(m = str.match(/^\s*["']([^'"\s]+)["']\s*$/))) {
-            S.error('can not find required mod in require call: ' + str);
-        }
-        return  m[1];
-    }
-})(KISSY);/**
+})
+(KISSY);/**
  * @ignore
  * setup data structure for kissy loader
  * @author yiminghe@gmail.com
@@ -836,13 +642,15 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Config = S.Config,
+        Status = Loader.Status,
+        ATTACHED = Status.ATTACHED,
+        ATTACHING = Status.ATTACHING,
         Utils = Loader.Utils,
+        createModule = Utils.createModule,
         mix = Utils.mix;
 
     function checkGlobalIfNotExist(self, property) {
-        return property in self ?
-            self[property] :
-            Config[property];
+        return property in self ? self[property] : Config[property];
     }
 
     /**
@@ -923,12 +731,12 @@ var KISSY = (function (undefined) {
         /**
          * exports of this module
          */
-        self.exports = {};
+        self.exports = undefined;
 
         /**
          * status of current modules
          */
-        self.status = Loader.Status.INIT;
+        self.status = Status.INIT;
 
         /**
          * name of this module
@@ -942,11 +750,15 @@ var KISSY = (function (undefined) {
 
         // lazy initialize and commonjs module format
         self.cjs = 1;
+
         mix(self, cfg);
+
         self.waits = {};
 
         self.require = function (moduleName) {
-            return S.require(self.resolve(moduleName),true,true);
+            var requiresModule = createModule(self.resolve(moduleName));
+            Utils.attachModules(requiresModule.getNormalizedModules());
+            return requiresModule.getExports();
         };
 
         self.require.resolve = function (relativeName) {
@@ -967,9 +779,7 @@ var KISSY = (function (undefined) {
             if (resolveCache[relativeName]) {
                 return resolveCache[relativeName];
             }
-            resolveCache[relativeName] = Utils.normalizeModNames(
-                [Utils.normalizePath(this.name, relativeName)]
-            )[0];
+            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
             return resolveCache[relativeName];
         },
 
@@ -1010,48 +820,48 @@ var KISSY = (function (undefined) {
             return v;
         },
 
-        getAlias: function () {
-            var self = this,
-                name = self.name,
-                packageInfo,
-                alias = self.alias;
-            if (typeof alias === 'string') {
-                alias = [alias];
-            }
-            if (alias) {
-                return alias;
-            }
-            packageInfo = self.getPackage();
-            if (packageInfo.alias) {
-                alias = packageInfo.alias(name);
-            }
-            alias = self.alias = alias || [];
-            return alias;
+        getExports: function () {
+            return this.getNormalizedModules()[0].exports;
         },
 
-        getNormalizedAlias: function () {
-            var self = this;
+        getAlias: function () {
+            var self = this,
+                name = self.name;
             if (self.normalizedAlias) {
                 return self.normalizedAlias;
             }
-            var alias = self.getAlias();
+            var alias = getShallowAlias(self);
             var ret = [];
-            for (var i = 0, l = alias.length; i < l; i++) {
-                if (alias[i]) {
-                    var mod = Utils.getOrCreateModuleInfo(alias[i]);
-                    var normalAlias = mod.getNormalizedAlias();
-                    if (normalAlias) {
-                        ret.push.apply(ret, normalAlias);
-                    } else {
-                        ret.push(alias[i]);
+            if (alias[0] === name) {
+                ret = alias;
+            } else {
+                for (var i = 0, l = alias.length; i < l; i++) {
+                    var aliasItem = alias[i];
+                    if (aliasItem && aliasItem !== name) {
+                        aliasItem = pluginAlias(aliasItem);
+                        var mod = createModule(aliasItem);
+                        var normalAlias = mod.getAlias();
+                        if (normalAlias) {
+                            ret.push.apply(ret, normalAlias);
+                        } else {
+                            ret.push(aliasItem);
+                        }
                     }
                 }
             }
-            if (!ret.length) {
-                ret.push(self.name);
-            }
             self.normalizedAlias = ret;
             return ret;
+        },
+
+        getNormalizedModules: function () {
+            var self = this;
+            if (self.normalizedModules) {
+                return self.normalizedModules;
+            }
+            self.normalizedModules = Utils.map(self.getAlias(), function (alias) {
+                return createModule(alias);
+            });
+            return self.normalizedModules;
         },
 
         /**
@@ -1114,54 +924,138 @@ var KISSY = (function (undefined) {
             return self.charset || self.getPackage().getCharset();
         },
 
-        /**
-         * get alias required module names
-         * @returns {String[]} alias required module names
-         */
-        getRequiresWithAlias: function () {
-            var self = this,
-                requiresWithAlias = self.requiresWithAlias,
-                requires = self.requires;
-            if (!requires || requires.length === 0) {
-                return requires || [];
-            } else if (!requiresWithAlias) {
-                self.requiresWithAlias = requiresWithAlias =
-                    Utils.normalizeModNamesWithAlias(requires, self.name);
+        setRequiresModules: function (requires) {
+            var self = this;
+            var requiredModules = self.requiredModules = Utils.map(normalizeRequires(requires, self), function (m) {
+                return createModule(m);
+            });
+            var normalizedRequiredModules = [];
+            Utils.each(requiredModules, function (mod) {
+                normalizedRequiredModules.push.apply(normalizedRequiredModules, mod.getNormalizedModules());
+            });
+            self.normalizedRequiredModules = normalizedRequiredModules;
+        },
+
+        getNormalizedRequiredModules: function () {
+            var self = this;
+            if (self.normalizedRequiredModules) {
+                return self.normalizedRequiredModules;
             }
-            return requiresWithAlias;
+            self.setRequiresModules(self.requires);
+            return self.normalizedRequiredModules;
         },
 
-        /**
-         * Get module objects required by this module
-         * @return {KISSY.Loader.Module[]}
-         */
-        getRequiredMods: function () {
-            return Utils.getOrCreateModulesInfo(this.getNormalizedRequires());
+        getRequiredModules: function () {
+            var self = this;
+            if (self.requiredModules) {
+                return self.requiredModules;
+            }
+            self.setRequiresModules(self.requires);
+            return self.requiredModules;
         },
 
-        /**
-         * Get module names required by this module
-         * @return {String[]}
-         */
-        getNormalizedRequires: function () {
+        attachSelf: function () {
             var self = this,
-                normalizedRequires,
-                normalizedRequiresStatus = self.normalizedRequiresStatus,
-                status = self.status,
-                requires = self.requires;
-            if (!requires || requires.length === 0) {
-                return requires || [];
-            } else if ((normalizedRequires = self.normalizedRequires) &&
-                // 事先声明的依赖不能当做 loaded 状态下真正的依赖
-                (normalizedRequiresStatus === status)) {
-                return normalizedRequires;
+                factory = self.factory,
+                exports;
+
+            if (typeof factory === 'function') {
+                self.exports = {};
+                // compatible and efficiency
+                // KISSY.add(function(S,undefined){})
+                // 需要解开 index，相对路径
+                // 但是需要保留 alias，防止值不对应
+                //noinspection JSUnresolvedFunction
+                var requires = self.requires;
+                exports = factory.apply(self,
+                    // KISSY.add(function(S){module.require}) lazy initialize
+                    (
+                        self.cjs ? [S,
+                                requires && requires.length ?
+                                self.require :
+                                undefined,
+                            self.exports,
+                            self] :
+                            [S].concat(Utils.map(self.getRequiredModules(), function (m) {
+                                return m.getExports();
+                            }))
+                        )
+                );
+                if (exports !== undefined) {
+                    // noinspection JSUndefinedPropertyAssignment
+                    self.exports = exports;
+                }
             } else {
-                self.normalizedRequiresStatus = status;
-                self.normalizedRequires = Utils.normalizeModNames(requires, self.name);
-                return self.normalizedRequires;
+                //noinspection JSUndefinedPropertyAssignment
+                self.exports = factory;
+            }
+
+            self.status = ATTACHED;
+        },
+
+        attach: function () {
+            var self = this,
+                status;
+            status = self.status;
+            // attached or circular dependency
+            if (status >= ATTACHING) {
+                self.status = ATTACHED;
+                return;
+            }
+            self.status = ATTACHING;
+            if (self.cjs) {
+                // commonjs format will call require in module code again
+                self.attachSelf();
+            } else {
+                Utils.each(self.getNormalizedRequiredModules(), function (m) {
+                    m.attach();
+                });
+                self.attachSelf();
             }
         }
     };
+
+    function pluginAlias(name) {
+        var index = name.indexOf('!');
+        if (index !== -1) {
+            var pluginName = name.substring(0, index);
+            name = name.substring(index + 1);
+            var Plugin = createModule(name).attach();
+            if (Plugin.alias) {
+                name = Plugin.alias(S, name, pluginName);
+            }
+        }
+        return name;
+    }
+
+    function normalizeRequires(requires, self) {
+        requires = requires || [];
+        var l = requires.length;
+        for (var i = 0; i < l; i++) {
+            requires[i] = self.resolve(requires[i]);
+        }
+        return requires;
+    }
+
+    function getShallowAlias(mod) {
+        var name = mod.name,
+            packageInfo,
+            alias = mod.alias;
+        if (typeof alias === 'string') {
+            mod.alias = alias = [alias];
+        }
+        if (alias) {
+            return alias;
+        }
+        packageInfo = mod.getPackage();
+        if (packageInfo.alias) {
+            alias = packageInfo.alias(name);
+        }
+        alias = mod.alias = alias || [
+            pluginAlias(name)
+        ];
+        return alias;
+    }
 
     Loader.Module = Module;
 })(KISSY);/**
@@ -1543,7 +1437,7 @@ var KISSY = (function (undefined) {
                 if (url) {
                     modCfg.url = normalizePath(url);
                 }
-                var mod = Utils.getOrCreateModuleInfo(modName, modCfg);
+                var mod = Utils.createModule(modName, modCfg);
                 // #485, invalid after add
                 if (mod.status === Loader.Status.INIT) {
                     Utils.mix(mod, modCfg);
@@ -1603,11 +1497,11 @@ var KISSY = (function (undefined) {
 (function (S, undefined) {
     var logger = S.getLogger('s/loader');
 
-    // ie11 is a new one!
     var Loader = S.Loader,
         Config = S.Config,
         Status = Loader.Status,
         Utils = Loader.Utils,
+        addModule = Utils.addModule,
         each = Utils.each,
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
@@ -1635,7 +1529,7 @@ var KISSY = (function (undefined) {
                     if (mod && currentMod) {
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         logger.debug('standard browser get mod name after load: ' + mod.name);
-                        Utils.registerModule(mod.name, currentMod.factory, currentMod.config);
+                        addModule(mod.name, currentMod.factory, currentMod.config);
                         currentMod = undefined;
                     }
                     complete();
@@ -1719,11 +1613,11 @@ var KISSY = (function (undefined) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
                 // S.log('oldIE get modName by interactive: ' + name);
-                Utils.registerModule(name, factory, config);
+                addModule(name, factory, config);
                 startLoadModName = null;
                 startLoadModTime = 0;
             } else {
-                // 其他浏览器 onload 时，关联模块名与模块定义
+                // standard browser associates name with definition when onload
                 currentMod = {
                     factory: factory,
                     config: config
@@ -1738,18 +1632,13 @@ var KISSY = (function (undefined) {
                 currentMod = undefined;
             }
             config = checkKISSYRequire(config, factory);
-            Utils.registerModule(name, factory, config);
+            addModule(name, factory, config);
         }
     };
 
-    // oldIE 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-    // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive() {
         var scripts = document.getElementsByTagName('script'),
-            re,
-            i,
-            name,
-            script;
+            re, i, name, script;
 
         for (i = scripts.length - 1; i >= 0; i--) {
             script = scripts[i];
@@ -1847,7 +1736,7 @@ var KISSY = (function (undefined) {
 
                     each(success, function (one) {
                         each(one.mods, function (mod) {
-                            Utils.registerModule(mod.name, Utils.noop);
+                            addModule(mod.name, Utils.noop);
                             // notify all loader instance
                             mod.flush();
                         });
@@ -1855,7 +1744,7 @@ var KISSY = (function (undefined) {
 
                     each(error, function (one) {
                         each(one.mods, function (mod) {
-                            var msg = mod.name + ' is not loaded! can not find module in url : ' + one.url;
+                            var msg = mod.name + ' is not loaded! can not find module in url: ' + one.url;
                             S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
@@ -1878,7 +1767,7 @@ var KISSY = (function (undefined) {
                             // https://github.com/kissyteam/kissy/issues/111
                             if (!mod.factory) {
                                 var msg = mod.name +
-                                    ' is not loaded! can not find module in url : ' +
+                                    ' is not loaded! can not find module in url: ' +
                                     one.url;
                                 S.log(msg, 'error');
                                 mod.status = ERROR;
@@ -1894,14 +1783,11 @@ var KISSY = (function (undefined) {
         /**
          * calculate dependency
          */
-        calculate: function (modNames, errorList, stack, cache, ret) {
-            if (!modNames.length) {
-                return [];
-            }
-
+        calculate: function (unloadedMods, errorList, stack, cache, ret) {
             var i, m, mod, modStatus,
                 stackDepth,
                 self = this;
+
             if ('@DEBUG@') {
                 stack = stack || [];
             }
@@ -1909,17 +1795,15 @@ var KISSY = (function (undefined) {
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
             cache = cache || {};
-            if ('@DEBUG@') {
-                stackDepth = stack.length;
-            }
-            for (i = 0; i < modNames.length; i++) {
-                m = modNames[i];
-                if (cache[m]) {
-                    continue;
+
+            for (i = 0; i < unloadedMods.length; i++) {
+                if ('@DEBUG@') {
+                    stackDepth = stack.length;
                 }
-                mod = Utils.getOrCreateModuleInfo(m);
+                mod = unloadedMods[i];
+                m = mod.name;
                 modStatus = mod.status;
-                if (modStatus === Status.ERROR) {
+                if (modStatus === ERROR) {
                     errorList.push(mod);
                     cache[m] = 1;
                     continue;
@@ -1936,8 +1820,8 @@ var KISSY = (function (undefined) {
                     self.wait(mod);
                 }
 
-                if ('@DEBUG@' && stack.indexOf) {
-                    if (stack.indexOf(m) !== -1) {
+                if ('@DEBUG@') {
+                    if (Utils.indexOf(m, stack) !== -1) {
                         S.log('find cyclic dependency between mods: ' + stack, 'warn');
                         cache[m] = 1;
                         continue;
@@ -1946,12 +1830,11 @@ var KISSY = (function (undefined) {
                     }
                 }
 
-                self.calculate(mod.getNormalizedRequires(), errorList, stack, cache, ret);
+                self.calculate(mod.getNormalizedRequiredModules(), errorList, stack, cache, ret);
                 cache[m] = 1;
-            }
-
-            if ('@DEBUG@') {
-                stack.length = stackDepth;
+                if ('@DEBUG@') {
+                    stack.length = stackDepth;
+                }
             }
 
             return ret;
@@ -2028,7 +1911,6 @@ var KISSY = (function (undefined) {
                     }
                     tmpMods.push(mod);
                 }
-
             }
 
             return {
@@ -2043,12 +1925,11 @@ var KISSY = (function (undefined) {
         getComboUrls: function (mods) {
             var comboPrefix = Config.comboPrefix,
                 comboSep = Config.comboSep,
+                comboRes = {},
                 maxFileNum = Config.comboMaxFileNum,
                 maxUrlLength = Config.comboMaxUrlLength;
 
             var comboMods = this.getComboMods(mods);
-
-            var comboRes = {};
 
             function processSamePrefixUrlMods(type, basePrefix, sendMods) {
                 var currentComboUrls = [];
@@ -2156,7 +2037,7 @@ var KISSY = (function (undefined) {
             while (head) {
                 var node = head.node,
                     status = node.status;
-                if (status >= Status.LOADED || status === Status.ERROR) {
+                if (status >= LOADED || status === ERROR) {
                     node.remove(self);
                     head = self.head = head.next;
                 } else {
@@ -2218,18 +2099,18 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
     var Loader = S.Loader,
-        Env = S.Env,
-        Status = Loader.Status,
         Utils = Loader.Utils,
+        createModule = Utils.createModule,
         ComboLoader = Loader.ComboLoader;
     var logger = S.getLogger('s/loader');
-    var mods = Env.mods = {};
 
     Utils.mix(S, {
+        // internal usage
         getModule: function (modName) {
-            return Utils.getOrCreateModuleInfo(modName);
+            return createModule(modName);
         },
 
+        // internal usage
         getPackage: function (packageName) {
             return S.Config.packages[packageName];
         },
@@ -2270,8 +2151,7 @@ var KISSY = (function (undefined) {
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
         use: function (modNames, success) {
-            var normalizedModNames,
-                loader,
+            var loader,
                 error,
                 tryCount = 0;
 
@@ -2282,12 +2162,15 @@ var KISSY = (function (undefined) {
                 success = success.success;
             }
 
-            modNames = Utils.getModNamesAsArray(modNames);
-            modNames = Utils.normalizeModNamesWithAlias(modNames);
+            var mods = Utils.createModules(modNames);
 
-            normalizedModNames = Utils.unalias(modNames);
+            var unloadedMods = [];
 
-            var unloadedModNames = normalizedModNames;
+            Utils.each(mods, function (mod) {
+                unloadedMods.push.apply(unloadedMods, mod.getNormalizedModules());
+            });
+
+            var normalizedMods = unloadedMods;
 
             function loadReady() {
                 ++tryCount;
@@ -2298,7 +2181,7 @@ var KISSY = (function (undefined) {
                     start = +new Date();
                 }
 
-                var unloadedMods = loader.calculate(unloadedModNames, errorList);
+                unloadedMods = loader.calculate(unloadedMods, errorList);
                 var unloadModsLen = unloadedMods.length;
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
                 if (errorList.length) {
@@ -2316,10 +2199,10 @@ var KISSY = (function (undefined) {
                     S.log(errorList, 'error');
                     S.log('loader: load above modules error', 'error');
                 } else if (loader.isCompleteLoading()) {
-                    Utils.attachModsRecursively(normalizedModNames);
+                    Utils.attachModules(normalizedMods);
                     if (success) {
                         try {
-                            success.apply(S, Utils.getModules(modNames));
+                            success.apply(S, [S].concat(Utils.getModulesExports(mods)));
                         } catch (e) {
                             S.log(e.stack || e, 'error');
                             /*jshint loopfunc:true*/
@@ -2333,10 +2216,6 @@ var KISSY = (function (undefined) {
                     loader.callback = loadReady;
                     if (unloadModsLen) {
                         logger.debug(tryCount + ' reload ');
-                        unloadedModNames = [];
-                        for (var i = 0; i < unloadModsLen; i++) {
-                            unloadedModNames.push(unloadedMods[i].name);
-                        }
                         loader.use(unloadedMods);
                     }
                 }
@@ -2354,22 +2233,11 @@ var KISSY = (function (undefined) {
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
-         * @param {Boolean} attach internal usage
-         * @param {Boolean} insideRequire internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName, attach, insideRequire) {
-            // cache module read
-            if (mods[moduleName] && mods[moduleName].status === Status.ATTACHED) {
-                return mods[moduleName].exports;
-            }
-            var moduleNames = Utils.normalizeModNames([moduleName]);
-            if (attach) {
-                Utils.attachModsRecursively(moduleNames);
-            }
-            var mod = S.getModule(moduleNames[0]);
-            return mod.status === Status.ATTACHED || insideRequire ? mod.exports : undefined;
+        require: function (moduleName) {
+            return createModule(moduleName).getExports();
         }
     });
 })(KISSY);
@@ -2396,7 +2264,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140509181951';
+    var TIMESTAMP = '20140512222119';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

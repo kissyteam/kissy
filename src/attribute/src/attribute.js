@@ -4,16 +4,16 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
-    require('util');
+    var util = require('util');
 
     var CustomEvent = require('event/custom');
 
     function bind(v) {
-        if (v === S.noop) {
+        if (v === util.noop) {
             return function () {
             };
         } else {
-            return S.bind(v);
+            return util.bind(v);
         }
     }
 
@@ -34,13 +34,13 @@ KISSY.add(function (S, require) {
     }
 
     function whenAttrChangeEventName(when, name) {
-        return when + S.ucfirst(name) + 'Change';
+        return when + util.ucfirst(name) + 'Change';
     }
 
     // fire attribute value change
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName, data) {
         attrName = attrName || name;
-        return self.fire(whenAttrChangeEventName(when, name), S.mix({
+        return self.fire(whenAttrChangeEventName(when, name), util.mix({
             attrName: attrName,
             subAttrName: subAttrName,
             prevVal: prevVal,
@@ -107,7 +107,7 @@ KISSY.add(function (S, require) {
             if (prevVal === undefined) {
                 tmp = {};
             } else {
-                tmp = S.clone(prevVal);
+                tmp = util.clone(prevVal);
             }
             setValueByPath(tmp, path, value);
         }
@@ -157,7 +157,7 @@ KISSY.add(function (S, require) {
 
         value = getValueBySubValue(prevVal, path, value);
 
-        var beforeEventObject = S.mix({
+        var beforeEventObject = util.mix({
             attrName: name,
             subAttrName: fullName,
             prevVal: prevVal,
@@ -248,7 +248,7 @@ KISSY.add(function (S, require) {
                 }
             }
         }
-        S.each(px, function (v, p) {
+        util.each(px, function (v, p) {
             if (typeof v === 'function') {
                 var wrapped = 0;
                 if (v.__owner__) {
@@ -275,20 +275,20 @@ KISSY.add(function (S, require) {
     function addMembers(px) {
         var self = this;
         wrapProtoForSuper(px, self);
-        S.mix(self.prototype, px);
+        util.mix(self.prototype, px);
     }
 
     Attribute.extend = function extend(px, sx) {
         var SubClass,
             self = this;
-        sx = S.merge(sx);
+        sx = util.merge(sx);
         // px is shared among classes
-        px = S.merge(px);
+        px = util.merge(px);
         var hooks,
             sxHooks = sx.__hooks__;
         if ((hooks = self.__hooks__)) {
             sxHooks = sx.__hooks__ = sx.__hooks__ || {};
-            S.mix(sxHooks, hooks, false);
+            util.mix(sxHooks, hooks, false);
         }
         var name = sx.name || 'AttributeDerived';
         if (px.hasOwnProperty('constructor')) {
@@ -297,7 +297,7 @@ KISSY.add(function (S, require) {
             // debug mode, give the right name for constructor
             if ('@DEBUG@') {
                 /*jshint evil: true*/
-                SubClass = new Function('return function ' + S.camelCase(name) + '(){ ' +
+                SubClass = new Function('return function ' + util.camelCase(name) + '(){ ' +
                     'this.callSuper.apply(this, arguments);' +
                     '}')();
             } else {
@@ -313,11 +313,11 @@ KISSY.add(function (S, require) {
             sxInheritedStatics = sx.inheritedStatics;
         if ((inheritedStatics = self.inheritedStatics)) {
             sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
-            S.mix(sxInheritedStatics, inheritedStatics, false);
+            util.mix(sxInheritedStatics, inheritedStatics, false);
         }
-        S.extend(SubClass, self, px, sx);
+        util.extend(SubClass, self, px, sx);
         if (sxInheritedStatics) {
-            S.mix(SubClass, sxInheritedStatics);
+            util.mix(SubClass, sxInheritedStatics);
         }
         SubClass.extend = sx.extend || extend;
         SubClass.addMembers = addMembers;
@@ -348,7 +348,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    S.augment(Attribute, CustomEvent.Target, {
+    util.augment(Attribute, CustomEvent.Target, {
         INVALID: INVALID,
 
         callSuper: function () {
@@ -429,13 +429,13 @@ KISSY.add(function (S, require) {
                 attrs = self.getAttrs(),
                 attr,
             // shadow clone
-                cfg = S.merge(attrConfig);
+                cfg = util.merge(attrConfig);
             if (cfg.value && typeof cfg.value === 'object') {
-                cfg.value = S.clone(cfg.value);
+                cfg.value = util.clone(cfg.value);
                 S.log('please use valueFn instead of value for ' + name + ' attribute','warn');
             }
             if ((attr = attrs[name])) {
-                S.mix(attr, cfg, override);
+                util.mix(attr, cfg, override);
             } else {
                 attrs[name] = cfg;
             }
@@ -450,7 +450,7 @@ KISSY.add(function (S, require) {
          */
         addAttrs: function (attrConfigs, initialValues) {
             var self = this;
-            S.each(attrConfigs, function (attrConfig, name) {
+            util.each(attrConfigs, function (attrConfig, name) {
                 self.addAttr(name, attrConfig);
             });
             if (initialValues) {
@@ -522,7 +522,7 @@ KISSY.add(function (S, require) {
                     prevVals = [],
                     newVals = [],
                     subAttrNames = [];
-                S.each(attrs, function (attr) {
+                util.each(attrs, function (attr) {
                     prevVals.push(attr.prevVal);
                     newVals.push(attr.newVal);
                     attrNames.push(attr.attrName);

@@ -5,6 +5,8 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
+    var util = require('util');
+
     /**
      * ItemSet for grammar
      * @class KISSY.Kison.ItemSet
@@ -56,12 +58,12 @@ KISSY.add(function (S, require) {
         toString: function (withGoto) {
             var ret = [],
                 gotos = this.get('gotos');
-            S.each(this.get('items'), function (item) {
+            util.each(this.get('items'), function (item) {
                 ret.push(item.toString());
             });
             if (withGoto) {
                 ret.push('start gotos:');
-                S.each(gotos, function (itemSet, symbol) {
+                util.each(gotos, function (itemSet, symbol) {
                     ret.push(symbol + ' -> ');
                     ret.push(itemSet.toString());
                 });
@@ -78,15 +80,21 @@ KISSY.add(function (S, require) {
     }, {
         ATTRS: {
             items: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
             gotos: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             },
             reverseGotos: {
                 // 多个来源同一个symbol指向自己
                 //{ c: [x,y]}
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             }
         }
     });

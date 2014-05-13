@@ -95,7 +95,7 @@
                 if (url) {
                     modCfg.url = normalizePath(url);
                 }
-                var mod = Utils.getOrCreateModuleInfo(modName, modCfg);
+                var mod = Utils.createModule(modName, modCfg);
                 // #485, invalid after add
                 if (mod.status === Loader.Status.INIT) {
                     Utils.mix(mod, modCfg);

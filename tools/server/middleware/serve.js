@@ -1,5 +1,5 @@
 var cwd = process.cwd();
-var S = require(cwd + '/lib/seed.js');
+var util = require(cwd + '/lib/util');
 var fs = require('fs');
 var serverConfig = JSON.parse(fs.readFileSync(__dirname + '/../server.json'));
 var config = {
@@ -8,7 +8,7 @@ var config = {
 
 module.exports=function (req, res, next) {
     var path = req.path;
-    if (S.endsWith(path, '.jss')) {
+    if (util.endsWith(path, '.jss')) {
         require(cwd + path)(req, res, config);
         return;
     }
@@ -17,7 +17,7 @@ module.exports=function (req, res, next) {
         indexHtml = cur + '/index.html';
 
     if (fs.existsSync(cur) && fs.statSync(cur).isDirectory()) {
-        if (!S.endsWith(cur, '/')) {
+        if (!util.endsWith(cur, '/')) {
             //noinspection JSUnresolvedFunction
             res.redirect('/kissy' + req.path + '/');
             return;

@@ -3,9 +3,9 @@
  * utils for kison.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var doubleReg = /"/g, single = /'/g, escapeString;
-
+    var util = require('util');
     /**
      * utils for kison
      * @class KISSY.Kison.Utils
@@ -45,16 +45,16 @@ KISSY.add(function (S) {
                 return '\'' + escapeString(obj) + '\'';
             } else if (typeof obj === 'number') {
                 return obj + '';
-            } else if (S.isRegExp(obj)) {
+            } else if (util.isRegExp(obj)) {
                 return '/' +
                     obj.source + '/' +
                     (obj.global ? 'g' : '') +
                     (obj.ignoreCase ? 'i' : '') +
                     (obj.multiline ? 'm' : '');
-            } else if (S.isArray(obj)) {
+            } else if (util.isArray(obj)) {
                 ret.push('[');
                 var sub = [];
-                S.each(obj, function (v) {
+                util.each(obj, function (v) {
                     var t = serializeObject(v, excludeReg);
                     if (t !== false) {
                         sub.push(t);
@@ -69,7 +69,7 @@ KISSY.add(function (S) {
                 var start = 1;
                 for (var i in obj) {
                     var v = obj[i];
-                    if (excludeReg && S.isRegExp(excludeReg) && i.match(excludeReg)) {
+                    if (excludeReg && util.isRegExp(excludeReg) && i.match(excludeReg)) {
                         continue;
                     }
                     var t = serializeObject(v, excludeReg);

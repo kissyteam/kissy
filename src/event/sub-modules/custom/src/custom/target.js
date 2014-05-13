@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var BaseEvent = require('event/base');
     var CustomEventObservable = require('./observable');
-
+    var util = require('util');
     var Utils = BaseEvent.Utils,
         splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
@@ -140,7 +140,7 @@ KISSY.add(function (S, require) {
 
             splitAndRun(type, function (t) {
                 customEventObservable = self.getCustomEventObservable(t, true);
-                S.mix(customEventObservable, cfg);
+                util.mix(customEventObservable, cfg);
             });
 
             return self;
@@ -155,7 +155,7 @@ KISSY.add(function (S, require) {
         addTarget: function (anotherTarget) {
             var self = this,
                 targets = self.getTargets();
-            if (!S.inArray(anotherTarget, targets)) {
+            if (!util.inArray(anotherTarget, targets)) {
                 targets.push(anotherTarget);
             }
             return self;
@@ -170,7 +170,7 @@ KISSY.add(function (S, require) {
         removeTarget: function (anotherTarget) {
             var self = this,
                 targets = self.getTargets(),
-                index = S.indexOf(anotherTarget, targets);
+                index = util.indexOf(anotherTarget, targets);
             if (index !== -1) {
                 targets.splice(index, 1);
             }
@@ -234,7 +234,7 @@ KISSY.add(function (S, require) {
                     }
                 } else {
                     customEvents = self.getCustomEvents();
-                    S.each(customEvents, function (customEvent) {
+                    util.each(customEvents, function (customEvent) {
                         customEvent.detach(cfg);
                     });
                 }

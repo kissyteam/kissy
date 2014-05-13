@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
+    var util = require('util');
 
     function equals(s1, s2) {
         if (s1.length !== s2.length) {
@@ -35,7 +36,7 @@ KISSY.add(function (S, require) {
         toString: function (dot) {
             var rhsStr = '';
             var rhs = this.get('rhs');
-            S.each(rhs, function (r, index) {
+            util.each(rhs, function (r, index) {
                 if (index === dot) {
                     rhsStr += ' . ';
                 }
@@ -49,14 +50,20 @@ KISSY.add(function (S, require) {
     }, {
         ATTRS: {
             firsts: {
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             },
             follows: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
             symbol: {},
             rhs: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
             nullable: {
                 value: false

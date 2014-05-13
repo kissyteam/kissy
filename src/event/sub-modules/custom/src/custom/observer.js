@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var BaseEvent = require('event/base');
+    var util = require('util');
 
     /**
      * Observer for custom event
@@ -16,7 +17,7 @@ KISSY.add(function (S, require) {
         CustomEventObserver.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(CustomEventObserver, BaseEvent.Observer, {
+    util.extend(CustomEventObserver, BaseEvent.Observer, {
         keys: ['fn', 'context', 'groups']
     });
 

@@ -4,7 +4,7 @@
  */
 var fs = require('fs');
 var esprima = require('esprima');
-var S = require('../../lib/seed');
+var S = require('../../lib/loader');
 var estraverse = require('estraverse');
 var escodegen = require('escodegen');
 var normalizePath = S.Loader.Utils.normalizePath;
@@ -51,6 +51,7 @@ function compileModule(modName, codes, requires) {
     }
     codes[modName] = '';
     var mod = S.getModule(modName);
+    // xtemplate -> xtemplate/runtime
     if (mod.getPackage().getName() === 'core' || !fs.existsSync(mod.getUrl())) {
         return;
     }
@@ -63,7 +64,9 @@ function compileModule(modName, codes, requires) {
     codes[modName] = escodegen.generate(ast, {
         comment: ast.comments
     });
-    S.Loader.Utils.normalDepModuleName(modName, modRequires);
+    modRequires = modRequires.map(function (r) {
+        return normalizePath(modName, r);
+    });
     // record after normalize
     requires[modName] = modRequires.concat();
     modRequires.forEach(function (requireName) {
@@ -87,12 +90,6 @@ function optimizeRequires(requires) {
 }
 
 function compile(main, packages, destFile, depFile) {
-    var backup = {
-        packages: S.config('packages'),
-        mods: S.Env.mods
-    };
-    S.Env.mods = {};
-    S.config('packages', false);
     S.config('packages', packages);
     var codes = {};
     var requires = {};
@@ -121,8 +118,6 @@ function compile(main, packages, destFile, depFile) {
     } else if (fs.existsSync(depFile)) {
         fs.unlinkSync(depFile);
     }
-    S.Env.mods = backup.mods;
-    S.config('packages', backup.packages);
 }
 
 module.exports = compile;

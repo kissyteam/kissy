@@ -1,6 +1,6 @@
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
-var S = require(cwd + '/lib/seed.js');
+var util = require(cwd + '/lib/util');
 var fs = require('fs');
 
 module.exports = function (req, res, next) {
@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
         path = cwd + req.path;
 
     for (k in query) {
-        if (S.startsWith(k, '?')) {
+        if (util.startsWith(k, '?')) {
             combo = k;
             break;
         }
@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
 
     var codes = [];
 
-    if (S.startsWith(combo, '?')) {
+    if (util.startsWith(combo, '?')) {
         var nextQ = combo.slice(1).indexOf('?');
         if (nextQ === -1) {
             nextQ = combo.length;
@@ -27,10 +27,10 @@ module.exports = function (req, res, next) {
         combo = combo.slice(1, nextQ);
         var files = combo.split(',');
         var f = files[0];
-        S.each(files, function (f) {
+        util.each(files, function (f) {
             codes.push(fs.readFileSync(path + f));
         });
-        if (S.endsWith(f, '.js')) {
+        if (util.endsWith(f, '.js')) {
             res.setHeader('Content-Type', 'application/x-javascript');
         } else {
             res.setHeader('Content-Type', 'text/css');

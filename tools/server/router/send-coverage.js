@@ -4,7 +4,7 @@ var request = require('request');
 var fs = require('fs');
 var path = require('path');
 var cwd = process.cwd();
-var S = require(cwd + '/lib/seed.js');
+var util = require(cwd + '/lib/util.js');
 
 function getSourceInfo(f, postData) {
     var source_files = postData.source_files,
@@ -54,7 +54,7 @@ module.exports = function (app) {
         var str = JSON.stringify(postData);
         if (!service_job_id) {
             //console.log(str);
-            res.send(S.substitute(ok, {
+            res.send(util.substitute(ok, {
                 //content: 'var data=' + str + ';console.log(data);',
                 time: (Date.now() - start)
             }));
@@ -62,7 +62,7 @@ module.exports = function (app) {
         }
         var url = 'https://coveralls.io/api/v1/jobs';
         request.post({url: url, form: { json: str}}, function () {
-            res.send(S.substitute(ok, {
+            res.send(util.substitute(ok, {
                 //content: 'var data=' + str + ';console.log(data);',
                 time: (Date.now() - start)
             }));
@@ -83,7 +83,7 @@ module.exports = function (app) {
         var srcPath;
         var myPath = cwd + pathParam.slice(pathParam.indexOf('/'));
         // find src dir
-        if (S.endsWith(pathParam, 'runner')) {
+        if (util.endsWith(pathParam, 'runner')) {
             srcPath = path.resolve(myPath, '../../src/');
         } else {
             srcPath = path.resolve(myPath, '../../../src/');

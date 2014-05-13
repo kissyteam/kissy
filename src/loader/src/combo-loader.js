@@ -6,11 +6,11 @@
 (function (S, undefined) {
     var logger = S.getLogger('s/loader');
 
-    // ie11 is a new one!
     var Loader = S.Loader,
         Config = S.Config,
         Status = Loader.Status,
         Utils = Loader.Utils,
+        addModule = Utils.addModule,
         each = Utils.each,
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
@@ -38,7 +38,7 @@
                     if (mod && currentMod) {
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         logger.debug('standard browser get mod name after load: ' + mod.name);
-                        Utils.registerModule(mod.name, currentMod.factory, currentMod.config);
+                        addModule(mod.name, currentMod.factory, currentMod.config);
                         currentMod = undefined;
                     }
                     complete();
@@ -122,11 +122,11 @@
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
                 // S.log('oldIE get modName by interactive: ' + name);
-                Utils.registerModule(name, factory, config);
+                addModule(name, factory, config);
                 startLoadModName = null;
                 startLoadModTime = 0;
             } else {
-                // 其他浏览器 onload 时，关联模块名与模块定义
+                // standard browser associates name with definition when onload
                 currentMod = {
                     factory: factory,
                     config: config
@@ -141,18 +141,13 @@
                 currentMod = undefined;
             }
             config = checkKISSYRequire(config, factory);
-            Utils.registerModule(name, factory, config);
+            addModule(name, factory, config);
         }
     };
 
-    // oldIE 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-    // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive() {
         var scripts = document.getElementsByTagName('script'),
-            re,
-            i,
-            name,
-            script;
+            re, i, name, script;
 
         for (i = scripts.length - 1; i >= 0; i--) {
             script = scripts[i];
@@ -250,7 +245,7 @@
 
                     each(success, function (one) {
                         each(one.mods, function (mod) {
-                            Utils.registerModule(mod.name, Utils.noop);
+                            addModule(mod.name, Utils.noop);
                             // notify all loader instance
                             mod.flush();
                         });
@@ -258,7 +253,7 @@
 
                     each(error, function (one) {
                         each(one.mods, function (mod) {
-                            var msg = mod.name + ' is not loaded! can not find module in url : ' + one.url;
+                            var msg = mod.name + ' is not loaded! can not find module in url: ' + one.url;
                             S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
@@ -281,7 +276,7 @@
                             // https://github.com/kissyteam/kissy/issues/111
                             if (!mod.factory) {
                                 var msg = mod.name +
-                                    ' is not loaded! can not find module in url : ' +
+                                    ' is not loaded! can not find module in url: ' +
                                     one.url;
                                 S.log(msg, 'error');
                                 mod.status = ERROR;
@@ -297,14 +292,11 @@
         /**
          * calculate dependency
          */
-        calculate: function (modNames, errorList, stack, cache, ret) {
-            if (!modNames.length) {
-                return [];
-            }
-
+        calculate: function (unloadedMods, errorList, stack, cache, ret) {
             var i, m, mod, modStatus,
                 stackDepth,
                 self = this;
+
             if ('@DEBUG@') {
                 stack = stack || [];
             }
@@ -312,17 +304,15 @@
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
             cache = cache || {};
-            if ('@DEBUG@') {
-                stackDepth = stack.length;
-            }
-            for (i = 0; i < modNames.length; i++) {
-                m = modNames[i];
-                if (cache[m]) {
-                    continue;
+
+            for (i = 0; i < unloadedMods.length; i++) {
+                if ('@DEBUG@') {
+                    stackDepth = stack.length;
                 }
-                mod = Utils.getOrCreateModuleInfo(m);
+                mod = unloadedMods[i];
+                m = mod.name;
                 modStatus = mod.status;
-                if (modStatus === Status.ERROR) {
+                if (modStatus === ERROR) {
                     errorList.push(mod);
                     cache[m] = 1;
                     continue;
@@ -339,8 +329,8 @@
                     self.wait(mod);
                 }
 
-                if ('@DEBUG@' && stack.indexOf) {
-                    if (stack.indexOf(m) !== -1) {
+                if ('@DEBUG@') {
+                    if (Utils.indexOf(m, stack) !== -1) {
                         S.log('find cyclic dependency between mods: ' + stack, 'warn');
                         cache[m] = 1;
                         continue;
@@ -349,12 +339,11 @@
                     }
                 }
 
-                self.calculate(mod.getNormalizedRequires(), errorList, stack, cache, ret);
+                self.calculate(mod.getNormalizedRequiredModules(), errorList, stack, cache, ret);
                 cache[m] = 1;
-            }
-
-            if ('@DEBUG@') {
-                stack.length = stackDepth;
+                if ('@DEBUG@') {
+                    stack.length = stackDepth;
+                }
             }
 
             return ret;
@@ -431,7 +420,6 @@
                     }
                     tmpMods.push(mod);
                 }
-
             }
 
             return {
@@ -446,12 +434,11 @@
         getComboUrls: function (mods) {
             var comboPrefix = Config.comboPrefix,
                 comboSep = Config.comboSep,
+                comboRes = {},
                 maxFileNum = Config.comboMaxFileNum,
                 maxUrlLength = Config.comboMaxUrlLength;
 
             var comboMods = this.getComboMods(mods);
-
-            var comboRes = {};
 
             function processSamePrefixUrlMods(type, basePrefix, sendMods) {
                 var currentComboUrls = [];
@@ -559,7 +546,7 @@
             while (head) {
                 var node = head.node,
                     status = node.status;
-                if (status >= Status.LOADED || status === Status.ERROR) {
+                if (status >= LOADED || status === ERROR) {
                     node.remove(self);
                     head = self.head = head.next;
                 } else {

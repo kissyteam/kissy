@@ -1,3 +1,7 @@
+/**
+ * commonjs module format tc
+ * @author yiminghe@gmail.com
+ */
 describe('it support commonjs require', function () {
     /*jshint quotmark:false*/
     beforeEach(function () {
@@ -12,25 +16,6 @@ describe('it support commonjs require', function () {
         } catch (e) {
             window.cjsTest = undefined;
         }
-    });
-
-    it('support cjs module and lazy initialization', function () {
-        var S = KISSY;
-        S.config('packages', {
-            cjs: {
-                base: '/kissy/src/loader/tests/specs/cjs'
-            }
-        });
-        var ret;
-        S.use('cjs/a', function (S, a) {
-            ret = a;
-        });
-        waitsFor(function () {
-            return ret === 3;
-        });
-        runs(function () {
-            expect(window.cjsTest).toEqual([ 2, 3, 4, 6]);
-        });
     });
 
     it('amd is not lazy', function () {
@@ -49,6 +34,25 @@ describe('it support commonjs require', function () {
         });
         runs(function () {
             expect(window.cjsTest).toEqual([3, 2, 4, 6]);
+        });
+    });
+
+    it('support cjs module and lazy initialization', function () {
+        var S = KISSY;
+        S.config('packages', {
+            cjs: {
+                base: '/kissy/src/loader/tests/specs/cjs'
+            }
+        });
+        var ret;
+        S.use('cjs/a', function (S, a) {
+            ret = a;
+        });
+        waitsFor(function () {
+            return ret === 3;
+        });
+        runs(function () {
+            expect(window.cjsTest).toEqual([ 2, 3, 4, 6]);
         });
     });
 });

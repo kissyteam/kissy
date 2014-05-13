@@ -1,19 +1,12 @@
 /**
  * @ignore
- * lang
+ * util from KISSY
  * @author  yiminghe@gmail.com
- *
  */
 KISSY.add(function (S, require) {
     var FALSE = false,
+        util = require('util/base'),
         CLONE_MARKER = '__~ks_cloned';
-
-    S.mix = function (to, from) {
-        for (var i in from) {
-            to[i] = from[i];
-        }
-        return to;
-    };
 
     require('util/array');
     require('util/escape');
@@ -23,7 +16,7 @@ KISSY.add(function (S, require) {
     require('util/type');
     require('util/web');
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * @param input
@@ -40,7 +33,7 @@ KISSY.add(function (S, require) {
             // and the other the destination object.
             var memory = {},
                 ret = cloneInternal(input, filter, memory);
-            S.each(memory, function (v) {
+            util.each(memory, function (v) {
                 // 清理在源对象上做的标记
                 v = v.input;
                 if (v[CLONE_MARKER]) {
@@ -75,19 +68,19 @@ KISSY.add(function (S, require) {
         } else if (typeof input === 'object') {
             // 引用类型要先记录
             var Constructor = input.constructor;
-            if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
+            if (util.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
                 destination = new Constructor(input.valueOf());
-            } else if ((isArray = S.isArray(input))) {
+            } else if ((isArray = util.isArray(input))) {
                 // ImageData , File, Blob , FileList .. etc
-                destination = f ? S.filter(input, f) : input.concat();
-            } else if ((isPlainObject = S.isPlainObject(input))) {
+                destination = f ? util.filter(input, f) : input.concat();
+            } else if ((isPlainObject = util.isPlainObject(input))) {
                 destination = {};
             }
             // Add a mapping from input (the source object)
             // to output (the destination object) to memory.
             // 做标记
             // stamp can not be
-            input[CLONE_MARKER] = (stamp = S.guid('c'));
+            input[CLONE_MARKER] = (stamp = util.guid('c'));
             // 存储源对象以及克隆后的对象
             memory[stamp] = {destination: destination, input: input};
         }
@@ -117,5 +110,5 @@ KISSY.add(function (S, require) {
         return destination;
     }
 
-    return S;
+    return util;
 });

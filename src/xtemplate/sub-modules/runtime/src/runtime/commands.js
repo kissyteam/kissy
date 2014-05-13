@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Scope = require('./scope');
-
+    var util = require('util');
     var commands = {
         each: function (scope, option, buffer) {
             var params = option.params;
@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
             var affix;
             // if undefined, will emit warning by compiler
             if (param0) {
-                if (S.isArray(param0)) {
+                if (util.isArray(param0)) {
                     xcount = param0.length;
                     for (var xindex = 0; xindex < xcount; xindex++) {
                         opScope = new Scope(param0[xindex]);
@@ -192,7 +192,7 @@ KISSY.add(function (S, require) {
 
     if ('@DEBUG@') {
         commands['debugger'] = function () {
-            S.globalEval('debugger');
+            util.globalEval('debugger');
         };
     }
 

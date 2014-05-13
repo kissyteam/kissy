@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
-    var BaseGesture = require('event/gesture/base');
+    var BasicGesture = require('event/gesture/basic');
     var TapGesture = require('event/gesture/tap');
     var Manager = require('./control/manager');
     var Base = require('base');
@@ -246,8 +246,8 @@ KISSY.add(function (S, require) {
                     self.$el.on('mouseenter', self.handleMouseEnter, self)
                         .on('mouseleave', self.handleMouseLeave, self)
                         .on('contextmenu', self.handleContextMenu, self)
-                        .on(BaseGesture.START, self.handleMouseDown, self)
-                        .on(BaseGesture.END, self.handleMouseUp, self)
+                        .on(BasicGesture.START, self.handleMouseDown, self)
+                        .on(BasicGesture.END, self.handleMouseUp, self)
                         // consider touch environment
                         .on(TapGesture.TAP, self.handleClick, self);
                 }
@@ -1366,7 +1366,7 @@ KISSY.add(function (S, require) {
 });
 /*
  yiminghe@gmail.com - 2014.04.08
- - use event modules: event/gesture/base, event/gesture/tap
+ - use event modules: event/gesture/basic, event/gesture/tap
  - remove render layer
  - beforeCreateDom is called after srcNode parser
 

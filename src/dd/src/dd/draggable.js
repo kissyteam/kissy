@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node'),
-        BaseGesture = require('event/gesture/base'),
+        BasicGesture = require('event/gesture/basic'),
         DDM = require('./ddm'),
         Base = require('base'),
         DragGesture = require('event/gesture/drag');
@@ -239,7 +239,7 @@ KISSY.add(function (S, require) {
                 node.on(DragGesture.DRAG_START, onDragStart, self)
                     .on(DragGesture.DRAG, onDrag, self)
                     .on(DragGesture.DRAG_END, onDragEnd, self)
-                    .on(BaseGesture.START, onGestureStart, self)
+                    .on(BasicGesture.START, onGestureStart, self)
                     // android need to prevent on touchmove
                     .on(['dragstart','touchmove'], preventDefault);
             }
@@ -252,7 +252,7 @@ KISSY.add(function (S, require) {
                 node.detach(DragGesture.DRAG_START, onDragStart, self)
                     .detach(DragGesture.DRAG, onDrag, self)
                     .detach(DragGesture.DRAG_END, onDragEnd, self)
-                    .detach(BaseGesture.START, onGestureStart, self)
+                    .detach(BasicGesture.START, onGestureStart, self)
                     .detach(['dragstart','touchmove'], preventDefault);
             }
         },
@@ -297,7 +297,7 @@ KISSY.add(function (S, require) {
 
             if (ie) {
                 fixIEMouseDown();
-                $doc.on(BaseGesture.END, {
+                $doc.on(BasicGesture.END, {
                     fn: fixIEMouseUp,
                     once: true
                 });

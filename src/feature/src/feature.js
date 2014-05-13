@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    require('util');
     var win = S.Env.host,
         Config = S.Config,
         UA = require('ua'),
@@ -45,10 +44,16 @@ KISSY.add(function (S, require) {
         isPointerSupported = 'pointerEnabled' in navigator;
     }
 
+    var RE_DASH = /-([a-z])/ig;
+
+    function upperCase() {
+        return arguments[1].toUpperCase();
+    }
+
     // return prefixed css prefix name
     function getVendorInfo(name) {
         if (name.indexOf('-') !== -1) {
-            name = S.camelCase(name);
+            name = name.replace(RE_DASH, upperCase);
         }
         if (name in vendorInfos) {
             return vendorInfos[name];

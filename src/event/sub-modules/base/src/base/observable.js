@@ -3,8 +3,8 @@
  * base custom event mechanism for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-
+KISSY.add(function (S, require) {
+    var util = require('util');
     /**
      * base custom event for registering and un-registering observer for specified event.
      * @class KISSY.Event.Observable
@@ -14,7 +14,7 @@ KISSY.add(function (S) {
     function Observable(cfg) {
         var self = this;
         self.currentTarget = null;
-        S.mix(self, cfg);
+        util.mix(self, cfg);
         self.reset();
         /**
          * current event type

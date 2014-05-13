@@ -13,8 +13,9 @@ program
     .option('-w, --watch', 'Watch xtemplate file change')
     .parse(process.argv);
 
-var S = require('../lib/seed'),
-    XTemplateCompiler = S.nodeRequire('xtemplate').Compiler,
+var S = require('../lib/loader'),
+    util = require('../lib/util'),
+    XTemplateCompiler = require('../lib/xtemplate').Compiler,
     chokidar = require('chokidar'),
 /*jshint camelcase: false*/
     jsBeautify = require('js-beautify').js_beautify,
@@ -92,19 +93,19 @@ function compile(tplFilePath, modulePath) {
 
 function generate(filePath) {
     var modulePath;
-    if (suffix && S.endsWith(filePath, '.' + suffix)) {
+    if (suffix && util.endsWith(filePath, '.' + suffix)) {
         modulePath = filePath.replace(suffixReg, '.js');
         compile(filePath, modulePath);
-    } else if (S.endsWith(filePath, '.xtpl.html') || S.endsWith(filePath, '-xtpl.html')) {
+    } else if (util.endsWith(filePath, '.xtpl.html') || util.endsWith(filePath, '-xtpl.html')) {
         modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
         compile(filePath, modulePath);
-    } else if (S.endsWith(filePath, '.tpl.html')) {
+    } else if (util.endsWith(filePath, '.tpl.html')) {
         modulePath = filePath.replace(/\.tpl\.html$/, '-tpl.js');
         var tplContent = fs.readFileSync(filePath, encoding);
         tplContent = tplContent.replace(/\\/g, '\\')
             .replace(/\r?\n/g, '\\n')
             .replace(/'/g, '\\\'');
-        var moduleCode = myJsBeautify(S.substitute(tplTemplate, {
+        var moduleCode = myJsBeautify(util.substitute(tplTemplate, {
             code: tplContent
         }));
         fs.writeFileSync(modulePath, moduleCode, encoding);

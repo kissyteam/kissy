@@ -2,9 +2,9 @@
  * @ignore
  * object utilities of lang
  * @author yiminghe@gmail.com
- *
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('./base');
     var undef;
     var logger = S.getLogger('s/util');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
@@ -28,7 +28,7 @@ KISSY.add(function (S) {
             'valueOf'
         ];
 
-    mix(S, {
+    mix(util, {
         /**
          * Get all the property names of o as array
          * @param {Object} o
@@ -39,7 +39,7 @@ KISSY.add(function (S) {
             var result = [], p, i;
 
             for (p in o) {
-                // S.keys(new XX())
+                // util.keys(new XX())
                 if (o.hasOwnProperty(p)) {
                     result.push(p);
                 }
@@ -77,7 +77,7 @@ KISSY.add(function (S) {
                 context = context || null;
 
                 if (isObj) {
-                    keys = S.keys(object);
+                    keys = util.keys(object);
                     for (; i < keys.length; i++) {
                         key = keys[i];
                         // can not use hasOwnProperty
@@ -140,7 +140,7 @@ KISSY.add(function (S) {
                 return guid;
             } else if (!readOnly) {
                 try {
-                    guid = o[marker] = S.guid(marker);
+                    guid = o[marker] = util.guid(marker);
                 }
                 catch (e) {
                     guid = undef;
@@ -166,9 +166,9 @@ KISSY.add(function (S) {
          * for example:
          *     @example
          *     var t = {};
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE}) => {x: {y: 3, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
+         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE}) => {x: {y: 3, z: 4, a: {}}}, a !== t
+         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
+         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
          */
         mix: function (r, s, ov, wl, deep) {
             if (typeof ov === 'object') {
@@ -183,7 +183,7 @@ KISSY.add(function (S) {
             if (wl && (typeof wl !== 'function')) {
                 var originalWl = wl;
                 wl = function (name, val) {
-                    return S.inArray(name, originalWl) ? val : undef;
+                    return util.inArray(name, originalWl) ? val : undef;
                 };
             }
 
@@ -211,12 +211,12 @@ KISSY.add(function (S) {
          * @member KISSY
          */
         merge: function (varArgs) {
-            varArgs = S.makeArray(arguments);
+            varArgs = util.makeArray(arguments);
             var o = {},
                 i,
                 l = varArgs.length;
             for (i = 0; i < l; i++) {
-                S.mix(o, varArgs[i]);
+                util.mix(o, varArgs[i]);
             }
             return o;
         },
@@ -231,7 +231,7 @@ KISSY.add(function (S) {
          * @member KISSY
          */
         augment: function (r, varArgs) {
-            var args = S.makeArray(arguments),
+            var args = util.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
                 proto,
@@ -241,7 +241,7 @@ KISSY.add(function (S) {
 
             args[1] = varArgs;
 
-            if (!S.isArray(wl)) {
+            if (!util.isArray(wl)) {
                 ov = wl;
                 wl = undef;
                 len++;
@@ -254,9 +254,9 @@ KISSY.add(function (S) {
             for (; i < len; i++) {
                 arg = args[i];
                 if ((proto = arg.prototype)) {
-                    arg = S.mix({}, proto, true, removeConstructor);
+                    arg = util.mix({}, proto, true, removeConstructor);
                 }
-                S.mix(r.prototype, arg, ov, wl);
+                util.mix(r.prototype, arg, ov, wl);
             }
 
             return r;
@@ -295,17 +295,17 @@ KISSY.add(function (S) {
 
             // add prototype chain
             rp = createObject(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
+            r.prototype = util.mix(rp, r.prototype);
             r.superclass = sp;
 
             // add prototype overrides
             if (px) {
-                S.mix(rp, px);
+                util.mix(rp, px);
             }
 
             // add object overrides
             if (sx) {
-                S.mix(r, sx);
+                util.mix(r, sx);
             }
 
             return r;
@@ -317,15 +317,15 @@ KISSY.add(function (S) {
          *
          * for example:
          *      @example
-         *      S.namespace('KISSY.app'); // returns KISSY.app
-         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
-         *      S.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
+         *      util.namespace('KISSY.app'); // returns KISSY.app
+         *      util.namespace('app.Shop'); // returns KISSY.app.Shop
+         *      util.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
          *
          * @return {Object}  A reference to the last namespace object created
          * @member KISSY
          */
         namespace: function () {
-            var args = S.makeArray(arguments),
+            var args = util.makeArray(arguments),
                 l = args.length,
                 o = null, i, j, p,
                 global = (args[l - 1] === TRUE && l--);
@@ -375,7 +375,7 @@ KISSY.add(function (S) {
         cache.push(s);
 
         // mix all properties
-        keys = S.keys(s);
+        keys = util.keys(s);
         len = keys.length;
         for (i = 0; i < len; i++) {
             p = keys[i];
@@ -401,7 +401,7 @@ KISSY.add(function (S) {
                 src = s[p];
             // prevent never-end loop
             if (target === src) {
-                // S.mix({},{x:undef})
+                // util.mix({},{x:undef})
                 if (target === undef) {
                     r[p] = target;
                 }
@@ -411,15 +411,15 @@ KISSY.add(function (S) {
                 src = wl.call(s, p, src);
             }
             // 来源是数组和对象，并且要求深度 mix
-            if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
+            if (deep && src && (util.isArray(src) || util.isPlainObject(src))) {
                 if (src[MIX_CIRCULAR_DETECTION]) {
                     r[p] = src[MIX_CIRCULAR_DETECTION];
                 } else {
                     // 目标值为对象或数组，直接 mix
                     // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
-                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
+                    var clone = target && (util.isArray(target) || util.isPlainObject(target)) ?
                         target :
-                        (S.isArray(src) ? [] : {});
+                        (util.isArray(src) ? [] : {});
                     r[p] = clone;
                     mixInternal(clone, src, ov, wl, TRUE, cache);
                 }

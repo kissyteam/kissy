@@ -231,11 +231,15 @@ if (! _$jscoverage['/kison/non-terminal.js']) {
   _$jscoverage['/kison/non-terminal.js'].lineData = [];
   _$jscoverage['/kison/non-terminal.js'].lineData[6] = 0;
   _$jscoverage['/kison/non-terminal.js'].lineData[7] = 0;
-  _$jscoverage['/kison/non-terminal.js'].lineData[12] = 0;
+  _$jscoverage['/kison/non-terminal.js'].lineData[13] = 0;
+  _$jscoverage['/kison/non-terminal.js'].lineData[17] = 0;
+  _$jscoverage['/kison/non-terminal.js'].lineData[22] = 0;
 }
 if (! _$jscoverage['/kison/non-terminal.js'].functionData) {
   _$jscoverage['/kison/non-terminal.js'].functionData = [];
   _$jscoverage['/kison/non-terminal.js'].functionData[0] = 0;
+  _$jscoverage['/kison/non-terminal.js'].functionData[1] = 0;
+  _$jscoverage['/kison/non-terminal.js'].functionData[2] = 0;
 }
 if (! _$jscoverage['/kison/non-terminal.js'].branchData) {
   _$jscoverage['/kison/non-terminal.js'].branchData = {};
@@ -245,13 +249,21 @@ KISSY.add(function(S, require) {
   _$jscoverage['/kison/non-terminal.js'].functionData[0]++;
   _$jscoverage['/kison/non-terminal.js'].lineData[7]++;
   var Base = require('base');
-  _$jscoverage['/kison/non-terminal.js'].lineData[12]++;
+  _$jscoverage['/kison/non-terminal.js'].lineData[13]++;
   return Base.extend({}, {
   ATTRS: {
   productions: {
-  value: []}, 
+  valueFn: function() {
+  _$jscoverage['/kison/non-terminal.js'].functionData[1]++;
+  _$jscoverage['/kison/non-terminal.js'].lineData[17]++;
+  return [];
+}}, 
   firsts: {
-  value: {}}, 
+  valueFn: function() {
+  _$jscoverage['/kison/non-terminal.js'].functionData[2]++;
+  _$jscoverage['/kison/non-terminal.js'].lineData[22]++;
+  return {};
+}}, 
   symbol: {}, 
   nullable: {
   value: false}}});

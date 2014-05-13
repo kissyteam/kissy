@@ -231,6 +231,7 @@ if (! _$jscoverage['/base/utils.js']) {
   _$jscoverage['/base/utils.js'].lineData = [];
   _$jscoverage['/base/utils.js'].lineData[6] = 0;
   _$jscoverage['/base/utils.js'].lineData[7] = 0;
+  _$jscoverage['/base/utils.js'].lineData[8] = 0;
   _$jscoverage['/base/utils.js'].lineData[9] = 0;
   _$jscoverage['/base/utils.js'].lineData[11] = 0;
   _$jscoverage['/base/utils.js'].lineData[12] = 0;
@@ -313,7 +314,7 @@ _$jscoverage['/base/utils.js'].branchData['93'][1].init(118, 9, '_ksGroups');
 function visit20_93_1(result) {
   _$jscoverage['/base/utils.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['71'][1].init(176, 26, 'types && S.isObject(types)');
+}_$jscoverage['/base/utils.js'].branchData['71'][1].init(179, 29, 'types && util.isObject(types)');
 function visit19_71_1(result) {
   _$jscoverage['/base/utils.js'].branchData['71'][1].ranCondition(result);
   return result;
@@ -325,11 +326,11 @@ function visit18_45_1(result) {
 function visit17_43_1(result) {
   _$jscoverage['/base/utils.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['35'][1].init(163, 24, 'type.indexOf(\' \') === -1');
+}_$jscoverage['/base/utils.js'].branchData['35'][1].init(172, 24, 'type.indexOf(\' \') === -1');
 function visit16_35_1(result) {
   _$jscoverage['/base/utils.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['30'][1].init(18, 15, 'S.isArray(type)');
+}_$jscoverage['/base/utils.js'].branchData['30'][1].init(18, 18, 'util.isArray(type)');
 function visit15_30_1(result) {
   _$jscoverage['/base/utils.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -346,6 +347,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/utils.js'].functionData[0]++;
   _$jscoverage['/base/utils.js'].lineData[7]++;
   var splitAndRun, getGroupsRe;
+  _$jscoverage['/base/utils.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/base/utils.js'].lineData[9]++;
   require('util');
   _$jscoverage['/base/utils.js'].lineData[11]++;
@@ -376,21 +379,21 @@ KISSY.add(function(S, require) {
   splitAndRun: splitAndRun = function(type, fn) {
   _$jscoverage['/base/utils.js'].functionData[2]++;
   _$jscoverage['/base/utils.js'].lineData[30]++;
-  if (visit15_30_1(S.isArray(type))) {
+  if (visit15_30_1(util.isArray(type))) {
     _$jscoverage['/base/utils.js'].lineData[31]++;
-    S.each(type, fn);
+    util.each(type, fn);
     _$jscoverage['/base/utils.js'].lineData[32]++;
     return;
   }
   _$jscoverage['/base/utils.js'].lineData[34]++;
-  type = S.trim(type);
+  type = util.trim(type);
   _$jscoverage['/base/utils.js'].lineData[35]++;
   if (visit16_35_1(type.indexOf(' ') === -1)) {
     _$jscoverage['/base/utils.js'].lineData[36]++;
     fn(type);
   } else {
     _$jscoverage['/base/utils.js'].lineData[38]++;
-    S.each(type.split(/\s+/), fn);
+    util.each(type.split(/\s+/), fn);
   }
 }, 
   normalizeParam: function(type, fn, context) {
@@ -405,7 +408,7 @@ KISSY.add(function(S, require) {
   context: context};
   } else {
     _$jscoverage['/base/utils.js'].lineData[52]++;
-    cfg = S.merge(cfg);
+    cfg = util.merge(cfg);
   }
   _$jscoverage['/base/utils.js'].lineData[55]++;
   var typedGroups = getTypedGroups(type);
@@ -421,11 +424,11 @@ KISSY.add(function(S, require) {
   batchForType: function(fn, num) {
   _$jscoverage['/base/utils.js'].functionData[4]++;
   _$jscoverage['/base/utils.js'].lineData[67]++;
-  var args = S.makeArray(arguments), types = args[2 + num];
+  var args = util.makeArray(arguments), types = args[2 + num];
   _$jscoverage['/base/utils.js'].lineData[71]++;
-  if (visit19_71_1(types && S.isObject(types))) {
+  if (visit19_71_1(types && util.isObject(types))) {
     _$jscoverage['/base/utils.js'].lineData[72]++;
-    S.each(types, function(value, type) {
+    util.each(types, function(value, type) {
   _$jscoverage['/base/utils.js'].functionData[5]++;
   _$jscoverage['/base/utils.js'].lineData[73]++;
   var args2 = [].concat(args);

@@ -14,8 +14,8 @@ program
     .option('--compressLexerState', 'Set compress lexer state')
     .parse(process.argv);
 
-var S = require('../lib/seed'),
-    KISON = S.nodeRequire('kison'),
+var util = require('../lib/util'),
+    KISON = require('../lib/kison'),
 /*jshint camelcase:false*/
     js_beautify = require('js-beautify').js_beautify,
     fs = require('fs'),
@@ -73,11 +73,11 @@ function genParser() {
     //// S.log(grammarContent);
 
     console.info('start generate grammar module: ' + modulePath + '\n');
-    var start = S.now();
+    var start = util.now();
     /*jshint evil:true*/
     var code = new KISON.Grammar(eval(grammarContent)).genCode(kisonCfg);
 
-    var moduleCode = my_js_beautify(S.substitute(codeTemplate, {
+    var moduleCode = my_js_beautify(util.substitute(codeTemplate, {
         code: code
     }));
 
@@ -86,11 +86,11 @@ function genParser() {
     fs.writeFileSync(modulePath, moduleCode, encoding);
 
     console.info('generate grammar module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
-    console.info('duration: ' + (S.now() - start) + 'ms');
+    console.info('duration: ' + (util.now() - start) + 'ms');
 
 }
 
-var bufferCompile = S.buffer(genParser);
+var bufferCompile = util.buffer(genParser);
 
 if (program.watch) {
     fs.watch(grammar, bufferCompile);

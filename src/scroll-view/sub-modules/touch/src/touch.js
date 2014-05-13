@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var TimerAnim = require('anim/timer');
     var OUT_OF_BOUND_FACTOR = 0.5;
     var MAX_SWIPE_VELOCITY = 6;
-    var BaseGesture = require('event/gesture/base');
+    var BasicGesture = require('event/gesture/basic');
     var DragGesture = require('event/gesture/drag');
 
     function onDragScroll(self, e, scrollType) {
@@ -373,7 +373,7 @@ KISSY.add(function (S, require) {
         var action = self.get('disabled') ? 'detach' : 'on';
         self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)
             // click
-            [action](BaseGesture.START, onGestureStart, self)
+            [action](BasicGesture.START, onGestureStart, self)
             [action](DragGesture.DRAG_PRE, onDragPreHandler, self)
             [action](DragGesture.DRAG, onDragHandler, self)
             [action](DragGesture.DRAG_END, onDragEndHandler, self);

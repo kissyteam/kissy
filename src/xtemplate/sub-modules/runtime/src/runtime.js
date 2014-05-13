@@ -4,7 +4,7 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
-    require('util');
+    var util = require('util');
     var nativeCommands = require('./runtime/commands');
     var commands = {};
     var Scope = require('./runtime/scope');
@@ -113,7 +113,7 @@ KISSY.add(function (S, require) {
         self.config = config;
     }
 
-    S.mix(XTemplateRuntime, {
+    util.mix(XTemplateRuntime, {
         nativeCommands: nativeCommands,
 
         utils: utils,
@@ -151,7 +151,7 @@ KISSY.add(function (S, require) {
         if (!parentName) {
             var error = 'parent template does not have name' +
                 ' for relative sub tpl name: ' + subName;
-            throw new Error(error);
+            S.error(error);
         }
         var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
         if (cache[subName]) {
@@ -172,15 +172,16 @@ KISSY.add(function (S, require) {
         utils: utils,
 
         getTplContent: function (name, callback) {
-            var tpl = S.require(name,true);
-            if (tpl) {
-                return callback(undefined, tpl);
-            } else {
-                var error = 'template "' + name + '" does not exist, ' +
-                    'better required or used first for performance!';
-                S.log(error, 'error');
-                callback(error);
-            }
+            S.use(name, {
+                success: function (S, tpl) {
+                    callback(undefined, tpl);
+                },
+                error: function () {
+                    var error = 'template "' + name + '" does not exist';
+                    S.log(error, 'error');
+                    callback(error);
+                }
+            });
         },
 
         /**

@@ -232,6 +232,7 @@ if (! _$jscoverage['/custom.js']) {
   _$jscoverage['/custom.js'].lineData[6] = 0;
   _$jscoverage['/custom.js'].lineData[7] = 0;
   _$jscoverage['/custom.js'].lineData[8] = 0;
+  _$jscoverage['/custom.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/custom.js'].functionData) {
   _$jscoverage['/custom.js'].functionData = [];
@@ -246,7 +247,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/custom.js'].lineData[7]++;
   var Target = require('./custom/target');
   _$jscoverage['/custom.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/custom.js'].lineData[9]++;
   return {
   Target: Target, 
-  global: S.mix({}, Target)};
+  global: util.mix({}, Target)};
 });

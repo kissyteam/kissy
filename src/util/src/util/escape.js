@@ -2,9 +2,9 @@
  * @ignore
  * escape of lang
  * @author yiminghe@gmail.com
- *
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('./base');
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
@@ -60,7 +60,7 @@ KISSY.add(function (S) {
         return unEscapeHtmlReg;
     }
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * get escaped string from html.
          * only escape
@@ -112,6 +112,6 @@ KISSY.add(function (S) {
         }
     });
 
-    S.escapeHTML = S.escapeHtml;
-    S.unEscapeHTML = S.unEscapeHtml;
+    util.escapeHTML = util.escapeHtml;
+    util.unEscapeHTML = util.unEscapeHtml;
 });

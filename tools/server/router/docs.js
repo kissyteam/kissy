@@ -1,7 +1,7 @@
 /*jshint camelcase:false*/
 var cwd = process.cwd();
 var fs = require('fs');
-var S = require(cwd + '/lib/seed.js');
+var util = require(cwd + '/lib/util');
 
 module.exports = function (app) {
     // js duck mobile
@@ -18,7 +18,7 @@ module.exports = function (app) {
         var $uri = req.protocol + '://' + req.host + req.path;
         var $canonical = $uri + '#!' + $fragment;
         var $html = file_get_contents('print-template.html');
-        res.send(S.substitute($html, {
+        res.send(util.substitute($html, {
             subtitle: $subtitle,
             body: fix_links($body),
             canonical: $canonical

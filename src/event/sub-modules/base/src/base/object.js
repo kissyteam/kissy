@@ -3,12 +3,13 @@
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var returnFalse = function () {
         return false;
     }, returnTrue = function () {
         return true;
     }, undef;
+    var util = require('util');
 
     /**
      * @class KISSY.Event.Object
@@ -19,7 +20,7 @@ KISSY.add(function (S) {
 
         var self = this;
 
-        self.timeStamp = S.now();
+        self.timeStamp = util.now();
         /**
          * target
          * @property target

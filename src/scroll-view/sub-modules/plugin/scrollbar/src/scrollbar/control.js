@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var UA = require('ua');
     var Control = require('component/control');
-    var BaseGesture = require('event/gesture/base');
+    var BasicGesture = require('event/gesture/basic');
     var DragGesture = require('event/gesture/drag');
     var ScrollBarTpl = require('./scrollbar-xtpl');
 
@@ -183,10 +183,10 @@ KISSY.add(function (S, require) {
                 [action](DragGesture.DRAG_START, onDragStartHandler, self)
                 [action](DragGesture.DRAG, onDragHandler, self);
             S.each([self.$downBtn, self.$upBtn], function (b) {
-                b[action](BaseGesture.START, onUpDownBtnMouseDown, self)
-                    [action](BaseGesture.END, onUpDownBtnMouseUp, self);
+                b[action](BasicGesture.START, onUpDownBtnMouseDown, self)
+                    [action](BasicGesture.END, onUpDownBtnMouseUp, self);
             });
-            self.$trackEl[action](BaseGesture.START, onTrackElMouseDown, self);
+            self.$trackEl[action](BasicGesture.START, onTrackElMouseDown, self);
         }
     }
 

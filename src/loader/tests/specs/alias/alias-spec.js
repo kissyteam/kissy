@@ -8,6 +8,7 @@ var run = function (combine) {
         afterEach(function () {
             KISSY.clearLoader();
         });
+
         it('works for package alias', function () {
             var modules = {
                 'alias-a/x': ['alias-a/b', 'alias-a/c'],
@@ -24,12 +25,10 @@ var run = function (combine) {
                 }
             });
             var ret = 0;
-
             KISSY.use('alias-a/x', function (S, X) {
                 expect(X).toBe('alias-a/b');
                 ret = 1;
             });
-
             waitsFor(function () {
                 return ret;
             });

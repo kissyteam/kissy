@@ -18,7 +18,7 @@
             });
 
             describe('kissy.require', function () {
-                it('can be set to not to attach', function () {
+                it('not to attach', function () {
                     var runned = 0;
                     S.add('z', ['d'], function (S, require) {
                         require('d');
@@ -27,17 +27,6 @@
                     });
                     expect(S.require('z')).toBe(undefined);
                     expect(runned).toBe(0);
-                });
-
-                it('can be set  to attach', function () {
-                    var runned = 0;
-                    S.add('z', ['d'], function (S, require) {
-                        expect(require('d')).toBe(undefined);
-                        runned = 1;
-                        return 1;
-                    });
-                    expect(S.require('z', true)).toBe(1);
-                    expect(runned).toBe(1);
                 });
             });
 

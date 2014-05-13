@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Manager = require('component/control').Manager;
 
-    var BaseGesture = require('event/gesture/base');
+    var BasicGesture = require('event/gesture/basic');
     var TapGesture = require('event/gesture/tap');
 
     function onRenderChild(e) {
@@ -46,10 +46,10 @@ KISSY.add(function (S, require) {
                     // e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {
-                        case BaseGesture.START:
+                        case BasicGesture.START:
                             control.handleMouseDown(e);
                             break;
-                        case BaseGesture.END:
+                        case BasicGesture.END:
                             control.handleMouseUp(e);
                             break;
                         case TapGesture.TAP:
@@ -73,8 +73,8 @@ KISSY.add(function (S, require) {
 
         __bindUI: function () {
             var self = this,
-                events = BaseGesture.START +
-                    ' ' + BaseGesture.END +
+                events = BasicGesture.START +
+                    ' ' + BasicGesture.END +
                     ' ' + TapGesture.TAP;
 
             events += ' mouseenter mouseleave contextmenu';

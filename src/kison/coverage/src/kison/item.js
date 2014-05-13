@@ -231,31 +231,33 @@ if (! _$jscoverage['/kison/item.js']) {
   _$jscoverage['/kison/item.js'].lineData = [];
   _$jscoverage['/kison/item.js'].lineData[6] = 0;
   _$jscoverage['/kison/item.js'].lineData[7] = 0;
-  _$jscoverage['/kison/item.js'].lineData[9] = 0;
+  _$jscoverage['/kison/item.js'].lineData[8] = 0;
   _$jscoverage['/kison/item.js'].lineData[10] = 0;
   _$jscoverage['/kison/item.js'].lineData[11] = 0;
   _$jscoverage['/kison/item.js'].lineData[12] = 0;
-  _$jscoverage['/kison/item.js'].lineData[16] = 0;
+  _$jscoverage['/kison/item.js'].lineData[13] = 0;
   _$jscoverage['/kison/item.js'].lineData[17] = 0;
   _$jscoverage['/kison/item.js'].lineData[18] = 0;
-  _$jscoverage['/kison/item.js'].lineData[22] = 0;
-  _$jscoverage['/kison/item.js'].lineData[29] = 0;
-  _$jscoverage['/kison/item.js'].lineData[31] = 0;
+  _$jscoverage['/kison/item.js'].lineData[19] = 0;
+  _$jscoverage['/kison/item.js'].lineData[23] = 0;
+  _$jscoverage['/kison/item.js'].lineData[30] = 0;
   _$jscoverage['/kison/item.js'].lineData[32] = 0;
   _$jscoverage['/kison/item.js'].lineData[33] = 0;
-  _$jscoverage['/kison/item.js'].lineData[35] = 0;
+  _$jscoverage['/kison/item.js'].lineData[34] = 0;
   _$jscoverage['/kison/item.js'].lineData[36] = 0;
-  _$jscoverage['/kison/item.js'].lineData[38] = 0;
+  _$jscoverage['/kison/item.js'].lineData[37] = 0;
   _$jscoverage['/kison/item.js'].lineData[39] = 0;
   _$jscoverage['/kison/item.js'].lineData[40] = 0;
-  _$jscoverage['/kison/item.js'].lineData[43] = 0;
-  _$jscoverage['/kison/item.js'].lineData[47] = 0;
-  _$jscoverage['/kison/item.js'].lineData[53] = 0;
+  _$jscoverage['/kison/item.js'].lineData[41] = 0;
+  _$jscoverage['/kison/item.js'].lineData[44] = 0;
+  _$jscoverage['/kison/item.js'].lineData[48] = 0;
   _$jscoverage['/kison/item.js'].lineData[54] = 0;
   _$jscoverage['/kison/item.js'].lineData[55] = 0;
   _$jscoverage['/kison/item.js'].lineData[56] = 0;
   _$jscoverage['/kison/item.js'].lineData[57] = 0;
-  _$jscoverage['/kison/item.js'].lineData[60] = 0;
+  _$jscoverage['/kison/item.js'].lineData[58] = 0;
+  _$jscoverage['/kison/item.js'].lineData[61] = 0;
+  _$jscoverage['/kison/item.js'].lineData[77] = 0;
 }
 if (! _$jscoverage['/kison/item.js'].functionData) {
   _$jscoverage['/kison/item.js'].functionData = [];
@@ -265,127 +267,130 @@ if (! _$jscoverage['/kison/item.js'].functionData) {
   _$jscoverage['/kison/item.js'].functionData[3] = 0;
   _$jscoverage['/kison/item.js'].functionData[4] = 0;
   _$jscoverage['/kison/item.js'].functionData[5] = 0;
+  _$jscoverage['/kison/item.js'].functionData[6] = 0;
 }
 if (! _$jscoverage['/kison/item.js'].branchData) {
   _$jscoverage['/kison/item.js'].branchData = {};
-  _$jscoverage['/kison/item.js'].branchData['11'] = [];
-  _$jscoverage['/kison/item.js'].branchData['11'][1] = new BranchData();
-  _$jscoverage['/kison/item.js'].branchData['17'] = [];
-  _$jscoverage['/kison/item.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/kison/item.js'].branchData['32'] = [];
-  _$jscoverage['/kison/item.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/kison/item.js'].branchData['35'] = [];
-  _$jscoverage['/kison/item.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/kison/item.js'].branchData['38'] = [];
-  _$jscoverage['/kison/item.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/kison/item.js'].branchData['12'] = [];
+  _$jscoverage['/kison/item.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/kison/item.js'].branchData['18'] = [];
+  _$jscoverage['/kison/item.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/kison/item.js'].branchData['33'] = [];
+  _$jscoverage['/kison/item.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/kison/item.js'].branchData['36'] = [];
+  _$jscoverage['/kison/item.js'].branchData['36'][1] = new BranchData();
   _$jscoverage['/kison/item.js'].branchData['39'] = [];
   _$jscoverage['/kison/item.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/kison/item.js'].branchData['55'] = [];
-  _$jscoverage['/kison/item.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/kison/item.js'].branchData['40'] = [];
+  _$jscoverage['/kison/item.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/kison/item.js'].branchData['56'] = [];
+  _$jscoverage['/kison/item.js'].branchData['56'][1] = new BranchData();
 }
-_$jscoverage['/kison/item.js'].branchData['55'][1].init(22, 13, '!lookAhead[l]');
-function visit89_55_1(result) {
-  _$jscoverage['/kison/item.js'].branchData['55'][1].ranCondition(result);
+_$jscoverage['/kison/item.js'].branchData['56'][1].init(22, 13, '!lookAhead[l]');
+function visit89_56_1(result) {
+  _$jscoverage['/kison/item.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item.js'].branchData['39'][1].init(22, 54, '!equals(self.get(\'lookAhead\'), other.get(\'lookAhead\'))');
-function visit88_39_1(result) {
+}_$jscoverage['/kison/item.js'].branchData['40'][1].init(22, 54, '!equals(self.get(\'lookAhead\'), other.get(\'lookAhead\'))');
+function visit88_40_1(result) {
+  _$jscoverage['/kison/item.js'].branchData['40'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/item.js'].branchData['39'][1].init(289, 16, '!ignoreLookAhead');
+function visit87_39_1(result) {
   _$jscoverage['/kison/item.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item.js'].branchData['38'][1].init(289, 16, '!ignoreLookAhead');
-function visit87_38_1(result) {
-  _$jscoverage['/kison/item.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/kison/item.js'].branchData['36'][1].init(170, 52, 'other.get(\'dotPosition\') !== self.get(\'dotPosition\')');
+function visit86_36_1(result) {
+  _$jscoverage['/kison/item.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item.js'].branchData['35'][1].init(170, 52, 'other.get(\'dotPosition\') !== self.get(\'dotPosition\')');
-function visit86_35_1(result) {
-  _$jscoverage['/kison/item.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/kison/item.js'].branchData['33'][1].init(48, 55, '!other.get(\'production\').equals(self.get(\'production\'))');
+function visit85_33_1(result) {
+  _$jscoverage['/kison/item.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item.js'].branchData['32'][1].init(48, 55, '!other.get(\'production\').equals(self.get(\'production\'))');
-function visit85_32_1(result) {
-  _$jscoverage['/kison/item.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/kison/item.js'].branchData['18'][1].init(18, 10, '!(i in s1)');
+function visit84_18_1(result) {
+  _$jscoverage['/kison/item.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item.js'].branchData['17'][1].init(18, 10, '!(i in s1)');
-function visit84_17_1(result) {
-  _$jscoverage['/kison/item.js'].branchData['17'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kison/item.js'].branchData['11'][1].init(18, 10, '!(i in s2)');
-function visit83_11_1(result) {
-  _$jscoverage['/kison/item.js'].branchData['11'][1].ranCondition(result);
+}_$jscoverage['/kison/item.js'].branchData['12'][1].init(18, 10, '!(i in s2)');
+function visit83_12_1(result) {
+  _$jscoverage['/kison/item.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/item.js'].lineData[6]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/kison/item.js'].functionData[0]++;
   _$jscoverage['/kison/item.js'].lineData[7]++;
   var Base = require('base');
-  _$jscoverage['/kison/item.js'].lineData[9]++;
+  _$jscoverage['/kison/item.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/kison/item.js'].lineData[10]++;
   function equals(s1, s2) {
     _$jscoverage['/kison/item.js'].functionData[1]++;
-    _$jscoverage['/kison/item.js'].lineData[10]++;
+    _$jscoverage['/kison/item.js'].lineData[11]++;
     for (var i in s1) {
-      _$jscoverage['/kison/item.js'].lineData[11]++;
-      if (visit83_11_1(!(i in s2))) {
-        _$jscoverage['/kison/item.js'].lineData[12]++;
+      _$jscoverage['/kison/item.js'].lineData[12]++;
+      if (visit83_12_1(!(i in s2))) {
+        _$jscoverage['/kison/item.js'].lineData[13]++;
         return false;
       }
     }
-    _$jscoverage['/kison/item.js'].lineData[16]++;
+    _$jscoverage['/kison/item.js'].lineData[17]++;
     for (i in s2) {
-      _$jscoverage['/kison/item.js'].lineData[17]++;
-      if (visit84_17_1(!(i in s1))) {
-        _$jscoverage['/kison/item.js'].lineData[18]++;
+      _$jscoverage['/kison/item.js'].lineData[18]++;
+      if (visit84_18_1(!(i in s1))) {
+        _$jscoverage['/kison/item.js'].lineData[19]++;
         return false;
       }
     }
-    _$jscoverage['/kison/item.js'].lineData[22]++;
+    _$jscoverage['/kison/item.js'].lineData[23]++;
     return true;
   }
-  _$jscoverage['/kison/item.js'].lineData[29]++;
+  _$jscoverage['/kison/item.js'].lineData[30]++;
   module.exports = Base.extend({
   equals: function(other, ignoreLookAhead) {
   _$jscoverage['/kison/item.js'].functionData[2]++;
-  _$jscoverage['/kison/item.js'].lineData[31]++;
-  var self = this;
   _$jscoverage['/kison/item.js'].lineData[32]++;
-  if (visit85_32_1(!other.get('production').equals(self.get('production')))) {
-    _$jscoverage['/kison/item.js'].lineData[33]++;
+  var self = this;
+  _$jscoverage['/kison/item.js'].lineData[33]++;
+  if (visit85_33_1(!other.get('production').equals(self.get('production')))) {
+    _$jscoverage['/kison/item.js'].lineData[34]++;
     return false;
   }
-  _$jscoverage['/kison/item.js'].lineData[35]++;
-  if (visit86_35_1(other.get('dotPosition') !== self.get('dotPosition'))) {
-    _$jscoverage['/kison/item.js'].lineData[36]++;
+  _$jscoverage['/kison/item.js'].lineData[36]++;
+  if (visit86_36_1(other.get('dotPosition') !== self.get('dotPosition'))) {
+    _$jscoverage['/kison/item.js'].lineData[37]++;
     return false;
   }
-  _$jscoverage['/kison/item.js'].lineData[38]++;
-  if (visit87_38_1(!ignoreLookAhead)) {
-    _$jscoverage['/kison/item.js'].lineData[39]++;
-    if (visit88_39_1(!equals(self.get('lookAhead'), other.get('lookAhead')))) {
-      _$jscoverage['/kison/item.js'].lineData[40]++;
+  _$jscoverage['/kison/item.js'].lineData[39]++;
+  if (visit87_39_1(!ignoreLookAhead)) {
+    _$jscoverage['/kison/item.js'].lineData[40]++;
+    if (visit88_40_1(!equals(self.get('lookAhead'), other.get('lookAhead')))) {
+      _$jscoverage['/kison/item.js'].lineData[41]++;
       return false;
     }
   }
-  _$jscoverage['/kison/item.js'].lineData[43]++;
+  _$jscoverage['/kison/item.js'].lineData[44]++;
   return true;
 }, 
   toString: function(ignoreLookAhead) {
   _$jscoverage['/kison/item.js'].functionData[3]++;
-  _$jscoverage['/kison/item.js'].lineData[47]++;
-  return this.get('production').toString(this.get('dotPosition')) + (ignoreLookAhead ? '' : (',' + S.keys(this.get('lookAhead')).join('/')));
+  _$jscoverage['/kison/item.js'].lineData[48]++;
+  return this.get('production').toString(this.get('dotPosition')) + (ignoreLookAhead ? '' : (',' + util.keys(this.get('lookAhead')).join('/')));
 }, 
   addLookAhead: function(ls) {
   _$jscoverage['/kison/item.js'].functionData[4]++;
-  _$jscoverage['/kison/item.js'].lineData[53]++;
-  var lookAhead = this.get('lookAhead'), ret = 0;
   _$jscoverage['/kison/item.js'].lineData[54]++;
-  S.each(ls, function(_, l) {
-  _$jscoverage['/kison/item.js'].functionData[5]++;
+  var lookAhead = this.get('lookAhead'), ret = 0;
   _$jscoverage['/kison/item.js'].lineData[55]++;
-  if (visit89_55_1(!lookAhead[l])) {
-    _$jscoverage['/kison/item.js'].lineData[56]++;
-    lookAhead[l] = 1;
+  util.each(ls, function(_, l) {
+  _$jscoverage['/kison/item.js'].functionData[5]++;
+  _$jscoverage['/kison/item.js'].lineData[56]++;
+  if (visit89_56_1(!lookAhead[l])) {
     _$jscoverage['/kison/item.js'].lineData[57]++;
+    lookAhead[l] = 1;
+    _$jscoverage['/kison/item.js'].lineData[58]++;
     ret = 1;
   }
 });
-  _$jscoverage['/kison/item.js'].lineData[60]++;
+  _$jscoverage['/kison/item.js'].lineData[61]++;
   return ret;
 }}, {
   ATTRS: {
@@ -393,5 +398,9 @@ KISSY.add(function(S, require, exports, module) {
   dotPosition: {
   value: 0}, 
   lookAhead: {
-  value: {}}}});
+  valueFn: function() {
+  _$jscoverage['/kison/item.js'].functionData[6]++;
+  _$jscoverage['/kison/item.js'].lineData[77]++;
+  return {};
+}}}});
 });

@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require, exports, module) {
     var Base = require('base');
+    var util = require('util');
 
     function equals(s1, s2) {
         for (var i in s1) {
@@ -46,12 +47,12 @@ KISSY.add(function (S, require, exports, module) {
         toString: function (ignoreLookAhead) {
             return this.get('production')
                 .toString(this.get('dotPosition')) + (ignoreLookAhead ? '' :
-                (',' + S.keys(this.get('lookAhead')).join('/')));
+                (',' + util.keys(this.get('lookAhead')).join('/')));
         },
 
         addLookAhead: function (ls) {
             var lookAhead = this.get('lookAhead'), ret = 0;
-            S.each(ls, function (_, l) {
+            util.each(ls, function (_, l) {
                 if (!lookAhead[l]) {
                     lookAhead[l] = 1;
                     ret = 1;
@@ -72,7 +73,9 @@ KISSY.add(function (S, require, exports, module) {
                  and find( indexOf )
                  instead of array
                  */
-                value: {}
+                valueFn: function () {
+                    return {};
+                }
             }
         }
     });

@@ -2,9 +2,8 @@
  * @ignore
  * array utilities of lang
  * @author yiminghe@gmail.com
- *
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var TRUE = true,
         undef,
         AP = Array.prototype,
@@ -13,10 +12,11 @@ KISSY.add(function (S) {
         filter = AP.filter,
         every = AP.every,
         some = AP.some,
+        util = require('./base'),
         map = AP.map,
         FALSE = false;
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * Search for a specified value within an array.
          * @param item individual item to be searched
@@ -71,8 +71,8 @@ KISSY.add(function (S) {
         /**
          * Returns a copy of the array with the duplicate entries removed
          * @param a {Array} the array to find the subset of unique for
-         * @param [override] {Boolean} if override is TRUE, S.unique([a, b, a]) => [b, a].
-         * if override is FALSE, S.unique([a, b, a]) => [a, b]
+         * @param [override] {Boolean} if override is TRUE, util.unique([a, b, a]) => [b, a].
+         * if override is FALSE, util.unique([a, b, a]) => [a, b]
          * @return {Array} a copy of the array with duplicate entries removed
          * @member KISSY
          */
@@ -87,7 +87,7 @@ KISSY.add(function (S) {
 
             while (i < b.length) {
                 item = b[i];
-                while ((n = S.lastIndexOf(item, b)) !== i) {
+                while ((n = util.lastIndexOf(item, b)) !== i) {
                     b.splice(n, 1);
                 }
                 i += 1;
@@ -107,7 +107,7 @@ KISSY.add(function (S) {
          * @member KISSY
          */
         inArray: function (item, arr) {
-            return S.indexOf(item, arr) > -1;
+            return util.indexOf(item, arr) > -1;
         },
 
         /**
@@ -128,7 +128,7 @@ KISSY.add(function (S) {
             } :
             function (arr, fn, context) {
                 var ret = [];
-                S.each(arr, function (item, i, arr) {
+                util.each(arr, function (item, i, arr) {
                     if (fn.call(context || this, item, i, arr)) {
                         ret.push(item);
                     }
@@ -275,7 +275,7 @@ KISSY.add(function (S) {
             if (o == null) {
                 return [];
             }
-            if (S.isArray(o)) {
+            if (util.isArray(o)) {
                 return o;
             }
             var lengthType = typeof o.length,

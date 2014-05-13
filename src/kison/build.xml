@@ -22,6 +22,8 @@
 
     <import file="../common.xml"/>
 
+    <target name="tpl2mod"/>
+
     <target name="kison-build" depends="build">
         <delete dir="${component.meta.dir}"/>
     </target>

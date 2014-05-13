@@ -2,9 +2,9 @@
  * @ignore
  * function utilities of lang
  * @author yiminghe@gmail.com
- *
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var util = require('./base');
     // ios Function.prototype.bind === undefine
     function bindFn(r, fn, obj) {
         function FNOP() {
@@ -16,7 +16,7 @@ KISSY.add(function (S) {
                 var inArgs = slice.call(arguments);
                 return fn.apply(
                     this instanceof FNOP ? this :
-                        // fix: y.x=S.bind(fn);
+                        // fix: y.x=util.bind(fn);
                         obj || this,
                     (r ? inArgs.concat(args) : args.concat(inArgs))
                 );
@@ -26,7 +26,7 @@ KISSY.add(function (S) {
         return bound;
     }
 
-    S.mix(S, {
+    util.mix(util, {
         /**
          * empty function
          * @member KISSY
@@ -85,7 +85,7 @@ KISSY.add(function (S) {
         later: function (fn, when, periodic, context, data) {
             when = when || 0;
             var m = fn,
-                d = S.makeArray(data),
+                d = util.makeArray(data),
                 f,
                 r;
 
@@ -94,7 +94,7 @@ KISSY.add(function (S) {
             }
 
             if (!m) {
-                S.error('method undefine');
+                util.error('method undefine');
             }
 
             f = function () {
@@ -134,10 +134,10 @@ KISSY.add(function (S) {
                 };
             }
 
-            var last = S.now();
+            var last = util.now();
 
             return function () {
-                var now = S.now();
+                var now = util.now();
                 if (now - last > ms) {
                     last = now;
                     fn.apply(context || this, arguments);
@@ -165,7 +165,7 @@ KISSY.add(function (S) {
 
             function f() {
                 f.stop();
-                bufferTimer = S.later(fn, ms, 0, context || this, arguments);
+                bufferTimer = util.later(fn, ms, 0, context || this, arguments);
             }
 
             f.stop = function () {

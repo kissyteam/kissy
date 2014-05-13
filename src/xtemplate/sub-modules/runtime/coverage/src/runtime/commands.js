@@ -231,6 +231,7 @@ if (! _$jscoverage['/runtime/commands.js']) {
   _$jscoverage['/runtime/commands.js'].lineData = [];
   _$jscoverage['/runtime/commands.js'].lineData[6] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[7] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[8] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[9] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[11] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[12] = 0;
@@ -414,7 +415,7 @@ if (! _$jscoverage['/runtime/commands.js'].branchData) {
   _$jscoverage['/runtime/commands.js'].branchData['193'] = [];
   _$jscoverage['/runtime/commands.js'].branchData['193'][1] = new BranchData();
 }
-_$jscoverage['/runtime/commands.js'].branchData['193'][1].init(6624, 9, '\'@DEBUG@\'');
+_$jscoverage['/runtime/commands.js'].branchData['193'][1].init(6658, 9, '\'@DEBUG@\'');
 function visit27_193_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['193'][1].ranCondition(result);
   return result;
@@ -510,7 +511,7 @@ function visit5_28_1(result) {
 function visit4_22_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/commands.js'].branchData['20'][1].init(22, 17, 'S.isArray(param0)');
+}_$jscoverage['/runtime/commands.js'].branchData['20'][1].init(22, 20, 'util.isArray(param0)');
 function visit3_20_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['20'][1].ranCondition(result);
   return result;
@@ -527,6 +528,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].functionData[0]++;
   _$jscoverage['/runtime/commands.js'].lineData[7]++;
   var Scope = require('./scope');
+  _$jscoverage['/runtime/commands.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/runtime/commands.js'].lineData[9]++;
   var commands = {
   each: function(scope, option, buffer) {
@@ -548,7 +551,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[19]++;
   if (visit2_19_1(param0)) {
     _$jscoverage['/runtime/commands.js'].lineData[20]++;
-    if (visit3_20_1(S.isArray(param0))) {
+    if (visit3_20_1(util.isArray(param0))) {
       _$jscoverage['/runtime/commands.js'].lineData[21]++;
       xcount = param0.length;
       _$jscoverage['/runtime/commands.js'].lineData[22]++;
@@ -811,7 +814,7 @@ KISSY.add(function(S, require) {
     commands['debugger'] = function() {
   _$jscoverage['/runtime/commands.js'].functionData[10]++;
   _$jscoverage['/runtime/commands.js'].lineData[195]++;
-  S.globalEval('debugger');
+  util.globalEval('debugger');
 };
   }
   _$jscoverage['/runtime/commands.js'].lineData[199]++;

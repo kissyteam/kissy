@@ -229,6 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/util/function.js']) {
   _$jscoverage['/util/function.js'] = {};
   _$jscoverage['/util/function.js'].lineData = [];
+  _$jscoverage['/util/function.js'].lineData[6] = 0;
   _$jscoverage['/util/function.js'].lineData[7] = 0;
   _$jscoverage['/util/function.js'].lineData[9] = 0;
   _$jscoverage['/util/function.js'].lineData[10] = 0;
@@ -328,68 +329,70 @@ if (! _$jscoverage['/util/function.js'].branchData) {
   _$jscoverage['/util/function.js'].branchData['172'][1] = new BranchData();
 }
 _$jscoverage['/util/function.js'].branchData['172'][1].init(22, 11, 'bufferTimer');
-function visit76_172_1(result) {
+function visit77_172_1(result) {
   _$jscoverage['/util/function.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['168'][1].init(78, 15, 'context || this');
-function visit75_168_1(result) {
+}_$jscoverage['/util/function.js'].branchData['168'][1].init(81, 15, 'context || this');
+function visit76_168_1(result) {
   _$jscoverage['/util/function.js'].branchData['168'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['161'][1].init(31, 15, 'context || this');
-function visit74_161_1(result) {
+function visit75_161_1(result) {
   _$jscoverage['/util/function.js'].branchData['161'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['159'][1].init(49, 9, 'ms === -1');
-function visit73_159_1(result) {
+function visit74_159_1(result) {
   _$jscoverage['/util/function.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['157'][1].init(19, 9, 'ms || 150');
-function visit72_157_1(result) {
+function visit73_157_1(result) {
   _$jscoverage['/util/function.js'].branchData['157'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['143'][1].init(64, 15, 'context || this');
-function visit71_143_1(result) {
+function visit72_143_1(result) {
   _$jscoverage['/util/function.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['141'][1].init(58, 15, 'now - last > ms');
-function visit70_141_1(result) {
+}_$jscoverage['/util/function.js'].branchData['141'][1].init(61, 15, 'now - last > ms');
+function visit71_141_1(result) {
   _$jscoverage['/util/function.js'].branchData['141'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['133'][1].init(31, 15, 'context || this');
-function visit69_133_1(result) {
+function visit70_133_1(result) {
   _$jscoverage['/util/function.js'].branchData['133'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['131'][1].init(49, 9, 'ms === -1');
-function visit68_131_1(result) {
+function visit69_131_1(result) {
   _$jscoverage['/util/function.js'].branchData['131'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['129'][1].init(19, 9, 'ms || 150');
-function visit67_129_1(result) {
+function visit68_129_1(result) {
   _$jscoverage['/util/function.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['110'][1].init(26, 13, 'this.interval');
-function visit66_110_1(result) {
+function visit67_110_1(result) {
   _$jscoverage['/util/function.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['96'][1].init(250, 2, '!m');
-function visit65_96_1(result) {
+}_$jscoverage['/util/function.js'].branchData['96'][1].init(253, 2, '!m');
+function visit66_96_1(result) {
   _$jscoverage['/util/function.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['92'][1].init(156, 22, 'typeof fn === \'string\'');
-function visit64_92_1(result) {
+}_$jscoverage['/util/function.js'].branchData['92'][1].init(159, 22, 'typeof fn === \'string\'');
+function visit65_92_1(result) {
   _$jscoverage['/util/function.js'].branchData['92'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/function.js'].branchData['86'][1].init(21, 9, 'when || 0');
-function visit63_86_1(result) {
+function visit64_86_1(result) {
   _$jscoverage['/util/function.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].branchData['20'][1].init(103, 11, 'obj || this');
-function visit62_20_1(result) {
+}_$jscoverage['/util/function.js'].branchData['20'][1].init(106, 11, 'obj || this');
+function visit63_20_1(result) {
   _$jscoverage['/util/function.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/function.js'].lineData[7]++;
-KISSY.add(function(S) {
+}_$jscoverage['/util/function.js'].lineData[6]++;
+KISSY.add(function(S, require) {
   _$jscoverage['/util/function.js'].functionData[0]++;
+  _$jscoverage['/util/function.js'].lineData[7]++;
+  var util = require('./base');
   _$jscoverage['/util/function.js'].lineData[9]++;
   function bindFn(r, fn, obj) {
     _$jscoverage['/util/function.js'].functionData[1]++;
@@ -403,7 +406,7 @@ KISSY.add(function(S) {
   _$jscoverage['/util/function.js'].lineData[16]++;
   var inArgs = slice.call(arguments);
   _$jscoverage['/util/function.js'].lineData[17]++;
-  return fn.apply(this instanceof FNOP ? this : visit62_20_1(obj || this), (r ? inArgs.concat(args) : args.concat(inArgs)));
+  return fn.apply(this instanceof FNOP ? this : visit63_20_1(obj || this), (r ? inArgs.concat(args) : args.concat(inArgs)));
 };
     _$jscoverage['/util/function.js'].lineData[24]++;
     FNOP.prototype = fn.prototype;
@@ -413,7 +416,7 @@ KISSY.add(function(S) {
     return bound;
   }
   _$jscoverage['/util/function.js'].lineData[29]++;
-  S.mix(S, {
+  util.mix(util, {
   noop: function() {
   _$jscoverage['/util/function.js'].functionData[4]++;
 }, 
@@ -422,18 +425,18 @@ KISSY.add(function(S) {
   later: function(fn, when, periodic, context, data) {
   _$jscoverage['/util/function.js'].functionData[5]++;
   _$jscoverage['/util/function.js'].lineData[86]++;
-  when = visit63_86_1(when || 0);
+  when = visit64_86_1(when || 0);
   _$jscoverage['/util/function.js'].lineData[87]++;
-  var m = fn, d = S.makeArray(data), f, r;
+  var m = fn, d = util.makeArray(data), f, r;
   _$jscoverage['/util/function.js'].lineData[92]++;
-  if (visit64_92_1(typeof fn === 'string')) {
+  if (visit65_92_1(typeof fn === 'string')) {
     _$jscoverage['/util/function.js'].lineData[93]++;
     m = context[fn];
   }
   _$jscoverage['/util/function.js'].lineData[96]++;
-  if (visit65_96_1(!m)) {
+  if (visit66_96_1(!m)) {
     _$jscoverage['/util/function.js'].lineData[97]++;
-    S.error('method undefine');
+    util.error('method undefine');
   }
   _$jscoverage['/util/function.js'].lineData[100]++;
   f = function() {
@@ -450,7 +453,7 @@ KISSY.add(function(S) {
   cancel: function() {
   _$jscoverage['/util/function.js'].functionData[7]++;
   _$jscoverage['/util/function.js'].lineData[110]++;
-  if (visit66_110_1(this.interval)) {
+  if (visit67_110_1(this.interval)) {
     _$jscoverage['/util/function.js'].lineData[111]++;
     clearInterval(r);
   } else {
@@ -462,43 +465,43 @@ KISSY.add(function(S) {
   throttle: function(fn, ms, context) {
   _$jscoverage['/util/function.js'].functionData[8]++;
   _$jscoverage['/util/function.js'].lineData[129]++;
-  ms = visit67_129_1(ms || 150);
+  ms = visit68_129_1(ms || 150);
   _$jscoverage['/util/function.js'].lineData[131]++;
-  if (visit68_131_1(ms === -1)) {
+  if (visit69_131_1(ms === -1)) {
     _$jscoverage['/util/function.js'].lineData[132]++;
     return function() {
   _$jscoverage['/util/function.js'].functionData[9]++;
   _$jscoverage['/util/function.js'].lineData[133]++;
-  fn.apply(visit69_133_1(context || this), arguments);
+  fn.apply(visit70_133_1(context || this), arguments);
 };
   }
   _$jscoverage['/util/function.js'].lineData[137]++;
-  var last = S.now();
+  var last = util.now();
   _$jscoverage['/util/function.js'].lineData[139]++;
   return function() {
   _$jscoverage['/util/function.js'].functionData[10]++;
   _$jscoverage['/util/function.js'].lineData[140]++;
-  var now = S.now();
+  var now = util.now();
   _$jscoverage['/util/function.js'].lineData[141]++;
-  if (visit70_141_1(now - last > ms)) {
+  if (visit71_141_1(now - last > ms)) {
     _$jscoverage['/util/function.js'].lineData[142]++;
     last = now;
     _$jscoverage['/util/function.js'].lineData[143]++;
-    fn.apply(visit71_143_1(context || this), arguments);
+    fn.apply(visit72_143_1(context || this), arguments);
   }
 };
 }, 
   buffer: function(fn, ms, context) {
   _$jscoverage['/util/function.js'].functionData[11]++;
   _$jscoverage['/util/function.js'].lineData[157]++;
-  ms = visit72_157_1(ms || 150);
+  ms = visit73_157_1(ms || 150);
   _$jscoverage['/util/function.js'].lineData[159]++;
-  if (visit73_159_1(ms === -1)) {
+  if (visit74_159_1(ms === -1)) {
     _$jscoverage['/util/function.js'].lineData[160]++;
     return function() {
   _$jscoverage['/util/function.js'].functionData[12]++;
   _$jscoverage['/util/function.js'].lineData[161]++;
-  fn.apply(visit74_161_1(context || this), arguments);
+  fn.apply(visit75_161_1(context || this), arguments);
 };
   }
   _$jscoverage['/util/function.js'].lineData[164]++;
@@ -509,13 +512,13 @@ KISSY.add(function(S) {
     _$jscoverage['/util/function.js'].lineData[167]++;
     f.stop();
     _$jscoverage['/util/function.js'].lineData[168]++;
-    bufferTimer = S.later(fn, ms, 0, visit75_168_1(context || this), arguments);
+    bufferTimer = util.later(fn, ms, 0, visit76_168_1(context || this), arguments);
   }
   _$jscoverage['/util/function.js'].lineData[171]++;
   f.stop = function() {
   _$jscoverage['/util/function.js'].functionData[14]++;
   _$jscoverage['/util/function.js'].lineData[172]++;
-  if (visit76_172_1(bufferTimer)) {
+  if (visit77_172_1(bufferTimer)) {
     _$jscoverage['/util/function.js'].lineData[173]++;
     bufferTimer.cancel();
     _$jscoverage['/util/function.js'].lineData[174]++;

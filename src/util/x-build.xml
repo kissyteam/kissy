@@ -1,6 +1,0 @@
-<project name="util.build" default="build" basedir=".">
-    <property name="component.name" value="util"/>
-    <import file="../common.xml"/>
-    <target name="compress-css"/>
-    <target name="tpl2mod"/>
-</project>

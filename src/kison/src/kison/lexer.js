@@ -5,6 +5,54 @@
  */
 KISSY.add(function (S, require) {
     var Utils = require('./utils');
+    var util = require('util');
+
+    function mix(to, from) {
+        for (var f in from) {
+            to[f] = from[f];
+        }
+    }
+
+    function isArray(obj) {
+        return '[object Array]' === Object.prototype.toString.call(obj);
+    }
+
+    function inArray(item, arr) {
+        for (var i = 0, l = arr.length; i < l; i++) {
+            if (arr[i] === item) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function each(object, fn, context) {
+        if (object) {
+            var key,
+                val,
+                length,
+                i = 0;
+
+            context = context || null;
+
+            if (!isArray(object)) {
+                for (key in object) {
+                    // can not use hasOwnProperty
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                length = object.length;
+                for (val = object[0];
+                     i < length; val = object[++i]) {
+                    if (fn.call(context, val, i, object) === false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     function mapSymbolForCodeGen(t) {
         return this.symbolMap[t];
@@ -35,7 +83,7 @@ KISSY.add(function (S, require) {
              */
             self.rules = [];
 
-            S.mix(self, cfg);
+            mix(self, cfg);
 
             /*
              Input languages
@@ -55,7 +103,7 @@ KISSY.add(function (S, require) {
         constructor: Lexer,
 
         resetInput: function (input) {
-            S.mix(this, {
+            mix(this, {
                 input: input,
                 matched: '',
                 stateStack: [Lexer.STATIC.INITIAL],
@@ -93,10 +141,16 @@ KISSY.add(function (S, require) {
                 self = this,
                 compressSymbol = cfg.compressSymbol,
                 compressState = cfg.compressLexerState,
-                code = ['/*jslint quotmark: false*/'],
+                code = [
+                    '/*jslint quotmark: false*/',
+                    mix.toString(),
+                    isArray.toString(),
+                    each.toString(),
+                    inArray.toString()
+                ],
                 stateMap;
 
-            var genPrototype = S.mix({}, Lexer.prototype, true, function (name, val) {
+            var genPrototype = util.mix({}, Lexer.prototype, true, function (name, val) {
                 if (name.match(/^(?:genCode|constructor|mapState|genShortId)$/)) {
                     return undefined;
                 }
@@ -131,7 +185,7 @@ KISSY.add(function (S, require) {
                         }
                         ret = [token, v.regexp, action || 0];
                         if (compressState && state) {
-                            state = S.map(state, function (s) {
+                            state = util.map(state, function (s) {
                                 return self.mapState(s);
                             });
                         }
@@ -164,13 +218,13 @@ KISSY.add(function (S, require) {
             if (self.mapState) {
                 currentState = self.mapState(currentState);
             }
-            S.each(self.rules, function (r) {
+            each(self.rules, function (r) {
                 var state = r.state || r[3];
                 if (!state) {
                     if (currentState === Lexer.STATIC.INITIAL) {
                         rules.push(r);
                     }
-                } else if (S.inArray(currentState, state)) {
+                } else if (inArray(currentState, state)) {
                     rules.push(r);
                 }
             });
@@ -213,7 +267,7 @@ KISSY.add(function (S, require) {
             if (!symbolMap) {
                 return t;
             }
-            // force string, see S.clone iphone5s ios7 bug
+            // force string, see util.clone iphone5s ios7 bug
             return symbolMap[t] || (symbolMap[t] = self.genShortId('symbol'));
         },
 
@@ -273,7 +327,7 @@ KISSY.add(function (S, require) {
                     if (lines) {
                         self.lineNumber += lines.length;
                     }
-                    S.mix(self, {
+                    mix(self, {
                         firstLine: self.lastLine,
                         lastLine: self.lineNumber + 1,
                         firstColumn: self.lastColumn,
