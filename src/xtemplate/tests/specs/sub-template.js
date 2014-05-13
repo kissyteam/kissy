@@ -103,8 +103,8 @@ KISSY.add(function (S, require) {
         it('support compiled xtemplate module', function () {
             var path;
 
-            if (S.UA.nodejs) {
-                path = S.config('packages').src.base + 'xtemplate/tests/specs/xtpls';
+            if (typeof process !== 'undefined') {
+                path = S.config('packages').src.base + 'xtemplate/tests/xtpls';
 
                 S.config('packages', {
                     xtpls: {
@@ -114,7 +114,7 @@ KISSY.add(function (S, require) {
             } else {
                 KISSY.config('packages', {
                     'xtpls': {
-                        base: '/kissy/src/xtemplate/tests/specs/xtpls'
+                        base: '/kissy/src/xtemplate/tests/xtpls'
                     }
                 });
             }

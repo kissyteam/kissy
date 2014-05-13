@@ -18,17 +18,16 @@
     <style>
         {{{externalStyle}}}
     </style>
+    <script src="/kissy/src/loader/tests/others/import.js"></script>
     {{#if (query.min)}}
         {{#if (loader)}}
-            <script src="/kissy/build/loader.js"></script>
         {{else}}
-            <script src="/kissy/build/seed.js"></script>
+            <script src="/kissy/build/??ua.js,feature.js,meta.js"></script>
         {{/if}}
     {{else}}
         {{#if (loader)}}
-            <script src="/kissy/build/loader.js"></script>
         {{else}}
-            <script src="/kissy/build/seed-debug.js"></script>
+            <script src="/kissy/build/??ua-debug.js,feature-debug.js,meta-debug.js"></script>
         {{/if}}
     {{/if}}
     <script>

@@ -4,12 +4,13 @@
  */
 KISSY.add(function (S, require) {
     var XTemplate = require('xtemplate');
+    var util = require('util');
 
     describe('extend', function () {
         var mods = ['template_extend/base', 'template_extend/base2', 'template_extend/base3', 'template_extend/base4'];
 
         beforeEach(function () {
-            S.each(mods, function (mod) {
+            util.each(mods, function (mod) {
                 delete S.Env.mods[mod];
             });
         });

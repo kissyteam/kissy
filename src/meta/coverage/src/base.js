@@ -229,13 +229,31 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'] = {};
   _$jscoverage['/base.js'].lineData = [];
-  _$jscoverage['/base.js'].lineData[1] = 0;
+  _$jscoverage['/base.js'].lineData[7] = 0;
+  _$jscoverage['/base.js'].lineData[15] = 0;
+  _$jscoverage['/base.js'].lineData[24] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
 }
 if (! _$jscoverage['/base.js'].branchData) {
   _$jscoverage['/base.js'].branchData = {};
+  _$jscoverage['/base.js'].branchData['18'] = [];
+  _$jscoverage['/base.js'].branchData['18'][1] = new BranchData();
 }
-_$jscoverage['/base.js'].lineData[1]++;
-KISSY.use('ua, util');
+_$jscoverage['/base.js'].branchData['18'][1].init(20, 29, 'location.protocol === \'https\'');
+function visit1_18_1(result) {
+  _$jscoverage['/base.js'].branchData['18'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base.js'].lineData[7]++;
+KISSY.config({
+  modules: {
+  ajax: {
+  alias: 'io'}}});
+_$jscoverage['/base.js'].lineData[15]++;
+KISSY.config({
+  packages: {
+  gallery: {
+  base: visit1_18_1(location.protocol === 'https') ? 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'}}});
+_$jscoverage['/base.js'].lineData[24]++;
+KISSY.use('ua,feature');

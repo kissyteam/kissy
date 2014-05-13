@@ -6,26 +6,19 @@
     <import file="config.xml"/>
 
     <target name="build">
-        <!--
-          各个组件构建
-          https://issues.apache.org/bugzilla/show_bug.cgi?id=33061 oom
-        -->
-        <subant target="" failonerror="true"
-                buildpath="${kissy.src.dir}/seed"
-                inheritall="false"/>
-
         <subant target="" failonerror="true"
                 buildpath="${kissy.src.dir}/xtemplate"
                 inheritall="false"/>
 
         <subant target="" failonerror="true" inheritall="false">
             <fileset dir="${kissy.src.dir}"
-                     excludesfile="${kissy.src.dir}/xtemplate/build.xml"
+                     excludesfile="${kissy.src.dir}/xtemplate/build.xml,
+                     ${kissy.src.dir}/meta/build.xml"
                      includes="*/build.xml"/>
         </subant>
 
         <subant target="" failonerror="true"
-                buildpath="${kissy.src.dir}/seed"
+                buildpath="${kissy.src.dir}/meta"
                 inheritall="false"/>
     </target>
 

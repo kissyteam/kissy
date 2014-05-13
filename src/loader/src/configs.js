@@ -28,7 +28,7 @@
             filter, t, url, subPath;
         var packageInfo = mod.getPackage();
         var packageBase = packageInfo.getBase();
-        var packageName = packageInfo.getName();
+        var packageName = packageInfo.name;
         var extname = '.' + mod.getType();
         // special for css module
         name = name.replace(/\.css$/, '');

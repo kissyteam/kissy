@@ -1,4 +1,32 @@
-/*jshint indent:false, quotmark:false*/
+/*
+Copyright 2014, KISSY v5.0.0
+MIT Licensed
+build time: May 13 17:44
+*/
+/**
+ * @ignore
+ * Default KISSY Gallery and core alias.
+ * @author yiminghe@gmail.com
+ */
+
+KISSY.config({
+    modules: {
+        ajax: {
+            alias: 'io'
+        }
+    }
+});
+
+KISSY.config({
+    packages: {
+        gallery: {
+            base: location.protocol === 'https' ?
+                'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'
+        }
+    }
+});
+
+KISSY.use('ua,feature');/*jshint indent:false, quotmark:false*/
 (function(S){
 S.config("requires",{
     "anim/base": [

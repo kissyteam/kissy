@@ -8,7 +8,6 @@ var program = require('./lib/commander');
 
 program
     .version(require('../package.json').version)
-    .command('kison <cmd>', 'run kison')
     .command('xtemplate <cmd>', 'run xtemplate')
     .parse(process.argv);
 

@@ -4,6 +4,7 @@
  */
 KISSY.add(function (S, require) {
     var XTemplate = require('xtemplate');
+    var util = require('util');
 
     describe('feature', function () {
         it('support {{%%}}', function () {
@@ -814,7 +815,7 @@ KISSY.add(function (S, require) {
                 var render = new XTemplate(tpl, {
                     commands: {
                         'map': function (scope, option) {
-                            return S.map(option.params[0], function (u) {
+                            return util.map(option.params[0], function (u) {
                                 return u.name;
                             });
                         },
@@ -872,7 +873,7 @@ KISSY.add(function (S, require) {
 
         it('support model object with function', function () {
             function Adder(cfg) {
-                S.mix(this, cfg);
+                util.mix(this, cfg);
             }
 
             Adder.prototype.add = function (a, b) {

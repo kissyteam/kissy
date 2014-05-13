@@ -5,6 +5,7 @@
 KISSY.add(function (S, require) {
     /*jshint quotmark:false*/
     var XTemplate = require('xtemplate');
+    var util = require('util');
 
     describe('error detection', function () {
         // https://github.com/kissyteam/kissy/issues/516
@@ -44,7 +45,7 @@ KISSY.add(function (S, require) {
 
             }
             if (S.config('debug')) {
-                expect(S.startsWith(info, 'Syntax error at line 3:\n' +
+                expect(util.startsWith(info, 'Syntax error at line 3:\n' +
                     '{{#if(title)}} shoot\n\n' +
                     '--------------------^\n' +
                     'expect'));
@@ -73,7 +74,7 @@ KISSY.add(function (S, require) {
                     throw e;
                 }
             }).toThrow('Syntax error at line 3:\n' +
-                    'expect {{/if}} not {{/with}}');
+                'expect {{/if}} not {{/with}}');
         });
 
         it('detect unmatched custom command', function () {
@@ -89,7 +90,7 @@ KISSY.add(function (S, require) {
                     throw e;
                 }
             }).toThrow('Syntax error at line 2:\n' +
-                    'expect {{/x,y}} not {{/x}}');
+                'expect {{/x,y}} not {{/x}}');
         });
 
         it('will report file information ' +
@@ -100,7 +101,7 @@ KISSY.add(function (S, require) {
 
             var path;
 
-            if (S.UA.nodejs) {
+            if (typeof process !== 'undefined') {
                 path = S.config('packages').src.base + 'xtemplate/tests/specs/';
 
                 S.config('packages', {
@@ -129,7 +130,7 @@ KISSY.add(function (S, require) {
                         }
                     }).render();
                 }).toThrow('in file: xtpls/custom-command-xtpl error in custom-command:' +
-                        ' "command" at line 1');
+                    ' "command" at line 1');
             });
 
             waitsFor(function () {

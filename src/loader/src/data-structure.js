@@ -44,14 +44,6 @@
         },
 
         /**
-         * Get package name.
-         * @return {String}
-         */
-        getName: function () {
-            return this.name;
-        },
-
-        /**
          * get package url
          */
         getBase: function () {
@@ -238,14 +230,6 @@
                 self.url = S.Config.resolveModFn(self);
             }
             return self.url;
-        },
-
-        /**
-         * Get the name of current module
-         * @return {String}
-         */
-        getName: function () {
-            return this.name;
         },
 
         /**
