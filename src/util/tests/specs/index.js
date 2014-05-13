@@ -1,5 +1,5 @@
 KISSY.add(function (S, require) {
-    require('util');
+    var util = require('util');
     var UA = require('ua');
     /*jshint quotmark:false*/
     describe('util', function () {
@@ -13,11 +13,11 @@ KISSY.add(function (S, require) {
         function Fn() {
         }
 
-        describe('S.mix', function () {
+        describe('util.mix', function () {
             it('can be tolerant', function () {
-                S.mix({}, false);
-                S.mix({}, null);
-                S.mix({}, undefined);
+                util.mix({}, false);
+                util.mix({}, null);
+                util.mix({}, undefined);
             });
 
             it("works simply", function () {
@@ -27,15 +27,15 @@ KISSY.add(function (S, require) {
                 //o4 = { a: 1, b: 2 },
                     o = { a: 'a', c: true };
 
-                S.mix(o1, o);
+                util.mix(o1, o);
                 expect(o1.a).toBe('a');
 
                 // turn off override
-                S.mix(o2, o, false);
+                util.mix(o2, o, false);
                 expect(o2.a).toBe(1);
 
                 // whitelist
-                S.mix(o3, o, true, ['c']);
+                util.mix(o3, o, true, ['c']);
                 expect(o3.a).toBe(1);
 
 
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
                     q: [2, 5]
                 };
 
-                S.mix(r, {
+                util.mix(r, {
                     x: 2,
                     y: {
                         s: 1
@@ -82,7 +82,7 @@ KISSY.add(function (S, require) {
 
                 r2.y.w = r2;
 
-                S.mix(r, r2, {
+                util.mix(r, r2, {
                     deep: true,
                     whitelist: ['x', 'y', 'z', 'w']
                 });
@@ -106,7 +106,7 @@ KISSY.add(function (S, require) {
                     q: [2, 5]
                 };
 
-                S.mix(r, {
+                util.mix(r, {
                     x: 2,
                     y: {
                         s: 1
@@ -127,7 +127,7 @@ KISSY.add(function (S, require) {
                     q: [2, 5]
                 };
 
-                S.mix(r, {
+                util.mix(r, {
                     x: 2,
                     y: {
                         s: 1
@@ -150,7 +150,7 @@ KISSY.add(function (S, require) {
                     q: [2, 5]
                 };
 
-                S.mix(r, {
+                util.mix(r, {
                     x: 2,
                     y: {
                         s: 1,
@@ -181,7 +181,7 @@ KISSY.add(function (S, require) {
 
                 var n = {};
 
-                S.mix(n, o, undefined, undefined, true);
+                util.mix(n, o, undefined, undefined, true);
 
                 expect(n.x).toBe(1);
 
@@ -209,10 +209,10 @@ KISSY.add(function (S, require) {
                 var t = 'hasOwnProperty';
                 v[t] = x;
                 var z = {};
-                S.mix(z, v);
+                util.mix(z, v);
                 expect(z.toString).toBe(x);
                 var fs = [], vs = [];
-                S.each(v, function (v, k) {
+                util.each(v, function (v, k) {
                     fs.push(k);
                     if (typeof v === 'function') {
                         v = v();
@@ -235,7 +235,7 @@ KISSY.add(function (S, require) {
                     y: undefined
                 };
 
-                var z = S.mix({}, x);
+                var z = util.mix({}, x);
 
                 expect(z.y).toBeUndefined();
                 expect('y' in z).toBe(true);
@@ -247,11 +247,11 @@ KISSY.add(function (S, require) {
                     x: 1
                 };
 
-                expect(S.mix(v, {
+                expect(util.mix(v, {
                     x: undefined
                 })).toEqual({
-                        x: 1
-                    });
+                    x: 1
+                });
             });
 
             describe('whitelist', function () {
@@ -263,7 +263,7 @@ KISSY.add(function (S, require) {
                             b22: 22
                         }
                     };
-                    S.mix(a, b, true, ["b1", "b2"], true);
+                    util.mix(a, b, true, ["b1", "b2"], true);
 
                     expect(a).toEqual({
                         b1: 1,
@@ -278,7 +278,7 @@ KISSY.add(function (S, require) {
                             b2: 22
                         }
                     };
-                    S.mix(a, b, true, ["b1", "b2"], true);
+                    util.mix(a, b, true, ["b1", "b2"], true);
 
                     expect(a).toEqual({
                         b1: 1,
@@ -296,7 +296,7 @@ KISSY.add(function (S, require) {
                                 b2: 22
                             }
                         };
-                    S.mix(a, b, {
+                    util.mix(a, b, {
                         deep: true,
                         whitelist: function (name, v) {
                             if (name === 'b1') {
@@ -323,7 +323,7 @@ KISSY.add(function (S, require) {
                                 b2: 22
                             }
                         };
-                    S.mix(a, b, {
+                    util.mix(a, b, {
                         deep: true,
                         whitelist: function (name, v) {
                             if (this.b1 && name === 'b2') {
@@ -340,7 +340,7 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it('S.merge', function () {
+        it('util.merge', function () {
             var a = {
                     'bool': false,
                     'num': 0,
@@ -356,7 +356,7 @@ KISSY.add(function (S, require) {
                     'str': 'oops'
                 };
 
-            var c = S.merge(a, b);
+            var c = util.merge(a, b);
 
             expect(c.bool).toBe('oops');
             expect(c.num).toBe('oops');
@@ -365,7 +365,7 @@ KISSY.add(function (S, require) {
             expect(c.str).toBe('oops');
         });
 
-        it('S.augment', function () {
+        it('util.augment', function () {
             function Bird(name) {
                 this.name = name;
             }
@@ -382,8 +382,8 @@ KISSY.add(function (S, require) {
                 this.name = name;
             }
 
-            S.augment(Pig, Bird, { prop: 'test prop' });
-            S.augment(Pig, { weight: '100kg' });
+            util.augment(Pig, Bird, { prop: 'test prop' });
+            util.augment(Pig, { weight: '100kg' });
             var pig = new Pig('Babe');
 
             expect(typeof pig.fly).toBe('function');
@@ -398,11 +398,11 @@ KISSY.add(function (S, require) {
             function Y() {
             }
 
-            S.augment(X, Y);
+            util.augment(X, Y);
             expect(new X().constructor).toBe(X);
         });
 
-        it('S.extend', function () {
+        it('util.extend', function () {
             function Bird(name) {
                 this.name = name;
             }
@@ -418,7 +418,7 @@ KISSY.add(function (S, require) {
             }
 
             Chicken.prototype.featcher = 2;
-            S.extend(Chicken, Bird);
+            util.extend(Chicken, Bird);
             var chicken = new Chicken('Tom');
 
             expect(chicken.constructor).toBe(Chicken);
@@ -426,292 +426,270 @@ KISSY.add(function (S, require) {
             expect(chicken.featcher).toBe(2); // keep existed prototype members
         });
 
-        it('S.namespace', function () {
+        it('util.namespace', function () {
             var ns;
-
             // normal
-            ns = S.namespace('app1.Test');
+            ns = util.namespace('app1.Test');
             ns.name = 'foo1';
-            expect(S.app1.Test.name).toBe('foo1');
-
-            // first part of argument is the global object
-            ns = S.namespace('KISSY.app2.Test2');
-            ns.name = 'foo2';
-            expect(S.app2.Test2.name).toBe('foo2');
-
-            // empty arguments
-            expect(S.namespace()).toBe(null);
-
-            // global
-            expect(S.namespace('Global', true)).toBe(window.Global);
-
-            // clear
-            delete S.app1;
-            delete S.app2;
-            try {
-                delete host.TB;
-                delete host.Global;
-            } catch (e) {
-                host.TB = undefined;
-                host.Global = undefined;
-            }
+            /*global app1*/
+            expect(app1.Test.name).toBe('foo1');
         });
 
-        it('S.guid', function () {
-            expect(typeof S.guid()).toBe('string');
-            expect(S.guid() - S.guid()).toBe(-1);
+        it('util.guid', function () {
+            expect(typeof util.guid()).toBe('string');
+            expect(util.guid() - util.guid()).toBe(-1);
         });
 
-        it('S.makeArray', function () {
+        it('util.makeArray', function () {
             var o;
 
             // 普通对象(无 length 属性)转换为 [obj]
             o = {a: 1};
-            expect(S.makeArray(o)[0]).toBe(o);
+            expect(util.makeArray(o)[0]).toBe(o);
 
             // string 转换为 [str]
-            expect(S.makeArray('test')[0]).toBe('test');
+            expect(util.makeArray('test')[0]).toBe('test');
 
             // function 转换为 [fn]
             o = fn;
-            expect(S.makeArray(o)[0]).toBe(o);
+            expect(util.makeArray(o)[0]).toBe(o);
 
             // array-like 对象，转换为数组
-            expect(S.makeArray({'0': 0, '1': 1, length: 2}).length).toBe(2);
-            expect(S.makeArray({'0': 0, '1': 1, length: 2})[1]).toBe(1);
+            expect(util.makeArray({'0': 0, '1': 1, length: 2}).length).toBe(2);
+            expect(util.makeArray({'0': 0, '1': 1, length: 2})[1]).toBe(1);
 
             // nodeList 转换为普通数组
             o = document.getElementsByTagName('body');
-            expect(S.makeArray(o).length).toBe(1);
-            expect(S.makeArray(o)[0]).toBe(o[0]);
-            expect('slice' in S.makeArray(o)).toBe(true);
+            expect(util.makeArray(o).length).toBe(1);
+            expect(util.makeArray(o)[0]).toBe(o[0]);
+            expect('slice' in util.makeArray(o)).toBe(true);
 
             // arguments 转换为普通数组
             o = arguments;
-            expect(S.makeArray(o).length).toBe(0);
+            expect(util.makeArray(o).length).toBe(0);
 
             // 伪 array-like 对象
-            o = S.makeArray({a: 1, b: 2, length: 2});
+            o = util.makeArray({a: 1, b: 2, length: 2});
             expect(o.length).toBe(2);
             expect(o[0]).toBe(undefined);
             expect(o[1]).toBe(undefined);
         });
 
-        it('S.param', function () {
-            expect(S.param({foo: 1, bar: 2})).toBe('foo=1&bar=2');
-            expect(S.param({foo: 1, bar: [2, 3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
+        it('util.param', function () {
+            expect(util.param({foo: 1, bar: 2})).toBe('foo=1&bar=2');
+            expect(util.param({foo: 1, bar: [2, 3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
 
-            expect(S.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
+            expect(util.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
 
-            expect(S.param({foo: 1, bar: []})).toBe('foo=1');
-            expect(S.param({foo: {}, bar: 2})).toBe('bar=2');
-            expect(S.param({foo: function () {
+            expect(util.param({foo: 1, bar: []})).toBe('foo=1');
+            expect(util.param({foo: {}, bar: 2})).toBe('bar=2');
+            expect(util.param({foo: function () {
             }, bar: 2})).toBe('bar=2');
 
-            expect(S.param({foo: undefined, bar: 2})).toBe('foo&bar=2');
-            expect(S.param({foo: null, bar: 2})).toBe('foo=null&bar=2');
-            expect(S.param({foo: true, bar: 2})).toBe('foo=true&bar=2');
-            expect(S.param({foo: false, bar: 2})).toBe('foo=false&bar=2');
-            expect(S.param({foo: '', bar: 2})).toBe('foo=&bar=2');
-            expect(S.param({foo: NaN, bar: 2})).toBe('foo=NaN&bar=2');
+            expect(util.param({foo: undefined, bar: 2})).toBe('foo&bar=2');
+            expect(util.param({foo: null, bar: 2})).toBe('foo=null&bar=2');
+            expect(util.param({foo: true, bar: 2})).toBe('foo=true&bar=2');
+            expect(util.param({foo: false, bar: 2})).toBe('foo=false&bar=2');
+            expect(util.param({foo: '', bar: 2})).toBe('foo=&bar=2');
+            expect(util.param({foo: NaN, bar: 2})).toBe('foo=NaN&bar=2');
 
-            expect(S.param({b: [2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
+            expect(util.param({b: [2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
 
-            expect(S.param({b: undefined})).toBe("b");
+            expect(util.param({b: undefined})).toBe("b");
 
-            expect(S.param({
+            expect(util.param({
                 nodeType: 1
             })).toBe('nodeType=1');
         });
 
-        it('S.unparam', function () {
-            expect(S.unparam('foo=1&bar=2').foo).toBe('1');
-            expect(S.unparam('foo=1&bar=2').bar).toBe('2');
+        it('util.unparam', function () {
+            expect(util.unparam('foo=1&bar=2').foo).toBe('1');
+            expect(util.unparam('foo=1&bar=2').bar).toBe('2');
 
-            expect(S.unparam('foo').foo).toBe(undefined);
-            expect(S.unparam('foo=').foo).toBe('');
+            expect(util.unparam('foo').foo).toBe(undefined);
+            expect(util.unparam('foo=').foo).toBe('');
 
-            expect(S.unparam('foo=1&bar=2&bar=3').bar[0]).toBe('2');
-            expect(S.unparam('foo=1&bar=2&bar=3').bar[1]).toBe('3');
+            expect(util.unparam('foo=1&bar=2&bar=3').bar[0]).toBe('2');
+            expect(util.unparam('foo=1&bar=2&bar=3').bar[1]).toBe('3');
 
-            expect(S.unparam('foo=null&bar=2').foo).toBe('null');
-            expect(S.unparam('foo=&bar=2').foo).toBe('');
-            expect(S.unparam('foo&bar=2').foo).toBe(undefined);
+            expect(util.unparam('foo=null&bar=2').foo).toBe('null');
+            expect(util.unparam('foo=&bar=2').foo).toBe('');
+            expect(util.unparam('foo&bar=2').foo).toBe(undefined);
 
-            expect(S.unparam('foo=1&bar=2&foo=3').foo[1]).toBe('3');
+            expect(util.unparam('foo=1&bar=2&foo=3').foo[1]).toBe('3');
 
-            expect(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0]).toBe('2');
+            expect(util.unparam('foo=1&bar[]=2&bar[]=3').bar[0]).toBe('2');
 
-            expect(S.unparam('foo=1&bar=2=6').bar).toBe('2=6');
+            expect(util.unparam('foo=1&bar=2=6').bar).toBe('2=6');
         });
 
-        it("S.escapeHtml", function () {
-            expect(S.escapeHtml("<")).toBe("&lt;");
-            expect(S.escapeHtml(">")).toBe("&gt;");
-            expect(S.escapeHtml("&")).toBe("&amp;");
-            expect(S.escapeHtml('"')).toBe("&quot;");
+        it("util.escapeHtml", function () {
+            expect(util.escapeHtml("<")).toBe("&lt;");
+            expect(util.escapeHtml(">")).toBe("&gt;");
+            expect(util.escapeHtml("&")).toBe("&amp;");
+            expect(util.escapeHtml('"')).toBe("&quot;");
         });
 
-        it("S.unEscapeHtml", function () {
-            expect(S.unEscapeHtml("&lt;")).toBe("<");
-            expect(S.unEscapeHtml("&gt;")).toBe(">");
-            expect(S.unEscapeHtml("&amp;")).toBe("&");
-            expect(S.unEscapeHtml('&quot;')).toBe('"');
-            expect(S.unEscapeHtml('&#' + "b".charCodeAt(0) + ';')).toBe('b');
+        it("util.unEscapeHtml", function () {
+            expect(util.unEscapeHtml("&lt;")).toBe("<");
+            expect(util.unEscapeHtml("&gt;")).toBe(">");
+            expect(util.unEscapeHtml("&amp;")).toBe("&");
+            expect(util.unEscapeHtml('&quot;')).toBe('"');
+            expect(util.unEscapeHtml('&#' + "b".charCodeAt(0) + ';')).toBe('b');
         });
 
-        it('S.type', function () {
-            expect(S.type(null)).toBe('null');
+        it('util.type', function () {
+            expect(util.type(null)).toBe('null');
 
-            expect(S.type(undefined)).toBe('undefined');
-            expect(S.type()).toBe('undefined');
+            expect(util.type(undefined)).toBe('undefined');
+            expect(util.type()).toBe('undefined');
 
-            expect(S.type(true)).toBe('boolean');
-            expect(S.type(false)).toBe('boolean');
-            expect(S.type(Boolean(true))).toBe('boolean');
+            expect(util.type(true)).toBe('boolean');
+            expect(util.type(false)).toBe('boolean');
+            expect(util.type(Boolean(true))).toBe('boolean');
 
-            expect(S.type(1)).toBe('number');
-            expect(S.type(0)).toBe('number');
-            expect(S.type(Number(1))).toBe('number');
+            expect(util.type(1)).toBe('number');
+            expect(util.type(0)).toBe('number');
+            expect(util.type(Number(1))).toBe('number');
 
-            expect(S.type('')).toBe('string');
-            expect(S.type('a')).toBe('string');
-            expect(S.type(String('a'))).toBe('string');
+            expect(util.type('')).toBe('string');
+            expect(util.type('a')).toBe('string');
+            expect(util.type(String('a'))).toBe('string');
 
-            expect(S.type({})).toBe('object');
+            expect(util.type({})).toBe('object');
 
-            expect(S.type(/foo/)).toBe('regexp');
-            expect(S.type(new RegExp('asdf'))).toBe('regexp');
+            expect(util.type(/foo/)).toBe('regexp');
+            expect(util.type(new RegExp('asdf'))).toBe('regexp');
 
-            expect(S.type([1])).toBe('array');
+            expect(util.type([1])).toBe('array');
 
-            expect(S.type(new Date())).toBe('date');
+            expect(util.type(new Date())).toBe('date');
 
-            expect(S.type(function () {
+            expect(util.type(function () {
             })).toBe('function');
-            expect(S.type(fn)).toBe('function');
+            expect(util.type(fn)).toBe('function');
 
-            expect(S.type(host)).toBe('object');
+            expect(util.type(host)).toBe('object');
 
             if (web) {
-                expect(S.type(doc)).toBe('object');
-                expect(S.type(doc.body)).toBe('object');
-                expect(S.type(doc.createTextNode('foo'))).toBe('object');
-                expect(S.type(doc.getElementsByTagName('*'))).toBe('object');
+                expect(util.type(doc)).toBe('object');
+                expect(util.type(doc.body)).toBe('object');
+                expect(util.type(doc.createTextNode('foo'))).toBe('object');
+                expect(util.type(doc.getElementsByTagName('*'))).toBe('object');
             }
         });
 
-        it('S.isArray', function () {
-            expect(S.isArray([])).toBe(true);
+        it('util.isArray', function () {
+            expect(util.isArray([])).toBe(true);
 
-            expect(S.isArray()).toBe(false);
-            expect(S.isArray(arguments)).toBe(false);
+            expect(util.isArray()).toBe(false);
+            expect(util.isArray(arguments)).toBe(false);
 
             if (web) {
-                expect(S.isArray(doc.getElementsByTagName('*'))).toBe(false);
+                expect(util.isArray(doc.getElementsByTagName('*'))).toBe(false);
             }
 
             // use native if possible
             if (Array.isArray) {
-                expect(S.isArray).toBe(Array.isArray);
+                expect(util.isArray).toBe(Array.isArray);
             }
         });
 
-        it('S.isDate', function () {
-            expect(S.isDate(new Date())).toBe(true);
-            expect(S.isDate('2010/12/5')).toBe(false);
+        it('util.isDate', function () {
+            expect(util.isDate(new Date())).toBe(true);
+            expect(util.isDate('2010/12/5')).toBe(false);
         });
 
-        it('S.isRegExp', function () {
-            expect(S.isRegExp(/s/)).toBe(true);
-            expect(S.isRegExp(new RegExp('asdf'))).toBe(true);
+        it('util.isRegExp', function () {
+            expect(util.isRegExp(/s/)).toBe(true);
+            expect(util.isRegExp(new RegExp('asdf'))).toBe(true);
         });
 
-        it('S.isObject', function () {
-            expect(S.isObject({})).toBe(true);
-            expect(S.isObject(new Fn())).toBe(true);
-            expect(S.isObject(host)).toBe(true);
+        it('util.isObject', function () {
+            expect(util.isObject({})).toBe(true);
+            expect(util.isObject(new Fn())).toBe(true);
+            expect(util.isObject(host)).toBe(true);
 
-            expect(S.isObject()).toBe(false);
-            expect(S.isObject(null)).toBe(false);
-            expect(S.isObject(1)).toBe(false);
-            expect(S.isObject('a')).toBe(false);
-            expect(S.isObject(true)).toBe(false);
+            expect(util.isObject()).toBe(false);
+            expect(util.isObject(null)).toBe(false);
+            expect(util.isObject(1)).toBe(false);
+            expect(util.isObject('a')).toBe(false);
+            expect(util.isObject(true)).toBe(false);
         });
 
-        it('S.isEmptyObject', function () {
-            expect(S.isEmptyObject({})).toBe(true);
+        it('util.isEmptyObject', function () {
+            expect(util.isEmptyObject({})).toBe(true);
 
-            expect(S.isEmptyObject({ a: 1 })).toBe(false);
-            expect(S.isEmptyObject([])).toBe(true);
+            expect(util.isEmptyObject({ a: 1 })).toBe(false);
+            expect(util.isEmptyObject([])).toBe(true);
 
             // Failed in Safari/Opera
-            //expect(S.isEmptyObject(fn)).toBe(true);
+            //expect(util.isEmptyObject(fn)).toBe(true);
         });
 
-        it('S.isPlainObject', function () {
+        it('util.isPlainObject', function () {
             // The use case that we want to match
-            expect(S.isPlainObject({})).toBe(true);
+            expect(util.isPlainObject({})).toBe(true);
 
-            expect(S.isPlainObject(new Fn())).toBe(false);
+            expect(util.isPlainObject(new Fn())).toBe(false);
 
             // Not objects shouldn't be matched
-            expect(S.isPlainObject('')).toBe(false);
-            expect(S.isPlainObject(0)).toBe(false);
-            expect(S.isPlainObject(1)).toBe(false);
-            expect(S.isPlainObject(true)).toBe(false);
-            expect(S.isPlainObject(null)).toBe(false);
-            expect(S.isPlainObject(undefined)).toBe(false);
-            expect(S.isPlainObject([])).toBe(false);
-            expect(S.isPlainObject(new Date())).toBe(false);
-            expect(S.isPlainObject(fn)).toBe(false);
+            expect(util.isPlainObject('')).toBe(false);
+            expect(util.isPlainObject(0)).toBe(false);
+            expect(util.isPlainObject(1)).toBe(false);
+            expect(util.isPlainObject(true)).toBe(false);
+            expect(util.isPlainObject(null)).toBe(false);
+            expect(util.isPlainObject(undefined)).toBe(false);
+            expect(util.isPlainObject([])).toBe(false);
+            expect(util.isPlainObject(new Date())).toBe(false);
+            expect(util.isPlainObject(fn)).toBe(false);
 
             // Dom Element
             if (web) {
-                expect(S.isPlainObject(doc.createElement('div'))).toBe(false);
+                expect(util.isPlainObject(doc.createElement('div'))).toBe(false);
             }
 
 
             function X() {
             }
 
-            expect(S.isPlainObject(new X())).toBe(false);
+            expect(util.isPlainObject(new X())).toBe(false);
             function Y() {
                 this.x = 1;
             }
 
-            Y.prototype.z = S.noop;
-            expect(S.isPlainObject(new Y())).toBe(false);
+            Y.prototype.z = util.noop;
+            expect(util.isPlainObject(new Y())).toBe(false);
 
             // Host
-            expect(S.isPlainObject(host)).toBe(false);
+            expect(util.isPlainObject(host)).toBe(false);
         });
 
-        it('S.clone', function () {
+        it('util.clone', function () {
             // non array or plain object, just return
-            expect(S.clone()).toBe(undefined);
-            expect(S.clone(null)).toBe(null);
-            expect(S.clone(1)).toBe(1);
-            expect(S.clone(true)).toBe(true);
-            expect(S.clone('a')).toBe('a');
-            expect(S.clone(fn)).toBe(fn);
+            expect(util.clone()).toBe(undefined);
+            expect(util.clone(null)).toBe(null);
+            expect(util.clone(1)).toBe(1);
+            expect(util.clone(true)).toBe(true);
+            expect(util.clone('a')).toBe('a');
+            expect(util.clone(fn)).toBe(fn);
 
             var date = new Date();
-            expect(S.clone(date)).toEqual(date);
-            expect(S.clone(date)).not.toBe(date);
+            expect(util.clone(date)).toEqual(date);
+            expect(util.clone(date)).not.toBe(date);
 
 
             var reg = /i/i;
-            expect(S.clone(reg)).toEqual(reg);
+            expect(util.clone(reg)).toEqual(reg);
 
             // phantomjs cache??
             if (!UA.phantomjs) {
-                expect(S.clone(reg)).not.toBe(reg);
+                expect(util.clone(reg)).not.toBe(reg);
             }
 
             // clone plain object
             var t = { a: 0, b: { b1: 1, b2: 'a' } };
-            var t2 = S.clone(t);
+            var t2 = util.clone(t);
             t.a = 1;
             expect(t2.a).toBe(0);
             expect(t2.b.b1).toBe(1);
@@ -720,7 +698,7 @@ KISSY.add(function (S, require) {
 
             // clone array
             var t3 = ['a', 2, 3, t];
-            var t4 = S.clone(t3);
+            var t4 = util.clone(t3);
             t3[1] = 1;
             t3.push(5);
             expect(t4[1]).toBe(2);
@@ -737,7 +715,7 @@ KISSY.add(function (S, require) {
                 };
             Tom.son = Green;
 
-            var Tom2 = S.clone(Tom);
+            var Tom2 = util.clone(Tom);
             expect(Tom2.son).toEqual(Green);
             expect(Tom2.son).not.toBe(Green);
             Tom2.son.x = 2;
@@ -745,14 +723,14 @@ KISSY.add(function (S, require) {
 
             expect(Tom2[CLONE_MARKER]).toBeUndefined();
 
-            var Green2 = S.clone(Green);
+            var Green2 = util.clone(Green);
             expect(Green2.father).toEqual(Tom);
             expect(Green2.father).not.toBe(Tom);
             expect(Green2[CLONE_MARKER]).toBeUndefined();
 
             // filter function
             var t5 = [1, 2, 3, 4, 5, 6];
-            var t6 = S.clone(t5, function (v) {
+            var t6 = util.clone(t5, function (v) {
                 return v % 2 === 0;
             });
             expect(t6.length).toBe(3);
@@ -769,7 +747,7 @@ KISSY.add(function (S, require) {
                 t8 = {x: 1, z: t7, q: t22},
                 t9 = {y: 1, z: t7, q: t22};
             t7.push(t8, t9);
-            var t10 = S.clone(t7);
+            var t10 = util.clone(t7);
             expect(t10).not.toBe(t7);
             expect(t10).toEqual(t7);
             expect(t10 === t7).toBe(false);
@@ -794,117 +772,117 @@ KISSY.add(function (S, require) {
             expect(t9.y).toBe(1);
         });
 
-        it('S.trim', function () {
+        it('util.trim', function () {
             var str = '    lots of spaces before and after    ';
-            expect(S.trim(str)).toBe('lots of spaces before and after');
+            expect(util.trim(str)).toBe('lots of spaces before and after');
 
             // special
-            expect(S.trim(false)).toBe('false');
-            expect(S.trim(0)).toBe('0');
-            expect(S.trim('')).toBe('');
-            expect(S.trim(NaN)).toBe('NaN');
-            expect(S.trim(null)).toBe('');
-            expect(S.trim()).toBe('');
-            expect(S.trim({})).toBe({}.toString());
+            expect(util.trim(false)).toBe('false');
+            expect(util.trim(0)).toBe('0');
+            expect(util.trim('')).toBe('');
+            expect(util.trim(NaN)).toBe('NaN');
+            expect(util.trim(null)).toBe('');
+            expect(util.trim()).toBe('');
+            expect(util.trim({})).toBe({}.toString());
         });
 
-        it('S.substitute', function () {
+        it('util.substitute', function () {
             var myString = "{subject} is {property1} and {property2}.";
             var myObject = {subject: 'Jack Bauer', property1: 'our lord', property2: 'savior'};
 
-            expect(S.substitute(myString, myObject)).toBe('Jack Bauer is our lord and savior.');
+            expect(util.substitute(myString, myObject)).toBe('Jack Bauer is our lord and savior.');
 
-            expect(S.substitute(1)).toBe(1);
-            expect(S.substitute()).toBe(undefined);
-            expect(S.substitute('a', fn)).toBe('a');
-            expect(S.substitute(fn)).toBe(fn);
+            expect(util.substitute(1)).toBe(1);
+            expect(util.substitute()).toBe(undefined);
+            expect(util.substitute('a', fn)).toBe('a');
+            expect(util.substitute(fn)).toBe(fn);
 
             function T() {
                 this.x = 1;
             }
 
-            expect(S.substitute("{x}", new T())).toBe('1');
+            expect(util.substitute("{x}", new T())).toBe('1');
 
         });
 
-        it('S.each', function () {
+        it('util.each', function () {
             var ret = 0;
 
-            S.each([1, 2, 3, 4, 5], function (num) {
+            util.each([1, 2, 3, 4, 5], function (num) {
                 ret += num;
             });
 
             expect(ret).toBe(15);
 
             // test context
-            S.each([1], function () {
+            util.each([1], function () {
                 expect(this).toBe(host);
             });
         });
 
-        it('S.indexOf', function () {
+        it('util.indexOf', function () {
             var a;
 
-            expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5], 1)).toBe(1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5], 2)).toBe(-1);
+            expect(util.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5], 1)).toBe(1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5], 2)).toBe(-1);
 
-            expect(S.indexOf(a, [1, 2, 3, 4, undefined])).toBe(4);
-            expect(S.indexOf({}, [1, 2, 3, 4, undefined])).toBe(-1);
+            expect(util.indexOf(a, [1, 2, 3, 4, undefined])).toBe(4);
+            expect(util.indexOf({}, [1, 2, 3, 4, undefined])).toBe(-1);
         });
 
-        it('S.lastIndexOf', function () {
-            expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5], 1)).toBe(1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5], 2)).toBe(-1);
-            expect(S.indexOf(2, [1, 2, 3, 4, 5], 0)).toBe(1);
+        it('util.lastIndexOf', function () {
+            expect(util.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5], 1)).toBe(1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5], 2)).toBe(-1);
+            expect(util.indexOf(2, [1, 2, 3, 4, 5], 0)).toBe(1);
         });
 
-        it('S.unique', function () {
+        it('util.unique', function () {
             if (host.hostType === 'console') {
                 return;
             } // BESENShell has bug for Array.prototype.splice
 
-            expect(S.unique([1, 2, 1]).length).toBe(2);
-            expect(S.unique([1, 2, '1']).length).toBe(3);
-            expect(S.unique(['1', '1', '1']).length).toBe(1);
+            expect(util.unique([1, 2, 1]).length).toBe(2);
+            expect(util.unique([1, 2, '1']).length).toBe(3);
+            expect(util.unique(['1', '1', '1']).length).toBe(1);
 
-            expect(S.unique(['a', 'b', 'a'])[0]).toBe('a');
-            expect(S.unique(['a', 'b', 'a'], true)[0]).toBe('b');
+            expect(util.unique(['a', 'b', 'a'])[0]).toBe('a');
+            expect(util.unique(['a', 'b', 'a'], true)[0]).toBe('b');
         });
 
-        it('S.inArray', function () {
+        it('util.inArray', function () {
             var a;
 
-            expect(S.inArray(2, [1, 2, 3, 4, 5])).toBe(true);
-            expect(S.inArray(6, [1, 2, 3, 4, 5])).toBe(false);
+            expect(util.inArray(2, [1, 2, 3, 4, 5])).toBe(true);
+            expect(util.inArray(6, [1, 2, 3, 4, 5])).toBe(false);
 
-            expect(S.inArray(a, [1, 2, 3, 4, undefined])).toBe(true);
-            expect(S.inArray({}, [1, 2, 3, 4, {}])).toBe(false);
+            expect(util.inArray(a, [1, 2, 3, 4, undefined])).toBe(true);
+            expect(util.inArray({}, [1, 2, 3, 4, {}])).toBe(false);
         });
 
-        it('S.filter', function () {
-            var ret = S.filter([1, 2, 3, 4, 5], function (item) {
+        it('util.filter', function () {
+            var ret = util.filter([1, 2, 3, 4, 5], function (item) {
                 return item % 2 === 0;
             });
 
             expect(ret.length).toBe(2);
         });
 
-        it('S.map', function () {
+        it('util.map', function () {
             function makePseudoPlural(single) {
                 return single.replace(/o/g, "e");
             }
 
             var singles = ["foot", "goose", "moose"];
-            var plurals = S.map(singles, makePseudoPlural);
+            var plurals = util.map(singles, makePseudoPlural);
 
             expect(plurals).toEqual(["feet", "geese", "meese"]);
 
 
-            var a = S.map("Hello World",
+            var a = util.map("Hello World",
                 function (x) {
                     return x.charCodeAt(0);
                 });
@@ -912,25 +890,25 @@ KISSY.add(function (S, require) {
 
         });
 
-        it('S.reduce', function () {
-            var r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue) {
+        it('util.reduce', function () {
+            var r = util.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue) {
                 return previousValue + currentValue;
             });
             expect(r).toBe(10);
 
 
-            r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue) {
+            r = util.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue) {
                 return previousValue + currentValue;
             }, 10);
             expect(r).toBe(20);
         });
 
-        it("S.bind", function () {
+        it("util.bind", function () {
             function x() {
                 expect(this).toBe(window);
             }
 
-            S.bind(x)();
+            util.bind(x)();
 
             if (x.bind) {
                 x.bind()();
@@ -946,14 +924,14 @@ KISSY.add(function (S, require) {
             var context = {};
             var t;
             // when new ,ignore context
-            t = new (S.bind(y, context, 1, 2))(3);
+            t = new (util.bind(y, context, 1, 2))(3);
 
             if (y.bind) {
                 t = new (y.bind(context, 1, 2))(3);
             }
 
             if (1 > 2) {
-                S.log(t);
+                util.log(t);
             }
 
             function z(a, b, c) {
@@ -964,28 +942,28 @@ KISSY.add(function (S, require) {
             }
 
             // consider context
-            S.bind(z, context, 1, 2)(3);
+            util.bind(z, context, 1, 2)(3);
 
             if (z.bind) {
                 z.bind(context, 1, 2)(3);
             }
         });
 
-        it('S.bind can be assigned to instance', function () {
+        it('util.bind can be assigned to instance', function () {
             var y = {};
-            var x = S.bind(function () {
+            var x = util.bind(function () {
                 expect(this).toBe(y);
             });
             y.x = x;
             y.x();
         });
 
-        it("S.rbind", function () {
+        it("util.rbind", function () {
             function x() {
                 expect(this).toBe(window);
             }
 
-            S.rbind(x)();
+            util.rbind(x)();
 
             function y(a, b, c) {
                 expect(a).toBe(3);
@@ -999,7 +977,7 @@ KISSY.add(function (S, require) {
             var t;
 
             // when new, ignore context
-            t = new (S.rbind(y, context, 1, 2))(3);
+            t = new (util.rbind(y, context, 1, 2))(3);
 
             if (1 > 2) {
                 console.log(t);
@@ -1013,10 +991,10 @@ KISSY.add(function (S, require) {
             }
 
             // consider context
-            S.rbind(z, context, 1, 2)(3);
+            util.rbind(z, context, 1, 2)(3);
         });
 
-        it("S.throttle", function () {
+        it("util.throttle", function () {
             var i = 0, x = {};
 
             function t() {
@@ -1024,7 +1002,7 @@ KISSY.add(function (S, require) {
                 expect(x).toBe(this);
             }
 
-            var z = S.throttle(t, 300, x);
+            var z = util.throttle(t, 300, x);
             z();
             expect(i).toBe(0);
             waits(500);
@@ -1043,7 +1021,7 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it("S.buffer", function () {
+        it("util.buffer", function () {
             var i = 0, x = {};
 
             function t() {
@@ -1051,7 +1029,7 @@ KISSY.add(function (S, require) {
                 expect(x).toBe(this);
             }
 
-            var z = S.buffer(t, 300, x);
+            var z = util.buffer(t, 300, x);
             z();
             expect(i).toBe(0);
             z();
@@ -1066,35 +1044,35 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it("S.every", function () {
+        it("util.every", function () {
             function isBigEnough(element) {
                 return (element >= 10);
             }
 
-            var passed = S.every([12, 5, 8, 130, 44], isBigEnough);
+            var passed = util.every([12, 5, 8, 130, 44], isBigEnough);
             expect(passed).toBe(false);
-            passed = S.every([12, 54, 18, 130, 44], isBigEnough);
+            passed = util.every([12, 54, 18, 130, 44], isBigEnough);
             expect(passed).toBe(true);
         });
 
-        it("S.some", function () {
+        it("util.some", function () {
             function isBigEnough(element) {
                 return (element >= 10);
             }
 
-            var passed = S.some([2, 5, 8, 1, 4], isBigEnough);
+            var passed = util.some([2, 5, 8, 1, 4], isBigEnough);
             // passed is false
             expect(passed).toBe(false);
-            passed = S.some([12, 5, 8, 1, 4], isBigEnough);
+            passed = util.some([12, 5, 8, 1, 4], isBigEnough);
             // passed is true
             expect(passed).toBe(true);
         });
 
-        it('S.now', function () {
-            expect(S.type(S.now())).toBe('number');
+        it('util.now', function () {
+            expect(util.type(util.now())).toBe('number');
         });
 
-        it('S.keys', function () {
+        it('util.keys', function () {
 
             var x = {
                 toString: function () {
@@ -1103,17 +1081,17 @@ KISSY.add(function (S, require) {
                 'x': 2
             };
 
-            var ret = S.keys(x);
+            var ret = util.keys(x);
 
             ret.sort();
 
             expect(ret).toEqual(['x', "toString"].sort());
         });
 
-        describe("S.ready", function () {
-            it('S.ready simple works', function () {
+        describe("util.ready", function () {
+            it('util.ready simple works', function () {
                 var r;
-                S.ready(function (s) {
+                util.ready(function (s) {
                     r = s;
                 });
 
@@ -1124,13 +1102,13 @@ KISSY.add(function (S, require) {
             });
 
             // fix #89
-            it("S.ready should be independent from each other", function () {
+            it("util.ready should be independent from each other", function () {
                 var r;
-                S.ready(function () {
+                util.ready(function () {
                     throw "1";
                 });
 
-                S.ready(function (s) {
+                util.ready(function (s) {
                     r = s;
                 });
 
@@ -1141,29 +1119,29 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it('S.isWindow', function () {
-            expect(S.isWindow(host)).toBe(true);
-            expect(S.isWindow({})).toBe(false);
-            expect(S.isWindow({
+        it('util.isWindow', function () {
+            expect(util.isWindow(host)).toBe(true);
+            expect(util.isWindow({})).toBe(false);
+            expect(util.isWindow({
                 setInterval: 1,
                 setTimeout: 1,
                 document: {
                     nodeType: 9
                 }
             })).toBe(false);
-            expect(S.isWindow(document)).toBe(false);
-            expect(S.isWindow(document.documentElement.firstChild)).toBe(false);
+            expect(util.isWindow(document)).toBe(false);
+            expect(util.isWindow(document.documentElement.firstChild)).toBe(false);
         });
 
-        it('S.globalEval', function () {
-            S.globalEval('var globalEvalTest = 1;');
+        it('util.globalEval', function () {
+            util.globalEval('var globalEvalTest = 1;');
             expect(host.globalEvalTest).toBe(1);
         });
 
-        it('S.later', function () {
+        it('util.later', function () {
             var ok = false;
 
-            S.later(function (data) {
+            util.later(function (data) {
                 ok = true;
                 expect(data.n).toBe(1);
             }, 20, false, null, { n: 1 });
@@ -1174,7 +1152,7 @@ KISSY.add(function (S, require) {
             ok = false;
 
             var i = 1;
-            var timer = S.later(function (data) {
+            var timer = util.later(function (data) {
                 expect(data.n).toBe(1);
                 if (i++ === 3) {
                     timer.cancel();
@@ -1188,7 +1166,7 @@ KISSY.add(function (S, require) {
             ok = false;
         });
 
-        it('S.available', function () {
+        it('util.available', function () {
             var ret, t;
 
             t = document.createElement('DIV');
@@ -1196,26 +1174,26 @@ KISSY.add(function (S, require) {
             document.body.appendChild(t);
 
             ret = 0;
-            S.available('#test-available', function () {
+            util.available('#test-available', function () {
                 ret = 1;
             });
             expect(ret).toBe(0);
 
-            S.later(function () {
+            util.later(function () {
                 t = document.createElement('DIV');
                 t.id = 'test-available2';
                 document.body.appendChild(t);
             }, 100);
 
             ret = 0;
-            S.available('test-available2', function () {
+            util.available('test-available2', function () {
                 ret = 1;
             });
             expect(ret).toBe(0);
 
             // 下面的语句不抛异常
-            S.available();
-            S.available('xxx');
+            util.available();
+            util.available('xxx');
         });
     });
 });

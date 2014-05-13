@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var util = require('./base');
     var undef;
-    var logger = S.getLogger('s/util');
+    var logger = S.getLogger('util');
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
@@ -26,6 +26,7 @@ KISSY.add(function (S, require) {
     }
 
     var RE_DASH = /-([a-z])/ig;
+
     function upperCase() {
         return arguments[1].toUpperCase();
     }

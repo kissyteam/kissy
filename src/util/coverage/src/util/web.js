@@ -395,112 +395,112 @@ if (! _$jscoverage['/util/web.js'].branchData) {
   _$jscoverage['/util/web.js'].branchData['232'] = [];
   _$jscoverage['/util/web.js'].branchData['232'][1] = new BranchData();
 }
-_$jscoverage['/util/web.js'].branchData['232'][1].init(7708, 12, 'supportEvent');
-function visit218_232_1(result) {
+_$jscoverage['/util/web.js'].branchData['232'][1].init(7701, 12, 'supportEvent');
+function visit227_232_1(result) {
   _$jscoverage['/util/web.js'].branchData['232'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['213'][1].init(931, 20, 'doScroll && notframe');
-function visit217_213_1(result) {
+function visit226_213_1(result) {
   _$jscoverage['/util/web.js'].branchData['213'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['207'][1].init(30, 25, 'win.frameElement === null');
-function visit216_207_1(result) {
+function visit225_207_1(result) {
   _$jscoverage['/util/web.js'].branchData['207'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['204'][1].init(41, 27, 'docElem && docElem.doScroll');
-function visit215_204_1(result) {
+function visit224_204_1(result) {
   _$jscoverage['/util/web.js'].branchData['204'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['191'][1].init(22, 27, 'doc.readyState === COMPLETE');
-function visit214_191_1(result) {
+function visit223_191_1(result) {
   _$jscoverage['/util/web.js'].branchData['191'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['182'][1].init(373, 18, 'standardEventModel');
-function visit213_182_1(result) {
+function visit222_182_1(result) {
   _$jscoverage['/util/web.js'].branchData['182'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['173'][2].init(128, 27, 'doc.readyState === COMPLETE');
-function visit212_173_2(result) {
+function visit221_173_2(result) {
   _$jscoverage['/util/web.js'].branchData['173'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['173'][1].init(120, 35, '!doc || doc.readyState === COMPLETE');
-function visit211_173_1(result) {
+function visit220_173_1(result) {
   _$jscoverage['/util/web.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/web.js'].branchData['160'][1].init(27, 12, 'e.stack || e');
-function visit210_160_1(result) {
+}_$jscoverage['/util/web.js'].branchData['160'][1].init(24, 12, 'e.stack || e');
+function visit219_160_1(result) {
   _$jscoverage['/util/web.js'].branchData['160'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['156'][1].init(236, 20, 'i < callbacks.length');
-function visit209_156_1(result) {
+function visit218_156_1(result) {
   _$jscoverage['/util/web.js'].branchData['156'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['152'][1].init(90, 21, 'win && win.setTimeout');
-function visit208_152_1(result) {
+function visit217_152_1(result) {
   _$jscoverage['/util/web.js'].branchData['152'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['148'][1].init(14, 8, 'domReady');
-function visit207_148_1(result) {
+function visit216_148_1(result) {
   _$jscoverage['/util/web.js'].branchData['148'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['139'][1].init(211, 4, 'node');
-function visit206_139_1(result) {
+function visit215_139_1(result) {
   _$jscoverage['/util/web.js'].branchData['139'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['134'][1].init(22, 27, '++retryCount > POLL_RETIRES');
-function visit205_134_1(result) {
+function visit214_134_1(result) {
   _$jscoverage['/util/web.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/web.js'].branchData['113'][1].init(31, 12, 'e.stack || e');
-function visit204_113_1(result) {
+}_$jscoverage['/util/web.js'].branchData['113'][1].init(28, 12, 'e.stack || e');
+function visit213_113_1(result) {
   _$jscoverage['/util/web.js'].branchData['113'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['109'][1].init(18, 8, 'domReady');
-function visit203_109_1(result) {
+function visit212_109_1(result) {
   _$jscoverage['/util/web.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['92'][1].init(273, 14, 'win.execScript');
-function visit202_92_1(result) {
+function visit211_92_1(result) {
   _$jscoverage['/util/web.js'].branchData['92'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['88'][1].init(18, 36, 'data && RE_NOT_WHITESPACE.test(data)');
-function visit201_88_1(result) {
+function visit210_88_1(result) {
   _$jscoverage['/util/web.js'].branchData['88'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['77'][2].init(728, 70, '!xml.documentElement || xml.getElementsByTagName(\'parsererror\').length');
-function visit200_77_2(result) {
+function visit209_77_2(result) {
   _$jscoverage['/util/web.js'].branchData['77'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['77'][1].init(720, 78, '!xml || !xml.documentElement || xml.getElementsByTagName(\'parsererror\').length');
-function visit199_77_1(result) {
+function visit208_77_1(result) {
   _$jscoverage['/util/web.js'].branchData['77'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['64'][1].init(51, 13, 'win.DOMParser');
-function visit198_64_1(result) {
+function visit207_64_1(result) {
   _$jscoverage['/util/web.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['58'][1].init(48, 20, 'data.documentElement');
-function visit197_58_1(result) {
+function visit206_58_1(result) {
   _$jscoverage['/util/web.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['48'][3].init(109, 17, 'obj == obj.window');
-function visit196_48_3(result) {
+function visit205_48_3(result) {
   _$jscoverage['/util/web.js'].branchData['48'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['48'][2].init(94, 11, 'obj != null');
-function visit195_48_2(result) {
+function visit204_48_2(result) {
   _$jscoverage['/util/web.js'].branchData['48'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['48'][1].init(94, 32, 'obj != null && obj == obj.window');
-function visit194_48_1(result) {
+function visit203_48_1(result) {
   _$jscoverage['/util/web.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['24'][1].init(482, 37, 'doc.attachEvent || standardEventModel');
-function visit193_24_1(result) {
+function visit202_24_1(result) {
   _$jscoverage['/util/web.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].branchData['11'][1].init(52, 18, 'win.document || {}');
-function visit192_11_1(result) {
+function visit201_11_1(result) {
   _$jscoverage['/util/web.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/web.js'].lineData[6]++;
@@ -509,9 +509,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util/web.js'].lineData[7]++;
   var util = require('./base');
   _$jscoverage['/util/web.js'].lineData[8]++;
-  var logger = S.getLogger('s/web');
+  var logger = S.getLogger('util');
   _$jscoverage['/util/web.js'].lineData[9]++;
-  var win = S.Env.host, undef, doc = visit192_11_1(win.document || {}), docElem = doc.documentElement, EMPTY = '', domReady = 0, callbacks = [], POLL_RETIRES = 500, POLL_INTERVAL = 40, RE_ID_STR = /^#?([\w-]+)$/, RE_NOT_WHITESPACE = /\S/, standardEventModel = doc.addEventListener, supportEvent = visit193_24_1(doc.attachEvent || standardEventModel), DOM_READY_EVENT = 'DOMContentLoaded', READY_STATE_CHANGE_EVENT = 'readystatechange', LOAD_EVENT = 'load', COMPLETE = 'complete', addEventListener = standardEventModel ? function(el, type, fn) {
+  var win = S.Env.host, undef, doc = visit201_11_1(win.document || {}), docElem = doc.documentElement, EMPTY = '', domReady = 0, callbacks = [], POLL_RETIRES = 500, POLL_INTERVAL = 40, RE_ID_STR = /^#?([\w-]+)$/, RE_NOT_WHITESPACE = /\S/, standardEventModel = doc.addEventListener, supportEvent = visit202_24_1(doc.attachEvent || standardEventModel), DOM_READY_EVENT = 'DOMContentLoaded', READY_STATE_CHANGE_EVENT = 'readystatechange', LOAD_EVENT = 'load', COMPLETE = 'complete', addEventListener = standardEventModel ? function(el, type, fn) {
   _$jscoverage['/util/web.js'].functionData[1]++;
   _$jscoverage['/util/web.js'].lineData[30]++;
   el.addEventListener(type, fn, false);
@@ -533,12 +533,12 @@ KISSY.add(function(S, require) {
   isWindow: function(obj) {
   _$jscoverage['/util/web.js'].functionData[5]++;
   _$jscoverage['/util/web.js'].lineData[48]++;
-  return visit194_48_1(visit195_48_2(obj != null) && visit196_48_3(obj == obj.window));
+  return visit203_48_1(visit204_48_2(obj != null) && visit205_48_3(obj == obj.window));
 }, 
   parseXML: function(data) {
   _$jscoverage['/util/web.js'].functionData[6]++;
   _$jscoverage['/util/web.js'].lineData[58]++;
-  if (visit197_58_1(data.documentElement)) {
+  if (visit206_58_1(data.documentElement)) {
     _$jscoverage['/util/web.js'].lineData[59]++;
     return data;
   }
@@ -547,7 +547,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util/web.js'].lineData[62]++;
   try {
     _$jscoverage['/util/web.js'].lineData[64]++;
-    if (visit198_64_1(win.DOMParser)) {
+    if (visit207_64_1(win.DOMParser)) {
       _$jscoverage['/util/web.js'].lineData[65]++;
       xml = new DOMParser().parseFromString(data, 'text/xml');
     } else {
@@ -567,7 +567,7 @@ KISSY.add(function(S, require) {
   xml = undef;
 }
   _$jscoverage['/util/web.js'].lineData[77]++;
-  if (visit199_77_1(!xml || visit200_77_2(!xml.documentElement || xml.getElementsByTagName('parsererror').length))) {
+  if (visit208_77_1(!xml || visit209_77_2(!xml.documentElement || xml.getElementsByTagName('parsererror').length))) {
     _$jscoverage['/util/web.js'].lineData[78]++;
     util.error('Invalid XML: ' + data);
   }
@@ -577,9 +577,9 @@ KISSY.add(function(S, require) {
   globalEval: function(data) {
   _$jscoverage['/util/web.js'].functionData[7]++;
   _$jscoverage['/util/web.js'].lineData[88]++;
-  if (visit201_88_1(data && RE_NOT_WHITESPACE.test(data))) {
+  if (visit210_88_1(data && RE_NOT_WHITESPACE.test(data))) {
     _$jscoverage['/util/web.js'].lineData[92]++;
-    if (visit202_92_1(win.execScript)) {
+    if (visit211_92_1(win.execScript)) {
       _$jscoverage['/util/web.js'].lineData[93]++;
       win.execScript(data);
     } else {
@@ -595,14 +595,14 @@ KISSY.add(function(S, require) {
   ready: function(fn) {
   _$jscoverage['/util/web.js'].functionData[9]++;
   _$jscoverage['/util/web.js'].lineData[109]++;
-  if (visit203_109_1(domReady)) {
+  if (visit212_109_1(domReady)) {
     _$jscoverage['/util/web.js'].lineData[110]++;
     try {
       _$jscoverage['/util/web.js'].lineData[111]++;
       fn(S);
     }    catch (e) {
   _$jscoverage['/util/web.js'].lineData[113]++;
-  util.log(visit204_113_1(e.stack || e), 'error');
+  S.log(visit213_113_1(e.stack || e), 'error');
   _$jscoverage['/util/web.js'].lineData[114]++;
   setTimeout(function() {
   _$jscoverage['/util/web.js'].functionData[10]++;
@@ -627,7 +627,7 @@ KISSY.add(function(S, require) {
   var timer = util.later(function() {
   _$jscoverage['/util/web.js'].functionData[12]++;
   _$jscoverage['/util/web.js'].lineData[134]++;
-  if (visit205_134_1(++retryCount > POLL_RETIRES)) {
+  if (visit214_134_1(++retryCount > POLL_RETIRES)) {
     _$jscoverage['/util/web.js'].lineData[135]++;
     timer.cancel();
     _$jscoverage['/util/web.js'].lineData[136]++;
@@ -636,7 +636,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util/web.js'].lineData[138]++;
   var node = doc.getElementById(id);
   _$jscoverage['/util/web.js'].lineData[139]++;
-  if (visit206_139_1(node)) {
+  if (visit215_139_1(node)) {
     _$jscoverage['/util/web.js'].lineData[140]++;
     fn(node);
     _$jscoverage['/util/web.js'].lineData[141]++;
@@ -648,26 +648,26 @@ KISSY.add(function(S, require) {
   function fireReady() {
     _$jscoverage['/util/web.js'].functionData[13]++;
     _$jscoverage['/util/web.js'].lineData[148]++;
-    if (visit207_148_1(domReady)) {
+    if (visit216_148_1(domReady)) {
       _$jscoverage['/util/web.js'].lineData[149]++;
       return;
     }
     _$jscoverage['/util/web.js'].lineData[152]++;
-    if (visit208_152_1(win && win.setTimeout)) {
+    if (visit217_152_1(win && win.setTimeout)) {
       _$jscoverage['/util/web.js'].lineData[153]++;
       removeEventListener(win, LOAD_EVENT, fireReady);
     }
     _$jscoverage['/util/web.js'].lineData[155]++;
     domReady = 1;
     _$jscoverage['/util/web.js'].lineData[156]++;
-    for (var i = 0; visit209_156_1(i < callbacks.length); i++) {
+    for (var i = 0; visit218_156_1(i < callbacks.length); i++) {
       _$jscoverage['/util/web.js'].lineData[157]++;
       try {
         _$jscoverage['/util/web.js'].lineData[158]++;
         callbacks[i](S);
       }      catch (e) {
   _$jscoverage['/util/web.js'].lineData[160]++;
-  util.log(visit210_160_1(e.stack || e), 'error');
+  S.log(visit219_160_1(e.stack || e), 'error');
   _$jscoverage['/util/web.js'].lineData[162]++;
   setTimeout(function() {
   _$jscoverage['/util/web.js'].functionData[14]++;
@@ -681,7 +681,7 @@ KISSY.add(function(S, require) {
   function bindReady() {
     _$jscoverage['/util/web.js'].functionData[15]++;
     _$jscoverage['/util/web.js'].lineData[173]++;
-    if (visit211_173_1(!doc || visit212_173_2(doc.readyState === COMPLETE))) {
+    if (visit220_173_1(!doc || visit221_173_2(doc.readyState === COMPLETE))) {
       _$jscoverage['/util/web.js'].lineData[174]++;
       fireReady();
       _$jscoverage['/util/web.js'].lineData[175]++;
@@ -690,7 +690,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/util/web.js'].lineData[179]++;
     addEventListener(win, LOAD_EVENT, fireReady);
     _$jscoverage['/util/web.js'].lineData[182]++;
-    if (visit213_182_1(standardEventModel)) {
+    if (visit222_182_1(standardEventModel)) {
       _$jscoverage['/util/web.js'].lineData[183]++;
       var domReady = function() {
   _$jscoverage['/util/web.js'].functionData[16]++;
@@ -706,7 +706,7 @@ KISSY.add(function(S, require) {
       var stateChange = function() {
   _$jscoverage['/util/web.js'].functionData[17]++;
   _$jscoverage['/util/web.js'].lineData[191]++;
-  if (visit214_191_1(doc.readyState === COMPLETE)) {
+  if (visit223_191_1(doc.readyState === COMPLETE)) {
     _$jscoverage['/util/web.js'].lineData[192]++;
     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
     _$jscoverage['/util/web.js'].lineData[193]++;
@@ -716,17 +716,17 @@ KISSY.add(function(S, require) {
       _$jscoverage['/util/web.js'].lineData[199]++;
       addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
       _$jscoverage['/util/web.js'].lineData[203]++;
-      var notframe, doScroll = visit215_204_1(docElem && docElem.doScroll);
+      var notframe, doScroll = visit224_204_1(docElem && docElem.doScroll);
       _$jscoverage['/util/web.js'].lineData[206]++;
       try {
         _$jscoverage['/util/web.js'].lineData[207]++;
-        notframe = (visit216_207_1(win.frameElement === null));
+        notframe = (visit225_207_1(win.frameElement === null));
       }      catch (e) {
   _$jscoverage['/util/web.js'].lineData[209]++;
   notframe = false;
 }
       _$jscoverage['/util/web.js'].lineData[213]++;
-      if (visit217_213_1(doScroll && notframe)) {
+      if (visit226_213_1(doScroll && notframe)) {
         _$jscoverage['/util/web.js'].lineData[214]++;
         var readyScroll = function() {
   _$jscoverage['/util/web.js'].functionData[18]++;
@@ -747,7 +747,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/util/web.js'].lineData[232]++;
-  if (visit218_232_1(supportEvent)) {
+  if (visit227_232_1(supportEvent)) {
     _$jscoverage['/util/web.js'].lineData[233]++;
     bindReady();
   }

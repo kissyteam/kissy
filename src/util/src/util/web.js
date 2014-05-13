@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var util = require('./base');
-    var logger = S.getLogger('s/web');
+    var logger = S.getLogger('util');
     var win = S.Env.host,
         undef,
         doc = win.document || {},
@@ -110,7 +110,7 @@ KISSY.add(function (S, require) {
                 try {
                     fn(S);
                 } catch (e) {
-                    util.log(e.stack || e, 'error');
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -157,7 +157,7 @@ KISSY.add(function (S, require) {
             try {
                 callbacks[i](S);
             } catch (e) {
-                util.log(e.stack || e, 'error');
+                S.log(e.stack || e, 'error');
                 /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;
