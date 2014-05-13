@@ -231,7 +231,6 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData = [];
   _$jscoverage['/base.js'].lineData[7] = 0;
   _$jscoverage['/base.js'].lineData[15] = 0;
-  _$jscoverage['/base.js'].lineData[24] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -255,5 +254,3 @@ KISSY.config({
   packages: {
   gallery: {
   base: visit1_18_1(location.protocol === 'https') ? 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'}}});
-_$jscoverage['/base.js'].lineData[24]++;
-KISSY.use('ua,feature');

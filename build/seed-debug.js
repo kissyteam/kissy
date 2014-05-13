@@ -2962,7 +2962,7 @@ KISSY.add('feature', ['ua'], function (S, require) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 23:31
+build time: May 13 23:59
 */
 /**
  * @ignore
@@ -2985,9 +2985,7 @@ KISSY.config({
                 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'
         }
     }
-});
-
-KISSY.use('ua,feature');/*jshint indent:false, quotmark:false*/
+});/*jshint indent:false, quotmark:false*/
 KISSY.use('ua, feature', function(S, UA, Feature){
 S.config("requires",{
     "anim/base": [

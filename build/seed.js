@@ -59,9 +59,9 @@ r},getCssVendorInfo:function(a){return l(a)}};return i.Feature});
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 23:31
+build time: May 13 23:59
 */
-KISSY.config({modules:{ajax:{alias:"io"}}});KISSY.config({packages:{gallery:{base:"https"===location.protocol?"https://s.tbcdn.cn/s/kissy/gallery":"http://a.tbcdn.cn/s/kissy/gallery"}}});KISSY.use("ua,feature");
+KISSY.config({modules:{ajax:{alias:"io"}}});KISSY.config({packages:{gallery:{base:"https"===location.protocol?"https://s.tbcdn.cn/s/kissy/gallery":"http://a.tbcdn.cn/s/kissy/gallery"}}});
 KISSY.use("ua, feature",function(f,g,a){function d(a,c){var b;"string"===typeof a?(b={},b[a]=c):b=a;f.config("alias",b)}f.config("requires",{"anim/base":["dom","promise"],"anim/timer":["anim/base"],"anim/transition":["anim/base"],attribute:["event/custom"],base:["attribute"],button:["component/control"],color:["attribute"],combobox:["menu","io"],"combobox/multi-word":["combobox"],"component/container":["component/control"],"component/control":["node","event/gesture/basic","event/gesture/tap","base",
 "xtemplate/runtime"],"component/extension/align":["node","ua"],"component/extension/delegate-children":["component/control"],"component/extension/shim":["ua"],"component/plugin/drag":["dd"],"component/plugin/resize":["resizable"],"date/format":["date/gregorian"],"date/gregorian":["i18n!date"],"date/picker":["i18n!date/picker","component/control","date/format","date/picker-xtpl"],"date/popup-picker":["date/picker","component/extension/shim","component/extension/align"],dd:["node","base","event/gesture/basic",
 "event/gesture/drag"],"dd/plugin/constrain":["node","base"],"dd/plugin/proxy":["dd"],"dd/plugin/scroll":["dd"],"dom/base":["ua"],"dom/class-list":["dom/base"],"dom/ie":["dom/base"],"dom/selector":["dom/basic"],event:["event/dom","event/custom"],"event/base":["util"],"event/custom":["event/base"],"event/dom/base":["event/base","dom","ua"],"event/dom/focusin":["event/dom/base"],"event/dom/hashchange":["event/dom/base"],"event/dom/ie":["event/dom/base"],"event/dom/input":["event/dom/base"],"event/gesture/basic":["event/gesture/util"],
