@@ -11,9 +11,9 @@ border:1px solid red;"></div>
 <script>
     KISSY.use('node', function (S, Node) {
         var t = Node.all('#t');
-        var now = S.now();
+        var now = (+new Date());
         t.fadeIn(1);
-        S.log('duration: ' + (S.now() - now));
+        S.log('duration: ' + ((+new Date()) - now));
         t.fadeOut(2);
         t.fadeIn(2);
     });

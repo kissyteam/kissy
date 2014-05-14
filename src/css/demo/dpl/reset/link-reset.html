@@ -20,7 +20,7 @@
 <script>
     KISSY.use('node',function (S) {
         var $ = S.all;
-        $("#t").attr("href", "#" + S.guid("ha"+ S.now()));
+        $("#t").attr("href", "#" + S.guid("ha"+ (+new Date())));
     });
 </script>
 </body>

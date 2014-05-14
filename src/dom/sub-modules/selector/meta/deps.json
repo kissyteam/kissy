@@ -1,1 +1,1 @@
-{"dom/selector":["dom/basic"]}
+{"dom/selector":["util","dom/basic"]}

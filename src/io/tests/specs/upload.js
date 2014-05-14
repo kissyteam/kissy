@@ -14,7 +14,7 @@ KISSY.add(function (S, UA, io, Node) {
         it("should abort for form file upload", function () {
             S.log("should abort for form file upload");
 
-            var f = $('<form id="f' + S.guid(S.now()) +
+            var f = $('<form id="f' + S.guid((+new Date())) +
                 '">' +
                 '<input name="testFile" type="file"/>' +
                 //php need []
@@ -64,7 +64,7 @@ KISSY.add(function (S, UA, io, Node) {
             S.log("nothing happens if abort after form file upload");
 
             // error !
-            var f = $('<form id="f' + S.guid(S.now()) + '"' +
+            var f = $('<form id="f' + S.guid((+new Date())) + '"' +
                 ' action="http://www.g.cn">' +
                 '<input name="testFile" type="file"/>' +
                 //php need []

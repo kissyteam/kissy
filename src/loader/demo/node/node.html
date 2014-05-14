@@ -8,7 +8,7 @@
 <script>
     var start = KISSY.now();
     KISSY.use('node', {success: function (S) {
-        console.log(S.now() - start)
+        console.log((+new Date()) - start)
     }
     });
 </script>

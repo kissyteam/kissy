@@ -12,8 +12,7 @@ KISSY.add(function (S, require) {
 
     // ident === identifier
 
-    var document = S.Env.host.document,
-        EXPANDO_SELECTOR_KEY = '_ks_data_selector_id_',
+    var EXPANDO_SELECTOR_KEY = '_ks_data_selector_id_',
         caches = {},
         isContextXML,
         uuid = 0,
@@ -398,12 +397,6 @@ KISSY.add(function (S, require) {
             dir: 'previousSibling'
         }
     };
-
-    if ('sourceIndex' in document.documentElement) {
-        Dom._compareNodeOrder = function (a, b) {
-            return a.sourceIndex - b.sourceIndex;
-        };
-    }
 
     function matches(str, seeds) {
         return Dom._selectInternal(str, null, seeds);

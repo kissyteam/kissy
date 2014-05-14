@@ -2,14 +2,14 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use('node', function (S, Node) {
-        var start = S.now();
+        var start = (+new Date());
         var body = Node.all('body');
         body.animate({}, {
             duration: 1
         }).animate({}, {
                     duration: 1,
                     complete: function () {
-                        S.log(S.now() - start);
+                        S.log((+new Date()) - start);
                     }
                 });
     });

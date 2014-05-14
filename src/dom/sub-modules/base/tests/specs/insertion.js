@@ -59,7 +59,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it('wrapAll should works', function () {
-            var time = S.now();
+            var time = (+new Date());
             var wrappedCls = 'f' + time;
             var wrapperCls = 'x' + time;
             var foo = body.appendChild(Dom.create('<div class="' + wrappedCls + '"></div>'));
@@ -77,7 +77,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it('wrap should works', function () {
-            var time = S.now();
+            var time = (+new Date());
             var wrappedCls = 'f' + time;
             var wrapperCls = 'x' + time;
             var foo = body.appendChild(Dom.create('<div class="' + wrappedCls + '"></div>'));
@@ -102,7 +102,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it('wrapInner should works', function () {
-            var time = S.now();
+            var time = (+new Date());
             var wrappedCls = 'f' + time;
             var wrapperCls = 'x' + time;
             var childCls = 'c' + time;
@@ -124,7 +124,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it('unwrap works', function () {
-            var time = S.now();
+            var time = (+new Date());
             var wrappedCls = 'f' + time;
             var foo = body.appendChild(Dom.create('<div class="' + wrappedCls + '">' +
                 '<div class="x' + wrappedCls + '"></div>' +

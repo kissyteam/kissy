@@ -335,7 +335,7 @@ KISSY.add(function (S, UA, Json, io, Node, Uri) {
 
 
         it("should works for form file upload", function () {
-            var f = $('<form id="f' + S.guid(S.now()) + '">' +
+            var f = $('<form id="f' + S.guid((+new Date())) + '">' +
                 //php need []
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
@@ -383,7 +383,7 @@ KISSY.add(function (S, UA, Json, io, Node, Uri) {
 
 
         it("should works for common form", function () {
-            var f = $('<form id="f' + S.guid(S.now()) + '">' +
+            var f = $('<form id="f' + S.guid((+new Date())) + '">' +
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
                 '<input name="test5" value="t8"/>' +

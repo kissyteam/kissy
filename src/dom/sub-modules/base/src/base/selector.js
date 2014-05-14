@@ -225,6 +225,16 @@ KISSY.add(function (S, require) {
         return value === '*' || el.nodeName.toLowerCase() === value.toLowerCase();
     }
 
+    var compareNodeOrder = ('sourceIndex' in docElem) ? function (a, b) {
+        return a.sourceIndex - b.sourceIndex;
+    } : function (a, b) {
+        if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
+            return a.compareDocumentPosition ? -1 : 1;
+        }
+        var bit = a.compareDocumentPosition(b) & 4;
+        return bit ? -1 : 1;
+    };
+
     util.mix(Dom,
         /**
          * @override KISSY.DOM
@@ -232,14 +242,6 @@ KISSY.add(function (S, require) {
          * @singleton
          */
         {
-            _compareNodeOrder: function (a, b) {
-                if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
-                    return a.compareDocumentPosition ? -1 : 1;
-                }
-                var bit = a.compareDocumentPosition(b) & 4;
-                return bit ? -1 : 1;
-            },
-
             _getElementsByTagName: function (name, context) {
                 // can not use getElementsByTagName for fragment
                 return makeArray(context.querySelectorAll(name));
@@ -326,7 +328,7 @@ KISSY.add(function (S, require) {
                         return 0;
                     }
 
-                    return Dom._compareNodeOrder(a, b);
+                    return compareNodeOrder(a, b);
                 }
 
                 // 排序去重

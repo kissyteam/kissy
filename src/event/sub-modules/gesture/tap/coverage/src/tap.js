@@ -465,7 +465,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tap.js'].lineData[91]++;
   var eventObj = S.mix({
   which: 1, 
-  duration: (S.now() - e.timeStamp) / 1000}, self.lastXY);
+  duration: ((+new Date()) - e.timeStamp) / 1000}, self.lastXY);
   _$jscoverage['/tap.js'].lineData[95]++;
   self.tapHoldTimer = 0;
   _$jscoverage['/tap.js'].lineData[96]++;
@@ -585,7 +585,7 @@ KISSY.add(function(S, require) {
   pageX: lastXY.pageX, 
   pageY: lastXY.pageY, 
   which: 1, 
-  duration: (S.now() - self.startTime) / 1000});
+  duration: ((+new Date()) - self.startTime) / 1000});
 }, SINGLE_TAP_DELAY);
   }
 }});

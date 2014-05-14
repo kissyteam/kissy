@@ -24,7 +24,7 @@
 <script>
     KISSY.use("node,menu",
             function (S, Node, Menu) {
-                var start = S.now();
+                var start = (+new Date());
                 var menu = new Menu({
                     render:"#menuitem_container"
                 });
@@ -50,7 +50,7 @@
 
                 menu.render();
 
-                S.log("render ok :" + (S.now() - start));
+                S.log("render ok :" + ((+new Date()) - start));
 
                 menu.on("click", function (ev) {
                     S.log("selected : " + ev.target.get("content"));

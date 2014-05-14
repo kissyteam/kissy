@@ -58,7 +58,7 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
 
     function filterImage(percentage) {
         var pixels = createImageData(originalWidth, originalHeight);
-        var callback = 'callback' + S.now();
+        var callback = 'callback' + (+new Date());
         window[callback] = function (data) {
             overlay.hide();
             var pixelsData = pixels.data;

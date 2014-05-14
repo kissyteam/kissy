@@ -205,7 +205,7 @@ KISSY.add(function (S, require) {
         });
 
         it("wrapAll works", function () {
-            var time = S.now();
+            var time = (+new Date());
             var wrappedCls = "f" + time;
             var wrapperCls = 'x' + time;
             var body = document.body;

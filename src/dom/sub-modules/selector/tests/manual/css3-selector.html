@@ -32,13 +32,13 @@
 <script src="/kissy/tools/third-party/sizzle.js"></script>
 <script>
     KISSY.use('dom/selector', function (S, engine) {
-        var start= S.now();
+        var start= (+new Date());
         var els = engine.select('#t > .inner form ul > li.my');
-        S.log(S.now()-start);
+        S.log((+new Date())-start);
         S.log(els);
-        start= S.now();
+        start= (+new Date());
          els = Sizzle('#t > .inner form ul > li.my');
-        S.log(S.now()-start);
+        S.log((+new Date())-start);
         S.log(els);
     });
 </script>

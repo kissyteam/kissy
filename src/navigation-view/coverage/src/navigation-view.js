@@ -881,7 +881,7 @@ KISSY.add(function(S, require) {
       view.$el.on(ANIMATION_END_EVENT, onViewAnimEnd, view);
     }
     _$jscoverage['/navigation-view.js'].lineData[218]++;
-    view.timeStamp = S.now();
+    view.timeStamp = (+new Date());
     _$jscoverage['/navigation-view.js'].lineData[219]++;
     return {
   view: view, 

@@ -122,7 +122,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it('does not confuse name with id', function () {
-            var id = 'id' + S.now();
+            var id = 'id' + (+new Date());
             var input = Dom.create('<input name="' + id + '"/>');
             var div = Dom.create('<div id="' + id + '"></div>');
             Dom.append(input, document.body);

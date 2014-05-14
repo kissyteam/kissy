@@ -66,14 +66,14 @@ KISSY.add(function (S, Dom, Anim, Node) {
         it('support wait queue', function () {
             var t = $('<div></div>');
             var time = 0;
-            var start = S.now();
+            var start = (+new Date());
             t.animate({}, {
                 duration: 0.2
             })
                 .animate({}, {
                     duration: 0.2,
                     complete: function () {
-                        time = S.now() - start;
+                        time = (+new Date()) - start;
                     }
                 });
             waitsFor(function () {

@@ -20,7 +20,7 @@ background-image: url("http://img03.taobaocdn.com/tps/i3/T1UfsTXotcXXb6hPny-500-
     KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
         S.all('#run').on('click', function () {
             this.disabled = true;
-            var start = S.now();
+            var start = (+new Date());
             var t = S.all('#t');
             new TimerAnim(t, {
                 height: 190,
@@ -46,7 +46,7 @@ background-image: url("http://img03.taobaocdn.com/tps/i3/T1UfsTXotcXXb6hPny-500-
                 duration: 2,
                 easing: 'easeIn',
                 complete: function () {
-                    S.log('ok: ' + (S.now() - start));
+                    S.log('ok: ' + ((+new Date()) - start));
                 }
             }).run();
         });

@@ -38,7 +38,7 @@
             new TimerAnim(t, {
                 left: {
                     frame: function (anim, fx) {
-                        var deltaTime = S.now() - anim.startTime,
+                        var deltaTime = (+new Date()) - anim.startTime,
                                 theta = (deltaTime / ACCELERATION),
                         // long tail hump
                                 powTime = theta * Math.exp(-SPRING_TENSION * theta),

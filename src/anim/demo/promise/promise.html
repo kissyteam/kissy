@@ -12,14 +12,14 @@
 </div>
 <script>
     KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
-        var start = S.now();
+        var start = (+new Date());
         var t = Node.all('#t')[0];
         var anim = new TimerAnim(t, {width: 200}, {
             duration: 1,
             complete: function () {
                 S.log('first');
                 S.log(this);
-                S.log(S.now() - start);
+                S.log((+new Date()) - start);
             }
         }).run()
                 .progress(function () {
@@ -28,7 +28,7 @@
                 .then(function () {
                     S.log('second');
                     S.log(anim);
-                    S.log(S.now() - start);
+                    S.log((+new Date()) - start);
                 });
     });
 </script>

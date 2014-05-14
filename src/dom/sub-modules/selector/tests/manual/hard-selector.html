@@ -198,14 +198,14 @@
         S.each(str, function (s, index) {
             index++;
             S.log(index + ': ' + s);
-            var start = S.now();
+            var start = (+new Date());
 
             var els = engine.select(s, document.getElementById('hard' + index));
-            S.log('KISSY: ' + (S.now() - start));
+            S.log('KISSY: ' + ((+new Date()) - start));
             S.log(els);
-            start = S.now();
+            start = (+new Date());
             var els2 = Sizzle(s, document.getElementById('hard' + index));
-            S.log('Sizzle: ' + (S.now() - start));
+            S.log('Sizzle: ' + ((+new Date()) - start));
             S.log(els2);
         });
     });

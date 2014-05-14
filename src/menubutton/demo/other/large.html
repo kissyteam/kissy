@@ -68,7 +68,7 @@
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
                 var $ = S.all;
                 var holder = $("#holder");
-                var start = S.now();
+                var start = (+new Date());
 
                 for (var i = 0; i < 50; i++) {
                     (function (i) {
@@ -110,7 +110,7 @@
                     })(i);
                 }
 
-                alert(S.now() - start);
+                alert((+new Date()) - start);
             });
 
     </script>

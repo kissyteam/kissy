@@ -41,7 +41,7 @@
             var i = 0;
 
             function run() {
-                var start = S.now();
+                var start = (+new Date());
                 for (var j = i; j < i + 5; j++) {
                     tree.addChild({
                         content: j + ''
@@ -51,7 +51,7 @@
                 if(i>500){
                     return;
                 }
-                S.log('duration: ' + (S.now() - start));
+                S.log('duration: ' + ((+new Date()) - start));
                 setTimeout(run, 500);
             }
 

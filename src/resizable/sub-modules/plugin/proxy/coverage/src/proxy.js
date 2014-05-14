@@ -314,7 +314,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/proxy.js'].lineData[9]++;
   var Base = require('base');
   _$jscoverage['/proxy.js'].lineData[11]++;
-  var $ = Node.all, PROXY_EVENT = '.-ks-proxy' + S.now();
+  var $ = Node.all, PROXY_EVENT = '.-ks-proxy' + (+new Date());
   _$jscoverage['/proxy.js'].lineData[18]++;
   return Base.extend({
   pluginId: 'resizable/plugin/proxy', 

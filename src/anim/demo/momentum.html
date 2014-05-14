@@ -40,7 +40,7 @@
             new TimerAnim(t, {
                 left: {
                     frame: function (anim, fx) {
-                        var deltaTime = S.now() - anim.startTime;
+                        var deltaTime = (+new Date()) - anim.startTime;
                         // Math.exp(-0.1) -> Math.exp(-999)
                         // big -> small
                         // 1 -> 0

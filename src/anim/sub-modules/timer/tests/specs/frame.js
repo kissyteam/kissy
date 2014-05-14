@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
             var t = $('<div style="height:100px;' +
                 'width:100px;overflow: hidden;">' +
                 '</div>').appendTo('body');
-            var start = S.now();
+            var start = (+new Date());
             var called = 0;
             var anim = new Anim(t, {
                 width: 10,
@@ -121,7 +121,7 @@ KISSY.add(function (S, require) {
                 },
                 complete: function () {
                     called++;
-                    expect(S.now() - start).toBeLessThan(1000);
+                    expect((+new Date()) - start).toBeLessThan(1000);
                 }
             });
             anim.run();
@@ -204,7 +204,7 @@ KISSY.add(function (S, require) {
 // to be removed, do not use this feature
         it('frame can stop early and ignore native update', function () {
             var t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
-            var start = S.now();
+            var start = (+new Date());
             var called = 0;
             var anim = new Anim(t, {
                 width: 10
@@ -215,7 +215,7 @@ KISSY.add(function (S, require) {
                 },
                 complete: function () {
                     called = 1;
-                    expect(S.now() - start).toBeLessThan(100);
+                    expect((+new Date()) - start).toBeLessThan(100);
                 }
             });
 
@@ -236,7 +236,7 @@ KISSY.add(function (S, require) {
 // to be removed, do not use this feature
         it('frame can stop early and perform native update', function () {
             var t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
-            var start = S.now();
+            var start = (+new Date());
             var called = 0;
             var anim = new Anim(t, {
                 width: 10
@@ -248,7 +248,7 @@ KISSY.add(function (S, require) {
                 },
                 complete: function () {
                     called = 1;
-                    expect(S.now() - start).toBeLessThan(100);
+                    expect((+new Date()) - start).toBeLessThan(100);
                 }
             });
 

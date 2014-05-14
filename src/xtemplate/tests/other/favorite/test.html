@@ -27,13 +27,13 @@
         var t = new XTemplate(xtpl);
 
         document.getElementById('render').onclick = function () {
-            var start = S.now();
+            var start = (+new Date());
 
             for (var i = 0; i < num; i++) {
                 var ret = t.render(data);
             }
 
-            S.log(S.now() - start);
+            S.log((+new Date()) - start);
             document.getElementById('content').value = ret;
         };
     });

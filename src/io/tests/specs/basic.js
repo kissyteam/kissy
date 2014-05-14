@@ -867,7 +867,7 @@ KISSY.add(function (S, IO) {
                             expect(ev.type).toBe(type);
                         });
                     });
-                    IO.get('/kissy/src/io/tests/data/interface.jss?t=' + S.now(), function () {
+                    IO.get('/kissy/src/io/tests/data/interface.jss?t=' + (+new Date()), function () {
                         ok = true;
                     });
                 });
@@ -891,7 +891,7 @@ KISSY.add(function (S, IO) {
                         expect(ev.ajaxConfig).not.toBe(undefined);
                         expect(ev.type).toBe('error');
                     });
-                    IO.get('/kissy/src/io/tests/data/404?t=' + S.now());
+                    IO.get('/kissy/src/io/tests/data/404?t=' + (+new Date()));
                 });
 
                 waitsFor(function () {

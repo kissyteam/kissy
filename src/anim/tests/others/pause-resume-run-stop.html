@@ -48,7 +48,7 @@ border: 1px solid red">
                     }
                 },
                 complete: function () {
-                    S.log(S.now() - t1);
+                    S.log((+new Date()) - t1);
                     S.log('anim completed');
                 }
             });
@@ -62,18 +62,18 @@ border: 1px solid red">
         genAnim();
         $('.anim').prop('disabled',false);
         $('#run').on('click', function () {
-            t1 = t0 = S.now();
+            t1 = t0 = (+new Date());
             $('#run')[0].disabled = true;
             anim.run();
         });
         $('#pause').on('click', function () {
-            S.log(S.now() - t0);
+            S.log((+new Date()) - t0);
             $('#pause')[0].disabled = true;
             anim.pause();
             $('#resume')[0].disabled = false;
         });
         $('#resume').on('click', function () {
-            t1 = S.now();
+            t1 = (+new Date());
             anim.resume();
             $('#resume')[0].disabled = true;
         });
@@ -82,7 +82,7 @@ border: 1px solid red">
             $('.anim').prop('disabled',true);
         });
         $('#stop-false').on('click', function () {
-            S.log(S.now() - t1);
+            S.log((+new Date()) - t1);
             anim.stop();
             $('.anim').prop('disabled',true);
         });

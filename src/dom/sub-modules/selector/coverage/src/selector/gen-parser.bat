@@ -1,1 +1,1 @@
-kissy-kison -g parser-grammar.kison -m dom/selector/parser
+kison -k -g parser-grammar.kison

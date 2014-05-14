@@ -25,7 +25,7 @@
             'i18n!date/picker,' +
             'date/gregorian', function (S, MonthPanel, locale,GregorianCalendar) {
         var now=new GregorianCalendar();
-        now.setTime(S.now());
+        now.setTime((+new Date()));
         new MonthPanel({
             value:now,
             locale:locale,

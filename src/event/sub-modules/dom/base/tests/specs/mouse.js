@@ -191,7 +191,7 @@ KISSY.add(function (S, Dom, Event, io) {
         describe('delegate works', function () {
 
             it("should delegate mouseenter/leave properly", function () {
-                var t = S.now();
+                var t = (+new Date());
                 var code = "<div id='d1" + t + "' style='width:500px;height:500px;border:1px solid red;'>" +
                     "<div id='d2" + t + "' class='t' style='width:300px;height:300px;margin:150px;border:1px solid green;'>" +
                     "<div id='d3" + t + "' style='width:100px;height:100px;margin:150px;border:1px solid black;'>" +

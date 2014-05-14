@@ -6113,9 +6113,9 @@
 </div>
 <script>
     KISSY.use('node', function (S) {
-        var now = S.now();
+        var now = (+new Date());
         var l = S.query('.J_TWidget', '#wrap').length;
-        alert(l + ' : ' + (S.now() - now));
+        alert(l + ' : ' + ((+new Date()) - now));
     });
 </script>
 </body>
