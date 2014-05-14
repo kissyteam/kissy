@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
                 '?:down|up|over|move|out)|key(?:press|down|up)))$');
 
     function escapeAttrValue(str) {
-        return String(str).replace(/"/g, '&quote;');
+        return String(str).replace(/"/g, '&quot;');
     }
 
     function canDeleteEmptyAttribute(tag, attr) {

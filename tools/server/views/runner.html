@@ -18,7 +18,11 @@
     <style>
         {{{externalStyle}}}
     </style>
-    <script src="/kissy/src/loader/tests/others/import.js"></script>
+    {{#if (query.build)}}
+            <script src="/kissy/build/loader-debug.js"></script>
+        {{else}}
+            <script src="/kissy/src/loader/tests/others/import.js"></script>
+    {{/if}}
     {{#if (query.min)}}
         {{#if (loader)}}
         {{else}}

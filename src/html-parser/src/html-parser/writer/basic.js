@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var isBooleanAttribute = Utils.isBooleanAttribute;
 
     function escapeAttrValue(str) {
-        return String(str).replace(/'/g, '&quote;');
+        return String(str).replace(/'/g, '&quot;');
     }
 
     /**
