@@ -25,32 +25,40 @@
     // how to get mod url
     Config.resolveModFn = function (mod) {
         var name = mod.name,
-            filter, t, url, subPath;
+            filter, t, url,
+        // deprecated! do not use path config
+            subPath = mod.path;
         var packageInfo = mod.getPackage();
         var packageBase = packageInfo.getBase();
         var packageName = packageInfo.name;
         var extname = '.' + mod.getType();
-        // special for css module
-        name = name.replace(/\.css$/, '');
-        filter = packageInfo.filter;
 
-        if (filter) {
-            filter = '-' + filter;
+        if (!subPath) {
+            // special for css module
+            name = name.replace(/\.css$/, '');
+            filter = packageInfo.filter;
+
+            if (filter) {
+                filter = '-' + filter;
+            }
+
+            subPath = name + filter + extname;
         }
 
-        // packageName: a/y use('a/y');
-        if (name === packageName) {
+        // core package
+        if (packageName === 'core') {
+            url = packageBase + subPath;
+        } else if (name === packageName) {
+            // packageName: a/y use('a/y');
+            // do not use this on production, can not be combo ed with other modules from same package
             url = packageBase.substring(0, packageBase.length - 1) + filter + extname;
         } else {
-            subPath = name + filter + extname;
-            if (Utils.startsWith(name, packageName + '/')) {
-                subPath = subPath.substring(packageName.length + 1);
-            }
+            subPath = subPath.substring(packageName.length + 1);
             url = packageBase + subPath;
         }
 
         if ((t = mod.getTag())) {
-            t += '.' + mod.getType();
+            t += extname;
             url += '?t=' + t;
         }
         return url;
