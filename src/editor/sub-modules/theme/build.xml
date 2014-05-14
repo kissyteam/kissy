@@ -36,12 +36,12 @@
 
         <replace token="./cool.png"
                  file="${component.src.dir.tmp}/cool/editor.css"
-                 value="http://g.tbcdn.cn/kissy/k/${cdn.version}/editor/theme/cool/cool.png"
+                 value="http://gtms02.alicdn.com/tps/i2/T1whP8FGhXXXbFdFYq-24-597.png"
                  encoding="${charset}"/>
 
         <replace token="./cool-ie6.png"
                  file="${component.src.dir.tmp}/cool/editor.css"
-                 value="http://g.tbcdn.cn/kissy/k/${cdn.version}/editor/theme/cool/cool-ie6.png"
+                 value="http://gtms01.alicdn.com/tps/i1/T1AV66FFNaXXbFdFYq-24-597.png"
                  encoding="${charset}"/>
 
         <delete dir="${component.src.dir.tmp}/cool/"
