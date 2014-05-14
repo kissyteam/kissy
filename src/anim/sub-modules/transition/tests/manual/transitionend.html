@@ -11,25 +11,26 @@
 <div id="t2" style="border:1px solid red;width:100px;height:100px"></div>
 <script>
     var S = KISSY;
-    var Feature = S.Feature;
-    var vendorPrefix = Feature.getCssVendorInfo('transition').propertyNamePrefix;
-    var TRANSITION_END_EVENT = vendorPrefix ?
-        // webkitTransitionEnd !
-            (vendorPrefix.toLowerCase() + 'TransitionEnd') :
-            'transitionend';
-    var TRANSITION = vendorPrefix ?
-        // webkitTransitionEnd !
-            (vendorPrefix.toLowerCase() + 'Transition') :
-            'transition';
-    var t = document.getElementById('t');
-    var tStyle = t.style;
-    // force compute width
-    t.offsetWidth;
-    tStyle[TRANSITION] = 'width 2s linear 0s';
-    t.addEventListener('webkitTransitionEnd', function (e) {
-        alert(e.propertyName);
-    }, false);
-    tStyle.width = '200px';
+    KISSY.use('feature', function (S, Feature) {
+        var vendorPrefix = Feature.getCssVendorInfo('transition').propertyNamePrefix;
+        var TRANSITION_END_EVENT = vendorPrefix ?
+            // webkitTransitionEnd !
+                (vendorPrefix.toLowerCase() + 'TransitionEnd') :
+                'transitionend';
+        var TRANSITION = vendorPrefix ?
+            // webkitTransitionEnd !
+                (vendorPrefix.toLowerCase() + 'Transition') :
+                'transition';
+        var t = document.getElementById('t');
+        var tStyle = t.style;
+        // force compute width
+        t.offsetWidth;
+        tStyle[TRANSITION] = 'width 2s linear 0s';
+        t.addEventListener('webkitTransitionEnd', function (e) {
+            alert(e.propertyName);
+        }, false);
+        tStyle.width = '200px';
+    });
 
     KISSY.use('anim', function (S, Anim) {
         new Anim('#t2', {

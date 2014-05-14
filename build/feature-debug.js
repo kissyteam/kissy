@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:26
+build time: May 14 22:50
 */
 /*
 combined modules:
@@ -84,7 +84,7 @@ KISSY.add('feature', ['ua'], function (S, require) {
      * @private
      * @singleton
      */
-    return {
+    S.Feature = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
          * whether support microsoft pointer event.
@@ -176,4 +176,5 @@ KISSY.add('feature', ['ua'], function (S, require) {
             return getVendorInfo(name);
         }
     };
+    return S.Feature;
 });

@@ -6,7 +6,7 @@ KISSY.add(function (S, require) {
     var Node = require('node');
     var $ = Node.all;
     var BasicGesture = require('event/gesture/basic');
-
+    var Feature = require('feature');
     describe('base gesture', function () {
         if (!S.UA.ios) {
             it('works for mouse', function () {
@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
             });
         }
 
-        if (S.Feature.isTouchEventSupported()) {
+        if (Feature.isTouchEventSupported()) {
             it('works for touch events', function () {
                 var d = $('<div style="position:absolute;left:0;top:0;width: 100px;height: 100px"></div>');
                 d.appendTo(document.body);

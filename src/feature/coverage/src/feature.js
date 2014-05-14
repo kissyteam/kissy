@@ -281,6 +281,7 @@ if (! _$jscoverage['/feature.js']) {
   _$jscoverage['/feature.js'].lineData[181] = 0;
   _$jscoverage['/feature.js'].lineData[190] = 0;
   _$jscoverage['/feature.js'].lineData[194] = 0;
+  _$jscoverage['/feature.js'].lineData[198] = 0;
 }
 if (! _$jscoverage['/feature.js'].functionData) {
   _$jscoverage['/feature.js'].functionData = [];
@@ -551,7 +552,7 @@ KISSY.add(function(S, require) {
     return vendorInfos[name];
   }
   _$jscoverage['/feature.js'].lineData[93]++;
-  return {
+  S.Feature = {
   isMsPointerSupported: function() {
   _$jscoverage['/feature.js'].functionData[3]++;
   _$jscoverage['/feature.js'].lineData[101]++;
@@ -634,4 +635,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/feature.js'].lineData[194]++;
   return getVendorInfo(name);
 }};
+  _$jscoverage['/feature.js'].lineData[198]++;
+  return S.Feature;
 });

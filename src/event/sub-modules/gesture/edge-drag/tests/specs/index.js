@@ -2,7 +2,8 @@
  * tc for edge-drag gesture
  */
 KISSY.add(function (S, require) {
-    if (S.UA.phantomjs || !S.Feature.isTouchEventSupported()) {
+    var Feature = require('feature');
+    if (S.UA.phantomjs || !Feature.isTouchEventSupported()) {
         return;
     }
 

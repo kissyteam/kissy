@@ -49,10 +49,13 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script>
     (function (S) {
-        if (!S.Feature.getCssVendorInfo('transform')) {
-            alert('your browser does not support this');
-            return;
-        }
+        KISSY.use('feature', function (S, Feature) {
+            if (!Feature.getCssVendorInfo('transform')) {
+                alert('your browser does not support this');
+                return;
+            }
+        });
+
         S.use('node', function (S, Node) {
             var $ = Node.all;
             var inner = $('#inner');

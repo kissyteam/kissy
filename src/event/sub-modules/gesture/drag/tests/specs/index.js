@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var $ = Node.all;
     var DragGesture = require('event/gesture/drag');
     var ie = S.UA.ieMode;
+    var Feature = require('feature');
     if (ie === 9 || ie === 11) {
         return;
     }
@@ -96,7 +97,7 @@ KISSY.add(function (S, require) {
             });
         }
 
-        if (S.Feature.isTouchEventSupported()) {
+        if (Feature.isTouchEventSupported()) {
             it('works for touch events', function () {
                 var d = $('<div style="position:absolute;left:0;top:0;width: 100px;height: 100px"></div>');
                 d.appendTo(document.body);

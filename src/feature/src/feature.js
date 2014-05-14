@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
      * @private
      * @singleton
      */
-    return {
+    S.Feature = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
          * whether support microsoft pointer event.
@@ -194,4 +194,6 @@ KISSY.add(function (S, require) {
             return getVendorInfo(name);
         }
     };
+
+    return S.Feature;
 });

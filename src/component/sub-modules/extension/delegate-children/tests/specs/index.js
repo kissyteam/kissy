@@ -2,6 +2,7 @@ KISSY.add(function (S, require) {
     var Container = require('component/container');
     var Control = require('component/control');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
+    var Feature = require('feature');
     /*jshint quotmark:false*/
     function invalidNode(n) {
         return n == null || n.nodeType === 11;
@@ -24,7 +25,7 @@ KISSY.add(function (S, require) {
             expect(invalidNode(c.get('el')[0].parentNode)).toBe(true);
         });
 
-        if (S.Feature.isTouchEventSupported()) {
+        if (Feature.isTouchEventSupported()) {
 
         } else {
             it("should delegate events", function () {

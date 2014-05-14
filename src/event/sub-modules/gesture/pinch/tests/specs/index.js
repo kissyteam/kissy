@@ -2,8 +2,9 @@
  * test pinch gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    if (S.UA.phantomjs || !S.Feature.isTouchEventSupported()) {
+KISSY.add(function (S, require){
+    var Feature = require('feature');
+    if (S.UA.phantomjs || !Feature.isTouchEventSupported()) {
         return;
     }
 
