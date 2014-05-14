@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Jan 13 14:57
+build time: May 14 11:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2617,13 +2617,16 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
     })
   }}
 });
-KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], function(S, require) {
+KISSY.add("editor/enterKey", ["node", "ua", "./walker", "./base", "./elementPath"], function(S, require) {
+  var util = S;
   var Node = require("node");
+  var $ = Node.all;
+  var UA = require("ua");
   var Walker = require("./walker");
   var Editor = require("./base");
   var ElementPath = require("./elementPath");
-  var OLD_IE = S.UA.ieMode < 11;
-  var headerTagRegex = /^h[1-6]$/, dtd = Editor.XHTML_DTD;
+  var OLD_IE = UA.ieMode < 11;
+  var headerPreTagRegex = /^(?:h[1-6])|(?:pre)$/i, dtd = Editor.XHTML_DTD;
   function getRange(editor) {
     var ranges = editor.getSelection().getRanges();
     for(var i = ranges.length - 1;i > 0;i--) {
@@ -2634,8 +2637,8 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
   function enterBlock(editor) {
     var range = getRange(editor);
     var doc = range.document;
-    if(range.checkStartOfBlock() && range.checkEndOfBlock()) {
-      var path = new ElementPath(range.startContainer), block = path.block;
+    var path = new ElementPath(range.startContainer), isStartOfBlock = range.checkStartOfBlock(), isEndOfBlock = range.checkEndOfBlock(), block = path.block;
+    if(isStartOfBlock && isEndOfBlock) {
       if(block && (block.nodeName() === "li" || block.parent().nodeName() === "li")) {
         if(editor.hasCommand("outdent")) {
           editor.execCommand("save");
@@ -2646,6 +2649,25 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
           return false
         }
       }
+    }else {
+      if(block && block.nodeName() === "pre") {
+        if(!isEndOfBlock) {
+          var lineBreak = UA.ieMode < 9 ? $(doc.createTextNode("\r")) : $(doc.createElement("br"));
+          range.insertNode(lineBreak);
+          if(UA.ieMode < 9) {
+            lineBreak = $(doc.createTextNode("\ufeff")).insertAfter(lineBreak);
+            range.setStartAt(lineBreak, Editor.RangeType.POSITION_AFTER_START)
+          }else {
+            range.setStartAfter(lineBreak)
+          }
+          range.collapse(true);
+          range.select();
+          if(UA.ieMode < 9) {
+            lineBreak[0].nodeValue = ""
+          }
+          return
+        }
+      }
     }
     var blockTag = "p";
     var splitInfo = range.splitBlock(blockTag);
@@ -2653,7 +2675,8 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
       return true
     }
     var previousBlock = splitInfo.previousBlock, nextBlock = splitInfo.nextBlock;
-    var isStartOfBlock = splitInfo.wasStartOfBlock, isEndOfBlock = splitInfo.wasEndOfBlock;
+    isStartOfBlock = splitInfo.wasStartOfBlock;
+    isEndOfBlock = splitInfo.wasEndOfBlock;
     var node;
     if(nextBlock) {
       node = nextBlock.parent();
@@ -2670,7 +2693,7 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
     }
     var newBlock;
     if(!isStartOfBlock && !isEndOfBlock) {
-      if(nextBlock.nodeName() === "li" && (node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), ["ul", "ol"])) {
+      if(nextBlock.nodeName() === "li" && (node = nextBlock.first(Walker.invisible(true))) && util.inArray(node.nodeName(), ["ul", "ol"])) {
         (OLD_IE ? new Node(doc.createTextNode("\u00a0")) : new Node(doc.createElement("br"))).insertBefore(node)
       }
       if(nextBlock) {
@@ -2678,7 +2701,7 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
       }
     }else {
       if(previousBlock) {
-        if(previousBlock.nodeName() === "li" || !headerTagRegex.test(previousBlock.nodeName())) {
+        if(previousBlock.nodeName() === "li" || !headerPreTagRegex.test(previousBlock.nodeName())) {
           newBlock = previousBlock.clone()
         }
       }else {
@@ -2750,27 +2773,39 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
     })
   }}
 });
-KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, require) {
-  var Editor = require("./base");
+KISSY.add("editor/htmlDataProcessor", ["html-parser", "ua", "node"], function(S, require) {
   var HtmlParser = require("html-parser");
-  var OLD_IE = S.UA.ieMode < 11;
-  return{init:function(editor) {
-    var Node = S.Node, UA = S.UA, htmlFilter = new HtmlParser.Filter, dataFilter = new HtmlParser.Filter;
-    function filterInline(element) {
-      var childNodes = element.childNodes, i, child, allEmpty, l = childNodes.length;
-      if(l) {
-        allEmpty = 1;
-        for(i = 0;i < l;i++) {
-          child = childNodes[i];
-          if(!(child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue)) {
-            allEmpty = 0;
-            break
-          }
+  var UA = require("ua");
+  var OLD_IE = UA.ieMode < 11;
+  var Node = require("node");
+  var dtd = HtmlParser.DTD;
+  var NodeType = Node.NodeType;
+  var util = S;
+  function isEmptyElement(el) {
+    if(!dtd.$removeEmpty[el.nodeName]) {
+      return false
+    }
+    var childNodes = el.childNodes, i, child, l = childNodes.length;
+    if(l) {
+      for(i = 0;i < l;i++) {
+        child = childNodes[i];
+        var nodeType = child.nodeType;
+        if(!(nodeType === NodeType.TEXT_NODE && !child.nodeValue)) {
+          return false
         }
-        return allEmpty ? false : undefined
-      }else {
-        return false
+        if(!isEmptyElement(child)) {
+          return false
+        }
       }
+      return true
+    }else {
+      return true
+    }
+  }
+  return{init:function(editor) {
+    var htmlFilter = new HtmlParser.Filter, dataFilter = new HtmlParser.Filter;
+    function filterInline(element) {
+      return!isEmptyElement(element)
     }
     (function() {
       function wrapAsComment(element) {
@@ -2807,13 +2842,13 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
         }
         return undefined
       }, span:filterInline, strong:filterInline, em:filterInline, del:filterInline, u:filterInline}, attributes:{style:function(v) {
-        if(!S.trim(v)) {
+        if(!util.trim(v)) {
           return false
         }
         return undefined
       }}, attributeNames:[[/^_keSaved_/, ""], [/^ke_on/, "on"], [/^_ke.*/, ""], [/^ke:.*$/, ""], [/^_ks.*/, ""]], comment:function(contents) {
         if(contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker) {
-          contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
+          contents = util.trim(util.urlDecode(contents.substr(protectedSourceMarker.length)));
           return HtmlParser.parse(contents).childNodes[0]
         }
         return undefined
@@ -2832,7 +2867,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
       var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)[\t\r\n ]*$/;
       function lastNoneSpaceChild(block) {
         var childNodes = block.childNodes, lastIndex = childNodes.length, last = childNodes[lastIndex - 1];
-        while(last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
+        while(last && (last.nodeType === 3 && !util.trim(last.nodeValue) || last.nodeType === 1 && isEmptyElement(last))) {
           last = childNodes[--lastIndex]
         }
         return last
@@ -2867,8 +2902,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
           block.appendChild(new HtmlParser.Text("\u00a0"))
         }
       }
-      var dtd = Editor.XHTML_DTD;
-      var blockLikeTags = S.merge(dtd.$block, dtd.$listItem, dtd.$tableContent), i;
+      var blockLikeTags = util.merge(dtd.$block, dtd.$listItem, dtd.$tableContent), i;
       for(i in blockLikeTags) {
         if(!("br" in dtd[i])) {
           delete blockLikeTags[i]
@@ -2912,7 +2946,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
     }
     function unprotectElements(html) {
       return html.replace(encodedElementsRegex, function(match, encoded) {
-        return S.urlDecode(encoded)
+        return util.urlDecode(encoded)
       })
     }
     function protectElementsNames(html) {
@@ -3810,7 +3844,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     if(typeof source === "string") {
       source = parseStyleText(source)
     }
-    if(target === "string") {
+    if(typeof target === "string") {
       target = parseStyleText(target)
     }
     for(var name in source) {

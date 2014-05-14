@@ -282,11 +282,11 @@ if (! _$jscoverage['/editor/focusManager.js'].branchData) {
   _$jscoverage['/editor/focusManager.js'].branchData['25'][1] = new BranchData();
 }
 _$jscoverage['/editor/focusManager.js'].branchData['25'][1].init(110, 5, 'timer');
-function visit337_25_1(result) {
+function visit343_25_1(result) {
   _$jscoverage['/editor/focusManager.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/focusManager.js'].branchData['13'][1].init(111, 5, 'timer');
-function visit336_13_1(result) {
+function visit342_13_1(result) {
   _$jscoverage['/editor/focusManager.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/focusManager.js'].lineData[6]++;
@@ -304,7 +304,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/focusManager.js'].lineData[12]++;
     currentInstance = editor;
     _$jscoverage['/editor/focusManager.js'].lineData[13]++;
-    if (visit336_13_1(timer)) {
+    if (visit342_13_1(timer)) {
       _$jscoverage['/editor/focusManager.js'].lineData[14]++;
       clearTimeout(timer);
     }
@@ -325,7 +325,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/focusManager.js'].lineData[24]++;
     currentInstance = NULL;
     _$jscoverage['/editor/focusManager.js'].lineData[25]++;
-    if (visit337_25_1(timer)) {
+    if (visit343_25_1(timer)) {
       _$jscoverage['/editor/focusManager.js'].lineData[26]++;
       clearTimeout(timer);
     }

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 25 16:37
+build time: May 14 11:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,11 +17,9 @@ KISSY.add("swf/ua", [], function(S) {
     if(navigator.plugins && navigator.mimeTypes.length) {
       ver = (navigator.plugins["Shockwave Flash"] || 0).description
     }else {
-      if(win.ActiveXObject) {
-        try {
-          ver = (new win.ActiveXObject(SF + "." + SF)).GetVariable("$version")
-        }catch(ex) {
-        }
+      try {
+        ver = (new win.ActiveXObject(SF + "." + SF)).GetVariable("$version")
+      }catch(ex) {
       }
     }
     if(!ver) {

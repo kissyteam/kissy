@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.42
+Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Dec 4 22:04
+build time: May 14 11:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -215,6 +215,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }
   }, handleFocusInternal:function() {
     var self = this, placeholderEl;
+    clearDismissTimer(self);
     if(self.get("invalidEl")) {
       setInvalid(self, false)
     }

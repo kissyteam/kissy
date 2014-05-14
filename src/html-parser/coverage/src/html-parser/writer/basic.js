@@ -325,7 +325,7 @@ KISSY.add(function(S, require) {
   function escapeAttrValue(str) {
     _$jscoverage['/html-parser/writer/basic.js'].functionData[1]++;
     _$jscoverage['/html-parser/writer/basic.js'].lineData[12]++;
-    return String(str).replace(/'/g, '&quote;');
+    return String(str).replace(/'/g, '&quot;');
   }
   _$jscoverage['/html-parser/writer/basic.js'].lineData[19]++;
   function BasicWriter() {

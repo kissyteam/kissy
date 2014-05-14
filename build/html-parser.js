@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.42
+Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Dec 4 22:16
+build time: May 14 11:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1564,7 +1564,7 @@ KISSY.add("html-parser/writer/basic", ["../utils"], function(S, require) {
   var Utils = require("../utils");
   var isBooleanAttribute = Utils.isBooleanAttribute;
   function escapeAttrValue(str) {
-    return String(str).replace(/'/g, "&quote;")
+    return String(str).replace(/'/g, "&quot;")
   }
   function BasicWriter() {
     this.output = []
@@ -1729,7 +1729,7 @@ KISSY.add("html-parser/writer/minify", ["./basic", "../utils"], function(S, requ
   var Utils = require("../utils");
   var trim = S.trim, isBooleanAttribute = Utils.isBooleanAttribute, collapseWhitespace = Utils.collapseWhitespace, reEmptyAttribute = new RegExp("^(?:class|id|style|title|lang|dir|on" + "(?:focus|blur|change|click|dblclick|mouse(" + "?:down|up|over|move|out)|key(?:press|down|up)))$");
   function escapeAttrValue(str) {
-    return String(str).replace(/"/g, "&quote;")
+    return String(str).replace(/"/g, "&quot;")
   }
   function canDeleteEmptyAttribute(tag, attr) {
     var attrValue = attr.value || "", attrName = attr.name;

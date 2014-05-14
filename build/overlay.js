@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.42
+Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Dec 4 22:17
+build time: May 14 11:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -202,27 +202,34 @@ KISSY.add("overlay/extension/overlay-effect", [], function(S) {
     ghost.css({visibility:"visible", overflow:"hidden"}).addClass(self.get("prefixCls") + "overlay-ghost");
     return self.__afterCreateEffectGhost(ghost)
   }
-  function processTarget(self, show, callback) {
+  function processTarget(self, show) {
     if(self.__effectGhost) {
       self.__effectGhost.stop(1, 1)
     }
-    var el = self.$el, $ = S.all, effectCfg = self.get("effect"), target = $(effectCfg.target), duration = effectCfg.duration, targetBox = S.mix(target.offset(), {width:target.width(), height:target.height()}), elBox = S.mix(el.offset(), {width:el.width(), height:el.height()}), from, to, ghost = getGhost(self), easing = effectCfg.easing;
+    var el = self.$el, $ = S.all, effectCfg = self.get("effect"), target = $(effectCfg.target), duration = effectCfg.duration, targetBox = {width:target.width(), height:target.height()}, targetOffset = target.offset(), elBox = {width:el.width(), height:el.height()}, elOffset = el.offset(), from, to, fromOffset, toOffset, ghost = getGhost(self), easing = effectCfg.easing;
     ghost.insertAfter(el);
     if(show) {
       from = targetBox;
-      to = elBox
+      fromOffset = targetOffset;
+      to = elBox;
+      toOffset = elOffset
     }else {
       from = elBox;
-      to = targetBox
+      fromOffset = elOffset;
+      to = targetBox;
+      toOffset = targetOffset
     }
+    ghost.offset(toOffset);
+    S.mix(to, {left:ghost.css("left"), top:ghost.css("top")});
     el.css("visibility", "hidden");
     ghost.css(from);
+    ghost.offset(fromOffset);
     self.__effectGhost = ghost;
-    ghost.animate(to, {duration:duration, easing:easing, complete:function() {
+    ghost.css("visibility", "visible");
+    ghost.animate(to, {Anim:effectCfg.Anim, duration:duration, easing:easing, complete:function() {
       self.__effectGhost = null;
       ghost.remove();
-      el.css("visibility", "");
-      callback()
+      el.css("visibility", "")
     }})
   }
   function processEffect(self, show, callback) {

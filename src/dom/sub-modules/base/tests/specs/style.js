@@ -371,6 +371,48 @@ KISSY.add(function (S, Dom) {
             }
             Dom.remove(div);
         });
+
+        it('support box-sizing border-box', function () {
+            var div = Dom.create('<div style="' +
+                'width:100px;height:101px;' +
+                'margin: 10px 11px;padding: 7px 8px;' +
+                'border: 3px solid #000000;' +
+                'border-left-width:4px;"></div>');
+            Dom.css(div, 'box-sizing', 'border-box');
+            Dom.append(div, document.body);
+            if (div.offsetWidth !== 100) {
+                return;
+            }
+
+            var $div=$(div);
+
+            expect(Dom.css(div, 'width')).toBe($div.css('width'));
+            expect(Dom.css(div, 'height')).toBe($div.css('height'));
+            expect(Dom.width(div)).toBe($div.width());
+            expect(Dom.height(div)).toBe($div.height());
+            expect(Dom.innerWidth(div)).toBe($div.innerWidth());
+            expect(Dom.innerHeight(div)).toBe($div.innerHeight());
+            expect(Dom.outerWidth(div)).toBe($div.outerWidth());
+            expect(Dom.outerHeight(div)).toBe($div.outerHeight());
+            expect(Dom.outerWidth(div, true)).toBe($div.outerWidth(true));
+            expect(Dom.outerHeight(div, true)).toBe($div.outerHeight(true));
+
+            Dom.width(div,100);
+            Dom.height(div,104);
+
+            expect(Dom.css(div, 'width')).toBe($div.css('width'));
+            expect(Dom.css(div, 'height')).toBe($div.css('height'));
+            expect(Dom.width(div)).toBe($div.width());
+            expect(Dom.height(div)).toBe($div.height());
+            expect(Dom.innerWidth(div)).toBe($div.innerWidth());
+            expect(Dom.innerHeight(div)).toBe($div.innerHeight());
+            expect(Dom.outerWidth(div)).toBe($div.outerWidth());
+            expect(Dom.outerHeight(div)).toBe($div.outerHeight());
+            expect(Dom.outerWidth(div, true)).toBe($div.outerWidth(true));
+            expect(Dom.outerHeight(div, true)).toBe($div.outerHeight(true));
+
+            Dom.remove(div);
+        });
     });
 }, {
     requires: ['dom']

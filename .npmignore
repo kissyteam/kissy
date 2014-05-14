@@ -1,4 +1,6 @@
 src/
+build/editor/
+build/editor.js
 *-min.*
 tools/
 docs/

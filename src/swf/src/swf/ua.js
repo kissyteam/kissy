@@ -21,7 +21,7 @@ KISSY.add(function (S) {
             ver = (navigator.plugins['Shockwave Flash'] || 0).description;
         }
         // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (win.ActiveXObject) {
+        else {
             try {
                 ver = new win.ActiveXObject(SF + '.' + SF).GetVariable('$version');
             } catch (ex) {

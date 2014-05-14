@@ -8,44 +8,54 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add(function (S, require) {
-    var Editor = require('./base');
     var HtmlParser = require('html-parser');
-    var OLD_IE = S.UA.ieMode < 11;
+    var UA = require('ua');
+    var OLD_IE = UA.ieMode < 11;
+    var Node = require('node');
+    var dtd = HtmlParser.DTD;
+    var NodeType = Node.NodeType;
+    var util = S;
+
+    // <span></span> <span><span></span></span>
+    function isEmptyElement(el) {
+        if (!dtd.$removeEmpty[el.nodeName]) {
+            return false;
+        }
+        var childNodes = el.childNodes,
+            i, child,
+            l = childNodes.length;
+        if (l) {
+            for (i = 0; i < l; i++) {
+                child = childNodes[i];
+                var nodeType = child.nodeType;
+                if (!(nodeType === NodeType.TEXT_NODE && !child.nodeValue)) {
+                    return false;
+                }
+                if (!isEmptyElement(child)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return true;
+        }
+    }
+
     return {
         init: function (editor) {
-            var Node = S.Node,
-                UA = S.UA,
-                htmlFilter = new HtmlParser.Filter(),
+            var htmlFilter = new HtmlParser.Filter(),
                 dataFilter = new HtmlParser.Filter();
 
             // remove empty inline element
             function filterInline(element) {
-                var childNodes = element.childNodes,
-                    i,
-                    child,
-                    allEmpty,
-                    l = childNodes.length;
-                if (l) {
-                    allEmpty = 1;
-                    for (i = 0; i < l; i++) {
-                        child = childNodes[i];
-                        if (!(child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue)) {
-                            allEmpty = 0;
-                            break;
-                        }
-                    }
-                    return allEmpty ? false : undefined;
-                } else {
-                    return false;
-                }
+                return !isEmptyElement(element);
             }
 
             (function () {
-
                 function wrapAsComment(element) {
                     var html = HtmlParser.serialize(element);
                     return new HtmlParser.Comment(protectedSourceMarker +
-                        encodeURIComponent(html).replace(/--/g,'%2D%2D'));
+                        encodeURIComponent(html).replace(/--/g, '%2D%2D'));
                 }
 
                 // 过滤外边来的 html
@@ -71,9 +81,9 @@ KISSY.add(function (S, require) {
                 var defaultHTMLFilterRules = {
                     tagNames: [
                         // Remove the "ke:" namespace prefix.
-                        [ ( /^ke:/ ), '' ],
+                        [(/^ke:/), ''],
                         // Ignore <?xml:namespace> tags.
-                        [ ( /^\?xml:namespace$/ ), '' ]
+                        [(/^\?xml:namespace$/), '']
                     ],
                     tags: {
                         $: function (element) {
@@ -82,10 +92,10 @@ KISSY.add(function (S, require) {
                             if (attributes.length) {
                                 // 先把真正属性去掉，后面会把 _ke_saved 后缀去掉的！
                                 // Remove duplicated attributes - #3789.
-                                var attributeNames = [ 'name', 'href', 'src' ],
+                                var attributeNames = ['name', 'href', 'src'],
                                     savedAttributeName;
                                 for (var i = 0; i < attributeNames.length; i++) {
-                                    savedAttributeName = '_keSaved_' + attributeNames[ i ];
+                                    savedAttributeName = '_keSaved_' + attributeNames[i];
                                     if (element.getAttribute(savedAttributeName)) {
                                         element.removeAttribute(attributeNames[i]);
                                     }
@@ -126,7 +136,7 @@ KISSY.add(function (S, require) {
                     attributes: {
                         // 清除空style
                         style: function (v) {
-                            if (!S.trim(v)) {
+                            if (!util.trim(v)) {
                                 return false;
                             }
                             return undefined;
@@ -136,17 +146,17 @@ KISSY.add(function (S, require) {
                         // 把保存的作为真正的属性，替换掉原来的
                         // replace(/^_keSaved_/,"")
                         // _keSavedHref -> href
-                        [ ( /^_keSaved_/ ), '' ],
-                        [ ( /^ke_on/ ), 'on' ],
-                        [ ( /^_ke.*/ ), '' ],
-                        [ ( /^ke:.*$/ ), '' ],
+                        [(/^_keSaved_/), ''],
+                        [(/^ke_on/), 'on'],
+                        [(/^_ke.*/), ''],
+                        [(/^ke:.*$/), ''],
                         // kissy 相关
-                        [ ( /^_ks.*/ ), '' ]
+                        [(/^_ks.*/), '']
                     ],
                     comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker) {
-                            contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
+                            contents = util.trim(util.urlDecode(contents.substr(protectedSourceMarker.length)));
                             return HtmlParser.parse(contents).childNodes[0];
                         }
                         return undefined;
@@ -157,8 +167,7 @@ KISSY.add(function (S, require) {
                     // them back to lower case.
                     // bug: style='background:url(www.G.cn)' =>  style='background:url(www.g.cn)'
                     // 只对 propertyName 小写
-                    defaultHTMLFilterRules.attributes.style = function (value // , element
-                        ) {
+                    defaultHTMLFilterRules.attributes.style = function (value) {
                         return value.replace(/(^|;)([^:]+)/g, function (match) {
                             return match.toLowerCase();
                         });
@@ -185,9 +194,11 @@ KISSY.add(function (S, require) {
                 function lastNoneSpaceChild(block) {
                     var childNodes = block.childNodes,
                         lastIndex = childNodes.length,
-                        last = childNodes[ lastIndex - 1 ];
-                    while (last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
-                        last = childNodes[ --lastIndex ];
+                        last = childNodes[lastIndex - 1];
+                    while (last &&
+                        (last.nodeType === 3 && !util.trim(last.nodeValue) ||
+                            last.nodeType === 1 && isEmptyElement(last))) {
+                        last = childNodes[--lastIndex];
                     }
                     return last;
                 }
@@ -197,8 +208,7 @@ KISSY.add(function (S, require) {
                     if (lastChild) {
                         if (lastChild.nodeType === 1 && lastChild.nodeName === 'br') {
                             block.removeChild(lastChild);
-                        }
-                        else if (lastChild.nodeType === 3 && tailNbspRegex.test(lastChild.nodeValue)) {
+                        } else if (lastChild.nodeType === 3 && tailNbspRegex.test(lastChild.nodeValue)) {
                             block.removeChild(lastChild);
                         }
                     }
@@ -237,13 +247,12 @@ KISSY.add(function (S, require) {
                 }
 
                 // Find out the list of block-like tags that can contain <br>.
-                var dtd = Editor.XHTML_DTD;
-                var blockLikeTags = S.merge(
+                var blockLikeTags = util.merge(
                     dtd.$block,
                     dtd.$listItem,
                     dtd.$tableContent), i;
                 for (i in blockLikeTags) {
-                    if (!( 'br' in dtd[i] )) {
+                    if (!('br' in dtd[i])) {
                         delete blockLikeTags[i];
                     }
                 }
@@ -251,18 +260,17 @@ KISSY.add(function (S, require) {
                 // We just avoid filler in <pre> right now.
                 // TODO: Support filler for <pre>, line break is also occupy line height.
                 delete blockLikeTags.pre;
-                var defaultDataBlockFilterRules = { tags: {} };
-                var defaultHTMLBlockFilterRules = { tags: {} };
+                var defaultDataBlockFilterRules = {tags: {}};
+                var defaultHTMLBlockFilterRules = {tags: {}};
 
                 for (i in blockLikeTags) {
-                    defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
-                    defaultHTMLBlockFilterRules.tags[ i ] = extendBlockForOutput;
+                    defaultDataBlockFilterRules.tags[i] = extendBlockForDisplay;
+                    defaultHTMLBlockFilterRules.tags[i] = extendBlockForOutput;
                 }
 
                 dataFilter.addRules(defaultDataBlockFilterRules);
                 htmlFilter.addRules(defaultHTMLBlockFilterRules);
             })();
-
 
             // html-parser fragment 中的 entities 处理
             // el.innerHTML="&nbsp;"
@@ -274,7 +282,6 @@ KISSY.add(function (S, require) {
                         .replace(/\xa0/g, '&nbsp;');
                 }
             });
-
 
             var protectElementRegex = /<(a|area|img|input)\b([^>]*)>/gi,
                 protectAttributeRegex = /\b(href|src|name)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+))/gi;
@@ -316,7 +323,7 @@ KISSY.add(function (S, require) {
 
             function unprotectElements(html) {
                 return html.replace(encodedElementsRegex, function (match, encoded) {
-                    return S.urlDecode(encoded);
+                    return util.urlDecode(encoded);
                 });
             }
 

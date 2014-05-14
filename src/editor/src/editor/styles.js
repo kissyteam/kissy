@@ -1063,7 +1063,7 @@ KISSY.add(function (S, require) {
         if (typeof source === 'string') {
             source = parseStyleText(source);
         }
-        if (target === 'string') {
+        if (typeof target === 'string') {
             target = parseStyleText(target);
         }
         for (var name in source) {
