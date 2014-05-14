@@ -309,6 +309,7 @@ KISSY.add(function (S, require) {
                     all,
                     DOMEvent = S.Env.mods['event/dom/base'],
                     i;
+                DOMEvent = DOMEvent && DOMEvent.exports;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
@@ -447,7 +448,7 @@ KISSY.add(function (S, require) {
         var DOMEvent = S.Env.mods['event/dom/base'],
             srcData,
             d;
-
+        DOMEvent = DOMEvent && DOMEvent.exports;
         if (dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
             return;
         }
@@ -521,7 +522,7 @@ KISSY.add(function (S, require) {
         (function (tag) {
             creators[p] = function (html, ownerDoc) {
                 return create('<' + tag + '>' +
-                    html + '<' + '/' + tag + '>',
+                        html + '<' + '/' + tag + '>',
                     undefined, ownerDoc);
             };
         })(creatorsMap[p]);

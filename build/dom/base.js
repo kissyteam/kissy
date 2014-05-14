@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: May 14 13:51
+build time: May 14 13:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -572,6 +572,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     return undefined
   }, remove:function(selector, keepData) {
     var el, els = Dom.query(selector), all, DOMEvent = S.Env.mods["event/dom/base"], i;
+    DOMEvent = DOMEvent && DOMEvent.exports;
     for(i = els.length - 1;i >= 0;i--) {
       el = els[i];
       if(!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
@@ -643,6 +644,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
   }
   function cloneWithDataAndEvent(src, dest) {
     var DOMEvent = S.Env.mods["event/dom/base"], srcData, d;
+    DOMEvent = DOMEvent && DOMEvent.exports;
     if(dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
       return
     }
@@ -857,6 +859,7 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
   }, cleanData:function(selector, deep) {
     var els = Dom.query(selector), elem, i;
     var DOMEvent = S.Env.mods["event/dom/base"];
+    DOMEvent = DOMEvent && DOMEvent.exports;
     for(i = els.length - 1;i >= 0;i--) {
       elem = els[i];
       if(elem.nodeType) {
