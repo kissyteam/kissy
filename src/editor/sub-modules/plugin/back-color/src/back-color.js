@@ -3,14 +3,15 @@
  * backColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Button=require('./color/btn');
-    var cmd=require('./back-color/cmd');
-    function backColor(config) {
+KISSY.add(function (S, require) {
+    var Button = require('./color/btn');
+    var cmd = require('./back-color/cmd');
+
+    function BackColor(config) {
         this.config = config || {};
     }
 
-    backColor.protoype = {
+    BackColor.prototype = {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
@@ -21,5 +22,5 @@ KISSY.add(function (S,require) {
         }
     };
 
-    return backColor;
+    return BackColor;
 });

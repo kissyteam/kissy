@@ -2,7 +2,7 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.add(function (S, UA, io, Node) {
+KISSY.add(function (S,util, UA, io, Node) {
     var $ = Node.all;
     /*jshint quotmark:false*/
     // travis-ci will not pass ...
@@ -14,7 +14,7 @@ KISSY.add(function (S, UA, io, Node) {
         it("should abort for form file upload", function () {
             S.log("should abort for form file upload");
 
-            var f = $('<form id="f' + S.guid((+new Date())) +
+            var f = $('<form id="f' + util.guid((+new Date())) +
                 '">' +
                 '<input name="testFile" type="file"/>' +
                 //php need []
@@ -64,7 +64,7 @@ KISSY.add(function (S, UA, io, Node) {
             S.log("nothing happens if abort after form file upload");
 
             // error !
-            var f = $('<form id="f' + S.guid((+new Date())) + '"' +
+            var f = $('<form id="f' + util.guid((+new Date())) + '"' +
                 ' action="http://www.g.cn">' +
                 '<input name="testFile" type="file"/>' +
                 //php need []
@@ -247,5 +247,5 @@ KISSY.add(function (S, UA, io, Node) {
         });
     });
 }, {
-    requires: ['ua', 'io', 'node']
+    requires: ['util','ua', 'io', 'node']
 });

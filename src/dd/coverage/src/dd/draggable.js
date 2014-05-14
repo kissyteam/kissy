@@ -231,6 +231,7 @@ if (! _$jscoverage['/dd/draggable.js']) {
   _$jscoverage['/dd/draggable.js'].lineData = [];
   _$jscoverage['/dd/draggable.js'].lineData[6] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[7] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[12] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[13] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[21] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[22] = 0;
@@ -517,15 +518,15 @@ function visit69_377_1(result) {
 function visit68_356_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['356'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['326'][1].init(1102, 15, 'self._allowMove');
+}_$jscoverage['/dd/draggable.js'].branchData['326'][1].init(1103, 15, 'self._allowMove');
 function visit67_326_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['326'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['322'][1].init(1002, 25, 'e.gestureType === \'mouse\'');
+}_$jscoverage['/dd/draggable.js'].branchData['322'][1].init(1003, 25, 'e.gestureType === \'mouse\'');
 function visit66_322_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['322'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['314'][1].init(704, 16, 'self.get(\'halt\')');
+}_$jscoverage['/dd/draggable.js'].branchData['314'][1].init(705, 16, 'self.get(\'halt\')');
 function visit65_314_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['314'][1].ranCondition(result);
   return result;
@@ -577,9 +578,11 @@ function visit54_23_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].functionData[0]++;
   _$jscoverage['/dd/draggable.js'].lineData[7]++;
-  var Node = require('node'), BaseGesture = require('event/gesture/base'), DDM = require('./ddm'), Base = require('base'), DragGesture = require('event/gesture/drag');
+  var Node = require('node'), BasicGesture = require('event/gesture/basic'), DDM = require('./ddm'), Base = require('base'), DragGesture = require('event/gesture/drag');
+  _$jscoverage['/dd/draggable.js'].lineData[12]++;
+  var util = require('util');
   _$jscoverage['/dd/draggable.js'].lineData[13]++;
-  var UA = require('ua'), $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  var UA = require('ua'), $ = Node.all, $doc = $(document), each = util.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   _$jscoverage['/dd/draggable.js'].lineData[21]++;
   function checkValid(fn) {
     _$jscoverage['/dd/draggable.js'].functionData[1]++;
@@ -656,7 +659,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[238]++;
   if (visit57_238_1(node)) {
     _$jscoverage['/dd/draggable.js'].lineData[244]++;
-    node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BaseGesture.START, onGestureStart, self).on(['dragstart', 'touchmove'], preventDefault);
+    node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BasicGesture.START, onGestureStart, self).on(['dragstart', 'touchmove'], preventDefault);
   }
 }, 
   stop: function() {
@@ -666,7 +669,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[251]++;
   if (visit58_251_1(node)) {
     _$jscoverage['/dd/draggable.js'].lineData[256]++;
-    node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BaseGesture.START, onGestureStart, self).detach(['dragstart', 'touchmove'], preventDefault);
+    node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BasicGesture.START, onGestureStart, self).detach(['dragstart', 'touchmove'], preventDefault);
   }
 }, 
   _onSetDisabled: function(d) {
@@ -726,7 +729,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dd/draggable.js'].lineData[299]++;
     fixIEMouseDown();
     _$jscoverage['/dd/draggable.js'].lineData[300]++;
-    $doc.on(BaseGesture.END, {
+    $doc.on(BasicGesture.END, {
   fn: fixIEMouseUp, 
   once: true});
   }

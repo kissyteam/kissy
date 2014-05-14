@@ -236,6 +236,7 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[10] = 0;
   _$jscoverage['/base.js'].lineData[11] = 0;
   _$jscoverage['/base.js'].lineData[12] = 0;
+  _$jscoverage['/base.js'].lineData[13] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -258,7 +259,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[11]++;
   require('./base/mouseenter');
   _$jscoverage['/base.js'].lineData[12]++;
-  return S.merge({
+  var util = require('util');
+  _$jscoverage['/base.js'].lineData[13]++;
+  return util.merge({
   add: DomEvent.on, 
   remove: DomEvent.detach, 
   KeyCode: KeyCode, 

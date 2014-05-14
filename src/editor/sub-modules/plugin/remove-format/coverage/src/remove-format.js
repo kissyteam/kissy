@@ -264,7 +264,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/remove-format.js'].functionData[1]++;
   }
   _$jscoverage['/remove-format.js'].lineData[14]++;
-  S.augment(removeFormat, {
+  (removeFormat.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/remove-format.js'].functionData[2]++;
   _$jscoverage['/remove-format.js'].lineData[16]++;

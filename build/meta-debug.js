@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 23:59
+build time: May 14 22:30
 */
 /**
  * @ignore
@@ -32,10 +32,12 @@ S.config("requires",{
         "promise"
     ],
     "anim/timer": [
-        "anim/base"
+        "anim/base",
+        "feature"
     ],
     "anim/transition": [
-        "anim/base"
+        "anim/base",
+        "feature"
     ],
     "attribute": [
         "event/custom"
@@ -82,10 +84,14 @@ S.config("requires",{
     "component/plugin/resize": [
         "resizable"
     ],
+    "cookie": [
+        "util"
+    ],
     "date/format": [
         "date/gregorian"
     ],
     "date/gregorian": [
+        "util",
         "i18n!date"
     ],
     "date/picker": [
@@ -116,7 +122,8 @@ S.config("requires",{
         "dd"
     ],
     "dom/base": [
-        "ua"
+        "util",
+        "feature"
     ],
     "dom/class-list": [
         "dom/base"
@@ -125,6 +132,7 @@ S.config("requires",{
         "dom/base"
     ],
     "dom/selector": [
+        "util",
         "dom/basic"
     ],
     "event": [
@@ -179,13 +187,17 @@ S.config("requires",{
         "event/gesture/util"
     ],
     "event/gesture/util": [
-        "event/dom/base"
+        "event/dom/base",
+        "feature"
     ],
     "feature": [
         "ua"
     ],
     "filter-menu": [
         "menu"
+    ],
+    "html-parser": [
+        "util"
     ],
     "io": [
         "dom",
@@ -194,6 +206,9 @@ S.config("requires",{
         "uri",
         "ua",
         "event/dom"
+    ],
+    "json": [
+        "util"
     ],
     "menu": [
         "component/container",
@@ -214,6 +229,7 @@ S.config("requires",{
         "button"
     ],
     "node": [
+        "util",
         "dom",
         "event/dom",
         "anim"
@@ -227,6 +243,9 @@ S.config("requires",{
     "path": [
         "util"
     ],
+    "promise": [
+        "util"
+    ],
     "resizable": [
         "dd"
     ],
@@ -237,7 +256,8 @@ S.config("requires",{
     "router": [
         "uri",
         "event/dom",
-        "event/custom"
+        "event/custom",
+        "feature"
     ],
     "scroll-view/base": [
         "anim/timer",
@@ -245,7 +265,9 @@ S.config("requires",{
         "component/extension/content-box"
     ],
     "scroll-view/plugin/pull-to-refresh": [
-        "base"
+        "base",
+        "node",
+        "feature"
     ],
     "scroll-view/plugin/scrollbar": [
         "component/control",

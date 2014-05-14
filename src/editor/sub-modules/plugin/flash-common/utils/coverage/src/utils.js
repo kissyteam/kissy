@@ -232,19 +232,21 @@ if (! _$jscoverage['/utils.js']) {
   _$jscoverage['/utils.js'].lineData[6] = 0;
   _$jscoverage['/utils.js'].lineData[7] = 0;
   _$jscoverage['/utils.js'].lineData[8] = 0;
-  _$jscoverage['/utils.js'].lineData[13] = 0;
+  _$jscoverage['/utils.js'].lineData[9] = 0;
+  _$jscoverage['/utils.js'].lineData[10] = 0;
+  _$jscoverage['/utils.js'].lineData[12] = 0;
+  _$jscoverage['/utils.js'].lineData[24] = 0;
   _$jscoverage['/utils.js'].lineData[25] = 0;
-  _$jscoverage['/utils.js'].lineData[26] = 0;
-  _$jscoverage['/utils.js'].lineData[30] = 0;
-  _$jscoverage['/utils.js'].lineData[37] = 0;
-  _$jscoverage['/utils.js'].lineData[41] = 0;
+  _$jscoverage['/utils.js'].lineData[29] = 0;
+  _$jscoverage['/utils.js'].lineData[36] = 0;
+  _$jscoverage['/utils.js'].lineData[40] = 0;
+  _$jscoverage['/utils.js'].lineData[43] = 0;
   _$jscoverage['/utils.js'].lineData[44] = 0;
   _$jscoverage['/utils.js'].lineData[45] = 0;
   _$jscoverage['/utils.js'].lineData[46] = 0;
   _$jscoverage['/utils.js'].lineData[47] = 0;
   _$jscoverage['/utils.js'].lineData[48] = 0;
-  _$jscoverage['/utils.js'].lineData[49] = 0;
-  _$jscoverage['/utils.js'].lineData[56] = 0;
+  _$jscoverage['/utils.js'].lineData[54] = 0;
 }
 if (! _$jscoverage['/utils.js'].functionData) {
   _$jscoverage['/utils.js'].functionData = [];
@@ -256,35 +258,35 @@ if (! _$jscoverage['/utils.js'].functionData) {
 }
 if (! _$jscoverage['/utils.js'].branchData) {
   _$jscoverage['/utils.js'].branchData = {};
+  _$jscoverage['/utils.js'].branchData['19'] = [];
+  _$jscoverage['/utils.js'].branchData['19'][1] = new BranchData();
   _$jscoverage['/utils.js'].branchData['20'] = [];
   _$jscoverage['/utils.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['21'] = [];
-  _$jscoverage['/utils.js'].branchData['21'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['30'] = [];
+  _$jscoverage['/utils.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['30'][2] = new BranchData();
   _$jscoverage['/utils.js'].branchData['31'] = [];
   _$jscoverage['/utils.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['31'][2] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['32'] = [];
-  _$jscoverage['/utils.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/utils.js'].branchData['32'][1].init(111, 30, 'Dom.attr(element, \'src\') || \'\'');
-function visit5_32_1(result) {
-  _$jscoverage['/utils.js'].branchData['32'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/utils.js'].branchData['31'][2].init(30, 61, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\'');
-function visit4_31_2(result) {
-  _$jscoverage['/utils.js'].branchData['31'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/utils.js'].branchData['31'][1].init(-1, 143, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\' || /\\.swf(?:$|\\?)/i.test(Dom.attr(element, \'src\') || \'\')');
-function visit3_31_1(result) {
+_$jscoverage['/utils.js'].branchData['31'][1].init(103, 30, 'Dom.attr(element, \'src\') || \'\'');
+function visit5_31_1(result) {
   _$jscoverage['/utils.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['21'][1].init(100, 16, '_type || \'flash\'');
-function visit2_21_1(result) {
-  _$jscoverage['/utils.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['30'][2].init(26, 61, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\'');
+function visit4_30_2(result) {
+  _$jscoverage['/utils.js'].branchData['30'][2].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['20'][1].init(55, 18, '_cls || \'ke_flash\'');
-function visit1_20_1(result) {
+}_$jscoverage['/utils.js'].branchData['30'][1].init(-1, 135, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\' || /\\.swf(?:$|\\?)/i.test(Dom.attr(element, \'src\') || \'\')');
+function visit3_30_1(result) {
+  _$jscoverage['/utils.js'].branchData['30'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/utils.js'].branchData['20'][1].init(100, 16, '_type || \'flash\'');
+function visit2_20_1(result) {
   _$jscoverage['/utils.js'].branchData['20'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/utils.js'].branchData['19'][1].init(55, 18, '_cls || \'ke_flash\'');
+function visit1_19_1(result) {
+  _$jscoverage['/utils.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/utils.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -292,48 +294,52 @@ KISSY.add(function(S, require) {
   _$jscoverage['/utils.js'].lineData[7]++;
   var SWF = require('swf');
   _$jscoverage['/utils.js'].lineData[8]++;
-  var Dom = require('dom'), flashUtils = {
+  var Dom = require('dom');
+  _$jscoverage['/utils.js'].lineData[9]++;
+  var $ = require('node').all;
+  _$jscoverage['/utils.js'].lineData[10]++;
+  var flashUtils = {
   insertFlash: function(editor, src, attrs, _cls, _type) {
   _$jscoverage['/utils.js'].functionData[1]++;
-  _$jscoverage['/utils.js'].lineData[13]++;
+  _$jscoverage['/utils.js'].lineData[12]++;
   var nodeInfo = flashUtils.createSWF({
   src: src, 
   attrs: attrs, 
-  document: editor.get('document')[0]}), real = nodeInfo.el, substitute = editor.createFakeElement(real, visit1_20_1(_cls || 'ke_flash'), visit2_21_1(_type || 'flash'), true, nodeInfo.html, attrs);
-  _$jscoverage['/utils.js'].lineData[25]++;
+  document: editor.get('document')[0]}), real = nodeInfo.el, substitute = editor.createFakeElement(real, visit1_19_1(_cls || 'ke_flash'), visit2_20_1(_type || 'flash'), true, nodeInfo.html, attrs);
+  _$jscoverage['/utils.js'].lineData[24]++;
   editor.insertElement(substitute);
-  _$jscoverage['/utils.js'].lineData[26]++;
+  _$jscoverage['/utils.js'].lineData[25]++;
   return substitute;
 }, 
   isFlashEmbed: function(element) {
   _$jscoverage['/utils.js'].functionData[2]++;
-  _$jscoverage['/utils.js'].lineData[30]++;
-  return (visit3_31_1(visit4_31_2(Dom.attr(element, 'type') === 'application/x-shockwave-flash') || /\.swf(?:$|\?)/i.test(visit5_32_1(Dom.attr(element, 'src') || ''))));
+  _$jscoverage['/utils.js'].lineData[29]++;
+  return (visit3_30_1(visit4_30_2(Dom.attr(element, 'type') === 'application/x-shockwave-flash') || /\.swf(?:$|\?)/i.test(visit5_31_1(Dom.attr(element, 'src') || ''))));
 }, 
   getUrl: function(r) {
   _$jscoverage['/utils.js'].functionData[3]++;
-  _$jscoverage['/utils.js'].lineData[37]++;
+  _$jscoverage['/utils.js'].lineData[36]++;
   return SWF.getSrc(r);
 }, 
   createSWF: function(cfg) {
   _$jscoverage['/utils.js'].functionData[4]++;
-  _$jscoverage['/utils.js'].lineData[41]++;
+  _$jscoverage['/utils.js'].lineData[40]++;
   var render = Dom.create('<div style="' + 'position:absolute;left:-9999px;top:-9999px;' + '"></div>', undefined, cfg.document);
-  _$jscoverage['/utils.js'].lineData[44]++;
+  _$jscoverage['/utils.js'].lineData[43]++;
   cfg.htmlMode = 'full';
-  _$jscoverage['/utils.js'].lineData[45]++;
+  _$jscoverage['/utils.js'].lineData[44]++;
   Dom.append(render, cfg.document.body);
-  _$jscoverage['/utils.js'].lineData[46]++;
+  _$jscoverage['/utils.js'].lineData[45]++;
   cfg.render = render;
-  _$jscoverage['/utils.js'].lineData[47]++;
+  _$jscoverage['/utils.js'].lineData[46]++;
   var swf = new SWF(cfg);
-  _$jscoverage['/utils.js'].lineData[48]++;
+  _$jscoverage['/utils.js'].lineData[47]++;
   Dom.remove(render);
-  _$jscoverage['/utils.js'].lineData[49]++;
+  _$jscoverage['/utils.js'].lineData[48]++;
   return {
-  el: S.all(swf.get('el')), 
+  el: $(swf.get('el')), 
   html: swf.get('html')};
 }};
-  _$jscoverage['/utils.js'].lineData[56]++;
+  _$jscoverage['/utils.js'].lineData[54]++;
   return flashUtils;
 });

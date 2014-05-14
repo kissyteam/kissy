@@ -229,149 +229,162 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/json/parser.js']) {
   _$jscoverage['/json/parser.js'] = {};
   _$jscoverage['/json/parser.js'].lineData = [];
-  _$jscoverage['/json/parser.js'].lineData[4] = 0;
+  _$jscoverage['/json/parser.js'].lineData[3] = 0;
   _$jscoverage['/json/parser.js'].lineData[6] = 0;
-  _$jscoverage['/json/parser.js'].lineData[15] = 0;
+  _$jscoverage['/json/parser.js'].lineData[16] = 0;
   _$jscoverage['/json/parser.js'].lineData[17] = 0;
+  _$jscoverage['/json/parser.js'].lineData[18] = 0;
+  _$jscoverage['/json/parser.js'].lineData[22] = 0;
+  _$jscoverage['/json/parser.js'].lineData[23] = 0;
+  _$jscoverage['/json/parser.js'].lineData[26] = 0;
+  _$jscoverage['/json/parser.js'].lineData[27] = 0;
+  _$jscoverage['/json/parser.js'].lineData[28] = 0;
   _$jscoverage['/json/parser.js'].lineData[33] = 0;
   _$jscoverage['/json/parser.js'].lineData[35] = 0;
-  _$jscoverage['/json/parser.js'].lineData[42] = 0;
+  _$jscoverage['/json/parser.js'].lineData[36] = 0;
+  _$jscoverage['/json/parser.js'].lineData[38] = 0;
+  _$jscoverage['/json/parser.js'].lineData[39] = 0;
+  _$jscoverage['/json/parser.js'].lineData[43] = 0;
+  _$jscoverage['/json/parser.js'].lineData[44] = 0;
   _$jscoverage['/json/parser.js'].lineData[45] = 0;
-  _$jscoverage['/json/parser.js'].lineData[47] = 0;
+  _$jscoverage['/json/parser.js'].lineData[46] = 0;
+  _$jscoverage['/json/parser.js'].lineData[53] = 0;
+  _$jscoverage['/json/parser.js'].lineData[54] = 0;
+  _$jscoverage['/json/parser.js'].lineData[55] = 0;
+  _$jscoverage['/json/parser.js'].lineData[56] = 0;
+  _$jscoverage['/json/parser.js'].lineData[59] = 0;
   _$jscoverage['/json/parser.js'].lineData[61] = 0;
-  _$jscoverage['/json/parser.js'].lineData[64] = 0;
-  _$jscoverage['/json/parser.js'].lineData[65] = 0;
-  _$jscoverage['/json/parser.js'].lineData[66] = 0;
-  _$jscoverage['/json/parser.js'].lineData[67] = 0;
-  _$jscoverage['/json/parser.js'].lineData[68] = 0;
-  _$jscoverage['/json/parser.js'].lineData[69] = 0;
-  _$jscoverage['/json/parser.js'].lineData[71] = 0;
-  _$jscoverage['/json/parser.js'].lineData[72] = 0;
-  _$jscoverage['/json/parser.js'].lineData[75] = 0;
-  _$jscoverage['/json/parser.js'].lineData[78] = 0;
+  _$jscoverage['/json/parser.js'].lineData[63] = 0;
+  _$jscoverage['/json/parser.js'].lineData[79] = 0;
   _$jscoverage['/json/parser.js'].lineData[81] = 0;
-  _$jscoverage['/json/parser.js'].lineData[84] = 0;
-  _$jscoverage['/json/parser.js'].lineData[87] = 0;
+  _$jscoverage['/json/parser.js'].lineData[88] = 0;
+  _$jscoverage['/json/parser.js'].lineData[90] = 0;
   _$jscoverage['/json/parser.js'].lineData[92] = 0;
-  _$jscoverage['/json/parser.js'].lineData[93] = 0;
-  _$jscoverage['/json/parser.js'].lineData[95] = 0;
-  _$jscoverage['/json/parser.js'].lineData[96] = 0;
-  _$jscoverage['/json/parser.js'].lineData[99] = 0;
-  _$jscoverage['/json/parser.js'].lineData[101] = 0;
-  _$jscoverage['/json/parser.js'].lineData[102] = 0;
-  _$jscoverage['/json/parser.js'].lineData[104] = 0;
-  _$jscoverage['/json/parser.js'].lineData[107] = 0;
+  _$jscoverage['/json/parser.js'].lineData[106] = 0;
+  _$jscoverage['/json/parser.js'].lineData[110] = 0;
   _$jscoverage['/json/parser.js'].lineData[111] = 0;
-  _$jscoverage['/json/parser.js'].lineData[112] = 0;
   _$jscoverage['/json/parser.js'].lineData[113] = 0;
   _$jscoverage['/json/parser.js'].lineData[114] = 0;
+  _$jscoverage['/json/parser.js'].lineData[115] = 0;
+  _$jscoverage['/json/parser.js'].lineData[116] = 0;
   _$jscoverage['/json/parser.js'].lineData[117] = 0;
-  _$jscoverage['/json/parser.js'].lineData[118] = 0;
+  _$jscoverage['/json/parser.js'].lineData[119] = 0;
   _$jscoverage['/json/parser.js'].lineData[120] = 0;
-  _$jscoverage['/json/parser.js'].lineData[124] = 0;
+  _$jscoverage['/json/parser.js'].lineData[123] = 0;
   _$jscoverage['/json/parser.js'].lineData[126] = 0;
-  _$jscoverage['/json/parser.js'].lineData[127] = 0;
   _$jscoverage['/json/parser.js'].lineData[129] = 0;
+  _$jscoverage['/json/parser.js'].lineData[130] = 0;
+  _$jscoverage['/json/parser.js'].lineData[131] = 0;
   _$jscoverage['/json/parser.js'].lineData[132] = 0;
-  _$jscoverage['/json/parser.js'].lineData[141] = 0;
-  _$jscoverage['/json/parser.js'].lineData[143] = 0;
+  _$jscoverage['/json/parser.js'].lineData[134] = 0;
+  _$jscoverage['/json/parser.js'].lineData[137] = 0;
+  _$jscoverage['/json/parser.js'].lineData[142] = 0;
   _$jscoverage['/json/parser.js'].lineData[144] = 0;
-  _$jscoverage['/json/parser.js'].lineData[147] = 0;
   _$jscoverage['/json/parser.js'].lineData[148] = 0;
-  _$jscoverage['/json/parser.js'].lineData[149] = 0;
-  _$jscoverage['/json/parser.js'].lineData[152] = 0;
+  _$jscoverage['/json/parser.js'].lineData[150] = 0;
   _$jscoverage['/json/parser.js'].lineData[153] = 0;
-  _$jscoverage['/json/parser.js'].lineData[154] = 0;
-  _$jscoverage['/json/parser.js'].lineData[155] = 0;
-  _$jscoverage['/json/parser.js'].lineData[157] = 0;
+  _$jscoverage['/json/parser.js'].lineData[156] = 0;
+  _$jscoverage['/json/parser.js'].lineData[160] = 0;
+  _$jscoverage['/json/parser.js'].lineData[161] = 0;
+  _$jscoverage['/json/parser.js'].lineData[162] = 0;
   _$jscoverage['/json/parser.js'].lineData[163] = 0;
-  _$jscoverage['/json/parser.js'].lineData[165] = 0;
+  _$jscoverage['/json/parser.js'].lineData[167] = 0;
   _$jscoverage['/json/parser.js'].lineData[168] = 0;
   _$jscoverage['/json/parser.js'].lineData[170] = 0;
-  _$jscoverage['/json/parser.js'].lineData[172] = 0;
-  _$jscoverage['/json/parser.js'].lineData[173] = 0;
   _$jscoverage['/json/parser.js'].lineData[174] = 0;
-  _$jscoverage['/json/parser.js'].lineData[175] = 0;
-  _$jscoverage['/json/parser.js'].lineData[177] = 0;
-  _$jscoverage['/json/parser.js'].lineData[179] = 0;
-  _$jscoverage['/json/parser.js'].lineData[180] = 0;
-  _$jscoverage['/json/parser.js'].lineData[182] = 0;
   _$jscoverage['/json/parser.js'].lineData[183] = 0;
+  _$jscoverage['/json/parser.js'].lineData[185] = 0;
   _$jscoverage['/json/parser.js'].lineData[186] = 0;
-  _$jscoverage['/json/parser.js'].lineData[191] = 0;
+  _$jscoverage['/json/parser.js'].lineData[189] = 0;
+  _$jscoverage['/json/parser.js'].lineData[190] = 0;
   _$jscoverage['/json/parser.js'].lineData[192] = 0;
-  _$jscoverage['/json/parser.js'].lineData[195] = 0;
-  _$jscoverage['/json/parser.js'].lineData[200] = 0;
-  _$jscoverage['/json/parser.js'].lineData[216] = 0;
+  _$jscoverage['/json/parser.js'].lineData[196] = 0;
+  _$jscoverage['/json/parser.js'].lineData[197] = 0;
+  _$jscoverage['/json/parser.js'].lineData[198] = 0;
+  _$jscoverage['/json/parser.js'].lineData[199] = 0;
+  _$jscoverage['/json/parser.js'].lineData[201] = 0;
+  _$jscoverage['/json/parser.js'].lineData[208] = 0;
+  _$jscoverage['/json/parser.js'].lineData[210] = 0;
+  _$jscoverage['/json/parser.js'].lineData[213] = 0;
+  _$jscoverage['/json/parser.js'].lineData[215] = 0;
   _$jscoverage['/json/parser.js'].lineData[217] = 0;
-  _$jscoverage['/json/parser.js'].lineData[239] = 0;
+  _$jscoverage['/json/parser.js'].lineData[218] = 0;
+  _$jscoverage['/json/parser.js'].lineData[219] = 0;
+  _$jscoverage['/json/parser.js'].lineData[220] = 0;
+  _$jscoverage['/json/parser.js'].lineData[222] = 0;
+  _$jscoverage['/json/parser.js'].lineData[224] = 0;
+  _$jscoverage['/json/parser.js'].lineData[225] = 0;
+  _$jscoverage['/json/parser.js'].lineData[227] = 0;
+  _$jscoverage['/json/parser.js'].lineData[228] = 0;
+  _$jscoverage['/json/parser.js'].lineData[231] = 0;
+  _$jscoverage['/json/parser.js'].lineData[237] = 0;
   _$jscoverage['/json/parser.js'].lineData[242] = 0;
-  _$jscoverage['/json/parser.js'].lineData[245] = 0;
-  _$jscoverage['/json/parser.js'].lineData[248] = 0;
-  _$jscoverage['/json/parser.js'].lineData[251] = 0;
-  _$jscoverage['/json/parser.js'].lineData[254] = 0;
-  _$jscoverage['/json/parser.js'].lineData[257] = 0;
-  _$jscoverage['/json/parser.js'].lineData[260] = 0;
-  _$jscoverage['/json/parser.js'].lineData[263] = 0;
-  _$jscoverage['/json/parser.js'].lineData[266] = 0;
-  _$jscoverage['/json/parser.js'].lineData[267] = 0;
-  _$jscoverage['/json/parser.js'].lineData[270] = 0;
-  _$jscoverage['/json/parser.js'].lineData[273] = 0;
-  _$jscoverage['/json/parser.js'].lineData[276] = 0;
-  _$jscoverage['/json/parser.js'].lineData[282] = 0;
-  _$jscoverage['/json/parser.js'].lineData[283] = 0;
-  _$jscoverage['/json/parser.js'].lineData[284] = 0;
-  _$jscoverage['/json/parser.js'].lineData[287] = 0;
-  _$jscoverage['/json/parser.js'].lineData[288] = 0;
-  _$jscoverage['/json/parser.js'].lineData[291] = 0;
-  _$jscoverage['/json/parser.js'].lineData[294] = 0;
-  _$jscoverage['/json/parser.js'].lineData[297] = 0;
-  _$jscoverage['/json/parser.js'].lineData[469] = 0;
-  _$jscoverage['/json/parser.js'].lineData[471] = 0;
-  _$jscoverage['/json/parser.js'].lineData[483] = 0;
-  _$jscoverage['/json/parser.js'].lineData[485] = 0;
-  _$jscoverage['/json/parser.js'].lineData[487] = 0;
-  _$jscoverage['/json/parser.js'].lineData[489] = 0;
-  _$jscoverage['/json/parser.js'].lineData[490] = 0;
-  _$jscoverage['/json/parser.js'].lineData[493] = 0;
-  _$jscoverage['/json/parser.js'].lineData[494] = 0;
-  _$jscoverage['/json/parser.js'].lineData[495] = 0;
-  _$jscoverage['/json/parser.js'].lineData[499] = 0;
-  _$jscoverage['/json/parser.js'].lineData[501] = 0;
-  _$jscoverage['/json/parser.js'].lineData[502] = 0;
-  _$jscoverage['/json/parser.js'].lineData[504] = 0;
-  _$jscoverage['/json/parser.js'].lineData[505] = 0;
-  _$jscoverage['/json/parser.js'].lineData[506] = 0;
-  _$jscoverage['/json/parser.js'].lineData[509] = 0;
-  _$jscoverage['/json/parser.js'].lineData[510] = 0;
-  _$jscoverage['/json/parser.js'].lineData[511] = 0;
-  _$jscoverage['/json/parser.js'].lineData[514] = 0;
-  _$jscoverage['/json/parser.js'].lineData[518] = 0;
-  _$jscoverage['/json/parser.js'].lineData[520] = 0;
-  _$jscoverage['/json/parser.js'].lineData[523] = 0;
-  _$jscoverage['/json/parser.js'].lineData[526] = 0;
-  _$jscoverage['/json/parser.js'].lineData[528] = 0;
-  _$jscoverage['/json/parser.js'].lineData[532] = 0;
-  _$jscoverage['/json/parser.js'].lineData[541] = 0;
+  _$jscoverage['/json/parser.js'].lineData[258] = 0;
+  _$jscoverage['/json/parser.js'].lineData[259] = 0;
+  _$jscoverage['/json/parser.js'].lineData[281] = 0;
+  _$jscoverage['/json/parser.js'].lineData[285] = 0;
+  _$jscoverage['/json/parser.js'].lineData[290] = 0;
+  _$jscoverage['/json/parser.js'].lineData[295] = 0;
+  _$jscoverage['/json/parser.js'].lineData[300] = 0;
+  _$jscoverage['/json/parser.js'].lineData[305] = 0;
+  _$jscoverage['/json/parser.js'].lineData[310] = 0;
+  _$jscoverage['/json/parser.js'].lineData[315] = 0;
+  _$jscoverage['/json/parser.js'].lineData[320] = 0;
+  _$jscoverage['/json/parser.js'].lineData[325] = 0;
+  _$jscoverage['/json/parser.js'].lineData[326] = 0;
+  _$jscoverage['/json/parser.js'].lineData[331] = 0;
+  _$jscoverage['/json/parser.js'].lineData[336] = 0;
+  _$jscoverage['/json/parser.js'].lineData[341] = 0;
+  _$jscoverage['/json/parser.js'].lineData[349] = 0;
+  _$jscoverage['/json/parser.js'].lineData[350] = 0;
+  _$jscoverage['/json/parser.js'].lineData[351] = 0;
+  _$jscoverage['/json/parser.js'].lineData[356] = 0;
+  _$jscoverage['/json/parser.js'].lineData[357] = 0;
+  _$jscoverage['/json/parser.js'].lineData[362] = 0;
+  _$jscoverage['/json/parser.js'].lineData[367] = 0;
+  _$jscoverage['/json/parser.js'].lineData[371] = 0;
   _$jscoverage['/json/parser.js'].lineData[543] = 0;
-  _$jscoverage['/json/parser.js'].lineData[545] = 0;
-  _$jscoverage['/json/parser.js'].lineData[546] = 0;
-  _$jscoverage['/json/parser.js'].lineData[549] = 0;
-  _$jscoverage['/json/parser.js'].lineData[550] = 0;
-  _$jscoverage['/json/parser.js'].lineData[553] = 0;
-  _$jscoverage['/json/parser.js'].lineData[554] = 0;
-  _$jscoverage['/json/parser.js'].lineData[556] = 0;
-  _$jscoverage['/json/parser.js'].lineData[559] = 0;
+  _$jscoverage['/json/parser.js'].lineData[544] = 0;
+  _$jscoverage['/json/parser.js'].lineData[558] = 0;
   _$jscoverage['/json/parser.js'].lineData[560] = 0;
-  _$jscoverage['/json/parser.js'].lineData[561] = 0;
+  _$jscoverage['/json/parser.js'].lineData[562] = 0;
   _$jscoverage['/json/parser.js'].lineData[564] = 0;
-  _$jscoverage['/json/parser.js'].lineData[566] = 0;
+  _$jscoverage['/json/parser.js'].lineData[565] = 0;
   _$jscoverage['/json/parser.js'].lineData[568] = 0;
   _$jscoverage['/json/parser.js'].lineData[570] = 0;
   _$jscoverage['/json/parser.js'].lineData[572] = 0;
+  _$jscoverage['/json/parser.js'].lineData[575] = 0;
   _$jscoverage['/json/parser.js'].lineData[576] = 0;
+  _$jscoverage['/json/parser.js'].lineData[579] = 0;
+  _$jscoverage['/json/parser.js'].lineData[580] = 0;
   _$jscoverage['/json/parser.js'].lineData[581] = 0;
   _$jscoverage['/json/parser.js'].lineData[584] = 0;
+  _$jscoverage['/json/parser.js'].lineData[587] = 0;
+  _$jscoverage['/json/parser.js'].lineData[590] = 0;
+  _$jscoverage['/json/parser.js'].lineData[592] = 0;
+  _$jscoverage['/json/parser.js'].lineData[594] = 0;
+  _$jscoverage['/json/parser.js'].lineData[597] = 0;
+  _$jscoverage['/json/parser.js'].lineData[600] = 0;
+  _$jscoverage['/json/parser.js'].lineData[602] = 0;
+  _$jscoverage['/json/parser.js'].lineData[605] = 0;
+  _$jscoverage['/json/parser.js'].lineData[614] = 0;
+  _$jscoverage['/json/parser.js'].lineData[616] = 0;
+  _$jscoverage['/json/parser.js'].lineData[618] = 0;
+  _$jscoverage['/json/parser.js'].lineData[619] = 0;
+  _$jscoverage['/json/parser.js'].lineData[622] = 0;
+  _$jscoverage['/json/parser.js'].lineData[623] = 0;
+  _$jscoverage['/json/parser.js'].lineData[626] = 0;
+  _$jscoverage['/json/parser.js'].lineData[627] = 0;
+  _$jscoverage['/json/parser.js'].lineData[629] = 0;
+  _$jscoverage['/json/parser.js'].lineData[632] = 0;
+  _$jscoverage['/json/parser.js'].lineData[633] = 0;
+  _$jscoverage['/json/parser.js'].lineData[635] = 0;
+  _$jscoverage['/json/parser.js'].lineData[637] = 0;
+  _$jscoverage['/json/parser.js'].lineData[639] = 0;
+  _$jscoverage['/json/parser.js'].lineData[641] = 0;
+  _$jscoverage['/json/parser.js'].lineData[643] = 0;
+  _$jscoverage['/json/parser.js'].lineData[646] = 0;
+  _$jscoverage['/json/parser.js'].lineData[650] = 0;
 }
 if (! _$jscoverage['/json/parser.js'].functionData) {
   _$jscoverage['/json/parser.js'].functionData = [];
@@ -406,259 +419,352 @@ if (! _$jscoverage['/json/parser.js'].functionData) {
   _$jscoverage['/json/parser.js'].functionData[28] = 0;
   _$jscoverage['/json/parser.js'].functionData[29] = 0;
   _$jscoverage['/json/parser.js'].functionData[30] = 0;
+  _$jscoverage['/json/parser.js'].functionData[31] = 0;
 }
 if (! _$jscoverage['/json/parser.js'].branchData) {
   _$jscoverage['/json/parser.js'].branchData = {};
-  _$jscoverage['/json/parser.js'].branchData['66'] = [];
-  _$jscoverage['/json/parser.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['67'] = [];
-  _$jscoverage['/json/parser.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['68'] = [];
-  _$jscoverage['/json/parser.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['71'] = [];
-  _$jscoverage['/json/parser.js'].branchData['71'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['93'] = [];
-  _$jscoverage['/json/parser.js'].branchData['93'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['95'] = [];
-  _$jscoverage['/json/parser.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['101'] = [];
-  _$jscoverage['/json/parser.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['104'] = [];
-  _$jscoverage['/json/parser.js'].branchData['104'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['111'] = [];
-  _$jscoverage['/json/parser.js'].branchData['111'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['117'] = [];
-  _$jscoverage['/json/parser.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['126'] = [];
-  _$jscoverage['/json/parser.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['23'] = [];
+  _$jscoverage['/json/parser.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['27'] = [];
+  _$jscoverage['/json/parser.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['33'] = [];
+  _$jscoverage['/json/parser.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['35'] = [];
+  _$jscoverage['/json/parser.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['38'] = [];
+  _$jscoverage['/json/parser.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['44'] = [];
+  _$jscoverage['/json/parser.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['45'] = [];
+  _$jscoverage['/json/parser.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['54'] = [];
+  _$jscoverage['/json/parser.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['55'] = [];
+  _$jscoverage['/json/parser.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['110'] = [];
+  _$jscoverage['/json/parser.js'].branchData['110'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['114'] = [];
+  _$jscoverage['/json/parser.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['115'] = [];
+  _$jscoverage['/json/parser.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['116'] = [];
+  _$jscoverage['/json/parser.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['119'] = [];
+  _$jscoverage['/json/parser.js'].branchData['119'][1] = new BranchData();
   _$jscoverage['/json/parser.js'].branchData['129'] = [];
   _$jscoverage['/json/parser.js'].branchData['129'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['143'] = [];
-  _$jscoverage['/json/parser.js'].branchData['143'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['147'] = [];
-  _$jscoverage['/json/parser.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['144'] = [];
+  _$jscoverage['/json/parser.js'].branchData['144'][1] = new BranchData();
   _$jscoverage['/json/parser.js'].branchData['149'] = [];
   _$jscoverage['/json/parser.js'].branchData['149'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['150'] = [];
-  _$jscoverage['/json/parser.js'].branchData['150'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['151'] = [];
-  _$jscoverage['/json/parser.js'].branchData['151'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['151'][2] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['152'] = [];
-  _$jscoverage['/json/parser.js'].branchData['152'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['154'] = [];
-  _$jscoverage['/json/parser.js'].branchData['154'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['173'] = [];
-  _$jscoverage['/json/parser.js'].branchData['173'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['174'] = [];
-  _$jscoverage['/json/parser.js'].branchData['174'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['182'] = [];
-  _$jscoverage['/json/parser.js'].branchData['182'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['257'] = [];
-  _$jscoverage['/json/parser.js'].branchData['257'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['489'] = [];
-  _$jscoverage['/json/parser.js'].branchData['489'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['493'] = [];
-  _$jscoverage['/json/parser.js'].branchData['493'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['499'] = [];
-  _$jscoverage['/json/parser.js'].branchData['499'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['501'] = [];
-  _$jscoverage['/json/parser.js'].branchData['501'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['504'] = [];
-  _$jscoverage['/json/parser.js'].branchData['504'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['533'] = [];
-  _$jscoverage['/json/parser.js'].branchData['533'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['534'] = [];
-  _$jscoverage['/json/parser.js'].branchData['534'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['535'] = [];
-  _$jscoverage['/json/parser.js'].branchData['535'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['545'] = [];
-  _$jscoverage['/json/parser.js'].branchData['545'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['549'] = [];
-  _$jscoverage['/json/parser.js'].branchData['549'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['553'] = [];
-  _$jscoverage['/json/parser.js'].branchData['553'][1] = new BranchData();
-  _$jscoverage['/json/parser.js'].branchData['559'] = [];
-  _$jscoverage['/json/parser.js'].branchData['559'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['160'] = [];
+  _$jscoverage['/json/parser.js'].branchData['160'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['167'] = [];
+  _$jscoverage['/json/parser.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['185'] = [];
+  _$jscoverage['/json/parser.js'].branchData['185'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['189'] = [];
+  _$jscoverage['/json/parser.js'].branchData['189'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['192'] = [];
+  _$jscoverage['/json/parser.js'].branchData['192'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['193'] = [];
+  _$jscoverage['/json/parser.js'].branchData['193'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['194'] = [];
+  _$jscoverage['/json/parser.js'].branchData['194'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['194'][2] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['198'] = [];
+  _$jscoverage['/json/parser.js'].branchData['198'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['218'] = [];
+  _$jscoverage['/json/parser.js'].branchData['218'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['219'] = [];
+  _$jscoverage['/json/parser.js'].branchData['219'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['227'] = [];
+  _$jscoverage['/json/parser.js'].branchData['227'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['310'] = [];
+  _$jscoverage['/json/parser.js'].branchData['310'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['564'] = [];
+  _$jscoverage['/json/parser.js'].branchData['564'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['568'] = [];
+  _$jscoverage['/json/parser.js'].branchData['568'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['570'] = [];
+  _$jscoverage['/json/parser.js'].branchData['570'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['575'] = [];
+  _$jscoverage['/json/parser.js'].branchData['575'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['579'] = [];
+  _$jscoverage['/json/parser.js'].branchData['579'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['606'] = [];
+  _$jscoverage['/json/parser.js'].branchData['606'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['607'] = [];
+  _$jscoverage['/json/parser.js'].branchData['607'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['608'] = [];
+  _$jscoverage['/json/parser.js'].branchData['608'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['618'] = [];
+  _$jscoverage['/json/parser.js'].branchData['618'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['622'] = [];
+  _$jscoverage['/json/parser.js'].branchData['622'][1] = new BranchData();
+  _$jscoverage['/json/parser.js'].branchData['626'] = [];
+  _$jscoverage['/json/parser.js'].branchData['626'][1] = new BranchData();
 }
-_$jscoverage['/json/parser.js'].branchData['559'][1].init(1108, 3, 'len');
-function visit43_559_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['559'][1].ranCondition(result);
+_$jscoverage['/json/parser.js'].branchData['626'][1].init(841, 17, 'ret !== undefined');
+function visit48_626_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['626'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['553'][1].init(933, 17, 'ret !== undefined');
-function visit42_553_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['553'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['622'][1].init(733, 13, 'reducedAction');
+function visit47_622_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['622'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['549'][1].init(809, 13, 'reducedAction');
-function visit41_549_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['549'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['618'][1].init(595, 7, 'i < len');
+function visit46_618_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['618'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['545'][1].init(655, 7, 'i < len');
-function visit40_545_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['545'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['608'][1].init(245, 31, 'production.rhs || production[1]');
+function visit45_608_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['608'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['535'][1].init(260, 31, 'production.rhs || production[1]');
-function visit39_535_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['535'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['607'][1].init(176, 34, 'production.action || production[2]');
+function visit44_607_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['607'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['534'][1].init(186, 34, 'production.action || production[2]');
-function visit38_534_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['534'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['606'][1].init(104, 34, 'production.symbol || production[0]');
+function visit43_606_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['606'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['533'][1].init(109, 34, 'production.symbol || production[0]');
-function visit37_533_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['533'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['579'][1].init(116, 18, 'tableAction[state]');
+function visit42_579_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['579'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['504'][1].init(86, 18, 'tableAction[state]');
-function visit36_504_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['504'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['575'][1].init(431, 7, '!action');
+function visit41_575_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['575'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['501'][1].init(488, 7, '!action');
-function visit35_501_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['501'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['570'][1].init(91, 48, 'tableAction[state] && tableAction[state][symbol]');
+function visit40_570_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['570'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['499'][1].init(419, 48, 'tableAction[state] && tableAction[state][symbol]');
-function visit34_499_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['499'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['568'][1].init(198, 6, 'symbol');
+function visit39_568_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['568'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['493'][1].init(206, 7, '!symbol');
-function visit33_493_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['493'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['564'][1].init(118, 7, '!symbol');
+function visit38_564_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['564'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['489'][1].init(122, 7, '!symbol');
-function visit32_489_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['489'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['310'][1].init(24, 18, 'this.$1 === \'true\'');
+function visit37_310_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['310'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['257'][1].init(21, 18, 'this.$1 === \'true\'');
-function visit31_257_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['257'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['227'][1].init(1240, 3, 'ret');
+function visit36_227_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['227'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['182'][1].init(1244, 3, 'ret');
-function visit30_182_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['182'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['219'][1].init(960, 17, 'ret === undefined');
+function visit35_219_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['174'][1].init(956, 17, 'ret === undefined');
-function visit29_174_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['218'][1].init(907, 27, 'action && action.call(self)');
+function visit34_218_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['173'][1].init(902, 27, 'action && action.call(self)');
-function visit28_173_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['173'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['198'][1].init(74, 5, 'lines');
+function visit33_198_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['154'][1].init(76, 5, 'lines');
-function visit27_154_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['154'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['194'][2].init(131, 20, 'rule[2] || undefined');
+function visit32_194_2(result) {
+  _$jscoverage['/json/parser.js'].branchData['194'][2].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['152'][1].init(229, 23, 'm = input.match(regexp)');
-function visit26_152_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['152'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['194'][1].init(116, 35, 'rule.action || rule[2] || undefined');
+function visit31_194_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['151'][2].init(133, 20, 'rule[2] || undefined');
-function visit25_151_2(result) {
-  _$jscoverage['/json/parser.js'].branchData['151'][2].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['193'][1].init(64, 21, 'rule.token || rule[0]');
+function visit30_193_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['193'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['151'][1].init(118, 35, 'rule.action || rule[2] || undefined');
-function visit24_151_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['151'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['192'][1].init(98, 22, 'rule.regexp || rule[1]');
+function visit29_192_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['150'][1].init(65, 21, 'rule.token || rule[0]');
-function visit23_150_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['150'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['189'][1].init(387, 16, 'i < rules.length');
+function visit28_189_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['149'][1].init(65, 22, 'rule.regexp || rule[1]');
-function visit22_149_1(result) {
+}_$jscoverage['/json/parser.js'].branchData['185'][1].init(277, 6, '!input');
+function visit27_185_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['185'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/parser.js'].branchData['167'][1].init(436, 16, 'reverseSymbolMap');
+function visit26_167_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['167'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/parser.js'].branchData['160'][1].init(167, 30, '!reverseSymbolMap && symbolMap');
+function visit25_160_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['160'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/parser.js'].branchData['149'][1].init(53, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
+function visit24_149_1(result) {
   _$jscoverage['/json/parser.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['147'][1].init(403, 16, 'i < rules.length');
-function visit21_147_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['147'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['144'][1].init(340, 36, 'matched.length > DEBUG_CONTEXT_LIMIT');
+function visit23_144_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['143'][1].init(289, 6, '!input');
-function visit20_143_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['143'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/json/parser.js'].branchData['129'][1].init(166, 47, 'stateMap[s] || (stateMap[s] = (++self.stateId))');
-function visit19_129_1(result) {
+}_$jscoverage['/json/parser.js'].branchData['129'][1].init(19, 8, 'num || 1');
+function visit22_129_1(result) {
   _$jscoverage['/json/parser.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['126'][1].init(91, 9, '!stateMap');
-function visit18_126_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['119'][1].init(230, 28, 'inArray(currentState, state)');
+function visit21_119_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['117'][1].init(418, 16, 'reverseSymbolMap');
-function visit17_117_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['116'][1].init(25, 37, 'currentState === Lexer.STATIC.INITIAL');
+function visit20_116_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['111'][1].init(172, 30, '!reverseSymbolMap && symbolMap');
-function visit16_111_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['111'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['115'][1].init(66, 6, '!state');
+function visit19_115_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['104'][1].init(169, 50, 'symbolMap[t] || (symbolMap[t] = (++self.symbolId))');
-function visit15_104_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['104'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['114'][1].init(29, 15, 'r.state || r[3]');
+function visit18_114_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['101'][1].init(93, 10, '!symbolMap');
-function visit14_101_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['110'][1].init(179, 13, 'self.mapState');
+function visit17_110_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['95'][1].init(525, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
-function visit13_95_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['95'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['55'][1].init(17, 15, 'arr[i] === item');
+function visit16_55_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['93'][1].init(316, 36, 'matched.length > DEBUG_CONTEXT_LIMIT');
-function visit12_93_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['93'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['54'][1].init(41, 5, 'i < l');
+function visit15_54_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['71'][1].init(235, 30, 'S.inArray(currentState, state)');
-function visit11_71_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['71'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['45'][1].init(25, 42, 'fn.call(context, val, i, object) === false');
+function visit14_45_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['68'][1].init(26, 36, 'currentState == Lexer.STATIC.INITIAL');
-function visit10_68_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['44'][1].init(79, 10, 'i < length');
+function visit13_44_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['67'][1].init(68, 6, '!state');
-function visit9_67_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['38'][1].init(75, 52, 'fn.call(context, object[key], key, object) === false');
+function visit12_38_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].branchData['66'][1].init(30, 15, 'r.state || r[3]');
-function visit8_66_1(result) {
-  _$jscoverage['/json/parser.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/json/parser.js'].branchData['35'][1].init(147, 16, '!isArray(object)');
+function visit11_35_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/parser.js'].lineData[4]++;
+}_$jscoverage['/json/parser.js'].branchData['33'][1].init(113, 15, 'context || null');
+function visit10_33_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['33'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/parser.js'].branchData['27'][1].init(13, 6, 'object');
+function visit9_27_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['27'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/parser.js'].branchData['23'][1].init(16, 56, '\'[object Array]\' === Object.prototype.toString.call(obj)');
+function visit8_23_1(result) {
+  _$jscoverage['/json/parser.js'].branchData['23'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/parser.js'].lineData[3]++;
 KISSY.add(function(_, undefined) {
   _$jscoverage['/json/parser.js'].functionData[0]++;
   _$jscoverage['/json/parser.js'].lineData[6]++;
-  var parser = {}, S = KISSY, GrammarConst = {
+  var parser = {}, GrammarConst = {
   'SHIFT_TYPE': 1, 
   'REDUCE_TYPE': 2, 
   'ACCEPT_TYPE': 0, 
   'TYPE_INDEX': 0, 
   'PRODUCTION_INDEX': 1, 
   'TO_INDEX': 2};
-  _$jscoverage['/json/parser.js'].lineData[15]++;
-  var Lexer = function(cfg) {
-  _$jscoverage['/json/parser.js'].functionData[1]++;
-  _$jscoverage['/json/parser.js'].lineData[17]++;
+  _$jscoverage['/json/parser.js'].lineData[16]++;
+  function mix(to, from) {
+    _$jscoverage['/json/parser.js'].functionData[1]++;
+    _$jscoverage['/json/parser.js'].lineData[17]++;
+    for (var f in from) {
+      _$jscoverage['/json/parser.js'].lineData[18]++;
+      to[f] = from[f];
+    }
+  }
+  _$jscoverage['/json/parser.js'].lineData[22]++;
+  function isArray(obj) {
+    _$jscoverage['/json/parser.js'].functionData[2]++;
+    _$jscoverage['/json/parser.js'].lineData[23]++;
+    return visit8_23_1('[object Array]' === Object.prototype.toString.call(obj));
+  }
+  _$jscoverage['/json/parser.js'].lineData[26]++;
+  function each(object, fn, context) {
+    _$jscoverage['/json/parser.js'].functionData[3]++;
+    _$jscoverage['/json/parser.js'].lineData[27]++;
+    if (visit9_27_1(object)) {
+      _$jscoverage['/json/parser.js'].lineData[28]++;
+      var key, val, length, i = 0;
+      _$jscoverage['/json/parser.js'].lineData[33]++;
+      context = visit10_33_1(context || null);
+      _$jscoverage['/json/parser.js'].lineData[35]++;
+      if (visit11_35_1(!isArray(object))) {
+        _$jscoverage['/json/parser.js'].lineData[36]++;
+        for (key in object) {
+          _$jscoverage['/json/parser.js'].lineData[38]++;
+          if (visit12_38_1(fn.call(context, object[key], key, object) === false)) {
+            _$jscoverage['/json/parser.js'].lineData[39]++;
+            break;
+          }
+        }
+      } else {
+        _$jscoverage['/json/parser.js'].lineData[43]++;
+        length = object.length;
+        _$jscoverage['/json/parser.js'].lineData[44]++;
+        for (val = object[0]; visit13_44_1(i < length); val = object[++i]) {
+          _$jscoverage['/json/parser.js'].lineData[45]++;
+          if (visit14_45_1(fn.call(context, val, i, object) === false)) {
+            _$jscoverage['/json/parser.js'].lineData[46]++;
+            break;
+          }
+        }
+      }
+    }
+  }
+  _$jscoverage['/json/parser.js'].lineData[53]++;
+  function inArray(item, arr) {
+    _$jscoverage['/json/parser.js'].functionData[4]++;
+    _$jscoverage['/json/parser.js'].lineData[54]++;
+    for (var i = 0, l = arr.length; visit15_54_1(i < l); i++) {
+      _$jscoverage['/json/parser.js'].lineData[55]++;
+      if (visit16_55_1(arr[i] === item)) {
+        _$jscoverage['/json/parser.js'].lineData[56]++;
+        return true;
+      }
+    }
+    _$jscoverage['/json/parser.js'].lineData[59]++;
+    return false;
+  }
+  _$jscoverage['/json/parser.js'].lineData[61]++;
+  var Lexer = function Lexer(cfg) {
+  _$jscoverage['/json/parser.js'].functionData[5]++;
+  _$jscoverage['/json/parser.js'].lineData[63]++;
   var self = this;
-  _$jscoverage['/json/parser.js'].lineData[33]++;
+  _$jscoverage['/json/parser.js'].lineData[79]++;
   self.rules = [];
-  _$jscoverage['/json/parser.js'].lineData[35]++;
-  S.mix(self, cfg);
-  _$jscoverage['/json/parser.js'].lineData[42]++;
+  _$jscoverage['/json/parser.js'].lineData[81]++;
+  mix(self, cfg);
+  _$jscoverage['/json/parser.js'].lineData[88]++;
   self.resetInput(self.input);
 };
-  _$jscoverage['/json/parser.js'].lineData[45]++;
+  _$jscoverage['/json/parser.js'].lineData[90]++;
   Lexer.prototype = {
   'resetInput': function(input) {
-  _$jscoverage['/json/parser.js'].functionData[2]++;
-  _$jscoverage['/json/parser.js'].lineData[47]++;
-  S.mix(this, {
+  _$jscoverage['/json/parser.js'].functionData[6]++;
+  _$jscoverage['/json/parser.js'].lineData[92]++;
+  mix(this, {
   input: input, 
-  matched: "", 
+  matched: '', 
   stateStack: [Lexer.STATIC.INITIAL], 
-  match: "", 
-  text: "", 
+  match: '', 
+  text: '', 
   firstLine: 1, 
   lineNumber: 1, 
   lastLine: 1, 
@@ -666,534 +772,509 @@ KISSY.add(function(_, undefined) {
   lastColumn: 1});
 }, 
   'getCurrentRules': function() {
-  _$jscoverage['/json/parser.js'].functionData[3]++;
-  _$jscoverage['/json/parser.js'].lineData[61]++;
+  _$jscoverage['/json/parser.js'].functionData[7]++;
+  _$jscoverage['/json/parser.js'].lineData[106]++;
   var self = this, currentState = self.stateStack[self.stateStack.length - 1], rules = [];
-  _$jscoverage['/json/parser.js'].lineData[64]++;
-  currentState = self.mapState(currentState);
-  _$jscoverage['/json/parser.js'].lineData[65]++;
-  S.each(self.rules, function(r) {
-  _$jscoverage['/json/parser.js'].functionData[4]++;
-  _$jscoverage['/json/parser.js'].lineData[66]++;
-  var state = visit8_66_1(r.state || r[3]);
-  _$jscoverage['/json/parser.js'].lineData[67]++;
-  if (visit9_67_1(!state)) {
-    _$jscoverage['/json/parser.js'].lineData[68]++;
-    if (visit10_68_1(currentState == Lexer.STATIC.INITIAL)) {
-      _$jscoverage['/json/parser.js'].lineData[69]++;
+  _$jscoverage['/json/parser.js'].lineData[110]++;
+  if (visit17_110_1(self.mapState)) {
+    _$jscoverage['/json/parser.js'].lineData[111]++;
+    currentState = self.mapState(currentState);
+  }
+  _$jscoverage['/json/parser.js'].lineData[113]++;
+  each(self.rules, function(r) {
+  _$jscoverage['/json/parser.js'].functionData[8]++;
+  _$jscoverage['/json/parser.js'].lineData[114]++;
+  var state = visit18_114_1(r.state || r[3]);
+  _$jscoverage['/json/parser.js'].lineData[115]++;
+  if (visit19_115_1(!state)) {
+    _$jscoverage['/json/parser.js'].lineData[116]++;
+    if (visit20_116_1(currentState === Lexer.STATIC.INITIAL)) {
+      _$jscoverage['/json/parser.js'].lineData[117]++;
       rules.push(r);
     }
   } else {
-    _$jscoverage['/json/parser.js'].lineData[71]++;
-    if (visit11_71_1(S.inArray(currentState, state))) {
-      _$jscoverage['/json/parser.js'].lineData[72]++;
+    _$jscoverage['/json/parser.js'].lineData[119]++;
+    if (visit21_119_1(inArray(currentState, state))) {
+      _$jscoverage['/json/parser.js'].lineData[120]++;
       rules.push(r);
     }
   }
 });
-  _$jscoverage['/json/parser.js'].lineData[75]++;
+  _$jscoverage['/json/parser.js'].lineData[123]++;
   return rules;
 }, 
   'pushState': function(state) {
-  _$jscoverage['/json/parser.js'].functionData[5]++;
-  _$jscoverage['/json/parser.js'].lineData[78]++;
+  _$jscoverage['/json/parser.js'].functionData[9]++;
+  _$jscoverage['/json/parser.js'].lineData[126]++;
   this.stateStack.push(state);
 }, 
-  'popState': function() {
-  _$jscoverage['/json/parser.js'].functionData[6]++;
-  _$jscoverage['/json/parser.js'].lineData[81]++;
-  return this.stateStack.pop();
-}, 
-  'getStateStack': function() {
-  _$jscoverage['/json/parser.js'].functionData[7]++;
-  _$jscoverage['/json/parser.js'].lineData[84]++;
-  return this.stateStack;
+  'popState': function(num) {
+  _$jscoverage['/json/parser.js'].functionData[10]++;
+  _$jscoverage['/json/parser.js'].lineData[129]++;
+  num = visit22_129_1(num || 1);
+  _$jscoverage['/json/parser.js'].lineData[130]++;
+  var ret;
+  _$jscoverage['/json/parser.js'].lineData[131]++;
+  while (num--) {
+    _$jscoverage['/json/parser.js'].lineData[132]++;
+    ret = this.stateStack.pop();
+  }
+  _$jscoverage['/json/parser.js'].lineData[134]++;
+  return ret;
 }, 
   'showDebugInfo': function() {
-  _$jscoverage['/json/parser.js'].functionData[8]++;
-  _$jscoverage['/json/parser.js'].lineData[87]++;
+  _$jscoverage['/json/parser.js'].functionData[11]++;
+  _$jscoverage['/json/parser.js'].lineData[137]++;
   var self = this, DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT, matched = self.matched, match = self.match, input = self.input;
-  _$jscoverage['/json/parser.js'].lineData[92]++;
+  _$jscoverage['/json/parser.js'].lineData[142]++;
   matched = matched.slice(0, matched.length - match.length);
-  _$jscoverage['/json/parser.js'].lineData[93]++;
-  var past = (visit12_93_1(matched.length > DEBUG_CONTEXT_LIMIT) ? "..." : "") + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
-  _$jscoverage['/json/parser.js'].lineData[95]++;
-  next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit13_95_1(next.length > DEBUG_CONTEXT_LIMIT) ? "..." : "");
-  _$jscoverage['/json/parser.js'].lineData[96]++;
-  return past + next + '\n' + new Array(past.length + 1).join("-") + "^";
+  _$jscoverage['/json/parser.js'].lineData[144]++;
+  var past = (visit23_144_1(matched.length > DEBUG_CONTEXT_LIMIT) ? '...' : '') + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '), next = match + input;
+  _$jscoverage['/json/parser.js'].lineData[148]++;
+  next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit24_149_1(next.length > DEBUG_CONTEXT_LIMIT) ? '...' : '');
+  _$jscoverage['/json/parser.js'].lineData[150]++;
+  return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
 }, 
-  'mapSymbol': function(t) {
-  _$jscoverage['/json/parser.js'].functionData[9]++;
-  _$jscoverage['/json/parser.js'].lineData[99]++;
-  var self = this, symbolMap = self.symbolMap;
-  _$jscoverage['/json/parser.js'].lineData[101]++;
-  if (visit14_101_1(!symbolMap)) {
-    _$jscoverage['/json/parser.js'].lineData[102]++;
-    return t;
-  }
-  _$jscoverage['/json/parser.js'].lineData[104]++;
-  return visit15_104_1(symbolMap[t] || (symbolMap[t] = (++self.symbolId)));
+  'mapSymbol': function mapSymbolForCodeGen(t) {
+  _$jscoverage['/json/parser.js'].functionData[12]++;
+  _$jscoverage['/json/parser.js'].lineData[153]++;
+  return this.symbolMap[t];
 }, 
   'mapReverseSymbol': function(rs) {
-  _$jscoverage['/json/parser.js'].functionData[10]++;
-  _$jscoverage['/json/parser.js'].lineData[107]++;
+  _$jscoverage['/json/parser.js'].functionData[13]++;
+  _$jscoverage['/json/parser.js'].lineData[156]++;
   var self = this, symbolMap = self.symbolMap, i, reverseSymbolMap = self.reverseSymbolMap;
-  _$jscoverage['/json/parser.js'].lineData[111]++;
-  if (visit16_111_1(!reverseSymbolMap && symbolMap)) {
-    _$jscoverage['/json/parser.js'].lineData[112]++;
+  _$jscoverage['/json/parser.js'].lineData[160]++;
+  if (visit25_160_1(!reverseSymbolMap && symbolMap)) {
+    _$jscoverage['/json/parser.js'].lineData[161]++;
     reverseSymbolMap = self.reverseSymbolMap = {};
-    _$jscoverage['/json/parser.js'].lineData[113]++;
+    _$jscoverage['/json/parser.js'].lineData[162]++;
     for (i in symbolMap) {
-      _$jscoverage['/json/parser.js'].lineData[114]++;
+      _$jscoverage['/json/parser.js'].lineData[163]++;
       reverseSymbolMap[symbolMap[i]] = i;
     }
   }
-  _$jscoverage['/json/parser.js'].lineData[117]++;
-  if (visit17_117_1(reverseSymbolMap)) {
-    _$jscoverage['/json/parser.js'].lineData[118]++;
+  _$jscoverage['/json/parser.js'].lineData[167]++;
+  if (visit26_167_1(reverseSymbolMap)) {
+    _$jscoverage['/json/parser.js'].lineData[168]++;
     return reverseSymbolMap[rs];
   } else {
-    _$jscoverage['/json/parser.js'].lineData[120]++;
+    _$jscoverage['/json/parser.js'].lineData[170]++;
     return rs;
   }
 }, 
-  'mapState': function(s) {
-  _$jscoverage['/json/parser.js'].functionData[11]++;
-  _$jscoverage['/json/parser.js'].lineData[124]++;
-  var self = this, stateMap = self.stateMap;
-  _$jscoverage['/json/parser.js'].lineData[126]++;
-  if (visit18_126_1(!stateMap)) {
-    _$jscoverage['/json/parser.js'].lineData[127]++;
-    return s;
-  }
-  _$jscoverage['/json/parser.js'].lineData[129]++;
-  return visit19_129_1(stateMap[s] || (stateMap[s] = (++self.stateId)));
-}, 
   'lex': function() {
-  _$jscoverage['/json/parser.js'].functionData[12]++;
-  _$jscoverage['/json/parser.js'].lineData[132]++;
+  _$jscoverage['/json/parser.js'].functionData[14]++;
+  _$jscoverage['/json/parser.js'].lineData[174]++;
   var self = this, input = self.input, i, rule, m, ret, lines, rules = self.getCurrentRules();
-  _$jscoverage['/json/parser.js'].lineData[141]++;
-  self.match = self.text = "";
-  _$jscoverage['/json/parser.js'].lineData[143]++;
-  if (visit20_143_1(!input)) {
-    _$jscoverage['/json/parser.js'].lineData[144]++;
+  _$jscoverage['/json/parser.js'].lineData[183]++;
+  self.match = self.text = '';
+  _$jscoverage['/json/parser.js'].lineData[185]++;
+  if (visit27_185_1(!input)) {
+    _$jscoverage['/json/parser.js'].lineData[186]++;
     return self.mapSymbol(Lexer.STATIC.END_TAG);
   }
-  _$jscoverage['/json/parser.js'].lineData[147]++;
-  for (i = 0; visit21_147_1(i < rules.length); i++) {
-    _$jscoverage['/json/parser.js'].lineData[148]++;
+  _$jscoverage['/json/parser.js'].lineData[189]++;
+  for (i = 0; visit28_189_1(i < rules.length); i++) {
+    _$jscoverage['/json/parser.js'].lineData[190]++;
     rule = rules[i];
-    _$jscoverage['/json/parser.js'].lineData[149]++;
-    var regexp = visit22_149_1(rule.regexp || rule[1]), token = visit23_150_1(rule.token || rule[0]), action = visit24_151_1(rule.action || visit25_151_2(rule[2] || undefined));
-    _$jscoverage['/json/parser.js'].lineData[152]++;
-    if (visit26_152_1(m = input.match(regexp))) {
-      _$jscoverage['/json/parser.js'].lineData[153]++;
+    _$jscoverage['/json/parser.js'].lineData[192]++;
+    var regexp = visit29_192_1(rule.regexp || rule[1]), token = visit30_193_1(rule.token || rule[0]), action = visit31_194_1(rule.action || visit32_194_2(rule[2] || undefined));
+    _$jscoverage['/json/parser.js'].lineData[196]++;
+    if ((m = input.match(regexp))) {
+      _$jscoverage['/json/parser.js'].lineData[197]++;
       lines = m[0].match(/\n.*/g);
-      _$jscoverage['/json/parser.js'].lineData[154]++;
-      if (visit27_154_1(lines)) {
-        _$jscoverage['/json/parser.js'].lineData[155]++;
+      _$jscoverage['/json/parser.js'].lineData[198]++;
+      if (visit33_198_1(lines)) {
+        _$jscoverage['/json/parser.js'].lineData[199]++;
         self.lineNumber += lines.length;
       }
-      _$jscoverage['/json/parser.js'].lineData[157]++;
-      S.mix(self, {
+      _$jscoverage['/json/parser.js'].lineData[201]++;
+      mix(self, {
   firstLine: self.lastLine, 
   lastLine: self.lineNumber + 1, 
   firstColumn: self.lastColumn, 
   lastColumn: lines ? lines[lines.length - 1].length - 1 : self.lastColumn + m[0].length});
-      _$jscoverage['/json/parser.js'].lineData[163]++;
+      _$jscoverage['/json/parser.js'].lineData[208]++;
       var match;
-      _$jscoverage['/json/parser.js'].lineData[165]++;
+      _$jscoverage['/json/parser.js'].lineData[210]++;
       match = self.match = m[0];
-      _$jscoverage['/json/parser.js'].lineData[168]++;
+      _$jscoverage['/json/parser.js'].lineData[213]++;
       self.matches = m;
-      _$jscoverage['/json/parser.js'].lineData[170]++;
+      _$jscoverage['/json/parser.js'].lineData[215]++;
       self.text = match;
-      _$jscoverage['/json/parser.js'].lineData[172]++;
+      _$jscoverage['/json/parser.js'].lineData[217]++;
       self.matched += match;
-      _$jscoverage['/json/parser.js'].lineData[173]++;
-      ret = visit28_173_1(action && action.call(self));
-      _$jscoverage['/json/parser.js'].lineData[174]++;
-      if (visit29_174_1(ret === undefined)) {
-        _$jscoverage['/json/parser.js'].lineData[175]++;
+      _$jscoverage['/json/parser.js'].lineData[218]++;
+      ret = visit34_218_1(action && action.call(self));
+      _$jscoverage['/json/parser.js'].lineData[219]++;
+      if (visit35_219_1(ret === undefined)) {
+        _$jscoverage['/json/parser.js'].lineData[220]++;
         ret = token;
       } else {
-        _$jscoverage['/json/parser.js'].lineData[177]++;
+        _$jscoverage['/json/parser.js'].lineData[222]++;
         ret = self.mapSymbol(ret);
       }
-      _$jscoverage['/json/parser.js'].lineData[179]++;
+      _$jscoverage['/json/parser.js'].lineData[224]++;
       input = input.slice(match.length);
-      _$jscoverage['/json/parser.js'].lineData[180]++;
+      _$jscoverage['/json/parser.js'].lineData[225]++;
       self.input = input;
-      _$jscoverage['/json/parser.js'].lineData[182]++;
-      if (visit30_182_1(ret)) {
-        _$jscoverage['/json/parser.js'].lineData[183]++;
+      _$jscoverage['/json/parser.js'].lineData[227]++;
+      if (visit36_227_1(ret)) {
+        _$jscoverage['/json/parser.js'].lineData[228]++;
         return ret;
       } else {
-        _$jscoverage['/json/parser.js'].lineData[186]++;
+        _$jscoverage['/json/parser.js'].lineData[231]++;
         return self.lex();
       }
     }
   }
-  _$jscoverage['/json/parser.js'].lineData[191]++;
-  S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
-  _$jscoverage['/json/parser.js'].lineData[192]++;
-  return undefined;
 }};
-  _$jscoverage['/json/parser.js'].lineData[195]++;
+  _$jscoverage['/json/parser.js'].lineData[237]++;
   Lexer.STATIC = {
   'INITIAL': 'I', 
   'DEBUG_CONTEXT_LIMIT': 20, 
   'END_TAG': '$EOF'};
-  _$jscoverage['/json/parser.js'].lineData[200]++;
-  var lexer = new Lexer({
-  'rules': [[2, /^"(\\"|\\\\|\\\/|\\b|\\f|\\n|\\r|\\t|\\u[0-9a-zA-Z]{4}|[^\\"\x00-\x1f])*"/, 0], [0, /^[\t\r\n\x20]/, 0], [3, /^,/, 0], [4, /^:/, 0], [5, /^\[/, 0], [6, /^\]/, 0], [7, /^\{/, 0], [8, /^\}/, 0], [9, /^-?\d+(?:\.\d+)?(?:e-?\d+)?/i, 0], [10, /^true|false/, 0], [11, /^null/, 0], [12, /^./, 0]]});
-  _$jscoverage['/json/parser.js'].lineData[216]++;
-  parser.lexer = lexer;
-  _$jscoverage['/json/parser.js'].lineData[217]++;
-  lexer.symbolMap = {
-  '$EOF': 1, 
-  'STRING': 2, 
-  'COMMA': 3, 
-  'COLON': 4, 
-  'LEFT_BRACKET': 5, 
-  'RIGHT_BRACKET': 6, 
-  'LEFT_BRACE': 7, 
-  'RIGHT_BRACE': 8, 
-  'NUMBER': 9, 
-  'BOOLEAN': 10, 
-  'NULL': 11, 
-  'INVALID': 12, 
-  '$START': 13, 
-  'json': 14, 
-  'value': 15, 
-  'object': 16, 
-  'array': 17, 
-  'elementList': 18, 
-  'member': 19, 
-  'memberList': 20};
-  _$jscoverage['/json/parser.js'].lineData[239]++;
-  parser.productions = [[13, [14]], [14, [15], function() {
-  _$jscoverage['/json/parser.js'].functionData[13]++;
   _$jscoverage['/json/parser.js'].lineData[242]++;
-  return this.$1;
-}], [15, [2], function() {
-  _$jscoverage['/json/parser.js'].functionData[14]++;
-  _$jscoverage['/json/parser.js'].lineData[245]++;
-  return this.yy.unQuote(this.$1);
-}], [15, [9], function() {
+  var lexer = new Lexer({
+  'rules': [['b', /^"(\\"|\\\\|\\\/|\\b|\\f|\\n|\\r|\\t|\\u[0-9a-zA-Z]{4}|[^\\"\x00-\x1f])*"/, 0], [0, /^[\t\r\n\x20]/, 0], ['c', /^,/, 0], ['d', /^:/, 0], ['e', /^\[/, 0], ['f', /^\]/, 0], ['g', /^\{/, 0], ['h', /^\}/, 0], ['i', /^-?\d+(?:\.\d+)?(?:e-?\d+)?/i, 0], ['j', /^true|false/, 0], ['k', /^null/, 0], ['l', /^./, 0]]});
+  _$jscoverage['/json/parser.js'].lineData[258]++;
+  parser.lexer = lexer;
+  _$jscoverage['/json/parser.js'].lineData[259]++;
+  lexer.symbolMap = {
+  '$EOF': 'a', 
+  'STRING': 'b', 
+  'COMMA': 'c', 
+  'COLON': 'd', 
+  'LEFT_BRACKET': 'e', 
+  'RIGHT_BRACKET': 'f', 
+  'LEFT_BRACE': 'g', 
+  'RIGHT_BRACE': 'h', 
+  'NUMBER': 'i', 
+  'BOOLEAN': 'j', 
+  'NULL': 'k', 
+  'INVALID': 'l', 
+  '$START': 'm', 
+  'json': 'n', 
+  'value': 'o', 
+  'object': 'p', 
+  'array': 'q', 
+  'elementList': 'r', 
+  'member': 's', 
+  'memberList': 't'};
+  _$jscoverage['/json/parser.js'].lineData[281]++;
+  parser.productions = [['m', ['n']], ['n', ['o'], function() {
   _$jscoverage['/json/parser.js'].functionData[15]++;
-  _$jscoverage['/json/parser.js'].lineData[248]++;
-  return parseFloat(this.$1);
-}], [15, [16], function() {
+  _$jscoverage['/json/parser.js'].lineData[285]++;
+  return this.$1;
+}], ['o', ['b'], function() {
   _$jscoverage['/json/parser.js'].functionData[16]++;
-  _$jscoverage['/json/parser.js'].lineData[251]++;
-  return this.$1;
-}], [15, [17], function() {
+  _$jscoverage['/json/parser.js'].lineData[290]++;
+  return this.yy.unQuote(this.$1);
+}], ['o', ['i'], function() {
   _$jscoverage['/json/parser.js'].functionData[17]++;
-  _$jscoverage['/json/parser.js'].lineData[254]++;
-  return this.$1;
-}], [15, [10], function() {
+  _$jscoverage['/json/parser.js'].lineData[295]++;
+  return parseFloat(this.$1);
+}], ['o', ['p'], function() {
   _$jscoverage['/json/parser.js'].functionData[18]++;
-  _$jscoverage['/json/parser.js'].lineData[257]++;
-  return visit31_257_1(this.$1 === 'true');
-}], [15, [11], function() {
-  _$jscoverage['/json/parser.js'].functionData[19]++;
-  _$jscoverage['/json/parser.js'].lineData[260]++;
-  return null;
-}], [18, [15], function() {
-  _$jscoverage['/json/parser.js'].functionData[20]++;
-  _$jscoverage['/json/parser.js'].lineData[263]++;
-  return [this.$1];
-}], [18, [18, 3, 15], function() {
-  _$jscoverage['/json/parser.js'].functionData[21]++;
-  _$jscoverage['/json/parser.js'].lineData[266]++;
-  this.$1[this.$1.length] = this.$3;
-  _$jscoverage['/json/parser.js'].lineData[267]++;
+  _$jscoverage['/json/parser.js'].lineData[300]++;
   return this.$1;
-}], [17, [5, 6], function() {
+}], ['o', ['q'], function() {
+  _$jscoverage['/json/parser.js'].functionData[19]++;
+  _$jscoverage['/json/parser.js'].lineData[305]++;
+  return this.$1;
+}], ['o', ['j'], function() {
+  _$jscoverage['/json/parser.js'].functionData[20]++;
+  _$jscoverage['/json/parser.js'].lineData[310]++;
+  return visit37_310_1(this.$1 === 'true');
+}], ['o', ['k'], function() {
+  _$jscoverage['/json/parser.js'].functionData[21]++;
+  _$jscoverage['/json/parser.js'].lineData[315]++;
+  return null;
+}], ['r', ['o'], function() {
   _$jscoverage['/json/parser.js'].functionData[22]++;
-  _$jscoverage['/json/parser.js'].lineData[270]++;
-  return [];
-}], [17, [5, 18, 6], function() {
+  _$jscoverage['/json/parser.js'].lineData[320]++;
+  return [this.$1];
+}], ['r', ['r', 'c', 'o'], function() {
   _$jscoverage['/json/parser.js'].functionData[23]++;
-  _$jscoverage['/json/parser.js'].lineData[273]++;
-  return this.$2;
-}], [19, [2, 4, 15], function() {
+  _$jscoverage['/json/parser.js'].lineData[325]++;
+  this.$1[this.$1.length] = this.$3;
+  _$jscoverage['/json/parser.js'].lineData[326]++;
+  return this.$1;
+}], ['q', ['e', 'f'], function() {
   _$jscoverage['/json/parser.js'].functionData[24]++;
-  _$jscoverage['/json/parser.js'].lineData[276]++;
+  _$jscoverage['/json/parser.js'].lineData[331]++;
+  return [];
+}], ['q', ['e', 'r', 'f'], function() {
+  _$jscoverage['/json/parser.js'].functionData[25]++;
+  _$jscoverage['/json/parser.js'].lineData[336]++;
+  return this.$2;
+}], ['s', ['b', 'd', 'o'], function() {
+  _$jscoverage['/json/parser.js'].functionData[26]++;
+  _$jscoverage['/json/parser.js'].lineData[341]++;
   return {
   key: this.yy.unQuote(this.$1), 
   value: this.$3};
-}], [20, [19], function() {
-  _$jscoverage['/json/parser.js'].functionData[25]++;
-  _$jscoverage['/json/parser.js'].lineData[282]++;
-  var ret = {};
-  _$jscoverage['/json/parser.js'].lineData[283]++;
-  ret[this.$1.key] = this.$1.value;
-  _$jscoverage['/json/parser.js'].lineData[284]++;
-  return ret;
-}], [20, [20, 3, 19], function() {
-  _$jscoverage['/json/parser.js'].functionData[26]++;
-  _$jscoverage['/json/parser.js'].lineData[287]++;
-  this.$1[this.$3.key] = this.$3.value;
-  _$jscoverage['/json/parser.js'].lineData[288]++;
-  return this.$1;
-}], [16, [7, 8], function() {
+}], ['t', ['s'], function() {
   _$jscoverage['/json/parser.js'].functionData[27]++;
-  _$jscoverage['/json/parser.js'].lineData[291]++;
-  return {};
-}], [16, [7, 20, 8], function() {
+  _$jscoverage['/json/parser.js'].lineData[349]++;
+  var ret = {};
+  _$jscoverage['/json/parser.js'].lineData[350]++;
+  ret[this.$1.key] = this.$1.value;
+  _$jscoverage['/json/parser.js'].lineData[351]++;
+  return ret;
+}], ['t', ['t', 'c', 's'], function() {
   _$jscoverage['/json/parser.js'].functionData[28]++;
-  _$jscoverage['/json/parser.js'].lineData[294]++;
+  _$jscoverage['/json/parser.js'].lineData[356]++;
+  this.$1[this.$3.key] = this.$3.value;
+  _$jscoverage['/json/parser.js'].lineData[357]++;
+  return this.$1;
+}], ['p', ['g', 'h'], function() {
+  _$jscoverage['/json/parser.js'].functionData[29]++;
+  _$jscoverage['/json/parser.js'].lineData[362]++;
+  return {};
+}], ['p', ['g', 't', 'h'], function() {
+  _$jscoverage['/json/parser.js'].functionData[30]++;
+  _$jscoverage['/json/parser.js'].lineData[367]++;
   return this.$2;
 }]];
-  _$jscoverage['/json/parser.js'].lineData[297]++;
+  _$jscoverage['/json/parser.js'].lineData[371]++;
   parser.table = {
   'gotos': {
   '0': {
-  '14': 7, 
-  '15': 8, 
-  '16': 9, 
-  '17': 10}, 
+  'n': 7, 
+  'o': 8, 
+  'q': 9, 
+  'p': 10}, 
   '2': {
-  '15': 12, 
-  '16': 9, 
-  '17': 10, 
-  '18': 13}, 
+  'o': 12, 
+  'r': 13, 
+  'q': 9, 
+  'p': 10}, 
   '3': {
-  '19': 16, 
-  '20': 17}, 
+  's': 16, 
+  't': 17}, 
   '18': {
-  '15': 23, 
-  '16': 9, 
-  '17': 10}, 
+  'o': 23, 
+  'q': 9, 
+  'p': 10}, 
   '20': {
-  '15': 24, 
-  '16': 9, 
-  '17': 10}, 
+  'o': 24, 
+  'q': 9, 
+  'p': 10}, 
   '21': {
-  '19': 25}}, 
+  's': 25}}, 
   'action': {
   '0': {
-  '2': [1, 0, 1], 
-  '5': [1, 0, 2], 
-  '7': [1, 0, 3], 
-  '9': [1, 0, 4], 
-  '10': [1, 0, 5], 
-  '11': [1, 0, 6]}, 
+  'b': [1, undefined, 1], 
+  'e': [1, undefined, 2], 
+  'g': [1, undefined, 3], 
+  'i': [1, undefined, 4], 
+  'j': [1, undefined, 5], 
+  'k': [1, undefined, 6]}, 
   '1': {
-  '1': [2, 2, 0], 
-  '3': [2, 2, 0], 
-  '6': [2, 2, 0], 
-  '8': [2, 2, 0]}, 
+  'a': [2, 2], 
+  'f': [2, 2], 
+  'c': [2, 2], 
+  'h': [2, 2]}, 
   '2': {
-  '2': [1, 0, 1], 
-  '5': [1, 0, 2], 
-  '6': [1, 0, 11], 
-  '7': [1, 0, 3], 
-  '9': [1, 0, 4], 
-  '10': [1, 0, 5], 
-  '11': [1, 0, 6]}, 
+  'b': [1, undefined, 1], 
+  'e': [1, undefined, 2], 
+  'f': [1, undefined, 11], 
+  'g': [1, undefined, 3], 
+  'i': [1, undefined, 4], 
+  'j': [1, undefined, 5], 
+  'k': [1, undefined, 6]}, 
   '3': {
-  '2': [1, 0, 14], 
-  '8': [1, 0, 15]}, 
+  'b': [1, undefined, 14], 
+  'h': [1, undefined, 15]}, 
   '4': {
-  '1': [2, 3, 0], 
-  '3': [2, 3, 0], 
-  '6': [2, 3, 0], 
-  '8': [2, 3, 0]}, 
+  'a': [2, 3], 
+  'f': [2, 3], 
+  'c': [2, 3], 
+  'h': [2, 3]}, 
   '5': {
-  '1': [2, 6, 0], 
-  '3': [2, 6, 0], 
-  '6': [2, 6, 0], 
-  '8': [2, 6, 0]}, 
+  'a': [2, 6], 
+  'f': [2, 6], 
+  'c': [2, 6], 
+  'h': [2, 6]}, 
   '6': {
-  '1': [2, 7, 0], 
-  '3': [2, 7, 0], 
-  '6': [2, 7, 0], 
-  '8': [2, 7, 0]}, 
+  'a': [2, 7], 
+  'f': [2, 7], 
+  'c': [2, 7], 
+  'h': [2, 7]}, 
   '7': {
-  '1': [0, 0, 0]}, 
+  'a': [0]}, 
   '8': {
-  '1': [2, 1, 0]}, 
+  'a': [2, 1]}, 
   '9': {
-  '1': [2, 4, 0], 
-  '3': [2, 4, 0], 
-  '6': [2, 4, 0], 
-  '8': [2, 4, 0]}, 
+  'a': [2, 5], 
+  'f': [2, 5], 
+  'c': [2, 5], 
+  'h': [2, 5]}, 
   '10': {
-  '1': [2, 5, 0], 
-  '3': [2, 5, 0], 
-  '6': [2, 5, 0], 
-  '8': [2, 5, 0]}, 
+  'a': [2, 4], 
+  'f': [2, 4], 
+  'c': [2, 4], 
+  'h': [2, 4]}, 
   '11': {
-  '1': [2, 10, 0], 
-  '3': [2, 10, 0], 
-  '6': [2, 10, 0], 
-  '8': [2, 10, 0]}, 
+  'a': [2, 10], 
+  'f': [2, 10], 
+  'c': [2, 10], 
+  'h': [2, 10]}, 
   '12': {
-  '3': [2, 8, 0], 
-  '6': [2, 8, 0]}, 
+  'f': [2, 8], 
+  'c': [2, 8]}, 
   '13': {
-  '3': [1, 0, 18], 
-  '6': [1, 0, 19]}, 
+  'c': [1, undefined, 18], 
+  'f': [1, undefined, 19]}, 
   '14': {
-  '4': [1, 0, 20]}, 
+  'd': [1, undefined, 20]}, 
   '15': {
-  '1': [2, 15, 0], 
-  '3': [2, 15, 0], 
-  '6': [2, 15, 0], 
-  '8': [2, 15, 0]}, 
+  'a': [2, 15], 
+  'f': [2, 15], 
+  'c': [2, 15], 
+  'h': [2, 15]}, 
   '16': {
-  '3': [2, 13, 0], 
-  '8': [2, 13, 0]}, 
+  'h': [2, 13], 
+  'c': [2, 13]}, 
   '17': {
-  '3': [1, 0, 21], 
-  '8': [1, 0, 22]}, 
+  'c': [1, undefined, 21], 
+  'h': [1, undefined, 22]}, 
   '18': {
-  '2': [1, 0, 1], 
-  '5': [1, 0, 2], 
-  '7': [1, 0, 3], 
-  '9': [1, 0, 4], 
-  '10': [1, 0, 5], 
-  '11': [1, 0, 6]}, 
+  'b': [1, undefined, 1], 
+  'e': [1, undefined, 2], 
+  'g': [1, undefined, 3], 
+  'i': [1, undefined, 4], 
+  'j': [1, undefined, 5], 
+  'k': [1, undefined, 6]}, 
   '19': {
-  '1': [2, 11, 0], 
-  '3': [2, 11, 0], 
-  '6': [2, 11, 0], 
-  '8': [2, 11, 0]}, 
+  'a': [2, 11], 
+  'f': [2, 11], 
+  'c': [2, 11], 
+  'h': [2, 11]}, 
   '20': {
-  '2': [1, 0, 1], 
-  '5': [1, 0, 2], 
-  '7': [1, 0, 3], 
-  '9': [1, 0, 4], 
-  '10': [1, 0, 5], 
-  '11': [1, 0, 6]}, 
+  'b': [1, undefined, 1], 
+  'e': [1, undefined, 2], 
+  'g': [1, undefined, 3], 
+  'i': [1, undefined, 4], 
+  'j': [1, undefined, 5], 
+  'k': [1, undefined, 6]}, 
   '21': {
-  '2': [1, 0, 14]}, 
+  'b': [1, undefined, 14]}, 
   '22': {
-  '1': [2, 16, 0], 
-  '3': [2, 16, 0], 
-  '6': [2, 16, 0], 
-  '8': [2, 16, 0]}, 
+  'a': [2, 16], 
+  'f': [2, 16], 
+  'c': [2, 16], 
+  'h': [2, 16]}, 
   '23': {
-  '3': [2, 9, 0], 
-  '6': [2, 9, 0]}, 
+  'f': [2, 9], 
+  'c': [2, 9]}, 
   '24': {
-  '3': [2, 12, 0], 
-  '8': [2, 12, 0]}, 
+  'h': [2, 12], 
+  'c': [2, 12]}, 
   '25': {
-  '3': [2, 14, 0], 
-  '8': [2, 14, 0]}}};
-  _$jscoverage['/json/parser.js'].lineData[469]++;
-  parser.parse = function parse(input) {
-  _$jscoverage['/json/parser.js'].functionData[29]++;
-  _$jscoverage['/json/parser.js'].lineData[471]++;
-  var self = this, lexer = self.lexer, state, symbol, action, table = self.table, gotos = table.gotos, tableAction = table.action, productions = self.productions, valueStack = [null], stack = [0];
-  _$jscoverage['/json/parser.js'].lineData[483]++;
+  'h': [2, 14], 
+  'c': [2, 14]}}};
+  _$jscoverage['/json/parser.js'].lineData[543]++;
+  parser.parse = function parse(input, filename) {
+  _$jscoverage['/json/parser.js'].functionData[31]++;
+  _$jscoverage['/json/parser.js'].lineData[544]++;
+  var self = this, lexer = self.lexer, state, symbol, action, table = self.table, gotos = table.gotos, tableAction = table.action, productions = self.productions, valueStack = [null], prefix = filename ? ('in file: ' + filename + ' ') : '', stack = [0];
+  _$jscoverage['/json/parser.js'].lineData[558]++;
   lexer.resetInput(input);
-  _$jscoverage['/json/parser.js'].lineData[485]++;
+  _$jscoverage['/json/parser.js'].lineData[560]++;
   while (1) {
-    _$jscoverage['/json/parser.js'].lineData[487]++;
+    _$jscoverage['/json/parser.js'].lineData[562]++;
     state = stack[stack.length - 1];
-    _$jscoverage['/json/parser.js'].lineData[489]++;
-    if (visit32_489_1(!symbol)) {
-      _$jscoverage['/json/parser.js'].lineData[490]++;
+    _$jscoverage['/json/parser.js'].lineData[564]++;
+    if (visit38_564_1(!symbol)) {
+      _$jscoverage['/json/parser.js'].lineData[565]++;
       symbol = lexer.lex();
     }
-    _$jscoverage['/json/parser.js'].lineData[493]++;
-    if (visit33_493_1(!symbol)) {
-      _$jscoverage['/json/parser.js'].lineData[494]++;
-      S.log("it is not a valid input: " + input, "error");
-      _$jscoverage['/json/parser.js'].lineData[495]++;
-      return false;
+    _$jscoverage['/json/parser.js'].lineData[568]++;
+    if (visit39_568_1(symbol)) {
+      _$jscoverage['/json/parser.js'].lineData[570]++;
+      action = visit40_570_1(tableAction[state] && tableAction[state][symbol]);
+    } else {
+      _$jscoverage['/json/parser.js'].lineData[572]++;
+      action = null;
     }
-    _$jscoverage['/json/parser.js'].lineData[499]++;
-    action = visit34_499_1(tableAction[state] && tableAction[state][symbol]);
-    _$jscoverage['/json/parser.js'].lineData[501]++;
-    if (visit35_501_1(!action)) {
-      _$jscoverage['/json/parser.js'].lineData[502]++;
+    _$jscoverage['/json/parser.js'].lineData[575]++;
+    if (visit41_575_1(!action)) {
+      _$jscoverage['/json/parser.js'].lineData[576]++;
       var expected = [], error;
-      _$jscoverage['/json/parser.js'].lineData[504]++;
-      if (visit36_504_1(tableAction[state])) {
-        _$jscoverage['/json/parser.js'].lineData[505]++;
-        S.each(tableAction[state], function(_, symbol) {
-  _$jscoverage['/json/parser.js'].functionData[30]++;
-  _$jscoverage['/json/parser.js'].lineData[506]++;
-  expected.push(self.lexer.mapReverseSymbol(symbol));
-});
+      _$jscoverage['/json/parser.js'].lineData[579]++;
+      if (visit42_579_1(tableAction[state])) {
+        _$jscoverage['/json/parser.js'].lineData[580]++;
+        for (var symbolForState in tableAction[state]) {
+          _$jscoverage['/json/parser.js'].lineData[581]++;
+          expected.push(self.lexer.mapReverseSymbol(symbolForState));
+        }
       }
-      _$jscoverage['/json/parser.js'].lineData[509]++;
-      error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + '\n' + "expect " + expected.join(", ");
-      _$jscoverage['/json/parser.js'].lineData[510]++;
-      S.error(error);
-      _$jscoverage['/json/parser.js'].lineData[511]++;
-      return false;
+      _$jscoverage['/json/parser.js'].lineData[584]++;
+      error = prefix + 'syntax error at line ' + lexer.lineNumber + ':\n' + lexer.showDebugInfo() + '\n' + 'expect ' + expected.join(', ');
+      _$jscoverage['/json/parser.js'].lineData[587]++;
+      throw new Error(error);
     }
-    _$jscoverage['/json/parser.js'].lineData[514]++;
+    _$jscoverage['/json/parser.js'].lineData[590]++;
     switch (action[GrammarConst.TYPE_INDEX]) {
       case GrammarConst.SHIFT_TYPE:
-        _$jscoverage['/json/parser.js'].lineData[518]++;
+        _$jscoverage['/json/parser.js'].lineData[592]++;
         stack.push(symbol);
-        _$jscoverage['/json/parser.js'].lineData[520]++;
+        _$jscoverage['/json/parser.js'].lineData[594]++;
         valueStack.push(lexer.text);
-        _$jscoverage['/json/parser.js'].lineData[523]++;
+        _$jscoverage['/json/parser.js'].lineData[597]++;
         stack.push(action[GrammarConst.TO_INDEX]);
-        _$jscoverage['/json/parser.js'].lineData[526]++;
+        _$jscoverage['/json/parser.js'].lineData[600]++;
         symbol = null;
-        _$jscoverage['/json/parser.js'].lineData[528]++;
+        _$jscoverage['/json/parser.js'].lineData[602]++;
         break;
       case GrammarConst.REDUCE_TYPE:
-        _$jscoverage['/json/parser.js'].lineData[532]++;
-        var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = visit37_533_1(production.symbol || production[0]), reducedAction = visit38_534_1(production.action || production[2]), reducedRhs = visit39_535_1(production.rhs || production[1]), len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
-        _$jscoverage['/json/parser.js'].lineData[541]++;
-        self.$$ = $$;
-        _$jscoverage['/json/parser.js'].lineData[543]++;
+        _$jscoverage['/json/parser.js'].lineData[605]++;
+        var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = visit43_606_1(production.symbol || production[0]), reducedAction = visit44_607_1(production.action || production[2]), reducedRhs = visit45_608_1(production.rhs || production[1]), len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
+        _$jscoverage['/json/parser.js'].lineData[614]++;
         ret = undefined;
-        _$jscoverage['/json/parser.js'].lineData[545]++;
-        for (; visit40_545_1(i < len); i++) {
-          _$jscoverage['/json/parser.js'].lineData[546]++;
-          self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
+        _$jscoverage['/json/parser.js'].lineData[616]++;
+        self.$$ = $$;
+        _$jscoverage['/json/parser.js'].lineData[618]++;
+        for (; visit46_618_1(i < len); i++) {
+          _$jscoverage['/json/parser.js'].lineData[619]++;
+          self['$' + (len - i)] = valueStack[valueStack.length - 1 - i];
         }
-        _$jscoverage['/json/parser.js'].lineData[549]++;
-        if (visit41_549_1(reducedAction)) {
-          _$jscoverage['/json/parser.js'].lineData[550]++;
+        _$jscoverage['/json/parser.js'].lineData[622]++;
+        if (visit47_622_1(reducedAction)) {
+          _$jscoverage['/json/parser.js'].lineData[623]++;
           ret = reducedAction.call(self);
         }
-        _$jscoverage['/json/parser.js'].lineData[553]++;
-        if (visit42_553_1(ret !== undefined)) {
-          _$jscoverage['/json/parser.js'].lineData[554]++;
+        _$jscoverage['/json/parser.js'].lineData[626]++;
+        if (visit48_626_1(ret !== undefined)) {
+          _$jscoverage['/json/parser.js'].lineData[627]++;
           $$ = ret;
         } else {
-          _$jscoverage['/json/parser.js'].lineData[556]++;
+          _$jscoverage['/json/parser.js'].lineData[629]++;
           $$ = self.$$;
         }
-        _$jscoverage['/json/parser.js'].lineData[559]++;
-        if (visit43_559_1(len)) {
-          _$jscoverage['/json/parser.js'].lineData[560]++;
-          stack = stack.slice(0, -1 * len * 2);
-          _$jscoverage['/json/parser.js'].lineData[561]++;
-          valueStack = valueStack.slice(0, -1 * len);
-        }
-        _$jscoverage['/json/parser.js'].lineData[564]++;
+        _$jscoverage['/json/parser.js'].lineData[632]++;
+        stack = stack.slice(0, -1 * len * 2);
+        _$jscoverage['/json/parser.js'].lineData[633]++;
+        valueStack = valueStack.slice(0, -1 * len);
+        _$jscoverage['/json/parser.js'].lineData[635]++;
         stack.push(reducedSymbol);
-        _$jscoverage['/json/parser.js'].lineData[566]++;
+        _$jscoverage['/json/parser.js'].lineData[637]++;
         valueStack.push($$);
-        _$jscoverage['/json/parser.js'].lineData[568]++;
+        _$jscoverage['/json/parser.js'].lineData[639]++;
         var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
-        _$jscoverage['/json/parser.js'].lineData[570]++;
+        _$jscoverage['/json/parser.js'].lineData[641]++;
         stack.push(newState);
-        _$jscoverage['/json/parser.js'].lineData[572]++;
+        _$jscoverage['/json/parser.js'].lineData[643]++;
         break;
       case GrammarConst.ACCEPT_TYPE:
-        _$jscoverage['/json/parser.js'].lineData[576]++;
+        _$jscoverage['/json/parser.js'].lineData[646]++;
         return $$;
     }
   }
-  _$jscoverage['/json/parser.js'].lineData[581]++;
-  return undefined;
 };
-  _$jscoverage['/json/parser.js'].lineData[584]++;
+  _$jscoverage['/json/parser.js'].lineData[650]++;
   return parser;
 });

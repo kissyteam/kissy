@@ -232,6 +232,7 @@ if (! _$jscoverage['/fake-objects.js']) {
   _$jscoverage['/fake-objects.js'].lineData[6] = 0;
   _$jscoverage['/fake-objects.js'].lineData[8] = 0;
   _$jscoverage['/fake-objects.js'].lineData[9] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[10] = 0;
   _$jscoverage['/fake-objects.js'].lineData[11] = 0;
   _$jscoverage['/fake-objects.js'].lineData[16] = 0;
   _$jscoverage['/fake-objects.js'].lineData[19] = 0;
@@ -369,15 +370,15 @@ if (! _$jscoverage['/fake-objects.js'].branchData) {
   _$jscoverage['/fake-objects.js'].branchData['167'] = [];
   _$jscoverage['/fake-objects.js'].branchData['167'][1] = new BranchData();
 }
-_$jscoverage['/fake-objects.js'].branchData['167'][1].init(1473, 11, 'isResizable');
+_$jscoverage['/fake-objects.js'].branchData['167'][1].init(1479, 11, 'isResizable');
 function visit27_167_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['164'][1].init(1329, 15, 'realElementType');
+}_$jscoverage['/fake-objects.js'].branchData['164'][1].init(1335, 15, 'realElementType');
 function visit26_164_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['158'][1].init(1121, 5, 'attrs');
+}_$jscoverage['/fake-objects.js'].branchData['158'][1].init(1124, 5, 'attrs');
 function visit25_158_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['158'][1].ranCondition(result);
   return result;
@@ -433,11 +434,11 @@ function visit13_88_1(result) {
 function visit12_85_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['83'][1].init(481, 11, 'realElement');
+}_$jscoverage['/fake-objects.js'].branchData['83'][1].init(484, 11, 'realElement');
 function visit11_83_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['79'][1].init(293, 44, 'realFragment && realFragment.childNodes[0]');
+}_$jscoverage['/fake-objects.js'].branchData['79'][1].init(296, 44, 'realFragment && realFragment.childNodes[0]');
 function visit10_79_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['79'][1].ranCondition(result);
   return result;
@@ -449,15 +450,15 @@ function visit9_75_1(result) {
 function visit8_54_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['47'][1].init(1143, 11, 'isResizable');
+}_$jscoverage['/fake-objects.js'].branchData['47'][1].init(1149, 11, 'isResizable');
 function visit7_47_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['43'][1].init(1021, 15, 'realElementType');
+}_$jscoverage['/fake-objects.js'].branchData['43'][1].init(1027, 15, 'realElementType');
 function visit6_43_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['37'][1].init(853, 5, 'attrs');
+}_$jscoverage['/fake-objects.js'].branchData['37'][1].init(856, 5, 'attrs');
 function visit5_37_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['37'][1].ranCondition(result);
   return result;
@@ -484,8 +485,10 @@ KISSY.add(function(S, require) {
   var Editor = require('editor');
   _$jscoverage['/fake-objects.js'].lineData[9]++;
   var HtmlParser = require('html-parser');
+  _$jscoverage['/fake-objects.js'].lineData[10]++;
+  var util = require('util');
   _$jscoverage['/fake-objects.js'].lineData[11]++;
-  var Node = S.Node, Dom = require('dom'), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
+  var Node = require('node'), Dom = require('dom'), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
   _$jscoverage['/fake-objects.js'].lineData[16]++;
   Editor.addMembers({
   createFakeElement: function(realElement, className, realElementType, isResizable, outerHTML, attrs) {
@@ -503,7 +506,7 @@ KISSY.add(function(S, require) {
     style = 'height:' + realElement.attr('height') + 'px;' + style;
   }
   _$jscoverage['/fake-objects.js'].lineData[26]++;
-  var self = this, existClass = S.trim(realElement.attr('class')), attributes = {
+  var self = this, existClass = util.trim(realElement.attr('class')), attributes = {
   'class': className + ' ' + existClass, 
   src: SPACER_GIF, 
   _ke_real_element: encodeURIComponent(visit4_32_1(outerHTML || realElement.outerHtml())), 
@@ -516,7 +519,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/fake-objects.js'].lineData[39]++;
     delete attrs.height;
     _$jscoverage['/fake-objects.js'].lineData[40]++;
-    S.mix(attributes, attrs, false);
+    util.mix(attributes, attrs, false);
   }
   _$jscoverage['/fake-objects.js'].lineData[43]++;
   if (visit6_43_1(realElementType)) {
@@ -539,7 +542,7 @@ KISSY.add(function(S, require) {
     return null;
   }
   _$jscoverage['/fake-objects.js'].lineData[58]++;
-  var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
+  var html = (util.urlDecode(fakeElement.attr('_ke_real_element')));
   _$jscoverage['/fake-objects.js'].lineData[60]++;
   var temp = new Node('<div>', null, this.get('document')[0]);
   _$jscoverage['/fake-objects.js'].lineData[61]++;
@@ -559,7 +562,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].lineData[75]++;
   if (visit9_75_1(realHTML)) {
     _$jscoverage['/fake-objects.js'].lineData[76]++;
-    realFragment = new HtmlParser.Parser(S.urlDecode(realHTML)).parse();
+    realFragment = new HtmlParser.Parser(util.urlDecode(realHTML)).parse();
   }
   _$jscoverage['/fake-objects.js'].lineData[79]++;
   var realElement = visit10_79_1(realFragment && realFragment.childNodes[0]);
@@ -607,7 +610,7 @@ KISSY.add(function(S, require) {
     htmlFilter.addRules(htmlFilterRules);
   }
   _$jscoverage['/fake-objects.js'].lineData[122]++;
-  S.mix(dataProcessor, {
+  util.mix(dataProcessor, {
   restoreRealElement: function(fakeElement) {
   _$jscoverage['/fake-objects.js'].functionData[5]++;
   _$jscoverage['/fake-objects.js'].lineData[124]++;
@@ -616,7 +619,7 @@ KISSY.add(function(S, require) {
     return null;
   }
   _$jscoverage['/fake-objects.js'].lineData[128]++;
-  var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
+  var html = (util.urlDecode(fakeElement.attr('_ke_real_element')));
   _$jscoverage['/fake-objects.js'].lineData[130]++;
   var temp = new Node('<div>', null, editor.get('document')[0]);
   _$jscoverage['/fake-objects.js'].lineData[131]++;
@@ -641,7 +644,7 @@ KISSY.add(function(S, require) {
     style = 'height:' + realElement.getAttribute('height') + 'px;' + style;
   }
   _$jscoverage['/fake-objects.js'].lineData[148]++;
-  var existClass = S.trim(realElement.getAttribute('class')), attributes = {
+  var existClass = util.trim(realElement.getAttribute('class')), attributes = {
   'class': className + ' ' + existClass, 
   src: SPACER_GIF, 
   _ke_real_element: encodeURIComponent(html), 
@@ -655,7 +658,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/fake-objects.js'].lineData[160]++;
     delete attrs.height;
     _$jscoverage['/fake-objects.js'].lineData[161]++;
-    S.mix(attributes, attrs, false);
+    util.mix(attributes, attrs, false);
   }
   _$jscoverage['/fake-objects.js'].lineData[164]++;
   if (visit26_164_1(realElementType)) {

@@ -2,10 +2,12 @@
  * test transform cross-browser implementation
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var util = require('util');
     function matrix(transform) {
         transform = transform.split(')');
-        var trim = S.trim,
+        var trim = util.trim,
             i = -1,
             l = transform.length - 1,
             split, prop, val,
@@ -189,6 +191,4 @@ KISSY.add(function (S, Dom) {
             compare(val);
         });
     });
-}, {
-    requires: ['dom']
 });

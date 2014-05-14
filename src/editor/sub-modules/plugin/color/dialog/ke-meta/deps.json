@@ -1,1 +1,1 @@
-{"editor/plugin/color/dialog":["editor","editor/plugin/dialog","dom"]}
+{"editor/plugin/color/dialog":["editor","util","editor/plugin/dialog","dom"]}

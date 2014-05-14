@@ -231,19 +231,20 @@ if (! _$jscoverage['/combobox/local-data-source.js']) {
   _$jscoverage['/combobox/local-data-source.js'].lineData = [];
   _$jscoverage['/combobox/local-data-source.js'].lineData[6] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[7] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[15] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[23] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[25] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[8] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[16] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[24] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[26] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[51] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[27] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[52] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[54] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[53] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[55] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[57] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[56] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[58] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[59] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[61] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[64] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[60] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[62] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[65] = 0;
 }
 if (! _$jscoverage['/combobox/local-data-source.js'].functionData) {
   _$jscoverage['/combobox/local-data-source.js'].functionData = [];
@@ -254,33 +255,35 @@ if (! _$jscoverage['/combobox/local-data-source.js'].functionData) {
 }
 if (! _$jscoverage['/combobox/local-data-source.js'].branchData) {
   _$jscoverage['/combobox/local-data-source.js'].branchData = {};
-  _$jscoverage['/combobox/local-data-source.js'].branchData['54'] = [];
-  _$jscoverage['/combobox/local-data-source.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/combobox/local-data-source.js'].branchData['58'] = [];
-  _$jscoverage['/combobox/local-data-source.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/combobox/local-data-source.js'].branchData['55'] = [];
+  _$jscoverage['/combobox/local-data-source.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/combobox/local-data-source.js'].branchData['59'] = [];
+  _$jscoverage['/combobox/local-data-source.js'].branchData['59'][1] = new BranchData();
 }
-_$jscoverage['/combobox/local-data-source.js'].branchData['58'][1].init(18, 26, 'd.indexOf(inputVal) !== -1');
-function visit82_58_1(result) {
-  _$jscoverage['/combobox/local-data-source.js'].branchData['58'][1].ranCondition(result);
+_$jscoverage['/combobox/local-data-source.js'].branchData['59'][1].init(18, 26, 'd.indexOf(inputVal) !== -1');
+function visit82_59_1(result) {
+  _$jscoverage['/combobox/local-data-source.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/local-data-source.js'].branchData['54'][1].init(61, 9, '!inputVal');
-function visit81_54_1(result) {
-  _$jscoverage['/combobox/local-data-source.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/combobox/local-data-source.js'].branchData['55'][1].init(61, 9, '!inputVal');
+function visit81_55_1(result) {
+  _$jscoverage['/combobox/local-data-source.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/local-data-source.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[0]++;
   _$jscoverage['/combobox/local-data-source.js'].lineData[7]++;
   var Attribute = require('attribute');
-  _$jscoverage['/combobox/local-data-source.js'].lineData[15]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/combobox/local-data-source.js'].lineData[16]++;
   return Attribute.extend({
   fetchData: function(inputVal, callback, context) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[1]++;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[23]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[24]++;
   var parse = this.get('parse'), data = this.get('data');
-  _$jscoverage['/combobox/local-data-source.js'].lineData[25]++;
-  data = parse(inputVal, data);
   _$jscoverage['/combobox/local-data-source.js'].lineData[26]++;
+  data = parse(inputVal, data);
+  _$jscoverage['/combobox/local-data-source.js'].lineData[27]++;
   callback.call(context, data);
 }}, {
   ATTRS: {
@@ -288,28 +291,28 @@ KISSY.add(function(S, require) {
   value: []}, 
   parse: {
   value: parser}}});
-  _$jscoverage['/combobox/local-data-source.js'].lineData[51]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[52]++;
   function parser(inputVal, data) {
     _$jscoverage['/combobox/local-data-source.js'].functionData[2]++;
-    _$jscoverage['/combobox/local-data-source.js'].lineData[52]++;
+    _$jscoverage['/combobox/local-data-source.js'].lineData[53]++;
     var ret = [], count = 0;
-    _$jscoverage['/combobox/local-data-source.js'].lineData[54]++;
-    if (visit81_54_1(!inputVal)) {
-      _$jscoverage['/combobox/local-data-source.js'].lineData[55]++;
+    _$jscoverage['/combobox/local-data-source.js'].lineData[55]++;
+    if (visit81_55_1(!inputVal)) {
+      _$jscoverage['/combobox/local-data-source.js'].lineData[56]++;
       return data;
     }
-    _$jscoverage['/combobox/local-data-source.js'].lineData[57]++;
-    S.each(data, function(d) {
+    _$jscoverage['/combobox/local-data-source.js'].lineData[58]++;
+    util.each(data, function(d) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[3]++;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[58]++;
-  if (visit82_58_1(d.indexOf(inputVal) !== -1)) {
-    _$jscoverage['/combobox/local-data-source.js'].lineData[59]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[59]++;
+  if (visit82_59_1(d.indexOf(inputVal) !== -1)) {
+    _$jscoverage['/combobox/local-data-source.js'].lineData[60]++;
     ret.push(d);
   }
-  _$jscoverage['/combobox/local-data-source.js'].lineData[61]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[62]++;
   count++;
 });
-    _$jscoverage['/combobox/local-data-source.js'].lineData[64]++;
+    _$jscoverage['/combobox/local-data-source.js'].lineData[65]++;
     return ret;
   }
 });

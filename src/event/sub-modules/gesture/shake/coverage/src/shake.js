@@ -231,6 +231,7 @@ if (! _$jscoverage['/shake.js']) {
   _$jscoverage['/shake.js'].lineData = [];
   _$jscoverage['/shake.js'].lineData[6] = 0;
   _$jscoverage['/shake.js'].lineData[7] = 0;
+  _$jscoverage['/shake.js'].lineData[8] = 0;
   _$jscoverage['/shake.js'].lineData[9] = 0;
   _$jscoverage['/shake.js'].lineData[20] = 0;
   _$jscoverage['/shake.js'].lineData[28] = 0;
@@ -313,8 +314,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/shake.js'].functionData[0]++;
   _$jscoverage['/shake.js'].lineData[7]++;
   var DomEvent = require('event/dom/base');
+  _$jscoverage['/shake.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/shake.js'].lineData[9]++;
-  var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = S.buffer(function() {
+  var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = util.buffer(function() {
   _$jscoverage['/shake.js'].functionData[1]++;
   _$jscoverage['/shake.js'].lineData[20]++;
   if (visit1_20_1(shaking)) {

@@ -232,51 +232,52 @@ if (! _$jscoverage['/gregorian/utils.js']) {
   _$jscoverage['/gregorian/utils.js'].lineData[6] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[7] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[8] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[25] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[9] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[26] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[31] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[33] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[27] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[32] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[34] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[36] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[39] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[35] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[37] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[40] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[41] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[42] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[43] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[44] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[46] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[45] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[47] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[48] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[49] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[50] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[51] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[52] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[54] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[57] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[53] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[55] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[58] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[61] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[64] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[66] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[59] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[62] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[65] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[67] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[69] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[74] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[79] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[81] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[87] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[68] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[70] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[75] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[80] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[82] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[88] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[89] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[90] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[91] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[92] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[94] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[93] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[95] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[96] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[98] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[102] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[97] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[99] = 0;
   _$jscoverage['/gregorian/utils.js'].lineData[103] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[105] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[115] = 0;
-  _$jscoverage['/gregorian/utils.js'].lineData[119] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[104] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[106] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[116] = 0;
+  _$jscoverage['/gregorian/utils.js'].lineData[120] = 0;
 }
 if (! _$jscoverage['/gregorian/utils.js'].functionData) {
   _$jscoverage['/gregorian/utils.js'].functionData = [];
@@ -291,183 +292,185 @@ if (! _$jscoverage['/gregorian/utils.js'].functionData) {
 }
 if (! _$jscoverage['/gregorian/utils.js'].branchData) {
   _$jscoverage['/gregorian/utils.js'].branchData = {};
-  _$jscoverage['/gregorian/utils.js'].branchData['33'] = [];
-  _$jscoverage['/gregorian/utils.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['57'] = [];
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][1] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][2] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][3] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][4] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['66'] = [];
-  _$jscoverage['/gregorian/utils.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['69'] = [];
-  _$jscoverage['/gregorian/utils.js'].branchData['69'][1] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['69'][2] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['69'][3] = new BranchData();
-  _$jscoverage['/gregorian/utils.js'].branchData['94'] = [];
-  _$jscoverage['/gregorian/utils.js'].branchData['94'][1] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['34'] = [];
+  _$jscoverage['/gregorian/utils.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['58'] = [];
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][2] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][3] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][4] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['67'] = [];
+  _$jscoverage['/gregorian/utils.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['70'] = [];
+  _$jscoverage['/gregorian/utils.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['70'][2] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['70'][3] = new BranchData();
   _$jscoverage['/gregorian/utils.js'].branchData['95'] = [];
   _$jscoverage['/gregorian/utils.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/gregorian/utils.js'].branchData['96'] = [];
+  _$jscoverage['/gregorian/utils.js'].branchData['96'][1] = new BranchData();
 }
-_$jscoverage['/gregorian/utils.js'].branchData['95'][1].init(22, 31, 'ACCUMULATED_DAYS[i] <= daysDiff');
-function visit11_95_1(result) {
+_$jscoverage['/gregorian/utils.js'].branchData['96'][1].init(22, 31, 'ACCUMULATED_DAYS[i] <= daysDiff');
+function visit11_96_1(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['96'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/gregorian/utils.js'].branchData['95'][1].init(384, 27, 'i < ACCUMULATED_DAYS.length');
+function visit10_95_1(result) {
   _$jscoverage['/gregorian/utils.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['94'][1].init(384, 27, 'i < ACCUMULATED_DAYS.length');
-function visit10_94_1(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['70'][3].init(127, 16, 'year % 400 === 0');
+function visit9_70_3(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['70'][3].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['69'][3].init(127, 16, 'year % 400 === 0');
-function visit9_69_3(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['69'][3].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['70'][2].init(105, 16, 'year % 100 !== 0');
+function visit8_70_2(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['70'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['69'][2].init(105, 16, 'year % 100 !== 0');
-function visit8_69_2(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['69'][2].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['70'][1].init(105, 39, '(year % 100 !== 0) || (year % 400 === 0)');
+function visit7_70_1(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['69'][1].init(105, 39, '(year % 100 !== 0) || (year % 400 === 0)');
-function visit7_69_1(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['69'][1].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['67'][1].init(19, 15, '(year & 3) !== 0');
+function visit6_67_1(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['66'][1].init(19, 15, '(year & 3) !== 0');
-function visit6_66_1(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['58'][4].init(548, 8, 'n1 === 4');
+function visit5_58_4(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][4].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][4].init(548, 8, 'n1 === 4');
-function visit5_57_4(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][4].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['58'][3].init(534, 10, 'n100 === 4');
+function visit4_58_3(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][3].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][3].init(534, 10, 'n100 === 4');
-function visit4_57_3(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][3].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['58'][2].init(534, 22, 'n100 === 4 || n1 === 4');
+function visit3_58_2(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][2].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][2].init(534, 22, 'n100 === 4 || n1 === 4');
-function visit3_57_2(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][2].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['58'][1].init(532, 25, '!(n100 === 4 || n1 === 4)');
+function visit2_58_1(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['57'][1].init(532, 25, '!(n100 === 4 || n1 === 4)');
-function visit2_57_1(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['57'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/gregorian/utils.js'].branchData['33'][1].init(78, 14, 'fixedDate >= 0');
-function visit1_33_1(result) {
-  _$jscoverage['/gregorian/utils.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/gregorian/utils.js'].branchData['34'][1].init(78, 14, 'fixedDate >= 0');
+function visit1_34_1(result) {
+  _$jscoverage['/gregorian/utils.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/gregorian/utils.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/gregorian/utils.js'].functionData[0]++;
   _$jscoverage['/gregorian/utils.js'].lineData[7]++;
-  var Const = require('./const');
+  var util = require('util');
   _$jscoverage['/gregorian/utils.js'].lineData[8]++;
+  var Const = require('./const');
+  _$jscoverage['/gregorian/utils.js'].lineData[9]++;
   var ACCUMULATED_DAYS_IN_MONTH = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334], ACCUMULATED_DAYS_IN_MONTH_LEAP = [0, 31, 59 + 1, 90 + 1, 120 + 1, 151 + 1, 181 + 1, 212 + 1, 243 + 1, 273 + 1, 304 + 1, 334 + 1], DAYS_OF_YEAR = 365, DAYS_OF_4YEAR = 365 * 4 + 1, DAYS_OF_100YEAR = DAYS_OF_4YEAR * 25 - 1, DAYS_OF_400YEAR = DAYS_OF_100YEAR * 4 + 1, Utils = {};
-  _$jscoverage['/gregorian/utils.js'].lineData[25]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[26]++;
   function getDayOfYear(year, month, dayOfMonth) {
     _$jscoverage['/gregorian/utils.js'].functionData[1]++;
-    _$jscoverage['/gregorian/utils.js'].lineData[26]++;
+    _$jscoverage['/gregorian/utils.js'].lineData[27]++;
     return dayOfMonth + (isLeapYear(year) ? ACCUMULATED_DAYS_IN_MONTH_LEAP[month] : ACCUMULATED_DAYS_IN_MONTH[month]);
   }
-  _$jscoverage['/gregorian/utils.js'].lineData[31]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[32]++;
   function getDayOfWeekFromFixedDate(fixedDate) {
     _$jscoverage['/gregorian/utils.js'].functionData[2]++;
-    _$jscoverage['/gregorian/utils.js'].lineData[33]++;
-    if (visit1_33_1(fixedDate >= 0)) {
-      _$jscoverage['/gregorian/utils.js'].lineData[34]++;
+    _$jscoverage['/gregorian/utils.js'].lineData[34]++;
+    if (visit1_34_1(fixedDate >= 0)) {
+      _$jscoverage['/gregorian/utils.js'].lineData[35]++;
       return fixedDate % 7;
     }
-    _$jscoverage['/gregorian/utils.js'].lineData[36]++;
+    _$jscoverage['/gregorian/utils.js'].lineData[37]++;
     return mod(fixedDate, 7);
   }
-  _$jscoverage['/gregorian/utils.js'].lineData[39]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[40]++;
   function getGregorianYearFromFixedDate(fixedDate) {
     _$jscoverage['/gregorian/utils.js'].functionData[3]++;
-    _$jscoverage['/gregorian/utils.js'].lineData[40]++;
-    var d0;
     _$jscoverage['/gregorian/utils.js'].lineData[41]++;
-    var d1, d2, d3;
+    var d0;
     _$jscoverage['/gregorian/utils.js'].lineData[42]++;
-    var n400, n100, n4, n1;
+    var d1, d2, d3;
     _$jscoverage['/gregorian/utils.js'].lineData[43]++;
-    var year;
+    var n400, n100, n4, n1;
     _$jscoverage['/gregorian/utils.js'].lineData[44]++;
+    var year;
+    _$jscoverage['/gregorian/utils.js'].lineData[45]++;
     d0 = fixedDate - 1;
-    _$jscoverage['/gregorian/utils.js'].lineData[46]++;
-    n400 = floorDivide(d0 / DAYS_OF_400YEAR);
     _$jscoverage['/gregorian/utils.js'].lineData[47]++;
-    d1 = mod(d0, DAYS_OF_400YEAR);
+    n400 = floorDivide(d0 / DAYS_OF_400YEAR);
     _$jscoverage['/gregorian/utils.js'].lineData[48]++;
-    n100 = floorDivide(d1 / DAYS_OF_100YEAR);
+    d1 = mod(d0, DAYS_OF_400YEAR);
     _$jscoverage['/gregorian/utils.js'].lineData[49]++;
-    d2 = mod(d1, DAYS_OF_100YEAR);
+    n100 = floorDivide(d1 / DAYS_OF_100YEAR);
     _$jscoverage['/gregorian/utils.js'].lineData[50]++;
-    n4 = floorDivide(d2 / DAYS_OF_4YEAR);
+    d2 = mod(d1, DAYS_OF_100YEAR);
     _$jscoverage['/gregorian/utils.js'].lineData[51]++;
-    d3 = mod(d2, DAYS_OF_4YEAR);
+    n4 = floorDivide(d2 / DAYS_OF_4YEAR);
     _$jscoverage['/gregorian/utils.js'].lineData[52]++;
+    d3 = mod(d2, DAYS_OF_4YEAR);
+    _$jscoverage['/gregorian/utils.js'].lineData[53]++;
     n1 = floorDivide(d3 / DAYS_OF_YEAR);
-    _$jscoverage['/gregorian/utils.js'].lineData[54]++;
+    _$jscoverage['/gregorian/utils.js'].lineData[55]++;
     year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
-    _$jscoverage['/gregorian/utils.js'].lineData[57]++;
-    if (visit2_57_1(!(visit3_57_2(visit4_57_3(n100 === 4) || visit5_57_4(n1 === 4))))) {
-      _$jscoverage['/gregorian/utils.js'].lineData[58]++;
+    _$jscoverage['/gregorian/utils.js'].lineData[58]++;
+    if (visit2_58_1(!(visit3_58_2(visit4_58_3(n100 === 4) || visit5_58_4(n1 === 4))))) {
+      _$jscoverage['/gregorian/utils.js'].lineData[59]++;
       ++year;
     }
-    _$jscoverage['/gregorian/utils.js'].lineData[61]++;
+    _$jscoverage['/gregorian/utils.js'].lineData[62]++;
     return year;
   }
-  _$jscoverage['/gregorian/utils.js'].lineData[64]++;
-  S.mix(Utils, {
+  _$jscoverage['/gregorian/utils.js'].lineData[65]++;
+  util.mix(Utils, {
   isLeapYear: function(year) {
   _$jscoverage['/gregorian/utils.js'].functionData[4]++;
-  _$jscoverage['/gregorian/utils.js'].lineData[66]++;
-  if (visit6_66_1((year & 3) !== 0)) {
-    _$jscoverage['/gregorian/utils.js'].lineData[67]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[67]++;
+  if (visit6_67_1((year & 3) !== 0)) {
+    _$jscoverage['/gregorian/utils.js'].lineData[68]++;
     return false;
   }
-  _$jscoverage['/gregorian/utils.js'].lineData[69]++;
-  return visit7_69_1((visit8_69_2(year % 100 !== 0)) || (visit9_69_3(year % 400 === 0)));
+  _$jscoverage['/gregorian/utils.js'].lineData[70]++;
+  return visit7_70_1((visit8_70_2(year % 100 !== 0)) || (visit9_70_3(year % 400 === 0)));
 }, 
   mod: function(x, y) {
   _$jscoverage['/gregorian/utils.js'].functionData[5]++;
-  _$jscoverage['/gregorian/utils.js'].lineData[74]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[75]++;
   return (x - y * floorDivide(x / y));
 }, 
   getFixedDate: function(year, month, dayOfMonth) {
   _$jscoverage['/gregorian/utils.js'].functionData[6]++;
-  _$jscoverage['/gregorian/utils.js'].lineData[79]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[80]++;
   var prevYear = year - 1;
-  _$jscoverage['/gregorian/utils.js'].lineData[81]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[82]++;
   return DAYS_OF_YEAR * prevYear + floorDivide(prevYear / 4) - floorDivide(prevYear / 100) + floorDivide(prevYear / 400) + getDayOfYear(year, month, dayOfMonth);
 }, 
   getGregorianDateFromFixedDate: function(fixedDate) {
   _$jscoverage['/gregorian/utils.js'].functionData[7]++;
-  _$jscoverage['/gregorian/utils.js'].lineData[87]++;
-  var year = getGregorianYearFromFixedDate(fixedDate);
   _$jscoverage['/gregorian/utils.js'].lineData[88]++;
-  var jan1 = Utils.getFixedDate(year, Const.JANUARY, 1);
+  var year = getGregorianYearFromFixedDate(fixedDate);
   _$jscoverage['/gregorian/utils.js'].lineData[89]++;
-  var isLeap = isLeapYear(year);
+  var jan1 = Utils.getFixedDate(year, Const.JANUARY, 1);
   _$jscoverage['/gregorian/utils.js'].lineData[90]++;
-  var ACCUMULATED_DAYS = isLeap ? ACCUMULATED_DAYS_IN_MONTH_LEAP : ACCUMULATED_DAYS_IN_MONTH;
+  var isLeap = isLeapYear(year);
   _$jscoverage['/gregorian/utils.js'].lineData[91]++;
-  var daysDiff = fixedDate - jan1;
+  var ACCUMULATED_DAYS = isLeap ? ACCUMULATED_DAYS_IN_MONTH_LEAP : ACCUMULATED_DAYS_IN_MONTH;
   _$jscoverage['/gregorian/utils.js'].lineData[92]++;
+  var daysDiff = fixedDate - jan1;
+  _$jscoverage['/gregorian/utils.js'].lineData[93]++;
   var month, i;
-  _$jscoverage['/gregorian/utils.js'].lineData[94]++;
-  for (i = 0; visit10_94_1(i < ACCUMULATED_DAYS.length); i++) {
-    _$jscoverage['/gregorian/utils.js'].lineData[95]++;
-    if (visit11_95_1(ACCUMULATED_DAYS[i] <= daysDiff)) {
-      _$jscoverage['/gregorian/utils.js'].lineData[96]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[95]++;
+  for (i = 0; visit10_95_1(i < ACCUMULATED_DAYS.length); i++) {
+    _$jscoverage['/gregorian/utils.js'].lineData[96]++;
+    if (visit11_96_1(ACCUMULATED_DAYS[i] <= daysDiff)) {
+      _$jscoverage['/gregorian/utils.js'].lineData[97]++;
       month = i;
     } else {
-      _$jscoverage['/gregorian/utils.js'].lineData[98]++;
+      _$jscoverage['/gregorian/utils.js'].lineData[99]++;
       break;
     }
   }
-  _$jscoverage['/gregorian/utils.js'].lineData[102]++;
-  var dayOfMonth = fixedDate - jan1 - ACCUMULATED_DAYS[month] + 1;
   _$jscoverage['/gregorian/utils.js'].lineData[103]++;
+  var dayOfMonth = fixedDate - jan1 - ACCUMULATED_DAYS[month] + 1;
+  _$jscoverage['/gregorian/utils.js'].lineData[104]++;
   var dayOfWeek = getDayOfWeekFromFixedDate(fixedDate);
-  _$jscoverage['/gregorian/utils.js'].lineData[105]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[106]++;
   return {
   year: year, 
   month: month, 
@@ -475,8 +478,8 @@ KISSY.add(function(S, require) {
   dayOfWeek: dayOfWeek, 
   isLeap: isLeap};
 }});
-  _$jscoverage['/gregorian/utils.js'].lineData[115]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[116]++;
   var floorDivide = Math.floor, isLeapYear = Utils.isLeapYear, mod = Utils.mod;
-  _$jscoverage['/gregorian/utils.js'].lineData[119]++;
+  _$jscoverage['/gregorian/utils.js'].lineData[120]++;
   return Utils;
 });

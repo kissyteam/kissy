@@ -1,1 +1,1 @@
-{"component/control":["node","event/gesture/basic","event/gesture/tap","base","ua","xtemplate/runtime"]}
+{"component/control":["util","node","event/gesture/basic","event/gesture/tap","base","ua","feature","xtemplate/runtime"]}

@@ -1,0 +1,149 @@
+/*
+Copyright 2014, KISSY v5.0.0
+MIT Licensed
+build time: May 14 22:28
+*/
+/*
+combined modules:
+scroll-view/plugin/pull-to-refresh
+*/
+/**
+ * @ignore
+ * pull-to-refresh plugin for KISSY scroll-view
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('scroll-view/plugin/pull-to-refresh', [
+    'base',
+    'node',
+    'util',
+    'feature'
+], function (S, require) {
+    var Base = require('base');
+    var Node = require('node');
+    var substitute = require('util').substitute;
+    var transformVendorInfo = require('feature').getCssVendorInfo('transform');
+    var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;    /**
+     * pull to refresh plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.PullToRefresh
+     * @extend KISSY.Base
+     */
+    /**
+     * pull to refresh plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.PullToRefresh
+     * @extend KISSY.Base
+     */
+    return Base.extend({
+        pluginId: this.name,
+        _onSetState: function (e) {
+            if (!this.scrollView) {
+                return;
+            }
+            var status = e.newVal, self = this, prefixCls = self.scrollView.get('prefixCls'), $el = self.$el;
+            $el.attr('class', prefixCls + 'scroll-view-pull-to-refresh ' + prefixCls + 'scroll-view-' + status);
+            self.labelEl.html(self.get(status + 'Html'));
+            self.elHeight = $el.height();
+        },
+        _onScrollMove: function (e) {
+            var self = this, b = e.newVal;
+            if (0 - b > self.elHeight) {
+                self.set('state', 'releasing');
+            } else if (b < 0) {
+                self.set('state', 'pulling');
+            }
+        },
+        _onDragEnd: function () {
+            var self = this;
+            var scrollView = self.scrollView;
+            var b = scrollView.get('scrollTop');
+            if (0 - b > self.elHeight) {
+                scrollView.minScroll.top = -self.elHeight;
+                var loadFn = self.get('loadFn');
+                self.set('state', 'loading');
+                var callback = function () {
+                    // will animate to restore
+                    scrollView.scrollTo({ top: -self.elHeight });
+                    scrollView.scrollTo({ top: scrollView.minScroll.top }, {
+                        duration: scrollView.get('snapDuration'),
+                        easing: scrollView.get('snapEasing')
+                    });
+                    self.set('state', 'pulling');
+                };
+                if (loadFn) {
+                    loadFn.call(self, callback);
+                } else {
+                    callback.call(self);
+                }
+            }
+        },
+        _onSetScrollTop: function (v) {
+            v = v.newVal;
+            if (v < 0) {
+                // does not care ie9 and non 3d browser
+                this.el.style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
+            }
+        },
+        pluginRenderUI: function (scrollView) {
+            var self = this;
+            self.scrollView = scrollView;
+            var prefixCls = scrollView.get('prefixCls');
+            var el = Node.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-label"></span>' + '</div>' + '</div>', { prefixCls: prefixCls }));
+            self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
+            scrollView.get('el').prepend(el);
+            self.$el = el;
+            self.el = el[0];
+            self._onSetState({ newValue: 'pulling' });
+        },
+        pluginBindUI: function (scrollView) {
+            var self = this;
+            scrollView.on('afterScrollTopChange', self._onScrollMove, self);
+            scrollView.on('touchEnd', self._onDragEnd, self);
+            self.on('afterStateChange', self._onSetState, self);
+            scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);
+        },
+        pluginDestructor: function () {
+            this.$el.remove();
+        }
+    }, {
+        ATTRS: {
+            /**
+             * pulling hint html.
+             * Defaults to: Pull down to refresh...
+             * @cfg {String} pullingHtml
+             */
+            /**
+             * @ignore
+             */
+            pullingHtml: { value: 'Pull down to refresh...' },
+            /**
+             * releasing hint html.
+             * Defaults to: release to refresh...
+             * @cfg {String} releasingHtml
+             */
+            /**
+             * @ignore
+             */
+            releasingHtml: { value: 'release to refresh...' },
+            /**
+             * loading hint html.
+             * Defaults to: loading...
+             * @cfg {String} loadingHtml
+             */
+            /**
+             * @ignore
+             */
+            loadingHtml: { value: 'loading...' },
+            /**
+             * load function to load data asynchronously
+             * @cfg {Function} loadFn
+             */
+            /**
+             * @ignore
+             */
+            loadFn: {},
+            state: { value: 'pulling' }
+        }
+    });
+});
+
+
+

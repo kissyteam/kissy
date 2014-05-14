@@ -232,6 +232,7 @@ if (! _$jscoverage['/base/special-events.js']) {
   _$jscoverage['/base/special-events.js'].lineData[6] = 0;
   _$jscoverage['/base/special-events.js'].lineData[7] = 0;
   _$jscoverage['/base/special-events.js'].lineData[8] = 0;
+  _$jscoverage['/base/special-events.js'].lineData[9] = 0;
   _$jscoverage['/base/special-events.js'].lineData[10] = 0;
   _$jscoverage['/base/special-events.js'].lineData[13] = 0;
   _$jscoverage['/base/special-events.js'].lineData[25] = 0;
@@ -348,10 +349,12 @@ KISSY.add(function(S, require) {
   var DomEvent = require('./dom-event');
   _$jscoverage['/base/special-events.js'].lineData[8]++;
   var Special = require('./special');
+  _$jscoverage['/base/special-events.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/base/special-events.js'].lineData[10]++;
   var UA = require('ua'), MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
   _$jscoverage['/base/special-events.js'].lineData[13]++;
-  return S.mix(Special, {
+  return util.mix(Special, {
   mousewheel: {
   typeFix: MOUSE_WHEEL}, 
   load: {

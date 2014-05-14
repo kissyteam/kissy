@@ -1,1 +1,1 @@
-{"overlay":["component/container","component/extension/shim","component/extension/align","component/extension/content-box","node","ua","event/gesture/tap"]}
+{"overlay":["component/container","component/extension/shim","component/extension/align","component/extension/content-box","node","ua","event/gesture/tap","util"]}

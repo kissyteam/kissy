@@ -1,1 +1,1 @@
-kissy-kison -g parser-grammar.kison -m json/parser
+kison -k -g parser-grammar.kison

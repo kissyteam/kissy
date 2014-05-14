@@ -232,6 +232,7 @@ if (! _$jscoverage['/util/double-touch.js']) {
   _$jscoverage['/util/double-touch.js'].lineData[6] = 0;
   _$jscoverage['/util/double-touch.js'].lineData[7] = 0;
   _$jscoverage['/util/double-touch.js'].lineData[8] = 0;
+  _$jscoverage['/util/double-touch.js'].lineData[9] = 0;
   _$jscoverage['/util/double-touch.js'].lineData[10] = 0;
   _$jscoverage['/util/double-touch.js'].lineData[13] = 0;
   _$jscoverage['/util/double-touch.js'].lineData[17] = 0;
@@ -281,12 +282,14 @@ KISSY.add(function(S, require) {
   var Dom = require('dom');
   _$jscoverage['/util/double-touch.js'].lineData[8]++;
   var Touch = require('./touch');
+  _$jscoverage['/util/double-touch.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/util/double-touch.js'].lineData[10]++;
   function DoubleTouch() {
     _$jscoverage['/util/double-touch.js'].functionData[1]++;
   }
   _$jscoverage['/util/double-touch.js'].lineData[13]++;
-  S.extend(DoubleTouch, Touch, {
+  util.extend(DoubleTouch, Touch, {
   requiredTouchCount: 2, 
   getCommonTarget: function(e) {
   _$jscoverage['/util/double-touch.js'].functionData[2]++;

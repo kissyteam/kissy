@@ -232,50 +232,51 @@ if (! _$jscoverage['/class-list.js']) {
   _$jscoverage['/class-list.js'].lineData[6] = 0;
   _$jscoverage['/class-list.js'].lineData[7] = 0;
   _$jscoverage['/class-list.js'].lineData[8] = 0;
-  _$jscoverage['/class-list.js'].lineData[11] = 0;
+  _$jscoverage['/class-list.js'].lineData[9] = 0;
   _$jscoverage['/class-list.js'].lineData[12] = 0;
-  _$jscoverage['/class-list.js'].lineData[15] = 0;
-  _$jscoverage['/class-list.js'].lineData[17] = 0;
-  _$jscoverage['/class-list.js'].lineData[21] = 0;
+  _$jscoverage['/class-list.js'].lineData[13] = 0;
+  _$jscoverage['/class-list.js'].lineData[16] = 0;
+  _$jscoverage['/class-list.js'].lineData[18] = 0;
   _$jscoverage['/class-list.js'].lineData[22] = 0;
   _$jscoverage['/class-list.js'].lineData[23] = 0;
   _$jscoverage['/class-list.js'].lineData[24] = 0;
   _$jscoverage['/class-list.js'].lineData[25] = 0;
-  _$jscoverage['/class-list.js'].lineData[28] = 0;
-  _$jscoverage['/class-list.js'].lineData[30] = 0;
-  _$jscoverage['/class-list.js'].lineData[34] = 0;
-  _$jscoverage['/class-list.js'].lineData[39] = 0;
+  _$jscoverage['/class-list.js'].lineData[26] = 0;
+  _$jscoverage['/class-list.js'].lineData[29] = 0;
+  _$jscoverage['/class-list.js'].lineData[31] = 0;
+  _$jscoverage['/class-list.js'].lineData[35] = 0;
   _$jscoverage['/class-list.js'].lineData[40] = 0;
   _$jscoverage['/class-list.js'].lineData[41] = 0;
   _$jscoverage['/class-list.js'].lineData[42] = 0;
   _$jscoverage['/class-list.js'].lineData[43] = 0;
   _$jscoverage['/class-list.js'].lineData[44] = 0;
   _$jscoverage['/class-list.js'].lineData[45] = 0;
-  _$jscoverage['/class-list.js'].lineData[48] = 0;
-  _$jscoverage['/class-list.js'].lineData[50] = 0;
-  _$jscoverage['/class-list.js'].lineData[52] = 0;
-  _$jscoverage['/class-list.js'].lineData[56] = 0;
-  _$jscoverage['/class-list.js'].lineData[61] = 0;
+  _$jscoverage['/class-list.js'].lineData[46] = 0;
+  _$jscoverage['/class-list.js'].lineData[49] = 0;
+  _$jscoverage['/class-list.js'].lineData[51] = 0;
+  _$jscoverage['/class-list.js'].lineData[53] = 0;
+  _$jscoverage['/class-list.js'].lineData[57] = 0;
   _$jscoverage['/class-list.js'].lineData[62] = 0;
   _$jscoverage['/class-list.js'].lineData[63] = 0;
   _$jscoverage['/class-list.js'].lineData[64] = 0;
   _$jscoverage['/class-list.js'].lineData[65] = 0;
-  _$jscoverage['/class-list.js'].lineData[67] = 0;
+  _$jscoverage['/class-list.js'].lineData[66] = 0;
   _$jscoverage['/class-list.js'].lineData[68] = 0;
-  _$jscoverage['/class-list.js'].lineData[71] = 0;
-  _$jscoverage['/class-list.js'].lineData[76] = 0;
-  _$jscoverage['/class-list.js'].lineData[83] = 0;
+  _$jscoverage['/class-list.js'].lineData[69] = 0;
+  _$jscoverage['/class-list.js'].lineData[72] = 0;
+  _$jscoverage['/class-list.js'].lineData[77] = 0;
   _$jscoverage['/class-list.js'].lineData[84] = 0;
   _$jscoverage['/class-list.js'].lineData[85] = 0;
   _$jscoverage['/class-list.js'].lineData[86] = 0;
-  _$jscoverage['/class-list.js'].lineData[88] = 0;
+  _$jscoverage['/class-list.js'].lineData[87] = 0;
   _$jscoverage['/class-list.js'].lineData[89] = 0;
   _$jscoverage['/class-list.js'].lineData[90] = 0;
   _$jscoverage['/class-list.js'].lineData[91] = 0;
-  _$jscoverage['/class-list.js'].lineData[94] = 0;
+  _$jscoverage['/class-list.js'].lineData[92] = 0;
   _$jscoverage['/class-list.js'].lineData[95] = 0;
-  _$jscoverage['/class-list.js'].lineData[97] = 0;
+  _$jscoverage['/class-list.js'].lineData[96] = 0;
   _$jscoverage['/class-list.js'].lineData[98] = 0;
+  _$jscoverage['/class-list.js'].lineData[99] = 0;
 }
 if (! _$jscoverage['/class-list.js'].functionData) {
   _$jscoverage['/class-list.js'].functionData = [];
@@ -288,235 +289,237 @@ if (! _$jscoverage['/class-list.js'].functionData) {
 }
 if (! _$jscoverage['/class-list.js'].branchData) {
   _$jscoverage['/class-list.js'].branchData = {};
-  _$jscoverage['/class-list.js'].branchData['21'] = [];
-  _$jscoverage['/class-list.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['23'] = [];
-  _$jscoverage['/class-list.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['22'] = [];
+  _$jscoverage['/class-list.js'].branchData['22'][1] = new BranchData();
   _$jscoverage['/class-list.js'].branchData['24'] = [];
   _$jscoverage['/class-list.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['39'] = [];
-  _$jscoverage['/class-list.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['43'] = [];
-  _$jscoverage['/class-list.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['25'] = [];
+  _$jscoverage['/class-list.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['40'] = [];
+  _$jscoverage['/class-list.js'].branchData['40'][1] = new BranchData();
   _$jscoverage['/class-list.js'].branchData['44'] = [];
   _$jscoverage['/class-list.js'].branchData['44'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['61'] = [];
-  _$jscoverage['/class-list.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['64'] = [];
-  _$jscoverage['/class-list.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['67'] = [];
-  _$jscoverage['/class-list.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['83'] = [];
-  _$jscoverage['/class-list.js'].branchData['83'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['86'] = [];
-  _$jscoverage['/class-list.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['86'][2] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['45'] = [];
+  _$jscoverage['/class-list.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['62'] = [];
+  _$jscoverage['/class-list.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['65'] = [];
+  _$jscoverage['/class-list.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['68'] = [];
+  _$jscoverage['/class-list.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['84'] = [];
+  _$jscoverage['/class-list.js'].branchData['84'][1] = new BranchData();
   _$jscoverage['/class-list.js'].branchData['87'] = [];
   _$jscoverage['/class-list.js'].branchData['87'][1] = new BranchData();
   _$jscoverage['/class-list.js'].branchData['87'][2] = new BranchData();
   _$jscoverage['/class-list.js'].branchData['88'] = [];
   _$jscoverage['/class-list.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['90'] = [];
-  _$jscoverage['/class-list.js'].branchData['90'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['94'] = [];
-  _$jscoverage['/class-list.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['97'] = [];
-  _$jscoverage['/class-list.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['88'][2] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['89'] = [];
+  _$jscoverage['/class-list.js'].branchData['89'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['91'] = [];
+  _$jscoverage['/class-list.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['95'] = [];
+  _$jscoverage['/class-list.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['98'] = [];
+  _$jscoverage['/class-list.js'].branchData['98'][1] = new BranchData();
 }
-_$jscoverage['/class-list.js'].branchData['97'][1].init(796, 14, 'removed.length');
-function visit18_97_1(result) {
-  _$jscoverage['/class-list.js'].branchData['97'][1].ranCondition(result);
+_$jscoverage['/class-list.js'].branchData['98'][1].init(796, 14, 'removed.length');
+function visit18_98_1(result) {
+  _$jscoverage['/class-list.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['94'][1].init(702, 12, 'added.length');
-function visit17_94_1(result) {
-  _$jscoverage['/class-list.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['95'][1].init(702, 12, 'added.length');
+function visit17_95_1(result) {
+  _$jscoverage['/class-list.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['90'][1].init(336, 16, 'method === \'add\'');
-function visit16_90_1(result) {
-  _$jscoverage['/class-list.js'].branchData['90'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['91'][1].init(336, 16, 'method === \'add\'');
+function visit16_91_1(result) {
+  _$jscoverage['/class-list.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['88'][1].init(238, 19, 'method === \'remove\'');
-function visit15_88_1(result) {
+}_$jscoverage['/class-list.js'].branchData['89'][1].init(238, 19, 'method === \'remove\'');
+function visit15_89_1(result) {
+  _$jscoverage['/class-list.js'].branchData['89'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/class-list.js'].branchData['88'][2].init(68, 15, 'force !== false');
+function visit14_88_2(result) {
+  _$jscoverage['/class-list.js'].branchData['88'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/class-list.js'].branchData['88'][1].init(58, 24, 'force !== false && \'add\'');
+function visit13_88_1(result) {
   _$jscoverage['/class-list.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['87'][2].init(68, 15, 'force !== false');
-function visit14_87_2(result) {
+}_$jscoverage['/class-list.js'].branchData['87'][2].init(141, 14, 'force !== true');
+function visit12_87_2(result) {
   _$jscoverage['/class-list.js'].branchData['87'][2].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['87'][1].init(58, 24, 'force !== false && \'add\'');
-function visit13_87_1(result) {
+}_$jscoverage['/class-list.js'].branchData['87'][1].init(141, 26, 'force !== true && \'remove\'');
+function visit11_87_1(result) {
   _$jscoverage['/class-list.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['86'][2].init(141, 14, 'force !== true');
-function visit12_86_2(result) {
-  _$jscoverage['/class-list.js'].branchData['86'][2].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['84'][1].init(238, 6, 'j < cl');
+function visit10_84_1(result) {
+  _$jscoverage['/class-list.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['86'][1].init(141, 26, 'force !== true && \'remove\'');
-function visit11_86_1(result) {
-  _$jscoverage['/class-list.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['68'][1].init(158, 30, 'className.indexOf(needle) >= 0');
+function visit9_68_1(result) {
+  _$jscoverage['/class-list.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['83'][1].init(238, 6, 'j < cl');
-function visit10_83_1(result) {
-  _$jscoverage['/class-list.js'].branchData['83'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['65'][1].init(95, 6, 'j < cl');
+function visit8_65_1(result) {
+  _$jscoverage['/class-list.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['67'][1].init(158, 30, 'className.indexOf(needle) >= 0');
-function visit9_67_1(result) {
-  _$jscoverage['/class-list.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['62'][1].init(177, 15, 'elemClass && cl');
+function visit7_62_1(result) {
+  _$jscoverage['/class-list.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['64'][1].init(95, 6, 'j < cl');
-function visit8_64_1(result) {
-  _$jscoverage['/class-list.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['45'][1].init(26, 56, 'normClassName.indexOf(SPACE + classNames[j] + SPACE) < 0');
+function visit6_45_1(result) {
+  _$jscoverage['/class-list.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['61'][1].init(177, 15, 'elemClass && cl');
-function visit7_61_1(result) {
-  _$jscoverage['/class-list.js'].branchData['61'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/class-list.js'].branchData['44'][1].init(26, 56, 'normClassName.indexOf(SPACE + classNames[j] + SPACE) < 0');
-function visit6_44_1(result) {
+}_$jscoverage['/class-list.js'].branchData['44'][1].init(138, 6, 'j < cl');
+function visit5_44_1(result) {
   _$jscoverage['/class-list.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['43'][1].init(138, 6, 'j < cl');
-function visit5_43_1(result) {
-  _$jscoverage['/class-list.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['40'][1].init(183, 9, 'elemClass');
+function visit4_40_1(result) {
+  _$jscoverage['/class-list.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['39'][1].init(183, 9, 'elemClass');
-function visit4_39_1(result) {
-  _$jscoverage['/class-list.js'].branchData['39'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['25'][1].init(26, 52, 'className.indexOf(SPACE + classNames[j] + SPACE) < 0');
+function visit3_25_1(result) {
+  _$jscoverage['/class-list.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['24'][1].init(26, 52, 'className.indexOf(SPACE + classNames[j] + SPACE) < 0');
-function visit3_24_1(result) {
+}_$jscoverage['/class-list.js'].branchData['24'][1].init(100, 6, 'j < cl');
+function visit2_24_1(result) {
   _$jscoverage['/class-list.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['23'][1].init(100, 6, 'j < cl');
-function visit2_23_1(result) {
-  _$jscoverage['/class-list.js'].branchData['23'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/class-list.js'].branchData['21'][1].init(132, 9, 'elemClass');
-function visit1_21_1(result) {
-  _$jscoverage['/class-list.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/class-list.js'].branchData['22'][1].init(132, 9, 'elemClass');
+function visit1_22_1(result) {
+  _$jscoverage['/class-list.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/class-list.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/class-list.js'].functionData[0]++;
   _$jscoverage['/class-list.js'].lineData[7]++;
-  var Dom = require('dom/base');
+  var util = require('util');
   _$jscoverage['/class-list.js'].lineData[8]++;
+  var Dom = require('dom/base');
+  _$jscoverage['/class-list.js'].lineData[9]++;
   var SPACE = ' ', RE_CLASS = /[\n\t\r]/g;
-  _$jscoverage['/class-list.js'].lineData[11]++;
+  _$jscoverage['/class-list.js'].lineData[12]++;
   function norm(elemClass) {
     _$jscoverage['/class-list.js'].functionData[1]++;
-    _$jscoverage['/class-list.js'].lineData[12]++;
+    _$jscoverage['/class-list.js'].lineData[13]++;
     return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
   }
-  _$jscoverage['/class-list.js'].lineData[15]++;
-  return S.mix(Dom, {
+  _$jscoverage['/class-list.js'].lineData[16]++;
+  return util.mix(Dom, {
   _hasClass: function(elem, classNames) {
   _$jscoverage['/class-list.js'].functionData[2]++;
-  _$jscoverage['/class-list.js'].lineData[17]++;
+  _$jscoverage['/class-list.js'].lineData[18]++;
   var elemClass = elem.className, className, cl, j;
-  _$jscoverage['/class-list.js'].lineData[21]++;
-  if (visit1_21_1(elemClass)) {
-    _$jscoverage['/class-list.js'].lineData[22]++;
-    className = norm(elemClass);
+  _$jscoverage['/class-list.js'].lineData[22]++;
+  if (visit1_22_1(elemClass)) {
     _$jscoverage['/class-list.js'].lineData[23]++;
-    for (j = 0 , cl = classNames.length; visit2_23_1(j < cl); j++) {
-      _$jscoverage['/class-list.js'].lineData[24]++;
-      if (visit3_24_1(className.indexOf(SPACE + classNames[j] + SPACE) < 0)) {
-        _$jscoverage['/class-list.js'].lineData[25]++;
+    className = norm(elemClass);
+    _$jscoverage['/class-list.js'].lineData[24]++;
+    for (j = 0 , cl = classNames.length; visit2_24_1(j < cl); j++) {
+      _$jscoverage['/class-list.js'].lineData[25]++;
+      if (visit3_25_1(className.indexOf(SPACE + classNames[j] + SPACE) < 0)) {
+        _$jscoverage['/class-list.js'].lineData[26]++;
         return false;
       }
     }
-    _$jscoverage['/class-list.js'].lineData[28]++;
+    _$jscoverage['/class-list.js'].lineData[29]++;
     return true;
   }
-  _$jscoverage['/class-list.js'].lineData[30]++;
+  _$jscoverage['/class-list.js'].lineData[31]++;
   return false;
 }, 
   _addClass: function(elem, classNames) {
   _$jscoverage['/class-list.js'].functionData[3]++;
-  _$jscoverage['/class-list.js'].lineData[34]++;
+  _$jscoverage['/class-list.js'].lineData[35]++;
   var elemClass = elem.className, normClassName, cl = classNames.length, setClass, j;
-  _$jscoverage['/class-list.js'].lineData[39]++;
-  if (visit4_39_1(elemClass)) {
-    _$jscoverage['/class-list.js'].lineData[40]++;
-    normClassName = norm(elemClass);
+  _$jscoverage['/class-list.js'].lineData[40]++;
+  if (visit4_40_1(elemClass)) {
     _$jscoverage['/class-list.js'].lineData[41]++;
-    setClass = elemClass;
+    normClassName = norm(elemClass);
     _$jscoverage['/class-list.js'].lineData[42]++;
-    j = 0;
+    setClass = elemClass;
     _$jscoverage['/class-list.js'].lineData[43]++;
-    for (; visit5_43_1(j < cl); j++) {
-      _$jscoverage['/class-list.js'].lineData[44]++;
-      if (visit6_44_1(normClassName.indexOf(SPACE + classNames[j] + SPACE) < 0)) {
-        _$jscoverage['/class-list.js'].lineData[45]++;
+    j = 0;
+    _$jscoverage['/class-list.js'].lineData[44]++;
+    for (; visit5_44_1(j < cl); j++) {
+      _$jscoverage['/class-list.js'].lineData[45]++;
+      if (visit6_45_1(normClassName.indexOf(SPACE + classNames[j] + SPACE) < 0)) {
+        _$jscoverage['/class-list.js'].lineData[46]++;
         setClass += SPACE + classNames[j];
       }
     }
-    _$jscoverage['/class-list.js'].lineData[48]++;
-    setClass = S.trim(setClass);
+    _$jscoverage['/class-list.js'].lineData[49]++;
+    setClass = util.trim(setClass);
   } else {
-    _$jscoverage['/class-list.js'].lineData[50]++;
+    _$jscoverage['/class-list.js'].lineData[51]++;
     setClass = classNames.join(' ');
   }
-  _$jscoverage['/class-list.js'].lineData[52]++;
+  _$jscoverage['/class-list.js'].lineData[53]++;
   elem.className = setClass;
 }, 
   _removeClass: function(elem, classNames) {
   _$jscoverage['/class-list.js'].functionData[4]++;
-  _$jscoverage['/class-list.js'].lineData[56]++;
+  _$jscoverage['/class-list.js'].lineData[57]++;
   var elemClass = elem.className, className, cl = classNames.length, j, needle;
-  _$jscoverage['/class-list.js'].lineData[61]++;
-  if (visit7_61_1(elemClass && cl)) {
-    _$jscoverage['/class-list.js'].lineData[62]++;
-    className = norm(elemClass);
+  _$jscoverage['/class-list.js'].lineData[62]++;
+  if (visit7_62_1(elemClass && cl)) {
     _$jscoverage['/class-list.js'].lineData[63]++;
-    j = 0;
+    className = norm(elemClass);
     _$jscoverage['/class-list.js'].lineData[64]++;
-    for (; visit8_64_1(j < cl); j++) {
-      _$jscoverage['/class-list.js'].lineData[65]++;
+    j = 0;
+    _$jscoverage['/class-list.js'].lineData[65]++;
+    for (; visit8_65_1(j < cl); j++) {
+      _$jscoverage['/class-list.js'].lineData[66]++;
       needle = SPACE + classNames[j] + SPACE;
-      _$jscoverage['/class-list.js'].lineData[67]++;
-      while (visit9_67_1(className.indexOf(needle) >= 0)) {
-        _$jscoverage['/class-list.js'].lineData[68]++;
+      _$jscoverage['/class-list.js'].lineData[68]++;
+      while (visit9_68_1(className.indexOf(needle) >= 0)) {
+        _$jscoverage['/class-list.js'].lineData[69]++;
         className = className.replace(needle, SPACE);
       }
     }
-    _$jscoverage['/class-list.js'].lineData[71]++;
-    elem.className = S.trim(className);
+    _$jscoverage['/class-list.js'].lineData[72]++;
+    elem.className = util.trim(className);
   }
 }, 
   _toggleClass: function(elem, classNames, force) {
   _$jscoverage['/class-list.js'].functionData[5]++;
-  _$jscoverage['/class-list.js'].lineData[76]++;
+  _$jscoverage['/class-list.js'].lineData[77]++;
   var j, className, result, method, self = this, removed = [], added = [], cl = classNames.length;
-  _$jscoverage['/class-list.js'].lineData[83]++;
-  for (j = 0; visit10_83_1(j < cl); j++) {
-    _$jscoverage['/class-list.js'].lineData[84]++;
-    className = classNames[j];
+  _$jscoverage['/class-list.js'].lineData[84]++;
+  for (j = 0; visit10_84_1(j < cl); j++) {
     _$jscoverage['/class-list.js'].lineData[85]++;
-    result = self._hasClass(elem, [className]);
+    className = classNames[j];
     _$jscoverage['/class-list.js'].lineData[86]++;
-    method = result ? visit11_86_1(visit12_86_2(force !== true) && 'remove') : visit13_87_1(visit14_87_2(force !== false) && 'add');
-    _$jscoverage['/class-list.js'].lineData[88]++;
-    if (visit15_88_1(method === 'remove')) {
-      _$jscoverage['/class-list.js'].lineData[89]++;
+    result = self._hasClass(elem, [className]);
+    _$jscoverage['/class-list.js'].lineData[87]++;
+    method = result ? visit11_87_1(visit12_87_2(force !== true) && 'remove') : visit13_88_1(visit14_88_2(force !== false) && 'add');
+    _$jscoverage['/class-list.js'].lineData[89]++;
+    if (visit15_89_1(method === 'remove')) {
+      _$jscoverage['/class-list.js'].lineData[90]++;
       removed.push(className);
     } else {
-      _$jscoverage['/class-list.js'].lineData[90]++;
-      if (visit16_90_1(method === 'add')) {
-        _$jscoverage['/class-list.js'].lineData[91]++;
+      _$jscoverage['/class-list.js'].lineData[91]++;
+      if (visit16_91_1(method === 'add')) {
+        _$jscoverage['/class-list.js'].lineData[92]++;
         added.push(className);
       }
     }
   }
-  _$jscoverage['/class-list.js'].lineData[94]++;
-  if (visit17_94_1(added.length)) {
-    _$jscoverage['/class-list.js'].lineData[95]++;
+  _$jscoverage['/class-list.js'].lineData[95]++;
+  if (visit17_95_1(added.length)) {
+    _$jscoverage['/class-list.js'].lineData[96]++;
     self._addClass(elem, added);
   }
-  _$jscoverage['/class-list.js'].lineData[97]++;
-  if (visit18_97_1(removed.length)) {
-    _$jscoverage['/class-list.js'].lineData[98]++;
+  _$jscoverage['/class-list.js'].lineData[98]++;
+  if (visit18_98_1(removed.length)) {
+    _$jscoverage['/class-list.js'].lineData[99]++;
     self._removeClass(elem, removed);
   }
 }});

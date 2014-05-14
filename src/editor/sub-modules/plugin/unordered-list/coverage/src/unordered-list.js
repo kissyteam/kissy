@@ -259,7 +259,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/unordered-list.js'].functionData[1]++;
   }
   _$jscoverage['/unordered-list.js'].lineData[13]++;
-  S.augment(unorderedList, {
+  (unorderedList.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/unordered-list.js'].functionData[2]++;
   _$jscoverage['/unordered-list.js'].lineData[15]++;

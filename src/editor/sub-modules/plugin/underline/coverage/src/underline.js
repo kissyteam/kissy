@@ -234,15 +234,16 @@ if (! _$jscoverage['/underline.js']) {
   _$jscoverage['/underline.js'].lineData[8] = 0;
   _$jscoverage['/underline.js'].lineData[9] = 0;
   _$jscoverage['/underline.js'].lineData[10] = 0;
-  _$jscoverage['/underline.js'].lineData[13] = 0;
-  _$jscoverage['/underline.js'].lineData[15] = 0;
-  _$jscoverage['/underline.js'].lineData[17] = 0;
-  _$jscoverage['/underline.js'].lineData[22] = 0;
+  _$jscoverage['/underline.js'].lineData[11] = 0;
+  _$jscoverage['/underline.js'].lineData[14] = 0;
+  _$jscoverage['/underline.js'].lineData[16] = 0;
+  _$jscoverage['/underline.js'].lineData[18] = 0;
   _$jscoverage['/underline.js'].lineData[23] = 0;
   _$jscoverage['/underline.js'].lineData[24] = 0;
   _$jscoverage['/underline.js'].lineData[25] = 0;
   _$jscoverage['/underline.js'].lineData[26] = 0;
-  _$jscoverage['/underline.js'].lineData[33] = 0;
+  _$jscoverage['/underline.js'].lineData[27] = 0;
+  _$jscoverage['/underline.js'].lineData[34] = 0;
 }
 if (! _$jscoverage['/underline.js'].functionData) {
   _$jscoverage['/underline.js'].functionData = [];
@@ -254,17 +255,17 @@ if (! _$jscoverage['/underline.js'].functionData) {
 }
 if (! _$jscoverage['/underline.js'].branchData) {
   _$jscoverage['/underline.js'].branchData = {};
-  _$jscoverage['/underline.js'].branchData['24'] = [];
-  _$jscoverage['/underline.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/underline.js'].branchData['24'][2] = new BranchData();
+  _$jscoverage['/underline.js'].branchData['25'] = [];
+  _$jscoverage['/underline.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/underline.js'].branchData['25'][2] = new BranchData();
 }
-_$jscoverage['/underline.js'].branchData['24'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.U');
-function visit2_24_2(result) {
-  _$jscoverage['/underline.js'].branchData['24'][2].ranCondition(result);
+_$jscoverage['/underline.js'].branchData['25'][2].init(39, 28, 'e.keyCode === Node.KeyCode.U');
+function visit2_25_2(result) {
+  _$jscoverage['/underline.js'].branchData['25'][2].ranCondition(result);
   return result;
-}_$jscoverage['/underline.js'].branchData['24'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.U');
-function visit1_24_1(result) {
-  _$jscoverage['/underline.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/underline.js'].branchData['25'][1].init(26, 41, 'e.ctrlKey && e.keyCode === Node.KeyCode.U');
+function visit1_25_1(result) {
+  _$jscoverage['/underline.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/underline.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -276,35 +277,37 @@ KISSY.add(function(S, require) {
   _$jscoverage['/underline.js'].lineData[9]++;
   require('./button');
   _$jscoverage['/underline.js'].lineData[10]++;
+  var Node = require('node');
+  _$jscoverage['/underline.js'].lineData[11]++;
   function Underline() {
     _$jscoverage['/underline.js'].functionData[1]++;
   }
-  _$jscoverage['/underline.js'].lineData[13]++;
-  S.augment(Underline, {
+  _$jscoverage['/underline.js'].lineData[14]++;
+  (Underline.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/underline.js'].functionData[2]++;
-  _$jscoverage['/underline.js'].lineData[15]++;
+  _$jscoverage['/underline.js'].lineData[16]++;
   cmd.init(editor);
-  _$jscoverage['/underline.js'].lineData[17]++;
+  _$jscoverage['/underline.js'].lineData[18]++;
   editor.addButton('underline', {
   cmdType: 'underline', 
   tooltip: '\u4e0b\u5212\u7ebf'}, ui.Button);
-  _$jscoverage['/underline.js'].lineData[22]++;
+  _$jscoverage['/underline.js'].lineData[23]++;
   editor.docReady(function() {
   _$jscoverage['/underline.js'].functionData[3]++;
-  _$jscoverage['/underline.js'].lineData[23]++;
+  _$jscoverage['/underline.js'].lineData[24]++;
   editor.get('document').on('keydown', function(e) {
   _$jscoverage['/underline.js'].functionData[4]++;
-  _$jscoverage['/underline.js'].lineData[24]++;
-  if (visit1_24_1(e.ctrlKey && visit2_24_2(e.keyCode === S.Node.KeyCode.U))) {
-    _$jscoverage['/underline.js'].lineData[25]++;
-    editor.execCommand('underline');
+  _$jscoverage['/underline.js'].lineData[25]++;
+  if (visit1_25_1(e.ctrlKey && visit2_25_2(e.keyCode === Node.KeyCode.U))) {
     _$jscoverage['/underline.js'].lineData[26]++;
+    editor.execCommand('underline');
+    _$jscoverage['/underline.js'].lineData[27]++;
     e.preventDefault();
   }
 });
 });
 }});
-  _$jscoverage['/underline.js'].lineData[33]++;
+  _$jscoverage['/underline.js'].lineData[34]++;
   return Underline;
 });

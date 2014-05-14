@@ -6,6 +6,7 @@ KISSY.add(function (S, require) {
     var mvc = require('../mvc/');
     var Json = require('json');
     var KEY = 'KISSY_Note';
+    var util = require('util');
 
     function isModel(m) {
         return m instanceof mvc.Model;
@@ -62,7 +63,7 @@ KISSY.add(function (S, require) {
                     break;
                 case 'create':
                     ret = self.toJSON();
-                    ret.id = S.guid('note');
+                    ret.id = util.guid('note');
                     ret.time = new Date().toLocaleTimeString();
                     store.push(ret);
                     break;

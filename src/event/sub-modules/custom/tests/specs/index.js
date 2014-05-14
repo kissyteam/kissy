@@ -2,7 +2,7 @@
  * custom bubble mechanism tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event) {
+KISSY.add(function (S, util, Event) {
     /*jshint quotmark:false*/
     var EventTarget = Event.Target;
 
@@ -14,7 +14,7 @@ KISSY.add(function (S, Event) {
         it("works for any object", function () {
             var r = 0;
 
-            var x = S.mix({
+            var x = util.mix({
                 item: 1,
                 length: 10
             }, EventTarget);
@@ -29,7 +29,7 @@ KISSY.add(function (S, Event) {
         it('support once', function () {
 
             var ret = [],
-                t = S.mix({}, EventTarget);
+                t = util.mix({}, EventTarget);
 
             t.on('click', {
                 once: 1,
@@ -59,7 +59,7 @@ KISSY.add(function (S, Event) {
             var S = KISSY,
                 haha = 0,
                 haha2 = 0,
-                obj = S.mix({}, EventTarget);
+                obj = util.mix({}, EventTarget);
 
             obj.on('haha', function (ev) {
                 haha++;
@@ -91,7 +91,7 @@ KISSY.add(function (S, Event) {
                 });
             }
 
-            S.augment(Test, EventTarget);
+            util.augment(Test, EventTarget);
 
             var t = new Test();
 
@@ -116,7 +116,7 @@ KISSY.add(function (S, Event) {
                     });
                 }
 
-                S.augment(Test, EventTarget);
+                util.augment(Test, EventTarget);
 
                 var t = new Test();
 
@@ -150,9 +150,9 @@ KISSY.add(function (S, Event) {
             });
 
             it('can bubble default', function () {
-                var a = S.mix({}, EventTarget),
-                    c = S.mix({}, EventTarget),
-                    b = S.mix({}, EventTarget);
+                var a = util.mix({}, EventTarget),
+                    c = util.mix({}, EventTarget),
+                    b = util.mix({}, EventTarget);
                 a.id = 'a';
                 b.id = 'b';
                 c.id = 'c';
@@ -183,7 +183,7 @@ KISSY.add(function (S, Event) {
                     });
                 }
 
-                S.augment(Test, EventTarget);
+                util.augment(Test, EventTarget);
 
                 var t = new Test();
 
@@ -212,7 +212,7 @@ KISSY.add(function (S, Event) {
                     });
                 }
 
-                S.augment(Test, EventTarget);
+                util.augment(Test, EventTarget);
 
                 var t = new Test();
 
@@ -232,11 +232,11 @@ KISSY.add(function (S, Event) {
 
             it("can bubble more than one level", function () {
 
-                var r1 = S.mix({}, EventTarget);
+                var r1 = util.mix({}, EventTarget);
 
-                var r2 = S.mix({}, EventTarget);
+                var r2 = util.mix({}, EventTarget);
 
-                var r3 = S.mix({}, EventTarget);
+                var r3 = util.mix({}, EventTarget);
 
                 r2.addTarget(r1);
                 r3.addTarget(r2);
@@ -255,11 +255,11 @@ KISSY.add(function (S, Event) {
 
             it("can not bubble if middle level does not allow", function () {
 
-                var r1 = S.mix({}, EventTarget);
+                var r1 = util.mix({}, EventTarget);
 
-                var r2 = S.mix({}, EventTarget);
+                var r2 = util.mix({}, EventTarget);
 
-                var r3 = S.mix({}, EventTarget);
+                var r3 = util.mix({}, EventTarget);
 
                 r2.addTarget(r1);
                 r3.addTarget(r2);
@@ -282,7 +282,7 @@ KISSY.add(function (S, Event) {
         });
 
         it('should no memory leak for custom event', function () {
-            var eventTarget = S.mix({}, EventTarget);
+            var eventTarget = util.mix({}, EventTarget);
 
             function noop() {
             }
@@ -303,7 +303,7 @@ KISSY.add(function (S, Event) {
 
                 var num = 0;
                 for (var i in customEventObservables) {
-                    expect(S.inArray(i, ['click', 'keydown']))
+                    expect(util.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
                 }
@@ -319,7 +319,7 @@ KISSY.add(function (S, Event) {
                 var num = 0;
 
                 for (var i in customEventObservables) {
-                    expect(S.inArray(i, ['click', 'keydown']))
+                    expect(util.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
                 }
@@ -359,7 +359,7 @@ KISSY.add(function (S, Event) {
                     this.name = name;
                 }
 
-                S.augment(Dog, EventTarget, {
+                util.augment(Dog, EventTarget, {
                     run: function () {
                         return this.fire('running', {speed: SPEED});
                     }
@@ -413,7 +413,7 @@ KISSY.add(function (S, Event) {
             });
 
             it('can get defaultFn value as final value', function () {
-                var o = S.mix({}, EventTarget);
+                var o = util.mix({}, EventTarget);
 
                 o.publish('t', {
                     defaultFn: function () {
@@ -434,7 +434,7 @@ KISSY.add(function (S, Event) {
 
                 }
 
-                S.augment(Target, EventTarget);
+                util.augment(Target, EventTarget);
 
                 it("should works with one group simply", function () {
 
@@ -588,7 +588,7 @@ KISSY.add(function (S, Event) {
             describe("defaultFn", function () {
                 it('call parent defaultFn first', function () {
                     var ret = [],
-                        t = S.mix({
+                        t = util.mix({
                             id: 't'
                         }, EventTarget);
 
@@ -598,7 +598,7 @@ KISSY.add(function (S, Event) {
                         }
                     });
 
-                    var t2 = S.mix({
+                    var t2 = util.mix({
                         id: 't2'
                     }, EventTarget);
 
@@ -617,7 +617,7 @@ KISSY.add(function (S, Event) {
 
                 it('can disable parent defaultFn', function () {
                     var ret = [],
-                        t = S.mix({
+                        t = util.mix({
                             id: 't'
                         }, EventTarget);
 
@@ -627,7 +627,7 @@ KISSY.add(function (S, Event) {
                         }
                     });
 
-                    var t2 = S.mix({
+                    var t2 = util.mix({
                         id: 't2'
                     }, EventTarget);
 
@@ -647,7 +647,7 @@ KISSY.add(function (S, Event) {
 
                 it('support simple defaultFn', function () {
                     var ret = [],
-                        t = S.mix({}, EventTarget);
+                        t = util.mix({}, EventTarget);
 
                     t.publish('click', {
                         defaultFn: function (e) {
@@ -664,7 +664,7 @@ KISSY.add(function (S, Event) {
 
                 it('support simple defaultFn with listeners', function () {
                     var ret = [],
-                        t = S.mix({}, EventTarget);
+                        t = util.mix({}, EventTarget);
 
                     t.publish('click', {
                         defaultFn: function () {
@@ -702,5 +702,5 @@ KISSY.add(function (S, Event) {
         });
     });
 }, {
-    requires: ['event/custom']
+    requires: ['util','event/custom']
 });

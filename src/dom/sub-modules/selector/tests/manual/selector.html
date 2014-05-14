@@ -8,7 +8,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('dom/selector', function (S, selector) {
+    KISSY.use('dom/selector,util', function (S, selector,util) {
         var str;
 
         var tests = [], ts;
@@ -134,10 +134,10 @@
         });
         ts.push.call(ts, 'p,div', 'p div , span');
 
-        S.each(tests, function (obj) {
+        util.each(tests, function (obj) {
             var ts = obj.ts;
             S.log('*********************'+obj.title,'info');
-            S.each(ts, function (t) {
+            util.each(ts, function (t) {
                 S.log(t);
                 S.log(selector.parse(t));
             });

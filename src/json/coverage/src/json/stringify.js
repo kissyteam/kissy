@@ -231,41 +231,41 @@ if (! _$jscoverage['/json/stringify.js']) {
   _$jscoverage['/json/stringify.js'].lineData = [];
   _$jscoverage['/json/stringify.js'].lineData[6] = 0;
   _$jscoverage['/json/stringify.js'].lineData[7] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[9] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[8] = 0;
   _$jscoverage['/json/stringify.js'].lineData[10] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[13] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[11] = 0;
   _$jscoverage['/json/stringify.js'].lineData[14] = 0;
   _$jscoverage['/json/stringify.js'].lineData[15] = 0;
   _$jscoverage['/json/stringify.js'].lineData[16] = 0;
   _$jscoverage['/json/stringify.js'].lineData[17] = 0;
   _$jscoverage['/json/stringify.js'].lineData[18] = 0;
   _$jscoverage['/json/stringify.js'].lineData[19] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[26] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[20] = 0;
   _$jscoverage['/json/stringify.js'].lineData[27] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[30] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[28] = 0;
   _$jscoverage['/json/stringify.js'].lineData[31] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[34] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[36] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[38] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[40] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[42] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[32] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[35] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[37] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[39] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[41] = 0;
   _$jscoverage['/json/stringify.js'].lineData[43] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[45] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[44] = 0;
   _$jscoverage['/json/stringify.js'].lineData[46] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[48] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[52] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[55] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[47] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[49] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[53] = 0;
   _$jscoverage['/json/stringify.js'].lineData[56] = 0;
   _$jscoverage['/json/stringify.js'].lineData[57] = 0;
   _$jscoverage['/json/stringify.js'].lineData[58] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[60] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[63] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[59] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[61] = 0;
   _$jscoverage['/json/stringify.js'].lineData[64] = 0;
   _$jscoverage['/json/stringify.js'].lineData[65] = 0;
   _$jscoverage['/json/stringify.js'].lineData[66] = 0;
   _$jscoverage['/json/stringify.js'].lineData[67] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[69] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[71] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[68] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[70] = 0;
   _$jscoverage['/json/stringify.js'].lineData[72] = 0;
   _$jscoverage['/json/stringify.js'].lineData[73] = 0;
   _$jscoverage['/json/stringify.js'].lineData[74] = 0;
@@ -274,25 +274,25 @@ if (! _$jscoverage['/json/stringify.js']) {
   _$jscoverage['/json/stringify.js'].lineData[77] = 0;
   _$jscoverage['/json/stringify.js'].lineData[78] = 0;
   _$jscoverage['/json/stringify.js'].lineData[79] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[81] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[80] = 0;
   _$jscoverage['/json/stringify.js'].lineData[82] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[85] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[83] = 0;
   _$jscoverage['/json/stringify.js'].lineData[86] = 0;
   _$jscoverage['/json/stringify.js'].lineData[87] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[89] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[88] = 0;
   _$jscoverage['/json/stringify.js'].lineData[90] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[92] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[91] = 0;
   _$jscoverage['/json/stringify.js'].lineData[93] = 0;
   _$jscoverage['/json/stringify.js'].lineData[94] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[97] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[95] = 0;
   _$jscoverage['/json/stringify.js'].lineData[98] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[100] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[103] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[99] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[101] = 0;
   _$jscoverage['/json/stringify.js'].lineData[104] = 0;
   _$jscoverage['/json/stringify.js'].lineData[105] = 0;
   _$jscoverage['/json/stringify.js'].lineData[106] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[108] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[110] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[107] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[109] = 0;
   _$jscoverage['/json/stringify.js'].lineData[111] = 0;
   _$jscoverage['/json/stringify.js'].lineData[112] = 0;
   _$jscoverage['/json/stringify.js'].lineData[113] = 0;
@@ -301,20 +301,20 @@ if (! _$jscoverage['/json/stringify.js']) {
   _$jscoverage['/json/stringify.js'].lineData[116] = 0;
   _$jscoverage['/json/stringify.js'].lineData[117] = 0;
   _$jscoverage['/json/stringify.js'].lineData[118] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[120] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[122] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[124] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[119] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[121] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[123] = 0;
   _$jscoverage['/json/stringify.js'].lineData[125] = 0;
   _$jscoverage['/json/stringify.js'].lineData[126] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[128] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[127] = 0;
   _$jscoverage['/json/stringify.js'].lineData[129] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[131] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[130] = 0;
   _$jscoverage['/json/stringify.js'].lineData[132] = 0;
   _$jscoverage['/json/stringify.js'].lineData[133] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[136] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[134] = 0;
   _$jscoverage['/json/stringify.js'].lineData[137] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[140] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[143] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[138] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[141] = 0;
   _$jscoverage['/json/stringify.js'].lineData[144] = 0;
   _$jscoverage['/json/stringify.js'].lineData[145] = 0;
   _$jscoverage['/json/stringify.js'].lineData[146] = 0;
@@ -322,13 +322,14 @@ if (! _$jscoverage['/json/stringify.js']) {
   _$jscoverage['/json/stringify.js'].lineData[148] = 0;
   _$jscoverage['/json/stringify.js'].lineData[149] = 0;
   _$jscoverage['/json/stringify.js'].lineData[150] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[154] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[151] = 0;
   _$jscoverage['/json/stringify.js'].lineData[155] = 0;
   _$jscoverage['/json/stringify.js'].lineData[156] = 0;
   _$jscoverage['/json/stringify.js'].lineData[157] = 0;
   _$jscoverage['/json/stringify.js'].lineData[158] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[161] = 0;
-  _$jscoverage['/json/stringify.js'].lineData[166] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[159] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[162] = 0;
+  _$jscoverage['/json/stringify.js'].lineData[167] = 0;
 }
 if (! _$jscoverage['/json/stringify.js'].functionData) {
   _$jscoverage['/json/stringify.js'].functionData = [];
@@ -341,444 +342,446 @@ if (! _$jscoverage['/json/stringify.js'].functionData) {
 }
 if (! _$jscoverage['/json/stringify.js'].branchData) {
   _$jscoverage['/json/stringify.js'].branchData = {};
-  _$jscoverage['/json/stringify.js'].branchData['10'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['15'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['15'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['15'][2] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['11'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['11'][1] = new BranchData();
   _$jscoverage['/json/stringify.js'].branchData['16'] = [];
   _$jscoverage['/json/stringify.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['18'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['26'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['26'][2] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['30'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['42'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['45'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['56'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['16'][2] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['17'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['19'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['27'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['27'][2] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['31'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['43'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['46'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['46'][1] = new BranchData();
   _$jscoverage['/json/stringify.js'].branchData['57'] = [];
   _$jscoverage['/json/stringify.js'].branchData['57'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['66'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['72'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['72'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['75'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['75'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['78'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['86'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['89'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['97'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['97'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['104'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['104'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['58'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['67'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['73'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['76'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['76'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['79'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['87'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['90'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['98'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['98'][1] = new BranchData();
   _$jscoverage['/json/stringify.js'].branchData['105'] = [];
   _$jscoverage['/json/stringify.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['115'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['117'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['125'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['125'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['128'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['128'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['136'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['146'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['146'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['106'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['106'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['116'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['118'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['126'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['129'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['129'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['137'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['137'][1] = new BranchData();
   _$jscoverage['/json/stringify.js'].branchData['147'] = [];
   _$jscoverage['/json/stringify.js'].branchData['147'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['149'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['149'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['154'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['154'][1] = new BranchData();
-  _$jscoverage['/json/stringify.js'].branchData['157'] = [];
-  _$jscoverage['/json/stringify.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['148'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['148'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['150'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['150'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['155'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['155'][1] = new BranchData();
+  _$jscoverage['/json/stringify.js'].branchData['158'] = [];
+  _$jscoverage['/json/stringify.js'].branchData['158'][1] = new BranchData();
 }
-_$jscoverage['/json/stringify.js'].branchData['157'][1].init(464, 25, 'typeof space === \'string\'');
-function visit76_157_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['157'][1].ranCondition(result);
+_$jscoverage['/json/stringify.js'].branchData['158'][1].init(467, 25, 'typeof space === \'string\'');
+function visit81_158_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['154'][1].init(321, 25, 'typeof space === \'number\'');
-function visit75_154_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['154'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['155'][1].init(324, 25, 'typeof space === \'number\'');
+function visit80_155_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['149'][1].init(123, 19, 'S.isArray(replacer)');
-function visit74_149_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['149'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['150'][1].init(123, 22, 'util.isArray(replacer)');
+function visit79_150_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['150'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['147'][1].init(18, 30, 'typeof replacer === \'function\'');
-function visit73_147_1(result) {
+}_$jscoverage['/json/stringify.js'].branchData['148'][1].init(18, 30, 'typeof replacer === \'function\'');
+function visit78_148_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['148'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/json/stringify.js'].branchData['147'][1].init(82, 8, 'replacer');
+function visit77_147_1(result) {
   _$jscoverage['/json/stringify.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['146'][1].init(82, 8, 'replacer');
-function visit72_146_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['137'][1].init(1095, 9, '\'@DEBUG@\'');
+function visit76_137_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['136'][1].init(1092, 9, '\'@DEBUG@\'');
-function visit71_136_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['136'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['129'][1].init(18, 4, '!gap');
+function visit75_129_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['128'][1].init(18, 4, '!gap');
-function visit70_128_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['128'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['126'][1].init(709, 15, '!partial.length');
+function visit74_126_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['125'][1].init(706, 15, '!partial.length');
-function visit69_125_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['125'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['118'][1].init(121, 18, 'strP === undefined');
+function visit73_118_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['117'][1].init(121, 18, 'strP === undefined');
-function visit68_117_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['116'][1].init(351, 11, 'index < len');
+function visit72_116_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['115'][1].init(348, 11, 'index < len');
-function visit67_115_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['106'][1].init(18, 26, 'util.inArray(value, stack)');
+function visit71_106_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['105'][1].init(18, 23, 'S.inArray(value, stack)');
-function visit66_105_1(result) {
+}_$jscoverage['/json/stringify.js'].branchData['105'][1].init(14, 9, '\'@DEBUG@\'');
+function visit70_105_1(result) {
   _$jscoverage['/json/stringify.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['104'][1].init(14, 9, '\'@DEBUG@\'');
-function visit65_104_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['104'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['98'][1].init(1336, 9, '\'@DEBUG@\'');
+function visit69_98_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['97'][1].init(1330, 9, '\'@DEBUG@\'');
-function visit64_97_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['97'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['90'][1].init(18, 4, '!gap');
+function visit68_90_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['89'][1].init(18, 4, '!gap');
-function visit63_89_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['87'][1].init(950, 15, '!partial.length');
+function visit67_87_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['86'][1].init(944, 15, '!partial.length');
-function visit62_86_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['79'][1].init(100, 3, 'gap');
+function visit66_79_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['78'][1].init(100, 3, 'gap');
-function visit61_78_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['78'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['76'][1].init(132, 18, 'strP !== undefined');
+function visit65_76_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['75'][1].init(132, 18, 'strP !== undefined');
-function visit60_75_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['75'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['73'][1].init(480, 6, 'i < kl');
+function visit64_73_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['72'][1].init(474, 6, 'i < kl');
-function visit59_72_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['72'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['67'][1].init(292, 26, 'propertyList !== undefined');
+function visit63_67_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['66'][1].init(289, 26, 'propertyList !== undefined');
-function visit58_66_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['58'][1].init(18, 26, 'util.inArray(value, stack)');
+function visit62_58_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['57'][1].init(18, 23, 'S.inArray(value, stack)');
-function visit57_57_1(result) {
+}_$jscoverage['/json/stringify.js'].branchData['57'][1].init(14, 9, '\'@DEBUG@\'');
+function visit61_57_1(result) {
   _$jscoverage['/json/stringify.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['56'][1].init(14, 9, '\'@DEBUG@\'');
-function visit56_56_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['46'][1].init(121, 19, 'util.isArray(value)');
+function visit60_46_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['45'][1].init(121, 16, 'S.isArray(value)');
-function visit55_45_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['43'][1].init(35, 6, '!value');
+function visit59_43_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['42'][1].init(35, 6, '!value');
-function visit54_42_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['31'][1].init(856, 30, 'replacerFunction !== undefined');
+function visit58_31_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['30'][1].init(856, 30, 'replacerFunction !== undefined');
-function visit53_30_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['27'][2].init(636, 52, 'value instanceof Number || value instanceof Boolean');
+function visit57_27_2(result) {
+  _$jscoverage['/json/stringify.js'].branchData['27'][2].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['26'][2].init(636, 52, 'value instanceof Number || value instanceof Boolean');
-function visit52_26_2(result) {
-  _$jscoverage['/json/stringify.js'].branchData['26'][2].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['27'][1].init(608, 80, 'value instanceof String || value instanceof Number || value instanceof Boolean');
+function visit56_27_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['26'][1].init(608, 80, 'value instanceof String || value instanceof Number || value instanceof Boolean');
-function visit51_26_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['26'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['19'][1].init(125, 21, 'value instanceof Date');
+function visit55_19_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['18'][1].init(125, 21, 'value instanceof Date');
-function visit50_18_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['17'][1].init(18, 34, 'typeof value.toJSON === \'function\'');
+function visit54_17_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['16'][1].init(18, 34, 'typeof value.toJSON === \'function\'');
-function visit49_16_1(result) {
+}_$jscoverage['/json/stringify.js'].branchData['16'][2].init(57, 25, 'typeof value === \'object\'');
+function visit53_16_2(result) {
+  _$jscoverage['/json/stringify.js'].branchData['16'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/json/stringify.js'].branchData['16'][1].init(48, 34, 'value && typeof value === \'object\'');
+function visit52_16_1(result) {
   _$jscoverage['/json/stringify.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['15'][2].init(57, 25, 'typeof value === \'object\'');
-function visit48_15_2(result) {
-  _$jscoverage['/json/stringify.js'].branchData['15'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/json/stringify.js'].branchData['15'][1].init(48, 34, 'value && typeof value === \'object\'');
-function visit47_15_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['15'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/json/stringify.js'].branchData['10'][1].init(17, 6, 'n < 10');
-function visit46_10_1(result) {
-  _$jscoverage['/json/stringify.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/json/stringify.js'].branchData['11'][1].init(17, 6, 'n < 10');
+function visit51_11_1(result) {
+  _$jscoverage['/json/stringify.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json/stringify.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/json/stringify.js'].functionData[0]++;
   _$jscoverage['/json/stringify.js'].lineData[7]++;
   var Quote = require('./quote');
-  _$jscoverage['/json/stringify.js'].lineData[9]++;
+  _$jscoverage['/json/stringify.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/json/stringify.js'].lineData[10]++;
   function padding2(n) {
     _$jscoverage['/json/stringify.js'].functionData[1]++;
-    _$jscoverage['/json/stringify.js'].lineData[10]++;
-    return visit46_10_1(n < 10) ? '0' + n : n;
+    _$jscoverage['/json/stringify.js'].lineData[11]++;
+    return visit51_11_1(n < 10) ? '0' + n : n;
   }
-  _$jscoverage['/json/stringify.js'].lineData[13]++;
+  _$jscoverage['/json/stringify.js'].lineData[14]++;
   function str(key, holder, replacerFunction, propertyList, gap, stack, indent) {
     _$jscoverage['/json/stringify.js'].functionData[2]++;
-    _$jscoverage['/json/stringify.js'].lineData[14]++;
-    var value = holder[key];
     _$jscoverage['/json/stringify.js'].lineData[15]++;
-    if (visit47_15_1(value && visit48_15_2(typeof value === 'object'))) {
-      _$jscoverage['/json/stringify.js'].lineData[16]++;
-      if (visit49_16_1(typeof value.toJSON === 'function')) {
-        _$jscoverage['/json/stringify.js'].lineData[17]++;
+    var value = holder[key];
+    _$jscoverage['/json/stringify.js'].lineData[16]++;
+    if (visit52_16_1(value && visit53_16_2(typeof value === 'object'))) {
+      _$jscoverage['/json/stringify.js'].lineData[17]++;
+      if (visit54_17_1(typeof value.toJSON === 'function')) {
+        _$jscoverage['/json/stringify.js'].lineData[18]++;
         value = value.toJSON(key);
       } else {
-        _$jscoverage['/json/stringify.js'].lineData[18]++;
-        if (visit50_18_1(value instanceof Date)) {
-          _$jscoverage['/json/stringify.js'].lineData[19]++;
+        _$jscoverage['/json/stringify.js'].lineData[19]++;
+        if (visit55_19_1(value instanceof Date)) {
+          _$jscoverage['/json/stringify.js'].lineData[20]++;
           value = isFinite(value.valueOf()) ? value.getUTCFullYear() + '-' + padding2(value.getUTCMonth() + 1) + '-' + padding2(value.getUTCDate()) + 'T' + padding2(value.getUTCHours()) + ':' + padding2(value.getUTCMinutes()) + ':' + padding2(value.getUTCSeconds()) + 'Z' : null;
         } else {
-          _$jscoverage['/json/stringify.js'].lineData[26]++;
-          if (visit51_26_1(value instanceof String || visit52_26_2(value instanceof Number || value instanceof Boolean))) {
-            _$jscoverage['/json/stringify.js'].lineData[27]++;
+          _$jscoverage['/json/stringify.js'].lineData[27]++;
+          if (visit56_27_1(value instanceof String || visit57_27_2(value instanceof Number || value instanceof Boolean))) {
+            _$jscoverage['/json/stringify.js'].lineData[28]++;
             value = value.valueOf();
           }
         }
       }
     }
-    _$jscoverage['/json/stringify.js'].lineData[30]++;
-    if (visit53_30_1(replacerFunction !== undefined)) {
-      _$jscoverage['/json/stringify.js'].lineData[31]++;
+    _$jscoverage['/json/stringify.js'].lineData[31]++;
+    if (visit58_31_1(replacerFunction !== undefined)) {
+      _$jscoverage['/json/stringify.js'].lineData[32]++;
       value = replacerFunction.call(holder, key, value);
     }
-    _$jscoverage['/json/stringify.js'].lineData[34]++;
+    _$jscoverage['/json/stringify.js'].lineData[35]++;
     switch (typeof value) {
       case 'number':
-        _$jscoverage['/json/stringify.js'].lineData[36]++;
+        _$jscoverage['/json/stringify.js'].lineData[37]++;
         return isFinite(value) ? String(value) : 'null';
       case 'string':
-        _$jscoverage['/json/stringify.js'].lineData[38]++;
+        _$jscoverage['/json/stringify.js'].lineData[39]++;
         return Quote.quote(value);
       case 'boolean':
-        _$jscoverage['/json/stringify.js'].lineData[40]++;
+        _$jscoverage['/json/stringify.js'].lineData[41]++;
         return String(value);
       case 'object':
-        _$jscoverage['/json/stringify.js'].lineData[42]++;
-        if (visit54_42_1(!value)) {
-          _$jscoverage['/json/stringify.js'].lineData[43]++;
+        _$jscoverage['/json/stringify.js'].lineData[43]++;
+        if (visit59_43_1(!value)) {
+          _$jscoverage['/json/stringify.js'].lineData[44]++;
           return 'null';
         }
-        _$jscoverage['/json/stringify.js'].lineData[45]++;
-        if (visit55_45_1(S.isArray(value))) {
-          _$jscoverage['/json/stringify.js'].lineData[46]++;
+        _$jscoverage['/json/stringify.js'].lineData[46]++;
+        if (visit60_46_1(util.isArray(value))) {
+          _$jscoverage['/json/stringify.js'].lineData[47]++;
           return ja(value, replacerFunction, propertyList, gap, stack, indent);
         }
-        _$jscoverage['/json/stringify.js'].lineData[48]++;
+        _$jscoverage['/json/stringify.js'].lineData[49]++;
         return jo(value, replacerFunction, propertyList, gap, stack, indent);
     }
-    _$jscoverage['/json/stringify.js'].lineData[52]++;
+    _$jscoverage['/json/stringify.js'].lineData[53]++;
     return undefined;
   }
-  _$jscoverage['/json/stringify.js'].lineData[55]++;
+  _$jscoverage['/json/stringify.js'].lineData[56]++;
   function jo(value, replacerFunction, propertyList, gap, stack, indent) {
     _$jscoverage['/json/stringify.js'].functionData[3]++;
-    _$jscoverage['/json/stringify.js'].lineData[56]++;
-    if (visit56_56_1('@DEBUG@')) {
-      _$jscoverage['/json/stringify.js'].lineData[57]++;
-      if (visit57_57_1(S.inArray(value, stack))) {
-        _$jscoverage['/json/stringify.js'].lineData[58]++;
+    _$jscoverage['/json/stringify.js'].lineData[57]++;
+    if (visit61_57_1('@DEBUG@')) {
+      _$jscoverage['/json/stringify.js'].lineData[58]++;
+      if (visit62_58_1(util.inArray(value, stack))) {
+        _$jscoverage['/json/stringify.js'].lineData[59]++;
         throw new TypeError('cyclic json');
       }
-      _$jscoverage['/json/stringify.js'].lineData[60]++;
+      _$jscoverage['/json/stringify.js'].lineData[61]++;
       stack[stack.length] = value;
     }
-    _$jscoverage['/json/stringify.js'].lineData[63]++;
-    var stepBack = indent;
     _$jscoverage['/json/stringify.js'].lineData[64]++;
-    indent += gap;
+    var stepBack = indent;
     _$jscoverage['/json/stringify.js'].lineData[65]++;
-    var k, kl, i, p;
+    indent += gap;
     _$jscoverage['/json/stringify.js'].lineData[66]++;
-    if (visit58_66_1(propertyList !== undefined)) {
-      _$jscoverage['/json/stringify.js'].lineData[67]++;
+    var k, kl, i, p;
+    _$jscoverage['/json/stringify.js'].lineData[67]++;
+    if (visit63_67_1(propertyList !== undefined)) {
+      _$jscoverage['/json/stringify.js'].lineData[68]++;
       k = propertyList;
     } else {
-      _$jscoverage['/json/stringify.js'].lineData[69]++;
-      k = S.keys(value);
+      _$jscoverage['/json/stringify.js'].lineData[70]++;
+      k = util.keys(value);
     }
-    _$jscoverage['/json/stringify.js'].lineData[71]++;
-    var partial = [];
     _$jscoverage['/json/stringify.js'].lineData[72]++;
-    for (i = 0 , kl = k.length; visit59_72_1(i < kl); i++) {
-      _$jscoverage['/json/stringify.js'].lineData[73]++;
-      p = k[i];
+    var partial = [];
+    _$jscoverage['/json/stringify.js'].lineData[73]++;
+    for (i = 0 , kl = k.length; visit64_73_1(i < kl); i++) {
       _$jscoverage['/json/stringify.js'].lineData[74]++;
-      var strP = str(p, value, replacerFunction, propertyList, gap, stack, indent);
+      p = k[i];
       _$jscoverage['/json/stringify.js'].lineData[75]++;
-      if (visit60_75_1(strP !== undefined)) {
-        _$jscoverage['/json/stringify.js'].lineData[76]++;
-        var member = Quote.quote(p);
+      var strP = str(p, value, replacerFunction, propertyList, gap, stack, indent);
+      _$jscoverage['/json/stringify.js'].lineData[76]++;
+      if (visit65_76_1(strP !== undefined)) {
         _$jscoverage['/json/stringify.js'].lineData[77]++;
-        member += ':';
+        var member = Quote.quote(p);
         _$jscoverage['/json/stringify.js'].lineData[78]++;
-        if (visit61_78_1(gap)) {
-          _$jscoverage['/json/stringify.js'].lineData[79]++;
+        member += ':';
+        _$jscoverage['/json/stringify.js'].lineData[79]++;
+        if (visit66_79_1(gap)) {
+          _$jscoverage['/json/stringify.js'].lineData[80]++;
           member += ' ';
         }
-        _$jscoverage['/json/stringify.js'].lineData[81]++;
-        member += strP;
         _$jscoverage['/json/stringify.js'].lineData[82]++;
+        member += strP;
+        _$jscoverage['/json/stringify.js'].lineData[83]++;
         partial[partial.length] = member;
       }
     }
-    _$jscoverage['/json/stringify.js'].lineData[85]++;
-    var ret;
     _$jscoverage['/json/stringify.js'].lineData[86]++;
-    if (visit62_86_1(!partial.length)) {
-      _$jscoverage['/json/stringify.js'].lineData[87]++;
+    var ret;
+    _$jscoverage['/json/stringify.js'].lineData[87]++;
+    if (visit67_87_1(!partial.length)) {
+      _$jscoverage['/json/stringify.js'].lineData[88]++;
       ret = '{}';
     } else {
-      _$jscoverage['/json/stringify.js'].lineData[89]++;
-      if (visit63_89_1(!gap)) {
-        _$jscoverage['/json/stringify.js'].lineData[90]++;
+      _$jscoverage['/json/stringify.js'].lineData[90]++;
+      if (visit68_90_1(!gap)) {
+        _$jscoverage['/json/stringify.js'].lineData[91]++;
         ret = '{' + partial.join(',') + '}';
       } else {
-        _$jscoverage['/json/stringify.js'].lineData[92]++;
-        var separator = ',\n' + indent;
         _$jscoverage['/json/stringify.js'].lineData[93]++;
-        var properties = partial.join(separator);
+        var separator = ',\n' + indent;
         _$jscoverage['/json/stringify.js'].lineData[94]++;
+        var properties = partial.join(separator);
+        _$jscoverage['/json/stringify.js'].lineData[95]++;
         ret = '{\n' + indent + properties + '\n' + stepBack + '}';
       }
     }
-    _$jscoverage['/json/stringify.js'].lineData[97]++;
-    if (visit64_97_1('@DEBUG@')) {
-      _$jscoverage['/json/stringify.js'].lineData[98]++;
+    _$jscoverage['/json/stringify.js'].lineData[98]++;
+    if (visit69_98_1('@DEBUG@')) {
+      _$jscoverage['/json/stringify.js'].lineData[99]++;
       stack.pop();
     }
-    _$jscoverage['/json/stringify.js'].lineData[100]++;
+    _$jscoverage['/json/stringify.js'].lineData[101]++;
     return ret;
   }
-  _$jscoverage['/json/stringify.js'].lineData[103]++;
+  _$jscoverage['/json/stringify.js'].lineData[104]++;
   function ja(value, replacerFunction, propertyList, gap, stack, indent) {
     _$jscoverage['/json/stringify.js'].functionData[4]++;
-    _$jscoverage['/json/stringify.js'].lineData[104]++;
-    if (visit65_104_1('@DEBUG@')) {
-      _$jscoverage['/json/stringify.js'].lineData[105]++;
-      if (visit66_105_1(S.inArray(value, stack))) {
-        _$jscoverage['/json/stringify.js'].lineData[106]++;
+    _$jscoverage['/json/stringify.js'].lineData[105]++;
+    if (visit70_105_1('@DEBUG@')) {
+      _$jscoverage['/json/stringify.js'].lineData[106]++;
+      if (visit71_106_1(util.inArray(value, stack))) {
+        _$jscoverage['/json/stringify.js'].lineData[107]++;
         throw new TypeError('cyclic json');
       }
-      _$jscoverage['/json/stringify.js'].lineData[108]++;
+      _$jscoverage['/json/stringify.js'].lineData[109]++;
       stack[stack.length] = value;
     }
-    _$jscoverage['/json/stringify.js'].lineData[110]++;
-    var stepBack = indent;
     _$jscoverage['/json/stringify.js'].lineData[111]++;
-    indent += gap;
+    var stepBack = indent;
     _$jscoverage['/json/stringify.js'].lineData[112]++;
-    var partial = [];
+    indent += gap;
     _$jscoverage['/json/stringify.js'].lineData[113]++;
-    var len = value.length;
+    var partial = [];
     _$jscoverage['/json/stringify.js'].lineData[114]++;
-    var index = 0;
+    var len = value.length;
     _$jscoverage['/json/stringify.js'].lineData[115]++;
-    while (visit67_115_1(index < len)) {
-      _$jscoverage['/json/stringify.js'].lineData[116]++;
-      var strP = str(String(index), value, replacerFunction, propertyList, gap, stack, indent);
+    var index = 0;
+    _$jscoverage['/json/stringify.js'].lineData[116]++;
+    while (visit72_116_1(index < len)) {
       _$jscoverage['/json/stringify.js'].lineData[117]++;
-      if (visit68_117_1(strP === undefined)) {
-        _$jscoverage['/json/stringify.js'].lineData[118]++;
+      var strP = str(String(index), value, replacerFunction, propertyList, gap, stack, indent);
+      _$jscoverage['/json/stringify.js'].lineData[118]++;
+      if (visit73_118_1(strP === undefined)) {
+        _$jscoverage['/json/stringify.js'].lineData[119]++;
         partial[partial.length] = 'null';
       } else {
-        _$jscoverage['/json/stringify.js'].lineData[120]++;
+        _$jscoverage['/json/stringify.js'].lineData[121]++;
         partial[partial.length] = strP;
       }
-      _$jscoverage['/json/stringify.js'].lineData[122]++;
+      _$jscoverage['/json/stringify.js'].lineData[123]++;
       ++index;
     }
-    _$jscoverage['/json/stringify.js'].lineData[124]++;
-    var ret;
     _$jscoverage['/json/stringify.js'].lineData[125]++;
-    if (visit69_125_1(!partial.length)) {
-      _$jscoverage['/json/stringify.js'].lineData[126]++;
+    var ret;
+    _$jscoverage['/json/stringify.js'].lineData[126]++;
+    if (visit74_126_1(!partial.length)) {
+      _$jscoverage['/json/stringify.js'].lineData[127]++;
       ret = '[]';
     } else {
-      _$jscoverage['/json/stringify.js'].lineData[128]++;
-      if (visit70_128_1(!gap)) {
-        _$jscoverage['/json/stringify.js'].lineData[129]++;
+      _$jscoverage['/json/stringify.js'].lineData[129]++;
+      if (visit75_129_1(!gap)) {
+        _$jscoverage['/json/stringify.js'].lineData[130]++;
         ret = '[' + partial.join(',') + ']';
       } else {
-        _$jscoverage['/json/stringify.js'].lineData[131]++;
-        var separator = '\n,' + indent;
         _$jscoverage['/json/stringify.js'].lineData[132]++;
-        var properties = partial.join(separator);
+        var separator = '\n,' + indent;
         _$jscoverage['/json/stringify.js'].lineData[133]++;
+        var properties = partial.join(separator);
+        _$jscoverage['/json/stringify.js'].lineData[134]++;
         ret = '[\n' + indent + properties + '\n' + stepBack + ']';
       }
     }
-    _$jscoverage['/json/stringify.js'].lineData[136]++;
-    if (visit71_136_1('@DEBUG@')) {
-      _$jscoverage['/json/stringify.js'].lineData[137]++;
+    _$jscoverage['/json/stringify.js'].lineData[137]++;
+    if (visit76_137_1('@DEBUG@')) {
+      _$jscoverage['/json/stringify.js'].lineData[138]++;
       stack.pop();
     }
-    _$jscoverage['/json/stringify.js'].lineData[140]++;
+    _$jscoverage['/json/stringify.js'].lineData[141]++;
     return ret;
   }
-  _$jscoverage['/json/stringify.js'].lineData[143]++;
+  _$jscoverage['/json/stringify.js'].lineData[144]++;
   function stringify(value, replacer, space) {
     _$jscoverage['/json/stringify.js'].functionData[5]++;
-    _$jscoverage['/json/stringify.js'].lineData[144]++;
-    var gap = '';
     _$jscoverage['/json/stringify.js'].lineData[145]++;
-    var propertyList, replacerFunction;
+    var gap = '';
     _$jscoverage['/json/stringify.js'].lineData[146]++;
-    if (visit72_146_1(replacer)) {
-      _$jscoverage['/json/stringify.js'].lineData[147]++;
-      if (visit73_147_1(typeof replacer === 'function')) {
-        _$jscoverage['/json/stringify.js'].lineData[148]++;
+    var propertyList, replacerFunction;
+    _$jscoverage['/json/stringify.js'].lineData[147]++;
+    if (visit77_147_1(replacer)) {
+      _$jscoverage['/json/stringify.js'].lineData[148]++;
+      if (visit78_148_1(typeof replacer === 'function')) {
+        _$jscoverage['/json/stringify.js'].lineData[149]++;
         replacerFunction = replacer;
       } else {
-        _$jscoverage['/json/stringify.js'].lineData[149]++;
-        if (visit74_149_1(S.isArray(replacer))) {
-          _$jscoverage['/json/stringify.js'].lineData[150]++;
+        _$jscoverage['/json/stringify.js'].lineData[150]++;
+        if (visit79_150_1(util.isArray(replacer))) {
+          _$jscoverage['/json/stringify.js'].lineData[151]++;
           propertyList = replacer;
         }
       }
     }
-    _$jscoverage['/json/stringify.js'].lineData[154]++;
-    if (visit75_154_1(typeof space === 'number')) {
-      _$jscoverage['/json/stringify.js'].lineData[155]++;
-      space = Math.min(10, space);
+    _$jscoverage['/json/stringify.js'].lineData[155]++;
+    if (visit80_155_1(typeof space === 'number')) {
       _$jscoverage['/json/stringify.js'].lineData[156]++;
+      space = Math.min(10, space);
+      _$jscoverage['/json/stringify.js'].lineData[157]++;
       gap = new Array(space + 1).join(' ');
     } else {
-      _$jscoverage['/json/stringify.js'].lineData[157]++;
-      if (visit76_157_1(typeof space === 'string')) {
-        _$jscoverage['/json/stringify.js'].lineData[158]++;
+      _$jscoverage['/json/stringify.js'].lineData[158]++;
+      if (visit81_158_1(typeof space === 'string')) {
+        _$jscoverage['/json/stringify.js'].lineData[159]++;
         gap = space.slice(0, 10);
       }
     }
-    _$jscoverage['/json/stringify.js'].lineData[161]++;
+    _$jscoverage['/json/stringify.js'].lineData[162]++;
     return str('', {
   '': value}, replacerFunction, propertyList, gap, [], '');
   }
-  _$jscoverage['/json/stringify.js'].lineData[166]++;
+  _$jscoverage['/json/stringify.js'].lineData[167]++;
   return stringify;
 });

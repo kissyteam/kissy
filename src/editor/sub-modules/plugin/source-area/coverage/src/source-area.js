@@ -281,7 +281,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/source-area.js'].functionData[1]++;
   }
   _$jscoverage['/source-area.js'].lineData[15]++;
-  S.augment(sourceArea, {
+  (sourceArea.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/source-area.js'].functionData[2]++;
   _$jscoverage['/source-area.js'].lineData[17]++;

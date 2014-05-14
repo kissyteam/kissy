@@ -1,4 +1,4 @@
-KISSY.use('menu', function (S, Menu) {
+KISSY.use('menu,util', function (S, Menu,util) {
     var prefixCls = "nav-";
 
     // 首先创建一个弹出菜单
@@ -13,7 +13,7 @@ KISSY.use('menu', function (S, Menu) {
         prefixCls:prefixCls
     });
 
-    S.each(['日志', '相册', '个人资料'], function (title) {
+    util.each(['日志', '相册', '个人资料'], function (title) {
         sb.addChild(new Menu.Item({
             prefixCls:prefixCls,
             content:'<a href="javascript:void(0)" tabindex="-1">' + title + '</a>'
@@ -35,7 +35,7 @@ KISSY.use('menu', function (S, Menu) {
         elCls:"horizonal"
     });
 
-    S.each(['淘单', '动态'], function (title) {
+    util.each(['淘单', '动态'], function (title) {
         menu.addChild(new Menu.Item({
             prefixCls:prefixCls,
             content:'<a href="javascript:void(0)" class='title' tabindex="-1">' + title + '</a>'

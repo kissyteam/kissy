@@ -3,4 +3,9 @@
     <import file="../common.xml"/>
     <target name="compress-css"/>
     <target name="tpl2mod"/>
+    <target name="build" depends="common.build.build">
+        <subant target="build-seed" failonerror="false"
+                buildpath="${kissy.src.dir}/"
+                inheritall="false"/>
+    </target>
 </project>

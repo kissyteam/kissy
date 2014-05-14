@@ -10,6 +10,7 @@ KISSY.add(function (S, require) {
     require('util/object');
     require('util/string');
     require('util/type');
+    require('util/json');
     require('util/web');
     return require('util/base');
 });

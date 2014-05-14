@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
      * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
      * and also allows other EventTargets to target the object with events sourced from the other object.
      *
-     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
+     * EventTarget is designed to be used with augment to allow events to be listened to and fired by name.
      *
      * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
      * or will not be created at all.
@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
      *
      *      @example
      *      KISSY.use('event/custom',function(S,CustomEvent){
-     *          var target = S.mix({}, CustomEvent.Target);
+     *          var target = mix({}, CustomEvent.Target);
      *          target.on('ok',function(){
      *              document.writeln('ok fired @'+new Date());
      *          });

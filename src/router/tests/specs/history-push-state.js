@@ -2,7 +2,7 @@
  * Router spec for mvc html5 history
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Router) {
+KISSY.add(function (S, util,Router) {
     /*jshint quotmark:false*/
     if (!window.history.pushState) {
         return;
@@ -121,7 +121,7 @@ KISSY.add(function (S, Router) {
             waits(200);
 
             runs(function () {
-                S.each({
+                util.each({
                     "/go/": function () {
                         go++;
                     },
@@ -193,5 +193,5 @@ KISSY.add(function (S, Router) {
         });
     });
 }, {
-    requires: ['router']
+    requires: ['util','router']
 });

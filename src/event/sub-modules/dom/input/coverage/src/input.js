@@ -233,67 +233,67 @@ if (! _$jscoverage['/input.js']) {
   _$jscoverage['/input.js'].lineData[7] = 0;
   _$jscoverage['/input.js'].lineData[8] = 0;
   _$jscoverage['/input.js'].lineData[9] = 0;
-  _$jscoverage['/input.js'].lineData[10] = 0;
   _$jscoverage['/input.js'].lineData[12] = 0;
-  _$jscoverage['/input.js'].lineData[13] = 0;
   _$jscoverage['/input.js'].lineData[14] = 0;
   _$jscoverage['/input.js'].lineData[15] = 0;
   _$jscoverage['/input.js'].lineData[16] = 0;
   _$jscoverage['/input.js'].lineData[17] = 0;
+  _$jscoverage['/input.js'].lineData[18] = 0;
   _$jscoverage['/input.js'].lineData[19] = 0;
-  _$jscoverage['/input.js'].lineData[22] = 0;
-  _$jscoverage['/input.js'].lineData[28] = 0;
-  _$jscoverage['/input.js'].lineData[29] = 0;
+  _$jscoverage['/input.js'].lineData[21] = 0;
+  _$jscoverage['/input.js'].lineData[24] = 0;
   _$jscoverage['/input.js'].lineData[30] = 0;
   _$jscoverage['/input.js'].lineData[31] = 0;
   _$jscoverage['/input.js'].lineData[32] = 0;
-  _$jscoverage['/input.js'].lineData[36] = 0;
-  _$jscoverage['/input.js'].lineData[37] = 0;
+  _$jscoverage['/input.js'].lineData[33] = 0;
+  _$jscoverage['/input.js'].lineData[34] = 0;
   _$jscoverage['/input.js'].lineData[38] = 0;
-  _$jscoverage['/input.js'].lineData[41] = 0;
-  _$jscoverage['/input.js'].lineData[42] = 0;
-  _$jscoverage['/input.js'].lineData[45] = 0;
-  _$jscoverage['/input.js'].lineData[46] = 0;
+  _$jscoverage['/input.js'].lineData[39] = 0;
+  _$jscoverage['/input.js'].lineData[40] = 0;
+  _$jscoverage['/input.js'].lineData[43] = 0;
+  _$jscoverage['/input.js'].lineData[44] = 0;
+  _$jscoverage['/input.js'].lineData[47] = 0;
   _$jscoverage['/input.js'].lineData[48] = 0;
   _$jscoverage['/input.js'].lineData[50] = 0;
-  _$jscoverage['/input.js'].lineData[51] = 0;
-  _$jscoverage['/input.js'].lineData[55] = 0;
-  _$jscoverage['/input.js'].lineData[56] = 0;
+  _$jscoverage['/input.js'].lineData[52] = 0;
+  _$jscoverage['/input.js'].lineData[53] = 0;
   _$jscoverage['/input.js'].lineData[57] = 0;
+  _$jscoverage['/input.js'].lineData[58] = 0;
   _$jscoverage['/input.js'].lineData[59] = 0;
-  _$jscoverage['/input.js'].lineData[60] = 0;
   _$jscoverage['/input.js'].lineData[61] = 0;
-  _$jscoverage['/input.js'].lineData[65] = 0;
-  _$jscoverage['/input.js'].lineData[66] = 0;
+  _$jscoverage['/input.js'].lineData[62] = 0;
+  _$jscoverage['/input.js'].lineData[63] = 0;
+  _$jscoverage['/input.js'].lineData[67] = 0;
   _$jscoverage['/input.js'].lineData[68] = 0;
-  _$jscoverage['/input.js'].lineData[69] = 0;
+  _$jscoverage['/input.js'].lineData[70] = 0;
   _$jscoverage['/input.js'].lineData[71] = 0;
-  _$jscoverage['/input.js'].lineData[74] = 0;
-  _$jscoverage['/input.js'].lineData[75] = 0;
+  _$jscoverage['/input.js'].lineData[73] = 0;
   _$jscoverage['/input.js'].lineData[76] = 0;
   _$jscoverage['/input.js'].lineData[77] = 0;
-  _$jscoverage['/input.js'].lineData[80] = 0;
-  _$jscoverage['/input.js'].lineData[81] = 0;
+  _$jscoverage['/input.js'].lineData[78] = 0;
+  _$jscoverage['/input.js'].lineData[79] = 0;
   _$jscoverage['/input.js'].lineData[82] = 0;
   _$jscoverage['/input.js'].lineData[83] = 0;
-  _$jscoverage['/input.js'].lineData[86] = 0;
+  _$jscoverage['/input.js'].lineData[84] = 0;
+  _$jscoverage['/input.js'].lineData[85] = 0;
   _$jscoverage['/input.js'].lineData[88] = 0;
-  _$jscoverage['/input.js'].lineData[89] = 0;
   _$jscoverage['/input.js'].lineData[90] = 0;
-  _$jscoverage['/input.js'].lineData[93] = 0;
-  _$jscoverage['/input.js'].lineData[97] = 0;
-  _$jscoverage['/input.js'].lineData[98] = 0;
+  _$jscoverage['/input.js'].lineData[91] = 0;
+  _$jscoverage['/input.js'].lineData[92] = 0;
+  _$jscoverage['/input.js'].lineData[95] = 0;
   _$jscoverage['/input.js'].lineData[99] = 0;
+  _$jscoverage['/input.js'].lineData[100] = 0;
   _$jscoverage['/input.js'].lineData[101] = 0;
-  _$jscoverage['/input.js'].lineData[102] = 0;
   _$jscoverage['/input.js'].lineData[103] = 0;
   _$jscoverage['/input.js'].lineData[104] = 0;
   _$jscoverage['/input.js'].lineData[105] = 0;
-  _$jscoverage['/input.js'].lineData[112] = 0;
-  _$jscoverage['/input.js'].lineData[113] = 0;
+  _$jscoverage['/input.js'].lineData[106] = 0;
+  _$jscoverage['/input.js'].lineData[107] = 0;
   _$jscoverage['/input.js'].lineData[114] = 0;
   _$jscoverage['/input.js'].lineData[115] = 0;
+  _$jscoverage['/input.js'].lineData[116] = 0;
   _$jscoverage['/input.js'].lineData[117] = 0;
+  _$jscoverage['/input.js'].lineData[119] = 0;
 }
 if (! _$jscoverage['/input.js'].functionData) {
   _$jscoverage['/input.js'].functionData = [];
@@ -312,91 +312,92 @@ if (! _$jscoverage['/input.js'].functionData) {
   _$jscoverage['/input.js'].functionData[12] = 0;
   _$jscoverage['/input.js'].functionData[13] = 0;
   _$jscoverage['/input.js'].functionData[14] = 0;
+  _$jscoverage['/input.js'].functionData[15] = 0;
 }
 if (! _$jscoverage['/input.js'].branchData) {
   _$jscoverage['/input.js'].branchData = {};
-  _$jscoverage['/input.js'].branchData['13'] = [];
-  _$jscoverage['/input.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['14'] = [];
-  _$jscoverage['/input.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['15'] = [];
+  _$jscoverage['/input.js'].branchData['15'][1] = new BranchData();
   _$jscoverage['/input.js'].branchData['16'] = [];
   _$jscoverage['/input.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['17'] = [];
-  _$jscoverage['/input.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['17'][2] = new BranchData();
-  _$jscoverage['/input.js'].branchData['17'][3] = new BranchData();
-  _$jscoverage['/input.js'].branchData['29'] = [];
-  _$jscoverage['/input.js'].branchData['29'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['48'] = [];
-  _$jscoverage['/input.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['56'] = [];
-  _$jscoverage['/input.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['68'] = [];
-  _$jscoverage['/input.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['89'] = [];
-  _$jscoverage['/input.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['98'] = [];
-  _$jscoverage['/input.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['103'] = [];
-  _$jscoverage['/input.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/input.js'].branchData['114'] = [];
-  _$jscoverage['/input.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['18'] = [];
+  _$jscoverage['/input.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['19'] = [];
+  _$jscoverage['/input.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['19'][2] = new BranchData();
+  _$jscoverage['/input.js'].branchData['19'][3] = new BranchData();
+  _$jscoverage['/input.js'].branchData['31'] = [];
+  _$jscoverage['/input.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['50'] = [];
+  _$jscoverage['/input.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['58'] = [];
+  _$jscoverage['/input.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['70'] = [];
+  _$jscoverage['/input.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['91'] = [];
+  _$jscoverage['/input.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['100'] = [];
+  _$jscoverage['/input.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['105'] = [];
+  _$jscoverage['/input.js'].branchData['105'][1] = new BranchData();
+  _$jscoverage['/input.js'].branchData['116'] = [];
+  _$jscoverage['/input.js'].branchData['116'][1] = new BranchData();
 }
-_$jscoverage['/input.js'].branchData['114'][1].init(41, 36, 'canFireInput(t) && !t.__inputHandler');
-function visit14_114_1(result) {
-  _$jscoverage['/input.js'].branchData['114'][1].ranCondition(result);
+_$jscoverage['/input.js'].branchData['116'][1].init(41, 36, 'canFireInput(t) && !t.__inputHandler');
+function visit14_116_1(result) {
+  _$jscoverage['/input.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['103'][1].init(26, 18, 'fel.__inputHandler');
-function visit13_103_1(result) {
-  _$jscoverage['/input.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['105'][1].init(26, 18, 'fel.__inputHandler');
+function visit13_105_1(result) {
+  _$jscoverage['/input.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['98'][1].init(48, 18, 'canFireInput(self)');
-function visit12_98_1(result) {
-  _$jscoverage['/input.js'].branchData['98'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['100'][1].init(48, 18, 'canFireInput(self)');
+function visit12_100_1(result) {
+  _$jscoverage['/input.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['89'][1].init(48, 18, 'canFireInput(self)');
-function visit11_89_1(result) {
-  _$jscoverage['/input.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['91'][1].init(48, 18, 'canFireInput(self)');
+function visit11_91_1(result) {
+  _$jscoverage['/input.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['68'][1].init(108, 19, 'ev.type === \'focus\'');
-function visit10_68_1(result) {
-  _$jscoverage['/input.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['70'][1].init(108, 19, 'ev.type === \'focus\'');
+function visit10_70_1(result) {
+  _$jscoverage['/input.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['56'][1].init(14, 29, 'Dom.hasData(target, POLL_KEY)');
-function visit9_56_1(result) {
-  _$jscoverage['/input.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['58'][1].init(14, 29, 'Dom.hasData(target, POLL_KEY)');
+function visit9_58_1(result) {
+  _$jscoverage['/input.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['48'][1].init(93, 7, 'v !== h');
-function visit8_48_1(result) {
-  _$jscoverage['/input.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['50'][1].init(93, 7, 'v !== h');
+function visit8_50_1(result) {
+  _$jscoverage['/input.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['29'][1].init(14, 29, 'Dom.hasData(target, POLL_KEY)');
-function visit7_29_1(result) {
-  _$jscoverage['/input.js'].branchData['29'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['31'][1].init(14, 29, 'Dom.hasData(target, POLL_KEY)');
+function visit7_31_1(result) {
+  _$jscoverage['/input.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['17'][3].init(42, 21, 'n.type === \'password\'');
-function visit6_17_3(result) {
-  _$jscoverage['/input.js'].branchData['17'][3].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['19'][3].init(42, 21, 'n.type === \'password\'');
+function visit6_19_3(result) {
+  _$jscoverage['/input.js'].branchData['19'][3].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['17'][2].init(21, 17, 'n.type === \'text\'');
-function visit5_17_2(result) {
-  _$jscoverage['/input.js'].branchData['17'][2].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['19'][2].init(21, 17, 'n.type === \'text\'');
+function visit5_19_2(result) {
+  _$jscoverage['/input.js'].branchData['19'][2].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['17'][1].init(21, 42, 'n.type === \'text\' || n.type === \'password\'');
-function visit4_17_1(result) {
-  _$jscoverage['/input.js'].branchData['17'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['19'][1].init(21, 42, 'n.type === \'text\' || n.type === \'password\'');
+function visit4_19_1(result) {
+  _$jscoverage['/input.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['16'][1].init(146, 20, 'nodeName === \'input\'');
-function visit3_16_1(result) {
+}_$jscoverage['/input.js'].branchData['18'][1].init(146, 20, 'nodeName === \'input\'');
+function visit3_18_1(result) {
+  _$jscoverage['/input.js'].branchData['18'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/input.js'].branchData['16'][1].init(72, 23, 'nodeName === \'textarea\'');
+function visit2_16_1(result) {
   _$jscoverage['/input.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/input.js'].branchData['14'][1].init(72, 23, 'nodeName === \'textarea\'');
-function visit2_14_1(result) {
-  _$jscoverage['/input.js'].branchData['14'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/input.js'].branchData['13'][1].init(26, 16, 'n.nodeName || \'\'');
-function visit1_13_1(result) {
-  _$jscoverage['/input.js'].branchData['13'][1].ranCondition(result);
+}_$jscoverage['/input.js'].branchData['15'][1].init(26, 16, 'n.nodeName || \'\'');
+function visit1_15_1(result) {
+  _$jscoverage['/input.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/input.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -406,169 +407,171 @@ KISSY.add(function(S, require) {
   _$jscoverage['/input.js'].lineData[8]++;
   var Dom = require('dom');
   _$jscoverage['/input.js'].lineData[9]++;
-  var noop = S.noop;
-  _$jscoverage['/input.js'].lineData[10]++;
-  var Special = DomEvent.Special;
+  var noop = function() {
+  _$jscoverage['/input.js'].functionData[1]++;
+};
   _$jscoverage['/input.js'].lineData[12]++;
+  var Special = DomEvent.Special;
+  _$jscoverage['/input.js'].lineData[14]++;
   function canFireInput(n) {
-    _$jscoverage['/input.js'].functionData[1]++;
-    _$jscoverage['/input.js'].lineData[13]++;
-    var nodeName = (visit1_13_1(n.nodeName || '')).toLowerCase();
-    _$jscoverage['/input.js'].lineData[14]++;
-    if (visit2_14_1(nodeName === 'textarea')) {
-      _$jscoverage['/input.js'].lineData[15]++;
+    _$jscoverage['/input.js'].functionData[2]++;
+    _$jscoverage['/input.js'].lineData[15]++;
+    var nodeName = (visit1_15_1(n.nodeName || '')).toLowerCase();
+    _$jscoverage['/input.js'].lineData[16]++;
+    if (visit2_16_1(nodeName === 'textarea')) {
+      _$jscoverage['/input.js'].lineData[17]++;
       return true;
     } else {
-      _$jscoverage['/input.js'].lineData[16]++;
-      if (visit3_16_1(nodeName === 'input')) {
-        _$jscoverage['/input.js'].lineData[17]++;
-        return visit4_17_1(visit5_17_2(n.type === 'text') || visit6_17_3(n.type === 'password'));
+      _$jscoverage['/input.js'].lineData[18]++;
+      if (visit3_18_1(nodeName === 'input')) {
+        _$jscoverage['/input.js'].lineData[19]++;
+        return visit4_19_1(visit5_19_2(n.type === 'text') || visit6_19_3(n.type === 'password'));
       }
     }
-    _$jscoverage['/input.js'].lineData[19]++;
+    _$jscoverage['/input.js'].lineData[21]++;
     return false;
   }
-  _$jscoverage['/input.js'].lineData[22]++;
+  _$jscoverage['/input.js'].lineData[24]++;
   var INPUT_CHANGE = 'input', KEY = 'event/input', HISTORY_KEY = KEY + '/history', POLL_KEY = KEY + '/poll', interval = 50;
-  _$jscoverage['/input.js'].lineData[28]++;
+  _$jscoverage['/input.js'].lineData[30]++;
   function clearPollTimer(target) {
-    _$jscoverage['/input.js'].functionData[2]++;
-    _$jscoverage['/input.js'].lineData[29]++;
-    if (visit7_29_1(Dom.hasData(target, POLL_KEY))) {
-      _$jscoverage['/input.js'].lineData[30]++;
-      var poll = Dom.data(target, POLL_KEY);
-      _$jscoverage['/input.js'].lineData[31]++;
-      clearTimeout(poll);
+    _$jscoverage['/input.js'].functionData[3]++;
+    _$jscoverage['/input.js'].lineData[31]++;
+    if (visit7_31_1(Dom.hasData(target, POLL_KEY))) {
       _$jscoverage['/input.js'].lineData[32]++;
+      var poll = Dom.data(target, POLL_KEY);
+      _$jscoverage['/input.js'].lineData[33]++;
+      clearTimeout(poll);
+      _$jscoverage['/input.js'].lineData[34]++;
       Dom.removeData(target, POLL_KEY);
     }
   }
-  _$jscoverage['/input.js'].lineData[36]++;
+  _$jscoverage['/input.js'].lineData[38]++;
   function stopPoll(target) {
-    _$jscoverage['/input.js'].functionData[3]++;
-    _$jscoverage['/input.js'].lineData[37]++;
+    _$jscoverage['/input.js'].functionData[4]++;
+    _$jscoverage['/input.js'].lineData[39]++;
     Dom.removeData(target, HISTORY_KEY);
-    _$jscoverage['/input.js'].lineData[38]++;
+    _$jscoverage['/input.js'].lineData[40]++;
     clearPollTimer(target);
   }
-  _$jscoverage['/input.js'].lineData[41]++;
+  _$jscoverage['/input.js'].lineData[43]++;
   function stopPollHandler(ev) {
-    _$jscoverage['/input.js'].functionData[4]++;
-    _$jscoverage['/input.js'].lineData[42]++;
+    _$jscoverage['/input.js'].functionData[5]++;
+    _$jscoverage['/input.js'].lineData[44]++;
     clearPollTimer(ev.target);
   }
-  _$jscoverage['/input.js'].lineData[45]++;
+  _$jscoverage['/input.js'].lineData[47]++;
   function checkChange(target) {
-    _$jscoverage['/input.js'].functionData[5]++;
-    _$jscoverage['/input.js'].lineData[46]++;
-    var v = target.value, h = Dom.data(target, HISTORY_KEY);
+    _$jscoverage['/input.js'].functionData[6]++;
     _$jscoverage['/input.js'].lineData[48]++;
-    if (visit8_48_1(v !== h)) {
-      _$jscoverage['/input.js'].lineData[50]++;
+    var v = target.value, h = Dom.data(target, HISTORY_KEY);
+    _$jscoverage['/input.js'].lineData[50]++;
+    if (visit8_50_1(v !== h)) {
+      _$jscoverage['/input.js'].lineData[52]++;
       DomEvent.fire(target, INPUT_CHANGE);
-      _$jscoverage['/input.js'].lineData[51]++;
+      _$jscoverage['/input.js'].lineData[53]++;
       Dom.data(target, HISTORY_KEY, v);
     }
   }
-  _$jscoverage['/input.js'].lineData[55]++;
+  _$jscoverage['/input.js'].lineData[57]++;
   function startPoll(target) {
-    _$jscoverage['/input.js'].functionData[6]++;
-    _$jscoverage['/input.js'].lineData[56]++;
-    if (visit9_56_1(Dom.hasData(target, POLL_KEY))) {
-      _$jscoverage['/input.js'].lineData[57]++;
+    _$jscoverage['/input.js'].functionData[7]++;
+    _$jscoverage['/input.js'].lineData[58]++;
+    if (visit9_58_1(Dom.hasData(target, POLL_KEY))) {
+      _$jscoverage['/input.js'].lineData[59]++;
       return;
     }
-    _$jscoverage['/input.js'].lineData[59]++;
+    _$jscoverage['/input.js'].lineData[61]++;
     Dom.data(target, POLL_KEY, setTimeout(function check() {
-  _$jscoverage['/input.js'].functionData[7]++;
-  _$jscoverage['/input.js'].lineData[60]++;
+  _$jscoverage['/input.js'].functionData[8]++;
+  _$jscoverage['/input.js'].lineData[62]++;
   checkChange(target);
-  _$jscoverage['/input.js'].lineData[61]++;
+  _$jscoverage['/input.js'].lineData[63]++;
   Dom.data(target, POLL_KEY, setTimeout(check, interval));
 }, interval));
   }
-  _$jscoverage['/input.js'].lineData[65]++;
+  _$jscoverage['/input.js'].lineData[67]++;
   function startPollHandler(ev) {
-    _$jscoverage['/input.js'].functionData[8]++;
-    _$jscoverage['/input.js'].lineData[66]++;
-    var target = ev.target;
+    _$jscoverage['/input.js'].functionData[9]++;
     _$jscoverage['/input.js'].lineData[68]++;
-    if (visit10_68_1(ev.type === 'focus')) {
-      _$jscoverage['/input.js'].lineData[69]++;
+    var target = ev.target;
+    _$jscoverage['/input.js'].lineData[70]++;
+    if (visit10_70_1(ev.type === 'focus')) {
+      _$jscoverage['/input.js'].lineData[71]++;
       Dom.data(target, HISTORY_KEY, target.value);
     }
-    _$jscoverage['/input.js'].lineData[71]++;
+    _$jscoverage['/input.js'].lineData[73]++;
     startPoll(target);
   }
-  _$jscoverage['/input.js'].lineData[74]++;
+  _$jscoverage['/input.js'].lineData[76]++;
   function monitor(target) {
-    _$jscoverage['/input.js'].functionData[9]++;
-    _$jscoverage['/input.js'].lineData[75]++;
-    unmonitored(target);
-    _$jscoverage['/input.js'].lineData[76]++;
-    DomEvent.on(target, 'blur', stopPollHandler);
+    _$jscoverage['/input.js'].functionData[10]++;
     _$jscoverage['/input.js'].lineData[77]++;
+    unmonitored(target);
+    _$jscoverage['/input.js'].lineData[78]++;
+    DomEvent.on(target, 'blur', stopPollHandler);
+    _$jscoverage['/input.js'].lineData[79]++;
     DomEvent.on(target, 'mousedown keyup keydown focus', startPollHandler);
   }
-  _$jscoverage['/input.js'].lineData[80]++;
+  _$jscoverage['/input.js'].lineData[82]++;
   function unmonitored(target) {
-    _$jscoverage['/input.js'].functionData[10]++;
-    _$jscoverage['/input.js'].lineData[81]++;
-    stopPoll(target);
-    _$jscoverage['/input.js'].lineData[82]++;
-    DomEvent.detach(target, 'blur', stopPollHandler);
+    _$jscoverage['/input.js'].functionData[11]++;
     _$jscoverage['/input.js'].lineData[83]++;
+    stopPoll(target);
+    _$jscoverage['/input.js'].lineData[84]++;
+    DomEvent.detach(target, 'blur', stopPollHandler);
+    _$jscoverage['/input.js'].lineData[85]++;
     DomEvent.detach(target, 'mousedown keyup keydown focus', startPollHandler);
   }
-  _$jscoverage['/input.js'].lineData[86]++;
+  _$jscoverage['/input.js'].lineData[88]++;
   Special.input = {
   setup: function() {
-  _$jscoverage['/input.js'].functionData[11]++;
-  _$jscoverage['/input.js'].lineData[88]++;
+  _$jscoverage['/input.js'].functionData[12]++;
+  _$jscoverage['/input.js'].lineData[90]++;
   var self = this;
-  _$jscoverage['/input.js'].lineData[89]++;
-  if (visit11_89_1(canFireInput(self))) {
-    _$jscoverage['/input.js'].lineData[90]++;
+  _$jscoverage['/input.js'].lineData[91]++;
+  if (visit11_91_1(canFireInput(self))) {
+    _$jscoverage['/input.js'].lineData[92]++;
     monitor(self);
   } else {
-    _$jscoverage['/input.js'].lineData[93]++;
+    _$jscoverage['/input.js'].lineData[95]++;
     DomEvent.on(self, 'focusin', beforeActivate);
   }
 }, 
   tearDown: function() {
-  _$jscoverage['/input.js'].functionData[12]++;
-  _$jscoverage['/input.js'].lineData[97]++;
+  _$jscoverage['/input.js'].functionData[13]++;
+  _$jscoverage['/input.js'].lineData[99]++;
   var self = this;
-  _$jscoverage['/input.js'].lineData[98]++;
-  if (visit12_98_1(canFireInput(self))) {
-    _$jscoverage['/input.js'].lineData[99]++;
+  _$jscoverage['/input.js'].lineData[100]++;
+  if (visit12_100_1(canFireInput(self))) {
+    _$jscoverage['/input.js'].lineData[101]++;
     unmonitored(self);
   } else {
-    _$jscoverage['/input.js'].lineData[101]++;
+    _$jscoverage['/input.js'].lineData[103]++;
     DomEvent.remove(self, 'focusin', beforeActivate);
-    _$jscoverage['/input.js'].lineData[102]++;
-    Dom.query('textarea,input', self).each(function(fel) {
-  _$jscoverage['/input.js'].functionData[13]++;
-  _$jscoverage['/input.js'].lineData[103]++;
-  if (visit13_103_1(fel.__inputHandler)) {
     _$jscoverage['/input.js'].lineData[104]++;
+    Dom.query('textarea,input', self).each(function(fel) {
+  _$jscoverage['/input.js'].functionData[14]++;
+  _$jscoverage['/input.js'].lineData[105]++;
+  if (visit13_105_1(fel.__inputHandler)) {
+    _$jscoverage['/input.js'].lineData[106]++;
     fel.__inputHandler = 0;
-    _$jscoverage['/input.js'].lineData[105]++;
+    _$jscoverage['/input.js'].lineData[107]++;
     DomEvent.remove(fel, 'input', noop);
   }
 });
   }
 }};
-  _$jscoverage['/input.js'].lineData[112]++;
+  _$jscoverage['/input.js'].lineData[114]++;
   function beforeActivate(e) {
-    _$jscoverage['/input.js'].functionData[14]++;
-    _$jscoverage['/input.js'].lineData[113]++;
+    _$jscoverage['/input.js'].functionData[15]++;
+    _$jscoverage['/input.js'].lineData[115]++;
     var t = e.target;
-    _$jscoverage['/input.js'].lineData[114]++;
-    if (visit14_114_1(canFireInput(t) && !t.__inputHandler)) {
-      _$jscoverage['/input.js'].lineData[115]++;
-      t.__inputHandler = 1;
+    _$jscoverage['/input.js'].lineData[116]++;
+    if (visit14_116_1(canFireInput(t) && !t.__inputHandler)) {
       _$jscoverage['/input.js'].lineData[117]++;
+      t.__inputHandler = 1;
+      _$jscoverage['/input.js'].lineData[119]++;
       DomEvent.on(t, 'input', noop);
     }
   }

@@ -423,11 +423,11 @@ function visit90_66_1(result) {
 function visit89_46_1(result) {
   _$jscoverage['/configs.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['42'][1].init(503, 20, 'name === packageName');
+}_$jscoverage['/configs.js'].branchData['42'][1].init(498, 20, 'name === packageName');
 function visit88_42_1(result) {
   _$jscoverage['/configs.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/configs.js'].branchData['37'][1].init(390, 6, 'filter');
+}_$jscoverage['/configs.js'].branchData['37'][1].init(385, 6, 'filter');
 function visit87_37_1(result) {
   _$jscoverage['/configs.js'].branchData['37'][1].ranCondition(result);
   return result;
@@ -461,7 +461,7 @@ function visit86_16_1(result) {
   _$jscoverage['/configs.js'].lineData[30]++;
   var packageBase = packageInfo.getBase();
   _$jscoverage['/configs.js'].lineData[31]++;
-  var packageName = packageInfo.getName();
+  var packageName = packageInfo.name;
   _$jscoverage['/configs.js'].lineData[32]++;
   var extname = '.' + mod.getType();
   _$jscoverage['/configs.js'].lineData[34]++;

@@ -238,6 +238,7 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[14] = 0;
   _$jscoverage['/base.js'].lineData[19] = 0;
   _$jscoverage['/base.js'].lineData[21] = 0;
+  _$jscoverage['/base.js'].lineData[22] = 0;
   _$jscoverage['/base.js'].lineData[23] = 0;
   _$jscoverage['/base.js'].lineData[25] = 0;
   _$jscoverage['/base.js'].lineData[29] = 0;
@@ -627,7 +628,7 @@ function visit51_298_1(result) {
 function visit50_295_1(result) {
   _$jscoverage['/base.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['274'][1].init(9977, 11, 'supportCss3');
+}_$jscoverage['/base.js'].branchData['274'][1].init(10018, 11, 'supportCss3');
 function visit49_274_1(result) {
   _$jscoverage['/base.js'].branchData['274'][1].ranCondition(result);
   return result;
@@ -837,11 +838,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[11]++;
   var $ = Node.all, KeyCode = Node.KeyCode;
   _$jscoverage['/base.js'].lineData[14]++;
-  var Feature = S.Feature, transformVendorInfo = Feature.getCssVendorInfo('transform'), floor = Math.floor, transformProperty;
+  var Feature = require('feature'), transformVendorInfo = Feature.getCssVendorInfo('transform'), floor = Math.floor, transformProperty;
   _$jscoverage['/base.js'].lineData[19]++;
-  var isTransform3dSupported = S.Feature.isTransform3dSupported();
+  var isTransform3dSupported = Feature.isTransform3dSupported();
   _$jscoverage['/base.js'].lineData[21]++;
   var supportCss3 = !!transformVendorInfo;
+  _$jscoverage['/base.js'].lineData[22]++;
+  var util = require('util');
   _$jscoverage['/base.js'].lineData[23]++;
   var methods = {
   initializer: function() {
@@ -1032,7 +1035,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[170]++;
   if (visit35_170_1(self.scrollAnims.length)) {
     _$jscoverage['/base.js'].lineData[171]++;
-    S.each(self.scrollAnims, function(scrollAnim) {
+    util.each(self.scrollAnims, function(scrollAnim) {
   _$jscoverage['/base.js'].functionData[9]++;
   _$jscoverage['/base.js'].lineData[172]++;
   scrollAnim.stop();

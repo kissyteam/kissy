@@ -232,6 +232,7 @@ if (! _$jscoverage['/base/observer.js']) {
   _$jscoverage['/base/observer.js'].lineData[6] = 0;
   _$jscoverage['/base/observer.js'].lineData[7] = 0;
   _$jscoverage['/base/observer.js'].lineData[8] = 0;
+  _$jscoverage['/base/observer.js'].lineData[9] = 0;
   _$jscoverage['/base/observer.js'].lineData[16] = 0;
   _$jscoverage['/base/observer.js'].lineData[17] = 0;
   _$jscoverage['/base/observer.js'].lineData[28] = 0;
@@ -289,6 +290,8 @@ KISSY.add(function(S, require) {
   var BaseEvent = require('event/base');
   _$jscoverage['/base/observer.js'].lineData[8]++;
   var Special = require('./special');
+  _$jscoverage['/base/observer.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/base/observer.js'].lineData[16]++;
   function DomEventObserver(cfg) {
     _$jscoverage['/base/observer.js'].functionData[1]++;
@@ -296,7 +299,7 @@ KISSY.add(function(S, require) {
     DomEventObserver.superclass.constructor.call(this, cfg);
   }
   _$jscoverage['/base/observer.js'].lineData[28]++;
-  S.extend(DomEventObserver, BaseEvent.Observer, {
+  util.extend(DomEventObserver, BaseEvent.Observer, {
   keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'], 
   notifyInternal: function(event, ce) {
   _$jscoverage['/base/observer.js'].functionData[2]++;

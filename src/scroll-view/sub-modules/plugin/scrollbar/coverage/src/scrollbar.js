@@ -389,7 +389,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/scrollbar.js'].lineData[56]++;
   return Base.extend({
-  pluginId: this.getName(), 
+  pluginId: this.name, 
   pluginBindUI: function(scrollView) {
   _$jscoverage['/scrollbar.js'].functionData[2]++;
   _$jscoverage['/scrollbar.js'].lineData[60]++;

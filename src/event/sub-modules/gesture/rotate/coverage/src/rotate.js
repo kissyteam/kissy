@@ -235,43 +235,45 @@ if (! _$jscoverage['/rotate.js']) {
   _$jscoverage['/rotate.js'].lineData[9] = 0;
   _$jscoverage['/rotate.js'].lineData[10] = 0;
   _$jscoverage['/rotate.js'].lineData[11] = 0;
+  _$jscoverage['/rotate.js'].lineData[15] = 0;
   _$jscoverage['/rotate.js'].lineData[16] = 0;
-  _$jscoverage['/rotate.js'].lineData[19] = 0;
-  _$jscoverage['/rotate.js'].lineData[23] = 0;
-  _$jscoverage['/rotate.js'].lineData[24] = 0;
+  _$jscoverage['/rotate.js'].lineData[18] = 0;
+  _$jscoverage['/rotate.js'].lineData[21] = 0;
   _$jscoverage['/rotate.js'].lineData[25] = 0;
-  _$jscoverage['/rotate.js'].lineData[32] = 0;
-  _$jscoverage['/rotate.js'].lineData[36] = 0;
-  _$jscoverage['/rotate.js'].lineData[37] = 0;
+  _$jscoverage['/rotate.js'].lineData[26] = 0;
+  _$jscoverage['/rotate.js'].lineData[27] = 0;
+  _$jscoverage['/rotate.js'].lineData[34] = 0;
   _$jscoverage['/rotate.js'].lineData[38] = 0;
-  _$jscoverage['/rotate.js'].lineData[41] = 0;
-  _$jscoverage['/rotate.js'].lineData[42] = 0;
+  _$jscoverage['/rotate.js'].lineData[39] = 0;
+  _$jscoverage['/rotate.js'].lineData[40] = 0;
   _$jscoverage['/rotate.js'].lineData[43] = 0;
+  _$jscoverage['/rotate.js'].lineData[44] = 0;
   _$jscoverage['/rotate.js'].lineData[45] = 0;
-  _$jscoverage['/rotate.js'].lineData[49] = 0;
+  _$jscoverage['/rotate.js'].lineData[47] = 0;
   _$jscoverage['/rotate.js'].lineData[51] = 0;
-  _$jscoverage['/rotate.js'].lineData[52] = 0;
+  _$jscoverage['/rotate.js'].lineData[53] = 0;
   _$jscoverage['/rotate.js'].lineData[54] = 0;
   _$jscoverage['/rotate.js'].lineData[56] = 0;
-  _$jscoverage['/rotate.js'].lineData[85] = 0;
-  _$jscoverage['/rotate.js'].lineData[90] = 0;
-  _$jscoverage['/rotate.js'].lineData[98] = 0;
-  _$jscoverage['/rotate.js'].lineData[99] = 0;
+  _$jscoverage['/rotate.js'].lineData[58] = 0;
+  _$jscoverage['/rotate.js'].lineData[87] = 0;
+  _$jscoverage['/rotate.js'].lineData[92] = 0;
   _$jscoverage['/rotate.js'].lineData[100] = 0;
   _$jscoverage['/rotate.js'].lineData[101] = 0;
-  _$jscoverage['/rotate.js'].lineData[107] = 0;
-  _$jscoverage['/rotate.js'].lineData[110] = 0;
-  _$jscoverage['/rotate.js'].lineData[111] = 0;
-  _$jscoverage['/rotate.js'].lineData[115] = 0;
+  _$jscoverage['/rotate.js'].lineData[102] = 0;
+  _$jscoverage['/rotate.js'].lineData[103] = 0;
+  _$jscoverage['/rotate.js'].lineData[109] = 0;
+  _$jscoverage['/rotate.js'].lineData[112] = 0;
+  _$jscoverage['/rotate.js'].lineData[113] = 0;
   _$jscoverage['/rotate.js'].lineData[117] = 0;
-  _$jscoverage['/rotate.js'].lineData[121] = 0;
-  _$jscoverage['/rotate.js'].lineData[124] = 0;
-  _$jscoverage['/rotate.js'].lineData[125] = 0;
+  _$jscoverage['/rotate.js'].lineData[119] = 0;
+  _$jscoverage['/rotate.js'].lineData[123] = 0;
   _$jscoverage['/rotate.js'].lineData[126] = 0;
+  _$jscoverage['/rotate.js'].lineData[127] = 0;
   _$jscoverage['/rotate.js'].lineData[128] = 0;
-  _$jscoverage['/rotate.js'].lineData[129] = 0;
-  _$jscoverage['/rotate.js'].lineData[133] = 0;
+  _$jscoverage['/rotate.js'].lineData[130] = 0;
+  _$jscoverage['/rotate.js'].lineData[131] = 0;
   _$jscoverage['/rotate.js'].lineData[135] = 0;
+  _$jscoverage['/rotate.js'].lineData[137] = 0;
 }
 if (! _$jscoverage['/rotate.js'].functionData) {
   _$jscoverage['/rotate.js'].functionData = [];
@@ -285,42 +287,42 @@ if (! _$jscoverage['/rotate.js'].functionData) {
 }
 if (! _$jscoverage['/rotate.js'].branchData) {
   _$jscoverage['/rotate.js'].branchData = {};
-  _$jscoverage['/rotate.js'].branchData['32'] = [];
-  _$jscoverage['/rotate.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/rotate.js'].branchData['41'] = [];
-  _$jscoverage['/rotate.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/rotate.js'].branchData['34'] = [];
+  _$jscoverage['/rotate.js'].branchData['34'][1] = new BranchData();
   _$jscoverage['/rotate.js'].branchData['43'] = [];
   _$jscoverage['/rotate.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/rotate.js'].branchData['51'] = [];
-  _$jscoverage['/rotate.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/rotate.js'].branchData['110'] = [];
-  _$jscoverage['/rotate.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/rotate.js'].branchData['124'] = [];
-  _$jscoverage['/rotate.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/rotate.js'].branchData['45'] = [];
+  _$jscoverage['/rotate.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/rotate.js'].branchData['53'] = [];
+  _$jscoverage['/rotate.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/rotate.js'].branchData['112'] = [];
+  _$jscoverage['/rotate.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/rotate.js'].branchData['126'] = [];
+  _$jscoverage['/rotate.js'].branchData['126'][1] = new BranchData();
 }
-_$jscoverage['/rotate.js'].branchData['124'][1].init(4081, 33, 'S.Feature.isTouchEventSupported()');
-function visit6_124_1(result) {
-  _$jscoverage['/rotate.js'].branchData['124'][1].ranCondition(result);
+_$jscoverage['/rotate.js'].branchData['126'][1].init(4165, 31, 'Feature.isTouchEventSupported()');
+function visit6_126_1(result) {
+  _$jscoverage['/rotate.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/rotate.js'].branchData['110'][1].init(90, 28, 'e.targetTouches.length === 2');
-function visit5_110_1(result) {
-  _$jscoverage['/rotate.js'].branchData['110'][1].ranCondition(result);
+}_$jscoverage['/rotate.js'].branchData['112'][1].init(90, 28, 'e.targetTouches.length === 2');
+function visit5_112_1(result) {
+  _$jscoverage['/rotate.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/rotate.js'].branchData['51'][1].init(1139, 15, '!self.isStarted');
-function visit4_51_1(result) {
-  _$jscoverage['/rotate.js'].branchData['51'][1].ranCondition(result);
+}_$jscoverage['/rotate.js'].branchData['53'][1].init(1139, 15, '!self.isStarted');
+function visit4_53_1(result) {
+  _$jscoverage['/rotate.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/rotate.js'].branchData['43'][1].init(482, 42, 'Math.abs(negativeAngle - lastAngle) < diff');
-function visit3_43_1(result) {
+}_$jscoverage['/rotate.js'].branchData['45'][1].init(482, 42, 'Math.abs(negativeAngle - lastAngle) < diff');
+function visit3_45_1(result) {
+  _$jscoverage['/rotate.js'].branchData['45'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/rotate.js'].branchData['43'][1].init(363, 42, 'Math.abs(positiveAngle - lastAngle) < diff');
+function visit2_43_1(result) {
   _$jscoverage['/rotate.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/rotate.js'].branchData['41'][1].init(363, 42, 'Math.abs(positiveAngle - lastAngle) < diff');
-function visit2_41_1(result) {
-  _$jscoverage['/rotate.js'].branchData['41'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/rotate.js'].branchData['32'][1].init(390, 23, 'lastAngle !== undefined');
-function visit1_32_1(result) {
-  _$jscoverage['/rotate.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/rotate.js'].branchData['34'][1].init(390, 23, 'lastAngle !== undefined');
+function visit1_34_1(result) {
+  _$jscoverage['/rotate.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/rotate.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -335,109 +337,113 @@ KISSY.add(function(S, require) {
   var DomEvent = require('event/dom/base');
   _$jscoverage['/rotate.js'].lineData[11]++;
   var ROTATE_START = 'rotateStart', ROTATE = 'rotate', RAD_2_DEG = 180 / Math.PI, ROTATE_END = 'rotateEnd';
+  _$jscoverage['/rotate.js'].lineData[15]++;
+  var util = require('util');
   _$jscoverage['/rotate.js'].lineData[16]++;
+  var Feature = require('feature');
+  _$jscoverage['/rotate.js'].lineData[18]++;
   function Rotate() {
     _$jscoverage['/rotate.js'].functionData[1]++;
   }
-  _$jscoverage['/rotate.js'].lineData[19]++;
-  S.extend(Rotate, DoubleTouch, {
+  _$jscoverage['/rotate.js'].lineData[21]++;
+  util.extend(Rotate, DoubleTouch, {
   requiredGestureType: 'touch', 
   move: function(e) {
   _$jscoverage['/rotate.js'].functionData[2]++;
-  _$jscoverage['/rotate.js'].lineData[23]++;
-  var self = this;
-  _$jscoverage['/rotate.js'].lineData[24]++;
-  Rotate.superclass.move.apply(self, arguments);
   _$jscoverage['/rotate.js'].lineData[25]++;
+  var self = this;
+  _$jscoverage['/rotate.js'].lineData[26]++;
+  Rotate.superclass.move.apply(self, arguments);
+  _$jscoverage['/rotate.js'].lineData[27]++;
   var touches = self.lastTouches, one = touches[0], two = touches[1], lastAngle = self.lastAngle, angle = Math.atan2(two.pageY - one.pageY, two.pageX - one.pageX) * RAD_2_DEG;
-  _$jscoverage['/rotate.js'].lineData[32]++;
-  if (visit1_32_1(lastAngle !== undefined)) {
-    _$jscoverage['/rotate.js'].lineData[36]++;
-    var diff = Math.abs(angle - lastAngle);
-    _$jscoverage['/rotate.js'].lineData[37]++;
-    var positiveAngle = (angle + 360) % 360;
+  _$jscoverage['/rotate.js'].lineData[34]++;
+  if (visit1_34_1(lastAngle !== undefined)) {
     _$jscoverage['/rotate.js'].lineData[38]++;
+    var diff = Math.abs(angle - lastAngle);
+    _$jscoverage['/rotate.js'].lineData[39]++;
+    var positiveAngle = (angle + 360) % 360;
+    _$jscoverage['/rotate.js'].lineData[40]++;
     var negativeAngle = (angle - 360) % 360;
-    _$jscoverage['/rotate.js'].lineData[41]++;
-    if (visit2_41_1(Math.abs(positiveAngle - lastAngle) < diff)) {
-      _$jscoverage['/rotate.js'].lineData[42]++;
+    _$jscoverage['/rotate.js'].lineData[43]++;
+    if (visit2_43_1(Math.abs(positiveAngle - lastAngle) < diff)) {
+      _$jscoverage['/rotate.js'].lineData[44]++;
       angle = positiveAngle;
     } else {
-      _$jscoverage['/rotate.js'].lineData[43]++;
-      if (visit3_43_1(Math.abs(negativeAngle - lastAngle) < diff)) {
-        _$jscoverage['/rotate.js'].lineData[45]++;
+      _$jscoverage['/rotate.js'].lineData[45]++;
+      if (visit3_45_1(Math.abs(negativeAngle - lastAngle) < diff)) {
+        _$jscoverage['/rotate.js'].lineData[47]++;
         angle = negativeAngle;
       }
     }
   }
-  _$jscoverage['/rotate.js'].lineData[49]++;
-  self.lastAngle = angle;
   _$jscoverage['/rotate.js'].lineData[51]++;
-  if (visit4_51_1(!self.isStarted)) {
-    _$jscoverage['/rotate.js'].lineData[52]++;
-    self.isStarted = true;
+  self.lastAngle = angle;
+  _$jscoverage['/rotate.js'].lineData[53]++;
+  if (visit4_53_1(!self.isStarted)) {
     _$jscoverage['/rotate.js'].lineData[54]++;
-    self.startAngle = angle;
+    self.isStarted = true;
     _$jscoverage['/rotate.js'].lineData[56]++;
+    self.startAngle = angle;
+    _$jscoverage['/rotate.js'].lineData[58]++;
     self.target = self.getCommonTarget(e);
-    _$jscoverage['/rotate.js'].lineData[85]++;
-    DomEvent.fire(self.target, ROTATE_START, S.mix(e, {
+    _$jscoverage['/rotate.js'].lineData[87]++;
+    DomEvent.fire(self.target, ROTATE_START, util.mix(e, {
   angle: angle, 
   rotation: 0}));
   } else {
-    _$jscoverage['/rotate.js'].lineData[90]++;
-    DomEvent.fire(self.target, ROTATE, S.mix(e, {
+    _$jscoverage['/rotate.js'].lineData[92]++;
+    DomEvent.fire(self.target, ROTATE, util.mix(e, {
   angle: angle, 
   rotation: angle - self.startAngle}));
   }
 }, 
   end: function(e) {
   _$jscoverage['/rotate.js'].functionData[3]++;
-  _$jscoverage['/rotate.js'].lineData[98]++;
-  var self = this;
-  _$jscoverage['/rotate.js'].lineData[99]++;
-  Rotate.superclass.end.apply(self, arguments);
   _$jscoverage['/rotate.js'].lineData[100]++;
-  self.lastAngle = undefined;
+  var self = this;
   _$jscoverage['/rotate.js'].lineData[101]++;
-  DomEvent.fire(self.target, ROTATE_END, S.mix(e, {
+  Rotate.superclass.end.apply(self, arguments);
+  _$jscoverage['/rotate.js'].lineData[102]++;
+  self.lastAngle = undefined;
+  _$jscoverage['/rotate.js'].lineData[103]++;
+  DomEvent.fire(self.target, ROTATE_END, util.mix(e, {
   touches: self.lastTouches}));
 }});
-  _$jscoverage['/rotate.js'].lineData[107]++;
+  _$jscoverage['/rotate.js'].lineData[109]++;
   function prevent(e) {
     _$jscoverage['/rotate.js'].functionData[4]++;
-    _$jscoverage['/rotate.js'].lineData[110]++;
-    if (visit5_110_1(e.targetTouches.length === 2)) {
-      _$jscoverage['/rotate.js'].lineData[111]++;
+    _$jscoverage['/rotate.js'].lineData[112]++;
+    if (visit5_112_1(e.targetTouches.length === 2)) {
+      _$jscoverage['/rotate.js'].lineData[113]++;
       e.preventDefault();
     }
   }
-  _$jscoverage['/rotate.js'].lineData[115]++;
-  var r = new Rotate();
   _$jscoverage['/rotate.js'].lineData[117]++;
+  var r = new Rotate();
+  _$jscoverage['/rotate.js'].lineData[119]++;
   addGestureEvent([ROTATE_END, ROTATE_START], {
   handle: r});
-  _$jscoverage['/rotate.js'].lineData[121]++;
+  _$jscoverage['/rotate.js'].lineData[123]++;
   var config = {
   handle: r};
-  _$jscoverage['/rotate.js'].lineData[124]++;
-  if (visit6_124_1(S.Feature.isTouchEventSupported())) {
-    _$jscoverage['/rotate.js'].lineData[125]++;
+  _$jscoverage['/rotate.js'].lineData[126]++;
+  if (visit6_126_1(Feature.isTouchEventSupported())) {
+    _$jscoverage['/rotate.js'].lineData[127]++;
     config.setup = function() {
   _$jscoverage['/rotate.js'].functionData[5]++;
-  _$jscoverage['/rotate.js'].lineData[126]++;
+  _$jscoverage['/rotate.js'].lineData[128]++;
   this.addEventListener('touchmove', prevent, false);
 };
-    _$jscoverage['/rotate.js'].lineData[128]++;
+    _$jscoverage['/rotate.js'].lineData[130]++;
     config.tearDown = function() {
   _$jscoverage['/rotate.js'].functionData[6]++;
-  _$jscoverage['/rotate.js'].lineData[129]++;
+  _$jscoverage['/rotate.js'].lineData[131]++;
   this.removeEventListener('touchmove', prevent, false);
 };
   }
-  _$jscoverage['/rotate.js'].lineData[133]++;
-  addGestureEvent(ROTATE, config);
   _$jscoverage['/rotate.js'].lineData[135]++;
+  addGestureEvent(ROTATE, config);
+  _$jscoverage['/rotate.js'].lineData[137]++;
   return {
   ROTATE_START: ROTATE_START, 
   ROTATE: ROTATE, 

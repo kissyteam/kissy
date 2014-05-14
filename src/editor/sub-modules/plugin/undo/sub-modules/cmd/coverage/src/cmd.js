@@ -232,6 +232,7 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
+  _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[17] = 0;
   _$jscoverage['/cmd.js'].lineData[18] = 0;
   _$jscoverage['/cmd.js'].lineData[21] = 0;
@@ -513,7 +514,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
-  var UA = S.UA, LIMIT = 30;
+  var UA = require('ua'), LIMIT = 30;
+  _$jscoverage['/cmd.js'].lineData[10]++;
+  var util = require('util');
   _$jscoverage['/cmd.js'].lineData[17]++;
   function Snapshot(editor) {
     _$jscoverage['/cmd.js'].functionData[1]++;
@@ -530,7 +533,7 @@ KISSY.add(function(S, require) {
     self.bookmarks = visit2_27_1(selection && selection.createBookmarks2(true));
   }
   _$jscoverage['/cmd.js'].lineData[30]++;
-  S.augment(Snapshot, {
+  (Snapshot.prototype = {
   equals: function(otherImage) {
   _$jscoverage['/cmd.js'].functionData[2]++;
   _$jscoverage['/cmd.js'].lineData[32]++;
@@ -550,7 +553,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[56]++;
     self.editor = editor;
     _$jscoverage['/cmd.js'].lineData[58]++;
-    self.bufferRunner = S.buffer(self.save, 500, self);
+    self.bufferRunner = util.buffer(self.save, 500, self);
     _$jscoverage['/cmd.js'].lineData[59]++;
     self._init();
   }
@@ -566,7 +569,7 @@ KISSY.add(function(S, require) {
   33: 1, 
   34: 1}, zKeyCode = 90, yKeyCode = 89;
   _$jscoverage['/cmd.js'].lineData[69]++;
-  S.augment(UndoManager, {
+  (UndoManager.prototype = {
   _keyMonitor: function() {
   _$jscoverage['/cmd.js'].functionData[4]++;
   _$jscoverage['/cmd.js'].lineData[71]++;

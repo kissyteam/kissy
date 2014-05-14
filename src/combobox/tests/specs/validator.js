@@ -2,7 +2,7 @@
  * Simple TC for KISSY ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, ComboBox) {
+KISSY.add(function (S,util, ComboBox) {
     window.focus();
     document.body.focus();
 
@@ -31,9 +31,9 @@ KISSY.add(function (S, ComboBox) {
                 }),
                 format: function (q, data) {
                     var ret = [];
-                    S.each(data, function (d) {
+                    util.each(data, function (d) {
                         ret.push({
-                            content: d.replace(new RegExp(S.escapeRegExp(q), 'g'), '<b>$&</b>'),
+                            content: d.replace(new RegExp(util.escapeRegExp(q), 'g'), '<b>$&</b>'),
                             textContent: d
                         });
                     });
@@ -135,5 +135,5 @@ KISSY.add(function (S, ComboBox) {
         });
     });
 }, {
-    requires: ['combobox']
+    requires: ['util','combobox']
 });

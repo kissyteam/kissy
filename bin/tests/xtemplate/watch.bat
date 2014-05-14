@@ -1,1 +1,0 @@
-kissy xtemplate -p ./ -w

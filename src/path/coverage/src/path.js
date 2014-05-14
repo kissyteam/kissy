@@ -526,7 +526,7 @@ function visit1_15_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/path.js'].functionData[0]++;
   _$jscoverage['/path.js'].lineData[8]++;
-  require('util');
+  var util = require('util');
   _$jscoverage['/path.js'].lineData[10]++;
   var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
   _$jscoverage['/path.js'].lineData[12]++;
@@ -535,7 +535,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/path.js'].lineData[13]++;
     var ret = [];
     _$jscoverage['/path.js'].lineData[14]++;
-    S.each(arr, function(item, i, arr) {
+    util.each(arr, function(item, i, arr) {
   _$jscoverage['/path.js'].functionData[2]++;
   _$jscoverage['/path.js'].lineData[15]++;
   if (visit1_15_1(fn.call(visit2_15_2(context || this), item, i, arr))) {

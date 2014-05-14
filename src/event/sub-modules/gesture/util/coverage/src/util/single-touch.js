@@ -231,12 +231,13 @@ if (! _$jscoverage['/util/single-touch.js']) {
   _$jscoverage['/util/single-touch.js'].lineData = [];
   _$jscoverage['/util/single-touch.js'].lineData[6] = 0;
   _$jscoverage['/util/single-touch.js'].lineData[7] = 0;
-  _$jscoverage['/util/single-touch.js'].lineData[9] = 0;
-  _$jscoverage['/util/single-touch.js'].lineData[12] = 0;
-  _$jscoverage['/util/single-touch.js'].lineData[16] = 0;
+  _$jscoverage['/util/single-touch.js'].lineData[8] = 0;
+  _$jscoverage['/util/single-touch.js'].lineData[10] = 0;
+  _$jscoverage['/util/single-touch.js'].lineData[13] = 0;
   _$jscoverage['/util/single-touch.js'].lineData[17] = 0;
-  _$jscoverage['/util/single-touch.js'].lineData[20] = 0;
-  _$jscoverage['/util/single-touch.js'].lineData[27] = 0;
+  _$jscoverage['/util/single-touch.js'].lineData[18] = 0;
+  _$jscoverage['/util/single-touch.js'].lineData[21] = 0;
+  _$jscoverage['/util/single-touch.js'].lineData[28] = 0;
 }
 if (! _$jscoverage['/util/single-touch.js'].functionData) {
   _$jscoverage['/util/single-touch.js'].functionData = [];
@@ -252,24 +253,26 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util/single-touch.js'].functionData[0]++;
   _$jscoverage['/util/single-touch.js'].lineData[7]++;
   var Touch = require('./touch');
-  _$jscoverage['/util/single-touch.js'].lineData[9]++;
+  _$jscoverage['/util/single-touch.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/util/single-touch.js'].lineData[10]++;
   function SingleTouch() {
     _$jscoverage['/util/single-touch.js'].functionData[1]++;
   }
-  _$jscoverage['/util/single-touch.js'].lineData[12]++;
-  S.extend(SingleTouch, Touch, {
+  _$jscoverage['/util/single-touch.js'].lineData[13]++;
+  util.extend(SingleTouch, Touch, {
   requiredTouchCount: 1, 
   start: function() {
   _$jscoverage['/util/single-touch.js'].functionData[2]++;
-  _$jscoverage['/util/single-touch.js'].lineData[16]++;
-  SingleTouch.superclass.start.apply(this, arguments);
   _$jscoverage['/util/single-touch.js'].lineData[17]++;
+  SingleTouch.superclass.start.apply(this, arguments);
+  _$jscoverage['/util/single-touch.js'].lineData[18]++;
   var self = this, touches = self.lastTouches;
-  _$jscoverage['/util/single-touch.js'].lineData[20]++;
+  _$jscoverage['/util/single-touch.js'].lineData[21]++;
   self.lastXY = {
   pageX: touches[0].pageX, 
   pageY: touches[0].pageY};
 }});
-  _$jscoverage['/util/single-touch.js'].lineData[27]++;
+  _$jscoverage['/util/single-touch.js'].lineData[28]++;
   return SingleTouch;
 });

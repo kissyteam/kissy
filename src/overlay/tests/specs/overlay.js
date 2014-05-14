@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(function (S, Dom,UA, Node, Overlay, ResizePlugin) {
+KISSY.add(function (S,util, Dom,UA, Node, Overlay, ResizePlugin) {
     var $ = Node.all;
     var ie = S.UA.ieMode;
 
@@ -133,7 +133,7 @@ KISSY.add(function (S, Dom,UA, Node, Overlay, ResizePlugin) {
             });
 
             it("渲染后可以取到元素", function () {
-                expect(S.trim(o.get('contentEl').html())).toBe("render by javascript");
+                expect(util.trim(o.get('contentEl').html())).toBe("render by javascript");
             });
 
             it("渲染后元素会正确配置", function () {
@@ -383,5 +383,5 @@ KISSY.add(function (S, Dom,UA, Node, Overlay, ResizePlugin) {
         });
     });
 }, {
-    requires: "dom,ua,node,overlay,component/plugin/resize".split(',')
+    requires: "util,dom,ua,node,overlay,component/plugin/resize".split(',')
 });

@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var Model = require('./model');
     var Attribute = require('attribute');
+    var util = require('util');
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -58,9 +59,9 @@ KISSY.add(function (S, require) {
         add: function (model, opts) {
             var self = this,
                 ret = true;
-            if (S.isArray(model)) {
+            if (util.isArray(model)) {
                 var orig = [].concat(model);
-                S.each(orig, function (m) {
+                util.each(orig, function (m) {
                     var t = self._add(m, opts);
                     ret = ret && t;
                 });
@@ -78,9 +79,9 @@ KISSY.add(function (S, require) {
          */
         remove: function (model, opts) {
             var self = this;
-            if (S.isArray(model)) {
+            if (util.isArray(model)) {
                 var orig = [].concat(model);
-                S.each(orig, function (m) {
+                util.each(orig, function (m) {
                     self._remove(m, opts);
                 });
             } else if (model) {
@@ -132,7 +133,7 @@ KISSY.add(function (S, require) {
                     }
                 }
                 // https://github.com/kissyteam/kissy/issues/138
-                S.each(self.get('models'), function (m) {
+                util.each(self.get('models'), function (m) {
                     m.__isModified = 0;
                 });
                 if(success){
@@ -192,7 +193,7 @@ KISSY.add(function (S, require) {
          */
         _remove: function (model, opts) {
             opts = opts || {};
-            var index = S.indexOf(model, this.get('models'));
+            var index = util.indexOf(model, this.get('models'));
             if (index !== -1) {
                 this.get('models').splice(index, 1);
                 model.removeFromCollection(this);

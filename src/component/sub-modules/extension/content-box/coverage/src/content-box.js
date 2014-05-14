@@ -245,9 +245,9 @@ if (! _$jscoverage['/content-box.js']) {
   _$jscoverage['/content-box.js'].lineData[40] = 0;
   _$jscoverage['/content-box.js'].lineData[41] = 0;
   _$jscoverage['/content-box.js'].lineData[46] = 0;
-  _$jscoverage['/content-box.js'].lineData[53] = 0;
-  _$jscoverage['/content-box.js'].lineData[58] = 0;
-  _$jscoverage['/content-box.js'].lineData[64] = 0;
+  _$jscoverage['/content-box.js'].lineData[52] = 0;
+  _$jscoverage['/content-box.js'].lineData[57] = 0;
+  _$jscoverage['/content-box.js'].lineData[62] = 0;
 }
 if (! _$jscoverage['/content-box.js'].functionData) {
   _$jscoverage['/content-box.js'].functionData = [];
@@ -319,22 +319,21 @@ KISSY.add(function(S, require) {
   }
 }};
   _$jscoverage['/content-box.js'].lineData[46]++;
-  S.mix(ContentBox, {
-  ATTRS: {
+  ContentBox.ATTRS = {
   contentTpl: {
   value: contentTpl}, 
   contentEl: {
   selector: function() {
   _$jscoverage['/content-box.js'].functionData[7]++;
-  _$jscoverage['/content-box.js'].lineData[53]++;
+  _$jscoverage['/content-box.js'].lineData[52]++;
   return '.' + this.getBaseCssClass('content');
 }}, 
   content: {
   parse: function() {
   _$jscoverage['/content-box.js'].functionData[8]++;
-  _$jscoverage['/content-box.js'].lineData[58]++;
+  _$jscoverage['/content-box.js'].lineData[57]++;
   return this.get('contentEl').html();
-}}}});
-  _$jscoverage['/content-box.js'].lineData[64]++;
+}}};
+  _$jscoverage['/content-box.js'].lineData[62]++;
   return ContentBox;
 });

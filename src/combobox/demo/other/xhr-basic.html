@@ -21,7 +21,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox", function (S, ComboBox) {
+    KISSY.use("combobox,util", function (S, ComboBox,util) {
 
         /*
          remote dataSource
@@ -48,7 +48,7 @@
                     for (var i = 0; i < data.length; i++) {
                         ret[i] = {
                             content: (data[i] + "")
-                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    .replace(new RegExp(util.escapeRegExp(query), "g"),
                                     "<b>$&</b>"),
                             disabled: (i % 2 ? true : false)
                         };

@@ -2,14 +2,14 @@
  * test cases for create sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+KISSY.add(function (S,util, Dom) {
     describe('create', function () {
         it('create should works', function () {
             var div = Dom.create('<div>'),
                 html = '',
                 tag;
 
-            S.each([
+            util.each([
                 'option', 'optgroup', 'td', 'th', 'tr',
                 'tbody', 'thead', 'tfoot',
                 'caption', 'col', 'colgroup', 'legend'
@@ -28,7 +28,7 @@ KISSY.add(function (S, Dom) {
             // script
             html = tag = 'script';
             div.appendChild(Dom.create('<script><\/script>'));
-            html = S.trim(div.innerHTML.toLowerCase());
+            html = util.trim(div.innerHTML.toLowerCase());
             expect((html.indexOf('<' + tag + '>') === 0 || html.indexOf('<' + tag + ' ') === 0)).toBe(true);
             div.innerHTML = '';
 
@@ -221,5 +221,5 @@ KISSY.add(function (S, Dom) {
         });
     });
 }, {
-    requires: ['dom']
+    requires: ['util','dom']
 });

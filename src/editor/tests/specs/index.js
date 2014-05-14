@@ -1,4 +1,4 @@
-KISSY.add(KISSY.noop,{
+KISSY.add(function(){}, {
     requires:[
         './back-color',
         './dom',

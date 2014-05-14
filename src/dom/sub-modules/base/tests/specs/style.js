@@ -2,7 +2,7 @@
  * test cases for style sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+KISSY.add(function (S, util,Dom) {
     /*jshint quotmark:false*/
     /*global $*/
     var UA = S.UA;
@@ -45,7 +45,7 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.css(elem, 'backgroundColor')).toBe('transparent');
             }
 
-            expect(S.indexOf(Dom.css(elem, "backgroundPosition"), ['left 0% top 0%', '0% 0%']))
+            expect(util.indexOf(Dom.css(elem, "backgroundPosition"), ['left 0% top 0%', '0% 0%']))
                 .not.toBe(-1);
 
             expect(Dom.css(elem, 'fontSize')).toBeEqual('16px');
@@ -159,7 +159,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it('show hide can precede css', function () {
-            var id = S.guid('test-css');
+            var id = util.guid('test-css');
             Dom.addStyleSheet('#' + id + ' {display:none}', 'xx-style' + id);
             var elem = Dom.create('<div></div>');
             elem.id = id;
@@ -199,7 +199,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it("float works inline or from stylehsheet", function () {
-            var tag = S.guid("float");
+            var tag = util.guid("float");
             Dom.addStyleSheet("." + tag + " {float:left}", tag + 'style');
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>");
             Dom.append(d, document.body);
@@ -216,7 +216,7 @@ KISSY.add(function (S, Dom) {
 
         // also test prop api
         it("float works inline or from stylehsheet", function () {
-            var tag = S.guid("float");
+            var tag = util.guid("float");
             Dom.addStyleSheet("." + tag + " {float:left}", tag + 'style');
 
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>");
@@ -241,7 +241,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it("opacity works inline or from stylesheet", function () {
-            var tag = S.guid("opacity");
+            var tag = util.guid("opacity");
             Dom.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }", tag + 'style');
 
             var d = Dom.create("<div class='" + tag + "' style='" +
@@ -309,7 +309,7 @@ KISSY.add(function (S, Dom) {
             });
 
             it("outerWidth should works for display:none !important", function () {
-                var id = S.guid('test-id');
+                var id = util.guid('test-id');
                 var div = Dom.create("<div style='width:100px;" +
                     "margin:20px;" +
                     "padding:10px;" +
@@ -428,5 +428,5 @@ KISSY.add(function (S, Dom) {
         });
     });
 }, {
-    requires: ['dom']
+    requires: ['util','dom']
 });

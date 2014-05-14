@@ -13,14 +13,13 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script >
-    KISSY.use("node,event", function (S, Node, Event) {
+    KISSY.use("node,event,util", function (S, Node, Event,util) {
         var $ = Node.all,
                 height = 270,
                 num = 11,
                 multiple = 2,
                 duration = 3,
                 t = $("#t");
-
 
         function Slot(node, multiple, num, duration) {
             node = $(node);
@@ -65,7 +64,7 @@
                 });
             }
 
-            return S.mix({
+            return util.mix({
                 start:function () {
                     this.fire('start');
                     anim();

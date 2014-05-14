@@ -259,27 +259,27 @@ if (! _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['23'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['23'][1].init(614, 7, 'content');
-function visit282_23_1(result) {
+function visit281_23_1(result) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['17'][1].init(39, 28, 'node.tagName === tag.tagName');
-function visit281_17_1(result) {
+function visit280_17_1(result) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['16'][3].init(80, 68, 'node.isEndTag() && node.tagName === tag.tagName');
-function visit280_16_3(result) {
+function visit279_16_3(result) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['16'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['16'][2].init(55, 19, 'node.nodeType !== 1');
-function visit279_16_2(result) {
+function visit278_16_2(result) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['16'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['16'][1].init(55, 94, 'node.nodeType !== 1 || !(node.isEndTag() && node.tagName === tag.tagName)');
-function visit278_16_1(result) {
+function visit277_16_1(result) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['14'][1].init(287, 4, 'node');
-function visit277_14_1(result) {
+function visit276_14_1(result) {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[6]++;
@@ -292,9 +292,9 @@ KISSY.add(function() {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[11]++;
   var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName), position = lexer.getPosition(), node = lexer.nextNode();
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[14]++;
-  if (visit277_14_1(node)) {
+  if (visit276_14_1(node)) {
     _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[16]++;
-    if (visit278_16_1(visit279_16_2(node.nodeType !== 1) || !(visit280_16_3(node.isEndTag() && visit281_17_1(node.tagName === tag.tagName))))) {
+    if (visit277_16_1(visit278_16_2(node.nodeType !== 1) || !(visit279_16_3(node.isEndTag() && visit280_17_1(node.tagName === tag.tagName))))) {
       _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[18]++;
       lexer.setPosition(position);
       _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[19]++;
@@ -304,7 +304,7 @@ KISSY.add(function() {
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[22]++;
   tag.closed = true;
   _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[23]++;
-  if (visit282_23_1(content)) {
+  if (visit281_23_1(content)) {
     _$jscoverage['/html-parser/scanners/cdata-scanner.js'].lineData[24]++;
     tag.appendChild(content);
   }

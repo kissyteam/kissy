@@ -5,8 +5,6 @@
  */
 
 // global
-var S = require('../../' + 'lib/loader');
-
 var sys = require('sys');
 
 var fs = require('fs');
@@ -32,23 +30,6 @@ var junitReport = {
     useDotNotation: true,
     consolidate: true
 };
-
-var cwd = process.cwd();
-
-S.config('packages', {
-    src: {
-        base: cwd + '/src'
-    }
-});
-
-var mods = [
-    'src/xtemplate/tests/specs/',
-    'src/kison/tests/specs/',
-    'src/json/tests/specs/',
-    'src/base/tests/specs/',
-    'src/html-parser/tests/specs/',
-    'src/event/sub-modules/custom/tests/specs/'
-];
 
 function onComplete(runner) {
     var description = runner.queue.blocks[0].description;
@@ -86,7 +67,5 @@ if (isVerbose) {
 
 // ------------ configs end
 
-
-S.nodeRequire(mods);
 require('../../tests/');
 jasmineEnv.execute();

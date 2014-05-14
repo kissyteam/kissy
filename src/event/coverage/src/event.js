@@ -234,6 +234,7 @@ if (! _$jscoverage['/event.js']) {
   _$jscoverage['/event.js'].lineData[6] = 0;
   _$jscoverage['/event.js'].lineData[7] = 0;
   _$jscoverage['/event.js'].lineData[8] = 0;
+  _$jscoverage['/event.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/event.js'].functionData) {
   _$jscoverage['/event.js'].functionData = [];
@@ -248,9 +249,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/event.js'].lineData[5]++;
   var Event = S.Event = {};
   _$jscoverage['/event.js'].lineData[6]++;
-  S.mix(Event, require('event/dom'));
+  var util = require('util');
   _$jscoverage['/event.js'].lineData[7]++;
-  Event.Target = require('event/custom').Target;
+  util.mix(Event, require('event/dom'));
   _$jscoverage['/event.js'].lineData[8]++;
+  Event.Target = require('event/custom').Target;
+  _$jscoverage['/event.js'].lineData[9]++;
   return Event;
 });

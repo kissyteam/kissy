@@ -231,9 +231,10 @@ if (! _$jscoverage['/separator.js']) {
   _$jscoverage['/separator.js'].lineData = [];
   _$jscoverage['/separator.js'].lineData[6] = 0;
   _$jscoverage['/separator.js'].lineData[7] = 0;
-  _$jscoverage['/separator.js'].lineData[10] = 0;
-  _$jscoverage['/separator.js'].lineData[15] = 0;
-  _$jscoverage['/separator.js'].lineData[19] = 0;
+  _$jscoverage['/separator.js'].lineData[9] = 0;
+  _$jscoverage['/separator.js'].lineData[12] = 0;
+  _$jscoverage['/separator.js'].lineData[17] = 0;
+  _$jscoverage['/separator.js'].lineData[21] = 0;
 }
 if (! _$jscoverage['/separator.js'].functionData) {
   _$jscoverage['/separator.js'].functionData = [];
@@ -245,19 +246,21 @@ if (! _$jscoverage['/separator.js'].branchData) {
   _$jscoverage['/separator.js'].branchData = {};
 }
 _$jscoverage['/separator.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/separator.js'].functionData[0]++;
   _$jscoverage['/separator.js'].lineData[7]++;
+  var $ = require('node').all;
+  _$jscoverage['/separator.js'].lineData[9]++;
   function Separator() {
     _$jscoverage['/separator.js'].functionData[1]++;
   }
-  _$jscoverage['/separator.js'].lineData[10]++;
-  S.augment(Separator, {
+  _$jscoverage['/separator.js'].lineData[12]++;
+  (Separator.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/separator.js'].functionData[2]++;
-  _$jscoverage['/separator.js'].lineData[15]++;
-  S.all('<span ' + 'class="' + editor.get('prefixCls') + 'editor-toolbar-separator">&nbsp;' + '</span>').appendTo(editor.get('toolBarEl'));
+  _$jscoverage['/separator.js'].lineData[17]++;
+  $('<span ' + 'class="' + editor.get('prefixCls') + 'editor-toolbar-separator">&nbsp;' + '</span>').appendTo(editor.get('toolBarEl'));
 }});
-  _$jscoverage['/separator.js'].lineData[19]++;
+  _$jscoverage['/separator.js'].lineData[21]++;
   return Separator;
 });

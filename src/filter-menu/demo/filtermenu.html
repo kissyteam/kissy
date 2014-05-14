@@ -109,7 +109,7 @@
 <script>
 
     KISSY.ready(function (S) {
-        S.use("menu,filter-menu", function (S, Menu,FilterMenu) {
+        S.use("util,menu,filter-menu", function (S, util,Menu,FilterMenu) {
             if (1)(function () {
 
                 var m1 = new Menu.Item({
@@ -169,7 +169,7 @@
                     if (/^[a-z\s]+$/i.test(str)) {
 
                         // 过滤所有子组件
-                        S.each(children, function (c) {
+                        util.each(children, function (c) {
                             var pinyin = c.get("pinyin"),
                                     content = c.get("content");
 

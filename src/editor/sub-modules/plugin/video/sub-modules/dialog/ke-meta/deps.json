@@ -1,1 +1,1 @@
-{"editor/plugin/video/dialog":["editor","io","editor/plugin/flash/dialog","editor/plugin/menubutton"]}
+{"editor/plugin/video/dialog":["util","editor","io","editor/plugin/flash/dialog","editor/plugin/menubutton"]}

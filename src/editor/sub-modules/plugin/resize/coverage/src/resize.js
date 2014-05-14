@@ -232,6 +232,7 @@ if (! _$jscoverage['/resize.js']) {
   _$jscoverage['/resize.js'].lineData[6] = 0;
   _$jscoverage['/resize.js'].lineData[7] = 0;
   _$jscoverage['/resize.js'].lineData[8] = 0;
+  _$jscoverage['/resize.js'].lineData[9] = 0;
   _$jscoverage['/resize.js'].lineData[10] = 0;
   _$jscoverage['/resize.js'].lineData[11] = 0;
   _$jscoverage['/resize.js'].lineData[14] = 0;
@@ -288,11 +289,11 @@ if (! _$jscoverage['/resize.js'].branchData) {
   _$jscoverage['/resize.js'].branchData['63'] = [];
   _$jscoverage['/resize.js'].branchData['63'][1] = new BranchData();
 }
-_$jscoverage['/resize.js'].branchData['63'][1].init(153, 25, 'S.inArray(\'x\', direction)');
+_$jscoverage['/resize.js'].branchData['63'][1].init(156, 28, 'util.inArray(\'x\', direction)');
 function visit6_63_1(result) {
   _$jscoverage['/resize.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['60'][1].init(22, 25, 'S.inArray(\'y\', direction)');
+}_$jscoverage['/resize.js'].branchData['60'][1].init(22, 28, 'util.inArray(\'y\', direction)');
 function visit5_60_1(result) {
   _$jscoverage['/resize.js'].branchData['60'][1].ranCondition(result);
   return result;
@@ -318,7 +319,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[7]++;
   var DD = require('dd');
   _$jscoverage['/resize.js'].lineData[8]++;
-  var Node = S.Node;
+  var Node = require('node');
+  _$jscoverage['/resize.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/resize.js'].lineData[10]++;
   function Resize(config) {
     _$jscoverage['/resize.js'].functionData[1]++;
@@ -326,7 +329,7 @@ KISSY.add(function(S, require) {
     this.config = visit1_11_1(config || {});
   }
   _$jscoverage['/resize.js'].lineData[14]++;
-  S.augment(Resize, {
+  (Resize.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/resize.js'].functionData[2]++;
   _$jscoverage['/resize.js'].lineData[16]++;
@@ -376,12 +379,12 @@ KISSY.add(function(S, require) {
   d.on('drag', function(e) {
   _$jscoverage['/resize.js'].functionData[6]++;
   _$jscoverage['/resize.js'].lineData[60]++;
-  if (visit5_60_1(S.inArray('y', direction))) {
+  if (visit5_60_1(util.inArray('y', direction))) {
     _$jscoverage['/resize.js'].lineData[61]++;
     editor.set('height', height + e.deltaY);
   }
   _$jscoverage['/resize.js'].lineData[63]++;
-  if (visit6_63_1(S.inArray('x', direction))) {
+  if (visit6_63_1(util.inArray('x', direction))) {
     _$jscoverage['/resize.js'].lineData[64]++;
     editor.set('width', width + e.deltaX);
   }

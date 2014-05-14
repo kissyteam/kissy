@@ -238,6 +238,7 @@ if (! _$jscoverage['/util.js']) {
   _$jscoverage['/util.js'].lineData[12] = 0;
   _$jscoverage['/util.js'].lineData[13] = 0;
   _$jscoverage['/util.js'].lineData[14] = 0;
+  _$jscoverage['/util.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/util.js'].functionData) {
   _$jscoverage['/util.js'].functionData = [];
@@ -262,7 +263,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util.js'].lineData[12]++;
   require('util/type');
   _$jscoverage['/util.js'].lineData[13]++;
-  require('util/web');
+  require('util/json');
   _$jscoverage['/util.js'].lineData[14]++;
+  require('util/web');
+  _$jscoverage['/util.js'].lineData[15]++;
   return require('util/base');
 });

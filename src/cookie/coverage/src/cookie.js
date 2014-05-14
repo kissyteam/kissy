@@ -230,6 +230,7 @@ if (! _$jscoverage['/cookie.js']) {
   _$jscoverage['/cookie.js'] = {};
   _$jscoverage['/cookie.js'].lineData = [];
   _$jscoverage['/cookie.js'].lineData[6] = 0;
+  _$jscoverage['/cookie.js'].lineData[7] = 0;
   _$jscoverage['/cookie.js'].lineData[8] = 0;
   _$jscoverage['/cookie.js'].lineData[13] = 0;
   _$jscoverage['/cookie.js'].lineData[14] = 0;
@@ -319,10 +320,12 @@ function visit1_14_1(result) {
   _$jscoverage['/cookie.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cookie.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cookie.js'].functionData[0]++;
+  _$jscoverage['/cookie.js'].lineData[7]++;
+  var util = require('util');
   _$jscoverage['/cookie.js'].lineData[8]++;
-  var doc = S.Env.host.document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000, encode = encodeURIComponent, decode = S.urlDecode;
+  var doc = S.Env.host.document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000, encode = encodeURIComponent, decode = util.urlDecode;
   _$jscoverage['/cookie.js'].lineData[13]++;
   function isNotEmptyString(val) {
     _$jscoverage['/cookie.js'].functionData[1]++;

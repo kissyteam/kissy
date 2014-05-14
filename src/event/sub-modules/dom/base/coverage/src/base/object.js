@@ -231,6 +231,7 @@ if (! _$jscoverage['/base/object.js']) {
   _$jscoverage['/base/object.js'].lineData = [];
   _$jscoverage['/base/object.js'].lineData[6] = 0;
   _$jscoverage['/base/object.js'].lineData[7] = 0;
+  _$jscoverage['/base/object.js'].lineData[8] = 0;
   _$jscoverage['/base/object.js'].lineData[9] = 0;
   _$jscoverage['/base/object.js'].lineData[23] = 0;
   _$jscoverage['/base/object.js'].lineData[24] = 0;
@@ -432,11 +433,11 @@ function visit100_479_1(result) {
 function visit99_464_1(result) {
   _$jscoverage['/base/object.js'].branchData['464'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/object.js'].branchData['453'][1].init(5375, 34, 'originalEvent.timeStamp || S.now()');
+}_$jscoverage['/base/object.js'].branchData['453'][1].init(5378, 37, 'originalEvent.timeStamp || util.now()');
 function visit98_453_1(result) {
   _$jscoverage['/base/object.js'].branchData['453'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/object.js'].branchData['442'][1].init(5116, 26, 'self.target.nodeType === 3');
+}_$jscoverage['/base/object.js'].branchData['442'][1].init(5119, 26, 'self.target.nodeType === 3');
 function visit97_442_1(result) {
   _$jscoverage['/base/object.js'].branchData['442'][1].ranCondition(result);
   return result;
@@ -444,7 +445,7 @@ function visit97_442_1(result) {
 function visit96_438_1(result) {
   _$jscoverage['/base/object.js'].branchData['438'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/object.js'].branchData['437'][1].init(4915, 12, '!self.target');
+}_$jscoverage['/base/object.js'].branchData['437'][1].init(4918, 12, '!self.target');
 function visit95_437_1(result) {
   _$jscoverage['/base/object.js'].branchData['437'][1].ranCondition(result);
   return result;
@@ -633,6 +634,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/object.js'].functionData[0]++;
   _$jscoverage['/base/object.js'].lineData[7]++;
   var BaseEvent = require('event/base');
+  _$jscoverage['/base/object.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/base/object.js'].lineData[9]++;
   var DOCUMENT = S.Env.host.document, TRUE = true, FALSE = false, commonProps = ['altKey', 'bubbles', 'cancelable', 'ctrlKey', 'currentTarget', 'eventPhase', 'metaKey', 'shiftKey', 'target', 'timeStamp', 'view', 'type'], eventNormalizers = [{
   reg: /^key/, 
@@ -798,7 +801,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/object.js'].lineData[412]++;
     var fixFns = [], fixFn, l, prop, props = commonProps.concat();
     _$jscoverage['/base/object.js'].lineData[418]++;
-    S.each(eventNormalizers, function(normalizer) {
+    util.each(eventNormalizers, function(normalizer) {
   _$jscoverage['/base/object.js'].functionData[7]++;
   _$jscoverage['/base/object.js'].lineData[419]++;
   if (visit93_419_1(type.match(normalizer.reg))) {
@@ -842,10 +845,10 @@ KISSY.add(function(S, require) {
       fixFn(self, originalEvent);
     }
     _$jscoverage['/base/object.js'].lineData[453]++;
-    self.timeStamp = visit98_453_1(originalEvent.timeStamp || S.now());
+    self.timeStamp = visit98_453_1(originalEvent.timeStamp || util.now());
   }
   _$jscoverage['/base/object.js'].lineData[456]++;
-  S.extend(DomEventObject, BaseEvent.Object, {
+  util.extend(DomEventObject, BaseEvent.Object, {
   constructor: DomEventObject, 
   preventDefault: function() {
   _$jscoverage['/base/object.js'].functionData[8]++;

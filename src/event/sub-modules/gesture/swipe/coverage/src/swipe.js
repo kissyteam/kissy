@@ -235,6 +235,7 @@ if (! _$jscoverage['/swipe.js']) {
   _$jscoverage['/swipe.js'].lineData[9] = 0;
   _$jscoverage['/swipe.js'].lineData[10] = 0;
   _$jscoverage['/swipe.js'].lineData[11] = 0;
+  _$jscoverage['/swipe.js'].lineData[17] = 0;
   _$jscoverage['/swipe.js'].lineData[18] = 0;
   _$jscoverage['/swipe.js'].lineData[19] = 0;
   _$jscoverage['/swipe.js'].lineData[31] = 0;
@@ -413,6 +414,8 @@ KISSY.add(function(S, require) {
   var SingleTouch = GestureUtil.SingleTouch;
   _$jscoverage['/swipe.js'].lineData[11]++;
   var SWIPE = 'swipe', SWIPE_START = 'swipeStart', SWIPE_END = 'swipeEnd', MAX_DURATION = 1000, MAX_OFFSET = 35, MIN_DISTANCE = 50;
+  _$jscoverage['/swipe.js'].lineData[17]++;
+  var util = require('util');
   _$jscoverage['/swipe.js'].lineData[18]++;
   function fire(self, e, ing) {
     _$jscoverage['/swipe.js'].functionData[1]++;
@@ -511,7 +514,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/swipe.js'].functionData[2]++;
   }
   _$jscoverage['/swipe.js'].lineData[143]++;
-  S.extend(Swipe, SingleTouch, {
+  util.extend(Swipe, SingleTouch, {
   requiredGestureType: 'touch', 
   start: function() {
   _$jscoverage['/swipe.js'].functionData[3]++;

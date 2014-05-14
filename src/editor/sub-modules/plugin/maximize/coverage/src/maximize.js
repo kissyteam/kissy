@@ -279,7 +279,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/maximize.js'].functionData[1]++;
   }
   _$jscoverage['/maximize.js'].lineData[20]++;
-  S.augment(maximizePlugin, {
+  (maximizePlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/maximize.js'].functionData[2]++;
   _$jscoverage['/maximize.js'].lineData[22]++;

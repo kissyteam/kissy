@@ -231,6 +231,7 @@ if (! _$jscoverage['/html-parser/nodes/comment.js']) {
   _$jscoverage['/html-parser/nodes/comment.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[7] = 0;
+  _$jscoverage['/html-parser/nodes/comment.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[11] = 0;
@@ -269,23 +270,23 @@ if (! _$jscoverage['/html-parser/nodes/comment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1].init(18, 14, 'this.nodeValue');
-function visit190_29_1(result) {
+function visit189_29_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['20'][1].init(26, 12, 'this !== ret');
-function visit189_20_1(result) {
+function visit188_20_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['19'][1].init(22, 3, 'ret');
-function visit188_19_1(result) {
+function visit187_19_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][2].init(52, 39, '(ret = filter.onComment(this)) !== false');
-function visit187_18_2(result) {
+function visit186_18_2(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].init(40, 51, '!filter || (ret = filter.onComment(this)) !== false');
-function visit186_18_1(result) {
+function visit185_18_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].lineData[6]++;
@@ -293,6 +294,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/comment.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[7]++;
   var Text = require('./text');
+  _$jscoverage['/html-parser/nodes/comment.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[9]++;
   function Comment() {
     _$jscoverage['/html-parser/nodes/comment.js'].functionData[1]++;
@@ -304,17 +307,17 @@ KISSY.add(function(S, require) {
     this.nodeName = '#comment';
   }
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[15]++;
-  S.extend(Comment, Text, {
+  util.extend(Comment, Text, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/comment.js'].functionData[2]++;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[17]++;
   var ret;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[18]++;
-  if (visit186_18_1(!filter || visit187_18_2((ret = filter.onComment(this)) !== false))) {
+  if (visit185_18_1(!filter || visit186_18_2((ret = filter.onComment(this)) !== false))) {
     _$jscoverage['/html-parser/nodes/comment.js'].lineData[19]++;
-    if (visit188_19_1(ret)) {
+    if (visit187_19_1(ret)) {
       _$jscoverage['/html-parser/nodes/comment.js'].lineData[20]++;
-      if (visit189_20_1(this !== ret)) {
+      if (visit188_20_1(this !== ret)) {
         _$jscoverage['/html-parser/nodes/comment.js'].lineData[21]++;
         ret.writeHtml(writer, filter);
         _$jscoverage['/html-parser/nodes/comment.js'].lineData[22]++;
@@ -328,7 +331,7 @@ KISSY.add(function(S, require) {
   toHtml: function() {
   _$jscoverage['/html-parser/nodes/comment.js'].functionData[3]++;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[29]++;
-  if (visit190_29_1(this.nodeValue)) {
+  if (visit189_29_1(this.nodeValue)) {
     _$jscoverage['/html-parser/nodes/comment.js'].lineData[30]++;
     return this.nodeValue;
   } else {

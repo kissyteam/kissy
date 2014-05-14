@@ -2,7 +2,7 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.add(function (S, UA, Json, io, Node, Uri) {
+KISSY.add(function (S,util, UA, Json, io, Node, Uri) {
     /*jshint quotmark:false*/
     var $ = Node.all;
     var pageUri = new Uri(location.href);
@@ -57,7 +57,7 @@ KISSY.add(function (S, UA, Json, io, Node, Uri) {
                             expect(xhr.status).toBe(200);
 
 
-                            expect(S.isEmptyObject(
+                            expect(util.isEmptyObject(
                                 io.__lastModifiedCached)).toBe(true);
 
 
@@ -335,7 +335,7 @@ KISSY.add(function (S, UA, Json, io, Node, Uri) {
 
 
         it("should works for form file upload", function () {
-            var f = $('<form id="f' + S.guid((+new Date())) + '">' +
+            var f = $('<form id="f' + util.guid((+new Date())) + '">' +
                 //php need []
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
@@ -383,7 +383,7 @@ KISSY.add(function (S, UA, Json, io, Node, Uri) {
 
 
         it("should works for common form", function () {
-            var f = $('<form id="f' + S.guid((+new Date())) + '">' +
+            var f = $('<form id="f' + util.guid((+new Date())) + '">' +
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
                 '<input name="test5" value="t8"/>' +
@@ -426,5 +426,5 @@ KISSY.add(function (S, UA, Json, io, Node, Uri) {
         });
     });
 }, {
-    requires: ['ua', 'json', 'io', 'node', 'uri']
+    requires: ['util','ua', 'json', 'io', 'node', 'uri']
 });

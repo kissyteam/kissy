@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         IO = require('io'),
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
-
+    var util = require('util');
     var ie = S.UA.ieMode;
 
     if (ie === 9 || ie === 11) {
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
                  */
                 node: function (drag) {
                     var n = $(drag.get('dragNode').clone(true));
-                    n.attr('id', S.guid('ks-dd-proxy'));
+                    n.attr('id', util.guid('ks-dd-proxy'));
                     n.css('opacity', 0.2);
                     return n;
                 },
@@ -154,7 +154,7 @@ KISSY.add(function (S, require) {
                  */
                 node: function (drag) {
                     var n = $(drag.get('dragNode').clone(true));
-                    n.attr('id', S.guid('ks-dd-proxy'));
+                    n.attr('id', util.guid('ks-dd-proxy'));
                     n.css('opacity', 0.2);
                     return n;
                 },

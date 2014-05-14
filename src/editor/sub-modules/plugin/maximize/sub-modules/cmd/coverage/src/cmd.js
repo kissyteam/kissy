@@ -232,6 +232,7 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
+  _$jscoverage['/cmd.js'].lineData[9] = 0;
   _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[18] = 0;
   _$jscoverage['/cmd.js'].lineData[19] = 0;
@@ -503,8 +504,10 @@ KISSY.add(function(S, require) {
   var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
   var Event = require('event/dom');
+  _$jscoverage['/cmd.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/cmd.js'].lineData[10]++;
-  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = require('dom'), iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function() {
+  var UA = require('ua'), ie = UA.ie, doc = document, Node = require('node'), Dom = require('dom'), iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function() {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[18]++;
   if (visit1_18_1(!iframe)) {
@@ -519,7 +522,7 @@ KISSY.add(function(S, require) {
     this.editor = editor;
   }
   _$jscoverage['/cmd.js'].lineData[33]++;
-  S.augment(MaximizeCmd, {
+  util.augment(MaximizeCmd, {
   restoreWindow: function() {
   _$jscoverage['/cmd.js'].functionData[3]++;
   _$jscoverage['/cmd.js'].lineData[36]++;
@@ -752,7 +755,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[273]++;
   if (visit18_273_1(!self._resize)) {
     _$jscoverage['/cmd.js'].lineData[274]++;
-    self._resize = S.buffer(function() {
+    self._resize = util.buffer(function() {
   _$jscoverage['/cmd.js'].functionData[11]++;
   _$jscoverage['/cmd.js'].lineData[275]++;
   self._maximize();

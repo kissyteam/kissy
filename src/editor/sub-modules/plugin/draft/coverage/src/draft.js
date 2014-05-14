@@ -236,6 +236,7 @@ if (! _$jscoverage['/draft.js']) {
   _$jscoverage['/draft.js'].lineData[10] = 0;
   _$jscoverage['/draft.js'].lineData[11] = 0;
   _$jscoverage['/draft.js'].lineData[12] = 0;
+  _$jscoverage['/draft.js'].lineData[14] = 0;
   _$jscoverage['/draft.js'].lineData[15] = 0;
   _$jscoverage['/draft.js'].lineData[20] = 0;
   _$jscoverage['/draft.js'].lineData[21] = 0;
@@ -503,11 +504,11 @@ function visit16_201_1(result) {
 function visit15_194_1(result) {
   _$jscoverage['/draft.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/draft.js'].branchData['182'][1].init(3723, 18, 'cfg.draft.helpHTML');
+}_$jscoverage['/draft.js'].branchData['182'][1].init(3726, 18, 'cfg.draft.helpHTML');
 function visit14_182_1(result) {
   _$jscoverage['/draft.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/draft.js'].branchData['154'][1].init(2814, 30, 'editor.get(\'textarea\')[0].form');
+}_$jscoverage['/draft.js'].branchData['154'][1].init(2817, 30, 'editor.get(\'textarea\')[0].form');
 function visit13_154_1(result) {
   _$jscoverage['/draft.js'].branchData['154'][1].ranCondition(result);
   return result;
@@ -574,8 +575,10 @@ KISSY.add(function(S, require) {
   var Overlay = require('overlay');
   _$jscoverage['/draft.js'].lineData[12]++;
   var MenuButton = require('./menubutton');
+  _$jscoverage['/draft.js'].lineData[14]++;
+  var util = require('util');
   _$jscoverage['/draft.js'].lineData[15]++;
-  var Node = S.Node, LIMIT = 5, INTERVAL = 5, DRAFT_SAVE = 'ks-editor-draft-save20110503';
+  var Node = require('node'), LIMIT = 5, INTERVAL = 5, DRAFT_SAVE = 'ks-editor-draft-save20110503';
   _$jscoverage['/draft.js'].lineData[20]++;
   function padding(n, l, p) {
     _$jscoverage['/draft.js'].functionData[1]++;
@@ -619,7 +622,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[61]++;
   var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
   _$jscoverage['/draft.js'].lineData[64]++;
-  S.augment(Draft, {
+  util.augment(Draft, {
   _getSaveKey: function() {
   _$jscoverage['/draft.js'].functionData[4]++;
   _$jscoverage['/draft.js'].lineData[66]++;
@@ -638,7 +641,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/draft.js'].lineData[78]++;
     if (visit7_78_1(str)) {
       _$jscoverage['/draft.js'].lineData[80]++;
-      drafts = (visit8_80_1(localStorage === window.localStorage)) ? Json.parse(S.urlDecode(str)) : str;
+      drafts = (visit8_80_1(localStorage === window.localStorage)) ? Json.parse(util.urlDecode(str)) : str;
     }
     _$jscoverage['/draft.js'].lineData[83]++;
     self.drafts = drafts;
@@ -661,7 +664,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[104]++;
   self.timeTip = new Node('<span class="' + prefixCls + 'editor-draft-time"/>').appendTo(holder);
   _$jscoverage['/draft.js'].lineData[107]++;
-  var save = new Node(S.substitute('<a href="#" ' + 'onclick="return false;" ' + 'class="{prefixCls}editor-button ' + '{prefixCls}editor-draft-save-btn ks-inline-block" ' + 'style="' + 'vertical-align:middle;' + 'padding:1px 9px;' + '">' + '<span class="{prefixCls}editor-draft-save">' + '</span>' + '<span>\u7acb\u5373\u4fdd\u5b58</span>' + '</a>', {
+  var save = new Node(util.substitute('<a href="#" ' + 'onclick="return false;" ' + 'class="{prefixCls}editor-button ' + '{prefixCls}editor-draft-save-btn ks-inline-block" ' + 'style="' + 'vertical-align:middle;' + 'padding:1px 9px;' + '">' + '<span class="{prefixCls}editor-draft-save">' + '</span>' + '<span>\u7acb\u5373\u4fdd\u5b58</span>' + '</a>', {
   prefixCls: prefixCls})).unselectable(undefined).appendTo(holder), versions = new MenuButton({
   render: holder, 
   collapseOnClick: true, 
@@ -924,7 +927,7 @@ KISSY.add(function(S, require) {
     this.config = visit26_367_1(config || {});
   }
   _$jscoverage['/draft.js'].lineData[370]++;
-  S.augment(DraftPlugin, {
+  util.augment(DraftPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/draft.js'].functionData[27]++;
   _$jscoverage['/draft.js'].lineData[372]++;

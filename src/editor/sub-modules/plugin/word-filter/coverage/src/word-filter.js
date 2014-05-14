@@ -231,6 +231,7 @@ if (! _$jscoverage['/word-filter.js']) {
   _$jscoverage['/word-filter.js'].lineData = [];
   _$jscoverage['/word-filter.js'].lineData[6] = 0;
   _$jscoverage['/word-filter.js'].lineData[8] = 0;
+  _$jscoverage['/word-filter.js'].lineData[9] = 0;
   _$jscoverage['/word-filter.js'].lineData[10] = 0;
   _$jscoverage['/word-filter.js'].lineData[54] = 0;
   _$jscoverage['/word-filter.js'].lineData[55] = 0;
@@ -1251,7 +1252,7 @@ function visit150_958_1(result) {
 function visit149_956_1(result) {
   _$jscoverage['/word-filter.js'].branchData['956'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['949'][1].init(202, 9, 'styleText');
+}_$jscoverage['/word-filter.js'].branchData['949'][1].init(205, 9, 'styleText');
 function visit148_949_1(result) {
   _$jscoverage['/word-filter.js'].branchData['949'][1].ranCondition(result);
   return result;
@@ -1267,7 +1268,7 @@ function visit146_934_1(result) {
 function visit145_921_1(result) {
   _$jscoverage['/word-filter.js'].branchData['921'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['908'][1].init(255, 29, 'element.getAttribute(\'style\')');
+}_$jscoverage['/word-filter.js'].branchData['908'][1].init(258, 29, 'element.getAttribute(\'style\')');
 function visit144_908_1(result) {
   _$jscoverage['/word-filter.js'].branchData['908'][1].ranCondition(result);
   return result;
@@ -1567,7 +1568,7 @@ function visit71_494_1(result) {
 function visit70_489_1(result) {
   _$jscoverage['/word-filter.js'].branchData['489'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['464'][1].init(7805, 22, 'i < openedLists.length');
+}_$jscoverage['/word-filter.js'].branchData['464'][1].init(7808, 22, 'i < openedLists.length');
 function visit69_464_1(result) {
   _$jscoverage['/word-filter.js'].branchData['464'][1].ranCondition(result);
   return result;
@@ -1575,11 +1576,11 @@ function visit69_464_1(result) {
 function visit68_459_3(result) {
   _$jscoverage['/word-filter.js'].branchData['459'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['459'][2].init(6858, 48, 'child.nodeType === 3 && !S.trim(child.nodeValue)');
+}_$jscoverage['/word-filter.js'].branchData['459'][2].init(6858, 51, 'child.nodeType === 3 && !util.trim(child.nodeValue)');
 function visit67_459_2(result) {
   _$jscoverage['/word-filter.js'].branchData['459'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['459'][1].init(6848, 59, 'list && !(child.nodeType === 3 && !S.trim(child.nodeValue))');
+}_$jscoverage['/word-filter.js'].branchData['459'][1].init(6848, 62, 'list && !(child.nodeType === 3 && !util.trim(child.nodeValue))');
 function visit66_459_1(result) {
   _$jscoverage['/word-filter.js'].branchData['459'][1].ranCondition(result);
   return result;
@@ -1848,8 +1849,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].functionData[0]++;
   _$jscoverage['/word-filter.js'].lineData[8]++;
   var HtmlParser = require('html-parser');
+  _$jscoverage['/word-filter.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/word-filter.js'].lineData[10]++;
-  var $ = S.all, UA = S.UA, dtd = HtmlParser.DTD, wordFilter = new HtmlParser.Filter(), cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i, emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/, romanLiteralPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$', lowerRomanLiteralRegex = new RegExp(romanLiteralPattern), upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()), orderedPatterns = {
+  var $ = require('node').all, UA = require('ua'), dtd = HtmlParser.DTD, wordFilter = new HtmlParser.Filter(), cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i, emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/, romanLiteralPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$', lowerRomanLiteralRegex = new RegExp(romanLiteralPattern), upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()), orderedPatterns = {
   'decimal': /\d+/, 
   'lower-roman': lowerRomanLiteralRegex, 
   'upper-roman': upperRomanLiteralRegex, 
@@ -2326,7 +2329,7 @@ KISSY.add(function(S, require) {
       lastIndent = listItemIndent;
     } else {
       _$jscoverage['/word-filter.js'].lineData[459]++;
-      if (visit66_459_1(list && !(visit67_459_2(visit68_459_3(child.nodeType === 3) && !S.trim(child.nodeValue))))) {
+      if (visit66_459_1(list && !(visit67_459_2(visit68_459_3(child.nodeType === 3) && !util.trim(child.nodeValue))))) {
         _$jscoverage['/word-filter.js'].lineData[460]++;
         list = lastIndent = lastListItem = null;
       }
@@ -2563,7 +2566,7 @@ KISSY.add(function(S, require) {
       element.setAttribute('ke:indent', 1);
     }
     _$jscoverage['/word-filter.js'].lineData[689]++;
-    S.each(listMarker.attributes, function(a) {
+    util.each(listMarker.attributes, function(a) {
   _$jscoverage['/word-filter.js'].functionData[27]++;
   _$jscoverage['/word-filter.js'].lineData[690]++;
   element.setAttribute(a.name, a.value);
@@ -2602,7 +2605,7 @@ KISSY.add(function(S, require) {
   (function() {
   _$jscoverage['/word-filter.js'].functionData[30]++;
   _$jscoverage['/word-filter.js'].lineData[723]++;
-  var blockLike = S.merge(dtd.$block, dtd.$listItem, dtd.$tableContent), falsyFilter = filters.falsyFilter, stylesFilter = filters.stylesFilter, createListBulletMarker = utils.createListBulletMarker, flattenList = filters.flattenList, assembleList = filters.assembleList, isListBulletIndicator = utils.isListBulletIndicator, containsNothingButSpaces = utils.isContainingOnlySpaces, resolveListItem = utils.resolveList, convertToPxStr = function(value) {
+  var blockLike = util.merge(dtd.$block, dtd.$listItem, dtd.$tableContent), falsyFilter = filters.falsyFilter, stylesFilter = filters.stylesFilter, createListBulletMarker = utils.createListBulletMarker, flattenList = filters.flattenList, assembleList = filters.assembleList, isListBulletIndicator = utils.isListBulletIndicator, containsNothingButSpaces = utils.isContainingOnlySpaces, resolveListItem = utils.resolveList, convertToPxStr = function(value) {
   _$jscoverage['/word-filter.js'].functionData[31]++;
   _$jscoverage['/word-filter.js'].lineData[733]++;
   value = convertToPx(value);
@@ -2708,7 +2711,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[831]++;
   for (var i = 0; visit129_831_1(i < length); i++) {
     _$jscoverage['/word-filter.js'].lineData[835]++;
-    S.trim(selectors[i]).replace(/^(\w+)(\.[\w-]+)?$/g, function(match, tagName, className) {
+    util.trim(selectors[i]).replace(/^(\w+)(\.[\w-]+)?$/g, function(match, tagName, className) {
   _$jscoverage['/word-filter.js'].functionData[37]++;
   _$jscoverage['/word-filter.js'].lineData[837]++;
   tagName = visit130_837_1(tagName || '*');
@@ -2793,7 +2796,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[902]++;
     var attrs = element.attributes;
     _$jscoverage['/word-filter.js'].lineData[904]++;
-    S.each(attrs, function(attr) {
+    util.each(attrs, function(attr) {
   _$jscoverage['/word-filter.js'].functionData[42]++;
   _$jscoverage['/word-filter.js'].lineData[905]++;
   singleChild.setAttribute(attr.name, attr.value);
@@ -2840,7 +2843,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[944]++;
   if (visit147_944_1('font' === parent.name)) {
     _$jscoverage['/word-filter.js'].lineData[946]++;
-    S.each(element.attributes, function(attr) {
+    util.each(element.attributes, function(attr) {
   _$jscoverage['/word-filter.js'].functionData[45]++;
   _$jscoverage['/word-filter.js'].lineData[947]++;
   parent.setAttribute(attr.name, attr.value);

@@ -233,70 +233,71 @@ if (! _$jscoverage['/hashchange.js']) {
   _$jscoverage['/hashchange.js'].lineData[7] = 0;
   _$jscoverage['/hashchange.js'].lineData[8] = 0;
   _$jscoverage['/hashchange.js'].lineData[9] = 0;
-  _$jscoverage['/hashchange.js'].lineData[18] = 0;
-  _$jscoverage['/hashchange.js'].lineData[23] = 0;
+  _$jscoverage['/hashchange.js'].lineData[10] = 0;
+  _$jscoverage['/hashchange.js'].lineData[19] = 0;
   _$jscoverage['/hashchange.js'].lineData[24] = 0;
-  _$jscoverage['/hashchange.js'].lineData[27] = 0;
-  _$jscoverage['/hashchange.js'].lineData[41] = 0;
+  _$jscoverage['/hashchange.js'].lineData[25] = 0;
+  _$jscoverage['/hashchange.js'].lineData[28] = 0;
   _$jscoverage['/hashchange.js'].lineData[42] = 0;
-  _$jscoverage['/hashchange.js'].lineData[51] = 0;
-  _$jscoverage['/hashchange.js'].lineData[54] = 0;
+  _$jscoverage['/hashchange.js'].lineData[43] = 0;
+  _$jscoverage['/hashchange.js'].lineData[52] = 0;
   _$jscoverage['/hashchange.js'].lineData[55] = 0;
   _$jscoverage['/hashchange.js'].lineData[56] = 0;
-  _$jscoverage['/hashchange.js'].lineData[58] = 0;
-  _$jscoverage['/hashchange.js'].lineData[60] = 0;
-  _$jscoverage['/hashchange.js'].lineData[64] = 0;
-  _$jscoverage['/hashchange.js'].lineData[66] = 0;
-  _$jscoverage['/hashchange.js'].lineData[71] = 0;
-  _$jscoverage['/hashchange.js'].lineData[82] = 0;
-  _$jscoverage['/hashchange.js'].lineData[84] = 0;
+  _$jscoverage['/hashchange.js'].lineData[57] = 0;
+  _$jscoverage['/hashchange.js'].lineData[59] = 0;
+  _$jscoverage['/hashchange.js'].lineData[61] = 0;
+  _$jscoverage['/hashchange.js'].lineData[65] = 0;
+  _$jscoverage['/hashchange.js'].lineData[67] = 0;
+  _$jscoverage['/hashchange.js'].lineData[72] = 0;
+  _$jscoverage['/hashchange.js'].lineData[83] = 0;
   _$jscoverage['/hashchange.js'].lineData[85] = 0;
-  _$jscoverage['/hashchange.js'].lineData[88] = 0;
-  _$jscoverage['/hashchange.js'].lineData[92] = 0;
+  _$jscoverage['/hashchange.js'].lineData[86] = 0;
+  _$jscoverage['/hashchange.js'].lineData[89] = 0;
   _$jscoverage['/hashchange.js'].lineData[93] = 0;
-  _$jscoverage['/hashchange.js'].lineData[100] = 0;
-  _$jscoverage['/hashchange.js'].lineData[106] = 0;
-  _$jscoverage['/hashchange.js'].lineData[110] = 0;
-  _$jscoverage['/hashchange.js'].lineData[113] = 0;
+  _$jscoverage['/hashchange.js'].lineData[94] = 0;
+  _$jscoverage['/hashchange.js'].lineData[101] = 0;
+  _$jscoverage['/hashchange.js'].lineData[107] = 0;
+  _$jscoverage['/hashchange.js'].lineData[111] = 0;
   _$jscoverage['/hashchange.js'].lineData[114] = 0;
-  _$jscoverage['/hashchange.js'].lineData[118] = 0;
+  _$jscoverage['/hashchange.js'].lineData[115] = 0;
   _$jscoverage['/hashchange.js'].lineData[119] = 0;
-  _$jscoverage['/hashchange.js'].lineData[121] = 0;
-  _$jscoverage['/hashchange.js'].lineData[126] = 0;
-  _$jscoverage['/hashchange.js'].lineData[133] = 0;
+  _$jscoverage['/hashchange.js'].lineData[120] = 0;
+  _$jscoverage['/hashchange.js'].lineData[122] = 0;
+  _$jscoverage['/hashchange.js'].lineData[127] = 0;
   _$jscoverage['/hashchange.js'].lineData[134] = 0;
   _$jscoverage['/hashchange.js'].lineData[135] = 0;
-  _$jscoverage['/hashchange.js'].lineData[137] = 0;
-  _$jscoverage['/hashchange.js'].lineData[147] = 0;
-  _$jscoverage['/hashchange.js'].lineData[150] = 0;
+  _$jscoverage['/hashchange.js'].lineData[136] = 0;
+  _$jscoverage['/hashchange.js'].lineData[138] = 0;
+  _$jscoverage['/hashchange.js'].lineData[148] = 0;
   _$jscoverage['/hashchange.js'].lineData[151] = 0;
-  _$jscoverage['/hashchange.js'].lineData[155] = 0;
+  _$jscoverage['/hashchange.js'].lineData[152] = 0;
   _$jscoverage['/hashchange.js'].lineData[156] = 0;
   _$jscoverage['/hashchange.js'].lineData[157] = 0;
-  _$jscoverage['/hashchange.js'].lineData[164] = 0;
+  _$jscoverage['/hashchange.js'].lineData[158] = 0;
   _$jscoverage['/hashchange.js'].lineData[165] = 0;
   _$jscoverage['/hashchange.js'].lineData[166] = 0;
   _$jscoverage['/hashchange.js'].lineData[167] = 0;
   _$jscoverage['/hashchange.js'].lineData[168] = 0;
-  _$jscoverage['/hashchange.js'].lineData[181] = 0;
-  _$jscoverage['/hashchange.js'].lineData[191] = 0;
-  _$jscoverage['/hashchange.js'].lineData[198] = 0;
-  _$jscoverage['/hashchange.js'].lineData[203] = 0;
+  _$jscoverage['/hashchange.js'].lineData[169] = 0;
+  _$jscoverage['/hashchange.js'].lineData[182] = 0;
+  _$jscoverage['/hashchange.js'].lineData[192] = 0;
+  _$jscoverage['/hashchange.js'].lineData[199] = 0;
   _$jscoverage['/hashchange.js'].lineData[204] = 0;
   _$jscoverage['/hashchange.js'].lineData[205] = 0;
-  _$jscoverage['/hashchange.js'].lineData[207] = 0;
+  _$jscoverage['/hashchange.js'].lineData[206] = 0;
   _$jscoverage['/hashchange.js'].lineData[208] = 0;
   _$jscoverage['/hashchange.js'].lineData[209] = 0;
   _$jscoverage['/hashchange.js'].lineData[210] = 0;
-  _$jscoverage['/hashchange.js'].lineData[214] = 0;
-  _$jscoverage['/hashchange.js'].lineData[216] = 0;
+  _$jscoverage['/hashchange.js'].lineData[211] = 0;
+  _$jscoverage['/hashchange.js'].lineData[215] = 0;
   _$jscoverage['/hashchange.js'].lineData[217] = 0;
-  _$jscoverage['/hashchange.js'].lineData[221] = 0;
+  _$jscoverage['/hashchange.js'].lineData[218] = 0;
   _$jscoverage['/hashchange.js'].lineData[222] = 0;
-  _$jscoverage['/hashchange.js'].lineData[224] = 0;
-  _$jscoverage['/hashchange.js'].lineData[227] = 0;
+  _$jscoverage['/hashchange.js'].lineData[223] = 0;
+  _$jscoverage['/hashchange.js'].lineData[225] = 0;
   _$jscoverage['/hashchange.js'].lineData[228] = 0;
-  _$jscoverage['/hashchange.js'].lineData[230] = 0;
+  _$jscoverage['/hashchange.js'].lineData[229] = 0;
+  _$jscoverage['/hashchange.js'].lineData[231] = 0;
 }
 if (! _$jscoverage['/hashchange.js'].functionData) {
   _$jscoverage['/hashchange.js'].functionData = [];
@@ -319,304 +320,306 @@ if (! _$jscoverage['/hashchange.js'].functionData) {
 }
 if (! _$jscoverage['/hashchange.js'].branchData) {
   _$jscoverage['/hashchange.js'].branchData = {};
-  _$jscoverage['/hashchange.js'].branchData['28'] = [];
-  _$jscoverage['/hashchange.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['28'][2] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['42'] = [];
-  _$jscoverage['/hashchange.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['42'][2] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['54'] = [];
-  _$jscoverage['/hashchange.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['60'] = [];
-  _$jscoverage['/hashchange.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['69'] = [];
-  _$jscoverage['/hashchange.js'].branchData['69'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['69'][2] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['84'] = [];
-  _$jscoverage['/hashchange.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['113'] = [];
-  _$jscoverage['/hashchange.js'].branchData['113'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['118'] = [];
-  _$jscoverage['/hashchange.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['126'] = [];
-  _$jscoverage['/hashchange.js'].branchData['126'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['126'][2] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['134'] = [];
-  _$jscoverage['/hashchange.js'].branchData['134'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['165'] = [];
-  _$jscoverage['/hashchange.js'].branchData['165'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['167'] = [];
-  _$jscoverage['/hashchange.js'].branchData['167'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['204'] = [];
-  _$jscoverage['/hashchange.js'].branchData['204'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['216'] = [];
-  _$jscoverage['/hashchange.js'].branchData['216'][1] = new BranchData();
-  _$jscoverage['/hashchange.js'].branchData['227'] = [];
-  _$jscoverage['/hashchange.js'].branchData['227'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['29'] = [];
+  _$jscoverage['/hashchange.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['29'][2] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['43'] = [];
+  _$jscoverage['/hashchange.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['43'][2] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['55'] = [];
+  _$jscoverage['/hashchange.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['61'] = [];
+  _$jscoverage['/hashchange.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['70'] = [];
+  _$jscoverage['/hashchange.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['70'][2] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['85'] = [];
+  _$jscoverage['/hashchange.js'].branchData['85'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['114'] = [];
+  _$jscoverage['/hashchange.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['119'] = [];
+  _$jscoverage['/hashchange.js'].branchData['119'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['127'] = [];
+  _$jscoverage['/hashchange.js'].branchData['127'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['127'][2] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['135'] = [];
+  _$jscoverage['/hashchange.js'].branchData['135'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['166'] = [];
+  _$jscoverage['/hashchange.js'].branchData['166'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['168'] = [];
+  _$jscoverage['/hashchange.js'].branchData['168'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['205'] = [];
+  _$jscoverage['/hashchange.js'].branchData['205'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['217'] = [];
+  _$jscoverage['/hashchange.js'].branchData['217'][1] = new BranchData();
+  _$jscoverage['/hashchange.js'].branchData['228'] = [];
+  _$jscoverage['/hashchange.js'].branchData['228'][1] = new BranchData();
 }
-_$jscoverage['/hashchange.js'].branchData['227'][1].init(18, 12, 'this !== win');
-function visit19_227_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['227'][1].ranCondition(result);
+_$jscoverage['/hashchange.js'].branchData['228'][1].init(18, 12, 'this !== win');
+function visit19_228_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['228'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['216'][1].init(18, 12, 'this !== win');
-function visit18_216_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['216'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['217'][1].init(18, 12, 'this !== win');
+function visit18_217_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['217'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['204'][1].init(18, 5, 'timer');
-function visit17_204_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['204'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['205'][1].init(18, 5, 'timer');
+function visit17_205_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['167'][1].init(30, 26, 'e.propertyName === \'title\'');
-function visit16_167_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['167'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['168'][1].init(30, 26, 'e.propertyName === \'title\'');
+function visit16_168_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['165'][1].init(26, 17, 'e || window.event');
-function visit15_165_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['165'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['166'][1].init(26, 17, 'e || window.event');
+function visit15_166_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['134'][1].init(18, 7, '!iframe');
-function visit14_134_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['134'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['135'][1].init(18, 7, '!iframe');
+function visit14_135_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['126'][2].init(4067, 6, 'ie < 8');
-function visit13_126_2(result) {
-  _$jscoverage['/hashchange.js'].branchData['126'][2].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['127'][2].init(4106, 6, 'ie < 8');
+function visit13_127_2(result) {
+  _$jscoverage['/hashchange.js'].branchData['127'][2].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['126'][1].init(4061, 12, 'ie && ie < 8');
-function visit12_126_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['127'][1].init(4100, 12, 'ie && ie < 8');
+function visit12_127_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['118'][1].init(18, 5, 'timer');
-function visit11_118_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['119'][1].init(18, 5, 'timer');
+function visit11_119_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['113'][1].init(18, 6, '!timer');
-function visit10_113_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['113'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['114'][1].init(18, 6, '!timer');
+function visit10_114_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['84'][1].init(54, 14, 'replaceHistory');
-function visit9_84_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['84'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['85'][1].init(54, 14, 'replaceHistory');
+function visit9_85_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['69'][2].init(1470, 6, 'ie < 8');
-function visit8_69_2(result) {
-  _$jscoverage['/hashchange.js'].branchData['69'][2].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['70'][2].init(1470, 6, 'ie < 8');
+function visit8_70_2(result) {
+  _$jscoverage['/hashchange.js'].branchData['70'][2].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['69'][1].init(1464, 12, 'ie && ie < 8');
-function visit7_69_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['69'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['70'][1].init(1464, 12, 'ie && ie < 8');
+function visit7_70_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['60'][1].init(335, 17, 'hash !== lastHash');
-function visit6_60_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['61'][1].init(335, 17, 'hash !== lastHash');
+function visit6_61_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['54'][1].init(92, 36, 'hash.indexOf(REPLACE_HISTORY) !== -1');
-function visit5_54_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['55'][1].init(92, 36, 'hash.indexOf(REPLACE_HISTORY) !== -1');
+function visit5_55_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['42'][2].init(432, 9, 'm && m[0]');
-function visit4_42_2(result) {
-  _$jscoverage['/hashchange.js'].branchData['42'][2].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['43'][2].init(432, 9, 'm && m[0]');
+function visit4_43_2(result) {
+  _$jscoverage['/hashchange.js'].branchData['43'][2].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['42'][1].init(432, 16, 'm && m[0] || \'#\'');
-function visit3_42_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['43'][1].init(432, 16, 'm && m[0] || \'#\'');
+function visit3_43_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['28'][2].init(75, 16, 'doc && doc.title');
-function visit2_28_2(result) {
-  _$jscoverage['/hashchange.js'].branchData['28'][2].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['29'][2].init(75, 16, 'doc && doc.title');
+function visit2_29_2(result) {
+  _$jscoverage['/hashchange.js'].branchData['29'][2].ranCondition(result);
   return result;
-}_$jscoverage['/hashchange.js'].branchData['28'][1].init(75, 22, 'doc && doc.title || \'\'');
-function visit1_28_1(result) {
-  _$jscoverage['/hashchange.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/hashchange.js'].branchData['29'][1].init(75, 22, 'doc && doc.title || \'\'');
+function visit1_29_1(result) {
+  _$jscoverage['/hashchange.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/hashchange.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/hashchange.js'].functionData[0]++;
   _$jscoverage['/hashchange.js'].lineData[7]++;
-  var DomEvent = require('event/dom/base');
+  var util = require('util');
   _$jscoverage['/hashchange.js'].lineData[8]++;
-  var Dom = require('dom');
+  var DomEvent = require('event/dom/base');
   _$jscoverage['/hashchange.js'].lineData[9]++;
+  var Dom = require('dom');
+  _$jscoverage['/hashchange.js'].lineData[10]++;
   var UA = require('ua'), urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, REPLACE_HISTORY = '__ks_replace_history__', ie = UA.ieMode, HASH_CHANGE = 'hashchange';
-  _$jscoverage['/hashchange.js'].lineData[18]++;
+  _$jscoverage['/hashchange.js'].lineData[19]++;
   DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
-  _$jscoverage['/hashchange.js'].lineData[23]++;
+  _$jscoverage['/hashchange.js'].lineData[24]++;
   function getIframeDoc(iframe) {
     _$jscoverage['/hashchange.js'].functionData[1]++;
-    _$jscoverage['/hashchange.js'].lineData[24]++;
+    _$jscoverage['/hashchange.js'].lineData[25]++;
     return iframe.contentWindow.document;
   }
-  _$jscoverage['/hashchange.js'].lineData[27]++;
-  var POLL_INTERVAL = 50, IFRAME_TEMPLATE = '<html><head><title>' + (visit1_28_1(visit2_28_2(doc && doc.title) || '')) + ' - {hash}</title>{head}</head><body>{hash}</body></html>', getHash = function() {
+  _$jscoverage['/hashchange.js'].lineData[28]++;
+  var POLL_INTERVAL = 50, IFRAME_TEMPLATE = '<html><head><title>' + (visit1_29_1(visit2_29_2(doc && doc.title) || '')) + ' - {hash}</title>{head}</head><body>{hash}</body></html>', getHash = function() {
   _$jscoverage['/hashchange.js'].functionData[2]++;
-  _$jscoverage['/hashchange.js'].lineData[41]++;
-  var m = location.href.match(/#.+$/);
   _$jscoverage['/hashchange.js'].lineData[42]++;
-  return visit3_42_1(visit4_42_2(m && m[0]) || '#');
+  var m = location.href.match(/#.+$/);
+  _$jscoverage['/hashchange.js'].lineData[43]++;
+  return visit3_43_1(visit4_43_2(m && m[0]) || '#');
 }, timer, lastHash, poll = function() {
   _$jscoverage['/hashchange.js'].functionData[3]++;
-  _$jscoverage['/hashchange.js'].lineData[51]++;
+  _$jscoverage['/hashchange.js'].lineData[52]++;
   var hash = getHash(), replaceHistory = 0;
-  _$jscoverage['/hashchange.js'].lineData[54]++;
-  if (visit5_54_1(hash.indexOf(REPLACE_HISTORY) !== -1)) {
-    _$jscoverage['/hashchange.js'].lineData[55]++;
-    replaceHistory = 1;
+  _$jscoverage['/hashchange.js'].lineData[55]++;
+  if (visit5_55_1(hash.indexOf(REPLACE_HISTORY) !== -1)) {
     _$jscoverage['/hashchange.js'].lineData[56]++;
+    replaceHistory = 1;
+    _$jscoverage['/hashchange.js'].lineData[57]++;
     hash = hash.replace(REPLACE_HISTORY, '');
-    _$jscoverage['/hashchange.js'].lineData[58]++;
+    _$jscoverage['/hashchange.js'].lineData[59]++;
     location.hash = hash;
   }
-  _$jscoverage['/hashchange.js'].lineData[60]++;
-  if (visit6_60_1(hash !== lastHash)) {
-    _$jscoverage['/hashchange.js'].lineData[64]++;
+  _$jscoverage['/hashchange.js'].lineData[61]++;
+  if (visit6_61_1(hash !== lastHash)) {
+    _$jscoverage['/hashchange.js'].lineData[65]++;
     hashChange(hash, replaceHistory);
   }
-  _$jscoverage['/hashchange.js'].lineData[66]++;
+  _$jscoverage['/hashchange.js'].lineData[67]++;
   timer = setTimeout(poll, POLL_INTERVAL);
-}, hashChange = visit7_69_1(ie && visit8_69_2(ie < 8)) ? function(hash, replaceHistory) {
+}, hashChange = visit7_70_1(ie && visit8_70_2(ie < 8)) ? function(hash, replaceHistory) {
   _$jscoverage['/hashchange.js'].functionData[4]++;
-  _$jscoverage['/hashchange.js'].lineData[71]++;
-  var html = S.substitute(IFRAME_TEMPLATE, {
-  hash: S.escapeHtml(hash), 
+  _$jscoverage['/hashchange.js'].lineData[72]++;
+  var html = util.substitute(IFRAME_TEMPLATE, {
+  hash: util.escapeHtml(hash), 
   head: Dom.isCustomDomain() ? ('<script>' + 'document.' + 'domain = "' + doc.domain + '";</script>') : ''}), iframeDoc = getIframeDoc(iframe);
-  _$jscoverage['/hashchange.js'].lineData[82]++;
+  _$jscoverage['/hashchange.js'].lineData[83]++;
   try {
-    _$jscoverage['/hashchange.js'].lineData[84]++;
-    if (visit9_84_1(replaceHistory)) {
-      _$jscoverage['/hashchange.js'].lineData[85]++;
+    _$jscoverage['/hashchange.js'].lineData[85]++;
+    if (visit9_85_1(replaceHistory)) {
+      _$jscoverage['/hashchange.js'].lineData[86]++;
       iframeDoc.open('text/html', 'replace');
     } else {
-      _$jscoverage['/hashchange.js'].lineData[88]++;
+      _$jscoverage['/hashchange.js'].lineData[89]++;
       iframeDoc.open();
     }
-    _$jscoverage['/hashchange.js'].lineData[92]++;
-    iframeDoc.write(html);
     _$jscoverage['/hashchange.js'].lineData[93]++;
+    iframeDoc.write(html);
+    _$jscoverage['/hashchange.js'].lineData[94]++;
     iframeDoc.close();
   }  catch (e) {
 }
 } : function() {
   _$jscoverage['/hashchange.js'].functionData[5]++;
-  _$jscoverage['/hashchange.js'].lineData[100]++;
+  _$jscoverage['/hashchange.js'].lineData[101]++;
   notifyHashChange();
 }, notifyHashChange = function() {
   _$jscoverage['/hashchange.js'].functionData[6]++;
-  _$jscoverage['/hashchange.js'].lineData[106]++;
+  _$jscoverage['/hashchange.js'].lineData[107]++;
   DomEvent.fireHandler(win, HASH_CHANGE, {
   newURL: location.href, 
   oldURL: urlWithoutHash + lastHash});
-  _$jscoverage['/hashchange.js'].lineData[110]++;
+  _$jscoverage['/hashchange.js'].lineData[111]++;
   lastHash = getHash();
 }, setup = function() {
   _$jscoverage['/hashchange.js'].functionData[7]++;
-  _$jscoverage['/hashchange.js'].lineData[113]++;
-  if (visit10_113_1(!timer)) {
-    _$jscoverage['/hashchange.js'].lineData[114]++;
+  _$jscoverage['/hashchange.js'].lineData[114]++;
+  if (visit10_114_1(!timer)) {
+    _$jscoverage['/hashchange.js'].lineData[115]++;
     poll();
   }
 }, tearDown = function() {
   _$jscoverage['/hashchange.js'].functionData[8]++;
-  _$jscoverage['/hashchange.js'].lineData[118]++;
-  if (visit11_118_1(timer)) {
-    _$jscoverage['/hashchange.js'].lineData[119]++;
+  _$jscoverage['/hashchange.js'].lineData[119]++;
+  if (visit11_119_1(timer)) {
+    _$jscoverage['/hashchange.js'].lineData[120]++;
     clearTimeout(timer);
   }
-  _$jscoverage['/hashchange.js'].lineData[121]++;
+  _$jscoverage['/hashchange.js'].lineData[122]++;
   timer = 0;
 }, iframe;
-  _$jscoverage['/hashchange.js'].lineData[126]++;
-  if (visit12_126_1(ie && visit13_126_2(ie < 8))) {
-    _$jscoverage['/hashchange.js'].lineData[133]++;
+  _$jscoverage['/hashchange.js'].lineData[127]++;
+  if (visit12_127_1(ie && visit13_127_2(ie < 8))) {
+    _$jscoverage['/hashchange.js'].lineData[134]++;
     setup = function() {
   _$jscoverage['/hashchange.js'].functionData[9]++;
-  _$jscoverage['/hashchange.js'].lineData[134]++;
-  if (visit14_134_1(!iframe)) {
-    _$jscoverage['/hashchange.js'].lineData[135]++;
+  _$jscoverage['/hashchange.js'].lineData[135]++;
+  if (visit14_135_1(!iframe)) {
+    _$jscoverage['/hashchange.js'].lineData[136]++;
     var iframeSrc = Dom.getEmptyIframeSrc();
-    _$jscoverage['/hashchange.js'].lineData[137]++;
+    _$jscoverage['/hashchange.js'].lineData[138]++;
     iframe = Dom.create('<iframe ' + (iframeSrc ? 'src="' + iframeSrc + '"' : '') + ' style="display: none" ' + 'height="0" ' + 'width="0" ' + 'tabindex="-1" ' + 'title="empty"/>');
-    _$jscoverage['/hashchange.js'].lineData[147]++;
+    _$jscoverage['/hashchange.js'].lineData[148]++;
     Dom.prepend(iframe, doc.documentElement);
-    _$jscoverage['/hashchange.js'].lineData[150]++;
+    _$jscoverage['/hashchange.js'].lineData[151]++;
     DomEvent.add(iframe, 'load', function() {
   _$jscoverage['/hashchange.js'].functionData[10]++;
-  _$jscoverage['/hashchange.js'].lineData[151]++;
+  _$jscoverage['/hashchange.js'].lineData[152]++;
   DomEvent.remove(iframe, 'load');
-  _$jscoverage['/hashchange.js'].lineData[155]++;
-  hashChange(getHash());
   _$jscoverage['/hashchange.js'].lineData[156]++;
-  DomEvent.add(iframe, 'load', onIframeLoad);
+  hashChange(getHash());
   _$jscoverage['/hashchange.js'].lineData[157]++;
+  DomEvent.add(iframe, 'load', onIframeLoad);
+  _$jscoverage['/hashchange.js'].lineData[158]++;
   poll();
 });
-    _$jscoverage['/hashchange.js'].lineData[164]++;
+    _$jscoverage['/hashchange.js'].lineData[165]++;
     doc.attachEvent('propertychange', function(e) {
   _$jscoverage['/hashchange.js'].functionData[11]++;
-  _$jscoverage['/hashchange.js'].lineData[165]++;
-  e = visit15_165_1(e || window.event);
   _$jscoverage['/hashchange.js'].lineData[166]++;
+  e = visit15_166_1(e || window.event);
+  _$jscoverage['/hashchange.js'].lineData[167]++;
   try {
-    _$jscoverage['/hashchange.js'].lineData[167]++;
-    if (visit16_167_1(e.propertyName === 'title')) {
-      _$jscoverage['/hashchange.js'].lineData[168]++;
+    _$jscoverage['/hashchange.js'].lineData[168]++;
+    if (visit16_168_1(e.propertyName === 'title')) {
+      _$jscoverage['/hashchange.js'].lineData[169]++;
       getIframeDoc(iframe).title = doc.title + ' - ' + getHash();
     }
   }  catch (e) {
 }
 });
-    _$jscoverage['/hashchange.js'].lineData[181]++;
+    _$jscoverage['/hashchange.js'].lineData[182]++;
     var onIframeLoad = function() {
   _$jscoverage['/hashchange.js'].functionData[12]++;
-  _$jscoverage['/hashchange.js'].lineData[191]++;
-  location.hash = S.trim(getIframeDoc(iframe).body.innerText);
-  _$jscoverage['/hashchange.js'].lineData[198]++;
+  _$jscoverage['/hashchange.js'].lineData[192]++;
+  location.hash = util.trim(getIframeDoc(iframe).body.innerText);
+  _$jscoverage['/hashchange.js'].lineData[199]++;
   notifyHashChange();
 };
   }
 };
-    _$jscoverage['/hashchange.js'].lineData[203]++;
+    _$jscoverage['/hashchange.js'].lineData[204]++;
     tearDown = function() {
   _$jscoverage['/hashchange.js'].functionData[13]++;
-  _$jscoverage['/hashchange.js'].lineData[204]++;
-  if (visit17_204_1(timer)) {
-    _$jscoverage['/hashchange.js'].lineData[205]++;
+  _$jscoverage['/hashchange.js'].lineData[205]++;
+  if (visit17_205_1(timer)) {
+    _$jscoverage['/hashchange.js'].lineData[206]++;
     clearTimeout(timer);
   }
-  _$jscoverage['/hashchange.js'].lineData[207]++;
-  timer = 0;
   _$jscoverage['/hashchange.js'].lineData[208]++;
-  DomEvent.detach(iframe);
+  timer = 0;
   _$jscoverage['/hashchange.js'].lineData[209]++;
-  Dom.remove(iframe);
+  DomEvent.detach(iframe);
   _$jscoverage['/hashchange.js'].lineData[210]++;
+  Dom.remove(iframe);
+  _$jscoverage['/hashchange.js'].lineData[211]++;
   iframe = 0;
 };
   }
-  _$jscoverage['/hashchange.js'].lineData[214]++;
+  _$jscoverage['/hashchange.js'].lineData[215]++;
   Special[HASH_CHANGE] = {
   setup: function() {
   _$jscoverage['/hashchange.js'].functionData[14]++;
-  _$jscoverage['/hashchange.js'].lineData[216]++;
-  if (visit18_216_1(this !== win)) {
-    _$jscoverage['/hashchange.js'].lineData[217]++;
+  _$jscoverage['/hashchange.js'].lineData[217]++;
+  if (visit18_217_1(this !== win)) {
+    _$jscoverage['/hashchange.js'].lineData[218]++;
     return;
   }
-  _$jscoverage['/hashchange.js'].lineData[221]++;
-  lastHash = getHash();
   _$jscoverage['/hashchange.js'].lineData[222]++;
+  lastHash = getHash();
+  _$jscoverage['/hashchange.js'].lineData[223]++;
   urlWithoutHash = location.href.replace(/#.+/, '');
-  _$jscoverage['/hashchange.js'].lineData[224]++;
+  _$jscoverage['/hashchange.js'].lineData[225]++;
   setup();
 }, 
   tearDown: function() {
   _$jscoverage['/hashchange.js'].functionData[15]++;
-  _$jscoverage['/hashchange.js'].lineData[227]++;
-  if (visit19_227_1(this !== win)) {
-    _$jscoverage['/hashchange.js'].lineData[228]++;
+  _$jscoverage['/hashchange.js'].lineData[228]++;
+  if (visit19_228_1(this !== win)) {
+    _$jscoverage['/hashchange.js'].lineData[229]++;
     return;
   }
-  _$jscoverage['/hashchange.js'].lineData[230]++;
+  _$jscoverage['/hashchange.js'].lineData[231]++;
   tearDown();
 }};
 });

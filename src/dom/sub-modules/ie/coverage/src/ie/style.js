@@ -233,48 +233,49 @@ if (! _$jscoverage['/ie/style.js']) {
   _$jscoverage['/ie/style.js'].lineData[7] = 0;
   _$jscoverage['/ie/style.js'].lineData[8] = 0;
   _$jscoverage['/ie/style.js'].lineData[9] = 0;
-  _$jscoverage['/ie/style.js'].lineData[29] = 0;
-  _$jscoverage['/ie/style.js'].lineData[32] = 0;
-  _$jscoverage['/ie/style.js'].lineData[34] = 0;
+  _$jscoverage['/ie/style.js'].lineData[10] = 0;
+  _$jscoverage['/ie/style.js'].lineData[30] = 0;
+  _$jscoverage['/ie/style.js'].lineData[33] = 0;
   _$jscoverage['/ie/style.js'].lineData[35] = 0;
-  _$jscoverage['/ie/style.js'].lineData[39] = 0;
-  _$jscoverage['/ie/style.js'].lineData[45] = 0;
+  _$jscoverage['/ie/style.js'].lineData[36] = 0;
+  _$jscoverage['/ie/style.js'].lineData[40] = 0;
   _$jscoverage['/ie/style.js'].lineData[46] = 0;
   _$jscoverage['/ie/style.js'].lineData[47] = 0;
-  _$jscoverage['/ie/style.js'].lineData[52] = 0;
-  _$jscoverage['/ie/style.js'].lineData[61] = 0;
-  _$jscoverage['/ie/style.js'].lineData[63] = 0;
-  _$jscoverage['/ie/style.js'].lineData[69] = 0;
-  _$jscoverage['/ie/style.js'].lineData[73] = 0;
-  _$jscoverage['/ie/style.js'].lineData[78] = 0;
-  _$jscoverage['/ie/style.js'].lineData[80] = 0;
-  _$jscoverage['/ie/style.js'].lineData[84] = 0;
-  _$jscoverage['/ie/style.js'].lineData[90] = 0;
-  _$jscoverage['/ie/style.js'].lineData[97] = 0;
-  _$jscoverage['/ie/style.js'].lineData[105] = 0;
-  _$jscoverage['/ie/style.js'].lineData[108] = 0;
+  _$jscoverage['/ie/style.js'].lineData[48] = 0;
+  _$jscoverage['/ie/style.js'].lineData[53] = 0;
+  _$jscoverage['/ie/style.js'].lineData[62] = 0;
+  _$jscoverage['/ie/style.js'].lineData[64] = 0;
+  _$jscoverage['/ie/style.js'].lineData[70] = 0;
+  _$jscoverage['/ie/style.js'].lineData[74] = 0;
+  _$jscoverage['/ie/style.js'].lineData[79] = 0;
+  _$jscoverage['/ie/style.js'].lineData[81] = 0;
+  _$jscoverage['/ie/style.js'].lineData[85] = 0;
+  _$jscoverage['/ie/style.js'].lineData[91] = 0;
+  _$jscoverage['/ie/style.js'].lineData[98] = 0;
+  _$jscoverage['/ie/style.js'].lineData[106] = 0;
   _$jscoverage['/ie/style.js'].lineData[109] = 0;
   _$jscoverage['/ie/style.js'].lineData[110] = 0;
-  _$jscoverage['/ie/style.js'].lineData[112] = 0;
+  _$jscoverage['/ie/style.js'].lineData[111] = 0;
   _$jscoverage['/ie/style.js'].lineData[113] = 0;
-  _$jscoverage['/ie/style.js'].lineData[116] = 0;
-  _$jscoverage['/ie/style.js'].lineData[119] = 0;
-  _$jscoverage['/ie/style.js'].lineData[122] = 0;
-  _$jscoverage['/ie/style.js'].lineData[124] = 0;
+  _$jscoverage['/ie/style.js'].lineData[114] = 0;
+  _$jscoverage['/ie/style.js'].lineData[117] = 0;
+  _$jscoverage['/ie/style.js'].lineData[120] = 0;
+  _$jscoverage['/ie/style.js'].lineData[123] = 0;
   _$jscoverage['/ie/style.js'].lineData[125] = 0;
-  _$jscoverage['/ie/style.js'].lineData[128] = 0;
-  _$jscoverage['/ie/style.js'].lineData[131] = 0;
-  _$jscoverage['/ie/style.js'].lineData[136] = 0;
+  _$jscoverage['/ie/style.js'].lineData[126] = 0;
+  _$jscoverage['/ie/style.js'].lineData[129] = 0;
+  _$jscoverage['/ie/style.js'].lineData[132] = 0;
   _$jscoverage['/ie/style.js'].lineData[137] = 0;
-  _$jscoverage['/ie/style.js'].lineData[140] = 0;
-  _$jscoverage['/ie/style.js'].lineData[152] = 0;
-  _$jscoverage['/ie/style.js'].lineData[154] = 0;
-  _$jscoverage['/ie/style.js'].lineData[159] = 0;
-  _$jscoverage['/ie/style.js'].lineData[162] = 0;
+  _$jscoverage['/ie/style.js'].lineData[138] = 0;
+  _$jscoverage['/ie/style.js'].lineData[141] = 0;
+  _$jscoverage['/ie/style.js'].lineData[153] = 0;
+  _$jscoverage['/ie/style.js'].lineData[155] = 0;
+  _$jscoverage['/ie/style.js'].lineData[160] = 0;
   _$jscoverage['/ie/style.js'].lineData[163] = 0;
-  _$jscoverage['/ie/style.js'].lineData[166] = 0;
-  _$jscoverage['/ie/style.js'].lineData[168] = 0;
-  _$jscoverage['/ie/style.js'].lineData[170] = 0;
+  _$jscoverage['/ie/style.js'].lineData[164] = 0;
+  _$jscoverage['/ie/style.js'].lineData[167] = 0;
+  _$jscoverage['/ie/style.js'].lineData[169] = 0;
+  _$jscoverage['/ie/style.js'].lineData[171] = 0;
 }
 if (! _$jscoverage['/ie/style.js'].functionData) {
   _$jscoverage['/ie/style.js'].functionData = [];
@@ -288,273 +289,275 @@ if (! _$jscoverage['/ie/style.js'].functionData) {
 }
 if (! _$jscoverage['/ie/style.js'].branchData) {
   _$jscoverage['/ie/style.js'].branchData = {};
-  _$jscoverage['/ie/style.js'].branchData['14'] = [];
-  _$jscoverage['/ie/style.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['34'] = [];
-  _$jscoverage['/ie/style.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['46'] = [];
-  _$jscoverage['/ie/style.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['52'] = [];
-  _$jscoverage['/ie/style.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['15'] = [];
+  _$jscoverage['/ie/style.js'].branchData['15'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['35'] = [];
+  _$jscoverage['/ie/style.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['47'] = [];
+  _$jscoverage['/ie/style.js'].branchData['47'][1] = new BranchData();
   _$jscoverage['/ie/style.js'].branchData['53'] = [];
   _$jscoverage['/ie/style.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['66'] = [];
-  _$jscoverage['/ie/style.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['66'][2] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['66'][3] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['73'] = [];
-  _$jscoverage['/ie/style.js'].branchData['73'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['73'][2] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['73'][3] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['81'] = [];
-  _$jscoverage['/ie/style.js'].branchData['81'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['83'] = [];
-  _$jscoverage['/ie/style.js'].branchData['83'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['105'] = [];
-  _$jscoverage['/ie/style.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['120'] = [];
-  _$jscoverage['/ie/style.js'].branchData['120'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['120'][2] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['122'] = [];
-  _$jscoverage['/ie/style.js'].branchData['122'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['122'][2] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['124'] = [];
-  _$jscoverage['/ie/style.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['124'][2] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['137'] = [];
-  _$jscoverage['/ie/style.js'].branchData['137'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['140'] = [];
-  _$jscoverage['/ie/style.js'].branchData['140'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['152'] = [];
-  _$jscoverage['/ie/style.js'].branchData['152'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['162'] = [];
-  _$jscoverage['/ie/style.js'].branchData['162'][1] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['162'][2] = new BranchData();
-  _$jscoverage['/ie/style.js'].branchData['170'] = [];
-  _$jscoverage['/ie/style.js'].branchData['170'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['54'] = [];
+  _$jscoverage['/ie/style.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['67'] = [];
+  _$jscoverage['/ie/style.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['67'][2] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['67'][3] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['74'] = [];
+  _$jscoverage['/ie/style.js'].branchData['74'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['74'][2] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['74'][3] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['82'] = [];
+  _$jscoverage['/ie/style.js'].branchData['82'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['84'] = [];
+  _$jscoverage['/ie/style.js'].branchData['84'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['106'] = [];
+  _$jscoverage['/ie/style.js'].branchData['106'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['121'] = [];
+  _$jscoverage['/ie/style.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['121'][2] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['123'] = [];
+  _$jscoverage['/ie/style.js'].branchData['123'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['123'][2] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['125'] = [];
+  _$jscoverage['/ie/style.js'].branchData['125'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['125'][2] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['138'] = [];
+  _$jscoverage['/ie/style.js'].branchData['138'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['141'] = [];
+  _$jscoverage['/ie/style.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['153'] = [];
+  _$jscoverage['/ie/style.js'].branchData['153'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['163'] = [];
+  _$jscoverage['/ie/style.js'].branchData['163'][1] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['163'][2] = new BranchData();
+  _$jscoverage['/ie/style.js'].branchData['171'] = [];
+  _$jscoverage['/ie/style.js'].branchData['171'][1] = new BranchData();
 }
-_$jscoverage['/ie/style.js'].branchData['170'][1].init(1474, 10, 'ret === \'\'');
-function visit86_170_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['170'][1].ranCondition(result);
+_$jscoverage['/ie/style.js'].branchData['171'][1].init(1474, 10, 'ret === \'\'');
+function visit86_171_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['162'][2].init(414, 8, 'ret || 0');
-function visit85_162_2(result) {
-  _$jscoverage['/ie/style.js'].branchData['162'][2].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['163'][2].init(414, 8, 'ret || 0');
+function visit85_163_2(result) {
+  _$jscoverage['/ie/style.js'].branchData['163'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['162'][1].init(383, 19, 'name === \'fontSize\'');
-function visit84_162_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['162'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['163'][1].init(383, 19, 'name === \'fontSize\'');
+function visit84_163_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['152'][1].init(801, 49, 'Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)');
-function visit83_152_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['152'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['153'][1].init(801, 49, 'Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)');
+function visit83_153_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['140'][1].init(162, 48, 'elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name]');
-function visit82_140_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['140'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['141'][1].init(162, 48, 'elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name]');
+function visit82_141_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['137'][1].init(17, 22, 'cssProps[name] || name');
-function visit81_137_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['137'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['138'][1].init(17, 22, 'cssProps[name] || name');
+function visit81_138_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['124'][2].init(80, 34, 'currentStyle[styleName] !== \'none\'');
-function visit80_124_2(result) {
-  _$jscoverage['/ie/style.js'].branchData['124'][2].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['125'][2].init(80, 34, 'currentStyle[styleName] !== \'none\'');
+function visit80_125_2(result) {
+  _$jscoverage['/ie/style.js'].branchData['125'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['124'][1].init(57, 57, 'BORDER_MAP[current] && currentStyle[styleName] !== \'none\'');
-function visit79_124_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['125'][1].init(57, 57, 'BORDER_MAP[current] && currentStyle[styleName] !== \'none\'');
+function visit79_125_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['122'][2].init(290, 25, 'current.indexOf(\'px\') < 0');
-function visit78_122_2(result) {
-  _$jscoverage['/ie/style.js'].branchData['122'][2].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['123'][2].init(290, 25, 'current.indexOf(\'px\') < 0');
+function visit78_123_2(result) {
+  _$jscoverage['/ie/style.js'].branchData['123'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['122'][1].init(279, 36, 'current && current.indexOf(\'px\') < 0');
-function visit77_122_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['122'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['123'][1].init(279, 36, 'current && current.indexOf(\'px\') < 0');
+function visit77_123_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['120'][2].init(85, 42, 'currentStyle && String(currentStyle[name])');
-function visit76_120_2(result) {
-  _$jscoverage['/ie/style.js'].branchData['120'][2].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['121'][2].init(85, 42, 'currentStyle && String(currentStyle[name])');
+function visit76_121_2(result) {
+  _$jscoverage['/ie/style.js'].branchData['121'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['120'][1].init(85, 55, 'currentStyle && String(currentStyle[name]) || undefined');
-function visit75_120_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['120'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['121'][1].init(85, 55, 'currentStyle && String(currentStyle[name]) || undefined');
+function visit75_121_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['105'][1].init(3988, 11, 'UA.ie === 8');
-function visit74_105_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['105'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['106'][1].init(4027, 11, 'UA.ie === 8');
+function visit74_106_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['83'][1].init(143, 37, 'currentStyle && !currentStyle[FILTER]');
-function visit73_83_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['83'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['84'][1].init(143, 37, 'currentStyle && !currentStyle[FILTER]');
+function visit73_84_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['81'][1].init(56, 181, '!opacity || currentStyle && !currentStyle[FILTER]');
-function visit72_81_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['81'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['82'][1].init(56, 181, '!opacity || currentStyle && !currentStyle[FILTER]');
+function visit72_82_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['73'][3].init(647, 8, 'val >= 1');
-function visit71_73_3(result) {
-  _$jscoverage['/ie/style.js'].branchData['73'][3].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['74'][3].init(650, 8, 'val >= 1');
+function visit71_74_3(result) {
+  _$jscoverage['/ie/style.js'].branchData['74'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['73'][2].init(647, 20, 'val >= 1 || !opacity');
-function visit70_73_2(result) {
-  _$jscoverage['/ie/style.js'].branchData['73'][2].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['74'][2].init(650, 20, 'val >= 1 || !opacity');
+function visit70_74_2(result) {
+  _$jscoverage['/ie/style.js'].branchData['74'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['73'][1].init(647, 61, '(val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, \'\'))');
-function visit69_73_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['73'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['74'][1].init(650, 64, '(val >= 1 || !opacity) && !util.trim(filter.replace(R_ALPHA, \'\'))');
+function visit69_74_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['66'][3].init(39, 19, 'style[FILTER] || \'\'');
-function visit68_66_3(result) {
-  _$jscoverage['/ie/style.js'].branchData['66'][3].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['67'][3].init(39, 19, 'style[FILTER] || \'\'');
+function visit68_67_3(result) {
+  _$jscoverage['/ie/style.js'].branchData['67'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['66'][2].init(16, 36, 'currentStyle && currentStyle[FILTER]');
-function visit67_66_2(result) {
-  _$jscoverage['/ie/style.js'].branchData['66'][2].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['67'][2].init(19, 36, 'currentStyle && currentStyle[FILTER]');
+function visit67_67_2(result) {
+  _$jscoverage['/ie/style.js'].branchData['67'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['66'][1].init(227, 59, 'currentStyle && currentStyle[FILTER] || style[FILTER] || \'\'');
-function visit66_66_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['67'][1].init(230, 59, 'currentStyle && currentStyle[FILTER] || style[FILTER] || \'\'');
+function visit66_67_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['53'][1].init(-1, 31, 'computed && elem[CURRENT_STYLE]');
-function visit65_53_1(result) {
+}_$jscoverage['/ie/style.js'].branchData['54'][1].init(-1, 31, 'computed && elem[CURRENT_STYLE]');
+function visit65_54_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['54'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/ie/style.js'].branchData['53'][1].init(41, 148, '(computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || \'\'');
+function visit64_53_1(result) {
   _$jscoverage['/ie/style.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['52'][1].init(41, 148, '(computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || \'\'');
-function visit64_52_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['52'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['47'][1].init(14, 30, 'docElem.style[OPACITY] == null');
+function visit63_47_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['46'][1].init(14, 30, 'docElem.style[OPACITY] == null');
-function visit63_46_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['35'][1].init(18, 8, 'computed');
+function visit62_35_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/style.js'].branchData['34'][1].init(18, 8, 'computed');
-function visit62_34_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['34'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/ie/style.js'].branchData['14'][1].init(163, 26, 'doc && doc.documentElement');
-function visit61_14_1(result) {
-  _$jscoverage['/ie/style.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/ie/style.js'].branchData['15'][1].init(163, 26, 'doc && doc.documentElement');
+function visit61_15_1(result) {
+  _$jscoverage['/ie/style.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/style.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/ie/style.js'].functionData[0]++;
   _$jscoverage['/ie/style.js'].lineData[7]++;
-  var logger = S.getLogger('s/dom');
+  var util = require('util');
   _$jscoverage['/ie/style.js'].lineData[8]++;
-  var Dom = require('dom/base');
+  var logger = S.getLogger('s/dom');
   _$jscoverage['/ie/style.js'].lineData[9]++;
-  var cssProps = Dom._cssProps, UA = require('ua'), FLOAT = 'float', HUNDRED = 100, doc = S.Env.host.document, docElem = visit61_14_1(doc && doc.documentElement), OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
-  _$jscoverage['/ie/style.js'].lineData[29]++;
+  var Dom = require('dom/base');
+  _$jscoverage['/ie/style.js'].lineData[10]++;
+  var cssProps = Dom._cssProps, UA = require('ua'), FLOAT = 'float', HUNDRED = 100, doc = S.Env.host.document, docElem = visit61_15_1(doc && doc.documentElement), OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
+  _$jscoverage['/ie/style.js'].lineData[30]++;
   cssProps[FLOAT] = 'styleFloat';
-  _$jscoverage['/ie/style.js'].lineData[32]++;
+  _$jscoverage['/ie/style.js'].lineData[33]++;
   cssHooks[backgroundPosition] = {
   get: function(elem, computed) {
   _$jscoverage['/ie/style.js'].functionData[1]++;
-  _$jscoverage['/ie/style.js'].lineData[34]++;
-  if (visit62_34_1(computed)) {
-    _$jscoverage['/ie/style.js'].lineData[35]++;
+  _$jscoverage['/ie/style.js'].lineData[35]++;
+  if (visit62_35_1(computed)) {
+    _$jscoverage['/ie/style.js'].lineData[36]++;
     return elem[CURRENT_STYLE][backgroundPosition + 'X'] + ' ' + elem[CURRENT_STYLE][backgroundPosition + 'Y'];
   } else {
-    _$jscoverage['/ie/style.js'].lineData[39]++;
+    _$jscoverage['/ie/style.js'].lineData[40]++;
     return elem[STYLE][backgroundPosition];
   }
 }};
-  _$jscoverage['/ie/style.js'].lineData[45]++;
+  _$jscoverage['/ie/style.js'].lineData[46]++;
   try {
-    _$jscoverage['/ie/style.js'].lineData[46]++;
-    if (visit63_46_1(docElem.style[OPACITY] == null)) {
-      _$jscoverage['/ie/style.js'].lineData[47]++;
+    _$jscoverage['/ie/style.js'].lineData[47]++;
+    if (visit63_47_1(docElem.style[OPACITY] == null)) {
+      _$jscoverage['/ie/style.js'].lineData[48]++;
       cssHooks[OPACITY] = {
   get: function(elem, computed) {
   _$jscoverage['/ie/style.js'].functionData[2]++;
-  _$jscoverage['/ie/style.js'].lineData[52]++;
-  return R_OPACITY.test(visit64_52_1((visit65_53_1(computed && elem[CURRENT_STYLE]) ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || '')) ? (parseFloat(RegExp.$1) / HUNDRED) + '' : computed ? '1' : '';
+  _$jscoverage['/ie/style.js'].lineData[53]++;
+  return R_OPACITY.test(visit64_53_1((visit65_54_1(computed && elem[CURRENT_STYLE]) ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || '')) ? (parseFloat(RegExp.$1) / HUNDRED) + '' : computed ? '1' : '';
 }, 
   set: function(elem, val) {
   _$jscoverage['/ie/style.js'].functionData[3]++;
-  _$jscoverage['/ie/style.js'].lineData[61]++;
+  _$jscoverage['/ie/style.js'].lineData[62]++;
   val = parseFloat(val);
-  _$jscoverage['/ie/style.js'].lineData[63]++;
-  var style = elem[STYLE], currentStyle = elem[CURRENT_STYLE], opacity = isNaN(val) ? '' : 'alpha(' + OPACITY + '=' + val * HUNDRED + ')', filter = S.trim(visit66_66_1(visit67_66_2(currentStyle && currentStyle[FILTER]) || visit68_66_3(style[FILTER] || '')));
-  _$jscoverage['/ie/style.js'].lineData[69]++;
+  _$jscoverage['/ie/style.js'].lineData[64]++;
+  var style = elem[STYLE], currentStyle = elem[CURRENT_STYLE], opacity = isNaN(val) ? '' : 'alpha(' + OPACITY + '=' + val * HUNDRED + ')', filter = util.trim(visit66_67_1(visit67_67_2(currentStyle && currentStyle[FILTER]) || visit68_67_3(style[FILTER] || '')));
+  _$jscoverage['/ie/style.js'].lineData[70]++;
   style.zoom = 1;
-  _$jscoverage['/ie/style.js'].lineData[73]++;
-  if (visit69_73_1((visit70_73_2(visit71_73_3(val >= 1) || !opacity)) && !S.trim(filter.replace(R_ALPHA, '')))) {
-    _$jscoverage['/ie/style.js'].lineData[78]++;
+  _$jscoverage['/ie/style.js'].lineData[74]++;
+  if (visit69_74_1((visit70_74_2(visit71_74_3(val >= 1) || !opacity)) && !util.trim(filter.replace(R_ALPHA, '')))) {
+    _$jscoverage['/ie/style.js'].lineData[79]++;
     style.removeAttribute(FILTER);
-    _$jscoverage['/ie/style.js'].lineData[80]++;
-    if (visit72_81_1(!opacity || visit73_83_1(currentStyle && !currentStyle[FILTER]))) {
-      _$jscoverage['/ie/style.js'].lineData[84]++;
+    _$jscoverage['/ie/style.js'].lineData[81]++;
+    if (visit72_82_1(!opacity || visit73_84_1(currentStyle && !currentStyle[FILTER]))) {
+      _$jscoverage['/ie/style.js'].lineData[85]++;
       return;
     }
   }
-  _$jscoverage['/ie/style.js'].lineData[90]++;
+  _$jscoverage['/ie/style.js'].lineData[91]++;
   style.filter = R_ALPHA.test(filter) ? filter.replace(R_ALPHA, opacity) : filter + (filter ? ', ' : '') + opacity;
 }};
     }
   }  catch (ex) {
-  _$jscoverage['/ie/style.js'].lineData[97]++;
+  _$jscoverage['/ie/style.js'].lineData[98]++;
   logger.debug('IE filters ActiveX is disabled. ex = ' + ex);
 }
-  _$jscoverage['/ie/style.js'].lineData[105]++;
-  var IE8 = visit74_105_1(UA.ie === 8), BORDER_MAP = {}, BORDERS = ['', 'Top', 'Left', 'Right', 'Bottom'];
-  _$jscoverage['/ie/style.js'].lineData[108]++;
-  BORDER_MAP.thin = IE8 ? '1px' : '2px';
+  _$jscoverage['/ie/style.js'].lineData[106]++;
+  var IE8 = visit74_106_1(UA.ie === 8), BORDER_MAP = {}, BORDERS = ['', 'Top', 'Left', 'Right', 'Bottom'];
   _$jscoverage['/ie/style.js'].lineData[109]++;
-  BORDER_MAP.medium = IE8 ? '3px' : '4px';
+  BORDER_MAP.thin = IE8 ? '1px' : '2px';
   _$jscoverage['/ie/style.js'].lineData[110]++;
+  BORDER_MAP.medium = IE8 ? '3px' : '4px';
+  _$jscoverage['/ie/style.js'].lineData[111]++;
   BORDER_MAP.thick = IE8 ? '5px' : '6px';
-  _$jscoverage['/ie/style.js'].lineData[112]++;
-  S.each(BORDERS, function(b) {
-  _$jscoverage['/ie/style.js'].functionData[4]++;
   _$jscoverage['/ie/style.js'].lineData[113]++;
+  util.each(BORDERS, function(b) {
+  _$jscoverage['/ie/style.js'].functionData[4]++;
+  _$jscoverage['/ie/style.js'].lineData[114]++;
   var name = 'border' + b + 'Width', styleName = 'border' + b + 'Style';
-  _$jscoverage['/ie/style.js'].lineData[116]++;
+  _$jscoverage['/ie/style.js'].lineData[117]++;
   cssHooks[name] = {
   get: function(elem, computed) {
   _$jscoverage['/ie/style.js'].functionData[5]++;
-  _$jscoverage['/ie/style.js'].lineData[119]++;
-  var currentStyle = computed ? elem[CURRENT_STYLE] : 0, current = visit75_120_1(visit76_120_2(currentStyle && String(currentStyle[name])) || undefined);
-  _$jscoverage['/ie/style.js'].lineData[122]++;
-  if (visit77_122_1(current && visit78_122_2(current.indexOf('px') < 0))) {
-    _$jscoverage['/ie/style.js'].lineData[124]++;
-    if (visit79_124_1(BORDER_MAP[current] && visit80_124_2(currentStyle[styleName] !== 'none'))) {
-      _$jscoverage['/ie/style.js'].lineData[125]++;
+  _$jscoverage['/ie/style.js'].lineData[120]++;
+  var currentStyle = computed ? elem[CURRENT_STYLE] : 0, current = visit75_121_1(visit76_121_2(currentStyle && String(currentStyle[name])) || undefined);
+  _$jscoverage['/ie/style.js'].lineData[123]++;
+  if (visit77_123_1(current && visit78_123_2(current.indexOf('px') < 0))) {
+    _$jscoverage['/ie/style.js'].lineData[125]++;
+    if (visit79_125_1(BORDER_MAP[current] && visit80_125_2(currentStyle[styleName] !== 'none'))) {
+      _$jscoverage['/ie/style.js'].lineData[126]++;
       current = BORDER_MAP[current];
     } else {
-      _$jscoverage['/ie/style.js'].lineData[128]++;
+      _$jscoverage['/ie/style.js'].lineData[129]++;
       current = 0;
     }
   }
-  _$jscoverage['/ie/style.js'].lineData[131]++;
+  _$jscoverage['/ie/style.js'].lineData[132]++;
   return current;
 }};
 });
-  _$jscoverage['/ie/style.js'].lineData[136]++;
+  _$jscoverage['/ie/style.js'].lineData[137]++;
   Dom._getComputedStyle = function(elem, name) {
   _$jscoverage['/ie/style.js'].functionData[6]++;
-  _$jscoverage['/ie/style.js'].lineData[137]++;
-  name = visit81_137_1(cssProps[name] || name);
-  _$jscoverage['/ie/style.js'].lineData[140]++;
-  var ret = visit82_140_1(elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name]);
-  _$jscoverage['/ie/style.js'].lineData[152]++;
-  if (visit83_152_1(Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name))) {
-    _$jscoverage['/ie/style.js'].lineData[154]++;
+  _$jscoverage['/ie/style.js'].lineData[138]++;
+  name = visit81_138_1(cssProps[name] || name);
+  _$jscoverage['/ie/style.js'].lineData[141]++;
+  var ret = visit82_141_1(elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name]);
+  _$jscoverage['/ie/style.js'].lineData[153]++;
+  if (visit83_153_1(Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name))) {
+    _$jscoverage['/ie/style.js'].lineData[155]++;
     var style = elem[STYLE], left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
-    _$jscoverage['/ie/style.js'].lineData[159]++;
+    _$jscoverage['/ie/style.js'].lineData[160]++;
     elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-    _$jscoverage['/ie/style.js'].lineData[162]++;
-    style[LEFT] = visit84_162_1(name === 'fontSize') ? '1em' : (visit85_162_2(ret || 0));
     _$jscoverage['/ie/style.js'].lineData[163]++;
+    style[LEFT] = visit84_163_1(name === 'fontSize') ? '1em' : (visit85_163_2(ret || 0));
+    _$jscoverage['/ie/style.js'].lineData[164]++;
     ret = style.pixelLeft + PX;
-    _$jscoverage['/ie/style.js'].lineData[166]++;
+    _$jscoverage['/ie/style.js'].lineData[167]++;
     style[LEFT] = left;
-    _$jscoverage['/ie/style.js'].lineData[168]++;
+    _$jscoverage['/ie/style.js'].lineData[169]++;
     elem[RUNTIME_STYLE][LEFT] = rsLeft;
   }
-  _$jscoverage['/ie/style.js'].lineData[170]++;
-  return visit86_170_1(ret === '') ? 'auto' : ret;
+  _$jscoverage['/ie/style.js'].lineData[171]++;
+  return visit86_171_1(ret === '') ? 'auto' : ret;
 };
 });

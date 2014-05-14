@@ -28,7 +28,7 @@
     <script src="/kissy/src/package.js"></script>
 
     <script>
-        KISSY.use("tree", function (S, Tree) {
+        KISSY.use("tree,util", function (S, Tree,util) {
             var $ = S.all;
 
             var data = {
@@ -89,7 +89,7 @@
                 if (!node.get('children').length) {
                     var c = getNode(data, node.get("content")).children;
                     var nodeCheckState = node.get("checkState");
-                    S.each(c, function (v) {
+                    util.each(c, function (v) {
                         node.addChild(new Tree.CheckNode({
                             isLeaf: !(v.children && v.children.length),
                             checkState: nodeCheckState == CheckState.CHECK ? CheckState.CHECK : CheckState.EMPTY,

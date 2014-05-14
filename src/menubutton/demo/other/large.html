@@ -65,7 +65,7 @@
 
     <script>
 
-            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+            KISSY.use("menubutton,menu,util", function (S, MenuButton, Menu,util) {
                 var $ = S.all;
                 var holder = $("#holder");
                 var start = (+new Date());
@@ -86,7 +86,7 @@
                         };
 
                         function constructMenu(menuConfig) {
-                            return S.mix({
+                            return util.mix({
                                 children:[]
                             }, menuConfig);
                         }

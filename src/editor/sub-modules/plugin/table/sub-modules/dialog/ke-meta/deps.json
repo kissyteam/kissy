@@ -1,1 +1,1 @@
-{"editor/plugin/table/dialog":["editor","editor/plugin/dialog","editor/plugin/menubutton","dom"]}
+{"editor/plugin/table/dialog":["util","editor","editor/plugin/dialog","editor/plugin/menubutton","ua","node","dom"]}

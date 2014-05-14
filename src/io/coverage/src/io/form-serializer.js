@@ -232,37 +232,38 @@ if (! _$jscoverage['/io/form-serializer.js']) {
   _$jscoverage['/io/form-serializer.js'].lineData[6] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[7] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[8] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[13] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[9] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[14] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[17] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[29] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[34] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[15] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[18] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[30] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[35] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[38] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[36] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[39] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[42] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[44] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[58] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[40] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[43] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[45] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[59] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[63] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[60] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[64] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[68] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[65] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[69] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[71] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[74] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[70] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[72] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[75] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[76] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[77] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[79] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[81] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[83] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[85] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[90] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[78] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[80] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[82] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[84] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[86] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[91] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[92] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[93] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[95] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[98] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[94] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[96] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[99] = 0;
 }
 if (! _$jscoverage['/io/form-serializer.js'].functionData) {
   _$jscoverage['/io/form-serializer.js'].functionData = [];
@@ -277,156 +278,158 @@ if (! _$jscoverage['/io/form-serializer.js'].functionData) {
 }
 if (! _$jscoverage['/io/form-serializer.js'].branchData) {
   _$jscoverage['/io/form-serializer.js'].branchData = {};
-  _$jscoverage['/io/form-serializer.js'].branchData['30'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['44'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['44'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['46'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['49'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['51'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['63'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['68'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['75'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['75'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['79'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['92'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['31'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['45'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['47'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['50'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['52'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['64'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['69'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['76'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['76'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['80'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['80'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['93'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['93'][1] = new BranchData();
 }
-_$jscoverage['/io/form-serializer.js'].branchData['92'][1].init(49, 19, 'i < elements.length');
-function visit34_92_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['92'][1].ranCondition(result);
+_$jscoverage['/io/form-serializer.js'].branchData['93'][1].init(49, 19, 'i < elements.length');
+function visit34_93_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['79'][1].init(607, 20, 'vs && !S.isArray(vs)');
-function visit33_79_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['79'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['80'][1].init(613, 23, 'vs && !util.isArray(vs)');
+function visit33_80_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['75'][1].init(489, 3, '!vs');
-function visit32_75_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['75'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['76'][1].init(495, 3, '!vs');
+function visit32_76_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['68'][1].init(265, 14, 'S.isArray(val)');
-function visit31_68_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['69'][1].init(265, 17, 'util.isArray(val)');
+function visit31_69_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['63'][1].init(147, 12, 'val === null');
-function visit30_63_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['64'][1].init(147, 12, 'val === null');
+function visit30_64_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['51'][1].init(93, 127, 'rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
-function visit29_51_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['51'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['52'][1].init(93, 127, 'rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
+function visit29_52_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['49'][1].init(-1, 221, 'el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
-function visit28_49_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['49'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['50'][1].init(-1, 221, 'el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
+function visit28_50_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['46'][1].init(60, 360, '!el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
-function visit27_46_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['47'][1].init(60, 360, '!el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
+function visit27_47_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['44'][1].init(49, 421, 'el.name && !el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
-function visit26_44_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['44'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['45'][1].init(49, 421, 'el.name && !el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
+function visit26_45_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['30'][1].init(81, 23, 'serializeArray || false');
-function visit25_30_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/io/form-serializer.js'].branchData['31'][1].init(84, 23, 'serializeArray || false');
+function visit25_31_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form-serializer.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/io/form-serializer.js'].functionData[0]++;
   _$jscoverage['/io/form-serializer.js'].lineData[7]++;
-  var Dom = require('dom');
+  var util = require('util');
   _$jscoverage['/io/form-serializer.js'].lineData[8]++;
+  var Dom = require('dom');
+  _$jscoverage['/io/form-serializer.js'].lineData[9]++;
   var rselectTextarea = /^(?:select|textarea)/i, rCRLF = /\r?\n/g, FormSerializer, rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
-  _$jscoverage['/io/form-serializer.js'].lineData[13]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[14]++;
   function normalizeCRLF(v) {
     _$jscoverage['/io/form-serializer.js'].functionData[1]++;
-    _$jscoverage['/io/form-serializer.js'].lineData[14]++;
+    _$jscoverage['/io/form-serializer.js'].lineData[15]++;
     return v.replace(rCRLF, '\r\n');
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[17]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[18]++;
   FormSerializer = {
   serialize: function(forms, serializeArray) {
   _$jscoverage['/io/form-serializer.js'].functionData[2]++;
-  _$jscoverage['/io/form-serializer.js'].lineData[29]++;
-  return S.param(FormSerializer.getFormData(forms), undefined, undefined, visit25_30_1(serializeArray || false));
+  _$jscoverage['/io/form-serializer.js'].lineData[30]++;
+  return util.param(FormSerializer.getFormData(forms), undefined, undefined, visit25_31_1(serializeArray || false));
 }, 
   getFormData: function(forms) {
   _$jscoverage['/io/form-serializer.js'].functionData[3]++;
-  _$jscoverage['/io/form-serializer.js'].lineData[34]++;
-  var elements = [], data = {};
   _$jscoverage['/io/form-serializer.js'].lineData[35]++;
-  S.each(Dom.query(forms), function(el) {
+  var elements = [], data = {};
+  _$jscoverage['/io/form-serializer.js'].lineData[36]++;
+  util.each(Dom.query(forms), function(el) {
   _$jscoverage['/io/form-serializer.js'].functionData[4]++;
-  _$jscoverage['/io/form-serializer.js'].lineData[38]++;
-  var subs = el.elements ? elementsToArray(el.elements) : [el];
   _$jscoverage['/io/form-serializer.js'].lineData[39]++;
+  var subs = el.elements ? elementsToArray(el.elements) : [el];
+  _$jscoverage['/io/form-serializer.js'].lineData[40]++;
   elements.push.apply(elements, subs);
 });
-  _$jscoverage['/io/form-serializer.js'].lineData[42]++;
-  elements = S.filter(elements, function(el) {
+  _$jscoverage['/io/form-serializer.js'].lineData[43]++;
+  elements = util.filter(elements, function(el) {
   _$jscoverage['/io/form-serializer.js'].functionData[5]++;
-  _$jscoverage['/io/form-serializer.js'].lineData[44]++;
-  return visit26_44_1(el.name && visit27_46_1(!el.disabled && (visit28_49_1(el.checked || visit29_51_1(rselectTextarea.test(el.nodeName) || rinput.test(el.type))))));
+  _$jscoverage['/io/form-serializer.js'].lineData[45]++;
+  return visit26_45_1(el.name && visit27_47_1(!el.disabled && (visit28_50_1(el.checked || visit29_52_1(rselectTextarea.test(el.nodeName) || rinput.test(el.type))))));
 });
-  _$jscoverage['/io/form-serializer.js'].lineData[58]++;
-  S.each(elements, function(el) {
-  _$jscoverage['/io/form-serializer.js'].functionData[6]++;
   _$jscoverage['/io/form-serializer.js'].lineData[59]++;
+  util.each(elements, function(el) {
+  _$jscoverage['/io/form-serializer.js'].functionData[6]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[60]++;
   var val = Dom.val(el), vs;
-  _$jscoverage['/io/form-serializer.js'].lineData[63]++;
-  if (visit30_63_1(val === null)) {
-    _$jscoverage['/io/form-serializer.js'].lineData[64]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[64]++;
+  if (visit30_64_1(val === null)) {
+    _$jscoverage['/io/form-serializer.js'].lineData[65]++;
     return;
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[68]++;
-  if (visit31_68_1(S.isArray(val))) {
-    _$jscoverage['/io/form-serializer.js'].lineData[69]++;
-    val = S.map(val, normalizeCRLF);
+  _$jscoverage['/io/form-serializer.js'].lineData[69]++;
+  if (visit31_69_1(util.isArray(val))) {
+    _$jscoverage['/io/form-serializer.js'].lineData[70]++;
+    val = util.map(val, normalizeCRLF);
   } else {
-    _$jscoverage['/io/form-serializer.js'].lineData[71]++;
+    _$jscoverage['/io/form-serializer.js'].lineData[72]++;
     val = normalizeCRLF(val);
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[74]++;
-  vs = data[el.name];
   _$jscoverage['/io/form-serializer.js'].lineData[75]++;
-  if (visit32_75_1(!vs)) {
-    _$jscoverage['/io/form-serializer.js'].lineData[76]++;
-    data[el.name] = val;
+  vs = data[el.name];
+  _$jscoverage['/io/form-serializer.js'].lineData[76]++;
+  if (visit32_76_1(!vs)) {
     _$jscoverage['/io/form-serializer.js'].lineData[77]++;
+    data[el.name] = val;
+    _$jscoverage['/io/form-serializer.js'].lineData[78]++;
     return;
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[79]++;
-  if (visit33_79_1(vs && !S.isArray(vs))) {
-    _$jscoverage['/io/form-serializer.js'].lineData[81]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[80]++;
+  if (visit33_80_1(vs && !util.isArray(vs))) {
+    _$jscoverage['/io/form-serializer.js'].lineData[82]++;
     vs = data[el.name] = [vs];
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[83]++;
-  vs.push.apply(vs, S.makeArray(val));
+  _$jscoverage['/io/form-serializer.js'].lineData[84]++;
+  vs.push.apply(vs, util.makeArray(val));
 });
-  _$jscoverage['/io/form-serializer.js'].lineData[85]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[86]++;
   return data;
 }};
-  _$jscoverage['/io/form-serializer.js'].lineData[90]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[91]++;
   function elementsToArray(elements) {
     _$jscoverage['/io/form-serializer.js'].functionData[7]++;
-    _$jscoverage['/io/form-serializer.js'].lineData[91]++;
-    var ret = [];
     _$jscoverage['/io/form-serializer.js'].lineData[92]++;
-    for (var i = 0; visit34_92_1(i < elements.length); i++) {
-      _$jscoverage['/io/form-serializer.js'].lineData[93]++;
+    var ret = [];
+    _$jscoverage['/io/form-serializer.js'].lineData[93]++;
+    for (var i = 0; visit34_93_1(i < elements.length); i++) {
+      _$jscoverage['/io/form-serializer.js'].lineData[94]++;
       ret.push(elements[i]);
     }
-    _$jscoverage['/io/form-serializer.js'].lineData[95]++;
+    _$jscoverage['/io/form-serializer.js'].lineData[96]++;
     return ret;
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[98]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[99]++;
   return FormSerializer;
 });

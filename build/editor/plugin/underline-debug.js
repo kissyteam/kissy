@@ -1,0 +1,48 @@
+/*
+Copyright 2014, KISSY v5.0.0
+MIT Licensed
+build time: May 14 22:23
+*/
+/*
+combined modules:
+editor/plugin/underline
+*/
+/**
+ * @ignore
+ * underline button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('editor/plugin/underline', [
+    './font/ui',
+    './underline/cmd',
+    './button',
+    'node'
+], function (S, require) {
+    var ui = require('./font/ui');
+    var cmd = require('./underline/cmd');
+    require('./button');
+    var Node = require('node');
+    function Underline() {
+    }
+    Underline.prototype = {
+        pluginRenderUI: function (editor) {
+            cmd.init(editor);
+            editor.addButton('underline', {
+                cmdType: 'underline',
+                tooltip: '\u4E0B\u5212\u7EBF'
+            }, ui.Button);
+            editor.docReady(function () {
+                editor.get('document').on('keydown', function (e) {
+                    if (e.ctrlKey && e.keyCode === Node.KeyCode.U) {
+                        editor.execCommand('underline');
+                        e.preventDefault();
+                    }
+                });
+            });
+        }
+    };
+    return Underline;
+});
+
+
+

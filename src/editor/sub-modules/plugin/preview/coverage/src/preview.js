@@ -233,6 +233,7 @@ if (! _$jscoverage['/preview.js']) {
   _$jscoverage['/preview.js'].lineData[7] = 0;
   _$jscoverage['/preview.js'].lineData[8] = 0;
   _$jscoverage['/preview.js'].lineData[9] = 0;
+  _$jscoverage['/preview.js'].lineData[11] = 0;
   _$jscoverage['/preview.js'].lineData[12] = 0;
   _$jscoverage['/preview.js'].lineData[14] = 0;
   _$jscoverage['/preview.js'].lineData[18] = 0;
@@ -272,8 +273,10 @@ KISSY.add(function(S, require) {
   function Preview() {
     _$jscoverage['/preview.js'].functionData[1]++;
   }
+  _$jscoverage['/preview.js'].lineData[11]++;
+  var util = require('util');
   _$jscoverage['/preview.js'].lineData[12]++;
-  S.augment(Preview, {
+  (Preview.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/preview.js'].functionData[2]++;
   _$jscoverage['/preview.js'].lineData[14]++;
@@ -303,7 +306,7 @@ KISSY.add(function(S, require) {
   iLeft = 80;
 }
   _$jscoverage['/preview.js'].lineData[29]++;
-  var sHTML = S.substitute(editor.getDocHtml(), {
+  var sHTML = util.substitute(editor.getDocHtml(), {
   title: '\u9884\u89c8'}), sOpenUrl = '', oWindow = win.open(sOpenUrl, '', 'toolbar=yes,' + 'location=no,' + 'status=yes,' + 'menubar=yes,' + 'scrollbars=yes,' + 'resizable=yes,' + 'width=' + iWidth + ',height=' + iHeight + ',left=' + iLeft), winDoc = oWindow.document;
   _$jscoverage['/preview.js'].lineData[45]++;
   winDoc.open();

@@ -231,16 +231,17 @@ if (! _$jscoverage['/html-parser/dtd.js']) {
   _$jscoverage['/html-parser/dtd.js'].lineData = [];
   _$jscoverage['/html-parser/dtd.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/dtd.js'].lineData[11] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[160] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[208] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[808] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[818] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[12] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[161] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[209] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[809] = 0;
   _$jscoverage['/html-parser/dtd.js'].lineData[819] = 0;
   _$jscoverage['/html-parser/dtd.js'].lineData[820] = 0;
   _$jscoverage['/html-parser/dtd.js'].lineData[821] = 0;
   _$jscoverage['/html-parser/dtd.js'].lineData[822] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[828] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[823] = 0;
   _$jscoverage['/html-parser/dtd.js'].lineData[829] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[830] = 0;
 }
 if (! _$jscoverage['/html-parser/dtd.js'].functionData) {
   _$jscoverage['/html-parser/dtd.js'].functionData = [];
@@ -248,30 +249,32 @@ if (! _$jscoverage['/html-parser/dtd.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/dtd.js'].branchData) {
   _$jscoverage['/html-parser/dtd.js'].branchData = {};
-  _$jscoverage['/html-parser/dtd.js'].branchData['820'] = [];
-  _$jscoverage['/html-parser/dtd.js'].branchData['820'][1] = new BranchData();
   _$jscoverage['/html-parser/dtd.js'].branchData['821'] = [];
   _$jscoverage['/html-parser/dtd.js'].branchData['821'][1] = new BranchData();
-  _$jscoverage['/html-parser/dtd.js'].branchData['828'] = [];
-  _$jscoverage['/html-parser/dtd.js'].branchData['828'][1] = new BranchData();
+  _$jscoverage['/html-parser/dtd.js'].branchData['822'] = [];
+  _$jscoverage['/html-parser/dtd.js'].branchData['822'][1] = new BranchData();
+  _$jscoverage['/html-parser/dtd.js'].branchData['829'] = [];
+  _$jscoverage['/html-parser/dtd.js'].branchData['829'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/dtd.js'].branchData['828'][1].init(20480, 20, 'i < html5Tags.length');
-function visit3_828_1(result) {
-  _$jscoverage['/html-parser/dtd.js'].branchData['828'][1].ranCondition(result);
+_$jscoverage['/html-parser/dtd.js'].branchData['829'][1].init(20516, 20, 'i < html5Tags.length');
+function visit3_829_1(result) {
+  _$jscoverage['/html-parser/dtd.js'].branchData['829'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['821'][1].init(30, 20, 'i < html5Tags.length');
-function visit2_821_1(result) {
+}_$jscoverage['/html-parser/dtd.js'].branchData['822'][1].init(30, 20, 'i < html5Tags.length');
+function visit2_822_1(result) {
+  _$jscoverage['/html-parser/dtd.js'].branchData['822'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/dtd.js'].branchData['821'][1].init(18, 12, 'p2 === \'div\'');
+function visit1_821_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['821'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['820'][1].init(18, 12, 'p2 === \'div\'');
-function visit1_820_1(result) {
-  _$jscoverage['/html-parser/dtd.js'].branchData['820'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/dtd.js'].lineData[10]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/html-parser/dtd.js'].functionData[0]++;
   _$jscoverage['/html-parser/dtd.js'].lineData[11]++;
-  var merge = S.merge, A = {
+  var util = require('util');
+  _$jscoverage['/html-parser/dtd.js'].lineData[12]++;
+  var merge = util.merge, A = {
   isindex: 1, 
   fieldset: 1}, B = {
   input: 1, 
@@ -418,7 +421,7 @@ KISSY.add(function(S, require, exports, module) {
   head: 1, 
   body: 1}, V = {
   html: 1};
-  _$jscoverage['/html-parser/dtd.js'].lineData[160]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[161]++;
   var block = {
   address: 1, 
   blockquote: 1, 
@@ -443,7 +446,7 @@ KISSY.add(function(S, require, exports, module) {
   pre: 1, 
   table: 1, 
   ul: 1};
-  _$jscoverage['/html-parser/dtd.js'].lineData[208]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[209]++;
   var dtd = module.exports = {
   $nonBodyContent: merge(V, U, headTags), 
   $block: block, 
@@ -646,25 +649,25 @@ KISSY.add(function(S, require, exports, module) {
   p: L, 
   em: L, 
   dfn: L};
-  _$jscoverage['/html-parser/dtd.js'].lineData[808]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[809]++;
   var i, html5Tags = ['article', 'figure', 'nav', 'aside', 'section', 'footer'];
-  _$jscoverage['/html-parser/dtd.js'].lineData[818]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[819]++;
   for (var p in dtd) {
-    _$jscoverage['/html-parser/dtd.js'].lineData[819]++;
+    _$jscoverage['/html-parser/dtd.js'].lineData[820]++;
     for (var p2 in dtd[p]) {
-      _$jscoverage['/html-parser/dtd.js'].lineData[820]++;
-      if (visit1_820_1(p2 === 'div')) {
-        _$jscoverage['/html-parser/dtd.js'].lineData[821]++;
-        for (i = 0; visit2_821_1(i < html5Tags.length); i++) {
-          _$jscoverage['/html-parser/dtd.js'].lineData[822]++;
+      _$jscoverage['/html-parser/dtd.js'].lineData[821]++;
+      if (visit1_821_1(p2 === 'div')) {
+        _$jscoverage['/html-parser/dtd.js'].lineData[822]++;
+        for (i = 0; visit2_822_1(i < html5Tags.length); i++) {
+          _$jscoverage['/html-parser/dtd.js'].lineData[823]++;
           dtd[p][html5Tags[i]] = dtd[p][p2];
         }
       }
     }
   }
-  _$jscoverage['/html-parser/dtd.js'].lineData[828]++;
-  for (i = 0; visit3_828_1(i < html5Tags.length); i++) {
-    _$jscoverage['/html-parser/dtd.js'].lineData[829]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[829]++;
+  for (i = 0; visit3_829_1(i < html5Tags.length); i++) {
+    _$jscoverage['/html-parser/dtd.js'].lineData[830]++;
     dtd[html5Tags[i]] = dtd.div;
   }
 });

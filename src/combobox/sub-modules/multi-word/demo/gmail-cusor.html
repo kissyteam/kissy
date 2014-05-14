@@ -32,7 +32,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox,combobox/multi-word", function (S, ComboBox, MultiWordComboBox) {
+    KISSY.use("util,combobox,combobox/multi-word", function (S, util,ComboBox, MultiWordComboBox) {
         var data = [
             '"a123456" <a123456@gmail.com>',
             '"b12345" <b12345@gmail.com>',
@@ -49,7 +49,7 @@
                 data: data,
                 parse: function (query, data) {
                     var ret = [];
-                    S.each(data, function (d) {
+                    util.each(data, function (d) {
                         if (d.replace(/@gmail\.com/, "").indexOf(query) != -1) {
                             ret.push(d);
                         }
@@ -66,7 +66,7 @@
                     if (query) {
                         ret[i] = {
                             content: S.escapeHtml(v)
-                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    .replace(new RegExp(util.escapeRegExp(query), "g"),
                                             "<b>$&</b>")
                         };
                     } else {

@@ -63,8 +63,8 @@
 <script>
 
 
-    KISSY.use("node,menu,separator",
-            function (S, Node, Menu) {
+    KISSY.use("util,node,menu,separator",
+            function (S, util,Node, Menu) {
 
                 var menu = new Menu({
 
@@ -112,7 +112,7 @@
                 dis.on("click", function () {
                     menu.set('disabled', !!dis[0].checked);
                     var children = menu.get('children');
-                    S.each(children, function (child) {
+                    util.each(children, function (child) {
                         child.set('disabled', !!dis[0].checked);
                     });
                 });

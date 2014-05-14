@@ -289,6 +289,10 @@ if (! _$jscoverage['/router/utils.js'].branchData) {
   _$jscoverage['/router/utils.js'].branchData['23'] = [];
   _$jscoverage['/router/utils.js'].branchData['23'][1] = new BranchData();
   _$jscoverage['/router/utils.js'].branchData['23'][2] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['28'] = [];
+  _$jscoverage['/router/utils.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['32'] = [];
+  _$jscoverage['/router/utils.js'].branchData['32'][1] = new BranchData();
   _$jscoverage['/router/utils.js'].branchData['36'] = [];
   _$jscoverage['/router/utils.js'].branchData['36'][1] = new BranchData();
   _$jscoverage['/router/utils.js'].branchData['43'] = [];
@@ -301,24 +305,32 @@ if (! _$jscoverage['/router/utils.js'].branchData) {
   _$jscoverage['/router/utils.js'].branchData['89'][1] = new BranchData();
 }
 _$jscoverage['/router/utils.js'].branchData['89'][1].init(21, 31, 'str.indexOf(\'__ks-vid=\') !== -1');
-function visit24_89_1(result) {
+function visit26_89_1(result) {
   _$jscoverage['/router/utils.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['70'][1].init(115, 13, 'str1 === str2');
-function visit23_70_1(result) {
+function visit25_70_1(result) {
   _$jscoverage['/router/utils.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['54'][1].init(18, 3, 'str');
-function visit22_54_1(result) {
+function visit24_54_1(result) {
   _$jscoverage['/router/utils.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['43'][1].init(18, 24, 'this.startWithSlash(str)');
-function visit21_43_1(result) {
+function visit23_43_1(result) {
   _$jscoverage['/router/utils.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['36'][1].init(18, 22, 'this.endWithSlash(str)');
-function visit20_36_1(result) {
+function visit22_36_1(result) {
   _$jscoverage['/router/utils.js'].branchData['36'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/utils.js'].branchData['32'][1].init(21, 21, 'str.charAt(0) === \'/\'');
+function visit21_32_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['32'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/utils.js'].branchData['28'][1].init(21, 34, 'str.charAt(str.length - 1) === \'/\'');
+function visit20_28_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['23'][2].init(55, 9, 'm && m[1]');
 function visit19_23_2(result) {
@@ -367,17 +379,17 @@ KISSY.add(function(S, require) {
   endWithSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[4]++;
   _$jscoverage['/router/utils.js'].lineData[28]++;
-  return S.endsWith(str, '/');
+  return visit20_28_1(str.charAt(str.length - 1) === '/');
 }, 
   startWithSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[5]++;
   _$jscoverage['/router/utils.js'].lineData[32]++;
-  return S.startsWith(str, '/');
+  return visit21_32_1(str.charAt(0) === '/');
 }, 
   removeEndSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[6]++;
   _$jscoverage['/router/utils.js'].lineData[36]++;
-  if (visit20_36_1(this.endWithSlash(str))) {
+  if (visit22_36_1(this.endWithSlash(str))) {
     _$jscoverage['/router/utils.js'].lineData[37]++;
     str = str.substring(0, str.length - 1);
   }
@@ -387,7 +399,7 @@ KISSY.add(function(S, require) {
   removeStartSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[7]++;
   _$jscoverage['/router/utils.js'].lineData[43]++;
-  if (visit21_43_1(this.startWithSlash(str))) {
+  if (visit23_43_1(this.startWithSlash(str))) {
     _$jscoverage['/router/utils.js'].lineData[44]++;
     str = str.substring(1);
   }
@@ -402,7 +414,7 @@ KISSY.add(function(S, require) {
   addStartSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[9]++;
   _$jscoverage['/router/utils.js'].lineData[54]++;
-  if (visit22_54_1(str)) {
+  if (visit24_54_1(str)) {
     _$jscoverage['/router/utils.js'].lineData[55]++;
     return '/' + this.removeStartSlash(str);
   } else {
@@ -422,7 +434,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/router/utils.js'].lineData[69]++;
   str2 = this.removeEndSlash(str2);
   _$jscoverage['/router/utils.js'].lineData[70]++;
-  return visit23_70_1(str1 === str2);
+  return visit25_70_1(str1 === str2);
 }, 
   getHash: function(url) {
   _$jscoverage['/router/utils.js'].functionData[12]++;
@@ -433,7 +445,7 @@ KISSY.add(function(S, require) {
   hasVid: function(str) {
   _$jscoverage['/router/utils.js'].functionData[13]++;
   _$jscoverage['/router/utils.js'].lineData[89]++;
-  return visit24_89_1(str.indexOf('__ks-vid=') !== -1);
+  return visit26_89_1(str.indexOf('__ks-vid=') !== -1);
 }, 
   addVid: function(str, vid) {
   _$jscoverage['/router/utils.js'].functionData[14]++;

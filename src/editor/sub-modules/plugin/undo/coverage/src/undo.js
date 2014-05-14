@@ -266,7 +266,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/undo.js'].functionData[1]++;
   }
   _$jscoverage['/undo.js'].lineData[14]++;
-  S.augment(undo, {
+  (undo.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/undo.js'].functionData[2]++;
   _$jscoverage['/undo.js'].lineData[17]++;

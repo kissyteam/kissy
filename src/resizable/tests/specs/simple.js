@@ -2,7 +2,7 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Resizable) {
+KISSY.add(function (S,util, Resizable) {
     /*jshint quotmark:false*/
     // ie9 mousemove does not fire
     var ie = S.UA.ieMode;
@@ -449,12 +449,12 @@ KISSY.add(function (S, Resizable) {
 
         it('destroy works', function () {
             resizable.destroy();
-            S.each(['t', 'l', 'b', 'r', 'tl', 'tr', 'bl', 'br'], function (s) {
+            util.each(['t', 'l', 'b', 'r', 'tl', 'tr', 'bl', 'br'], function (s) {
                 expect(dom.one('.ks-resizable-handler-' + s)).toBe(null);
             });
         });
     });
 
 }, {
-    requires: ['resizable']
+    requires: ['util','resizable']
 });

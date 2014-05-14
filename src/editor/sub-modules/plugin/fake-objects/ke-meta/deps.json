@@ -1,1 +1,1 @@
-{"editor/plugin/fake-objects":["editor","html-parser","dom"]}
+{"editor/plugin/fake-objects":["editor","html-parser","util","node","dom"]}

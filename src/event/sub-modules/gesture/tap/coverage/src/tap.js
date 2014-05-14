@@ -235,6 +235,7 @@ if (! _$jscoverage['/tap.js']) {
   _$jscoverage['/tap.js'].lineData[9] = 0;
   _$jscoverage['/tap.js'].lineData[10] = 0;
   _$jscoverage['/tap.js'].lineData[11] = 0;
+  _$jscoverage['/tap.js'].lineData[12] = 0;
   _$jscoverage['/tap.js'].lineData[52] = 0;
   _$jscoverage['/tap.js'].lineData[62] = 0;
   _$jscoverage['/tap.js'].lineData[63] = 0;
@@ -342,7 +343,7 @@ if (! _$jscoverage['/tap.js'].branchData) {
   _$jscoverage['/tap.js'].branchData['195'] = [];
   _$jscoverage['/tap.js'].branchData['195'][1] = new BranchData();
 }
-_$jscoverage['/tap.js'].branchData['195'][1].init(2326, 27, 'duration > SINGLE_TAP_DELAY');
+_$jscoverage['/tap.js'].branchData['195'][1].init(2329, 27, 'duration > SINGLE_TAP_DELAY');
 function visit15_195_1(result) {
   _$jscoverage['/tap.js'].branchData['195'][1].ranCondition(result);
   return result;
@@ -350,7 +351,7 @@ function visit15_195_1(result) {
 function visit14_178_1(result) {
   _$jscoverage['/tap.js'].branchData['178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['174'][1].init(1500, 11, 'lastEndTime');
+}_$jscoverage['/tap.js'].branchData['174'][1].init(1503, 11, 'lastEndTime');
 function visit13_174_1(result) {
   _$jscoverage['/tap.js'].branchData['174'][1].ranCondition(result);
   return result;
@@ -362,7 +363,7 @@ function visit12_161_1(result) {
 function visit11_158_1(result) {
   _$jscoverage['/tap.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tap.js'].branchData['157'][1].init(893, 45, 'eventObject.isDefaultPrevented() && UA.mobile');
+}_$jscoverage['/tap.js'].branchData['157'][1].init(896, 45, 'eventObject.isDefaultPrevented() && UA.mobile');
 function visit10_157_1(result) {
   _$jscoverage['/tap.js'].branchData['157'][1].ranCondition(result);
   return result;
@@ -415,6 +416,8 @@ KISSY.add(function(S, require) {
   var SingleTouch = GestureUtil.SingleTouch;
   _$jscoverage['/tap.js'].lineData[11]++;
   var UA = require('ua');
+  _$jscoverage['/tap.js'].lineData[12]++;
+  var util = require('util');
   _$jscoverage['/tap.js'].lineData[52]++;
   var SINGLE_TAP = 'singleTap', DOUBLE_TAP = 'doubleTap', TAP_HOLD = 'tapHold', TAP = 'tap', TAP_HOLD_DELAY = 1000, SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
   _$jscoverage['/tap.js'].lineData[62]++;
@@ -448,7 +451,7 @@ KISSY.add(function(S, require) {
     Tap.superclass.constructor.apply(this, arguments);
   }
   _$jscoverage['/tap.js'].lineData[81]++;
-  S.extend(Tap, SingleTouch, {
+  util.extend(Tap, SingleTouch, {
   start: function(e) {
   _$jscoverage['/tap.js'].functionData[4]++;
   _$jscoverage['/tap.js'].lineData[83]++;
@@ -463,9 +466,9 @@ KISSY.add(function(S, require) {
   self.tapHoldTimer = setTimeout(function() {
   _$jscoverage['/tap.js'].functionData[5]++;
   _$jscoverage['/tap.js'].lineData[91]++;
-  var eventObj = S.mix({
+  var eventObj = util.mix({
   which: 1, 
-  duration: ((+new Date()) - e.timeStamp) / 1000}, self.lastXY);
+  duration: (util.now() - e.timeStamp) / 1000}, self.lastXY);
   _$jscoverage['/tap.js'].lineData[95]++;
   self.tapHoldTimer = 0;
   _$jscoverage['/tap.js'].lineData[96]++;
@@ -522,7 +525,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tap.js'].lineData[143]++;
   var eventObject = new DomEventObject(e.originalEvent);
   _$jscoverage['/tap.js'].lineData[145]++;
-  S.mix(eventObject, {
+  util.mix(eventObject, {
   type: TAP, 
   which: 1, 
   pageX: lastXY.pageX, 
@@ -585,7 +588,7 @@ KISSY.add(function(S, require) {
   pageX: lastXY.pageX, 
   pageY: lastXY.pageY, 
   which: 1, 
-  duration: ((+new Date()) - self.startTime) / 1000});
+  duration: (util.now() - self.startTime) / 1000});
 }, SINGLE_TAP_DELAY);
   }
 }});

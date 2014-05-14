@@ -1,1 +1,1 @@
-{"router":["uri","event/dom","event/custom"]}
+{"router":["util","uri","event/dom","event/custom","feature"]}

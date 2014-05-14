@@ -5,6 +5,8 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
+    var util = require('util');
+
     var $ = Node.all,
         FAKE_DIV_HTML = '<div style="' +
             'z-index:-9999;' +
@@ -62,7 +64,7 @@ KISSY.add(function (S, require) {
             // input does not wrap at all
             fake.css('width', 9999);
         }
-        S.each(STYLES, function (s) {
+        util.each(STYLES, function (s) {
             fake.css(s, elem.css(s));
         });
         if (!FAKE_DIV) {
@@ -86,7 +88,9 @@ KISSY.add(function (S, require) {
         input[0].focus();
         supportInputScrollLeft = (input[0].scrollLeft > 0);
         input.remove();
-        findSupportInputScrollLeft = S.noop;
+        findSupportInputScrollLeft = function () {
+
+        };
     };
 
     // firefox not support, chrome support

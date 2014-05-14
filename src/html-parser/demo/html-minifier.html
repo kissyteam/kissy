@@ -55,13 +55,13 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("html-parser,core", function (S, HtmlParser) {
-        var $ = S.all;
+    KISSY.use("html-parser,node,util", function (S, HtmlParser,Node,util) {
+        var $ = Node.all;
         $("#after").val("");
         var start = $("#start");
         start.on("click", function () {
             var writer = new HtmlParser.MinifyWriter(),
-                    before = S.trim($("#before").val()),
+                    before = util.trim($("#before").val()),
                     n = new HtmlParser.Parser(before, {
                         fixByDtd:$("#fixByDtd").prop("checked"),
                         autoParagraph:$("#autoParagraph").prop("checked")

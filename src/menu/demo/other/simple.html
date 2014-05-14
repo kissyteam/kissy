@@ -72,8 +72,8 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     (function () {
-        KISSY.use("node,menu,separator",
-                function (S, Node, Menu, Separator) {
+        KISSY.use("util,node,menu,separator",
+                function (S, util,Node, Menu, Separator) {
                     //view
                     //render to container : button_container
 
@@ -148,7 +148,7 @@
                     dis.on("click", function () {
                         menu.set('disabled', !!dis[0].checked);
                         var children = menu.get('children');
-                        S.each(children, function (child) {
+                        util.each(children, function (child) {
                             child.set('disabled', !!dis[0].checked);
                         });
                     });

@@ -341,7 +341,7 @@ KISSY.add(function(S, require) {
     this.config = visit1_17_1(config || {});
   }
   _$jscoverage['/flash.js'].lineData[20]++;
-  S.augment(FlashPlugin, {
+  (FlashPlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/flash.js'].functionData[2]++;
   _$jscoverage['/flash.js'].lineData[22]++;

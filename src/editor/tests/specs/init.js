@@ -2,7 +2,7 @@
  * init editor for test
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Editor) {
+KISSY.add(function (S,util, Editor) {
     var editor;
 
     var cfg = {
@@ -50,12 +50,12 @@ KISSY.add(function (S, Editor) {
 
     var fullPlugins = [];
 
-    S.each(plugins, function (p, i) {
+    util.each(plugins, function (p, i) {
         fullPlugins[i] = 'editor/plugin/' + p;
     });
 
     KISSY.use(fullPlugins, function (S) {
-        var args = S.makeArray(arguments);
+        var args = util.makeArray(arguments);
         args.shift();
         cfg.plugins = args;
         editor = new Editor(cfg);
@@ -78,5 +78,5 @@ KISSY.add(function (S, Editor) {
         }
     };
 }, {
-    requires: ['editor']
+    requires: ['util','editor']
 });

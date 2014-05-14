@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 12:48
+build time: May 14 22:17
 */
 /*
 combined modules:
@@ -43,6 +43,7 @@ KISSY.add('dom/selector', [
         return str.replace(unescape, unescapeFn);
     }
     parser.lexer.yy = {
+        trim: util.trim,
         unEscape: unEscape,
         unEscapeStr: function (str) {
             return this.unEscape(str.slice(1, -1));
@@ -793,63 +794,63 @@ KISSY.add('dom/selector/parser', [], function (_, undefined) {
                     'b',
                     /^\[(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'c',
                     /^(?:[\t\r\n\f\x20]*)\]/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'd',
                     /^(?:[\t\r\n\f\x20]*)~=(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'e',
                     /^(?:[\t\r\n\f\x20]*)\|=(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'f',
                     /^(?:[\t\r\n\f\x20]*)\^=(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'g',
                     /^(?:[\t\r\n\f\x20]*)\$=(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'h',
                     /^(?:[\t\r\n\f\x20]*)\*=(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'i',
                     /^(?:[\t\r\n\f\x20]*)\=(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'j',
                     /^(?:(?:[\w]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))(?:[\w\d-]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))*)\(/,
                     function () {
-                        this.text = KISSY.trim(this.text).slice(0, -1);
+                        this.text = this.yy.trim(this.text).slice(0, -1);
                         this.pushState('fn');
                     }
                 ],
@@ -865,14 +866,14 @@ KISSY.add('dom/selector/parser', [], function (_, undefined) {
                     'l',
                     /^(?:[\t\r\n\f\x20]*)\)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'm',
                     /^:not\((?:[\t\r\n\f\x20]*)/i,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
@@ -914,7 +915,7 @@ KISSY.add('dom/selector/parser', [], function (_, undefined) {
                     'r',
                     /^(?:[\t\r\n\f\x20]*),(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
@@ -926,21 +927,21 @@ KISSY.add('dom/selector/parser', [], function (_, undefined) {
                     't',
                     /^(?:[\t\r\n\f\x20]*)\+(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'u',
                     /^(?:[\t\r\n\f\x20]*)>(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [
                     'v',
                     /^(?:[\t\r\n\f\x20]*)~(?:[\t\r\n\f\x20]*)/,
                     function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 ],
                 [

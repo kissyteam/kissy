@@ -3,22 +3,22 @@
  * backColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var cmd=require('../color/cmd');
+KISSY.add(function (S, require) {
+    var cmd = require('../color/cmd');
     var BACK_COLOR_STYLE = {
-        element:'span',
-        styles:{
-            'background-color':'#(color)'
+        element: 'span',
+        styles: {
+            'background-color': '#(color)'
         },
-        overrides:[
+        overrides: [
             {
-                element:'*',
-                styles:{
-                    'background-color':null
+                element: '*',
+                styles: {
+                    'background-color': null
                 }
             }
         ],
-        childRule:function (currentNode) {
+        childRule: function (currentNode) {
             // 除了嵌套背景，其他强制最里面
             // <span style='bgcolor:red'><span style='fontSize:100px'>123434</span></span>
             return !!currentNode.style('background-color');
@@ -32,10 +32,10 @@ KISSY.add(function (S,require) {
     };
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             if (!editor.hasCommand('backColor')) {
                 editor.addCommand('backColor', {
-                    exec:function (editor, c) {
+                    exec: function (editor, c) {
                         editor.execCommand('save');
                         cmd.applyColor(editor, c, BACK_COLOR_STYLE);
                         editor.execCommand('save');
@@ -44,5 +44,4 @@ KISSY.add(function (S,require) {
             }
         }
     };
-
 });

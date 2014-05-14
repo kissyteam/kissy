@@ -2,7 +2,7 @@
  * css3 selector tc modified from Sizzle
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, engine, Dom) {
+KISSY.add(function (S, util,engine, Dom) {
 
     var select = engine.select;
 
@@ -17,7 +17,7 @@ KISSY.add(function (S, engine, Dom) {
             '.x .y .x>.y div.z',
             '.x .y .x>.y div.z'
         ];
-        S.each(str, function (s, index) {
+        util.each(str, function (s, index) {
             index++;
             it(s, function () {
                 var node = null;
@@ -73,5 +73,5 @@ KISSY.add(function (S, engine, Dom) {
 
     });
 }, {
-    requires: ['dom/selector', 'dom']
+    requires: ['util','dom/selector', 'dom']
 });

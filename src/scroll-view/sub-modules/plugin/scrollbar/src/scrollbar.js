@@ -54,7 +54,7 @@ KISSY.add(function (S, require) {
      * @extend KISSY.Base
      */
     return Base.extend({
-        pluginId: this.getName(),
+        pluginId: this.name,
 
         pluginBindUI: function (scrollView) {
             var self = this;

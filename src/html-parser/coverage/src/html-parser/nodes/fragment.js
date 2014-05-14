@@ -231,6 +231,7 @@ if (! _$jscoverage['/html-parser/nodes/fragment.js']) {
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[11] = 0;
@@ -255,7 +256,7 @@ if (! _$jscoverage['/html-parser/nodes/fragment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'][1].init(97, 6, 'filter');
-function visit191_19_1(result) {
+function visit190_19_1(result) {
   _$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/fragment.js'].lineData[6]++;
@@ -263,6 +264,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7]++;
   var Tag = require('./tag');
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9]++;
   function Fragment() {
     _$jscoverage['/html-parser/nodes/fragment.js'].functionData[1]++;
@@ -274,7 +277,7 @@ KISSY.add(function(S, require) {
     this.nodeName = '#fragment';
   }
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[15]++;
-  S.extend(Fragment, Tag, {
+  util.extend(Fragment, Tag, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData[2]++;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17]++;
@@ -282,7 +285,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18]++;
   this.isChildrenFiltered = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[19]++;
-  if (visit191_19_1(filter)) {
+  if (visit190_19_1(filter)) {
     _$jscoverage['/html-parser/nodes/fragment.js'].lineData[20]++;
     filter.onFragment(this);
   }

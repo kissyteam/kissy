@@ -308,7 +308,7 @@ function visit10_113_1(result) {
 function visit9_111_1(result) {
   _$jscoverage['/control/manager.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/manager.js'].branchData['92'][1].init(943, 29, 'component.isControl && parent');
+}_$jscoverage['/control/manager.js'].branchData['92'][1].init(951, 29, 'component.isControl && parent');
 function visit8_92_1(result) {
   _$jscoverage['/control/manager.js'].branchData['92'][1].ranCondition(result);
   return result;
@@ -341,7 +341,7 @@ function visit1_73_1(result) {
   _$jscoverage['/control/manager.js'].branchData['73'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/manager.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function() {
   _$jscoverage['/control/manager.js'].functionData[0]++;
   _$jscoverage['/control/manager.js'].lineData[7]++;
   var basePriority = 0, Manager, uis = {}, componentInstances = {};
@@ -394,7 +394,7 @@ KISSY.add(function(S) {
       _$jscoverage['/control/manager.js'].lineData[87]++;
       if (visit7_87_1(!ChildConstructor)) {
         _$jscoverage['/control/manager.js'].lineData[88]++;
-        S.error('can not find class by xclass desc : ' + xclass);
+        throw new Error('can not find class by xclass desc : ' + xclass);
       }
       _$jscoverage['/control/manager.js'].lineData[90]++;
       component = new ChildConstructor(component);

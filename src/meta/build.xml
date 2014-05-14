@@ -23,4 +23,10 @@
             <path location="${component.src.dir}/modules.js"/>
         </concat>
     </target>
+
+    <target name="build" depends="common.build.build">
+        <subant target="build-seed" failonerror="false"
+                buildpath="${kissy.src.dir}/"
+                inheritall="false"/>
+    </target>
 </project>

@@ -617,7 +617,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/list-utils.js'].lineData[7]++;
   var listNodeNames = {
   ol: 1, 
-  ul: 1}, Node = S.Node, Dom = require('dom'), NodeType = Dom.NodeType, UA = S.UA, list = {
+  ul: 1}, Node = require('node'), Dom = require('dom'), NodeType = Dom.NodeType, UA = require('ua'), list = {
   listToArray: function(listNode, database, baseArray, baseIndentLevel, grandparentNode) {
   _$jscoverage['/list-utils.js'].functionData[1]++;
   _$jscoverage['/list-utils.js'].lineData[21]++;

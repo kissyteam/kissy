@@ -4,11 +4,11 @@
  */
 KISSY.add(function (S, require) {
     /*jshint quotmark:false*/
-    var Uri = require('uri');
     var Router = require('router');
     var getHash = function () {
-        return Router.Utils.getHash(new Uri(location.href));
+        return Router.Utils.getHash(location.href);
     };
+    var util = require('util');
 
     describe("router using hash", function () {
         beforeEach(function () {
@@ -125,7 +125,7 @@ KISSY.add(function (S, require) {
             waits(200);
 
             runs(function () {
-                S.each({
+                util.each({
                     "/go/": function () {
                         go++;
                     },

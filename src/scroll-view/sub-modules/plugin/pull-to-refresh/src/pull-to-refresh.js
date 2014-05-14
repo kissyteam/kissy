@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
      * @extend KISSY.Base
      */
     return Base.extend({
-        pluginId: this.getName(),
+        pluginId: this.name,
 
         _onSetState: function (e) {
             if (!this.scrollView) {

@@ -232,6 +232,7 @@ if (! _$jscoverage['/focusin.js']) {
   _$jscoverage['/focusin.js'].lineData[6] = 0;
   _$jscoverage['/focusin.js'].lineData[7] = 0;
   _$jscoverage['/focusin.js'].lineData[8] = 0;
+  _$jscoverage['/focusin.js'].lineData[9] = 0;
   _$jscoverage['/focusin.js'].lineData[11] = 0;
   _$jscoverage['/focusin.js'].lineData[15] = 0;
   _$jscoverage['/focusin.js'].lineData[16] = 0;
@@ -298,15 +299,17 @@ KISSY.add(function(S, require) {
   var DomEvent = require('event/dom/base');
   _$jscoverage['/focusin.js'].lineData[8]++;
   var Special = DomEvent.Special;
+  _$jscoverage['/focusin.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/focusin.js'].lineData[11]++;
-  S.each([{
+  util.each([{
   name: 'focusin', 
   fix: 'focus'}, {
   name: 'focusout', 
   fix: 'blur'}], function(o) {
   _$jscoverage['/focusin.js'].functionData[1]++;
   _$jscoverage['/focusin.js'].lineData[15]++;
-  var key = S.guid('attaches_' + S.now() + '_');
+  var key = util.guid('attaches_' + util.now() + '_');
   _$jscoverage['/focusin.js'].lineData[16]++;
   Special[o.name] = {
   setup: function() {

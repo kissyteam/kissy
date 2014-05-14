@@ -2,7 +2,7 @@
  * css3 selector tc modified from Sizzle
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, engine) {
+KISSY.add(function (S, util,engine) {
     /*jshint quotmark:false*/
     var select = engine.select;
     var matches = engine.matches;
@@ -82,7 +82,7 @@ KISSY.add(function (S, engine) {
             try {
                 select(selector);
             } catch (e) {
-                expect(e.message.indexOf("Syntax error")).toBeGreaterThan(-1);
+                expect(e.message.toLowerCase().indexOf("syntax error")).toBeGreaterThan(-1);
             }
 
         });
@@ -759,7 +759,7 @@ KISSY.add(function (S, engine) {
 
         it("Nth-of-type(-n+2)", function () {
             expect(select("#qunit-fixture > :nth-of-type(-n+2)", null, select('#qunit-fixture > *')))
-                .toEqual(S.makeArray(sizzle("#qunit-fixture > :nth-of-type(-n+2)")));
+                .toEqual(util.makeArray(sizzle("#qunit-fixture > :nth-of-type(-n+2)")));
         });
 
     });
@@ -1103,5 +1103,5 @@ KISSY.add(function (S, engine) {
         equal(select(":not(code)", document.getElementById("foo")), q("sndp", "en", "yahoo", "sap", "anchor2", "simon"), "Reusing selector with new context");
     });
 }, {
-    requires: ['dom/selector']
+    requires: ['util','dom/selector']
 });

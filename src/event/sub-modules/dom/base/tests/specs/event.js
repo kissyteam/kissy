@@ -2,7 +2,7 @@
  * @module  event-spec
  * @author yiminghe@gmail.com, gonghao@ghsky.com
  */
-KISSY.add(function (S, Dom, Event, io) {
+KISSY.add(function (S,util, Dom, Event, io) {
     var tpl = '';
     /*jshint quotmark:false*/
 
@@ -54,7 +54,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 });
 
                 // click all lis
-                S.each(lis, function (li) {
+                util.each(lis, function (li) {
                     simulate(li, 'click');
                 });
                 waits(0);
@@ -555,7 +555,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 var eventDesc = DomEventUtils.data(domNode);
                 var num = 0;
                 for (var i in eventDesc) {
-                    expect(S.inArray(i, ["handle", "observables"]))
+                    expect(util.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
 
@@ -566,7 +566,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 num = 0;
                 for (i in domEventObservables) {
 
-                    expect(S.inArray(i, ['click', 'keydown']))
+                    expect(util.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
 
@@ -583,7 +583,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 var num = 0;
                 for (var i in domEventObservablesHolder) {
 
-                    expect(S.inArray(i, ["handle", "observables"]))
+                    expect(util.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
 
@@ -594,7 +594,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 num = 0;
                 for (i in domEventObservables) {
 
-                    expect(S.inArray(i, ['click', 'keydown']))
+                    expect(util.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
 
@@ -611,7 +611,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 var num = 0;
                 for (var i in domEventObservablesHolder) {
 
-                    expect(S.inArray(i, ["handle", "observables"]))
+                    expect(util.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
 
@@ -622,7 +622,7 @@ KISSY.add(function (S, Dom, Event, io) {
                 num = 0;
                 for (i in domEventObservables) {
 
-                    expect(S.inArray(i, ['keydown']))
+                    expect(util.inArray(i, ['keydown']))
                         .toBe(true);
                     num++;
 
@@ -642,5 +642,5 @@ KISSY.add(function (S, Dom, Event, io) {
         });
     });
 }, {
-    requires: ['dom', 'event/dom/base', 'io']
+    requires: ['util','dom', 'event/dom/base', 'io']
 });

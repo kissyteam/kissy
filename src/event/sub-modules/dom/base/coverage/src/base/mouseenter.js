@@ -232,6 +232,7 @@ if (! _$jscoverage['/base/mouseenter.js']) {
   _$jscoverage['/base/mouseenter.js'].lineData[6] = 0;
   _$jscoverage['/base/mouseenter.js'].lineData[7] = 0;
   _$jscoverage['/base/mouseenter.js'].lineData[8] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[9] = 0;
   _$jscoverage['/base/mouseenter.js'].lineData[10] = 0;
   _$jscoverage['/base/mouseenter.js'].lineData[14] = 0;
   _$jscoverage['/base/mouseenter.js'].lineData[18] = 0;
@@ -271,8 +272,10 @@ KISSY.add(function(S, require) {
   var Dom = require('dom');
   _$jscoverage['/base/mouseenter.js'].lineData[8]++;
   var Special = require('./special');
+  _$jscoverage['/base/mouseenter.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/base/mouseenter.js'].lineData[10]++;
-  S.each([{
+  util.each([{
   name: 'mouseenter', 
   fix: 'mouseover'}, {
   name: 'mouseleave', 

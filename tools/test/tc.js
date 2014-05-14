@@ -254,11 +254,11 @@ tests.push('/kissy/src/resizable/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/resizable/tests/runner/test.jss?coverage');
 
-tests.push('/kissy/src/router/tests/runner/test.jss');
+tests.push('/kissy/src/router/tests/runner');
 
-tests.push('/kissy/src/router/tests/runner/test.jss?build');
+tests.push('/kissy/src/router/tests/runner?build');
 
-tests.push('/kissy/src/router/tests/runner/test.jss?coverage');
+tests.push('/kissy/src/router/tests/runner?coverage');
 
 tests.push('/kissy/src/stylesheet/tests/runner');
 

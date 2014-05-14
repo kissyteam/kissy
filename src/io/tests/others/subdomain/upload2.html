@@ -17,10 +17,10 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     document.domain = location.hostname;
-    KISSY.use("dom,event/dom", function (S, Dom, Event) {
+    KISSY.use("dom,event/dom,util", function (S, Dom, Event,util) {
         var UA = S.UA;
         var doFormUpload = function (o, ps, url) {
-            var id = S.guid("form-upload-");
+            var id = util.guid("form-upload-");
             var frame = document.createElement('iframe');
             frame.id = id;
             frame.name = id;
@@ -78,7 +78,7 @@
                     }
 
                     if (doc && doc.body) {
-                        r.responseText = S.trim(Dom.text(doc.body));
+                        r.responseText = util.trim(Dom.text(doc.body));
                     }
                     if (doc && doc['XMLDocument']) {
                         r.responseXML = doc['XMLDocument'];

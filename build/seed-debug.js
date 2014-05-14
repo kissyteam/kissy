@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 12 22:21
+build time: May 14 22:27
 */
 /**
  * @ignore
@@ -30,9 +30,7 @@ build time: May 12 22:21
 /*jshint -W079 */
 var KISSY = (function (undefined) {
     var self = this,
-        S,
-        guid = 0,
-        EMPTY = '';
+        S;
 
     function getLogger(logger) {
         var obj = {};
@@ -57,11 +55,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140512222119' will replace with current timestamp when compressing.
+         * NOTICE: '20140514222707' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140512222119',
+        __BUILD_TIME: '20140514222707',
 
         /**
          * KISSY Environment.
@@ -246,15 +244,6 @@ var KISSY = (function (undefined) {
                 // with stack info!
                 throw msg instanceof  Error ? msg : new Error(msg);
             }
-        },
-
-        /*
-         * Generate a global unique id.
-         * @param {String} [pre] guid prefix
-         * @return {String} the guid
-         */
-        guid: function (pre) {
-            return (pre || EMPTY) + guid++;
         }
     };
 
@@ -680,14 +669,6 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get package name.
-         * @return {String}
-         */
-        getName: function () {
-            return this.name;
-        },
-
-        /**
          * get package url
          */
         getBase: function () {
@@ -838,7 +819,6 @@ var KISSY = (function (undefined) {
                 for (var i = 0, l = alias.length; i < l; i++) {
                     var aliasItem = alias[i];
                     if (aliasItem && aliasItem !== name) {
-                        aliasItem = pluginAlias(aliasItem);
                         var mod = createModule(aliasItem);
                         var normalAlias = mod.getAlias();
                         if (normalAlias) {
@@ -874,14 +854,6 @@ var KISSY = (function (undefined) {
                 self.url = S.Config.resolveModFn(self);
             }
             return self.url;
-        },
-
-        /**
-         * Get the name of current module
-         * @return {String}
-         */
-        getName: function () {
-            return this.name;
         },
 
         /**
@@ -1012,6 +984,7 @@ var KISSY = (function (undefined) {
                 });
                 self.attachSelf();
             }
+            return self;
         }
     };
 
@@ -1020,7 +993,7 @@ var KISSY = (function (undefined) {
         if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
-            var Plugin = createModule(name).attach();
+            var Plugin = createModule(pluginName).attach().exports || {};
             if (Plugin.alias) {
                 name = Plugin.alias(S, name, pluginName);
             }
@@ -1370,7 +1343,7 @@ var KISSY = (function (undefined) {
             filter, t, url, subPath;
         var packageInfo = mod.getPackage();
         var packageBase = packageInfo.getBase();
-        var packageName = packageInfo.getName();
+        var packageName = packageInfo.name;
         var extname = '.' + mod.getType();
         // special for css module
         name = name.replace(/\.css$/, '');
@@ -2264,7 +2237,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140512222119';
+    var TIMESTAMP = '20140514222707';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2389,7 +2362,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 17:39
+build time: May 14 22:29
 */
 /*
 combined modules:
@@ -2782,7 +2755,7 @@ KISSY.add('ua', [], function (S) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 17:39
+build time: May 14 22:26
 */
 /*
 combined modules:
@@ -2865,7 +2838,7 @@ KISSY.add('feature', ['ua'], function (S, require) {
      * @private
      * @singleton
      */
-    S.Feature = {
+    return {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
          * whether support microsoft pointer event.
@@ -2957,12 +2930,11 @@ KISSY.add('feature', ['ua'], function (S, require) {
             return getVendorInfo(name);
         }
     };
-    return S.Feature;
 });
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 13 23:59
+build time: May 14 22:30
 */
 /**
  * @ignore
@@ -2993,10 +2965,12 @@ S.config("requires",{
         "promise"
     ],
     "anim/timer": [
-        "anim/base"
+        "anim/base",
+        "feature"
     ],
     "anim/transition": [
-        "anim/base"
+        "anim/base",
+        "feature"
     ],
     "attribute": [
         "event/custom"
@@ -3043,10 +3017,14 @@ S.config("requires",{
     "component/plugin/resize": [
         "resizable"
     ],
+    "cookie": [
+        "util"
+    ],
     "date/format": [
         "date/gregorian"
     ],
     "date/gregorian": [
+        "util",
         "i18n!date"
     ],
     "date/picker": [
@@ -3077,7 +3055,8 @@ S.config("requires",{
         "dd"
     ],
     "dom/base": [
-        "ua"
+        "util",
+        "feature"
     ],
     "dom/class-list": [
         "dom/base"
@@ -3086,6 +3065,7 @@ S.config("requires",{
         "dom/base"
     ],
     "dom/selector": [
+        "util",
         "dom/basic"
     ],
     "event": [
@@ -3140,13 +3120,17 @@ S.config("requires",{
         "event/gesture/util"
     ],
     "event/gesture/util": [
-        "event/dom/base"
+        "event/dom/base",
+        "feature"
     ],
     "feature": [
         "ua"
     ],
     "filter-menu": [
         "menu"
+    ],
+    "html-parser": [
+        "util"
     ],
     "io": [
         "dom",
@@ -3155,6 +3139,9 @@ S.config("requires",{
         "uri",
         "ua",
         "event/dom"
+    ],
+    "json": [
+        "util"
     ],
     "menu": [
         "component/container",
@@ -3175,6 +3162,7 @@ S.config("requires",{
         "button"
     ],
     "node": [
+        "util",
         "dom",
         "event/dom",
         "anim"
@@ -3188,6 +3176,9 @@ S.config("requires",{
     "path": [
         "util"
     ],
+    "promise": [
+        "util"
+    ],
     "resizable": [
         "dd"
     ],
@@ -3198,7 +3189,8 @@ S.config("requires",{
     "router": [
         "uri",
         "event/dom",
-        "event/custom"
+        "event/custom",
+        "feature"
     ],
     "scroll-view/base": [
         "anim/timer",
@@ -3206,7 +3198,9 @@ S.config("requires",{
         "component/extension/content-box"
     ],
     "scroll-view/plugin/pull-to-refresh": [
-        "base"
+        "base",
+        "node",
+        "feature"
     ],
     "scroll-view/plugin/scrollbar": [
         "component/control",

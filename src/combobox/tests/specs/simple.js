@@ -6,6 +6,7 @@ KISSY.add(function (S, require) {
     window.focus();
     document.body.focus();
     var Event = require('event/dom');
+    var util = require('util');
     var ComboBox = require('combobox');
 
     describe('simple combobox', function () {
@@ -30,9 +31,9 @@ KISSY.add(function (S, require) {
             value: '2',
             format: function (q, data) {
                 var ret = [];
-                S.each(data, function (d) {
+                util.each(data, function (d) {
                     ret.push({
-                        content: d.replace(new RegExp(S.escapeRegExp(q), 'g'), '<b>$&</b>'),
+                        content: d.replace(new RegExp(util.escapeRegExp(q), 'g'), '<b>$&</b>'),
                         textContent: d
                     });
                 });
@@ -59,7 +60,7 @@ KISSY.add(function (S, require) {
                 var children = menu.get('children');
                 expect(children.length).toBe(1);
                 expect(children[0].get('textContent')).toBe('21');
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(-1);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(-1);
                 document.body.focus();
             });
             waits(100);
@@ -189,7 +190,7 @@ KISSY.add(function (S, require) {
                 expect(children[2].get('value')).toBe('31');
 
                 // 入项和第一个提示项 textContent 一样，那么第一个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), menu.get('children')))
+                expect(util.indexOf(menu.get('highlightedItem'), menu.get('children')))
                     .toBe(0);
             });
 
@@ -235,7 +236,7 @@ KISSY.add(function (S, require) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 // 第一个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(0);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(0);
 
                 jasmine.simulate(t, 'keydown', {
                     keyCode: KeyCode.DOWN
@@ -248,7 +249,7 @@ KISSY.add(function (S, require) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 // 第二个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(1);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(1);
 
                 // 先把 textContent 放到里面
                 expect(t.value).toBe(children[1].get('textContent'));
@@ -264,7 +265,7 @@ KISSY.add(function (S, require) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 // 第3个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(2);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(2);
                 jasmine.simulate(t, 'keydown', {
                     keyCode: KeyCode.DOWN
                 });
@@ -287,7 +288,7 @@ KISSY.add(function (S, require) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 // 第1个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(0);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(0);
                 expect(t.value).toBe(menu.get('highlightedItem').get('textContent'));
                 t.blur();
             });
@@ -324,14 +325,14 @@ KISSY.add(function (S, require) {
                     var menu = comboBox.get('menu');
                     var children = menu.get('children');
                     // 第一个高亮
-                    expect(S.indexOf(menu.get('highlightedItem'),
+                    expect(util.indexOf(menu.get('highlightedItem'),
                         children)).toBe(0);
 
                     jasmine.simulate(children[1].get('el')[0], 'mouseover', {
                         relatedTarget: children[0].get('el')[0]
                     });
                     // 第二个高亮
-                    expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(1);
+                    expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(1);
                     t.blur();
                 });
                 waits(100);
@@ -372,7 +373,7 @@ KISSY.add(function (S, require) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 // 第二个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(1);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(1);
 
                 jasmine.simulate(t, 'keydown', {
                     keyCode: KeyCode.ENTER
@@ -422,7 +423,7 @@ KISSY.add(function (S, require) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 // 第二个高亮
-                expect(S.indexOf(menu.get('highlightedItem'), children)).toBe(1);
+                expect(util.indexOf(menu.get('highlightedItem'), children)).toBe(1);
                 expect(t.value).toBe(children[1].get('textContent'));
                 jasmine.simulate(t, 'keydown', {
                     keyCode: KeyCode.ESC

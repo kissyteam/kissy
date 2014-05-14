@@ -1,1 +1,1 @@
-{"dom/ie":["dom/base","ua"]}
+{"dom/ie":["util","dom/base","ua"]}

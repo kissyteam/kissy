@@ -61,7 +61,7 @@
 
     <script>
 
-            KISSY.use("menubutton", function (S, MenuButton) {
+            KISSY.use("menubutton,util", function (S, MenuButton) {
                 var data = {
                     "上海":["上海市", "崇明"],
                     "河南":["焦作", "洛阳"],
@@ -107,7 +107,7 @@
                     var vs = data[v];
                     s2.removeItems(true);
                     S.log("*********************");
-                    S.each(vs, function (v_) {
+                    util.each(vs, function (v_) {
                         S.log(v_);
                         s2.addItem(new MenuButton.Option({
                             value:v_,

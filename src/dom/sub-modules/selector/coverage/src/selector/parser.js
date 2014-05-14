@@ -987,39 +987,39 @@ KISSY.add(function(_, undefined) {
   'rules': [['b', /^\[(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[15]++;
   _$jscoverage['/selector/parser.js'].lineData[246]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['c', /^(?:[\t\r\n\f\x20]*)\]/, function() {
   _$jscoverage['/selector/parser.js'].functionData[16]++;
   _$jscoverage['/selector/parser.js'].lineData[251]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['d', /^(?:[\t\r\n\f\x20]*)~=(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[17]++;
   _$jscoverage['/selector/parser.js'].lineData[256]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['e', /^(?:[\t\r\n\f\x20]*)\|=(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[18]++;
   _$jscoverage['/selector/parser.js'].lineData[261]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['f', /^(?:[\t\r\n\f\x20]*)\^=(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[19]++;
   _$jscoverage['/selector/parser.js'].lineData[266]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['g', /^(?:[\t\r\n\f\x20]*)\$=(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[20]++;
   _$jscoverage['/selector/parser.js'].lineData[271]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['h', /^(?:[\t\r\n\f\x20]*)\*=(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[21]++;
   _$jscoverage['/selector/parser.js'].lineData[276]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['i', /^(?:[\t\r\n\f\x20]*)\=(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[22]++;
   _$jscoverage['/selector/parser.js'].lineData[281]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['j', /^(?:(?:[\w]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))(?:[\w\d-]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))*)\(/, function() {
   _$jscoverage['/selector/parser.js'].functionData[23]++;
   _$jscoverage['/selector/parser.js'].lineData[286]++;
-  this.text = KISSY.trim(this.text).slice(0, -1);
+  this.text = this.yy.trim(this.text).slice(0, -1);
   _$jscoverage['/selector/parser.js'].lineData[287]++;
   this.pushState('fn');
 }], ['k', /^[^\)]*/, function() {
@@ -1029,11 +1029,11 @@ KISSY.add(function(_, undefined) {
 }, ['fn']], ['l', /^(?:[\t\r\n\f\x20]*)\)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[25]++;
   _$jscoverage['/selector/parser.js'].lineData[298]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['m', /^:not\((?:[\t\r\n\f\x20]*)/i, function() {
   _$jscoverage['/selector/parser.js'].functionData[26]++;
   _$jscoverage['/selector/parser.js'].lineData[303]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['n', /^(?:(?:[\w]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))(?:[\w\d-]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[27]++;
   _$jscoverage['/selector/parser.js'].lineData[308]++;
@@ -1057,19 +1057,19 @@ KISSY.add(function(_, undefined) {
 }], ['r', /^(?:[\t\r\n\f\x20]*),(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[32]++;
   _$jscoverage['/selector/parser.js'].lineData[333]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['s', /^::?/, 0], ['t', /^(?:[\t\r\n\f\x20]*)\+(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[33]++;
   _$jscoverage['/selector/parser.js'].lineData[339]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['u', /^(?:[\t\r\n\f\x20]*)>(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[34]++;
   _$jscoverage['/selector/parser.js'].lineData[344]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['v', /^(?:[\t\r\n\f\x20]*)~(?:[\t\r\n\f\x20]*)/, function() {
   _$jscoverage['/selector/parser.js'].functionData[35]++;
   _$jscoverage['/selector/parser.js'].lineData[349]++;
-  this.text = KISSY.trim(this.text);
+  this.text = this.yy.trim(this.text);
 }], ['w', /^\*/, 0], ['x', /^(?:[\t\r\n\f\x20]+)/, 0], ['y', /^./, 0]]});
   _$jscoverage['/selector/parser.js'].lineData[357]++;
   parser.lexer = lexer;

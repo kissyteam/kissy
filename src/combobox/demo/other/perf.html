@@ -23,7 +23,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox", function (S, ComboBox) {
+    KISSY.use("combobox,util", function (S, ComboBox,util) {
         (function () {
             var data = ["a123456", "b12345", "c3464356", "d23434"];
 
@@ -50,7 +50,7 @@
                     for (var i = 0; i < data.length; i++) {
                         ret[i] = {
                             content: query?(data[i] + "")
-                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    .replace(new RegExp(util.escapeRegExp(query), "g"),
                                             "<b>$&</b>"):(data[i] + ""),
                             disabled: (i % 2 ? true : false)
                         };

@@ -233,11 +233,13 @@ if (! _$jscoverage['/editor/base.js']) {
   _$jscoverage['/editor/base.js'].lineData[7] = 0;
   _$jscoverage['/editor/base.js'].lineData[8] = 0;
   _$jscoverage['/editor/base.js'].lineData[9] = 0;
-  _$jscoverage['/editor/base.js'].lineData[15] = 0;
+  _$jscoverage['/editor/base.js'].lineData[10] = 0;
+  _$jscoverage['/editor/base.js'].lineData[11] = 0;
   _$jscoverage['/editor/base.js'].lineData[17] = 0;
-  _$jscoverage['/editor/base.js'].lineData[41] = 0;
-  _$jscoverage['/editor/base.js'].lineData[78] = 0;
-  _$jscoverage['/editor/base.js'].lineData[88] = 0;
+  _$jscoverage['/editor/base.js'].lineData[19] = 0;
+  _$jscoverage['/editor/base.js'].lineData[43] = 0;
+  _$jscoverage['/editor/base.js'].lineData[80] = 0;
+  _$jscoverage['/editor/base.js'].lineData[90] = 0;
 }
 if (! _$jscoverage['/editor/base.js'].functionData) {
   _$jscoverage['/editor/base.js'].functionData = [];
@@ -254,18 +256,22 @@ _$jscoverage['/editor/base.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/editor/base.js'].functionData[0]++;
   _$jscoverage['/editor/base.js'].lineData[7]++;
-  var HtmlParser = require('html-parser');
+  var util = require('util');
   _$jscoverage['/editor/base.js'].lineData[8]++;
-  var Control = require('component/control');
+  var UA = require('ua');
   _$jscoverage['/editor/base.js'].lineData[9]++;
+  var HtmlParser = require('html-parser');
+  _$jscoverage['/editor/base.js'].lineData[10]++;
+  var Control = require('component/control');
+  _$jscoverage['/editor/base.js'].lineData[11]++;
   var RenderTpl = require('./render-xtpl');
-  _$jscoverage['/editor/base.js'].lineData[15]++;
+  _$jscoverage['/editor/base.js'].lineData[17]++;
   return Control.extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/editor/base.js'].functionData[1]++;
-  _$jscoverage['/editor/base.js'].lineData[17]++;
-  S.mix(renderData, {
-  mobile: S.UA.mobile});
+  _$jscoverage['/editor/base.js'].lineData[19]++;
+  util.mix(renderData, {
+  mobile: UA.mobile});
 }}, {
   Config: {}, 
   XHTML_DTD: HtmlParser.DTD, 
@@ -277,7 +283,7 @@ KISSY.add(function(S, require) {
   textarea: {
   selector: function() {
   _$jscoverage['/editor/base.js'].functionData[2]++;
-  _$jscoverage['/editor/base.js'].lineData[41]++;
+  _$jscoverage['/editor/base.js'].lineData[43]++;
   return '.' + this.getBaseCssClass('textarea');
 }}, 
   textareaAttrs: {
@@ -289,13 +295,13 @@ KISSY.add(function(S, require) {
   toolBarEl: {
   selector: function() {
   _$jscoverage['/editor/base.js'].functionData[3]++;
-  _$jscoverage['/editor/base.js'].lineData[78]++;
+  _$jscoverage['/editor/base.js'].lineData[80]++;
   return '.' + this.getBaseCssClass('tools');
 }}, 
   statusBarEl: {
   selector: function() {
   _$jscoverage['/editor/base.js'].functionData[4]++;
-  _$jscoverage['/editor/base.js'].lineData[88]++;
+  _$jscoverage['/editor/base.js'].lineData[90]++;
   return '.' + this.getBaseCssClass('status');
 }}, 
   handleGestureEvents: {

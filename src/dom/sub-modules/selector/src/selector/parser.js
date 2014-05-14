@@ -243,47 +243,47 @@ KISSY.add(function (_, undefined) {
         'rules': [
             ['b', /^\[(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['c', /^(?:[\t\r\n\f\x20]*)\]/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['d', /^(?:[\t\r\n\f\x20]*)~=(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['e', /^(?:[\t\r\n\f\x20]*)\|=(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['f', /^(?:[\t\r\n\f\x20]*)\^=(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['g', /^(?:[\t\r\n\f\x20]*)\$=(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['h', /^(?:[\t\r\n\f\x20]*)\*=(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['i', /^(?:[\t\r\n\f\x20]*)\=(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['j', /^(?:(?:[\w]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))(?:[\w\d-]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))*)\(/,
                 function () {
-                    this.text = KISSY.trim(this.text).slice(0, -1);
+                    this.text = this.yy.trim(this.text).slice(0, -1);
                     this.pushState('fn');
                 }
             ],
@@ -295,12 +295,12 @@ KISSY.add(function (_, undefined) {
             ],
             ['l', /^(?:[\t\r\n\f\x20]*)\)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['m', /^:not\((?:[\t\r\n\f\x20]*)/i,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['n', /^(?:(?:[\w]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))(?:[\w\d-]|[^\x00-\xa0]|(?:\\[^\n\r\f0-9a-f]))*)/,
@@ -330,23 +330,23 @@ KISSY.add(function (_, undefined) {
             ],
             ['r', /^(?:[\t\r\n\f\x20]*),(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['s', /^::?/, 0],
             ['t', /^(?:[\t\r\n\f\x20]*)\+(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['u', /^(?:[\t\r\n\f\x20]*)>(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['v', /^(?:[\t\r\n\f\x20]*)~(?:[\t\r\n\f\x20]*)/,
                 function () {
-                    this.text = KISSY.trim(this.text);
+                    this.text = this.yy.trim(this.text);
                 }
             ],
             ['w', /^\*/, 0],

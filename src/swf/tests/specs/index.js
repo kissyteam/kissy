@@ -5,17 +5,18 @@
 KISSY.add(function (S, require) {
     var SWF = require('swf');
     var Dom = require('dom');
+    var util = require('util');
 
     function getFlashVars(swf) {
         if (Dom.nodeName(swf) === 'embed') {
-            return S.unparam(swf.getAttribute('flashvars'));
+            return util.unparam(swf.getAttribute('flashvars'));
         } else {
             var params = swf.childNodes, i;
             for (i = 0; i < params.length; i++) {
                 var param = params[i];
                 if (param.nodeType === 1) {
                     if (Dom.attr(params[i], 'name').toLowerCase() === 'flashvars') {
-                        return S.unparam(Dom.attr(param, 'value'));
+                        return util.unparam(Dom.attr(param, 'value'));
                     }
                 }
             }
@@ -71,7 +72,7 @@ KISSY.add(function (S, require) {
                     expect(Dom.last(document.body)).toBe(swf1.get('swfObject'));
                     expect(swf1.get('swfObject').nodeName.toLowerCase()).toBe('object');
                     // has id
-                    expect(swf1.get('html').replace('classid','').indexOf('id=')).toBeGreaterThan(-1);
+                    expect(swf1.get('html').replace('classid', '').indexOf('id=')).toBeGreaterThan(-1);
                     expect(swf1.get('el').id).toBe('test');
 
                     swf1.destroy();
@@ -106,7 +107,7 @@ KISSY.add(function (S, require) {
                     expect(render.innerHTML.toLowerCase().indexOf('object')).toBeGreaterThan(0);
 
                     // has id
-                    expect(swf1.get('html').replace('classid','').indexOf('id=')).toBe(-1);
+                    expect(swf1.get('html').replace('classid', '').indexOf('id=')).toBe(-1);
                     expect(Dom.hasAttr(swf1.get('el'), 'id')).toBeFalsy();
 
                     swf1.destroy();
@@ -146,7 +147,7 @@ KISSY.add(function (S, require) {
                     var swf = new SWF(config);
                     var flashvars = getFlashVars(swf.get('el'));
                     expect(flashvars.name1).toBe('http://taobao.com/?x=1&z=2');
-                    expect(S.parseJson(flashvars.name2).cpx.s).toBe('string');
+                    expect(util.parseJson(flashvars.name2).cpx.s).toBe('string');
                     expect(swf.get('el').id).toEqual('test-flash-vars');
 
                     swf.destroy();

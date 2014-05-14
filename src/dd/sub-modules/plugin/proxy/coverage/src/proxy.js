@@ -303,7 +303,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/proxy.js'].lineData[7]++;
   var Node = require('node'), DD = require('dd'), Base = require('base');
   _$jscoverage['/proxy.js'].lineData[11]++;
-  var DDM = DD.DDM, PROXY_EVENT = '.-ks-proxy' + S.now();
+  var DDM = DD.DDM, PROXY_EVENT = '.-ks-proxy' + (+new Date());
   _$jscoverage['/proxy.js'].lineData[20]++;
   return Base.extend({
   pluginId: 'dd/plugin/proxy', 

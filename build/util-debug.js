@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 00:17
+build time: May 14 22:29
 */
 /*
 combined modules:
@@ -13,6 +13,7 @@ util/function
 util/object
 util/string
 util/type
+util/json
 util/web
 */
 /**
@@ -27,6 +28,7 @@ KISSY.add('util', [
     'util/object',
     'util/string',
     'util/type',
+    'util/json',
     'util/web',
     'util/base'
 ], function (S, require) {
@@ -36,6 +38,7 @@ KISSY.add('util', [
     require('util/object');
     require('util/string');
     require('util/type');
+    require('util/json');
     require('util/web');
     return require('util/base');
 });
@@ -1386,6 +1389,28 @@ KISSY.add('util/type', ['./base'], function (S, require) {
     }
     util.isArray = Array.isArray || util.isArray;
 });
+KISSY.add('util/json', ['./base'], function (S, require) {
+    var util = require('./base');    // Json RegExp
+    // Json RegExp
+    var INVALID_CHARS_REG = /^[\],:{}\s]*$/, INVALID_BRACES_REG = /(?:^|:|,)(?:\s*\[)+/g, INVALID_ESCAPES_REG = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g, INVALID_TOKENS_REG = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
+    util.parseJson = function (data) {
+        if (data === null) {
+            return data;
+        }
+        if (typeof data === 'string') {
+            // for ie
+            data = util.trim(data);
+            if (data) {
+                // from json2
+                if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@').replace(INVALID_TOKENS_REG, ']').replace(INVALID_BRACES_REG, ''))) {
+                    /*jshint evil:true*/
+                    return new Function('return ' + data)();
+                }
+            }
+        }
+        return util.error('Invalid Json: ' + data);
+    };
+});
 /**
  * this code can only run at browser environment
  * @ignore
@@ -1424,7 +1449,7 @@ KISSY.add('util/web', ['./base'], function (S, require) {
          * @param {String} data
          * @member KISSY
          */
-        parseXML: function (data) {
+        parseXml: function (data) {
             // already a xml
             if (data.documentElement) {
                 return data;
@@ -1512,6 +1537,7 @@ KISSY.add('util/web', ['./base'], function (S, require) {
                 }, POLL_INTERVAL, true);
         }
     });
+    util.parserXML = util.parseXml;
     function fireReady() {
         if (domReady) {
             return;

@@ -2,7 +2,7 @@
  * test cases for data sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+KISSY.add(function (S,util, Dom) {
     var UA = S.UA;
     var __EXPANDO = Dom.__EXPANDO;
     describe('Dom.data', function () {
@@ -76,7 +76,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.hasData(window)).toBe(false);
 
             // 返回空对象
-            expect(S.isEmptyObject(Dom.data(window))).toBe(true);
+            expect(util.isEmptyObject(Dom.data(window))).toBe(true);
 
             Dom.data(foo, 'custom', 'custom');
             Dom.data(bar, 'custom2', 'custom2');
@@ -112,7 +112,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.hasData(p)).toBe(false); //=> false
 
             //空对象
-            expect(S.isEmptyObject(Dom.data(p))).toBe(true);
+            expect(util.isEmptyObject(Dom.data(p))).toBe(true);
         });
 
         it('cleanData works', function () {
@@ -131,5 +131,5 @@ KISSY.add(function (S, Dom) {
         });
     });
 }, {
-    requires: ['dom']
+    requires: ['util','dom']
 });

@@ -2,7 +2,7 @@
  * @overview test case for button
  * @author shiran<shiran@taobao.com>
  */
-KISSY.add(function (S, DOM, Tree, Node) {
+KISSY.add(function (S, util, DOM, Tree, Node) {
     var $ = Node.all;
 
     var CheckState = Tree.CheckNode.CheckState;
@@ -46,8 +46,8 @@ KISSY.add(function (S, DOM, Tree, Node) {
                 var children = tree.get('childrenEl').children();
 
                 expect(children.length).toBe(2);
-                expect(S.trim(DOM.text(children[0]))).toBe('first');
-                expect(S.trim(DOM.text(children[1]))).toBe('second');
+                expect(util.trim(DOM.text(children[0]))).toBe('first');
+                expect(util.trim(DOM.text(children[1]))).toBe('second');
 
                 // 获取子节点位置
                 //expect(tree.getChildAt(first)).toBe(0);
@@ -288,5 +288,5 @@ KISSY.add(function (S, DOM, Tree, Node) {
         });
     });
 }, {
-    requires: ['dom', 'tree', 'node']
+    requires: ['util','dom', 'tree', 'node']
 });

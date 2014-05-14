@@ -2,22 +2,23 @@
  * tc for html-parser for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, HtmlParser, UA) {
+KISSY.add(function (S, util, HtmlParser, io) {
     /*jshint quotmark:false, curly:false*/
-    /*global requireNode*/
-    function getTextSync(path, callback) {
-        if (S.UA.nodejs) {
-            path = S.config('packages').src.base + '../../' + path;
-            var fs = requireNode('fs');
-            callback(fs.readFileSync(path, 'utf-8'));
-        } else {
-            S.IO({
-                url: path,
-                dataType: 'text',
-                async: false,
-                success: callback
-            });
+
+    function isIE() {
+        var m;
+        if ((m = navigator.userAgent.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/))) {
+            return true;
         }
+    }
+
+    function getTextSync(path, callback) {
+        io({
+            url: path,
+            dataType: 'text',
+            async: false,
+            success: callback
+        });
     }
 
     describe('html parser for editor', function () {
@@ -48,7 +49,6 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             expect(writer.getHtml()).toBe("xy");
         });
-
 
         it("can filter imagedata in vml@ie", function () {
             var dataFilterRules = {
@@ -180,7 +180,7 @@ KISSY.add(function (S, HtmlParser, UA) {
 
                         if (
                             !value ||
-                                /(^|\s+)Mso/.test(value)
+                            /(^|\s+)Mso/.test(value)
                             ) {
                             return false;
                         }
@@ -220,7 +220,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                 var childNodes = block.childNodes,
                     lastIndex = childNodes.length,
                     last = childNodes[ lastIndex - 1 ];
-                while (last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
+                while (last && last.nodeType === 3 && !util.trim(last.nodeValue)) {
                     last = childNodes[ --lastIndex ];
                 }
                 return last;
@@ -233,7 +233,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                 // (#2886)
                 var lastChild = lastNoneSpaceChild(block);
                 if (lastChild) {
-                    if (( fromSource || !UA.ie ) &&
+                    if (( fromSource || !isIE() ) &&
                         lastChild.nodeType === 1 &&
                         lastChild.nodeName === 'br') {
                         block.removeChild(lastChild);
@@ -253,7 +253,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                     // Some of the controls in form needs extension too,
                     // to move cursor at the end of the form. (#4791)
                     block.nodeName === 'form' &&
-                        lastChild.nodeName === 'input';
+                    lastChild.nodeName === 'input';
             }
 
             function extendBlockForDisplay(block) {
@@ -262,7 +262,7 @@ KISSY.add(function (S, HtmlParser, UA) {
 
                 if (blockNeedsExtension(block)) {
                     //任何浏览器都要加空格！，否则空表格可能间隙太小，不能容下光标
-                    if (UA.ie) {
+                    if (isIE()) {
                         block.appendChild(new HtmlParser.Text('\xa0'));
                     } else {
                         //其他浏览器需要加空格??
@@ -291,7 +291,7 @@ KISSY.add(function (S, HtmlParser, UA) {
             var n = new HtmlParser.Parser(before).parse();
 
             n.writeHtml(writer, filter);
-            if (UA.ie) {
+            if (isIE()) {
                 expect(writer.getHtml()).toBe("<p>\xa0</p><p>1</p>");
             } else {
                 expect(writer.getHtml()).toBe("<p>&nbsp;<br /></p><p>1</p>");
@@ -389,5 +389,5 @@ KISSY.add(function (S, HtmlParser, UA) {
 
     });
 }, {
-    requires: ['html-parser', 'ua', KISSY.UA.nodejs ? '' : 'io']
+    requires: ['util', 'html-parser', 'io']
 });

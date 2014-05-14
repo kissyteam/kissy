@@ -326,7 +326,7 @@
         },
         {
             "name": "router",
-            "runner": "http://dev.kissyui.com/kissy/src/router/tests/runner/test.jss",
+            "runner": "http://dev.kissyui.com/kissy/src/router/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]

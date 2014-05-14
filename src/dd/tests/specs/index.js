@@ -1,3 +1,3 @@
-KISSY.add(KISSY.noop,{
+KISSY.add(function(){},{
     requires:['./draggable','./delegate','./droppable']
 });

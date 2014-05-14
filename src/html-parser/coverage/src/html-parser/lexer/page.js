@@ -290,35 +290,35 @@ if (! _$jscoverage['/html-parser/lexer/page.js'].branchData) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1].init(66, 11, '\'\\r\' === ch');
-function visit176_58_1(result) {
+function visit175_58_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][3].init(181, 7, '0 !== i');
-function visit175_56_3(result) {
+function visit174_56_3(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['56'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][2].init(166, 11, 'ch === \'\\n\'');
-function visit174_56_2(result) {
+function visit173_56_2(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['56'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['56'][1].init(166, 22, 'ch === \'\\n\' && 0 !== i');
-function visit173_56_1(result) {
+function visit172_56_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['43'][1].init(1064, 12, '\'\\n\' === ret');
-function visit172_43_1(result) {
+function visit171_43_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['37'][1].init(135, 13, 'next === \'\\n\'');
-function visit171_37_1(result) {
+function visit170_37_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['33'][1].init(771, 12, '\'\\r\' === ret');
-function visit170_33_1(result) {
+function visit169_33_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].branchData['20'][1].init(95, 18, 'i >= source.length');
-function visit169_20_1(result) {
+function visit168_20_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/page.js'].lineData[6]++;
@@ -344,7 +344,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/lexer/page.js'].lineData[19]++;
   var i = cursor.position;
   _$jscoverage['/html-parser/lexer/page.js'].lineData[20]++;
-  if (visit169_20_1(i >= source.length)) {
+  if (visit168_20_1(i >= source.length)) {
     _$jscoverage['/html-parser/lexer/page.js'].lineData[21]++;
     return -1;
   }
@@ -353,7 +353,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/lexer/page.js'].lineData[25]++;
   cursor.advance();
   _$jscoverage['/html-parser/lexer/page.js'].lineData[33]++;
-  if (visit170_33_1('\r' === ret)) {
+  if (visit169_33_1('\r' === ret)) {
     _$jscoverage['/html-parser/lexer/page.js'].lineData[34]++;
     ret = '\n';
     _$jscoverage['/html-parser/lexer/page.js'].lineData[35]++;
@@ -361,13 +361,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/html-parser/lexer/page.js'].lineData[36]++;
     var next = source.charAt(i);
     _$jscoverage['/html-parser/lexer/page.js'].lineData[37]++;
-    if (visit171_37_1(next === '\n')) {
+    if (visit170_37_1(next === '\n')) {
       _$jscoverage['/html-parser/lexer/page.js'].lineData[38]++;
       cursor.advance();
     }
   }
   _$jscoverage['/html-parser/lexer/page.js'].lineData[43]++;
-  if (visit172_43_1('\n' === ret)) {
+  if (visit171_43_1('\n' === ret)) {
     _$jscoverage['/html-parser/lexer/page.js'].lineData[44]++;
     this.lineIndex.add(cursor);
   }
@@ -383,11 +383,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/lexer/page.js'].lineData[54]++;
   var i = cursor.position, ch = source.charAt(i);
   _$jscoverage['/html-parser/lexer/page.js'].lineData[56]++;
-  if (visit173_56_1(visit174_56_2(ch === '\n') && visit175_56_3(0 !== i))) {
+  if (visit172_56_1(visit173_56_2(ch === '\n') && visit174_56_3(0 !== i))) {
     _$jscoverage['/html-parser/lexer/page.js'].lineData[57]++;
     ch = source.charAt(i - 1);
     _$jscoverage['/html-parser/lexer/page.js'].lineData[58]++;
-    if (visit176_58_1('\r' === ch)) {
+    if (visit175_58_1('\r' === ch)) {
       _$jscoverage['/html-parser/lexer/page.js'].lineData[59]++;
       cursor.retreat();
     }

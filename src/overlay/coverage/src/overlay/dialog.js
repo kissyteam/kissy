@@ -233,58 +233,59 @@ if (! _$jscoverage['/overlay/dialog.js']) {
   _$jscoverage['/overlay/dialog.js'].lineData[7] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[8] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[9] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[11] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[10] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[12] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[13] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[21] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[23] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[30] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[35] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[43] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[45] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[49] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[51] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[53] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[14] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[22] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[24] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[31] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[36] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[44] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[46] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[50] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[52] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[54] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[56] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[58] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[62] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[64] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[55] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[57] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[59] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[63] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[65] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[66] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[67] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[72] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[74] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[68] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[73] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[75] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[76] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[77] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[86] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[90] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[94] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[113] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[127] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[141] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[189] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[204] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[219] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[271] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[274] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[78] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[87] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[91] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[95] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[114] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[128] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[142] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[190] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[205] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[220] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[272] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[275] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[278] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[276] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[279] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[281] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[285] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[290] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[295] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[280] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[282] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[286] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[291] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[296] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[297] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[298] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[300] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[299] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[301] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[304] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[302] = 0;
   _$jscoverage['/overlay/dialog.js'].lineData[305] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[310] = 0;
-  _$jscoverage['/overlay/dialog.js'].lineData[313] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[306] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[311] = 0;
+  _$jscoverage['/overlay/dialog.js'].lineData[314] = 0;
 }
 if (! _$jscoverage['/overlay/dialog.js'].functionData) {
   _$jscoverage['/overlay/dialog.js'].functionData = [];
@@ -308,152 +309,154 @@ if (! _$jscoverage['/overlay/dialog.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/dialog.js'].branchData) {
   _$jscoverage['/overlay/dialog.js'].branchData = {};
-  _$jscoverage['/overlay/dialog.js'].branchData['49'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['49'][1] = new BranchData();
   _$jscoverage['/overlay/dialog.js'].branchData['50'] = [];
   _$jscoverage['/overlay/dialog.js'].branchData['50'][1] = new BranchData();
   _$jscoverage['/overlay/dialog.js'].branchData['51'] = [];
   _$jscoverage['/overlay/dialog.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['51'][2] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['51'][3] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['65'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['76'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['278'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['278'][1] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['295'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['295'][1] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['298'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['298'][1] = new BranchData();
-  _$jscoverage['/overlay/dialog.js'].branchData['304'] = [];
-  _$jscoverage['/overlay/dialog.js'].branchData['304'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['52'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['52'][2] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['52'][3] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['66'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['66'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['77'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['279'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['279'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['296'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['296'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['299'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['299'][1] = new BranchData();
+  _$jscoverage['/overlay/dialog.js'].branchData['305'] = [];
+  _$jscoverage['/overlay/dialog.js'].branchData['305'][1] = new BranchData();
 }
-_$jscoverage['/overlay/dialog.js'].branchData['304'][1].init(67, 38, 'node.equals($el) || $el.contains(node)');
-function visit17_304_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['304'][1].ranCondition(result);
+_$jscoverage['/overlay/dialog.js'].branchData['305'][1].init(67, 38, 'node.equals($el) || $el.contains(node)');
+function visit17_305_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['305'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['298'][1].init(945, 41, 'node.equals(lastFocusItem) && !e.shiftKey');
-function visit16_298_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['298'][1].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['299'][1].init(945, 41, 'node.equals(lastFocusItem) && !e.shiftKey');
+function visit16_299_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['299'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['295'][1].init(761, 30, 'node.equals($el) && e.shiftKey');
-function visit15_295_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['295'][1].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['296'][1].init(761, 30, 'node.equals($el) && e.shiftKey');
+function visit15_296_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['278'][1].init(76, 19, 'keyCode !== KEY_TAB');
-function visit14_278_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['278'][1].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['279'][1].init(76, 19, 'keyCode !== KEY_TAB');
+function visit14_279_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['76'][1].init(26, 17, 'self.__lastActive');
-function visit13_76_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['77'][1].init(26, 17, 'self.__lastActive');
+function visit13_77_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['65'][1].init(114, 1, 'v');
-function visit12_65_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['65'][1].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['66'][1].init(114, 1, 'v');
+function visit12_66_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['51'][3].init(24, 44, 'e.target.nodeName.toLowerCase() === \'select\'');
-function visit11_51_3(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['51'][3].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['52'][3].init(24, 44, 'e.target.nodeName.toLowerCase() === \'select\'');
+function visit11_52_3(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['52'][3].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['51'][2].init(24, 66, 'e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled');
-function visit10_51_2(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['51'][2].ranCondition(result);
+}_$jscoverage['/overlay/dialog.js'].branchData['52'][2].init(24, 66, 'e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled');
+function visit10_52_2(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['52'][2].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['51'][1].init(22, 69, '!(e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled)');
-function visit9_51_1(result) {
+}_$jscoverage['/overlay/dialog.js'].branchData['52'][1].init(22, 69, '!(e.target.nodeName.toLowerCase() === \'select\' && !e.target.disabled)');
+function visit9_52_1(result) {
+  _$jscoverage['/overlay/dialog.js'].branchData['52'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/overlay/dialog.js'].branchData['51'][1].init(45, 30, 'e.keyCode === Node.KeyCode.ESC');
+function visit8_51_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['50'][1].init(45, 30, 'e.keyCode === Node.KeyCode.ESC');
-function visit8_50_1(result) {
+}_$jscoverage['/overlay/dialog.js'].branchData['50'][1].init(18, 76, 'this.get(\'escapeToClose\') && e.keyCode === Node.KeyCode.ESC');
+function visit7_50_1(result) {
   _$jscoverage['/overlay/dialog.js'].branchData['50'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/overlay/dialog.js'].branchData['49'][1].init(18, 76, 'this.get(\'escapeToClose\') && e.keyCode === Node.KeyCode.ESC');
-function visit7_49_1(result) {
-  _$jscoverage['/overlay/dialog.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/overlay/dialog.js'].functionData[0]++;
   _$jscoverage['/overlay/dialog.js'].lineData[7]++;
-  var Overlay = require('./control');
+  var util = require('util');
   _$jscoverage['/overlay/dialog.js'].lineData[8]++;
-  var Node = require('node');
+  var Overlay = require('./control');
   _$jscoverage['/overlay/dialog.js'].lineData[9]++;
+  var Node = require('node');
+  _$jscoverage['/overlay/dialog.js'].lineData[10]++;
   var DialogTpl = require('./dialog-xtpl');
-  _$jscoverage['/overlay/dialog.js'].lineData[11]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[12]++;
   function _setStdModRenderContent(self, part, v) {
     _$jscoverage['/overlay/dialog.js'].functionData[1]++;
-    _$jscoverage['/overlay/dialog.js'].lineData[12]++;
-    part = self.get(part);
     _$jscoverage['/overlay/dialog.js'].lineData[13]++;
+    part = self.get(part);
+    _$jscoverage['/overlay/dialog.js'].lineData[14]++;
     part.html(v);
   }
-  _$jscoverage['/overlay/dialog.js'].lineData[21]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[22]++;
   var Dialog = Overlay.extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/overlay/dialog.js'].functionData[2]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[23]++;
-  S.mix(renderData.elAttrs, {
+  _$jscoverage['/overlay/dialog.js'].lineData[24]++;
+  util.mix(renderData.elAttrs, {
   role: 'dialog', 
   'aria-labelledby': 'ks-stdmod-header-' + this.get('id')});
 }, 
   getChildrenContainerEl: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[3]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[30]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[31]++;
   return this.get('body');
 }, 
   __afterCreateEffectGhost: function(ghost) {
   _$jscoverage['/overlay/dialog.js'].functionData[4]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[35]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[36]++;
   var self = this, elBody = self.get('body');
-  _$jscoverage['/overlay/dialog.js'].lineData[43]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[44]++;
   ghost.all('.' + self.get('prefixCls') + 'stdmod-body').css({
   height: elBody.height(), 
   width: elBody.width()}).html('');
-  _$jscoverage['/overlay/dialog.js'].lineData[45]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[46]++;
   return ghost;
 }, 
   handleKeyDownInternal: function(e) {
   _$jscoverage['/overlay/dialog.js'].functionData[5]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[49]++;
-  if (visit7_49_1(this.get('escapeToClose') && visit8_50_1(e.keyCode === Node.KeyCode.ESC))) {
-    _$jscoverage['/overlay/dialog.js'].lineData[51]++;
-    if (visit9_51_1(!(visit10_51_2(visit11_51_3(e.target.nodeName.toLowerCase() === 'select') && !e.target.disabled)))) {
-      _$jscoverage['/overlay/dialog.js'].lineData[53]++;
-      this.close();
+  _$jscoverage['/overlay/dialog.js'].lineData[50]++;
+  if (visit7_50_1(this.get('escapeToClose') && visit8_51_1(e.keyCode === Node.KeyCode.ESC))) {
+    _$jscoverage['/overlay/dialog.js'].lineData[52]++;
+    if (visit9_52_1(!(visit10_52_2(visit11_52_3(e.target.nodeName.toLowerCase() === 'select') && !e.target.disabled)))) {
       _$jscoverage['/overlay/dialog.js'].lineData[54]++;
+      this.close();
+      _$jscoverage['/overlay/dialog.js'].lineData[55]++;
       e.halt();
     }
-    _$jscoverage['/overlay/dialog.js'].lineData[56]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[57]++;
     return;
   }
-  _$jscoverage['/overlay/dialog.js'].lineData[58]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[59]++;
   trapFocus.call(this, e);
 }, 
   _onSetVisible: function(v, e) {
   _$jscoverage['/overlay/dialog.js'].functionData[6]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[62]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[63]++;
   var self = this, el = self.el;
-  _$jscoverage['/overlay/dialog.js'].lineData[64]++;
-  self.callSuper(v, e);
   _$jscoverage['/overlay/dialog.js'].lineData[65]++;
-  if (visit12_65_1(v)) {
-    _$jscoverage['/overlay/dialog.js'].lineData[66]++;
-    self.__lastActive = el.ownerDocument.activeElement;
+  self.callSuper(v, e);
+  _$jscoverage['/overlay/dialog.js'].lineData[66]++;
+  if (visit12_66_1(v)) {
     _$jscoverage['/overlay/dialog.js'].lineData[67]++;
+    self.__lastActive = el.ownerDocument.activeElement;
+    _$jscoverage['/overlay/dialog.js'].lineData[68]++;
     self.focus();
-    _$jscoverage['/overlay/dialog.js'].lineData[72]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[73]++;
     el.setAttribute('aria-hidden', 'false');
   } else {
-    _$jscoverage['/overlay/dialog.js'].lineData[74]++;
-    el.setAttribute('aria-hidden', 'true');
     _$jscoverage['/overlay/dialog.js'].lineData[75]++;
+    el.setAttribute('aria-hidden', 'true');
+    _$jscoverage['/overlay/dialog.js'].lineData[76]++;
     try {
-      _$jscoverage['/overlay/dialog.js'].lineData[76]++;
-      if (visit13_76_1(self.__lastActive)) {
-        _$jscoverage['/overlay/dialog.js'].lineData[77]++;
+      _$jscoverage['/overlay/dialog.js'].lineData[77]++;
+      if (visit13_77_1(self.__lastActive)) {
+        _$jscoverage['/overlay/dialog.js'].lineData[78]++;
         self.__lastActive.focus();
       }
     }    catch (ee) {
@@ -462,17 +465,17 @@ KISSY.add(function(S, require) {
 }, 
   _onSetBodyContent: function(v) {
   _$jscoverage['/overlay/dialog.js'].functionData[7]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[86]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[87]++;
   _setStdModRenderContent(this, 'body', v);
 }, 
   _onSetHeaderContent: function(v) {
   _$jscoverage['/overlay/dialog.js'].functionData[8]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[90]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[91]++;
   _setStdModRenderContent(this, 'header', v);
 }, 
   _onSetFooterContent: function(v) {
   _$jscoverage['/overlay/dialog.js'].functionData[9]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[94]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[95]++;
   _setStdModRenderContent(this, 'footer', v);
 }}, {
   ATTRS: {
@@ -481,19 +484,19 @@ KISSY.add(function(S, require) {
   header: {
   selector: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[10]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[113]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[114]++;
   return '.' + this.getBaseCssClass('header');
 }}, 
   body: {
   selector: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[11]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[127]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[128]++;
   return '.' + this.getBaseCssClass('body');
 }}, 
   footer: {
   selector: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[12]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[141]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[142]++;
   return '.' + this.getBaseCssClass('footer');
 }}, 
   bodyStyle: {
@@ -511,7 +514,7 @@ KISSY.add(function(S, require) {
   render: 1, 
   parse: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[13]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[189]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[190]++;
   return this.get('header').html();
 }}, 
   bodyContent: {
@@ -520,7 +523,7 @@ KISSY.add(function(S, require) {
   render: 1, 
   parse: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[14]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[204]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[205]++;
   return this.get('body').html();
 }}, 
   footerContent: {
@@ -529,7 +532,7 @@ KISSY.add(function(S, require) {
   render: 1, 
   parse: function() {
   _$jscoverage['/overlay/dialog.js'].functionData[15]++;
-  _$jscoverage['/overlay/dialog.js'].lineData[219]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[220]++;
   return this.get('footer').html();
 }}, 
   closable: {
@@ -539,48 +542,48 @@ KISSY.add(function(S, require) {
   escapeToClose: {
   value: true}}, 
   xclass: 'dialog'});
-  _$jscoverage['/overlay/dialog.js'].lineData[271]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[272]++;
   var KEY_TAB = Node.KeyCode.TAB;
-  _$jscoverage['/overlay/dialog.js'].lineData[274]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[275]++;
   function trapFocus(e) {
     _$jscoverage['/overlay/dialog.js'].functionData[16]++;
-    _$jscoverage['/overlay/dialog.js'].lineData[275]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[276]++;
     var self = this, keyCode = e.keyCode;
-    _$jscoverage['/overlay/dialog.js'].lineData[278]++;
-    if (visit14_278_1(keyCode !== KEY_TAB)) {
-      _$jscoverage['/overlay/dialog.js'].lineData[279]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[279]++;
+    if (visit14_279_1(keyCode !== KEY_TAB)) {
+      _$jscoverage['/overlay/dialog.js'].lineData[280]++;
       return;
     }
-    _$jscoverage['/overlay/dialog.js'].lineData[281]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[282]++;
     var $el = self.$el;
-    _$jscoverage['/overlay/dialog.js'].lineData[285]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[286]++;
     var node = Node.all(e.target);
-    _$jscoverage['/overlay/dialog.js'].lineData[290]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[291]++;
     var lastFocusItem = $el.last();
-    _$jscoverage['/overlay/dialog.js'].lineData[295]++;
-    if (visit15_295_1(node.equals($el) && e.shiftKey)) {
-      _$jscoverage['/overlay/dialog.js'].lineData[296]++;
-      lastFocusItem[0].focus();
+    _$jscoverage['/overlay/dialog.js'].lineData[296]++;
+    if (visit15_296_1(node.equals($el) && e.shiftKey)) {
       _$jscoverage['/overlay/dialog.js'].lineData[297]++;
+      lastFocusItem[0].focus();
+      _$jscoverage['/overlay/dialog.js'].lineData[298]++;
       e.halt();
     } else {
-      _$jscoverage['/overlay/dialog.js'].lineData[298]++;
-      if (visit16_298_1(node.equals(lastFocusItem) && !e.shiftKey)) {
-        _$jscoverage['/overlay/dialog.js'].lineData[300]++;
-        self.focus();
+      _$jscoverage['/overlay/dialog.js'].lineData[299]++;
+      if (visit16_299_1(node.equals(lastFocusItem) && !e.shiftKey)) {
         _$jscoverage['/overlay/dialog.js'].lineData[301]++;
+        self.focus();
+        _$jscoverage['/overlay/dialog.js'].lineData[302]++;
         e.halt();
       } else {
-        _$jscoverage['/overlay/dialog.js'].lineData[304]++;
-        if (visit17_304_1(node.equals($el) || $el.contains(node))) {
-          _$jscoverage['/overlay/dialog.js'].lineData[305]++;
+        _$jscoverage['/overlay/dialog.js'].lineData[305]++;
+        if (visit17_305_1(node.equals($el) || $el.contains(node))) {
+          _$jscoverage['/overlay/dialog.js'].lineData[306]++;
           return;
         }
       }
     }
-    _$jscoverage['/overlay/dialog.js'].lineData[310]++;
+    _$jscoverage['/overlay/dialog.js'].lineData[311]++;
     e.halt();
   }
-  _$jscoverage['/overlay/dialog.js'].lineData[313]++;
+  _$jscoverage['/overlay/dialog.js'].lineData[314]++;
   return Dialog;
 });

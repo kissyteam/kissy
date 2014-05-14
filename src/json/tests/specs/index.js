@@ -1,9 +1,9 @@
-KISSY.add(function (S, Json) {
+KISSY.add(function (S, Json, UA) {
     /*global global*/
     /*jshint camelcase:false*/
-    var JSON = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).JSON;
+    var JSON = ((typeof global === 'object') ? global : S.Env.host).JSON;
 
-    var phantomjs = S.UA.phantomjs;
+    var phantomjs = UA.phantomjs;
 
     describe('json', function () {
         describe('stringify', function () {
@@ -323,9 +323,9 @@ KISSY.add(function (S, Json) {
                     }
                     return v;
                 })).toEqual(r = {test: {
-                        t: 1,
-                        t2: 5
-                    }});
+                    t: 1,
+                    t2: 5
+                }});
                 if (JSON) {
                     expect(JSON.parse(t, f)).toEqual(r);
                 }
@@ -347,5 +347,5 @@ KISSY.add(function (S, Json) {
         });
     });
 }, {
-    requires: ['json']
+    requires: ['json', 'ua']
 });

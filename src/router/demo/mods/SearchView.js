@@ -3,7 +3,7 @@ KISSY.add(function (S, require) {
     var mvc = require('../mvc/');
     var Template = require('xtemplate');
     var router=require('router');
-
+    var util = require('util');
     var $ = Node.all,
         tmpl = new Template($('#searchTpl').html());
 
@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
             });
         },
         search: function () {
-            if (S.trim(this.searchInput.val())) {
+            if (util.trim(this.searchInput.val())) {
                 router.navigate('/search/?q=' + encodeURIComponent(this.searchInput.val()));
             }
         },

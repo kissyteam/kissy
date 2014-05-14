@@ -231,6 +231,7 @@ if (! _$jscoverage['/io.js']) {
   _$jscoverage['/io.js'].lineData = [];
   _$jscoverage['/io.js'].lineData[6] = 0;
   _$jscoverage['/io.js'].lineData[7] = 0;
+  _$jscoverage['/io.js'].lineData[9] = 0;
   _$jscoverage['/io.js'].lineData[10] = 0;
   _$jscoverage['/io.js'].lineData[11] = 0;
   _$jscoverage['/io.js'].lineData[12] = 0;
@@ -318,6 +319,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io.js'].functionData[0]++;
   _$jscoverage['/io.js'].lineData[7]++;
   var serializer = require('io/form-serializer'), IO = require('io/base');
+  _$jscoverage['/io.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/io.js'].lineData[10]++;
   require('io/xhr-transport');
   _$jscoverage['/io.js'].lineData[11]++;
@@ -351,7 +354,7 @@ KISSY.add(function(S, require) {
   dataType: dataType});
   }
   _$jscoverage['/io.js'].lineData[35]++;
-  S.mix(IO, {
+  util.mix(IO, {
   serialize: serializer.serialize, 
   get: get, 
   post: function(url, data, callback, dataType) {

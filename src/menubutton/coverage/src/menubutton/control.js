@@ -235,6 +235,7 @@ if (! _$jscoverage['/menubutton/control.js']) {
   _$jscoverage['/menubutton/control.js'].lineData[9] = 0;
   _$jscoverage['/menubutton/control.js'].lineData[10] = 0;
   _$jscoverage['/menubutton/control.js'].lineData[11] = 0;
+  _$jscoverage['/menubutton/control.js'].lineData[12] = 0;
   _$jscoverage['/menubutton/control.js'].lineData[19] = 0;
   _$jscoverage['/menubutton/control.js'].lineData[23] = 0;
   _$jscoverage['/menubutton/control.js'].lineData[25] = 0;
@@ -493,7 +494,7 @@ function visit5_69_1(result) {
 function visit4_68_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['64'][1].init(490, 24, 'self.get(\'matchElWidth\')');
+}_$jscoverage['/menubutton/control.js'].branchData['64'][1].init(493, 24, 'self.get(\'matchElWidth\')');
 function visit3_64_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['64'][1].ranCondition(result);
   return result;
@@ -518,6 +519,8 @@ KISSY.add(function(S, require) {
   var KeyCode = Node.KeyCode;
   _$jscoverage['/menubutton/control.js'].lineData[11]++;
   var MenuButtonTpl = require('./menubutton-xtpl');
+  _$jscoverage['/menubutton/control.js'].lineData[12]++;
+  var util = require('util');
   _$jscoverage['/menubutton/control.js'].lineData[19]++;
   return Button.extend([ContentBox], {
   isMenuButton: 1, 
@@ -541,7 +544,7 @@ KISSY.add(function(S, require) {
   beforeCreateDom: function(renderData) {
   _$jscoverage['/menubutton/control.js'].functionData[2]++;
   _$jscoverage['/menubutton/control.js'].lineData[37]++;
-  S.mix(renderData.elAttrs, {
+  util.mix(renderData.elAttrs, {
   'aria-expanded': false, 
   'aria-haspopup': true});
 }, 
@@ -570,7 +573,7 @@ KISSY.add(function(S, require) {
   adjustX: 1, 
   adjustY: 1}};
       _$jscoverage['/menubutton/control.js'].lineData[63]++;
-      S.mix(menu.get('align'), align, false);
+      util.mix(menu.get('align'), align, false);
       _$jscoverage['/menubutton/control.js'].lineData[64]++;
       if (visit3_64_1(self.get('matchElWidth'))) {
         _$jscoverage['/menubutton/control.js'].lineData[65]++;

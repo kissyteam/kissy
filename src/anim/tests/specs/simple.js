@@ -2,11 +2,11 @@
  * test case for simple anim
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Anim, Node) {
+KISSY.add(function (S, util,Dom, Anim, Node) {
     /*jshint quotmark:false*/
     function matrix(transform) {
         transform = transform.split(")");
-        var trim = S.trim,
+        var trim = util.trim,
             i = -1,
             l = transform.length - 1,
             split, prop, val,
@@ -255,7 +255,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
         });
 
         it('support different easing for different property', function () {
-            if (S.Env.mods.anim.alias === 'anim/transition') {
+            if (S.getModule('anim').getAlias()[0] === 'anim/transition') {
                 // native does not support easing as function
                 return;
             }
@@ -412,5 +412,5 @@ KISSY.add(function (S, Dom, Anim, Node) {
         });
     });
 }, {
-    requires: ['dom', 'anim', 'node']
+    requires: ['util','dom', 'anim', 'node']
 });

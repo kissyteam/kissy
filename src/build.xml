@@ -12,8 +12,7 @@
 
         <subant target="" failonerror="true" inheritall="false">
             <fileset dir="${kissy.src.dir}"
-                     excludesfile="${kissy.src.dir}/xtemplate/build.xml,
-                     ${kissy.src.dir}/meta/build.xml"
+                     excludes="${kissy.src.dir}/xtemplate/build.xml,${kissy.src.dir}/meta/build.xml"
                      includes="*/build.xml"/>
         </subant>
 

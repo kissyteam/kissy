@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    var util = require('util');
     var Node = require('node');
     var mvc = require('../mvc/');
     var Template = require('xtemplate');
@@ -101,7 +102,7 @@ KISSY.add(function (S, require) {
                 });
         },
         search: function () {
-            if (S.trim(this.searchInput.val())) {
+            if (util.trim(this.searchInput.val())) {
                 router.navigate('/search/?q=' + encodeURIComponent(this.searchInput.val()));
             }
         },

@@ -786,7 +786,7 @@ function visit649_181_1(result) {
 function visit648_128_1(result) {
   _$jscoverage['/editor/selection-fix.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/selection-fix.js'].branchData['122'][1].init(31, 15, 'S.UA.ieMode < 8');
+}_$jscoverage['/editor/selection-fix.js'].branchData['122'][1].init(31, 13, 'UA.ieMode < 8');
 function visit647_122_1(result) {
   _$jscoverage['/editor/selection-fix.js'].branchData['122'][1].ranCondition(result);
   return result;
@@ -840,7 +840,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/selection-fix.js'].lineData[13]++;
   var Node = require('node');
   _$jscoverage['/editor/selection-fix.js'].lineData[15]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = require('dom'), KES = Editor.SelectionType;
+  var TRUE = true, FALSE = false, NULL = null, UA = require('ua'), Dom = require('dom'), KES = Editor.SelectionType;
   _$jscoverage['/editor/selection-fix.js'].lineData[26]++;
   function fixCursorForIE(editor) {
     _$jscoverage['/editor/selection-fix.js'].functionData[1]++;
@@ -947,7 +947,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/selection-fix.js'].lineData[113]++;
     var doc = editor.get('document')[0], body = new Node(doc.body), html = new Node(doc.documentElement);
     _$jscoverage['/editor/selection-fix.js'].lineData[121]++;
-    if (visit647_122_1(S.UA.ieMode < 8)) {
+    if (visit647_122_1(UA.ieMode < 8)) {
       _$jscoverage['/editor/selection-fix.js'].lineData[126]++;
       html.on('click', function(evt) {
   _$jscoverage['/editor/selection-fix.js'].functionData[7]++;

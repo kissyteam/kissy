@@ -291,27 +291,27 @@ if (! _$jscoverage['/html-parser/writer/basic.js'].branchData) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].init(96, 34, 'isBooleanAttribute(name) && !value');
-function visit349_61_1(result) {
+function visit348_61_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].init(26, 16, 'attr.value || \'\'');
-function visit348_59_1(result) {
+function visit347_59_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].init(18, 15, 'el.isSelfClosed');
-function visit347_48_1(result) {
+function visit346_48_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].init(38, 14, 'j < arg.length');
-function visit346_33_1(result) {
+function visit345_33_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].init(54, 14, 'arg.length > 1');
-function visit345_32_1(result) {
+function visit344_32_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].init(123, 15, 'i < args.length');
-function visit344_30_1(result) {
+function visit343_30_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].lineData[6]++;
@@ -325,7 +325,7 @@ KISSY.add(function(S, require) {
   function escapeAttrValue(str) {
     _$jscoverage['/html-parser/writer/basic.js'].functionData[1]++;
     _$jscoverage['/html-parser/writer/basic.js'].lineData[12]++;
-    return String(str).replace(/'/g, '&quote;');
+    return String(str).replace(/'/g, '&quot;');
   }
   _$jscoverage['/html-parser/writer/basic.js'].lineData[19]++;
   function BasicWriter() {
@@ -341,13 +341,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/writer/basic.js'].lineData[27]++;
   var o = this.output, args = (arguments), arg;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[30]++;
-  for (var i = 0; visit344_30_1(i < args.length); i++) {
+  for (var i = 0; visit343_30_1(i < args.length); i++) {
     _$jscoverage['/html-parser/writer/basic.js'].lineData[31]++;
     arg = args[i];
     _$jscoverage['/html-parser/writer/basic.js'].lineData[32]++;
-    if (visit345_32_1(arg.length > 1)) {
+    if (visit344_32_1(arg.length > 1)) {
       _$jscoverage['/html-parser/writer/basic.js'].lineData[33]++;
-      for (var j = 0; visit346_33_1(j < arg.length); j++) {
+      for (var j = 0; visit345_33_1(j < arg.length); j++) {
         _$jscoverage['/html-parser/writer/basic.js'].lineData[34]++;
         o.push(arg.charAt(j));
       }
@@ -367,7 +367,7 @@ KISSY.add(function(S, require) {
   openTagClose: function(el) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[5]++;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[48]++;
-  if (visit347_48_1(el.isSelfClosed)) {
+  if (visit346_48_1(el.isSelfClosed)) {
     _$jscoverage['/html-parser/writer/basic.js'].lineData[49]++;
     this.append(' ', '/');
   }
@@ -382,9 +382,9 @@ KISSY.add(function(S, require) {
   attribute: function(attr) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[7]++;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[59]++;
-  var value = visit348_59_1(attr.value || ''), name = attr.name;
+  var value = visit347_59_1(attr.value || ''), name = attr.name;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[61]++;
-  if (visit349_61_1(isBooleanAttribute(name) && !value)) {
+  if (visit348_61_1(isBooleanAttribute(name) && !value)) {
     _$jscoverage['/html-parser/writer/basic.js'].lineData[62]++;
     value = name;
   }

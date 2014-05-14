@@ -2,7 +2,8 @@
  * Router data structure
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
+    var util = require('util');
     /*
      transform route declaration to router reg
      @param str
@@ -10,7 +11,7 @@ KISSY.add(function (S) {
      /user/*path
      */
     function pathRegexp(path, keys, strict, sensitive) {
-        if (S.isArray(path)) {
+        if (util.isArray(path)) {
             path = '(' + path.join('|') + ')';
         }
         path = path
@@ -36,8 +37,8 @@ KISSY.add(function (S) {
         self.path = path;
         self.callbacks = callbacks;
         self.keys = [];
-        if (typeof path === 'string' || S.isArray(path)) {
-            S.mix(self, pathRegexp(path, self.keys, option.strict, option.caseSensitive));
+        if (typeof path === 'string' || util.isArray(path)) {
+            util.mix(self, pathRegexp(path, self.keys, option.strict, option.caseSensitive));
         } else {
             self.regexp = path;
         }
@@ -58,7 +59,7 @@ KISSY.add(function (S) {
             for (var i = 1, len = m.length; i < len; ++i) {
                 var key = keys[i - 1];
 
-                var val = 'string' === typeof m[i] ? S.urlDecode(m[i]) : m[i];
+                var val = 'string' === typeof m[i] ? util.urlDecode(m[i]) : m[i];
 
                 if (key) {
                     params[key] = val;

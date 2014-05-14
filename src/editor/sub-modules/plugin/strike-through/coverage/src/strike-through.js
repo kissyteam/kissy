@@ -262,7 +262,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/strike-through.js'].functionData[1]++;
   }
   _$jscoverage['/strike-through.js'].lineData[13]++;
-  S.augment(StrikeThrough, {
+  (StrikeThrough.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/strike-through.js'].functionData[2]++;
   _$jscoverage['/strike-through.js'].lineData[15]++;

@@ -2,14 +2,12 @@
  * using dd to draw three mutual-crossed lines to cross four points
  * @author yiminghe@gmail.com
  */
-KISSY.use('dd', function (S, DD) {
-
+KISSY.use('dd,util', function (S, DD,util) {
     function inRange(x, min, max, estimated) {
         return x >= min && x <= max ||
             (Math.abs(x - min) < estimated) ||
             (Math.abs(x - max) < estimated);
     }
-
 
     // y=kx+b
     function Line(p1, p2) {
@@ -23,8 +21,7 @@ KISSY.use('dd', function (S, DD) {
         this.maxTop = Math.max(p1.top, p2.top);
     }
 
-    S.augment(Line, {
-
+    (Line.prototype = {
         distance: function (p) {
             var a = p.left, b = p.top, A = this.k, B = -1, C = this.b;
             return Math.abs(A * a + B * b + C) / Math.sqrt(A * A + B * B);
@@ -65,10 +62,7 @@ KISSY.use('dd', function (S, DD) {
 //            return { x: a.left + dx, y: a.top + dy };
 
         }
-
-
     });
-
 
     var $ = S.all;
     var canvas = document.getElementById("canvas");
@@ -88,7 +82,7 @@ KISSY.use('dd', function (S, DD) {
             // clear canvas
             ctx.fillStyle = "rgb(200,0,0)";
 
-            S.each(points, function (p) {
+            util.each(points, function (p) {
                 ctx.beginPath();
                 ctx.arc(p[0], p[1], r, 0, Math.PI * 2, true);
                 ctx.closePath();
@@ -96,7 +90,7 @@ KISSY.use('dd', function (S, DD) {
             });
 
 
-            S.each(mouse, function (m) {
+            util.each(mouse, function (m) {
                 var start = m.start, end = m.end;
                 if (start && end) {
                     ctx.beginPath();
@@ -161,16 +155,16 @@ KISSY.use('dd', function (S, DD) {
 
 
                 var lines = [];
-                S.each(mouse, function (m, i) {
+                util.each(mouse, function (m, i) {
                     lines[i] = new Line(m.start, m.end);
                 });
 
 
                 var ok = [];
 
-                S.each(points, function (p, i) {
+                util.each(points, function (p, i) {
 
-                    S.each(lines, function (l) {
+                    util.each(lines, function (l) {
                         if (l.isOn({
                             left: p[0],
                             top: p[1]
@@ -224,6 +218,5 @@ KISSY.use('dd', function (S, DD) {
                 redraw();
             }
         });
-
     }
 });

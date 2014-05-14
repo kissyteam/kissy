@@ -1,1 +1,1 @@
-{"event/dom/hashchange":["event/dom/base","dom","ua"]}
+{"event/dom/hashchange":["util","event/dom/base","dom","ua"]}

@@ -57,7 +57,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-KISSY.use('component/control,' +
+KISSY.use('util,component/control,' +
         'component/container,' +
         'navigation-view,' +
         'navigation-view/bar,' +
@@ -320,7 +320,7 @@ KISSY.use('component/control,' +
 
                 initializer: function () {
                     var items = [];
-                    S.each(anims, function (anim) {
+                    util.each(anims, function (anim) {
                         items.push({
                             xclass: 'menuitem',
                             content: anim.content

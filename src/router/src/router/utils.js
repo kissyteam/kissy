@@ -25,11 +25,11 @@ KISSY.add(function (S, require) {
 
     utils = {
         endWithSlash: function (str) {
-            return S.endsWith(str, '/');
+            return str.charAt(str.length - 1) === '/';
         },
 
         startWithSlash: function (str) {
-            return S.startsWith(str, '/');
+            return str.charAt(0) === '/';
         },
 
         removeEndSlash: function (str) {

@@ -277,7 +277,7 @@ function visit208_29_1(result) {
 function visit207_24_1(result) {
   _$jscoverage['/base/utils.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['22'][1].init(515, 30, 'doc && doc.removeEventListener');
+}_$jscoverage['/base/utils.js'].branchData['22'][1].init(521, 30, 'doc && doc.removeEventListener');
 function visit206_22_1(result) {
   _$jscoverage['/base/utils.js'].branchData['22'][1].ranCondition(result);
   return result;
@@ -289,7 +289,7 @@ function visit205_18_1(result) {
 function visit204_13_1(result) {
   _$jscoverage['/base/utils.js'].branchData['13'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['11'][1].init(103, 27, 'doc && doc.addEventListener');
+}_$jscoverage['/base/utils.js'].branchData['11'][1].init(109, 27, 'doc && doc.addEventListener');
 function visit203_11_1(result) {
   _$jscoverage['/base/utils.js'].branchData['11'][1].ranCondition(result);
   return result;
@@ -299,7 +299,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/utils.js'].lineData[8]++;
   var Dom = require('dom');
   _$jscoverage['/base/utils.js'].lineData[9]++;
-  var EVENT_GUID = 'ksEventTargetId_' + S.now(), doc = S.Env.host.document, simpleAdd = visit203_11_1(doc && doc.addEventListener) ? function(el, type, fn, capture) {
+  var EVENT_GUID = 'ksEventTargetId_' + (+new Date()), doc = S.Env.host.document, simpleAdd = visit203_11_1(doc && doc.addEventListener) ? function(el, type, fn, capture) {
   _$jscoverage['/base/utils.js'].functionData[1]++;
   _$jscoverage['/base/utils.js'].lineData[13]++;
   if (visit204_13_1(el.addEventListener)) {

@@ -233,6 +233,7 @@ if (! _$jscoverage['/local-storage.js']) {
   _$jscoverage['/local-storage.js'].lineData[7] = 0;
   _$jscoverage['/local-storage.js'].lineData[8] = 0;
   _$jscoverage['/local-storage.js'].lineData[9] = 0;
+  _$jscoverage['/local-storage.js'].lineData[10] = 0;
   _$jscoverage['/local-storage.js'].lineData[11] = 0;
   _$jscoverage['/local-storage.js'].lineData[15] = 0;
   _$jscoverage['/local-storage.js'].lineData[17] = 0;
@@ -285,15 +286,15 @@ if (! _$jscoverage['/local-storage.js'].branchData) {
   _$jscoverage['/local-storage.js'].branchData['15'][2] = new BranchData();
   _$jscoverage['/local-storage.js'].branchData['15'][3] = new BranchData();
 }
-_$jscoverage['/local-storage.js'].branchData['15'][3].init(242, 6, 'ie > 8');
+_$jscoverage['/local-storage.js'].branchData['15'][3].init(282, 6, 'ie > 8');
 function visit3_15_3(result) {
   _$jscoverage['/local-storage.js'].branchData['15'][3].ranCondition(result);
   return result;
-}_$jscoverage['/local-storage.js'].branchData['15'][2].init(235, 13, '!ie || ie > 8');
+}_$jscoverage['/local-storage.js'].branchData['15'][2].init(275, 13, '!ie || ie > 8');
 function visit2_15_2(result) {
   _$jscoverage['/local-storage.js'].branchData['15'][2].ranCondition(result);
   return result;
-}_$jscoverage['/local-storage.js'].branchData['15'][1].init(235, 37, '(!ie || ie > 8) && window.localStorage');
+}_$jscoverage['/local-storage.js'].branchData['15'][1].init(275, 37, '(!ie || ie > 8) && window.localStorage');
 function visit1_15_1(result) {
   _$jscoverage['/local-storage.js'].branchData['15'][1].ranCondition(result);
   return result;
@@ -306,8 +307,10 @@ KISSY.add(function(S, require) {
   var Overlay = require('overlay');
   _$jscoverage['/local-storage.js'].lineData[9]++;
   var FlashBridge = require('./flash-bridge');
+  _$jscoverage['/local-storage.js'].lineData[10]++;
+  var util = require('util');
   _$jscoverage['/local-storage.js'].lineData[11]++;
-  var ie = S.UA.ieMode;
+  var ie = require('ua').ieMode;
   _$jscoverage['/local-storage.js'].lineData[15]++;
   if (visit1_15_1((visit2_15_2(!ie || visit3_15_3(ie > 8))) && window.localStorage)) {
     _$jscoverage['/local-storage.js'].lineData[17]++;
@@ -345,7 +348,7 @@ KISSY.add(function(S, require) {
   width: '100%'}, 
   methods: ['setItem', 'removeItem', 'getItem', 'setMinDiskSpace', 'getValueOf']});
   _$jscoverage['/local-storage.js'].lineData[61]++;
-  S.ready(function() {
+  util.ready(function() {
   _$jscoverage['/local-storage.js'].functionData[1]++;
   _$jscoverage['/local-storage.js'].lineData[62]++;
   setTimeout(function() {
@@ -379,7 +382,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/local-storage.js'].lineData[81]++;
   var oldSet = store.setItem;
   _$jscoverage['/local-storage.js'].lineData[83]++;
-  S.mix(store, {
+  util.mix(store, {
   _ke: 1, 
   getItem: function(k) {
   _$jscoverage['/local-storage.js'].functionData[6]++;

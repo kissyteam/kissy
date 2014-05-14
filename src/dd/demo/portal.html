@@ -102,7 +102,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
 
-    KISSY.use("dd,node,dd/plugin/proxy,dd/plugin/scroll", function (S, DD, Node, Proxy, Scroll) {
+    KISSY.use("dd,util,node,dd/plugin/proxy,dd/plugin/scroll", function (S, DD,util, Node, Proxy, Scroll) {
         var DDM = DD.DDM,
                 $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
@@ -117,7 +117,7 @@
              */
             node: function (drag) {
                 var n = $(drag.get("dragNode").clone(true));
-                n.attr('id', S.guid("ks-dd-proxy"));
+                n.attr('id', util.guid("ks-dd-proxy"));
                 n.css("opacity", 0.2);
                 return n;
             },

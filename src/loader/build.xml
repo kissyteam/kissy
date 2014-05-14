@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="loader.build" default="build" basedir=".">
     <property name="component.name" value="loader"/>
+    <property name="component.isNode" value="1"/>
 
     <import file="../common.xml"/>
 
@@ -8,7 +9,22 @@
 
     <target name="tpl2mod"/>
 
-    <target name="build" depends="common.build.build"/>
+    <target name="build" depends="common.build.build">
+        <!-- build loader-nodejs -->
+        <concat destfile="${kissy.lib.dir}/loader-node.js" encoding="${charset}"
+                outputencoding="${charset}">
+            <path location="${kissy.lib.dir}/loader.js"/>
+            <path location="${component.src.dir}/nodejs.js"/>
+        </concat>
+
+        <delete file="${kissy.lib.dir}/loader.js"/>
+
+        <move file="${kissy.lib.dir}/loader-node.js" tofile="${kissy.lib.dir}/loader.js"/>
+
+        <subant target="build-seed" failonerror="false"
+                buildpath="${kissy.src.dir}/"
+                inheritall="false"/>
+    </target>
 
     <target name="concat">
         <concat destfile="${component.src.dir.tmp}/loader-pkg-debug.js"
@@ -23,13 +39,6 @@
             <path location="${component.src.dir}/loader.js"/>
             <path location="${component.src.dir}/i18n.js"/>
             <path location="${component.src.dir}/init.js"/>
-        </concat>
-
-        <!-- build loader-nodejs -->
-        <concat destfile="${kissy.lib.dir}/loader.js" encoding="${charset}"
-                outputencoding="${charset}">
-            <path location="${component.src.dir.tmp}/loader-pkg-debug.js"/>
-            <path location="${component.src.dir}/nodejs.js"/>
         </concat>
     </target>
 </project>

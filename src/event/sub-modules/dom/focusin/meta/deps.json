@@ -1,1 +1,1 @@
-{"event/dom/focusin":["event/dom/base"]}
+{"event/dom/focusin":["event/dom/base","util"]}

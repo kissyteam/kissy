@@ -5,7 +5,7 @@
 KISSY.add(function (S, require) {
     var Uri = require('uri');
     var Dom = require('dom');
-
+    var util = require('util');
     var $ = window.jQuery;
 
     function trimCssText(str) {
@@ -232,7 +232,7 @@ KISSY.add(function (S, require) {
                     '<option value="">二</option><option>三</option></select>');
                 Dom.append(s, 'body');
                 var ret = [];
-                S.each(Dom.query('option', s), function (o) {
+                util.each(Dom.query('option', s), function (o) {
                     ret.push(Dom.attr(o, 'value'));
                 });
                 expect(ret).toEqual(['1', '', undefined]);

@@ -3,10 +3,11 @@
  * Flash UA 探测
  * @author oicuicu@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var fpvCached,
         firstRun = true,
         win = S.Env.host;
+    var util = require('util');
 
     /*
      获取 Flash 版本号
@@ -58,7 +59,7 @@ KISSY.add(function (S) {
                 getArrayVersion(ver) :
                 ver,
             ret = ver;
-        if (S.isArray(arr)) {
+        if (util.isArray(arr)) {
             ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
         }
         return ret || 0;

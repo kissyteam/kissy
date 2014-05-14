@@ -234,15 +234,16 @@ if (! _$jscoverage['/bold.js']) {
   _$jscoverage['/bold.js'].lineData[8] = 0;
   _$jscoverage['/bold.js'].lineData[9] = 0;
   _$jscoverage['/bold.js'].lineData[10] = 0;
-  _$jscoverage['/bold.js'].lineData[13] = 0;
-  _$jscoverage['/bold.js'].lineData[15] = 0;
+  _$jscoverage['/bold.js'].lineData[11] = 0;
+  _$jscoverage['/bold.js'].lineData[14] = 0;
   _$jscoverage['/bold.js'].lineData[16] = 0;
-  _$jscoverage['/bold.js'].lineData[21] = 0;
+  _$jscoverage['/bold.js'].lineData[17] = 0;
   _$jscoverage['/bold.js'].lineData[22] = 0;
   _$jscoverage['/bold.js'].lineData[23] = 0;
   _$jscoverage['/bold.js'].lineData[24] = 0;
   _$jscoverage['/bold.js'].lineData[25] = 0;
-  _$jscoverage['/bold.js'].lineData[32] = 0;
+  _$jscoverage['/bold.js'].lineData[26] = 0;
+  _$jscoverage['/bold.js'].lineData[33] = 0;
 }
 if (! _$jscoverage['/bold.js'].functionData) {
   _$jscoverage['/bold.js'].functionData = [];
@@ -254,17 +255,17 @@ if (! _$jscoverage['/bold.js'].functionData) {
 }
 if (! _$jscoverage['/bold.js'].branchData) {
   _$jscoverage['/bold.js'].branchData = {};
-  _$jscoverage['/bold.js'].branchData['23'] = [];
-  _$jscoverage['/bold.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/bold.js'].branchData['23'][2] = new BranchData();
+  _$jscoverage['/bold.js'].branchData['24'] = [];
+  _$jscoverage['/bold.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/bold.js'].branchData['24'][2] = new BranchData();
 }
-_$jscoverage['/bold.js'].branchData['23'][2].init(39, 30, 'e.keyCode === S.Node.KeyCode.B');
-function visit2_23_2(result) {
-  _$jscoverage['/bold.js'].branchData['23'][2].ranCondition(result);
+_$jscoverage['/bold.js'].branchData['24'][2].init(39, 28, 'e.keyCode === Node.KeyCode.B');
+function visit2_24_2(result) {
+  _$jscoverage['/bold.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bold.js'].branchData['23'][1].init(26, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.B');
-function visit1_23_1(result) {
-  _$jscoverage['/bold.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/bold.js'].branchData['24'][1].init(26, 41, 'e.ctrlKey && e.keyCode === Node.KeyCode.B');
+function visit1_24_1(result) {
+  _$jscoverage['/bold.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bold.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -274,37 +275,39 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bold.js'].lineData[8]++;
   var cmd = require('./bold/cmd');
   _$jscoverage['/bold.js'].lineData[9]++;
-  require('./button');
+  var Node = require('node');
   _$jscoverage['/bold.js'].lineData[10]++;
-  function bold() {
+  require('./button');
+  _$jscoverage['/bold.js'].lineData[11]++;
+  function Bold() {
     _$jscoverage['/bold.js'].functionData[1]++;
   }
-  _$jscoverage['/bold.js'].lineData[13]++;
-  S.augment(bold, {
+  _$jscoverage['/bold.js'].lineData[14]++;
+  Bold.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/bold.js'].functionData[2]++;
-  _$jscoverage['/bold.js'].lineData[15]++;
-  cmd.init(editor);
   _$jscoverage['/bold.js'].lineData[16]++;
+  cmd.init(editor);
+  _$jscoverage['/bold.js'].lineData[17]++;
   editor.addButton('bold', {
   cmdType: 'bold', 
   tooltip: '\u7c97\u4f53'}, ui.Button);
-  _$jscoverage['/bold.js'].lineData[21]++;
+  _$jscoverage['/bold.js'].lineData[22]++;
   editor.docReady(function() {
   _$jscoverage['/bold.js'].functionData[3]++;
-  _$jscoverage['/bold.js'].lineData[22]++;
+  _$jscoverage['/bold.js'].lineData[23]++;
   editor.get('document').on('keydown', function(e) {
   _$jscoverage['/bold.js'].functionData[4]++;
-  _$jscoverage['/bold.js'].lineData[23]++;
-  if (visit1_23_1(e.ctrlKey && visit2_23_2(e.keyCode === S.Node.KeyCode.B))) {
-    _$jscoverage['/bold.js'].lineData[24]++;
-    editor.execCommand('bold');
+  _$jscoverage['/bold.js'].lineData[24]++;
+  if (visit1_24_1(e.ctrlKey && visit2_24_2(e.keyCode === Node.KeyCode.B))) {
     _$jscoverage['/bold.js'].lineData[25]++;
+    editor.execCommand('bold');
+    _$jscoverage['/bold.js'].lineData[26]++;
     e.preventDefault();
   }
 });
 });
-}});
-  _$jscoverage['/bold.js'].lineData[32]++;
-  return bold;
+}};
+  _$jscoverage['/bold.js'].lineData[33]++;
+  return Bold;
 });

@@ -233,6 +233,7 @@ if (! _$jscoverage['/resizable.js']) {
   _$jscoverage['/resizable.js'].lineData[7] = 0;
   _$jscoverage['/resizable.js'].lineData[8] = 0;
   _$jscoverage['/resizable.js'].lineData[9] = 0;
+  _$jscoverage['/resizable.js'].lineData[10] = 0;
   _$jscoverage['/resizable.js'].lineData[11] = 0;
   _$jscoverage['/resizable.js'].lineData[21] = 0;
   _$jscoverage['/resizable.js'].lineData[24] = 0;
@@ -373,7 +374,7 @@ function visit7_69_1(result) {
 function visit6_57_1(result) {
   _$jscoverage['/resizable.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resizable.js'].branchData['56'][1].init(1828, 21, 'i < horizontal.length');
+}_$jscoverage['/resizable.js'].branchData['56'][1].init(1859, 21, 'i < horizontal.length');
 function visit5_56_1(result) {
   _$jscoverage['/resizable.js'].branchData['56'][1].ranCondition(result);
   return result;
@@ -402,6 +403,8 @@ KISSY.add(function(S, require) {
   var Base = require('base');
   _$jscoverage['/resizable.js'].lineData[9]++;
   var DD = require('dd');
+  _$jscoverage['/resizable.js'].lineData[10]++;
+  var util = require('util');
   _$jscoverage['/resizable.js'].lineData[11]++;
   var $ = Node.all, i, j, Draggable = DD.Draggable, CLS_PREFIX = 'resizable-handler', horizontal = ['l', 'r'], vertical = ['t', 'b'], ATTRS_ORDER = ['width', 'height', 'top', 'left'], hcNormal = {
   t: function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
@@ -495,7 +498,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/resizable.js'].lineData[87]++;
     for (i = 0; visit9_87_1(i < handlers.length); i++) {
       _$jscoverage['/resizable.js'].lineData[88]++;
-      var hc = handlers[i], el = $('<div class="' + prefix + ' ' + prefix + '-' + hc + '"></div>').prependTo(node, undefined), dd = dds[hc] = new Draggable(S.mix({
+      var hc = handlers[i], el = $('<div class="' + prefix + ' ' + prefix + '-' + hc + '"></div>').prependTo(node, undefined), dd = dds[hc] = new Draggable(util.mix({
   node: el, 
   cursor: null, 
   groups: false}, dragConfig));
@@ -581,7 +584,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resizable.js'].lineData[177]++;
   var dds = this.dds;
   _$jscoverage['/resizable.js'].lineData[178]++;
-  S.each(dds, function(d) {
+  util.each(dds, function(d) {
   _$jscoverage['/resizable.js'].functionData[18]++;
   _$jscoverage['/resizable.js'].lineData[179]++;
   d.set('disabled', v);

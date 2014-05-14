@@ -53,7 +53,7 @@ KISSY.add(function (S, require) {
          * @param {String} data
          * @member KISSY
          */
-        parseXML: function (data) {
+        parseXml: function (data) {
             // already a xml
             if (data.documentElement) {
                 return data;
@@ -143,6 +143,8 @@ KISSY.add(function (S, require) {
             }, POLL_INTERVAL, true);
         }
     });
+
+    util.parserXML = util.parseXml;
 
     function fireReady() {
         if (domReady) {

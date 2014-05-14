@@ -1,1 +1,1 @@
-{"editor/plugin/drag-upload":["editor","event/dom","dom"]}
+{"editor/plugin/drag-upload":["util","editor","event/dom","node","dom"]}

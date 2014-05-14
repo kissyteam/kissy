@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 12 22:21
+build time: May 14 22:27
 */
 /**
  * @ignore
@@ -30,9 +30,7 @@ build time: May 12 22:21
 /*jshint -W079 */
 var KISSY = (function (undefined) {
     var self = this,
-        S,
-        guid = 0,
-        EMPTY = '';
+        S;
 
     function getLogger(logger) {
         var obj = {};
@@ -57,11 +55,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140512222119' will replace with current timestamp when compressing.
+         * NOTICE: '20140514222707' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140512222119',
+        __BUILD_TIME: '20140514222707',
 
         /**
          * KISSY Environment.
@@ -246,15 +244,6 @@ var KISSY = (function (undefined) {
                 // with stack info!
                 throw msg instanceof  Error ? msg : new Error(msg);
             }
-        },
-
-        /*
-         * Generate a global unique id.
-         * @param {String} [pre] guid prefix
-         * @return {String} the guid
-         */
-        guid: function (pre) {
-            return (pre || EMPTY) + guid++;
         }
     };
 
@@ -680,14 +669,6 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get package name.
-         * @return {String}
-         */
-        getName: function () {
-            return this.name;
-        },
-
-        /**
          * get package url
          */
         getBase: function () {
@@ -838,7 +819,6 @@ var KISSY = (function (undefined) {
                 for (var i = 0, l = alias.length; i < l; i++) {
                     var aliasItem = alias[i];
                     if (aliasItem && aliasItem !== name) {
-                        aliasItem = pluginAlias(aliasItem);
                         var mod = createModule(aliasItem);
                         var normalAlias = mod.getAlias();
                         if (normalAlias) {
@@ -874,14 +854,6 @@ var KISSY = (function (undefined) {
                 self.url = S.Config.resolveModFn(self);
             }
             return self.url;
-        },
-
-        /**
-         * Get the name of current module
-         * @return {String}
-         */
-        getName: function () {
-            return this.name;
         },
 
         /**
@@ -1012,6 +984,7 @@ var KISSY = (function (undefined) {
                 });
                 self.attachSelf();
             }
+            return self;
         }
     };
 
@@ -1020,7 +993,7 @@ var KISSY = (function (undefined) {
         if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
-            var Plugin = createModule(name).attach();
+            var Plugin = createModule(pluginName).attach().exports || {};
             if (Plugin.alias) {
                 name = Plugin.alias(S, name, pluginName);
             }
@@ -1370,7 +1343,7 @@ var KISSY = (function (undefined) {
             filter, t, url, subPath;
         var packageInfo = mod.getPackage();
         var packageBase = packageInfo.getBase();
-        var packageName = packageInfo.getName();
+        var packageName = packageInfo.name;
         var extname = '.' + mod.getType();
         // special for css module
         name = name.replace(/\.css$/, '');
@@ -2264,7 +2237,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140512222119';
+    var TIMESTAMP = '20140514222707';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

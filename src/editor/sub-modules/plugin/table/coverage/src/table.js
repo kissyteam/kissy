@@ -237,6 +237,7 @@ if (! _$jscoverage['/table.js']) {
   _$jscoverage['/table.js'].lineData[11] = 0;
   _$jscoverage['/table.js'].lineData[12] = 0;
   _$jscoverage['/table.js'].lineData[13] = 0;
+  _$jscoverage['/table.js'].lineData[18] = 0;
   _$jscoverage['/table.js'].lineData[19] = 0;
   _$jscoverage['/table.js'].lineData[22] = 0;
   _$jscoverage['/table.js'].lineData[27] = 0;
@@ -503,8 +504,8 @@ if (! _$jscoverage['/table.js'].functionData) {
 }
 if (! _$jscoverage['/table.js'].branchData) {
   _$jscoverage['/table.js'].branchData = {};
-  _$jscoverage['/table.js'].branchData['8'] = [];
-  _$jscoverage['/table.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/table.js'].branchData['18'] = [];
+  _$jscoverage['/table.js'].branchData['18'][1] = new BranchData();
   _$jscoverage['/table.js'].branchData['29'] = [];
   _$jscoverage['/table.js'].branchData['29'][1] = new BranchData();
   _$jscoverage['/table.js'].branchData['34'] = [];
@@ -674,7 +675,7 @@ function visit85_542_1(result) {
 function visit84_536_1(result) {
   _$jscoverage['/table.js'].branchData['536'][1].ranCondition(result);
   return result;
-}_$jscoverage['/table.js'].branchData['527'][1].init(22, 41, 'S.inArray(Dom.nodeName(node), tableRules)');
+}_$jscoverage['/table.js'].branchData['527'][1].init(22, 44, 'util.inArray(Dom.nodeName(node), tableRules)');
 function visit83_527_1(result) {
   _$jscoverage['/table.js'].branchData['527'][1].ranCondition(result);
   return result;
@@ -730,7 +731,7 @@ function visit71_414_1(result) {
 function visit70_405_1(result) {
   _$jscoverage['/table.js'].branchData['405'][1].ranCondition(result);
   return result;
-}_$jscoverage['/table.js'].branchData['391'][1].init(110, 1, 'v');
+}_$jscoverage['/table.js'].branchData['391'][1].init(113, 1, 'v');
 function visit69_391_1(result) {
   _$jscoverage['/table.js'].branchData['391'][1].ranCondition(result);
   return result;
@@ -738,7 +739,7 @@ function visit69_391_1(result) {
 function visit68_389_1(result) {
   _$jscoverage['/table.js'].branchData['389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/table.js'].branchData['377'][1].init(64, 14, 'cssClass || \'\'');
+}_$jscoverage['/table.js'].branchData['377'][1].init(67, 14, 'cssClass || \'\'');
 function visit67_377_1(result) {
   _$jscoverage['/table.js'].branchData['377'][1].ranCondition(result);
   return result;
@@ -1002,9 +1003,9 @@ function visit3_34_1(result) {
 function visit2_29_1(result) {
   _$jscoverage['/table.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/table.js'].branchData['8'][1].init(56, 16, 'S.UA.ieMode < 11');
-function visit1_8_1(result) {
-  _$jscoverage['/table.js'].branchData['8'][1].ranCondition(result);
+}_$jscoverage['/table.js'].branchData['18'][1].init(424, 14, 'UA.ieMode < 11');
+function visit1_18_1(result) {
+  _$jscoverage['/table.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/table.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -1012,17 +1013,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/table.js'].lineData[8]++;
-  var OLD_IE = visit1_8_1(S.UA.ieMode < 11);
-  _$jscoverage['/table.js'].lineData[9]++;
   var Walker = Editor.Walker;
-  _$jscoverage['/table.js'].lineData[10]++;
+  _$jscoverage['/table.js'].lineData[9]++;
   var DialogLoader = require('./dialog-loader');
-  _$jscoverage['/table.js'].lineData[11]++;
+  _$jscoverage['/table.js'].lineData[10]++;
   require('./contextmenu');
-  _$jscoverage['/table.js'].lineData[12]++;
+  _$jscoverage['/table.js'].lineData[11]++;
   require('./button');
+  _$jscoverage['/table.js'].lineData[12]++;
+  var util = require('util');
   _$jscoverage['/table.js'].lineData[13]++;
-  var UA = S.UA, Dom = require('dom'), Node = S.Node, tableRules = ['tr', 'th', 'td', 'tbody', 'table'], cellNodeRegex = /^(?:td|th)$/;
+  var UA = require('ua'), Dom = require('dom'), Node = require('node'), tableRules = ['tr', 'th', 'td', 'tbody', 'table'], cellNodeRegex = /^(?:td|th)$/;
+  _$jscoverage['/table.js'].lineData[18]++;
+  var OLD_IE = visit1_18_1(UA.ieMode < 11);
   _$jscoverage['/table.js'].lineData[19]++;
   function getSelectedCells(selection) {
     _$jscoverage['/table.js'].functionData[1]++;
@@ -1396,7 +1399,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[376]++;
   if (visit65_376_1(!border || visit66_376_2(border <= 0))) {
     _$jscoverage['/table.js'].lineData[377]++;
-    element.setAttribute('class', S.trim((visit67_377_1(cssClass || '')) + ' ' + showBorderClassName));
+    element.setAttribute('class', util.trim((visit67_377_1(cssClass || '')) + ' ' + showBorderClassName));
   }
 }}}, extraHTMLFilter = {
   tags: {
@@ -1407,7 +1410,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[389]++;
   if (visit68_389_1(cssClass)) {
     _$jscoverage['/table.js'].lineData[390]++;
-    v = S.trim(cssClass.replace(showBorderClassName, ''));
+    v = util.trim(cssClass.replace(showBorderClassName, ''));
     _$jscoverage['/table.js'].lineData[391]++;
     if (visit69_391_1(v)) {
       _$jscoverage['/table.js'].lineData[392]++;
@@ -1425,7 +1428,7 @@ KISSY.add(function(S, require) {
     this.config = visit70_405_1(config || {});
   }
   _$jscoverage['/table.js'].lineData[408]++;
-  S.augment(TablePlugin, {
+  util.augment(TablePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/table.js'].functionData[18]++;
   _$jscoverage['/table.js'].lineData[411]++;
@@ -1570,7 +1573,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[519]++;
   var children = [];
   _$jscoverage['/table.js'].lineData[520]++;
-  S.each(handlers, function(h, name) {
+  util.each(handlers, function(h, name) {
   _$jscoverage['/table.js'].functionData[27]++;
   _$jscoverage['/table.js'].lineData[521]++;
   children.push({
@@ -1580,7 +1583,7 @@ KISSY.add(function(S, require) {
   editor.addContextMenu('table', function(node) {
   _$jscoverage['/table.js'].functionData[28]++;
   _$jscoverage['/table.js'].lineData[527]++;
-  if (visit83_527_1(S.inArray(Dom.nodeName(node), tableRules))) {
+  if (visit83_527_1(util.inArray(Dom.nodeName(node), tableRules))) {
     _$jscoverage['/table.js'].lineData[528]++;
     return true;
   }
@@ -1607,7 +1610,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/table.js'].lineData[544]++;
     var editor = self.get('editor');
     _$jscoverage['/table.js'].lineData[545]++;
-    S.each(children, function(c) {
+    util.each(children, function(c) {
   _$jscoverage['/table.js'].functionData[31]++;
   _$jscoverage['/table.js'].lineData[546]++;
   var content = c.get('content');

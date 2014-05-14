@@ -55,7 +55,7 @@ describe("loader package", function () {
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('core');
+        expect(m1.getPackage().name).toBe('core');
 
 
         m1 = new Loader.Module({
@@ -63,48 +63,48 @@ describe("loader package", function () {
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('core');
+        expect(m1.getPackage().name).toBe('core');
 
         m1 = new Loader.Module({
             name: 'component/a/c',
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('core');
+        expect(m1.getPackage().name).toBe('core');
 
         m1 = new Loader.Module({
             name: 'com',
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('com');
+        expect(m1.getPackage().name).toBe('com');
 
         m1 = new Loader.Module({
             name: 'com/a',
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('com');
+        expect(m1.getPackage().name).toBe('com');
 
         m1 = new Loader.Module({
             name: 'com/a/a',
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('com');
+        expect(m1.getPackage().name).toBe('com');
 
         m1 = new Loader.Module({
             name: 'com/c',
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('com/c');
+        expect(m1.getPackage().name).toBe('com/c');
 
         m1 = new Loader.Module({
             name: 'com/c/a',
             runtime: S
         });
 
-        expect(m1.getPackage().getName()).toBe('com/c');
+        expect(m1.getPackage().name).toBe('com/c');
     });
 });

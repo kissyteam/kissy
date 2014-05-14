@@ -8,7 +8,8 @@ if (location.href.indexOf('useHashChange') !== -1) {
     history.pushState = null;
 }
 
-KISSY.use('navigation-view,' +
+KISSY.use('util,' +
+        'navigation-view,' +
         'navigation-view/bar,' +
         'node,' +
         'event/gesture/tap,' +
@@ -16,7 +17,7 @@ KISSY.use('navigation-view,' +
         'router,' +
         'promise,' +
         window.PAGE_VIEW,
-    function (S, NavigationView, Bar, Node,TapGesture, BasicGesture,router, Promise, pageViewFactory) {
+    function (S, util,NavigationView, Bar, Node,TapGesture, BasicGesture,router, Promise, pageViewFactory) {
         var PageView = pageViewFactory();
         var tap = TapGesture.TAP;
 
@@ -97,7 +98,7 @@ KISSY.use('navigation-view,' +
 
         var menuContent = '<ul class="nav">';
 
-        S.each(anims, function (anim) {
+        util.each(anims, function (anim) {
             menuContent += '<li class="list-item"><a tabindex="0">' + anim.content + '</a></li>';
             menuContent += '<li class="list-item"><a tabindex="0">' + anim.content + '</a></li>';
         });
@@ -268,7 +269,7 @@ KISSY.use('navigation-view,' +
             },
 
             onMenuItemClick: function (e) {
-                router.navigate('/' + S.trim(e.currentTarget.innerText));
+                router.navigate('/' + util.trim(e.currentTarget.innerText));
 
             }
         }, {

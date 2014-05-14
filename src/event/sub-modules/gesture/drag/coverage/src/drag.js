@@ -236,6 +236,7 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData[10] = 0;
   _$jscoverage['/drag.js'].lineData[70] = 0;
   _$jscoverage['/drag.js'].lineData[76] = 0;
+  _$jscoverage['/drag.js'].lineData[77] = 0;
   _$jscoverage['/drag.js'].lineData[78] = 0;
   _$jscoverage['/drag.js'].lineData[79] = 0;
   _$jscoverage['/drag.js'].lineData[81] = 0;
@@ -410,6 +411,8 @@ KISSY.add(function(S, require) {
   var DRAG_START = 'ksDragStart', DRAG_END = 'ksDragEnd', DRAG_PRE = 'ksDragging', DRAG = 'ksDrag', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
   _$jscoverage['/drag.js'].lineData[76]++;
   var doc = document;
+  _$jscoverage['/drag.js'].lineData[77]++;
+  var util = require('util');
   _$jscoverage['/drag.js'].lineData[78]++;
   function getDistance(p1, p2) {
     _$jscoverage['/drag.js'].functionData[1]++;
@@ -514,7 +517,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/drag.js'].functionData[5]++;
   }
   _$jscoverage['/drag.js'].lineData[150]++;
-  S.extend(Drag, SingleTouch, {
+  util.extend(Drag, SingleTouch, {
   start: function() {
   _$jscoverage['/drag.js'].functionData[6]++;
   _$jscoverage['/drag.js'].lineData[152]++;

@@ -231,6 +231,7 @@ if (! _$jscoverage['/dd/droppable-delegate.js']) {
   _$jscoverage['/dd/droppable-delegate.js'].lineData = [];
   _$jscoverage['/dd/droppable-delegate.js'].lineData[6] = 0;
   _$jscoverage['/dd/droppable-delegate.js'].lineData[7] = 0;
+  _$jscoverage['/dd/droppable-delegate.js'].lineData[10] = 0;
   _$jscoverage['/dd/droppable-delegate.js'].lineData[11] = 0;
   _$jscoverage['/dd/droppable-delegate.js'].lineData[12] = 0;
   _$jscoverage['/dd/droppable-delegate.js'].lineData[16] = 0;
@@ -306,7 +307,7 @@ _$jscoverage['/dd/droppable-delegate.js'].branchData['92'][1].init(329, 23, 'las
 function visit89_92_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable-delegate.js'].branchData['69'][1].init(963, 3, 'ret');
+}_$jscoverage['/dd/droppable-delegate.js'].branchData['69'][1].init(966, 3, 'ret');
 function visit88_69_1(result) {
   _$jscoverage['/dd/droppable-delegate.js'].branchData['69'][1].ranCondition(result);
   return result;
@@ -339,6 +340,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/droppable-delegate.js'].functionData[0]++;
   _$jscoverage['/dd/droppable-delegate.js'].lineData[7]++;
   var Node = require('node'), DDM = require('./ddm'), Droppable = require('./droppable');
+  _$jscoverage['/dd/droppable-delegate.js'].lineData[10]++;
+  var util = require('util');
   _$jscoverage['/dd/droppable-delegate.js'].lineData[11]++;
   function dragStart() {
     _$jscoverage['/dd/droppable-delegate.js'].functionData[1]++;
@@ -371,7 +374,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/droppable-delegate.js'].lineData[50]++;
   if (visit82_50_1(allNodes)) {
     _$jscoverage['/dd/droppable-delegate.js'].lineData[51]++;
-    S.each(allNodes, function(n) {
+    util.each(allNodes, function(n) {
   _$jscoverage['/dd/droppable-delegate.js'].functionData[5]++;
   _$jscoverage['/dd/droppable-delegate.js'].lineData[52]++;
   var domNode = n[0];

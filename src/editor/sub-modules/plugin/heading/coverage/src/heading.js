@@ -292,7 +292,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/heading.js'].functionData[1]++;
   }
   _$jscoverage['/heading.js'].lineData[15]++;
-  S.augment(HeadingPlugin, {
+  (HeadingPlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/heading.js'].functionData[2]++;
   _$jscoverage['/heading.js'].lineData[17]++;

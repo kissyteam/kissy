@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Attribute = require('attribute');
+    var util = require('util');
     var blacklist = [
         'idAttribute',
         'destroyed',
@@ -107,7 +108,7 @@ KISSY.add(function (S, require) {
                     lists[l].remove(self, opts);
                 }
                 self.fire('destroy');
-                if(success){
+                if (success) {
                     success.apply(self, arguments);
                 }
             };
@@ -146,7 +147,7 @@ KISSY.add(function (S, require) {
                     }
                 }
                 self.__isModified = 0;
-                if(success){
+                if (success) {
                     success.apply(self, arguments);
                 }
             };
@@ -177,7 +178,7 @@ KISSY.add(function (S, require) {
                     }
                 }
                 self.__isModified = 0;
-                if(success){
+                if (success) {
                     success.apply(self, arguments);
                 }
             };
@@ -191,7 +192,7 @@ KISSY.add(function (S, require) {
          */
         toJSON: function () {
             var ret = this.getAttrVals();
-            S.each(blacklist, function (b) {
+            util.each(blacklist, function (b) {
                 delete ret[b];
             });
             return ret;
@@ -215,7 +216,7 @@ KISSY.add(function (S, require) {
              */
             clientId: {
                 valueFn: function () {
-                    return S.guid('mvc-client');
+                    return util.guid('mvc-client');
                 }
             },
             /**

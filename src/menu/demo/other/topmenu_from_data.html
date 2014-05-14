@@ -71,7 +71,7 @@
         }
     ];
 
-    KISSY.use("menu,separator", function (S, Menu) {
+    KISSY.use("util,menu,separator", function (S, util,Menu) {
         var context = S.all("#context");
 
         function generatePopupMenu(items, cfg) {
@@ -80,13 +80,13 @@
                 autoHideOnMouseLeave:true,
                 children:[]
             };
-            S.mix(sb, cfg);
+            util.mix(sb, cfg);
             generateMenu(sb, items);
             return sb;
         }
 
         function generateSubMenu(item, top) {
-            return S.mix({
+            return util.mix({
                 xclass:'submenu',
                 content:item.content,
                 menu:(function () {
@@ -101,7 +101,7 @@
         }
 
         function generateMenu(sb, items, top) {
-            S.each(items, function (item) {
+            util.each(items, function (item) {
                 if (item.children) {
                     sb.children.push(generateSubMenu(item, top));
                 } else {

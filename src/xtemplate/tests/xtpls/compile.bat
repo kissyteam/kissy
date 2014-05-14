@@ -1,1 +1,1 @@
-node ../../../../../bin/kissy-xtemplate -p ./
+node ../../../../bin/kissy-xtemplate -p ./

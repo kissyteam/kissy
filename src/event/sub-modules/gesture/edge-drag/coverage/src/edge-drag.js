@@ -235,6 +235,7 @@ if (! _$jscoverage['/edge-drag.js']) {
   _$jscoverage['/edge-drag.js'].lineData[8] = 0;
   _$jscoverage['/edge-drag.js'].lineData[9] = 0;
   _$jscoverage['/edge-drag.js'].lineData[10] = 0;
+  _$jscoverage['/edge-drag.js'].lineData[14] = 0;
   _$jscoverage['/edge-drag.js'].lineData[15] = 0;
   _$jscoverage['/edge-drag.js'].lineData[16] = 0;
   _$jscoverage['/edge-drag.js'].lineData[28] = 0;
@@ -441,6 +442,8 @@ KISSY.add(function(S, require) {
   var SingleTouch = GestureUtil.SingleTouch;
   _$jscoverage['/edge-drag.js'].lineData[10]++;
   var EDGE_DRAG_START = 'edgeDragStart', EDGE_DRAG = 'edgeDrag', EDGE_DRAG_END = 'edgeDragEnd', MIN_EDGE_DISTANCE = 60;
+  _$jscoverage['/edge-drag.js'].lineData[14]++;
+  var util = require('util');
   _$jscoverage['/edge-drag.js'].lineData[15]++;
   function fire(self, e, move) {
     _$jscoverage['/edge-drag.js'].functionData[1]++;
@@ -547,7 +550,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/edge-drag.js'].functionData[2]++;
   }
   _$jscoverage['/edge-drag.js'].lineData[148]++;
-  S.extend(EdgeDrag, SingleTouch, {
+  util.extend(EdgeDrag, SingleTouch, {
   requiredGestureType: 'touch', 
   start: function() {
   _$jscoverage['/edge-drag.js'].functionData[3]++;

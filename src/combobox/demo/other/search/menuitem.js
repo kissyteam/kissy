@@ -1,4 +1,4 @@
-KISSY.add(function (S, Menu, Node) {
+KISSY.add(function (S,util, Menu, Node) {
     var KeyCode = Node.KeyCode;
     return Menu.Item.extend({
         handleKeyDownInternal: function (e) {
@@ -11,7 +11,7 @@ KISSY.add(function (S, Menu, Node) {
             }
         },
         handleMouseEnterInternal: function (e) {
-            var superCall = S.bind(this.callSuper, arguments.callee, this);
+            var superCall = util.bind(this.callSuper, arguments.callee, this);
             this._lazyTimeout = setTimeout(function () {
                 superCall(e);
             }, 100);
@@ -27,5 +27,5 @@ KISSY.add(function (S, Menu, Node) {
         xclass: 'search-menuitem'
     });
 }, {
-    requires: ['menu', 'node']
+    requires: ['util','menu', 'node']
 });

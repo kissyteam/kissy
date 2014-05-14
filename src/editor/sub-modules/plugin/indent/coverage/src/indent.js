@@ -265,7 +265,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/indent.js'].functionData[1]++;
   }
   _$jscoverage['/indent.js'].lineData[14]++;
-  S.augment(Indent, {
+  (Indent.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/indent.js'].functionData[2]++;
   _$jscoverage['/indent.js'].lineData[16]++;

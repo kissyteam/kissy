@@ -82,7 +82,7 @@
 
     var S = KISSY;
 
-    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD, Proxy) {
+    KISSY.use("node,util,dd,dd/plugin/proxy", function (S, Node,util, DD, Proxy) {
         var $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 Droppable = DD.Droppable;
@@ -94,7 +94,7 @@
              */
             node: function (drag) {
                 var n = $(drag.get("dragNode").clone(true));
-                n.attr('id', S.guid("ks-dd-proxy"));
+                n.attr('id', util.guid("ks-dd-proxy"));
                 n.css("opacity", 0.2);
                 return n;
             },

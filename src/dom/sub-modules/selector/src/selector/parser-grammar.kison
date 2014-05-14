@@ -314,63 +314,63 @@
                     regexp: new RegExp('^' + '\\[' + w),
                     token: 'LEFT_BRACKET',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\]'),
                     token: 'RIGHT_BRACKET',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '~=' + w),
                     token: 'INCLUDES',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\|=' + w),
                     token: 'DASH_MATCH',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\^=' + w),
                     token: 'PREFIX_MATCH',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\$=' + w),
                     token: 'SUFFIX_MATCH',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\*=' + w),
                     token: 'SUBSTRING_MATCH',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\=' + w),
                     token: 'ALL_MATCH',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + ident + '\\('),
                     token: 'FUNCTION',
                     action: function () {
-                        this.text = KISSY.trim(this.text).slice(0, -1);
+                        this.text = this.yy.trim(this.text).slice(0, -1);
                         this.pushState('fn');
                     }
                 },
@@ -386,14 +386,14 @@
                     regexp: new RegExp('^' + w + '\\)'),
                     token: 'RIGHT_PARENTHESES',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^:not\\(' + w,'i'),
                     token: 'NOT',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
@@ -435,7 +435,7 @@
                     regexp: new RegExp('^' + w + ',' + w),
                     token: 'COMMA',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
@@ -446,21 +446,21 @@
                     regexp: new RegExp('^' + w + '\\+' + w),
                     token: 'PLUS',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '>' + w),
                     token: 'GREATER',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '~' + w),
                     token: 'TILDE',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = this.yy.trim(this.text);
                     }
                 },
                 {

@@ -52,7 +52,7 @@ function compileModule(modName, codes, requires) {
     codes[modName] = '';
     var mod = S.getModule(modName);
     // xtemplate -> xtemplate/runtime
-    if (mod.getPackage().getName() === 'core' || !fs.existsSync(mod.getUrl())) {
+    if (mod.getPackage().name === 'core' || !fs.existsSync(mod.getUrl())) {
         return;
     }
     var code = fs.readFileSync(mod.getUrl());

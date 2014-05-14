@@ -2,7 +2,7 @@
  * basic test cases for kissy io
  * @author lijing00333@163.com, yiminghe@gmail.com
  */
-KISSY.add(function (S, IO) {
+KISSY.add(function (S, util, IO) {
     /*jshint quotmark:false*/
     describe('IO', function () {
         describe('404/301', function () {
@@ -13,11 +13,11 @@ KISSY.add(function (S, IO) {
                     url: '/kissy/src/io/tests/data/404',
                     cache: false,
                     success: function () {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret404 = 1;
                     },
                     error: function () {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret404 = 0;
                     },
                     complete: function () {
@@ -41,13 +41,13 @@ KISSY.add(function (S, IO) {
                     url: '/kissy/src/io/tests/data/301.jss',
                     cache: false,
                     success: function (p) {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         expect(p.name).toBe('kissy');
                         ret301 = 1;
                     },
                     error: function (_, s, io) {
                         expect(io.status).toBe(0);
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret301 = 0;
                     },
                     complete: function () {
@@ -73,11 +73,11 @@ KISSY.add(function (S, IO) {
                     type: 'post',
                     cache: false,
                     success: function () {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret404 = 1;
                     },
                     error: function () {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret404 = 0;
                     },
                     complete: function () {
@@ -105,13 +105,13 @@ KISSY.add(function (S, IO) {
                     cache: false,
                     type: 'post',
                     success: function (p) {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         expect(p.name).toBe('kissy');
                         ret301 = 1;
                     },
                     error: function (_, s, io) {
                         expect(io.status).toBe(0);
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret301 = 0;
                     },
                     complete: function () {
@@ -135,11 +135,11 @@ KISSY.add(function (S, IO) {
                     url: '/kissy/src/io/tests/data/404',
                     dataType: 'jsonp',
                     success: function () {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret404 = 1;
                     },
                     error: function () {
-                        var args = S.makeArray(arguments);
+                        var args = util.makeArray(arguments);
                         expect(args[1]).toBe("Not Found");
                         ret404 = 0;
                     }
@@ -157,12 +157,12 @@ KISSY.add(function (S, IO) {
                     dataType: 'jsonp',
                     crossDomain: true,
                     success: function () {
-                        //var args = S.makeArray(arguments);
+                        //var args = util.makeArray(arguments);
                         ret404 = 1;
                     },
                     error: function () {
-                        var args = S.makeArray(arguments);
-                        expect(S.inArray(args[1], [
+                        var args = util.makeArray(arguments);
+                        expect(util.inArray(args[1], [
                             "script error",
                             "parser error"
                         ]))
@@ -355,7 +355,7 @@ KISSY.add(function (S, IO) {
                 IO.post('/kissy/src/io/tests/data/interface.jss?t=post', function (data, status, xhr) {
                     ok = true;
                     expect(typeof data).toBe('string');
-                    var o = S.parseJson(data);
+                    var o = util.parseJson(data);
                     expect(o).not.toBe(undefined);
                     expect(o.name).toBe('test');
                     expect(xhr.responseText).toBe(data);
@@ -378,7 +378,7 @@ KISSY.add(function (S, IO) {
                     exp: '>,?/%."`~'
                 }, function (data, textStatus, xhr) {
                     ok = true;
-                    var o = S.parseJson(data);
+                    var o = util.parseJson(data);
                     expect(o).not.toBe(undefined);
                     expect(o.name).toBe('test');
                     expect(o.company).toBe('www.taobao.com');
@@ -396,12 +396,12 @@ KISSY.add(function (S, IO) {
 
                 var ok = false;
                 IO.post('/kissy/src/io/tests/data/interface.jss?t=post',
-                    'name=test&company=www.taobao.com&exp=' +
+                        'name=test&company=www.taobao.com&exp=' +
                         encodeURIComponent('>,?/\\%."`~'),
                     function (data, textStatus, xhr) {
                         ok = true;
 
-                        var o = S.parseJson(data);
+                        var o = util.parseJson(data);
                         expect(o).not.toBe(undefined);
                         expect(o.name).toBe('test');
                         expect(o.company).toBe('www.taobao.com');
@@ -513,8 +513,8 @@ KISSY.add(function (S, IO) {
                 runs(function () {
                     // 这里和get的处理一致
                     IO.post('/kissy/src/io/tests/data/interface.jss?type=post' +
-                        '&dataType=script' +
-                        '&contentType=text/javascript',
+                            '&dataType=script' +
+                            '&contentType=text/javascript',
                         function (data) {
                             ok = true;
                             expect(data).toBe("var globalScriptTest = 500;");
@@ -594,7 +594,7 @@ KISSY.add(function (S, IO) {
                     url: 'http://m.taobao.com/',
                     type: 'post',
                     error: function () {
-                        var args = S.makeArray(arguments);
+                        var args = util.makeArray(arguments);
                         expect(args[2].status || 500).toBe(500);
                         ret = 1;
                     }
@@ -612,7 +612,7 @@ KISSY.add(function (S, IO) {
                     url: 'http://m.taobao.com/',
                     type: 'get',
                     error: function () {
-                        var args = S.makeArray(arguments);
+                        var args = util.makeArray(arguments);
                         // chrome status 0
                         // security error
                         // ie10 throw error when send status 未指明的错误
@@ -696,7 +696,7 @@ KISSY.add(function (S, IO) {
                 IO.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data, textStatus, xhr) {
                     ok = true;
 
-                    var o = S.parseJson(data);
+                    var o = util.parseJson(data);
                     expect(o).not.toBe(undefined);
                     expect(o.t).toBe('get');
                     expect(o.name).toBe('test');
@@ -717,7 +717,7 @@ KISSY.add(function (S, IO) {
 
                 IO.get('/kissy/src/io/tests/data/interface.jss?t=get', {'data': 'hello'}, function (data) {
                     ok = true;
-                    var o = S.parseJson(data);
+                    var o = util.parseJson(data);
                     expect(o.data).toBe('hello');
                 });
 
@@ -860,7 +860,7 @@ KISSY.add(function (S, IO) {
                 var ok = false, called = [];
 
                 runs(function () {
-                    S.each(['start', 'send', 'success', 'complete'], function (type) {
+                    util.each(['start', 'send', 'success', 'complete'], function (type) {
                         IO.on(type, function (ev) {
                             called.push(ev.type);
                             expect(ev.ajaxConfig).not.toBe(undefined);
@@ -901,5 +901,5 @@ KISSY.add(function (S, IO) {
         });
     });
 }, {
-    requires: ['io']
+    requires: ['util', 'io']
 });

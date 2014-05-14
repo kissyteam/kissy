@@ -4,6 +4,8 @@
  */
 KISSY.add(function (S, require) {
     var Uri = require('uri');
+    var util = require('util');
+    
     /*jshint quotmark:false*/
     /**
      * Uri spec for kissy.
@@ -72,26 +74,26 @@ KISSY.add(function (S, require) {
             it('works', function () {
                 var query = new Uri.Query("x=1&y=2");
 
-                expect(S.unparam(query.toString())).toEqual(S.unparam("x=1&y=2"));
+                expect(util.unparam(query.toString())).toEqual(util.unparam("x=1&y=2"));
 
                 query.set('x', "3");
 
-                expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2"));
+                expect(util.unparam(query.toString())).toEqual(util.unparam("x=3&y=2"));
 
                 query.set("z", "5");
 
-                expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2&z=5"));
+                expect(util.unparam(query.toString())).toEqual(util.unparam("x=3&y=2&z=5"));
 
                 query.remove('x');
 
-                expect(S.unparam(query.toString())).toEqual(S.unparam("y=2&z=5"));
+                expect(util.unparam(query.toString())).toEqual(util.unparam("y=2&z=5"));
 
                 query.set({
                     x: 6,
                     y: 7
                 });
 
-                expect(S.unparam(query.toString())).toEqual(S.unparam("y=7&z=5&x=6"));
+                expect(util.unparam(query.toString())).toEqual(util.unparam("y=7&z=5&x=6"));
 
                 expect(query.count()).toBe(3);
 
@@ -100,7 +102,7 @@ KISSY.add(function (S, require) {
                     y: 71
                 });
 
-                expect(S.unparam(query.toString(false))).toEqual(S.unparam("y=7&y=71&z=5&x=6&x=61"));
+                expect(util.unparam(query.toString(false))).toEqual(util.unparam("y=7&y=71&z=5&x=6&x=61"));
 
                 expect(query.count()).toBe(5);
 
@@ -110,13 +112,13 @@ KISSY.add(function (S, require) {
 
                 query.add(q2);
 
-                expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=3&x1=1&y1=4&y1=2"));
+                expect(util.unparam(query.toString(false))).toEqual(util.unparam("x1=3&x1=1&y1=4&y1=2"));
 
                 expect(query.count()).toBe(4);
 
                 query.set(q2);
 
-                expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=1&y1=2"));
+                expect(util.unparam(query.toString(false))).toEqual(util.unparam("x1=1&y1=2"));
 
                 expect(query.count()).toBe(2);
 

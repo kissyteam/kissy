@@ -234,47 +234,48 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[8] = 0;
   _$jscoverage['/dialog.js'].lineData[9] = 0;
   _$jscoverage['/dialog.js'].lineData[10] = 0;
-  _$jscoverage['/dialog.js'].lineData[50] = 0;
+  _$jscoverage['/dialog.js'].lineData[11] = 0;
   _$jscoverage['/dialog.js'].lineData[51] = 0;
   _$jscoverage['/dialog.js'].lineData[52] = 0;
   _$jscoverage['/dialog.js'].lineData[53] = 0;
   _$jscoverage['/dialog.js'].lineData[54] = 0;
-  _$jscoverage['/dialog.js'].lineData[57] = 0;
-  _$jscoverage['/dialog.js'].lineData[59] = 0;
-  _$jscoverage['/dialog.js'].lineData[73] = 0;
+  _$jscoverage['/dialog.js'].lineData[55] = 0;
+  _$jscoverage['/dialog.js'].lineData[58] = 0;
+  _$jscoverage['/dialog.js'].lineData[60] = 0;
   _$jscoverage['/dialog.js'].lineData[74] = 0;
-  _$jscoverage['/dialog.js'].lineData[76] = 0;
+  _$jscoverage['/dialog.js'].lineData[75] = 0;
   _$jscoverage['/dialog.js'].lineData[77] = 0;
   _$jscoverage['/dialog.js'].lineData[78] = 0;
   _$jscoverage['/dialog.js'].lineData[79] = 0;
-  _$jscoverage['/dialog.js'].lineData[81] = 0;
+  _$jscoverage['/dialog.js'].lineData[80] = 0;
   _$jscoverage['/dialog.js'].lineData[82] = 0;
   _$jscoverage['/dialog.js'].lineData[83] = 0;
   _$jscoverage['/dialog.js'].lineData[84] = 0;
-  _$jscoverage['/dialog.js'].lineData[86] = 0;
-  _$jscoverage['/dialog.js'].lineData[90] = 0;
+  _$jscoverage['/dialog.js'].lineData[85] = 0;
+  _$jscoverage['/dialog.js'].lineData[87] = 0;
   _$jscoverage['/dialog.js'].lineData[91] = 0;
-  _$jscoverage['/dialog.js'].lineData[94] = 0;
+  _$jscoverage['/dialog.js'].lineData[92] = 0;
   _$jscoverage['/dialog.js'].lineData[95] = 0;
-  _$jscoverage['/dialog.js'].lineData[97] = 0;
+  _$jscoverage['/dialog.js'].lineData[96] = 0;
   _$jscoverage['/dialog.js'].lineData[98] = 0;
-  _$jscoverage['/dialog.js'].lineData[104] = 0;
+  _$jscoverage['/dialog.js'].lineData[99] = 0;
   _$jscoverage['/dialog.js'].lineData[105] = 0;
-  _$jscoverage['/dialog.js'].lineData[110] = 0;
-  _$jscoverage['/dialog.js'].lineData[115] = 0;
+  _$jscoverage['/dialog.js'].lineData[106] = 0;
+  _$jscoverage['/dialog.js'].lineData[111] = 0;
   _$jscoverage['/dialog.js'].lineData[116] = 0;
   _$jscoverage['/dialog.js'].lineData[117] = 0;
   _$jscoverage['/dialog.js'].lineData[118] = 0;
   _$jscoverage['/dialog.js'].lineData[119] = 0;
-  _$jscoverage['/dialog.js'].lineData[121] = 0;
+  _$jscoverage['/dialog.js'].lineData[120] = 0;
   _$jscoverage['/dialog.js'].lineData[122] = 0;
   _$jscoverage['/dialog.js'].lineData[123] = 0;
   _$jscoverage['/dialog.js'].lineData[124] = 0;
-  _$jscoverage['/dialog.js'].lineData[127] = 0;
-  _$jscoverage['/dialog.js'].lineData[130] = 0;
+  _$jscoverage['/dialog.js'].lineData[125] = 0;
+  _$jscoverage['/dialog.js'].lineData[128] = 0;
   _$jscoverage['/dialog.js'].lineData[131] = 0;
   _$jscoverage['/dialog.js'].lineData[132] = 0;
-  _$jscoverage['/dialog.js'].lineData[135] = 0;
+  _$jscoverage['/dialog.js'].lineData[133] = 0;
+  _$jscoverage['/dialog.js'].lineData[136] = 0;
 }
 if (! _$jscoverage['/dialog.js'].functionData) {
   _$jscoverage['/dialog.js'].functionData = [];
@@ -289,172 +290,174 @@ if (! _$jscoverage['/dialog.js'].functionData) {
 }
 if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData = {};
-  _$jscoverage['/dialog.js'].branchData['53'] = [];
-  _$jscoverage['/dialog.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['94'] = [];
-  _$jscoverage['/dialog.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['115'] = [];
-  _$jscoverage['/dialog.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['54'] = [];
+  _$jscoverage['/dialog.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['95'] = [];
+  _$jscoverage['/dialog.js'].branchData['95'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['116'] = [];
   _$jscoverage['/dialog.js'].branchData['116'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['118'] = [];
-  _$jscoverage['/dialog.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['117'] = [];
+  _$jscoverage['/dialog.js'].branchData['117'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['119'] = [];
   _$jscoverage['/dialog.js'].branchData['119'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['123'] = [];
-  _$jscoverage['/dialog.js'].branchData['123'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['120'] = [];
+  _$jscoverage['/dialog.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['124'] = [];
+  _$jscoverage['/dialog.js'].branchData['124'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['123'][1].init(110, 10, 'cfg.target');
-function visit7_123_1(result) {
-  _$jscoverage['/dialog.js'].branchData['123'][1].ranCondition(result);
+_$jscoverage['/dialog.js'].branchData['124'][1].init(110, 10, 'cfg.target');
+function visit7_124_1(result) {
+  _$jscoverage['/dialog.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['119'][1].init(247, 39, '_selectedEl.attr(\'target\') === \'_blank\'');
-function visit6_119_1(result) {
+}_$jscoverage['/dialog.js'].branchData['120'][1].init(247, 39, '_selectedEl.attr(\'target\') === \'_blank\'');
+function visit6_120_1(result) {
+  _$jscoverage['/dialog.js'].branchData['120'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['119'][1].init(171, 31, '_selectedEl.attr(\'title\') || \'\'');
+function visit5_119_1(result) {
   _$jscoverage['/dialog.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['118'][1].init(171, 31, '_selectedEl.attr(\'title\') || \'\'');
-function visit5_118_1(result) {
-  _$jscoverage['/dialog.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['117'][1].init(28, 55, '_selectedEl.attr(savedHref) || _selectedEl.attr(\'href\')');
+function visit4_117_1(result) {
+  _$jscoverage['/dialog.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['116'][1].init(28, 55, '_selectedEl.attr(savedHref) || _selectedEl.attr(\'href\')');
-function visit4_116_1(result) {
+}_$jscoverage['/dialog.js'].branchData['116'][1].init(188, 11, '_selectedEl');
+function visit3_116_1(result) {
   _$jscoverage['/dialog.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['115'][1].init(188, 11, '_selectedEl');
-function visit3_115_1(result) {
-  _$jscoverage['/dialog.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['95'][1].init(144, 52, '!Editor.Utils.verifyInputs(d.get(\'el\').all(\'input\'))');
+function visit2_95_1(result) {
+  _$jscoverage['/dialog.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['94'][1].init(144, 52, '!Editor.Utils.verifyInputs(d.get(\'el\').all(\'input\'))');
-function visit2_94_1(result) {
-  _$jscoverage['/dialog.js'].branchData['94'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['53'][1].init(81, 12, 'config || {}');
-function visit1_53_1(result) {
-  _$jscoverage['/dialog.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['54'][1].init(81, 12, 'config || {}');
+function visit1_54_1(result) {
+  _$jscoverage['/dialog.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dialog.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].functionData[0]++;
   _$jscoverage['/dialog.js'].lineData[7]++;
-  var Editor = require('editor');
+  var util = require('util');
   _$jscoverage['/dialog.js'].lineData[8]++;
-  var Dialog4E = require('../dialog');
+  var Editor = require('editor');
   _$jscoverage['/dialog.js'].lineData[9]++;
-  var Utils = require('./utils');
+  var Dialog4E = require('../dialog');
   _$jscoverage['/dialog.js'].lineData[10]++;
+  var Utils = require('./utils');
+  _$jscoverage['/dialog.js'].lineData[11]++;
   var savedHref = Utils.savedHref, bodyHTML = '<div style="padding:20px 20px 0 20px">' + '<p>' + '<label>' + '\u94fe\u63a5\u7f51\u5740\uff1a ' + '<input ' + ' data-verify="^(https?://[^\\s]+)|(#.+)$" ' + ' data-warning="\u8bf7\u8f93\u5165\u5408\u9002\u7684\u7f51\u5740\u683c\u5f0f" ' + 'class="{prefixCls}editor-link-url {prefixCls}editor-input" ' + 'style="width:390px;' + '"' + ' />' + '</label>' + '</p>' + '<p ' + 'style="margin: 15px 0 10px 0px;">' + '<label>' + '\u94fe\u63a5\u540d\u79f0\uff1a ' + '<input class="{prefixCls}editor-link-title {prefixCls}editor-input" style="width:100px;' + '">' + '</label> ' + '<label>' + '<input ' + 'class="{prefixCls}editor-link-blank" ' + 'style="vertical-align: middle; margin-left: 21px;" ' + 'type="checkbox"/>' + ' &nbsp; \u5728\u65b0\u7a97\u53e3\u6253\u5f00\u94fe\u63a5' + '</label>' + '</p>' + '</div>', footHTML = '<div style="padding:5px 20px 20px;">' + '<a ' + 'href="javascript:void(\'\u786e\u5b9a\')" ' + 'class="{prefixCls}editor-link-ok {prefixCls}editor-button ks-inline-block" ' + 'style="margin-left:65px;margin-right:20px;">\u786e\u5b9a</a> ' + '<a ' + 'href="javascript:void(\'\u53d6\u6d88\')" ' + 'class="{prefixCls}editor-link-cancel {prefixCls}editor-button ks-inline-block">\u53d6\u6d88</a>' + '</div>';
-  _$jscoverage['/dialog.js'].lineData[50]++;
+  _$jscoverage['/dialog.js'].lineData[51]++;
   function LinkDialog(editor, config) {
     _$jscoverage['/dialog.js'].functionData[1]++;
-    _$jscoverage['/dialog.js'].lineData[51]++;
-    var self = this;
     _$jscoverage['/dialog.js'].lineData[52]++;
-    self.editor = editor;
+    var self = this;
     _$jscoverage['/dialog.js'].lineData[53]++;
-    self.config = visit1_53_1(config || {});
+    self.editor = editor;
     _$jscoverage['/dialog.js'].lineData[54]++;
+    self.config = visit1_54_1(config || {});
+    _$jscoverage['/dialog.js'].lineData[55]++;
     Editor.Utils.lazyRun(self, '_prepareShow', '_real');
   }
-  _$jscoverage['/dialog.js'].lineData[57]++;
-  S.augment(LinkDialog, {
+  _$jscoverage['/dialog.js'].lineData[58]++;
+  util.augment(LinkDialog, {
   _prepareShow: function() {
   _$jscoverage['/dialog.js'].functionData[2]++;
-  _$jscoverage['/dialog.js'].lineData[59]++;
+  _$jscoverage['/dialog.js'].lineData[60]++;
   var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), d = new Dialog4E({
   width: 500, 
   headerContent: '\u94fe\u63a5', 
-  bodyContent: S.substitute(bodyHTML, {
+  bodyContent: util.substitute(bodyHTML, {
   prefixCls: prefixCls}), 
-  footerContent: S.substitute(footHTML, {
+  footerContent: util.substitute(footHTML, {
   prefixCls: prefixCls}), 
   mask: true}).render();
-  _$jscoverage['/dialog.js'].lineData[73]++;
-  self.dialog = d;
   _$jscoverage['/dialog.js'].lineData[74]++;
+  self.dialog = d;
+  _$jscoverage['/dialog.js'].lineData[75]++;
   var body = d.get('body'), foot = d.get('footer');
-  _$jscoverage['/dialog.js'].lineData[76]++;
-  d.urlEl = body.one('.' + prefixCls + 'editor-link-url');
   _$jscoverage['/dialog.js'].lineData[77]++;
-  d.urlTitle = body.one('.' + prefixCls + 'editor-link-title');
+  d.urlEl = body.one('.' + prefixCls + 'editor-link-url');
   _$jscoverage['/dialog.js'].lineData[78]++;
-  d.targetEl = body.one('.' + prefixCls + 'editor-link-blank');
+  d.urlTitle = body.one('.' + prefixCls + 'editor-link-title');
   _$jscoverage['/dialog.js'].lineData[79]++;
+  d.targetEl = body.one('.' + prefixCls + 'editor-link-blank');
+  _$jscoverage['/dialog.js'].lineData[80]++;
   var cancel = foot.one('.' + prefixCls + 'editor-link-cancel'), ok = foot.one('.' + prefixCls + 'editor-link-ok');
-  _$jscoverage['/dialog.js'].lineData[81]++;
-  ok.on('click', self._link, self);
   _$jscoverage['/dialog.js'].lineData[82]++;
+  ok.on('click', self._link, self);
+  _$jscoverage['/dialog.js'].lineData[83]++;
   cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[3]++;
-  _$jscoverage['/dialog.js'].lineData[83]++;
-  ev.halt();
   _$jscoverage['/dialog.js'].lineData[84]++;
+  ev.halt();
+  _$jscoverage['/dialog.js'].lineData[85]++;
   d.hide();
 });
-  _$jscoverage['/dialog.js'].lineData[86]++;
+  _$jscoverage['/dialog.js'].lineData[87]++;
   Editor.Utils.placeholder(d.urlEl, 'http://');
 }, 
   _link: function(ev) {
   _$jscoverage['/dialog.js'].functionData[4]++;
-  _$jscoverage['/dialog.js'].lineData[90]++;
-  ev.halt();
   _$jscoverage['/dialog.js'].lineData[91]++;
+  ev.halt();
+  _$jscoverage['/dialog.js'].lineData[92]++;
   var self = this, d = self.dialog, url = d.urlEl.val();
-  _$jscoverage['/dialog.js'].lineData[94]++;
-  if (visit2_94_1(!Editor.Utils.verifyInputs(d.get('el').all('input')))) {
-    _$jscoverage['/dialog.js'].lineData[95]++;
+  _$jscoverage['/dialog.js'].lineData[95]++;
+  if (visit2_95_1(!Editor.Utils.verifyInputs(d.get('el').all('input')))) {
+    _$jscoverage['/dialog.js'].lineData[96]++;
     return;
   }
-  _$jscoverage['/dialog.js'].lineData[97]++;
-  d.hide();
   _$jscoverage['/dialog.js'].lineData[98]++;
+  d.hide();
+  _$jscoverage['/dialog.js'].lineData[99]++;
   var attr = {
   href: url, 
   target: d.targetEl[0].checked ? '_blank' : '_self', 
-  title: S.trim(d.urlTitle.val())};
-  _$jscoverage['/dialog.js'].lineData[104]++;
+  title: util.trim(d.urlTitle.val())};
+  _$jscoverage['/dialog.js'].lineData[105]++;
   setTimeout(function() {
   _$jscoverage['/dialog.js'].functionData[5]++;
-  _$jscoverage['/dialog.js'].lineData[105]++;
+  _$jscoverage['/dialog.js'].lineData[106]++;
   Utils.applyLink(self.editor, attr, self._selectedEl);
 }, 0);
 }, 
   _real: function() {
   _$jscoverage['/dialog.js'].functionData[6]++;
-  _$jscoverage['/dialog.js'].lineData[110]++;
+  _$jscoverage['/dialog.js'].lineData[111]++;
   var self = this, cfg = self.config, d = self.dialog, _selectedEl = self._selectedEl;
-  _$jscoverage['/dialog.js'].lineData[115]++;
-  if (visit3_115_1(_selectedEl)) {
-    _$jscoverage['/dialog.js'].lineData[116]++;
-    var url = visit4_116_1(_selectedEl.attr(savedHref) || _selectedEl.attr('href'));
+  _$jscoverage['/dialog.js'].lineData[116]++;
+  if (visit3_116_1(_selectedEl)) {
     _$jscoverage['/dialog.js'].lineData[117]++;
-    Editor.Utils.valInput(d.urlEl, url);
+    var url = visit4_117_1(_selectedEl.attr(savedHref) || _selectedEl.attr('href'));
     _$jscoverage['/dialog.js'].lineData[118]++;
-    d.urlTitle.val(visit5_118_1(_selectedEl.attr('title') || ''));
+    Editor.Utils.valInput(d.urlEl, url);
     _$jscoverage['/dialog.js'].lineData[119]++;
-    d.targetEl[0].checked = (visit6_119_1(_selectedEl.attr('target') === '_blank'));
+    d.urlTitle.val(visit5_119_1(_selectedEl.attr('title') || ''));
+    _$jscoverage['/dialog.js'].lineData[120]++;
+    d.targetEl[0].checked = (visit6_120_1(_selectedEl.attr('target') === '_blank'));
   } else {
-    _$jscoverage['/dialog.js'].lineData[121]++;
-    Editor.Utils.resetInput(d.urlEl);
     _$jscoverage['/dialog.js'].lineData[122]++;
-    d.urlTitle.val('');
+    Editor.Utils.resetInput(d.urlEl);
     _$jscoverage['/dialog.js'].lineData[123]++;
-    if (visit7_123_1(cfg.target)) {
-      _$jscoverage['/dialog.js'].lineData[124]++;
+    d.urlTitle.val('');
+    _$jscoverage['/dialog.js'].lineData[124]++;
+    if (visit7_124_1(cfg.target)) {
+      _$jscoverage['/dialog.js'].lineData[125]++;
       d.targetEl[0].checked = true;
     }
   }
-  _$jscoverage['/dialog.js'].lineData[127]++;
+  _$jscoverage['/dialog.js'].lineData[128]++;
   d.show();
 }, 
   show: function(_selectedEl) {
   _$jscoverage['/dialog.js'].functionData[7]++;
-  _$jscoverage['/dialog.js'].lineData[130]++;
-  var self = this;
   _$jscoverage['/dialog.js'].lineData[131]++;
-  self._selectedEl = _selectedEl;
+  var self = this;
   _$jscoverage['/dialog.js'].lineData[132]++;
+  self._selectedEl = _selectedEl;
+  _$jscoverage['/dialog.js'].lineData[133]++;
   self._prepareShow();
 }});
-  _$jscoverage['/dialog.js'].lineData[135]++;
+  _$jscoverage['/dialog.js'].lineData[136]++;
   return LinkDialog;
 });

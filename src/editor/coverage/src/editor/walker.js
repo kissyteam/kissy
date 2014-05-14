@@ -231,6 +231,7 @@ if (! _$jscoverage['/editor/walker.js']) {
   _$jscoverage['/editor/walker.js'].lineData = [];
   _$jscoverage['/editor/walker.js'].lineData[11] = 0;
   _$jscoverage['/editor/walker.js'].lineData[12] = 0;
+  _$jscoverage['/editor/walker.js'].lineData[13] = 0;
   _$jscoverage['/editor/walker.js'].lineData[14] = 0;
   _$jscoverage['/editor/walker.js'].lineData[22] = 0;
   _$jscoverage['/editor/walker.js'].lineData[23] = 0;
@@ -526,7 +527,7 @@ function visit1135_334_1(result) {
 function visit1134_318_2(result) {
   _$jscoverage['/editor/walker.js'].branchData['318'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/walker.js'].branchData['318'][1].init(37, 67, 'node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue)');
+}_$jscoverage['/editor/walker.js'].branchData['318'][1].init(37, 70, 'node.nodeType === Dom.NodeType.TEXT_NODE && !util.trim(node.nodeValue)');
 function visit1133_318_1(result) {
   _$jscoverage['/editor/walker.js'].branchData['318'][1].ranCondition(result);
   return result;
@@ -707,8 +708,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/walker.js'].functionData[0]++;
   _$jscoverage['/editor/walker.js'].lineData[12]++;
   var Editor = require('./base');
+  _$jscoverage['/editor/walker.js'].lineData[13]++;
+  var util = require('util');
   _$jscoverage['/editor/walker.js'].lineData[14]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = require('dom'), dtd = Editor.XHTML_DTD, Node = require('node');
+  var TRUE = true, FALSE = false, NULL = null, UA = require('ua'), Dom = require('dom'), dtd = Editor.XHTML_DTD, Node = require('node');
   _$jscoverage['/editor/walker.js'].lineData[22]++;
   function iterate(rtl, breakOnFalseRetFalse) {
     _$jscoverage['/editor/walker.js'].functionData[1]++;
@@ -880,7 +883,7 @@ KISSY.add(function(S, require) {
     this._ = {};
   }
   _$jscoverage['/editor/walker.js'].lineData[193]++;
-  S.augment(Walker, {
+  util.augment(Walker, {
   end: function() {
   _$jscoverage['/editor/walker.js'].functionData[7]++;
   _$jscoverage['/editor/walker.js'].lineData[199]++;
@@ -925,7 +928,7 @@ KISSY.add(function(S, require) {
 }, 
   _iterator: iterate});
   _$jscoverage['/editor/walker.js'].lineData[270]++;
-  S.mix(Walker, {
+  util.mix(Walker, {
   blockBoundary: function(customNodeNames) {
   _$jscoverage['/editor/walker.js'].functionData[15]++;
   _$jscoverage['/editor/walker.js'].lineData[277]++;
@@ -962,7 +965,7 @@ KISSY.add(function(S, require) {
   return function(node) {
   _$jscoverage['/editor/walker.js'].functionData[21]++;
   _$jscoverage['/editor/walker.js'].lineData[318]++;
-  var isWhitespace = visit1133_318_1(visit1134_318_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue));
+  var isWhitespace = visit1133_318_1(visit1134_318_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !util.trim(node.nodeValue));
   _$jscoverage['/editor/walker.js'].lineData[319]++;
   return !!(isReject ^ isWhitespace);
 };

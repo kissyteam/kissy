@@ -231,6 +231,7 @@ if (! _$jscoverage['/html-parser/nodes/document.js']) {
   _$jscoverage['/html-parser/nodes/document.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/document.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[7] = 0;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[11] = 0;
@@ -254,6 +255,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/document.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[7]++;
   var Tag = require('./tag');
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/html-parser/nodes/document.js'].lineData[9]++;
   function Document() {
     _$jscoverage['/html-parser/nodes/document.js'].functionData[1]++;
@@ -265,7 +268,7 @@ KISSY.add(function(S, require) {
     this.nodeName = '#document';
   }
   _$jscoverage['/html-parser/nodes/document.js'].lineData[15]++;
-  S.extend(Document, Tag, {
+  util.extend(Document, Tag, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/document.js'].functionData[2]++;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[17]++;

@@ -194,7 +194,6 @@
                 for (var i = 0, l = alias.length; i < l; i++) {
                     var aliasItem = alias[i];
                     if (aliasItem && aliasItem !== name) {
-                        aliasItem = pluginAlias(aliasItem);
                         var mod = createModule(aliasItem);
                         var normalAlias = mod.getAlias();
                         if (normalAlias) {
@@ -360,6 +359,7 @@
                 });
                 self.attachSelf();
             }
+            return self;
         }
     };
 
@@ -368,7 +368,7 @@
         if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
-            var Plugin = createModule(name).attach();
+            var Plugin = createModule(pluginName).attach().exports || {};
             if (Plugin.alias) {
                 name = Plugin.alias(S, name, pluginName);
             }

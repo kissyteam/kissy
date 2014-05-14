@@ -1,1 +1,1 @@
-{"editor/plugin/list-utils":["dom"]}
+{"editor/plugin/list-utils":["node","dom","ua"]}

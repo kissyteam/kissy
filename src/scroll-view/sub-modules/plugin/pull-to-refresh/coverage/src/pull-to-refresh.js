@@ -234,50 +234,51 @@ if (! _$jscoverage['/pull-to-refresh.js']) {
   _$jscoverage['/pull-to-refresh.js'].lineData[8] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[9] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[10] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[17] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[21] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[11] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[18] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[22] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[24] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[28] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[31] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[23] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[25] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[29] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[32] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[36] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[38] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[33] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[37] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[39] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[40] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[41] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[46] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[42] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[47] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[48] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[49] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[50] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[51] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[52] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[54] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[56] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[59] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[65] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[68] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[53] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[55] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[57] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[60] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[66] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[69] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[71] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[77] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[70] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[72] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[78] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[80] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[85] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[79] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[81] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[86] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[87] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[88] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[96] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[89] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[97] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[98] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[99] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[100] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[106] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[101] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[107] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[108] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[109] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[110] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[114] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[111] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[115] = 0;
 }
 if (! _$jscoverage['/pull-to-refresh.js'].functionData) {
   _$jscoverage['/pull-to-refresh.js'].functionData = [];
@@ -293,48 +294,48 @@ if (! _$jscoverage['/pull-to-refresh.js'].functionData) {
 }
 if (! _$jscoverage['/pull-to-refresh.js'].branchData) {
   _$jscoverage['/pull-to-refresh.js'].branchData = {};
-  _$jscoverage['/pull-to-refresh.js'].branchData['10'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/pull-to-refresh.js'].branchData['21'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/pull-to-refresh.js'].branchData['38'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['38'][1] = new BranchData();
-  _$jscoverage['/pull-to-refresh.js'].branchData['40'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/pull-to-refresh.js'].branchData['49'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/pull-to-refresh.js'].branchData['68'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/pull-to-refresh.js'].branchData['78'] = [];
-  _$jscoverage['/pull-to-refresh.js'].branchData['78'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['11'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['22'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['39'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['41'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['50'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['69'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/pull-to-refresh.js'].branchData['79'] = [];
+  _$jscoverage['/pull-to-refresh.js'].branchData['79'][1] = new BranchData();
 }
-_$jscoverage['/pull-to-refresh.js'].branchData['78'][1].init(45, 5, 'v < 0');
-function visit7_78_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['78'][1].ranCondition(result);
+_$jscoverage['/pull-to-refresh.js'].branchData['79'][1].init(45, 5, 'v < 0');
+function visit7_79_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['68'][1].init(739, 6, 'loadFn');
-function visit6_68_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/pull-to-refresh.js'].branchData['69'][1].init(739, 6, 'loadFn');
+function visit6_69_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['49'][1].init(145, 21, '0 - b > self.elHeight');
-function visit5_49_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['49'][1].ranCondition(result);
+}_$jscoverage['/pull-to-refresh.js'].branchData['50'][1].init(145, 21, '0 - b > self.elHeight');
+function visit5_50_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['40'][1].init(178, 5, 'b < 0');
-function visit4_40_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/pull-to-refresh.js'].branchData['41'][1].init(178, 5, 'b < 0');
+function visit4_41_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['38'][1].init(79, 21, '0 - b > self.elHeight');
-function visit3_38_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/pull-to-refresh.js'].branchData['39'][1].init(79, 21, '0 - b > self.elHeight');
+function visit3_39_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['21'][1].init(18, 16, '!this.scrollView');
-function visit2_21_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/pull-to-refresh.js'].branchData['22'][1].init(18, 16, '!this.scrollView');
+function visit2_22_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['10'][1].init(171, 55, 'transformVendorInfo && transformVendorInfo.propertyName');
-function visit1_10_1(result) {
-  _$jscoverage['/pull-to-refresh.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/pull-to-refresh.js'].branchData['11'][1].init(227, 55, 'transformVendorInfo && transformVendorInfo.propertyName');
+function visit1_11_1(result) {
+  _$jscoverage['/pull-to-refresh.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/pull-to-refresh.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -342,135 +343,137 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[7]++;
   var Base = require('base');
   _$jscoverage['/pull-to-refresh.js'].lineData[8]++;
-  var substitute = S.substitute;
+  var Node = require('node');
   _$jscoverage['/pull-to-refresh.js'].lineData[9]++;
-  var transformVendorInfo = S.Feature.getCssVendorInfo('transform');
+  var substitute = require('util').substitute;
   _$jscoverage['/pull-to-refresh.js'].lineData[10]++;
-  var transformProperty = visit1_10_1(transformVendorInfo && transformVendorInfo.propertyName);
-  _$jscoverage['/pull-to-refresh.js'].lineData[17]++;
+  var transformVendorInfo = require('feature').getCssVendorInfo('transform');
+  _$jscoverage['/pull-to-refresh.js'].lineData[11]++;
+  var transformProperty = visit1_11_1(transformVendorInfo && transformVendorInfo.propertyName);
+  _$jscoverage['/pull-to-refresh.js'].lineData[18]++;
   return Base.extend({
-  pluginId: this.getName(), 
+  pluginId: this.name, 
   _onSetState: function(e) {
   _$jscoverage['/pull-to-refresh.js'].functionData[1]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[21]++;
-  if (visit2_21_1(!this.scrollView)) {
-    _$jscoverage['/pull-to-refresh.js'].lineData[22]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[22]++;
+  if (visit2_22_1(!this.scrollView)) {
+    _$jscoverage['/pull-to-refresh.js'].lineData[23]++;
     return;
   }
-  _$jscoverage['/pull-to-refresh.js'].lineData[24]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[25]++;
   var status = e.newVal, self = this, prefixCls = self.scrollView.get('prefixCls'), $el = self.$el;
-  _$jscoverage['/pull-to-refresh.js'].lineData[28]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[29]++;
   $el.attr('class', prefixCls + 'scroll-view-pull-to-refresh ' + prefixCls + 'scroll-view-' + status);
-  _$jscoverage['/pull-to-refresh.js'].lineData[31]++;
-  self.labelEl.html(self.get(status + 'Html'));
   _$jscoverage['/pull-to-refresh.js'].lineData[32]++;
+  self.labelEl.html(self.get(status + 'Html'));
+  _$jscoverage['/pull-to-refresh.js'].lineData[33]++;
   self.elHeight = $el.height();
 }, 
   _onScrollMove: function(e) {
   _$jscoverage['/pull-to-refresh.js'].functionData[2]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[36]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[37]++;
   var self = this, b = e.newVal;
-  _$jscoverage['/pull-to-refresh.js'].lineData[38]++;
-  if (visit3_38_1(0 - b > self.elHeight)) {
-    _$jscoverage['/pull-to-refresh.js'].lineData[39]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[39]++;
+  if (visit3_39_1(0 - b > self.elHeight)) {
+    _$jscoverage['/pull-to-refresh.js'].lineData[40]++;
     self.set('state', 'releasing');
   } else {
-    _$jscoverage['/pull-to-refresh.js'].lineData[40]++;
-    if (visit4_40_1(b < 0)) {
-      _$jscoverage['/pull-to-refresh.js'].lineData[41]++;
+    _$jscoverage['/pull-to-refresh.js'].lineData[41]++;
+    if (visit4_41_1(b < 0)) {
+      _$jscoverage['/pull-to-refresh.js'].lineData[42]++;
       self.set('state', 'pulling');
     }
   }
 }, 
   _onDragEnd: function() {
   _$jscoverage['/pull-to-refresh.js'].functionData[3]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[46]++;
-  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[47]++;
-  var scrollView = self.scrollView;
+  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[48]++;
-  var b = scrollView.get('scrollTop');
+  var scrollView = self.scrollView;
   _$jscoverage['/pull-to-refresh.js'].lineData[49]++;
-  if (visit5_49_1(0 - b > self.elHeight)) {
-    _$jscoverage['/pull-to-refresh.js'].lineData[50]++;
-    scrollView.minScroll.top = -self.elHeight;
+  var b = scrollView.get('scrollTop');
+  _$jscoverage['/pull-to-refresh.js'].lineData[50]++;
+  if (visit5_50_1(0 - b > self.elHeight)) {
     _$jscoverage['/pull-to-refresh.js'].lineData[51]++;
-    var loadFn = self.get('loadFn');
+    scrollView.minScroll.top = -self.elHeight;
     _$jscoverage['/pull-to-refresh.js'].lineData[52]++;
+    var loadFn = self.get('loadFn');
+    _$jscoverage['/pull-to-refresh.js'].lineData[53]++;
     self.set('state', 'loading');
-    _$jscoverage['/pull-to-refresh.js'].lineData[54]++;
+    _$jscoverage['/pull-to-refresh.js'].lineData[55]++;
     var callback = function() {
   _$jscoverage['/pull-to-refresh.js'].functionData[4]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[56]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[57]++;
   scrollView.scrollTo({
   top: -self.elHeight});
-  _$jscoverage['/pull-to-refresh.js'].lineData[59]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[60]++;
   scrollView.scrollTo({
   top: scrollView.minScroll.top}, {
   duration: scrollView.get('snapDuration'), 
   easing: scrollView.get('snapEasing')});
-  _$jscoverage['/pull-to-refresh.js'].lineData[65]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[66]++;
   self.set('state', 'pulling');
 };
-    _$jscoverage['/pull-to-refresh.js'].lineData[68]++;
-    if (visit6_68_1(loadFn)) {
-      _$jscoverage['/pull-to-refresh.js'].lineData[69]++;
+    _$jscoverage['/pull-to-refresh.js'].lineData[69]++;
+    if (visit6_69_1(loadFn)) {
+      _$jscoverage['/pull-to-refresh.js'].lineData[70]++;
       loadFn.call(self, callback);
     } else {
-      _$jscoverage['/pull-to-refresh.js'].lineData[71]++;
+      _$jscoverage['/pull-to-refresh.js'].lineData[72]++;
       callback.call(self);
     }
   }
 }, 
   _onSetScrollTop: function(v) {
   _$jscoverage['/pull-to-refresh.js'].functionData[5]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[77]++;
-  v = v.newVal;
   _$jscoverage['/pull-to-refresh.js'].lineData[78]++;
-  if (visit7_78_1(v < 0)) {
-    _$jscoverage['/pull-to-refresh.js'].lineData[80]++;
+  v = v.newVal;
+  _$jscoverage['/pull-to-refresh.js'].lineData[79]++;
+  if (visit7_79_1(v < 0)) {
+    _$jscoverage['/pull-to-refresh.js'].lineData[81]++;
     this.el.style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
   }
 }, 
   pluginRenderUI: function(scrollView) {
   _$jscoverage['/pull-to-refresh.js'].functionData[6]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[85]++;
-  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[86]++;
-  self.scrollView = scrollView;
+  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[87]++;
-  var prefixCls = scrollView.get('prefixCls');
+  self.scrollView = scrollView;
   _$jscoverage['/pull-to-refresh.js'].lineData[88]++;
-  var el = S.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-label"></span>' + '</div>' + '</div>', {
+  var prefixCls = scrollView.get('prefixCls');
+  _$jscoverage['/pull-to-refresh.js'].lineData[89]++;
+  var el = Node.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-label"></span>' + '</div>' + '</div>', {
   prefixCls: prefixCls}));
-  _$jscoverage['/pull-to-refresh.js'].lineData[96]++;
-  self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
   _$jscoverage['/pull-to-refresh.js'].lineData[97]++;
-  scrollView.get('el').prepend(el);
+  self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
   _$jscoverage['/pull-to-refresh.js'].lineData[98]++;
-  self.$el = el;
+  scrollView.get('el').prepend(el);
   _$jscoverage['/pull-to-refresh.js'].lineData[99]++;
-  self.el = el[0];
+  self.$el = el;
   _$jscoverage['/pull-to-refresh.js'].lineData[100]++;
+  self.el = el[0];
+  _$jscoverage['/pull-to-refresh.js'].lineData[101]++;
   self._onSetState({
   newValue: 'pulling'});
 }, 
   pluginBindUI: function(scrollView) {
   _$jscoverage['/pull-to-refresh.js'].functionData[7]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[106]++;
-  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[107]++;
-  scrollView.on('afterScrollTopChange', self._onScrollMove, self);
+  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[108]++;
-  scrollView.on('touchEnd', self._onDragEnd, self);
+  scrollView.on('afterScrollTopChange', self._onScrollMove, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[109]++;
-  self.on('afterStateChange', self._onSetState, self);
+  scrollView.on('touchEnd', self._onDragEnd, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[110]++;
+  self.on('afterStateChange', self._onSetState, self);
+  _$jscoverage['/pull-to-refresh.js'].lineData[111]++;
   scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);
 }, 
   pluginDestructor: function() {
   _$jscoverage['/pull-to-refresh.js'].functionData[8]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[114]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[115]++;
   this.$el.remove();
 }}, {
   ATTRS: {

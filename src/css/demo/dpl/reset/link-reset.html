@@ -18,9 +18,9 @@
 
 <script src="/kissy/build/seed-debug.js"></script>
 <script>
-    KISSY.use('node',function (S) {
+    KISSY.use('node,util',function (S,Node,,util) {
         var $ = S.all;
-        $("#t").attr("href", "#" + S.guid("ha"+ (+new Date())));
+        $("#t").attr("href", "#" + util.guid("ha"+ (+new Date())));
     });
 </script>
 </body>

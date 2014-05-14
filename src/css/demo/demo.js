@@ -1,4 +1,4 @@
-KISSY.use('menu', function (S, Menu) {
+KISSY.use('menu,util', function (S, Menu,util) {
 
 
     var $ = S.all;
@@ -235,7 +235,7 @@ KISSY.use('menu', function (S, Menu) {
 
     var div = $("<p></p>").appendTo(cssContainer);
 
-    S.each(simple, function (item, name) {
+    util.each(simple, function (item, name) {
         div.append('<label class="checkbox">' +
             '<input type="checkbox"' +
             ' class="simple" ' +
@@ -248,7 +248,7 @@ KISSY.use('menu', function (S, Menu) {
 
     div = $("<p></p>").appendTo(cssContainer);
 
-    S.each(complex, function (item, name) {
+    util.each(complex, function (item, name) {
         div.append('<label class="checkbox">' +
             '<input type="checkbox"' +
             'class="complex" ' +
@@ -260,8 +260,8 @@ KISSY.use('menu', function (S, Menu) {
     function findAllMods(requires, mods, ret) {
         ret = ret || [];
         // menu button menubutton
-        S.each(requires, function (r) {
-            if (S.indexOf(r, ret) != -1) {
+        util.each(requires, function (r) {
+            if (util.indexOf(r, ret) != -1) {
                 return;
             }
             var name = r;
@@ -289,7 +289,7 @@ KISSY.use('menu', function (S, Menu) {
         var all = findAllMods(mods, modsHolder[mode]),
             cache = {}, finalMods = [];
 
-        S.each(all, function (a) {
+        util.each(all, function (a) {
             if (cache[a]) {
             } else {
                 finalMods.push(a);

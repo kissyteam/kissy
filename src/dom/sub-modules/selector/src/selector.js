@@ -36,10 +36,10 @@ KISSY.add(function (S, require) {
             return isNaN(high) ?
                 escaped :
                 // BMP codepoint
-                high < 0 ?
-                    String.fromCharCode(high + 0x10000) :
-                    // Supplemental Plane codepoint (surrogate pair)
-                    String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
+                    high < 0 ?
+                String.fromCharCode(high + 0x10000) :
+                // Supplemental Plane codepoint (surrogate pair)
+                String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
         };
 
     function unEscape(str) {
@@ -47,6 +47,7 @@ KISSY.add(function (S, require) {
     }
 
     parser.lexer.yy = {
+        trim: util.trim,
         unEscape: unEscape,
         unEscapeStr: function (str) {
             return this.unEscape(str.slice(1, -1));
@@ -78,7 +79,7 @@ KISSY.add(function (S, require) {
             b = 0;
         } else if ((match = param.replace(/\s/g, '').match(aNPlusB))) {
             if (match[1]) {
-                a = parseInt(match[2],10);
+                a = parseInt(match[2], 10);
                 if (isNaN(a)) {
                     if (match[2] === '-') {
                         a = -1;
@@ -89,7 +90,7 @@ KISSY.add(function (S, require) {
             } else {
                 a = 0;
             }
-            b = parseInt(match[3],10) || 0;
+            b = parseInt(match[3], 10) || 0;
         }
         return {
             a: a,

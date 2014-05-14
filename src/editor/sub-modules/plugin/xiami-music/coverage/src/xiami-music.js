@@ -235,6 +235,7 @@ if (! _$jscoverage['/xiami-music.js']) {
   _$jscoverage['/xiami-music.js'].lineData[9] = 0;
   _$jscoverage['/xiami-music.js'].lineData[10] = 0;
   _$jscoverage['/xiami-music.js'].lineData[11] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[12] = 0;
   _$jscoverage['/xiami-music.js'].lineData[13] = 0;
   _$jscoverage['/xiami-music.js'].lineData[16] = 0;
   _$jscoverage['/xiami-music.js'].lineData[17] = 0;
@@ -407,6 +408,8 @@ KISSY.add(function(S, require) {
   var fakeObjects = require('./fake-objects');
   _$jscoverage['/xiami-music.js'].lineData[11]++;
   require('./button');
+  _$jscoverage['/xiami-music.js'].lineData[12]++;
+  var util = require('util');
   _$jscoverage['/xiami-music.js'].lineData[13]++;
   var CLS_XIAMI = 'ke_xiami', TYPE_XIAMI = 'xiami-music';
   _$jscoverage['/xiami-music.js'].lineData[16]++;
@@ -416,7 +419,7 @@ KISSY.add(function(S, require) {
     XiamiMusic.superclass.constructor.apply(this, arguments);
   }
   _$jscoverage['/xiami-music.js'].lineData[20]++;
-  S.extend(XiamiMusic, FlashBaseClass, {
+  util.extend(XiamiMusic, FlashBaseClass, {
   _updateTip: function(tipUrlEl, selectedFlash) {
   _$jscoverage['/xiami-music.js'].functionData[2]++;
   _$jscoverage['/xiami-music.js'].lineData[22]++;
@@ -436,7 +439,7 @@ KISSY.add(function(S, require) {
     this.config = visit2_33_1(config || {});
   }
   _$jscoverage['/xiami-music.js'].lineData[36]++;
-  S.augment(XiamiMusicPlugin, {
+  (XiamiMusicPlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/xiami-music.js'].functionData[4]++;
   _$jscoverage['/xiami-music.js'].lineData[39]++;

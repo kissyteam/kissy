@@ -162,7 +162,7 @@
         /**/
     });
 
-    KISSY.use('combobox', function (S, ComboBox) {
+    KISSY.use('combobox,util', function (S, ComboBox,util) {
         var data = ["a123456", "b12345", "c3464356", "d23434"];
 
         var basicComboBox = new ComboBox({
@@ -179,7 +179,7 @@
                 for (var i = 0; i < data.length; i++) {
                     ret[i] = {
                         content: (data[i] + "")
-                                .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                .replace(new RegExp(util.escapeRegExp(query), "g"),
                                         "<b>$&</b>"),
                         disabled: (i % 2 ? true : false)
                     };
@@ -225,7 +225,7 @@
                 for (var i = 0; i < data.length; i++) {
                     ret[i] = {
                         content: (data[i] + "")
-                                .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                .replace(new RegExp(util.escapeRegExp(query), "g"),
                                         "<b>$&</b>"),
                         disabled: (i % 2 ? true : false)
                     };
@@ -240,7 +240,7 @@
      * checked combobox
      */
 
-    KISSY.use('combobox', function (S, ComboBox) {
+    KISSY.use('combobox,util', function (S, ComboBox,util) {
         var $ = S.all;
         var data = ["a1234567", "a123456", "b12345", "c3464356", "d23434"];
 
@@ -252,7 +252,7 @@
                 data: data
             }),
             validator: function (v, callback) {
-                callback(!S.inArray(v, data) ? "请选择提示框内容" : false);
+                callback(!util.inArray(v, data) ? "请选择提示框内容" : false);
             },
             width: 200,
             maxItemCount: 5,
@@ -261,7 +261,7 @@
                 for (var i = 0; i < data.length; i++) {
                     ret[i] = {
                         content: (data[i] + "")
-                                .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                .replace(new RegExp(util.escapeRegExp(query), "g"),
                                         "<b>$&</b>"),
                         disabled: (i % 2 ? true : false)
                     };
@@ -292,7 +292,7 @@
                 data: data
             }),
             validator: function (v, callback) {
-                callback(!S.inArray(v, data) ? "请选择提示框内容" : false);
+                callback(!util.inArray(v, data) ? "请选择提示框内容" : false);
             },
             width: 200,
             maxItemCount: 5

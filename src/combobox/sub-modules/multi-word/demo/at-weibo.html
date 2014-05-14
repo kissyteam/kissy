@@ -32,7 +32,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox,combobox/multi-word", function (S, ComboBox, MultiWordComboBox) {
+    KISSY.use("util,combobox,combobox/multi-word", function (S, util,ComboBox, MultiWordComboBox) {
         var data = [
             'yiminghe',
             'kissyteam',
@@ -57,7 +57,7 @@
                     if (query) {
                         ret[i] = {
                             content: S.escapeHtml(v)
-                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    .replace(new RegExp(util.escapeRegExp(query), "g"),
                                             "<b>$&</b>")
                         };
                     } else {
@@ -93,7 +93,7 @@
                         //return ret;
                         return ret.concat(data);
                     }
-                    S.each(data, function (d) {
+                    util.each(data, function (d) {
                         if (d.indexOf(query) != -1) {
                             ret.push(d);
                         }

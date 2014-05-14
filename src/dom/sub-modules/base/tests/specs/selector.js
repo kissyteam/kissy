@@ -2,7 +2,7 @@
  * simple selector test
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+KISSY.add(function (S,util, Dom) {
     var tpl = '';
     var $ = window.jQuery;
     var jQuery = window.jQuery;
@@ -26,7 +26,7 @@ KISSY.add(function (S, Dom) {
 
         if (document.getElementsByClassName) {
             it('return array type', function () {
-                expect(S.isArray(Dom.query('.test-selector'))).toBe(true);
+                expect(util.isArray(Dom.query('.test-selector'))).toBe(true);
                 expect(Dom.query('.test-selector').length).toBe(document.getElementsByClassName('test-selector').length);
             });
         }
@@ -236,7 +236,7 @@ KISSY.add(function (S, Dom) {
             var ret = Dom.query(o);
             expect(ret.length).toBe(o.length);
             expect(ret[0]).toBe(o[0]);
-            expect(S.isArray(ret)).toBe(true);
+            expect(util.isArray(ret)).toBe(true);
         });
 
         it('id selector should constrain to context', function () {
@@ -283,5 +283,5 @@ KISSY.add(function (S, Dom) {
         });
     });
 }, {
-    requires: ['dom']
+    requires: ['util','dom']
 });

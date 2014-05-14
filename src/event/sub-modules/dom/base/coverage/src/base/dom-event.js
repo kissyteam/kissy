@@ -236,6 +236,7 @@ if (! _$jscoverage['/base/dom-event.js']) {
   _$jscoverage['/base/dom-event.js'].lineData[10] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[11] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[12] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[13] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[14] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[16] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[17] = 0;
@@ -475,15 +476,15 @@ function visit15_181_1(result) {
 function visit14_144_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['113'][1].init(684, 11, 'customEvent');
+}_$jscoverage['/base/dom-event.js'].branchData['113'][1].init(687, 11, 'customEvent');
 function visit13_113_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['104'][1].init(456, 5, '!type');
+}_$jscoverage['/base/dom-event.js'].branchData['104'][1].init(459, 5, '!type');
 function visit12_104_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['99'][1].init(317, 50, '!domEventObservablesHolder || !domEventObservables');
+}_$jscoverage['/base/dom-event.js'].branchData['99'][1].init(320, 50, '!domEventObservablesHolder || !domEventObservables');
 function visit11_99_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['99'][1].ranCondition(result);
   return result;
@@ -491,11 +492,11 @@ function visit11_99_1(result) {
 function visit10_97_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['74'][1].init(1692, 19, '!domEventObservable');
+}_$jscoverage['/base/dom-event.js'].branchData['74'][1].init(1695, 19, '!domEventObservable');
 function visit9_74_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['67'][1].init(1395, 62, '!(domEventObservables = domEventObservablesHolder.observables)');
+}_$jscoverage['/base/dom-event.js'].branchData['67'][1].init(1398, 62, '!(domEventObservables = domEventObservablesHolder.observables)');
 function visit8_67_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['67'][1].ranCondition(result);
   return result;
@@ -515,7 +516,7 @@ function visit5_52_2(result) {
 function visit4_52_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['44'][1].init(336, 44, '!(handle = domEventObservablesHolder.handle)');
+}_$jscoverage['/base/dom-event.js'].branchData['44'][1].init(339, 44, '!(handle = domEventObservablesHolder.handle)');
 function visit3_44_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['44'][1].ranCondition(result);
   return result;
@@ -542,6 +543,8 @@ KISSY.add(function(S, require) {
   var DomEventObservable = require('./observable');
   _$jscoverage['/base/dom-event.js'].lineData[12]++;
   var DomEventObject = require('./object');
+  _$jscoverage['/base/dom-event.js'].lineData[13]++;
+  var util = require('util');
   _$jscoverage['/base/dom-event.js'].lineData[14]++;
   var BaseUtils = BaseEvent.Utils;
   _$jscoverage['/base/dom-event.js'].lineData[16]++;
@@ -565,7 +568,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/dom-event.js'].lineData[33]++;
     var domEventObservablesHolder, domEventObservable, domEventObservables, handle;
     _$jscoverage['/base/dom-event.js'].lineData[38]++;
-    cfg = S.merge(cfg);
+    cfg = util.merge(cfg);
     _$jscoverage['/base/dom-event.js'].lineData[39]++;
     type = fixType(cfg, type);
     _$jscoverage['/base/dom-event.js'].lineData[42]++;
@@ -624,7 +627,7 @@ KISSY.add(function(S, require) {
   function removeInternal(currentTarget, type, cfg) {
     _$jscoverage['/base/dom-event.js'].functionData[4]++;
     _$jscoverage['/base/dom-event.js'].lineData[90]++;
-    cfg = S.merge(cfg);
+    cfg = util.merge(cfg);
     _$jscoverage['/base/dom-event.js'].lineData[92]++;
     var customEvent;
     _$jscoverage['/base/dom-event.js'].lineData[94]++;
@@ -806,10 +809,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/dom-event.js'].lineData[336]++;
   domEventObservables = domEventObservablesHolder.observables;
   _$jscoverage['/base/dom-event.js'].lineData[337]++;
-  S.each(domEventObservables, function(customEvent, type) {
+  util.each(domEventObservables, function(customEvent, type) {
   _$jscoverage['/base/dom-event.js'].functionData[15]++;
   _$jscoverage['/base/dom-event.js'].lineData[338]++;
-  S.each(customEvent.observers, function(observer) {
+  util.each(customEvent.observers, function(observer) {
   _$jscoverage['/base/dom-event.js'].functionData[16]++;
   _$jscoverage['/base/dom-event.js'].lineData[342]++;
   addInternal(dest, type, observer);

@@ -236,37 +236,38 @@ if (! _$jscoverage['/link.js']) {
   _$jscoverage['/link.js'].lineData[10] = 0;
   _$jscoverage['/link.js'].lineData[11] = 0;
   _$jscoverage['/link.js'].lineData[12] = 0;
-  _$jscoverage['/link.js'].lineData[25] = 0;
+  _$jscoverage['/link.js'].lineData[13] = 0;
   _$jscoverage['/link.js'].lineData[26] = 0;
   _$jscoverage['/link.js'].lineData[27] = 0;
-  _$jscoverage['/link.js'].lineData[30] = 0;
+  _$jscoverage['/link.js'].lineData[28] = 0;
   _$jscoverage['/link.js'].lineData[31] = 0;
-  _$jscoverage['/link.js'].lineData[34] = 0;
-  _$jscoverage['/link.js'].lineData[37] = 0;
+  _$jscoverage['/link.js'].lineData[32] = 0;
+  _$jscoverage['/link.js'].lineData[35] = 0;
   _$jscoverage['/link.js'].lineData[38] = 0;
-  _$jscoverage['/link.js'].lineData[42] = 0;
-  _$jscoverage['/link.js'].lineData[49] = 0;
-  _$jscoverage['/link.js'].lineData[51] = 0;
+  _$jscoverage['/link.js'].lineData[39] = 0;
+  _$jscoverage['/link.js'].lineData[43] = 0;
+  _$jscoverage['/link.js'].lineData[50] = 0;
   _$jscoverage['/link.js'].lineData[52] = 0;
-  _$jscoverage['/link.js'].lineData[57] = 0;
-  _$jscoverage['/link.js'].lineData[60] = 0;
-  _$jscoverage['/link.js'].lineData[63] = 0;
-  _$jscoverage['/link.js'].lineData[67] = 0;
-  _$jscoverage['/link.js'].lineData[72] = 0;
-  _$jscoverage['/link.js'].lineData[74] = 0;
+  _$jscoverage['/link.js'].lineData[53] = 0;
+  _$jscoverage['/link.js'].lineData[58] = 0;
+  _$jscoverage['/link.js'].lineData[61] = 0;
+  _$jscoverage['/link.js'].lineData[64] = 0;
+  _$jscoverage['/link.js'].lineData[68] = 0;
+  _$jscoverage['/link.js'].lineData[73] = 0;
   _$jscoverage['/link.js'].lineData[75] = 0;
   _$jscoverage['/link.js'].lineData[76] = 0;
-  _$jscoverage['/link.js'].lineData[79] = 0;
+  _$jscoverage['/link.js'].lineData[77] = 0;
   _$jscoverage['/link.js'].lineData[80] = 0;
   _$jscoverage['/link.js'].lineData[81] = 0;
-  _$jscoverage['/link.js'].lineData[84] = 0;
+  _$jscoverage['/link.js'].lineData[82] = 0;
   _$jscoverage['/link.js'].lineData[85] = 0;
   _$jscoverage['/link.js'].lineData[86] = 0;
   _$jscoverage['/link.js'].lineData[87] = 0;
-  _$jscoverage['/link.js'].lineData[89] = 0;
-  _$jscoverage['/link.js'].lineData[91] = 0;
+  _$jscoverage['/link.js'].lineData[88] = 0;
+  _$jscoverage['/link.js'].lineData[90] = 0;
   _$jscoverage['/link.js'].lineData[92] = 0;
-  _$jscoverage['/link.js'].lineData[101] = 0;
+  _$jscoverage['/link.js'].lineData[93] = 0;
+  _$jscoverage['/link.js'].lineData[102] = 0;
 }
 if (! _$jscoverage['/link.js'].functionData) {
   _$jscoverage['/link.js'].functionData = [];
@@ -283,24 +284,24 @@ if (! _$jscoverage['/link.js'].functionData) {
 }
 if (! _$jscoverage['/link.js'].branchData) {
   _$jscoverage['/link.js'].branchData = {};
-  _$jscoverage['/link.js'].branchData['31'] = [];
-  _$jscoverage['/link.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/link.js'].branchData['86'] = [];
-  _$jscoverage['/link.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/link.js'].branchData['89'] = [];
-  _$jscoverage['/link.js'].branchData['89'][1] = new BranchData();
+  _$jscoverage['/link.js'].branchData['32'] = [];
+  _$jscoverage['/link.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/link.js'].branchData['87'] = [];
+  _$jscoverage['/link.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/link.js'].branchData['90'] = [];
+  _$jscoverage['/link.js'].branchData['90'][1] = new BranchData();
 }
-_$jscoverage['/link.js'].branchData['89'][1].init(221, 74, 'a.attr(Utils.savedHref) || a.attr(\'href\')');
-function visit3_89_1(result) {
-  _$jscoverage['/link.js'].branchData['89'][1].ranCondition(result);
+_$jscoverage['/link.js'].branchData['90'][1].init(221, 74, 'a.attr(Utils.savedHref) || a.attr(\'href\')');
+function visit3_90_1(result) {
+  _$jscoverage['/link.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/link.js'].branchData['86'][1].init(103, 2, '!a');
-function visit2_86_1(result) {
-  _$jscoverage['/link.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/link.js'].branchData['87'][1].init(103, 2, '!a');
+function visit2_87_1(result) {
+  _$jscoverage['/link.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/link.js'].branchData['31'][1].init(24, 12, 'config || {}');
-function visit1_31_1(result) {
-  _$jscoverage['/link.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/link.js'].branchData['32'][1].init(24, 12, 'config || {}');
+function visit1_32_1(result) {
+  _$jscoverage['/link.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/link.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -310,100 +311,102 @@ KISSY.add(function(S, require) {
   _$jscoverage['/link.js'].lineData[8]++;
   require('./bubble');
   _$jscoverage['/link.js'].lineData[9]++;
-  var Editor = require('editor');
+  var util = require('util');
   _$jscoverage['/link.js'].lineData[10]++;
-  var Utils = require('./link/utils');
+  var Editor = require('editor');
   _$jscoverage['/link.js'].lineData[11]++;
-  var DialogLoader = require('./dialog-loader');
+  var Utils = require('./link/utils');
   _$jscoverage['/link.js'].lineData[12]++;
-  var $ = S.all, tipHTML = '<a ' + 'href="" ' + ' target="_blank" ' + 'class="{prefixCls}editor-bubble-url">' + '\u5728\u65b0\u7a97\u53e3\u67e5\u770b' + '</a>  \u2013  ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">' + '\u7f16\u8f91' + '</span>   |   ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">' + '\u53bb\u9664' + '</span>';
-  _$jscoverage['/link.js'].lineData[25]++;
+  var DialogLoader = require('./dialog-loader');
+  _$jscoverage['/link.js'].lineData[13]++;
+  var $ = require('node').all, tipHTML = '<a ' + 'href="" ' + ' target="_blank" ' + 'class="{prefixCls}editor-bubble-url">' + '\u5728\u65b0\u7a97\u53e3\u67e5\u770b' + '</a>  \u2013  ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">' + '\u7f16\u8f91' + '</span>   |   ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">' + '\u53bb\u9664' + '</span>';
+  _$jscoverage['/link.js'].lineData[26]++;
   function checkLink(lastElement) {
     _$jscoverage['/link.js'].functionData[1]++;
-    _$jscoverage['/link.js'].lineData[26]++;
-    lastElement = $(lastElement);
     _$jscoverage['/link.js'].lineData[27]++;
+    lastElement = $(lastElement);
+    _$jscoverage['/link.js'].lineData[28]++;
     return lastElement.closest('a', undefined);
   }
-  _$jscoverage['/link.js'].lineData[30]++;
+  _$jscoverage['/link.js'].lineData[31]++;
   function LinkPlugin(config) {
     _$jscoverage['/link.js'].functionData[2]++;
-    _$jscoverage['/link.js'].lineData[31]++;
-    this.config = visit1_31_1(config || {});
+    _$jscoverage['/link.js'].lineData[32]++;
+    this.config = visit1_32_1(config || {});
   }
-  _$jscoverage['/link.js'].lineData[34]++;
-  S.augment(LinkPlugin, {
+  _$jscoverage['/link.js'].lineData[35]++;
+  (LinkPlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/link.js'].functionData[3]++;
-  _$jscoverage['/link.js'].lineData[37]++;
-  var prefixCls = editor.get('prefixCls');
   _$jscoverage['/link.js'].lineData[38]++;
+  var prefixCls = editor.get('prefixCls');
+  _$jscoverage['/link.js'].lineData[39]++;
   editor.addButton('link', {
   tooltip: '\u63d2\u5165\u94fe\u63a5', 
   listeners: {
   click: function() {
   _$jscoverage['/link.js'].functionData[4]++;
-  _$jscoverage['/link.js'].lineData[42]++;
+  _$jscoverage['/link.js'].lineData[43]++;
   showLinkEditDialog();
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
-  _$jscoverage['/link.js'].lineData[49]++;
+  _$jscoverage['/link.js'].lineData[50]++;
   var self = this;
-  _$jscoverage['/link.js'].lineData[51]++;
+  _$jscoverage['/link.js'].lineData[52]++;
   function showLinkEditDialog(selectedEl) {
     _$jscoverage['/link.js'].functionData[5]++;
-    _$jscoverage['/link.js'].lineData[52]++;
+    _$jscoverage['/link.js'].lineData[53]++;
     DialogLoader.useDialog(editor, 'link', self.config, selectedEl);
   }
-  _$jscoverage['/link.js'].lineData[57]++;
+  _$jscoverage['/link.js'].lineData[58]++;
   editor.addBubble('link', checkLink, {
   listeners: {
   afterRenderUI: function() {
   _$jscoverage['/link.js'].functionData[6]++;
-  _$jscoverage['/link.js'].lineData[60]++;
+  _$jscoverage['/link.js'].lineData[61]++;
   var bubble = this, el = bubble.get('contentEl');
-  _$jscoverage['/link.js'].lineData[63]++;
-  el.html(S.substitute(tipHTML, {
+  _$jscoverage['/link.js'].lineData[64]++;
+  el.html(util.substitute(tipHTML, {
   prefixCls: prefixCls}));
-  _$jscoverage['/link.js'].lineData[67]++;
+  _$jscoverage['/link.js'].lineData[68]++;
   var tipUrl = el.one('.' + prefixCls + 'editor-bubble-url'), tipChange = el.one('.' + prefixCls + 'editor-bubble-change'), tipRemove = el.one('.' + prefixCls + 'editor-bubble-remove');
-  _$jscoverage['/link.js'].lineData[72]++;
+  _$jscoverage['/link.js'].lineData[73]++;
   Editor.Utils.preventFocus(el);
-  _$jscoverage['/link.js'].lineData[74]++;
+  _$jscoverage['/link.js'].lineData[75]++;
   tipChange.on('click', function(ev) {
   _$jscoverage['/link.js'].functionData[7]++;
-  _$jscoverage['/link.js'].lineData[75]++;
-  showLinkEditDialog(bubble.get('editorSelectedEl'));
   _$jscoverage['/link.js'].lineData[76]++;
+  showLinkEditDialog(bubble.get('editorSelectedEl'));
+  _$jscoverage['/link.js'].lineData[77]++;
   ev.halt();
 });
-  _$jscoverage['/link.js'].lineData[79]++;
+  _$jscoverage['/link.js'].lineData[80]++;
   tipRemove.on('click', function(ev) {
   _$jscoverage['/link.js'].functionData[8]++;
-  _$jscoverage['/link.js'].lineData[80]++;
-  Utils.removeLink(editor, bubble.get('editorSelectedEl'));
   _$jscoverage['/link.js'].lineData[81]++;
+  Utils.removeLink(editor, bubble.get('editorSelectedEl'));
+  _$jscoverage['/link.js'].lineData[82]++;
   ev.halt();
 });
-  _$jscoverage['/link.js'].lineData[84]++;
+  _$jscoverage['/link.js'].lineData[85]++;
   bubble.on('show', function() {
   _$jscoverage['/link.js'].functionData[9]++;
-  _$jscoverage['/link.js'].lineData[85]++;
-  var a = bubble.get('editorSelectedEl');
   _$jscoverage['/link.js'].lineData[86]++;
-  if (visit2_86_1(!a)) {
-    _$jscoverage['/link.js'].lineData[87]++;
+  var a = bubble.get('editorSelectedEl');
+  _$jscoverage['/link.js'].lineData[87]++;
+  if (visit2_87_1(!a)) {
+    _$jscoverage['/link.js'].lineData[88]++;
     return;
   }
-  _$jscoverage['/link.js'].lineData[89]++;
-  var href = visit3_89_1(a.attr(Utils.savedHref) || a.attr('href'));
-  _$jscoverage['/link.js'].lineData[91]++;
-  tipUrl.html(href);
+  _$jscoverage['/link.js'].lineData[90]++;
+  var href = visit3_90_1(a.attr(Utils.savedHref) || a.attr('href'));
   _$jscoverage['/link.js'].lineData[92]++;
+  tipUrl.html(href);
+  _$jscoverage['/link.js'].lineData[93]++;
   tipUrl.attr('href', href);
 });
 }}});
 }});
-  _$jscoverage['/link.js'].lineData[101]++;
+  _$jscoverage['/link.js'].lineData[102]++;
   return LinkPlugin;
 });

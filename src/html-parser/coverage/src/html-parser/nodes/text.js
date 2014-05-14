@@ -231,6 +231,7 @@ if (! _$jscoverage['/html-parser/nodes/text.js']) {
   _$jscoverage['/html-parser/nodes/text.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/text.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[7] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[11] = 0;
@@ -274,27 +275,27 @@ if (! _$jscoverage['/html-parser/nodes/text.js'].branchData) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].init(18, 14, 'this.nodeValue');
-function visit239_35_1(result) {
+function visit238_35_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].init(26, 12, 'this !== ret');
-function visit238_26_1(result) {
+function visit237_26_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].init(22, 3, 'ret');
-function visit237_25_1(result) {
+function visit236_25_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].init(52, 36, '(ret = filter.onText(this)) !== false');
-function visit236_24_2(result) {
+function visit235_24_2(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].init(40, 48, '!filter || (ret = filter.onText(this)) !== false');
-function visit235_24_1(result) {
+function visit234_24_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].init(14, 21, 'typeof v === \'string\'');
-function visit234_10_1(result) {
+function visit233_10_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].lineData[6]++;
@@ -302,11 +303,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/text.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[7]++;
   var Node = require('./node');
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[8]++;
+  var util = require('util');
   _$jscoverage['/html-parser/nodes/text.js'].lineData[9]++;
   function Text(v) {
     _$jscoverage['/html-parser/nodes/text.js'].functionData[1]++;
     _$jscoverage['/html-parser/nodes/text.js'].lineData[10]++;
-    if (visit234_10_1(typeof v === 'string')) {
+    if (visit233_10_1(typeof v === 'string')) {
       _$jscoverage['/html-parser/nodes/text.js'].lineData[11]++;
       this.nodeValue = v;
       _$jscoverage['/html-parser/nodes/text.js'].lineData[12]++;
@@ -323,17 +326,17 @@ KISSY.add(function(S, require) {
     this.nodeName = '#text';
   }
   _$jscoverage['/html-parser/nodes/text.js'].lineData[21]++;
-  S.extend(Text, Node, {
+  util.extend(Text, Node, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/text.js'].functionData[2]++;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[23]++;
   var ret;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[24]++;
-  if (visit235_24_1(!filter || visit236_24_2((ret = filter.onText(this)) !== false))) {
+  if (visit234_24_1(!filter || visit235_24_2((ret = filter.onText(this)) !== false))) {
     _$jscoverage['/html-parser/nodes/text.js'].lineData[25]++;
-    if (visit237_25_1(ret)) {
+    if (visit236_25_1(ret)) {
       _$jscoverage['/html-parser/nodes/text.js'].lineData[26]++;
-      if (visit238_26_1(this !== ret)) {
+      if (visit237_26_1(this !== ret)) {
         _$jscoverage['/html-parser/nodes/text.js'].lineData[27]++;
         ret.writeHtml(writer, filter);
         _$jscoverage['/html-parser/nodes/text.js'].lineData[28]++;
@@ -347,7 +350,7 @@ KISSY.add(function(S, require) {
   toHtml: function() {
   _$jscoverage['/html-parser/nodes/text.js'].functionData[3]++;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[35]++;
-  if (visit239_35_1(this.nodeValue)) {
+  if (visit238_35_1(this.nodeValue)) {
     _$jscoverage['/html-parser/nodes/text.js'].lineData[36]++;
     return this.nodeValue;
   } else {

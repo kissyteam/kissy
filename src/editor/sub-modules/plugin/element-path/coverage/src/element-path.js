@@ -312,7 +312,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/element-path.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/element-path.js'].lineData[8]++;
-  var Node = S.Node;
+  var Node = require('node');
   _$jscoverage['/element-path.js'].lineData[9]++;
   var CLASS = 'editor-element-path';
   _$jscoverage['/element-path.js'].lineData[11]++;
@@ -328,7 +328,7 @@ KISSY.add(function(S, require) {
     self._init();
   }
   _$jscoverage['/element-path.js'].lineData[18]++;
-  S.augment(ElementPaths, {
+  ElementPaths.prototype = {
   _init: function() {
   _$jscoverage['/element-path.js'].functionData[2]++;
   _$jscoverage['/element-path.js'].lineData[20]++;
@@ -397,13 +397,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/element-path.js'].functionData[9]++;
   _$jscoverage['/element-path.js'].lineData[75]++;
   this.holder.remove();
-}});
+}};
   _$jscoverage['/element-path.js'].lineData[79]++;
   function ElementPathPlugin() {
     _$jscoverage['/element-path.js'].functionData[10]++;
   }
   _$jscoverage['/element-path.js'].lineData[83]++;
-  S.augment(ElementPathPlugin, {
+  ElementPathPlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/element-path.js'].functionData[11]++;
   _$jscoverage['/element-path.js'].lineData[85]++;
@@ -415,7 +415,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/element-path.js'].lineData[89]++;
   elemPath.destroy();
 });
-}});
+}};
   _$jscoverage['/element-path.js'].lineData[94]++;
   return ElementPathPlugin;
 });

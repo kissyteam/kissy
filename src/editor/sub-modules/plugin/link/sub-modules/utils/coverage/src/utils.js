@@ -333,7 +333,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/utils.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/utils.js'].lineData[8]++;
-  var Node = S.Node, KEStyle = Editor.Style, savedHref = '_ke_saved_href', linkStyle = {
+  var Node = require('node'), KEStyle = Editor.Style, savedHref = '_ke_saved_href', linkStyle = {
   element: 'a', 
   attributes: {
   'href': '#(href)', 

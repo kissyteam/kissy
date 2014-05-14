@@ -176,24 +176,22 @@ KISSY.add(function (S, require) {
          state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
          */
         parseTag: function (start) {
+            function checkError() {
+                if (strict && ch === -1 && attributes.length) {
+                    throw new Error(attributes[0].name + ' syntax error at row ' +
+                        (page.row(cursor) + 1) + ' , col ' + (page.col(cursor) + 1));
+                }
+            }
+
             var done,
                 bookmarks = [],
                 attributes = [],
                 ch,
                 cfg = this.cfg,
                 strict = cfg.strict,
-                checkError = function(){},
                 page = this.page,
                 state = 0,
                 cursor = this.cursor;
-            if (strict) {
-                checkError = function () {
-                    if (strict && ch === -1 && attributes.length) {
-                        throw new Error(attributes[0].name + ' syntax error at row ' +
-                            (page.row(cursor) + 1) + ' , col ' + (page.col(cursor) + 1));
-                    }
-                };
-            }
             /*
              record state position
 
@@ -614,8 +612,8 @@ KISSY.add(function (S, require) {
                                  U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
                                  */
                                 if (!tagName || (mPage.getText(mCursor.position,
-                                    mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length,
-                                    mCursor.position + tagName.length + 1).match(/\w/))
+                                        mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length,
+                                        mCursor.position + tagName.length + 1).match(/\w/))
                                     )) {
                                     state = 2;
                                 } else {

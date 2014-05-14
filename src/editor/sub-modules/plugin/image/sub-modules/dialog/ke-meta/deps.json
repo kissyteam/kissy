@@ -1,1 +1,1 @@
-{"editor/plugin/image/dialog":["editor","io","editor/plugin/dialog","tabs","editor/plugin/menubutton","node"]}
+{"editor/plugin/image/dialog":["util","editor","io","editor/plugin/dialog","tabs","editor/plugin/menubutton","ua","node"]}

@@ -242,33 +242,34 @@ if (! _$jscoverage['/delegate-children.js']) {
   _$jscoverage['/delegate-children.js'].lineData[22] = 0;
   _$jscoverage['/delegate-children.js'].lineData[24] = 0;
   _$jscoverage['/delegate-children.js'].lineData[25] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[34] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[35] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[30] = 0;
   _$jscoverage['/delegate-children.js'].lineData[36] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[37] = 0;
   _$jscoverage['/delegate-children.js'].lineData[38] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[41] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[40] = 0;
   _$jscoverage['/delegate-children.js'].lineData[43] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[44] = 0;
   _$jscoverage['/delegate-children.js'].lineData[45] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[48] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[46] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[47] = 0;
   _$jscoverage['/delegate-children.js'].lineData[50] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[51] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[52] = 0;
   _$jscoverage['/delegate-children.js'].lineData[53] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[54] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[55] = 0;
   _$jscoverage['/delegate-children.js'].lineData[56] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[57] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[58] = 0;
   _$jscoverage['/delegate-children.js'].lineData[59] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[60] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[61] = 0;
   _$jscoverage['/delegate-children.js'].lineData[62] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[63] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[64] = 0;
   _$jscoverage['/delegate-children.js'].lineData[65] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[66] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[67] = 0;
   _$jscoverage['/delegate-children.js'].lineData[68] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[75] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[80] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[70] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[77] = 0;
   _$jscoverage['/delegate-children.js'].lineData[82] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[93] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[97] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[84] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[95] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[99] = 0;
 }
 if (! _$jscoverage['/delegate-children.js'].functionData) {
   _$jscoverage['/delegate-children.js'].functionData = [];
@@ -288,18 +289,18 @@ if (! _$jscoverage['/delegate-children.js'].branchData) {
   _$jscoverage['/delegate-children.js'].branchData['21'][1] = new BranchData();
   _$jscoverage['/delegate-children.js'].branchData['24'] = [];
   _$jscoverage['/delegate-children.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/delegate-children.js'].branchData['43'] = [];
-  _$jscoverage['/delegate-children.js'].branchData['43'][1] = new BranchData();
   _$jscoverage['/delegate-children.js'].branchData['45'] = [];
   _$jscoverage['/delegate-children.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/delegate-children.js'].branchData['47'] = [];
+  _$jscoverage['/delegate-children.js'].branchData['47'][1] = new BranchData();
 }
-_$jscoverage['/delegate-children.js'].branchData['45'][1].init(78, 35, 'control && !control.get(\'disabled\')');
-function visit5_45_1(result) {
-  _$jscoverage['/delegate-children.js'].branchData['45'][1].ranCondition(result);
+_$jscoverage['/delegate-children.js'].branchData['47'][1].init(78, 35, 'control && !control.get(\'disabled\')');
+function visit5_47_1(result) {
+  _$jscoverage['/delegate-children.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['43'][1].init(18, 21, '!this.get(\'disabled\')');
-function visit4_43_1(result) {
-  _$jscoverage['/delegate-children.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/delegate-children.js'].branchData['45'][1].init(18, 21, '!this.get(\'disabled\')');
+function visit4_45_1(result) {
+  _$jscoverage['/delegate-children.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/delegate-children.js'].branchData['24'][1].init(89, 2, 'el');
 function visit3_24_1(result) {
@@ -319,7 +320,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/delegate-children.js'].lineData[7]++;
   var Manager = require('component/control').Manager;
   _$jscoverage['/delegate-children.js'].lineData[9]++;
-  var BaseGesture = require('event/gesture/base');
+  var BasicGesture = require('event/gesture/basic');
   _$jscoverage['/delegate-children.js'].lineData[10]++;
   var TapGesture = require('event/gesture/tap');
   _$jscoverage['/delegate-children.js'].lineData[12]++;
@@ -347,60 +348,62 @@ KISSY.add(function(S, require) {
       }
     }
   }
-  _$jscoverage['/delegate-children.js'].lineData[34]++;
+  _$jscoverage['/delegate-children.js'].lineData[30]++;
+  var guid = 1;
+  _$jscoverage['/delegate-children.js'].lineData[36]++;
   function DelegateChildren() {
     _$jscoverage['/delegate-children.js'].functionData[3]++;
-    _$jscoverage['/delegate-children.js'].lineData[35]++;
+    _$jscoverage['/delegate-children.js'].lineData[37]++;
     var self = this;
-    _$jscoverage['/delegate-children.js'].lineData[36]++;
-    self.__childClsTag = S.guid('ks-component-child');
     _$jscoverage['/delegate-children.js'].lineData[38]++;
+    self.__childClsTag = ('ks-component-child') + (guid++);
+    _$jscoverage['/delegate-children.js'].lineData[40]++;
     self.on('afterRenderChild', onRenderChild, self).on('afterRemoveChild', onRemoveChild, self);
   }
-  _$jscoverage['/delegate-children.js'].lineData[41]++;
-  S.augment(DelegateChildren, {
+  _$jscoverage['/delegate-children.js'].lineData[43]++;
+  DelegateChildren.prototype = {
   handleChildrenEvents: function(e) {
   _$jscoverage['/delegate-children.js'].functionData[4]++;
-  _$jscoverage['/delegate-children.js'].lineData[43]++;
-  if (visit4_43_1(!this.get('disabled'))) {
-    _$jscoverage['/delegate-children.js'].lineData[44]++;
+  _$jscoverage['/delegate-children.js'].lineData[45]++;
+  if (visit4_45_1(!this.get('disabled'))) {
+    _$jscoverage['/delegate-children.js'].lineData[46]++;
     var control = this.getOwnerControl(e);
-    _$jscoverage['/delegate-children.js'].lineData[45]++;
-    if (visit5_45_1(control && !control.get('disabled'))) {
-      _$jscoverage['/delegate-children.js'].lineData[48]++;
+    _$jscoverage['/delegate-children.js'].lineData[47]++;
+    if (visit5_47_1(control && !control.get('disabled'))) {
+      _$jscoverage['/delegate-children.js'].lineData[50]++;
       switch (e.type) {
-        case BaseGesture.START:
-          _$jscoverage['/delegate-children.js'].lineData[50]++;
+        case BasicGesture.START:
+          _$jscoverage['/delegate-children.js'].lineData[52]++;
           control.handleMouseDown(e);
-          _$jscoverage['/delegate-children.js'].lineData[51]++;
-          break;
-        case BaseGesture.END:
           _$jscoverage['/delegate-children.js'].lineData[53]++;
+          break;
+        case BasicGesture.END:
+          _$jscoverage['/delegate-children.js'].lineData[55]++;
           control.handleMouseUp(e);
-          _$jscoverage['/delegate-children.js'].lineData[54]++;
+          _$jscoverage['/delegate-children.js'].lineData[56]++;
           break;
         case TapGesture.TAP:
-          _$jscoverage['/delegate-children.js'].lineData[56]++;
+          _$jscoverage['/delegate-children.js'].lineData[58]++;
           control.handleClick(e);
-          _$jscoverage['/delegate-children.js'].lineData[57]++;
+          _$jscoverage['/delegate-children.js'].lineData[59]++;
           break;
         case 'mouseenter':
-          _$jscoverage['/delegate-children.js'].lineData[59]++;
+          _$jscoverage['/delegate-children.js'].lineData[61]++;
           control.handleMouseEnter(e);
-          _$jscoverage['/delegate-children.js'].lineData[60]++;
+          _$jscoverage['/delegate-children.js'].lineData[62]++;
           break;
         case 'mouseleave':
-          _$jscoverage['/delegate-children.js'].lineData[62]++;
+          _$jscoverage['/delegate-children.js'].lineData[64]++;
           control.handleMouseLeave(e);
-          _$jscoverage['/delegate-children.js'].lineData[63]++;
+          _$jscoverage['/delegate-children.js'].lineData[65]++;
           break;
         case 'contextmenu':
-          _$jscoverage['/delegate-children.js'].lineData[65]++;
+          _$jscoverage['/delegate-children.js'].lineData[67]++;
           control.handleContextMenu(e);
-          _$jscoverage['/delegate-children.js'].lineData[66]++;
+          _$jscoverage['/delegate-children.js'].lineData[68]++;
           break;
         default:
-          _$jscoverage['/delegate-children.js'].lineData[68]++;
+          _$jscoverage['/delegate-children.js'].lineData[70]++;
           S.error(e.type + ' unhandled!');
       }
     }
@@ -408,18 +411,18 @@ KISSY.add(function(S, require) {
 }, 
   __bindUI: function() {
   _$jscoverage['/delegate-children.js'].functionData[5]++;
-  _$jscoverage['/delegate-children.js'].lineData[75]++;
-  var self = this, events = BaseGesture.START + ' ' + BaseGesture.END + ' ' + TapGesture.TAP;
-  _$jscoverage['/delegate-children.js'].lineData[80]++;
-  events += ' mouseenter mouseleave contextmenu';
+  _$jscoverage['/delegate-children.js'].lineData[77]++;
+  var self = this, events = BasicGesture.START + ' ' + BasicGesture.END + ' ' + TapGesture.TAP;
   _$jscoverage['/delegate-children.js'].lineData[82]++;
+  events += ' mouseenter mouseleave contextmenu';
+  _$jscoverage['/delegate-children.js'].lineData[84]++;
   self.$el.delegate(events, '.' + self.__childClsTag, self.handleChildrenEvents, self);
 }, 
   getOwnerControl: function(e) {
   _$jscoverage['/delegate-children.js'].functionData[6]++;
-  _$jscoverage['/delegate-children.js'].lineData[93]++;
+  _$jscoverage['/delegate-children.js'].lineData[95]++;
   return Manager.getComponent(e.currentTarget.id);
-}});
-  _$jscoverage['/delegate-children.js'].lineData[97]++;
+}};
+  _$jscoverage['/delegate-children.js'].lineData[99]++;
   return DelegateChildren;
 });

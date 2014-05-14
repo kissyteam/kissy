@@ -263,7 +263,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/code.js'].functionData[1]++;
   }
   _$jscoverage['/code.js'].lineData[15]++;
-  S.augment(CodePlugin, {
+  CodePlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/code.js'].functionData[2]++;
   _$jscoverage['/code.js'].lineData[17]++;
@@ -276,7 +276,7 @@ KISSY.add(function(S, require) {
   DialogLoader.useDialog(editor, 'code');
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
-}});
+}};
   _$jscoverage['/code.js'].lineData[29]++;
   return CodePlugin;
 });

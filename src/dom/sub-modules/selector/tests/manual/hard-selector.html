@@ -184,7 +184,7 @@
 <script src="/kissy/src/package.js"></script>
 <script src="/kissy/tools/third-party/sizzle.js"></script>
 <script>
-    KISSY.use('dom/selector', function (S, engine) {
+    KISSY.use('dom/selector,util', function (S, engine,util) {
         var str = [
             '.x>.y div.z',
             '.x>.y>.q .y>div.z',
@@ -195,7 +195,7 @@
             '.x .y .x>.y div.z',
             '.x>.y .x>.y div.z'
         ];
-        S.each(str, function (s, index) {
+        util.each(str, function (s, index) {
             index++;
             S.log(index + ': ' + s);
             var start = (+new Date());

@@ -232,53 +232,54 @@ if (! _$jscoverage['/multi-word/cursor.js']) {
   _$jscoverage['/multi-word/cursor.js'].lineData[6] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[7] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[8] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[54] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[55] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[10] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[56] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[57] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[58] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[59] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[60] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[63] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[61] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[62] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[65] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[66] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[67] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[68] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[69] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[70] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[71] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[72] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[75] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[76] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[73] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[74] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[77] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[78] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[84] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[85] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[80] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[86] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[87] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[88] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[89] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[93] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[95] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[96] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[90] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[91] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[97] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[98] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[108] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[109] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[110] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[120] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[99] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[100] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[101] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[102] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[112] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[113] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[114] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[124] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[125] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[126] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[128] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[129] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[131] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[130] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[133] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[141] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[144] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[135] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[137] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[145] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[146] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[147] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[148] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[149] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[150] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[151] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[153] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[154] = 0;
-  _$jscoverage['/multi-word/cursor.js'].lineData[155] = 0;
   _$jscoverage['/multi-word/cursor.js'].lineData[158] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[159] = 0;
+  _$jscoverage['/multi-word/cursor.js'].lineData[162] = 0;
 }
 if (! _$jscoverage['/multi-word/cursor.js'].functionData) {
   _$jscoverage['/multi-word/cursor.js'].functionData = [];
@@ -287,56 +288,57 @@ if (! _$jscoverage['/multi-word/cursor.js'].functionData) {
   _$jscoverage['/multi-word/cursor.js'].functionData[2] = 0;
   _$jscoverage['/multi-word/cursor.js'].functionData[3] = 0;
   _$jscoverage['/multi-word/cursor.js'].functionData[4] = 0;
+  _$jscoverage['/multi-word/cursor.js'].functionData[5] = 0;
 }
 if (! _$jscoverage['/multi-word/cursor.js'].branchData) {
   _$jscoverage['/multi-word/cursor.js'].branchData = {};
-  _$jscoverage['/multi-word/cursor.js'].branchData['56'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['59'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['68'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['87'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['108'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['108'][1] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['124'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['124'][2] = new BranchData();
-  _$jscoverage['/multi-word/cursor.js'].branchData['149'] = [];
-  _$jscoverage['/multi-word/cursor.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['58'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['61'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['70'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['89'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['89'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['112'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['128'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['128'][1] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['128'][2] = new BranchData();
+  _$jscoverage['/multi-word/cursor.js'].branchData['153'] = [];
+  _$jscoverage['/multi-word/cursor.js'].branchData['153'][1] = new BranchData();
 }
-_$jscoverage['/multi-word/cursor.js'].branchData['149'][1].init(1879, 18, 'selectionStart > 0');
-function visit8_149_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['149'][1].ranCondition(result);
+_$jscoverage['/multi-word/cursor.js'].branchData['153'][1].init(1879, 18, 'selectionStart > 0');
+function visit8_153_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['124'][2].init(1033, 24, 'elem.type !== \'textarea\'');
-function visit7_124_2(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['124'][2].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['128'][2].init(1033, 24, 'elem.type !== \'textarea\'');
+function visit7_128_2(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['128'][2].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['124'][1].init(1006, 51, '!supportInputScrollLeft && elem.type !== \'textarea\'');
-function visit6_124_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['128'][1].init(1006, 51, '!supportInputScrollLeft && elem.type !== \'textarea\'');
+function visit6_128_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['108'][1].init(364, 13, 'doc.selection');
-function visit5_108_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['108'][1].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['112'][1].init(364, 13, 'doc.selection');
+function visit5_112_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['87'][1].init(337, 23, 'input[0].scrollLeft > 0');
-function visit4_87_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['87'][1].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['89'][1].init(337, 23, 'input[0].scrollLeft > 0');
+function visit4_89_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['68'][1].init(433, 9, '!FAKE_DIV');
-function visit3_68_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['70'][1].init(436, 9, '!FAKE_DIV');
+function visit3_70_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['59'][1].init(115, 49, 'String(elem[0].type.toLowerCase()) === \'textarea\'');
-function visit2_59_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['61'][1].init(115, 49, 'String(elem[0].type.toLowerCase()) === \'textarea\'');
+function visit2_61_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multi-word/cursor.js'].branchData['56'][1].init(44, 5, '!fake');
-function visit1_56_1(result) {
-  _$jscoverage['/multi-word/cursor.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/multi-word/cursor.js'].branchData['58'][1].init(44, 5, '!fake');
+function visit1_58_1(result) {
+  _$jscoverage['/multi-word/cursor.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/multi-word/cursor.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -344,120 +346,124 @@ KISSY.add(function(S, require) {
   _$jscoverage['/multi-word/cursor.js'].lineData[7]++;
   var Node = require('node');
   _$jscoverage['/multi-word/cursor.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/multi-word/cursor.js'].lineData[10]++;
   var $ = Node.all, FAKE_DIV_HTML = '<div style="' + 'z-index:-9999;' + 'overflow:hidden;' + 'position: fixed;' + 'left:-9999px;' + 'top:-9999px;' + 'opacity:0;' + 'white-space:pre-wrap;' + 'word-wrap:break-word;' + '"></div>', FAKE_DIV, MARKER = '<span>' + 'x' + '</span>', STYLES = ['paddingLeft', 'paddingTop', 'paddingBottom', 'paddingRight', 'marginLeft', 'marginTop', 'marginBottom', 'marginRight', 'borderLeftStyle', 'borderTopStyle', 'borderBottomStyle', 'borderRightStyle', 'borderLeftWidth', 'borderTopWidth', 'borderBottomWidth', 'borderRightWidth', 'line-height', 'outline', 'height', 'fontFamily', 'fontSize', 'fontWeight', 'fontVariant', 'fontStyle'], supportInputScrollLeft, findSupportInputScrollLeft;
-  _$jscoverage['/multi-word/cursor.js'].lineData[54]++;
+  _$jscoverage['/multi-word/cursor.js'].lineData[56]++;
   function getFakeDiv(elem) {
     _$jscoverage['/multi-word/cursor.js'].functionData[1]++;
-    _$jscoverage['/multi-word/cursor.js'].lineData[55]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[57]++;
     var fake = FAKE_DIV;
-    _$jscoverage['/multi-word/cursor.js'].lineData[56]++;
-    if (visit1_56_1(!fake)) {
-      _$jscoverage['/multi-word/cursor.js'].lineData[57]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[58]++;
+    if (visit1_58_1(!fake)) {
+      _$jscoverage['/multi-word/cursor.js'].lineData[59]++;
       fake = $(FAKE_DIV_HTML);
     }
-    _$jscoverage['/multi-word/cursor.js'].lineData[59]++;
-    if (visit2_59_1(String(elem[0].type.toLowerCase()) === 'textarea')) {
-      _$jscoverage['/multi-word/cursor.js'].lineData[60]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[61]++;
+    if (visit2_61_1(String(elem[0].type.toLowerCase()) === 'textarea')) {
+      _$jscoverage['/multi-word/cursor.js'].lineData[62]++;
       fake.css('width', elem.css('width'));
     } else {
-      _$jscoverage['/multi-word/cursor.js'].lineData[63]++;
+      _$jscoverage['/multi-word/cursor.js'].lineData[65]++;
       fake.css('width', 9999);
     }
-    _$jscoverage['/multi-word/cursor.js'].lineData[65]++;
-    S.each(STYLES, function(s) {
+    _$jscoverage['/multi-word/cursor.js'].lineData[67]++;
+    util.each(STYLES, function(s) {
   _$jscoverage['/multi-word/cursor.js'].functionData[2]++;
-  _$jscoverage['/multi-word/cursor.js'].lineData[66]++;
+  _$jscoverage['/multi-word/cursor.js'].lineData[68]++;
   fake.css(s, elem.css(s));
 });
-    _$jscoverage['/multi-word/cursor.js'].lineData[68]++;
-    if (visit3_68_1(!FAKE_DIV)) {
-      _$jscoverage['/multi-word/cursor.js'].lineData[69]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[70]++;
+    if (visit3_70_1(!FAKE_DIV)) {
+      _$jscoverage['/multi-word/cursor.js'].lineData[71]++;
       fake.insertBefore(elem[0].ownerDocument.body.firstChild);
     }
-    _$jscoverage['/multi-word/cursor.js'].lineData[71]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[73]++;
     FAKE_DIV = fake;
-    _$jscoverage['/multi-word/cursor.js'].lineData[72]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[74]++;
     return fake;
   }
-  _$jscoverage['/multi-word/cursor.js'].lineData[75]++;
+  _$jscoverage['/multi-word/cursor.js'].lineData[77]++;
   findSupportInputScrollLeft = function() {
   _$jscoverage['/multi-word/cursor.js'].functionData[3]++;
-  _$jscoverage['/multi-word/cursor.js'].lineData[76]++;
-  var doc = document, input = $('<input>');
   _$jscoverage['/multi-word/cursor.js'].lineData[78]++;
+  var doc = document, input = $('<input>');
+  _$jscoverage['/multi-word/cursor.js'].lineData[80]++;
   input.css({
   width: 1, 
   position: 'absolute', 
   left: -9999, 
   top: -9999});
-  _$jscoverage['/multi-word/cursor.js'].lineData[84]++;
-  input.val('123456789');
-  _$jscoverage['/multi-word/cursor.js'].lineData[85]++;
-  input.appendTo(doc.body);
   _$jscoverage['/multi-word/cursor.js'].lineData[86]++;
-  input[0].focus();
+  input.val('123456789');
   _$jscoverage['/multi-word/cursor.js'].lineData[87]++;
-  supportInputScrollLeft = (visit4_87_1(input[0].scrollLeft > 0));
+  input.appendTo(doc.body);
   _$jscoverage['/multi-word/cursor.js'].lineData[88]++;
-  input.remove();
+  input[0].focus();
   _$jscoverage['/multi-word/cursor.js'].lineData[89]++;
-  findSupportInputScrollLeft = S.noop;
-};
-  _$jscoverage['/multi-word/cursor.js'].lineData[93]++;
-  supportInputScrollLeft = false;
-  _$jscoverage['/multi-word/cursor.js'].lineData[95]++;
-  return function(elem) {
+  supportInputScrollLeft = (visit4_89_1(input[0].scrollLeft > 0));
+  _$jscoverage['/multi-word/cursor.js'].lineData[90]++;
+  input.remove();
+  _$jscoverage['/multi-word/cursor.js'].lineData[91]++;
+  findSupportInputScrollLeft = function() {
   _$jscoverage['/multi-word/cursor.js'].functionData[4]++;
-  _$jscoverage['/multi-word/cursor.js'].lineData[96]++;
-  var $elem = $(elem);
+};
+};
   _$jscoverage['/multi-word/cursor.js'].lineData[97]++;
+  supportInputScrollLeft = false;
+  _$jscoverage['/multi-word/cursor.js'].lineData[99]++;
+  return function(elem) {
+  _$jscoverage['/multi-word/cursor.js'].functionData[5]++;
+  _$jscoverage['/multi-word/cursor.js'].lineData[100]++;
+  var $elem = $(elem);
+  _$jscoverage['/multi-word/cursor.js'].lineData[101]++;
   elem = $elem[0];
-  _$jscoverage['/multi-word/cursor.js'].lineData[98]++;
+  _$jscoverage['/multi-word/cursor.js'].lineData[102]++;
   var doc = elem.ownerDocument, $doc = $(doc), elemOffset, range, fake, selectionStart, offset, marker, elemScrollTop = elem.scrollTop, elemScrollLeft = elem.scrollLeft;
-  _$jscoverage['/multi-word/cursor.js'].lineData[108]++;
-  if (visit5_108_1(doc.selection)) {
-    _$jscoverage['/multi-word/cursor.js'].lineData[109]++;
+  _$jscoverage['/multi-word/cursor.js'].lineData[112]++;
+  if (visit5_112_1(doc.selection)) {
+    _$jscoverage['/multi-word/cursor.js'].lineData[113]++;
     range = doc.selection.createRange();
-    _$jscoverage['/multi-word/cursor.js'].lineData[110]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[114]++;
     return {
   left: range.boundingLeft + elemScrollLeft + $doc.scrollLeft(), 
   top: range.boundingTop + elemScrollTop + range.boundingHeight + $doc.scrollTop()};
   }
-  _$jscoverage['/multi-word/cursor.js'].lineData[120]++;
-  elemOffset = $elem.offset();
   _$jscoverage['/multi-word/cursor.js'].lineData[124]++;
-  if (visit6_124_1(!supportInputScrollLeft && visit7_124_2(elem.type !== 'textarea'))) {
-    _$jscoverage['/multi-word/cursor.js'].lineData[125]++;
+  elemOffset = $elem.offset();
+  _$jscoverage['/multi-word/cursor.js'].lineData[128]++;
+  if (visit6_128_1(!supportInputScrollLeft && visit7_128_2(elem.type !== 'textarea'))) {
+    _$jscoverage['/multi-word/cursor.js'].lineData[129]++;
     elemOffset.top += elem.offsetHeight;
-    _$jscoverage['/multi-word/cursor.js'].lineData[126]++;
+    _$jscoverage['/multi-word/cursor.js'].lineData[130]++;
     return elemOffset;
   }
-  _$jscoverage['/multi-word/cursor.js'].lineData[129]++;
-  fake = getFakeDiv($elem);
-  _$jscoverage['/multi-word/cursor.js'].lineData[131]++;
-  selectionStart = elem.selectionStart;
   _$jscoverage['/multi-word/cursor.js'].lineData[133]++;
+  fake = getFakeDiv($elem);
+  _$jscoverage['/multi-word/cursor.js'].lineData[135]++;
+  selectionStart = elem.selectionStart;
+  _$jscoverage['/multi-word/cursor.js'].lineData[137]++;
   fake.html(S.escapeHtml(elem.value.substring(0, selectionStart - 1)) + MARKER);
-  _$jscoverage['/multi-word/cursor.js'].lineData[141]++;
-  offset = elemOffset;
-  _$jscoverage['/multi-word/cursor.js'].lineData[144]++;
-  fake.offset(offset);
   _$jscoverage['/multi-word/cursor.js'].lineData[145]++;
-  marker = fake.last();
-  _$jscoverage['/multi-word/cursor.js'].lineData[146]++;
-  offset = marker.offset();
-  _$jscoverage['/multi-word/cursor.js'].lineData[147]++;
-  offset.top += marker.height();
+  offset = elemOffset;
+  _$jscoverage['/multi-word/cursor.js'].lineData[148]++;
+  fake.offset(offset);
   _$jscoverage['/multi-word/cursor.js'].lineData[149]++;
-  if (visit8_149_1(selectionStart > 0)) {
-    _$jscoverage['/multi-word/cursor.js'].lineData[150]++;
+  marker = fake.last();
+  _$jscoverage['/multi-word/cursor.js'].lineData[150]++;
+  offset = marker.offset();
+  _$jscoverage['/multi-word/cursor.js'].lineData[151]++;
+  offset.top += marker.height();
+  _$jscoverage['/multi-word/cursor.js'].lineData[153]++;
+  if (visit8_153_1(selectionStart > 0)) {
+    _$jscoverage['/multi-word/cursor.js'].lineData[154]++;
     offset.left += marker.width();
   }
-  _$jscoverage['/multi-word/cursor.js'].lineData[154]++;
-  offset.top -= elemScrollTop;
-  _$jscoverage['/multi-word/cursor.js'].lineData[155]++;
-  offset.left -= elemScrollLeft;
   _$jscoverage['/multi-word/cursor.js'].lineData[158]++;
+  offset.top -= elemScrollTop;
+  _$jscoverage['/multi-word/cursor.js'].lineData[159]++;
+  offset.left -= elemScrollLeft;
+  _$jscoverage['/multi-word/cursor.js'].lineData[162]++;
   return offset;
 };
 });

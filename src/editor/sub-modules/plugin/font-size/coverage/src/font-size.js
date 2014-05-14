@@ -234,6 +234,7 @@ if (! _$jscoverage['/font-size.js']) {
   _$jscoverage['/font-size.js'].lineData[8] = 0;
   _$jscoverage['/font-size.js'].lineData[9] = 0;
   _$jscoverage['/font-size.js'].lineData[10] = 0;
+  _$jscoverage['/font-size.js'].lineData[11] = 0;
   _$jscoverage['/font-size.js'].lineData[12] = 0;
   _$jscoverage['/font-size.js'].lineData[13] = 0;
   _$jscoverage['/font-size.js'].lineData[16] = 0;
@@ -276,6 +277,8 @@ KISSY.add(function(S, require) {
   var cmd = require('./font-size/cmd');
   _$jscoverage['/font-size.js'].lineData[10]++;
   require('./menubutton');
+  _$jscoverage['/font-size.js'].lineData[11]++;
+  var util = require('util');
   _$jscoverage['/font-size.js'].lineData[12]++;
   function FontSizePlugin(config) {
     _$jscoverage['/font-size.js'].functionData[1]++;
@@ -283,7 +286,7 @@ KISSY.add(function(S, require) {
     this.config = visit1_13_1(config || {});
   }
   _$jscoverage['/font-size.js'].lineData[16]++;
-  S.augment(FontSizePlugin, {
+  util.augment(FontSizePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/font-size.js'].functionData[2]++;
   _$jscoverage['/font-size.js'].lineData[19]++;
@@ -294,7 +297,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/font-size.js'].lineData[22]++;
     var v = [];
     _$jscoverage['/font-size.js'].lineData[23]++;
-    S.each(vs, function(n) {
+    util.each(vs, function(n) {
   _$jscoverage['/font-size.js'].functionData[4]++;
   _$jscoverage['/font-size.js'].lineData[24]++;
   v.push({
@@ -307,10 +310,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/font-size.js'].lineData[32]++;
   var fontSizeConfig = this.config;
   _$jscoverage['/font-size.js'].lineData[34]++;
-  fontSizeConfig.menu = S.mix({
+  fontSizeConfig.menu = util.mix({
   children: wrapFont(['8px', '10px', '12px', '14px', '18px', '24px', '36px', '48px', '60px', '72px', '84px', '96px'])}, fontSizeConfig.menu);
   _$jscoverage['/font-size.js'].lineData[43]++;
-  editor.addSelect('fontSize', S.mix({
+  editor.addSelect('fontSize', util.mix({
   cmdType: 'fontSize', 
   defaultCaption: '\u5927\u5c0f', 
   width: '70px', 

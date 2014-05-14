@@ -15,7 +15,7 @@ program
 
 var S = require('../lib/loader'),
     util = require('../lib/util'),
-    XTemplateCompiler = require('../lib/xtemplate').Compiler,
+    XTemplateCompiler = require('../lib/xtemplate').XTemplate.Compiler,
     chokidar = require('chokidar'),
 /*jshint camelcase: false*/
     jsBeautify = require('js-beautify').js_beautify,

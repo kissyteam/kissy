@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var $ = S.all,
         Editor = require('editor'),
         UA = S.UA,
+        util = require('util'),
         Dom = require('dom'),
         RangeType = Editor.RangeType,
         Node = S.Node;
@@ -14,7 +15,7 @@ KISSY.add(function (S, require) {
 
     function trimNode(t) {
         if (t.nodeType === Dom.NodeType.TEXT_NODE) {
-            t.nodeValue = S.trim(t.nodeValue);
+            t.nodeValue = util.trim(t.nodeValue);
         } else {
             var cs = t.childNodes || [];
             for (var i = 0; i < cs.length; i++) {

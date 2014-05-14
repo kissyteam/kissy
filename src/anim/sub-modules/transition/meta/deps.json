@@ -1,1 +1,1 @@
-{"anim/transition":["dom","anim/base"]}
+{"anim/transition":["util","dom","anim/base","feature"]}

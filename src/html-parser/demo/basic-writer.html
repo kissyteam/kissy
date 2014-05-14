@@ -27,13 +27,13 @@
 </label>
 <script>
 
-    KISSY.use("html-parser,core", function (S, HtmlParser) {
-        var $ = S.all;
+    KISSY.use("html-parser,node,util", function (S, HtmlParser,Node,util) {
+        var $ = Node.all;
         var start = $("#start");
         start.on("click", function () {
             var basicWriter = new HtmlParser.BasicWriter(),
                     filter = new HtmlParser.Filter(),
-                    before = S.trim($("#before").val()),
+                    before = util.trim($("#before").val()),
                     n = new HtmlParser.Parser(before).parse();
 
             filter.addRules({

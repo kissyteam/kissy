@@ -2,13 +2,13 @@
  *  complex tc for base and attribute
  *  @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Attribute) {
+KISSY.add(function (S,util, Attribute) {
     describe('complex attr', function () {
         it('support validator', function () {
             function A() {
             }
 
-            S.augment(A, Attribute);
+            util.augment(A, Attribute);
 
             var t = new A();
             t.addAttrs({
@@ -34,7 +34,7 @@ KISSY.add(function (S, Attribute) {
             function A() {
             }
 
-            S.augment(A, Attribute);
+            util.augment(A, Attribute);
 
             var t = new A(),
                 e1;
@@ -102,7 +102,7 @@ KISSY.add(function (S, Attribute) {
             function A() {
             }
 
-            S.augment(A, Attribute);
+            util.augment(A, Attribute);
 
             var t = new A();
             t.addAttrs({
@@ -157,7 +157,7 @@ KISSY.add(function (S, Attribute) {
             function A() {
             }
 
-            S.augment(A, Attribute);
+            util.augment(A, Attribute);
 
             var a = new A();
 
@@ -173,7 +173,7 @@ KISSY.add(function (S, Attribute) {
                 function A() {
                 }
 
-                S.augment(A, Attribute);
+                util.augment(A, Attribute);
 
                 var a = new A();
                 a.addAttrs({
@@ -214,7 +214,7 @@ KISSY.add(function (S, Attribute) {
                 function A() {
                 }
 
-                S.augment(A, Attribute);
+                util.augment(A, Attribute);
 
                 var a = new A();
                 a.addAttrs({
@@ -254,7 +254,7 @@ KISSY.add(function (S, Attribute) {
             function A() {
             }
 
-            S.augment(A, Attribute);
+            util.augment(A, Attribute);
 
             var aa = new A(),
                 ok = 0,
@@ -313,5 +313,5 @@ KISSY.add(function (S, Attribute) {
         });
     });
 }, {
-    requires: ['attribute']
+    requires: ['util','attribute']
 });

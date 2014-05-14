@@ -232,24 +232,25 @@ if (! _$jscoverage['/menubutton.js']) {
   _$jscoverage['/menubutton.js'].lineData[6] = 0;
   _$jscoverage['/menubutton.js'].lineData[7] = 0;
   _$jscoverage['/menubutton.js'].lineData[8] = 0;
-  _$jscoverage['/menubutton.js'].lineData[16] = 0;
+  _$jscoverage['/menubutton.js'].lineData[9] = 0;
   _$jscoverage['/menubutton.js'].lineData[17] = 0;
-  _$jscoverage['/menubutton.js'].lineData[19] = 0;
-  _$jscoverage['/menubutton.js'].lineData[21] = 0;
+  _$jscoverage['/menubutton.js'].lineData[18] = 0;
+  _$jscoverage['/menubutton.js'].lineData[20] = 0;
   _$jscoverage['/menubutton.js'].lineData[22] = 0;
   _$jscoverage['/menubutton.js'].lineData[23] = 0;
   _$jscoverage['/menubutton.js'].lineData[24] = 0;
-  _$jscoverage['/menubutton.js'].lineData[26] = 0;
+  _$jscoverage['/menubutton.js'].lineData[25] = 0;
   _$jscoverage['/menubutton.js'].lineData[27] = 0;
-  _$jscoverage['/menubutton.js'].lineData[31] = 0;
-  _$jscoverage['/menubutton.js'].lineData[36] = 0;
+  _$jscoverage['/menubutton.js'].lineData[28] = 0;
+  _$jscoverage['/menubutton.js'].lineData[32] = 0;
   _$jscoverage['/menubutton.js'].lineData[37] = 0;
   _$jscoverage['/menubutton.js'].lineData[38] = 0;
-  _$jscoverage['/menubutton.js'].lineData[40] = 0;
+  _$jscoverage['/menubutton.js'].lineData[39] = 0;
   _$jscoverage['/menubutton.js'].lineData[41] = 0;
-  _$jscoverage['/menubutton.js'].lineData[44] = 0;
+  _$jscoverage['/menubutton.js'].lineData[42] = 0;
   _$jscoverage['/menubutton.js'].lineData[45] = 0;
-  _$jscoverage['/menubutton.js'].lineData[49] = 0;
+  _$jscoverage['/menubutton.js'].lineData[46] = 0;
+  _$jscoverage['/menubutton.js'].lineData[50] = 0;
 }
 if (! _$jscoverage['/menubutton.js'].functionData) {
   _$jscoverage['/menubutton.js'].functionData = [];
@@ -260,36 +261,36 @@ if (! _$jscoverage['/menubutton.js'].functionData) {
 }
 if (! _$jscoverage['/menubutton.js'].branchData) {
   _$jscoverage['/menubutton.js'].branchData = {};
-  _$jscoverage['/menubutton.js'].branchData['17'] = [];
-  _$jscoverage['/menubutton.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/menubutton.js'].branchData['21'] = [];
-  _$jscoverage['/menubutton.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/menubutton.js'].branchData['23'] = [];
-  _$jscoverage['/menubutton.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/menubutton.js'].branchData['26'] = [];
-  _$jscoverage['/menubutton.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/menubutton.js'].branchData['36'] = [];
-  _$jscoverage['/menubutton.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/menubutton.js'].branchData['18'] = [];
+  _$jscoverage['/menubutton.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/menubutton.js'].branchData['22'] = [];
+  _$jscoverage['/menubutton.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/menubutton.js'].branchData['24'] = [];
+  _$jscoverage['/menubutton.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/menubutton.js'].branchData['27'] = [];
+  _$jscoverage['/menubutton.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/menubutton.js'].branchData['37'] = [];
+  _$jscoverage['/menubutton.js'].branchData['37'][1] = new BranchData();
 }
-_$jscoverage['/menubutton.js'].branchData['36'][1].init(583, 37, 'cfg.mode === Editor.Mode.WYSIWYG_MODE');
-function visit5_36_1(result) {
-  _$jscoverage['/menubutton.js'].branchData['36'][1].ranCondition(result);
+_$jscoverage['/menubutton.js'].branchData['37'][1].init(586, 37, 'cfg.mode === Editor.Mode.WYSIWYG_MODE');
+function visit5_37_1(result) {
+  _$jscoverage['/menubutton.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['26'][1].init(177, 9, 'cfg.elCls');
-function visit4_26_1(result) {
-  _$jscoverage['/menubutton.js'].branchData['26'][1].ranCondition(result);
+}_$jscoverage['/menubutton.js'].branchData['27'][1].init(177, 9, 'cfg.elCls');
+function visit4_27_1(result) {
+  _$jscoverage['/menubutton.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['23'][1].init(50, 8, 'cfg.menu');
-function visit3_23_1(result) {
-  _$jscoverage['/menubutton.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/menubutton.js'].branchData['24'][1].init(50, 8, 'cfg.menu');
+function visit3_24_1(result) {
+  _$jscoverage['/menubutton.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['21'][1].init(146, 3, 'cfg');
-function visit2_21_1(result) {
-  _$jscoverage['/menubutton.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/menubutton.js'].branchData['22'][1].init(146, 3, 'cfg');
+function visit2_22_1(result) {
+  _$jscoverage['/menubutton.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton.js'].branchData['17'][1].init(23, 31, 'SelectType || MenuButton.Select');
-function visit1_17_1(result) {
-  _$jscoverage['/menubutton.js'].branchData['17'][1].ranCondition(result);
+}_$jscoverage['/menubutton.js'].branchData['18'][1].init(23, 31, 'SelectType || MenuButton.Select');
+function visit1_18_1(result) {
+  _$jscoverage['/menubutton.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menubutton.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -297,53 +298,55 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menubutton.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/menubutton.js'].lineData[8]++;
+  var util = require('util');
+  _$jscoverage['/menubutton.js'].lineData[9]++;
   var MenuButton = require('menubutton');
-  _$jscoverage['/menubutton.js'].lineData[16]++;
+  _$jscoverage['/menubutton.js'].lineData[17]++;
   Editor.prototype.addSelect = function(id, cfg, SelectType) {
   _$jscoverage['/menubutton.js'].functionData[1]++;
-  _$jscoverage['/menubutton.js'].lineData[17]++;
-  SelectType = visit1_17_1(SelectType || MenuButton.Select);
-  _$jscoverage['/menubutton.js'].lineData[19]++;
+  _$jscoverage['/menubutton.js'].lineData[18]++;
+  SelectType = visit1_18_1(SelectType || MenuButton.Select);
+  _$jscoverage['/menubutton.js'].lineData[20]++;
   var self = this, prefixCls = self.get('prefixCls') + 'editor-';
-  _$jscoverage['/menubutton.js'].lineData[21]++;
-  if (visit2_21_1(cfg)) {
-    _$jscoverage['/menubutton.js'].lineData[22]++;
-    cfg.editor = self;
+  _$jscoverage['/menubutton.js'].lineData[22]++;
+  if (visit2_22_1(cfg)) {
     _$jscoverage['/menubutton.js'].lineData[23]++;
-    if (visit3_23_1(cfg.menu)) {
-      _$jscoverage['/menubutton.js'].lineData[24]++;
+    cfg.editor = self;
+    _$jscoverage['/menubutton.js'].lineData[24]++;
+    if (visit3_24_1(cfg.menu)) {
+      _$jscoverage['/menubutton.js'].lineData[25]++;
       cfg.menu.zIndex = Editor.baseZIndex(Editor.ZIndexManager.SELECT);
     }
-    _$jscoverage['/menubutton.js'].lineData[26]++;
-    if (visit4_26_1(cfg.elCls)) {
-      _$jscoverage['/menubutton.js'].lineData[27]++;
+    _$jscoverage['/menubutton.js'].lineData[27]++;
+    if (visit4_27_1(cfg.elCls)) {
+      _$jscoverage['/menubutton.js'].lineData[28]++;
       cfg.elCls = prefixCls + cfg.elCls;
     }
   }
-  _$jscoverage['/menubutton.js'].lineData[31]++;
-  var s = new SelectType(S.mix({
+  _$jscoverage['/menubutton.js'].lineData[32]++;
+  var s = new SelectType(util.mix({
   render: self.get('toolBarEl'), 
   prefixCls: prefixCls}, cfg)).render();
-  _$jscoverage['/menubutton.js'].lineData[36]++;
-  if (visit5_36_1(cfg.mode === Editor.Mode.WYSIWYG_MODE)) {
-    _$jscoverage['/menubutton.js'].lineData[37]++;
+  _$jscoverage['/menubutton.js'].lineData[37]++;
+  if (visit5_37_1(cfg.mode === Editor.Mode.WYSIWYG_MODE)) {
+    _$jscoverage['/menubutton.js'].lineData[38]++;
     self.on('wysiwygMode', function() {
   _$jscoverage['/menubutton.js'].functionData[2]++;
-  _$jscoverage['/menubutton.js'].lineData[38]++;
+  _$jscoverage['/menubutton.js'].lineData[39]++;
   s.set('disabled', false);
 });
-    _$jscoverage['/menubutton.js'].lineData[40]++;
+    _$jscoverage['/menubutton.js'].lineData[41]++;
     self.on('sourceMode', function() {
   _$jscoverage['/menubutton.js'].functionData[3]++;
-  _$jscoverage['/menubutton.js'].lineData[41]++;
+  _$jscoverage['/menubutton.js'].lineData[42]++;
   s.set('disabled', true);
 });
   }
-  _$jscoverage['/menubutton.js'].lineData[44]++;
-  self.addControl(id + '/select', s);
   _$jscoverage['/menubutton.js'].lineData[45]++;
+  self.addControl(id + '/select', s);
+  _$jscoverage['/menubutton.js'].lineData[46]++;
   return s;
 };
-  _$jscoverage['/menubutton.js'].lineData[49]++;
+  _$jscoverage['/menubutton.js'].lineData[50]++;
   return MenuButton;
 });

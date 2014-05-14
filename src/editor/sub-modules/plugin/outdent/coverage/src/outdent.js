@@ -286,7 +286,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/outdent.js'].functionData[1]++;
   }
   _$jscoverage['/outdent.js'].lineData[15]++;
-  S.augment(outdent, {
+  (outdent.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/outdent.js'].functionData[2]++;
   _$jscoverage['/outdent.js'].lineData[18]++;

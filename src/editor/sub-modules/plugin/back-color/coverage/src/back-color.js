@@ -232,12 +232,12 @@ if (! _$jscoverage['/back-color.js']) {
   _$jscoverage['/back-color.js'].lineData[6] = 0;
   _$jscoverage['/back-color.js'].lineData[7] = 0;
   _$jscoverage['/back-color.js'].lineData[8] = 0;
-  _$jscoverage['/back-color.js'].lineData[9] = 0;
   _$jscoverage['/back-color.js'].lineData[10] = 0;
-  _$jscoverage['/back-color.js'].lineData[13] = 0;
-  _$jscoverage['/back-color.js'].lineData[15] = 0;
+  _$jscoverage['/back-color.js'].lineData[11] = 0;
+  _$jscoverage['/back-color.js'].lineData[14] = 0;
   _$jscoverage['/back-color.js'].lineData[16] = 0;
-  _$jscoverage['/back-color.js'].lineData[24] = 0;
+  _$jscoverage['/back-color.js'].lineData[17] = 0;
+  _$jscoverage['/back-color.js'].lineData[25] = 0;
 }
 if (! _$jscoverage['/back-color.js'].functionData) {
   _$jscoverage['/back-color.js'].functionData = [];
@@ -247,12 +247,12 @@ if (! _$jscoverage['/back-color.js'].functionData) {
 }
 if (! _$jscoverage['/back-color.js'].branchData) {
   _$jscoverage['/back-color.js'].branchData = {};
-  _$jscoverage['/back-color.js'].branchData['10'] = [];
-  _$jscoverage['/back-color.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/back-color.js'].branchData['11'] = [];
+  _$jscoverage['/back-color.js'].branchData['11'][1] = new BranchData();
 }
-_$jscoverage['/back-color.js'].branchData['10'][1].init(24, 12, 'config || {}');
-function visit1_10_1(result) {
-  _$jscoverage['/back-color.js'].branchData['10'][1].ranCondition(result);
+_$jscoverage['/back-color.js'].branchData['11'][1].init(24, 12, 'config || {}');
+function visit1_11_1(result) {
+  _$jscoverage['/back-color.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/back-color.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -261,24 +261,24 @@ KISSY.add(function(S, require) {
   var Button = require('./color/btn');
   _$jscoverage['/back-color.js'].lineData[8]++;
   var cmd = require('./back-color/cmd');
-  _$jscoverage['/back-color.js'].lineData[9]++;
-  function backColor(config) {
+  _$jscoverage['/back-color.js'].lineData[10]++;
+  function BackColor(config) {
     _$jscoverage['/back-color.js'].functionData[1]++;
-    _$jscoverage['/back-color.js'].lineData[10]++;
-    this.config = visit1_10_1(config || {});
+    _$jscoverage['/back-color.js'].lineData[11]++;
+    this.config = visit1_11_1(config || {});
   }
-  _$jscoverage['/back-color.js'].lineData[13]++;
-  S.augment(backColor, {
+  _$jscoverage['/back-color.js'].lineData[14]++;
+  BackColor.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/back-color.js'].functionData[2]++;
-  _$jscoverage['/back-color.js'].lineData[15]++;
-  cmd.init(editor);
   _$jscoverage['/back-color.js'].lineData[16]++;
+  cmd.init(editor);
+  _$jscoverage['/back-color.js'].lineData[17]++;
   Button.init(editor, {
   defaultColor: 'rgb(255, 217, 102)', 
   cmdType: 'backColor', 
   tooltip: '\u80cc\u666f\u989c\u8272'});
-}});
-  _$jscoverage['/back-color.js'].lineData[24]++;
-  return backColor;
+}};
+  _$jscoverage['/back-color.js'].lineData[25]++;
+  return BackColor;
 });

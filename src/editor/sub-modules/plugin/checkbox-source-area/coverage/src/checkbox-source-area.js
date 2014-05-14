@@ -231,6 +231,7 @@ if (! _$jscoverage['/checkbox-source-area.js']) {
   _$jscoverage['/checkbox-source-area.js'].lineData = [];
   _$jscoverage['/checkbox-source-area.js'].lineData[6] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[8] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[9] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[10] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[12] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[15] = 0;
@@ -286,8 +287,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/checkbox-source-area.js'].functionData[0]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[8]++;
   var Editor = require('editor');
+  _$jscoverage['/checkbox-source-area.js'].lineData[9]++;
+  var util = require('util');
   _$jscoverage['/checkbox-source-area.js'].lineData[10]++;
-  var Node = S.Node;
+  var Node = require('node');
   _$jscoverage['/checkbox-source-area.js'].lineData[12]++;
   var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
   _$jscoverage['/checkbox-source-area.js'].lineData[15]++;
@@ -301,7 +304,7 @@ KISSY.add(function(S, require) {
     self._init();
   }
   _$jscoverage['/checkbox-source-area.js'].lineData[21]++;
-  S.augment(CheckboxSourceArea, {
+  util.augment(CheckboxSourceArea, {
   _init: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[2]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[23]++;
@@ -352,7 +355,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/checkbox-source-area.js'].functionData[7]++;
   }
   _$jscoverage['/checkbox-source-area.js'].lineData[62]++;
-  S.augment(CheckboxSourceAreaPlugin, {
+  util.augment(CheckboxSourceAreaPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/checkbox-source-area.js'].functionData[8]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[64]++;

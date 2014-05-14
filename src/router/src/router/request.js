@@ -2,9 +2,11 @@
  * request data structure. instance passed to router callbacks
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function () {
     function Request(data) {
-        S.mix(this, data);
+        for (var d in data) {
+            this[d] = data[d];
+        }
     }
 
     Request.prototype = {

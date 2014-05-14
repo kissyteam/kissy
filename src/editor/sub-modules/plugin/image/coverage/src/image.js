@@ -235,6 +235,7 @@ if (! _$jscoverage['/image.js']) {
   _$jscoverage['/image.js'].lineData[9] = 0;
   _$jscoverage['/image.js'].lineData[10] = 0;
   _$jscoverage['/image.js'].lineData[11] = 0;
+  _$jscoverage['/image.js'].lineData[12] = 0;
   _$jscoverage['/image.js'].lineData[13] = 0;
   _$jscoverage['/image.js'].lineData[17] = 0;
   _$jscoverage['/image.js'].lineData[18] = 0;
@@ -403,8 +404,10 @@ KISSY.add(function(S, require) {
   require('./contextmenu');
   _$jscoverage['/image.js'].lineData[11]++;
   var DialogLoader = require('./dialog-loader');
+  _$jscoverage['/image.js'].lineData[12]++;
+  var util = require('util');
   _$jscoverage['/image.js'].lineData[13]++;
-  var UA = S.UA, Node = require('node'), $ = Node.all, checkImg = function(node) {
+  var UA = require('ua'), Node = require('node'), $ = Node.all, checkImg = function(node) {
   _$jscoverage['/image.js'].functionData[1]++;
   _$jscoverage['/image.js'].lineData[17]++;
   node = $(node);
@@ -421,7 +424,7 @@ KISSY.add(function(S, require) {
     this.config = visit3_31_1(config || {});
   }
   _$jscoverage['/image.js'].lineData[34]++;
-  S.augment(ImagePlugin, {
+  (ImagePlugin.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/image.js'].functionData[3]++;
   _$jscoverage['/image.js'].lineData[37]++;
@@ -487,7 +490,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[90]++;
   var children = [];
   _$jscoverage['/image.js'].lineData[92]++;
-  S.each(handlers, function(h) {
+  util.each(handlers, function(h) {
   _$jscoverage['/image.js'].functionData[8]++;
   _$jscoverage['/image.js'].lineData[93]++;
   children.push({
@@ -503,7 +506,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[103]++;
   var self = this, content = e.target.get('content');
   _$jscoverage['/image.js'].lineData[104]++;
-  S.each(handlers, function(h) {
+  util.each(handlers, function(h) {
   _$jscoverage['/image.js'].functionData[10]++;
   _$jscoverage['/image.js'].lineData[105]++;
   if (visit6_105_1(h.content === content)) {
@@ -537,7 +540,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[127]++;
   var bubble = this, el = bubble.get('contentEl');
   _$jscoverage['/image.js'].lineData[129]++;
-  el.html(S.substitute(tipHTML, {
+  el.html(util.substitute(tipHTML, {
   prefixCls: prefixCls}));
   _$jscoverage['/image.js'].lineData[132]++;
   var tipUrlEl = el.one('.' + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one('.' + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one('.' + prefixCls + 'editor-bubble-remove');

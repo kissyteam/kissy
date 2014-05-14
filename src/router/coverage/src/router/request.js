@@ -232,12 +232,13 @@ if (! _$jscoverage['/router/request.js']) {
   _$jscoverage['/router/request.js'].lineData[5] = 0;
   _$jscoverage['/router/request.js'].lineData[6] = 0;
   _$jscoverage['/router/request.js'].lineData[7] = 0;
-  _$jscoverage['/router/request.js'].lineData[10] = 0;
+  _$jscoverage['/router/request.js'].lineData[8] = 0;
   _$jscoverage['/router/request.js'].lineData[12] = 0;
-  _$jscoverage['/router/request.js'].lineData[13] = 0;
   _$jscoverage['/router/request.js'].lineData[14] = 0;
+  _$jscoverage['/router/request.js'].lineData[15] = 0;
   _$jscoverage['/router/request.js'].lineData[16] = 0;
-  _$jscoverage['/router/request.js'].lineData[19] = 0;
+  _$jscoverage['/router/request.js'].lineData[18] = 0;
+  _$jscoverage['/router/request.js'].lineData[21] = 0;
 }
 if (! _$jscoverage['/router/request.js'].functionData) {
   _$jscoverage['/router/request.js'].functionData = [];
@@ -247,36 +248,39 @@ if (! _$jscoverage['/router/request.js'].functionData) {
 }
 if (! _$jscoverage['/router/request.js'].branchData) {
   _$jscoverage['/router/request.js'].branchData = {};
-  _$jscoverage['/router/request.js'].branchData['13'] = [];
-  _$jscoverage['/router/request.js'].branchData['13'][1] = new BranchData();
+  _$jscoverage['/router/request.js'].branchData['15'] = [];
+  _$jscoverage['/router/request.js'].branchData['15'][1] = new BranchData();
 }
-_$jscoverage['/router/request.js'].branchData['13'][1].init(48, 19, 'name in self.params');
-function visit1_13_1(result) {
-  _$jscoverage['/router/request.js'].branchData['13'][1].ranCondition(result);
+_$jscoverage['/router/request.js'].branchData['15'][1].init(48, 19, 'name in self.params');
+function visit1_15_1(result) {
+  _$jscoverage['/router/request.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/request.js'].lineData[5]++;
-KISSY.add(function(S) {
+KISSY.add(function() {
   _$jscoverage['/router/request.js'].functionData[0]++;
   _$jscoverage['/router/request.js'].lineData[6]++;
   function Request(data) {
     _$jscoverage['/router/request.js'].functionData[1]++;
     _$jscoverage['/router/request.js'].lineData[7]++;
-    S.mix(this, data);
+    for (var d in data) {
+      _$jscoverage['/router/request.js'].lineData[8]++;
+      this[d] = data[d];
+    }
   }
-  _$jscoverage['/router/request.js'].lineData[10]++;
+  _$jscoverage['/router/request.js'].lineData[12]++;
   Request.prototype = {
   param: function(name) {
   _$jscoverage['/router/request.js'].functionData[2]++;
-  _$jscoverage['/router/request.js'].lineData[12]++;
+  _$jscoverage['/router/request.js'].lineData[14]++;
   var self = this;
-  _$jscoverage['/router/request.js'].lineData[13]++;
-  if (visit1_13_1(name in self.params)) {
-    _$jscoverage['/router/request.js'].lineData[14]++;
+  _$jscoverage['/router/request.js'].lineData[15]++;
+  if (visit1_15_1(name in self.params)) {
+    _$jscoverage['/router/request.js'].lineData[16]++;
     return self.params[name];
   }
-  _$jscoverage['/router/request.js'].lineData[16]++;
+  _$jscoverage['/router/request.js'].lineData[18]++;
   return self.query[name];
 }};
-  _$jscoverage['/router/request.js'].lineData[19]++;
+  _$jscoverage['/router/request.js'].lineData[21]++;
   return Request;
 });

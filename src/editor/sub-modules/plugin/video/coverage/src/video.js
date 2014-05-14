@@ -429,7 +429,7 @@ KISSY.add(function(S, require) {
     this.config = config;
   }
   _$jscoverage['/video.js'].lineData[19]++;
-  S.augment(video, {
+  (video.prototype = {
   pluginRenderUI: function(editor) {
   _$jscoverage['/video.js'].functionData[2]++;
   _$jscoverage['/video.js'].lineData[22]++;

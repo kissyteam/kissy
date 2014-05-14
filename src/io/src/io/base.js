@@ -377,7 +377,7 @@ KISSY.add(function (S, require) {
         // Set the Accepts header for the server, depending on the dataType
         self.setRequestHeader(
             'Accept',
-            dataType && accepts[dataType] ?
+                dataType && accepts[dataType] ?
                 accepts[dataType] + (dataType === '*' ? '' : ', */*; q=0.01') :
                 accepts['*']
         );

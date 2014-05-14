@@ -657,7 +657,11 @@ li {
     if (location.search.indexOf('del') !== -1) {
         xclass = 'del-menuitem';
     }
-    KISSY.use("event/dom,dom,combobox,search/menuitem,search/del-menuitem", function (S, Event, Dom, ComboBox) {
+    KISSY.use("util," +
+            "event/dom," +
+            "dom,combobox," +
+            "search/menuitem," +
+            "search/del-menuitem", function (S, util,Event, Dom, ComboBox) {
         /*
          remote dataSource
          */
@@ -690,7 +694,7 @@ li {
                 }),
                 format: function (query, results) {
                     var ret = [];
-                    S.each(results, function (r) {
+                    util.each(results, function (r) {
                         var item = {
                             // 点击菜单项后要放入 input 中的内容
                             textContent: r[0],

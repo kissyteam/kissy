@@ -100,7 +100,7 @@
     }
 
     function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
-        var name = mod.getName();
+        var name = mod.name;
         if (isDebug && stackCache[name]) {
             S.error('circular dependencies found: ' + stack);
             return;

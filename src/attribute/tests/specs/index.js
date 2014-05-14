@@ -1,7 +1,7 @@
 /**
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Attribute) {
+KISSY.add(function (S, util, Attribute) {
     /*jshint noarg:false*/
     describe('attr', function () {
         it('拥有 Attribute 上的方法', function () {
@@ -177,7 +177,7 @@ KISSY.add(function (S, Attribute) {
                 },
                 m: function (value) {
                     // function bm(value), can not have named function in ie
-                    var superFn = S.bind(this.callSuper, arguments.callee, this);
+                    var superFn = util.bind(this.callSuper, arguments.callee, this);
 
                     // 普通的
                     var t0 = this.callSuper(value);
@@ -239,5 +239,5 @@ KISSY.add(function (S, Attribute) {
         });
     });
 }, {
-    requires: ['attribute', './complex-attr']
+    requires: ['util','attribute', './complex-attr']
 });

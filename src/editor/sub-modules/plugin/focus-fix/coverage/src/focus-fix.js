@@ -313,7 +313,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/focus-fix.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/focus-fix.js'].lineData[8]++;
-  var UA = S.UA, focusManager = Editor.focusManager;
+  var UA = require('ua'), focusManager = Editor.focusManager;
   _$jscoverage['/focus-fix.js'].lineData[11]++;
   function _show4FocusExt() {
     _$jscoverage['/focus-fix.js'].functionData[1]++;

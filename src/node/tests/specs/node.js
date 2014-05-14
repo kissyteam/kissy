@@ -7,9 +7,9 @@ KISSY.add(function (S, require) {
     /*global jQuery*/
     var Dom = require('dom');
     var Node = require('node');
-
+    var util = require('util');
     var jq = jQuery;
-    var $ = S.all;
+    var $ = Node.all;
     var NodeList = Node;
     //Dom 已经测试通过，通过 Dom 测 Node
     describe("node", function () {
@@ -33,9 +33,9 @@ KISSY.add(function (S, require) {
         });
 
         it('node is not plainObject', function () {
-            expect(S.isPlainObject($('body'))).toBe(false);
-            expect(S.isPlainObject($('#ee'))).toBe(false);
-            expect(S.isPlainObject($(document.body))).toBe(false);
+            expect(util.isPlainObject($('body'))).toBe(false);
+            expect(util.isPlainObject($('#ee'))).toBe(false);
+            expect(util.isPlainObject($(document.body))).toBe(false);
         });
 
         it("add works", function () {
