@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: May 14 11:54
+build time: May 14 12:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1224,6 +1224,9 @@ KISSY.add("dom/base/style", ["./api", "ua"], function(S, require) {
   function upperCase() {
     return arguments[1].toUpperCase()
   }
+  function camelCase(name) {
+    return name.replace(RE_DASH, upperCase)
+  }
   function getCssVendorInfo(name) {
     if(name.indexOf("-") !== -1) {
       name = name.replace(RE_DASH, upperCase)
@@ -1250,7 +1253,7 @@ KISSY.add("dom/base/style", ["./api", "ua"], function(S, require) {
   var logger = S.getLogger("s/dom");
   var Dom = require("./api");
   var globalWindow = S.Env.host, vendorInfos = {}, propertyPrefixes = ["Webkit", "Moz", "O", "ms"], propertyPrefixesLength = propertyPrefixes.length, doc = globalWindow.document || {}, documentElement = doc && doc.documentElement, documentElementStyle = documentElement.style, UA = require("ua"), BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", 
-  DISPLAY = "display", OLD_DISPLAY = DISPLAY + util.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, defaultDisplay = {}, userSelectVendorInfo = getCssVendorInfo("userSelect"), userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName, camelCase = util.camelCase;
+  DISPLAY = "display", OLD_DISPLAY = DISPLAY + util.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, defaultDisplay = {}, userSelectVendorInfo = getCssVendorInfo("userSelect"), userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName;
   cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {
     if(cssProps[name]) {

@@ -10,6 +10,10 @@ KISSY.add(function (S, require) {
         return arguments[1].toUpperCase();
     }
 
+    function camelCase(name){
+        return name.replace(RE_DASH, upperCase);
+    }
+
     // return prefixed css prefix name
     function getCssVendorInfo(name) {
         if (name.indexOf('-') !== -1) {
@@ -90,8 +94,7 @@ KISSY.add(function (S, require) {
         cssProps = {},
         defaultDisplay = {},
         userSelectVendorInfo = getCssVendorInfo('userSelect'),
-        userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName,
-        camelCase = util.camelCase;
+        userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName;
 
     cssProps['float'] = 'cssFloat';
 
