@@ -307,7 +307,7 @@ KISSY.add(function (S, require) {
                 var el,
                     els = Dom.query(selector),
                     all,
-                    DOMEvent = S.require('event/dom'),
+                    DOMEvent = S.Env.mods['event/dom/base'],
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
@@ -315,7 +315,7 @@ KISSY.add(function (S, require) {
                         all = S.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
                         Dom.removeData(all);
-                        if (DOMEvent) {
+                        if (DOMEvent && DOMEvent.detach) {
                             DOMEvent.detach(all);
                         }
                     }
@@ -444,7 +444,7 @@ KISSY.add(function (S, require) {
 
     // 克隆除了事件的 data
     function cloneWithDataAndEvent(src, dest) {
-        var DOMEvent = S.require('event/dom'),
+        var DOMEvent = S.Env.mods['event/dom/base'],
             srcData,
             d;
 
@@ -460,7 +460,7 @@ KISSY.add(function (S, require) {
         }
 
         // 事件要特殊点
-        if (DOMEvent) {
+        if (DOMEvent && DOMEvent.clone) {
             // attach src 's event data and dom attached listener to dest
             DOMEvent.clone(src, dest);
         }

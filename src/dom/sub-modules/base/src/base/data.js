@@ -257,7 +257,7 @@ KISSY.add(function (S, require) {
              */
             cleanData: function (selector, deep) {
                 var els = Dom.query(selector), elem, i;
-                var DOMEvent = S.require('event/dom');
+                var DOMEvent = S.Env.mods['event/dom/base'];
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType) {
@@ -266,7 +266,7 @@ KISSY.add(function (S, require) {
                         for (var j = 0, len = descendants.length; j < len; j++) {
                             domOps.removeData(descendants[j]);
                         }
-                        if (DOMEvent) {
+                        if (DOMEvent && DOMEvent.detach) {
                             DOMEvent.detach(descendants);
                         }
                     } else {

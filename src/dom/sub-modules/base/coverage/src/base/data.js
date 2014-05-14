@@ -454,7 +454,7 @@ if (! _$jscoverage['/base/data.js'].branchData) {
   _$jscoverage['/base/data.js'].branchData['269'] = [];
   _$jscoverage['/base/data.js'].branchData['269'][1] = new BranchData();
 }
-_$jscoverage['/base/data.js'].branchData['269'][1].init(349, 8, 'DOMEvent');
+_$jscoverage['/base/data.js'].branchData['269'][1].init(349, 27, 'DOMEvent && DOMEvent.detach');
 function visit228_269_1(result) {
   _$jscoverage['/base/data.js'].branchData['269'][1].ranCondition(result);
   return result;
@@ -474,7 +474,7 @@ function visit225_264_1(result) {
 function visit224_263_1(result) {
   _$jscoverage['/base/data.js'].branchData['263'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/data.js'].branchData['261'][1].init(153, 6, 'i >= 0');
+}_$jscoverage['/base/data.js'].branchData['261'][1].init(159, 6, 'i >= 0');
 function visit223_261_1(result) {
   _$jscoverage['/base/data.js'].branchData['261'][1].ranCondition(result);
   return result;
@@ -933,7 +933,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/data.js'].lineData[259]++;
   var els = Dom.query(selector), elem, i;
   _$jscoverage['/base/data.js'].lineData[260]++;
-  var DOMEvent = S.require('event/dom');
+  var DOMEvent = S.Env.mods['event/dom/base'];
   _$jscoverage['/base/data.js'].lineData[261]++;
   for (i = els.length - 1; visit223_261_1(i >= 0); i--) {
     _$jscoverage['/base/data.js'].lineData[262]++;
@@ -950,7 +950,7 @@ KISSY.add(function(S, require) {
         domOps.removeData(descendants[j]);
       }
       _$jscoverage['/base/data.js'].lineData[269]++;
-      if (visit228_269_1(DOMEvent)) {
+      if (visit228_269_1(DOMEvent && DOMEvent.detach)) {
         _$jscoverage['/base/data.js'].lineData[270]++;
         DOMEvent.detach(descendants);
       }

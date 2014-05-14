@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: May 14 12:24
+build time: May 14 13:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -571,14 +571,14 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     }
     return undefined
   }, remove:function(selector, keepData) {
-    var el, els = Dom.query(selector), all, DOMEvent = S.require("event/dom"), i;
+    var el, els = Dom.query(selector), all, DOMEvent = S.Env.mods["event/dom/base"], i;
     for(i = els.length - 1;i >= 0;i--) {
       el = els[i];
       if(!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
         all = S.makeArray(getElementsByTagName(el, "*"));
         all.push(el);
         Dom.removeData(all);
-        if(DOMEvent) {
+        if(DOMEvent && DOMEvent.detach) {
           DOMEvent.detach(all)
         }
       }
@@ -642,7 +642,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     }
   }
   function cloneWithDataAndEvent(src, dest) {
-    var DOMEvent = S.require("event/dom"), srcData, d;
+    var DOMEvent = S.Env.mods["event/dom/base"], srcData, d;
     if(dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
       return
     }
@@ -650,7 +650,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     for(d in srcData) {
       Dom.data(dest, d, srcData[d])
     }
-    if(DOMEvent) {
+    if(DOMEvent && DOMEvent.clone) {
       DOMEvent.clone(src, dest)
     }
   }
@@ -856,7 +856,7 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
     }
   }, cleanData:function(selector, deep) {
     var els = Dom.query(selector), elem, i;
-    var DOMEvent = S.require("event/dom");
+    var DOMEvent = S.Env.mods["event/dom/base"];
     for(i = els.length - 1;i >= 0;i--) {
       elem = els[i];
       if(elem.nodeType) {
@@ -865,7 +865,7 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
         for(var j = 0, len = descendants.length;j < len;j++) {
           domOps.removeData(descendants[j])
         }
-        if(DOMEvent) {
+        if(DOMEvent && DOMEvent.detach) {
           DOMEvent.detach(descendants)
         }
       }else {
