@@ -242,7 +242,7 @@ KISSY.use('util,component/control,' +
                 },
 
                 createDom: function () {
-                    this.get('contentEl').html(S.substitute(tpl, {
+                    this.get('contentEl').html(util.substitute(tpl, {
                         title: this.get('viewId')
                     }));
                 }
@@ -264,7 +264,7 @@ KISSY.use('util,component/control,' +
                     var defer = new Promise.Defer();
                     self.promise = defer.promise;
                     setTimeout(function () {
-                        self.get('contentEl').html(S.substitute(tpl, {
+                        self.get('contentEl').html(util.substitute(tpl, {
                             title: self.get('viewId')
                         }));
                         self.sync();

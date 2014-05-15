@@ -168,7 +168,7 @@ KISSY.use('util,' +
             },
 
             createDom: function () {
-                this.getContentEl().html(S.substitute(tpl, {
+                this.getContentEl().html(util.substitute(tpl, {
                     title: this.get('viewId')
                 }));
             },

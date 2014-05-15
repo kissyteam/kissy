@@ -40,7 +40,7 @@
 </div>
 
 <script>
-    KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
+    KISSY.use('node,anim/timer,util', function (S, Node, TimerAnim,util) {
         var $ = S.all;
         var easings = [
             [
@@ -130,7 +130,7 @@
                 var color = nextColour(),
                         easing = easings[j],
                         path = "";
-                easingHTML.push(S.substitute("<span style='color:{color}'>{easing}</span>", {
+                easingHTML.push(util.substitute("<span style='color:{color}'>{easing}</span>", {
                     color: Raphael.getRGB(color).hex,
                     easing: easings[j]
                 }));

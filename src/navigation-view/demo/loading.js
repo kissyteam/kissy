@@ -1,4 +1,6 @@
 KISSY.add(function (S, require) {
+    var util = require('util');
+
     var tpl = '<h2 class="anim-title">{title}</h2>' +
         '<p class="anim-content">Sed ut perspiciatis unde omnis iste natus error ' +
         'sit voluptatem accusantium doloremque laudantium, ' +
@@ -29,7 +31,7 @@ KISSY.add(function (S, require) {
         enter: function () {
             var page = this.page;
             setTimeout(function () {
-                page.getContentEl().html(S.substitute(tpl, {
+                page.getContentEl().html(util.substitute(tpl, {
                     title: page.get('viewId')
                 }));
                 page.sync();
