@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var itemCard = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var itemCard = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('', 0);
             var option0 = {
                 escape: 1
@@ -35,9 +32,10 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('" title="����ԤԼ"\r\n   id="J_LinkAppoint" >����ԤԼ</a>\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 1, session);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 1);
             return buffer;
         };
 itemCard.TPL_NAME = module.name;
+itemCard.version = "5.0.0";
 return itemCard
 });

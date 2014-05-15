@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var itemCommitment = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var itemCommitment = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('\r\n\r\n<div class="meta-item clearfix" data-spm="991222525">\r\n    <div class="meta-item-hd">承&nbsp;&nbsp;诺</div>\r\n    <div class="meta-item-bd">\r\n        <!--服务-->\r\n        ', 0);
             var option0 = {
                 escape: 1
@@ -32,7 +29,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank" title="破损补寄"\r\n                                                href="${mealServer}/cu_pr.htm?item_num_id=$!{itemCommitment.itemId}"><span class="icon-psbj"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 7, session);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 7);
             buffer.write('\r\n        ', 0);
             var option3 = {
                 escape: 1
@@ -45,7 +42,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank" title="运费险"\r\n                                                 href="http://ju.mmstat.com/?url=http://www.taobao.com/go/act/baoxian/yunfeixian.php?ad_id=&am_id=&cm_id=&pm_id=150106180823b65f1640"><span class="icon-yfx "></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option3, buffer, 9, session);
+            buffer = ifCommand.call(tpl, scope, option3, buffer, 9);
             buffer.write('\r\n\r\n        ', 0);
             var option6 = {
                 escape: 1
@@ -58,7 +55,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank" title="退货承诺"\r\n                                                           href="${mealServer}/cu_pr.htm?item_num_id=$!{itemCommitment.itemId}"><span class="icon-thcn"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option6, buffer, 12, session);
+            buffer = ifCommand.call(tpl, scope, option6, buffer, 12);
             buffer.write('\r\n        ', 0);
             var option9 = {
                 escape: 1
@@ -71,7 +68,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank" title="品质承诺"\r\n                                                        href="${mealServer}/cu_pr.htm?item_num_id=$!{itemCommitment.itemId}"><span class="icon-pzcn"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option9, buffer, 14, session);
+            buffer = ifCommand.call(tpl, scope, option9, buffer, 14);
             buffer.write('\r\n        ', 0);
             var option12 = {
                 escape: 1
@@ -84,7 +81,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank" title="质量鉴定"\r\n                                                       href="http://www.taobao.com/go/act/sale/3cshumajd.php?ad_id=&am_id=130104775269aec13e6b&cm_id=&pm_id="><span class="icon-zj"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option12, buffer, 16, session);
+            buffer = ifCommand.call(tpl, scope, option12, buffer, 16);
             buffer.write('\r\n        ', 0);
             var option15 = {
                 escape: 1
@@ -97,7 +94,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank" title="质量鉴定"\r\n                                                              href="http://www.taobao.com/go/act/315/jiandingbuyer.php"><span class="icon-zj"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option15, buffer, 18, session);
+            buffer = ifCommand.call(tpl, scope, option15, buffer, 18);
             buffer.write('\r\n        ', 0);
             var option18 = {
                 escape: 1
@@ -110,7 +107,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                          href="http://www.taobao.com/go/act/315/xb_20100707.php?ad_id=&am_id=1300268931aef04f0cdc&cm_id=&pm_id=#qitian" title="七天退换"><span class="icon-7tth"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option18, buffer, 20, session);
+            buffer = ifCommand.call(tpl, scope, option18, buffer, 20);
             buffer.write('\r\n\r\n        ', 0);
             var option21 = {
                 escape: 1
@@ -123,7 +120,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                   href="http://www.taobao.com/go/act/315/xb_20100707.php?ad_id=&am_id=1300268931aef04f0cdc&cm_id=&pm_id=#shandian" title="假一赔三"><span class="icon-zpbz"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option21, buffer, 23, session);
+            buffer = ifCommand.call(tpl, scope, option21, buffer, 23);
             buffer.write('\r\n\r\n        ', 0);
             var option24 = {
                 escape: 1
@@ -136,7 +133,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                    href="http://itemCommitment.taobao.com/support/knowledge-1121827.htm"  title="鞋类三包"><span>鞋类三包</span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option24, buffer, 26, session);
+            buffer = ifCommand.call(tpl, scope, option24, buffer, 26);
             buffer.write('\r\n\r\n        ', 0);
             var option27 = {
                 escape: 1
@@ -149,7 +146,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a title="新品" target="_blank"\r\n                                                  href="http://itemCommitment.taobao.com/support/knowledge-1138476.htm7"><span class="icon-sxp"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option27, buffer, 29, session);
+            buffer = ifCommand.call(tpl, scope, option27, buffer, 29);
             buffer.write('\r\n        ', 0);
             var option30 = {
                 escape: 1
@@ -162,7 +159,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                       href="http://www.taobao.com/go/act/315/xb_20100707.php?ad_id=&am_id=1300268931aef04f0cdc&cm_id=&pm_id=#weixiu" title="30天维修"><span class="icon-shwx"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option30, buffer, 31, session);
+            buffer = ifCommand.call(tpl, scope, option30, buffer, 31);
             buffer.write('\r\n\r\n        ', 0);
             var option33 = {
                 escape: 1
@@ -175,7 +172,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                        href="http://www.taobao.com/go/act/315/xb_20100707.php?ad_id=&am_id=1300268931aef04f0cdc&cm_id=&pm_id=#shandian" title="24小时发货"><span>24小时发货</span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option33, buffer, 34, session);
+            buffer = ifCommand.call(tpl, scope, option33, buffer, 34);
             buffer.write('\r\n        ', 0);
             var option36 = {
                 escape: 1
@@ -188,7 +185,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                             href="http://www.taobao.com/go/act/315/xb_20100707.php?ad_id=&am_id=1300268931aef04f0cdc&cm_id=&pm_id=#shandian" title="闪电发货"><span>闪电发货</span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option36, buffer, 36, session);
+            buffer = ifCommand.call(tpl, scope, option36, buffer, 36);
             buffer.write('\r\n        ', 0);
             var option39 = {
                 escape: 1
@@ -201,7 +198,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a href="http://service.taobao.com/support/knowledge-1119683.htm"\r\n                                                      target="_blank" title="自动发货"><span>自动发货</span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option39, buffer, 38, session);
+            buffer = ifCommand.call(tpl, scope, option39, buffer, 38);
             buffer.write('\r\n        ', 0);
             var option42 = {
                 escape: 1
@@ -214,7 +211,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a href="http://service.taobao.com/support/knowledge-1119861.htm"\r\n                                                  target="_blank" title="虚拟物品"><span>虚拟物品</span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option42, buffer, 40, session);
+            buffer = ifCommand.call(tpl, scope, option42, buffer, 40);
             buffer.write('\r\n\r\n        ', 0);
             var option45 = {
                 escape: 1
@@ -227,7 +224,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                        href="http://itemCommitment.taobao.com/support/knowledge-1117985.htm" title="公益宝贝"><span class="icon-gy"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option45, buffer, 43, session);
+            buffer = ifCommand.call(tpl, scope, option45, buffer, 43);
             buffer.write('\r\n\r\n        ', 0);
             var option48 = {
                 escape: 1
@@ -240,7 +237,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a\r\n            href="http://qudao.taobao.com/channelt/s9364759a707947ed8d0282cacaa84ea5.e?productID=$!{itemCommitment.itemId}" target="_blank"><img src="http://img07.taobaocdn.com/tps/i7/T1kmNAXg8cXXXXXXXX-60-16.png"/></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option48, buffer, 46, session);
+            buffer = ifCommand.call(tpl, scope, option48, buffer, 46);
             buffer.write('\r\n        ', 0);
             var option51 = {
                 escape: 1
@@ -253,7 +250,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<span>代购商品</span>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option51, buffer, 48, session);
+            buffer = ifCommand.call(tpl, scope, option51, buffer, 48);
             buffer.write('\r\n        ', 0);
             var option54 = {
                 escape: 1
@@ -266,7 +263,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a href="http://itemCommitment.taobao.com/support/knowledge-1126791.htm"\r\n                                              target="_blank" title="平台代充"><img src="http://img02.taobaocdn.com/tps/i2/T1PuR3XohwXXXXXXXX-15-15.png" width="15" height="15" /></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option54, buffer, 49, session);
+            buffer = ifCommand.call(tpl, scope, option54, buffer, 49);
             buffer.write('\r\n        ', 0);
             var option57 = {
                 escape: 1
@@ -279,7 +276,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a target="_blank"\r\n                                                       href="http://itemCommitment.taobao.com/support/help-13290.htm" title="部分城市提供配送安装服务"><span>配送安装</span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option57, buffer, 51, session);
+            buffer = ifCommand.call(tpl, scope, option57, buffer, 51);
             buffer.write('\r\n\r\n        ', 0);
             var option60 = {
                 escape: 1
@@ -292,7 +289,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a href="https://jf.alipay.com/prod/rule.htm?src=jfb-tbDetail1#help1"\r\n                                          target="_blank" title="支持集分宝购物抵现"><span class="icon-jfb"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option60, buffer, 54, session);
+            buffer = ifCommand.call(tpl, scope, option60, buffer, 54);
             buffer.write('\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class="meta-item clearfix" data-spm="991222509">\r\n    <div class="meta-item-hd">支&nbsp;&nbsp;付</div>\r\n    <div class="meta-item-bd">\r\n        <!--支付方式-->\r\n        ', 0);
             var option63 = {
                 escape: 1
@@ -309,7 +306,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('\r\n        <a data-spm="d3" target="_blank" href="http://help.alipay.com/lab/help_detail.htm?help_id=245296" title="支持每月累计500元以下的小额付款"><span class="icon-xykzf"></span></a>\r\n        ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option63, buffer, 64, session);
+            buffer = ifCommand.call(tpl, scope, option63, buffer, 64);
             buffer.write('\r\n        ', 0);
             var option66 = {
                 escape: 1
@@ -322,10 +319,11 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('<a href="http://www.taobao.com/go/act/sale/cod2.php"\r\n                                                    title="收到宝贝时，再付款给快递人员" target="_blank" ><span class="icon-hdfk"></span></a>', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option66, buffer, 69, session);
+            buffer = ifCommand.call(tpl, scope, option66, buffer, 69);
             buffer.write('\r\n        <span class="icon-zfb"></span>\r\n    </div>\r\n</div>', 0);
             return buffer;
         };
 itemCommitment.TPL_NAME = module.name;
+itemCommitment.version = "5.0.0";
 return itemCommitment
 });

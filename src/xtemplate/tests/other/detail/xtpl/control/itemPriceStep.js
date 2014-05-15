@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var itemPriceStep = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var itemPriceStep = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<script>\r\n    KISSY.use("detail/mod", function(S,Mod) {\r\n        Mod.data("g_price_step",JSON.parse(S.unEscapeHTML(\'', 0);
             var option0 = {
                 escape: 1
@@ -29,7 +26,7 @@ KISSY.add(function (S, require, exports, module) {
             params1.push(id2);
             option0.params = params1;
             var callRet3
-            callRet3 = callFnUtil(engine, scope, option0, buffer, ["objToStr"], 0, 3);
+            callRet3 = callFnUtil(tpl, scope, option0, buffer, ["objToStr"], 0, 3);
             if (callRet3 && callRet3.isBuffer) {
                 buffer = callRet3;
                 callRet3 = undefined;
@@ -39,5 +36,6 @@ KISSY.add(function (S, require, exports, module) {
             return buffer;
         };
 itemPriceStep.TPL_NAME = module.name;
+itemPriceStep.version = "5.0.0";
 return itemPriceStep
 });

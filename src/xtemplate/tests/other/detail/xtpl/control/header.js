@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var header = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var header = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<head>\r\n    <meta charset="utf-8">\r\n    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">\r\n    <meta name="apple-mobile-web-app-capable" content="yes" />\r\n    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />\r\n    <meta name="format-detection" content="telephone=no"/>\r\n    <meta name="data-spm" content="a1z2c" />\r\n    <title>', 0);
             var id0 = scope.resolve(["header", "data", "itemTitle"], 0);
             buffer.write(id0, true);
@@ -36,5 +33,6 @@ KISSY.add(function (S, require, exports, module) {
             return buffer;
         };
 header.TPL_NAME = module.name;
+header.version = "5.0.0";
 return header
 });

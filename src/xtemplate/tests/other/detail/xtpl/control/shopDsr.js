@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var shopDsr = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var shopDsr = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<div class="mod-shop-bd" data-spm="991222493">\r\n    <ul class="mod-shop-dsr J_DSR clearfix">\r\n        ', 0);
             var option0 = {
                 escape: 1
@@ -44,7 +41,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('分', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option3, buffer, 5, session);
+                buffer = ifCommand.call(tpl, scope, option3, buffer, 5);
                 buffer.write('">\r\n                描述 ', 0);
                 var id7 = scope.resolve(["shopDsr", "data", "merchandisAvgScore"], 0);
                 buffer.write(id7, true);
@@ -96,15 +93,15 @@ KISSY.add(function (S, require, exports, module) {
                             buffer.write('\r\n                    该店铺尚未收到评价\r\n                    ', 0);
                             return buffer;
                         };
-                        buffer = ifCommand.call(engine, scope, option16, buffer, 14, session);
+                        buffer = ifCommand.call(tpl, scope, option16, buffer, 14);
                         buffer.write('\r\n                ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option12, buffer, 11, session);
+                    buffer = ifCommand.call(tpl, scope, option12, buffer, 11);
                     buffer.write('\r\n            ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option8, buffer, 8, session);
+                buffer = ifCommand.call(tpl, scope, option8, buffer, 8);
                 buffer.write('\r\n        <li>\r\n            <label title="', 0);
                 var option19 = {
                     escape: 1
@@ -120,7 +117,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('分 ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option19, buffer, 22, session);
+                buffer = ifCommand.call(tpl, scope, option19, buffer, 22);
                 buffer.write('">\r\n                服务 ', 0);
                 var id23 = scope.resolve(["shopDsr", "data", "serviceAvgScore"], 0);
                 buffer.write(id23, true);
@@ -172,15 +169,15 @@ KISSY.add(function (S, require, exports, module) {
                             buffer.write('\r\n                    该店铺尚未收到评价\r\n                    ', 0);
                             return buffer;
                         };
-                        buffer = ifCommand.call(engine, scope, option32, buffer, 31, session);
+                        buffer = ifCommand.call(tpl, scope, option32, buffer, 31);
                         buffer.write('\r\n                ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option28, buffer, 28, session);
+                    buffer = ifCommand.call(tpl, scope, option28, buffer, 28);
                     buffer.write('\r\n            ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option24, buffer, 25, session);
+                buffer = ifCommand.call(tpl, scope, option24, buffer, 25);
                 buffer.write('\r\n        <li>\r\n            <label title="', 0);
                 var option35 = {
                     escape: 1
@@ -196,7 +193,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('分', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option35, buffer, 39, session);
+                buffer = ifCommand.call(tpl, scope, option35, buffer, 39);
                 buffer.write('">\r\n                物流 ', 0);
                 var id39 = scope.resolve(["shopDsr", "data", "consignmentAvgScore"], 0);
                 buffer.write(id39, true);
@@ -248,15 +245,15 @@ KISSY.add(function (S, require, exports, module) {
                             buffer.write('\r\n                    该店铺尚未收到评价\r\n                    ', 0);
                             return buffer;
                         };
-                        buffer = ifCommand.call(engine, scope, option48, buffer, 48, session);
+                        buffer = ifCommand.call(tpl, scope, option48, buffer, 48);
                         buffer.write('\r\n                ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option44, buffer, 45, session);
+                    buffer = ifCommand.call(tpl, scope, option44, buffer, 45);
                     buffer.write('\r\n            ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option40, buffer, 42, session);
+                buffer = ifCommand.call(tpl, scope, option40, buffer, 42);
                 buffer.write('\r\n        ', 0);
                 return buffer;
             };
@@ -264,10 +261,11 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('\r\n        该店铺尚未收到评价\r\n        ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 3, session);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 3);
             buffer.write('\r\n    </ul>\r\n</div>', 0);
             return buffer;
         };
 shopDsr.TPL_NAME = module.name;
+shopDsr.version = "5.0.0";
 return shopDsr
 });

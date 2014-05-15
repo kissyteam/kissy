@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var shopIdentity = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var shopIdentity = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<span class="others" data-spm="991222469">\r\n\r\n\t', 0);
             var option0 = {
                 escape: 1
@@ -58,15 +55,15 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('\r\n\t\t        <a title="淘宝个人实名认证" href="http://service.taobao.com/support/5-27-31/help-1055.htm" target="_blank"><i class="icon-grrz"></i></a>\r\n            ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option6, buffer, 9, session);
+                    buffer = ifCommand.call(tpl, scope, option6, buffer, 9);
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option3, buffer, 6, session);
+                buffer = ifCommand.call(tpl, scope, option3, buffer, 6);
                 buffer.write('\r\n\t', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 3, session);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 3);
             buffer.write('\r\n\r\n\r\n\t', 0);
             var option9 = {
                 escape: 1
@@ -105,18 +102,19 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('\r\n\t\t        <a href="#" onclick="javascript:return false;" target="_blank" title="消保卖家"><i class="icon-xb"></i></a>\r\n            ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option15, buffer, 22, session);
+                    buffer = ifCommand.call(tpl, scope, option15, buffer, 22);
                     buffer.write('\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option12, buffer, 19, session);
+                buffer = ifCommand.call(tpl, scope, option12, buffer, 19);
                 buffer.write('\r\n\t', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option9, buffer, 16, session);
+            buffer = ifCommand.call(tpl, scope, option9, buffer, 16);
             buffer.write('\r\n\r\n</span>', 0);
             return buffer;
         };
 shopIdentity.TPL_NAME = module.name;
+shopIdentity.version = "5.0.0";
 return shopIdentity
 });

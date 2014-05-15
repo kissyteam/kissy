@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var detail = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var detail = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('\r\n<!doctype html>\r\n\r\n<html>\r\n', 0);
             var option0 = {};
             var params1 = [];
@@ -27,7 +24,7 @@ KISSY.add(function (S, require, exports, module) {
             option0.params = params1;
             require("../control/header");
             var callRet2
-            callRet2 = includeCommand.call(engine, scope, option0, buffer, 5, session);
+            callRet2 = includeCommand.call(tpl, scope, option0, buffer, 5);
             if (callRet2 && callRet2.isBuffer) {
                 buffer = callRet2;
                 callRet2 = undefined;
@@ -40,7 +37,7 @@ KISSY.add(function (S, require, exports, module) {
             option3.params = params4;
             require("../control/vData");
             var callRet5
-            callRet5 = includeCommand.call(engine, scope, option3, buffer, 7, session);
+            callRet5 = includeCommand.call(tpl, scope, option3, buffer, 7);
             if (callRet5 && callRet5.isBuffer) {
                 buffer = callRet5;
                 callRet5 = undefined;
@@ -67,7 +64,7 @@ KISSY.add(function (S, require, exports, module) {
                 hash10["path"] = exp13;
                 option9.hash = hash10;
                 var callRet14
-                callRet14 = setCommand.call(engine, scope, option9, buffer, 12, session);
+                callRet14 = setCommand.call(tpl, scope, option9, buffer, 12);
                 if (callRet14 && callRet14.isBuffer) {
                     buffer = callRet14;
                     callRet14 = undefined;
@@ -103,7 +100,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('/\',\r\n                combine:true,//!(~location.href.indexOf("ks-debug")),\r\n                tag: \'20130829\',\r\n                name: \'detail\',\r\n                charset: \'utf-8\'\r\n            }\r\n        }\r\n    });\r\n    if(g_config.vdata.viewer.dt =="phone"){\r\n        KISSY.importStyle(\'detail/frame/phone,detail/footer/phone,detail/gallery/phone,detail/shop/phone,detail/sku/index,detail/maininfo/phone,detail/page/index,detail/describe/phone\');\r\n    }else{\r\n        KISSY.importStyle(\'detail/frame/pad,detail/footer/pad,detail/gallery/pad,detail/shop/pad,detail/sku/index,detail/maininfo/pad,detail/page/index,detail/describe/pad\');\r\n    }\r\n</script>\r\n', 0);
                 return buffer;
             };
-            buffer = withCommand.call(engine, scope, option6, buffer, 10, session);
+            buffer = withCommand.call(tpl, scope, option6, buffer, 10);
             buffer.write('\r\n\r\n<div id="J_Pages" class="pages-panel">\r\n    <div class="J_Pages-home pages-item-index" data-page="index">\r\n        ', 0);
             var option24 = {};
             var params25 = [];
@@ -111,7 +108,7 @@ KISSY.add(function (S, require, exports, module) {
             option24.params = params25;
             require("../control/tabs");
             var callRet26
-            callRet26 = includeCommand.call(engine, scope, option24, buffer, 39, session);
+            callRet26 = includeCommand.call(tpl, scope, option24, buffer, 39);
             if (callRet26 && callRet26.isBuffer) {
                 buffer = callRet26;
                 callRet26 = undefined;
@@ -124,7 +121,7 @@ KISSY.add(function (S, require, exports, module) {
             option27.params = params28;
             require("../control/footer");
             var callRet29
-            callRet29 = includeCommand.call(engine, scope, option27, buffer, 40, session);
+            callRet29 = includeCommand.call(tpl, scope, option27, buffer, 40);
             if (callRet29 && callRet29.isBuffer) {
                 buffer = callRet29;
                 callRet29 = undefined;
@@ -137,7 +134,7 @@ KISSY.add(function (S, require, exports, module) {
             option30.params = params31;
             require("../control/config");
             var callRet32
-            callRet32 = includeCommand.call(engine, scope, option30, buffer, 44, session);
+            callRet32 = includeCommand.call(tpl, scope, option30, buffer, 44);
             if (callRet32 && callRet32.isBuffer) {
                 buffer = callRet32;
                 callRet32 = undefined;
@@ -150,7 +147,7 @@ KISSY.add(function (S, require, exports, module) {
             option33.params = params34;
             require("../control/activity");
             var callRet35
-            callRet35 = includeCommand.call(engine, scope, option33, buffer, 45, session);
+            callRet35 = includeCommand.call(tpl, scope, option33, buffer, 45);
             if (callRet35 && callRet35.isBuffer) {
                 buffer = callRet35;
                 callRet35 = undefined;
@@ -160,5 +157,6 @@ KISSY.add(function (S, require, exports, module) {
             return buffer;
         };
 detail.TPL_NAME = module.name;
+detail.version = "5.0.0";
 return detail
 });

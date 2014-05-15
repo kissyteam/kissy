@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var itemPrice = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var itemPrice = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<div class="mod-item-property" data-spm="991222405">\r\n    <h2 class="mod-item-title">', 0);
             var id0 = scope.resolve(["itemPrice", "data", "itemTitle"], 0);
             buffer.write(id0, true);
@@ -41,7 +38,7 @@ KISSY.add(function (S, require, exports, module) {
                 params5.push(id6);
                 option4.params = params5;
                 var callRet7
-                callRet7 = callFnUtil(engine, scope, option4, buffer, ["formatPrice"], 0, 11);
+                callRet7 = callFnUtil(tpl, scope, option4, buffer, ["formatPrice"], 0, 11);
                 if (callRet7 && callRet7.isBuffer) {
                     buffer = callRet7;
                     callRet7 = undefined;
@@ -56,7 +53,7 @@ KISSY.add(function (S, require, exports, module) {
                 params9.push(id10);
                 option8.params = params9;
                 var callRet11
-                callRet11 = callFnUtil(engine, scope, option8, buffer, ["formatPrice"], 0, 11);
+                callRet11 = callFnUtil(tpl, scope, option8, buffer, ["formatPrice"], 0, 11);
                 if (callRet11 && callRet11.isBuffer) {
                     buffer = callRet11;
                     callRet11 = undefined;
@@ -75,7 +72,7 @@ KISSY.add(function (S, require, exports, module) {
                 params13.push(id14);
                 option12.params = params13;
                 var callRet15
-                callRet15 = callFnUtil(engine, scope, option12, buffer, ["formatPrice"], 0, 13);
+                callRet15 = callFnUtil(tpl, scope, option12, buffer, ["formatPrice"], 0, 13);
                 if (callRet15 && callRet15.isBuffer) {
                     buffer = callRet15;
                     callRet15 = undefined;
@@ -84,7 +81,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option1, buffer, 10, session);
+            buffer = ifCommand.call(tpl, scope, option1, buffer, 10);
             buffer.write('</strong>\r\n                ', 0);
             var option16 = {
                 escape: 1
@@ -103,7 +100,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('</span>）', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option16, buffer, 14, session);
+            buffer = ifCommand.call(tpl, scope, option16, buffer, 14);
             buffer.write('\r\n                <input type="hidden" id="itemStart" value="', 0);
             var id21 = scope.resolve(["itemPrice", "data", "itemStarts"], 0);
             buffer.write(id21, true);
@@ -141,7 +138,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write(' 面&nbsp;&nbsp;值 ', 0);
                         return buffer;
                     };
-                    buffer = callCommandUtil(engine, scope, option29, buffer, ["ifHas"], 25);
+                    buffer = callCommandUtil(tpl, scope, option29, buffer, ["ifHas"], 25);
                     buffer.write('\r\n                ', 0);
                     var option32 = {
                         escape: 1
@@ -155,7 +152,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write(' 净含量 ', 0);
                         return buffer;
                     };
-                    buffer = callCommandUtil(engine, scope, option32, buffer, ["ifHas"], 26);
+                    buffer = callCommandUtil(tpl, scope, option32, buffer, ["ifHas"], 26);
                     buffer.write('\r\n                ', 0);
                     var option35 = {
                         escape: 1
@@ -169,7 +166,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write(' 净含量 ', 0);
                         return buffer;
                     };
-                    buffer = callCommandUtil(engine, scope, option35, buffer, ["ifHas"], 27);
+                    buffer = callCommandUtil(tpl, scope, option35, buffer, ["ifHas"], 27);
                     buffer.write('\r\n            </div>\r\n            <div class="meta-item-bd J_bd">\r\n                ', 0);
                     var option38 = {
                         escape: 1
@@ -183,7 +180,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write(' <em class="yuan">&yen;</em> ', 0);
                         return buffer;
                     };
-                    buffer = callCommandUtil(engine, scope, option38, buffer, ["ifHas"], 30);
+                    buffer = callCommandUtil(tpl, scope, option38, buffer, ["ifHas"], 30);
                     buffer.write('\r\n                ', 0);
                     var id41 = scope.resolve(["itemPrice", "data", "spec"], 0);
                     buffer.write(id41, true);
@@ -200,7 +197,7 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write(' g ', 0);
                         return buffer;
                     };
-                    buffer = callCommandUtil(engine, scope, option42, buffer, ["ifHas"], 32);
+                    buffer = callCommandUtil(tpl, scope, option42, buffer, ["ifHas"], 32);
                     buffer.write('\r\n                ', 0);
                     var option45 = {
                         escape: 1
@@ -214,11 +211,11 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write(' ml ', 0);
                         return buffer;
                     };
-                    buffer = callCommandUtil(engine, scope, option45, buffer, ["ifHas"], 33);
+                    buffer = callCommandUtil(tpl, scope, option45, buffer, ["ifHas"], 33);
                     buffer.write('\r\n            </div>\r\n        </div>\r\n        ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option26, buffer, 21, session);
+                buffer = ifCommand.call(tpl, scope, option26, buffer, 21);
                 buffer.write('\r\n        <!--ump价格-->\r\n        <div class="meta-item  J_UMP hidden clearfix">\r\n            <div class="meta-item-hd">促&nbsp;&nbsp;销</div>\r\n            <div class="meta-item-bd J_bd price">\r\n\r\n            </div>\r\n        </div>\r\n\r\n        <!--其他优惠-->\r\n        <div class="meta-item hidden J_PointTxt clearfix">\r\n            <div class="meta-item-hd">优&nbsp;&nbsp;惠</div>\r\n            <div class="meta-item-bd J_bd"></div>\r\n        </div>\r\n\r\n        <!--增值服务-->\r\n        <div class="meta-item hidden J_AddService clearfix">\r\n            <div class="meta-item-hd">服&nbsp;&nbsp;务</div>\r\n            <div class="meta-item-bd J_bd"></div>\r\n        </div>\r\n\r\n        <!--配送-->\r\n        <div class="meta-item J_Logistic clearfix">\r\n            <div class="meta-item-hd">配&nbsp;&nbsp;送</div>\r\n            <div class="meta-item-bd J_bd"></div>\r\n        </div>\r\n\r\n        <!--销量-->\r\n        <div class="meta-item J_Deal clearfix">\r\n            <div class="meta-item-hd">销&nbsp;&nbsp;量</div>\r\n            <div class="meta-item-bd J_bd"></div>\r\n        </div>\r\n\r\n        <!--itemCommitmentModulet start-->\r\n        ', 0);
                 var option48 = {};
                 var params49 = [];
@@ -226,7 +223,7 @@ KISSY.add(function (S, require, exports, module) {
                 option48.params = params49;
                 require("./itemCommitment");
                 var callRet50
-                callRet50 = includeCommand.call(engine, scope, option48, buffer, 70, session);
+                callRet50 = includeCommand.call(tpl, scope, option48, buffer, 70);
                 if (callRet50 && callRet50.isBuffer) {
                     buffer = callRet50;
                     callRet50 = undefined;
@@ -251,11 +248,11 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('">进入掌柜店铺</a>\r\n                </p>\r\n                ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option51, buffer, 79, session);
+                buffer = ifCommand.call(tpl, scope, option51, buffer, 79);
                 buffer.write('\r\n            </div>\r\n        </div>\r\n        ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option23, buffer, 20, session);
+            buffer = ifCommand.call(tpl, scope, option23, buffer, 20);
             buffer.write('\r\n    </div>\r\n\r\n</div>\r\n', 0);
             var option55 = {
                 escape: 1
@@ -277,7 +274,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('\r\n    <button type="button" class="btn-buy" id="J_btn-buy">立刻购买</button>\r\n    ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option58, buffer, 92, session);
+                buffer = ifCommand.call(tpl, scope, option58, buffer, 92);
                 buffer.write('\r\n\r\n    ', 0);
                 var option61 = {
                     escape: 1
@@ -290,7 +287,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('\r\n    <button type="button" class="btn-cart" id="J_btn-cart">加入购物车</button>\r\n    ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option61, buffer, 96, session);
+                buffer = ifCommand.call(tpl, scope, option61, buffer, 96);
                 buffer.write('\r\n    <!--<button type="button" class="btn-share"><i class="icon-share"></i></button>-->\r\n    <button type="button" class="btn-favorite"><i class="icon-favorite"></i></button>\r\n</div>\r\n<!--itemBuyModulet start-->\r\n', 0);
                 var option64 = {};
                 var params65 = [];
@@ -298,7 +295,7 @@ KISSY.add(function (S, require, exports, module) {
                 option64.params = params65;
                 require("./itemBuy");
                 var callRet66
-                callRet66 = includeCommand.call(engine, scope, option64, buffer, 103, session);
+                callRet66 = includeCommand.call(tpl, scope, option64, buffer, 103);
                 if (callRet66 && callRet66.isBuffer) {
                     buffer = callRet66;
                     callRet66 = undefined;
@@ -311,7 +308,7 @@ KISSY.add(function (S, require, exports, module) {
                 option67.params = params68;
                 require("./itemPriceStep");
                 var callRet69
-                callRet69 = includeCommand.call(engine, scope, option67, buffer, 106, session);
+                callRet69 = includeCommand.call(tpl, scope, option67, buffer, 106);
                 if (callRet69 && callRet69.isBuffer) {
                     buffer = callRet69;
                     callRet69 = undefined;
@@ -320,9 +317,10 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('\r\n<!--itemPrice.dataStepModulet end-->\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option55, buffer, 90, session);
+            buffer = ifCommand.call(tpl, scope, option55, buffer, 90);
             return buffer;
         };
 itemPrice.TPL_NAME = module.name;
+itemPrice.version = "5.0.0";
 return itemPrice
 });

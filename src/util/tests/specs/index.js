@@ -1195,6 +1195,20 @@ KISSY.add(function (S, require) {
             util.available();
             util.available('xxx');
         });
+
+        it('util.equals', function () {
+            var d = new Date();
+            var d2 = new Date(d.getTime());
+            expect(util.equals({x: 1}, {})).toBe(false);
+            expect(util.equals({x: 1}, {x: 2})).toBe(false);
+            expect(util.equals({x: 1}, {y: 1})).toBe(false);
+            expect(util.equals({x: 1}, {x: 1})).toBe(true);
+            expect(util.equals({x: [1]}, {x: [1, 2]})).toBe(false);
+            expect(util.equals({x: [1, 2], y: 1}, {y: 1, x: [1, 2]})).toBe(true);
+            expect(util.equals({x: [1, 2], y: 2}, {y: 1, x: [1, 2]})).toBe(false);
+            expect(util.equals({x: d}, {x: d2})).toBe(true);
+            expect(util.equals(d, d2)).toBe(true);
+        });
     });
 });
 

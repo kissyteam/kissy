@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var itemBuy = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var itemBuy = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('', 0);
             var option0 = {
                 escape: 1
@@ -56,7 +53,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('" />', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option7, buffer, 10, session);
+                buffer = ifCommand.call(tpl, scope, option7, buffer, 10);
                 buffer.write('\r\n    <input type="hidden" name="current_price" value= "', 0);
                 var id11 = scope.resolve(["itemBuy", "data", "reservePrice"], 0);
                 buffer.write(id11, true);
@@ -94,11 +91,11 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('\r\n    <input type="hidden" id="J_secKills" name="" value="" />\r\n    <input type="hidden" name="answer" value="" id="J_Answer"/>\r\n    <input type="hidden" name="secKillEncryptStr" value="" id="J_Sign" />\r\n    <input type="hidden" name="event_submit_do_buy" value="1" />\r\n    <input type="hidden" name="action" value="buynow/secKillBuyNowAction" />\r\n    ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option18, buffer, 23, session);
+                    buffer = ifCommand.call(tpl, scope, option18, buffer, 23);
                     buffer.write('\r\n    ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option15, buffer, 20, session);
+                buffer = ifCommand.call(tpl, scope, option15, buffer, 20);
                 buffer.write('\r\n    ', 0);
                 var option21 = {
                     escape: 1
@@ -123,11 +120,11 @@ KISSY.add(function (S, require, exports, module) {
                         buffer.write('"/>\r\n    ', 0);
                         return buffer;
                     };
-                    buffer = ifCommand.call(engine, scope, option24, buffer, 32, session);
+                    buffer = ifCommand.call(tpl, scope, option24, buffer, 32);
                     buffer.write('\r\n    ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option21, buffer, 31, session);
+                buffer = ifCommand.call(tpl, scope, option21, buffer, 31);
                 buffer.write('\r\n    ', 0);
                 var option28 = {
                     escape: 1
@@ -143,7 +140,7 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('" />', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option28, buffer, 36, session);
+                buffer = ifCommand.call(tpl, scope, option28, buffer, 36);
                 buffer.write('\r\n    ', 0);
                 var option32 = {
                     escape: 1
@@ -159,13 +156,14 @@ KISSY.add(function (S, require, exports, module) {
                     buffer.write('" />\r\n    ', 0);
                     return buffer;
                 };
-                buffer = ifCommand.call(engine, scope, option32, buffer, 37, session);
+                buffer = ifCommand.call(tpl, scope, option32, buffer, 37);
                 buffer.write('\r\n</form>\r\n', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 1, session);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 1);
             return buffer;
         };
 itemBuy.TPL_NAME = module.name;
+itemBuy.version = "5.0.0";
 return itemBuy
 });

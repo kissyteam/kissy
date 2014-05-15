@@ -5,20 +5,19 @@
  */
 KISSY.add(function (S, require) {
     var util = require('./base');
-    var undef;
-    var FALSE = false,
-        CLONE_MARKER = '__~ks_cloned';
     var logger = S.getLogger('util');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
         host = S.Env.host,
-        TRUE = true,
+        undef,
+        CLONE_MARKER = '__~ks_cloned',
         EMPTY = '',
         toString = ({}).toString,
+        COMPARE_MARKER = '__~ks_compared',
         Obj = Object,
         objectCreate = Obj.create;
 
-    // error in native ie678, not in simulated ie9
+    // bug in native ie678, not in simulated ie9
     var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
             'constructor',
@@ -30,7 +29,84 @@ KISSY.add(function (S, require) {
             'valueOf'
         ];
 
+    function hasKey(obj, keyName) {
+        return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
+    }
+
+    function cleanAndReturn(a, b, ret) {
+        delete a[COMPARE_MARKER];
+        delete b[COMPARE_MARKER];
+        return ret;
+    }
+
+    function compareObjects(a, b) {
+        // avoid circular reference
+        if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
+            return true;
+        }
+        a[COMPARE_MARKER] = b;
+        b[COMPARE_MARKER] = a;
+        for (var property in b) {
+            if (!hasKey(a, property) && hasKey(b, property)) {
+                return cleanAndReturn(a, b, false);
+                // mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
+            }
+        }
+        for (property in a) {
+            if (!hasKey(b, property) && hasKey(a, property)) {
+                return cleanAndReturn(a, b, false);
+                // mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
+            }
+        }
+        for (property in b) {
+            if (property === COMPARE_MARKER) {
+                continue;
+            }
+            if (!util.equals(a[property], b[property])) {
+                return cleanAndReturn(a, b, false);
+//                mismatchValues.push('"' + property + '" was "' +
+//                    (b[property] ? (b[property].toString()) : b[property]) +
+//                    '" in expected, but was "' +
+//                    (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
+            }
+        }
+        if (util.isArray(a) && util.isArray(b) && a.length !== b.length) {
+            return cleanAndReturn(a, b, false);
+            // mismatchValues.push('arrays were not the same length');
+        }
+        return cleanAndReturn(a, b, true);
+    }
+
     mix(util, {
+        /**
+         * Checks to see whether two object are equals.
+         * @param a
+         * @param b
+         * @member KISSY
+         */
+        equals: function (a, b) {
+            if (a === b) {
+                return true;
+            }
+            if (a === undef || a === null || b === undef || b === null) {
+                // need type coercion
+                return a == null && b == null;
+            }
+            if (a instanceof Date && b instanceof Date) {
+                return a.getTime() === b.getTime();
+            }
+            if (typeof a === 'string' && typeof b === 'string') {
+                return (a === b);
+            }
+            if (typeof a === 'number' && typeof b === 'number') {
+                return (a === b);
+            }
+            if (typeof a === 'object' && typeof b === 'object') {
+                return compareObjects(a, b);
+            }
+            // Straight check
+            return (a === b);
+        },
         /**
          * Get all the property names of o as array
          * @param {Object} o
@@ -164,8 +240,8 @@ KISSY.add(function (S, require) {
          * for example:
          *     @example
          *     var t = {};
-         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE}) => {x: {y: 3, z: 4, a: {}}}, a !== t
-         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
+         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
+         *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
          *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
          */
         mix: function (r, s, ov, wl, deep) {
@@ -186,7 +262,7 @@ KISSY.add(function (S, require) {
             }
 
             if (ov === undef) {
-                ov = TRUE;
+                ov = true;
             }
 
             var cache = [],
@@ -223,7 +299,7 @@ KISSY.add(function (S, require) {
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
          * @param   {...Object} varArgs object need to  augment
-         *          {Boolean} [ov=TRUE] whether overwrite existing property
+         *          {Boolean} [ov=true] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
          * @member KISSY
@@ -317,7 +393,7 @@ KISSY.add(function (S, require) {
          *      @example
          *      util.namespace('KISSY.app'); // returns KISSY.app
          *      util.namespace('app.Shop'); // returns KISSY.app.Shop
-         *      util.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
+         *      util.namespace('TB.app.Shop', true); // returns TB.app.Shop
          *
          * @return {Object}  A reference to the last namespace object created
          * @member KISSY
@@ -449,7 +525,7 @@ KISSY.add(function (S, require) {
                         target :
                         (util.isArray(src) ? [] : {});
                     r[p] = clone;
-                    mixInternal(clone, src, ov, wl, TRUE, cache);
+                    mixInternal(clone, src, ov, wl, true, cache);
                 }
             } else if (src !== undef && (ov || !(p in r))) {
                 r[p] = src;
@@ -508,7 +584,7 @@ KISSY.add(function (S, require) {
             for (k in input) {
 
                 if (k !== CLONE_MARKER &&
-                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    (!f || (f.call(input, input[k], k, input) !== false))) {
                     destination[k] = cloneInternal(input[k], f, memory);
                 }
 

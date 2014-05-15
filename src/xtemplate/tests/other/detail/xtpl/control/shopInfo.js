@@ -1,10 +1,10 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-        var shopInfo = function (scope, buffer, session, undefined) {
-            var engine = this,
-                nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+        var shopInfo = function (scope, buffer, undefined) {
+            var tpl = this,
+                nativeCommands = tpl.root.nativeCommands,
+                utils = tpl.root.utils;
             var callFnUtil = utils["callFn"],
                 callCommandUtil = utils["callCommand"],
                 eachCommand = nativeCommands["each"],
@@ -17,9 +17,6 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands["block"],
                 macroCommand = nativeCommands["macro"],
                 debuggerCommand = nativeCommands["debugger"];
-            if ("5.0.0" !== S.version) {
-                throw new Error("current xtemplate file(" + engine.name + ")(v5.0.0) need to be recompiled using current kissy(v" + S.version + ")!");
-            }
             buffer.write('<!--掌柜信息-->\r\n<div class="mod-shop" id="J_ShopInfo" data-spm="991222461">\r\n    ', 0);
             var option0 = {
                 escape: 1
@@ -42,7 +39,7 @@ KISSY.add(function (S, require, exports, module) {
                 option5.params = params6;
                 require("./shopIdentity");
                 var callRet7
-                callRet7 = includeCommand.call(engine, scope, option5, buffer, 8, session);
+                callRet7 = includeCommand.call(tpl, scope, option5, buffer, 8);
                 if (callRet7 && callRet7.isBuffer) {
                     buffer = callRet7;
                     callRet7 = undefined;
@@ -51,7 +48,7 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('\r\n        </p>\r\n    </div>\r\n    ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option0, buffer, 3, session);
+            buffer = ifCommand.call(tpl, scope, option0, buffer, 3);
             buffer.write('\r\n    ', 0);
             var option8 = {};
             var params9 = [];
@@ -59,7 +56,7 @@ KISSY.add(function (S, require, exports, module) {
             option8.params = params9;
             require("./shopDsr");
             var callRet10
-            callRet10 = includeCommand.call(engine, scope, option8, buffer, 12, session);
+            callRet10 = includeCommand.call(tpl, scope, option8, buffer, 12);
             if (callRet10 && callRet10.isBuffer) {
                 buffer = callRet10;
                 callRet10 = undefined;
@@ -83,10 +80,11 @@ KISSY.add(function (S, require, exports, module) {
                 buffer.write('"><i class="icon-shop"></i>进入店铺</a></li>\r\n            ', 0);
                 return buffer;
             };
-            buffer = ifCommand.call(engine, scope, option12, buffer, 18, session);
+            buffer = ifCommand.call(tpl, scope, option12, buffer, 18);
             buffer.write('\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n<script>\r\n    KISSY.use("detail/mod", function(S,Mod) {\r\n        Mod.add({\r\n            name:"detail/shop/",\r\n            data:{\r\n                panel: "#J_ShopInfo"\r\n            }\r\n        });\r\n    });\r\n</script>', 0);
             return buffer;
         };
 shopInfo.TPL_NAME = module.name;
+shopInfo.version = "5.0.0";
 return shopInfo
 });
