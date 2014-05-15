@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:28
+build time: May 15 22:56
 */
 KISSY.add("scroll-view/plugin/scrollbar",["base","./scrollbar/control"],function(i,g){function k(){var c=this.scrollView,h=this.get("minLength"),j=this.get("autoHideX"),b=this.get("autoHideY"),d;!this.scrollBarX&&c.allowScroll.left&&(d={axis:"x",scrollView:c,elBefore:c.$contentEl},void 0!==h&&(d.minLength=h),void 0!==j&&(d.autoHide=j),this.scrollBarX=(new e(d)).render());!this.scrollBarY&&c.allowScroll.top&&(d={axis:"y",scrollView:c,elBefore:c.$contentEl},void 0!==h&&(d.minLength=h),void 0!==b&&(d.autoHide=
 b),this.scrollBarY=(new e(d)).render())}var l=g("base"),e=g("./scrollbar/control");return l.extend({pluginId:this.name,pluginBindUI:function(c){this.scrollView=c;c.on("reflow",k,this)},pluginDestructor:function(c){this.scrollBarX&&(this.scrollBarX.destroy(),this.scrollBarX=null);this.scrollBarY&&(this.scrollBarY.destroy(),this.scrollBarY=null);c.detach("reflow",k,this)}},{ATTRS:{minLength:{},autoHideX:{},autoHideY:{}}})});

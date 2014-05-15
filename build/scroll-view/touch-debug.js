@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:28
+build time: May 15 22:56
 */
 /*
 combined modules:
@@ -200,6 +200,7 @@ KISSY.add('scroll-view/touch', [
         }
         onDragScroll(self, e, 'left');
         onDragScroll(self, e, 'top');
+        self.fire('touchMove');
     }
     function onDragEndHandler(e) {
         var self = this;

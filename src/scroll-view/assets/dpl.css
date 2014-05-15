@@ -122,18 +122,22 @@
     filter: alpha(opacity=50);
 }
 
-/**
- *
- * Pull down styles
- *
- */
-.ks-scroll-view-pull-to-refresh {
+.ks-scroll-view-pull-down-to-refresh {
     position: absolute;
     width: 100%;
+    height: 51px;
     top: -51px;
 }
 
-.ks-scroll-view-pull-to-refresh-content {
+.ks-scroll-view-pull-up-to-refresh {
+    position: absolute;
+    width: 100%;
+    height: 51px;
+    bottom: -51px;
+}
+
+.ks-scroll-view-pull-down-to-refresh-content,
+.ks-scroll-view-pull-up-to-refresh-content{
     background: #fff;
     height: 40px;
     line-height: 40px;
@@ -144,7 +148,7 @@
     color: #888;
 }
 
-.ks-scroll-view-pull-icon {
+.ks-scroll-view-pull-up-icon,.ks-scroll-view-pull-down-icon {
     display: block;
     float: left;
     width: 40px;
@@ -156,19 +160,21 @@
     -webkit-transition-duration: 250ms;
 }
 
-.ks-scroll-view-pulling .ks-scroll-view-pull-icon {
+.ks-scroll-view-pulling .ks-scroll-view-pull-down-icon,
+.ks-scroll-view-releasing .ks-scroll-view-pull-up-icon{
     -webkit-transform: rotate(0deg) translateZ(0);
 }
 
-.ks-scroll-view-releasing .ks-scroll-view-pull-icon {
+.ks-scroll-view-releasing .ks-scroll-view-pull-down-icon,
+.ks-scroll-view-pulling .ks-scroll-view-pull-up-icon{
     -webkit-transform: rotate(-180deg) translateZ(0);
 }
 
-.ks-scroll-view-loading .ks-scroll-view-pull-icon {
+.ks-scroll-view-loading .ks-scroll-view-pull-up-icon,
+.ks-scroll-view-loading .ks-scroll-view-pull-down-icon{
     background-position: 0 100%;
     -webkit-transform: rotate(0deg) translateZ(0);
     -webkit-transition-duration: 0ms;
-
     -webkit-animation-name: loading;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: infinite;

@@ -95,38 +95,46 @@
 <script>
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    KISSY.use('scroll-view,scroll-view/plugin/scrollbar,' +
-            'scroll-view/plugin/pull-to-refresh', function (S, ScrollView, ScrollbarPlugin, PullToRefresh) {
-        S.ready(function () {
-            var num = '41';
+    KISSY.use('node,' +
+            'scroll-view,' +
+            'scroll-view/plugin/scrollbar,' +
+            'scroll-view/plugin/pull-to-refresh', function (S, Node, ScrollView, ScrollbarPlugin, PullToRefresh) {
+        var num = '41';
 
-            num = parseInt(num);
+        num = parseInt(num);
 
-            var str = '';
-            for (var i = 1; i < num; i++) {
-                str += '<p>line ' + i + '</p>'
-            }
-            S.all('#thelist').html(str);
+        var str = '';
+        for (var i = 1; i < num; i++) {
+            str += '<p>line ' + i + '</p>'
+        }
+        Node.all('#thelist').html(str);
 
-            window.scrollView = new ScrollView({
-                srcNode: '#wrapper',
-                plugins: [ ScrollbarPlugin,
-                    new PullToRefresh({
-                        loadFn: function (callback) {
-                            setTimeout(function () {
-                                scrollView.get('contentEl')
-                                        .prepend('<p>line ' + i++ + '</p>');
-                                scrollView.sync();
-                                callback();
-                            }, 500);
-                        }
-                    })
-                ]
-            }).render();
+        window.scrollView = new ScrollView({
+            srcNode: '#wrapper',
+            plugins: [ ScrollbarPlugin,
+                new PullToRefresh({
+                    pullDownLoadFn: function (callback) {
+                        setTimeout(function () {
+                            scrollView.get('contentEl')
+                                    .prepend('<p>pull down ' + i++ + '</p>');
+                            scrollView.sync();
+                            callback();
+                        }, 1000);
+                    },
+                    pullUpLoadFn: function (callback) {
+                        setTimeout(function () {
+                            scrollView.get('contentEl')
+                                    .append('<p style="height: 100px">pull up ' + i++ + '</p>');
+                            scrollView.sync();
+                            callback();
+                        }, 1000);
+                    }
+                })
+            ]
+        }).render();
 
-            S.all(window).on('resize orientationchange',
-                    scrollView.sync, scrollView);
-        });
+        Node.all(window).on('resize orientationchange',
+                scrollView.sync, scrollView);
     });
 </script>
 </body>

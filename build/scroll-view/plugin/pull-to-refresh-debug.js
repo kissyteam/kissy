@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:28
+build time: May 15 22:56
 */
 /*
 combined modules:
@@ -16,13 +16,22 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
     'base',
     'node',
     'util',
+    'util',
     'feature'
 ], function (S, require) {
     var Base = require('base');
     var Node = require('node');
+    var util = require('util');
+    var $ = Node.all;
     var substitute = require('util').substitute;
     var transformVendorInfo = require('feature').getCssVendorInfo('transform');
-    var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;    /**
+    var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;
+    function setState(self, state, direction) {
+        self.isLoading = state === 'loading';
+        var prefixCls = self.scrollView.get('prefixCls'), $el = self.get$El(direction);
+        $el.attr('class', prefixCls + 'scroll-view-pull-' + direction + '-to-refresh ' + prefixCls + 'scroll-view-' + state);
+        self.get$LabelEl(direction).html(self.getStateHtml(direction, state));
+    }    /**
      * pull to refresh plugin for ScrollView
      * @class KISSY.ScrollView.Plugin.PullToRefresh
      * @extend KISSY.Base
@@ -34,74 +43,138 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
      */
     return Base.extend({
         pluginId: this.name,
-        _onSetState: function (e) {
-            if (!this.scrollView) {
+        get$El: function (direction) {
+            return this['$' + direction + 'El'];
+        },
+        getEl: function (direction) {
+            return this.get$El(direction)[0];
+        },
+        get$LabelEl: function (direction) {
+            return this['$' + direction + 'LabelEl'];
+        },
+        getStateHtml: function (direction, state) {
+            direction = util.ucfirst(direction);
+            return this.get(state + direction + 'Html');
+        },
+        _onSetPullUpState: function (state) {
+            setState(this, state, 'up');
+        },
+        _onSetPullDownState: function (state) {
+            setState(this, state, 'down');
+        },
+        _onScrollMove: function () {
+            var self = this;
+            if (self.isLoading) {
                 return;
             }
-            var status = e.newVal, self = this, prefixCls = self.scrollView.get('prefixCls'), $el = self.$el;
-            $el.attr('class', prefixCls + 'scroll-view-pull-to-refresh ' + prefixCls + 'scroll-view-' + status);
-            self.labelEl.html(self.get(status + 'Html'));
-            self.elHeight = $el.height();
-        },
-        _onScrollMove: function (e) {
-            var self = this, b = e.newVal;
-            if (0 - b > self.elHeight) {
-                self.set('state', 'releasing');
-            } else if (b < 0) {
-                self.set('state', 'pulling');
+            var b = self.scrollView.get('scrollTop');
+            if (b < 0) {
+                if (self.get$El('down')) {
+                    self.set('pullDownState', b > -self.pulldownElHeight ? 'pulling' : 'releasing');
+                }
+            } else if (b > self.scrollView.maxScroll.top) {
+                if (self.get$El('up')) {
+                    self.set('pullUpState', b < self.scrollView.maxScroll.top + self.pullupElHeight ? 'pulling' : 'releasing');
+                }
             }
         },
         _onDragEnd: function () {
             var self = this;
+            if (self.isLoading) {
+                return;
+            }
+            var loadFn;
+            var callback;
             var scrollView = self.scrollView;
             var b = scrollView.get('scrollTop');
-            if (0 - b > self.elHeight) {
-                scrollView.minScroll.top = -self.elHeight;
-                var loadFn = self.get('loadFn');
-                self.set('state', 'loading');
-                var callback = function () {
+            if (self.get$El('down') && b < -self.pulldownElHeight) {
+                scrollView.minScroll.top = -self.pulldownElHeight;
+                loadFn = self.get('pullDownLoadFn');
+                self.set('pullDownState', 'loading');
+                callback = function () {
                     // will animate to restore
-                    scrollView.scrollTo({ top: -self.elHeight });
+                    scrollView.scrollTo({ top: -self.pulldownElHeight });
                     scrollView.scrollTo({ top: scrollView.minScroll.top }, {
                         duration: scrollView.get('snapDuration'),
                         easing: scrollView.get('snapEasing')
                     });
-                    self.set('state', 'pulling');
+                    self.set('pullDownState', 'pulling');
                 };
-                if (loadFn) {
-                    loadFn.call(self, callback);
-                } else {
-                    callback.call(self);
-                }
+            } else if (self.get$El('up') && b > scrollView.maxScroll.top + self.pullupElHeight) {
+                scrollView.maxScroll.top += self.pullupElHeight;
+                loadFn = self.get('pullUpLoadFn');
+                self.set('pullUpState', 'loading');
+                callback = function () {
+                    // will animate to restore
+                    scrollView.scrollTo({ top: scrollView.maxScroll.top + self.pullupElHeight });
+                    scrollView.scrollTo({ top: scrollView.maxScroll.top }, {
+                        duration: scrollView.get('snapDuration'),
+                        easing: scrollView.get('snapEasing')
+                    });
+                    self.set('pullUpState', 'pulling');
+                };
+            }
+            if (loadFn) {
+                loadFn.call(self, callback);
             }
         },
         _onSetScrollTop: function (v) {
             v = v.newVal;
-            if (v < 0) {
+            var self = this;
+            if (self.get$El('down') && v < 0) {
                 // does not care ie9 and non 3d browser
-                this.el.style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
+                self.getEl('down').style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
+            }
+            if (self.get$El('up')) {
+                var maxTop = self.scrollView.maxScroll.top;
+                if (self.isLoading) {
+                    maxTop -= self.pullupElHeight;
+                }
+                if (v > maxTop) {
+                    // does not care ie9 and non 3d browser
+                    self.getEl('up').style[transformProperty] = 'translate3d(0,' + (maxTop - v) + 'px,0)';
+                }
             }
         },
         pluginRenderUI: function (scrollView) {
             var self = this;
             self.scrollView = scrollView;
+            var direction = [];
+            if (self.get('pullUpLoadFn')) {
+                direction.push('up');
+            }
+            if (self.get('pullDownLoadFn')) {
+                direction.push('down');
+            }
             var prefixCls = scrollView.get('prefixCls');
-            var el = Node.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-label"></span>' + '</div>' + '</div>', { prefixCls: prefixCls }));
-            self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
-            scrollView.get('el').prepend(el);
-            self.$el = el;
-            self.el = el[0];
-            self._onSetState({ newValue: 'pulling' });
+            util.each(direction, function (d) {
+                var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-{d}-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-{d}-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-{d}-label"></span>' + '</div>' + '</div>', {
+                        prefixCls: prefixCls,
+                        d: d
+                    }));
+                self['$' + d + 'LabelEl'] = $el.one('.' + prefixCls + 'scroll-view-pull-' + d + '-label');
+                scrollView.get('el').prepend($el);
+                self['$' + d + 'El'] = $el;
+                self['pull' + d + 'ElHeight'] = $el.height();
+            });
         },
         pluginBindUI: function (scrollView) {
             var self = this;
-            scrollView.on('afterScrollTopChange', self._onScrollMove, self);
+            scrollView.on('touchMove', self._onScrollMove, self);
             scrollView.on('touchEnd', self._onDragEnd, self);
-            self.on('afterStateChange', self._onSetState, self);
             scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);
         },
-        pluginDestructor: function () {
-            this.$el.remove();
+        pluginDestructor: function (scrollView) {
+            var self = this;
+            if (self.get$El('up')) {
+                self.get$El('up').remove();
+            }
+            if (self.get$El('down')) {
+                self.get$El('down').remove();
+            }
+            scrollView.detach('touchMove', self._onScrollMove, self);
+            scrollView.detach('touchEnd', self._onDragEnd, self);
+            scrollView.detach('afterScrollTopChange', self._onSetScrollTop, self);
         }
     }, {
         ATTRS: {
@@ -113,7 +186,8 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
             /**
              * @ignore
              */
-            pullingHtml: { value: 'Pull down to refresh...' },
+            pullingDownHtml: { value: 'Pull down to refresh...' },
+            pullingUpHtml: { value: 'Pull up to refresh...' },
             /**
              * releasing hint html.
              * Defaults to: release to refresh...
@@ -122,7 +196,8 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
             /**
              * @ignore
              */
-            releasingHtml: { value: 'release to refresh...' },
+            releasingUpHtml: { value: 'release to refresh...' },
+            releasingDownHtml: { value: 'release to refresh...' },
             /**
              * loading hint html.
              * Defaults to: loading...
@@ -131,7 +206,8 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
             /**
              * @ignore
              */
-            loadingHtml: { value: 'loading...' },
+            loadingUpHtml: { value: 'loading...' },
+            loadingDownHtml: { value: 'loading...' },
             /**
              * load function to load data asynchronously
              * @cfg {Function} loadFn
@@ -139,8 +215,10 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
             /**
              * @ignore
              */
-            loadFn: {},
-            state: { value: 'pulling' }
+            pullUpLoadFn: {},
+            pullDownLoadFn: {},
+            pullUpState: {},
+            pullDownState: {}
         }
     });
 });

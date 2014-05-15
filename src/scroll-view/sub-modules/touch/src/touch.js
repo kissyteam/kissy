@@ -207,13 +207,12 @@ KISSY.add(function (S, require) {
 
     function onDragHandler(e) {
         var self = this;
-
         if (e.gestureType !== 'touch') {
             return;
         }
-
         onDragScroll(self, e, 'left');
         onDragScroll(self, e, 'top');
+        self.fire('touchMove');
     }
 
     function onDragEndHandler(e) {
