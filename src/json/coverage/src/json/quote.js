@@ -288,7 +288,7 @@ KISSY.add(function(S, require) {
   util.each(CONTROL_MAP, function(original, encoded) {
   _$jscoverage['/json/quote.js'].functionData[1]++;
   _$jscoverage['/json/quote.js'].lineData[21]++;
-  REVERSE_CONTROL_MAP[encoded] = original;
+  REVERSE_CONTROL_MAP[original] = encoded;
 });
   _$jscoverage['/json/quote.js'].lineData[24]++;
   REVERSE_CONTROL_MAP['\\/'] = '/';

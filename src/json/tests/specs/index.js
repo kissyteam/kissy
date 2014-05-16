@@ -13,6 +13,9 @@ KISSY.add(function (S, Json, UA) {
                 };
                 var ret = Json.stringify(x);
                 expect(ret).toBe('{"\\"z\\"":"\\"q\\""}');
+                var obj = Json.parse(ret);
+                ret = Json.stringify(obj);
+                expect(ret).toBe('{"\\"z\\"":"\\"q\\""}');
             });
 
             it('should convert an arbitrary value to a Json string representation', function () {

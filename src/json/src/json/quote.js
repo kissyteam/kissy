@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
         UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
 
     util.each(CONTROL_MAP, function (original, encoded) {
-        REVERSE_CONTROL_MAP[encoded] = original;
+        REVERSE_CONTROL_MAP[original] = encoded;
     });
 
     REVERSE_CONTROL_MAP['\\/'] = '/';
