@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.43
+Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Dec 4 22:16
+build time: May 16 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -59,7 +59,6 @@ KISSY.add("menu/control", ["node", "component/container", "component/extension/d
       clearTimeout(rootMenu._popupAutoHideTimer);
       rootMenu._popupAutoHideTimer = null
     }
-    this.focus()
   }, handleBlurInternal:function(e) {
     this.callSuper(e);
     var highlightedItem;

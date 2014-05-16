@@ -66,7 +66,6 @@ KISSY.add(function (S, require) {
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
-            this.focus();
         },
 
         handleBlurInternal: function (e) {
