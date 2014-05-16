@@ -23,7 +23,7 @@ KISSY.use('menu,util', function (S, Menu,util) {
     // 这个子菜单, 关联到上面创建的弹出菜单
     var b = new Menu.SubMenu({
         prefixCls:prefixCls,
-        content:'<span class='title'>更多</span>',
+        content:'<span class="title">更多</span>',
         menu:sb
     });
 
@@ -38,7 +38,7 @@ KISSY.use('menu,util', function (S, Menu,util) {
     util.each(['淘单', '动态'], function (title) {
         menu.addChild(new Menu.Item({
             prefixCls:prefixCls,
-            content:'<a href="javascript:void(0)" class='title' tabindex="-1">' + title + '</a>'
+            content:'<a href="javascript:void(0)" class="title" tabindex="-1">' + title + '</a>'
         }));
     });
     menu.addChild(b);

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 16 12:48
+build time: May 16 15:11
 */
 /*
 combined modules:
@@ -106,7 +106,6 @@ KISSY.add('menu/control', [
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
-            this.focus();
         },
         handleBlurInternal: function (e) {
             this.callSuper(e);
