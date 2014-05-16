@@ -24,9 +24,8 @@ KISSY.add(function (S, require) {
         },
         handleClickInternal: function (e) {
             var self = this;
-            self.callSuper(e);
             self.set('checked', !self.get('checked'));
-            self.fire('click');
+            self.callSuper(e);
             return true;
         }
     }, {

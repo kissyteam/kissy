@@ -226,105 +226,137 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/menu/submenu-xtpl.js']) {
-  _$jscoverage['/menu/submenu-xtpl.js'] = {};
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData = [];
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[2] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[4] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[5] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[8] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[20] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[24] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[25] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[26] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[27] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[28] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[29] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[30] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[31] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[33] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[34] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[35] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[36] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[37] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[38] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[39] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[40] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[41] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[43] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[44] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[45] = 0;
+if (! _$jscoverage['/menu/radio-menuitem-xtpl.js']) {
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'] = {};
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData = [];
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[2] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[4] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[5] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[8] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[20] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[21] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[24] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[25] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[27] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[28] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[29] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[30] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[31] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[33] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[34] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[35] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[38] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[39] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[40] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[41] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[42] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[43] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[44] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[45] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[47] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[48] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[49] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[50] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[51] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[52] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[54] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[55] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[56] = 0;
 }
-if (! _$jscoverage['/menu/submenu-xtpl.js'].functionData) {
-  _$jscoverage['/menu/submenu-xtpl.js'].functionData = [];
-  _$jscoverage['/menu/submenu-xtpl.js'].functionData[0] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].functionData[1] = 0;
+if (! _$jscoverage['/menu/radio-menuitem-xtpl.js'].functionData) {
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].functionData = [];
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].functionData[0] = 0;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].functionData[1] = 0;
 }
-if (! _$jscoverage['/menu/submenu-xtpl.js'].branchData) {
-  _$jscoverage['/menu/submenu-xtpl.js'].branchData = {};
-  _$jscoverage['/menu/submenu-xtpl.js'].branchData['29'] = [];
-  _$jscoverage['/menu/submenu-xtpl.js'].branchData['29'][1] = new BranchData();
+if (! _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData) {
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData = {};
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['29'] = [];
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['43'] = [];
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['43'][1] = new BranchData();
 }
-_$jscoverage['/menu/submenu-xtpl.js'].branchData['29'][1].init(1140, 29, 'callRet2 && callRet2.isBuffer');
-function visit48_29_1(result) {
-  _$jscoverage['/menu/submenu-xtpl.js'].branchData['29'][1].ranCondition(result);
+_$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['43'][1].init(1669, 29, 'callRet5 && callRet5.isBuffer');
+function visit41_43_1(result) {
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/submenu-xtpl.js'].lineData[2]++;
+}_$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['29'][1].init(1138, 29, 'callRet2 && callRet2.isBuffer');
+function visit40_29_1(result) {
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].branchData['29'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
-  _$jscoverage['/menu/submenu-xtpl.js'].functionData[0]++;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[4]++;
-  var submenu = function(scope, buffer, undefined) {
-  _$jscoverage['/menu/submenu-xtpl.js'].functionData[1]++;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[5]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].functionData[0]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[4]++;
+  var radioMenuitem = function(scope, buffer, undefined) {
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].functionData[1]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[5]++;
   var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[8]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[8]++;
   var callFnUtil = utils["callFn"], callCommandUtil = utils["callCommand"], eachCommand = nativeCommands["each"], withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands["set"], includeCommand = nativeCommands["include"], parseCommand = nativeCommands["parse"], extendCommand = nativeCommands["extend"], blockCommand = nativeCommands["block"], macroCommand = nativeCommands["macro"], debuggerCommand = nativeCommands["debugger"];
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[20]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[20]++;
   buffer.write('<div class="', 0);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[21]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[21]++;
   var option0 = {
   escape: 1};
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[24]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[24]++;
   var params1 = [];
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[25]++;
-  params1.push('content');
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[26]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[25]++;
+  params1.push('radio');
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[26]++;
   option0.params = params1;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[27]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[27]++;
   var callRet2;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[28]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[28]++;
   callRet2 = callFnUtil(tpl, scope, option0, buffer, ["getBaseCssClasses"], 0, 1);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[29]++;
-  if (visit48_29_1(callRet2 && callRet2.isBuffer)) {
-    _$jscoverage['/menu/submenu-xtpl.js'].lineData[30]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[29]++;
+  if (visit40_29_1(callRet2 && callRet2.isBuffer)) {
+    _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[30]++;
     buffer = callRet2;
-    _$jscoverage['/menu/submenu-xtpl.js'].lineData[31]++;
+    _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[31]++;
     callRet2 = undefined;
   }
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[33]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[33]++;
   buffer.write(callRet2, true);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[34]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[34]++;
+  buffer.write('">\r\n</div>\r\n<div class="', 0);
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[35]++;
+  var option3 = {
+  escape: 1};
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[38]++;
+  var params4 = [];
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[39]++;
+  params4.push('content');
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[40]++;
+  option3.params = params4;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[41]++;
+  var callRet5;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[42]++;
+  callRet5 = callFnUtil(tpl, scope, option3, buffer, ["getBaseCssClasses"], 0, 3);
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[43]++;
+  if (visit41_43_1(callRet5 && callRet5.isBuffer)) {
+    _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[44]++;
+    buffer = callRet5;
+    _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[45]++;
+    callRet5 = undefined;
+  }
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[47]++;
+  buffer.write(callRet5, true);
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[48]++;
   buffer.write('">', 0);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[35]++;
-  var id3 = scope.resolve(["content"], 0);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[36]++;
-  buffer.write(id3, false);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[37]++;
-  buffer.write('</div>\r\n<span class="', 0);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[38]++;
-  var id4 = scope.resolve(["prefixCls"], 0);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[39]++;
-  buffer.write(id4, true);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[40]++;
-  buffer.write('submenu-arrow">\u25ba</span>', 0);
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[41]++;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[49]++;
+  var id6 = scope.resolve(["content"], 0);
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[50]++;
+  buffer.write(id6, false);
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[51]++;
+  buffer.write('</div>', 0);
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[52]++;
   return buffer;
 };
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[43]++;
-  submenu.TPL_NAME = module.name;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[44]++;
-  submenu.version = "5.0.0";
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[45]++;
-  return submenu;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[54]++;
+  radioMenuitem.TPL_NAME = module.name;
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[55]++;
+  radioMenuitem.version = "5.0.0";
+  _$jscoverage['/menu/radio-menuitem-xtpl.js'].lineData[56]++;
+  return radioMenuitem;
 });

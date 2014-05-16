@@ -231,15 +231,12 @@ if (! _$jscoverage['/menu.js']) {
   _$jscoverage['/menu.js'].lineData = [];
   _$jscoverage['/menu.js'].lineData[6] = 0;
   _$jscoverage['/menu.js'].lineData[7] = 0;
-  _$jscoverage['/menu.js'].lineData[8] = 0;
   _$jscoverage['/menu.js'].lineData[9] = 0;
   _$jscoverage['/menu.js'].lineData[10] = 0;
   _$jscoverage['/menu.js'].lineData[11] = 0;
+  _$jscoverage['/menu.js'].lineData[12] = 0;
   _$jscoverage['/menu.js'].lineData[13] = 0;
   _$jscoverage['/menu.js'].lineData[14] = 0;
-  _$jscoverage['/menu.js'].lineData[15] = 0;
-  _$jscoverage['/menu.js'].lineData[16] = 0;
-  _$jscoverage['/menu.js'].lineData[17] = 0;
 }
 if (! _$jscoverage['/menu.js'].functionData) {
   _$jscoverage['/menu.js'].functionData = [];
@@ -253,22 +250,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu.js'].functionData[0]++;
   _$jscoverage['/menu.js'].lineData[7]++;
   var Menu = require('menu/control');
-  _$jscoverage['/menu.js'].lineData[8]++;
-  var Item = require('menu/menuitem');
   _$jscoverage['/menu.js'].lineData[9]++;
-  var CheckItem = require('menu/check-menuitem');
+  Menu.Item = require('menu/menuitem');
   _$jscoverage['/menu.js'].lineData[10]++;
-  var SubMenu = require('menu/submenu');
+  Menu.CheckItem = require('menu/check-menuitem');
   _$jscoverage['/menu.js'].lineData[11]++;
-  var PopupMenu = require('menu/popupmenu');
+  Menu.RadioItem = require('menu/radio-menuitem');
+  _$jscoverage['/menu.js'].lineData[12]++;
+  Menu.SubMenu = require('menu/submenu');
   _$jscoverage['/menu.js'].lineData[13]++;
-  Menu.Item = Item;
+  Menu.PopupMenu = require('menu/popupmenu');
   _$jscoverage['/menu.js'].lineData[14]++;
-  Menu.CheckItem = CheckItem;
-  _$jscoverage['/menu.js'].lineData[15]++;
-  Menu.SubMenu = SubMenu;
-  _$jscoverage['/menu.js'].lineData[16]++;
-  Menu.PopupMenu = PopupMenu;
-  _$jscoverage['/menu.js'].lineData[17]++;
   return Menu;
 });

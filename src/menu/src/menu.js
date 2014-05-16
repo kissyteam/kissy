@@ -5,14 +5,11 @@
  */
 KISSY.add(function (S, require) {
     var Menu = require('menu/control');
-    var Item = require('menu/menuitem');
-    var CheckItem = require('menu/check-menuitem');
-    var SubMenu = require('menu/submenu');
-    var PopupMenu = require('menu/popupmenu');
 
-    Menu.Item = Item;
-    Menu.CheckItem = CheckItem;
-    Menu.SubMenu = SubMenu;
-    Menu.PopupMenu = PopupMenu;
+    Menu.Item = require('menu/menuitem');
+    Menu.CheckItem = require('menu/check-menuitem');
+    Menu.RadioItem = require('menu/radio-menuitem');
+    Menu.SubMenu = require('menu/submenu');
+    Menu.PopupMenu = require('menu/popupmenu');
     return Menu;
 });

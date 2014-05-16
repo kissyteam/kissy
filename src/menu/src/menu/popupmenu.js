@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
                 last = cur;
                 cur = cur.get('parent');
             } while (cur && (cur.isMenuItem || cur.isMenu));
-            return last === self ? null : last;
+            return last;
         },
 
         handleMouseLeaveInternal: function (e) {
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
             // }
             if (self.get('autoHideOnMouseLeave')) {
                 var rootMenu = self.getRootMenu();
-                if (rootMenu) {
+                if (rootMenu !== this) {
                     clearTimeout(rootMenu._popupAutoHideTimer);
                     rootMenu._popupAutoHideTimer = setTimeout(function () {
                         var item;

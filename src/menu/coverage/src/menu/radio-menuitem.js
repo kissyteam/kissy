@@ -226,81 +226,145 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/menu/check-menuitem.js']) {
-  _$jscoverage['/menu/check-menuitem.js'] = {};
-  _$jscoverage['/menu/check-menuitem.js'].lineData = [];
-  _$jscoverage['/menu/check-menuitem.js'].lineData[6] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[7] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[8] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[9] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[14] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[16] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[17] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[21] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[23] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[26] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[27] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[28] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[29] = 0;
+if (! _$jscoverage['/menu/radio-menuitem.js']) {
+  _$jscoverage['/menu/radio-menuitem.js'] = {};
+  _$jscoverage['/menu/radio-menuitem.js'].lineData = [];
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[6] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[7] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[8] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[9] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[14] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[16] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[17] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[18] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[23] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[25] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[29] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[30] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[31] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[32] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[33] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[35] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[36] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[37] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[38] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[42] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[43] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[44] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[45] = 0;
 }
-if (! _$jscoverage['/menu/check-menuitem.js'].functionData) {
-  _$jscoverage['/menu/check-menuitem.js'].functionData = [];
-  _$jscoverage['/menu/check-menuitem.js'].functionData[0] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].functionData[1] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].functionData[2] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].functionData[3] = 0;
+if (! _$jscoverage['/menu/radio-menuitem.js'].functionData) {
+  _$jscoverage['/menu/radio-menuitem.js'].functionData = [];
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[0] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[1] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[2] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[3] = 0;
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[4] = 0;
 }
-if (! _$jscoverage['/menu/check-menuitem.js'].branchData) {
-  _$jscoverage['/menu/check-menuitem.js'].branchData = {};
-  _$jscoverage['/menu/check-menuitem.js'].branchData['16'] = [];
-  _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1] = new BranchData();
+if (! _$jscoverage['/menu/radio-menuitem.js'].branchData) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData = {};
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['17'] = [];
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['32'] = [];
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['32'][2] = new BranchData();
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['43'] = [];
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['44'] = [];
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['44'][2] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].init(18, 18, 'renderData.checked');
-function visit3_16_1(result) {
-  _$jscoverage['/menu/check-menuitem.js'].branchData['16'][1].ranCondition(result);
+_$jscoverage['/menu/radio-menuitem.js'].branchData['44'][2].init(136, 32, 'rootMenu.__selectedItem === this');
+function visit47_44_2(result) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/check-menuitem.js'].lineData[6]++;
+}_$jscoverage['/menu/radio-menuitem.js'].branchData['44'][1].init(124, 44, 'rootMenu && rootMenu.__selectedItem === this');
+function visit46_44_1(result) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['44'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/radio-menuitem.js'].branchData['43'][1].init(75, 30, 'parent && parent.getRootMenu()');
+function visit45_43_1(result) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['43'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/radio-menuitem.js'].branchData['32'][2].init(183, 21, 'selectedItem !== self');
+function visit44_32_2(result) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['32'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/radio-menuitem.js'].branchData['32'][1].init(167, 37, 'selectedItem && selectedItem !== self');
+function visit43_32_1(result) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['32'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/radio-menuitem.js'].branchData['17'][1].init(74, 19, 'renderData.selected');
+function visit42_17_1(result) {
+  _$jscoverage['/menu/radio-menuitem.js'].branchData['17'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/radio-menuitem.js'].lineData[6]++;
 KISSY.add(function(S, require) {
-  _$jscoverage['/menu/check-menuitem.js'].functionData[0]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[7]++;
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[0]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[7]++;
   var MenuItem = require('./menuitem');
-  _$jscoverage['/menu/check-menuitem.js'].lineData[8]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[8]++;
   var ContentBox = require('component/extension/content-box');
-  _$jscoverage['/menu/check-menuitem.js'].lineData[9]++;
-  var CheckMenuItemTpl = require('./check-menuitem-xtpl');
-  _$jscoverage['/menu/check-menuitem.js'].lineData[14]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[9]++;
+  var RadioMenuItemTpl = require('./radio-menuitem-xtpl');
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[14]++;
   return MenuItem.extend([ContentBox], {
   beforeCreateDom: function(renderData) {
-  _$jscoverage['/menu/check-menuitem.js'].functionData[1]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[16]++;
-  if (visit3_16_1(renderData.checked)) {
-    _$jscoverage['/menu/check-menuitem.js'].lineData[17]++;
-    renderData.elCls.push(this.getBaseCssClasses('checked'));
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[1]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[16]++;
+  renderData.elAttrs.role = 'menuitemradio';
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[17]++;
+  if (visit42_17_1(renderData.selected)) {
+    _$jscoverage['/menu/radio-menuitem.js'].lineData[18]++;
+    renderData.elCls.push(this.getBaseCssClasses('selected'));
   }
 }, 
-  _onSetChecked: function(v) {
-  _$jscoverage['/menu/check-menuitem.js'].functionData[2]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[21]++;
-  var self = this, cls = self.getBaseCssClasses('checked');
-  _$jscoverage['/menu/check-menuitem.js'].lineData[23]++;
+  _onSetSelected: function(v) {
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[2]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[23]++;
+  var self = this, cls = self.getBaseCssClasses('selected');
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[25]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }, 
   handleClickInternal: function(e) {
-  _$jscoverage['/menu/check-menuitem.js'].functionData[3]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[26]++;
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[3]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[29]++;
   var self = this;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[27]++;
-  self.set('checked', !self.get('checked'));
-  _$jscoverage['/menu/check-menuitem.js'].lineData[28]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[30]++;
+  var rootMenu = self.get('parent').getRootMenu();
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[31]++;
+  var selectedItem = rootMenu.__selectedItem;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[32]++;
+  if (visit43_32_1(selectedItem && visit44_32_2(selectedItem !== self))) {
+    _$jscoverage['/menu/radio-menuitem.js'].lineData[33]++;
+    selectedItem.set('selected', false);
+  }
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[35]++;
+  rootMenu.__selectedItem = self;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[36]++;
+  self.set('selected', true);
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[37]++;
   self.callSuper(e);
-  _$jscoverage['/menu/check-menuitem.js'].lineData[29]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[38]++;
   return true;
+}, 
+  destructor: function() {
+  _$jscoverage['/menu/radio-menuitem.js'].functionData[4]++;
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[42]++;
+  var parent = this.get('parent');
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[43]++;
+  var rootMenu = visit45_43_1(parent && parent.getRootMenu());
+  _$jscoverage['/menu/radio-menuitem.js'].lineData[44]++;
+  if (visit46_44_1(rootMenu && visit47_44_2(rootMenu.__selectedItem === this))) {
+    _$jscoverage['/menu/radio-menuitem.js'].lineData[45]++;
+    rootMenu.__selectedItem = null;
+  }
 }}, {
   ATTRS: {
   contentTpl: {
-  value: CheckMenuItemTpl}, 
-  checked: {
-  render: 1, 
-  sync: 0}}, 
-  xclass: 'check-menuitem'});
+  value: RadioMenuItemTpl}, 
+  selected: {
+  sync: 0, 
+  render: 1}}, 
+  xclass: 'radio-menuitem'});
 });

@@ -231,8 +231,7 @@ if (! _$jscoverage['/menubutton/option.js']) {
   _$jscoverage['/menubutton/option.js'].lineData = [];
   _$jscoverage['/menubutton/option.js'].lineData[6] = 0;
   _$jscoverage['/menubutton/option.js'].lineData[7] = 0;
-  _$jscoverage['/menubutton/option.js'].lineData[8] = 0;
-  _$jscoverage['/menubutton/option.js'].lineData[15] = 0;
+  _$jscoverage['/menubutton/option.js'].lineData[14] = 0;
 }
 if (! _$jscoverage['/menubutton/option.js'].functionData) {
   _$jscoverage['/menubutton/option.js'].functionData = [];
@@ -246,13 +245,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menubutton/option.js'].functionData[0]++;
   _$jscoverage['/menubutton/option.js'].lineData[7]++;
   var Menu = require('menu');
-  _$jscoverage['/menubutton/option.js'].lineData[8]++;
-  var MenuItem = Menu.Item;
-  _$jscoverage['/menubutton/option.js'].lineData[15]++;
-  return MenuItem.extend({}, {
+  _$jscoverage['/menubutton/option.js'].lineData[14]++;
+  return Menu.RadioItem.extend({}, {
   ATTRS: {
-  selectable: {
-  value: true}, 
   textContent: {}}, 
   xclass: 'option'});
 });

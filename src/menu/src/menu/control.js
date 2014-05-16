@@ -64,7 +64,7 @@ KISSY.add(function (S, require) {
             this.callSuper(e);
             var rootMenu = this.getRootMenu();
             // maybe called by popupmenu, no submenu
-            if (rootMenu && rootMenu._popupAutoHideTimer) {
+            if (rootMenu !== this && rootMenu._popupAutoHideTimer) {
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }

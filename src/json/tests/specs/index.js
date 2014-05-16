@@ -7,6 +7,14 @@ KISSY.add(function (S, Json, UA) {
 
     describe('json', function () {
         describe('stringify', function () {
+            it('should escape " in property name and value', function () {
+                var x = {
+                    '"z"': '"q"'
+                };
+                var ret = Json.stringify(x);
+                expect(ret).toBe('{"\\"z\\"":"\\"q\\""}');
+            });
+
             it('should convert an arbitrary value to a Json string representation', function () {
                 expect(Json.stringify({'a': true})).toBe('{"a":true}');
                 expect(Json.stringify(true)).toBe('true');

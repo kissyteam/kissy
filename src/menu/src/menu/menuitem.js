@@ -17,11 +17,7 @@ KISSY.add(function (S, require) {
         isMenuItem: 1,
 
         beforeCreateDom: function (renderData) {
-            renderData.elAttrs.role = renderData.selectable ?
-                'menuitemradio' : 'menuitem';
-            if (renderData.selected) {
-                renderData.elCls.push(this.getBaseCssClasses('selected'));
-            }
+            renderData.elAttrs.role = 'menuitem';
         },
 
         // do not set highlighted on mousedown for touch device!
@@ -29,8 +25,6 @@ KISSY.add(function (S, require) {
 
         /**
          * Perform default action when click on enter on this menuitem.
-         * If selectable, then make it selected.
-         * Finally fire click on its parent menu.
          * @protected
          */
         handleClickInternal: function (ev) {
@@ -39,10 +33,6 @@ KISSY.add(function (S, require) {
             // combobox menu tap penetration
             // https://github.com/kissyteam/kissy/issues/533
             ev.preventDefault();
-            // 可选
-            if (self.get('selectable')) {
-                self.set('selected', true);
-            }
             self.fire('click');
             return true;
         },
@@ -82,12 +72,6 @@ KISSY.add(function (S, require) {
             }
         },
 
-        _onSetSelected: function (v) {
-            var self = this,
-                cls = self.getBaseCssClasses('selected');
-            self.$el[v ? 'addClass' : 'removeClass'](cls);
-        },
-
         /**
          * Check whether this menu item contains specified element.
          * @param {KISSY.Node} element Element to be tested.
@@ -105,59 +89,6 @@ KISSY.add(function (S, require) {
 
             handleGestureEvents: {
                 value: false
-            },
-
-            /**
-             * Whether the menu item is selectable or not.
-             * Set to true for option.
-             * @cfg {Boolean} selectable
-             */
-            /**
-             * @ignore
-             */
-            selectable: {
-                sync: 0,
-                render: 1,
-                parse: function (el) {
-                    return el.hasClass(this.getBaseCssClass('selectable'));
-                }
-            },
-
-            /**
-             * The value associated with the menu item.
-             * @cfg {*} value
-             */
-            /**
-             * The value associated with the menu item.
-             * @property value
-             * @type {*}
-             */
-            /**
-             * @ignore
-             */
-            value: {},
-
-            /**
-             * Whether the menu item is checked.
-             * @type {Boolean}
-             * @property checked
-             */
-
-            /**
-             * Whether the menu item is selected.
-             * @type {Boolean}
-             * @property selected
-             */
-            /**
-             * Whether the menu item is selected.
-             * @cfg {Boolean} selected
-             */
-            /**
-             * @ignore
-             */
-            selected: {
-                sync: 0,
-                render: 1
             }
         },
         xclass: 'menuitem'

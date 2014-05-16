@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:27
+build time: May 16 12:48
 */
 /*
 combined modules:
@@ -10,6 +10,8 @@ menu/control
 menu/menuitem
 menu/check-menuitem
 menu/check-menuitem-xtpl
+menu/radio-menuitem
+menu/radio-menuitem-xtpl
 menu/submenu
 menu/submenu-xtpl
 menu/popupmenu
@@ -23,18 +25,16 @@ KISSY.add('menu', [
     'menu/control',
     'menu/menuitem',
     'menu/check-menuitem',
+    'menu/radio-menuitem',
     'menu/submenu',
     'menu/popupmenu'
 ], function (S, require) {
     var Menu = require('menu/control');
-    var Item = require('menu/menuitem');
-    var CheckItem = require('menu/check-menuitem');
-    var SubMenu = require('menu/submenu');
-    var PopupMenu = require('menu/popupmenu');
-    Menu.Item = Item;
-    Menu.CheckItem = CheckItem;
-    Menu.SubMenu = SubMenu;
-    Menu.PopupMenu = PopupMenu;
+    Menu.Item = require('menu/menuitem');
+    Menu.CheckItem = require('menu/check-menuitem');
+    Menu.RadioItem = require('menu/radio-menuitem');
+    Menu.SubMenu = require('menu/submenu');
+    Menu.PopupMenu = require('menu/popupmenu');
     return Menu;
 });
 /**
@@ -102,7 +102,7 @@ KISSY.add('menu/control', [
             this.callSuper(e);
             var rootMenu = this.getRootMenu();    // maybe called by popupmenu, no submenu
             // maybe called by popupmenu, no submenu
-            if (rootMenu && rootMenu._popupAutoHideTimer) {
+            if (rootMenu !== this && rootMenu._popupAutoHideTimer) {
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
@@ -289,17 +289,12 @@ KISSY.add('menu/menuitem', [
     return Control.extend({
         isMenuItem: 1,
         beforeCreateDom: function (renderData) {
-            renderData.elAttrs.role = renderData.selectable ? 'menuitemradio' : 'menuitem';
-            if (renderData.selected) {
-                renderData.elCls.push(this.getBaseCssClasses('selected'));
-            }
+            renderData.elAttrs.role = 'menuitem';
         },
         // do not set highlighted on mousedown for touch device!
         // only set active in component/control
         /**
          * Perform default action when click on enter on this menuitem.
-         * If selectable, then make it selected.
-         * Finally fire click on its parent menu.
          * @protected
          */
         handleClickInternal: function (ev) {
@@ -308,11 +303,7 @@ KISSY.add('menu/menuitem', [
                                    // https://github.com/kissyteam/kissy/issues/533
             // combobox menu tap penetration
             // https://github.com/kissyteam/kissy/issues/533
-            ev.preventDefault();    // 可选
-            // 可选
-            if (self.get('selectable')) {
-                self.set('selected', true);
-            }
+            ev.preventDefault();
             self.fire('click');
             return true;
         },
@@ -349,10 +340,6 @@ KISSY.add('menu/menuitem', [
                 });
             }
         },
-        _onSetSelected: function (v) {
-            var self = this, cls = self.getBaseCssClasses('selected');
-            self.$el[v ? 'addClass' : 'removeClass'](cls);
-        },
         /**
          * Check whether this menu item contains specified element.
          * @param {KISSY.Node} element Element to be tested.
@@ -365,56 +352,7 @@ KISSY.add('menu/menuitem', [
     }, {
         ATTRS: {
             focusable: { value: false },
-            handleGestureEvents: { value: false },
-            /**
-             * Whether the menu item is selectable or not.
-             * Set to true for option.
-             * @cfg {Boolean} selectable
-             */
-            /**
-             * @ignore
-             */
-            selectable: {
-                sync: 0,
-                render: 1,
-                parse: function (el) {
-                    return el.hasClass(this.getBaseCssClass('selectable'));
-                }
-            },
-            /**
-             * The value associated with the menu item.
-             * @cfg {*} value
-             */
-            /**
-             * The value associated with the menu item.
-             * @property value
-             * @type {*}
-             */
-            /**
-             * @ignore
-             */
-            value: {},
-            /**
-             * Whether the menu item is checked.
-             * @type {Boolean}
-             * @property checked
-             */
-            /**
-             * Whether the menu item is selected.
-             * @type {Boolean}
-             * @property selected
-             */
-            /**
-             * Whether the menu item is selected.
-             * @cfg {Boolean} selected
-             */
-            /**
-             * @ignore
-             */
-            selected: {
-                sync: 0,
-                render: 1
-            }
+            handleGestureEvents: { value: false }
         },
         xclass: 'menuitem'
     });
@@ -450,9 +388,8 @@ KISSY.add('menu/check-menuitem', [
         },
         handleClickInternal: function (e) {
             var self = this;
-            self.callSuper(e);
             self.set('checked', !self.get('checked'));
-            self.fire('click');
+            self.callSuper(e);
             return true;
         }
     }, {
@@ -513,6 +450,117 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
     checkMenuitem.TPL_NAME = module.name;
     checkMenuitem.version = '5.0.0';
     return checkMenuitem;
+});
+/**
+ * checkable menu item
+ * @ignore
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('menu/radio-menuitem', [
+    './menuitem',
+    'component/extension/content-box',
+    './radio-menuitem-xtpl'
+], function (S, require) {
+    var MenuItem = require('./menuitem');
+    var ContentBox = require('component/extension/content-box');
+    var RadioMenuItemTpl = require('./radio-menuitem-xtpl');    /**
+     * @class KISSY.Menu.RadioItem
+     */
+    /**
+     * @class KISSY.Menu.RadioItem
+     */
+    return MenuItem.extend([ContentBox], {
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'menuitemradio';
+            if (renderData.selected) {
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
+            }
+        },
+        _onSetSelected: function (v) {
+            var self = this, cls = self.getBaseCssClasses('selected');
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
+        },
+        handleClickInternal: function (e) {
+            var self = this;
+            var rootMenu = self.get('parent').getRootMenu();
+            var selectedItem = rootMenu.__selectedItem;
+            if (selectedItem && selectedItem !== self) {
+                selectedItem.set('selected', false);
+            }
+            rootMenu.__selectedItem = self;
+            self.set('selected', true);
+            self.callSuper(e);
+            return true;
+        },
+        destructor: function () {
+            var parent = this.get('parent');
+            var rootMenu = parent && parent.getRootMenu();
+            if (rootMenu && rootMenu.__selectedItem === this) {
+                rootMenu.__selectedItem = null;
+            }
+        }
+    }, {
+        ATTRS: {
+            contentTpl: { value: RadioMenuItemTpl },
+            /**
+             * Whether the menu item is selected.
+             * @type {Boolean}
+             * @property selected
+             */
+            /**
+             * Whether the menu item is selected.
+             * @cfg {Boolean} selected
+             */
+            /**
+             * @ignore
+             */
+            selected: {
+                sync: 0,
+                render: 1
+            }
+        },
+        xclass: 'radio-menuitem'
+    });
+});
+/** Compiled By kissy-xtemplate */
+KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module) {
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    var radioMenuitem = function (scope, buffer, undefined) {
+        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="', 0);
+        var option0 = { escape: 1 };
+        var params1 = [];
+        params1.push('radio');
+        option0.params = params1;
+        var callRet2;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        if (callRet2 && callRet2.isBuffer) {
+            buffer = callRet2;
+            callRet2 = undefined;
+        }
+        buffer.write(callRet2, true);
+        buffer.write('">\r\n</div>\r\n<div class="', 0);
+        var option3 = { escape: 1 };
+        var params4 = [];
+        params4.push('content');
+        option3.params = params4;
+        var callRet5;
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 3);
+        if (callRet5 && callRet5.isBuffer) {
+            buffer = callRet5;
+            callRet5 = undefined;
+        }
+        buffer.write(callRet5, true);
+        buffer.write('">', 0);
+        var id6 = scope.resolve(['content'], 0);
+        buffer.write(id6, false);
+        buffer.write('</div>', 0);
+        return buffer;
+    };
+    radioMenuitem.TPL_NAME = module.name;
+    radioMenuitem.version = '5.0.0';
+    return radioMenuitem;
 });
 /**
  * @ignore
@@ -827,7 +875,7 @@ KISSY.add('menu/popupmenu', [
                 last = cur;
                 cur = cur.get('parent');
             } while (cur && (cur.isMenuItem || cur.isMenu));
-            return last === self ? null : last;
+            return last;
         },
         handleMouseLeaveInternal: function (e) {
             var self = this;
@@ -843,7 +891,7 @@ KISSY.add('menu/popupmenu', [
             // }
             if (self.get('autoHideOnMouseLeave')) {
                 var rootMenu = self.getRootMenu();
-                if (rootMenu) {
+                if (rootMenu !== this) {
                     clearTimeout(rootMenu._popupAutoHideTimer);
                     rootMenu._popupAutoHideTimer = setTimeout(function () {
                         var item;

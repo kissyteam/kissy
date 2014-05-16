@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:27
+build time: May 16 12:48
 */
 /*
 combined modules:
@@ -570,8 +570,7 @@ KISSY.add('menubutton/select', [
  * @author yiminghe@gmail.com
  */
 KISSY.add('menubutton/option', ['menu'], function (S, require) {
-    var Menu = require('menu');
-    var MenuItem = Menu.Item;    /**
+    var Menu = require('menu');    /**
      * Option for Select component.
      * xclass: 'option'.
      * @class KISSY.MenuButton.Option
@@ -583,14 +582,8 @@ KISSY.add('menubutton/option', ['menu'], function (S, require) {
      * @class KISSY.MenuButton.Option
      * @extends KISSY.Menu.Item
      */
-    return MenuItem.extend({}, {
+    return Menu.RadioItem.extend({}, {
         ATTRS: {
-            /**
-             * Whether this option can be selected.
-             * Defaults to: true.
-             * @type {Boolean}
-             */
-            selectable: { value: true },
             /**
              * String will be used as select 's content if selected.
              * @type {String}
