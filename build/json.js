@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.43
+Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Dec 4 22:16
+build time: May 16 14:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Dec 4 22:16
 KISSY.add("json/quote", [], function(S) {
   var CONTROL_MAP = {"\u0008":"\\b", "\u000c":"\\f", "\n":"\\n", "\r":"\\r", "\t":"\\t", '"':'\\"'}, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
   S.each(CONTROL_MAP, function(original, encoded) {
-    REVERSE_CONTROL_MAP[encoded] = original
+    REVERSE_CONTROL_MAP[original] = encoded
   });
   REVERSE_CONTROL_MAP["\\/"] = "/";
   return{quote:function(value) {

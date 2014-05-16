@@ -1,9 +1,9 @@
 /*
-Copyright 2013, KISSY v1.43
+Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Dec 4 22:16
+build time: May 16 14:59
 */
-KISSY.add("json/quote",[],function(o){var h={"":"\\b","":"\\f","\n":"\\n","\r":"\\r","\t":"\\t",'"':'\\"'},j={},k=/["\b\f\n\r\t\x00-\x1f]/g,m=/\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;o.each(h,function(f,b){j[b]=f});j["\\/"]="/";return{quote:function(f){return'"'+f.replace(k,function(b){var a;if(!(a=h[b]))a="\\u"+("0000"+b.charCodeAt(0).toString(16)).slice(-4);return a})+'"'},unQuote:function(f){return f.slice(1,f.length-1).replace(m,function(b){var a;if(!(a=j[b]))a=String.fromCharCode(parseInt(b.slice(2),
+KISSY.add("json/quote",[],function(o){var h={"":"\\b","":"\\f","\n":"\\n","\r":"\\r","\t":"\\t",'"':'\\"'},j={},k=/["\b\f\n\r\t\x00-\x1f]/g,m=/\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;o.each(h,function(f,b){j[f]=b});j["\\/"]="/";return{quote:function(f){return'"'+f.replace(k,function(b){var a;if(!(a=h[b]))a="\\u"+("0000"+b.charCodeAt(0).toString(16)).slice(-4);return a})+'"'},unQuote:function(f){return f.slice(1,f.length-1).replace(m,function(b){var a;if(!(a=j[b]))a=String.fromCharCode(parseInt(b.slice(2),
 16));return a})}}});
 KISSY.add("json/stringify",["./quote"],function(o,h){function j(f){return 10>f?"0"+f:f}function k(f,b,a,c,e,s,g){var d=b[f];if(d&&"object"===typeof d)if("function"===typeof d.toJSON)d=d.toJSON(f);else if(d instanceof Date)d=isFinite(d.valueOf())?d.getUTCFullYear()+"-"+j(d.getUTCMonth()+1)+"-"+j(d.getUTCDate())+"T"+j(d.getUTCHours())+":"+j(d.getUTCMinutes())+":"+j(d.getUTCSeconds())+"Z":null;else if(d instanceof String||d instanceof Number||d instanceof Boolean)d=d.valueOf();void 0!==a&&(d=a.call(b,
 f,d));switch(typeof d){case "number":return isFinite(d)?""+d:"null";case "string":return m.quote(d);case "boolean":return""+d;case "object":if(d)if(o.isArray(d)){for(var f=d,b=g,g=g+e,d=[],h=f.length,p=0;p<h;){var l=k(""+p,f,a,c,e,s,g);d[d.length]=void 0===l?"null":l;++p}d.length?e?(a=d.join("\n,"+g),a="[\n"+g+a+"\n"+b+"]"):a="["+d.join(",")+"]":a="[]"}else{for(var f=d,b=g,g=g+e,i,d=void 0!==c?c:o.keys(f),l=[],p=0,h=d.length;p<h;p++){i=d[p];var t=k(i,f,a,c,e,s,g);void 0!==t&&(i=m.quote(i),i+=":",
