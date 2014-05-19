@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:25
+build time: May 19 17:13
 */
 /*
 combined modules:
@@ -160,7 +160,7 @@ KISSY.add('event/gesture/drag', [
             }
             DomEvent.fire(self.dragTarget, DRAG_START, getEventObject(self, e));
         } else {
-            // call e.preventDefault() to prevent native browser behavior for android chrome
+            // call e.preventDefault() to prevent native browser behavior
             DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
         }
     }
@@ -194,18 +194,23 @@ KISSY.add('event/gesture/drag', [
     function Drag() {
     }
     util.extend(Drag, SingleTouch, {
-        start: function () {
+        start: function (e) {
             var self = this;
+            if (e.touches[0].target.nodeName.match(/^(A|INPUT|TEXTAREA|BUTTON|SELECT)$/i)) {
+                return false;
+            }
             Drag.superclass.start.apply(self, arguments);
             var touch = self.lastTouches[0];
             self.lastTime = self.startTime;    // dragTarget will change on mousemove for mouse event
             // dragTarget will change on mousemove for mouse event
-            self.dragTarget = touch.target;
+            var target = self.dragTarget = touch.target;
             self.startPos = self.lastPos = {
                 pageX: touch.pageX,
                 pageY: touch.pageY
             };
-            self.direction = null;
+            self.direction = null;    // call e.preventDefault() to prevent native browser behavior
+            // call e.preventDefault() to prevent native browser behavior
+            DomEvent.fire(target, DRAG_PRE, getEventObject(self, e));
         },
         move: function (e) {
             var self = this;

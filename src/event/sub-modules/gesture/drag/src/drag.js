@@ -75,6 +75,7 @@ KISSY.add(function (S, require) {
         MIN_DISTANCE = 3;
     var doc = document;
     var util = require('util');
+
     function getDistance(p1, p2) {
         var deltaX = p1.pageX - p2.pageX,
             deltaY = p1.pageY - p2.pageY;
@@ -110,7 +111,7 @@ KISSY.add(function (S, require) {
             }
             DomEvent.fire(self.dragTarget, DRAG_START, getEventObject(self, e));
         } else {
-            // call e.preventDefault() to prevent native browser behavior for android chrome
+            // call e.preventDefault() to prevent native browser behavior
             DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
         }
     }
@@ -148,18 +149,23 @@ KISSY.add(function (S, require) {
     }
 
     util.extend(Drag, SingleTouch, {
-        start: function () {
+        start: function (e) {
             var self = this;
+            if (e.touches[0].target.nodeName.match(/^(A|INPUT|TEXTAREA|BUTTON|SELECT)$/i)) {
+                return false;
+            }
             Drag.superclass.start.apply(self, arguments);
             var touch = self.lastTouches[0];
             self.lastTime = self.startTime;
             // dragTarget will change on mousemove for mouse event
-            self.dragTarget = touch.target;
+            var target = self.dragTarget = touch.target;
             self.startPos = self.lastPos = {
                 pageX: touch.pageX,
                 pageY: touch.pageY
             };
             self.direction = null;
+            // call e.preventDefault() to prevent native browser behavior
+            DomEvent.fire(target, DRAG_PRE, getEventObject(self, e));
         },
 
         move: function (e) {

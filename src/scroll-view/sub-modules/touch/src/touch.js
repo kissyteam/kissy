@@ -176,7 +176,7 @@ KISSY.add(function (S, require) {
         var self = this;
 
         if (e.gestureType !== 'touch') {
-            return;
+            return true;
         }
 
         var lockX = self._lockX,
@@ -190,7 +190,7 @@ KISSY.add(function (S, require) {
                 if (self._preventDefaultX) {
                     e.preventDefault();
                 }
-                return;
+                return true;
             }
 
             if (lockY && direction === 'top' && !self.allowScroll[direction]) {
@@ -198,7 +198,7 @@ KISSY.add(function (S, require) {
                 if (self._preventDefaultY) {
                     e.preventDefault();
                 }
-                return;
+                return true;
             }
         }
 
@@ -210,6 +210,9 @@ KISSY.add(function (S, require) {
         if (e.gestureType !== 'touch') {
             return;
         }
+        if (onDragPreHandler.call(self, e)) {
+            return;
+        }
         onDragScroll(self, e, 'left');
         onDragScroll(self, e, 'top');
         self.fire('touchMove');
@@ -218,6 +221,9 @@ KISSY.add(function (S, require) {
     function onDragEndHandler(e) {
         var self = this;
         if (e.gestureType !== 'touch') {
+            return;
+        }
+        if (onDragPreHandler.call(self, e)) {
             return;
         }
         self.fire('touchEnd', {
@@ -356,10 +362,12 @@ KISSY.add(function (S, require) {
         if (self.isScrolling && e.gestureType === 'touch') {
             e.preventDefault();
         }
+
         // snap mode can not stop anim in the middle
         if (self.isScrolling && self.pagesOffset) {
             return;
         }
+
         if (self.isScrolling) {
             self.stopAnimation();
             self.fire('scrollTouchEnd', {
@@ -371,7 +379,7 @@ KISSY.add(function (S, require) {
 
     function bindUI(self) {
         var action = self.get('disabled') ? 'detach' : 'on';
-        self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)
+        self.$el[action](DragGesture.DRAG_START, onDragStartHandler, self)
             // click
             [action](BasicGesture.START, onGestureStart, self)
             [action](DragGesture.DRAG_PRE, onDragPreHandler, self)

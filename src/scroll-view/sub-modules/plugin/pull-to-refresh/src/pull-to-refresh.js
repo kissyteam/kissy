@@ -156,7 +156,7 @@ KISSY.add(function (S, require) {
             }
             var prefixCls = scrollView.get('prefixCls');
             util.each(direction, function (d) {
-                var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh">' +
+                var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh" ontouchmove="return false;">' +
                     '<div class="{prefixCls}scroll-view-pull-{d}-to-refresh-content">' +
                     '<span class="{prefixCls}scroll-view-pull-{d}-icon"></span>' +
                     '<span class="{prefixCls}scroll-view-pull-{d}-label"></span>' +

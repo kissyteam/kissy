@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 15 22:56
+build time: May 19 17:13
 */
 /*
 combined modules:
@@ -148,7 +148,7 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
             }
             var prefixCls = scrollView.get('prefixCls');
             util.each(direction, function (d) {
-                var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-{d}-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-{d}-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-{d}-label"></span>' + '</div>' + '</div>', {
+                var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh" ontouchmove="return false;">' + '<div class="{prefixCls}scroll-view-pull-{d}-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-{d}-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-{d}-label"></span>' + '</div>' + '</div>', {
                         prefixCls: prefixCls,
                         d: d
                     }));

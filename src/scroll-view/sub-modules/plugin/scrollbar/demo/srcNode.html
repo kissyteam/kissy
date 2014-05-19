@@ -112,11 +112,20 @@
         var $ = S.all;
         var num = new Uri(location.href).getQuery().get('num') || '41';
 
+        $('#header, #footer').on('touchmove', function (e) {
+            e.preventDefault();
+        });
+
         num = parseInt(num);
 
         var str = '';
         for (var i = 1; i < num; i++) {
-            str += '<p><a href="http://m.taobao.com">line ' + i + '</a></p>';
+            if (i % 2) {
+                str += '<p><a href="http://m.taobao.com">line ' + i + '</a></p>';
+            } else {
+                str += '<p><input value="input ' + i + '"/></p>';
+            }
+
         }
         S.all('#thelist').html(str);
 
@@ -136,6 +145,11 @@
         S.all(window).on('resize orientationchange', S.UA.ieMode < 9 ?
                 S.buffer(scrollView.sync, 30) :
                 scrollView.sync, scrollView);
+
+        // hide address bar
+        setTimeout(function () {
+            window.scrollTo(0, 0);
+        }, 0);
     });
 </script>
 </body>

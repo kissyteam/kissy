@@ -700,7 +700,7 @@ KISSY.add(function(S, require) {
   util.each(direction, function(d) {
   _$jscoverage['/pull-to-refresh.js'].functionData[14]++;
   _$jscoverage['/pull-to-refresh.js'].lineData[159]++;
-  var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-{d}-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-{d}-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-{d}-label"></span>' + '</div>' + '</div>', {
+  var $el = $(substitute('<div class="{prefixCls}scroll-view-pull-{d}-to-refresh" ontouchmove="return false;">' + '<div class="{prefixCls}scroll-view-pull-{d}-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-{d}-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-{d}-label"></span>' + '</div>' + '</div>', {
   prefixCls: prefixCls, 
   d: d}));
   _$jscoverage['/pull-to-refresh.js'].lineData[168]++;

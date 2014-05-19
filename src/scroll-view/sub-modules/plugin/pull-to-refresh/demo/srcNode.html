@@ -100,14 +100,20 @@
             'scroll-view/plugin/scrollbar,' +
             'scroll-view/plugin/pull-to-refresh', function (S, Node, ScrollView, ScrollbarPlugin, PullToRefresh) {
         var num = '41';
+        var $ = Node.all;
 
         num = parseInt(num);
 
         var str = '';
         for (var i = 1; i < num; i++) {
-            str += '<p>line ' + i + '</p>'
+            if (i % 2) {
+                str += '<p><a href="http://m.taobao.com">line ' + i + '</a></p>';
+            } else {
+                str += '<p><input value="input ' + i + '"/></p>';
+            }
+
         }
-        Node.all('#thelist').html(str);
+        $('#thelist').html(str);
 
         window.scrollView = new ScrollView({
             srcNode: '#wrapper',
@@ -133,8 +139,12 @@
             ]
         }).render();
 
-        Node.all(window).on('resize orientationchange',
+        $(window).on('resize orientationchange',
                 scrollView.sync, scrollView);
+
+        $('#header, #footer').on('touchmove', function (e) {
+            e.preventDefault();
+        });
     });
 </script>
 </body>

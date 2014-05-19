@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 15 22:56
+build time: May 19 17:14
 */
 /*
 combined modules:
@@ -170,7 +170,7 @@ KISSY.add('scroll-view/touch', [
     function onDragPreHandler(e) {
         var self = this;
         if (e.gestureType !== 'touch') {
-            return;
+            return true;
         }
         var lockX = self._lockX, lockY = self._lockY;    // if lockX or lockY then do not prevent native scroll on some condition
         // if lockX or lockY then do not prevent native scroll on some condition
@@ -181,14 +181,14 @@ KISSY.add('scroll-view/touch', [
                 if (self._preventDefaultX) {
                     e.preventDefault();
                 }
-                return;
+                return true;
             }
             if (lockY && direction === 'top' && !self.allowScroll[direction]) {
                 self.isScrolling = 0;
                 if (self._preventDefaultY) {
                     e.preventDefault();
                 }
-                return;
+                return true;
             }
         }
         e.preventDefault();
@@ -198,6 +198,9 @@ KISSY.add('scroll-view/touch', [
         if (e.gestureType !== 'touch') {
             return;
         }
+        if (onDragPreHandler.call(self, e)) {
+            return;
+        }
         onDragScroll(self, e, 'left');
         onDragScroll(self, e, 'top');
         self.fire('touchMove');
@@ -205,6 +208,9 @@ KISSY.add('scroll-view/touch', [
     function onDragEndHandler(e) {
         var self = this;
         if (e.gestureType !== 'touch') {
+            return;
+        }
+        if (onDragPreHandler.call(self, e)) {
             return;
         }
         self.fire('touchEnd', {
@@ -342,7 +348,7 @@ KISSY.add('scroll-view/touch', [
     }
     function bindUI(self) {
         var action = self.get('disabled') ? 'detach' : 'on';
-        self.$contentEl[action](DragGesture.DRAG_START, onDragStartHandler, self)    // click
+        self.$el[action](DragGesture.DRAG_START, onDragStartHandler, self)    // click
 [// click
         action](BasicGesture.START, onGestureStart, self)[action](DragGesture.DRAG_PRE, onDragPreHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
     }    /**
