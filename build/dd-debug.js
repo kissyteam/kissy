@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:31
+build time: May 19 20:55
 */
 /*
 combined modules:
@@ -250,7 +250,11 @@ KISSY.add('dd/ddm', [
                 /**
              * @ignore
              */
-                drops: { value: [] },
+                drops: {
+                    valueFn: function () {
+                        return [];
+                    }
+                },
                 /**
              * a array of the valid drop targets for this interaction
              * @property validDrops
@@ -260,7 +264,11 @@ KISSY.add('dd/ddm', [
                 /**
              * @ignore
              */
-                validDrops: { value: [] }
+                validDrops: {
+                    valueFn: function () {
+                        return [];
+                    }
+                }
             }
         });    /*
      垫片只需创建一次
@@ -999,7 +1007,9 @@ KISSY.add('dd/draggable', [
              * @ignore
              */
                 handlers: {
-                    value: [],
+                    valueFn: function () {
+                        return [];
+                    },
                     getter: function (vs) {
                         var self = this;
                         if (!vs.length) {
@@ -1330,7 +1340,9 @@ KISSY.add('dd/draggable-delegate', [
                  * @ignore
                  */
             handlers: {
-                value: [],
+                valueFn: function () {
+                    return [];
+                },
                 // 覆盖父类的 getter ，这里 normalize 成节点
                 getter: 0
             }

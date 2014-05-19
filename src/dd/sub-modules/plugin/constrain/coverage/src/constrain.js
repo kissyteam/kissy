@@ -258,12 +258,13 @@ if (! _$jscoverage['/constrain.js']) {
   _$jscoverage['/constrain.js'].lineData[80] = 0;
   _$jscoverage['/constrain.js'].lineData[83] = 0;
   _$jscoverage['/constrain.js'].lineData[92] = 0;
-  _$jscoverage['/constrain.js'].lineData[116] = 0;
-  _$jscoverage['/constrain.js'].lineData[117] = 0;
+  _$jscoverage['/constrain.js'].lineData[115] = 0;
   _$jscoverage['/constrain.js'].lineData[118] = 0;
   _$jscoverage['/constrain.js'].lineData[119] = 0;
+  _$jscoverage['/constrain.js'].lineData[120] = 0;
   _$jscoverage['/constrain.js'].lineData[121] = 0;
-  _$jscoverage['/constrain.js'].lineData[124] = 0;
+  _$jscoverage['/constrain.js'].lineData[123] = 0;
+  _$jscoverage['/constrain.js'].lineData[126] = 0;
 }
 if (! _$jscoverage['/constrain.js'].functionData) {
   _$jscoverage['/constrain.js'].functionData = [];
@@ -274,6 +275,7 @@ if (! _$jscoverage['/constrain.js'].functionData) {
   _$jscoverage['/constrain.js'].functionData[4] = 0;
   _$jscoverage['/constrain.js'].functionData[5] = 0;
   _$jscoverage['/constrain.js'].functionData[6] = 0;
+  _$jscoverage['/constrain.js'].functionData[7] = 0;
 }
 if (! _$jscoverage['/constrain.js'].branchData) {
   _$jscoverage['/constrain.js'].branchData = {};
@@ -289,35 +291,35 @@ if (! _$jscoverage['/constrain.js'].branchData) {
   _$jscoverage['/constrain.js'].branchData['39'][1] = new BranchData();
   _$jscoverage['/constrain.js'].branchData['52'] = [];
   _$jscoverage['/constrain.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/constrain.js'].branchData['116'] = [];
-  _$jscoverage['/constrain.js'].branchData['116'][1] = new BranchData();
-  _$jscoverage['/constrain.js'].branchData['117'] = [];
-  _$jscoverage['/constrain.js'].branchData['117'][1] = new BranchData();
+  _$jscoverage['/constrain.js'].branchData['118'] = [];
+  _$jscoverage['/constrain.js'].branchData['118'][1] = new BranchData();
   _$jscoverage['/constrain.js'].branchData['119'] = [];
   _$jscoverage['/constrain.js'].branchData['119'][1] = new BranchData();
-  _$jscoverage['/constrain.js'].branchData['119'][2] = new BranchData();
-  _$jscoverage['/constrain.js'].branchData['120'] = [];
-  _$jscoverage['/constrain.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/constrain.js'].branchData['121'] = [];
+  _$jscoverage['/constrain.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/constrain.js'].branchData['121'][2] = new BranchData();
+  _$jscoverage['/constrain.js'].branchData['122'] = [];
+  _$jscoverage['/constrain.js'].branchData['122'][1] = new BranchData();
 }
-_$jscoverage['/constrain.js'].branchData['120'][1].init(48, 21, 'typeof v === \'string\'');
-function visit11_120_1(result) {
-  _$jscoverage['/constrain.js'].branchData['120'][1].ranCondition(result);
+_$jscoverage['/constrain.js'].branchData['122'][1].init(48, 21, 'typeof v === \'string\'');
+function visit11_122_1(result) {
+  _$jscoverage['/constrain.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['119'][2].init(139, 70, 'util.isWindow(v) || typeof v === \'string\'');
-function visit10_119_2(result) {
-  _$jscoverage['/constrain.js'].branchData['119'][2].ranCondition(result);
+}_$jscoverage['/constrain.js'].branchData['121'][2].init(139, 70, 'util.isWindow(v) || typeof v === \'string\'');
+function visit10_121_2(result) {
+  _$jscoverage['/constrain.js'].branchData['121'][2].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['119'][1].init(125, 84, 'v.nodeType || util.isWindow(v) || typeof v === \'string\'');
-function visit9_119_1(result) {
+}_$jscoverage['/constrain.js'].branchData['121'][1].init(125, 84, 'v.nodeType || util.isWindow(v) || typeof v === \'string\'');
+function visit9_121_1(result) {
+  _$jscoverage['/constrain.js'].branchData['121'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/constrain.js'].branchData['119'][1].init(30, 10, 'v === true');
+function visit8_119_1(result) {
   _$jscoverage['/constrain.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['117'][1].init(30, 10, 'v === true');
-function visit8_117_1(result) {
-  _$jscoverage['/constrain.js'].branchData['117'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/constrain.js'].branchData['116'][1].init(26, 1, 'v');
-function visit7_116_1(result) {
-  _$jscoverage['/constrain.js'].branchData['116'][1].ranCondition(result);
+}_$jscoverage['/constrain.js'].branchData['118'][1].init(26, 1, 'v');
+function visit7_118_1(result) {
+  _$jscoverage['/constrain.js'].branchData['118'][1].ranCondition(result);
   return result;
 }_$jscoverage['/constrain.js'].branchData['52'][1].init(162, 9, 'constrain');
 function visit6_52_1(result) {
@@ -435,24 +437,28 @@ KISSY.add(function(S, require, exports, module) {
 }}, {
   ATTRS: {
   constrain: {
-  value: $(WIN), 
-  setter: function(v) {
+  valueFn: function() {
   _$jscoverage['/constrain.js'].functionData[6]++;
-  _$jscoverage['/constrain.js'].lineData[116]++;
-  if (visit7_116_1(v)) {
-    _$jscoverage['/constrain.js'].lineData[117]++;
-    if (visit8_117_1(v === true)) {
-      _$jscoverage['/constrain.js'].lineData[118]++;
+  _$jscoverage['/constrain.js'].lineData[115]++;
+  return $(WIN);
+}, 
+  setter: function(v) {
+  _$jscoverage['/constrain.js'].functionData[7]++;
+  _$jscoverage['/constrain.js'].lineData[118]++;
+  if (visit7_118_1(v)) {
+    _$jscoverage['/constrain.js'].lineData[119]++;
+    if (visit8_119_1(v === true)) {
+      _$jscoverage['/constrain.js'].lineData[120]++;
       return $(WIN);
     } else {
-      _$jscoverage['/constrain.js'].lineData[119]++;
-      if (visit9_119_1(v.nodeType || visit10_119_2(util.isWindow(v) || visit11_120_1(typeof v === 'string')))) {
-        _$jscoverage['/constrain.js'].lineData[121]++;
+      _$jscoverage['/constrain.js'].lineData[121]++;
+      if (visit9_121_1(v.nodeType || visit10_121_2(util.isWindow(v) || visit11_122_1(typeof v === 'string')))) {
+        _$jscoverage['/constrain.js'].lineData[123]++;
         return $(v);
       }
     }
   }
-  _$jscoverage['/constrain.js'].lineData[124]++;
+  _$jscoverage['/constrain.js'].lineData[126]++;
   return v;
 }}}});
 });

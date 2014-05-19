@@ -237,7 +237,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             drops: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             },
 
             /**
@@ -250,7 +252,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             validDrops: {
-                value: []
+                valueFn: function () {
+                    return [];
+                }
             }
         }
     });

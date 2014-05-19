@@ -559,7 +559,9 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             handlers: {
-                value: [],
+                valueFn: function () {
+                    return [];
+                },
                 getter: function (vs) {
                     var self = this;
                     if (!vs.length) {

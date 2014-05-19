@@ -157,11 +157,13 @@ KISSY.add(function (S, require) {
          * @ignore
          */
         effect: {
-            value: {
-                effect: '',
-                target: null,
-                duration: 0.5,
-                easing: 'easeOut'
+            valueFn: function () {
+                return {
+                    effect: '',
+                    target: null,
+                    duration: 0.5,
+                    easing: 'easeOut'
+                };
             },
             setter: function (v) {
                 var effect = v.effect;
@@ -169,7 +171,6 @@ KISSY.add(function (S, require) {
                     v.effect = '';
                 }
             }
-
         }
     };
 

@@ -278,13 +278,14 @@ if (! _$jscoverage['/overlay/extension/overlay-effect.js']) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[127] = 0;
   _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[134] = 0;
   _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[137] = 0;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[167] = 0;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[168] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[161] = 0;
   _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[169] = 0;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[176] = 0;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[178] = 0;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[182] = 0;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[186] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[170] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[171] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[177] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[179] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[183] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[187] = 0;
 }
 if (! _$jscoverage['/overlay/extension/overlay-effect.js'].functionData) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].functionData = [];
@@ -299,6 +300,7 @@ if (! _$jscoverage['/overlay/extension/overlay-effect.js'].functionData) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[8] = 0;
   _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[9] = 0;
   _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[10] = 0;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[11] = 0;
 }
 if (! _$jscoverage['/overlay/extension/overlay-effect.js'].branchData) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData = {};
@@ -313,17 +315,17 @@ if (! _$jscoverage['/overlay/extension/overlay-effect.js'].branchData) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['91'][2] = new BranchData();
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['94'] = [];
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'] = [];
-  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'][2] = new BranchData();
+  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'] = [];
+  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'][2] = new BranchData();
 }
-_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'][2].init(62, 26, 'typeof effect === \'string\'');
-function visit34_168_2(result) {
-  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'][2].ranCondition(result);
+_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'][2].init(62, 26, 'typeof effect === \'string\'');
+function visit34_170_2(result) {
+  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'][2].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'][1].init(62, 46, 'typeof effect === \'string\' && !effects[effect]');
-function visit33_168_1(result) {
-  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['168'][1].ranCondition(result);
+}_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'][1].init(62, 46, 'typeof effect === \'string\' && !effects[effect]');
+function visit33_170_1(result) {
+  _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/overlay-effect.js'].branchData['94'][1].init(254, 6, 'target');
 function visit32_94_1(result) {
@@ -490,33 +492,37 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[137]++;
   OverlayEffect.ATTRS = {
   effect: {
-  value: {
+  valueFn: function() {
+  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[8]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[161]++;
+  return {
   effect: '', 
   target: null, 
   duration: 0.5, 
-  easing: 'easeOut'}, 
+  easing: 'easeOut'};
+}, 
   setter: function(v) {
-  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[8]++;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[167]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[9]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[169]++;
   var effect = v.effect;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[168]++;
-  if (visit33_168_1(visit34_168_2(typeof effect === 'string') && !effects[effect])) {
-    _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[169]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[170]++;
+  if (visit33_170_1(visit34_170_2(typeof effect === 'string') && !effects[effect])) {
+    _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[171]++;
     v.effect = '';
   }
 }}};
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[176]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[177]++;
   OverlayEffect.prototype = {
   __afterCreateEffectGhost: function(ghost) {
-  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[9]++;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[178]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[10]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[179]++;
   return ghost;
 }, 
   __bindUI: function() {
-  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[10]++;
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[182]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[11]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[183]++;
   this.on('afterVisibleChange', afterVisibleChange, this);
 }};
-  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[186]++;
+  _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[187]++;
   return OverlayEffect;
 });

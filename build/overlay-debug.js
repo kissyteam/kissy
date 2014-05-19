@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:28
+build time: May 19 20:54
 */
 /*
 combined modules:
@@ -533,11 +533,13 @@ KISSY.add('overlay/extension/overlay-effect', [
          * @ignore
          */
         effect: {
-            value: {
-                effect: '',
-                target: null,
-                duration: 0.5,
-                easing: 'easeOut'
+            valueFn: function () {
+                return {
+                    effect: '',
+                    target: null,
+                    duration: 0.5,
+                    easing: 'easeOut'
+                };
             },
             setter: function (v) {
                 var effect = v.effect;
@@ -786,10 +788,7 @@ KISSY.add('overlay/dialog', [
                 /**
              * @ignore
              */
-                bodyStyle: {
-                    value: {},
-                    sync: 0
-                },
+                bodyStyle: { sync: 0 },
                 /**
              * Key-value map of footer element's style.
              * @cfg {Object} footerStyle
@@ -797,10 +796,7 @@ KISSY.add('overlay/dialog', [
                 /**
              * @ignore
              */
-                footerStyle: {
-                    value: {},
-                    render: 1
-                },
+                footerStyle: { render: 1 },
                 /**
              * Key-value map of header element's style.
              * @cfg {Object} headerStyle
@@ -808,10 +804,7 @@ KISSY.add('overlay/dialog', [
                 /**
              * @ignore
              */
-                headerStyle: {
-                    value: {},
-                    render: 1
-                },
+                headerStyle: { render: 1 },
                 /**
              * html content of header element.
              * @cfg {KISSY.Node|String} headerContent

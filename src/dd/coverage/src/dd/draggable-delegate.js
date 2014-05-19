@@ -263,6 +263,7 @@ if (! _$jscoverage['/dd/draggable-delegate.js']) {
   _$jscoverage['/dd/draggable-delegate.js'].lineData[95] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[102] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[117] = 0;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[143] = 0;
 }
 if (! _$jscoverage['/dd/draggable-delegate.js'].functionData) {
   _$jscoverage['/dd/draggable-delegate.js'].functionData = [];
@@ -274,6 +275,7 @@ if (! _$jscoverage['/dd/draggable-delegate.js'].functionData) {
   _$jscoverage['/dd/draggable-delegate.js'].functionData[5] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].functionData[6] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].functionData[7] = 0;
+  _$jscoverage['/dd/draggable-delegate.js'].functionData[8] = 0;
 }
 if (! _$jscoverage['/dd/draggable-delegate.js'].branchData) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData = {};
@@ -434,6 +436,10 @@ KISSY.add(function(S, require) {
 }}, 
   selector: {}, 
   handlers: {
-  value: [], 
+  valueFn: function() {
+  _$jscoverage['/dd/draggable-delegate.js'].functionData[8]++;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[143]++;
+  return [];
+}, 
   getter: 0}}});
 });

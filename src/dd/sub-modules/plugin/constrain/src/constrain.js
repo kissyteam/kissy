@@ -111,7 +111,9 @@ KISSY.add(function (S, require, exports, module) {
              * @ignore
              */
             constrain: {
-                value: $(WIN),
+                valueFn: function () {
+                    return $(WIN);
+                },
                 setter: function (v) {
                     if (v) {
                         if (v === true) {

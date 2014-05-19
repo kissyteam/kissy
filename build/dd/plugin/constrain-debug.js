@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:16
+build time: May 19 20:54
 */
 /*
 combined modules:
@@ -103,7 +103,9 @@ KISSY.add('dd/plugin/constrain', [
              * @ignore
              */
             constrain: {
-                value: $(WIN),
+                valueFn: function () {
+                    return $(WIN);
+                },
                 setter: function (v) {
                     if (v) {
                         if (v === true) {

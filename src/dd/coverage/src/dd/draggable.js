@@ -339,37 +339,38 @@ if (! _$jscoverage['/dd/draggable.js']) {
   _$jscoverage['/dd/draggable.js'].lineData[518] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[519] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[521] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[564] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[565] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[563] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[566] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[567] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[568] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[569] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[570] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[573] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[574] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[571] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[572] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[575] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[576] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[577] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[578] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[579] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[581] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[582] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[743] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[583] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[584] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[745] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[746] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[749] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[750] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[755] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[756] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[747] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[748] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[751] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[752] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[757] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[760] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[761] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[771] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[772] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[778] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[779] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[782] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[783] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[758] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[759] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[762] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[763] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[773] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[774] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[780] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[781] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[784] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[787] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[785] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[786] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[789] = 0;
 }
 if (! _$jscoverage['/dd/draggable.js'].functionData) {
   _$jscoverage['/dd/draggable.js'].functionData = [];
@@ -406,6 +407,7 @@ if (! _$jscoverage['/dd/draggable.js'].functionData) {
   _$jscoverage['/dd/draggable.js'].functionData[30] = 0;
   _$jscoverage['/dd/draggable.js'].functionData[31] = 0;
   _$jscoverage['/dd/draggable.js'].functionData[32] = 0;
+  _$jscoverage['/dd/draggable.js'].functionData[33] = 0;
 }
 if (! _$jscoverage['/dd/draggable.js'].branchData) {
   _$jscoverage['/dd/draggable.js'].branchData = {};
@@ -453,42 +455,42 @@ if (! _$jscoverage['/dd/draggable.js'].branchData) {
   _$jscoverage['/dd/draggable.js'].branchData['431'][1] = new BranchData();
   _$jscoverage['/dd/draggable.js'].branchData['518'] = [];
   _$jscoverage['/dd/draggable.js'].branchData['518'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['565'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['565'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['569'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['569'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['573'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['573'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['576'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['576'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['749'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['749'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['760'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['760'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['567'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['567'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['571'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['571'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['575'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['575'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['578'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['578'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['751'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['751'][1] = new BranchData();
+  _$jscoverage['/dd/draggable.js'].branchData['762'] = [];
+  _$jscoverage['/dd/draggable.js'].branchData['762'][1] = new BranchData();
 }
-_$jscoverage['/dd/draggable.js'].branchData['760'][1].init(310, 19, 'doc.body.setCapture');
-function visit82_760_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['760'][1].ranCondition(result);
+_$jscoverage['/dd/draggable.js'].branchData['762'][1].init(310, 19, 'doc.body.setCapture');
+function visit82_762_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['762'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['749'][1].init(263, 23, 'doc.body.releaseCapture');
-function visit81_749_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['749'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['751'][1].init(263, 23, 'doc.body.releaseCapture');
+function visit81_751_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['751'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['576'][1].init(346, 10, 'v.nodeType');
-function visit80_576_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['576'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['578'][1].init(346, 10, 'v.nodeType');
+function visit80_578_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['578'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['573'][1].init(207, 21, 'typeof v === \'string\'');
-function visit79_573_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['573'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['575'][1].init(207, 21, 'typeof v === \'string\'');
+function visit79_575_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['575'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['569'][1].init(30, 23, 'typeof v === \'function\'');
-function visit78_569_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['569'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['571'][1].init(30, 23, 'typeof v === \'function\'');
+function visit78_571_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['571'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['565'][1].init(64, 10, '!vs.length');
-function visit77_565_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['565'][1].ranCondition(result);
+}_$jscoverage['/dd/draggable.js'].branchData['567'][1].init(64, 10, '!vs.length');
+function visit77_567_1(result) {
+  _$jscoverage['/dd/draggable.js'].branchData['567'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['518'][1].init(26, 20, '!(v instanceof Node)');
 function visit76_518_1(result) {
@@ -935,40 +937,44 @@ KISSY.add(function(S, require) {
   shim: {
   value: false}, 
   handlers: {
-  value: [], 
-  getter: function(vs) {
+  valueFn: function() {
   _$jscoverage['/dd/draggable.js'].functionData[26]++;
-  _$jscoverage['/dd/draggable.js'].lineData[564]++;
+  _$jscoverage['/dd/draggable.js'].lineData[563]++;
+  return [];
+}, 
+  getter: function(vs) {
+  _$jscoverage['/dd/draggable.js'].functionData[27]++;
+  _$jscoverage['/dd/draggable.js'].lineData[566]++;
   var self = this;
-  _$jscoverage['/dd/draggable.js'].lineData[565]++;
-  if (visit77_565_1(!vs.length)) {
-    _$jscoverage['/dd/draggable.js'].lineData[566]++;
+  _$jscoverage['/dd/draggable.js'].lineData[567]++;
+  if (visit77_567_1(!vs.length)) {
+    _$jscoverage['/dd/draggable.js'].lineData[568]++;
     vs[0] = self.get('node');
   }
-  _$jscoverage['/dd/draggable.js'].lineData[568]++;
+  _$jscoverage['/dd/draggable.js'].lineData[570]++;
   each(vs, function(v, i) {
-  _$jscoverage['/dd/draggable.js'].functionData[27]++;
-  _$jscoverage['/dd/draggable.js'].lineData[569]++;
-  if (visit78_569_1(typeof v === 'function')) {
-    _$jscoverage['/dd/draggable.js'].lineData[570]++;
+  _$jscoverage['/dd/draggable.js'].functionData[28]++;
+  _$jscoverage['/dd/draggable.js'].lineData[571]++;
+  if (visit78_571_1(typeof v === 'function')) {
+    _$jscoverage['/dd/draggable.js'].lineData[572]++;
     v = v.call(self);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[573]++;
-  if (visit79_573_1(typeof v === 'string')) {
-    _$jscoverage['/dd/draggable.js'].lineData[574]++;
+  _$jscoverage['/dd/draggable.js'].lineData[575]++;
+  if (visit79_575_1(typeof v === 'string')) {
+    _$jscoverage['/dd/draggable.js'].lineData[576]++;
     v = self.get('node').one(v);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[576]++;
-  if (visit80_576_1(v.nodeType)) {
-    _$jscoverage['/dd/draggable.js'].lineData[577]++;
+  _$jscoverage['/dd/draggable.js'].lineData[578]++;
+  if (visit80_578_1(v.nodeType)) {
+    _$jscoverage['/dd/draggable.js'].lineData[579]++;
     v = $(v);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[579]++;
+  _$jscoverage['/dd/draggable.js'].lineData[581]++;
   vs[i] = v;
 });
-  _$jscoverage['/dd/draggable.js'].lineData[581]++;
+  _$jscoverage['/dd/draggable.js'].lineData[583]++;
   self.setInternal('handlers', vs);
-  _$jscoverage['/dd/draggable.js'].lineData[582]++;
+  _$jscoverage['/dd/draggable.js'].lineData[584]++;
   return vs;
 }}, 
   activeHandler: {}, 
@@ -993,52 +999,52 @@ KISSY.add(function(S, require) {
   POINT: 'point', 
   INTERSECT: 'intersect', 
   STRICT: 'strict'}}});
-  _$jscoverage['/dd/draggable.js'].lineData[743]++;
-  var _ieSelectBack;
   _$jscoverage['/dd/draggable.js'].lineData[745]++;
+  var _ieSelectBack;
+  _$jscoverage['/dd/draggable.js'].lineData[747]++;
   function fixIEMouseUp() {
-    _$jscoverage['/dd/draggable.js'].functionData[28]++;
-    _$jscoverage['/dd/draggable.js'].lineData[746]++;
+    _$jscoverage['/dd/draggable.js'].functionData[29]++;
+    _$jscoverage['/dd/draggable.js'].lineData[748]++;
     doc.body.onselectstart = _ieSelectBack;
-    _$jscoverage['/dd/draggable.js'].lineData[749]++;
-    if (visit81_749_1(doc.body.releaseCapture)) {
-      _$jscoverage['/dd/draggable.js'].lineData[750]++;
+    _$jscoverage['/dd/draggable.js'].lineData[751]++;
+    if (visit81_751_1(doc.body.releaseCapture)) {
+      _$jscoverage['/dd/draggable.js'].lineData[752]++;
       doc.body.releaseCapture();
     }
   }
-  _$jscoverage['/dd/draggable.js'].lineData[755]++;
+  _$jscoverage['/dd/draggable.js'].lineData[757]++;
   function fixIEMouseDown() {
-    _$jscoverage['/dd/draggable.js'].functionData[29]++;
-    _$jscoverage['/dd/draggable.js'].lineData[756]++;
+    _$jscoverage['/dd/draggable.js'].functionData[30]++;
+    _$jscoverage['/dd/draggable.js'].lineData[758]++;
     _ieSelectBack = doc.body.onselectstart;
-    _$jscoverage['/dd/draggable.js'].lineData[757]++;
+    _$jscoverage['/dd/draggable.js'].lineData[759]++;
     doc.body.onselectstart = fixIESelect;
-    _$jscoverage['/dd/draggable.js'].lineData[760]++;
-    if (visit82_760_1(doc.body.setCapture)) {
-      _$jscoverage['/dd/draggable.js'].lineData[761]++;
+    _$jscoverage['/dd/draggable.js'].lineData[762]++;
+    if (visit82_762_1(doc.body.setCapture)) {
+      _$jscoverage['/dd/draggable.js'].lineData[763]++;
       doc.body.setCapture();
     }
   }
-  _$jscoverage['/dd/draggable.js'].lineData[771]++;
+  _$jscoverage['/dd/draggable.js'].lineData[773]++;
   function preventDefault(e) {
-    _$jscoverage['/dd/draggable.js'].functionData[30]++;
-    _$jscoverage['/dd/draggable.js'].lineData[772]++;
+    _$jscoverage['/dd/draggable.js'].functionData[31]++;
+    _$jscoverage['/dd/draggable.js'].lineData[774]++;
     e.preventDefault();
   }
-  _$jscoverage['/dd/draggable.js'].lineData[778]++;
+  _$jscoverage['/dd/draggable.js'].lineData[780]++;
   function fixIESelect() {
-    _$jscoverage['/dd/draggable.js'].functionData[31]++;
-    _$jscoverage['/dd/draggable.js'].lineData[779]++;
+    _$jscoverage['/dd/draggable.js'].functionData[32]++;
+    _$jscoverage['/dd/draggable.js'].lineData[781]++;
     return false;
   }
-  _$jscoverage['/dd/draggable.js'].lineData[782]++;
+  _$jscoverage['/dd/draggable.js'].lineData[784]++;
   function onGestureStart(e) {
-    _$jscoverage['/dd/draggable.js'].functionData[32]++;
-    _$jscoverage['/dd/draggable.js'].lineData[783]++;
+    _$jscoverage['/dd/draggable.js'].functionData[33]++;
+    _$jscoverage['/dd/draggable.js'].lineData[785]++;
     this._isValidDrag = 0;
-    _$jscoverage['/dd/draggable.js'].lineData[784]++;
+    _$jscoverage['/dd/draggable.js'].lineData[786]++;
     this.onGestureStart(e);
   }
-  _$jscoverage['/dd/draggable.js'].lineData[787]++;
+  _$jscoverage['/dd/draggable.js'].lineData[789]++;
   return Draggable;
 });

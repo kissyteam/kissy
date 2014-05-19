@@ -150,7 +150,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             bodyStyle: {
-                value: {},
                 sync: 0
             },
             /**
@@ -161,7 +160,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             footerStyle: {
-                value: {},
                 render: 1
             },
             /**
@@ -172,7 +170,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             headerStyle: {
-                value: {},
                 render: 1
             },
             /**

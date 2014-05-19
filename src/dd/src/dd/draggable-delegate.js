@@ -139,7 +139,9 @@ KISSY.add(function (S, require) {
                  * @ignore
                  */
                 handlers: {
-                    value: [],
+                    valueFn: function () {
+                        return [];
+                    },
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter: 0
                 }
