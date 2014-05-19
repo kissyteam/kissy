@@ -34,6 +34,10 @@ KISSY.add(function (S, require) {
         this._move(e);
     });
 
+//    var onDragPre = checkValid(function (e) {
+//        e.preventDefault();
+//    });
+
     var onDragEnd = checkValid(function (e) {
         this._end(e);
     });
@@ -240,8 +244,7 @@ KISSY.add(function (S, require) {
                     .on(DragGesture.DRAG, onDrag, self)
                     .on(DragGesture.DRAG_END, onDragEnd, self)
                     .on(BasicGesture.START, onGestureStart, self)
-                    // android need to prevent on touchmove
-                    .on(['dragstart', 'touchmove'], preventDefault);
+                    .on('dragstart', preventDefault);
             }
         },
 
@@ -253,7 +256,7 @@ KISSY.add(function (S, require) {
                     .detach(DragGesture.DRAG, onDrag, self)
                     .detach(DragGesture.DRAG_END, onDragEnd, self)
                     .detach(BasicGesture.START, onGestureStart, self)
-                    .detach(['dragstart', 'touchmove'], preventDefault);
+                    .detach('dragstart', preventDefault);
             }
         },
 
@@ -330,6 +333,12 @@ KISSY.add(function (S, require) {
 
         _start: function (e) {
             var self = this;
+
+            // prevent touch scroll
+            if (e.gestureType === 'touch') {
+                e.preventDefault();
+            }
+
             self.mousePos = {
                 left: e.pageX,
                 top: e.pageY

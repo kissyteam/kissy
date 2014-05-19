@@ -18,7 +18,9 @@ KISSY.add(function (S, require) {
         }, {
             ATTRS: {
                 plugins: {
-                    value: [ScrollBar]
+                    valueFn: function () {
+                        return [ScrollBar];
+                    }
                 }
             }
         });

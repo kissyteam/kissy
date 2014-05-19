@@ -35,6 +35,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(11);
                     expect(e.pageY).toBe(1);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -163,6 +164,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(11);
                     expect(e.pageY).toBe(11);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -292,6 +294,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(right - 11);
                     expect(e.pageY).toBe(1);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -421,6 +424,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(right - 11);
                     expect(e.pageY).toBe(1);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -552,6 +556,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(11);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -681,6 +686,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(bottom - 11);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -812,6 +818,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(bottom - 11);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
@@ -941,6 +948,7 @@ KISSY.add(function (S, require) {
                     start = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(bottom - 11);
+                    e.preventDefault();
                 });
 
                 win.on(EdgeDragGesture.EDGE_DRAG, function (e) {

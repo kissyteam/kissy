@@ -162,7 +162,10 @@ KISSY.add(function (S, require) {
     function onDragStartHandler(e) {
         var self = this;
         // snap mode can not stop anim in the middle
-        if (e.gestureType !== 'touch' || (self.isScrolling && self.pagesOffset)) {
+        if (self.isScrolling && self.pagesOffset) {
+            return;
+        }
+        if (onDragPreHandler.call(self, e)) {
             return;
         }
         self.startScroll = {};
@@ -207,9 +210,6 @@ KISSY.add(function (S, require) {
 
     function onDragHandler(e) {
         var self = this;
-        if (e.gestureType !== 'touch') {
-            return;
-        }
         if (onDragPreHandler.call(self, e)) {
             return;
         }
@@ -220,9 +220,6 @@ KISSY.add(function (S, require) {
 
     function onDragEndHandler(e) {
         var self = this;
-        if (e.gestureType !== 'touch') {
-            return;
-        }
         if (onDragPreHandler.call(self, e)) {
             return;
         }
@@ -379,10 +376,10 @@ KISSY.add(function (S, require) {
 
     function bindUI(self) {
         var action = self.get('disabled') ? 'detach' : 'on';
+        // bind to $el in case $contentEl is out of bound
         self.$el[action](DragGesture.DRAG_START, onDragStartHandler, self)
             // click
             [action](BasicGesture.START, onGestureStart, self)
-            [action](DragGesture.DRAG_PRE, onDragPreHandler, self)
             [action](DragGesture.DRAG, onDragHandler, self)
             [action](DragGesture.DRAG_END, onDragEndHandler, self);
     }

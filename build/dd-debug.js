@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:16
+build time: May 19 20:31
 */
 /*
 combined modules:
@@ -408,7 +408,12 @@ KISSY.add('dd/draggable', [
         });
     var onDrag = checkValid(function (e) {
             this._move(e);
-        });
+        });    //    var onDragPre = checkValid(function (e) {
+               //        e.preventDefault();
+               //    });
+    //    var onDragPre = checkValid(function (e) {
+    //        e.preventDefault();
+    //    });
     var onDragEnd = checkValid(function (e) {
             this._end(e);
         });    /**
@@ -730,20 +735,13 @@ KISSY.add('dd/draggable', [
             start: function () {
                 var self = this, node = self.getEventTargetEl();
                 if (node) {
-                    node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BasicGesture.START, onGestureStart, self)    // android need to prevent on touchmove
-.on([
-                        'dragstart',
-                        'touchmove'
-                    ], preventDefault);
+                    node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BasicGesture.START, onGestureStart, self).on('dragstart', preventDefault);
                 }
             },
             stop: function () {
                 var self = this, node = self.getEventTargetEl();
                 if (node) {
-                    node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BasicGesture.START, onGestureStart, self).detach([
-                        'dragstart',
-                        'touchmove'
-                    ], preventDefault);
+                    node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BasicGesture.START, onGestureStart, self).detach('dragstart', preventDefault);
                 }
             },
             _onSetDisabled: function (d) {
@@ -814,7 +812,11 @@ KISSY.add('dd/draggable', [
                 }
             },
             _start: function (e) {
-                var self = this;
+                var self = this;    // prevent touch scroll
+                // prevent touch scroll
+                if (e.gestureType === 'touch') {
+                    e.preventDefault();
+                }
                 self.mousePos = {
                     left: e.pageX,
                     top: e.pageY

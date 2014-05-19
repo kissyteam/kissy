@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 17:13
+build time: May 19 20:31
 */
 /*
 combined modules:
@@ -34,20 +34,6 @@ KISSY.add('event/gesture/drag', [
      * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
      */
                                                   /**
-     * fired when touchmove started but drag is not started.
-     * preventDefault this event to prevent native behavior
-     * @event DRAG_PRE
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
-                                                  /**
      * fired when drag.
      * preventDefault this event to prevent native behavior
      * @event DRAG
@@ -88,20 +74,6 @@ KISSY.add('event/gesture/drag', [
      * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
      */
     /**
-     * fired when touchmove started but drag is not started.
-     * preventDefault this event to prevent native behavior
-     * @event DRAG_PRE
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
-    /**
      * fired when drag.
      * preventDefault this event to prevent native behavior
      * @event DRAG
@@ -128,7 +100,9 @@ KISSY.add('event/gesture/drag', [
      * @param {String} e.gestureType 'mouse' or 'touch'
      * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
      */
-    var DRAG_START = 'ksDragStart', DRAG_END = 'ksDragEnd', DRAG_PRE = 'ksDragging', DRAG = 'ksDrag', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
+    var DRAG_START = 'ksDragStart', DRAG_END = 'ksDragEnd',
+        //DRAG_PRE = 'ksDragging',
+        DRAG = 'ksDrag', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
     var doc = document;
     var util = require('util');
     function getDistance(p1, p2) {
@@ -157,13 +131,16 @@ KISSY.add('event/gesture/drag', [
                     doc.body.setCapture();
                 }
                 self.isStarted = true;
-            }
+            }    // call e.preventDefault() to prevent native browser behavior
+                 // DRAG_START is fired in touchmove!
+            // call e.preventDefault() to prevent native browser behavior
+            // DRAG_START is fired in touchmove!
             DomEvent.fire(self.dragTarget, DRAG_START, getEventObject(self, e));
         } else {
-            // call e.preventDefault() to prevent native browser behavior
-            DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
         }
     }
+    // call e.preventDefault() to prevent native browser behavior
+    //DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
     function sample(self, e) {
         var currentTouch = self.lastTouches[0];
         var currentTime = e.timeStamp;
@@ -194,24 +171,29 @@ KISSY.add('event/gesture/drag', [
     function Drag() {
     }
     util.extend(Drag, SingleTouch, {
-        start: function (e) {
-            var self = this;
-            if (e.touches[0].target.nodeName.match(/^(A|INPUT|TEXTAREA|BUTTON|SELECT)$/i)) {
-                return false;
-            }
+        start: function () {
+            var self = this;    // var e = arguments[0];
+                                //if (e.touches[0].target.nodeName.match(/^(A|INPUT|TEXTAREA|BUTTON|SELECT)$/i)) {
+                                //return false;
+                                //}
+            // var e = arguments[0];
+            //if (e.touches[0].target.nodeName.match(/^(A|INPUT|TEXTAREA|BUTTON|SELECT)$/i)) {
+            //return false;
+            //}
             Drag.superclass.start.apply(self, arguments);
             var touch = self.lastTouches[0];
             self.lastTime = self.startTime;    // dragTarget will change on mousemove for mouse event
             // dragTarget will change on mousemove for mouse event
-            var target = self.dragTarget = touch.target;
+            self.dragTarget = touch.target;
             self.startPos = self.lastPos = {
                 pageX: touch.pageX,
                 pageY: touch.pageY
             };
             self.direction = null;    // call e.preventDefault() to prevent native browser behavior
-            // call e.preventDefault() to prevent native browser behavior
-            DomEvent.fire(target, DRAG_PRE, getEventObject(self, e));
+                                      // DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
         },
+        // call e.preventDefault() to prevent native browser behavior
+        // DomEvent.fire(self.dragTarget, DRAG_PRE, getEventObject(self, e));
         move: function (e) {
             var self = this;
             Drag.superclass.move.apply(self, arguments);
@@ -243,7 +225,7 @@ KISSY.add('event/gesture/drag', [
         DRAG_END
     ], { handle: new Drag() });
     return {
-        DRAG_PRE: DRAG_PRE,
+        //DRAG_PRE: DRAG_PRE,
         DRAG_START: DRAG_START,
         DRAG: DRAG,
         DRAG_END: DRAG_END

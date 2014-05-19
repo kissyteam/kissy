@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
     }
 
     function onDragStartHandler(e) {
-        e.stopPropagation();
+        e.halt();
         var self = this;
         self.startScroll = self.scrollView.get(self.scrollProperty);
     }
@@ -33,6 +33,7 @@ KISSY.add(function (S, require) {
             scrollCfg = {};
         scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
         scrollView.scrollToWithBounds(scrollCfg);
+        e.halt();
     }
 
     function onScrollViewReflow() {
@@ -177,10 +178,15 @@ KISSY.add(function (S, require) {
         }
     }
 
+    function halt(e) {
+        e.halt();
+    }
+
     function bindDrag(self, disabled) {
         var action = disabled ? 'detach' : 'on';
         if (!self.get('autoHide')) {
-            self.$dragEl[action](['dragstart', 'mousedown', 'touchmove'], preventDefault)
+            self.$dragEl[action](['dragstart', 'mousedown'], preventDefault)
+                [action](DragGesture.DRAG_END, halt, self)
                 [action](DragGesture.DRAG_START, onDragStartHandler, self)
                 [action](DragGesture.DRAG, onDragHandler, self);
             util.each([self.$downBtn, self.$upBtn], function (b) {

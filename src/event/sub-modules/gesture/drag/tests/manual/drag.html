@@ -46,10 +46,8 @@
         t.on('dragstart', function (e) {
             e.preventDefault();
         });
-        t.on(DragGesture.DRAG_PRE, function (e) {
+        t.on(DragGesture.DRAG_START, function (e) {
             e.preventDefault();
-        });
-        t.on(DragGesture.DRAG_START, function () {
             left = parseInt(t.css('left'));
             top = parseInt(t.css('top'));
         });

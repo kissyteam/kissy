@@ -21,15 +21,14 @@ KISSY.add(function (S, require) {
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAG_PRE, function (e) {
-                    e.preventDefault();
-                });
                 d.on(DragGesture.DRAG_START, function (e) {
                     expect(e.gestureType).toBe('mouse');
                     start = 1;
                     expect(e.pageX).toBe(14);
                     expect(e.pageY).toBe(14);
+                    e.preventDefault();
                 });
+
                 d.on(DragGesture.DRAG, function (e) {
                     expect(e.gestureType).toBe('mouse');
                     move = 1;
@@ -105,15 +104,14 @@ KISSY.add(function (S, require) {
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAG_PRE, function (e) {
-                    e.preventDefault();
-                });
                 d.on(DragGesture.DRAG_START, function (e) {
                     expect(e.gestureType).toBe('touch');
                     start = 1;
                     expect(e.pageX).toBe(14);
                     expect(e.pageY).toBe(14);
+                    e.preventDefault();
                 });
+
                 d.on(DragGesture.DRAG, function (e) {
                     expect(e.gestureType).toBe('touch');
                     move = 1;
@@ -265,15 +263,14 @@ KISSY.add(function (S, require) {
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAG_PRE, function (e) {
-                    e.preventDefault();
-                });
                 d.on(DragGesture.DRAG_START, function (e) {
                     expect(e.gestureType).toBe('touch');
                     start = 1;
                     expect(e.pageX).toBe(14);
                     expect(e.pageY).toBe(14);
+                    e.preventDefault();
                 });
+
                 d.on(DragGesture.DRAG, function (e) {
                     expect(e.gestureType).toBe('touch');
                     move = 1;

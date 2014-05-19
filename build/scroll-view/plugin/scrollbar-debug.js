@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 17:14
+build time: May 19 20:31
 */
 /*
 combined modules:
@@ -143,7 +143,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
         e.preventDefault();
     }
     function onDragStartHandler(e) {
-        e.stopPropagation();
+        e.halt();
         var self = this;
         self.startScroll = self.scrollView.get(self.scrollProperty);
     }
@@ -151,6 +151,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
         var self = this, diff = self.pageXyProperty === 'pageX' ? e.deltaX : e.deltaY, scrollView = self.scrollView, scrollType = self.scrollType, scrollCfg = {};
         scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
         scrollView.scrollToWithBounds(scrollCfg);
+        e.halt();
     }
     function onScrollViewReflow() {
         var self = this, scrollView = self.scrollView, trackEl = self.trackEl, scrollWHProperty = self.scrollWHProperty, whProperty = self.whProperty, clientWHProperty = self.clientWHProperty, dragWHProperty = self.dragWHProperty, ratio, trackElSize, barSize;
@@ -248,14 +249,16 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
             self.hideTimer = null;
         }
     }
+    function halt(e) {
+        e.halt();
+    }
     function bindDrag(self, disabled) {
         var action = disabled ? 'detach' : 'on';
         if (!self.get('autoHide')) {
             self.$dragEl[action]([
                 'dragstart',
-                'mousedown',
-                'touchmove'
-            ], preventDefault)[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](DragGesture.DRAG, onDragHandler, self);
+                'mousedown'
+            ], preventDefault)[action](DragGesture.DRAG_END, halt, self)[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](DragGesture.DRAG, onDragHandler, self);
             util.each([
                 self.$downBtn,
                 self.$upBtn

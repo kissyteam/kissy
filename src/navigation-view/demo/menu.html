@@ -250,7 +250,9 @@ KISSY.use('util,component/control,' +
                 xclass: 'tb-anim-view',
                 ATTRS: {
                     plugins: {
-                        value: [ScrollBar]
+                        valueFn: function () {
+                            return [ScrollBar];
+                        }
                     }
                 }
             });
@@ -280,7 +282,9 @@ KISSY.use('util,component/control,' +
                 xclass: 'tb-loading-view',
                 ATTRS: {
                     plugins: {
-                        value: [ScrollBar]
+                        valueFn: function () {
+                            return [ScrollBar];
+                        }
                     }
                 }
             });
@@ -346,7 +350,9 @@ KISSY.use('util,component/control,' +
                 xclass: 'tb-index-view',
                 ATTRS: {
                     plugins: {
-                        value: [ScrollBar]
+                        valueFn: function () {
+                            return [ScrollBar];
+                        }
                     },
                     title: {
                         value: 'navigation-view'

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 17:14
+build time: May 19 20:32
 */
 /*
 combined modules:
@@ -158,7 +158,10 @@ KISSY.add('scroll-view/touch', [
     function onDragStartHandler(e) {
         var self = this;    // snap mode can not stop anim in the middle
         // snap mode can not stop anim in the middle
-        if (e.gestureType !== 'touch' || self.isScrolling && self.pagesOffset) {
+        if (self.isScrolling && self.pagesOffset) {
+            return;
+        }
+        if (onDragPreHandler.call(self, e)) {
             return;
         }
         self.startScroll = {};
@@ -195,9 +198,6 @@ KISSY.add('scroll-view/touch', [
     }
     function onDragHandler(e) {
         var self = this;
-        if (e.gestureType !== 'touch') {
-            return;
-        }
         if (onDragPreHandler.call(self, e)) {
             return;
         }
@@ -207,9 +207,6 @@ KISSY.add('scroll-view/touch', [
     }
     function onDragEndHandler(e) {
         var self = this;
-        if (e.gestureType !== 'touch') {
-            return;
-        }
         if (onDragPreHandler.call(self, e)) {
             return;
         }
@@ -347,10 +344,11 @@ KISSY.add('scroll-view/touch', [
         }
     }
     function bindUI(self) {
-        var action = self.get('disabled') ? 'detach' : 'on';
+        var action = self.get('disabled') ? 'detach' : 'on';    // bind to $el in case $contentEl is out of bound
+        // bind to $el in case $contentEl is out of bound
         self.$el[action](DragGesture.DRAG_START, onDragStartHandler, self)    // click
 [// click
-        action](BasicGesture.START, onGestureStart, self)[action](DragGesture.DRAG_PRE, onDragPreHandler, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
+        action](BasicGesture.START, onGestureStart, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
     }    /**
      * allow touch drag for scroll view.
      * module scroll-view will be this class on touch device

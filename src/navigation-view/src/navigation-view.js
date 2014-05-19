@@ -258,8 +258,10 @@ KISSY.add(function (S, require) {
         replace: function (config) {
             var self = this,
                 viewStack = self.viewStack;
-            util.mix(viewStack[viewStack.length - 1], config);
-            self.get('activeView').set(config);
+            if (viewStack.length) {
+                util.mix(viewStack[viewStack.length - 1], config);
+                self.get('activeView').set(config);
+            }
         },
 
         pop: function (config) {

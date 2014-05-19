@@ -51,7 +51,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use('navigation-view,navigation-view/bar,node,scroll-view,scroll-view/plugin/scrollbar',
-            function (S, NavigationView,Bar, Node, ScrollView, ScrollBar) {
+            function (S, NavigationView, Bar, Node, ScrollView, ScrollBar) {
                 var win = Node.all(window);
 
                 var navigationView = new NavigationView({
@@ -97,7 +97,9 @@
 
                     ATTRS: {
                         plugins: {
-                            value: [ScrollBar]
+                            valueFn: function () {
+                                return [ScrollBar];
+                            }
                         }
                     }
                 });
