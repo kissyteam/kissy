@@ -5,9 +5,11 @@
  * @author yiminghe@gmail.com
  */
 var program = require('commander');
+var esprima = require('esprima');
+var escodegen = require('escodegen');
 
 program
-    .option('-p, --package-path <packagePath>', 'Set kissy package path')
+    .option('-p, --packagePath <packagePath>', 'Set kissy package path')
     .option('-s, --suffix [suffix]', 'Set xtemplate file suffix', '')
     .option('-e, --encoding [encoding]', 'Set xtemplate file encoding', 'utf-8')
     .option('-w, --watch', 'Watch xtemplate file change')
@@ -26,8 +28,6 @@ var S = require('../lib/loader'),
     util = require('../lib/util'),
     XTemplateCompiler = require('../lib/xtemplate').XTemplate.Compiler,
     chokidar = require('chokidar'),
-/*jshint camelcase: false*/
-    jsBeautify = require('js-beautify').js_beautify,
     fs = require('fs'),
     path = require('path'),
     packagePath = program.packagePath,
@@ -70,32 +70,30 @@ function getFunctionName(path) {
     return name;
 }
 
-
 function myJsBeautify(str) {
-    var opts = {
-        'indent_size': '4',
-        'indent_char': ' ',
-        'preserve_newlines': true,
-        'brace_style': 'collapse',
-        'keep_array_indentation': false,
-        'space_after_anon_function': true
-    };
-    return jsBeautify(str, opts);
+    try {
+        return escodegen.generate(esprima.parse(str));
+    } catch (e) {
+        console.log('syntax error: ');
+        console.log(str);
+        throw e;
+    }
 }
 
 function compile(tplFilePath, modulePath) {
     var tplContent = fs.readFileSync(tplFilePath, encoding);
     var functionName = getFunctionName(tplFilePath);
-    var moduleCode = myJsBeautify(
-            '/** Compiled By kissy-xtemplate */\n' +
-            'KISSY.add(function(S,require,exports,module){\n' +
-            jshint +
-            'var ' + functionName + ' = ' +
-            XTemplateCompiler.compileToStr(tplContent, tplFilePath, true)) + ';\n' +
-        functionName + '.TPL_NAME = module.name;\n' +
-        functionName + '.version = "' + S.version + '";\n' +
-        'return ' + functionName + '\n' +
-        '});';
+    var moduleCode = '/** Compiled By kissy-xtemplate */\n' +
+        jshint +
+        myJsBeautify(
+                'KISSY.add(function(S,require,exports,module){\n' +
+
+                'var ' + functionName + ' = ' +
+                XTemplateCompiler.compileToStr(tplContent, tplFilePath, true) + ';\n' +
+                functionName + '.TPL_NAME = module.name;\n' +
+                functionName + '.version = "' + S.version + '";\n' +
+                'return ' + functionName + '\n' +
+                '});');
     fs.writeFileSync(modulePath, moduleCode, encoding);
     console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
 }

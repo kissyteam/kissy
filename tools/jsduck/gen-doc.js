@@ -5,12 +5,10 @@ var srcDir = normalizeSlash(path.resolve(cwd, 'src') + '/');
 var jsduckDir = normalizeSlash(path.resolve(cwd, 'tools/jsduck') + '/');
 var saveTo = jsduckDir + 'jsduck.json';
 var tplJson = jsduckDir + 'jsduck.tpl.json';
-var base = '/kissy/src/';
 var fs = require('fs-extra');
 var config = JSON.parse(fs.readFileSync(tplJson, {
     encoding: 'utf-8'
 }));
-var request = require('request');
 
 function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
@@ -22,28 +20,13 @@ function collectSrcDir(dir, allSrc) {
         var c = dir + f;
         var state = fs.statSync(c);
         if (state.isDirectory()) {
-            if (f == 'src') {
+            if (f === 'src') {
                 allSrc.push(normalizeSlash(path.relative(jsduckDir, c)));
-            } else if (f != 'coverage') {
+            } else if (f !== 'coverage') {
                 collectSrcDir(c + '/', allSrc);
             }
         }
     });
-}
-
-var js_beautify = require('js-beautify').js_beautify;
-
-function my_js_beautify(str) {
-    var opts = {
-        'indent_size': '4',
-        'indent_char': ' ',
-        'preserve_newlines': true,
-        'brace_style': 'collapse',
-        'keep_array_indentation': false,
-        "wrap_line_length": 40,
-        'space_after_anon_function': true
-    };
-    return js_beautify(str, opts);
 }
 
 var allSrc = [];
@@ -52,7 +35,7 @@ collectSrcDir(srcDir, allSrc);
 
 config['--'] = allSrc;
 
-fs.writeFileSync(saveTo, my_js_beautify(JSON.stringify(config)));
+fs.writeFileSync(saveTo, JSON.stringify(config, null, 2));
 
 console.log('saved to: ' + saveTo);
 
@@ -77,6 +60,6 @@ jsduck.on('close', function (code) {
 
 function postDoc() {
     fs.copySync(jsduckDir + 'template', cwd + '/docs/');
-    fs.unlinkSync(apiDir)
+    fs.unlinkSync(apiDir);
     fs.copySync(cwd + '/docs/', apiDir);
 }
