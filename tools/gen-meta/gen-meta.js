@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var dirname = __dirname;
 var root = path.join(dirname, '../../');
-var program = require(path.join(root, 'bin/lib/commander.js'));
+var program = require('commander');
 
 program.option('--suffix [suffix]')
     .option('--dir [dir]')

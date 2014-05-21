@@ -2,11 +2,8 @@
  * build a package by command line
  * @author yiminghe@gmail.com
  */
-console.log(process.argv);
-var dirname = __dirname;
 var Path = require('path');
-var root = Path.join(dirname, '../../');
-var program = require(root + 'bin/lib/commander');
+var program = require('commander');
 program
     .option('--packageName <packageName>')
     .option('--packageBase <packageBase>')
