@@ -4,544 +4,193 @@
 */
 /*jshint quotmark:false, unused:false*/
 var SERVER_CONFIG = {
-    "ports": [8888, 9999],
-    "codeDir": "/home/admin/cai/www/dev.kissyui.com/kissy",
-    "docsDir": "/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
-};
+        'ports': [
+            8888,
+            9999
+        ],
+        'codeDir': '/home/admin/cai/www/dev.kissyui.com/kissy',
+        'docsDir': '/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com'
+    };
 KISSY.config('tag', +new Date());
 var loc = location;
 if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
     KISSY.config('packages', {
-        "anim/base": {
-            "base": "/kissy/src/anim/sub-modules/base/src/base"
-        },
-        "anim/timer": {
-            "base": "/kissy/src/anim/sub-modules/timer/src/timer"
-        },
-        "anim/transition": {
-            "base": "/kissy/src/anim/sub-modules/transition/src/transition"
-        },
-        "attribute": {
-            "base": "/kissy/src/attribute/src/attribute"
-        },
-        "base": {
-            "base": "/kissy/src/base/src/base"
-        },
-        "button": {
-            "base": "/kissy/src/button/src/button"
-        },
-        "color": {
-            "base": "/kissy/src/color/src/color"
-        },
-        "combobox": {
-            "base": "/kissy/src/combobox/src/combobox"
-        },
-        "combobox/multi-word": {
-            "base": "/kissy/src/combobox/sub-modules/multi-word/src/multi-word"
-        },
-        "component/container": {
-            "base": "/kissy/src/component/sub-modules/container/src/container"
-        },
-        "component/control": {
-            "base": "/kissy/src/component/sub-modules/control/src/control"
-        },
-        "component/extension/align": {
-            "base": "/kissy/src/component/sub-modules/extension/align/src/align"
-        },
-        "component/extension/content-box": {
-            "base": "/kissy/src/component/sub-modules/extension/content-box/src/content-box"
-        },
-        "component/extension/delegate-children": {
-            "base": "/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children"
-        },
-        "component/extension/shim": {
-            "base": "/kissy/src/component/sub-modules/extension/shim/src/shim"
-        },
-        "component/plugin/drag": {
-            "base": "/kissy/src/component/sub-modules/plugin/drag/src/drag"
-        },
-        "component/plugin/resize": {
-            "base": "/kissy/src/component/sub-modules/plugin/resize/src/resize"
-        },
-        "cookie": {
-            "base": "/kissy/src/cookie/src/cookie"
-        },
-        "date/format": {
-            "base": "/kissy/src/date/format/src/format"
-        },
-        "date/gregorian": {
-            "base": "/kissy/src/date/gregorian/src/gregorian"
-        },
-        "date/i18n/en-us": {
-            "base": "/kissy/src/date/i18n/en-us/src/en-us"
-        },
-        "date/i18n/zh-cn": {
-            "base": "/kissy/src/date/i18n/zh-cn/src/zh-cn"
-        },
-        "date/picker/i18n/en-us": {
-            "base": "/kissy/src/date/picker/i18n/en-us/src/en-us"
-        },
-        "date/picker/i18n/zh-cn": {
-            "base": "/kissy/src/date/picker/i18n/zh-cn/src/zh-cn"
-        },
-        "date/picker": {
-            "base": "/kissy/src/date/picker/src/picker"
-        },
-        "date/picker-xtpl": {
-            "base": "/kissy/src/date/picker-xtpl/src/picker-xtpl"
-        },
-        "date/popup-picker": {
-            "base": "/kissy/src/date/popup-picker/src/popup-picker"
-        },
-        "dd": {
-            "base": "/kissy/src/dd/src/dd"
-        },
-        "dd/plugin/constrain": {
-            "base": "/kissy/src/dd/sub-modules/plugin/constrain/src/constrain"
-        },
-        "dd/plugin/proxy": {
-            "base": "/kissy/src/dd/sub-modules/plugin/proxy/src/proxy"
-        },
-        "dd/plugin/scroll": {
-            "base": "/kissy/src/dd/sub-modules/plugin/scroll/src/scroll"
-        },
-        "dom/base": {
-            "base": "/kissy/src/dom/sub-modules/base/src/base"
-        },
-        "dom/class-list": {
-            "base": "/kissy/src/dom/sub-modules/class-list/src/class-list"
-        },
-        "dom/ie": {
-            "base": "/kissy/src/dom/sub-modules/ie/src/ie"
-        },
-        "dom/selector": {
-            "base": "/kissy/src/dom/sub-modules/selector/src/selector"
-        },
-        "editor": {
-            "base": "/kissy/src/editor/src/editor"
-        },
-        "editor/plugin/back-color": {
-            "base": "/kissy/src/editor/sub-modules/plugin/back-color/src/back-color"
-        },
-        "editor/plugin/back-color/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/back-color/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/bold": {
-            "base": "/kissy/src/editor/sub-modules/plugin/bold/src/bold"
-        },
-        "editor/plugin/bold/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/bold/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/bubble": {
-            "base": "/kissy/src/editor/sub-modules/plugin/bubble/src/bubble"
-        },
-        "editor/plugin/button": {
-            "base": "/kissy/src/editor/sub-modules/plugin/button/src/button"
-        },
-        "editor/plugin/checkbox-source-area": {
-            "base": "/kissy/src/editor/sub-modules/plugin/checkbox-source-area/src/checkbox-source-area"
-        },
-        "editor/plugin/code": {
-            "base": "/kissy/src/editor/sub-modules/plugin/code/src/code"
-        },
-        "editor/plugin/code/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/code/sub-modules/dialog/src/dialog"
-        },
-        "editor/plugin/color/btn": {
-            "base": "/kissy/src/editor/sub-modules/plugin/color/btn/src/btn"
-        },
-        "editor/plugin/color/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/color/cmd/src/cmd"
-        },
-        "editor/plugin/color/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/color/dialog/src/dialog"
-        },
-        "editor/plugin/contextmenu": {
-            "base": "/kissy/src/editor/sub-modules/plugin/contextmenu/src/contextmenu"
-        },
-        "editor/plugin/dent-cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/dent-cmd/src/dent-cmd"
-        },
-        "editor/plugin/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/dialog/src/dialog"
-        },
-        "editor/plugin/dialog-loader": {
-            "base": "/kissy/src/editor/sub-modules/plugin/dialog-loader/src/dialog-loader"
-        },
-        "editor/plugin/draft": {
-            "base": "/kissy/src/editor/sub-modules/plugin/draft/src/draft"
-        },
-        "editor/plugin/drag-upload": {
-            "base": "/kissy/src/editor/sub-modules/plugin/drag-upload/src/drag-upload"
-        },
-        "editor/plugin/element-path": {
-            "base": "/kissy/src/editor/sub-modules/plugin/element-path/src/element-path"
-        },
-        "editor/plugin/fake-objects": {
-            "base": "/kissy/src/editor/sub-modules/plugin/fake-objects/src/fake-objects"
-        },
-        "editor/plugin/flash": {
-            "base": "/kissy/src/editor/sub-modules/plugin/flash/src/flash"
-        },
-        "editor/plugin/flash/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/flash/sub-modules/dialog/src/dialog"
-        },
-        "editor/plugin/flash-bridge": {
-            "base": "/kissy/src/editor/sub-modules/plugin/flash-bridge/src/flash-bridge"
-        },
-        "editor/plugin/flash-common/base-class": {
-            "base": "/kissy/src/editor/sub-modules/plugin/flash-common/base-class/src/base-class"
-        },
-        "editor/plugin/flash-common/utils": {
-            "base": "/kissy/src/editor/sub-modules/plugin/flash-common/utils/src/utils"
-        },
-        "editor/plugin/focus-fix": {
-            "base": "/kissy/src/editor/sub-modules/plugin/focus-fix/src/focus-fix"
-        },
-        "editor/plugin/font/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/font/cmd/src/cmd"
-        },
-        "editor/plugin/font/ui": {
-            "base": "/kissy/src/editor/sub-modules/plugin/font/ui/src/ui"
-        },
-        "editor/plugin/font-family": {
-            "base": "/kissy/src/editor/sub-modules/plugin/font-family/src/font-family"
-        },
-        "editor/plugin/font-family/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/font-family/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/font-size": {
-            "base": "/kissy/src/editor/sub-modules/plugin/font-size/src/font-size"
-        },
-        "editor/plugin/font-size/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/font-size/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/fore-color": {
-            "base": "/kissy/src/editor/sub-modules/plugin/fore-color/src/fore-color"
-        },
-        "editor/plugin/fore-color/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/fore-color/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/heading": {
-            "base": "/kissy/src/editor/sub-modules/plugin/heading/src/heading"
-        },
-        "editor/plugin/heading/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/heading/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/image": {
-            "base": "/kissy/src/editor/sub-modules/plugin/image/src/image"
-        },
-        "editor/plugin/image/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/image/sub-modules/dialog/src/dialog"
-        },
-        "editor/plugin/indent": {
-            "base": "/kissy/src/editor/sub-modules/plugin/indent/src/indent"
-        },
-        "editor/plugin/indent/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/indent/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/italic": {
-            "base": "/kissy/src/editor/sub-modules/plugin/italic/src/italic"
-        },
-        "editor/plugin/italic/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/italic/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/justify-center": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-center/src/justify-center"
-        },
-        "editor/plugin/justify-center/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-center/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/justify-cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-cmd/src/justify-cmd"
-        },
-        "editor/plugin/justify-left": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-left/src/justify-left"
-        },
-        "editor/plugin/justify-left/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-left/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/justify-right": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-right/src/justify-right"
-        },
-        "editor/plugin/justify-right/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/justify-right/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/link": {
-            "base": "/kissy/src/editor/sub-modules/plugin/link/src/link"
-        },
-        "editor/plugin/link/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/link/sub-modules/dialog/src/dialog"
-        },
-        "editor/plugin/link/utils": {
-            "base": "/kissy/src/editor/sub-modules/plugin/link/sub-modules/utils/src/utils"
-        },
-        "editor/plugin/list-utils": {
-            "base": "/kissy/src/editor/sub-modules/plugin/list-utils/src/list-utils"
-        },
-        "editor/plugin/list-utils/btn": {
-            "base": "/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/btn/src/btn"
-        },
-        "editor/plugin/list-utils/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/local-storage": {
-            "base": "/kissy/src/editor/sub-modules/plugin/local-storage/src/local-storage"
-        },
-        "editor/plugin/maximize": {
-            "base": "/kissy/src/editor/sub-modules/plugin/maximize/src/maximize"
-        },
-        "editor/plugin/maximize/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/maximize/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/menubutton": {
-            "base": "/kissy/src/editor/sub-modules/plugin/menubutton/src/menubutton"
-        },
-        "editor/plugin/ordered-list": {
-            "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/src/ordered-list"
-        },
-        "editor/plugin/ordered-list/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/outdent": {
-            "base": "/kissy/src/editor/sub-modules/plugin/outdent/src/outdent"
-        },
-        "editor/plugin/outdent/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/outdent/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/overlay": {
-            "base": "/kissy/src/editor/sub-modules/plugin/overlay/src/overlay"
-        },
-        "editor/plugin/page-break": {
-            "base": "/kissy/src/editor/sub-modules/plugin/page-break/src/page-break"
-        },
-        "editor/plugin/preview": {
-            "base": "/kissy/src/editor/sub-modules/plugin/preview/src/preview"
-        },
-        "editor/plugin/progressbar": {
-            "base": "/kissy/src/editor/sub-modules/plugin/progressbar/src/progressbar"
-        },
-        "editor/plugin/remove-format": {
-            "base": "/kissy/src/editor/sub-modules/plugin/remove-format/src/remove-format"
-        },
-        "editor/plugin/remove-format/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/remove-format/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/resize": {
-            "base": "/kissy/src/editor/sub-modules/plugin/resize/src/resize"
-        },
-        "editor/plugin/separator": {
-            "base": "/kissy/src/editor/sub-modules/plugin/separator/src/separator"
-        },
-        "editor/plugin/smiley": {
-            "base": "/kissy/src/editor/sub-modules/plugin/smiley/src/smiley"
-        },
-        "editor/plugin/source-area": {
-            "base": "/kissy/src/editor/sub-modules/plugin/source-area/src/source-area"
-        },
-        "editor/plugin/strike-through": {
-            "base": "/kissy/src/editor/sub-modules/plugin/strike-through/src/strike-through"
-        },
-        "editor/plugin/strike-through/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/strike-through/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/table": {
-            "base": "/kissy/src/editor/sub-modules/plugin/table/src/table"
-        },
-        "editor/plugin/table/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/table/sub-modules/dialog/src/dialog"
-        },
-        "editor/plugin/underline": {
-            "base": "/kissy/src/editor/sub-modules/plugin/underline/src/underline"
-        },
-        "editor/plugin/underline/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/underline/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/undo": {
-            "base": "/kissy/src/editor/sub-modules/plugin/undo/src/undo"
-        },
-        "editor/plugin/undo/btn": {
-            "base": "/kissy/src/editor/sub-modules/plugin/undo/sub-modules/btn/src/btn"
-        },
-        "editor/plugin/undo/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/undo/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/unordered-list": {
-            "base": "/kissy/src/editor/sub-modules/plugin/unordered-list/src/unordered-list"
-        },
-        "editor/plugin/unordered-list/cmd": {
-            "base": "/kissy/src/editor/sub-modules/plugin/unordered-list/sub-modules/cmd/src/cmd"
-        },
-        "editor/plugin/video": {
-            "base": "/kissy/src/editor/sub-modules/plugin/video/src/video"
-        },
-        "editor/plugin/video/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/video/sub-modules/dialog/src/dialog"
-        },
-        "editor/plugin/word-filter": {
-            "base": "/kissy/src/editor/sub-modules/plugin/word-filter/src/word-filter"
-        },
-        "editor/plugin/xiami-music": {
-            "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/src/xiami-music"
-        },
-        "editor/plugin/xiami-music/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog"
-        },
-        "event": {
-            "base": "/kissy/src/event/src/event"
-        },
-        "event/base": {
-            "base": "/kissy/src/event/sub-modules/base/src/base"
-        },
-        "event/custom": {
-            "base": "/kissy/src/event/sub-modules/custom/src/custom"
-        },
-        "event/dom/base": {
-            "base": "/kissy/src/event/sub-modules/dom/base/src/base"
-        },
-        "event/dom/focusin": {
-            "base": "/kissy/src/event/sub-modules/dom/focusin/src/focusin"
-        },
-        "event/dom/hashchange": {
-            "base": "/kissy/src/event/sub-modules/dom/hashchange/src/hashchange"
-        },
-        "event/dom/ie": {
-            "base": "/kissy/src/event/sub-modules/dom/ie/src/ie"
-        },
-        "event/dom/input": {
-            "base": "/kissy/src/event/sub-modules/dom/input/src/input"
-        },
-        "event/gesture/basic": {
-            "base": "/kissy/src/event/sub-modules/gesture/basic/src/basic"
-        },
-        "event/gesture/drag": {
-            "base": "/kissy/src/event/sub-modules/gesture/drag/src/drag"
-        },
-        "event/gesture/edge-drag": {
-            "base": "/kissy/src/event/sub-modules/gesture/edge-drag/src/edge-drag"
-        },
-        "event/gesture/pinch": {
-            "base": "/kissy/src/event/sub-modules/gesture/pinch/src/pinch"
-        },
-        "event/gesture/rotate": {
-            "base": "/kissy/src/event/sub-modules/gesture/rotate/src/rotate"
-        },
-        "event/gesture/shake": {
-            "base": "/kissy/src/event/sub-modules/gesture/shake/src/shake"
-        },
-        "event/gesture/swipe": {
-            "base": "/kissy/src/event/sub-modules/gesture/swipe/src/swipe"
-        },
-        "event/gesture/tap": {
-            "base": "/kissy/src/event/sub-modules/gesture/tap/src/tap"
-        },
-        "event/gesture/util": {
-            "base": "/kissy/src/event/sub-modules/gesture/util/src/util"
-        },
-        "feature": {
-            "base": "/kissy/src/feature/src/feature"
-        },
-        "filter-menu": {
-            "base": "/kissy/src/filter-menu/src/filter-menu"
-        },
-        "html-parser": {
-            "base": "/kissy/src/html-parser/src/html-parser"
-        },
-        "import-style": {
-            "base": "/kissy/src/import-style/src/import-style"
-        },
-        "io": {
-            "base": "/kissy/src/io/src/io"
-        },
-        "json": {
-            "base": "/kissy/src/json/src/json"
-        },
-        "loader": {
-            "base": "/kissy/src/loader/src/loader"
-        },
-        "menu": {
-            "base": "/kissy/src/menu/src/menu"
-        },
-        "menubutton": {
-            "base": "/kissy/src/menubutton/src/menubutton"
-        },
-        "meta": {
-            "base": "/kissy/src/meta/src/meta"
-        },
-        "navigation-view": {
-            "base": "/kissy/src/navigation-view/src/navigation-view"
-        },
-        "navigation-view/bar": {
-            "base": "/kissy/src/navigation-view/sub-modules/bar/src/bar"
-        },
-        "node": {
-            "base": "/kissy/src/node/src/node"
-        },
-        "overlay": {
-            "base": "/kissy/src/overlay/src/overlay"
-        },
-        "path": {
-            "base": "/kissy/src/path/src/path"
-        },
-        "promise": {
-            "base": "/kissy/src/promise/src/promise"
-        },
-        "resizable": {
-            "base": "/kissy/src/resizable/src/resizable"
-        },
-        "resizable/plugin/proxy": {
-            "base": "/kissy/src/resizable/sub-modules/plugin/proxy/src/proxy"
-        },
-        "router": {
-            "base": "/kissy/src/router/src/router"
-        },
-        "scroll-view/base": {
-            "base": "/kissy/src/scroll-view/sub-modules/base/src/base"
-        },
-        "scroll-view/plugin/pull-to-refresh": {
-            "base": "/kissy/src/scroll-view/sub-modules/plugin/pull-to-refresh/src/pull-to-refresh"
-        },
-        "scroll-view/plugin/scrollbar": {
-            "base": "/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar"
-        },
-        "scroll-view/touch": {
-            "base": "/kissy/src/scroll-view/sub-modules/touch/src/touch"
-        },
-        "separator": {
-            "base": "/kissy/src/separator/src/separator"
-        },
-        "split-button": {
-            "base": "/kissy/src/split-button/src/split-button"
-        },
-        "stylesheet": {
-            "base": "/kissy/src/stylesheet/src/stylesheet"
-        },
-        "swf": {
-            "base": "/kissy/src/swf/src/swf"
-        },
-        "tabs": {
-            "base": "/kissy/src/tabs/src/tabs"
-        },
-        "toolbar": {
-            "base": "/kissy/src/toolbar/src/toolbar"
-        },
-        "tree": {
-            "base": "/kissy/src/tree/src/tree"
-        },
-        "ua": {
-            "base": "/kissy/src/ua/src/ua"
-        },
-        "uri": {
-            "base": "/kissy/src/uri/src/uri"
-        },
-        "util": {
-            "base": "/kissy/src/util/src/util"
-        },
-        "xtemplate": {
-            "base": "/kissy/src/xtemplate/src/xtemplate"
-        },
-        "xtemplate/runtime": {
-            "base": "/kissy/src/xtemplate/sub-modules/runtime/src/runtime"
-        }
+        'anim/base': { 'base': '/kissy/src/anim/sub-modules/base/src/base' },
+        'anim/timer': { 'base': '/kissy/src/anim/sub-modules/timer/src/timer' },
+        'anim/transition': { 'base': '/kissy/src/anim/sub-modules/transition/src/transition' },
+        'attribute': { 'base': '/kissy/src/attribute/src/attribute' },
+        'base': { 'base': '/kissy/src/base/src/base' },
+        'button': { 'base': '/kissy/src/button/src/button' },
+        'color': { 'base': '/kissy/src/color/src/color' },
+        'combobox': { 'base': '/kissy/src/combobox/src/combobox' },
+        'combobox/multi-word': { 'base': '/kissy/src/combobox/sub-modules/multi-word/src/multi-word' },
+        'component/container': { 'base': '/kissy/src/component/sub-modules/container/src/container' },
+        'component/control': { 'base': '/kissy/src/component/sub-modules/control/src/control' },
+        'component/extension/align': { 'base': '/kissy/src/component/sub-modules/extension/align/src/align' },
+        'component/extension/content-box': { 'base': '/kissy/src/component/sub-modules/extension/content-box/src/content-box' },
+        'component/extension/delegate-children': { 'base': '/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children' },
+        'component/extension/shim': { 'base': '/kissy/src/component/sub-modules/extension/shim/src/shim' },
+        'component/plugin/drag': { 'base': '/kissy/src/component/sub-modules/plugin/drag/src/drag' },
+        'component/plugin/resize': { 'base': '/kissy/src/component/sub-modules/plugin/resize/src/resize' },
+        'cookie': { 'base': '/kissy/src/cookie/src/cookie' },
+        'date/format': { 'base': '/kissy/src/date/format/src/format' },
+        'date/gregorian': { 'base': '/kissy/src/date/gregorian/src/gregorian' },
+        'date/i18n/en-us': { 'base': '/kissy/src/date/i18n/en-us/src/en-us' },
+        'date/i18n/zh-cn': { 'base': '/kissy/src/date/i18n/zh-cn/src/zh-cn' },
+        'date/picker/i18n/en-us': { 'base': '/kissy/src/date/picker/i18n/en-us/src/en-us' },
+        'date/picker/i18n/zh-cn': { 'base': '/kissy/src/date/picker/i18n/zh-cn/src/zh-cn' },
+        'date/picker': { 'base': '/kissy/src/date/picker/src/picker' },
+        'date/picker-xtpl': { 'base': '/kissy/src/date/picker-xtpl/src/picker-xtpl' },
+        'date/popup-picker': { 'base': '/kissy/src/date/popup-picker/src/popup-picker' },
+        'dd': { 'base': '/kissy/src/dd/src/dd' },
+        'dd/plugin/constrain': { 'base': '/kissy/src/dd/sub-modules/plugin/constrain/src/constrain' },
+        'dd/plugin/proxy': { 'base': '/kissy/src/dd/sub-modules/plugin/proxy/src/proxy' },
+        'dd/plugin/scroll': { 'base': '/kissy/src/dd/sub-modules/plugin/scroll/src/scroll' },
+        'dom/base': { 'base': '/kissy/src/dom/sub-modules/base/src/base' },
+        'dom/class-list': { 'base': '/kissy/src/dom/sub-modules/class-list/src/class-list' },
+        'dom/ie': { 'base': '/kissy/src/dom/sub-modules/ie/src/ie' },
+        'dom/selector': { 'base': '/kissy/src/dom/sub-modules/selector/src/selector' },
+        'editor': { 'base': '/kissy/src/editor/src/editor' },
+        'editor/plugin/back-color': { 'base': '/kissy/src/editor/sub-modules/plugin/back-color/src/back-color' },
+        'editor/plugin/back-color/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/back-color/sub-modules/cmd/src/cmd' },
+        'editor/plugin/bold': { 'base': '/kissy/src/editor/sub-modules/plugin/bold/src/bold' },
+        'editor/plugin/bold/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/bold/sub-modules/cmd/src/cmd' },
+        'editor/plugin/bubble': { 'base': '/kissy/src/editor/sub-modules/plugin/bubble/src/bubble' },
+        'editor/plugin/button': { 'base': '/kissy/src/editor/sub-modules/plugin/button/src/button' },
+        'editor/plugin/checkbox-source-area': { 'base': '/kissy/src/editor/sub-modules/plugin/checkbox-source-area/src/checkbox-source-area' },
+        'editor/plugin/code': { 'base': '/kissy/src/editor/sub-modules/plugin/code/src/code' },
+        'editor/plugin/code/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/code/sub-modules/dialog/src/dialog' },
+        'editor/plugin/color/btn': { 'base': '/kissy/src/editor/sub-modules/plugin/color/btn/src/btn' },
+        'editor/plugin/color/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/color/cmd/src/cmd' },
+        'editor/plugin/color/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/color/dialog/src/dialog' },
+        'editor/plugin/contextmenu': { 'base': '/kissy/src/editor/sub-modules/plugin/contextmenu/src/contextmenu' },
+        'editor/plugin/dent-cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/dent-cmd/src/dent-cmd' },
+        'editor/plugin/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/dialog/src/dialog' },
+        'editor/plugin/dialog-loader': { 'base': '/kissy/src/editor/sub-modules/plugin/dialog-loader/src/dialog-loader' },
+        'editor/plugin/draft': { 'base': '/kissy/src/editor/sub-modules/plugin/draft/src/draft' },
+        'editor/plugin/drag-upload': { 'base': '/kissy/src/editor/sub-modules/plugin/drag-upload/src/drag-upload' },
+        'editor/plugin/element-path': { 'base': '/kissy/src/editor/sub-modules/plugin/element-path/src/element-path' },
+        'editor/plugin/fake-objects': { 'base': '/kissy/src/editor/sub-modules/plugin/fake-objects/src/fake-objects' },
+        'editor/plugin/flash': { 'base': '/kissy/src/editor/sub-modules/plugin/flash/src/flash' },
+        'editor/plugin/flash/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/flash/sub-modules/dialog/src/dialog' },
+        'editor/plugin/flash-bridge': { 'base': '/kissy/src/editor/sub-modules/plugin/flash-bridge/src/flash-bridge' },
+        'editor/plugin/flash-common/base-class': { 'base': '/kissy/src/editor/sub-modules/plugin/flash-common/base-class/src/base-class' },
+        'editor/plugin/flash-common/utils': { 'base': '/kissy/src/editor/sub-modules/plugin/flash-common/utils/src/utils' },
+        'editor/plugin/focus-fix': { 'base': '/kissy/src/editor/sub-modules/plugin/focus-fix/src/focus-fix' },
+        'editor/plugin/font/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/font/cmd/src/cmd' },
+        'editor/plugin/font/ui': { 'base': '/kissy/src/editor/sub-modules/plugin/font/ui/src/ui' },
+        'editor/plugin/font-family': { 'base': '/kissy/src/editor/sub-modules/plugin/font-family/src/font-family' },
+        'editor/plugin/font-family/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/font-family/sub-modules/cmd/src/cmd' },
+        'editor/plugin/font-size': { 'base': '/kissy/src/editor/sub-modules/plugin/font-size/src/font-size' },
+        'editor/plugin/font-size/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/font-size/sub-modules/cmd/src/cmd' },
+        'editor/plugin/fore-color': { 'base': '/kissy/src/editor/sub-modules/plugin/fore-color/src/fore-color' },
+        'editor/plugin/fore-color/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/fore-color/sub-modules/cmd/src/cmd' },
+        'editor/plugin/heading': { 'base': '/kissy/src/editor/sub-modules/plugin/heading/src/heading' },
+        'editor/plugin/heading/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/heading/sub-modules/cmd/src/cmd' },
+        'editor/plugin/image': { 'base': '/kissy/src/editor/sub-modules/plugin/image/src/image' },
+        'editor/plugin/image/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/image/sub-modules/dialog/src/dialog' },
+        'editor/plugin/indent': { 'base': '/kissy/src/editor/sub-modules/plugin/indent/src/indent' },
+        'editor/plugin/indent/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/indent/sub-modules/cmd/src/cmd' },
+        'editor/plugin/italic': { 'base': '/kissy/src/editor/sub-modules/plugin/italic/src/italic' },
+        'editor/plugin/italic/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/italic/sub-modules/cmd/src/cmd' },
+        'editor/plugin/justify-center': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-center/src/justify-center' },
+        'editor/plugin/justify-center/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-center/sub-modules/cmd/src/cmd' },
+        'editor/plugin/justify-cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-cmd/src/justify-cmd' },
+        'editor/plugin/justify-left': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-left/src/justify-left' },
+        'editor/plugin/justify-left/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-left/sub-modules/cmd/src/cmd' },
+        'editor/plugin/justify-right': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-right/src/justify-right' },
+        'editor/plugin/justify-right/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/justify-right/sub-modules/cmd/src/cmd' },
+        'editor/plugin/link': { 'base': '/kissy/src/editor/sub-modules/plugin/link/src/link' },
+        'editor/plugin/link/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/link/sub-modules/dialog/src/dialog' },
+        'editor/plugin/link/utils': { 'base': '/kissy/src/editor/sub-modules/plugin/link/sub-modules/utils/src/utils' },
+        'editor/plugin/list-utils': { 'base': '/kissy/src/editor/sub-modules/plugin/list-utils/src/list-utils' },
+        'editor/plugin/list-utils/btn': { 'base': '/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/btn/src/btn' },
+        'editor/plugin/list-utils/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/cmd/src/cmd' },
+        'editor/plugin/local-storage': { 'base': '/kissy/src/editor/sub-modules/plugin/local-storage/src/local-storage' },
+        'editor/plugin/maximize': { 'base': '/kissy/src/editor/sub-modules/plugin/maximize/src/maximize' },
+        'editor/plugin/maximize/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/maximize/sub-modules/cmd/src/cmd' },
+        'editor/plugin/menubutton': { 'base': '/kissy/src/editor/sub-modules/plugin/menubutton/src/menubutton' },
+        'editor/plugin/ordered-list': { 'base': '/kissy/src/editor/sub-modules/plugin/ordered-list/src/ordered-list' },
+        'editor/plugin/ordered-list/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/ordered-list/sub-modules/cmd/src/cmd' },
+        'editor/plugin/outdent': { 'base': '/kissy/src/editor/sub-modules/plugin/outdent/src/outdent' },
+        'editor/plugin/outdent/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/outdent/sub-modules/cmd/src/cmd' },
+        'editor/plugin/overlay': { 'base': '/kissy/src/editor/sub-modules/plugin/overlay/src/overlay' },
+        'editor/plugin/page-break': { 'base': '/kissy/src/editor/sub-modules/plugin/page-break/src/page-break' },
+        'editor/plugin/preview': { 'base': '/kissy/src/editor/sub-modules/plugin/preview/src/preview' },
+        'editor/plugin/progressbar': { 'base': '/kissy/src/editor/sub-modules/plugin/progressbar/src/progressbar' },
+        'editor/plugin/remove-format': { 'base': '/kissy/src/editor/sub-modules/plugin/remove-format/src/remove-format' },
+        'editor/plugin/remove-format/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/remove-format/sub-modules/cmd/src/cmd' },
+        'editor/plugin/resize': { 'base': '/kissy/src/editor/sub-modules/plugin/resize/src/resize' },
+        'editor/plugin/separator': { 'base': '/kissy/src/editor/sub-modules/plugin/separator/src/separator' },
+        'editor/plugin/smiley': { 'base': '/kissy/src/editor/sub-modules/plugin/smiley/src/smiley' },
+        'editor/plugin/source-area': { 'base': '/kissy/src/editor/sub-modules/plugin/source-area/src/source-area' },
+        'editor/plugin/strike-through': { 'base': '/kissy/src/editor/sub-modules/plugin/strike-through/src/strike-through' },
+        'editor/plugin/strike-through/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/strike-through/sub-modules/cmd/src/cmd' },
+        'editor/plugin/table': { 'base': '/kissy/src/editor/sub-modules/plugin/table/src/table' },
+        'editor/plugin/table/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/table/sub-modules/dialog/src/dialog' },
+        'editor/plugin/underline': { 'base': '/kissy/src/editor/sub-modules/plugin/underline/src/underline' },
+        'editor/plugin/underline/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/underline/sub-modules/cmd/src/cmd' },
+        'editor/plugin/undo': { 'base': '/kissy/src/editor/sub-modules/plugin/undo/src/undo' },
+        'editor/plugin/undo/btn': { 'base': '/kissy/src/editor/sub-modules/plugin/undo/sub-modules/btn/src/btn' },
+        'editor/plugin/undo/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/undo/sub-modules/cmd/src/cmd' },
+        'editor/plugin/unordered-list': { 'base': '/kissy/src/editor/sub-modules/plugin/unordered-list/src/unordered-list' },
+        'editor/plugin/unordered-list/cmd': { 'base': '/kissy/src/editor/sub-modules/plugin/unordered-list/sub-modules/cmd/src/cmd' },
+        'editor/plugin/video': { 'base': '/kissy/src/editor/sub-modules/plugin/video/src/video' },
+        'editor/plugin/video/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/video/sub-modules/dialog/src/dialog' },
+        'editor/plugin/word-filter': { 'base': '/kissy/src/editor/sub-modules/plugin/word-filter/src/word-filter' },
+        'editor/plugin/xiami-music': { 'base': '/kissy/src/editor/sub-modules/plugin/xiami-music/src/xiami-music' },
+        'editor/plugin/xiami-music/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog' },
+        'event': { 'base': '/kissy/src/event/src/event' },
+        'event/base': { 'base': '/kissy/src/event/sub-modules/base/src/base' },
+        'event/custom': { 'base': '/kissy/src/event/sub-modules/custom/src/custom' },
+        'event/dom/base': { 'base': '/kissy/src/event/sub-modules/dom/base/src/base' },
+        'event/dom/focusin': { 'base': '/kissy/src/event/sub-modules/dom/focusin/src/focusin' },
+        'event/dom/hashchange': { 'base': '/kissy/src/event/sub-modules/dom/hashchange/src/hashchange' },
+        'event/dom/ie': { 'base': '/kissy/src/event/sub-modules/dom/ie/src/ie' },
+        'event/dom/input': { 'base': '/kissy/src/event/sub-modules/dom/input/src/input' },
+        'event/gesture/basic': { 'base': '/kissy/src/event/sub-modules/gesture/basic/src/basic' },
+        'event/gesture/drag': { 'base': '/kissy/src/event/sub-modules/gesture/drag/src/drag' },
+        'event/gesture/edge-drag': { 'base': '/kissy/src/event/sub-modules/gesture/edge-drag/src/edge-drag' },
+        'event/gesture/pinch': { 'base': '/kissy/src/event/sub-modules/gesture/pinch/src/pinch' },
+        'event/gesture/rotate': { 'base': '/kissy/src/event/sub-modules/gesture/rotate/src/rotate' },
+        'event/gesture/shake': { 'base': '/kissy/src/event/sub-modules/gesture/shake/src/shake' },
+        'event/gesture/swipe': { 'base': '/kissy/src/event/sub-modules/gesture/swipe/src/swipe' },
+        'event/gesture/tap': { 'base': '/kissy/src/event/sub-modules/gesture/tap/src/tap' },
+        'event/gesture/util': { 'base': '/kissy/src/event/sub-modules/gesture/util/src/util' },
+        'feature': { 'base': '/kissy/src/feature/src/feature' },
+        'filter-menu': { 'base': '/kissy/src/filter-menu/src/filter-menu' },
+        'html-parser': { 'base': '/kissy/src/html-parser/src/html-parser' },
+        'import-style': { 'base': '/kissy/src/import-style/src/import-style' },
+        'io': { 'base': '/kissy/src/io/src/io' },
+        'json': { 'base': '/kissy/src/json/src/json' },
+        'loader': { 'base': '/kissy/src/loader/src/loader' },
+        'menu': { 'base': '/kissy/src/menu/src/menu' },
+        'menubutton': { 'base': '/kissy/src/menubutton/src/menubutton' },
+        'meta': { 'base': '/kissy/src/meta/src/meta' },
+        'navigation-view': { 'base': '/kissy/src/navigation-view/src/navigation-view' },
+        'navigation-view/bar': { 'base': '/kissy/src/navigation-view/sub-modules/bar/src/bar' },
+        'node': { 'base': '/kissy/src/node/src/node' },
+        'overlay': { 'base': '/kissy/src/overlay/src/overlay' },
+        'path': { 'base': '/kissy/src/path/src/path' },
+        'promise': { 'base': '/kissy/src/promise/src/promise' },
+        'resizable': { 'base': '/kissy/src/resizable/src/resizable' },
+        'resizable/plugin/proxy': { 'base': '/kissy/src/resizable/sub-modules/plugin/proxy/src/proxy' },
+        'router': { 'base': '/kissy/src/router/src/router' },
+        'scroll-view/base': { 'base': '/kissy/src/scroll-view/sub-modules/base/src/base' },
+        'scroll-view/plugin/pull-to-refresh': { 'base': '/kissy/src/scroll-view/sub-modules/plugin/pull-to-refresh/src/pull-to-refresh' },
+        'scroll-view/plugin/scrollbar': { 'base': '/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar' },
+        'scroll-view/touch': { 'base': '/kissy/src/scroll-view/sub-modules/touch/src/touch' },
+        'separator': { 'base': '/kissy/src/separator/src/separator' },
+        'split-button': { 'base': '/kissy/src/split-button/src/split-button' },
+        'stylesheet': { 'base': '/kissy/src/stylesheet/src/stylesheet' },
+        'swf': { 'base': '/kissy/src/swf/src/swf' },
+        'tabs': { 'base': '/kissy/src/tabs/src/tabs' },
+        'toolbar': { 'base': '/kissy/src/toolbar/src/toolbar' },
+        'tree': { 'base': '/kissy/src/tree/src/tree' },
+        'ua': { 'base': '/kissy/src/ua/src/ua' },
+        'uri': { 'base': '/kissy/src/uri/src/uri' },
+        'util': { 'base': '/kissy/src/util/src/util' },
+        'xtemplate': { 'base': '/kissy/src/xtemplate/src/xtemplate' },
+        'xtemplate/runtime': { 'base': '/kissy/src/xtemplate/sub-modules/runtime/src/runtime' }
     });
 }
