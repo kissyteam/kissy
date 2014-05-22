@@ -425,10 +425,7 @@ KISSY.add(function (S, require) {
             // Propagate exception as error if not done
             if (self.state < 2) {
                 S.log(e.stack || e, 'error');
-                setTimeout(function () {
-                    throw e;
-                }, 0);
-                self._ioReady(0 - 1, e.message);
+                self._ioReady(0 - 1, e.message || 'send error');
                 // Simply rethrow otherwise
             } else {
                 S.error(e);

@@ -87,7 +87,7 @@ KISSY.add(function (S, require) {
             var converter = converts[prevType] && converts[prevType][type];
 
             if (!converter) {
-                throw 'no covert for ' + prevType + ' => ' + type;
+                throw new Error('no covert for ' + prevType + ' => ' + type);
             }
             responseData = converter(responseData);
 

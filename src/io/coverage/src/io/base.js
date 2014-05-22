@@ -292,17 +292,15 @@ if (! _$jscoverage['/io/base.js']) {
   _$jscoverage['/io/base.js'].lineData[426] = 0;
   _$jscoverage['/io/base.js'].lineData[427] = 0;
   _$jscoverage['/io/base.js'].lineData[428] = 0;
-  _$jscoverage['/io/base.js'].lineData[429] = 0;
   _$jscoverage['/io/base.js'].lineData[431] = 0;
-  _$jscoverage['/io/base.js'].lineData[434] = 0;
+  _$jscoverage['/io/base.js'].lineData[435] = 0;
   _$jscoverage['/io/base.js'].lineData[438] = 0;
-  _$jscoverage['/io/base.js'].lineData[441] = 0;
-  _$jscoverage['/io/base.js'].lineData[443] = 0;
-  _$jscoverage['/io/base.js'].lineData[459] = 0;
-  _$jscoverage['/io/base.js'].lineData[469] = 0;
-  _$jscoverage['/io/base.js'].lineData[477] = 0;
-  _$jscoverage['/io/base.js'].lineData[486] = 0;
-  _$jscoverage['/io/base.js'].lineData[490] = 0;
+  _$jscoverage['/io/base.js'].lineData[440] = 0;
+  _$jscoverage['/io/base.js'].lineData[456] = 0;
+  _$jscoverage['/io/base.js'].lineData[466] = 0;
+  _$jscoverage['/io/base.js'].lineData[474] = 0;
+  _$jscoverage['/io/base.js'].lineData[483] = 0;
+  _$jscoverage['/io/base.js'].lineData[487] = 0;
 }
 if (! _$jscoverage['/io/base.js'].functionData) {
   _$jscoverage['/io/base.js'].functionData = [];
@@ -315,7 +313,6 @@ if (! _$jscoverage['/io/base.js'].functionData) {
   _$jscoverage['/io/base.js'].functionData[6] = 0;
   _$jscoverage['/io/base.js'].functionData[7] = 0;
   _$jscoverage['/io/base.js'].functionData[8] = 0;
-  _$jscoverage['/io/base.js'].functionData[9] = 0;
 }
 if (! _$jscoverage['/io/base.js'].branchData) {
   _$jscoverage['/io/base.js'].branchData = {};
@@ -363,8 +360,14 @@ if (! _$jscoverage['/io/base.js'].branchData) {
   _$jscoverage['/io/base.js'].branchData['426'][1] = new BranchData();
   _$jscoverage['/io/base.js'].branchData['427'] = [];
   _$jscoverage['/io/base.js'].branchData['427'][1] = new BranchData();
+  _$jscoverage['/io/base.js'].branchData['428'] = [];
+  _$jscoverage['/io/base.js'].branchData['428'][1] = new BranchData();
 }
-_$jscoverage['/io/base.js'].branchData['427'][1].init(24, 12, 'e.stack || e');
+_$jscoverage['/io/base.js'].branchData['428'][1].init(86, 25, 'e.message || \'send error\'');
+function visit25_428_1(result) {
+  _$jscoverage['/io/base.js'].branchData['428'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/io/base.js'].branchData['427'][1].init(24, 12, 'e.stack || e');
 function visit24_427_1(result) {
   _$jscoverage['/io/base.js'].branchData['427'][1].ranCondition(result);
   return result;
@@ -646,47 +649,41 @@ KISSY.add(function(S, require) {
     _$jscoverage['/io/base.js'].lineData[427]++;
     S.log(visit24_427_1(e.stack || e), 'error');
     _$jscoverage['/io/base.js'].lineData[428]++;
-    setTimeout(function() {
-  _$jscoverage['/io/base.js'].functionData[5]++;
-  _$jscoverage['/io/base.js'].lineData[429]++;
-  throw e;
-}, 0);
-    _$jscoverage['/io/base.js'].lineData[431]++;
-    self._ioReady(0 - 1, e.message);
+    self._ioReady(0 - 1, visit25_428_1(e.message || 'send error'));
   } else {
-    _$jscoverage['/io/base.js'].lineData[434]++;
+    _$jscoverage['/io/base.js'].lineData[431]++;
     S.error(e);
   }
 }
-    _$jscoverage['/io/base.js'].lineData[438]++;
+    _$jscoverage['/io/base.js'].lineData[435]++;
     return self;
   }
-  _$jscoverage['/io/base.js'].lineData[441]++;
+  _$jscoverage['/io/base.js'].lineData[438]++;
   util.mix(IO, CustomEvent.Target);
-  _$jscoverage['/io/base.js'].lineData[443]++;
+  _$jscoverage['/io/base.js'].lineData[440]++;
   util.mix(IO, {
   isLocal: isLocal, 
   setupConfig: function(setting) {
-  _$jscoverage['/io/base.js'].functionData[6]++;
-  _$jscoverage['/io/base.js'].lineData[459]++;
+  _$jscoverage['/io/base.js'].functionData[5]++;
+  _$jscoverage['/io/base.js'].lineData[456]++;
   util.mix(defaultConfig, setting, {
   deep: true});
 }, 
   setupTransport: function(name, fn) {
-  _$jscoverage['/io/base.js'].functionData[7]++;
-  _$jscoverage['/io/base.js'].lineData[469]++;
+  _$jscoverage['/io/base.js'].functionData[6]++;
+  _$jscoverage['/io/base.js'].lineData[466]++;
   transports[name] = fn;
 }, 
   getTransport: function(name) {
-  _$jscoverage['/io/base.js'].functionData[8]++;
-  _$jscoverage['/io/base.js'].lineData[477]++;
+  _$jscoverage['/io/base.js'].functionData[7]++;
+  _$jscoverage['/io/base.js'].lineData[474]++;
   return transports[name];
 }, 
   getConfig: function() {
-  _$jscoverage['/io/base.js'].functionData[9]++;
-  _$jscoverage['/io/base.js'].lineData[486]++;
+  _$jscoverage['/io/base.js'].functionData[8]++;
+  _$jscoverage['/io/base.js'].lineData[483]++;
   return defaultConfig;
 }});
-  _$jscoverage['/io/base.js'].lineData[490]++;
+  _$jscoverage['/io/base.js'].lineData[487]++;
   return IO;
 });

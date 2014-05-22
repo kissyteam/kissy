@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 22 12:07
+build time: May 22 12:18
 */
 /*
 combined modules:
@@ -833,10 +833,7 @@ KISSY.add('io/base', [
             // Propagate exception as error if not done
             if (self.state < 2) {
                 S.log(e.stack || e, 'error');
-                setTimeout(function () {
-                    throw e;
-                }, 0);
-                self._ioReady(0 - 1, e.message);    // Simply rethrow otherwise
+                self._ioReady(0 - 1, e.message || 'send error');    // Simply rethrow otherwise
             } else
                 // Simply rethrow otherwise
                 {
@@ -1232,14 +1229,10 @@ KISSY.add('io/xhr-transport-base', [
                     }
                 }
             } catch (e) {
-                S.log(e.stack || e, 'error');    // success throw error
-                // success throw error
-                setTimeout(function () {
-                    throw e;
-                }, 0);
+                S.log(e.stack || e, 'error');
                 nativeXhr.onreadystatechange = util.noop;
                 if (!abort) {
-                    io._ioReady(0 - 1, e);
+                    io._ioReady(0 - 1, e.message || 'process error');
                 }
             }
         }
@@ -1969,7 +1962,7 @@ KISSY.add('io/methods', [
             type = dataType[i];
             var converter = converts[prevType] && converts[prevType][type];
             if (!converter) {
-                throw 'no covert for ' + prevType + ' => ' + type;
+                throw new Error('no covert for ' + prevType + ' => ' + type);
             }
             responseData = converter(responseData);
             prevType = type;

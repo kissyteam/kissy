@@ -426,163 +426,163 @@ if (! _$jscoverage['/io/methods.js'].branchData) {
   _$jscoverage['/io/methods.js'].branchData['286'][1] = new BranchData();
 }
 _$jscoverage['/io/methods.js'].branchData['286'][1].init(91, 36, 'Uri.getComponents(c.url).query || \'\'');
-function visit111_286_1(result) {
+function visit112_286_1(result) {
   _$jscoverage['/io/methods.js'].branchData['286'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['215'][1].init(26, 10, 'status < 0');
-function visit110_215_1(result) {
+function visit111_215_1(result) {
   _$jscoverage['/io/methods.js'].branchData['215'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['211'][1].init(364, 27, 'e.message || \'parser error\'');
-function visit109_211_1(result) {
+function visit110_211_1(result) {
   _$jscoverage['/io/methods.js'].branchData['211'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['205'][1].init(36, 12, 'e.stack || e');
-function visit108_205_1(result) {
+function visit109_205_1(result) {
   _$jscoverage['/io/methods.js'].branchData['205'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['196'][1].init(165, 23, 'status === NOT_MODIFIED');
-function visit107_196_1(result) {
+function visit108_196_1(result) {
   _$jscoverage['/io/methods.js'].branchData['196'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['193'][5].init(476, 23, 'status === NOT_MODIFIED');
-function visit106_193_5(result) {
+function visit107_193_5(result) {
   _$jscoverage['/io/methods.js'].branchData['193'][5].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['193'][4].init(447, 25, 'status < MULTIPLE_CHOICES');
-function visit105_193_4(result) {
+function visit106_193_4(result) {
   _$jscoverage['/io/methods.js'].branchData['193'][4].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['193'][3].init(426, 17, 'status >= OK_CODE');
-function visit104_193_3(result) {
+function visit105_193_3(result) {
   _$jscoverage['/io/methods.js'].branchData['193'][3].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['193'][2].init(426, 46, 'status >= OK_CODE && status < MULTIPLE_CHOICES');
-function visit103_193_2(result) {
+function visit104_193_2(result) {
   _$jscoverage['/io/methods.js'].branchData['193'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['193'][1].init(426, 73, 'status >= OK_CODE && status < MULTIPLE_CHOICES || status === NOT_MODIFIED');
-function visit102_193_1(result) {
+function visit103_193_1(result) {
   _$jscoverage['/io/methods.js'].branchData['193'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['187'][1].init(234, 16, 'self.state === 2');
-function visit101_187_1(result) {
+function visit102_187_1(result) {
   _$jscoverage['/io/methods.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['173'][1].init(71, 9, 'transport');
-function visit100_173_1(result) {
+function visit101_173_1(result) {
   _$jscoverage['/io/methods.js'].branchData['173'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['159'][1].init(109, 14, 'self.transport');
-function visit99_159_1(result) {
+function visit100_159_1(result) {
   _$jscoverage['/io/methods.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['158'][1].init(65, 21, 'statusText || \'abort\'');
-function visit98_158_1(result) {
+function visit99_158_1(result) {
   _$jscoverage['/io/methods.js'].branchData['158'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['144'][1].init(56, 11, '!self.state');
-function visit97_144_1(result) {
+function visit98_144_1(result) {
   _$jscoverage['/io/methods.js'].branchData['144'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['138'][1].init(679, 19, 'match === undefined');
-function visit96_138_1(result) {
+function visit97_138_1(result) {
   _$jscoverage['/io/methods.js'].branchData['138'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['130'][1].init(26, 41, '!(responseHeaders = self.responseHeaders)');
-function visit95_130_1(result) {
+function visit96_130_1(result) {
   _$jscoverage['/io/methods.js'].branchData['130'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['129'][1].init(204, 16, 'self.state === 2');
-function visit94_129_1(result) {
+function visit95_129_1(result) {
   _$jscoverage['/io/methods.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['115'][1].init(59, 16, 'self.state === 2');
-function visit93_115_1(result) {
+function visit94_115_1(result) {
   _$jscoverage['/io/methods.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['89'][1].init(132, 10, '!converter');
-function visit92_89_1(result) {
+function visit93_89_1(result) {
   _$jscoverage['/io/methods.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['87'][1].init(65, 46, 'converts[prevType] && converts[prevType][type]');
-function visit91_87_1(result) {
+function visit92_87_1(result) {
   _$jscoverage['/io/methods.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['84'][1].init(2438, 19, 'i < dataType.length');
-function visit90_84_1(result) {
+function visit91_84_1(result) {
   _$jscoverage['/io/methods.js'].branchData['84'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['74'][1].init(94, 19, 'prevType === \'text\'');
-function visit89_74_1(result) {
+function visit90_74_1(result) {
   _$jscoverage['/io/methods.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['72'][1].init(156, 30, 'converter && rawData[prevType]');
-function visit88_72_1(result) {
+function visit89_72_1(result) {
   _$jscoverage['/io/methods.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['71'][1].init(60, 46, 'converts[prevType] && converts[prevType][type]');
-function visit87_71_1(result) {
+function visit88_71_1(result) {
   _$jscoverage['/io/methods.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['66'][1].init(1236, 13, '!responseData');
-function visit86_66_1(result) {
+function visit87_66_1(result) {
   _$jscoverage['/io/methods.js'].branchData['66'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['59'][3].init(218, 17, 'xml !== undefined');
-function visit85_59_3(result) {
+function visit86_59_3(result) {
   _$jscoverage['/io/methods.js'].branchData['59'][3].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['59'][2].init(181, 33, 'dataType[dataTypeIndex] === \'xml\'');
-function visit84_59_2(result) {
+function visit85_59_2(result) {
   _$jscoverage['/io/methods.js'].branchData['59'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['59'][1].init(181, 54, 'dataType[dataTypeIndex] === \'xml\' && xml !== undefined');
-function visit83_59_1(result) {
+function visit84_59_1(result) {
   _$jscoverage['/io/methods.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['56'][3].init(60, 18, 'text !== undefined');
-function visit82_56_3(result) {
+function visit83_56_3(result) {
   _$jscoverage['/io/methods.js'].branchData['56'][3].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['56'][2].init(22, 34, 'dataType[dataTypeIndex] === \'text\'');
-function visit81_56_2(result) {
+function visit82_56_2(result) {
   _$jscoverage['/io/methods.js'].branchData['56'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['56'][1].init(22, 56, 'dataType[dataTypeIndex] === \'text\' && text !== undefined');
-function visit80_56_1(result) {
+function visit81_56_1(result) {
   _$jscoverage['/io/methods.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['55'][1].init(775, 31, 'dataTypeIndex < dataType.length');
-function visit79_55_1(result) {
+function visit80_55_1(result) {
   _$jscoverage['/io/methods.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['52'][1].init(683, 21, 'dataType[0] || \'text\'');
-function visit78_52_1(result) {
+function visit79_52_1(result) {
   _$jscoverage['/io/methods.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['43'][1].init(30, 20, 'dataType[0] !== type');
-function visit77_43_1(result) {
+function visit78_43_1(result) {
   _$jscoverage['/io/methods.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['42'][1].init(26, 32, 'contents[type].test(contentType)');
-function visit76_42_1(result) {
+function visit77_42_1(result) {
   _$jscoverage['/io/methods.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['39'][1].init(221, 16, '!dataType.length');
-function visit75_39_1(result) {
+function visit76_39_1(result) {
   _$jscoverage['/io/methods.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['35'][1].init(129, 19, 'dataType[0] === \'*\'');
-function visit74_35_1(result) {
+function visit75_35_1(result) {
   _$jscoverage['/io/methods.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['32'][1].init(28, 51, 'io.mimeType || io.getResponseHeader(\'Content-Type\')');
-function visit73_32_1(result) {
+function visit74_32_1(result) {
   _$jscoverage['/io/methods.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].branchData['31'][1].init(427, 11, 'text || xml');
-function visit72_31_1(result) {
+function visit73_31_1(result) {
   _$jscoverage['/io/methods.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/methods.js'].lineData[6]++;
@@ -602,22 +602,22 @@ KISSY.add(function(S, require) {
     _$jscoverage['/io/methods.js'].lineData[19]++;
     var text = io.responseText, xml = io.responseXML, c = io.config, converts = c.converters, type, contentType, responseData, contents = c.contents, dataType = c.dataType;
     _$jscoverage['/io/methods.js'].lineData[31]++;
-    if (visit72_31_1(text || xml)) {
+    if (visit73_31_1(text || xml)) {
       _$jscoverage['/io/methods.js'].lineData[32]++;
-      contentType = visit73_32_1(io.mimeType || io.getResponseHeader('Content-Type'));
+      contentType = visit74_32_1(io.mimeType || io.getResponseHeader('Content-Type'));
       _$jscoverage['/io/methods.js'].lineData[35]++;
-      while (visit74_35_1(dataType[0] === '*')) {
+      while (visit75_35_1(dataType[0] === '*')) {
         _$jscoverage['/io/methods.js'].lineData[36]++;
         dataType.shift();
       }
       _$jscoverage['/io/methods.js'].lineData[39]++;
-      if (visit75_39_1(!dataType.length)) {
+      if (visit76_39_1(!dataType.length)) {
         _$jscoverage['/io/methods.js'].lineData[41]++;
         for (type in contents) {
           _$jscoverage['/io/methods.js'].lineData[42]++;
-          if (visit76_42_1(contents[type].test(contentType))) {
+          if (visit77_42_1(contents[type].test(contentType))) {
             _$jscoverage['/io/methods.js'].lineData[43]++;
-            if (visit77_43_1(dataType[0] !== type)) {
+            if (visit78_43_1(dataType[0] !== type)) {
               _$jscoverage['/io/methods.js'].lineData[44]++;
               dataType.unshift(type);
             }
@@ -627,18 +627,18 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/io/methods.js'].lineData[52]++;
-      dataType[0] = visit78_52_1(dataType[0] || 'text');
+      dataType[0] = visit79_52_1(dataType[0] || 'text');
       _$jscoverage['/io/methods.js'].lineData[55]++;
-      for (var dataTypeIndex = 0; visit79_55_1(dataTypeIndex < dataType.length); dataTypeIndex++) {
+      for (var dataTypeIndex = 0; visit80_55_1(dataTypeIndex < dataType.length); dataTypeIndex++) {
         _$jscoverage['/io/methods.js'].lineData[56]++;
-        if (visit80_56_1(visit81_56_2(dataType[dataTypeIndex] === 'text') && visit82_56_3(text !== undefined))) {
+        if (visit81_56_1(visit82_56_2(dataType[dataTypeIndex] === 'text') && visit83_56_3(text !== undefined))) {
           _$jscoverage['/io/methods.js'].lineData[57]++;
           responseData = text;
           _$jscoverage['/io/methods.js'].lineData[58]++;
           break;
         } else {
           _$jscoverage['/io/methods.js'].lineData[59]++;
-          if (visit83_59_1(visit84_59_2(dataType[dataTypeIndex] === 'xml') && visit85_59_3(xml !== undefined))) {
+          if (visit84_59_1(visit85_59_2(dataType[dataTypeIndex] === 'xml') && visit86_59_3(xml !== undefined))) {
             _$jscoverage['/io/methods.js'].lineData[61]++;
             responseData = xml;
             _$jscoverage['/io/methods.js'].lineData[62]++;
@@ -647,7 +647,7 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/io/methods.js'].lineData[66]++;
-      if (visit86_66_1(!responseData)) {
+      if (visit87_66_1(!responseData)) {
         _$jscoverage['/io/methods.js'].lineData[67]++;
         var rawData = {
   text: text, 
@@ -656,13 +656,13 @@ KISSY.add(function(S, require) {
         util.each(['text', 'xml'], function(prevType) {
   _$jscoverage['/io/methods.js'].functionData[2]++;
   _$jscoverage['/io/methods.js'].lineData[70]++;
-  var type = dataType[0], converter = visit87_71_1(converts[prevType] && converts[prevType][type]);
+  var type = dataType[0], converter = visit88_71_1(converts[prevType] && converts[prevType][type]);
   _$jscoverage['/io/methods.js'].lineData[72]++;
-  if (visit88_72_1(converter && rawData[prevType])) {
+  if (visit89_72_1(converter && rawData[prevType])) {
     _$jscoverage['/io/methods.js'].lineData[73]++;
     dataType.unshift(prevType);
     _$jscoverage['/io/methods.js'].lineData[74]++;
-    responseData = visit89_74_1(prevType === 'text') ? text : xml;
+    responseData = visit90_74_1(prevType === 'text') ? text : xml;
     _$jscoverage['/io/methods.js'].lineData[75]++;
     return false;
   }
@@ -674,15 +674,15 @@ KISSY.add(function(S, require) {
     _$jscoverage['/io/methods.js'].lineData[81]++;
     var prevType = dataType[0];
     _$jscoverage['/io/methods.js'].lineData[84]++;
-    for (var i = 1; visit90_84_1(i < dataType.length); i++) {
+    for (var i = 1; visit91_84_1(i < dataType.length); i++) {
       _$jscoverage['/io/methods.js'].lineData[85]++;
       type = dataType[i];
       _$jscoverage['/io/methods.js'].lineData[87]++;
-      var converter = visit91_87_1(converts[prevType] && converts[prevType][type]);
+      var converter = visit92_87_1(converts[prevType] && converts[prevType][type]);
       _$jscoverage['/io/methods.js'].lineData[89]++;
-      if (visit92_89_1(!converter)) {
+      if (visit93_89_1(!converter)) {
         _$jscoverage['/io/methods.js'].lineData[90]++;
-        throw 'no covert for ' + prevType + ' => ' + type;
+        throw new Error('no covert for ' + prevType + ' => ' + type);
       }
       _$jscoverage['/io/methods.js'].lineData[92]++;
       responseData = converter(responseData);
@@ -708,7 +708,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/methods.js'].lineData[114]++;
   var self = this;
   _$jscoverage['/io/methods.js'].lineData[115]++;
-  return visit93_115_1(self.state === 2) ? self.responseHeadersString : null;
+  return visit94_115_1(self.state === 2) ? self.responseHeadersString : null;
 }, 
   getResponseHeader: function(name) {
   _$jscoverage['/io/methods.js'].functionData[5]++;
@@ -717,9 +717,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/methods.js'].lineData[128]++;
   name = name.toLowerCase();
   _$jscoverage['/io/methods.js'].lineData[129]++;
-  if (visit94_129_1(self.state === 2)) {
+  if (visit95_129_1(self.state === 2)) {
     _$jscoverage['/io/methods.js'].lineData[130]++;
-    if (visit95_130_1(!(responseHeaders = self.responseHeaders))) {
+    if (visit96_130_1(!(responseHeaders = self.responseHeaders))) {
       _$jscoverage['/io/methods.js'].lineData[131]++;
       responseHeaders = self.responseHeaders = {};
       _$jscoverage['/io/methods.js'].lineData[132]++;
@@ -732,14 +732,14 @@ KISSY.add(function(S, require) {
     match = responseHeaders[name];
   }
   _$jscoverage['/io/methods.js'].lineData[138]++;
-  return visit96_138_1(match === undefined) ? null : match;
+  return visit97_138_1(match === undefined) ? null : match;
 }, 
   overrideMimeType: function(type) {
   _$jscoverage['/io/methods.js'].functionData[6]++;
   _$jscoverage['/io/methods.js'].lineData[143]++;
   var self = this;
   _$jscoverage['/io/methods.js'].lineData[144]++;
-  if (visit97_144_1(!self.state)) {
+  if (visit98_144_1(!self.state)) {
     _$jscoverage['/io/methods.js'].lineData[145]++;
     self.mimeType = type;
   }
@@ -751,9 +751,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/methods.js'].lineData[157]++;
   var self = this;
   _$jscoverage['/io/methods.js'].lineData[158]++;
-  statusText = visit98_158_1(statusText || 'abort');
+  statusText = visit99_158_1(statusText || 'abort');
   _$jscoverage['/io/methods.js'].lineData[159]++;
-  if (visit99_159_1(self.transport)) {
+  if (visit100_159_1(self.transport)) {
     _$jscoverage['/io/methods.js'].lineData[160]++;
     self.transport.abort(statusText);
   }
@@ -767,7 +767,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/methods.js'].lineData[172]++;
   var transport = this.transport;
   _$jscoverage['/io/methods.js'].lineData[173]++;
-  if (visit100_173_1(transport)) {
+  if (visit101_173_1(transport)) {
     _$jscoverage['/io/methods.js'].lineData[174]++;
     return transport.nativeXhr;
   }
@@ -779,7 +779,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/methods.js'].lineData[180]++;
   var self = this;
   _$jscoverage['/io/methods.js'].lineData[187]++;
-  if (visit101_187_1(self.state === 2)) {
+  if (visit102_187_1(self.state === 2)) {
     _$jscoverage['/io/methods.js'].lineData[188]++;
     return;
   }
@@ -790,9 +790,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/methods.js'].lineData[192]++;
   var isSuccess;
   _$jscoverage['/io/methods.js'].lineData[193]++;
-  if (visit102_193_1(visit103_193_2(visit104_193_3(status >= OK_CODE) && visit105_193_4(status < MULTIPLE_CHOICES)) || visit106_193_5(status === NOT_MODIFIED))) {
+  if (visit103_193_1(visit104_193_2(visit105_193_3(status >= OK_CODE) && visit106_193_4(status < MULTIPLE_CHOICES)) || visit107_193_5(status === NOT_MODIFIED))) {
     _$jscoverage['/io/methods.js'].lineData[196]++;
-    if (visit107_196_1(status === NOT_MODIFIED)) {
+    if (visit108_196_1(status === NOT_MODIFIED)) {
       _$jscoverage['/io/methods.js'].lineData[197]++;
       statusText = 'not modified';
       _$jscoverage['/io/methods.js'].lineData[198]++;
@@ -808,14 +808,14 @@ KISSY.add(function(S, require) {
         isSuccess = true;
       }      catch (e) {
   _$jscoverage['/io/methods.js'].lineData[205]++;
-  S.log(visit108_205_1(e.stack || e), 'error');
+  S.log(visit109_205_1(e.stack || e), 'error');
   _$jscoverage['/io/methods.js'].lineData[211]++;
-  statusText = visit109_211_1(e.message || 'parser error');
+  statusText = visit110_211_1(e.message || 'parser error');
 }
     }
   } else {
     _$jscoverage['/io/methods.js'].lineData[215]++;
-    if (visit110_215_1(status < 0)) {
+    if (visit111_215_1(status < 0)) {
       _$jscoverage['/io/methods.js'].lineData[216]++;
       status = 0;
     }
@@ -857,7 +857,7 @@ KISSY.add(function(S, require) {
   _getUrlForSend: function() {
   _$jscoverage['/io/methods.js'].functionData[10]++;
   _$jscoverage['/io/methods.js'].lineData[284]++;
-  var c = this.config, uri = c.uri, originalQuery = visit111_286_1(Uri.getComponents(c.url).query || ''), url = uri.toString.call(uri, c.serializeArray);
+  var c = this.config, uri = c.uri, originalQuery = visit112_286_1(Uri.getComponents(c.url).query || ''), url = uri.toString.call(uri, c.serializeArray);
   _$jscoverage['/io/methods.js'].lineData[289]++;
   return url + (originalQuery ? ((uri.query.has() ? '&' : '?') + originalQuery) : originalQuery);
 }});

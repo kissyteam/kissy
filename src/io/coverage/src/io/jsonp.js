@@ -290,31 +290,31 @@ if (! _$jscoverage['/io/jsonp.js'].branchData) {
   _$jscoverage['/io/jsonp.js'].branchData['71'][1] = new BranchData();
 }
 _$jscoverage['/io/jsonp.js'].branchData['71'][1].init(22, 9, '!response');
-function visit71_71_1(result) {
+function visit72_71_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].branchData['62'][1].init(1554, 23, 'converters.script || {}');
-function visit70_62_1(result) {
+function visit71_62_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['62'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].branchData['54'][1].init(266, 8, 'response');
-function visit69_54_1(result) {
+function visit70_54_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].branchData['49'][1].init(72, 22, 'previous === undefined');
-function visit68_49_1(result) {
+function visit69_49_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].branchData['39'][1].init(122, 20, 'arguments.length > 1');
-function visit67_39_1(result) {
+function visit68_39_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].branchData['28'][1].init(126, 36, 'typeof cJsonpCallback === \'function\'');
-function visit66_28_1(result) {
+function visit67_28_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].branchData['21'][1].init(102, 23, 'dataType[0] === \'jsonp\'');
-function visit65_21_1(result) {
+function visit66_21_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].lineData[6]++;
@@ -340,18 +340,18 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/jsonp.js'].lineData[18]++;
   var io = e.io, c = io.config, dataType = c.dataType;
   _$jscoverage['/io/jsonp.js'].lineData[21]++;
-  if (visit65_21_1(dataType[0] === 'jsonp')) {
+  if (visit66_21_1(dataType[0] === 'jsonp')) {
     _$jscoverage['/io/jsonp.js'].lineData[24]++;
     delete c.contentType;
     _$jscoverage['/io/jsonp.js'].lineData[25]++;
-    var response, cJsonpCallback = c.jsonpCallback, converters, jsonpCallback = visit66_28_1(typeof cJsonpCallback === 'function') ? cJsonpCallback() : cJsonpCallback, previous = win[jsonpCallback];
+    var response, cJsonpCallback = c.jsonpCallback, converters, jsonpCallback = visit67_28_1(typeof cJsonpCallback === 'function') ? cJsonpCallback() : cJsonpCallback, previous = win[jsonpCallback];
     _$jscoverage['/io/jsonp.js'].lineData[33]++;
     c.uri.query.set(c.jsonp, jsonpCallback);
     _$jscoverage['/io/jsonp.js'].lineData[36]++;
     win[jsonpCallback] = function(r) {
   _$jscoverage['/io/jsonp.js'].functionData[3]++;
   _$jscoverage['/io/jsonp.js'].lineData[39]++;
-  if (visit67_39_1(arguments.length > 1)) {
+  if (visit68_39_1(arguments.length > 1)) {
     _$jscoverage['/io/jsonp.js'].lineData[40]++;
     r = util.makeArray(arguments);
   }
@@ -364,7 +364,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/jsonp.js'].lineData[48]++;
   win[jsonpCallback] = previous;
   _$jscoverage['/io/jsonp.js'].lineData[49]++;
-  if (visit68_49_1(previous === undefined)) {
+  if (visit69_49_1(previous === undefined)) {
     _$jscoverage['/io/jsonp.js'].lineData[50]++;
     try {
       _$jscoverage['/io/jsonp.js'].lineData[51]++;
@@ -373,7 +373,7 @@ KISSY.add(function(S, require) {
 }
   } else {
     _$jscoverage['/io/jsonp.js'].lineData[54]++;
-    if (visit69_54_1(response)) {
+    if (visit70_54_1(response)) {
       _$jscoverage['/io/jsonp.js'].lineData[57]++;
       previous(response[0]);
     }
@@ -382,12 +382,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/io/jsonp.js'].lineData[61]++;
     converters = c.converters;
     _$jscoverage['/io/jsonp.js'].lineData[62]++;
-    converters.script = visit70_62_1(converters.script || {});
+    converters.script = visit71_62_1(converters.script || {});
     _$jscoverage['/io/jsonp.js'].lineData[70]++;
     converters.script.json = function() {
   _$jscoverage['/io/jsonp.js'].functionData[5]++;
   _$jscoverage['/io/jsonp.js'].lineData[71]++;
-  if (visit71_71_1(!response)) {
+  if (visit72_71_1(!response)) {
     _$jscoverage['/io/jsonp.js'].lineData[73]++;
     throw new Error('not call jsonpCallback: ' + jsonpCallback);
   }

@@ -300,13 +300,9 @@ KISSY.add(function (S, require) {
                 }
             } catch (e) {
                 S.log(e.stack || e, 'error');
-                // success throw error
-                setTimeout(function () {
-                    throw e;
-                }, 0);
                 nativeXhr.onreadystatechange = util.noop;
                 if (!abort) {
-                    io._ioReady(0 - 1, e);
+                    io._ioReady(0 - 1, e.message || 'process error');
                 }
             }
         }

@@ -304,51 +304,51 @@ if (! _$jscoverage['/io/form.js'].branchData) {
   _$jscoverage['/io/form.js'].branchData['72'][1] = new BranchData();
 }
 _$jscoverage['/io/form.js'].branchData['72'][1].init(127, 9, 'd === \'*\'');
-function visit46_72_1(result) {
+function visit47_72_1(result) {
   _$jscoverage['/io/form.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['59'][1].init(122, 4, 'data');
-function visit45_59_1(result) {
+function visit46_59_1(result) {
   _$jscoverage['/io/form.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['57'][1].init(201, 12, 'c.hasContent');
-function visit44_57_1(result) {
+function visit45_57_1(result) {
   _$jscoverage['/io/form.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['53'][1].init(982, 21, '!isUpload || FormData');
-function visit43_53_1(result) {
+function visit44_53_1(result) {
   _$jscoverage['/io/form.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['46'][1].init(28, 13, 'c.files || {}');
-function visit42_46_1(result) {
+function visit43_46_1(result) {
   _$jscoverage['/io/form.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['45'][1].init(705, 20, 'isUpload && FormData');
-function visit41_45_1(result) {
+function visit42_45_1(result) {
   _$jscoverage['/io/form.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['41'][2].init(284, 19, 'selected[0] || null');
-function visit40_41_2(result) {
+function visit41_41_2(result) {
   _$jscoverage['/io/form.js'].branchData['41'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['41'][1].init(250, 19, 'selected.length > 1');
-function visit39_41_1(result) {
+function visit40_41_1(result) {
   _$jscoverage['/io/form.js'].branchData['41'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['37'][1].init(64, 9, '!FormData');
-function visit38_37_1(result) {
+function visit39_37_1(result) {
   _$jscoverage['/io/form.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['35'][1].init(62, 35, 'input.type.toLowerCase() === \'file\'');
-function visit37_35_1(result) {
+function visit38_35_1(result) {
   _$jscoverage['/io/form.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['33'][1].init(233, 5, 'i < l');
-function visit36_33_1(result) {
+function visit37_33_1(result) {
   _$jscoverage['/io/form.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].branchData['26'][1].init(237, 7, 'tmpForm');
-function visit35_26_1(result) {
+function visit36_26_1(result) {
   _$jscoverage['/io/form.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form.js'].lineData[6]++;
@@ -370,7 +370,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/form.js'].lineData[16]++;
   var io = e.io, form, d, dataType, formParam, data, c = io.config, tmpForm = c.form;
   _$jscoverage['/io/form.js'].lineData[26]++;
-  if (visit35_26_1(tmpForm)) {
+  if (visit36_26_1(tmpForm)) {
     _$jscoverage['/io/form.js'].lineData[27]++;
     form = Dom.get(tmpForm);
     _$jscoverage['/io/form.js'].lineData[28]++;
@@ -382,43 +382,43 @@ KISSY.add(function(S, require) {
     _$jscoverage['/io/form.js'].lineData[32]++;
     var inputs = Dom.query('input', form);
     _$jscoverage['/io/form.js'].lineData[33]++;
-    for (var i = 0, l = inputs.length; visit36_33_1(i < l); i++) {
+    for (var i = 0, l = inputs.length; visit37_33_1(i < l); i++) {
       _$jscoverage['/io/form.js'].lineData[34]++;
       var input = inputs[i];
       _$jscoverage['/io/form.js'].lineData[35]++;
-      if (visit37_35_1(input.type.toLowerCase() === 'file')) {
+      if (visit38_35_1(input.type.toLowerCase() === 'file')) {
         _$jscoverage['/io/form.js'].lineData[36]++;
         isUpload = true;
         _$jscoverage['/io/form.js'].lineData[37]++;
-        if (visit38_37_1(!FormData)) {
+        if (visit39_37_1(!FormData)) {
           _$jscoverage['/io/form.js'].lineData[38]++;
           break;
         }
         _$jscoverage['/io/form.js'].lineData[40]++;
         var selected = slice.call(input.files, 0);
         _$jscoverage['/io/form.js'].lineData[41]++;
-        files[Dom.attr(input, 'name')] = visit39_41_1(selected.length > 1) ? selected : (visit40_41_2(selected[0] || null));
+        files[Dom.attr(input, 'name')] = visit40_41_1(selected.length > 1) ? selected : (visit41_41_2(selected[0] || null));
       }
     }
     _$jscoverage['/io/form.js'].lineData[45]++;
-    if (visit41_45_1(isUpload && FormData)) {
+    if (visit42_45_1(isUpload && FormData)) {
       _$jscoverage['/io/form.js'].lineData[46]++;
-      c.files = visit42_46_1(c.files || {});
+      c.files = visit43_46_1(c.files || {});
       _$jscoverage['/io/form.js'].lineData[47]++;
       util.mix(c.files, files);
       _$jscoverage['/io/form.js'].lineData[49]++;
       delete c.contentType;
     }
     _$jscoverage['/io/form.js'].lineData[53]++;
-    if (visit43_53_1(!isUpload || FormData)) {
+    if (visit44_53_1(!isUpload || FormData)) {
       _$jscoverage['/io/form.js'].lineData[56]++;
       formParam = FormSerializer.getFormData(form);
       _$jscoverage['/io/form.js'].lineData[57]++;
-      if (visit44_57_1(c.hasContent)) {
+      if (visit45_57_1(c.hasContent)) {
         _$jscoverage['/io/form.js'].lineData[58]++;
         formParam = util.param(formParam, undefined, undefined, c.serializeArray);
         _$jscoverage['/io/form.js'].lineData[59]++;
-        if (visit45_59_1(data)) {
+        if (visit46_59_1(data)) {
           _$jscoverage['/io/form.js'].lineData[60]++;
           c.data += '&' + formParam;
         } else {
@@ -435,7 +435,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/io/form.js'].lineData[71]++;
       d = dataType[0];
       _$jscoverage['/io/form.js'].lineData[72]++;
-      if (visit46_72_1(d === '*')) {
+      if (visit47_72_1(d === '*')) {
         _$jscoverage['/io/form.js'].lineData[73]++;
         d = 'text';
       }
