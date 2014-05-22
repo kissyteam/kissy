@@ -314,39 +314,39 @@ if (! _$jscoverage['/loader.js'].branchData) {
   _$jscoverage['/loader.js'].branchData['123'][1] = new BranchData();
 }
 _$jscoverage['/loader.js'].branchData['123'][1].init(158, 13, 'unloadModsLen');
-function visit225_123_1(result) {
+function visit227_123_1(result) {
   _$jscoverage['/loader.js'].branchData['123'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['113'][1].init(35, 12, 'e.stack || e');
-function visit224_113_1(result) {
+function visit226_113_1(result) {
   _$jscoverage['/loader.js'].branchData['113'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['109'][1].init(82, 7, 'success');
-function visit223_109_1(result) {
+function visit225_109_1(result) {
   _$jscoverage['/loader.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['107'][1].init(1033, 26, 'loader.isCompleteLoading()');
-function visit222_107_1(result) {
+function visit224_107_1(result) {
   _$jscoverage['/loader.js'].branchData['107'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['98'][1].init(35, 12, 'e.stack || e');
-function visit221_98_1(result) {
+function visit223_98_1(result) {
   _$jscoverage['/loader.js'].branchData['98'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['94'][1].init(25, 5, 'error');
-function visit220_94_1(result) {
+function visit222_94_1(result) {
   _$jscoverage['/loader.js'].branchData['94'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['93'][1].init(422, 16, 'errorList.length');
-function visit219_93_1(result) {
+function visit221_93_1(result) {
   _$jscoverage['/loader.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['86'][1].init(113, 9, '\'@DEBUG@\'');
-function visit218_86_1(result) {
+function visit220_86_1(result) {
   _$jscoverage['/loader.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].branchData['64'][1].init(95, 27, 'typeof success === \'object\'');
-function visit217_64_1(result) {
+function visit219_64_1(result) {
   _$jscoverage['/loader.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader.js'].lineData[6]++;
@@ -378,7 +378,7 @@ function visit217_64_1(result) {
   _$jscoverage['/loader.js'].lineData[60]++;
   var loader, error, tryCount = 0;
   _$jscoverage['/loader.js'].lineData[64]++;
-  if (visit217_64_1(typeof success === 'object')) {
+  if (visit219_64_1(typeof success === 'object')) {
     _$jscoverage['/loader.js'].lineData[66]++;
     error = success.error;
     _$jscoverage['/loader.js'].lineData[68]++;
@@ -404,7 +404,7 @@ function visit217_64_1(result) {
     _$jscoverage['/loader.js'].lineData[83]++;
     var errorList = [], start;
     _$jscoverage['/loader.js'].lineData[86]++;
-    if (visit218_86_1('@DEBUG@')) {
+    if (visit220_86_1('@DEBUG@')) {
       _$jscoverage['/loader.js'].lineData[87]++;
       start = +new Date();
     }
@@ -415,16 +415,16 @@ function visit217_64_1(result) {
     _$jscoverage['/loader.js'].lineData[92]++;
     logger.debug(tryCount + ' check duration ' + (+new Date() - start));
     _$jscoverage['/loader.js'].lineData[93]++;
-    if (visit219_93_1(errorList.length)) {
+    if (visit221_93_1(errorList.length)) {
       _$jscoverage['/loader.js'].lineData[94]++;
-      if (visit220_94_1(error)) {
+      if (visit222_94_1(error)) {
         _$jscoverage['/loader.js'].lineData[95]++;
         try {
           _$jscoverage['/loader.js'].lineData[96]++;
           error.apply(S, errorList);
         }        catch (e) {
   _$jscoverage['/loader.js'].lineData[98]++;
-  S.log(visit221_98_1(e.stack || e), 'error');
+  S.log(visit223_98_1(e.stack || e), 'error');
   _$jscoverage['/loader.js'].lineData[100]++;
   setTimeout(function() {
   _$jscoverage['/loader.js'].functionData[7]++;
@@ -439,18 +439,18 @@ function visit217_64_1(result) {
       S.log('loader: load above modules error', 'error');
     } else {
       _$jscoverage['/loader.js'].lineData[107]++;
-      if (visit222_107_1(loader.isCompleteLoading())) {
+      if (visit224_107_1(loader.isCompleteLoading())) {
         _$jscoverage['/loader.js'].lineData[108]++;
         Utils.attachModules(normalizedMods);
         _$jscoverage['/loader.js'].lineData[109]++;
-        if (visit223_109_1(success)) {
+        if (visit225_109_1(success)) {
           _$jscoverage['/loader.js'].lineData[110]++;
           try {
             _$jscoverage['/loader.js'].lineData[111]++;
             success.apply(S, [S].concat(Utils.getModulesExports(mods)));
           }          catch (e) {
   _$jscoverage['/loader.js'].lineData[113]++;
-  S.log(visit224_113_1(e.stack || e), 'error');
+  S.log(visit226_113_1(e.stack || e), 'error');
   _$jscoverage['/loader.js'].lineData[115]++;
   setTimeout(function() {
   _$jscoverage['/loader.js'].functionData[8]++;
@@ -463,7 +463,7 @@ function visit217_64_1(result) {
         _$jscoverage['/loader.js'].lineData[122]++;
         loader.callback = loadReady;
         _$jscoverage['/loader.js'].lineData[123]++;
-        if (visit225_123_1(unloadModsLen)) {
+        if (visit227_123_1(unloadModsLen)) {
           _$jscoverage['/loader.js'].lineData[124]++;
           logger.debug(tryCount + ' reload ');
           _$jscoverage['/loader.js'].lineData[125]++;

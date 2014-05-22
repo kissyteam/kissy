@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 23:18
+build time: May 22 12:32
 */
 /**
  * @ignore
@@ -55,11 +55,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140514231754' will replace with current timestamp when compressing.
+         * NOTICE: '20140522123248' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140514231754',
+        __BUILD_TIME: '20140522123248',
 
         /**
          * KISSY Environment.
@@ -1778,11 +1778,17 @@ var KISSY = (function (undefined) {
             cache = cache || {};
 
             for (i = 0; i < unloadedMods.length; i++) {
+                mod = unloadedMods[i];
+                m = mod.name;
+
+                if (cache[m]) {
+                    continue;
+                }
+
                 if ('@DEBUG@') {
                     stackDepth = stack.length;
                 }
-                mod = unloadedMods[i];
-                m = mod.name;
+
                 modStatus = mod.status;
                 if (modStatus === ERROR) {
                     errorList.push(mod);
@@ -1802,11 +1808,13 @@ var KISSY = (function (undefined) {
                 }
 
                 if ('@DEBUG@') {
-                    if (Utils.indexOf(m, stack) !== -1) {
+                    // do not use indexOf, poor performance in ie8
+                    if (stack[m]) {
                         S.log('find cyclic dependency between mods: ' + stack, 'warn');
                         cache[m] = 1;
                         continue;
                     } else {
+                        stack[m] = 1;
                         stack.push(m);
                     }
                 }
@@ -1814,6 +1822,9 @@ var KISSY = (function (undefined) {
                 self.calculate(mod.getNormalizedRequiredModules(), errorList, stack, cache, ret);
                 cache[m] = 1;
                 if ('@DEBUG@') {
+                    for (var si = stackDepth; si < stack.length; si++) {
+                        stack[stack[si]] = 0;
+                    }
                     stack.length = stackDepth;
                 }
             }
@@ -2245,7 +2256,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140514231754';
+    var TIMESTAMP = '20140522123248';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

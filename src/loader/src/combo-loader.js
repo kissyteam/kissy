@@ -306,11 +306,17 @@
             cache = cache || {};
 
             for (i = 0; i < unloadedMods.length; i++) {
+                mod = unloadedMods[i];
+                m = mod.name;
+
+                if (cache[m]) {
+                    continue;
+                }
+
                 if ('@DEBUG@') {
                     stackDepth = stack.length;
                 }
-                mod = unloadedMods[i];
-                m = mod.name;
+
                 modStatus = mod.status;
                 if (modStatus === ERROR) {
                     errorList.push(mod);
@@ -330,11 +336,13 @@
                 }
 
                 if ('@DEBUG@') {
-                    if (Utils.indexOf(m, stack) !== -1) {
+                    // do not use indexOf, poor performance in ie8
+                    if (stack[m]) {
                         S.log('find cyclic dependency between mods: ' + stack, 'warn');
                         cache[m] = 1;
                         continue;
                     } else {
+                        stack[m] = 1;
                         stack.push(m);
                     }
                 }
@@ -342,6 +350,9 @@
                 self.calculate(mod.getNormalizedRequiredModules(), errorList, stack, cache, ret);
                 cache[m] = 1;
                 if ('@DEBUG@') {
+                    for (var si = stackDepth; si < stack.length; si++) {
+                        stack[stack[si]] = 0;
+                    }
                     stack.length = stackDepth;
                 }
             }
