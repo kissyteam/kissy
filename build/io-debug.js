@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:27
+build time: May 22 12:07
 */
 /*
 combined modules:
@@ -1584,7 +1584,8 @@ KISSY.add('io/jsonp', [
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-                    S.error(' not call jsonpCallback: ' + jsonpCallback);
+                    // notify event on production mode
+                    throw new Error('not call jsonpCallback: ' + jsonpCallback);
                 }
                 return response[0];
             };
@@ -2076,11 +2077,17 @@ KISSY.add('io/methods', [
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        S.log(e.stack || e, 'error');
-                        setTimeout(function () {
-                            throw e;
-                        }, 0);
-                        statusText = 'parser error';
+                        S.log(e.stack || e, 'error');    // do not throw, interfere window.error
+                                                         // interfere error report
+                                                         //                            setTimeout(function () {
+                                                         //                                throw e;
+                                                         //                            }, 0);
+                        // do not throw, interfere window.error
+                        // interfere error report
+                        //                            setTimeout(function () {
+                        //                                throw e;
+                        //                            }, 0);
+                        statusText = e.message || 'parser error';
                     }
                 }
             } else {

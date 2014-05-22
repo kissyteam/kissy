@@ -256,12 +256,12 @@ if (! _$jscoverage['/io/jsonp.js']) {
   _$jscoverage['/io/jsonp.js'].lineData[62] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[70] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[71] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[72] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[74] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[77] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[79] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[73] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[75] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[78] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[80] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[83] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[81] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[84] = 0;
 }
 if (! _$jscoverage['/io/jsonp.js'].functionData) {
   _$jscoverage['/io/jsonp.js'].functionData = [];
@@ -388,20 +388,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/jsonp.js'].functionData[5]++;
   _$jscoverage['/io/jsonp.js'].lineData[71]++;
   if (visit71_71_1(!response)) {
-    _$jscoverage['/io/jsonp.js'].lineData[72]++;
-    S.error(' not call jsonpCallback: ' + jsonpCallback);
+    _$jscoverage['/io/jsonp.js'].lineData[73]++;
+    throw new Error('not call jsonpCallback: ' + jsonpCallback);
   }
-  _$jscoverage['/io/jsonp.js'].lineData[74]++;
+  _$jscoverage['/io/jsonp.js'].lineData[75]++;
   return response[0];
 };
-    _$jscoverage['/io/jsonp.js'].lineData[77]++;
+    _$jscoverage['/io/jsonp.js'].lineData[78]++;
     dataType.length = 2;
-    _$jscoverage['/io/jsonp.js'].lineData[79]++;
-    dataType[0] = 'script';
     _$jscoverage['/io/jsonp.js'].lineData[80]++;
+    dataType[0] = 'script';
+    _$jscoverage['/io/jsonp.js'].lineData[81]++;
     dataType[1] = 'json';
   }
 });
-  _$jscoverage['/io/jsonp.js'].lineData[83]++;
+  _$jscoverage['/io/jsonp.js'].lineData[84]++;
   return IO;
 });

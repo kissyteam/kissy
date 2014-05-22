@@ -69,7 +69,8 @@ KISSY.add(function (S, require) {
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-                    S.error(' not call jsonpCallback: ' + jsonpCallback);
+                    // notify event on production mode
+                    throw new Error('not call jsonpCallback: ' + jsonpCallback);
                 }
                 return response[0];
             };

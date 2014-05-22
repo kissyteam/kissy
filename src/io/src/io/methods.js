@@ -203,10 +203,12 @@ KISSY.add(function (S, require) {
                             isSuccess = true;
                         } catch (e) {
                             S.log(e.stack || e, 'error');
-                            setTimeout(function () {
-                                throw e;
-                            }, 0);
-                            statusText = 'parser error';
+                            // do not throw, interfere window.error
+                            // interfere error report
+//                            setTimeout(function () {
+//                                throw e;
+//                            }, 0);
+                            statusText = e.message || 'parser error';
                         }
                     }
                 } else {
