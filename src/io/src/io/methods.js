@@ -87,7 +87,7 @@ KISSY.add(function (S, require) {
             var converter = converts[prevType] && converts[prevType][type];
 
             if (!converter) {
-                throw 'no covert for ' + prevType + ' => ' + type;
+                throw new Error('no covert for ' + prevType + ' => ' + type);
             }
             responseData = converter(responseData);
 
@@ -203,10 +203,7 @@ KISSY.add(function (S, require) {
                             isSuccess = true;
                         } catch (e) {
                             S.log(e.stack || e, 'error');
-                            setTimeout(function () {
-                                throw e;
-                            }, 0);
-                            statusText = 'parser error';
+                            statusText = e.message || 'parser error';
                         }
                     }
                 } else {

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.43
+Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Dec 4 22:17
+build time: May 22 12:29
 */
 KISSY.add("menubutton/menubutton-xtpl",["component/extension/content-xtpl"],function(k,d,i,h){return function(f){var c,e;c=this.config.utils;"undefined"!==typeof h&&h.kissy&&(e=h);var j=c.renderOutput,a=c.runInlineCommand;c="";var b={},g=[];g.push("component/extension/content-xtpl");b.params=g;e&&(d("component/extension/content-xtpl"),b.params[0]=e.resolveByName(b.params[0]));e=a(this,f,b,"include",1);c+=j(e,!1);c+='\n<div class="';e={};b=[];b.push("dropdown");e.params=b;e=a(this,f,e,"getBaseCssClasses",
 2);c+=j(e,!0);c+='">\n    <div class="';e={};b=[];b.push("dropdown-inner");e.params=b;f=a(this,f,e,"getBaseCssClasses",3);c+=j(f,!0);return c+'">\n    </div>\n</div>'}});

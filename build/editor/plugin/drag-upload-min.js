@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Jan 6 12:46
+build time: May 22 12:20
 */
 KISSY.add("editor/plugin/drag-upload",["editor","event"],function(h,g){function k(h){this.config=h||{}}var q=g("editor"),m=g("event"),r=h.Node,s=q.Utils,l=h.DOM;h.augment(k,{pluginRenderUI:function(g){function k(b){b=b.originalEvent.target;"img"===l.nodeName(b)&&b.src.match(/^file:\/\//)&&(n[b.src]=b)}function t(b,d){var e=new window.FileReader;e.onload=function(f){var a=b.name,f=f.target.result,c=new XMLHttpRequest;c.open("POST",u,!0);c.onreadystatechange=function(){if(4===c.readyState){if(200===
 c.status||304===c.status){if(""!==c.responseText){var a=h.parseJson(c.responseText);d[0].src=a.imgUrl}}else window.alert("\u670d\u52a1\u5668\u7aef\u51fa\u9519\uff01"),d.remove();c.onreadystatechange=null}};a="\r\n------kissy-editor-yiminghe\r\n"+("Content-Disposition: form-data; name='"+v+"'; filename='"+encodeURIComponent(a)+"'\r\n");a+="Content-Type: "+(b.type||"application/octet-stream")+"\r\n\r\n";a+=f+"\r\n";o=q.Utils.normParams(o);for(var j in o)a+="------kissy-editor-yiminghe\r\n",a+="Content-Disposition: form-data; name='"+

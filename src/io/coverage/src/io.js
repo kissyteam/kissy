@@ -290,27 +290,27 @@ if (! _$jscoverage['/io.js'].branchData) {
   _$jscoverage['/io.js'].branchData['144'][1] = new BranchData();
 }
 _$jscoverage['/io.js'].branchData['144'][1].init(17, 26, 'typeof data === \'function\'');
-function visit191_144_1(result) {
+function visit194_144_1(result) {
   _$jscoverage['/io.js'].branchData['144'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].branchData['122'][1].init(17, 26, 'typeof data === \'function\'');
-function visit190_122_1(result) {
+function visit193_122_1(result) {
   _$jscoverage['/io.js'].branchData['122'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].branchData['94'][1].init(17, 26, 'typeof data === \'function\'');
-function visit189_94_1(result) {
+function visit192_94_1(result) {
   _$jscoverage['/io.js'].branchData['94'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].branchData['71'][1].init(17, 26, 'typeof data === \'function\'');
-function visit188_71_1(result) {
+function visit191_71_1(result) {
   _$jscoverage['/io.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].branchData['26'][1].init(19, 13, 'type || \'get\'');
-function visit187_26_1(result) {
+function visit190_26_1(result) {
   _$jscoverage['/io.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].branchData['19'][1].init(35, 26, 'typeof data === \'function\'');
-function visit186_19_1(result) {
+function visit189_19_1(result) {
   _$jscoverage['/io.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io.js'].lineData[6]++;
@@ -334,7 +334,7 @@ KISSY.add(function(S, require) {
   function get(url, data, callback, dataType, type) {
     _$jscoverage['/io.js'].functionData[1]++;
     _$jscoverage['/io.js'].lineData[19]++;
-    if (visit186_19_1(typeof data === 'function')) {
+    if (visit189_19_1(typeof data === 'function')) {
       _$jscoverage['/io.js'].lineData[20]++;
       dataType = callback;
       _$jscoverage['/io.js'].lineData[21]++;
@@ -344,7 +344,7 @@ KISSY.add(function(S, require) {
     }
     _$jscoverage['/io.js'].lineData[25]++;
     return IO({
-  type: visit187_26_1(type || 'get'), 
+  type: visit190_26_1(type || 'get'), 
   url: url, 
   data: data, 
   success: callback, 
@@ -357,7 +357,7 @@ KISSY.add(function(S, require) {
   post: function(url, data, callback, dataType) {
   _$jscoverage['/io.js'].functionData[2]++;
   _$jscoverage['/io.js'].lineData[71]++;
-  if (visit188_71_1(typeof data === 'function')) {
+  if (visit191_71_1(typeof data === 'function')) {
     _$jscoverage['/io.js'].lineData[72]++;
     dataType = callback;
     _$jscoverage['/io.js'].lineData[75]++;
@@ -371,7 +371,7 @@ KISSY.add(function(S, require) {
   jsonp: function(url, data, callback) {
   _$jscoverage['/io.js'].functionData[3]++;
   _$jscoverage['/io.js'].lineData[94]++;
-  if (visit189_94_1(typeof data === 'function')) {
+  if (visit192_94_1(typeof data === 'function')) {
     _$jscoverage['/io.js'].lineData[95]++;
     callback = data;
     _$jscoverage['/io.js'].lineData[96]++;
@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
   getJSON: function(url, data, callback) {
   _$jscoverage['/io.js'].functionData[4]++;
   _$jscoverage['/io.js'].lineData[122]++;
-  if (visit190_122_1(typeof data === 'function')) {
+  if (visit193_122_1(typeof data === 'function')) {
     _$jscoverage['/io.js'].lineData[123]++;
     callback = data;
     _$jscoverage['/io.js'].lineData[124]++;
@@ -396,7 +396,7 @@ KISSY.add(function(S, require) {
   upload: function(url, form, data, callback, dataType) {
   _$jscoverage['/io.js'].functionData[5]++;
   _$jscoverage['/io.js'].lineData[144]++;
-  if (visit191_144_1(typeof data === 'function')) {
+  if (visit194_144_1(typeof data === 'function')) {
     _$jscoverage['/io.js'].lineData[145]++;
     dataType = callback;
     _$jscoverage['/io.js'].lineData[149]++;

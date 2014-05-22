@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Mar 6 13:34
+build time: May 22 12:30
 */
 KISSY.add("scroll-view/base/render",["component/container","component/extension/content-render"],function(i,g){var n=g("component/container"),o=g("component/extension/content-render"),p=i.Features,j=Math.floor,l,m=i.Features.isTransform3dSupported(),k={syncUI:function(){var e=this.control,a=e.el,b=e.contentEl,c=Math.max(b.offsetHeight,b.scrollHeight),b=Math.max(b.offsetWidth,b.scrollWidth);e.set("dimension",{scrollHeight:c,scrollWidth:b,clientWidth:a.clientWidth,clientHeight:a.clientHeight})},_onSetScrollLeft:function(e){this.control.contentEl.style.left=
 -e+"px"},_onSetScrollTop:function(e){this.control.contentEl.style.top=-e+"px"}};!1!==i.Features.getVendorCssPropPrefix("transform")&&(l=p.getVendorCssPropName("transform"),k._onSetScrollLeft=function(e){var a=this.control;a.contentEl.style[l]="translateX("+j(-e)+"px) translateY("+j(-a.get("scrollTop"))+"px)"+(m?" translateZ(0)":"")},k._onSetScrollTop=function(e){var a=this.control;a.contentEl.style[l]="translateX("+j(-a.get("scrollLeft"))+"px) translateY("+j(-e)+"px)"+(m?" translateZ(0)":"")});return n.getDefaultRender().extend([o],

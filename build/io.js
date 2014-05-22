@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.43
+Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: Dec 9 22:41
+build time: May 22 12:29
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -136,10 +136,7 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
     }catch(e) {
       if(self.state < 2) {
         S.log(e.stack || e, "error");
-        setTimeout(function() {
-          throw e;
-        }, 0);
-        self._ioReady(-1, e.message)
+        self._ioReady(-1, e.message || "send error")
       }else {
         S.error(e)
       }
@@ -347,12 +344,9 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
       }
     }catch(e) {
       S.log(e.stack || e, "error");
-      setTimeout(function() {
-        throw e;
-      }, 0);
       nativeXhr.onreadystatechange = S.noop;
       if(!abort) {
-        io._ioReady(-1, e)
+        io._ioReady(-1, e.message || "process error")
       }
     }
   }});
@@ -594,7 +588,7 @@ KISSY.add("io/jsonp", ["./base"], function(S, require) {
       converters.script = converters.script || {};
       converters.script.json = function() {
         if(!response) {
-          S.error(" not call jsonpCallback: " + jsonpCallback)
+          throw new Error("not call jsonpCallback: " + jsonpCallback);
         }
         return response[0]
       };
@@ -824,7 +818,7 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
       type = dataType[i];
       var converter = converts[prevType] && converts[prevType][type];
       if(!converter) {
-        throw"no covert for " + prevType + " => " + type;
+        throw new Error("no covert for " + prevType + " => " + type);
       }
       responseData = converter(responseData);
       prevType = type
@@ -890,10 +884,7 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
           isSuccess = true
         }catch(e) {
           S.log(e.stack || e, "error");
-          setTimeout(function() {
-            throw e;
-          }, 0);
-          statusText = "parser error"
+          statusText = e.message || "parser error"
         }
       }
     }else {
