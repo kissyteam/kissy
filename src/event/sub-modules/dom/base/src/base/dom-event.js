@@ -243,6 +243,13 @@ KISSY.add(function (S, require) {
          */
         fire: function (targets, eventType, eventData, onlyHandlers) {
             var ret;
+
+            // fire(eventObject) === dispatchEvent(eventObject)
+            if (eventType.isEventObject) {
+                eventData = eventType;
+                eventType = eventType.type;
+            }
+
             // custom event firing moved to target.js
             eventData = eventData || {};
 
@@ -253,7 +260,6 @@ KISSY.add(function (S, require) {
             eventData.synthetic = 1;
 
             BaseUtils.splitAndRun(eventType, function (eventType) {
-
                 var r,
                     i,
                     target,

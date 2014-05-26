@@ -76,6 +76,11 @@ KISSY.add(function (S, require) {
                 targets = self.getTargets(),
                 hasTargets = targets && targets.length;
 
+            if (type.isEventObject) {
+                eventData = type;
+                type = type.type;
+            }
+
             eventData = eventData || {};
 
             splitAndRun(type, function (type) {

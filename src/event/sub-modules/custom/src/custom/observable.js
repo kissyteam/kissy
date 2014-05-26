@@ -70,11 +70,11 @@ KISSY.add(function (S, require) {
 
             eventData.type = type;
 
-            if (!(customEventObject instanceof  CustomEventObject)) {
-                customEventObject.target = currentTarget;
+            if (!customEventObject.isEventObject) {
                 customEventObject = new CustomEventObject(customEventObject);
             }
 
+            customEventObject.target = customEventObject.target || currentTarget;
             customEventObject.currentTarget = currentTarget;
 
             ret = self.notify(customEventObject);
@@ -177,10 +177,10 @@ KISSY.add(function (S, require) {
                     observerContext = observer.context || currentTarget;
                     if (
                         (context !== observerContext) ||
-                            // 指定了函数，函数不相等，保留
-                            (fn && fn !== observer.fn) ||
-                            // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
-                            (groupsRe && !observer.groups.match(groupsRe))
+                        // 指定了函数，函数不相等，保留
+                        (fn && fn !== observer.fn) ||
+                        // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
+                        (groupsRe && !observer.groups.match(groupsRe))
                         ) {
                         t[j++] = observer;
                     }

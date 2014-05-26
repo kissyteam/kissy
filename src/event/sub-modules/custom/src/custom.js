@@ -9,6 +9,8 @@ KISSY.add(function (S, require) {
     return {
         Target: Target,
 
+        Object: require('./custom/object'),
+
         /**
          * global event target
          * @property {KISSY.Event.CustomEvent.Target} global

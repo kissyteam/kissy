@@ -13,9 +13,6 @@ KISSY.add(function (S, require) {
     var DomEventObserver = require('./observer');
     var DomEventObject = require('./object');
 
-    // 记录手工 fire(domElement,type) 时的 type
-    // 再在浏览器通知的系统 eventHandler 中检查
-    // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var BaseUtils = BaseEvent.Utils;
 
     /**
@@ -136,19 +133,14 @@ KISSY.add(function (S, require) {
 
             //noinspection JSUnresolvedFunction
             for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
-
                 observerObj = allObservers[i];
                 currentTargetObservers = observerObj.currentTargetObservers;
                 currentTarget0 = observerObj.currentTarget;
                 event.currentTarget = currentTarget0;
-
                 //noinspection JSUnresolvedFunction
                 for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetObservers.length; j++) {
-
                     currentTargetObserver = currentTargetObservers[j];
-
                     ret = currentTargetObserver.notify(event, self);
-
                     // 和 jQuery 逻辑保持一致
                     // 有一个 false，最终结果就是 false
                     // 否则等于最后一个返回值
@@ -173,8 +165,7 @@ KISSY.add(function (S, require) {
 
             var self = this,
                 eventType = String(self.type),
-                domEventObservable,
-                eventData,
+                domEventObservable, eventData,
                 specialEvent = Special[eventType] || {},
                 bubbles = specialEvent.bubbles !== false,
                 currentTarget = self.currentTarget;
@@ -184,15 +175,16 @@ KISSY.add(function (S, require) {
                 return;
             }
 
-            if (!(event instanceof DomEventObject)) {
+            if (!event.isEventObject) {
                 eventData = event;
                 event = new DomEventObject({
-                    currentTarget: currentTarget,
-                    type: eventType,
-                    target: currentTarget
+                    type: eventType
                 });
                 util.mix(event, eventData);
             }
+
+            event.currentTarget = currentTarget;
+            event.target = event.target || currentTarget;
 
             if (specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false) {
                 return;
@@ -248,7 +240,6 @@ KISSY.add(function (S, require) {
                     if (currentTarget[ eventType ] && !util.isWindow(currentTarget)) {
                         // 记录当前 trigger 触发
                         DomEventObservable.triggeredEvent = eventType;
-
                         // 只触发默认事件，而不要执行绑定的用户回调
                         // 同步触发
                         currentTarget[ eventType ]();
@@ -280,8 +271,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            if (self.findObserver(/**@type KISSY.Event.DomEvent.Observer
-             @ignore*/observer) === -1) {
+            if (self.findObserver(observer) === -1) {
                 // 增加 listener
                 if (observer.filter) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -336,32 +326,32 @@ KISSY.add(function (S, require) {
                     observerContext = observer.context || currentTarget;
                     if (
                         (context !== observerContext) ||
-                            // 指定了函数，函数不相等，保留
-                            (fn && fn !== observer.fn) ||
-                            // 1.没指定函数
-                            // 1.1 没有指定选择器,删掉 else2
-                            // 1.2 指定选择器,字符串为空
-                            // 1.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
-                            // 1.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
-                            // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
-                            // 1.4 指定选择器,字符串不为空,字符串不相等,保留
-                            // 2.指定了函数且函数相等
-                            // 2.1 没有指定选择器,删掉 else
-                            // 2.2 指定选择器,字符串为空
-                            // 2.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
-                            // 2.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
-                            // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
-                            // 2.4 指定选择器,字符串不为空,字符串不相等,保留
+                        // 指定了函数，函数不相等，保留
+                        (fn && fn !== observer.fn) ||
+                        // 1.没指定函数
+                        // 1.1 没有指定选择器,删掉 else2
+                        // 1.2 指定选择器,字符串为空
+                        // 1.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
+                        // 1.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
+                        // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
+                        // 1.4 指定选择器,字符串不为空,字符串不相等,保留
+                        // 2.指定了函数且函数相等
+                        // 2.1 没有指定选择器,删掉 else
+                        // 2.2 指定选择器,字符串为空
+                        // 2.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
+                        // 2.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
+                        // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
+                        // 2.4 指定选择器,字符串不为空,字符串不相等,保留
+                        (
+                            hasFilter &&
                             (
-                                hasFilter &&
-                                    (
-                                        (filter && filter !== observer.filter) ||
-                                            (!filter && !observer.filter)
-                                        )
-                                ) ||
+                                (filter && filter !== observer.filter) ||
+                                (!filter && !observer.filter)
+                                )
+                            ) ||
 
-                            // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
-                            (groupsRe && !observer.groups.match(groupsRe))
+                        // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
+                        (groupsRe && !observer.groups.match(groupsRe))
                         ) {
                         t[j++] = observer;
                     } else {
@@ -416,6 +406,9 @@ KISSY.add(function (S, require) {
         }
     });
 
+    // 记录手工 fire(domElement,type) 时的 type
+    // 再在浏览器通知的系统 eventHandler 中检查
+    // 如果相同，那么证明已经 fire 过了，不要再次触发了
     DomEventObservable.triggeredEvent = '';
 
     /**
@@ -425,7 +418,6 @@ KISSY.add(function (S, require) {
      * @return {KISSY.Event.DomEvent.Observable}
      */
     DomEventObservable.getDomEventObservable = function (node, type) {
-
         var domEventObservablesHolder = DomEventUtils.data(node),
             domEventObservables;
         if (domEventObservablesHolder) {

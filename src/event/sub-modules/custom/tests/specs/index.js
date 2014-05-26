@@ -2,10 +2,10 @@
  * custom bubble mechanism tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, util, Event) {
+KISSY.add(function (S, util, CustomEvent) {
     /*jshint quotmark:false*/
-    var EventTarget = Event.Target;
-
+    var EventTarget = CustomEvent.Target;
+    var CustomEventObject = CustomEvent.Object;
     var FIRST = '1',
         SECOND = '2',
         SEP = '=';
@@ -56,8 +56,7 @@ KISSY.add(function (S, util, Event) {
 
         // note 219
         it('fire does not depend on custom event\'s type', function () {
-            var S = KISSY,
-                haha = 0,
+            var haha = 0,
                 haha2 = 0,
                 obj = util.mix({}, EventTarget);
 
@@ -428,6 +427,58 @@ KISSY.add(function (S, util, Event) {
                 expect(o.fire('t')).toBe('x');
             });
 
+            it('can fire EventObject instance', function () {
+                var event = new CustomEventObject({
+                    type: 'xx'
+                });
+                var node = util.mix({}, EventTarget);
+                var fired = 0;
+                node.on('xx', function (e) {
+                    fired = 1;
+                    expect(e.target).toBe(node);
+                    e.preventDefault();
+                    expect(e).toBe(event);
+                });
+                node.fire(event);
+                expect(fired).toBe(1);
+                expect(event.isDefaultPrevented()).toBe(true);
+            });
+
+            it('will propagate', function () {
+                var event = new CustomEventObject({
+                    type: 'xx'
+                });
+                var node = util.mix({}, EventTarget);
+                var node2 = util.mix({}, EventTarget);
+                node.addTarget(node2);
+                var fired = 0;
+                node2.on('xx', function () {
+                    fired = 1;
+                });
+                node.fire(event);
+                expect(fired).toBe(1);
+                expect(event.isPropagationStopped()).toBe(false);
+            });
+
+            it('can set EventObject instance', function () {
+                var event = new CustomEventObject({
+                    type: 'xx'
+                });
+                var node = util.mix({}, EventTarget);
+                var node2 = util.mix({}, EventTarget);
+                node.addTarget(node2);
+                event.isPropagationStopped = function () {
+                    return true;
+                };
+                var fired = 0;
+                node2.on('xx', function () {
+                    fired = 1;
+                });
+                node.fire(event);
+                expect(fired).toBe(0);
+                expect(event.isPropagationStopped()).toBe(true);
+            });
+
             describe("fire manually for event groups", function () {
 
                 function Target() {
@@ -702,5 +753,5 @@ KISSY.add(function (S, util, Event) {
         });
     });
 }, {
-    requires: ['util','event/custom']
+    requires: ['util', 'event/custom']
 });

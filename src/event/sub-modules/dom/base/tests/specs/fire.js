@@ -210,6 +210,60 @@ KISSY.add(function (S, Dom, Event) {
 
             Dom.remove(n);
         });
+
+        it('can fire EventObject instance', function () {
+            var event = new Event.Object({
+                type: 'xx'
+            });
+            var node = Dom.create('<div></div>');
+            var fired = 0;
+            Event.on(node, 'xx', function (e) {
+                fired = 1;
+                expect(e.target).toBe(node);
+                e.preventDefault();
+                expect(e).toBe(event);
+            });
+            Event.fire(node, event);
+            expect(fired).toBe(1);
+            expect(event.isDefaultPrevented()).toBe(true);
+        });
+
+        it('will propagate', function () {
+            var event = new Event.Object({
+                type: 'xx'
+            });
+            var node2 = Dom.create('<div></div>');
+            var node = Dom.create('<div></div>');
+            node2.appendChild(node);
+            var fired = 0;
+            Event.on(node2, 'xx', function () {
+                fired = 1;
+
+            });
+            Event.fire(node, event);
+            expect(fired).toBe(1);
+            expect(event.isPropagationStopped()).toBe(false);
+        });
+
+        it('can set EventObject instance', function () {
+            var event = new Event.Object({
+                type: 'xx'
+            });
+            event.isPropagationStopped = function () {
+                return true;
+            };
+            var node2 = Dom.create('<div></div>');
+            var node = Dom.create('<div></div>');
+            node2.appendChild(node);
+            var fired = 0;
+            Event.on(node2, 'xx', function () {
+                fired = 1;
+
+            });
+            Event.fire(node, event);
+            expect(fired).toBe(0);
+            expect(event.isPropagationStopped()).toBe(true);
+        });
     });
 }, {
     requires: ['dom', 'event/dom/base']

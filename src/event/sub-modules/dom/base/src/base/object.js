@@ -132,7 +132,7 @@ KISSY.add(function (S, require) {
                         button = originalEvent.button;
 
                     // Calculate pageX/Y if missing and clientX/Y available
-                    if (event.pageX == null && originalEvent.clientX != null) {
+                    if (target && event.pageX == null && originalEvent.clientX != null) {
                         eventDoc = target.ownerDocument || DOCUMENT;
                         doc = eventDoc.documentElement;
                         body = eventDoc.body;
@@ -189,6 +189,9 @@ KISSY.add(function (S, require) {
     function DomEventObject(originalEvent) {
         var self = this,
             type = originalEvent.type;
+
+        var isNative = (typeof originalEvent.stopPropagation === 'function') ||
+            (typeof originalEvent.cancelBubble === 'boolean');
 
         /**
          * altKey
@@ -434,12 +437,12 @@ KISSY.add(function (S, require) {
         }
 
         // fix target property, if necessary
-        if (!self.target) {
+        if (!self.target && isNative) {
             self.target = originalEvent.srcElement || DOCUMENT; // srcElement might not be defined either
         }
 
         // check if target is a text node (safari)
-        if (self.target.nodeType === 3) {
+        if (self.target && self.target.nodeType === 3) {
             self.target = self.target.parentNode;
         }
 

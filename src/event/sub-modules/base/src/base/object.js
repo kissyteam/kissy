@@ -42,6 +42,8 @@ KISSY.add(function (S, require) {
     }
 
     EventObject.prototype = {
+        isEventObject: 1,
+
         constructor: EventObject,
         /**
          * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
