@@ -5,6 +5,7 @@ var fs = require('fs');
 var util = require('../../lib/util');
 var mkdirp = require('mkdirp');
 var excludes = ['/demo/', '/meta/', '/tests/', '/coverage/'];
+var fsExtra = require('fs-extra');
 
 function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
@@ -12,7 +13,7 @@ function normalizeSlash(str) {
 
 function run(moduleName, callback) {
     var srcPath = path.join(__dirname, '../../src/' + moduleName + '/');
-    if(!fs.existsSync(srcPath)){
+    if (!fs.existsSync(srcPath)) {
         callback('not exists');
         return;
     }
@@ -22,9 +23,11 @@ function run(moduleName, callback) {
 
     var reportsDir = path.join(__dirname, '../../reports/' + moduleName + '/');
 
+    fsExtra.removeSync(reportsDir);
+
     mkdirp.sync(reportsDir);
 
-    var jshintContent = fs.readFileSync(path.join(__dirname,'../../.jshintrc'), {
+    var jshintContent = fs.readFileSync(path.join(__dirname, '../../.jshintrc'), {
         encoding: 'utf-8'
     });
 
