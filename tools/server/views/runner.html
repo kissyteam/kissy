@@ -67,7 +67,7 @@
         S.config('packages',{
             specs:{
                 debug:1,
-                base: endsWith(location.href.replace(/\?.+$/,''),
+                base: endsWith(location.pathname,
                         'runner')?'./specs':'../specs'
             },
             src:{
