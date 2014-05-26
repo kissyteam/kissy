@@ -251,5 +251,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/custom.js'].lineData[9]++;
   return {
   Target: Target, 
+  Object: require('./custom/object'), 
   global: util.mix({}, Target)};
 });

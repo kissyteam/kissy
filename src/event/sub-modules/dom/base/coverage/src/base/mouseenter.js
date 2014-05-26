@@ -254,15 +254,15 @@ if (! _$jscoverage['/base/mouseenter.js'].branchData) {
   _$jscoverage['/base/mouseenter.js'].branchData['24'][2] = new BranchData();
 }
 _$jscoverage['/base/mouseenter.js'].branchData['24'][2].init(39, 31, 'relatedTarget !== currentTarget');
-function visit49_24_2(result) {
+function visit50_24_2(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['24'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].branchData['24'][1].init(39, 78, 'relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget)');
-function visit48_24_1(result) {
+function visit49_24_1(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].branchData['23'][1].init(293, 119, '!relatedTarget || (relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget))');
-function visit47_23_1(result) {
+function visit48_23_1(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].lineData[6]++;
@@ -289,7 +289,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/mouseenter.js'].lineData[18]++;
   var currentTarget = event.currentTarget, relatedTarget = event.relatedTarget;
   _$jscoverage['/base/mouseenter.js'].lineData[23]++;
-  if (visit47_23_1(!relatedTarget || (visit48_24_1(visit49_24_2(relatedTarget !== currentTarget) && !Dom.contains(currentTarget, relatedTarget))))) {
+  if (visit48_23_1(!relatedTarget || (visit49_24_1(visit50_24_2(relatedTarget !== currentTarget) && !Dom.contains(currentTarget, relatedTarget))))) {
     _$jscoverage['/base/mouseenter.js'].lineData[34]++;
     return [observer.simpleNotify(event, ce)];
   }

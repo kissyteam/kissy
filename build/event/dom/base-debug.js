@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:25
+build time: May 26 21:38
 */
 /*
 combined modules:
@@ -253,7 +253,12 @@ KISSY.add('event/dom/base/dom-event', [
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
             fire: function (targets, eventType, eventData, onlyHandlers) {
-                var ret;    // custom event firing moved to target.js
+                var ret;    // fire(eventObject) === dispatchEvent(eventObject)
+                // fire(eventObject) === dispatchEvent(eventObject)
+                if (eventType.isEventObject) {
+                    eventData = eventType;
+                    eventType = eventType.type;
+                }    // custom event firing moved to target.js
                 // custom event firing moved to target.js
                 eventData = eventData || {};    /**
              * identify event as fired manually
@@ -416,12 +421,7 @@ KISSY.add('event/dom/base/observable', [
     var Special = require('./special');
     var DomEventUtils = require('./utils');
     var DomEventObserver = require('./observer');
-    var DomEventObject = require('./object');    // 记录手工 fire(domElement,type) 时的 type
-                                                 // 再在浏览器通知的系统 eventHandler 中检查
-                                                 // 如果相同，那么证明已经 fire 过了，不要再次触发了
-    // 记录手工 fire(domElement,type) 时的 type
-    // 再在浏览器通知的系统 eventHandler 中检查
-    // 如果相同，那么证明已经 fire 过了，不要再次触发了
+    var DomEventObject = require('./object');
     var BaseUtils = BaseEvent.Utils;    /**
      * custom event for dom
      * @param {Object} cfg
@@ -557,15 +557,13 @@ KISSY.add('event/dom/base/observable', [
             if (specialEvent.fire && specialEvent.fire.call(currentTarget, onlyHandlers) === false) {
                 return;
             }
-            if (!(event instanceof DomEventObject)) {
+            if (!event.isEventObject) {
                 eventData = event;
-                event = new DomEventObject({
-                    currentTarget: currentTarget,
-                    type: eventType,
-                    target: currentTarget
-                });
+                event = new DomEventObject({ type: eventType });
                 util.mix(event, eventData);
             }
+            event.currentTarget = currentTarget;
+            event.target = event.target || currentTarget;
             if (specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false) {
                 return;
             }    // onlyHandlers is equal to event.halt()
@@ -637,9 +635,7 @@ KISSY.add('event/dom/base/observable', [
                     S.error('lack event handler for ' + self.type);
                 }
             }
-            if (self.findObserver(/**@type KISSY.Event.DomEvent.Observer
-             @ignore*/
-                observer) === -1) {
+            if (self.findObserver(observer) === -1) {
                 // 增加 listener
                 if (observer.filter) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -735,7 +731,12 @@ KISSY.add('event/dom/base/observable', [
                 }
             }
         }
-    });
+    });    // 记录手工 fire(domElement,type) 时的 type
+           // 再在浏览器通知的系统 eventHandler 中检查
+           // 如果相同，那么证明已经 fire 过了，不要再次触发了
+    // 记录手工 fire(domElement,type) 时的 type
+    // 再在浏览器通知的系统 eventHandler 中检查
+    // 如果相同，那么证明已经 fire 过了，不要再次触发了
     DomEventObservable.triggeredEvent = '';    /**
      * get custom event from html node by event type.
      * @param {HTMLElement} node
@@ -995,7 +996,7 @@ KISSY.add('event/dom/base/object', [
                 fix: function (event, originalEvent) {
                     var eventDoc, doc, body, target = event.target, button = originalEvent.button;    // Calculate pageX/Y if missing and clientX/Y available
                     // Calculate pageX/Y if missing and clientX/Y available
-                    if (event.pageX == null && originalEvent.clientX != null) {
+                    if (target && event.pageX == null && originalEvent.clientX != null) {
                         eventDoc = target.ownerDocument || DOCUMENT;
                         doc = eventDoc.documentElement;
                         body = eventDoc.body;
@@ -1058,164 +1059,165 @@ KISSY.add('event/dom/base/object', [
      * @param originalEvent native dom event
      */
     function DomEventObject(originalEvent) {
-        var self = this, type = originalEvent.type;    /**
+        var self = this, type = originalEvent.type;
+        var isNative = typeof originalEvent.stopPropagation === 'function' || typeof originalEvent.cancelBubble === 'boolean';    /**
          * altKey
          * @property altKey
          */
-                                                       /**
+                                                                                                                                  /**
          * attrChange
          * @property attrChange
          */
-                                                       /**
+                                                                                                                                  /**
          * attrName
          * @property attrName
          */
-                                                       /**
+                                                                                                                                  /**
          * bubbles
          * @property bubbles
          */
-                                                       /**
+                                                                                                                                  /**
          * button
          * @property button
          */
-                                                       /**
+                                                                                                                                  /**
          * cancelable
          * @property cancelable
          */
-                                                       /**
+                                                                                                                                  /**
          * charCode
          * @property charCode
          */
-                                                       /**
+                                                                                                                                  /**
          * clientX
          * @property clientX
          */
-                                                       /**
+                                                                                                                                  /**
          * clientY
          * @property clientY
          */
-                                                       /**
+                                                                                                                                  /**
          * ctrlKey
          * @property ctrlKey
          */
-                                                       /**
+                                                                                                                                  /**
          * data
          * @property data
          */
-                                                       /**
+                                                                                                                                  /**
          * detail
          * @property detail
          */
-                                                       /**
+                                                                                                                                  /**
          * eventPhase
          * @property eventPhase
          */
-                                                       /**
+                                                                                                                                  /**
          * fromElement
          * @property fromElement
          */
-                                                       /**
+                                                                                                                                  /**
          * handler
          * @property handler
          */
-                                                       /**
+                                                                                                                                  /**
          * keyCode
          * @property keyCode
          */
-                                                       /**
+                                                                                                                                  /**
          * metaKey
          * @property metaKey
          */
-                                                       /**
+                                                                                                                                  /**
          * newValue
          * @property newValue
          */
-                                                       /**
+                                                                                                                                  /**
          * offsetX
          * @property offsetX
          */
-                                                       /**
+                                                                                                                                  /**
          * offsetY
          * @property offsetY
          */
-                                                       /**
+                                                                                                                                  /**
          * pageX
          * @property pageX
          */
-                                                       /**
+                                                                                                                                  /**
          * pageY
          * @property pageY
          */
-                                                       /**
+                                                                                                                                  /**
          * prevValue
          * @property prevValue
          */
-                                                       /**
+                                                                                                                                  /**
          * relatedNode
          * @property relatedNode
          */
-                                                       /**
+                                                                                                                                  /**
          * relatedTarget
          * @property relatedTarget
          */
-                                                       /**
+                                                                                                                                  /**
          * screenX
          * @property screenX
          */
-                                                       /**
+                                                                                                                                  /**
          * screenY
          * @property screenY
          */
-                                                       /**
+                                                                                                                                  /**
          * shiftKey
          * @property shiftKey
          */
-                                                       /**
+                                                                                                                                  /**
          * srcElement
          * @property srcElement
          */
-                                                       /**
+                                                                                                                                  /**
          * toElement
          * @property toElement
          */
-                                                       /**
+                                                                                                                                  /**
          * view
          * @property view
          */
-                                                       /**
+                                                                                                                                  /**
          * wheelDelta
          * @property wheelDelta
          */
-                                                       /**
+                                                                                                                                  /**
          * which
          * @property which
          */
-                                                       /**
+                                                                                                                                  /**
          * changedTouches
          * @property changedTouches
          */
-                                                       /**
+                                                                                                                                  /**
          * touches
          * @property touches
          */
-                                                       /**
+                                                                                                                                  /**
          * targetTouches
          * @property targetTouches
          */
-                                                       /**
+                                                                                                                                  /**
          * rotation
          * @property rotation
          */
-                                                       /**
+                                                                                                                                  /**
          * scale
          * @property scale
          */
-                                                       /**
+                                                                                                                                  /**
          * source html node of current event
          * @property target
          * @type {HTMLElement}
          */
-                                                       /**
+                                                                                                                                  /**
          * current htm node which processes current event
          * @property currentTarget
          * @type {HTMLElement}
@@ -1412,12 +1414,12 @@ KISSY.add('event/dom/base/object', [
             self[prop] = originalEvent[prop];
         }    // fix target property, if necessary
         // fix target property, if necessary
-        if (!self.target) {
+        if (!self.target && isNative) {
             self.target = originalEvent.srcElement || DOCUMENT;    // srcElement might not be defined either
         }    // check if target is a text node (safari)
         // srcElement might not be defined either
         // check if target is a text node (safari)
-        if (self.target.nodeType === 3) {
+        if (self.target && self.target.nodeType === 3) {
             self.target = self.target.parentNode;
         }
         l = fixFns.length;

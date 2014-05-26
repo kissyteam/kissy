@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:26
+build time: May 26 21:39
 */
 KISSY.add("event/gesture/util",["./util/add-event","./util/touch","./util/single-touch","./util/double-touch"],function(m,d){return{addEvent:d("./util/add-event"),Touch:d("./util/touch"),SingleTouch:d("./util/single-touch"),DoubleTouch:d("./util/double-touch")}});
 KISSY.add("event/gesture/util/add-event",["util","dom","ua","event/dom/base","feature"],function(m,d){function c(a){return l.startsWith(a,"touch")}function g(a){return l.startsWith(a,"mouse")}function h(a){return l.startsWith(a,"MSPointer")||l.startsWith(a,"pointer")}function s(a){this.doc=a;this.eventHandles=[];this.init();this.touches=[];this.inTouch=0}function w(a){u(this,a)}function x(a){v(this,a)}function y(a){u(this,a);p[a].setup.apply(this,arguments)}function z(a){v(this,a);p[a].tearDown.apply(this,

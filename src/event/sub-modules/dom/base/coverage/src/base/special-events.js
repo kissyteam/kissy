@@ -291,55 +291,55 @@ if (! _$jscoverage['/base/special-events.js'].branchData) {
   _$jscoverage['/base/special-events.js'].branchData['66'][2] = new BranchData();
 }
 _$jscoverage['/base/special-events.js'].branchData['66'][2].init(26, 41, 'self === self.ownerDocument.activeElement');
-function visit202_66_2(result) {
+function visit209_66_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['66'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['66'][1].init(26, 54, 'self === self.ownerDocument.activeElement && self.blur');
-function visit201_66_1(result) {
+function visit208_66_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['66'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['65'][1].init(56, 35, '!onlyHandlers && self.ownerDocument');
-function visit200_65_1(result) {
+function visit207_65_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['58'][1].init(22, 13, '!onlyHandlers');
-function visit199_58_1(result) {
+function visit206_58_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['46'][2].init(26, 41, 'self !== self.ownerDocument.activeElement');
-function visit198_46_2(result) {
+function visit205_46_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['46'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['46'][1].init(26, 55, 'self !== self.ownerDocument.activeElement && self.focus');
-function visit197_46_1(result) {
+function visit204_46_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['45'][1].init(56, 35, '!onlyHandlers && self.ownerDocument');
-function visit196_45_1(result) {
+function visit203_45_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['38'][1].init(22, 13, '!onlyHandlers');
-function visit195_38_1(result) {
+function visit202_38_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['27'][2].init(147, 39, 'self.nodeName.toLowerCase() === \'input\'');
-function visit194_27_2(result) {
+function visit201_27_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['27'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['27'][1].init(56, 53, 'self.click && self.nodeName.toLowerCase() === \'input\'');
-function visit193_27_1(result) {
+function visit200_27_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['26'][3].init(73, 32, 'String(self.type) === \'checkbox\'');
-function visit192_26_3(result) {
+function visit199_26_3(result) {
   _$jscoverage['/base/special-events.js'].branchData['26'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['26'][2].init(73, 110, 'String(self.type) === \'checkbox\' && self.click && self.nodeName.toLowerCase() === \'input\'');
-function visit191_26_2(result) {
+function visit198_26_2(result) {
   _$jscoverage['/base/special-events.js'].branchData['26'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].branchData['26'][1].init(56, 127, '!onlyHandlers && String(self.type) === \'checkbox\' && self.click && self.nodeName.toLowerCase() === \'input\'');
-function visit190_26_1(result) {
+function visit197_26_1(result) {
   _$jscoverage['/base/special-events.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/special-events.js'].lineData[6]++;
@@ -365,7 +365,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/special-events.js'].lineData[25]++;
   var self = this;
   _$jscoverage['/base/special-events.js'].lineData[26]++;
-  if (visit190_26_1(!onlyHandlers && visit191_26_2(visit192_26_3(String(self.type) === 'checkbox') && visit193_27_1(self.click && visit194_27_2(self.nodeName.toLowerCase() === 'input'))))) {
+  if (visit197_26_1(!onlyHandlers && visit198_26_2(visit199_26_3(String(self.type) === 'checkbox') && visit200_27_1(self.click && visit201_27_2(self.nodeName.toLowerCase() === 'input'))))) {
     _$jscoverage['/base/special-events.js'].lineData[28]++;
     self.click();
     _$jscoverage['/base/special-events.js'].lineData[29]++;
@@ -379,7 +379,7 @@ KISSY.add(function(S, require) {
   preFire: function(event, onlyHandlers) {
   _$jscoverage['/base/special-events.js'].functionData[2]++;
   _$jscoverage['/base/special-events.js'].lineData[38]++;
-  if (visit195_38_1(!onlyHandlers)) {
+  if (visit202_38_1(!onlyHandlers)) {
     _$jscoverage['/base/special-events.js'].lineData[39]++;
     return DomEvent.fire(this, 'focusin');
   }
@@ -389,9 +389,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/special-events.js'].lineData[44]++;
   var self = this;
   _$jscoverage['/base/special-events.js'].lineData[45]++;
-  if (visit196_45_1(!onlyHandlers && self.ownerDocument)) {
+  if (visit203_45_1(!onlyHandlers && self.ownerDocument)) {
     _$jscoverage['/base/special-events.js'].lineData[46]++;
-    if (visit197_46_1(visit198_46_2(self !== self.ownerDocument.activeElement) && self.focus)) {
+    if (visit204_46_1(visit205_46_2(self !== self.ownerDocument.activeElement) && self.focus)) {
       _$jscoverage['/base/special-events.js'].lineData[47]++;
       self.focus();
       _$jscoverage['/base/special-events.js'].lineData[48]++;
@@ -406,7 +406,7 @@ KISSY.add(function(S, require) {
   preFire: function(event, onlyHandlers) {
   _$jscoverage['/base/special-events.js'].functionData[4]++;
   _$jscoverage['/base/special-events.js'].lineData[58]++;
-  if (visit199_58_1(!onlyHandlers)) {
+  if (visit206_58_1(!onlyHandlers)) {
     _$jscoverage['/base/special-events.js'].lineData[59]++;
     return DomEvent.fire(this, 'focusout');
   }
@@ -416,9 +416,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/special-events.js'].lineData[64]++;
   var self = this;
   _$jscoverage['/base/special-events.js'].lineData[65]++;
-  if (visit200_65_1(!onlyHandlers && self.ownerDocument)) {
+  if (visit207_65_1(!onlyHandlers && self.ownerDocument)) {
     _$jscoverage['/base/special-events.js'].lineData[66]++;
-    if (visit201_66_1(visit202_66_2(self === self.ownerDocument.activeElement) && self.blur)) {
+    if (visit208_66_1(visit209_66_2(self === self.ownerDocument.activeElement) && self.blur)) {
       _$jscoverage['/base/special-events.js'].lineData[67]++;
       self.blur();
       _$jscoverage['/base/special-events.js'].lineData[68]++;

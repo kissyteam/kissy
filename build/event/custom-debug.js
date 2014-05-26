@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: May 26 21:38
 */
 /*
 combined modules:
@@ -18,12 +18,14 @@ event/custom/object
  */
 KISSY.add('event/custom', [
     './custom/target',
-    'util'
+    'util',
+    './custom/object'
 ], function (S, require) {
     var Target = require('./custom/target');
     var util = require('util');
     return {
         Target: Target,
+        Object: require('./custom/object'),
         /**
          * global event target
          * @property {KISSY.Event.CustomEvent.Target} global
@@ -123,6 +125,10 @@ KISSY.add('event/custom/target', [
          */
         fire: function (type, eventData) {
             var self = this, ret, targets = self.getTargets(), hasTargets = targets && targets.length;
+            if (type.isEventObject) {
+                eventData = type;
+                type = type.type;
+            }
             eventData = eventData || {};
             splitAndRun(type, function (type) {
                 var r2, customEventObservable;
@@ -342,10 +348,10 @@ KISSY.add('event/custom/observable', [
             eventData = eventData || {};
             var self = this, bubbles = self.bubbles, currentTarget = self.currentTarget, parents, parentsLen, type = self.type, defaultFn = self.defaultFn, i, customEventObject = eventData, gRet, ret;
             eventData.type = type;
-            if (!(customEventObject instanceof CustomEventObject)) {
-                customEventObject.target = currentTarget;
+            if (!customEventObject.isEventObject) {
                 customEventObject = new CustomEventObject(customEventObject);
             }
+            customEventObject.target = customEventObject.target || currentTarget;
             customEventObject.currentTarget = currentTarget;
             ret = self.notify(customEventObject);
             if (gRet !== false && ret !== undefined) {

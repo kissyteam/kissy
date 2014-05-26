@@ -289,75 +289,75 @@ if (! _$jscoverage['/base/key-codes.js'].branchData) {
   _$jscoverage['/base/key-codes.js'].branchData['498'][3] = new BranchData();
 }
 _$jscoverage['/base/key-codes.js'].branchData['498'][3].init(498, 13, 'keyCode === 0');
-function visit46_498_3(result) {
+function visit47_498_3(result) {
   _$jscoverage['/base/key-codes.js'].branchData['498'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['498'][2].init(442, 52, 'window.navigation.userAgent.indexOf(\'WebKit\') !== -1');
-function visit45_498_2(result) {
+function visit46_498_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['498'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['498'][1].init(442, 69, 'window.navigation.userAgent.indexOf(\'WebKit\') !== -1 && keyCode === 0');
-function visit44_498_1(result) {
+function visit45_498_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['498'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['493'][1].init(36, 20, 'keyCode <= KeyCode.Z');
-function visit43_493_1(result) {
+function visit44_493_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['493'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['492'][2].init(264, 20, 'keyCode >= KeyCode.A');
-function visit42_492_2(result) {
+function visit43_492_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['492'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['492'][1].init(264, 57, 'keyCode >= KeyCode.A && keyCode <= KeyCode.Z');
-function visit41_492_1(result) {
+function visit42_492_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['492'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['488'][1].init(43, 31, 'keyCode <= KeyCode.NUM_MULTIPLY');
-function visit40_488_1(result) {
+function visit41_488_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['488'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['487'][2].init(133, 27, 'keyCode >= KeyCode.NUM_ZERO');
-function visit39_487_2(result) {
+function visit40_487_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['487'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['487'][1].init(133, 75, 'keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY');
-function visit38_487_1(result) {
+function visit39_487_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['487'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['483'][1].init(39, 23, 'keyCode <= KeyCode.NINE');
-function visit37_483_1(result) {
+function visit38_483_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['483'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['482'][2].init(14, 23, 'keyCode >= KeyCode.ZERO');
-function visit36_482_2(result) {
+function visit37_482_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['482'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['482'][1].init(14, 63, 'keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE');
-function visit35_482_1(result) {
+function visit36_482_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['482'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['442'][3].init(24, 22, 'keyCode <= KeyCode.F12');
-function visit34_442_3(result) {
+function visit35_442_3(result) {
   _$jscoverage['/base/key-codes.js'].branchData['442'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['442'][2].init(153, 21, 'keyCode >= KeyCode.F1');
-function visit33_442_2(result) {
+function visit34_442_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['442'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['442'][1].init(75, 47, 'keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
-function visit32_442_1(result) {
+function visit33_442_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['442'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['440'][3].init(74, 123, 'e.metaKey || keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
-function visit31_440_3(result) {
+function visit32_440_3(result) {
   _$jscoverage['/base/key-codes.js'].branchData['440'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['440'][2].init(48, 22, 'e.altKey && !e.ctrlKey');
-function visit30_440_2(result) {
+function visit31_440_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['440'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].branchData['440'][1].init(48, 149, 'e.altKey && !e.ctrlKey || e.metaKey || keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
-function visit29_440_1(result) {
+function visit30_440_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['440'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].lineData[6]++;
@@ -476,7 +476,7 @@ KISSY.add(function() {
   _$jscoverage['/base/key-codes.js'].lineData[439]++;
   var keyCode = e.keyCode;
   _$jscoverage['/base/key-codes.js'].lineData[440]++;
-  if (visit29_440_1(visit30_440_2(e.altKey && !e.ctrlKey) || visit31_440_3(e.metaKey || visit32_442_1(visit33_442_2(keyCode >= KeyCode.F1) && visit34_442_3(keyCode <= KeyCode.F12))))) {
+  if (visit30_440_1(visit31_440_2(e.altKey && !e.ctrlKey) || visit32_440_3(e.metaKey || visit33_442_1(visit34_442_2(keyCode >= KeyCode.F1) && visit35_442_3(keyCode <= KeyCode.F12))))) {
     _$jscoverage['/base/key-codes.js'].lineData[443]++;
     return false;
   }
@@ -516,22 +516,22 @@ KISSY.add(function() {
   KeyCode.isCharacterKey = function(keyCode) {
   _$jscoverage['/base/key-codes.js'].functionData[2]++;
   _$jscoverage['/base/key-codes.js'].lineData[482]++;
-  if (visit35_482_1(visit36_482_2(keyCode >= KeyCode.ZERO) && visit37_483_1(keyCode <= KeyCode.NINE))) {
+  if (visit36_482_1(visit37_482_2(keyCode >= KeyCode.ZERO) && visit38_483_1(keyCode <= KeyCode.NINE))) {
     _$jscoverage['/base/key-codes.js'].lineData[484]++;
     return true;
   }
   _$jscoverage['/base/key-codes.js'].lineData[487]++;
-  if (visit38_487_1(visit39_487_2(keyCode >= KeyCode.NUM_ZERO) && visit40_488_1(keyCode <= KeyCode.NUM_MULTIPLY))) {
+  if (visit39_487_1(visit40_487_2(keyCode >= KeyCode.NUM_ZERO) && visit41_488_1(keyCode <= KeyCode.NUM_MULTIPLY))) {
     _$jscoverage['/base/key-codes.js'].lineData[489]++;
     return true;
   }
   _$jscoverage['/base/key-codes.js'].lineData[492]++;
-  if (visit41_492_1(visit42_492_2(keyCode >= KeyCode.A) && visit43_493_1(keyCode <= KeyCode.Z))) {
+  if (visit42_492_1(visit43_492_2(keyCode >= KeyCode.A) && visit44_493_1(keyCode <= KeyCode.Z))) {
     _$jscoverage['/base/key-codes.js'].lineData[494]++;
     return true;
   }
   _$jscoverage['/base/key-codes.js'].lineData[498]++;
-  if (visit44_498_1(visit45_498_2(window.navigation.userAgent.indexOf('WebKit') !== -1) && visit46_498_3(keyCode === 0))) {
+  if (visit45_498_1(visit46_498_2(window.navigation.userAgent.indexOf('WebKit') !== -1) && visit47_498_3(keyCode === 0))) {
     _$jscoverage['/base/key-codes.js'].lineData[499]++;
     return true;
   }

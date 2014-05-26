@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:25
+build time: May 26 21:39
 */
 KISSY.add("event/dom/ie",["./ie/change","./ie/submit"],function(i,c){c("./ie/change");c("./ie/submit")});
 KISSY.add("event/dom/ie/change",["event/dom/base","dom"],function(i,c){function d(a){a=a.type;return"checkbox"===a||"radio"===a}function f(a){if("checked"===a.originalEvent.propertyName){var b=this;b.__changed=1;b.__changeTimer&&clearTimeout(b.__changeTimer);b.__changeTimer=setTimeout(function(){b.__changed=0;b.__changeTimer=null},50)}}function b(b){this.__changed&&(this.__changed=0,a.fire(this,"change",b))}function g(b){b=b.target;h.test(b.nodeName)&&!b.__changeHandler&&(b.__changeHandler=1,a.on(b,

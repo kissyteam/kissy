@@ -378,7 +378,7 @@
     </target>
 
     <target name="build-all" depends="check-src">
-        <subant target="" failonerror="true" inheritall="false">
+        <subant target="build" failonerror="true" inheritall="false">
             <fileset dir="./" includes="**/build.xml" excludes="build.xml"/>
         </subant>
         <ac:if>

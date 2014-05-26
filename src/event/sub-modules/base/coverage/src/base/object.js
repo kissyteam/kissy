@@ -240,17 +240,17 @@ if (! _$jscoverage['/base/object.js']) {
   _$jscoverage['/base/object.js'].lineData[29] = 0;
   _$jscoverage['/base/object.js'].lineData[35] = 0;
   _$jscoverage['/base/object.js'].lineData[44] = 0;
-  _$jscoverage['/base/object.js'].lineData[70] = 0;
-  _$jscoverage['/base/object.js'].lineData[78] = 0;
-  _$jscoverage['/base/object.js'].lineData[88] = 0;
-  _$jscoverage['/base/object.js'].lineData[89] = 0;
-  _$jscoverage['/base/object.js'].lineData[92] = 0;
-  _$jscoverage['/base/object.js'].lineData[102] = 0;
-  _$jscoverage['/base/object.js'].lineData[103] = 0;
+  _$jscoverage['/base/object.js'].lineData[72] = 0;
+  _$jscoverage['/base/object.js'].lineData[80] = 0;
+  _$jscoverage['/base/object.js'].lineData[90] = 0;
+  _$jscoverage['/base/object.js'].lineData[91] = 0;
+  _$jscoverage['/base/object.js'].lineData[94] = 0;
   _$jscoverage['/base/object.js'].lineData[104] = 0;
+  _$jscoverage['/base/object.js'].lineData[105] = 0;
   _$jscoverage['/base/object.js'].lineData[106] = 0;
   _$jscoverage['/base/object.js'].lineData[108] = 0;
-  _$jscoverage['/base/object.js'].lineData[112] = 0;
+  _$jscoverage['/base/object.js'].lineData[110] = 0;
+  _$jscoverage['/base/object.js'].lineData[114] = 0;
 }
 if (! _$jscoverage['/base/object.js'].functionData) {
   _$jscoverage['/base/object.js'].functionData = [];
@@ -265,12 +265,12 @@ if (! _$jscoverage['/base/object.js'].functionData) {
 }
 if (! _$jscoverage['/base/object.js'].branchData) {
   _$jscoverage['/base/object.js'].branchData = {};
-  _$jscoverage['/base/object.js'].branchData['103'] = [];
-  _$jscoverage['/base/object.js'].branchData['103'][1] = new BranchData();
+  _$jscoverage['/base/object.js'].branchData['105'] = [];
+  _$jscoverage['/base/object.js'].branchData['105'][1] = new BranchData();
 }
-_$jscoverage['/base/object.js'].branchData['103'][1].init(48, 9, 'immediate');
-function visit1_103_1(result) {
-  _$jscoverage['/base/object.js'].branchData['103'][1].ranCondition(result);
+_$jscoverage['/base/object.js'].branchData['105'][1].init(48, 9, 'immediate');
+function visit1_105_1(result) {
+  _$jscoverage['/base/object.js'].branchData['105'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/object.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -301,44 +301,45 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/base/object.js'].lineData[44]++;
   EventObject.prototype = {
+  isEventObject: 1, 
   constructor: EventObject, 
   isDefaultPrevented: returnFalse, 
   isPropagationStopped: returnFalse, 
   isImmediatePropagationStopped: returnFalse, 
   preventDefault: function() {
   _$jscoverage['/base/object.js'].functionData[4]++;
-  _$jscoverage['/base/object.js'].lineData[70]++;
+  _$jscoverage['/base/object.js'].lineData[72]++;
   this.isDefaultPrevented = returnTrue;
 }, 
   stopPropagation: function() {
   _$jscoverage['/base/object.js'].functionData[5]++;
-  _$jscoverage['/base/object.js'].lineData[78]++;
+  _$jscoverage['/base/object.js'].lineData[80]++;
   this.isPropagationStopped = returnTrue;
 }, 
   stopImmediatePropagation: function() {
   _$jscoverage['/base/object.js'].functionData[6]++;
-  _$jscoverage['/base/object.js'].lineData[88]++;
+  _$jscoverage['/base/object.js'].lineData[90]++;
   var self = this;
-  _$jscoverage['/base/object.js'].lineData[89]++;
+  _$jscoverage['/base/object.js'].lineData[91]++;
   self.isImmediatePropagationStopped = returnTrue;
-  _$jscoverage['/base/object.js'].lineData[92]++;
+  _$jscoverage['/base/object.js'].lineData[94]++;
   self.stopPropagation();
 }, 
   halt: function(immediate) {
   _$jscoverage['/base/object.js'].functionData[7]++;
-  _$jscoverage['/base/object.js'].lineData[102]++;
+  _$jscoverage['/base/object.js'].lineData[104]++;
   var self = this;
-  _$jscoverage['/base/object.js'].lineData[103]++;
-  if (visit1_103_1(immediate)) {
-    _$jscoverage['/base/object.js'].lineData[104]++;
+  _$jscoverage['/base/object.js'].lineData[105]++;
+  if (visit1_105_1(immediate)) {
+    _$jscoverage['/base/object.js'].lineData[106]++;
     self.stopImmediatePropagation();
   } else {
-    _$jscoverage['/base/object.js'].lineData[106]++;
+    _$jscoverage['/base/object.js'].lineData[108]++;
     self.stopPropagation();
   }
-  _$jscoverage['/base/object.js'].lineData[108]++;
+  _$jscoverage['/base/object.js'].lineData[110]++;
   self.preventDefault();
 }};
-  _$jscoverage['/base/object.js'].lineData[112]++;
+  _$jscoverage['/base/object.js'].lineData[114]++;
   return EventObject;
 });
