@@ -3,7 +3,7 @@
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var CustomEvent = require('event/custom'),
         Promise = require('promise');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
@@ -373,7 +373,7 @@ KISSY.add(function (S,require) {
         // Set the Accepts header for the server, depending on the dataType
         self.setRequestHeader(
             'Accept',
-            dataType && accepts[dataType] ?
+                dataType && accepts[dataType] ?
                 accepts[ dataType ] + (dataType === '*' ? '' : ', */*; q=0.01'  ) :
                 accepts[ '*' ]
         );
@@ -422,6 +422,11 @@ KISSY.add(function (S,require) {
             // Propagate exception as error if not done
             if (self.state < 2) {
                 S.log(e.stack || e, 'error');
+                if ('@DEBUG@') {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
                 self._ioReady(-1, e.message || 'send error');
                 // Simply rethrow otherwise
             } else {

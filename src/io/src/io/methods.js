@@ -203,6 +203,11 @@ KISSY.add(function (S, require) {
                             isSuccess = true;
                         } catch (e) {
                             S.log(e.stack || e, 'error');
+                            if ('@DEBUG@') {
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
                             statusText = e.message || 'parser error';
                         }
                     }
