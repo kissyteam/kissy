@@ -17,20 +17,22 @@ function sync(dir, callback, errorCallback) {
 }
 
 function cloneBranch(dir, branch, callback, errorCallback) {
-    exec('git clone https://github.com/kissyteam/docs.kissyui.com -b ' + branch + ' ' + path.join(dir, branch),
-        { maxBuffer: 1024 * 1024 },
+    var cmd = 'git clone https://github.com/kissyteam/docs.kissyui.com -b ' + branch + ' ' + path.join(dir, branch);
+    console.log('exec ' + cmd);
+    exec(cmd, { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
             if (error) {
-                errorCallback(error);
+                errorCallback('clone branch error: ' + error);
             } else {
-                callback(stdout || stderr);
+                callback(stdout || ('clone branch stderr: ' + stderr));
             }
         });
 }
 
 function updateBranch(dir, branch, callback, errorCallback) {
-    exec('cd ' + path.join(dir, branch) + ' && git pull origin ' + branch,
-        { maxBuffer: 1024 * 1024 },
+    var cmd = 'cd ' + path.join(dir, branch) + ' && git pull origin ' + branch;
+    console.log('exec ' + cmd);
+    exec(cmd, { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
             if (error) {
                 errorCallback(error);

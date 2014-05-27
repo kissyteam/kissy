@@ -45,7 +45,8 @@
     "debug": "~0.7.4",
     "deps-optimizer": "~0.1",
     "plato": "~1.0.1",
-    "mkdirp": "~0.5.0"
+    "mkdirp": "~0.5.0",
+    "ncp": "~0.5.1"
   },
   "dependencies": {
     "estraverse": "~1.5.0",
