@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: May 22 12:16
+build time: May 27 14:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -439,7 +439,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   var ComponentProcess = require("./control/process");
   var Manager = require("component/manager");
   var Render = require("./control/render");
-  var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
+  var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported();
   var Control = ComponentProcess.extend({isControl:true, createDom:function() {
     var self = this, Render = self.get("xrender"), view = self.get("view"), id = self.get("id"), el;
     if(view) {
@@ -547,7 +547,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
       if(self.get("focusable")) {
         self.focus()
       }
-      if(!self.get("allowTextSelection") && ev.type.indexOf("mouse") !== -1) {
+      if(!self.get("allowTextSelection") && ev.originalEvent.type.toLowerCase().indexOf("mouse") !== -1) {
         n = ev.target.nodeName;
         n = n && n.toLowerCase();
         if(n !== "input" && n !== "textarea" && n !== "button") {

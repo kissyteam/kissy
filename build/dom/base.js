@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.43
 MIT Licensed
-build time: May 22 12:18
+build time: May 27 14:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1400,7 +1400,7 @@ KISSY.add("dom/base/style", ["./api", "ua"], function(S, require) {
     }else {
       elem.appendChild(doc.createTextNode(cssText))
     }
-  }, unselectable:userSelectProperty ? function(selector) {
+  }, unselectable:!userSelectProperty ? function(selector) {
     var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
     for(j = _els.length - 1;j >= 0;j--) {
       elem = _els[j];

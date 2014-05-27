@@ -67,9 +67,15 @@
                 defaultCaption: "请选择",
                 prefixCls: "pix-",
                 width: 280,
-                menu: {
+                menuCfg: {
                     align: {
-                        points: ['tl', 'tl'],
+                        // chrome win8 does not allow adjust when console is open
+                        overflow:{
+                            //adjustY:0,
+                            //adjustX:0
+                        },
+                        // chrome win8 tap can not allow menu overlap with menubutton
+                        //points: ['tl', 'tl'],
                         offset: [0, -1]
                     },
                     width: 278,

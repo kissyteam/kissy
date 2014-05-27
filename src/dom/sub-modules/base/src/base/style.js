@@ -361,7 +361,7 @@ KISSY.add(function (S, require) {
              * Make matched elements unselectable
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
-            unselectable: userSelectProperty ? function (selector) {
+            unselectable: !userSelectProperty ? function (selector) {
                 var _els = Dom.query(selector),
                     elem,
                     j,

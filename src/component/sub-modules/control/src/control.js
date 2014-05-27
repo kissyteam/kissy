@@ -11,8 +11,7 @@ KISSY.add(function (S, require) {
     var ie = S.UA.ieMode,
         Features = S.Features,
         Gesture = Node.Gesture,
-        isTouchGestureSupported = Features.isTouchGestureSupported(),
-        isTouchEventSupported = Features.isTouchEventSupported();
+        isTouchGestureSupported = Features.isTouchGestureSupported();
 
     /**
      * Base Control class for KISSY Component.
@@ -263,7 +262,7 @@ KISSY.add(function (S, require) {
                     if (self.get('focusable')) {
                         self.focus();
                     }
-                    if (!self.get('allowTextSelection') && ev.type.indexOf('mouse') !== -1) {
+                    if (!self.get('allowTextSelection') && ev.originalEvent.type.toLowerCase().indexOf('mouse') !== -1) {
                         // firefox /chrome/ie9/i10 不会引起焦点转移
                         // invalid for ie10 buggy?
                         n = ev.target.nodeName;

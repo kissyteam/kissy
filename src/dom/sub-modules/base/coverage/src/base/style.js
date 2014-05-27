@@ -1619,7 +1619,7 @@ KISSY.add(function(S, require) {
     elem.appendChild(doc.createTextNode(cssText));
   }
 }, 
-  unselectable: userSelectProperty ? function(selector) {
+  unselectable: !userSelectProperty ? function(selector) {
   _$jscoverage['/base/style.js'].functionData[13]++;
   _$jscoverage['/base/style.js'].lineData[365]++;
   var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;

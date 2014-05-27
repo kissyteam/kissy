@@ -3,7 +3,9 @@
     background: #fff;
     overflow: hidden;
     width:280px;
-    zoom:1;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
 }
 
 .pix-menu-button-content {
@@ -28,7 +30,7 @@
 .pix-popupmenu {
     position: absolute;
     width: 280px;
-    overflow: hidden;
+    overflow: auto;
     border: 1px solid #BFBFBF;
 }
 
