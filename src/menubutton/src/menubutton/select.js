@@ -205,12 +205,8 @@ KISSY.add(function (S, require) {
                     allItems.push(item);
                 });
 
-                S.mix(cfg, {
-                    menu: S.mix({
-                        children: allItems
-                    }, cfg.menuCfg)
-                });
-
+                cfg.menu = cfg.menu || cfg.menuCfg || {};
+                cfg.menu.children = allItems;
                 delete cfg.menuCfg;
 
                 select = new Select(S.mix(cfg, selectedItem)).render();
@@ -229,8 +225,8 @@ KISSY.add(function (S, require) {
                 element.remove();
                 return select;
             },
-            xclass: 'select'
 
+            xclass: 'select'
         });
 
     return Select;
