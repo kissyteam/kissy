@@ -15,25 +15,9 @@ function sync(dir, callback, errorCallback) {
         });
 }
 
-function cloneBranch(dir, branch, callback, errorCallback) {
-    var cmd = 'git clone https://github.com/kissyteam/docs.kissyui.com -b ' + branch + ' ' + path.join(dir, branch);
-    //console.log('exec ' + cmd);
-    exec(cmd, { maxBuffer: 1024 * 1024 },
-        function (error, stdout, stderr) {
-            if (error) {
-                errorCallback('clone branch error: ' + error);
-            } else {
-                callback(stdout || ('clone branch stderr: ' + stderr));
-            }
-        });
-}
-
-function updateBranch(dir, branch, callback, errorCallback) {
+function updateBranch(branchDir, branch, callback, errorCallback) {
     var cmd;
-    if (!fs.existsSync(path.join(serverConfig.docsDir, branch))) {
-        fs.symlinkSync(path.join(dir, branch + '/build'), path.join(serverConfig.docsDir, branch), 'dir');
-    }
-    cmd = 'cd ' + path.join(dir, branch) + ' && git pull origin ' + branch;
+    cmd = 'cd ' + branchDir + ' && git reset --hard && git pull origin ' + branch;
     //console.log('exec ' + cmd);
     exec(cmd, { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
@@ -45,16 +29,6 @@ function updateBranch(dir, branch, callback, errorCallback) {
         });
 }
 
-function syncBranch(dir, branch, callback, errorCallback) {
-    if (!fs.existsSync(path.join(dir, branch))) {
-        cloneBranch(dir, branch, function () {
-            updateBranch(dir, branch, callback, errorCallback);
-        }, errorCallback);
-    } else {
-        updateBranch(dir, branch, callback, errorCallback);
-    }
-}
-
 function syncCode(callback, errorCallback) {
     sync(serverConfig.codeDir, callback, errorCallback);
 }
@@ -63,8 +37,29 @@ function syncDocs(callback, errorCallback) {
     sync(serverConfig.docsDir, callback, errorCallback);
 }
 
-function syncDocsVersion(version, callback, errorCallback) {
-    syncBranch(serverConfig.newDocsDir, version, callback, errorCallback);
+function syncDocsBranch(branch, callback, errorCallback) {
+    var docsDir = serverConfig.docsDir;
+    var newDocsDir = serverConfig.newDocsDir;
+    var newDocsBranchDir = path.join(newDocsDir, branch + '/build');
+    var docsBranchDir = path.join(docsDir, branch);
+    if (!fs.existsSync(docsBranchDir)) {
+        fs.symlinkSync(newDocsBranchDir, docsBranchDir, 'dir');
+    }
+    if (!fs.existsSync(newDocsBranchDir)) {
+        var cmd = 'git clone https://github.com/kissyteam/docs.kissyui.com -b ' +
+            branch + ' ' + newDocsBranchDir;
+        //console.log('exec ' + cmd);
+        exec(cmd, { maxBuffer: 1024 * 1024 },
+            function (error) {
+                if (error) {
+                    errorCallback('clone branch error: ' + error);
+                } else {
+                    updateBranch(newDocsBranchDir, branch, callback, errorCallback);
+                }
+            });
+    } else {
+        updateBranch(newDocsBranchDir, branch, callback, errorCallback);
+    }
 }
 
 function shouldSyncFn(req) {
@@ -107,7 +102,7 @@ module.exports = function (app) {
     app.all('/sync-new-docs', function (req, res) {
         var branch = getSyncBranch(req);
         if (branch) {
-            syncDocsVersion(branch, function (str) {
+            syncDocsBranch(branch, function (str) {
                 res.send(str);
             }, function (str) {
                 res.status(500);
