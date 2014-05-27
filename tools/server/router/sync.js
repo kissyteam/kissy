@@ -1,6 +1,5 @@
 var serverConfig = require('../server.json');
 var exec = require('child_process').exec;
-var ncp = require('ncp').ncp;
 var path = require('path');
 var fs = require('fs');
 
@@ -18,7 +17,7 @@ function sync(dir, callback, errorCallback) {
 
 function cloneBranch(dir, branch, callback, errorCallback) {
     var cmd = 'git clone https://github.com/kissyteam/docs.kissyui.com -b ' + branch + ' ' + path.join(dir, branch);
-    console.log('exec ' + cmd);
+    //console.log('exec ' + cmd);
     exec(cmd, { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
             if (error) {
@@ -31,7 +30,7 @@ function cloneBranch(dir, branch, callback, errorCallback) {
 
 function updateBranch(dir, branch, callback, errorCallback) {
     var cmd = 'cd ' + path.join(dir, branch) + ' && git pull origin ' + branch;
-    console.log('exec ' + cmd);
+    //console.log('exec ' + cmd);
     exec(cmd, { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
             if (error) {
@@ -61,10 +60,7 @@ function syncDocs(callback, errorCallback) {
 }
 
 function syncDocsVersion(version, callback, errorCallback) {
-    syncBranch(serverConfig.newDocsDir, version, function () {
-        ncp(path.join(serverConfig.newDocsDir, version + '/build'),
-            path.join(serverConfig.docsDir, version), callback);
-    }, errorCallback);
+    syncBranch(serverConfig.newDocsDir, version, callback, errorCallback);
 }
 
 function shouldSyncFn(req) {
