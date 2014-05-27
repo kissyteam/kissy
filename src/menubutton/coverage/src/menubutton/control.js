@@ -545,8 +545,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menubutton/control.js'].functionData[2]++;
   _$jscoverage['/menubutton/control.js'].lineData[37]++;
   util.mix(renderData.elAttrs, {
-  'aria-expanded': false, 
-  'aria-haspopup': true});
+  'aria-expanded': 'false', 
+  'aria-haspopup': 'true'});
 }, 
   _onSetCollapsed: function(v) {
   _$jscoverage['/menubutton/control.js'].functionData[3]++;

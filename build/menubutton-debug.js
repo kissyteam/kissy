@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 16 12:48
+build time: May 27 12:34
 */
 /*
 combined modules:
@@ -72,8 +72,8 @@ KISSY.add('menubutton/control', [
         },
         beforeCreateDom: function (renderData) {
             util.mix(renderData.elAttrs, {
-                'aria-expanded': false,
-                'aria-haspopup': true
+                'aria-expanded': 'false',
+                'aria-haspopup': 'true'
             });
         },
         _onSetCollapsed: function (v) {
@@ -311,8 +311,8 @@ KISSY.add('menubutton/control', [
 
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     var menubutton = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];

@@ -234,54 +234,59 @@ if (! _$jscoverage['/runtime/scope.js']) {
   _$jscoverage['/runtime/scope.js'].lineData[8] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[10] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[11] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[14] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[18] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[19] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[13] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[16] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[17] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[20] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[24] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[25] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[27] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[30] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[31] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[35] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[39] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[40] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[33] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[37] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[41] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[43] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[44] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[45] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[46] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[47] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[49] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[51] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[53] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[54] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[50] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[55] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[56] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[57] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[59] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[61] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[62] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[65] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[66] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[67] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[68] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[71] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[69] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[70] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[73] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[74] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[75] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[77] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[78] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[81] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[76] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[79] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[83] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[85] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[86] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[87] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[88] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[89] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[90] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[91] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[92] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[94] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[95] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[96] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[97] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[98] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[99] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[100] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[102] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[103] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[106] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[107] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[104] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[105] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[108] = 0;
   _$jscoverage['/runtime/scope.js'].lineData[110] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[112] = 0;
-  _$jscoverage['/runtime/scope.js'].lineData[117] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[111] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[114] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[115] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[116] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[118] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[120] = 0;
+  _$jscoverage['/runtime/scope.js'].lineData[125] = 0;
 }
 if (! _$jscoverage['/runtime/scope.js'].functionData) {
   _$jscoverage['/runtime/scope.js'].functionData = [];
@@ -297,276 +302,289 @@ if (! _$jscoverage['/runtime/scope.js'].functionData) {
 }
 if (! _$jscoverage['/runtime/scope.js'].branchData) {
   _$jscoverage['/runtime/scope.js'].branchData = {};
-  _$jscoverage['/runtime/scope.js'].branchData['8'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['8'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['24'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['40'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['51'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['53'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['10'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['30'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['46'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['46'][1] = new BranchData();
   _$jscoverage['/runtime/scope.js'].branchData['59'] = [];
   _$jscoverage['/runtime/scope.js'].branchData['59'][1] = new BranchData();
   _$jscoverage['/runtime/scope.js'].branchData['61'] = [];
   _$jscoverage['/runtime/scope.js'].branchData['61'][1] = new BranchData();
   _$jscoverage['/runtime/scope.js'].branchData['65'] = [];
   _$jscoverage['/runtime/scope.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['67'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['77'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['77'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['77'][2] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['86'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['86'][2] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['90'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['90'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['91'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['91'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['96'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['96'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['69'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['73'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['75'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['85'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['85'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['85'][2] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['94'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['94'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['94'][2] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['98'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['99'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['99'][1] = new BranchData();
   _$jscoverage['/runtime/scope.js'].branchData['104'] = [];
   _$jscoverage['/runtime/scope.js'].branchData['104'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['104'][2] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['106'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['107'] = [];
-  _$jscoverage['/runtime/scope.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/runtime/scope.js'].branchData['107'][2] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['112'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['112'][2] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['114'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['115'] = [];
+  _$jscoverage['/runtime/scope.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/runtime/scope.js'].branchData['115'][2] = new BranchData();
 }
-_$jscoverage['/runtime/scope.js'].branchData['107'][2].init(35, 7, 'i < len');
-function visit53_107_2(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['107'][2].ranCondition(result);
+_$jscoverage['/runtime/scope.js'].branchData['115'][2].init(35, 7, 'i < len');
+function visit53_115_2(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['115'][2].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['107'][1].init(30, 12, 'v && i < len');
-function visit52_107_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['115'][1].init(30, 12, 'v && i < len');
+function visit52_115_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['106'][1].init(832, 10, 'v && scope');
-function visit51_106_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['114'][1].init(828, 10, 'v && scope');
+function visit51_114_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['104'][2].init(770, 15, 'v === undefined');
-function visit50_104_2(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['104'][2].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['112'][2].init(770, 11, 'v === undef');
+function visit50_112_2(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['112'][2].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['104'][1].init(65, 41, 'v === undefined && (scope = scope.parent)');
-function visit49_104_1(result) {
+}_$jscoverage['/runtime/scope.js'].branchData['112'][1].init(65, 37, 'v === undef && (scope = scope.parent)');
+function visit49_112_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['112'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/runtime/scope.js'].branchData['104'][1].init(592, 4, '!len');
+function visit48_104_1(result) {
   _$jscoverage['/runtime/scope.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['96'][1].init(592, 4, '!len');
-function visit48_96_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['96'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['99'][1].init(25, 16, 'scope && depth--');
+function visit47_99_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['91'][1].init(25, 16, 'scope && depth--');
-function visit47_91_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['91'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['98'][1].init(444, 5, 'depth');
+function visit46_98_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['90'][1].init(444, 5, 'depth');
-function visit46_90_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['90'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['94'][2].init(303, 19, 'parts[0] === \'root\'');
+function visit45_94_2(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['94'][2].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['86'][2].init(303, 19, 'parts[0] === \'root\'');
-function visit45_86_2(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['86'][2].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['94'][1].init(296, 26, 'len && parts[0] === \'root\'');
+function visit44_94_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['86'][1].init(296, 26, 'len && parts[0] === \'root\'');
-function visit44_86_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['85'][2].init(60, 18, 'parts.length === 1');
+function visit43_85_2(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['85'][2].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['77'][2].init(60, 18, 'parts.length === 1');
-function visit43_77_2(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['77'][2].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['85'][1].init(50, 28, '!depth && parts.length === 1');
+function visit42_85_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['77'][1].init(50, 28, '!depth && parts.length === 1');
-function visit42_77_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['77'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['75'][1].init(464, 15, 'name === \'root\'');
+function visit41_75_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['67'][1].init(412, 15, 'name === \'root\'');
-function visit41_67_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['73'][1].init(390, 15, 'name === \'this\'');
+function visit40_73_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['65'][1].init(338, 15, 'name === \'this\'');
-function visit40_65_1(result) {
+}_$jscoverage['/runtime/scope.js'].branchData['69'][1].init(314, 11, 'v !== undef');
+function visit39_69_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['69'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/runtime/scope.js'].branchData['65'][1].init(229, 14, 'data !== undef');
+function visit38_65_1(result) {
   _$jscoverage['/runtime/scope.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['61'][1].init(258, 15, 'v !== undefined');
-function visit39_61_1(result) {
+}_$jscoverage['/runtime/scope.js'].branchData['61'][1].init(153, 11, 'v !== undef');
+function visit37_61_1(result) {
   _$jscoverage['/runtime/scope.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['59'][1].init(217, 20, 'affix && affix[name]');
-function visit38_59_1(result) {
+}_$jscoverage['/runtime/scope.js'].branchData['59'][1].init(112, 20, 'affix && affix[name]');
+function visit36_59_1(result) {
   _$jscoverage['/runtime/scope.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['53'][1].init(98, 15, 'v !== undefined');
-function visit37_53_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['46'][1].init(55, 6, '!affix');
+function visit35_46_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['51'][1].init(59, 18, 'data && data[name]');
-function visit36_51_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['51'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['30'][1].init(18, 11, '!this.affix');
+function visit34_30_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/scope.js'].branchData['40'][1].init(55, 6, '!affix');
-function visit35_40_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['40'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/runtime/scope.js'].branchData['24'][1].init(18, 11, '!this.affix');
-function visit34_24_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['24'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/runtime/scope.js'].branchData['8'][1].init(37, 10, 'data || {}');
-function visit33_8_1(result) {
-  _$jscoverage['/runtime/scope.js'].branchData['8'][1].ranCondition(result);
+}_$jscoverage['/runtime/scope.js'].branchData['10'][1].init(29, 16, 'arguments.length');
+function visit33_10_1(result) {
+  _$jscoverage['/runtime/scope.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/scope.js'].lineData[5]++;
 KISSY.add(function() {
   _$jscoverage['/runtime/scope.js'].functionData[0]++;
   _$jscoverage['/runtime/scope.js'].lineData[6]++;
-  function Scope(data, affix) {
+  var undef;
+  _$jscoverage['/runtime/scope.js'].lineData[8]++;
+  function Scope(data) {
     _$jscoverage['/runtime/scope.js'].functionData[1]++;
-    _$jscoverage['/runtime/scope.js'].lineData[8]++;
-    this.data = visit33_8_1(data || {});
     _$jscoverage['/runtime/scope.js'].lineData[10]++;
-    this.affix = affix;
-    _$jscoverage['/runtime/scope.js'].lineData[11]++;
+    if (visit33_10_1(arguments.length)) {
+      _$jscoverage['/runtime/scope.js'].lineData[11]++;
+      this.data = data;
+    } else {
+      _$jscoverage['/runtime/scope.js'].lineData[13]++;
+      this.data = {};
+    }
+    _$jscoverage['/runtime/scope.js'].lineData[16]++;
+    this.affix = undef;
+    _$jscoverage['/runtime/scope.js'].lineData[17]++;
     this.root = this;
   }
-  _$jscoverage['/runtime/scope.js'].lineData[14]++;
+  _$jscoverage['/runtime/scope.js'].lineData[20]++;
   Scope.prototype = {
   isScope: 1, 
   setParent: function(parentScope) {
   _$jscoverage['/runtime/scope.js'].functionData[2]++;
-  _$jscoverage['/runtime/scope.js'].lineData[18]++;
+  _$jscoverage['/runtime/scope.js'].lineData[24]++;
   this.parent = parentScope;
-  _$jscoverage['/runtime/scope.js'].lineData[19]++;
+  _$jscoverage['/runtime/scope.js'].lineData[25]++;
   this.root = parentScope.root;
 }, 
   set: function(name, value) {
   _$jscoverage['/runtime/scope.js'].functionData[3]++;
-  _$jscoverage['/runtime/scope.js'].lineData[24]++;
-  if (visit34_24_1(!this.affix)) {
-    _$jscoverage['/runtime/scope.js'].lineData[25]++;
+  _$jscoverage['/runtime/scope.js'].lineData[30]++;
+  if (visit34_30_1(!this.affix)) {
+    _$jscoverage['/runtime/scope.js'].lineData[31]++;
     this.affix = {};
   }
-  _$jscoverage['/runtime/scope.js'].lineData[27]++;
+  _$jscoverage['/runtime/scope.js'].lineData[33]++;
   this.affix[name] = value;
 }, 
   setData: function(data) {
   _$jscoverage['/runtime/scope.js'].functionData[4]++;
-  _$jscoverage['/runtime/scope.js'].lineData[31]++;
+  _$jscoverage['/runtime/scope.js'].lineData[37]++;
   this.data = data;
 }, 
   getData: function() {
   _$jscoverage['/runtime/scope.js'].functionData[5]++;
-  _$jscoverage['/runtime/scope.js'].lineData[35]++;
+  _$jscoverage['/runtime/scope.js'].lineData[41]++;
   return this.data;
 }, 
   mix: function(v) {
   _$jscoverage['/runtime/scope.js'].functionData[6]++;
-  _$jscoverage['/runtime/scope.js'].lineData[39]++;
+  _$jscoverage['/runtime/scope.js'].lineData[45]++;
   var affix = this.affix;
-  _$jscoverage['/runtime/scope.js'].lineData[40]++;
-  if (visit35_40_1(!affix)) {
-    _$jscoverage['/runtime/scope.js'].lineData[41]++;
+  _$jscoverage['/runtime/scope.js'].lineData[46]++;
+  if (visit35_46_1(!affix)) {
+    _$jscoverage['/runtime/scope.js'].lineData[47]++;
     affix = this.affix = {};
   }
-  _$jscoverage['/runtime/scope.js'].lineData[43]++;
+  _$jscoverage['/runtime/scope.js'].lineData[49]++;
   for (var name in v) {
-    _$jscoverage['/runtime/scope.js'].lineData[44]++;
+    _$jscoverage['/runtime/scope.js'].lineData[50]++;
     affix[name] = v[name];
   }
 }, 
   get: function(name) {
   _$jscoverage['/runtime/scope.js'].functionData[7]++;
-  _$jscoverage['/runtime/scope.js'].lineData[49]++;
+  _$jscoverage['/runtime/scope.js'].lineData[55]++;
   var data = this.data;
-  _$jscoverage['/runtime/scope.js'].lineData[51]++;
-  var v = visit36_51_1(data && data[name]);
-  _$jscoverage['/runtime/scope.js'].lineData[53]++;
-  if (visit37_53_1(v !== undefined)) {
-    _$jscoverage['/runtime/scope.js'].lineData[54]++;
-    return v;
-  }
+  _$jscoverage['/runtime/scope.js'].lineData[56]++;
+  var v;
   _$jscoverage['/runtime/scope.js'].lineData[57]++;
   var affix = this.affix;
   _$jscoverage['/runtime/scope.js'].lineData[59]++;
-  v = visit38_59_1(affix && affix[name]);
+  v = visit36_59_1(affix && affix[name]);
   _$jscoverage['/runtime/scope.js'].lineData[61]++;
-  if (visit39_61_1(v !== undefined)) {
+  if (visit37_61_1(v !== undef)) {
     _$jscoverage['/runtime/scope.js'].lineData[62]++;
     return v;
   }
   _$jscoverage['/runtime/scope.js'].lineData[65]++;
-  if (visit40_65_1(name === 'this')) {
+  if (visit38_65_1(data !== undef)) {
     _$jscoverage['/runtime/scope.js'].lineData[66]++;
+    v = data[name];
+  }
+  _$jscoverage['/runtime/scope.js'].lineData[69]++;
+  if (visit39_69_1(v !== undef)) {
+    _$jscoverage['/runtime/scope.js'].lineData[70]++;
+    return v;
+  }
+  _$jscoverage['/runtime/scope.js'].lineData[73]++;
+  if (visit40_73_1(name === 'this')) {
+    _$jscoverage['/runtime/scope.js'].lineData[74]++;
     return data;
   } else {
-    _$jscoverage['/runtime/scope.js'].lineData[67]++;
-    if (visit41_67_1(name === 'root')) {
-      _$jscoverage['/runtime/scope.js'].lineData[68]++;
+    _$jscoverage['/runtime/scope.js'].lineData[75]++;
+    if (visit41_75_1(name === 'root')) {
+      _$jscoverage['/runtime/scope.js'].lineData[76]++;
       return this.root.data;
     }
   }
-  _$jscoverage['/runtime/scope.js'].lineData[71]++;
+  _$jscoverage['/runtime/scope.js'].lineData[79]++;
   return v;
 }, 
   resolve: function(parts, depth) {
   _$jscoverage['/runtime/scope.js'].functionData[8]++;
-  _$jscoverage['/runtime/scope.js'].lineData[75]++;
+  _$jscoverage['/runtime/scope.js'].lineData[83]++;
   var self = this;
-  _$jscoverage['/runtime/scope.js'].lineData[77]++;
-  if (visit42_77_1(!depth && visit43_77_2(parts.length === 1))) {
-    _$jscoverage['/runtime/scope.js'].lineData[78]++;
+  _$jscoverage['/runtime/scope.js'].lineData[85]++;
+  if (visit42_85_1(!depth && visit43_85_2(parts.length === 1))) {
+    _$jscoverage['/runtime/scope.js'].lineData[86]++;
     return self.get(parts[0]);
   }
-  _$jscoverage['/runtime/scope.js'].lineData[81]++;
+  _$jscoverage['/runtime/scope.js'].lineData[89]++;
   var len = parts.length, scope = self, i, v;
-  _$jscoverage['/runtime/scope.js'].lineData[86]++;
-  if (visit44_86_1(len && visit45_86_2(parts[0] === 'root'))) {
-    _$jscoverage['/runtime/scope.js'].lineData[87]++;
+  _$jscoverage['/runtime/scope.js'].lineData[94]++;
+  if (visit44_94_1(len && visit45_94_2(parts[0] === 'root'))) {
+    _$jscoverage['/runtime/scope.js'].lineData[95]++;
     parts.shift();
-    _$jscoverage['/runtime/scope.js'].lineData[88]++;
+    _$jscoverage['/runtime/scope.js'].lineData[96]++;
     scope = scope.root;
-    _$jscoverage['/runtime/scope.js'].lineData[89]++;
+    _$jscoverage['/runtime/scope.js'].lineData[97]++;
     len--;
   } else {
-    _$jscoverage['/runtime/scope.js'].lineData[90]++;
-    if (visit46_90_1(depth)) {
-      _$jscoverage['/runtime/scope.js'].lineData[91]++;
-      while (visit47_91_1(scope && depth--)) {
-        _$jscoverage['/runtime/scope.js'].lineData[92]++;
+    _$jscoverage['/runtime/scope.js'].lineData[98]++;
+    if (visit46_98_1(depth)) {
+      _$jscoverage['/runtime/scope.js'].lineData[99]++;
+      while (visit47_99_1(scope && depth--)) {
+        _$jscoverage['/runtime/scope.js'].lineData[100]++;
         scope = scope.parent;
       }
     }
   }
-  _$jscoverage['/runtime/scope.js'].lineData[96]++;
-  if (visit48_96_1(!len)) {
-    _$jscoverage['/runtime/scope.js'].lineData[97]++;
+  _$jscoverage['/runtime/scope.js'].lineData[104]++;
+  if (visit48_104_1(!len)) {
+    _$jscoverage['/runtime/scope.js'].lineData[105]++;
     return scope.data;
   }
-  _$jscoverage['/runtime/scope.js'].lineData[100]++;
+  _$jscoverage['/runtime/scope.js'].lineData[108]++;
   var part0 = parts[0];
-  _$jscoverage['/runtime/scope.js'].lineData[102]++;
+  _$jscoverage['/runtime/scope.js'].lineData[110]++;
   do {
-    _$jscoverage['/runtime/scope.js'].lineData[103]++;
+    _$jscoverage['/runtime/scope.js'].lineData[111]++;
     v = scope.get(part0);
-  } while (visit49_104_1(visit50_104_2(v === undefined) && (scope = scope.parent)));
-  _$jscoverage['/runtime/scope.js'].lineData[106]++;
-  if (visit51_106_1(v && scope)) {
-    _$jscoverage['/runtime/scope.js'].lineData[107]++;
-    for (i = 1; visit52_107_1(v && visit53_107_2(i < len)); i++) {
-      _$jscoverage['/runtime/scope.js'].lineData[108]++;
+  } while (visit49_112_1(visit50_112_2(v === undef) && (scope = scope.parent)));
+  _$jscoverage['/runtime/scope.js'].lineData[114]++;
+  if (visit51_114_1(v && scope)) {
+    _$jscoverage['/runtime/scope.js'].lineData[115]++;
+    for (i = 1; visit52_115_1(v && visit53_115_2(i < len)); i++) {
+      _$jscoverage['/runtime/scope.js'].lineData[116]++;
       v = v[parts[i]];
     }
-    _$jscoverage['/runtime/scope.js'].lineData[110]++;
+    _$jscoverage['/runtime/scope.js'].lineData[118]++;
     return v;
   } else {
-    _$jscoverage['/runtime/scope.js'].lineData[112]++;
-    return undefined;
+    _$jscoverage['/runtime/scope.js'].lineData[120]++;
+    return undef;
   }
 }};
-  _$jscoverage['/runtime/scope.js'].lineData[117]++;
+  _$jscoverage['/runtime/scope.js'].lineData[125]++;
   return Scope;
 });

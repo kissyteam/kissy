@@ -19,11 +19,14 @@ KISSY.add(function (S, require) {
 
         beforeCreateDom: function (renderData) {
             var self = this;
-            util.mix(renderData.elAttrs, {
-                role: 'button',
-                title: renderData.tooltip,
-                'aria-describedby': renderData.describedby
-            });
+            var elAttrs = renderData.elAttrs;
+            elAttrs.role = 'button';
+            if (renderData.tooltip) {
+                elAttrs.title = renderData.tooltip;
+            }
+            if (renderData['aria-describedby']) {
+                elAttrs['aria-describedby'] = renderData.describedby;
+            }
             if (renderData.checked) {
                 renderData.elCls.push(self.getBaseCssClasses('checked'));
             }

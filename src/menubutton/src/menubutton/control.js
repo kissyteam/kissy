@@ -35,8 +35,8 @@ KISSY.add(function (S, require) {
 
         beforeCreateDom: function (renderData) {
             util.mix(renderData.elAttrs, {
-                'aria-expanded': false,
-                'aria-haspopup': true
+                'aria-expanded': 'false',
+                'aria-haspopup': 'true'
             });
         },
 

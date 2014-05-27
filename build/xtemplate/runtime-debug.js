@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:30
+build time: May 27 12:34
 */
 /*
 combined modules:
@@ -479,11 +479,16 @@ KISSY.add('xtemplate/runtime/commands', [
  * @author yiminghe@gmail.com
  */
 KISSY.add('xtemplate/runtime/scope', [], function () {
-    function Scope(data, affix) {
+    var undef;
+    function Scope(data) {
         // {}
-        this.data = data || {};    // {xindex}
+        if (arguments.length) {
+            this.data = data;
+        } else {
+            this.data = {};
+        }    // {xindex}
         // {xindex}
-        this.affix = affix;
+        this.affix = undef;
         this.root = this;
     }
     Scope.prototype = {
@@ -516,13 +521,16 @@ KISSY.add('xtemplate/runtime/scope', [], function () {
         },
         get: function (name) {
             var data = this.data;
-            var v = data && data[name];
-            if (v !== undefined) {
-                return v;
-            }
+            var v;
             var affix = this.affix;
             v = affix && affix[name];
-            if (v !== undefined) {
+            if (v !== undef) {
+                return v;
+            }
+            if (data !== undef) {
+                v = data[name];
+            }
+            if (v !== undef) {
                 return v;
             }
             if (name === 'this') {
@@ -554,14 +562,14 @@ KISSY.add('xtemplate/runtime/scope', [], function () {
             var part0 = parts[0];
             do {
                 v = scope.get(part0);
-            } while (v === undefined && (scope = scope.parent));
+            } while (v === undef && (scope = scope.parent));
             if (v && scope) {
                 for (i = 1; v && i < len; i++) {
                     v = v[parts[i]];
                 }
                 return v;
             } else {
-                return undefined;
+                return undef;
             }
         }
     };

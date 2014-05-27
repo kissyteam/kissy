@@ -3,11 +3,17 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function () {
-    function Scope(data, affix) {
+    var undef;
+
+    function Scope(data) {
         // {}
-        this.data = data || {};
+        if (arguments.length) {
+            this.data = data;
+        } else {
+            this.data = {};
+        }
         // {xindex}
-        this.affix = affix;
+        this.affix = undef;
         this.root = this;
     }
 
@@ -47,18 +53,20 @@ KISSY.add(function () {
 
         get: function (name) {
             var data = this.data;
-
-            var v = data && data[name];
-
-            if (v !== undefined) {
-                return v;
-            }
-
+            var v;
             var affix = this.affix;
 
             v = affix && affix[name];
 
-            if (v !== undefined) {
+            if (v !== undef) {
+                return v;
+            }
+
+            if (data !== undef) {
+                v = data[name];
+            }
+
+            if (v !== undef) {
                 return v;
             }
 
@@ -101,7 +109,7 @@ KISSY.add(function () {
 
             do {
                 v = scope.get(part0);
-            } while (v === undefined && (scope = scope.parent));
+            } while (v === undef && (scope = scope.parent));
 
             if (v && scope) {
                 for (i = 1; v && i < len; i++) {
@@ -109,7 +117,7 @@ KISSY.add(function () {
                 }
                 return v;
             } else {
-                return undefined;
+                return undef;
             }
         }
     };
