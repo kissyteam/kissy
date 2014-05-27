@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 27 12:34
+build time: May 27 14:12
 */
 /*
 combined modules:
@@ -545,7 +545,8 @@ KISSY.add('menubutton/select', [
                     }
                     allItems.push(item);
                 });
-                util.mix(cfg, { menu: util.mix({ children: allItems }, cfg.menuCfg) });
+                cfg.menu = cfg.menu || cfg.menuCfg || {};
+                cfg.menu.children = allItems;
                 delete cfg.menuCfg;
                 select = new Select(util.mix(cfg, selectedItem)).render();
                 if (name = element.attr('name')) {

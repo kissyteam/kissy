@@ -309,6 +309,11 @@ KISSY.add(function (S, require) {
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
             unselectable: userSelectProperty ? function (selector) {
+                var els = Dom.query(selector);
+                for (var j = els.length - 1; j >= 0; j--) {
+                    els[j].style[userSelectProperty] = 'none';
+                }
+            } : function (selector) {
                 var _els = Dom.query(selector),
                     elem,
                     j,
@@ -317,22 +322,17 @@ KISSY.add(function (S, require) {
                     excludes,
                     style,
                     els;
+                excludes = ['iframe', 'textarea', 'input', 'select'];
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
                     style = elem.style;
                     els = elem.getElementsByTagName('*');
                     elem.setAttribute('unselectable', 'on');
-                    excludes = ['iframe', 'textarea', 'input', 'select'];
                     while ((e = els[i++])) {
                         if (!util.inArray(getNodeName(e), excludes)) {
                             e.setAttribute('unselectable', 'on');
                         }
                     }
-                }
-            } : function (selector) {
-                var els = Dom.query(selector);
-                for (var j = els.length - 1; j >= 0; j--) {
-                    els[j].style[userSelectProperty] = 'none';
                 }
             },
 

@@ -69,7 +69,12 @@
                 width: 280,
                 menu: {
                     align: {
-                        points: ['tl', 'tl'],
+                        // chrome on win8 touch does not allow adjust when console is open
+                        overflow: {
+
+                        },
+                        // chrome on win8 touch tap does not allow overlap menubutton with menu
+                        // points: ['tl', 'tl'],
                         offset: [0, -1]
                     },
                     width: 278,
