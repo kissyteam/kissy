@@ -29,7 +29,11 @@ function cloneBranch(dir, branch, callback, errorCallback) {
 }
 
 function updateBranch(dir, branch, callback, errorCallback) {
-    var cmd = 'cd ' + path.join(dir, branch) + ' && git pull origin ' + branch;
+    var cmd;
+    if (!fs.existsSync(path.join(serverConfig.docsDir, branch))) {
+        fs.symlinkSync(path.join(dir, branch + '/build'), path.join(serverConfig.docsDir, branch), 'dir');
+    }
+    cmd = 'cd ' + path.join(dir, branch) + ' && git pull origin ' + branch;
     //console.log('exec ' + cmd);
     exec(cmd, { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
