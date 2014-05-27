@@ -422,13 +422,16 @@ KISSY.add(function (S, require) {
             self.state = 1;
             transport.send();
         } catch (e) {
+            S.log(e.stack || e, 'error');
+            if ('@DEBUG@') {
+                setTimeout(function () {
+                    throw e;
+                }, 0);
+            }
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack || e, 'error');
                 self._ioReady(0 - 1, e.message || 'send error');
                 // Simply rethrow otherwise
-            } else {
-                S.error(e);
             }
         }
 

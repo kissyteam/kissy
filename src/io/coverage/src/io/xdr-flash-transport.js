@@ -321,47 +321,47 @@ if (! _$jscoverage['/io/xdr-flash-transport.js'].branchData) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['142'][1] = new BranchData();
 }
 _$jscoverage['/io/xdr-flash-transport.js'].branchData['142'][1].init(46, 3, 'xhr');
-function visit134_142_1(result) {
+function visit136_142_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['142'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['114'][1].init(1118, 3, 'ret');
-function visit133_114_1(result) {
+function visit135_114_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['114'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['110'][1].init(103, 17, 'c.statusText || e');
-function visit132_110_1(result) {
+function visit134_110_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['89'][1].init(263, 36, 'c && (responseText = c.responseText)');
-function visit131_89_1(result) {
+function visit133_89_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['72'][2].init(122, 22, 'c.hasContent && c.data');
-function visit130_72_2(result) {
+function visit132_72_2(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['72'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['72'][1].init(122, 28, 'c.hasContent && c.data || {}');
-function visit129_72_1(result) {
+function visit131_72_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['58'][1].init(286, 6, '!flash');
-function visit128_58_1(result) {
+function visit130_58_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['56'][1].init(185, 50, 'xdr.src || (S.config(\'base\') + \'io/assets/io.swf\')');
-function visit127_56_1(result) {
+function visit129_56_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['54'][1].init(102, 11, 'c.xdr || {}');
-function visit126_54_1(result) {
+function visit128_54_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['39'][1].init(633, 31, 'doc.body || doc.documentElement');
-function visit125_39_1(result) {
+function visit127_39_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].branchData['23'][1].init(14, 4, 'init');
-function visit124_23_1(result) {
+function visit126_23_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xdr-flash-transport.js'].lineData[6]++;
@@ -379,7 +379,7 @@ KISSY.add(function(S, require) {
   function _swf(uri, _, uid) {
     _$jscoverage['/io/xdr-flash-transport.js'].functionData[1]++;
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[23]++;
-    if (visit124_23_1(init)) {
+    if (visit126_23_1(init)) {
       _$jscoverage['/io/xdr-flash-transport.js'].lineData[24]++;
       return;
     }
@@ -388,7 +388,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[27]++;
     var o = '<object id="' + ID + '" type="application/x-shockwave-flash" data="' + uri + '" width="0" height="0">' + '<param name="movie" value="' + uri + '" />' + '<param name="FlashVars" value="yid=' + _ + '&uid=' + uid + '&host=KISSY.IO" />' + '<param name="allowScriptAccess" value="always" />' + '</object>', c = doc.createElement('div');
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[39]++;
-    Dom.prepend(c, visit125_39_1(doc.body || doc.documentElement));
+    Dom.prepend(c, visit127_39_1(doc.body || doc.documentElement));
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[40]++;
     c.innerHTML = o;
   }
@@ -405,11 +405,11 @@ KISSY.add(function(S, require) {
   send: function() {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[3]++;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[51]++;
-  var self = this, io = self.io, c = io.config, xdr = visit126_54_1(c.xdr || {});
+  var self = this, io = self.io, c = io.config, xdr = visit128_54_1(c.xdr || {});
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[56]++;
-  _swf(visit127_56_1(xdr.src || (S.config('base') + 'io/assets/io.swf')), 1, 1);
+  _swf(visit129_56_1(xdr.src || (S.config('base') + 'io/assets/io.swf')), 1, 1);
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[58]++;
-  if (visit128_58_1(!flash)) {
+  if (visit130_58_1(!flash)) {
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[59]++;
     setTimeout(function() {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[4]++;
@@ -428,7 +428,7 @@ KISSY.add(function(S, require) {
   id: self._uid, 
   uid: self._uid, 
   method: c.type, 
-  data: visit129_72_1(visit130_72_2(c.hasContent && c.data) || {})});
+  data: visit131_72_1(visit132_72_2(c.hasContent && c.data) || {})});
 }, 
   abort: function() {
   _$jscoverage['/io/xdr-flash-transport.js'].functionData[5]++;
@@ -440,7 +440,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[81]++;
   var self = this, ret, id = o.id, responseText, c = o.c, io = self.io;
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[89]++;
-  if (visit131_89_1(c && (responseText = c.responseText))) {
+  if (visit133_89_1(c && (responseText = c.responseText))) {
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[90]++;
     io.responseText = decodeURI(responseText);
   }
@@ -468,12 +468,12 @@ KISSY.add(function(S, require) {
       _$jscoverage['/io/xdr-flash-transport.js'].lineData[108]++;
       ret = {
   status: 'status' in c ? c.status : 500, 
-  statusText: visit132_110_1(c.statusText || e)};
+  statusText: visit134_110_1(c.statusText || e)};
       _$jscoverage['/io/xdr-flash-transport.js'].lineData[112]++;
       break;
   }
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[114]++;
-  if (visit133_114_1(ret)) {
+  if (visit135_114_1(ret)) {
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[115]++;
     io._ioReady(ret.status, ret.statusText);
   }
@@ -504,7 +504,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[141]++;
   var xhr = maps[o.uid];
   _$jscoverage['/io/xdr-flash-transport.js'].lineData[142]++;
-  if (visit134_142_1(xhr)) {
+  if (visit136_142_1(xhr)) {
     _$jscoverage['/io/xdr-flash-transport.js'].lineData[143]++;
     xhr._xdrResponse(e, o);
   }

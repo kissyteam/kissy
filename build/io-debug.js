@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 22 12:18
+build time: May 27 14:29
 */
 /*
 combined modules:
@@ -830,16 +830,18 @@ KISSY.add('io/base', [
             self.state = 1;
             transport.send();
         } catch (e) {
+            S.log(e.stack || e, 'error');
+            if ('@DEBUG@') {
+                setTimeout(function () {
+                    throw e;
+                }, 0);
+            }    // Propagate exception as error if not done
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack || e, 'error');
                 self._ioReady(0 - 1, e.message || 'send error');    // Simply rethrow otherwise
-            } else
-                // Simply rethrow otherwise
-                {
-                    S.error(e);
-                }
+            }
         }
+        // Simply rethrow otherwise
         return self;
     }
     util.mix(IO, CustomEvent.Target);
@@ -1230,6 +1232,11 @@ KISSY.add('io/xhr-transport-base', [
                 }
             } catch (e) {
                 S.log(e.stack || e, 'error');
+                if ('@DEBUG@') {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
                 nativeXhr.onreadystatechange = util.noop;
                 if (!abort) {
                     io._ioReady(0 - 1, e.message || 'process error');
@@ -2070,16 +2077,12 @@ KISSY.add('io/methods', [
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        S.log(e.stack || e, 'error');    // do not throw, interfere window.error
-                                                         // interfere error report
-                                                         //                            setTimeout(function () {
-                                                         //                                throw e;
-                                                         //                            }, 0);
-                        // do not throw, interfere window.error
-                        // interfere error report
-                        //                            setTimeout(function () {
-                        //                                throw e;
-                        //                            }, 0);
+                        S.log(e.stack || e, 'error');
+                        if ('@DEBUG@') {
+                            setTimeout(function () {
+                                throw e;
+                            }, 0);
+                        }
                         statusText = e.message || 'parser error';
                     }
                 }
