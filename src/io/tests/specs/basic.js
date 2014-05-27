@@ -591,7 +591,7 @@ KISSY.add(function (S, util, IO) {
                 // ie 9 10 send 报异常 error: 未指明错误
                 // ch
                 IO({
-                    url: 'http://m.taobao.com/',
+                    url: 'http://www.google.com/',
                     type: 'post',
                     error: function () {
                         var args = util.makeArray(arguments);
@@ -602,14 +602,14 @@ KISSY.add(function (S, util, IO) {
 
                 waitsFor(function () {
                     return ret;
-                });
+                },10000);
             });
 
             it('当 dataType 不为 jsonp, url 参数 get 跨域时，不触发回调', function () {
                 var ret = 0;
 
                 IO({
-                    url: 'http://m.taobao.com/',
+                    url: 'http://www.google.com/',
                     type: 'get',
                     error: function () {
                         var args = util.makeArray(arguments);
@@ -623,7 +623,7 @@ KISSY.add(function (S, util, IO) {
 
                 waitsFor(function () {
                     return ret;
-                });
+                },10000);
             });
 
             it('xhr 方式时，能正确设置 callback 里的 this', function () {
