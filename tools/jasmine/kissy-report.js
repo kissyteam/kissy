@@ -332,10 +332,10 @@ jasmine.KissyReoport = (function () {
     }
 
     Report.prototype.reportRunnerResults = function (runner) {
-        if (window._$jscoverage) {
+        if (window._$jscoverage && window.jscoverage_serializeCoverageToJSON) {
             printCoverageInfo();
         }
-        if (window.jscoverage_serializeCoverageToJSON && phantomjs && window.travisJobId) {
+        if (window._$jscoverage && window.jscoverage_serializeCoverageToJSON && phantomjs && window.travisJobId) {
             var json = window.jscoverage_serializeCoverageToJSON();
             var request = createRequest();
             request.open('post', '/save-coverage-report', true);
