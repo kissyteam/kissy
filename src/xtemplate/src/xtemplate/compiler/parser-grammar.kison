@@ -277,9 +277,9 @@
             },
             {
                 symbol: 'primaryExpression',
-                rhs: ['BOOLEAN'],
+                rhs: ['GLOBAL'],
                 action: function () {
-                    return new this.yy.Boolean(this.lexer.lineNumber, this.$1);
+                    return new this.yy.Global(this.lexer.lineNumber, this.$1);
                 }
             },
             {
@@ -594,13 +594,8 @@
                 },
                 {
                     state: codeSection,
-                    regexp: /^true/,
-                    token: 'BOOLEAN'
-                },
-                {
-                    state: codeSection,
-                    regexp: /^false/,
-                    token: 'BOOLEAN'
+                    regexp: /^(?:true|false|null|undefined)/,
+                    token: 'GLOBAL'
                 },
                 {
                     state: codeSection,

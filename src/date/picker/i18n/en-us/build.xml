@@ -2,6 +2,5 @@
     <property name="component.name" value="date/picker/i18n/en-us"/>
     <import file="../../../../common.xml"/>
     <target name="tpl2mod"/>
-    <target name="js-cover-gen"/>
 </project>
 

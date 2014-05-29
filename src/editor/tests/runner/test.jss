@@ -4,6 +4,7 @@ module.exports = function (req, res) {
             '/kissy/src/css/assets/dpl/base.css',
             '/kissy/build/editor/theme/cool/editor-debug-sprite.css'
         ],
-        component: 'editor'
+        component: 'editor',
+        query: req.query
     });
 };

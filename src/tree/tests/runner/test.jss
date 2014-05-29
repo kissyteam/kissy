@@ -3,6 +3,7 @@ module.exports = function (req, res) {
         component: 'tree',
         externalLinks: [
             '/kissy/build/tree/assets/dpl.css'
-        ]
+        ],
+        query: req.query
     });
 };

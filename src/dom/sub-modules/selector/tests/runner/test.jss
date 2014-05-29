@@ -4,6 +4,7 @@ module.exports = function (req, res) {
             '/kissy/tools/third-party/jquery.js',
             '/kissy/tools/third-party/sizzle.js'
         ],
-        component: 'dom/selector'
+        component: 'dom/selector',
+        query: req.query
     });
 };

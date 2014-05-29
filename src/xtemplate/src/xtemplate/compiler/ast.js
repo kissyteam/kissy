@@ -169,13 +169,13 @@ KISSY.add(function (S) {
 
     ast.Number.prototype.type = 'number';
 
-    ast.Boolean = function (lineNumber, value) {
+    ast.Global = function (lineNumber, value) {
         var self = this;
         self.lineNumber = lineNumber;
         self.value = value;
     };
 
-    ast.Boolean.prototype.type = 'boolean';
+    ast.Global.prototype.type = 'global';
 
     ast.Hash = function (lineNumber) {
         var self = this,

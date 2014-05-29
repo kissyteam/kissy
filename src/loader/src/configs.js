@@ -36,7 +36,7 @@
         if (!subPath) {
             // special for css module
             name = name.replace(/\.css$/, '');
-            filter = packageInfo.filter;
+            filter = packageInfo.getFilter();
 
             if (filter) {
                 filter = '-' + filter;

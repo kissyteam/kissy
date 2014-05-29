@@ -416,15 +416,14 @@ KISSY.add(function (S, require) {
                     })
                 ]
             };
-        }
-    };
+        },
 
-    // prevent jscs error
-    xtplAstToJs['boolean'] = function (e) {
-        return {
-            exp: e.value,
-            source: []
-        };
+        global: function (e) {
+            return {
+                exp: e.value,
+                source: []
+            };
+        }
     };
 
     var compiler;

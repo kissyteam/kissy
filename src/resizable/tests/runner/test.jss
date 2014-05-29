@@ -5,6 +5,7 @@ module.exports = function (req, res) {
             'border: 1px dashed #426FD9;' +
             'position: absolute;' +
             '}',
-        externalLinks: ['../../demo/resizable.css']
+        externalLinks: ['../../demo/resizable.css'],
+        query: req.query
     });
 };

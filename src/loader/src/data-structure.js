@@ -23,7 +23,6 @@
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
-        this.filter = '';
         mix(this, cfg);
     }
 
@@ -32,6 +31,10 @@
 
         reset: function (cfg) {
             mix(this, cfg);
+        },
+
+        getFilter: function () {
+            return checkGlobalIfNotExist(this, 'filter');
         },
 
         /**

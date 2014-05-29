@@ -2,63 +2,54 @@
  * gen tc.js to share tests between phantomjs and nodejs
  * @author yiminghe@gmail.com
  */
+
+/*jshint quotmark:false*/
 var path = require('path');
 var fs = require('fs');
-var cwd = process.cwd().replace(/\\/g, '/');
-var srcDir = path.resolve(cwd, 'src');
-var util =  require(cwd + '/lib/util');
+var walk = require('walk');
+var root = path.join(__dirname, '../../..');
+var kissyDir = path.join(root, 'kissy');
+var util = require(path.join(kissyDir, 'lib/util'));
+var srcDir = path.join(kissyDir, 'src/');
+var mark = '/tests/runner';
 
-function collectTc(baseDir, codes) {
-    var files = fs.readdirSync(baseDir);
-    var ts = "/tests/runner";
-    files.forEach(function (f) {
-        f = baseDir + '/' + f;
+function normalizeSlash(str) {
+    return str.replace(/[\\/]+/g, '/');
+}
 
-        if (util.endsWith(f, ts)) {
-            f = f.replace(/\\/g, '/');
-            var coverDir = path.resolve(f, '../../coverage/runner');
-            var cover = 0;
-            // allow coverage
-            if (fs.existsSync(coverDir)) {
-                cover = 1;
-            }
-            if (!fs.statSync(f).isDirectory()) {
-                var r = '/kissy/' + f.replace(cwd + '/', '');
-                codes.push("tests.push('" + r + "');\n");
-                codes.push("tests.push('" + r + "?build');\n");
-                if (cover) {
-                    codes.push("tests.push('" + r + "?coverage');\n");
-                }
-            } else {
-                var runners = fs.readdirSync(f);
-                runners.forEach(function (r) {
-                    r = '/kissy/' + (f + '/' + r).replace(cwd + '/', '');
-                    codes.push("tests.push('" + r + "');\n");
-                    codes.push("tests.push('" + r + "?build');\n");
-                    if (cover) {
-                        codes.push("tests.push('" + r + "?coverage');\n");
-                    }
-                });
-            }
-        } else if (fs.statSync(f).isDirectory()) {
-            collectTc(f, codes);
+function collectTc(baseDir, callback) {
+    var codes = [];
+    var walker = walk.walk(baseDir);
+    walker.on('file', function (d, stats, next) {
+        d = normalizeSlash(d);
+        var file = normalizeSlash(path.join(d, stats.name));
+        var r;
+        if (util.endsWith(d, mark) || util.endsWith(file, mark)) {
+            r = file.substring(root.length);
         }
-
+        if (r) {
+            codes.push("tests.push('" + r + "');");
+            codes.push("tests.push('" + r + "?build');");
+            codes.push("tests.push('" + r + "?coverage');");
+        }
+        next();
+    }).on('end', function (err) {
+        callback(err, codes);
     });
 }
 
-var codes = [];
-collectTc(srcDir, codes);
-//codes.push("tests.push('" +'/kissy/src/anim/sub-modules/timer/tests/runner/test.jss?coverage' + "');\n");
-codes.push("tests.push('" + '/send-to-coveralls' + "');\n");
-var finalCode = '/**\n' +
-    'gen by gen-tc.js\n' +
-    '*/\n' +
-    'module.exports=function()' +
-    '{ var tests=[];\n' + codes.join('\n') + '\n return tests; \n  };';
-
-fs.writeFileSync('./tools/test/tc.js', finalCode, 'utf-8');
-
-require('./gen-totoro');
-
-console.log('ok with gen-tc to tc.js!');
+(function () {
+    collectTc(srcDir, function (err, codes) {
+        var finalCode = ['/**' ,
+            'gen by gen-tc.js' ,
+            '*/' ,
+            'module.exports = function()' ,
+            '{ var tests = [];' ,
+            codes.join('\n') ,
+                "tests.push('" + '/send-to-coveralls' + "');",
+            ' return tests;   };'].join('\n');
+        fs.writeFileSync(path.join(__dirname, 'tc.js'), finalCode, 'utf-8');
+        require('./gen-totoro');
+        console.log('ok with gen-tc to tc.js!');
+    });
+})();

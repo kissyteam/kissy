@@ -233,7 +233,8 @@ KISSY.add(function (S, require) {
                     // faster
                     // fix #103,some html element can not be set through innerHTML
                     if (!htmlString.match(/<(?:script|style|link)/i) &&
-                        (!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
+                        (!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
+                        !creatorsMap[(htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase()]) {
 
                         try {
                             for (i = els.length - 1; i >= 0; i--) {

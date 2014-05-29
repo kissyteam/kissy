@@ -373,8 +373,7 @@ KISSY.add(function (_, undefined) {
                 },
                 ['p', 'e']
             ],
-            ['z', /^true/, 0, ['p', 'e']],
-            ['z', /^false/, 0, ['p', 'e']],
+            ['z', /^(?:true|false|null|undefined)/, 0, ['p', 'e']],
             ['aa', /^\d+(?:\.\d+)?(?:e-?\d+)?/i, 0, ['p', 'e']],
             ['ab', /^=/, 0, ['p', 'e']],
             ['ac', /^\.\./,
@@ -423,7 +422,7 @@ KISSY.add(function (_, undefined) {
         'MODULUS': 'w',
         'NOT': 'x',
         'STRING': 'y',
-        'BOOLEAN': 'z',
+        'GLOBAL': 'z',
         'NUMBER': 'aa',
         'EQUALS': 'ab',
         'ID': 'ac',
@@ -616,7 +615,7 @@ KISSY.add(function (_, undefined) {
         ],
         ['ax', ['z'],
             function () {
-                return new this.yy.Boolean(this.lexer.lineNumber, this.$1);
+                return new this.yy.Global(this.lexer.lineNumber, this.$1);
             }
         ],
         ['ax', ['al']],

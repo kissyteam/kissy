@@ -495,7 +495,7 @@ KISSY.add(function (S, require) {
                 var menuChildren = contextmenu.get('children');
 
                 // must query paste first ...
-                for (i = menuChildren.length - 1; i--; i >= 0) {
+                for (i = menuChildren.length - 1; i >= 0; i--) {
                     var c = menuChildren[i];
                     var value;
                     if (c.get) {

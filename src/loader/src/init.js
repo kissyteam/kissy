@@ -16,8 +16,8 @@
         return (new Function('return ' + s))();
     }
 
-    var baseReg = /^(.*)(seed|loader)(?:-debug)?\.js[^/]*/i,
-        baseTestReg = /(seed|loader)(?:-debug)?\.js/i;
+    var baseReg = /^(.*)(seed|loader)(?:-debug|-coverage)?\.js[^/]*/i,
+        baseTestReg = /(seed|loader)(?:-debug|-coverage)?\.js/i;
 
     function getBaseInfoFromOneScript(script) {
         // can not use KISSY.Uri
@@ -111,6 +111,7 @@
         comboPrefix: defaultComboPrefix,
         comboSep: defaultComboSep,
         charset: 'utf-8',
+        filter: '',
         lang: 'zh-cn'
     });
     S.config('packages', {

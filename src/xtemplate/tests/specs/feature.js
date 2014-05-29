@@ -206,6 +206,16 @@ KISSY.add(function (S, require) {
         });
 
         describe('if', function () {
+            it('support undefined null',function(){
+                var tpl = '{{#if(t !== undefined)}}defined{{/if}} {{#if(t === null)}}null{{/if}} ' +
+                    '{{#if(t3 === undefined)}}undefined{{/if}} {{#if(t3 !== null)}}nonull{{else}}null{{/if}}';
+                var data = {
+                    t: null
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('defined null undefined nonull');
+            });
+
             it('empty block works', function () {
                 var tpl = '{{#if(t !== true)}}{{else}}true{{/if}}';
                 var data = {

@@ -1,6 +1,7 @@
 module.exports=function(req,res){
     res.render('runner',{
         component:'overlay',
-        externalLinks:['../../demo/other/assets/cool.css']
+        externalLinks:['../../demo/other/assets/cool.css'],
+        query: req.query
     });
 };

@@ -12,8 +12,12 @@ var tests = require('./tc.js')(), index = -1;
 var start = Date.now();
 var args = require('system').args;
 var srcMode = 0;
+var coverageMode = 0;
 if (args.length > 1 && args[1] === 'src') {
     srcMode = 1;
+}
+if (args.length > 1 && args[1] === 'coverage') {
+    coverageMode = 1;
 }
 
 page.onConsoleMessage = function (m) {
@@ -55,6 +59,12 @@ function next(url) {
     }
     if (!url) {
         url = tests[index];
+        if (coverageMode) {
+            if (url.indexOf('?coverage') === -1) {
+                next();
+                return;
+            }
+        }
         if (url.indexOf('?build') !== -1 || url.indexOf('?coverage') !== -1) {
             if (srcMode) {
                 next();
