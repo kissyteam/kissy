@@ -107,7 +107,7 @@ module.exports = function (app) {
                     source = fs.readFileSync(path.join(srcPath, f), 'utf8');
                 } else {
                     f = f.replace(/\.js$/, '.html');
-                    source = xtemplate.getCompileModule(f, path.basename(f, '.html'));
+                    source = xtemplate.getCompileModule(path.join(srcPath, f), path.basename(f, '.html'));
                 }
                 source_files.push({
                     name: name,
