@@ -68,7 +68,7 @@
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
                 <exec executable="node" failonerror="true">
-                    <arg value="${bin.dir}/kissy-xtemplate"/>
+                    <arg value="${bin.dir}/xtemplate"/>
                     <arg value="-p"/>
                     <arg value="${component.src.dir.kmc.tmp}"/>
                 </exec>

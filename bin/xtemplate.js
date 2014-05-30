@@ -100,18 +100,6 @@ if (require.main === module) {
             }
         }
 
-        var packagePath = program.packagePath,
-            suffix = program.suffix,
-            cwd = process.cwd();
-
-        var suffixReg;
-
-        if (suffix) {
-            suffixReg = new RegExp('\\.' + suffix + '$', 'g');
-        }
-
-        packagePath = path.resolve(cwd, packagePath);
-
         program
             .option('-p, --packagePath <packagePath>', 'Set kissy package path')
             .option('-s, --suffix [suffix]', 'Set xtemplate file suffix', '')
@@ -126,6 +114,18 @@ if (require.main === module) {
                 program.optionMissingArgument(o);
             }
         });
+
+        var packagePath = program.packagePath,
+            suffix = program.suffix,
+            cwd = process.cwd();
+
+        var suffixReg;
+
+        if (suffix) {
+            suffixReg = new RegExp('\\.' + suffix + '$', 'g');
+        }
+
+        packagePath = path.resolve(cwd, packagePath);
 
         if (program.watch) {
             var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});

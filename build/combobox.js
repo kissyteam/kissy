@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 30 14:04
+build time: May 30 14:52
 */
 KISSY.add("combobox",["combobox/control","combobox/local-data-source","combobox/remote-data-source"],function(m,g){var n=g("combobox/control"),p=g("combobox/local-data-source"),c=g("combobox/remote-data-source");n.LocalDataSource=p;n.RemoteDataSource=c;return n});
 KISSY.add("combobox/control",["util","node","component/control","./combobox-xtpl","menu"],function(m,g){function n(d){for(var a=0;a<d.length;a++)if(!d[a].get("disabled"))return d[a];return null}function p(){e(this)}function c(){var d=this;setTimeout(function(){l(d)},0)}function b(){this.focus();l(this)}function i(){this.setCurrentValue(this.getCurrentValue(),{force:1})}function j(d){var a;a=this.get("menu");if(!d||a===d.target){var d=this.get("input"),h=a.get("el");a=a.get("contentEl");d.attr("aria-owns",
