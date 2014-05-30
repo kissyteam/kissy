@@ -100,7 +100,7 @@ module.exports = function (app) {
             if (info) {
                 merge(info.coverage, lineData);
             } else {
-                var source = fs.readFileSync(srcPath + f, 'utf8');
+                var source = fs.readFileSync(path.join(srcPath, f), 'utf8');
                 source_files.push({
                     name: name,
                     source: source,

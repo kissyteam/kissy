@@ -5,17 +5,16 @@ var jscover = require('node-jscover');
 var url = require('url');
 
 function getModuleName(url) {
-    var urls = url.split(/[/\\]/);
+    var parts=[];
+    var urls = url.split(/[/\\]+/);
     for (var i = urls.length - 1; i >= 0; i--) {
         if (urls[i] === 'src') {
             break;
         }
+        parts.unshift(urls[i]);
     }
-    if (i !== 0) {
-        urls.splice(i - 1, 2);
-    }
-    url = urls.join('/');
-    return url.replace(/-coverage.+/, '').replace(/\/(src|sub-modules)/g, '').replace(/^\//, '');
+    url = parts.join('/');
+    return url.replace(/-coverage.+/, '');
 }
 
 module.exports = function (req, res, next) {

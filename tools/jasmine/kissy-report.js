@@ -2,7 +2,7 @@
  * report for kissy on jasmine
  * @author yiminghe@gmail.com
  */
-jasmine.KissyReoport = (function () {
+jasmine.KissyReport = (function () {
     /*jshint camelcase:false*/
     var phantomjs, m;
 
@@ -160,7 +160,7 @@ jasmine.KissyReoport = (function () {
         return ret;
     }
 
-    function printCoverageInfo() {
+    function printCoverageInfo(component) {
         var totals = {
             files: 0,
             statements: 0,
@@ -276,6 +276,9 @@ jasmine.KissyReoport = (function () {
         }
 
         console.log(new Array(116).join('-'));
+        console.log('|' +
+            padding(component, 110, 'center') +
+            '|');
         outputTh(['File', 'Coverage', 'Branch', 'Function']);
         outputTr(['Total: ' + totals.files, parseInt(totals.executed * 100 / totals.statements, 10),
             parseInt(totals.branches_covered * 100 / totals.branches, 10), parseInt(totals.functions_covered * 100 / totals.functions, 10)]);
@@ -333,7 +336,7 @@ jasmine.KissyReoport = (function () {
 
     Report.prototype.reportRunnerResults = function (runner) {
         if (window._$jscoverage && window.jscoverage_serializeCoverageToJSON) {
-            printCoverageInfo();
+            printCoverageInfo(this.component);
         }
         if (window._$jscoverage && window.jscoverage_serializeCoverageToJSON && phantomjs && window.travisJobId) {
             var json = window.jscoverage_serializeCoverageToJSON();
