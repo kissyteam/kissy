@@ -5,6 +5,8 @@ var fs = require('fs');
 var path = require('path');
 var cwd = process.cwd();
 var util = require(cwd + '/lib/util.js');
+var kissyRoot = path.join(__dirname, '../../../');
+var xtemplate = require(kissyRoot + '/bin/xtemplate');
 
 function getSourceInfo(f, postData) {
     var source_files = postData.source_files,
@@ -100,7 +102,13 @@ module.exports = function (app) {
             if (info) {
                 merge(info.coverage, lineData);
             } else {
-                var source = fs.readFileSync(path.join(srcPath, f), 'utf8');
+                var source;
+                if (f.indexOf('-xtpl.js') === -1) {
+                    source = fs.readFileSync(path.join(srcPath, f), 'utf8');
+                } else {
+                    f = f.replace(/\.js$/, '.html');
+                    source = xtemplate.getCompileModule(f, path.basename(f, '.html'));
+                }
                 source_files.push({
                     name: name,
                     source: source,
