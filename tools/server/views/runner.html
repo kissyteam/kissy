@@ -21,10 +21,14 @@
     <style>
         {{{externalStyle}}}
     </style>
+    {{set(suffix = '-debug')}}
+    {{#if (query.min !== undefined)}}
+        {{set(suffix = '')}}
+    {{/if}}
     {{#if (query.loader !== undefined)}}
-        <script src="/kissy/src/loader/tests/others/import.js"></script>
+        <script src="/kissy/build/loader{{suffix}}.js"></script>
      {{else}}
-        <script src="/kissy/build/??loader-debug.js,ua-debug.js,feature-debug.js,meta-debug.js"></script>
+        <script src="/kissy/build/seed{{suffix}}.js"></script>
     {{/if}}
     {{#if (query.coverage !== undefined)}}
         <script src="/kissy/tools/jscover/assets/jscoverage.js"></script>
@@ -55,15 +59,14 @@
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) === ind;
         }
-        var tests=['specs/'], S=KISSY;
+        var tests = ['specs/'],
+            S = KISSY;
         S.config('packages',{
             specs:{
-                debug:1,
                 base: endsWith(location.pathname,
                         'runner')?'./specs':'../specs'
             },
             src:{
-                debug:1,
                 base:'/kissy/src'
             }
         });

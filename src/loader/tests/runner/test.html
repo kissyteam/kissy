@@ -10,43 +10,51 @@
     <title>Loader Test Runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <script src="/kissy/src/loader/tests/others/import.js"></script>
-    <script src="/kissy/tools/jasmine/jasmine.js"></script>
-    <script src="/kissy/tools/third-party/jquery.js"></script>
-    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
-    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
-    <script src="/kissy/tools/jasmine/init.js"></script>
-    <script src="../others/clear.js"></script>
 </head>
 <body>
 <h1>KISSY Loader Test Cases</h1>
-<!--kissy-->
-<script src="../specs/kissy-spec.js"></script>
-<!--loader-->
-<script src="../specs/filter/filter-spec.js"></script>
-<script src="../specs/combo/combo-spec.js"></script>
-<script src="../specs/sync/sync-spec.js"></script>
-<script src="../specs/error-report/error-report-spec.js"></script>
-<script src="../specs/cjs/cjs-spec.js"></script>
-<script src="../specs/system-ondemand/system-ondemand-spec.js"></script>
-<script src="../specs/timeout/timeout-spec.js"></script>
-<script src="../specs/loader-simple/loader-simple-spec.js"></script>
-<script src="../specs/circular-dependency/circular-dependency-spec.js"></script>
-<script src="../specs/css-combo/css-combo-spec.js"></script>
-<script src="../specs/suffix/suffix-combo-spec.js"></script>
-<script src="../specs/packages-modules/packages-modules-spec.js"></script>
-<script src="../specs/package/package-spec.js"></script>
-<script src="../specs/add_require/add-require-spec.js"></script>
-<script src="../specs/alias/alias-spec.js"></script>
-<script src="../specs/packages-groups/packages-groups-spec.js"></script>
-<script src="../specs/timestamp/timestamp-spec.js"></script>
-<script src="../specs/timestamp/timestamp-combo-spec.js"></script>
-<script src="../specs/package_path_longest_match/package-longest-match-spec.js"></script>
-<script src="../specs/suffix/suffix-spec.js"></script>
 <script>
-    setTimeout(function () {
-        jasmine.getEnv().execute();
-    }, 100);
+    (function () {
+        var files = ["/kissy/tools/jasmine/jasmine.js",
+            "/kissy/tools/third-party/jquery.js",
+            "/kissy/tools/jasmine/jasmine-html.js",
+            "/kissy/tools/jasmine/jasmine.console_reporter.js",
+            "/kissy/tools/jasmine/kissy-report.js",
+            "/kissy/tools/jasmine/init.js",
+            "../others/clear.js",
+            "../specs/kissy-spec.js",
+            "../specs/filter/filter-spec.js",
+            "../specs/combo/combo-spec.js",
+            "../specs/sync/sync-spec.js",
+            "../specs/error-report/error-report-spec.js",
+            "../specs/cjs/cjs-spec.js",
+            "../specs/system-ondemand/system-ondemand-spec.js",
+            "../specs/timeout/timeout-spec.js",
+            "../specs/loader-simple/loader-simple-spec.js",
+            "../specs/circular-dependency/circular-dependency-spec.js",
+            "../specs/css-combo/css-combo-spec.js",
+            "../specs/suffix/suffix-combo-spec.js",
+            "../specs/packages-modules/packages-modules-spec.js",
+            "../specs/package/package-spec.js",
+            "../specs/add_require/add-require-spec.js",
+            "../specs/alias/alias-spec.js",
+            "../specs/packages-groups/packages-groups-spec.js",
+            "../specs/timestamp/timestamp-spec.js",
+            "../specs/timestamp/timestamp-combo-spec.js",
+            "../specs/package_path_longest_match/package-longest-match-spec.js",
+            "../specs/suffix/suffix-spec.js"
+        ];
+        for (var i = 0; i < files.length; i++) {
+            window.document.write('<script src="' + files[i] + '">' + '<' + '/script>');
+        }
+    })();
+</script>
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            jasmine.getEnv().execute();
+        }, 100);
+    };
 </script>
 </body>
 </html>

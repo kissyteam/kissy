@@ -4,6 +4,8 @@
  */
 describe('modules and packages', function () {
     var locationPrefix = location.protocol + '//' + location.host;
+    var build = (location.href.indexOf('build') !== -1) ||
+        (location.href.indexOf('min') !== -1);
 
     beforeEach(function () {
         KISSY.config('combine', true);
@@ -14,7 +16,8 @@ describe('modules and packages', function () {
     });
 
     it('can get base correctly', function () {
-        expect(KISSY.config('base')).toBe(locationPrefix + ('/kissy/src/loader/src/'));
+        expect(KISSY.config('base')).toBe(locationPrefix +
+            (build ? '/kissy/build/' : '/kissy/src/loader/src/'));
     });
 
     it('does not depend on order', function () {

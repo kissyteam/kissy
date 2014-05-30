@@ -9,6 +9,11 @@
     <title>selector Test Runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <script src="/kissy/build/seed-debug.js"></script>
+    <script>
+        if (location.href.indexOf('?coverage') !== -1) {
+            window.document.write('<script src="/kissy/tools/jscover/assets/jscoverage.js">' + '<' + '/script>');
+        }
+    </script>
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
@@ -268,20 +273,14 @@
 </div>
 </dl>
 <br id="last"/>
+<script src="/kissy/src/package.js"></script>
 <script>
     var S = KISSY;
     var component = 'dom/selector';
-    if (location.search.indexOf('coverage')!==-1) {
-        S.config('map', [
-            [/kissy\/src\/(.+)\/src\//g, function (m, m1) {
-                var mm = m1.replace(/sub-modules\//g, '');
-                if (mm != component) return m;
-                return m.slice(0, -5) + '/coverage/src/';
-            }]
-        ]);
+    if (location.search.indexOf('coverage') !== -1) {
+        KISSY.config('packages')[component].filter = 'coverage';
     }
 </script>
-<script src="/kissy/src/package.js"></script>
 <script>
     S.config('packages', {
         specs: {
