@@ -277,7 +277,7 @@ jasmine.KissyReport = (function () {
 
         console.log(new Array(116).join('-'));
         console.log('|' +
-            padding(component, 110, 'center') +
+            padding(component, 113, 'center') +
             '|');
         outputTh(['File', 'Coverage', 'Branch', 'Function']);
         outputTr(['Total: ' + totals.files, parseInt(totals.executed * 100 / totals.statements, 10),
