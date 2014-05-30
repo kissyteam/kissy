@@ -7,7 +7,8 @@ KISSY.add(function (S, require, exports, module) {
     var util = require('util');
     var logger = S.getLogger('s/editor');
     var Node = require('node');
-    var iframeContentTpl = require('editor/iframe-content-tpl');
+    var XTemplate = require('xtemplate/runtime');
+    var iframeContentXTpl = require('editor/iframe-content-xtpl');
     var Editor = require('editor/base');
     var Utils = require('editor/utils');
     var focusManager = require('editor/focus-manager');
@@ -1075,7 +1076,7 @@ KISSY.add(function (S, require, exports, module) {
                 href: customLink[i]
             });
         }
-        return util.substitute(iframeContentTpl, {
+        return new XTemplate(iframeContentXTpl).render({
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.

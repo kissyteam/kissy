@@ -22,7 +22,7 @@
     },
     "bin": {
         "kissy": "./bin/kissy.js",
-        "kissy-xtemplate": "./bin/kissy-xtemplate.js"
+        "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "directories": {
         "lib": "./lib/"

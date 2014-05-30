@@ -7,13 +7,11 @@
 // global
 var sys = require('sys');
 
-var fs = require('fs');
-
 var jasmineExports = require('../jasmine/jasmine');
 
 var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
 
-for(var k in jasmineExports){
+for (var k in jasmineExports) {
     global[k] = jasmineExports[k];
 }
 
@@ -21,15 +19,7 @@ var jasmineEnv = jasmineExports.jasmine.getEnv();
 
 // ------------ configs start
 
-var isVerbose = false;
 var showColors = true;
-
-var junitReport = {
-    report: true,
-    savePath: './reports/',
-    useDotNotation: true,
-    consolidate: true
-};
 
 function onComplete(runner) {
     var description = runner.queue.blocks[0].description;
@@ -41,29 +31,11 @@ function onComplete(runner) {
     }
 }
 
-if (junitReport && junitReport.report) {
-    if (!fs.existsSync(junitReport.savePath)) {
-        console.log('creating junit xml report save path: ' + junitReport.savePath);
-        fs.mkdirSync(junitReport.savePath, '0755');
-    }
-    jasmineEnv.addReporter(new jasmineNode.JUnitXmlReporter(junitReport.savePath,
-        junitReport.consolidate,
-        junitReport.useDotNotation));
-}
-
-if (isVerbose) {
-    jasmineEnv.addReporter(new jasmineNode.TerminalVerboseReporter({
-        print: sys.print,
-        color: showColors,
-        onComplete: onComplete
-    }));
-} else {
-    jasmineEnv.addReporter(new jasmineNode.TerminalReporter({
-        print: sys.print,
-        color: showColors,
-        onComplete: onComplete
-    }));
-}
+jasmineEnv.addReporter(new jasmineNode.TerminalVerboseReporter({
+    print: sys.print,
+    color: showColors,
+    onComplete: onComplete
+}));
 
 // ------------ configs end
 

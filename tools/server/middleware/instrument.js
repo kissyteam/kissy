@@ -32,7 +32,8 @@ module.exports = function (req, res, next) {
             next(err);
         } else {
             try {
-                res.end(jscover.instrument(code, getModuleName(pathname)+'.js', {
+                res.setHeader('Content-Type', 'application/x-javascript');
+                res.end(jscover.instrument(code, getModuleName(pathname) + '.js', {
                     excludeHeader: true
                 }));
             } catch (e) {

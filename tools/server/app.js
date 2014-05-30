@@ -49,9 +49,13 @@ function startServer(port) {
     // combo
     app.use('/kissy/', require('./middleware/combo'));
 
+    app.use('/kissy/', require('./middleware/xtpl'));
+
     app.use('/kissy/', require('./middleware/instrument'));
 
-    app.use('/kissy/', require('./middleware/runner'));
+    app.use('/kissy/', require('./middleware/tests-runner'));
+
+    app.use('/kissy/', require('./middleware/coverage-runner'));
 
     // list and process jss
     app.use('/kissy/', require('./middleware/serve'));

@@ -9,17 +9,16 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var IO = require('io');
     var Dialog4E = require('../dialog');
+    var XTemplate = require('xtemplate/runtime');
     var Tabs = require('tabs');
     var MenuButton = require('../menubutton');
-    var bodyTpl = require('./dialog/dialog-tpl');
+    var bodyXTpl = require('./dialog/dialog-xtpl');
     var dtd = Editor.XHTML_DTD,
         UA = require('ua'),
         Node = require('node'),
         HTTP_TIP = 'http://',
         AUTOMATIC_TIP = '自动',
         MARGIN_DEFAULT = 10,
-        IMAGE_DIALOG_BODY_HTML = bodyTpl,
-
         IMAGE_DIALOG_FOOT_HTML = '<div style="padding:5px 20px 20px;">' +
             '<a ' +
             'href="javascript:void(\'确定\')" ' +
@@ -67,7 +66,7 @@ KISSY.add(function (S, require) {
             self.dialog = self.d = new Dialog4E({
                 width: 500,
                 headerContent: '图片',
-                bodyContent: util.substitute(IMAGE_DIALOG_BODY_HTML, {
+                bodyContent: new XTemplate(bodyXTpl).render({
                     prefixCls: prefixCls
                 }),
                 footerContent: util.substitute(IMAGE_DIALOG_FOOT_HTML, {
