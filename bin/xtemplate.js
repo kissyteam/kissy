@@ -130,7 +130,6 @@ if (require.main === module) {
         if (program.watch) {
             var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});
             watcher.on('add', generate).on('change', generate);
-            watcher.close();
         } else {
             var walk = require('walk');
             //noinspection JSUnresolvedFunction
