@@ -21,7 +21,6 @@
         "node": "~0.10"
     },
     "bin": {
-        "kissy": "./bin/kissy.js",
         "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "directories": {
