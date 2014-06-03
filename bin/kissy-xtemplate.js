@@ -81,7 +81,6 @@ S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
     if (program.watch) {
         var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});
         watcher.on('add', process).on('change', process);
-        watcher.close();
     } else {
         var walk = require('walk');
         //noinspection JSUnresolvedFunction
