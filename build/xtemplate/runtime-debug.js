@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 29 15:34
+build time: Jun 4 12:51
 */
 /*
 combined modules:
@@ -26,9 +26,9 @@ KISSY.add('xtemplate/runtime', [
     var commands = {};
     var Scope = require('./runtime/scope');
     var LinkedBuffer = require('./runtime/linked-buffer');
-    function findCommand(localCommands, parts) {
+    function findCommand(runtimeCommands, instanceCommands, parts) {
         var name = parts[0];
-        var cmd = localCommands && localCommands[name] || commands[name];
+        var cmd = runtimeCommands && runtimeCommands[name] || instanceCommands && instanceCommands[name] || commands[name];
         if (parts.length === 1) {
             return cmd;
         }
@@ -63,21 +63,19 @@ KISSY.add('xtemplate/runtime', [
         if (fn.version && S.version !== fn.version) {
             throw new Error('current xtemplate file(' + tpl.name + ')(v' + fn.version + ')need to be recompiled using current kissy(v' + S.version + ')!');
         }
-        buffer = tpl.fn.call(tpl, scope, buffer);
-        var extendTplName = tpl.session.extendTplName;    // if has extend statement, only parse
+        buffer = tpl.fn(scope, buffer);
+        var extendTplName = tpl.runtime.extendTplName;    // if has extend statement, only parse
         // if has extend statement, only parse
         if (extendTplName) {
-            delete tpl.session.extendTplName;
+            delete tpl.runtime.extendTplName;
             buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
         }
         return buffer.end();
     }
     function callFn(tpl, scope, option, buffer, parts, depth, line, resolveInScope) {
-        var commands = tpl.root.config.commands;
-        var error, caller, fn;
-        var command1;
+        var error, caller, fn, command1;
         if (!depth) {
-            command1 = findCommand(commands, parts);
+            command1 = findCommand(tpl.runtime.commands, tpl.root.config.commands, parts);
         }
         if (command1) {
             return command1.call(tpl, scope, option, buffer, line);
@@ -228,7 +226,7 @@ KISSY.add('xtemplate/runtime', [
                             root: tpl.root,
                             fn: tplFn,
                             name: subTplName,
-                            session: tpl.session
+                            runtime: tpl.runtime
                         }, scope, newBuffer);
                     }
                 });
@@ -237,13 +235,19 @@ KISSY.add('xtemplate/runtime', [
         /**
          * get result by merge data with template
          * @param data
+         * @param option
          * @param callback function called
          * @return {String}
          */
-        render: function (data, callback) {
+        render: function (data, option, callback) {
             var html = '';
             var self = this;
             var fn = self.fn;
+            if (typeof option === 'function') {
+                callback = option;
+                option = null;
+            }
+            option = option || {};
             callback = callback || function (error, ret) {
                 html = ret;
             };
@@ -255,7 +259,7 @@ KISSY.add('xtemplate/runtime', [
             renderTpl({
                 name: name,
                 fn: fn,
-                session: {},
+                runtime: { commands: option.commands },
                 root: self
             }, scope, buffer);
             return html;
@@ -387,12 +391,12 @@ KISSY.add('xtemplate/runtime/commands', [
                 return commands.include.call(this, new Scope(), option, buffer);
             },
             extend: function (scope, option, buffer) {
-                this.session.extendTplName = option.params[0];
+                this.runtime.extendTplName = option.params[0];
                 return buffer;
             },
             block: function (scope, option, buffer) {
                 var self = this;
-                var session = self.session;
+                var runtime = self.runtime;
                 var params = option.params;
                 var blockName = params[0];
                 var type;
@@ -400,7 +404,7 @@ KISSY.add('xtemplate/runtime/commands', [
                     type = params[0];
                     blockName = params[1];
                 }
-                var blocks = session.blocks = session.blocks || {};
+                var blocks = runtime.blocks = runtime.blocks || {};
                 var head = blocks[blockName], cursor;
                 var current = {
                         fn: option.fn,
@@ -423,7 +427,7 @@ KISSY.add('xtemplate/runtime/commands', [
                         prev.next = current;
                     }
                 }
-                if (!session.extendTplName) {
+                if (!runtime.extendTplName) {
                     cursor = blocks[blockName];
                     while (cursor) {
                         if (cursor.fn) {
@@ -439,8 +443,8 @@ KISSY.add('xtemplate/runtime/commands', [
                 var macroName = params[0];
                 var params1 = params.slice(1);
                 var self = this;
-                var session = self.session;
-                var macros = session.macros = session.macros || {};    // definition
+                var runtime = self.runtime;
+                var macros = runtime.macros = runtime.macros || {};    // definition
                 // definition
                 if (option.fn) {
                     macros[macroName] = {

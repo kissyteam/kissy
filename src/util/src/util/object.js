@@ -582,12 +582,10 @@ KISSY.add(function (S, require) {
             }
         } else if (isPlainObject) {
             for (k in input) {
-
                 if (k !== CLONE_MARKER &&
                     (!f || (f.call(input, input[k], k, input) !== false))) {
                     destination[k] = cloneInternal(input[k], f, memory);
                 }
-
             }
         }
 

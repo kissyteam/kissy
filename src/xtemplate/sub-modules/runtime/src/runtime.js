@@ -10,9 +10,11 @@ KISSY.add(function (S, require) {
     var Scope = require('./runtime/scope');
     var LinkedBuffer = require('./runtime/linked-buffer');
 
-    function findCommand(localCommands, parts) {
+    function findCommand(runtimeCommands, instanceCommands, parts) {
         var name = parts[0];
-        var cmd = localCommands && localCommands[name] || commands[name];
+        var cmd = runtimeCommands && runtimeCommands[name] ||
+            instanceCommands && instanceCommands[name] ||
+            commands[name];
         if (parts.length === 1) {
             return cmd;
         }
@@ -51,22 +53,20 @@ KISSY.add(function (S, require) {
                 ')(v' + fn.version + ')need to be recompiled using current kissy(v' +
                 S.version + ')!');
         }
-        buffer = tpl.fn.call(tpl, scope, buffer);
-        var extendTplName = tpl.session.extendTplName;
+        buffer = tpl.fn(scope, buffer);
+        var extendTplName = tpl.runtime.extendTplName;
         // if has extend statement, only parse
         if (extendTplName) {
-            delete tpl.session.extendTplName;
+            delete tpl.runtime.extendTplName;
             buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
         }
         return buffer.end();
     }
 
     function callFn(tpl, scope, option, buffer, parts, depth, line, resolveInScope) {
-        var commands = tpl.root.config.commands;
-        var error, caller, fn;
-        var command1;
+        var error, caller, fn, command1;
         if (!depth) {
-            command1 = findCommand(commands, parts);
+            command1 = findCommand(tpl.runtime.commands, tpl.root.config.commands, parts);
         }
         if (command1) {
             return command1.call(tpl, scope, option, buffer, line);
@@ -227,7 +227,7 @@ KISSY.add(function (S, require) {
                             root: tpl.root,
                             fn: tplFn,
                             name: subTplName,
-                            session: tpl.session
+                            runtime: tpl.runtime
                         }, scope, newBuffer);
                     }
                 });
@@ -237,16 +237,23 @@ KISSY.add(function (S, require) {
         /**
          * get result by merge data with template
          * @param data
+         * @param option
          * @param callback function called
          * @return {String}
          */
-        render: function (data, callback) {
+        render: function (data, option, callback) {
             var html = '';
             var self = this;
             var fn = self.fn;
+            if (typeof option === 'function') {
+                callback = option;
+                option = null;
+            }
+            option = option || {};
             callback = callback || function (error, ret) {
                 html = ret;
             };
+
             var name = self.config.name;
             if (!name && fn.TPL_NAME) {
                 name = fn.TPL_NAME;
@@ -256,7 +263,9 @@ KISSY.add(function (S, require) {
             renderTpl({
                 name: name,
                 fn: fn,
-                session: {},
+                runtime: {
+                    commands: option.commands
+                },
                 root: self
             }, scope, buffer);
             return html;

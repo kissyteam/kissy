@@ -104,13 +104,13 @@ KISSY.add(function (S, require) {
         },
 
         extend: function (scope, option, buffer) {
-            this.session.extendTplName = option.params[0];
+            this.runtime.extendTplName = option.params[0];
             return buffer;
         },
 
         block: function (scope, option, buffer) {
             var self = this;
-            var session = self.session;
+            var runtime = self.runtime;
             var params = option.params;
             var blockName = params[0];
             var type;
@@ -118,7 +118,7 @@ KISSY.add(function (S, require) {
                 type = params[0];
                 blockName = params[1];
             }
-            var blocks = session.blocks = session.blocks || {};
+            var blocks = runtime.blocks = runtime.blocks || {};
             var head = blocks[blockName],
                 cursor;
             var current = {
@@ -143,7 +143,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            if (!session.extendTplName) {
+            if (!runtime.extendTplName) {
                 cursor = blocks[blockName];
                 while (cursor) {
                     if (cursor.fn) {
@@ -161,8 +161,8 @@ KISSY.add(function (S, require) {
             var macroName = params[0];
             var params1 = params.slice(1);
             var self = this;
-            var session = self.session;
-            var macros = session.macros = session.macros || {};
+            var runtime = self.runtime;
+            var macros = runtime.macros = runtime.macros || {};
             // definition
             if (option.fn) {
                 macros[macroName] = {

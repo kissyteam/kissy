@@ -4,6 +4,7 @@
  */
 KISSY.add(function (S, require) {
     var XTemplate = require('xtemplate');
+
     describe('async', function () {
         it('can report error', function () {
             var tpl = '{{tms(1)}}3';
