@@ -8,18 +8,13 @@ KISSY.add(function (S, require) {
     describe("path", function () {
         it("resolve works", function () {
             expect(Path.resolve('x', 'y', "..", "z", ".")).toBe("x/z");
-
             expect(Path.resolve('x', "./y")).toBe("x/y");
-
             expect(Path.resolve("/x", "./y")).toBe("/x/y");
         });
 
         it("normalize works", function () {
-
             expect(Path.normalize("x/y/z/../q/./")).toBe("x/y/q/");
-
             expect(Path.normalize("x/y/z/../q/.")).toBe("x/y/q");
-
         });
 
         it("join works", function () {
@@ -28,12 +23,11 @@ KISSY.add(function (S, require) {
 
         it("relative works", function () {
             expect(Path.relative("x/y/z", "x/y")).toBe("..");
-
+            expect(Path.relative("x/y/z/", "x/y")).toBe("..");
             expect(Path.relative("x/y/", "x/y/z/q")).toBe("z/q");
-
             expect(Path.relative("x/y", "x/y/z/q")).toBe("z/q");
-
             expect(Path.relative("x/y", "x/y/z/q/")).toBe("z/q");
+            expect(Path.relative('x/t/z','x/')).toBe('../..');
         });
 
         it("basename works", function () {

@@ -475,54 +475,6 @@ KISSY.add(function (S, require) {
             expect(o[1]).toBe(undefined);
         });
 
-        it('util.param', function () {
-            expect(util.param({foo: 1, bar: 2})).toBe('foo=1&bar=2');
-            expect(util.param({foo: 1, bar: [2, 3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
-
-            expect(util.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
-
-            expect(util.param({foo: 1, bar: []})).toBe('foo=1');
-            expect(util.param({foo: {}, bar: 2})).toBe('bar=2');
-            expect(util.param({foo: function () {
-            }, bar: 2})).toBe('bar=2');
-
-            expect(util.param({foo: undefined, bar: 2})).toBe('foo&bar=2');
-            expect(util.param({foo: null, bar: 2})).toBe('foo=null&bar=2');
-            expect(util.param({foo: true, bar: 2})).toBe('foo=true&bar=2');
-            expect(util.param({foo: false, bar: 2})).toBe('foo=false&bar=2');
-            expect(util.param({foo: '', bar: 2})).toBe('foo=&bar=2');
-            expect(util.param({foo: NaN, bar: 2})).toBe('foo=NaN&bar=2');
-
-            expect(util.param({b: [2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
-
-            expect(util.param({b: undefined})).toBe("b");
-
-            expect(util.param({
-                nodeType: 1
-            })).toBe('nodeType=1');
-        });
-
-        it('util.unparam', function () {
-            expect(util.unparam('foo=1&bar=2').foo).toBe('1');
-            expect(util.unparam('foo=1&bar=2').bar).toBe('2');
-
-            expect(util.unparam('foo').foo).toBe(undefined);
-            expect(util.unparam('foo=').foo).toBe('');
-
-            expect(util.unparam('foo=1&bar=2&bar=3').bar[0]).toBe('2');
-            expect(util.unparam('foo=1&bar=2&bar=3').bar[1]).toBe('3');
-
-            expect(util.unparam('foo=null&bar=2').foo).toBe('null');
-            expect(util.unparam('foo=&bar=2').foo).toBe('');
-            expect(util.unparam('foo&bar=2').foo).toBe(undefined);
-
-            expect(util.unparam('foo=1&bar=2&foo=3').foo[1]).toBe('3');
-
-            expect(util.unparam('foo=1&bar[]=2&bar[]=3').bar[0]).toBe('2');
-
-            expect(util.unparam('foo=1&bar=2=6').bar).toBe('2=6');
-        });
-
         it("util.escapeHtml", function () {
             expect(util.escapeHtml("<")).toBe("&lt;");
             expect(util.escapeHtml(">")).toBe("&gt;");

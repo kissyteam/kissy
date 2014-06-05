@@ -169,6 +169,7 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         'overlay': { 'base': '/kissy/src/overlay/src/overlay' },
         'path': { 'base': '/kissy/src/path/src/path' },
         'promise': { 'base': '/kissy/src/promise/src/promise' },
+        'querystring': { 'base': '/kissy/src/querystring/src/querystring' },
         'resizable': { 'base': '/kissy/src/resizable/src/resizable' },
         'resizable/plugin/proxy': { 'base': '/kissy/src/resizable/sub-modules/plugin/proxy/src/proxy' },
         'router': { 'base': '/kissy/src/router/src/router' },
@@ -184,7 +185,7 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         'toolbar': { 'base': '/kissy/src/toolbar/src/toolbar' },
         'tree': { 'base': '/kissy/src/tree/src/tree' },
         'ua': { 'base': '/kissy/src/ua/src/ua' },
-        'uri': { 'base': '/kissy/src/uri/src/uri' },
+        'url': { 'base': '/kissy/src/url/src/url' },
         'util': { 'base': '/kissy/src/util/src/util' },
         'xtemplate': { 'base': '/kissy/src/xtemplate/src/xtemplate' },
         'xtemplate/runtime': { 'base': '/kissy/src/xtemplate/sub-modules/runtime/src/runtime' }

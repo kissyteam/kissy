@@ -3,8 +3,10 @@
  * @author yiminghe@gmail.com
  */
 
+require('../test/gen-runner');
 require('../test/gen-tc');
 require('./gen-package');
+
 var util = require('util');
 var fs = require('fs');
 var cwd = process.cwd();

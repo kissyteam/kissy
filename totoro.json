@@ -305,7 +305,7 @@
         },
         {
             "name": "path",
-            "runner": "http://dev.kissyui.com/kissy/src/path/tests/runner/test.jss",
+            "runner": "http://dev.kissyui.com/kissy/src/path/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
@@ -313,6 +313,13 @@
         {
             "name": "promise",
             "runner": "http://dev.kissyui.com/kissy/src/promise/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
+            "name": "querystring",
+            "runner": "http://dev.kissyui.com/kissy/src/querystring/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
@@ -367,8 +374,8 @@
             ]
         },
         {
-            "name": "uri",
-            "runner": "http://dev.kissyui.com/kissy/src/uri/tests/runner/test.jss",
+            "name": "url",
+            "runner": "http://dev.kissyui.com/kissy/src/url/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]

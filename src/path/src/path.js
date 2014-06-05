@@ -4,19 +4,19 @@
  * Note: Only posix mode.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var util = require('util');
+KISSY.add(function () {
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
-    function filter(arr, fn, context) {
-        var ret = [];
-        util.each(arr, function (item, i, arr) {
-            if (fn.call(context || this, item, i, arr)) {
-                ret.push(item);
-            }
-        });
-        return ret;
+    function splitPathToArray(str) {
+        var arr = str.split(/\/+/);
+        if (!arr[arr.length - 1]) {
+            arr = arr.slice(0, -1);
+        }
+        if (!arr[0]) {
+            arr = arr.slice(1);
+        }
+        return arr;
     }
 
     // Remove .. and . in path array
@@ -81,9 +81,7 @@ KISSY.add(function (S, require) {
                 absolute = path.charAt(0) === '/';
             }
 
-            resolvedPathStr = normalizeArray(filter(resolvedPath.split('/'), function (p) {
-                return !!p;
-            }), !absolute).join('/');
+            resolvedPathStr = normalizeArray(splitPathToArray(resolvedPath), !absolute).join('/');
 
             return ((absolute ? '/' : '') + resolvedPathStr) || '.';
         },
@@ -102,9 +100,7 @@ KISSY.add(function (S, require) {
             var absolute = path.charAt(0) === '/',
                 trailingSlash = path.slice(0 - 1) === '/';
 
-            path = normalizeArray(filter(path.split('/'), function (p) {
-                return !!p;
-            }), !absolute).join('/');
+            path = normalizeArray(splitPathToArray(path), !absolute).join('/');
 
             if (!path && !absolute) {
                 path = '.';
@@ -123,9 +119,7 @@ KISSY.add(function (S, require) {
          */
         join: function () {
             var args = Array.prototype.slice.call(arguments);
-            return Path.normalize(filter(args,function (p) {
-                return p && (typeof p === 'string');
-            }).join('/'));
+            return Path.normalize(args.join('/'));
         },
 
         /**
@@ -135,7 +129,7 @@ KISSY.add(function (S, require) {
          *
          *
          *      relative('x/','x/y/z') => 'y/z'
-         *      relative('x/t/z','x/') => '../../'
+         *      relative('x/t/z','x/') => '../..'
          *
          * @return {String}
          */
@@ -143,15 +137,12 @@ KISSY.add(function (S, require) {
             from = Path.normalize(from);
             to = Path.normalize(to);
 
-            var fromParts = filter(from.split('/'), function (p) {
-                    return !!p;
-                }),
+            var fromParts = splitPathToArray(from),
                 path = [],
                 sameIndex,
                 sameIndex2,
-                toParts = filter(to.split('/'), function (p) {
-                    return !!p;
-                }), commonLength = Math.min(fromParts.length, toParts.length);
+                toParts = splitPathToArray(to),
+                commonLength = Math.min(fromParts.length, toParts.length);
 
             for (sameIndex = 0; sameIndex < commonLength; sameIndex++) {
                 if (fromParts[sameIndex] !== toParts[sameIndex]) {
