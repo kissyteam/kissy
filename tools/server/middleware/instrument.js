@@ -36,8 +36,8 @@ module.exports = function (req, res, next) {
     }
     var pathname = url.parse(req.url).pathname;
     var moduleName = getModuleName(pathname);
-    if (req.xtpl) {
-        instrument(req.xtpl, moduleName, res, next);
+    if (req.code) {
+        instrument(req.code, moduleName, res, next);
     } else {
         var codeFile = Path.join(cwd, pathname);
         codeFile = codeFile.replace(/-coverage/, '');

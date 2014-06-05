@@ -15,8 +15,12 @@ walker.on('directories', function (dir, states, next) {
                 fs.writeFileSync(path.join(dir, 'runner'), '');
             }
         } else {
-            fs.unlinkSync(path.join(dir, 'coverage'));
-            fs.unlinkSync(path.join(dir, 'runner'));
+            if (fs.existsSync(path.join(dir, 'coverage'))) {
+                fs.unlinkSync(path.join(dir, 'coverage'));
+            }
+            if (fs.existsSync(path.join(dir, 'runner'))) {
+                fs.unlinkSync(path.join(dir, 'runner'));
+            }
         }
     }
     next();

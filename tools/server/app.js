@@ -51,6 +51,8 @@ function startServer(port) {
 
     app.use('/kissy/', require('./middleware/xtpl'));
 
+    app.use('/kissy/src/', require('./middleware/wrap-module'));
+
     app.use('/kissy/', require('./middleware/instrument'));
 
     app.use('/kissy/', require('./middleware/tests-runner'));

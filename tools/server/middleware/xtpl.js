@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
 
     var code = xtemplate.getCompileModule(filePath, name);
     if (pathname.match(/-coverage/)) {
-        req.xtpl = code;
+        req.code = code;
         next();
     } else {
         res.setHeader('Content-Type', 'application/x-javascript');

@@ -3,207 +3,205 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S, require) {
-    var Dom = require('dom');
-    var util = require('util');
-    var AnimBase = require('./base');
-    var Easing = require('./timer/easing');
-    var AM = require('./timer/manager');
-    var Fx = require('./timer/fx');
-    require('./timer/color');
-    require('./timer/transform');
 
-    var SHORT_HANDS = require('./timer/short-hand');
-    var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
+var Dom = require('dom');
+var util = require('util');
+var AnimBase = require('./base');
+var Easing = require('./timer/easing');
+var AM = require('./timer/manager');
+var Fx = require('./timer/fx');
+require('./timer/color');
+require('./timer/transform');
 
-    function TimerAnim(node, to, duration, easing, complete) {
-        var self = this;
-        if (!(self instanceof  TimerAnim)) {
-            return new TimerAnim(node, to, duration, easing, complete);
-        }
-        TimerAnim.superclass.constructor.apply(self, arguments);
+var SHORT_HANDS = require('./timer/short-hand');
+var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
+
+function TimerAnim(node, to, duration, easing, complete) {
+    var self = this;
+    if (!(self instanceof  TimerAnim)) {
+        return new TimerAnim(node, to, duration, easing, complete);
     }
+    TimerAnim.superclass.constructor.apply(self, arguments);
+}
 
-    util.extend(TimerAnim, AnimBase, {
-        prepareFx: function () {
-            var self = this,
-                node = self.node,
-                _propsData = self._propsData;
+util.extend(TimerAnim, AnimBase, {
+    prepareFx: function () {
+        var self = this,
+            node = self.node,
+            _propsData = self._propsData;
 
-            util.each(_propsData, function (_propData) {
-                // ms
-                _propData.duration *= 1000;
-                _propData.delay *= 1000;
-                if (typeof _propData.easing === 'string') {
-                    _propData.easing = Easing.toFn(_propData.easing);
-                }
-            });
-
-            // 扩展分属性
-            util.each(SHORT_HANDS, function (shortHands, p) {
-                var origin,
-                    _propData = _propsData[p],
-                    val;
-                if (_propData) {
-                    val = _propData.value;
-                    origin = {};
-                    util.each(shortHands, function (sh) {
-                        // 得到原始分属性之前值
-                        origin[sh] = Dom.css(node, sh);
-                    });
-                    Dom.css(node, p, val);
-                    util.each(origin, function (val, sh) {
-                        // 如果分属性没有显式设置过，得到期待的分属性最后值
-                        if (!(sh in _propsData)) {
-                            _propsData[sh] = util.merge(_propData, {
-                                value: Dom.css(node, sh)
-                            });
-                        }
-                        // 还原
-                        Dom.css(node, sh, val);
-                    });
-                    // 删除复合属性
-                    delete _propsData[p];
-                }
-            });
-
-            var prop,
-                _propData,
-                val,
-                to,
-                from,
-                propCfg,
-                fx,
-                isCustomFx = 0,
-                unit,
-                parts;
-
-            if (util.isPlainObject(node)) {
-                isCustomFx = 1;
+        util.each(_propsData, function (_propData) {
+            // ms
+            _propData.duration *= 1000;
+            _propData.delay *= 1000;
+            if (typeof _propData.easing === 'string') {
+                _propData.easing = Easing.toFn(_propData.easing);
             }
+        });
 
-            // 取得单位，并对单个属性构建 Fx 对象
-            for (prop in _propsData) {
-                _propData = _propsData[prop];
+        // 扩展分属性
+        util.each(SHORT_HANDS, function (shortHands, p) {
+            var origin,
+                _propData = _propsData[p],
+                val;
+            if (_propData) {
                 val = _propData.value;
-                propCfg = {
-                    isCustomFx: isCustomFx,
-                    prop: prop,
-                    anim: self,
-                    fxType: _propData.fxType,
-                    type: _propData.type,
-                    propData: _propData
-                };
-                fx = Fx.getFx(propCfg);
-
-                to = val;
-
-                from = fx.cur();
-
-                val += '';
-                unit = '';
-                parts = val.match(NUMBER_REG);
-
-                if (parts) {
-                    to = parseFloat(parts[2]);
-                    unit = parts[3];
-
-                    // 有单位但单位不是 px
-                    if (unit && unit !== 'px' && from) {
-                        var tmpCur = 0,
-                            to2 = to;
-                        do {
-                            ++to2;
-                            Dom.css(node, prop, to2 + unit);
-                            // in case tmpCur==0
-                            tmpCur = fx.cur();
-                        } while (tmpCur === 0);
-                        from = (to2 / tmpCur) * from;
-                        Dom.css(node, prop, from + unit);
+                origin = {};
+                util.each(shortHands, function (sh) {
+                    // 得到原始分属性之前值
+                    origin[sh] = Dom.css(node, sh);
+                });
+                Dom.css(node, p, val);
+                util.each(origin, function (val, sh) {
+                    // 如果分属性没有显式设置过，得到期待的分属性最后值
+                    if (!(sh in _propsData)) {
+                        _propsData[sh] = util.merge(_propData, {
+                            value: Dom.css(node, sh)
+                        });
                     }
+                    // 还原
+                    Dom.css(node, sh, val);
+                });
+                // 删除复合属性
+                delete _propsData[p];
+            }
+        });
 
-                    // 相对
-                    if (parts[1]) {
-                        to = ((parts[ 1 ] === '-=' ? -1 : 1) * to) + from;
-                    }
+        var prop,
+            _propData,
+            val,
+            to,
+            from,
+            propCfg,
+            fx,
+            isCustomFx = 0,
+            unit,
+            parts;
+
+        if (util.isPlainObject(node)) {
+            isCustomFx = 1;
+        }
+
+        // 取得单位，并对单个属性构建 Fx 对象
+        for (prop in _propsData) {
+            _propData = _propsData[prop];
+            val = _propData.value;
+            propCfg = {
+                isCustomFx: isCustomFx,
+                prop: prop,
+                anim: self,
+                fxType: _propData.fxType,
+                type: _propData.type,
+                propData: _propData
+            };
+            fx = Fx.getFx(propCfg);
+
+            to = val;
+
+            from = fx.cur();
+
+            val += '';
+            unit = '';
+            parts = val.match(NUMBER_REG);
+
+            if (parts) {
+                to = parseFloat(parts[2]);
+                unit = parts[3];
+
+                // 有单位但单位不是 px
+                if (unit && unit !== 'px' && from) {
+                    var tmpCur = 0,
+                        to2 = to;
+                    do {
+                        ++to2;
+                        Dom.css(node, prop, to2 + unit);
+                        // in case tmpCur==0
+                        tmpCur = fx.cur();
+                    } while (tmpCur === 0);
+                    from = (to2 / tmpCur) * from;
+                    Dom.css(node, prop, from + unit);
                 }
 
-                propCfg.from = from;
-                propCfg.to = to;
-                propCfg.unit = unit;
-                fx.load(propCfg);
-                _propData.fx = fx;
+                // 相对
+                if (parts[1]) {
+                    to = ((parts[ 1 ] === '-=' ? -1 : 1) * to) + from;
+                }
             }
-        },
 
-        // frame of animation
-        frame: function () {
-            var self = this,
-                prop,
-                end = 1,
-                fx,
-                _propData,
-                _propsData = self._propsData;
+            propCfg.from = from;
+            propCfg.to = to;
+            propCfg.unit = unit;
+            fx.load(propCfg);
+            _propData.fx = fx;
+        }
+    },
+
+    // frame of animation
+    frame: function () {
+        var self = this,
+            prop,
+            end = 1,
+            fx,
+            _propData,
+            _propsData = self._propsData;
+        for (prop in _propsData) {
+            _propData = _propsData[prop];
+            fx = _propData.fx;
+            fx.frame();
+            // in case call stop in frame
+            if (self.isRejected() || self.isResolved()) {
+                return;
+            }
+            end &= fx.pos === 1;
+        }
+        var currentTime = util.now(),
+            duration = self.config.duration * 1000,
+            remaining = Math.max(0,
+                    self.startTime + duration - currentTime),
+            temp = remaining / duration || 0,
+            percent = 1 - temp;
+        self.defer.notify([self, percent, remaining]);
+        if (end) {
+            // complete 事件只在动画到达最后一帧时才触发
+            self.stop(end);
+        }
+    },
+
+    doStop: function (finish) {
+        var self = this,
+            prop,
+            fx,
+            _propData,
+            _propsData = self._propsData;
+        AM.stop(self);
+        if (finish) {
             for (prop in _propsData) {
                 _propData = _propsData[prop];
                 fx = _propData.fx;
-                fx.frame();
-                // in case call stop in frame
-                if (self.isRejected() || self.isResolved()) {
-                    return;
-                }
-                end &= fx.pos === 1;
-            }
-            var currentTime = util.now(),
-                duration = self.config.duration * 1000,
-                remaining = Math.max(0,
-                        self.startTime + duration - currentTime),
-                temp = remaining / duration || 0,
-                percent = 1 - temp;
-            self.defer.notify([self, percent, remaining]);
-            if (end) {
-                // complete 事件只在动画到达最后一帧时才触发
-                self.stop(end);
-            }
-        },
-
-        doStop: function (finish) {
-            var self = this,
-                prop,
-                fx,
-                _propData,
-                _propsData = self._propsData;
-            AM.stop(self);
-            if (finish) {
-                for (prop in _propsData) {
-                    _propData = _propsData[prop];
-                    fx = _propData.fx;
-                    // fadeIn() -> call stop
-                    if (fx) {
-                        fx.frame(1);
-                    }
+                // fadeIn() -> call stop
+                if (fx) {
+                    fx.frame(1);
                 }
             }
-        },
-
-        doStart: function () {
-            AM.start(this);
         }
-    });
+    },
 
-    // can used to judge whether it's a timer based anim
-    TimerAnim.Easing = Easing;
-
-    // for test
-    TimerAnim.Fx = Fx;
-
-    util.mix(TimerAnim, AnimBase.Statics);
-
-    // bad
-    S.Anim = TimerAnim;
-
-    return TimerAnim;
+    doStart: function () {
+        AM.start(this);
+    }
 });
+
+// can used to judge whether it's a timer based anim
+TimerAnim.Easing = Easing;
+
+// for test
+TimerAnim.Fx = Fx;
+
+util.mix(TimerAnim, AnimBase.Statics);
+
+// bad
+module.exports = S.Anim = TimerAnim;
+
 /*
  2013-09
  - support custom anim object
