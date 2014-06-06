@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
         fs.readFile(filePath, {
             encoding: 'utf-8'
         }, function (err, content) {
-            if (content.indexOf('no-module-wrap') !== -1 || content.indexOf('KISSY.add(') !== -1) {
+            if (content.indexOf('--no-module-wrap--') !== -1 || content.indexOf('KISSY.add(') !== -1) {
                 next();
                 return;
             }

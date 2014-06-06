@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,

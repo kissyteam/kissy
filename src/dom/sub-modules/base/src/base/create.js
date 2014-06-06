@@ -3,7 +3,7 @@
  * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+KISSY.add(function (S, require,exports,module) {
     var util = require('util');
     var logger = S.getLogger('s/dom');
     var Dom = require('./api');
@@ -316,7 +316,7 @@ KISSY.add(function (S, require) {
                 var el,
                     els = Dom.query(selector),
                     all,
-                    DOMEvent = S.require('event/dom'),
+                    DOMEvent = module.require('event/dom'),
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
@@ -453,7 +453,7 @@ KISSY.add(function (S, require) {
 
     // 克隆除了事件的 data
     function cloneWithDataAndEvent(src, dest) {
-        var DOMEvent = S.require('event/dom'),
+        var DOMEvent = module.require('event/dom'),
             srcData,
             d;
 

@@ -1,4 +1,5 @@
-<script src="/kissy/build/seed-debug.js" charset="utf-8"></script>
+<script src="/kissy/src/loader/tests/others/import.js" charset="utf-8"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
     KISSY.config({
         modules: {
@@ -8,7 +9,7 @@
         }
     });
 
-    KISSY.use('jsonp/data,json', function (S, data, Json) {
-        alert(Json.stringify(data));
+    KISSY.use('jsonp/data', function (S, data) {
+        S.log(data);
     });
 </script>

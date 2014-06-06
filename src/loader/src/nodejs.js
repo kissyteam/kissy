@@ -5,6 +5,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     /*global require*/
     var fs = require('fs'),
         Utils = S.Loader.Utils,

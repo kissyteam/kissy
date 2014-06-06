@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Utils = Loader.Utils,
         createModule = Utils.createModule,
@@ -60,6 +61,11 @@
             var loader,
                 error,
                 tryCount = 0;
+
+            if (typeof modNames === 'string') {
+                S.log('KISSY.use\'s first argument should be Array, but now: ' + modNames, 'warning');
+                modNames = modNames.replace(/\s+/g, '').split(',');
+            }
 
             if (typeof success === 'object') {
                 //noinspection JSUnresolvedVariable
@@ -143,7 +149,21 @@
          * @return {*} exports of specified module
          */
         require: function (moduleName) {
-            return createModule(moduleName).getExports();
+            var requiresModule = createModule(moduleName);
+            return requiresModule.getExports();
+        },
+
+        /**
+         * undefine a module
+         * @param {String} moduleName module name
+         * @member KISSY
+         */
+        undef: function (moduleName) {
+            var requiresModule = createModule(moduleName);
+            var mods = requiresModule.getNormalizedModules();
+            Utils.each(mods, function (m) {
+                m.undef();
+            });
         }
     });
 })(KISSY);

@@ -3,7 +3,7 @@
  * represent tag, it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+KISSY.add(function (S, require,exports,module) {
     var Node = require('./node');
     var Attribute = require('./attribute');
     var Dtd = require('../dtd');
@@ -231,9 +231,9 @@ KISSY.add(function (S, require) {
         filterChildren: function () {
             var self = this;
             if (!self.isChildrenFiltered) {
-                var writer = new (S.require('html-parser/writer/basic'))();
+                var writer = new (module.require('html-parser/writer/basic'))();
                 self._writeChildrenHTML(writer);
-                var parser = new (S.require('html-parser/parser'))(writer.getHtml()),
+                var parser = new (module.require('html-parser/parser'))(writer.getHtml()),
                     children = parser.parse().childNodes;
                 self.empty();
                 util.each(children, function (c) {
@@ -341,7 +341,7 @@ KISSY.add(function (S, require) {
         },
 
         outerHtml: function () {
-            var writer = new (S.require('html-parser/writer/basic'))();
+            var writer = new (module.require('html-parser/writer/basic'))();
             this.writeHtml(writer);
             return writer.getHtml();
         }

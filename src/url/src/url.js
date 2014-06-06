@@ -165,7 +165,7 @@ var url = {
     format: function (url, serializeArray) {
         var host = url.host;
         if (host === undef) {
-            host = url.hostname;
+            host = encodeURIComponent(url.hostname);
             if (url.port) {
                 host += ':' + url.port;
             }
@@ -210,7 +210,7 @@ var url = {
                 out.push(encodeSpecialChars(auth, reDisallowedInProtocolOrAuth));
                 out.push('@');
             }
-            out.push(encodeURIComponent(host));
+            out.push(host);
         }
 
         if (pathname) {

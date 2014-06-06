@@ -255,7 +255,7 @@ KISSY.add(function (S, require) {
              */
             cleanData: function (selector, deep) {
                 var els = Dom.query(selector), elem, i;
-                var DOMEvent = S.require('event/dom');
+                var DOMEvent = module.require('event/dom');
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType) {

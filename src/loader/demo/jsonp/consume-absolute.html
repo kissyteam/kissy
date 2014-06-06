@@ -1,0 +1,11 @@
+<script src="/kissy/src/loader/tests/others/import.js" charset="utf-8"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use(['url'], function (S, url) {
+        var jsonp = url.resolve(location.href, './data.jss?test=1');
+        S.use(jsonp, function (S, d) {
+            S.log('***********');
+            S.log(d);
+        })
+    });
+</script>

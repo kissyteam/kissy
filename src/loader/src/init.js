@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;

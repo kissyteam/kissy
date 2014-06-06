@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+    // --no-module-wrap--
     var logger = S.getLogger('s/loader');
 
     var Loader = S.Loader,
@@ -389,13 +390,18 @@
                 type = mod.getType();
                 modUrl = mod.getUrl();
                 packageInfo = mod.getPackage();
-                packageBase = packageInfo.getBase();
-                packageName = packageInfo.name;
-                charset = packageInfo.getCharset();
-                tag = packageInfo.getTag();
-                group = packageInfo.getGroup();
 
-                if (packageInfo.isCombine() && group) {
+                if (packageInfo) {
+                    packageBase = packageInfo.getBase();
+                    packageName = packageInfo.name;
+                    charset = packageInfo.getCharset();
+                    tag = packageInfo.getTag();
+                    group = packageInfo.getGroup();
+                } else {
+                    packageBase = mod.name;
+                }
+
+                if (packageInfo && packageInfo.isCombine() && group) {
                     var typeGroups = groups[type] || (groups[type] = {});
                     group = group + '-' + charset;
                     var typeGroup = typeGroups[group] || (typeGroups[group] = {});
@@ -481,7 +487,7 @@
                 for (var i = 0; i < sendMods.length; i++) {
                     var currentMod = sendMods[i];
                     var url = currentMod.getUrl();
-                    if (!currentMod.getPackage().isCombine() ||
+                    if (!currentMod.getPackage() || !currentMod.getPackage().isCombine() ||
                         // use(x/y) packageName: x/y ...
                         !Utils.startsWith(url, basePrefix)) {
                         res.push({

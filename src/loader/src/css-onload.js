@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var   logger = S.getLogger('s/loader/getScript');
 
     var CSS_POLL_INTERVAL = 30,

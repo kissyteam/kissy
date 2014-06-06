@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 29 12:01
+build time: Jun 6 16:01
 */
 /**
  * @ignore
@@ -29,6 +29,7 @@ build time: May 29 12:01
 /* exported KISSY */
 /*jshint -W079 */
 var KISSY = (function (undefined) {
+    // --no-module-wrap--
     var self = this,
         S;
 
@@ -55,11 +56,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140529120059' will replace with current timestamp when compressing.
+         * NOTICE: '20140606160113' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140529120059',
+        __BUILD_TIME: '20140606160113',
 
         /**
          * KISSY Environment.
@@ -319,6 +320,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Env = S.Env,
         mods = Env.mods,
@@ -365,16 +367,7 @@ var KISSY = (function (undefined) {
 
     var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/,
         commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*require\s*\(([^)]+)\)/g;
-
-    function getRequireVal(str) {
-        var m;
-        // simple string
-        if (!(m = str.match(/^\s*["']([^'"\s]+)["']\s*$/))) {
-            S.error('can not find required mod in require call: ' + str);
-        }
-        return  m[1];
-    }
+        requireRegExp = /[^.'"]\s*require\s*\((['"])([^)]+)\1\)/g;
 
     function normalizeName(name) {
         // 'x/' 'x/y/z/'
@@ -498,8 +491,8 @@ var KISSY = (function (undefined) {
             if (firstChar !== '.') {
                 return subPath;
             }
-            var parts = parentPath.split('/');
-            var subParts = subPath.split('/');
+            var parts = parentPath.split(/\//);
+            var subParts = subPath.split(/\//);
             parts.pop();
             for (var i = 0, l = subParts.length; i < l; i++) {
                 var subPart = subParts[i];
@@ -551,8 +544,8 @@ var KISSY = (function (undefined) {
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, dep) {
-                    requires.push(getRequireVal(dep));
+                .replace(requireRegExp, function (match, _,dep) {
+                    requires.push(dep);
                 });
             return requires;
         },
@@ -584,9 +577,6 @@ var KISSY = (function (undefined) {
         },
 
         createModules: function (names) {
-            if (typeof names === 'string') {
-                names = names.replace(/\s+/g, '').split(',');
-            }
             return Utils.map(names, function (name) {
                 return Utils.createModule(name);
             });
@@ -629,14 +619,38 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Config = S.Config,
         Status = Loader.Status,
         ATTACHED = Status.ATTACHED,
         ATTACHING = Status.ATTACHING,
         Utils = Loader.Utils,
+        startsWith = Utils.startsWith,
         createModule = Utils.createModule,
         mix = Utils.mix;
+
+    function makeArray(arr) {
+        var ret = [];
+        for (var i = 0; i < arr.length; i++) {
+            ret[i] = arr[i];
+        }
+        return ret;
+    }
+
+    function wrapUse(fn) {
+        if (typeof fn === 'function') {
+            return function () {
+                fn.apply(this, makeArray(arguments).slice(1));
+            };
+        } else if (fn && fn.success) {
+            var original = fn.success;
+            fn.success = function () {
+                original.apply(this, makeArray(arguments).slice(1));
+            };
+            return fn;
+        }
+    }
 
     function checkGlobalIfNotExist(self, property) {
         return property in self ? self[property] : Config[property];
@@ -739,18 +753,47 @@ var KISSY = (function (undefined) {
 
         self.waits = {};
 
-        self.require = function (moduleName) {
-            var requiresModule = createModule(self.resolve(moduleName));
-            Utils.attachModules(requiresModule.getNormalizedModules());
-            return requiresModule.getExports();
+        var require = self._require = function (moduleName) {
+            if (typeof moduleName === 'string') {
+                var requiresModule = createModule(self.resolve(moduleName));
+                Utils.attachModules(requiresModule.getNormalizedModules());
+                return requiresModule.getExports();
+            } else {
+                require.async.apply(require, arguments);
+            }
         };
 
-        self.require.resolve = function (relativeName) {
+        require.async = function (mods) {
+            for (var i = 0; i < mods.length; i++) {
+                mods[i] = self.resolve(mods[i]);
+            }
+            var args = makeArray(arguments);
+            args[0] = mods;
+            args[1] = wrapUse(args[1]);
+            S.use.apply(S, args);
+        };
+
+        require.resolve = function (relativeName) {
             return self.resolve(relativeName);
         };
 
-        // relative name resolve cache
-        self.resolveCache = {};
+        require.toUrl = function (path) {
+            var url = self.getUrl();
+            var pathIndex = url.indexOf('//');
+            if (pathIndex === -1) {
+                pathIndex = 0;
+            } else {
+                pathIndex = url.indexOf('/', pathIndex + 2);
+                if (pathIndex === -1) {
+                    pathIndex = 0;
+                }
+            }
+            var rest = url.substring(pathIndex);
+            path = Utils.normalizePath(rest, path);
+            return url.substring(0, pathIndex) + path;
+        };
+//      relative name resolve cache
+//      self.resolveCache = {};
     }
 
     Module.prototype = {
@@ -758,13 +801,18 @@ var KISSY = (function (undefined) {
 
         constructor: Module,
 
+        require: function (moduleName) {
+            return S.require(this.resolve(moduleName));
+        },
+
         resolve: function (relativeName) {
-            var resolveCache = this.resolveCache;
-            if (resolveCache[relativeName]) {
-                return resolveCache[relativeName];
-            }
-            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
-            return resolveCache[relativeName];
+            return Utils.normalizePath(this.name, relativeName);
+//            var resolveCache = this.resolveCache;
+//            if (resolveCache[relativeName]) {
+//                return resolveCache[relativeName];
+//            }
+//            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
+//            return resolveCache[relativeName];
         },
 
         add: function (loader) {
@@ -854,7 +902,7 @@ var KISSY = (function (undefined) {
         getUrl: function () {
             var self = this;
             if (!self.url) {
-                self.url = S.Config.resolveModFn(self);
+                self.url = Utils.normalizeSlash(S.Config.resolveModFn(self));
             }
             return self.url;
         },
@@ -865,13 +913,22 @@ var KISSY = (function (undefined) {
          */
         getPackage: function () {
             var self = this;
-            if (!self.packageInfo) {
+            if (!('packageInfo' in self)) {
+                var name = self.name;
+                // absolute path
+                if (startsWith(name, '/') ||
+                    startsWith(name, 'http://') ||
+                    startsWith(name, 'https://') ||
+                    startsWith(name, 'file://')) {
+                    self.packageInfo = null;
+                    return;
+                }
                 var packages = Config.packages,
                     modNameSlash = self.name + '/',
                     pName = '',
                     p;
                 for (p in packages) {
-                    if (Utils.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
+                    if (startsWith(modNameSlash, p + '/') && p.length > pName.length) {
                         pName = p;
                     }
                 }
@@ -887,7 +944,7 @@ var KISSY = (function (undefined) {
          */
         getTag: function () {
             var self = this;
-            return self.tag || self.getPackage().getTag();
+            return self.tag || self.getPackage() && self.getPackage().getTag();
         },
 
         /**
@@ -896,7 +953,7 @@ var KISSY = (function (undefined) {
          */
         getCharset: function () {
             var self = this;
-            return self.charset || self.getPackage().getCharset();
+            return self.charset || self.getPackage() && self.getPackage().getCharset();
         },
 
         setRequiresModules: function (requires) {
@@ -931,8 +988,13 @@ var KISSY = (function (undefined) {
 
         attachSelf: function () {
             var self = this,
+                status = self.status,
                 factory = self.factory,
                 exports;
+
+            if (status === Status.ATTACHED || status < Status.LOADED) {
+                return true;
+            }
 
             if (typeof factory === 'function') {
                 self.exports = {};
@@ -941,16 +1003,11 @@ var KISSY = (function (undefined) {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
-                var requires = self.requires;
                 exports = factory.apply(self,
                     // KISSY.add(function(S){module.require}) lazy initialize
                     (
-                        self.cjs ? [S,
-                                requires && requires.length ?
-                                self.require :
-                                undefined,
-                            self.exports,
-                            self] :
+                        self.cjs ?
+                            [S, self._require, self.exports, self] :
                             [S].concat(Utils.map(self.getRequiredModules(), function (m) {
                                 return m.getExports();
                             }))
@@ -973,8 +1030,7 @@ var KISSY = (function (undefined) {
                 status;
             status = self.status;
             // attached or circular dependency
-            if (status >= ATTACHING) {
-                self.status = ATTACHED;
+            if (status >= ATTACHING || status < Status.LOADED) {
                 return;
             }
             self.status = ATTACHING;
@@ -987,7 +1043,24 @@ var KISSY = (function (undefined) {
                 });
                 self.attachSelf();
             }
-            return self;
+            return self.status;
+        },
+
+        undef: function () {
+            this.status = Status.INIT;
+            delete this.factory;
+            delete this.exports;
+        },
+
+        attached: function (moduleName) {
+            var requiresModule = createModule(this.resolve(moduleName));
+            var mods = requiresModule.getNormalizedModules();
+            var attached = true;
+            Utils.each(mods, function (m) {
+                attached = m.status === Status.ATTACHED;
+                return attached;
+            });
+            return attached;
         }
     };
 
@@ -1024,7 +1097,7 @@ var KISSY = (function (undefined) {
             return alias;
         }
         packageInfo = mod.getPackage();
-        if (packageInfo.alias) {
+        if (packageInfo && packageInfo.alias) {
             alias = packageInfo.alias(name);
         }
         alias = mod.alias = alias || [
@@ -1040,6 +1113,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var   logger = S.getLogger('s/loader/getScript');
 
     var CSS_POLL_INTERVAL = 30,
@@ -1144,6 +1218,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,
@@ -1322,6 +1397,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Package = Loader.Package,
         Utils = Loader.Utils,
@@ -1347,6 +1423,11 @@ var KISSY = (function (undefined) {
         // deprecated! do not use path config
             subPath = mod.path;
         var packageInfo = mod.getPackage();
+
+        if (!packageInfo) {
+            return name;
+        }
+
         var packageBase = packageInfo.getBase();
         var packageName = packageInfo.name;
         var extname = '.' + mod.getType();
@@ -1479,6 +1560,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+    // --no-module-wrap--
     var logger = S.getLogger('s/loader');
 
     var Loader = S.Loader,
@@ -1864,13 +1946,18 @@ var KISSY = (function (undefined) {
                 type = mod.getType();
                 modUrl = mod.getUrl();
                 packageInfo = mod.getPackage();
-                packageBase = packageInfo.getBase();
-                packageName = packageInfo.name;
-                charset = packageInfo.getCharset();
-                tag = packageInfo.getTag();
-                group = packageInfo.getGroup();
 
-                if (packageInfo.isCombine() && group) {
+                if (packageInfo) {
+                    packageBase = packageInfo.getBase();
+                    packageName = packageInfo.name;
+                    charset = packageInfo.getCharset();
+                    tag = packageInfo.getTag();
+                    group = packageInfo.getGroup();
+                } else {
+                    packageBase = mod.name;
+                }
+
+                if (packageInfo && packageInfo.isCombine() && group) {
                     var typeGroups = groups[type] || (groups[type] = {});
                     group = group + '-' + charset;
                     var typeGroup = typeGroups[group] || (typeGroups[group] = {});
@@ -1956,7 +2043,7 @@ var KISSY = (function (undefined) {
                 for (var i = 0; i < sendMods.length; i++) {
                     var currentMod = sendMods[i];
                     var url = currentMod.getUrl();
-                    if (!currentMod.getPackage().isCombine() ||
+                    if (!currentMod.getPackage() || !currentMod.getPackage().isCombine() ||
                         // use(x/y) packageName: x/y ...
                         !Utils.startsWith(url, basePrefix)) {
                         res.push({
@@ -2093,6 +2180,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Utils = Loader.Utils,
         createModule = Utils.createModule,
@@ -2149,6 +2237,11 @@ var KISSY = (function (undefined) {
             var loader,
                 error,
                 tryCount = 0;
+
+            if (typeof modNames === 'string') {
+                S.log('KISSY.use\'s first argument should be Array, but now: ' + modNames, 'warning');
+                modNames = modNames.replace(/\s+/g, '').split(',');
+            }
 
             if (typeof success === 'object') {
                 //noinspection JSUnresolvedVariable
@@ -2232,7 +2325,21 @@ var KISSY = (function (undefined) {
          * @return {*} exports of specified module
          */
         require: function (moduleName) {
-            return createModule(moduleName).getExports();
+            var requiresModule = createModule(moduleName);
+            return requiresModule.getExports();
+        },
+
+        /**
+         * undefine a module
+         * @param {String} moduleName module name
+         * @member KISSY
+         */
+        undef: function (moduleName) {
+            var requiresModule = createModule(moduleName);
+            var mods = requiresModule.getNormalizedModules();
+            Utils.each(mods, function (m) {
+                m.undef();
+            });
         }
     });
 })(KISSY);
@@ -2256,10 +2363,11 @@ KISSY.add('i18n', {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140529120059';
+    var TIMESTAMP = '20140606160113';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

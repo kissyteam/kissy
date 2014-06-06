@@ -24,6 +24,7 @@
 /* exported KISSY */
 /*jshint -W079 */
 var KISSY = (function (undefined) {
+    // --no-module-wrap--
     var self = this,
         S;
 

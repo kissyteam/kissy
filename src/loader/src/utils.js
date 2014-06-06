@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Env = S.Env,
         mods = Env.mods,
@@ -50,16 +51,7 @@
 
     var urlReg = /http(s)?:\/\/([^/]+)(?::(\d+))?/,
         commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*require\s*\(([^)]+)\)/g;
-
-    function getRequireVal(str) {
-        var m;
-        // simple string
-        if (!(m = str.match(/^\s*["']([^'"\s]+)["']\s*$/))) {
-            S.error('can not find required mod in require call: ' + str);
-        }
-        return  m[1];
-    }
+        requireRegExp = /[^.'"]\s*require\s*\((['"])([^)]+)\1\)/g;
 
     function normalizeName(name) {
         // 'x/' 'x/y/z/'
@@ -183,8 +175,8 @@
             if (firstChar !== '.') {
                 return subPath;
             }
-            var parts = parentPath.split('/');
-            var subParts = subPath.split('/');
+            var parts = parentPath.split(/\//);
+            var subParts = subPath.split(/\//);
             parts.pop();
             for (var i = 0, l = subParts.length; i < l; i++) {
                 var subPart = subParts[i];
@@ -236,8 +228,8 @@
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, dep) {
-                    requires.push(getRequireVal(dep));
+                .replace(requireRegExp, function (match, _,dep) {
+                    requires.push(dep);
                 });
             return requires;
         },
@@ -269,9 +261,6 @@
         },
 
         createModules: function (names) {
-            if (typeof names === 'string') {
-                names = names.replace(/\s+/g, '').split(',');
-            }
             return Utils.map(names, function (name) {
                 return Utils.createModule(name);
             });

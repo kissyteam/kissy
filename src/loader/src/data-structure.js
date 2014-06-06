@@ -4,14 +4,38 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Config = S.Config,
         Status = Loader.Status,
         ATTACHED = Status.ATTACHED,
         ATTACHING = Status.ATTACHING,
         Utils = Loader.Utils,
+        startsWith = Utils.startsWith,
         createModule = Utils.createModule,
         mix = Utils.mix;
+
+    function makeArray(arr) {
+        var ret = [];
+        for (var i = 0; i < arr.length; i++) {
+            ret[i] = arr[i];
+        }
+        return ret;
+    }
+
+    function wrapUse(fn) {
+        if (typeof fn === 'function') {
+            return function () {
+                fn.apply(this, makeArray(arguments).slice(1));
+            };
+        } else if (fn && fn.success) {
+            var original = fn.success;
+            fn.success = function () {
+                original.apply(this, makeArray(arguments).slice(1));
+            };
+            return fn;
+        }
+    }
 
     function checkGlobalIfNotExist(self, property) {
         return property in self ? self[property] : Config[property];
@@ -114,18 +138,47 @@
 
         self.waits = {};
 
-        self.require = function (moduleName) {
-            var requiresModule = createModule(self.resolve(moduleName));
-            Utils.attachModules(requiresModule.getNormalizedModules());
-            return requiresModule.getExports();
+        var require = self._require = function (moduleName) {
+            if (typeof moduleName === 'string') {
+                var requiresModule = createModule(self.resolve(moduleName));
+                Utils.attachModules(requiresModule.getNormalizedModules());
+                return requiresModule.getExports();
+            } else {
+                require.async.apply(require, arguments);
+            }
         };
 
-        self.require.resolve = function (relativeName) {
+        require.async = function (mods) {
+            for (var i = 0; i < mods.length; i++) {
+                mods[i] = self.resolve(mods[i]);
+            }
+            var args = makeArray(arguments);
+            args[0] = mods;
+            args[1] = wrapUse(args[1]);
+            S.use.apply(S, args);
+        };
+
+        require.resolve = function (relativeName) {
             return self.resolve(relativeName);
         };
 
-        // relative name resolve cache
-        self.resolveCache = {};
+        require.toUrl = function (path) {
+            var url = self.getUrl();
+            var pathIndex = url.indexOf('//');
+            if (pathIndex === -1) {
+                pathIndex = 0;
+            } else {
+                pathIndex = url.indexOf('/', pathIndex + 2);
+                if (pathIndex === -1) {
+                    pathIndex = 0;
+                }
+            }
+            var rest = url.substring(pathIndex);
+            path = Utils.normalizePath(rest, path);
+            return url.substring(0, pathIndex) + path;
+        };
+//      relative name resolve cache
+//      self.resolveCache = {};
     }
 
     Module.prototype = {
@@ -133,13 +186,18 @@
 
         constructor: Module,
 
+        require: function (moduleName) {
+            return S.require(this.resolve(moduleName));
+        },
+
         resolve: function (relativeName) {
-            var resolveCache = this.resolveCache;
-            if (resolveCache[relativeName]) {
-                return resolveCache[relativeName];
-            }
-            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
-            return resolveCache[relativeName];
+            return Utils.normalizePath(this.name, relativeName);
+//            var resolveCache = this.resolveCache;
+//            if (resolveCache[relativeName]) {
+//                return resolveCache[relativeName];
+//            }
+//            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
+//            return resolveCache[relativeName];
         },
 
         add: function (loader) {
@@ -229,7 +287,7 @@
         getUrl: function () {
             var self = this;
             if (!self.url) {
-                self.url = S.Config.resolveModFn(self);
+                self.url = Utils.normalizeSlash(S.Config.resolveModFn(self));
             }
             return self.url;
         },
@@ -240,13 +298,22 @@
          */
         getPackage: function () {
             var self = this;
-            if (!self.packageInfo) {
+            if (!('packageInfo' in self)) {
+                var name = self.name;
+                // absolute path
+                if (startsWith(name, '/') ||
+                    startsWith(name, 'http://') ||
+                    startsWith(name, 'https://') ||
+                    startsWith(name, 'file://')) {
+                    self.packageInfo = null;
+                    return;
+                }
                 var packages = Config.packages,
                     modNameSlash = self.name + '/',
                     pName = '',
                     p;
                 for (p in packages) {
-                    if (Utils.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
+                    if (startsWith(modNameSlash, p + '/') && p.length > pName.length) {
                         pName = p;
                     }
                 }
@@ -262,7 +329,7 @@
          */
         getTag: function () {
             var self = this;
-            return self.tag || self.getPackage().getTag();
+            return self.tag || self.getPackage() && self.getPackage().getTag();
         },
 
         /**
@@ -271,7 +338,7 @@
          */
         getCharset: function () {
             var self = this;
-            return self.charset || self.getPackage().getCharset();
+            return self.charset || self.getPackage() && self.getPackage().getCharset();
         },
 
         setRequiresModules: function (requires) {
@@ -306,8 +373,13 @@
 
         attachSelf: function () {
             var self = this,
+                status = self.status,
                 factory = self.factory,
                 exports;
+
+            if (status === Status.ATTACHED || status < Status.LOADED) {
+                return true;
+            }
 
             if (typeof factory === 'function') {
                 self.exports = {};
@@ -316,16 +388,11 @@
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
-                var requires = self.requires;
                 exports = factory.apply(self,
                     // KISSY.add(function(S){module.require}) lazy initialize
                     (
-                        self.cjs ? [S,
-                                requires && requires.length ?
-                                self.require :
-                                undefined,
-                            self.exports,
-                            self] :
+                        self.cjs ?
+                            [S, self._require, self.exports, self] :
                             [S].concat(Utils.map(self.getRequiredModules(), function (m) {
                                 return m.getExports();
                             }))
@@ -348,8 +415,7 @@
                 status;
             status = self.status;
             // attached or circular dependency
-            if (status >= ATTACHING) {
-                self.status = ATTACHED;
+            if (status >= ATTACHING || status < Status.LOADED) {
                 return;
             }
             self.status = ATTACHING;
@@ -362,7 +428,24 @@
                 });
                 self.attachSelf();
             }
-            return self;
+            return self.status;
+        },
+
+        undef: function () {
+            this.status = Status.INIT;
+            delete this.factory;
+            delete this.exports;
+        },
+
+        attached: function (moduleName) {
+            var requiresModule = createModule(this.resolve(moduleName));
+            var mods = requiresModule.getNormalizedModules();
+            var attached = true;
+            Utils.each(mods, function (m) {
+                attached = m.status === Status.ATTACHED;
+                return attached;
+            });
+            return attached;
         }
     };
 
@@ -399,7 +482,7 @@
             return alias;
         }
         packageInfo = mod.getPackage();
-        if (packageInfo.alias) {
+        if (packageInfo && packageInfo.alias) {
             alias = packageInfo.alias(name);
         }
         alias = mod.alias = alias || [

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var Loader = S.Loader,
         Package = Loader.Package,
         Utils = Loader.Utils,
@@ -29,6 +30,11 @@
         // deprecated! do not use path config
             subPath = mod.path;
         var packageInfo = mod.getPackage();
+
+        if (!packageInfo) {
+            return name;
+        }
+
         var packageBase = packageInfo.getBase();
         var packageName = packageInfo.name;
         var extname = '.' + mod.getType();
