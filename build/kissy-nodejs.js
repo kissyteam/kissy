@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.44
 MIT Licensed
-build time: May 22 12:30
+build time: Jun 10 15:14
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140522123037' will replace with current timestamp when compressing.
+         * NOTICE: '20140610151400' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140522123037',
+        __BUILD_TIME: '20140610151400',
 
         /**
          * KISSY Environment.
@@ -118,10 +118,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.43' will replace with current version when compressing.
+         * NOTICE: '1.44' will replace with current version when compressing.
          * @type {String}
          */
-        version:'1.44',
+        version: '1.44',
 
         /**
          * set KISSY configuration
@@ -3401,13 +3401,18 @@ var KISSY = (function (undefined) {
             // https://gist.github.com/lorenzopolidori/3794226
             // ie9 does not support 3d transform
             // http://msdn.microsoft.com/en-us/ie/ff468705
-            var el = doc.createElement('p');
-            documentElement.insertBefore(el, documentElement.firstChild);
-            el.style[transformProperty] = 'translate3d(1px,1px,1px)';
-            var computedStyle = win.getComputedStyle(el);
-            var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-            documentElement.removeChild(el);
-            isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+            try {
+                var el = doc.createElement('p');
+                documentElement.insertBefore(el, documentElement.firstChild);
+                el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+                var computedStyle = win.getComputedStyle(el);
+                var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
+                documentElement.removeChild(el);
+                isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+            }catch (e){
+                // https://github.com/kissyteam/kissy/issues/563
+                isTransform3dSupported = true;
+            }
         }
     }
 
@@ -5457,7 +5462,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140522123037';
+    var TIMESTAMP = '20140610151400';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

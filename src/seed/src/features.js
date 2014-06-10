@@ -65,13 +65,18 @@
             // https://gist.github.com/lorenzopolidori/3794226
             // ie9 does not support 3d transform
             // http://msdn.microsoft.com/en-us/ie/ff468705
-            var el = doc.createElement('p');
-            documentElement.insertBefore(el, documentElement.firstChild);
-            el.style[transformProperty] = 'translate3d(1px,1px,1px)';
-            var computedStyle = win.getComputedStyle(el);
-            var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-            documentElement.removeChild(el);
-            isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+            try {
+                var el = doc.createElement('p');
+                documentElement.insertBefore(el, documentElement.firstChild);
+                el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+                var computedStyle = win.getComputedStyle(el);
+                var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
+                documentElement.removeChild(el);
+                isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+            }catch (e){
+                // https://github.com/kissyteam/kissy/issues/563
+                isTransform3dSupported = true;
+            }
         }
     }
 
