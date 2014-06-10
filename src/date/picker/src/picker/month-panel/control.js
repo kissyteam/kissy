@@ -12,7 +12,7 @@ var DateFormat = require('date/format'),
     MonthPanelTpl = require('./month-panel-xtpl');
 var TapGesture = require('event/gesture/tap');
 var tap = TapGesture.TAP;
-var $ = require('node').all;
+var $ = require('node');
 
 function prepareMonths(self) {
     var value = self.get('value');

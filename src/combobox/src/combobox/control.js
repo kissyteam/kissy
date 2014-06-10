@@ -7,15 +7,14 @@
 var util = require('util');
 var Logger = require('logger');
 var logger = Logger.getLogger('combobox');
-/* global Node: true */
-var Node = require('node');
+var $ = require('node');
 var Control = require('component/control');
 var ComboboxTpl = require('./combobox-xtpl');
 // provide popupmenu xclass
 require('menu');
 
 var ComboBox,
-    KeyCode = Node.KeyCode;
+    KeyCode = $.Event.KeyCode;
 
 /**
  * KISSY ComboBox.

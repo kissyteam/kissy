@@ -3,47 +3,46 @@
  * Add indent button.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Editor = require('editor');
-    require('./button');
-    var indexCmd = require('./outdent/cmd');
 
-    function outdent() {
+var Editor = require('editor');
+require('./button');
+var indexCmd = require('./outdent/cmd');
 
-    }
+function Outdent() {
 
-    (outdent.prototype = {
-        pluginRenderUI: function (editor) {
+}
 
-            indexCmd.init(editor);
+Outdent.prototype = {
+    pluginRenderUI: function (editor) {
 
-            editor.addButton('outdent', {
-                tooltip: '减少缩进量',
-                listeners: {
-                    click: function () {
-                        editor.execCommand('outdent');
-                        editor.focus();
+        indexCmd.init(editor);
 
-                    },
-                    afterSyncUI: function () {
-                        var self = this;
-                        editor.on('selectionChange', function () {
-                            if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
-                                return;
-                            }
-                            if (editor.queryCommandValue('outdent')) {
-                                self.set('disabled', false);
-                            } else {
-                                self.set('disabled', true);
-                            }
-                        });
+        editor.addButton('outdent', {
+            tooltip: '减少缩进量',
+            listeners: {
+                click: function () {
+                    editor.execCommand('outdent');
+                    editor.focus();
 
-                    }
                 },
-                mode: Editor.Mode.WYSIWYG_MODE
-            });
-        }
-    });
+                afterSyncUI: function () {
+                    var self = this;
+                    editor.on('selectionChange', function () {
+                        if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
+                            return;
+                        }
+                        if (editor.queryCommandValue('outdent')) {
+                            self.set('disabled', false);
+                        } else {
+                            self.set('disabled', true);
+                        }
+                    });
 
-    return outdent;
-});
+                }
+            },
+            mode: Editor.Mode.WYSIWYG_MODE
+        });
+    }
+};
+
+module.exports = Outdent;

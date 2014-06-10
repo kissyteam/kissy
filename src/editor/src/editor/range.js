@@ -40,7 +40,7 @@ var TRUE = true,
     Dom = require('dom'),
     UA = require('ua'),
     dtd = Editor.XHTML_DTD,
-    $ = require('node').all,
+    $ = require('node'),
     UN_REMOVABLE = {
         td: 1
     },

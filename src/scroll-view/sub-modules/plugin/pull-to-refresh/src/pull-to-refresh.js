@@ -6,7 +6,7 @@
 
 var Base = require('base');
 var util = require('util');
-var $ = require('node').all;
+var $ = require('node');
 var substitute = require('util').substitute;
 var transformVendorInfo = require('feature').getCssVendorInfo('transform');
 var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;

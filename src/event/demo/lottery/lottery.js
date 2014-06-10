@@ -1,13 +1,11 @@
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     var Base = require('base');
     var Color = require('color');
     var Overlay = require('overlay');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
     var BasicGesture = require('event/gesture/basic');
-
-    var $ = Node.all;
 
     var methods = {
         initializer: function () {

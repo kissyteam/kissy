@@ -47,7 +47,7 @@ Editor.addMembers({
         if (isResizable) {
             attributes._ke_resizable = isResizable;
         }
-        return $('<img/>', attributes, self.get('document')[0]);
+        return new $('<img/>', attributes, self.get('document')[0]);
     },
 
     restoreRealElement: function (fakeElement) {
@@ -57,7 +57,7 @@ Editor.addMembers({
 
         var html = (util.urlDecode(fakeElement.attr('_ke_real_element')));
 
-        var temp = $('<div>', null, this.get('document')[0]);
+        var temp = $('<div>', this.get('document')[0]);
         temp.html(html);
         // When returning the node, remove it from its parent to detach it.
         return temp.first().remove();
@@ -127,7 +127,7 @@ module.exports = {
 
                 var html = (util.urlDecode(fakeElement.attr('_ke_real_element')));
 
-                var temp = $('<div>', null, editor.get('document')[0]);
+                var temp = $('<div>', editor.get('document')[0]);
                 temp.html(html);
                 // When returning the node, remove it from its parent to detach it.
                 return temp.first().remove();

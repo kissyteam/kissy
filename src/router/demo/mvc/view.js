@@ -4,10 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     var Attribute = require('attribute');
-
-    var $ = Node.all;
 
     function normFn(self, f) {
         if (typeof f === 'string') {

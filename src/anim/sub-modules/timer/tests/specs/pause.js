@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 
-var $ = require('node').all;
+var $ = require('node');
 var Anim = require('anim');
 describe('anim pause/resume', function () {
     it('anim-pause/resume works', function () {

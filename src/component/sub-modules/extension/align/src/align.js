@@ -6,7 +6,7 @@
 
 var util = require('util');
 var win = window,
-    $ = require('node').all,
+    $ = require('node'),
     UA = require('ua');
 
 // http://yiminghe.iteye.com/blog/1124720

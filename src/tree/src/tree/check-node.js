@@ -6,7 +6,7 @@
 
 var TreeNode = require('./node');
 var util = require('util');
-var $ = require('node').all,
+var $ = require('node'),
     PARTIAL_CHECK = 2,
     CHECK = 1,
     EMPTY = 0;

@@ -16,7 +16,7 @@ var TRUE = true,
     UA = require('ua'),
     Dom = require('dom'),
     dtd = Editor.XHTML_DTD,
-    $ = require('node').all;
+    $ = require('node');
 
 function iterate(rtl, breakOnFalseRetFalse) {
     var self = this;

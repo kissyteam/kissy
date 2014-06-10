@@ -9,7 +9,7 @@
  */
 
 var util = require('util');
-var $ = require('node').all;
+var $ = require('node');
 var Editor = require('./base');
 var Utils = require('./utils');
 var TRUE = true,

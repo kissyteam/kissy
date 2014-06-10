@@ -3,34 +3,34 @@
  * italic button.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var ui = require('./font/ui');
-    var cmd = require('./italic/cmd');
-    require('./button');
-    var Node = require('node');
-    function Italic() {
 
-    }
+var ui = require('./font/ui');
+var cmd = require('./italic/cmd');
+require('./button');
+var $ = require('node');
 
-    (Italic.prototype = {
-        pluginRenderUI: function (editor) {
-            cmd.init(editor);
+function Italic() {
 
-            editor.addButton('italic', {
-                cmdType: 'italic',
-                tooltip: '斜体'
-            }, ui.Button);
+}
 
-            editor.docReady(function () {
-                editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === Node.KeyCode.I) {
-                        editor.execCommand('italic');
-                        e.preventDefault();
-                    }
-                });
+(Italic.prototype = {
+    pluginRenderUI: function (editor) {
+        cmd.init(editor);
+
+        editor.addButton('italic', {
+            cmdType: 'italic',
+            tooltip: '斜体'
+        }, ui.Button);
+
+        editor.docReady(function () {
+            editor.get('document').on('keydown', function (e) {
+                if (e.ctrlKey && e.keyCode === $.Event.KeyCode.I) {
+                    editor.execCommand('italic');
+                    e.preventDefault();
+                }
             });
-        }
-    });
-
-    return Italic;
+        });
+    }
 });
+
+module.exports = Italic;

@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var $ = require('node').all,
+var $ = require('node'),
     DD = require('dd'),
     Base = require('base');
 var DDM = DD.DDM,

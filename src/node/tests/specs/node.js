@@ -6,16 +6,14 @@ KISSY.add(function (S, require) {
     /*jshint quotmark:false*/
     /*global jQuery*/
     var Dom = require('dom');
-    var Node = require('node');
     var util = require('util');
     var jq = jQuery;
-    var $ = Node.all;
-    var NodeList = Node;
+    var $ = require('node');
     //Dom 已经测试通过，通过 Dom 测 Node
     describe("node", function () {
 
         it('support filter', function () {
-            var nodes = new Node('<div class="x" id="x"></div>' +
+            var nodes = $('<div class="x" id="x"></div>' +
                 '<div class="y" id="y"></div>' +
                 '<div class="z" id="z"></div>');
 
@@ -53,17 +51,15 @@ KISSY.add(function (S, require) {
         });
 
         it("should invoke dom method correctly on node", function () {
-            var n = new Node("<div id='testDiv' class='test-div'>ok</div>").appendTo(document.body);
+            var n = $("<div id='testDiv' class='test-div'>ok</div>").appendTo(document.body);
             expect($("#testDiv")[0]).not.toBe(undefined);
             expect($("#testDiv2")[0]).toBe(undefined);
 
-            new Node("<div id='testDiv3' class='test-div'>ok3</div>").appendTo(n);
+            $("<div id='testDiv3' class='test-div'>ok3</div>").appendTo(n);
             expect($("#testDiv3")[0]).not.toBe(null);
             expect(S.one("#testDiv3").parent().equals(n)).toBe(true);
 
-
-            new Node("<div id='testDiv6' class='test-div'>ok5</div>").appendTo(document.body);
-
+            $("<div id='testDiv6' class='test-div'>ok5</div>").appendTo(document.body);
 
             //data chained
             expect(n.data('x')).toBe(undefined);
@@ -130,12 +126,12 @@ KISSY.add(function (S, require) {
 
         it("should append/prepend correctly on nodelist", function () {
             var body = S.one(document.body);
-            new Node("<div id='testDiv7' class='test-div'>ok7</div>" +
+            $("<div id='testDiv7' class='test-div'>ok7</div>" +
                 "<div id='testDiv8' class='test-div'>ok8</div>").appendTo(body);
             expect(Dom.get("#testDiv7")).not.toBe(null);
             expect(Dom.get("#testDiv8")).not.toBe(null);
 
-            var newNode = new Node("<div class='test-nodelist'>test-nodelist</div>" +
+            var newNode = $("<div class='test-nodelist'>test-nodelist</div>" +
                 "<div class='test-nodelist'>test-nodelist2</div>");
             var testDivs = S.all(".test-div");
 
@@ -229,7 +225,7 @@ KISSY.add(function (S, require) {
             var doms = Dom.query(".test-div");
 
             var testDivs = S.all(".test-div");
-            expect(testDivs instanceof NodeList).toBe(true);
+            expect(testDivs instanceof $).toBe(true);
             expect(doms.length).toBe(testDivs.length);
 
 
@@ -239,7 +235,7 @@ KISSY.add(function (S, require) {
             }
 
             var ps = body.all(".test-div");
-            expect(ps instanceof NodeList).toBe(true);
+            expect(ps instanceof $).toBe(true);
             expect(doms.length).toBe(ps.length);
             for (i = 0; i < doms.length; i++) {
                 expect(doms[i]).toBe(ps[i]);
@@ -250,7 +246,7 @@ KISSY.add(function (S, require) {
             var body = S.one(document.body);
             var dbivs = Dom.children(body[0], 'div');
             var bdivnodes = body.children('div');
-            expect(bdivnodes instanceof NodeList).toBe(true);
+            expect(bdivnodes instanceof $).toBe(true);
             expect(dbivs.length).toBe(bdivnodes.length);
         });
 
@@ -315,7 +311,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should return value or chains correctly", function () {
-            var n = new Node("<div>test return</div>").appendTo(document.body);
+            var n = $("<div>test return</div>").appendTo(document.body);
 
             var ret = n.attr("test", "5");
 

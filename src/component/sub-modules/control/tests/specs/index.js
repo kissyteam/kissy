@@ -1,5 +1,5 @@
 KISSY.add(function (S, require) {
-    var $ = require('node').all;
+    var $ = require('node');
     var Control = require('component/control');
 
     /*jshint quotmark:false*/

@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     var DragGesture = require('event/gesture/drag');
     var ie = S.UA.ieMode;
     var Feature = require('feature');

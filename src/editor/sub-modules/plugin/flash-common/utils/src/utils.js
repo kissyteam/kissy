@@ -6,7 +6,7 @@
 
 var SWF = require('swf');
 var Dom = require('dom');
-var $ = require('node').all;
+var $ = require('node');
 module.exports = {
     insertFlash: function (editor, src, attrs, _cls, _type) {
         var nodeInfo = this.createSWF({

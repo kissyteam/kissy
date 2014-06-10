@@ -3,7 +3,7 @@
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Editor = require('editor');
     var Walker = Editor.Walker;
     var DialogLoader = require('./dialog-loader');
@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     var util = require('util');
     var UA = require('ua'),
         Dom = require('dom'),
-        Node = require('node'),
+        $ = require('node'),
         tableRules = ['tr', 'th', 'td', 'tbody', 'table'],
         cellNodeRegex = /^(?:td|th)$/;
     var OLD_IE = UA.ieMode < 11;
@@ -85,7 +85,7 @@ KISSY.add(function (S, require) {
         for (var i = 0; i < $cells.length; i++) {
             $cells[ i ].innerHTML = '';
             if (!OLD_IE) {
-                ( new Node($cells[ i ]) )._4eAppendBogus(undefined);
+                ( $($cells[ i ]) )._4eAppendBogus(undefined);
             }
         }
     }
@@ -140,7 +140,7 @@ KISSY.add(function (S, require) {
             // 1. Into next sibling row if any;
             // 2. Into previous sibling row if any;
             // 3. Into table's parent element if it's the very last row.
-            cursorPosition = new Node(
+            cursorPosition = $(
                 nextRowIndex < rowCount && table[0].rows[ nextRowIndex ] ||
                     previousRowIndex > 0 && table[0].rows[ previousRowIndex ] ||
                     table[0].parentNode);
@@ -153,7 +153,7 @@ KISSY.add(function (S, require) {
 
             return cursorPosition;
         }
-        else if (selectionOrRow instanceof Node) {
+        else if (selectionOrRow instanceof $) {
             table = selectionOrRow.parent('table');
 
             if (table[0].rows.length === 1) {
@@ -187,13 +187,13 @@ KISSY.add(function (S, require) {
             if ($row.cells.length < ( cellIndex + 1 )) {
                 continue;
             }
-            cell = new Node($row.cells[ cellIndex ].cloneNode(undefined));
+            cell = $($row.cells[ cellIndex ].cloneNode(undefined));
 
             if (!OLD_IE) {
                 cell._4eAppendBogus(undefined);
             }
             // Get back the currently selected cell.
-            var baseCell = new Node($row.cells[ cellIndex ]);
+            var baseCell = $($row.cells[ cellIndex ]);
             if (insertBefore) {
                 cell.insertBefore(baseCell);
             } else {
@@ -238,7 +238,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        return targetCell ? new Node(targetCell) : table.prev();
+        return targetCell ? $(targetCell) : table.prev();
     }
 
     function deleteColumns(selectionOrCell) {
@@ -255,7 +255,7 @@ KISSY.add(function (S, require) {
             }
 
             return elementToFocus;
-        } else if (selectionOrCell instanceof Node) {
+        } else if (selectionOrCell instanceof $) {
             // Get the cell's table.
             var table = selectionOrCell.parent('table');
 
@@ -274,7 +274,7 @@ KISSY.add(function (S, require) {
              */
             for (i = table[0].rows.length - 1; i >= 0; i--) {
                 // Get the row.
-                var row = new Node(table[0].rows[ i ]);
+                var row = $(table[0].rows[i]);
 
                 // If the cell to be removed is the first one and
                 //  the row has just one cell.
@@ -576,5 +576,4 @@ KISSY.add(function (S, require) {
         }
     });
 
-    return TablePlugin;
-});
+    module.exports = TablePlugin;

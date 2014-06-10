@@ -4,7 +4,7 @@
  */
 
 var Anim = require('anim');
-var $ = require('node').all;
+var $ = require('node');
 describe('anim-frame config', function () {
     it('accept custom animation property', function () {
         //非标准的css属性渐变

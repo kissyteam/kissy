@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node'),
-        $ = Node.all,
+    var $ = require('node'),
         win = $(window),
         DD = require('dd'),
         Proxy = require('dd/plugin/proxy'),

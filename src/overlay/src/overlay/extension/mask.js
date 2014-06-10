@@ -6,7 +6,7 @@
 
 var UA = require('ua'),
     ie6 = (UA.ie === 6),
-    $ = require('node').all;
+    $ = require('node');
 
 var TapGesture = require('event/gesture/tap');
 var tap = TapGesture.TAP;

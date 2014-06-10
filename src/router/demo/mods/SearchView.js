@@ -1,11 +1,10 @@
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     var mvc = require('../mvc/');
     var Template = require('xtemplate');
     var router=require('router');
     var util = require('util');
-    var $ = Node.all,
-        tmpl = new Template($('#searchTpl').html());
+    var tmpl = new Template($('#searchTpl').html());
 
     return mvc.View.extend({
         constructor: function () {

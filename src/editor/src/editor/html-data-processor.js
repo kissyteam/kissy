@@ -11,10 +11,9 @@
 var HtmlParser = require('html-parser');
 var UA = require('ua');
 var OLD_IE = UA.ieMode < 11;
-/*global Node:true*/
-var Node = require('node');
+var $ = require('node');
 var dtd = HtmlParser.DTD;
-var NodeType = Node.NodeType;
+var NodeType = $.Dom.NodeType;
 var util = require('util');
 
 // <span></span> <span><span></span></span>
@@ -380,7 +379,7 @@ exports.init = function (editor) {
             // 标签不合法可能 parser 出错，这里先用浏览器帮我们建立棵合法的 dom 树的 html
             // Call the browser to help us fixing a possibly invalid HTML
             // structure.
-            var div = new Node('<div>');
+            var div = $('<div>');
             // Add fake character to workaround IE comments bug. (#3801)
             div.html('a' + html);
             html = div.html().substr(1);

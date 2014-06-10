@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 
-var $ = require('node').all;
+var $ = require('node');
 var MenuButton = require('./control');
 var util = require('util');
 

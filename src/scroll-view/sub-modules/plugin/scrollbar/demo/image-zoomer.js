@@ -6,8 +6,7 @@ KISSY.add(function (S, require) {
     var Base = require('base');
     var ScrollView = require('scroll-view');
     var ScrollbarPlugin = require('scroll-view/plugin/scrollbar');
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     var win = $(window);
     var TapGesture = require('event/gesture/tap');
 

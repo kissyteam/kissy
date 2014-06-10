@@ -9,7 +9,7 @@
  */
 
 var util = require('util');
-var $ = require('node').all;
+var $ = require('node');
 var UA = require('ua');
 var Walker = require('./walker');
 var Editor = require('./base');

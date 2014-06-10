@@ -5,8 +5,7 @@
  */
 
 var util = require('util');
-/*global Node:true*/
-var Node = require('node');
+var $ = require('node');
 var BasicGesture = require('event/gesture/basic');
 var TapGesture = require('event/gesture/tap');
 var Manager = require('./control/manager');
@@ -21,7 +20,6 @@ var isTouchGestureSupported = Feature.isTouchGestureSupported();
 var noop = util.noop;
 var XTemplateRuntime = require('xtemplate/runtime');
 var trim = util.trim;
-var $ = Node.all;
 var doc = document;
 
 function normalExtras(extras) {
@@ -547,7 +545,7 @@ var Control = module.exports = Base.extend({
          * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
          */
         handleKeyDownInternal: function (ev) {
-            if (ev.keyCode === Node.KeyCode.ENTER) {
+            if (ev.keyCode === $.Event.KeyCode.ENTER) {
                 return this.handleClickInternal(ev);
             }
             return undefined;

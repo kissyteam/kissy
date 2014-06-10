@@ -3,30 +3,29 @@
  * strike-through command
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Editor = require('editor');
-    var Cmd = require('../font/cmd');
 
-    var STRIKE_STYLE = new Editor.Style({
-        element: 'del',
-        overrides: [
-            {
-                element: 'span',
-                attributes: {
-                    style: 'text-decoration: line-through;'
-                }
-            },
-            {
-                element: 's'
-            },
-            {
-                element: 'strike'
+var Editor = require('editor');
+var Cmd = require('../font/cmd');
+
+var STRIKE_STYLE = new Editor.Style({
+    element: 'del',
+    overrides: [
+        {
+            element: 'span',
+            attributes: {
+                style: 'text-decoration: line-through;'
             }
-        ]
-    });
-    return {
-        init: function (editor) {
-            Cmd.addButtonCmd(editor, 'strikeThrough', STRIKE_STYLE);
+        },
+        {
+            element: 's'
+        },
+        {
+            element: 'strike'
         }
-    };
+    ]
 });
+module.exports = {
+    init: function (editor) {
+        Cmd.addButtonCmd(editor, 'strikeThrough', STRIKE_STYLE);
+    }
+};

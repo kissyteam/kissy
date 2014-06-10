@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 var Control = require('component/control');
-var $ = require('node').all;
+var $ = require('node');
 
 /**
  * @class KISSY.Menu.Item

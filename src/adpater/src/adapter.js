@@ -32,8 +32,12 @@
     };
 
     var configs = {
+        'core': {
+            alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+        },
         node: {
             afterAttach: function (v) {
+                S.Node = S.NodeList = v;
                 S.one = v.one;
                 S.all = v.all;
             }
@@ -52,4 +56,21 @@
     }
 
     S.config('modules', configs);
+
+    S.namespace = function () {
+        var args = S.makeArray(arguments),
+            l = args.length,
+            o = null,
+            i, j, p,
+            global = (args[l - 1] === true && l--);
+
+        for (i = 0; i < l; i++) {
+            p = ('' + args[i]).split('.');
+            o = global ? window : this;
+            for (j = (window[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                o = o[p[j]] = o[p[j]] || { };
+            }
+        }
+        return o;
+    };
 })(KISSY);

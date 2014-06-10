@@ -4,11 +4,11 @@
  */
 
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     var TapType = require('event/gesture/tap');
     var DOUBLE_TAP = TapType.DOUBLE_TAP;
     var SINGLE_TAP = TapType.SINGLE_TAP;
-    var $ = Node.all, step = 10;
+    var step = 10;
 
     describe('doubleTap/singleTap', function () {
 

@@ -222,7 +222,7 @@ SWF = Attribute.extend({
          * @ignore
          */
         expressInstall: {
-            value: require.toURL('./assets/expressInstall.swf')
+            value: require.toUrl('./assets/expressInstall.swf')
         },
 
         /**

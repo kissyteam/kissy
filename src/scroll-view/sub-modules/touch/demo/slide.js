@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     var Base = require('base');
     var ScrollView = require('scroll-view');
 

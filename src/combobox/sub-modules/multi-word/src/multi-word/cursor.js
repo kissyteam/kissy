@@ -4,10 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
     var util = require('util');
-
-    var $ = Node.all,
+    var $ = require('node'),
         FAKE_DIV_HTML = '<div style="' +
             'z-index:-9999;' +
             'overflow:hidden;' +

@@ -3,10 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     var mvc = require('../mvc/');
     var Template = require('xtemplate');
-    var detailTpl = new Template(Node.all('#detailTpl').html());
+    var detailTpl = new Template($('#detailTpl').html());
 
     /**
      * 编辑笔记view

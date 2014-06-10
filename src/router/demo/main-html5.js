@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         triggerRoute: true,
         urlRoot: location.pathname,
         success: function () {
-            require('node').all('#loading').hide();
+            require('node')('#loading').hide();
         }
     });
 });

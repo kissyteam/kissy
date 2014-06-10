@@ -8,13 +8,12 @@ KISSY.add(function (S, require){
         return;
     }
 
-    var Node = require('node');
+    var $ = require('node');
     var PinchType = require('event/gesture/pinch');
     var PINCH = PinchType.PINCH;
     var PINCH_START = PinchType.PINCH_START;
     var PINCH_END = PinchType.PINCH_END;
-    var $ = Node.all,
-        step = 10;
+    var step = 10;
 
     /*jshint loopfunc:true*/
     describe('pinch', function () {

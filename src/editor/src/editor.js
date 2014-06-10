@@ -7,8 +7,7 @@
 var util = require('util');
 var Logger = require('logger');
 var logger = Logger.getLogger('s/editor');
-/*global Node:true*/
-var Node = require('node');
+var $ = require('node');
 var XTemplate = require('xtemplate/runtime');
 var iframeContentXTpl = require('editor/iframe-content-xtpl');
 var Editor = require('editor/base');
@@ -28,8 +27,7 @@ var TRUE = true,
     UA = require('ua'),
     IS_IE = UA.ieMode < 11,
 // ie11 = UA.ieMode === 11,
-    NodeType = Node.NodeType,
-    $ = Node.all,
+    NodeType = $.Dom.NodeType,
     HEIGHT = 'height',
     tryThese = Utils.tryThese,
     IFRAME_TPL = '<iframe' +

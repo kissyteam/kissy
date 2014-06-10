@@ -3,12 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     var TapGesture = require('event/gesture/tap');
     var TAP = TapGesture.TAP;
     var TAP_HOLD=TapGesture.TAP_HOLD;
-    var $ = Node.all,
-        step = 10;
+    var step = 10;
 
     describe('tap', function () {
 

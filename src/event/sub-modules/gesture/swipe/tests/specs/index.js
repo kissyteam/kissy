@@ -7,11 +7,11 @@ KISSY.add(function (S, require) {
     if (S.UA.phantomjs || !Feature.isTouchEventSupported()) {
         return;
     }
-    var Node = require('node');
+    var $ = require('node');
     var SwipeType = require('event/gesture/swipe');
     var SWIPE = SwipeType.SWIPE;
     /*jshint loopfunc:true*/
-    var $ = Node.all, step = 10;
+    var step = 10;
     describe('swipe', function () {
         var t;
 

@@ -6,8 +6,7 @@
 
 var util = require('util');
 var Overlay = require('./control');
-/*global Node:true*/
-var Node = require('node');
+var $ = require('node');
 var DialogTpl = require('./dialog-xtpl');
 
 function _setStdModRenderContent(self, part, v) {
@@ -49,7 +48,7 @@ var Dialog = Overlay.extend({
 
     handleKeyDownInternal: function (e) {
         if (this.get('escapeToClose') &&
-            e.keyCode === Node.KeyCode.ESC) {
+            e.keyCode === $.Event.KeyCode.ESC) {
             if (!(e.target.nodeName.toLowerCase() === 'select' && !e.target.disabled)) {
                 // escape at select
                 this.close();
@@ -267,7 +266,7 @@ var Dialog = Overlay.extend({
     xclass: 'dialog'
 });
 
-var KEY_TAB = Node.KeyCode.TAB;
+var KEY_TAB = $.Event.KeyCode.TAB;
 
 // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
 function trapFocus(e) {
@@ -281,7 +280,7 @@ function trapFocus(e) {
     // summary:
     // Handles the keyboard events for accessibility reasons
 
-    var node = Node.all(e.target); // get the target node of the keypress event
+    var node = $(e.target); // get the target node of the keypress event
 
     // find the first and last tab focusable items in the hierarchy of the dialog container node
     // do this every time if the items may be added / removed from the the dialog may change visibility or state

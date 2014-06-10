@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     /*jshint quotmark:false*/
 
     function padding(s) {
@@ -51,7 +50,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should attach node with slideUp/down well", function () {
-            var test1 = Node.one("#test6");
+            var test1 = $("#test6");
 
             test1.css({
                 width: '100px',
@@ -107,7 +106,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should attach node with show/hide well", function () {
-            var test2 = Node.one("#test2");
+            var test2 = $("#test2");
 
             test2.css({
                 width: '100px',

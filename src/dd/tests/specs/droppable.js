@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node'),
-        $ = Node.all,
+    var $ = require('node'),
         win = $(window),
         DD = require('dd'),
         DDM = DD.DDM,
@@ -243,8 +242,8 @@ KISSY.add(function (S, require) {
                 });
 
                 runs(function () {
-                    Node.one('#drag_mode').remove();
-                    Node.one('#drop_mode').remove();
+                    $('#drag_mode').remove();
+                    $('#drop_mode').remove();
                 });
             });
 

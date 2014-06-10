@@ -4,11 +4,9 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-/*global Node:true*/
-var Node = require('node');
 var TapGesture = require('event/gesture/tap');
 var tap = TapGesture.TAP;
-var $ = Node.all;
+var $ = require('node');
 var Control = require('component/control'),
     DecadePanelTpl = require('./decade-panel-xtpl'),
     MonthsTpl = require('./decades-xtpl');

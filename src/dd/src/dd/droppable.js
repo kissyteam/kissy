@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 
-var $ = require('node').all,
+var $ = require('node'),
     DDM = require('./ddm'),
     Base = require('base'),
     PREFIX_CLS = DDM.PREFIX_CLS;

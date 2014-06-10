@@ -1,6 +1,6 @@
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var $ = require('node').all;
+    var $ = require('node');
     var win = $(window);
     return function () {
         return Control.extend({

@@ -6,8 +6,7 @@
 
 var ui = require('./font/ui');
 var cmd = require('./bold/cmd');
-/*global Node:true*/
-var Node = require('node');
+var $ = require('node');
 require('./button');
 function Bold() {
 }
@@ -22,7 +21,7 @@ Bold.prototype = {
 
         editor.docReady(function () {
             editor.get('document').on('keydown', function (e) {
-                if (e.ctrlKey && e.keyCode === Node.KeyCode.B) {
+                if (e.ctrlKey && e.keyCode === $.Event.KeyCode.B) {
                     editor.execCommand('bold');
                     e.preventDefault();
                 }

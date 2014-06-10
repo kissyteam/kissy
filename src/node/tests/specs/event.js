@@ -3,10 +3,8 @@
  * @author gonghao, yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
+    var $ = require('node');
     /*jshint quotmark:false*/
-
-    var $ = Node.all;
 // simulate mouse event on any element
     var simulate = function (target, type, relatedTarget) {
         if (typeof target === 'string') {
@@ -22,8 +20,7 @@ KISSY.add(function (S, require) {
 
             // Node
             runs(function () {
-
-                Node.one('#link-test-this').on('click', function () {
+                $('#link-test-this').on('click', function () {
                     ret = this;
                 });
                 simulate('#link-test-this', 'click');
@@ -38,7 +35,7 @@ KISSY.add(function (S, require) {
             // NodeList
             runs(function () {
                 $('#link-test-this-all span').on('click', function () {
-                    ret = Node.one(this);
+                    ret = $(this);
                 });
                 simulate('#link-test-this-all-span', 'click');
             });
@@ -65,7 +62,7 @@ KISSY.add(function (S, require) {
 
             // Node
             runs(function () {
-                var node = Node.one('#link-detach');
+                var node = $('#link-detach');
 
                 function t() {
                     ret = 1;
@@ -73,7 +70,7 @@ KISSY.add(function (S, require) {
 
                 node.on('click', t);
 
-                Node.one('#link-detach').detach('click', t);
+                node.detach('click', t);
 
                 simulate('#link-detach', 'click');
             });

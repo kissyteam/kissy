@@ -6,10 +6,9 @@ KISSY.add(function (S, require) {
     var DD = require('dd'),
         Draggable = DD.Draggable,
         UA = S.UA,
-        Node = require('node'),
+        $ = require('node'),
         IO = require('io'),
         Scroll = require('dd/plugin/scroll'),
-        $ = Node.all,
         win = $(window);
 
 

@@ -6,7 +6,7 @@
  */
 
 var Base = require('base');
-var $ = require('node').all,
+var $ = require('node'),
     PROXY_EVENT = '.-ks-proxy' + (+new Date());
 
 /**

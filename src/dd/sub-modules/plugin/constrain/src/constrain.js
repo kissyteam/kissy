@@ -6,7 +6,7 @@
 
 var Base = require('base');
 var util = require('util');
-var $ = require('node').all,
+var $ = require('node'),
     CONSTRAIN_EVENT = '.-ks-constrain' + util.now(),
     WIN = window;
 

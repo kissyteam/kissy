@@ -1,6 +1,5 @@
 KISSY.add(function (S, require) {
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     var ScrollView = require('scroll-view');
     var ScrollbarPlugin = require('scroll-view/plugin/scrollbar');
 
@@ -14,7 +13,7 @@ KISSY.add(function (S, require) {
         documentElementStyle = document.documentElement.style;
 
     function has3d() {
-        var el = Node.all('<p></p>').prependTo(document.body),
+        var el = $('<p></p>').prependTo(document.body),
             has3d_;
         // Add it to the body to get the computed style.
         el.css('transform', 'translate3d(1px,1px,1px)');

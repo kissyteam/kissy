@@ -6,7 +6,7 @@
 
 var Overlay = require('./control');
 var util = require('util');
-var $ = require('node').all;
+var $ = require('node');
 
 function bindTriggerMouse() {
     var self = this,

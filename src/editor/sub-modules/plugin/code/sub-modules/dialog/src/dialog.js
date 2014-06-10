@@ -11,7 +11,7 @@ var xhtmlDtd = Editor.XHTML_DTD;
 var NodeType = require('dom').NodeType;
 var notWhitespaceEval = Editor.Walker.whitespaces(true);
 var Dialog4E = require('../dialog');
-var $ = require('node').all;
+var $ = require('node');
 var UA = require('ua');
 var codeTypes = [
         ['ActionScript3', 'as3'],

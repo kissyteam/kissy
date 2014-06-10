@@ -6,9 +6,7 @@ KISSY.add(function (S, require) {
     if (S.UA.phantomjs || !Feature.isTouchEventSupported()) {
         return;
     }
-
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     var EdgeDragGesture = require('event/gesture/edge-drag');
     var ie = S.UA.ieMode;
     if (ie === 9 || ie === 11) {

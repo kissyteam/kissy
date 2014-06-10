@@ -8,7 +8,7 @@ var Container = require('component/container');
 var DelegateChildrenExtension = require('component/extension/delegate-children');
 var util = require('util');
 
-var KeyCode = require('node').KeyCode;
+var KeyCode = require('node').Event.KeyCode;
 
 function getNextEnabledItem(index, direction, self) {
     var children = self.get('children'),

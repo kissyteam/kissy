@@ -4,8 +4,7 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-/*global Node:true*/
-var Node = require('node');
+var $ = require('node');
 var Editor = require('./base');
 var TRUE = true,
     FALSE = false,
@@ -32,7 +31,7 @@ var TRUE = true,
                     url+='?t='+tag;
                 }
             }
-            return require.toURL('../' + url);
+            return require.toUrl('../' + url);
         },
 
         lazyRun: function (obj, before, after) {
@@ -94,7 +93,7 @@ var TRUE = true,
 
         verifyInputs: function (inputs) {
             for (var i = 0; i < inputs.length; i++) {
-                var input = new Node(inputs[i]),
+                var input = $(inputs[i]),
                     v = util.trim(Utils.valInput(input)),
                     verify = input.attr('data-verify'),
                     warning = input.attr('data-warning');
@@ -191,16 +190,16 @@ var TRUE = true,
             for (var dm in editorDom) {
                 /*jshint loopfunc:true*/
                 (function (dm) {
-                    Node.prototype[dm] = function () {
+                    $.prototype[dm] = function () {
                         var args = [].slice.call(arguments, 0);
                         args.unshift(this[0]);
                         var ret = editorDom[dm].apply(NULL, args);
                         if (ret && (ret.nodeType || util.isWindow(ret))) {
-                            return new Node(ret);
+                            return $(ret);
                         } else {
                             if (util.isArray(ret)) {
                                 if (ret.__IS_NODELIST || (ret[0] && ret[0].nodeType)) {
-                                    return new Node(ret);
+                                    return $(ret);
                                 }
                             }
                             return ret;

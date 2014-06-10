@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 
-var $ = require('node').all;
+var $ = require('node');
 
 /**
  * @class KISSY.Overlay.Extension.Loading

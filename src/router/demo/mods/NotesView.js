@@ -4,13 +4,12 @@
  */
 KISSY.add(function (S, require) {
     var util = require('util');
-    var Node = require('node');
+    var $ = require('node');
     var mvc = require('../mvc/');
     var Template = require('xtemplate');
     var NoteView = require('./NoteView');
     var router = require('router');
-    var $ = Node.all,
-        tmpl = new Template($('#listTpl').html());
+    var tmpl = new Template($('#listTpl').html());
 
     /**
      * 笔记列表View

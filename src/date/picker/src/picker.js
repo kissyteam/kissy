@@ -5,16 +5,14 @@
  */
 
 var util = require('util');
-/*global Node:true*/
-var Node = require('node'),
+var $ = require('node'),
     GregorianCalendar = require('date/gregorian'),
     locale = require('i18n!date/picker'),
     Control = require('component/control'),
     MonthPanel = require('./picker/month-panel/control');
 var TapGesture = require('event/gesture/tap');
 var tap = TapGesture.TAP;
-var $ = Node.all;
-var KeyCode = Node.KeyCode;
+var KeyCode = $.Event.KeyCode;
 
 var DateTimeFormat = require('date/format'),
     PickerTpl = require('date/picker-xtpl');

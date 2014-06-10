@@ -7,8 +7,8 @@
 var Container = require('component/container');
 var util = require('util');
 
-var $ = require('node').all,
-    KeyCode = require('node').KeyCode;
+var $ = require('node'),
+    KeyCode = require('node').Event.KeyCode;
 
 var SELECTED_CLS = 'selected',
     EXPAND_EL_CLS = 'expand-icon',

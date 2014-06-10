@@ -1,5 +1,5 @@
 var Anim = require('anim');
-var $ = require('node').all;
+var $ = require('node');
 describe('promise api', function () {
     it('support progress', function () {
         var d = $('<div style="width:100px"></div>').appendTo('body');

@@ -6,7 +6,7 @@
 var util = require('util');
 var Container = require('component/container');
 var DelegateChildrenExtension = require('component/extension/delegate-children');
-var KeyCode = require('node').KeyCode;
+var KeyCode = require('node').Event.KeyCode;
 
 /**
  * KISSY Menu.

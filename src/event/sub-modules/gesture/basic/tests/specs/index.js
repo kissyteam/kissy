@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Node = require('node');
-    var $ = Node.all;
+    var $ = require('node');
     var BasicGesture = require('event/gesture/basic');
     var Feature = require('feature');
     describe('base gesture', function () {

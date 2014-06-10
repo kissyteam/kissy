@@ -10,7 +10,7 @@
 
 var Editor = require('./base');
 require('./selection');
-var $ = require('node').all;
+var $ = require('node');
 var TRUE = true,
     FALSE = false,
     NULL = null,

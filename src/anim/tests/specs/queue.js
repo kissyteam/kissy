@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 var Anim = require('anim');
-var $ = require('node').all;
+var $ = require('node');
 var ANIM_KEY = Anim.Q.queueCollectionKey;
 describe('anim-queue', function () {
     beforeEach(function () {

@@ -7,7 +7,7 @@
 var Base = require('base');
 var DD = require('dd');
 var util = require('util');
-var $ = require('node').all,
+var $ = require('node'),
     i,
     j,
     Draggable = DD.Draggable,

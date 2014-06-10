@@ -7,8 +7,8 @@
 var TimerAnim = require('anim/timer');
 var Container = require('component/container');
 var ContentBox = require('component/extension/content-box');
-var $ = require('node').all,
-    KeyCode = require('node').KeyCode;
+var $ = require('node'),
+    KeyCode = $.Event.KeyCode;
 // http://www.html5rocks.com/en/tutorials/speed/html5/
 var Feature = require('feature'),
 //        MARKER_CLS = 'ks-scroll-view-marker',

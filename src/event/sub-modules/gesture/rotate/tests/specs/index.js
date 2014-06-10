@@ -8,13 +8,12 @@ KISSY.add(function (S, require) {
         return;
     }
 
-    var Node = require('node');
+    var $ = require('node');
     var RotateType = require('event/gesture/rotate');
     var ROTATE = RotateType.ROTATE;
     var ROTATE_START = RotateType.ROTATE_START;
     var ROTATE_END = RotateType.ROTATE_END;
-    var $ = Node.all,
-        step = 10;
+    var step = 10;
 
     describe('rotate', function () {
         var t, t1, t2;

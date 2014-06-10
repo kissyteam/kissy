@@ -3,11 +3,11 @@
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-/* global Node: true */
-var Node = require('node');
+
+var $ = require('node');
 var Control = require('component/control');
 
-var KeyCode = Node.KeyCode;
+var KeyCode = $.Event.KeyCode;
 /**
  * KISSY Button.
  * @extends KISSY.Component.Control

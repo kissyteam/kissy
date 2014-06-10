@@ -7,7 +7,7 @@
 var DDM = require('./ddm'),
     Draggable = require('./draggable'),
     PREFIX_CLS = DDM.PREFIX_CLS,
-    $ = require('node').all;
+    $ = require('node');
 
 /**
  * @extends KISSY.DD.Draggable

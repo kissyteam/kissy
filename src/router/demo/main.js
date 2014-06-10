@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     require('./mods/app').initializer({
         useHash: true,
         success: function () {
-            require('node').all('#loading').hide();
+            require('node')('#loading').hide();
         }
     });
 });

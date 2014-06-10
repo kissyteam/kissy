@@ -6,7 +6,7 @@
 var util = require('util');
 var Dom = require('dom');
 var Anim = require('anim');
-var $ = require('node').all;
+var $ = require('node');
 /*jshint quotmark:false*/
 function matrix(transform) {
     transform = transform.split(")");
@@ -257,7 +257,7 @@ describe("anim-simple", function () {
     });
 
     it('support different easing for different property', function () {
-        if (S.getModule('anim').getAlias()[0] === 'anim/transition') {
+        if (KISSY.getModule('anim').getAlias()[0] === 'anim/transition') {
             // native does not support easing as function
             return;
         }

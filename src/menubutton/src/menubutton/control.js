@@ -6,7 +6,7 @@
 
 var Button = require('button');
 var ContentBox = require('component/extension/content-box');
-var KeyCode = require('node').KeyCode;
+var KeyCode = require('node').Event.KeyCode;
 var MenuButtonTpl = require('./menubutton-xtpl');
 var util = require('util');
 /**

@@ -53,7 +53,7 @@ util.augment(XdrFlashTransport, {
             c = io.config,
             xdr = c.xdr || {};
         // 不提供则使用 cdn 默认的 flash
-        _swf(xdr.src || require.toURL('../assets/io.swf'), 1, 1);
+        _swf(xdr.src || require.toUrl('../assets/io.swf'), 1, 1);
         // 简便起见，用轮训
         if (!flash) {
             setTimeout(function () {

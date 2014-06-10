@@ -12,7 +12,6 @@ var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
     host = typeof window === 'undefined' ? global : window,
     undef,
     CLONE_MARKER = '__~ks_cloned',
-    EMPTY = '',
     toString = ({}).toString,
     COMPARE_MARKER = '__~ks_compared',
     Obj = Object,
@@ -238,7 +237,6 @@ mix(util, {
      * @return {Object} the augmented object
      * @member KISSY
      *
-     * for example:
      *     @example
      *     var t = {};
      *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
@@ -390,26 +388,20 @@ mix(util, {
      * Returns the namespace specified and creates it if it doesn't exist. Be careful
      * when naming packages. Reserved words may work in some browsers and not others.
      *
-     * for example:
      *      @example
      *      util.namespace('KISSY.app'); // returns KISSY.app
-     *      util.namespace('app.Shop'); // returns KISSY.app.Shop
-     *      util.namespace('TB.app.Shop', true); // returns TB.app.Shop
+     *      util.namespace('app.Shop',a); // returns a.app.Shop
+     *      util.namespace('TB.app.Shop'); // returns TB.app.Shop
      *
      * @return {Object}  A reference to the last namespace object created
      * @member KISSY
      */
-    namespace: function () {
-        var args = util.makeArray(arguments),
-            l = args.length,
-            o = null, i, j, p;
-
-        for (i = 0; i < l; i++) {
-            p = (EMPTY + args[i]).split('.');
-            o = host;
-            for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                o = o[p[j]] = o[p[j]] || {};
-            }
+    namespace: function (name, holder) {
+        var o, j, p;
+        p = name.split('.');
+        o = holder || host;
+        for (j = 0; j < p.length; ++j) {
+            o = o[p[j]] = o[p[j]] || {};
         }
         return o;
     },

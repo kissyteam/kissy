@@ -433,6 +433,12 @@ KISSY.add(function (S, require) {
             ns.name = 'foo1';
             /*global app1*/
             expect(app1.Test.name).toBe('foo1');
+
+            var x = {};
+            ns = util.namespace('app2.Test', x);
+            ns.name = 'foo2';
+            expect(x.app2.Test.name).toBe('foo2');
+            expect(window.app2).toBeUndefined();
         });
 
         it('util.guid', function () {

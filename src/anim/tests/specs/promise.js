@@ -1,5 +1,5 @@
 var Anim = require('anim');
-var $ = require('node').all;
+var $ = require('node');
 describe('anim support promise api', function () {
     it('support then and complete callback', function () {
         var d = $('<div style="width:100px"></div>').appendTo(document.body);

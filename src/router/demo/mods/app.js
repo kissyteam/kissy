@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require, exports, module) {
-    var $ = require('node').all;
+    var $ = require('node');
     var NotesView = require('./NotesView');
     var EditView = require('./EditView');
     var NotesCollection = require('./NotesCollection');

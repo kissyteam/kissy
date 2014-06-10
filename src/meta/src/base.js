@@ -6,14 +6,6 @@
 
 // --no-module-wrap--
 KISSY.config({
-    modules: {
-        ajax: {
-            alias: 'io'
-        }
-    }
-});
-
-KISSY.config({
     packages: {
         gallery: {
             base: location.protocol === 'https' ?

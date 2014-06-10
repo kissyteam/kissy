@@ -9,7 +9,7 @@ var SubMenuTpl = require('./submenu-xtpl');
 var MenuItem = require('./menuitem');
 var ContentBox = require('component/extension/content-box');
 
-var KeyCode = require('node').KeyCode,
+var KeyCode = require('node').Event.KeyCode,
     MENU_DELAY = 0.15;
 
 function afterHighlightedChange(e) {

@@ -27,7 +27,7 @@ function processTarget(self, show) {
     }
 
     var el = self.$el,
-        $ = require('node').all,
+        $ = require('node'),
         effectCfg = self.get('effect'),
         target = $(effectCfg.target),
         duration = effectCfg.duration,

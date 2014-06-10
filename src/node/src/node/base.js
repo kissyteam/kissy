@@ -254,17 +254,9 @@ util.mix(Node, {
     }
 });
 
-/**
- * Same with {@link KISSY.DOM.NodeType}
- * @member KISSY.Node
- * @property NodeType
- * @static
- */
-Node.NodeType = NodeType;
+Node.Event = Event;
 
-Node.KeyCode = Event.KeyCode;
-
-Node.REPLACE_HISTORY = Event.REPLACE_HISTORY;
+Node.Dom = Dom;
 
 module.exports = Node;
 

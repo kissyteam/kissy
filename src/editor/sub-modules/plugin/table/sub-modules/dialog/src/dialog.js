@@ -3,14 +3,14 @@
  * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     /*global alert*/
     var util = require('util');
     var Editor = require('editor');
     var Dialog4E = require('../dialog');
     var MenuButton = require('../menubutton');
     var OLD_IE = require('ua').ieMode < 11;
-    var Node = require('node'),
+    var $ = require('node'),
         Dom = require('dom'),
         trim = util.trim,
         showBorderClassName = 'ke_show_border',
@@ -403,7 +403,7 @@ KISSY.add(function (S, require) {
             html += '</tbody>';
             html += '</table>';
 
-            var table = new Node(html, null, editor.get('document')[0]);
+            var table = $(html, editor.get('document')[0]);
             editor.insertElement(table);
         },
         _fillTableDialog: function () {
@@ -486,5 +486,4 @@ KISSY.add(function (S, require) {
         }
     });
 
-    return TableDialog;
-});
+    module.exports = TableDialog;

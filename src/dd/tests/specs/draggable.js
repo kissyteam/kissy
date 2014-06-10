@@ -4,8 +4,7 @@
  * ie9 模式下 mousemove 触发事件有问题，无法测试
  */
 KISSY.add(function (S, require) {
-    var Node = require('node'),
-        $ = Node.all,
+    var $ = require('node'),
         win = $(window),
         DD = require('dd'),
         IO = require('io');
@@ -41,8 +40,8 @@ KISSY.add(function (S, require) {
 
         it('should not drag before mousedown while mousemove', function () {
 
-            var drag = Node.one('#drag_before'),
-                dragHeader = Node.one('#dragHeader_before');
+            var drag = $('#drag_before'),
+                dragHeader = $('#dragHeader_before');
             var action = new Draggable({
                     node: drag,
                     move: 1,
@@ -72,8 +71,8 @@ KISSY.add(function (S, require) {
 
         it('should drag after mousedown while mousemove after exceeding clickPixelThresh', function () {
 
-            var drag = Node.one('#drag'),
-                dragHeader = Node.one('#dragHeader'),
+            var drag = $('#drag'),
+                dragHeader = $('#dragHeader'),
                 scrollLeft = win.scrollLeft(),
                 scrollTop = win.scrollTop();
             var action = new Draggable({
@@ -137,8 +136,8 @@ KISSY.add(function (S, require) {
         });
 
         it('should not drag after mouseup while mousemove', function () {
-            var drag = Node.one('#drag_after'),
-                dragHeader = Node.one('#dragHeader_after');
+            var drag = $('#drag_after'),
+                dragHeader = $('#dragHeader_after');
 
             var action = new Draggable({
                 node: drag,
@@ -197,10 +196,8 @@ KISSY.add(function (S, require) {
         });
 
         it('disabled works', function () {
-
-
-            var drag = Node.one('#drag'),
-                dragHeader = Node.one('#dragHeader');
+            var drag = $('#drag'),
+                dragHeader = $('#dragHeader');
 
             var action = new Draggable({
                 node: drag,
@@ -248,9 +245,9 @@ KISSY.add(function (S, require) {
         });
 
         runs(function () {
-            Node.one('#drag_before').remove();
-            Node.one('#drag').remove();
-            Node.one('#drag_after').remove();
+            $('#drag_before').remove();
+            $('#drag').remove();
+            $('#drag_after').remove();
         });
     });
 });
