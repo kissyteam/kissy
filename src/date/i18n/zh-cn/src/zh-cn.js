@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add({
+module.exports = {
     // in minutes
     timezoneOffset: 8 * 60,
     firstDayOfWeek: 1,
@@ -24,4 +24,4 @@ KISSY.add({
     datePatterns: ["yyyy'年'M'月'd'日' EEEE", "yyyy'年'M'月'd'日'", "yyyy-M-d", "yy-M-d"],
     timePatterns: ["ahh'时'mm'分'ss'秒' 'GMT'Z", "ahh'时'mm'分'ss'秒'", "H:mm:ss", "ah:mm"],
     dateTimePattern: '{date} {time}'
-});
+};

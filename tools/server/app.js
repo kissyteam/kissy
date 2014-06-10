@@ -1,6 +1,7 @@
 /*jshint camelcase:false*/
 var path = require('path');
 var fs = require('fs');
+var mime = require('mime');
 //noinspection JSUnresolvedVariable
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
@@ -37,6 +38,17 @@ function startServer(port) {
         d.add(req);
         d.add(res);
         d.run(next);
+    });
+
+    var extensionReg = /.*\.(js|css)$/;
+
+    app.use(function (req, res, next) {
+        var m = req.path.match(extensionReg) || req.url.match(extensionReg);
+        if (m && m[1]) {
+            res.charset = 'utf-8';
+            res.set('content-type', mime.lookup(m[1]));
+        }
+        next();
     });
 
     app.use(express.favicon());

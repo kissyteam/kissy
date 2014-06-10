@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var swfSrc = Editor.Utils.debugUrl('plugin/local-storage/assets/swfstore.swf?t=' + (+new Date()));
+    var swfSrc = Editor.Utils.debugUrl('plugin/local-storage/assets/swfstore.swf?refresh=' + (+new Date()));
 
     var css = {
         width: 215,

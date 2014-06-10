@@ -5,6 +5,7 @@
  */
 
 var util = require('util');
+var Logger = require('logger');
 var Dom = require('dom');
 var AnimBase = require('./base');
 var Feature = require('feature');
@@ -64,7 +65,8 @@ util.extend(TransitionAnim, AnimBase, {
             }
             vendorInfo = getCssVendorInfo(propertyName);
             if (!vendorInfo) {
-                S.error('unsupported css property for transition anim: ' + propertyName);
+                Logger.log('unsupported css property for transition anim: ' + propertyName,'error');
+                continue;
             }
             newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName];
         }
@@ -167,7 +169,7 @@ util.extend(TransitionAnim, AnimBase, {
 util.mix(TransitionAnim, AnimBase.Statics);
 
 // bad
-module.exports = S.Anim = TransitionAnim;
+module.exports = TransitionAnim;
 
 /*
  refer:

@@ -117,7 +117,7 @@
     });
     S.config('packages', {
         core: {
-            filter: '@DEBUG@' ? 'debug' : ''
+            filter: S.Config.debug ? 'debug' : ''
         }
     });
     // ejecta
@@ -130,4 +130,8 @@
             comboMaxFileNum: 40
         }, getBaseInfo()));
     }
+
+    S.add('logger', function () {
+        return S.Logger;
+    });
 })(KISSY);

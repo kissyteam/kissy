@@ -2,125 +2,123 @@
  * scope resolution for xtemplate like function in javascript but keep original data unmodified
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var undef;
+var undef;
 
-    function Scope(data) {
-        // {}
-        if (arguments.length) {
-            this.data = data;
-        } else {
-            this.data = {};
-        }
-        // {xindex}
-        this.affix = undef;
-        this.root = this;
+function Scope(data) {
+    // {}
+    if (arguments.length) {
+        this.data = data;
+    } else {
+        this.data = {};
     }
+    // {xindex}
+    this.affix = undef;
+    this.root = this;
+}
 
-    Scope.prototype = {
-        isScope: 1,
+Scope.prototype = {
+    isScope: 1,
 
-        setParent: function (parentScope) {
-            this.parent = parentScope;
-            this.root = parentScope.root;
-        },
+    setParent: function (parentScope) {
+        this.parent = parentScope;
+        this.root = parentScope.root;
+    },
 
-        // keep original data unmodified
-        set: function (name, value) {
-            if (!this.affix) {
-                this.affix = {};
-            }
-            this.affix[name] = value;
-        },
+    // keep original data unmodified
+    set: function (name, value) {
+        if (!this.affix) {
+            this.affix = {};
+        }
+        this.affix[name] = value;
+    },
 
-        setData: function (data) {
-            this.data = data;
-        },
+    setData: function (data) {
+        this.data = data;
+    },
 
-        getData: function () {
-            return this.data;
-        },
+    getData: function () {
+        return this.data;
+    },
 
-        mix: function (v) {
-            var affix = this.affix;
-            if (!affix) {
-                affix = this.affix = {};
-            }
-            for (var name in v) {
-                affix[name] = v[name];
-            }
-        },
+    mix: function (v) {
+        var affix = this.affix;
+        if (!affix) {
+            affix = this.affix = {};
+        }
+        for (var name in v) {
+            affix[name] = v[name];
+        }
+    },
 
-        get: function (name) {
-            var data = this.data;
-            var v;
-            var affix = this.affix;
+    get: function (name) {
+        var data = this.data;
+        var v;
+        var affix = this.affix;
 
-            v = affix && affix[name];
+        v = affix && affix[name];
 
-            if (v !== undef) {
-                return v;
-            }
-
-            if (data !== undef) {
-                v = data[name];
-            }
-
-            if (v !== undef) {
-                return v;
-            }
-
-            if (name === 'this') {
-                return data;
-            } else if (name === 'root') {
-                return this.root.data;
-            }
-
+        if (v !== undef) {
             return v;
-        },
+        }
 
-        resolve: function (parts, depth) {
-            var self = this;
+        if (data !== undef) {
+            v = data[name];
+        }
 
-            if (!depth && parts.length === 1) {
-                return self.get(parts[0]);
-            }
+        if (v !== undef) {
+            return v;
+        }
 
-            var len = parts.length,
-                scope = self,
-                i, v;
+        if (name === 'this') {
+            return data;
+        } else if (name === 'root') {
+            return this.root.data;
+        }
 
-            // root keyword for root self
-            if (len && parts[0] === 'root') {
-                parts.shift();
-                scope = scope.root;
-                len--;
-            } else if (depth) {
-                while (scope && depth--) {
-                    scope = scope.parent;
-                }
-            }
+        return v;
+    },
 
-            if (!len) {
-                return scope.data;
-            }
+    resolve: function (parts, depth) {
+        var self = this;
 
-            var part0 = parts[0];
+        if (!depth && parts.length === 1) {
+            return self.get(parts[0]);
+        }
 
-            do {
-                v = scope.get(part0);
-            } while (v === undef && (scope = scope.parent));
+        var len = parts.length,
+            scope = self,
+            i, v;
 
-            if (v && scope) {
-                for (i = 1; v && i < len; i++) {
-                    v = v[parts[i]];
-                }
-                return v;
-            } else {
-                return undef;
+        // root keyword for root self
+        if (len && parts[0] === 'root') {
+            parts.shift();
+            scope = scope.root;
+            len--;
+        } else if (depth) {
+            while (scope && depth--) {
+                scope = scope.parent;
             }
         }
-    };
 
-    return Scope;
-});
+        if (!len) {
+            return scope.data;
+        }
+
+        var part0 = parts[0];
+
+        do {
+            v = scope.get(part0);
+        } while (v === undef && (scope = scope.parent));
+
+        if (v && scope) {
+            for (i = 1; v && i < len; i++) {
+                v = v[parts[i]];
+            }
+            return v;
+        } else {
+            return undef;
+        }
+    }
+};
+
+module.exports = Scope;

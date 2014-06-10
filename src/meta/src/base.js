@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 
+// --no-module-wrap--
 KISSY.config({
     modules: {
         ajax: {

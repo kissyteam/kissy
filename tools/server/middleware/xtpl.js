@@ -18,7 +18,6 @@ module.exports = function (req, res, next) {
         req.code = code;
         next();
     } else {
-        res.setHeader('Content-Type', 'application/x-javascript');
         res.end(code);
     }
 };

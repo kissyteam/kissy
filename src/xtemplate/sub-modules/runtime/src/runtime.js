@@ -3,279 +3,279 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S, require) {
-    var util = require('util');
-    var nativeCommands = require('./runtime/commands');
-    var commands = {};
-    var Scope = require('./runtime/scope');
-    var LinkedBuffer = require('./runtime/linked-buffer');
 
-    function findCommand(runtimeCommands, instanceCommands, parts) {
-        var name = parts[0];
-        var cmd = runtimeCommands && runtimeCommands[name] ||
-            instanceCommands && instanceCommands[name] ||
-            commands[name];
-        if (parts.length === 1) {
-            return cmd;
-        }
-        if (cmd) {
-            var len = parts.length;
-            for (var i = 1; i < len; i++) {
-                cmd = cmd[parts[i]];
-                if (!cmd) {
-                    break;
-                }
-            }
-        }
+var util = require('util');
+var Logger = require('logger');
+var nativeCommands = require('./runtime/commands');
+var commands = {};
+var Scope = require('./runtime/scope');
+var LinkedBuffer = require('./runtime/linked-buffer');
+
+function findCommand(runtimeCommands, instanceCommands, parts) {
+    var name = parts[0];
+    var cmd = runtimeCommands && runtimeCommands[name] ||
+        instanceCommands && instanceCommands[name] ||
+        commands[name];
+    if (parts.length === 1) {
         return cmd;
     }
-
-    function getSubNameFromParentName(parentName, subName) {
-        var parts = parentName.split('/');
-        var subParts = subName.split('/');
-        parts.pop();
-        for (var i = 0, l = subParts.length; i < l; i++) {
-            var subPart = subParts[i];
-            if (subPart === '.') {
-            } else if (subPart === '..') {
-                parts.pop();
-            } else {
-                parts.push(subPart);
+    if (cmd) {
+        var len = parts.length;
+        for (var i = 1; i < len; i++) {
+            cmd = cmd[parts[i]];
+            if (!cmd) {
+                break;
             }
         }
-        return parts.join('/');
     }
+    return cmd;
+}
 
-    function renderTpl(tpl, scope, buffer) {
-        var fn = tpl.fn;
-        if (fn.version && S.version !== fn.version) {
-            throw new Error('current xtemplate file(' + tpl.name +
-                ')(v' + fn.version + ')need to be recompiled using current kissy(v' +
-                S.version + ')!');
-        }
-        buffer = tpl.fn(scope, buffer);
-        var extendTplName = tpl.runtime.extendTplName;
-        // if has extend statement, only parse
-        if (extendTplName) {
-            delete tpl.runtime.extendTplName;
-            buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
-        }
-        return buffer.end();
-    }
-
-    function callFn(tpl, scope, option, buffer, parts, depth, line, resolveInScope) {
-        var error, caller, fn, command1;
-        if (!depth) {
-            command1 = findCommand(tpl.runtime.commands, tpl.root.config.commands, parts);
-        }
-        if (command1) {
-            return command1.call(tpl, scope, option, buffer, line);
+function getSubNameFromParentName(parentName, subName) {
+    var parts = parentName.split('/');
+    var subParts = subName.split('/');
+    parts.pop();
+    for (var i = 0, l = subParts.length; i < l; i++) {
+        var subPart = subParts[i];
+        if (subPart === '.') {
+        } else if (subPart === '..') {
+            parts.pop();
         } else {
-            error = 'in file: ' + tpl.name + ' can not call: ' + parts.join('.') + '" at line ' + line;
+            parts.push(subPart);
         }
-        if (resolveInScope) {
-            caller = scope.resolve(parts.slice(0, -1), depth);
-            fn = caller[parts[parts.length - 1]];
-            if (fn) {
-                return fn.apply(caller, option.params);
-            }
-        }
-        if (error) {
-            S.error(error);
-        }
-        return buffer;
     }
+    return parts.join('/');
+}
 
-    var utils = {
-        callFn: function (tpl, scope, option, buffer, parts, depth, line) {
-            return callFn(tpl, scope, option, buffer, parts, depth, line, true);
-        },
-        callCommand: function (tpl, scope, option, buffer, parts, line) {
-            return callFn(tpl, scope, option, buffer, parts, 0, line, true);
+function renderTpl(tpl, scope, buffer) {
+    var fn = tpl.fn;
+    if (fn.version && KISSY.version !== fn.version) {
+        throw new Error('current xtemplate file(' + tpl.name +
+            ')(v' + fn.version + ')need to be recompiled using current kissy(v' +
+            KISSY.version + ')!');
+    }
+    buffer = tpl.fn(scope, buffer);
+    var extendTplName = tpl.runtime.extendTplName;
+    // if has extend statement, only parse
+    if (extendTplName) {
+        delete tpl.runtime.extendTplName;
+        buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
+    }
+    return buffer.end();
+}
+
+function callFn(tpl, scope, option, buffer, parts, depth, line, resolveInScope) {
+    var error, caller, fn, command1;
+    if (!depth) {
+        command1 = findCommand(tpl.runtime.commands, tpl.root.config.commands, parts);
+    }
+    if (command1) {
+        return command1.call(tpl, scope, option, buffer, line);
+    } else {
+        error = 'in file: ' + tpl.name + ' can not call: ' + parts.join('.') + '" at line ' + line;
+    }
+    if (resolveInScope) {
+        caller = scope.resolve(parts.slice(0, -1), depth);
+        fn = caller[parts[parts.length - 1]];
+        if (fn) {
+            return fn.apply(caller, option.params);
         }
-    };
+    }
+    if (error) {
+        Logger.error(error);
+    }
+    return buffer;
+}
+
+var utils = {
+    callFn: function (tpl, scope, option, buffer, parts, depth, line) {
+        return callFn(tpl, scope, option, buffer, parts, depth, line, true);
+    },
+    callCommand: function (tpl, scope, option, buffer, parts, line) {
+        return callFn(tpl, scope, option, buffer, parts, 0, line, true);
+    }
+};
+
+/**
+ * template file name for chrome debug
+ *
+ * @cfg {Boolean} name
+ * @member KISSY.XTemplate.Runtime
+ */
+
+/**
+ * XTemplate runtime. only accept tpl as function.
+ * @class KISSY.XTemplate.Runtime
+ */
+function XTemplateRuntime(fn, config) {
+    var self = this;
+    self.fn = fn;
+    config = config || {};
+    self.config = config;
+}
+
+util.mix(XTemplateRuntime, {
+    nativeCommands: nativeCommands,
+
+    utils: utils,
 
     /**
-     * template file name for chrome debug
-     *
-     * @cfg {Boolean} name
+     * add command to all template
+     * @method
+     * @static
+     * @param {String} commandName
+     * @param {Function} fn
      * @member KISSY.XTemplate.Runtime
      */
+    addCommand: function (commandName, fn) {
+        commands[commandName] = fn;
+    },
 
     /**
-     * XTemplate runtime. only accept tpl as function.
-     * @class KISSY.XTemplate.Runtime
+     * remove command from all template by name
+     * @method
+     * @static
+     * @param {String} commandName
+     * @member KISSY.XTemplate.Runtime
      */
-    function XTemplateRuntime(fn, config) {
-        var self = this;
-        self.fn = fn;
-        config = config || {};
-        self.config = config;
+    removeCommand: function (commandName) {
+        delete commands[commandName];
     }
+});
 
-    util.mix(XTemplateRuntime, {
-        nativeCommands: nativeCommands,
+var subNameResolveCache = {};
 
-        utils: utils,
-
-        /**
-         * add command to all template
-         * @method
-         * @static
-         * @param {String} commandName
-         * @param {Function} fn
-         * @member KISSY.XTemplate.Runtime
-         */
-        addCommand: function (commandName, fn) {
-            commands[commandName] = fn;
-        },
-
-        /**
-         * remove command from all template by name
-         * @method
-         * @static
-         * @param {String} commandName
-         * @member KISSY.XTemplate.Runtime
-         */
-        removeCommand: function (commandName) {
-            delete commands[commandName];
-        }
-    });
-
-    var subNameResolveCache = {};
-
-    function resolve(subName, parentName) {
-        if (subName.charAt(0) !== '.') {
-            return subName;
-        }
-        if (!parentName) {
-            var error = 'parent template does not have name' +
-                ' for relative sub tpl name: ' + subName;
-            S.error(error);
-        }
-        var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
-        if (cache[subName]) {
-            return cache[subName];
-        }
-        subName = cache[subName] = getSubNameFromParentName(parentName, subName);
-        //console.log('resolve: ' + name + ' : ' + subName);
+function resolve(subName, parentName) {
+    if (subName.charAt(0) !== '.') {
         return subName;
     }
+    if (!parentName) {
+        var error = 'parent template does not have name' +
+            ' for relative sub tpl name: ' + subName;
+        Logger.error(error);
+    }
+    var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
+    if (cache[subName]) {
+        return cache[subName];
+    }
+    subName = cache[subName] = getSubNameFromParentName(parentName, subName);
+    //console.log('resolve: ' + name + ' : ' + subName);
+    return subName;
+}
 
-    XTemplateRuntime.prototype = {
-        constructor: XTemplateRuntime,
+XTemplateRuntime.prototype = {
+    constructor: XTemplateRuntime,
 
-        Scope: Scope,
+    Scope: Scope,
 
-        nativeCommands: nativeCommands,
+    nativeCommands: nativeCommands,
 
-        utils: utils,
+    utils: utils,
 
-        getTplContent: function (name, callback) {
-            S.use(name, {
-                success: function (S, tpl) {
-                    callback(undefined, tpl);
-                },
-                error: function () {
-                    var error = 'template "' + name + '" does not exist';
-                    S.log(error, 'error');
-                    callback(error);
+    getTplContent: function (name, callback) {
+        require([name], {
+            success: function (tpl) {
+                callback(undefined, tpl);
+            },
+            error: function () {
+                var error = 'template "' + name + '" does not exist';
+                Logger.log(error, 'error');
+                callback(error);
+            }
+        });
+    },
+
+    /**
+     * get
+     * @cfg {Function} loader
+     * @member KISSY.XTemplate.Runtime
+     */
+    load: function (name, callback) {
+        this.getTplContent(name, callback);
+    },
+
+    /**
+     * remove command by name
+     * @param commandName
+     */
+    removeCommand: function (commandName) {
+        var config = this.config;
+        if (config.commands) {
+            delete config.commands[commandName];
+        }
+    },
+
+    /**
+     * add command definition to current template
+     * @param commandName
+     * @param {Function} fn command definition
+     */
+    addCommand: function (commandName, fn) {
+        var config = this.config;
+        config.commands = config.commands || {};
+        config.commands[commandName] = fn;
+    },
+
+    include: function (subTplName, tpl, scope, buffer) {
+        var self = this;
+        subTplName = resolve(subTplName, tpl.name);
+        return buffer.async(function (newBuffer) {
+            self.load(subTplName, function (error, tplFn) {
+                if (error) {
+                    newBuffer.error(error);
+                } else {
+                    renderTpl({
+                        root: tpl.root,
+                        fn: tplFn,
+                        name: subTplName,
+                        runtime: tpl.runtime
+                    }, scope, newBuffer);
                 }
             });
-        },
+        });
+    },
 
-        /**
-         * get
-         * @cfg {Function} loader
-         * @member KISSY.XTemplate.Runtime
-         */
-        load: function (name, callback) {
-            this.getTplContent(name, callback);
-        },
-
-        /**
-         * remove command by name
-         * @param commandName
-         */
-        removeCommand: function (commandName) {
-            var config = this.config;
-            if (config.commands) {
-                delete config.commands[commandName];
-            }
-        },
-
-        /**
-         * add command definition to current template
-         * @param commandName
-         * @param {Function} fn command definition
-         */
-        addCommand: function (commandName, fn) {
-            var config = this.config;
-            config.commands = config.commands || {};
-            config.commands[commandName] = fn;
-        },
-
-        include: function (subTplName, tpl, scope, buffer) {
-            var self = this;
-            subTplName = resolve(subTplName, tpl.name);
-            return buffer.async(function (newBuffer) {
-                self.load(subTplName, function (error, tplFn) {
-                    if (error) {
-                        newBuffer.error(error);
-                    } else {
-                        renderTpl({
-                            root: tpl.root,
-                            fn: tplFn,
-                            name: subTplName,
-                            runtime: tpl.runtime
-                        }, scope, newBuffer);
-                    }
-                });
-            });
-        },
-
-        /**
-         * get result by merge data with template
-         * @param data
-         * @param option
-         * @param callback function called
-         * @return {String}
-         */
-        render: function (data, option, callback) {
-            var html = '';
-            var self = this;
-            var fn = self.fn;
-            if (typeof option === 'function') {
-                callback = option;
-                option = null;
-            }
-            option = option || {};
-            callback = callback || function (error, ret) {
-                html = ret;
-            };
-
-            var name = self.config.name;
-            if (!name && fn.TPL_NAME) {
-                name = fn.TPL_NAME;
-            }
-            var scope = new Scope(data),
-                buffer = new LinkedBuffer(callback).head;
-            renderTpl({
-                name: name,
-                fn: fn,
-                runtime: {
-                    commands: option.commands
-                },
-                root: self
-            }, scope, buffer);
-            return html;
+    /**
+     * get result by merge data with template
+     * @param data
+     * @param option
+     * @param callback function called
+     * @return {String}
+     */
+    render: function (data, option, callback) {
+        var html = '';
+        var self = this;
+        var fn = self.fn;
+        if (typeof option === 'function') {
+            callback = option;
+            option = null;
         }
-    };
+        option = option || {};
+        callback = callback || function (error, ret) {
+            html = ret;
+        };
 
-    XTemplateRuntime.Scope = Scope;
+        var name = self.config.name;
+        if (!name && fn.TPL_NAME) {
+            name = fn.TPL_NAME;
+        }
+        var scope = new Scope(data),
+            buffer = new LinkedBuffer(callback).head;
+        renderTpl({
+            name: name,
+            fn: fn,
+            runtime: {
+                commands: option.commands
+            },
+            root: self
+        }, scope, buffer);
+        return html;
+    }
+};
 
-    return XTemplateRuntime;
-});
+XTemplateRuntime.Scope = Scope;
+
+module.exports = XTemplateRuntime;
 
 /**
  * @ignore

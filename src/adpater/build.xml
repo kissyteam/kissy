@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<project name="adapter.build" default="build" basedir=".">
+    <property name="component.name" value="adapter"/>
+
+    <import file="../common.xml"/>
+
+    <target name="concat">
+        <concat destfile="${component.src.dir.tmp}/${component.basename}-pkg-debug.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <fileset dir="${component.src.dir}" includes="**/*.js"/>
+        </concat>
+    </target>
+
+    <target name="compress-css"/>
+</project>

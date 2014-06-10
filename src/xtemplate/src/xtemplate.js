@@ -3,105 +3,105 @@
  * simple facade for runtime and compiler
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var util = require('util');
-    var XTemplateRuntime = require('xtemplate/runtime');
-    var Compiler = require('xtemplate/compiler');
-    var cache = XTemplate.cache = {};
 
-    function compile(tpl, name, config) {
-        var fn;
+var util = require('util');
+var XTemplateRuntime = require('xtemplate/runtime');
+var Compiler = require('xtemplate/compiler');
+var cache = XTemplate.cache = {};
 
-        var cacheable = !config || config.cache !== false;
+function compile(tpl, name, config) {
+    var fn;
 
-        if (cacheable && (fn = cache[tpl])) {
-            return fn;
-        }
+    var cacheable = !config || config.cache !== false;
 
-        fn = Compiler.compileToFn(tpl, name);
-
-        if (cacheable) {
-            cache[tpl] = fn;
-        }
-
+    if (cacheable && (fn = cache[tpl])) {
         return fn;
     }
 
-    /*
-     *whether cache template string
-     * @member KISSY.XTemplate
-     * @cfg {Boolean} cache.
-     * Defaults to true.
-     */
+    fn = Compiler.compileToFn(tpl, name);
 
-    /**
-     * xtemplate engine for KISSY.
-     *
-     *
-     *      @example
-     *      KISSY.use('xtemplate',function(S, XTemplate){
-     *          document.writeln(new XTemplate('{{title}}').render({title:2}));
-     *      });
-     *
-     *
-     * @class KISSY.XTemplate
-     * @extends KISSY.XTemplate.Runtime
-     */
-    function XTemplate(tpl, config) {
-        if (typeof tpl === 'string') {
-            tpl = compile(tpl, config && config.name, config);
-        }
-        XTemplate.superclass.constructor.call(this, tpl, config);
+    if (cacheable) {
+        cache[tpl] = fn;
     }
 
-    util.extend(XTemplate, XTemplateRuntime, {
-        load: function (name, callback) {
-            var tplModule = this.getTplContent(name, function (error, fn) {
-                if (error) {
-                    return  callback(tplModule.error);
-                } else {
-                    if (typeof fn === 'string') {
-                        try {
-                            fn = compile(fn, name, this.config);
-                        } catch (e) {
-                            return callback(e);
-                        }
+    return fn;
+}
+
+/*
+ *whether cache template string
+ * @member KISSY.XTemplate
+ * @cfg {Boolean} cache.
+ * Defaults to true.
+ */
+
+/**
+ * xtemplate engine for KISSY.
+ *
+ *
+ *      @example
+ *      KISSY.use('xtemplate',function(S, XTemplate){
+     *          document.writeln(new XTemplate('{{title}}').render({title:2}));
+     *      });
+ *
+ *
+ * @class KISSY.XTemplate
+ * @extends KISSY.XTemplate.Runtime
+ */
+function XTemplate(tpl, config) {
+    if (typeof tpl === 'string') {
+        tpl = compile(tpl, config && config.name, config);
+    }
+    XTemplate.superclass.constructor.call(this, tpl, config);
+}
+
+util.extend(XTemplate, XTemplateRuntime, {
+    load: function (name, callback) {
+        var tplModule = this.getTplContent(name, function (error, fn) {
+            if (error) {
+                return  callback(tplModule.error);
+            } else {
+                if (typeof fn === 'string') {
+                    try {
+                        fn = compile(fn, name, this.config);
+                    } catch (e) {
+                        return callback(e);
                     }
-                    callback(undefined, fn);
                 }
-            });
-        }
-    }, {
-        Compiler: Compiler,
+                callback(undefined, fn);
+            }
+        });
+    }
+}, {
+    Compiler: Compiler,
 
-        Scope: XTemplateRuntime.Scope,
+    Scope: XTemplateRuntime.Scope,
 
-        RunTime: XTemplateRuntime,
+    RunTime: XTemplateRuntime,
 
-        clearCache: function (content) {
-            delete cache[content];
-        },
+    clearCache: function (content) {
+        delete cache[content];
+    },
 
-        /**
-         * add command to all template
-         * @method
-         * @static
-         * @param {String} commandName
-         * @param {Function} fn
-         */
-        addCommand: XTemplateRuntime.addCommand,
+    /**
+     * add command to all template
+     * @method
+     * @static
+     * @param {String} commandName
+     * @param {Function} fn
+     */
+    addCommand: XTemplateRuntime.addCommand,
 
-        /**
-         * remove command from all template by name
-         * @method
-         * @static
-         * @param {String} commandName
-         */
-        removeCommand: XTemplateRuntime.removeCommand
-    });
-
-    return XTemplate;
+    /**
+     * remove command from all template by name
+     * @method
+     * @static
+     * @param {String} commandName
+     */
+    removeCommand: XTemplateRuntime.removeCommand
 });
+
+module.exports = XTemplate;
+
 
 /*
  It consists three modules:

@@ -3,21 +3,17 @@
  * dom
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Dom = require('./base/api');
 
-    require('./base/attr');
-    require('./base/class');
-    require('./base/create');
-    require('./base/data');
-    require('./base/insertion');
-    require('./base/offset');
-    require('./base/style');
-    require('./base/selector');
-    require('./base/traversal');
+var Dom = require('./base/api');
 
-    // bad! compatibility
-    S.DOM = Dom;
+require('./base/attr');
+require('./base/class');
+require('./base/create');
+require('./base/data');
+require('./base/insertion');
+require('./base/offset');
+require('./base/style');
+require('./base/selector');
+require('./base/traversal');
 
-    return Dom;
-});
+module.exports = Dom;

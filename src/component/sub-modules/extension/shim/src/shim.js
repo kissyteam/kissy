@@ -3,49 +3,48 @@
  * create iframe shim for flash/select/office plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var UA = require('ua');
-    var ie6 = UA.ie === 6;
 
-    var shimTpl = '<' + 'iframe style="position: absolute;' +
-        'border: none;' +
-        // consider border
-        // bug fix: 2012-11-07
-        'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' +
-        'top: 0;' +
-        'opacity: 0;' +
-        'filter: alpha(opacity=0);' +
-        'left: 0;' +
-        'z-index: -1;' +
-        'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';
+var UA = require('ua');
+var ie6 = UA.ie === 6;
 
+var shimTpl = '<' + 'iframe style="position: absolute;' +
+    'border: none;' +
+    // consider border
+    // bug fix: 2012-11-07
+    'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' +
+    'top: 0;' +
+    'opacity: 0;' +
+    'filter: alpha(opacity=0);' +
+    'left: 0;' +
+    'z-index: -1;' +
+    'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';
+
+/**
+ * create iframe shim for mixin.
+ * @class KISSY.Component.Extension.Shim
+ */
+function Shim() {
+}
+
+Shim.ATTRS = {
     /**
-     * create iframe shim for mixin.
-     * @class KISSY.Component.Extension.Shim
+     * whether create shim
+     * @cfg {Boolean} shim
      */
-    function Shim() {
+    /**
+     * @ignore
+     */
+    shim: {
+        // default shim for ie6
+        // prevent select coming out of div
+        value: ie6
     }
+};
 
-    Shim.ATTRS = {
-        /**
-         * whether create shim
-         * @cfg {Boolean} shim
-         */
-        /**
-         * @ignore
-         */
-        shim: {
-            // default shim for ie6
-            // prevent select coming out of div
-            value: ie6
-        }
-    };
+Shim.prototype.__createDom = function () {
+    if (this.get('shim')) {
+        this.get('el').prepend(shimTpl);
+    }
+};
 
-    Shim.prototype.__createDom = function () {
-        if (this.get('shim')) {
-            this.get('el').prepend(shimTpl);
-        }
-    };
-
-    return Shim;
-});
+module.exports = Shim;

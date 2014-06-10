@@ -3,24 +3,22 @@
  * scalable event framework for kissy (refer Dom3 Events)
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Utils = require('./base/utils');
-    var Object = require('./base/object');
-    var Observer = require('./base/observer');
-    var Observable = require('./base/observable');
 
-    /**
-     * The event utility provides functions to add and remove event listeners.
-     * @class KISSY.Event
-     * @singleton
-     */
-    return {
-        Utils: Utils,
-        Object: Object,
-        Observer: Observer,
-        Observable: Observable
-    };
-});
+var Utils = require('./base/utils');
+var Observer = require('./base/observer');
+var Observable = require('./base/observable');
+
+/**
+ * The event utility provides functions to add and remove event listeners.
+ * @class KISSY.Event
+ * @singleton
+ */
+module.exports = {
+    Utils: Utils,
+    Object: require('./base/object'),
+    Observer: Observer,
+    Observable: Observable
+};
 
 /*
  yiminghe@gmail.com: 2012-10-24

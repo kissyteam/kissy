@@ -10,6 +10,8 @@ var SEP = '&',
     toString = ({}).toString,
     EQ = '=';
 
+var Logger = require('logger');
+
 function isValidParamValue(val) {
     var t = typeof val;
     // If the type of val is null, undef, number, string, boolean, return TRUE.
@@ -117,8 +119,8 @@ module.exports = {
                     // http://stackoverflow.com/questions/9064536/javascript-decodeuricomponent-malformed-uri-exception
                     val = urlDecode(val);
                 } catch (e) {
-                    S.log('decodeURIComponent error : ' + val, 'error');
-                    S.log(e, 'error');
+                    Logger.log('decodeURIComponent error : ' + val, 'error');
+                    Logger.log(e, 'error');
                 }
 
                 if (key.slice(0 - 2) === '[]') {

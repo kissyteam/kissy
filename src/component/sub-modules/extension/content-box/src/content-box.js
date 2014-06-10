@@ -3,61 +3,60 @@
  * common content box render
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    function shortcut(self) {
-        var contentEl = self.get('contentEl');
-        self.$contentEl = self.$contentEl = contentEl;
-        self.contentEl = self.contentEl = contentEl[0];
-    }
 
-    var contentTpl = require('./content-box/content-xtpl');
+function shortcut(self) {
+    var contentEl = self.get('contentEl');
+    self.$contentEl = self.$contentEl = contentEl;
+    self.contentEl = self.contentEl = contentEl[0];
+}
 
-    /**
-     * content-render extension for component system
-     * @class KISSY.Component.Extension.ContentBox
-     */
-    function ContentBox() {
-    }
+var contentTpl = require('./content-box/content-xtpl');
 
-    ContentBox.prototype = {
-        __createDom: function () {
-            shortcut(this);
-        },
+/**
+ * content-render extension for component system
+ * @class KISSY.Component.Extension.ContentBox
+ */
+function ContentBox() {
+}
 
-        __decorateDom: function () {
-            shortcut(this);
-        },
+ContentBox.prototype = {
+    __createDom: function () {
+        shortcut(this);
+    },
 
-        getChildrenContainerEl: function () {
-            // can not use $contentEl, maybe called by decorateDom method
-            return this.get('contentEl');
-        },
+    __decorateDom: function () {
+        shortcut(this);
+    },
 
-        _onSetContent: function (v) {
-            var contentEl = this.$contentEl;
-            contentEl.html(v);
-            // ie needs to set unselectable attribute recursively
-            if (!this.get('allowTextSelection')) {
-                contentEl.unselectable();
-            }
+    getChildrenContainerEl: function () {
+        // can not use $contentEl, maybe called by decorateDom method
+        return this.get('contentEl');
+    },
+
+    _onSetContent: function (v) {
+        var contentEl = this.$contentEl;
+        contentEl.html(v);
+        // ie needs to set unselectable attribute recursively
+        if (!this.get('allowTextSelection')) {
+            contentEl.unselectable();
         }
-    };
+    }
+};
 
-    ContentBox.ATTRS = {
-        contentTpl: {
-            value: contentTpl
-        },
-        contentEl: {
-            selector: function () {
-                return '.' + this.getBaseCssClass('content');
-            }
-        },
-        content: {
-            parse: function () {
-                return this.get('contentEl').html();
-            }
+ContentBox.ATTRS = {
+    contentTpl: {
+        value: contentTpl
+    },
+    contentEl: {
+        selector: function () {
+            return '.' + this.getBaseCssClass('content');
         }
-    };
+    },
+    content: {
+        parse: function () {
+            return this.get('contentEl').html();
+        }
+    }
+};
 
-    return ContentBox;
-});
+module.exports = ContentBox;

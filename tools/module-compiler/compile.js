@@ -7,9 +7,9 @@ var esprima = require('esprima');
 /*global S: true*/
 /*jshint quotmark:false */
 var S = require('../../lib/loader');
-var util = require('../../lib/util');
 var estraverse = require('estraverse');
 var escodegen = require('escodegen');
+var wrapModule = require('../util/wrap-module');
 var normalizePath = S.Loader.Utils.normalizePath;
 
 function findRequires(ast) {
@@ -48,42 +48,6 @@ function completeFullModuleFormat(ast, name, requires) {
     });
 }
 
-var calleeExpression = {
-    "type": "MemberExpression",
-    "object": {
-        "type": "Identifier",
-        "name": "KISSY"
-    },
-    "property": {
-        "type": "Identifier",
-        "name": "add"
-    }
-};
-
-function clearRange(ast) {
-    if (!ast) {
-        return {};
-    }
-    for (var i in ast) {
-        if (i === 'range' || i === 'computed') {
-            delete ast[i];
-        } else if (typeof ast[i] === 'object') {
-            clearRange(ast[i]);
-        }
-    }
-    return ast;
-}
-
-function isKISSYAdd(ast) {
-    if (!ast) {
-        return false;
-    }
-    if (!ast.expression) {
-        return false;
-    }
-    return util.equals(clearRange(ast.expression.callee), calleeExpression);
-}
-
 function compileModule(modName, codes, requires) {
     if (codes[modName] !== undefined) {
         return;
@@ -99,72 +63,12 @@ function compileModule(modName, codes, requires) {
         attachComment: true
     });
 
-    if (ast.body.length !== 1 || !isKISSYAdd(ast.body[0])) {
-        var wrapBody = {
-            "type": "BlockStatement",
-            "body": []
-        };
-        var wrapAst = {
-            "type": "Program",
-            "body": [
-                {
-                    "type": "ExpressionStatement",
-                    "expression": {
-                        "type": "CallExpression",
-                        "callee": {
-                            "type": "MemberExpression",
-                            "computed": false,
-                            "object": {
-                                "type": "Identifier",
-                                "name": "KISSY"
-                            },
-                            "property": {
-                                "type": "Identifier",
-                                "name": "add"
-                            }
-                        },
-                        "arguments": [
-                            {
-                                "type": "FunctionExpression",
-                                "id": null,
-                                "params": [
-                                    {
-                                        "type": "Identifier",
-                                        "name": "S"
-                                    },
-                                    {
-                                        "type": "Identifier",
-                                        "name": "require"
-                                    },
-                                    {
-                                        "type": "Identifier",
-                                        "name": "exports"
-                                    },
-                                    {
-                                        "type": "Identifier",
-                                        "name": "module"
-                                    }
-                                ],
-                                "defaults": [],
-                                "body": wrapBody,
-                                "rest": null,
-                                "generator": false,
-                                "expression": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        };
-
-        wrapBody.body = ast.body;
-        ast = wrapAst;
-    }
+    ast = wrapModule.wrapModuleAst(ast);
 
     var modRequires = findRequires(ast);
     completeFullModuleFormat(ast, modName, modRequires);
     codes[modName] = escodegen.generate(ast, {
-        comment: ast.comments
+        comment: true
     });
     modRequires = modRequires.map(function (r) {
         return normalizePath(modName, r);

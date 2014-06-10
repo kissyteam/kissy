@@ -3,19 +3,17 @@
  * custom facade
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Target = require('./custom/target');
-    var util = require('util');
-    return {
-        Target: Target,
+var Target = require('./custom/target');
+var util = require('util');
+module.exports = {
+    Target: Target,
 
-        Object: require('./custom/object'),
+    Object: require('./custom/object'),
 
-        /**
-         * global event target
-         * @property {KISSY.Event.CustomEvent.Target} global
-         * @member KISSY.Event.CustomEvent
-         */
-        global: util.mix({}, Target)
-    };
-});
+    /**
+     * global event target
+     * @property {KISSY.Event.CustomEvent.Target} global
+     * @member KISSY.Event.CustomEvent
+     */
+    global: util.mix({}, Target)
+};

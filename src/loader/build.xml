@@ -30,6 +30,7 @@
         <concat destfile="${component.src.dir.tmp}/loader-pkg-debug.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
+            <path location="${component.src.dir}/logger.js"/>
             <path location="${component.src.dir}/utils.js"/>
             <path location="${component.src.dir}/data-structure.js"/>
             <path location="${component.src.dir}/css-onload.js"/>

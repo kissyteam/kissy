@@ -3,23 +3,22 @@
  * Observer for custom event
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var BaseEvent = require('event/base');
-    var util = require('util');
 
-    /**
-     * Observer for custom event
-     * @class KISSY.Event.CustomEvent.Observer
-     * @extends KISSY.Event.Observer
-     * @private
-     */
-    function CustomEventObserver() {
-        CustomEventObserver.superclass.constructor.apply(this, arguments);
-    }
+var BaseEvent = require('event/base');
+var util = require('util');
 
-    util.extend(CustomEventObserver, BaseEvent.Observer, {
-        keys: ['fn', 'context', 'groups']
-    });
+/**
+ * Observer for custom event
+ * @class KISSY.Event.CustomEvent.Observer
+ * @extends KISSY.Event.Observer
+ * @private
+ */
+function CustomEventObserver() {
+    CustomEventObserver.superclass.constructor.apply(this, arguments);
+}
 
-    return CustomEventObserver;
+util.extend(CustomEventObserver, BaseEvent.Observer, {
+    keys: ['fn', 'context', 'groups']
 });
+
+module.exports = CustomEventObserver;

@@ -177,6 +177,8 @@
             path = Utils.normalizePath(rest, path);
             return url.substring(0, pathIndex) + path;
         };
+
+        require.load = S.getScript;
 //      relative name resolve cache
 //      self.resolveCache = {};
     }
@@ -408,9 +410,12 @@
             }
 
             self.status = ATTACHED;
+            if (self.afterAttach) {
+                self.afterAttach(self.exports);
+            }
         },
 
-        attach: function () {
+        attachRecursive: function () {
             var self = this,
                 status;
             status = self.status;
@@ -424,7 +429,7 @@
                 self.attachSelf();
             } else {
                 Utils.each(self.getNormalizedRequiredModules(), function (m) {
-                    m.attach();
+                    m.attachRecursive();
                 });
                 self.attachSelf();
             }
@@ -435,17 +440,6 @@
             this.status = Status.INIT;
             delete this.factory;
             delete this.exports;
-        },
-
-        attached: function (moduleName) {
-            var requiresModule = createModule(this.resolve(moduleName));
-            var mods = requiresModule.getNormalizedModules();
-            var attached = true;
-            Utils.each(mods, function (m) {
-                attached = m.status === Status.ATTACHED;
-                return attached;
-            });
-            return attached;
         }
     };
 
@@ -454,7 +448,7 @@
         if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
-            var Plugin = createModule(pluginName).attach().exports || {};
+            var Plugin = createModule(pluginName).attachRecursive().exports || {};
             if (Plugin.alias) {
                 name = Plugin.alias(S, name, pluginName);
             }

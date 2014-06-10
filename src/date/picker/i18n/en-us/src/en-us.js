@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add({
+module.exports = ({
     today: 'Today',
     clear: 'Clear',
     previousMonth: 'Previous month (PageUp)',

@@ -7,14 +7,14 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S, require) {
+
     var Editor = require('editor');
     var ListUtils = require('./list-utils');
 
     var listNodeNames = {ol: 1, ul: 1},
         Walker = Editor.Walker,
         Dom = require('dom'),
-        Node = require('node'),
+        $ = require('node'),
         UA = require('ua'),
         isNotWhitespaces = Walker.whitespaces(true),
         INDENT_CSS_PROPERTY = 'margin-left',
@@ -91,7 +91,7 @@ KISSY.add(function (S, require) {
             // Make sure the newly created sublist get a brand-new element of the same type. (#5372)
             var listRoot = listArray[ i ].parent;
             listArray[ i ].parent =
-                new Node(listRoot[0].ownerDocument.createElement(listRoot.nodeName()));
+                $(listRoot[0].ownerDocument.createElement(listRoot.nodeName()));
         }
         /*
          嵌到下层的li
@@ -127,7 +127,7 @@ KISSY.add(function (S, require) {
                     child;
 
                 for (i = count - 1; i >= 0; i--) {
-                    if (( child = new Node(children[i]) ) &&
+                    if (( child = $(children[i]) ) &&
                         child.nodeName() === 'li') {
                         pendingList.push(child);
                     }
@@ -268,7 +268,7 @@ KISSY.add(function (S, require) {
         }
     }
 
-    return {
+    module.exports = {
         checkOutdentActive: function (elementPath) {
             var blockLimit = elementPath.blockLimit;
             if (elementPath.contains(listNodeNames)) {
@@ -280,5 +280,3 @@ KISSY.add(function (S, require) {
         },
         addCommand: addCommand
     };
-
-});

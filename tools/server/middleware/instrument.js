@@ -19,7 +19,6 @@ function getModuleName(url) {
 
 function instrument(code, moduleName, res, next) {
     try {
-        res.setHeader('Content-Type', 'application/x-javascript');
         res.end(jscover.instrument(code, moduleName + '.js', {
             excludeHeader: true
         }));

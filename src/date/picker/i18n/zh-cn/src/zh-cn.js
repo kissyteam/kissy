@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add({
+module.exports = ({
     today: '今天',
     clear: '清除',
     previousMonth: '上个月 (翻页上键)',

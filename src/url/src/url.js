@@ -288,6 +288,8 @@ var url = {
     }
 };
 
+url.stringify = url.format;
+
 module.exports = url;
 /*
  Refer

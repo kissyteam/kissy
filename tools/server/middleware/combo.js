@@ -26,15 +26,9 @@ module.exports = function (req, res, next) {
         }
         combo = combo.slice(1, nextQ);
         var files = combo.split(',');
-        var f = files[0];
         util.each(files, function (f) {
             codes.push(fs.readFileSync(path + f));
         });
-        if (util.endsWith(f, '.js')) {
-            res.setHeader('Content-Type', 'application/x-javascript');
-        } else {
-            res.setHeader('Content-Type', 'text/css');
-        }
         res.send(codes.join('\n'));
     } else {
         next();

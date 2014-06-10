@@ -269,7 +269,7 @@
         attachModules: function (mods) {
             var l = mods.length, i;
             for (i = 0; i < l; i++) {
-                mods[i].attach();
+                mods[i].attachRecursive();
             }
         },
 

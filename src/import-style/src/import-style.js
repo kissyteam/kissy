@@ -5,6 +5,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var isDebug;
 
     function each(arr, fn) {

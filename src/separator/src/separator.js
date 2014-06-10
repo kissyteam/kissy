@@ -3,38 +3,37 @@
  * separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Control = require('component/control');
 
-    /**
-     * separator component for KISSY. xclass: 'separator'.
-     * @extends KISSY.Component.Control
-     * @class KISSY.Separator
-     */
-    return Control.extend({
-        beforeCreateDom: function (renderData) {
-            renderData.elAttrs.role = 'separator';
-        }
-    }, {
-        ATTRS: {
+var Control = require('component/control');
 
-            /**
-             * Un-focusable.
-             * readonly.
-             * Defaults to: false.
-             */
-            focusable: {
-                value: false
-            },
+/**
+ * separator component for KISSY. xclass: 'separator'.
+ * @extends KISSY.Component.Control
+ * @class KISSY.Separator
+ */
+module.exports = Control.extend({
+    beforeCreateDom: function (renderData) {
+        renderData.elAttrs.role = 'separator';
+    }
+}, {
+    ATTRS: {
 
-            disabled: {
-                value: true
-            },
-
-            handleGestureEvents: {
-                value: false
-            }
+        /**
+         * Un-focusable.
+         * readonly.
+         * Defaults to: false.
+         */
+        focusable: {
+            value: false
         },
-        xclass: 'separator'
-    });
+
+        disabled: {
+            value: true
+        },
+
+        handleGestureEvents: {
+            value: false
+        }
+    },
+    xclass: 'separator'
 });

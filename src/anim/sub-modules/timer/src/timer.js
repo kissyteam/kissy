@@ -200,7 +200,7 @@ TimerAnim.Fx = Fx;
 util.mix(TimerAnim, AnimBase.Statics);
 
 // bad
-module.exports = S.Anim = TimerAnim;
+module.exports = TimerAnim;
 
 /*
  2013-09

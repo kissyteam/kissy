@@ -18,7 +18,6 @@
     "node": true,
     "es3": true,
     "globals": {
-        "S": false,
         "KISSY": false,
         "describe": false,
         "expect": false,

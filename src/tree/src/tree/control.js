@@ -3,51 +3,50 @@
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var TreeNode = require('./node');
-    var TreeManager = require('./tree-manager');
 
-    /*多继承
-     1. 继承基节点（包括可装饰儿子节点功能）
-     2. 继承 mixin 树管理功能
-     3. 继承 mixin 儿子事件代理功能
-     */
+var TreeNode = require('./node');
+var TreeManager = require('./tree-manager');
 
-    /**
-     * KISSY Tree. xclass: 'tree'.
-     * @class KISSY.Tree
-     * @extends KISSY.Tree.Node
-     */
-    return TreeNode.extend([TreeManager], {
-        handleKeyDownInternal: function (e) {
-            var current = this.get('selectedItem');
-            if (current === this) {
-                return this.callSuper(e);
-            }
-            return current && current.handleKeyDownInternal(e);
-        },
+/*多继承
+ 1. 继承基节点（包括可装饰儿子节点功能）
+ 2. 继承 mixin 树管理功能
+ 3. 继承 mixin 儿子事件代理功能
+ */
 
-        _onSetFocused: function (v) {
-            var self = this;
-            self.callSuper(v);
-            // 得到焦点时没有选择节点
-            // 默认选择自己
-            if (v && !self.get('selectedItem')) {
-                self.select();
+/**
+ * KISSY Tree. xclass: 'tree'.
+ * @class KISSY.Tree
+ * @extends KISSY.Tree.Node
+ */
+module.exports = TreeNode.extend([TreeManager], {
+    handleKeyDownInternal: function (e) {
+        var current = this.get('selectedItem');
+        if (current === this) {
+            return this.callSuper(e);
+        }
+        return current && current.handleKeyDownInternal(e);
+    },
+
+    _onSetFocused: function (v) {
+        var self = this;
+        self.callSuper(v);
+        // 得到焦点时没有选择节点
+        // 默认选择自己
+        if (v && !self.get('selectedItem')) {
+            self.select();
+        }
+    }
+}, {
+    ATTRS: {
+        defaultChildCfg: {
+            valueFn: function () {
+                return {
+                    xclass: 'tree-node'
+                };
             }
         }
-    }, {
-        ATTRS: {
-            defaultChildCfg: {
-                valueFn: function () {
-                    return {
-                        xclass: 'tree-node'
-                    };
-                }
-            }
-        },
-        xclass: 'tree'
-    });
+    },
+    xclass: 'tree'
 });
 
 /*
