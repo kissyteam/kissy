@@ -2,7 +2,7 @@
  * test transform cross-browser implementation
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Dom = require('dom');
     var util = require('util');
     function matrix(transform) {
@@ -191,4 +191,3 @@ KISSY.add(function (S, require) {
             compare(val);
         });
     });
-});

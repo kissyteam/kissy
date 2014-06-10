@@ -2,8 +2,11 @@
  * test back-color command
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Node, Color, Editor, init) {
-    var $ = Node.all;
+
+    var init = require('./init');
+    var Editor = require('editor');
+    var Color = require('color');
+    var $ = require('node');
     describe('back-color', function () {
         var editor;
         it('init', function () {
@@ -50,6 +53,3 @@ KISSY.add(function (S, Node, Color, Editor, init) {
 
         });
     });
-}, {
-    requires: ['node', 'color', 'editor', './init']
-});

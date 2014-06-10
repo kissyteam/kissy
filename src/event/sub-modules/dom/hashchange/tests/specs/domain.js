@@ -2,44 +2,43 @@
  * domain spec for event
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, Dom) {
-    /*jshint quotmark:false*/
-    describe("domain in event", function () {
-        it("hashchange should consider domain", function () {
 
-            if (S.UA.ie === 6) {
-                return;
-            }
+var Dom = require('dom');
+var UA = require('ua');
+var Event = require('event/dom');
+/*jshint quotmark:false*/
+describe("domain in event", function () {
+    it("hashchange should consider domain", function () {
 
-            window.location.hash = '';
-            document.domain = location.hostname;
+        if (UA.ie === 6) {
+            return;
+        }
 
-            // document.domain does not contain port
-            Dom.isCustomDomain = function () {
-                return true;
-            };
+        window.location.hash = '';
+        document.domain = location.hostname;
 
-            var hash = "#ok",
-                current = -1;
+        // document.domain does not contain port
+        Dom.isCustomDomain = function () {
+            return true;
+        };
 
-            Event.on(window, "hashchange", function () {
-                current = window.location.hash;
-            });
+        var hash = "#ok",
+            current = -1;
 
-            waits(500);
+        Event.on(window, "hashchange", function () {
+            current = window.location.hash;
+        });
 
-            runs(function () {
-                window.location.hash = hash;
-            });
+        waits(500);
 
-            waits(500);
+        runs(function () {
+            window.location.hash = hash;
+        });
 
-            runs(function () {
-                expect(current).toBe(hash);
-            });
+        waits(500);
+
+        runs(function () {
+            expect(current).toBe(hash);
         });
     });
-
-},{
-        requires:['event/dom','dom']
-    });
+});

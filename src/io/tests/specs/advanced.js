@@ -2,10 +2,15 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.add(function (S,util, UA, Json, io, Node, Uri) {
+    var io = require('io');
+    var util = require('util');
+    var $ = require('node');
+    var UA = require('ua');
+    var Json = require('json');
+    var url = require('url');
+
+
     /*jshint quotmark:false*/
-    var $ = Node.all;
-    var pageUri = new Uri(location.href);
 
     describe("Advanced IO", function () {
 
@@ -99,7 +104,7 @@ KISSY.add(function (S,util, UA, Json, io, Node, Uri) {
                                 expect(status).toBe("not modified");
 
                                 expect(io.__lastModifiedCached[
-                                    pageUri.resolve('/kissy/src/io/tests/data/ifModified.jss').toString()
+                                    url.resolve(location.href,'/kissy/src/io/tests/data/ifModified.jss')
                                     ])
                                     .toBe('Thu, 18 Jul 2002 15:48:32 GMT');
                             }
@@ -143,11 +148,13 @@ KISSY.add(function (S,util, UA, Json, io, Node, Uri) {
                                 expect(xhr.status).toBe(304);
                                 expect(status).toBe("not modified");
 
-                                var uri = pageUri.resolve('/kissy/src/io/tests/data/ifModified.jss');
-                                uri.query.add("t", "t");
+                                var uri = url.parse(url.resolve(location.href,'/kissy/src/io/tests/data/ifModified.jss'));
+                                uri.query={
+                                    t:'t'
+                                };
 
                                 expect(io.__lastModifiedCached[
-                                    uri.toString()
+                                    url.stringify(uri)
                                     ]).toBe('Thu, 18 Jul 2002 15:48:32 GMT');
                             }
                             ok = 1;
@@ -425,6 +432,3 @@ KISSY.add(function (S,util, UA, Json, io, Node, Uri) {
             });
         });
     });
-}, {
-    requires: ['util','ua', 'json', 'io', 'node', 'uri']
-});

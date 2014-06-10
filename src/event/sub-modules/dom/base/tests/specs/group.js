@@ -2,9 +2,11 @@
  * tc about event group support
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Node) {
+
+    var Dom = require('dom');
+    var $ = require('node');
     /*jshint quotmark:false*/
-    var $ = Node.all,
+    var
     // simulate mouse event on any element
         simulate = function (target, type, relatedTarget) {
             target = Dom.get(target);
@@ -346,7 +348,3 @@ KISSY.add(function (S, Dom, Node) {
             });
         });
     });
-
-},{
-    requires:['dom','node']
-});

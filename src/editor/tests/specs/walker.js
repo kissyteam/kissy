@@ -2,10 +2,10 @@
  * Test walker for Editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Editor) {
-    /*jshint quotmark:false*/
 
-    var $ = S.all;
+    /*jshint quotmark:false*/
+    var Editor = require('editor');
+    var $ = require('node');
     var Walker = Editor.Walker;
     var Range = Editor.Range;
 
@@ -77,12 +77,12 @@ KISSY.add(function (S, Editor) {
                 "</div>").appendTo('body');
 
             var range = new Range(document);
-            range.setStart(div, 1)
+            range.setStart(div, 1);
             range.setEnd(div, 3);
             var walker = new Walker(range);
             walker.evaluator = function (node) {
                 // 只取文字节点
-                return node.nodeType == 3;
+                return node.nodeType === 3;
             };
             var node = walker.next();
             expect(node[0].nodeType).toBe(3);
@@ -128,13 +128,13 @@ KISSY.add(function (S, Editor) {
                 "</div>").appendTo('body');
 
             var range = new Range(document);
-            range.setStart(div, 1)
+            range.setStart(div, 1);
             range.setEnd(div, 3);
             var walker = new Walker(range);
 
             walker.evaluator = function (node) {
                 // 只取文字节点
-                return node.nodeType == 3;
+                return node.nodeType === 3;
             };
 
 
@@ -148,13 +148,13 @@ KISSY.add(function (S, Editor) {
 
             expect(node).toBe(false);
 
-            expect(walker.current.attr('id')).toBe("startInner")
+            expect(walker.current.attr('id')).toBe("startInner");
 
             node = walker._iterator(false, true);
 
             expect(node).toBe(false);
 
-            expect(walker.current.attr('id')).toBe("end")
+            expect(walker.current.attr('id')).toBe("end");
 
             node = walker._iterator(false, true);
 
@@ -188,12 +188,12 @@ KISSY.add(function (S, Editor) {
                 "</div>").appendTo('body');
 
             var range = new Range(document);
-            range.setStart(div, 0)
+            range.setStart(div, 0);
             range.setEnd(div2, 1);
             var walker = new Walker(range);
 
             walker.evaluator = function (node) {
-                return  node.nodeName.toLowerCase() !== 'div'
+                return  node.nodeName.toLowerCase() !== 'div';
             };
 
             expect(walker.checkForward()).toBe(false);
@@ -202,6 +202,3 @@ KISSY.add(function (S, Editor) {
             div2.remove();
         });
     });
-},{
-    requires:['editor']
-});

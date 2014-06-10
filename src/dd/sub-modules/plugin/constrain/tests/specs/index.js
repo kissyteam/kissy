@@ -2,288 +2,288 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, DD, Constrain) {
-    var Draggable = DD.Draggable,
-        $ = S.all;
 
-    window.scrollTo(0, 0);
+var DD = require('dd');
+var Constrain = require('dd/plugin/constrain');
 
-    var ie = S.UA.ieMode;
+var Draggable = DD.Draggable,
+    $ = require('node');
 
-    if (ie === 9 || ie === 11) {
-        return;
-    }
+window.scrollTo(0, 0);
 
-    describe('constrain', function () {
-        var node = $('<div style="width:100px;height:200px;' +
-            'background:red;' +
-            'position: absolute;left:0;top:0;">' +
-            '</div>')
-            .appendTo('body');
+var ie = require('ua').ieMode;
 
-        var container = $('<div style="width:300px;height:500px;' +
-            'position: absolute;left:0;top:0;">' +
-            '</div>')
-            .prependTo('body');
+if (ie === 9 || ie === 11) {
+    return;
+}
 
-        var draggable = new Draggable({
-            node: node,
-            move: 1,
-            groups: false
+describe('constrain', function () {
+    var node = $('<div style="width:100px;height:200px;' +
+        'background:red;' +
+        'position: absolute;left:0;top:0;">' +
+        '</div>')
+        .appendTo('body');
+
+    var container = $('<div style="width:300px;height:500px;' +
+        'position: absolute;left:0;top:0;">' +
+        '</div>')
+        .prependTo('body');
+
+    var draggable = new Draggable({
+        node: node,
+        move: 1,
+        groups: false
+    });
+
+    var constrain = new Constrain({
+        constrain: container
+    });
+
+    draggable.plug(constrain);
+
+    it('works for node', function () {
+        node.css({
+            left: 0,
+            top: 0
         });
 
-        var constrain = new Constrain({
-            constrain: container
+        constrain.set('constrain', container);
+
+        jasmine.simulate(node[0], 'mousedown', {
+            clientX: 10,
+            clientY: 10
         });
 
-        draggable.plug(constrain);
+        waits(100);
 
-        it('works for node', function () {
-            node.css({
-                left: 0,
-                top: 0
-            });
-
-            constrain.set('constrain', container);
-
-            jasmine.simulate(node[0], 'mousedown', {
-                clientX: 10,
-                clientY: 10
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 30,
-                    clientY: 30
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 500,
-                    clientY: 500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mouseup', {
-                    clientX: 500,
-                    clientY: 500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                expect(node.css('left')).toBe('200px');
-                expect(node.css('top')).toBe('300px');
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 30,
+                clientY: 30
             });
         });
 
-        it('works for window', function () {
-            node.css({
-                left: 0,
-                top: 0
-            });
+        waits(100);
 
-            constrain.set('constrain', window);
-
-            var win = $(window);
-
-            jasmine.simulate(node[0], 'mousedown', {
-                clientX: 10,
-                clientY: 10
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 30,
-                    clientY: 30
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mouseup', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                expect(parseInt(node.css('left'),10)).toBe(win.width() - 100);
-                expect(parseInt(node.css('top'),10)).toBe(win.height() - 200);
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 500,
+                clientY: 500
             });
         });
 
-        it('works for window (true constrain)', function () {
-            node.css({
-                left: 0,
-                top: 0
-            });
+        waits(100);
 
-            constrain.set('constrain', true);
-
-            var win = $(window);
-
-            jasmine.simulate(node[0], 'mousedown', {
-                clientX: 10,
-                clientY: 10
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 30,
-                    clientY: 30
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mouseup', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                expect(parseInt(node.css('left'),10)).toBe(win.width() - 100);
-                expect(parseInt(node.css('top'),10)).toBe(win.height() - 200);
+        runs(function () {
+            jasmine.simulate(document, 'mouseup', {
+                clientX: 500,
+                clientY: 500
             });
         });
 
-        it('can be freed (false constrain)', function () {
-            node.css({
-                left: 0,
-                top: 0
-            });
+        waits(100);
 
-            constrain.set('constrain', false);
-
-            jasmine.simulate(node[0], 'mousedown', {
-                clientX: 10,
-                clientY: 10
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 30,
-                    clientY: 30
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mouseup', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                expect(parseInt(node.css('left'),10)).toBe(5490);
-                expect(parseInt(node.css('top'),10)).toBe(5490);
-            });
-        });
-
-        it('can be freed (detach)', function () {
-            node.css({
-                left: 0,
-                top: 0
-            });
-
-            constrain.set('constrain', true);
-
-            draggable.unplug(constrain);
-
-            jasmine.simulate(node[0], 'mousedown', {
-                clientX: 10,
-                clientY: 10
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 30,
-                    clientY: 30
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mouseup', {
-                    clientX: 5500,
-                    clientY: 5500
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                expect(parseInt(node.css('left'),10)).toBe(5490);
-                expect(parseInt(node.css('top'),10)).toBe(5490);
-            });
+        runs(function () {
+            expect(node.css('left')).toBe('200px');
+            expect(node.css('top')).toBe('300px');
         });
     });
-}, {
-    requires: ['dd', 'dd/plugin/constrain']
+
+    it('works for window', function () {
+        node.css({
+            left: 0,
+            top: 0
+        });
+
+        constrain.set('constrain', window);
+
+        var win = $(window);
+
+        jasmine.simulate(node[0], 'mousedown', {
+            clientX: 10,
+            clientY: 10
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 30,
+                clientY: 30
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mouseup', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            expect(parseInt(node.css('left'), 10)).toBe(win.width() - 100);
+            expect(parseInt(node.css('top'), 10)).toBe(win.height() - 200);
+        });
+    });
+
+    it('works for window (true constrain)', function () {
+        node.css({
+            left: 0,
+            top: 0
+        });
+
+        constrain.set('constrain', true);
+
+        var win = $(window);
+
+        jasmine.simulate(node[0], 'mousedown', {
+            clientX: 10,
+            clientY: 10
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 30,
+                clientY: 30
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mouseup', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            expect(parseInt(node.css('left'), 10)).toBe(win.width() - 100);
+            expect(parseInt(node.css('top'), 10)).toBe(win.height() - 200);
+        });
+    });
+
+    it('can be freed (false constrain)', function () {
+        node.css({
+            left: 0,
+            top: 0
+        });
+
+        constrain.set('constrain', false);
+
+        jasmine.simulate(node[0], 'mousedown', {
+            clientX: 10,
+            clientY: 10
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 30,
+                clientY: 30
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mouseup', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            expect(parseInt(node.css('left'), 10)).toBe(5490);
+            expect(parseInt(node.css('top'), 10)).toBe(5490);
+        });
+    });
+
+    it('can be freed (detach)', function () {
+        node.css({
+            left: 0,
+            top: 0
+        });
+
+        constrain.set('constrain', true);
+
+        draggable.unplug(constrain);
+
+        jasmine.simulate(node[0], 'mousedown', {
+            clientX: 10,
+            clientY: 10
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 30,
+                clientY: 30
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mousemove', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            jasmine.simulate(document, 'mouseup', {
+                clientX: 5500,
+                clientY: 5500
+            });
+        });
+
+        waits(100);
+
+        runs(function () {
+            expect(parseInt(node.css('left'), 10)).toBe(5490);
+            expect(parseInt(node.css('top'), 10)).toBe(5490);
+        });
+    });
 });

@@ -2,18 +2,19 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.add(function (S,util, UA, io, Node) {
-    var $ = Node.all;
+
+    var io = require('io');
+    var $ = require('node');
+    var util = require('util');
+    var UA = require('ua');
     /*jshint quotmark:false*/
     // travis-ci will not pass ...
-    if (S.UA.phantomjs && S.UA.os === 'linux') {
+    if (UA.phantomjs && UA.os === 'linux') {
         return;
     }
 
     describe("io upload", function () {
         it("should abort for form file upload", function () {
-            S.log("should abort for form file upload");
-
             var f = $('<form id="f' + util.guid((+new Date())) +
                 '">' +
                 '<input name="testFile" type="file"/>' +
@@ -61,8 +62,6 @@ KISSY.add(function (S,util, UA, io, Node) {
         });
 
         it("nothing happens if abort after form file upload", function () {
-            S.log("nothing happens if abort after form file upload");
-
             // error !
             var f = $('<form id="f' + util.guid((+new Date())) + '"' +
                 ' action="http://www.g.cn">' +
@@ -246,6 +245,3 @@ KISSY.add(function (S,util, UA, io, Node) {
             });
         });
     });
-}, {
-    requires: ['util','ua', 'io', 'node']
-});

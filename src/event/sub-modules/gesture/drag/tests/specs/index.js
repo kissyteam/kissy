@@ -2,10 +2,11 @@
  * test drag gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
+    var UA = require('ua');
     var $ = require('node');
     var DragGesture = require('event/gesture/drag');
-    var ie = S.UA.ieMode;
+    var ie = UA.ieMode;
     var Feature = require('feature');
     if (ie === 9 || ie === 11) {
         return;
@@ -464,4 +465,3 @@ KISSY.add(function (S, require) {
             });
         }
     });
-});

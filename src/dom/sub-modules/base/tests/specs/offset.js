@@ -3,8 +3,9 @@
  * @author yiminghe@gmail.com
  * need to be completed
  */
-KISSY.add(function (S, Dom) {
+
     var $ = window.jQuery;
+    var Dom = require('dom');
     /*jshint quotmark:false*/
     describe("offset", function () {
         var iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html" ' +
@@ -99,6 +100,3 @@ KISSY.add(function (S, Dom) {
             window.scrollTo(0, scrollTop);
         });
     });
-}, {
-    requires: ['dom']
-});

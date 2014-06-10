@@ -2,9 +2,10 @@
  * tc for focusin event
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, Dom) {
-    /*jshint quotmark:false*/
 
+    /*jshint quotmark:false*/
+    var Dom = require('dom');
+    var Event = require('event/dom');
     var tpl = ' <div id="test-focusin">test focusin: <input type="text" value="点击我"/></div><input id="test-focusin-input" type="text" value="另一个输入框"/>',
         HAPPENED = 'happened',
         FIRST = '1',
@@ -163,6 +164,3 @@ KISSY.add(function (S, Event, Dom) {
         });
 
     });
-},{
-    requires:['event/dom','dom']
-});

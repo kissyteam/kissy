@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 
-KISSY.add(function (S, require) {
     var $ = require('node');
     var TapType = require('event/gesture/tap');
     var DOUBLE_TAP = TapType.DOUBLE_TAP;
@@ -276,6 +275,3 @@ KISSY.add(function (S, require) {
         });
 
     });
-
-});
-

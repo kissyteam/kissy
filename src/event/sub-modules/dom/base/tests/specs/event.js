@@ -2,7 +2,11 @@
  * @module  event-spec
  * @author yiminghe@gmail.com, gonghao@ghsky.com
  */
-KISSY.add(function (S,util, Dom, Event, io) {
+
+    var Dom = require('dom');
+    var io = require('io');
+    var Event = require('event/dom');
+    var util = require('util');
     var tpl = '';
     /*jshint quotmark:false*/
 
@@ -641,6 +645,3 @@ KISSY.add(function (S,util, Dom, Event, io) {
 
         });
     });
-}, {
-    requires: ['util','dom', 'event/dom/base', 'io']
-});

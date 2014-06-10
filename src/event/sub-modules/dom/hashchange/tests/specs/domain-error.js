@@ -2,9 +2,12 @@
  * domain error spec for event
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event, UA, Dom) {
+
+    var Dom = require('dom');
+    var UA = require('ua');
+    var Event = require('event/dom');
     /*jshint quotmark:false*/
-    var ie = S.UA.ieMode;
+    var ie = UA.ieMode;
     describe("set domain in event", function () {
         it("hashchange does not work for ie<8 " +
             "if change domain after bind hashchange event", function () {
@@ -43,6 +46,3 @@ KISSY.add(function (S, Event, UA, Dom) {
             });
         });
     });
-}, {
-    requires: ['event/dom', 'ua', 'dom']
-});

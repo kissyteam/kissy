@@ -1,18 +1,16 @@
-KISSY.add(function(){}, {
-    requires:[
-        './domain',
-        './attr',
-        './class',
-        './clone',
-        './create',
-        './data','./input-selection',
-        './insertion',
-        './offset',
-        './script',
-        './scroll',
-        './selector',
-        './style',
-        './traversal',
-        './transform'
-    ]
-});
+
+require('./domain');
+require('./attr');
+require('./class');
+require('./clone');
+require('./create');
+require('./data');
+require('./input-selection');
+require('./insertion');
+require('./offset');
+require('./script');
+require('./scroll');
+require('./selector');
+require('./style');
+require('./traversal');
+require('./transform');

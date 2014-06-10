@@ -1,11 +1,8 @@
-KISSY.add(function(){}, {
-    requires:[
-        './delegate',
-        './delegate-advanced',
-        './event',
-        './fire',
-        './focus',
-        './group',
-        './mouse'
-    ]
-});
+
+require('./delegate');
+require('./delegate-advanced');
+require('./event');
+require('./fire');
+require('./focus');
+require('./group');
+require('./mouse');

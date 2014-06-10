@@ -2,10 +2,12 @@
  * test cases for style sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, util,Dom) {
+
     /*jshint quotmark:false*/
     /*global $*/
-    var UA = S.UA;
+    var Dom = require('dom');
+    var util = require('util');
+    var UA = require('ua');
 
     describe('style', function () {
         beforeEach(function () {
@@ -427,6 +429,3 @@ KISSY.add(function (S, util,Dom) {
             Dom.remove(div);
         });
     });
-}, {
-    requires: ['util','dom']
-});

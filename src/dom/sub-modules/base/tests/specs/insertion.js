@@ -2,7 +2,8 @@
  * test cases for insertion sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+
+    var Dom = require('dom');
     describe('insertion', function () {
         var body = document.body;
         it('insertBefore should works', function () {
@@ -138,6 +139,3 @@ KISSY.add(function (S, Dom) {
             Dom.remove(foo);
         });
     });
-},{
-    requires:['dom']
-});

@@ -2,7 +2,8 @@
  * test cases for input-selection
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+
+    var Dom = require('dom');
     describe('input-selection', function () {
         it('works for ie', function () {
             var textarea = Dom.create('<textarea></textarea>');
@@ -52,6 +53,3 @@ KISSY.add(function (S, Dom) {
             });
         });
     });
-},{
-    requires:['dom']
-});

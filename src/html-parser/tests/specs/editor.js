@@ -2,8 +2,11 @@
  * tc for html-parser for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, util, HtmlParser, io) {
+
     /*jshint quotmark:false, curly:false*/
+    var util = require('util');
+    var HtmlParser = require('html-parser');
+    var io = require('io');
 
     function isIE() {
         var m;
@@ -388,6 +391,3 @@ KISSY.add(function (S, util, HtmlParser, io) {
         });
 
     });
-}, {
-    requires: ['util', 'html-parser', 'io']
-});

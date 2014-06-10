@@ -2,8 +2,11 @@
  * @module  delegation-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event, io) {
-    var DomEventUtils = S.require('event/dom/base/utils');
+
+    var Dom = require('dom');
+    var io = require('io');
+    var Event = require('event/dom');
+    var DomEventUtils = module.require('event/dom/base/utils');
 
     var tpl = '';
 
@@ -218,6 +221,3 @@ KISSY.add(function (S, Dom, Event, io) {
             });
         });
     });
-}, {
-    requires: ['dom', 'event/dom/base', 'io']
-});

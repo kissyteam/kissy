@@ -2,7 +2,9 @@
  * @module  delegation-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event) {
+
+    var Dom = require('dom');
+    var Event = require('event/dom');
     /*jshint quotmark:false*/
     describe('delegate-advanced', function () {
 
@@ -289,6 +291,3 @@ KISSY.add(function (S, Dom, Event) {
 
 
     });
-},{
-    requires:['dom','event/dom/base']
-});

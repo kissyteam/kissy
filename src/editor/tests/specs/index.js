@@ -1,9 +1,6 @@
-KISSY.add(function(){}, {
-    requires:[
-        './back-color',
-        './dom',
-        './range',
-        './style',
-        './walker'
-    ]
-});
+
+require('./back-color');
+require('./dom');
+require('./range');
+require('./style');
+require('./walker');

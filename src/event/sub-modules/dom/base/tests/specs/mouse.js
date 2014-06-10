@@ -2,7 +2,9 @@
  * mouseenter tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event, io) {
+    var Dom = require('dom');
+    var io = require('io');
+    var Event = require('event/dom');
     /*jshint quotmark:false*/
     var simulate = function (target, type, relatedTarget) {
         if (typeof target === 'string') {
@@ -263,6 +265,3 @@ KISSY.add(function (S, Dom, Event, io) {
         });
 
     });
-}, {
-    requires: ['dom', 'event/dom/base', 'io']
-});

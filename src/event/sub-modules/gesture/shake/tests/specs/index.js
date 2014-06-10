@@ -2,9 +2,12 @@
  * test tap gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
+
+    var UA = require('ua');
+
     // TODO firefox, ie11 ??
-    if (!window.DeviceMotionEvent || S.UA.firefox || S.UA.ie) {
+    if (!window.DeviceMotionEvent || UA.firefox || UA.ie) {
         return;
     }
 
@@ -194,4 +197,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

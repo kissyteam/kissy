@@ -2,8 +2,10 @@
  * tc about fire function
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event) {
-    var DomEventObservable = S.require('event/dom/base/observable');
+
+    var Dom = require('dom');
+    var Event = require('event/dom');
+    var DomEventObservable = module.require('event/dom/base/observable');
 
     describe('fire', function () {
         it('support once', function () {
@@ -265,6 +267,3 @@ KISSY.add(function (S, Dom, Event) {
             expect(event.isPropagationStopped()).toBe(true);
         });
     });
-}, {
-    requires: ['dom', 'event/dom/base']
-});

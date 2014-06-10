@@ -2,11 +2,12 @@
  * simple selector test
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,util, Dom) {
+
     var tpl = '';
     var $ = window.jQuery;
     var jQuery = window.jQuery;
-
+    var Dom = require('dom');
+    var util = require('util');
     window.$.ajax({
         url: '../specs/selector.html',
         async: false,
@@ -282,6 +283,3 @@ KISSY.add(function (S,util, Dom) {
             Dom.remove(div);
         });
     });
-}, {
-    requires: ['util','dom']
-});

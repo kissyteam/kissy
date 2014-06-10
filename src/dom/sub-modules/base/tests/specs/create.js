@@ -2,7 +2,9 @@
  * test cases for create sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,util, Dom) {
+
+    var Dom = require('dom');
+    var util = require('util');
     describe('create', function () {
         it('create should works', function () {
             var div = Dom.create('<div>'),
@@ -220,6 +222,3 @@ KISSY.add(function (S,util, Dom) {
             expect(Dom.outerHtml(n).toLowerCase()).toBe(html);
         });
     });
-}, {
-    requires: ['util','dom']
-});

@@ -1,5 +1,2 @@
-KISSY.add(function(){
-},{
-    requires:['./simple',
-        './validator']
-});
+require('./simple');
+require('./validator');

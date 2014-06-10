@@ -2,7 +2,9 @@
  * tc about script exec when clone and insert
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+
+    var Dom = require('dom');
+    var UA = require('ua');
     /*jshint quotmark:false*/
     var div = document.body.appendChild(Dom.create('<div style="display:none"></div>'));
 
@@ -40,7 +42,7 @@ KISSY.add(function (S, Dom) {
                 // external should not run when clone
                 o22 = o2 = window.scriptTest2;
                 // ie9 bug
-                if (S.UA.ieMode !== 9) {
+                if (UA.ieMode !== 9) {
                     expect(o2).toBe(1);
                 }
             });
@@ -64,6 +66,3 @@ KISSY.add(function (S, Dom) {
             });
         });
     });
-}, {
-    requires: ['dom']
-});

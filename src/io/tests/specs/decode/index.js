@@ -1,4 +1,5 @@
-KISSY.add(function (S, io) {
+
+    var io = require('io');
     describe('IO', function () {
         it('does not encode url query and encode data query', function () {
             var ok = 0;
@@ -25,6 +26,3 @@ KISSY.add(function (S, io) {
 
         });
     });
-}, {
-    requires: ['io']
-});

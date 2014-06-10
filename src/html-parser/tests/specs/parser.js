@@ -2,7 +2,8 @@
  * parser of html-parser tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, HtmlParser) {
+
+    var HtmlParser = require('html-parser');
     /*jshint quotmark:false*/
     var Parser = HtmlParser.Parser;
     describe("html parser", function () {
@@ -306,6 +307,3 @@ KISSY.add(function (S, HtmlParser) {
             });
         });
     });
-},{
-    requires:['html-parser','ua']
-});

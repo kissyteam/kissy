@@ -2,8 +2,9 @@
  * tc for src/api.js
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
-    var UA = S.UA;
+
+    var Dom = require('dom');
+    var UA = require('ua');
     describe('domain api', function () {
         it('isCustomDomain works', function () {
             expect(Dom.isCustomDomain()).toBe(false);
@@ -25,6 +26,3 @@ KISSY.add(function (S, Dom) {
             expect(ret).toBe(expected);
         });
     });
-}, {
-    requires: ['dom']
-});

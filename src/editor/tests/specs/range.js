@@ -2,15 +2,15 @@
  * Test cross browser Range implementation for Editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     /*jshint quotmark:false*/
-    var $ = S.all,
+    var $ = require('node'),
         Editor = require('editor'),
-        UA = S.UA,
+        UA = require('ua'),
         util = require('util'),
         Dom = require('dom'),
-        RangeType = Editor.RangeType,
-        Node = S.Node;
+        RangeType = Editor.RangeType;
+
     var Range = Editor.Range;
 
     function trimNode(t) {
@@ -40,7 +40,7 @@ KISSY.add(function (S, require) {
             it("works for simple text node", function () {
                 var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
-                var text = new Node(div[0].firstChild);
+                var text = $(div[0].firstChild);
 
                 range.setStart(text, 2);
                 range.setEnd(text, 5);
@@ -103,8 +103,8 @@ KISSY.add(function (S, require) {
                     "g</div>").appendTo('body', undefined);
 
                 var range = new Range(document);
-                var textStart = new Node($("#start")[0].firstChild);
-                var textEnd = new Node($("#end")[0].firstChild);
+                var textStart = $($("#start")[0].firstChild);
+                var textEnd = $($("#end")[0].firstChild);
                 range.setStart(textStart, 2);
                 range.setEnd(textEnd, 5);
 
@@ -226,7 +226,7 @@ KISSY.add(function (S, require) {
             it("works for simple text node", function () {
                 var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
-                var text = new Node(div[0].firstChild);
+                var text = $(div[0].firstChild);
 
                 range.setStart(text, 2);
                 range.setEnd(text, 5);
@@ -294,8 +294,8 @@ KISSY.add(function (S, require) {
 
 
                 var range = new Range(document);
-                var textStart = new Node($("#start")[0].firstChild);
-                var textEnd = new Node($("#end")[0].firstChild);
+                var textStart = $($("#start")[0].firstChild);
+                var textEnd = $($("#end")[0].firstChild);
                 range.setStart(textStart, 2);
                 range.setEnd(textEnd, 5);
 
@@ -456,7 +456,7 @@ KISSY.add(function (S, require) {
             it("works for simple text node", function () {
                 var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
-                var text = new Node(div[0].firstChild);
+                var text = $(div[0].firstChild);
 
                 range.setStart(text, 2);
                 range.setEnd(text, 5);
@@ -519,8 +519,8 @@ KISSY.add(function (S, require) {
                     "g</div>").appendTo('body', undefined);
 
                 var range = new Range(document);
-                var textStart = new Node($("#start")[0].firstChild);
-                var textEnd = new Node($("#end")[0].firstChild);
+                var textStart = $($("#start")[0].firstChild);
+                var textEnd = $($("#end")[0].firstChild);
                 range.setStart(textStart, 2);
                 range.setEnd(textEnd, 5);
 
@@ -1600,4 +1600,3 @@ KISSY.add(function (S, require) {
         });
 
     });
-});

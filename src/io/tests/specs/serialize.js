@@ -2,8 +2,9 @@
  * test cases for form serialization
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Node, io) {
-    var $ = Node.all;
+
+    var io = require('io');
+    var $ = require('node');
     /*jshint quotmark:false*/
     describe("Form serialize", function () {
         it("works in single condition", function () {
@@ -89,6 +90,3 @@ KISSY.add(function (S, Node, io) {
 
         });
     });
-}, {
-    requires: ['node', 'io']
-});

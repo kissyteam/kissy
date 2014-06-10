@@ -1,7 +1,8 @@
-KISSY.add(function (S, Dom, Event) {
-    /*jshint quotmark:false*/
 
-    var UA = S.UA;
+    /*jshint quotmark:false*/
+    var Dom = require('dom');
+    var Event = require('event/dom');
+    var UA = require('ua');
 
     describe("clone", function () {
         it("works for checkbox", function () {
@@ -333,6 +334,3 @@ KISSY.add(function (S, Dom, Event) {
             });
         });
     });
-}, {
-    requires: ['dom', 'event/dom']
-});

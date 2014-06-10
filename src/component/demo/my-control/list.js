@@ -1,12 +1,9 @@
-KISSY.add(function (S, Container) {
-    return Container.extend({}, {
-        xclass:'my-list',
-        ATTRS: {
-            focusable: {
-                value: false
-            }
+var Container = require('component/container');
+module.exports = Container.extend({}, {
+    xclass: 'my-list',
+    ATTRS: {
+        focusable: {
+            value: false
         }
-    });
-}, {
-    requires: ['component/container']
+    }
 });

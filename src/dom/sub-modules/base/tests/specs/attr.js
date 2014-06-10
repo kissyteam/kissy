@@ -2,7 +2,7 @@
  * test cases for attribute sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Uri = require('uri');
     var Dom = require('dom');
     var util = require('util');
@@ -389,4 +389,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

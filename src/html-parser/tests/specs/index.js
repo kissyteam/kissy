@@ -1,7 +1,4 @@
-KISSY.add(function(){}, {
-    requires:[
-        './editor',
-        './lexer',
-        './parser'
-    ]
-});
+
+require('./editor');
+require('./lexer');
+require('./parser');

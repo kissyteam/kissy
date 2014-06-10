@@ -2,9 +2,9 @@
  * Test Dom for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Dom = require('dom'),
-        $ = S.all;
+        $ = require('node');
 
     /*jshint quotmark:false*/
     /*jshint quotmark:false*/
@@ -132,9 +132,8 @@ KISSY.add(function (S, require) {
             var div = $("<div><span>1<span></span></span></div>");
             div.prependTo('body');
             var span = div.first().last();
-            var bodyIndex = S.one('body')._4eIndex();
+            var bodyIndex = $('body')._4eIndex();
             expect(span._4eAddress()).toEqual([bodyIndex, 0, 0, 1]);
             div.remove();
         });
     });
-});

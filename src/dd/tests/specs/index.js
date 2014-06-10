@@ -1,3 +1,3 @@
-KISSY.add(function(){},{
-    requires:['./draggable','./delegate','./droppable']
-});
+require('./draggable');
+require('./delegate');
+require('./droppable');

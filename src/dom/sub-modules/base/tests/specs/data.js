@@ -2,8 +2,10 @@
  * test cases for data sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,util, Dom) {
-    var UA = S.UA;
+
+    var Dom = require('dom');
+    var util = require('util');
+    var UA = require('ua');
     var __EXPANDO = Dom.__EXPANDO;
     describe('Dom.data', function () {
         it('data should works', function () {
@@ -130,6 +132,3 @@ KISSY.add(function (S,util, Dom) {
             expect(Dom.hasData(div2)).toBe(false);
         });
     });
-}, {
-    requires: ['util','dom']
-});

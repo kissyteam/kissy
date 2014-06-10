@@ -2,7 +2,8 @@
  * test cases for class sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
+
+    var Dom = require('dom');
     describe('class', function () {
         var tpl = '';
         
@@ -118,6 +119,3 @@ KISSY.add(function (S, Dom) {
             // expect(Dom.hasClass(a, 'link2')).toBe(true);
         });
     });
-}, {
-    requires: ['dom']
-});

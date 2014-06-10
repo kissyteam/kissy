@@ -3,7 +3,9 @@
  * @author yiminghe@gmail.com
  */
 
-KISSY.add(function (S, UA, io, Node) {
+    var io = require('io');
+    var $ = require('node');
+    var UA = require('ua');
     /*jshint quotmark:false*/
     var host = location.hostname;
     var url = host;
@@ -14,8 +16,6 @@ KISSY.add(function (S, UA, io, Node) {
     url += ':' + window.SERVER_CONFIG.ports[1];
     var testUrl = 'http://' + url + '/kissy/src/' +
         'io/tests/others/xdr/xdr.jss';
-
-    var $ = Node.all;
 
     describe('Xdr IO', function () {
         it('support ignore X-Requested-With for one request', function () {
@@ -253,6 +253,3 @@ KISSY.add(function (S, UA, io, Node) {
             });
         });
     });
-}, {
-    requires: ['ua', 'io', 'node']
-});

@@ -1,4 +1,4 @@
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     var Base = require('base');
     var Color = require('color');
@@ -313,5 +313,4 @@ KISSY.add(function (S, require) {
         }
     };
 
-    return Base.extend(methods, gglAttrs);
-});
+    module.exports = Base.extend(methods, gglAttrs);

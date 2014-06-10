@@ -2,9 +2,10 @@
  * test swipe gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
+    var UA = require('ua');
     var Feature = require('feature');
-    if (S.UA.phantomjs || !Feature.isTouchEventSupported()) {
+    if (UA.phantomjs || !Feature.isTouchEventSupported()) {
         return;
     }
     var $ = require('node');
@@ -382,5 +383,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});
-

@@ -2,56 +2,54 @@
  * DateTimeFormat tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, DateTimeFormat, GregorianCalendar) {
 
-    var Style = DateTimeFormat.Style;
+var DateTimeFormat = require('date/format');
+var GregorianCalendar = require('date/gregorian');
 
-    describe('DateTimeFormat', function () {
+var Style = DateTimeFormat.Style;
 
-        describe('format', function () {
-            it('works simply', function () {
-                var gregorianCalendar = new GregorianCalendar(2013,
-                    GregorianCalendar.JULY, 9);
-                var df = new DateTimeFormat('yyyy-MM-dd');
-                expect(df.format(gregorianCalendar)).toBe('2013-07-09');
-                df = new DateTimeFormat('yy-MM-dd');
-                expect(df.format(gregorianCalendar)).toBe('13-07-09');
-            });
+describe('DateTimeFormat', function () {
 
-            it('getDateTimeInstance works', function () {
-                var gregorianCalendar = new GregorianCalendar(2013,
-                    GregorianCalendar.JULY, 11, 14, 31, 19);
-                var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 下午02时31分19秒 GMT+0800');
-            });
-            it('getDateTimeInstance works for midnight', function () {
-                var gregorianCalendar = new GregorianCalendar(2013,
-                    GregorianCalendar.JULY, 11, 0, 31, 19);
-                var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 上午12时31分19秒 GMT+0800');
-            });
-            it('getDateTimeInstance works for noon', function () {
-                var gregorianCalendar = new GregorianCalendar(2013,
-                    GregorianCalendar.JULY, 11, 12, 31, 19);
-                var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 下午12时31分19秒 GMT+0800');
-            });
+    describe('format', function () {
+        it('works simply', function () {
+            var gregorianCalendar = new GregorianCalendar(2013,
+                GregorianCalendar.JULY, 9);
+            var df = new DateTimeFormat('yyyy-MM-dd');
+            expect(df.format(gregorianCalendar)).toBe('2013-07-09');
+            df = new DateTimeFormat('yy-MM-dd');
+            expect(df.format(gregorianCalendar)).toBe('13-07-09');
         });
 
-        describe('parse', function () {
-            it('simply works', function () {
-                var gregorianCalendar = new GregorianCalendar(2013,
-                    GregorianCalendar.JULY, 11, 12, 31, 19);
-                var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                var str = '2013年7月11日 星期四 下午12时31分19秒 GMT+0800';
-                var cal = df.parse(str);
-                expect(cal.equals(gregorianCalendar)).toBeTruthy();
-                expect(df.format(cal)).toBe(str);
-            });
+        it('getDateTimeInstance works', function () {
+            var gregorianCalendar = new GregorianCalendar(2013,
+                GregorianCalendar.JULY, 11, 14, 31, 19);
+            var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
+            expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 下午02时31分19秒 GMT+0800');
         });
-
+        it('getDateTimeInstance works for midnight', function () {
+            var gregorianCalendar = new GregorianCalendar(2013,
+                GregorianCalendar.JULY, 11, 0, 31, 19);
+            var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
+            expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 上午12时31分19秒 GMT+0800');
+        });
+        it('getDateTimeInstance works for noon', function () {
+            var gregorianCalendar = new GregorianCalendar(2013,
+                GregorianCalendar.JULY, 11, 12, 31, 19);
+            var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
+            expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 下午12时31分19秒 GMT+0800');
+        });
     });
 
-}, {
-    requires: ['date/format', 'date/gregorian']
+    describe('parse', function () {
+        it('simply works', function () {
+            var gregorianCalendar = new GregorianCalendar(2013,
+                GregorianCalendar.JULY, 11, 12, 31, 19);
+            var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
+            var str = '2013年7月11日 星期四 下午12时31分19秒 GMT+0800';
+            var cal = df.parse(str);
+            expect(cal.equals(gregorianCalendar)).toBeTruthy();
+            expect(df.format(cal)).toBe(str);
+        });
+    });
+
 });

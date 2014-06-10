@@ -1,5 +1,3 @@
-KISSY.add(function(){
-},{
-    requires:['./base',
-        './utils']
-});
+
+require('./base');
+require('./utils');

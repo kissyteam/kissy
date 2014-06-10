@@ -1,14 +1,15 @@
 /**
  * tc for edge-drag gesture
  */
-KISSY.add(function (S, require) {
+
+    var UA = require('ua');
     var Feature = require('feature');
-    if (S.UA.phantomjs || !Feature.isTouchEventSupported()) {
+    if (UA.phantomjs || !Feature.isTouchEventSupported()) {
         return;
     }
     var $ = require('node');
     var EdgeDragGesture = require('event/gesture/edge-drag');
-    var ie = S.UA.ieMode;
+    var ie = UA.ieMode;
     if (ie === 9 || ie === 11) {
         return;
     }
@@ -1067,4 +1068,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

@@ -2,8 +2,10 @@
  * input event spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event) {
-    var UA = S.UA;
+
+    var Dom = require('dom');
+    var UA = require('ua');
+    var Event = require('event/dom');
     /*jshint quotmark:false*/
     describe("input event", function () {
         it("should works", function () {
@@ -115,6 +117,3 @@ KISSY.add(function (S, Dom, Event) {
             });
         });
     });
-}, {
-    requires: ['dom', 'event/dom']
-});

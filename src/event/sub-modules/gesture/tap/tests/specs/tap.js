@@ -2,7 +2,7 @@
  * test tap gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     var TapGesture = require('event/gesture/tap');
     var TAP = TapGesture.TAP;
@@ -172,5 +172,4 @@ KISSY.add(function (S, require) {
         });
 
     });
-});
 

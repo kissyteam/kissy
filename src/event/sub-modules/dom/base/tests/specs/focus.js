@@ -2,9 +2,10 @@
  * fire focus in correct order
  * @author yiminghe@gmail.com
  */
-KISSY.add( function (S, Dom, Event) {
-    /*jshint quotmark:false*/
 
+    /*jshint quotmark:false*/
+    var Dom = require('dom');
+    var Event = require('event/dom');
     describe('focus', function () {
         it('fire is special', function () {
             var n = Dom.create('<input />');
@@ -141,6 +142,3 @@ KISSY.add( function (S, Dom, Event) {
             });
         });
     });
-},{
-    requires:['dom','event/dom/base']
-});

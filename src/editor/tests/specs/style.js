@@ -2,10 +2,12 @@
  * test style operation for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Editor, init) {
+
+    var init = require('./init');
+    var Editor = require('editor');
     var Selection = Editor.Selection;
     var Range = Editor.Range;
-    var UA = S.UA;
+    var UA = require('ua');
     var editor;
 
     describe('Style', function () {
@@ -141,6 +143,3 @@ KISSY.add(function (S, Editor, init) {
 
 
     });
-}, {
-    requires: ['editor', './init']
-});

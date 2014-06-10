@@ -2,8 +2,10 @@
  * css3 selector tc modified from Sizzle
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, util,engine, Dom) {
 
+    var Dom = require('dom');
+    var util = require('util');
+    var engine = require('dom/selector');
     var select = engine.select;
 
     describe('css3 selector', function () {
@@ -72,6 +74,3 @@ KISSY.add(function (S, util,engine, Dom) {
         });
 
     });
-}, {
-    requires: ['util','dom/selector', 'dom']
-});

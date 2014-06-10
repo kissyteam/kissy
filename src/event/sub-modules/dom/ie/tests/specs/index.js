@@ -2,7 +2,9 @@
  * submit spec for supporting bubbling in ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event) {
+
+    var Dom = require('dom');
+    var Event = require('event/dom');
     /*jshint quotmark:false*/
     describe("submit event", function () {
 
@@ -62,7 +64,7 @@ KISSY.add(function (S, Dom, Event) {
                 Event.on(form, 'submit', function (e) {
                     e.halt();
                 });
-                Event.on(div, 'submit', function (e) {
+                Event.on(div, 'submit', function () {
                     ret.push(1);
                 });
             });
@@ -103,6 +105,3 @@ KISSY.add(function (S, Dom, Event) {
             waits(100);
         });
     });
-},{
-    requires:['dom','event/dom']
-});

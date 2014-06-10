@@ -8,7 +8,7 @@ var middlewares = [];
 var routes = [];
 var utils = require('./router/utils');
 var Route = require('./router/route');
-var Uri = require('uri');
+var url = require('url');
 var Request = require('./router/request');
 var DomEvent = require('event/dom');
 /*global CustomEvent:true, history:true*/
@@ -41,14 +41,13 @@ function setPathByHash(path, replace) {
 }
 
 // get url path for router dispatch
-function getUrlForRouter(url) {
-    url = url || location.href;
-    var uri = new Uri(url);
+function getUrlForRouter(urlStr) {
+    urlStr = urlStr || location.href;
+    var uri = url.parse(urlStr);
     if (!globalConfig.useHash && supportHistoryPushState) {
-        var query = uri.query;
-        return uri.getPath().substr(globalConfig.urlRoot.length) + (query.has() ? ('?' + query.toString()) : '');
+        return uri.pathname.substr(globalConfig.urlRoot.length) + (uri.search || '');
     } else {
-        return utils.getHash(url);
+        return utils.getHash(urlStr);
     }
 }
 
@@ -114,12 +113,13 @@ function fireRoutes(request, response) {
 }
 
 function dispatch(backward, replace) {
-    var url = getUrlForRouter();
-    var uri = new Uri(url);
-    var query = uri.query.get();
-    uri.query.reset();
+    var urlStr = getUrlForRouter();
+    var uri = url.parse(urlStr, true);
+    var query = uri.query;
+    uri.search = '';
+    uri.query = {};
     // normalize to '/'
-    var path = uri.toString() || '/';
+    var path = url.stringify(uri) || '/';
     var request = new Request({
         query: query,
         // backward or forward
@@ -128,8 +128,8 @@ function dispatch(backward, replace) {
         replace: replace === true,
         forward: (backward === false && replace === false),
         path: path,
-        url: url,
-        originalUrl: url
+        url: urlStr,
+        originalUrl: urlStr
     });
     var response = {
         redirect: exports.navigate
@@ -174,7 +174,13 @@ exports.use = function (prefix, callback) {
 exports.navigate = function (path, opts) {
     opts = opts || {};
     var replace = opts.replace || false;
-    if (getUrlForRouter() !== path) {
+    var urlStr = getUrlForRouter();
+    var uri = url.parse(urlStr);
+    if (path.charAt(0) === '?') {
+        uri.search = path;
+        path = url.stringify(uri);
+    }
+    if (urlStr !== path) {
         if (!replace) {
             viewUniqueId++;
             viewsHistory.push(viewUniqueId);
@@ -333,18 +339,11 @@ var started;
  * @param {Function} [callback] Callback function to be called after router is started.
  */
 exports.start = function (callback) {
+
     if (started) {
         return callback && callback.call(exports);
     }
-
-    var useHash = globalConfig.useHash,
-        urlRoot = globalConfig.urlRoot,
-        triggerRoute = globalConfig.triggerRoute,
-        locPath = location.pathname,
-        href = location.href,
-        hash = getUrlForRouter(),
-        hashIsValid = location.hash.match(/#!.+/);
-
+    var useHash = globalConfig.useHash, urlRoot = globalConfig.urlRoot, triggerRoute = globalConfig.triggerRoute, locPath = location.pathname, href = location.href, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
     if (!useHash) {
         if (supportHistoryPushState) {
             // http://x.com/#!/x/y
@@ -353,9 +352,17 @@ exports.start = function (callback) {
             // =>
             // process without refresh page and add history entry
             if (hashIsValid) {
-                if (utils.equalsIgnoreSlash(locPath, urlRoot)) {
+                // http://x.com#!/?t=1 -> http://x.com?t=1
+                if (!urlRoot) {
+                    var tmp = location.hash.substring(2);
+                    if (tmp[0] === '/') {
+                        tmp = tmp.substring(1);
+                    }
+                    history.replaceState({}, '', href = location.protocol + '//' + location.host + location.pathname + tmp);
+                    triggerRoute = 1;
+                } else if (utils.equalsIgnoreSlash(locPath, urlRoot)) {
                     // put hash to path
-                    history.replaceState({}, '', utils.getFullPath(hash, urlRoot));
+                    history.replaceState({}, '', href = utils.getFullPath(hash, urlRoot));
                     triggerRoute = 1;
                 } else {
                     Logger.error('router: location path must be same with urlRoot!');
@@ -372,24 +379,25 @@ exports.start = function (callback) {
         } else {
             useHash = true;
         }
-    }
-
+    }    // prevent hashChange trigger on start
     // prevent hashChange trigger on start
     setTimeout(function () {
         var needReplaceHistory = supportHistoryPushState;
         if (supportHistoryPushState) {
-            DomEvent.on(win, 'popstate', onPopState);
-            // html5 triggerRoute is leaved to user decision
+            DomEvent.on(win, 'popstate', onPopState);    // html5 triggerRoute is leaved to user decision
             // if provide no #! hash
-        } else {
-            DomEvent.on(win, 'hashchange', onHashChange);
+        } else
+        // html5 triggerRoute is leaved to user decision
+        // if provide no #! hash
+        {
+            DomEvent.on(win, 'hashchange', onHashChange);    // hash-based browser is forced to trigger route
             // hash-based browser is forced to trigger route
             triggerRoute = 1;
         }
         if (useHash) {
             if (!getUrlForRouter()) {
                 exports.navigate('/', {
-                    replace: 1
+                    replace: true
                 });
                 triggerRoute = 0;
                 needReplaceHistory = false;
@@ -402,22 +410,20 @@ exports.start = function (callback) {
         }
         if (needReplaceHistory) {
             // fill in first state
-            history.replaceState({
-                vid: viewUniqueId
-            }, '', href);
-        }
+            history.replaceState({ vid: viewUniqueId }, '', href);
+        }    // check initial hash on start
+        // in case server does not render initial state correctly
+        // when monitor hashchange ,client must be responsible for dispatching and rendering.
         // check initial hash on start
         // in case server does not render initial state correctly
         // when monitor hashchange ,client must be responsible for dispatching and rendering.
         if (triggerRoute) {
             dispatch(false, true);
         }
-
         if (callback) {
             callback(exports);
         }
     }, BREATH_INTERVAL);
-
     started = true;
     return exports;
 };

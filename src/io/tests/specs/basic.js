@@ -2,7 +2,9 @@
  * basic test cases for kissy io
  * @author lijing00333@163.com, yiminghe@gmail.com
  */
-KISSY.add(function (S, util, IO) {
+
+    var io = require('io');
+    var util = require('util');
     /*jshint quotmark:false*/
     describe('IO', function () {
         describe('404/301', function () {
@@ -900,6 +902,3 @@ KISSY.add(function (S, util, IO) {
             });
         });
     });
-}, {
-    requires: ['util', 'io']
-});

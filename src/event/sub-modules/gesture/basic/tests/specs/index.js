@@ -2,12 +2,14 @@
  * tc for cross platform move gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
+
+    var UA = require('ua');
     var $ = require('node');
     var BasicGesture = require('event/gesture/basic');
     var Feature = require('feature');
     describe('base gesture', function () {
-        if (!S.UA.ios) {
+        if (!UA.ios) {
             it('works for mouse', function () {
                 var d = $('<div style="position:absolute;left:0;top:0;width: 100px;height: 100px"></div>');
                 d.appendTo(document.body);
@@ -232,4 +234,3 @@ KISSY.add(function (S, require) {
             });
         }
     });
-});

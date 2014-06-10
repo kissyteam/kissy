@@ -2,7 +2,8 @@
  * tc for lexer of html-parser
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, HtmlParser) {
+
+    var HtmlParser = require('html-parser');
     var Lexer = HtmlParser.Lexer;
     /*jshint quotmark:false*/
     describe("html parser lexer", function () {
@@ -90,6 +91,3 @@ KISSY.add(function (S, HtmlParser) {
         });
 
     });
-}, {
-    requires: ['html-parser', 'ua']
-});

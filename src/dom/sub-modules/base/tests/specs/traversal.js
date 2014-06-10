@@ -2,9 +2,9 @@
  * test cases for traversal sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom) {
-    var tpl = '';
 
+    var tpl = '';
+    var Dom = require('dom');
     var $ = window.$;
 
     $.ajax({
@@ -265,6 +265,3 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
     });
-}, {
-    requires: ['dom']
-});
