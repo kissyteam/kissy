@@ -56,9 +56,9 @@ function XTemplate(tpl, config) {
 
 util.extend(XTemplate, XTemplateRuntime, {
     load: function (name, callback) {
-        var tplModule = this.getTplContent(name, function (error, fn) {
+        this.getTplContent(name, function (error, fn) {
             if (error) {
-                return  callback(tplModule.error);
+                return  callback(error);
             } else {
                 if (typeof fn === 'string') {
                     try {
@@ -101,7 +101,6 @@ util.extend(XTemplate, XTemplateRuntime, {
 });
 
 module.exports = XTemplate;
-
 
 /*
  It consists three modules:

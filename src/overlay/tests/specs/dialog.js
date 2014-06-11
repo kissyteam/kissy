@@ -3,12 +3,15 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(
-    function (S, Dom,UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
-        var $ = Node.all;
-        var Dialog = Overlay.Dialog;
-        var ie = S.UA.ieMode;
 
+        var $ = require('node');
+        var UA = require('ua');
+        var ie = require('ua').ieMode;
+        var Dom = require('dom');
+        var Overlay = require('overlay');
+        var Dialog = Overlay.Dialog;
+        var ConstrainPlugin = require('dd/plugin/constrain');
+        var DragPlugin = require('component/plugin/drag');
         describe("dialog", function () {
 
             beforeEach(function () {
@@ -216,6 +219,3 @@ KISSY.add(
                 });
             });
         });
-    }, {
-        requires: "dom,ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
-    });

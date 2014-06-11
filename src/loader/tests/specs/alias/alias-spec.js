@@ -1,3 +1,4 @@
+// --no-module-wrap--
 var run = function (combine) {
     /*jshint quotmark:false*/
     describe("KISSY Loader alias" + (combine ? 'at combo mode' : ''), function () {

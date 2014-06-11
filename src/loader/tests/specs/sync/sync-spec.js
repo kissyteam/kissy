@@ -1,3 +1,4 @@
+// --no-module-wrap--
 var run = function (combine) {
     if (1) {
         // for performance, disabled async loading

@@ -1,8 +1,4 @@
-KISSY.add(function(){
-},{
-    requires:[
-        './simple',
-        './proxy',
-        './preserve-ratio'
-    ]
-});
+
+require('./simple');
+require('./proxy');
+require('./preserve-ratio');

@@ -2,7 +2,7 @@
  * url spec for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var url = require('url');
 
     /*jshint quotmark:false*/
@@ -157,4 +157,3 @@ KISSY.add(function (S, require) {
      * Refer
      *  - http://www.ietf.org/rfc/rfc3986.txt 5.4
      */
-});

@@ -24,7 +24,7 @@ var AP = Array.prototype,
  *
  * @class KISSY.Node
  */
-function Node(html, props, ownerDocument) {
+function Node(html, attrs, ownerDocument) {
     var self = this,
         domNode;
 
@@ -41,7 +41,7 @@ function Node(html, props, ownerDocument) {
         return self;
     } else if (typeof html === 'string') {
         // create from html
-        domNode = Dom.create(html, props, ownerDocument);
+        domNode = Dom.create(html, attrs, ownerDocument);
         // ('<p>1</p><p>2</p>') 转换为 Node
         if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
             push.apply(this, makeArray(domNode.childNodes));
@@ -228,13 +228,19 @@ util.mix(Node, {
             selector.length >= 3 &&
             util.startsWith(selector, '<') &&
             util.endsWith(selector, '>')) {
+            var attrs;
             if (context) {
                 if (context.getDOMNode) {
                     context = context[0];
                 }
-                context = context.ownerDocument || context;
+                if (context.nodeType) {
+                    context = context.ownerDocument || context;
+                } else {
+                    attrs = context;
+                    context = arguments[2];
+                }
             }
-            return new Node(selector, undefined, context);
+            return new Node(selector, attrs, context);
         }
         return new Node(Dom.query(selector, context));
     },

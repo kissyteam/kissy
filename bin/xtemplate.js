@@ -54,26 +54,25 @@ function myJsBeautify(str) {
     }
 }
 
-function compile(tplFilePath, modulePath) {
-    var moduleCode = getCompileModule(tplFilePath, tplFilePath);
+function compile(tplFilePath, modulePath,wrap) {
+    var moduleCode = getCompileModule(tplFilePath, tplFilePath,wrap);
     fs.writeFileSync(modulePath, moduleCode, encoding);
     console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
 }
 
-function getCompileModule(tplFilePath, tplName) {
+function getCompileModule(tplFilePath, tplName, wrap) {
     var tplContent = fs.readFileSync(tplFilePath, encoding);
     var functionName = getFunctionName(tplName);
     return '/** Compiled By kissy-xtemplate */\n' +
         jshint +
-        myJsBeautify('KISSY.add(function(S,require,exports,module){\n' +
+        myJsBeautify((wrap ? 'KISSY.add(function(S,require,exports,module){\n' : '') +
             'var ' + functionName + ' = ' +
             XTemplateCompiler.compileToStr(tplContent, tplName, true) + ';\n' +
             functionName + '.TPL_NAME = module.name;\n' +
             functionName + '.version = "' + S.version + '";\n' +
-            'return ' + functionName + '\n' +
-            '});');
+            'module.exports = ' + functionName + ';\n' +
+            (wrap ? '});' : ''));
 }
-
 
 if (require.main === module) {
     (function () {
@@ -81,10 +80,10 @@ if (require.main === module) {
             var modulePath;
             if (suffix && util.endsWith(filePath, '.' + suffix)) {
                 modulePath = filePath.replace(suffixReg, '.js');
-                compile(filePath, modulePath);
+                compile(filePath, modulePath,wrap);
             } else if (util.endsWith(filePath, '.xtpl.html') || util.endsWith(filePath, '-xtpl.html')) {
                 modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
-                compile(filePath, modulePath);
+                compile(filePath, modulePath,wrap);
             } else if (util.endsWith(filePath, '.tpl.html')) {
                 modulePath = filePath.replace(/\.tpl\.html$/, '-tpl.js');
                 var tplContent = fs.readFileSync(filePath, encoding);
@@ -104,6 +103,7 @@ if (require.main === module) {
             .option('-p, --packagePath <packagePath>', 'Set kissy package path')
             .option('-s, --suffix [suffix]', 'Set xtemplate file suffix', '')
             .option('-w, --watch', 'Watch xtemplate file change')
+            .option('--no-wrap', 'Wrap code by KISSY module')
             .parse(process.argv);
 
         var options = program.options;
@@ -117,6 +117,7 @@ if (require.main === module) {
 
         var packagePath = program.packagePath,
             suffix = program.suffix,
+            wrap = program.wrap,
             cwd = process.cwd();
 
         var suffixReg;

@@ -28,14 +28,24 @@
             return;
         }
 
+        if (!fs.existsSync(url)) {
+            var e = 'can not find file ' + url;
+            S.log(e, 'error');
+            if (error) {
+                error(e);
+            }
+            return;
+        }
+
         try {
+
             // async is controlled by async option in use
             // sync load in getScript, same as cached load in browser environment
             var mod = fs.readFileSync(url, charset);
             // code in runInThisContext unlike eval can not access local scope
-            //noinspection JSUnresolvedFunction
+            // noinspection JSUnresolvedFunction
             // use path, or else use url will error in nodejs debug mode
-            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
+            var factory = vm.runInThisContext('(function(KISSY, requireNode){' + mod + '})', url);
 
             factory(S, function (moduleName) {
                 return require(Utils.normalizePath(url, moduleName));
@@ -69,16 +79,13 @@
     // require synchronously in node js
     S.nodeRequire = function (modName) {
         var ret = [];
-        if (typeof modName === 'string' && modName.indexOf(',') !== -1) {
-            modName = modName.split(',');
-        }
-        S.use(modName, {
+        S.use([modName], {
             success: function () {
                 ret = [].slice.call(arguments, 1);
             },
             sync: true
         });
-        return typeof modName === 'string' ? ret[0] : ret;
+        return ret[0];
     };
 
     S.config('packages', {

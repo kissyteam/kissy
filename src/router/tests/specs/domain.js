@@ -2,7 +2,10 @@
  * Domain spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Router) {
+
+    var Dom = require('dom');
+    var UA = require('ua');
+    var Router = require('router');
     /*jshint quotmark:false*/
     describe("router: set domain", function () {
         beforeEach(function () {
@@ -20,7 +23,7 @@ KISSY.add(function (S, Dom, Router) {
 
         it("change domain works for router", function () {
 
-            if (S.UA.ie === 6) {
+            if (UA.ie === 6) {
                 return;
             }
 
@@ -55,6 +58,3 @@ KISSY.add(function (S, Dom, Router) {
 
         });
     });
-}, {
-    requires: ['dom', 'router']
-});

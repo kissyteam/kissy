@@ -1,8 +1,6 @@
-KISSY.add('bulk/a', function (S) {
-    return {
+
+    module.exports = {
         init: function () {
-            S.log('a');
             return 'a';
         }
     };
-});

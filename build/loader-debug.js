@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 6 16:01
+build time: Jun 11 20:23
 */
 /**
  * @ignore
@@ -33,34 +33,14 @@ var KISSY = (function (undefined) {
     var self = this,
         S;
 
-    function getLogger(logger) {
-        var obj = {};
-        for (var cat in loggerLevel) {
-            /*jshint loopfunc: true*/
-            (function (obj, cat) {
-                obj[cat] = function (msg) {
-                    return S.log(msg, cat, logger);
-                };
-            })(obj, cat);
-        }
-        return obj;
-    }
-
-    var loggerLevel = {
-        debug: 10,
-        info: 20,
-        warn: 30,
-        error: 40
-    };
-
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140606160113' will replace with current timestamp when compressing.
+         * NOTICE: '20140611202328' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140606160113',
+        __BUILD_TIME: '20140611202328',
 
         /**
          * KISSY Environment.
@@ -171,8 +151,63 @@ var KISSY = (function (undefined) {
                 }
             }
             return r;
-        },
+        }
+    };
 
+    var Loader = S.Loader = {};
+
+    if (typeof location !== 'undefined') {
+        if (location.search.indexOf('ks-debug') !== -1) {
+            S.Config.debug = true;
+        }
+    }
+
+    /**
+     * Loader Status Enum
+     * @enum {Number} KISSY.Loader.Status
+     */
+    Loader.Status = {
+        /** error */
+        ERROR: -1,
+        /** init */
+        INIT: 0,
+        /** loading */
+        LOADING: 1,
+        /** loaded */
+        LOADED: 2,
+        /** attaching */
+        ATTACHING: 3,
+        /** attached */
+        ATTACHED: 4
+    };
+
+    return S;
+})();/**
+ * logger utils
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    function getLogger(logger) {
+        var obj = {};
+        for (var cat in loggerLevel) {
+            /*jshint loopfunc: true*/
+            (function (obj, cat) {
+                obj[cat] = function (msg) {
+                    return S.log(msg, cat, logger);
+                };
+            })(obj, cat);
+        }
+        return obj;
+    }
+
+    var loggerLevel = {
+        debug: 10,
+        info: 20,
+        warn: 30,
+        error: 40
+    };
+
+    var Logger = {
         /**
          * Prints debug info.
          * @param msg {String} the message to log.
@@ -292,29 +327,10 @@ var KISSY = (function (undefined) {
          */
     }
 
-    var Loader = S.Loader = {};
-
-    /**
-     * Loader Status Enum
-     * @enum {Number} KISSY.Loader.Status
-     */
-    Loader.Status = {
-        /** error */
-        ERROR: -1,
-        /** init */
-        INIT: 0,
-        /** loading */
-        LOADING: 1,
-        /** loaded */
-        LOADED: 2,
-        /** attaching */
-        ATTACHING: 3,
-        /** attached */
-        ATTACHED: 4
-    };
-
-    return S;
-})();/**
+    S.getLogger = Logger.getLogger;
+    S.log = Logger.log;
+    S.error = Logger.error;
+})(KISSY);/**
  * @ignore
  * Utils for kissy loader
  * @author yiminghe@gmail.com
@@ -585,7 +601,7 @@ var KISSY = (function (undefined) {
         attachModules: function (mods) {
             var l = mods.length, i;
             for (i = 0; i < l; i++) {
-                mods[i].attach();
+                mods[i].attachRecursive();
             }
         },
 
@@ -792,6 +808,8 @@ var KISSY = (function (undefined) {
             path = Utils.normalizePath(rest, path);
             return url.substring(0, pathIndex) + path;
         };
+
+        require.load = S.getScript;
 //      relative name resolve cache
 //      self.resolveCache = {};
     }
@@ -1023,9 +1041,12 @@ var KISSY = (function (undefined) {
             }
 
             self.status = ATTACHED;
+            if (self.afterAttach) {
+                self.afterAttach(self.exports);
+            }
         },
 
-        attach: function () {
+        attachRecursive: function () {
             var self = this,
                 status;
             status = self.status;
@@ -1039,7 +1060,7 @@ var KISSY = (function (undefined) {
                 self.attachSelf();
             } else {
                 Utils.each(self.getNormalizedRequiredModules(), function (m) {
-                    m.attach();
+                    m.attachRecursive();
                 });
                 self.attachSelf();
             }
@@ -1050,17 +1071,6 @@ var KISSY = (function (undefined) {
             this.status = Status.INIT;
             delete this.factory;
             delete this.exports;
-        },
-
-        attached: function (moduleName) {
-            var requiresModule = createModule(this.resolve(moduleName));
-            var mods = requiresModule.getNormalizedModules();
-            var attached = true;
-            Utils.each(mods, function (m) {
-                attached = m.status === Status.ATTACHED;
-                return attached;
-            });
-            return attached;
         }
     };
 
@@ -1069,7 +1079,7 @@ var KISSY = (function (undefined) {
         if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
-            var Plugin = createModule(pluginName).attach().exports || {};
+            var Plugin = createModule(pluginName).attachRecursive().exports || {};
             if (Plugin.alias) {
                 name = Plugin.alias(S, name, pluginName);
             }
@@ -2367,7 +2377,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140606160113';
+    var TIMESTAMP = '20140611202328';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2476,7 +2486,7 @@ KISSY.add('i18n', {
     });
     S.config('packages', {
         core: {
-            filter: '@DEBUG@' ? 'debug' : ''
+            filter: S.Config.debug ? 'debug' : ''
         }
     });
     // ejecta
@@ -2489,4 +2499,8 @@ KISSY.add('i18n', {
             comboMaxFileNum: 40
         }, getBaseInfo()));
     }
+
+    S.add('logger', function () {
+        return S.Logger;
+    });
 })(KISSY);

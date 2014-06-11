@@ -1,3 +1,4 @@
+// --no-module-wrap--
 describe("timestamp for individual module works", function () {
     var S = KISSY;
 

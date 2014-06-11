@@ -2,7 +2,8 @@
  * lazy-render spec for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Tabs) {
+
+    var Tabs = require('tabs');
     /*jshint quotmark:false*/
     describe("tabs lazy render", function () {
 
@@ -98,7 +99,3 @@ KISSY.add(function (S, Tabs) {
         });
 
     });
-
-},{
-    requires:['tabs']
-});

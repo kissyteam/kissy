@@ -1,4 +1,5 @@
 /*jshint quotmark:false*/
+// --no-module-wrap--
 describe("ComboLoader", function () {
     var S = KISSY,
         Utils= S.Loader.Utils,

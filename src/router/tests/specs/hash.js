@@ -2,7 +2,7 @@
  * Router spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     /*jshint quotmark:false*/
     var Router = require('router');
     var getHash = function () {
@@ -202,4 +202,3 @@ KISSY.add(function (S, require) {
         });
 
     });
-});

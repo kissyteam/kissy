@@ -1,4 +1,4 @@
-KISSY.add(function (S, require) {
+
     require('io')({
         url: '../specs/node.fragment.html',
         async: false,
@@ -10,4 +10,3 @@ KISSY.add(function (S, require) {
     require('./anim');
     require('./event');
     require('./node');
-});

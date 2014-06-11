@@ -3,7 +3,7 @@
  * collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Model = require('./model');
     var Attribute = require('attribute');
     var util = require('util');
@@ -27,7 +27,7 @@ KISSY.add(function (S, require) {
      * @class KISSY.MVC.Collection
      * @extends KISSY.Attribute
      */
-    return Attribute.extend({
+    module.exports = Attribute.extend({
         /**
          * Sort model list according {@link KISSY.MVC.Collection#comparator}.
          */
@@ -45,7 +45,7 @@ KISSY.add(function (S, require) {
          * @return Object[]
          */
         toJSON: function () {
-            return S.map(this.get('models'), function (m) {
+            return util.map(this.get('models'), function (m) {
                 return m.toJSON();
             });
         },
@@ -296,4 +296,3 @@ KISSY.add(function (S, require) {
             }
         }
     });
-});

@@ -1,7 +1,7 @@
-KISSY.add(function (S, require) {
+
     var ScrollView = require('scroll-view');
     var ScrollBar = require('scroll-view/plugin/scrollbar');
-    return function () {
+    module.exports = function () {
         return ScrollView.extend({
             onScroll: function (fn) {
                 this.__fn = function (e) {
@@ -25,4 +25,3 @@ KISSY.add(function (S, require) {
             }
         });
     };
-});

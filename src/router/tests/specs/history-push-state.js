@@ -2,7 +2,10 @@
  * Router spec for mvc html5 history
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, util,Router) {
+
+
+    var util = require('util');
+    var Router = require('router');
     /*jshint quotmark:false*/
     if (!window.history.pushState) {
         return;
@@ -192,6 +195,3 @@ KISSY.add(function (S, util,Router) {
             });
         });
     });
-}, {
-    requires: ['util','router']
-});

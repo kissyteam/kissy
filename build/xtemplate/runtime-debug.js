@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 4 12:51
+build time: Jun 11 20:12
 */
 /*
 combined modules:
@@ -10,18 +10,20 @@ xtemplate/runtime/commands
 xtemplate/runtime/scope
 xtemplate/runtime/linked-buffer
 */
-/**
+KISSY.add('xtemplate/runtime', [
+    'util',
+    'logger',
+    './runtime/commands',
+    './runtime/scope',
+    './runtime/linked-buffer'
+], function (S, require, exports, module) {
+    /**
  * xtemplate runtime
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('xtemplate/runtime', [
-    'util',
-    './runtime/commands',
-    './runtime/scope',
-    './runtime/linked-buffer'
-], function (S, require) {
     var util = require('util');
+    var Logger = require('logger');
     var nativeCommands = require('./runtime/commands');
     var commands = {};
     var Scope = require('./runtime/scope');
@@ -60,15 +62,15 @@ KISSY.add('xtemplate/runtime', [
     }
     function renderTpl(tpl, scope, buffer) {
         var fn = tpl.fn;
-        if (fn.version && S.version !== fn.version) {
-            throw new Error('current xtemplate file(' + tpl.name + ')(v' + fn.version + ')need to be recompiled using current kissy(v' + S.version + ')!');
+        if (fn.version && KISSY.version !== fn.version) {
+            throw new Error('current xtemplate file(' + tpl.name + ')(v' + fn.version + ')need to be recompiled using current kissy(v' + KISSY.version + ')!');
         }
         buffer = tpl.fn(scope, buffer);
         var extendTplName = tpl.runtime.extendTplName;    // if has extend statement, only parse
         // if has extend statement, only parse
         if (extendTplName) {
             delete tpl.runtime.extendTplName;
-            buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
+            buffer = tpl.root.include(extendTplName, tpl, scope, null, buffer);
         }
         return buffer.end();
     }
@@ -90,7 +92,7 @@ KISSY.add('xtemplate/runtime', [
             }
         }
         if (error) {
-            S.error(error);
+            Logger.error(error);
         }
         return buffer;
     }
@@ -102,25 +104,25 @@ KISSY.add('xtemplate/runtime', [
                 return callFn(tpl, scope, option, buffer, parts, 0, line, true);
             }
         };    /**
-     * template file name for chrome debug
-     *
-     * @cfg {Boolean} name
-     * @member KISSY.XTemplate.Runtime
-     */
+ * template file name for chrome debug
+ *
+ * @cfg {Boolean} name
+ * @member KISSY.XTemplate.Runtime
+ */
               /**
-     * XTemplate runtime. only accept tpl as function.
-     * @class KISSY.XTemplate.Runtime
-     */
+ * XTemplate runtime. only accept tpl as function.
+ * @class KISSY.XTemplate.Runtime
+ */
     /**
-     * template file name for chrome debug
-     *
-     * @cfg {Boolean} name
-     * @member KISSY.XTemplate.Runtime
-     */
+ * template file name for chrome debug
+ *
+ * @cfg {Boolean} name
+ * @member KISSY.XTemplate.Runtime
+ */
     /**
-     * XTemplate runtime. only accept tpl as function.
-     * @class KISSY.XTemplate.Runtime
-     */
+ * XTemplate runtime. only accept tpl as function.
+ * @class KISSY.XTemplate.Runtime
+ */
     function XTemplateRuntime(fn, config) {
         var self = this;
         self.fn = fn;
@@ -131,23 +133,23 @@ KISSY.add('xtemplate/runtime', [
         nativeCommands: nativeCommands,
         utils: utils,
         /**
-         * add command to all template
-         * @method
-         * @static
-         * @param {String} commandName
-         * @param {Function} fn
-         * @member KISSY.XTemplate.Runtime
-         */
+     * add command to all template
+     * @method
+     * @static
+     * @param {String} commandName
+     * @param {Function} fn
+     * @member KISSY.XTemplate.Runtime
+     */
         addCommand: function (commandName, fn) {
             commands[commandName] = fn;
         },
         /**
-         * remove command from all template by name
-         * @method
-         * @static
-         * @param {String} commandName
-         * @member KISSY.XTemplate.Runtime
-         */
+     * remove command from all template by name
+     * @method
+     * @static
+     * @param {String} commandName
+     * @member KISSY.XTemplate.Runtime
+     */
         removeCommand: function (commandName) {
             delete commands[commandName];
         }
@@ -159,7 +161,7 @@ KISSY.add('xtemplate/runtime', [
         }
         if (!parentName) {
             var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subName;
-            S.error(error);
+            Logger.error(error);
         }
         var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
         if (cache[subName]) {
@@ -175,29 +177,29 @@ KISSY.add('xtemplate/runtime', [
         nativeCommands: nativeCommands,
         utils: utils,
         getTplContent: function (name, callback) {
-            S.use(name, {
-                success: function (S, tpl) {
+            require([name], {
+                success: function (tpl) {
                     callback(undefined, tpl);
                 },
                 error: function () {
                     var error = 'template "' + name + '" does not exist';
-                    S.log(error, 'error');
+                    Logger.log(error, 'error');
                     callback(error);
                 }
             });
         },
         /**
-         * get
-         * @cfg {Function} loader
-         * @member KISSY.XTemplate.Runtime
-         */
+     * get
+     * @cfg {Function} loader
+     * @member KISSY.XTemplate.Runtime
+     */
         load: function (name, callback) {
             this.getTplContent(name, callback);
         },
         /**
-         * remove command by name
-         * @param commandName
-         */
+     * remove command by name
+     * @param commandName
+     */
         removeCommand: function (commandName) {
             var config = this.config;
             if (config.commands) {
@@ -205,22 +207,24 @@ KISSY.add('xtemplate/runtime', [
             }
         },
         /**
-         * add command definition to current template
-         * @param commandName
-         * @param {Function} fn command definition
-         */
+     * add command definition to current template
+     * @param commandName
+     * @param {Function} fn command definition
+     */
         addCommand: function (commandName, fn) {
             var config = this.config;
             config.commands = config.commands || {};
             config.commands[commandName] = fn;
         },
-        include: function (subTplName, tpl, scope, buffer) {
+        include: function (subTplName, tpl, scope, option, buffer) {
             var self = this;
             subTplName = resolve(subTplName, tpl.name);
             return buffer.async(function (newBuffer) {
                 self.load(subTplName, function (error, tplFn) {
                     if (error) {
                         newBuffer.error(error);
+                    } else if (typeof tplFn === 'string') {
+                        newBuffer.write(tplFn, option && option.escape).end();
                     } else {
                         renderTpl({
                             root: tpl.root,
@@ -233,12 +237,12 @@ KISSY.add('xtemplate/runtime', [
             });
         },
         /**
-         * get result by merge data with template
-         * @param data
-         * @param option
-         * @param callback function called
-         * @return {String}
-         */
+     * get result by merge data with template
+     * @param data
+     * @param option
+     * @param callback function called
+     * @return {String}
+     */
         render: function (data, option, callback) {
             var html = '';
             var self = this;
@@ -266,8 +270,7 @@ KISSY.add('xtemplate/runtime', [
         }
     };
     XTemplateRuntime.Scope = Scope;
-    return XTemplateRuntime;
-});    /**
+    module.exports = XTemplateRuntime;    /**
  * @ignore
  *
  * 2012-09-12 yiminghe@gmail.com
@@ -294,16 +297,18 @@ KISSY.add('xtemplate/runtime', [
  *   劣势
  *      - 不支持完整 js 语法
  */
+});
 
-/**
+
+KISSY.add('xtemplate/runtime/commands', [
+    './scope',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * native commands for xtemplate.
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('xtemplate/runtime/commands', [
-    './scope',
-    'util'
-], function (S, require) {
     var Scope = require('./scope');
     var util = require('util');
     var commands = {
@@ -382,7 +387,7 @@ KISSY.add('xtemplate/runtime/commands', [
                     newScope.setParent(scope);
                 }
                 for (i = 0; i < l; i++) {
-                    buffer = this.root.include(params[i], this, newScope, buffer);
+                    buffer = this.root.include(params[i], this, newScope, option, buffer);
                 }
                 return buffer;
             },
@@ -465,7 +470,7 @@ KISSY.add('xtemplate/runtime/commands', [
                         buffer = macro.fn.call(self, newScope, buffer);
                     } else {
                         var error = 'in file: ' + self.name + ' can not find macro: ' + name + '" at line ' + lineNumber;
-                        S.error(error);
+                        throw new Error(error);
                     }
                 }
                 return buffer;
@@ -476,13 +481,13 @@ KISSY.add('xtemplate/runtime/commands', [
             util.globalEval('debugger');
         };
     }
-    return commands;
+    module.exports = commands;
 });
-/**
+KISSY.add('xtemplate/runtime/scope', [], function (S, require, exports, module) {
+    /**
  * scope resolution for xtemplate like function in javascript but keep original data unmodified
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/runtime/scope', [], function () {
     var undef;
     function Scope(data) {
         // {}
@@ -577,13 +582,13 @@ KISSY.add('xtemplate/runtime/scope', [], function () {
             }
         }
     };
-    return Scope;
+    module.exports = Scope;
 });
-/**
+KISSY.add('xtemplate/runtime/linked-buffer', ['util'], function (S, require, exports, module) {
+    /**
  * LinkedBuffer of generate content from xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/runtime/linked-buffer', ['util'], function (S, require) {
     var undef;
     var util = require('util');
     function Buffer(list) {
@@ -652,5 +657,5 @@ KISSY.add('xtemplate/runtime/linked-buffer', ['util'], function (S, require) {
         }
     };
     LinkedBuffer.Buffer = Buffer;
-    return LinkedBuffer;
+    module.exports = LinkedBuffer;
 });

@@ -1,4 +1,4 @@
-KISSY.add(function (S, require) {
+
     var util = require('util');
     var UA = require('ua');
     /*jshint quotmark:false*/
@@ -1168,5 +1168,4 @@ KISSY.add(function (S, require) {
             expect(util.equals(d, d2)).toBe(true);
         });
     });
-});
 

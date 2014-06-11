@@ -1,3 +1,4 @@
+// --no-module-wrap--
 describe('filter', function () {
     var S = KISSY;
     afterEach(function () {

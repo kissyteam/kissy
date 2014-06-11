@@ -198,7 +198,7 @@ util.mix(Dom,
             var elems = Dom.query(selector), elem = elems[0];
 
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 for (var k in name) {
                     Dom.data(elems, k, name[k]);
                 }

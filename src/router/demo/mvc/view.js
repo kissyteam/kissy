@@ -3,7 +3,7 @@
  * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     var Attribute = require('attribute');
 
@@ -19,7 +19,7 @@ KISSY.add(function (S, require) {
      * @class KISSY.MVC.View
      * @extends KISSY.Attribute
      */
-    return Attribute.extend({
+    module.exports = Attribute.extend({
         constructor: function () {
             this.callSuper.apply(this, arguments);
             var events;
@@ -111,4 +111,3 @@ KISSY.add(function (S, require) {
             }
         }
     });
-});

@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
+// --no-module-wrap--
 (function () {
     var run = function (combine) {
         describe("loader-cyclic " + (combine ? 'at combo mode' : ''), function () {

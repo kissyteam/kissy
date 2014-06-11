@@ -2,7 +2,7 @@
  * test cases for node about chained call and return value
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     /*jshint quotmark:false*/
     /*global jQuery*/
     var Dom = require('dom');
@@ -57,7 +57,7 @@ KISSY.add(function (S, require) {
 
             $("<div id='testDiv3' class='test-div'>ok3</div>").appendTo(n);
             expect($("#testDiv3")[0]).not.toBe(null);
-            expect(S.one("#testDiv3").parent().equals(n)).toBe(true);
+            expect($("#testDiv3").parent().equals(n)).toBe(true);
 
             $("<div id='testDiv6' class='test-div'>ok5</div>").appendTo(document.body);
 
@@ -79,7 +79,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should invoke dom method correctly on nodelist", function () {
-            var nl = S.all(".test-div");
+            var nl = $(".test-div");
 
             //chain
             expect(nl.css({
@@ -101,7 +101,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should invoke method on window or document correctly", function () {
-            var win = S.one(window), doc = S.one(document);
+            var win = $(window), doc = $(document);
 
             expect(win.height()).toBe(Dom.viewportHeight());
             expect(win.width()).toBe(Dom.viewportWidth());
@@ -111,7 +111,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should append/prepend correctly on node", function () {
-            var body = S.one(document.body);
+            var body = $(document.body);
 
             var n = body.append("<div class='test-div' id='testDiv4'>ok4</div>");
 
@@ -125,7 +125,7 @@ KISSY.add(function (S, require) {
         });
 
         it("should append/prepend correctly on nodelist", function () {
-            var body = S.one(document.body);
+            var body = $(document.body);
             $("<div id='testDiv7' class='test-div'>ok7</div>" +
                 "<div id='testDiv8' class='test-div'>ok8</div>").appendTo(body);
             expect(Dom.get("#testDiv7")).not.toBe(null);
@@ -133,7 +133,7 @@ KISSY.add(function (S, require) {
 
             var newNode = $("<div class='test-nodelist'>test-nodelist</div>" +
                 "<div class='test-nodelist'>test-nodelist2</div>");
-            var testDivs = S.all(".test-div");
+            var testDivs = $(".test-div");
 
             testDivs = testDivs.append(newNode);
             expect(testDivs.length * 2).toBe(Dom.query(".test-nodelist").length);
@@ -144,8 +144,8 @@ KISSY.add(function (S, require) {
             expect(testDivs.length * 2).toBe(Dom.query(".test-nodelist2").length);
 
 
-            S.all("#testDiv7").append(S.all("#testDiv8"));
-            expect(S.all("#testDiv8").parent().equals(S.all('#testDiv7'))).toBe(true);
+            $("#testDiv7").append($("#testDiv8"));
+            expect($("#testDiv8").parent().equals($('#testDiv7'))).toBe(true);
 
 
             testDivs.prepend("<div class='test-nodelist3-pre'>test-nodelist5-pre</div>" +
@@ -155,8 +155,8 @@ KISSY.add(function (S, require) {
             expect(testDivs.length).toBe(Dom.query(".test-nodelist3-last").length);
 
 
-            var pres = S.all(".test-nodelist3-pre"),
-                lasts = S.all(".test-nodelist3-last");
+            var pres = $(".test-nodelist3-pre"),
+                lasts = $(".test-nodelist3-last");
             expect(pres.length).toBe(lasts.length);
 
             for (var i = 0; i < pres.length; i++) {
@@ -167,15 +167,15 @@ KISSY.add(function (S, require) {
         });
 
         it("should insertBefore/insertAfter correctly", function () {
-            var testDivs = S.all(".test-div");
+            var testDivs = $(".test-div");
 
             (function () {
-                S.all("<div class='test-insertafter'>insertafter1</div>" +
+                $("<div class='test-insertafter'>insertafter1</div>" +
                         "<div class='test-insertafter2'>insertafter2</div>")
                     .insertAfter(testDivs);
 
-                var pres = S.all(".test-insertafter"),
-                    lasts = S.all(".test-insertafter2");
+                var pres = $(".test-insertafter"),
+                    lasts = $(".test-insertafter2");
                 expect(pres.length).toBe(lasts.length);
 
                 for (var i = 0; i < pres.length; i++) {
@@ -185,12 +185,12 @@ KISSY.add(function (S, require) {
             })();
 
             (function () {
-                S.all("<div class='test-insertbefore'>insertbefore1</div>" +
+                $("<div class='test-insertbefore'>insertbefore1</div>" +
                         "<div class='test-insertbefore2'>insertbefore2</div>")
                     .insertBefore(testDivs);
 
-                var pres = S.all(".test-insertbefore"),
-                    lasts = S.all(".test-insertbefore2");
+                var pres = $(".test-insertbefore"),
+                    lasts = $(".test-insertbefore2");
                 expect(pres.length).toBe(lasts.length);
 
                 for (var i = 0; i < pres.length; i++) {
@@ -219,12 +219,12 @@ KISSY.add(function (S, require) {
         });
 
         it("one/all should select nodes ", function () {
-            var body = S.one(document.body);
+            var body = $(document.body);
 
 
             var doms = Dom.query(".test-div");
 
-            var testDivs = S.all(".test-div");
+            var testDivs = $(".test-div");
             expect(testDivs instanceof $).toBe(true);
             expect(doms.length).toBe(testDivs.length);
 
@@ -243,7 +243,7 @@ KISSY.add(function (S, require) {
         });
 
         it("children should return nodelist", function () {
-            var body = S.one(document.body);
+            var body = $(document.body);
             var dbivs = Dom.children(body[0], 'div');
             var bdivnodes = body.children('div');
             expect(bdivnodes instanceof $).toBe(true);
@@ -252,28 +252,28 @@ KISSY.add(function (S, require) {
 
         it("one/all should create nodes", function () {
 
-            S.all("<div id='one-all-create'>one-all-create</div><div id='one-all-create2'>one-all-create2</div>")
-                .appendTo(S.one(document.body));
+            $("<div id='one-all-create'>one-all-create</div><div id='one-all-create2'>one-all-create2</div>")
+                .appendTo($(document.body));
 
-            expect(S.one("#one-all-create")).not.toBe(null);
-            expect(S.one("#one-all-create2")).not.toBe(null);
-            expect(S.one("#one-all-create3")).toBe(null);
+            expect($("#one-all-create")).not.toBe(null);
+            expect($("#one-all-create2")).not.toBe(null);
+            expect($("#one-all-create3")).toBe(null);
         });
 
 
         it("context support Node or htmlelement", function () {
 
-            S.all("<div id='context-wrapper'>" +
+            $("<div id='context-wrapper'>" +
                 "<div class='test-div'>context-wrapper : test-div</div>" +
                 "</div>").appendTo(document.body);
 
-            expect(S.all(".test-div", S.all("#context-wrapper")).length).toBe(1);
+            expect($(".test-div", $("#context-wrapper")).length).toBe(1);
 
-            expect(S.all(".test-div", Dom.get("#context-wrapper")).length).toBe(1);
+            expect($(".test-div", Dom.get("#context-wrapper")).length).toBe(1);
         });
 
         it("should on/detach event properly", function () {
-            var cb = S.one("#cb");
+            var cb = $("#cb");
             var handler = function () {
                 expect(this).toBe(cb.getDOMNode());
             };
@@ -291,7 +291,7 @@ KISSY.add(function (S, require) {
                 expect(this.className).toBe("test-div");
             };
 
-            var body = S.one(document.body);
+            var body = $(document.body);
 
             var ps = body.all(".test-div");
 
@@ -423,4 +423,3 @@ KISSY.add(function (S, require) {
             html.remove();
         });
     });
-});

@@ -1,5 +1,6 @@
 /*jshint quotmark:false*/
 /*global $*/
+// --no-module-wrap--
 describe("css-combo", function () {
     beforeEach(function () {
         KISSY.config('combine', true);

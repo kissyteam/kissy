@@ -105,6 +105,12 @@ function startServer(port) {
         process.exit(0);
     });
 
+    app.get('/try', function (req,res) {
+        res.render('try',{
+            x:1
+        });
+    });
+
     app.get('/', function (req, res) {
         //noinspection JSUnresolvedFunction
         res.redirect('/kissy/');

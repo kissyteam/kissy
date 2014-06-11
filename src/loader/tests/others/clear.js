@@ -1,3 +1,4 @@
+// --no-module-wrap--
 KISSY.clearLoader = function () {
     var self = this,
         Env = self.Env,
@@ -13,6 +14,8 @@ KISSY.clearLoader = function () {
     });
 
     for (m in modules) {
-        delete modules[m];
+        if (m !== 'logger') {
+            delete modules[m];
+        }
     }
 };

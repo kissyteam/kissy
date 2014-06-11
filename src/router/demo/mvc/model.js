@@ -3,7 +3,7 @@
  * enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Attribute = require('attribute');
     var util = require('util');
     var blacklist = [
@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
      * @class KISSY.MVC.Model
      * @extends KISSY.Attribute
      */
-    return Attribute.extend({
+    module.exports = Attribute.extend({
         getCollections: function () {
             return  this.collections || (this.collections = {});
         },
@@ -33,7 +33,7 @@ KISSY.add(function (S, require) {
          * @param {KISSY.MVC.Collection} c
          */
         addToCollection: function (c) {
-            this.getCollections()[S.stamp(c)] = c;
+            this.getCollections()[util.stamp(c)] = c;
             this.addTarget(c);
         },
         /**
@@ -41,7 +41,7 @@ KISSY.add(function (S, require) {
          * @param {KISSY.MVC.Collection} c
          */
         removeFromCollection: function (c) {
-            delete this.getCollections()[S.stamp(c)];
+            delete this.getCollections()[util.stamp(c)];
             this.removeTarget(c);
         },
 
@@ -288,4 +288,3 @@ KISSY.add(function (S, require) {
         base = base + (base.charAt(base.length - 1) === '/' ? '' : '/');
         return base + encodeURIComponent(this.getId()) + '/';
     }
-});

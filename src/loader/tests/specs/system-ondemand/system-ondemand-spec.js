@@ -2,6 +2,7 @@
  * tc for system.ondemand similar functionality
  * @author yiminghe@gmail.com
  */
+// --no-module-wrap--
 describe('support system.ondemand', function () {
     beforeEach(function () {
         KISSY.config('combine', false);

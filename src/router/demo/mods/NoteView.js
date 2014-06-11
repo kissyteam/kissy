@@ -2,7 +2,7 @@
  * 笔记视图
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     var mvc = require('../mvc/');
     var Template = require('xtemplate');
@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
     /*
      单个笔记view
      */
-    return mvc.View.extend({
+    module.exports = mvc.View.extend({
         constructor: function () {
             this.callSuper.apply(this,arguments);
             var self = this;
@@ -46,4 +46,3 @@ KISSY.add(function (S, require) {
             }
         }
     });
-});

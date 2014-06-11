@@ -1,4 +1,5 @@
 /*jshint quotmark:false*/
+// --no-module-wrap--
 describe("loader package", function () {
     var S = KISSY;
     var Loader = S.Loader;

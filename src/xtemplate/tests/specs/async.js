@@ -2,7 +2,7 @@
  * test async command
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
 
     describe('async', function () {
@@ -250,4 +250,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

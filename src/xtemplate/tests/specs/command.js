@@ -2,7 +2,7 @@
  * test custom command for xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
     var util = require('util');
 
@@ -284,4 +284,3 @@ render = xtpl.render({
 expect(render).toBe('start instance k runtime q');
         });
     });
-});

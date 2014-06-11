@@ -1,3 +1,4 @@
+// --no-module-wrap--
 describe('core package', function () {
     var S = KISSY;
 

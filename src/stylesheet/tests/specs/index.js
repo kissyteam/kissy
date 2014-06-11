@@ -3,8 +3,9 @@
  * note: font-size ios bug
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, StyleSheet, Node) {
-    var $ = Node.all;
+
+    var $ = require('node');
+    var StyleSheet = require('StyleSheet');
     /*jshint quotmark:false*/
     function filter(str) {
         var left = str.indexOf('{'), right = str.indexOf('}'),
@@ -31,13 +32,13 @@ KISSY.add(function (S, StyleSheet, Node) {
 
     describe("stylesheet", function () {
         it("works for link at same domain", function () {
-            var n = S.all("<p class='test1'>test1</p>").appendTo('body');
+            var n = $("<p class='test1'>test1</p>").appendTo('body');
 
-            var n2 = S.all("<p class='test2'>test1</p>").appendTo('body');
+            var n2 = $("<p class='test2'>test1</p>").appendTo('body');
 
             var ret = 0;
 
-            var style = S.getScript("/kissy/src/stylesheet/tests/data/test.css", function () {
+            var style = require.load("/kissy/src/stylesheet/tests/data/test.css", function () {
 
                 expect(n.css('height')).toBe("120px");
 
@@ -111,13 +112,13 @@ KISSY.add(function (S, StyleSheet, Node) {
 
 
         it("works for inline style", function () {
-            var n = S.all("<p class='test1'>test1</p>").appendTo('body');
+            var n = $("<p class='test1'>test1</p>").appendTo('body');
 
-            var n2 = S.all("<p class='test2'>test1</p>").appendTo('body');
+            var n2 = $("<p class='test2'>test1</p>").appendTo('body');
 
             var ret = 0;
 
-            var style = S.all("<style>.test1 {" +
+            var style = $("<style>.test1 {" +
                 "color:#ff0000;" +
                 "height: 120px;" +
                 "}</style>").appendTo('body')[0];
@@ -193,6 +194,3 @@ KISSY.add(function (S, StyleSheet, Node) {
             });
         });
     });
-}, {
-    requires: ['stylesheet', 'node']
-});

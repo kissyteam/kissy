@@ -1,8 +1,8 @@
-KISSY.add(function (S, require) {
+
     var Control = require('component/control');
     var $ = require('node');
     var win = $(window);
-    return function () {
+    module.exports = function () {
         return Control.extend({
             onScroll: function (fn) {
                 var self = this;
@@ -29,4 +29,3 @@ KISSY.add(function (S, require) {
             xclass:'page-view'
         });
     };
-});

@@ -1,3 +1,4 @@
+// --no-module-wrap--
 describe('kissy', function () {
     var S = KISSY;
     describe('utils', function () {

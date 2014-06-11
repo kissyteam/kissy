@@ -2,7 +2,7 @@
  * test expression for xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
 
     describe('expression', function () {
@@ -287,4 +287,3 @@ KISSY.add(function (S, require) {
             expect(content).toBe('2');
         });
     });
-});

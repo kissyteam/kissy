@@ -2,9 +2,11 @@
  * @overview test case for button
  * @author shiran<shiran@taobao.com>
  */
-KISSY.add(function (S, util, DOM, Tree, Node) {
-    var $ = Node.all;
 
+    var util = require('util');
+    var $ = require('node');
+    var Tree = require('tree');
+    var DOM = require('dom');
     var CheckState = Tree.CheckNode.CheckState;
 
     describe('tree', function () {
@@ -287,6 +289,3 @@ KISSY.add(function (S, util, DOM, Tree, Node) {
             });
         });
     });
-}, {
-    requires: ['util','dom', 'tree', 'node']
-});

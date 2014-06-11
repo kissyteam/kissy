@@ -2,7 +2,7 @@
  * es6 promise api
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Promise = require('promise');
     var Defer = Promise.Defer;
     describe('es6 promise', function () {
@@ -153,4 +153,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 9 10:07
+build time: Jun 11 18:48
 */
 /*
 combined modules:
@@ -10,16 +10,16 @@ xtemplate/compiler
 xtemplate/compiler/parser
 xtemplate/compiler/ast
 */
-/**
- * @ignore
- * simple facade for runtime and compiler
- * @author yiminghe@gmail.com
- */
 KISSY.add('xtemplate', [
     'util',
     'xtemplate/runtime',
     'xtemplate/compiler'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * simple facade for runtime and compiler
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var XTemplateRuntime = require('xtemplate/runtime');
     var Compiler = require('xtemplate/compiler');
@@ -36,43 +36,43 @@ KISSY.add('xtemplate', [
         }
         return fn;
     }    /*
-     *whether cache template string
-     * @member KISSY.XTemplate
-     * @cfg {Boolean} cache.
-     * Defaults to true.
-     */
+ *whether cache template string
+ * @member KISSY.XTemplate
+ * @cfg {Boolean} cache.
+ * Defaults to true.
+ */
          /**
-     * xtemplate engine for KISSY.
-     *
-     *
-     *      @example
-     *      KISSY.use('xtemplate',function(S, XTemplate){
+ * xtemplate engine for KISSY.
+ *
+ *
+ *      @example
+ *      KISSY.use('xtemplate',function(S, XTemplate){
      *          document.writeln(new XTemplate('{{title}}').render({title:2}));
      *      });
-     *
-     *
-     * @class KISSY.XTemplate
-     * @extends KISSY.XTemplate.Runtime
-     */
+ *
+ *
+ * @class KISSY.XTemplate
+ * @extends KISSY.XTemplate.Runtime
+ */
     /*
-     *whether cache template string
-     * @member KISSY.XTemplate
-     * @cfg {Boolean} cache.
-     * Defaults to true.
-     */
+ *whether cache template string
+ * @member KISSY.XTemplate
+ * @cfg {Boolean} cache.
+ * Defaults to true.
+ */
     /**
-     * xtemplate engine for KISSY.
-     *
-     *
-     *      @example
-     *      KISSY.use('xtemplate',function(S, XTemplate){
+ * xtemplate engine for KISSY.
+ *
+ *
+ *      @example
+ *      KISSY.use('xtemplate',function(S, XTemplate){
      *          document.writeln(new XTemplate('{{title}}').render({title:2}));
      *      });
-     *
-     *
-     * @class KISSY.XTemplate
-     * @extends KISSY.XTemplate.Runtime
-     */
+ *
+ *
+ * @class KISSY.XTemplate
+ * @extends KISSY.XTemplate.Runtime
+ */
     function XTemplate(tpl, config) {
         if (typeof tpl === 'string') {
             tpl = compile(tpl, config && config.name, config);
@@ -81,20 +81,20 @@ KISSY.add('xtemplate', [
     }
     util.extend(XTemplate, XTemplateRuntime, {
         load: function (name, callback) {
-            var tplModule = this.getTplContent(name, function (error, fn) {
-                    if (error) {
-                        return callback(tplModule.error);
-                    } else {
-                        if (typeof fn === 'string') {
-                            try {
-                                fn = compile(fn, name, this.config);
-                            } catch (e) {
-                                return callback(e);
-                            }
+            this.getTplContent(name, function (error, fn) {
+                if (error) {
+                    return callback(error);
+                } else {
+                    if (typeof fn === 'string') {
+                        try {
+                            fn = compile(fn, name, this.config);
+                        } catch (e) {
+                            return callback(e);
                         }
-                        callback(undefined, fn);
                     }
-                });
+                    callback(undefined, fn);
+                }
+            });
         }
     }, {
         Compiler: Compiler,
@@ -104,23 +104,22 @@ KISSY.add('xtemplate', [
             delete cache[content];
         },
         /**
-         * add command to all template
-         * @method
-         * @static
-         * @param {String} commandName
-         * @param {Function} fn
-         */
+     * add command to all template
+     * @method
+     * @static
+     * @param {String} commandName
+     * @param {Function} fn
+     */
         addCommand: XTemplateRuntime.addCommand,
         /**
-         * remove command from all template by name
-         * @method
-         * @static
-         * @param {String} commandName
-         */
+     * remove command from all template by name
+     * @method
+     * @static
+     * @param {String} commandName
+     */
         removeCommand: XTemplateRuntime.removeCommand
     });
-    return XTemplate;
-});    /*
+    module.exports = XTemplate;    /*
  It consists three modules:
 
  -   xtemplate - Both compiler and runtime functionality.
@@ -131,20 +130,22 @@ KISSY.add('xtemplate', [
  xtemplate/compiler depends on xtemplate/runtime,
  because compiler needs to know about runtime to generate corresponding codes.
  */
+});
 
 
-/**
- * translate ast to js function code
- * @author yiminghe@gmail.com
- * @ignore
- */
 KISSY.add('xtemplate/compiler', [
     'util',
     './runtime',
     './compiler/parser',
     './compiler/ast'
-], function (S, require) {
-    var util = require('util');    // codeTemplates --------------------------- start
+], function (S, require, exports, module) {
+    /**
+ * translate ast to js function code
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+    var util = require('util');
+    var xtplAstToJs;    // codeTemplates --------------------------- start
     // codeTemplates --------------------------- start
     var TOP_DECLARATION = [
             'var tpl = this,',
@@ -391,113 +392,113 @@ KISSY.add('xtemplate/compiler', [
             source: source
         };
     }
-    var xtplAstToJs = {
-            conditionalOrExpression: opExpression,
-            conditionalAndExpression: opExpression,
-            relationalExpression: opExpression,
-            equalityExpression: opExpression,
-            additiveExpression: opExpression,
-            multiplicativeExpression: opExpression,
-            unaryExpression: function (e) {
-                var code = xtplAstToJs[e.value.type](e.value);
-                return {
-                    exp: e.unaryType + '(' + code.exp + ')',
-                    source: code.source
-                };
-            },
-            string: function (e) {
-                // same as contentNode.value
-                /*jshint quotmark:false*/
-                return {
-                    exp: wrapBySingleQuote(escapeString(e.value, 1)),
-                    source: []
-                };
-            },
-            number: function (e) {
-                return {
-                    exp: e.value,
-                    source: []
-                };
-            },
-            id: function (idNode) {
-                var source = [], depth = idNode.depth, idParts = idNode.parts, idName = guid('id');    // variable {{variable[subVariable]}}
-                // variable {{variable[subVariable]}}
-                var newParts = getIdStringFromIdParts(source, idParts);    // optimize for x.y.z
-                // optimize for x.y.z
-                source.push(substitute(SCOPE_RESOLVE, {
-                    lhs: idName,
-                    idParts: newParts ? newParts.join(',') : joinArrayOfString(idParts),
-                    depth: depth
-                }));
-                return {
-                    exp: idName,
-                    source: source
-                };
-            },
-            'function': function (func, escape) {
-                return generateFunction(this, func, escape);
-            },
-            blockStatement: function (block) {
-                return generateFunction(this, block.func, block.escape, block);
-            },
-            expressionStatement: function (expressionStatement) {
-                var source = [], escape = expressionStatement.escape, code, expression = expressionStatement.value, type = expression.type, expressionOrVariable;
-                code = xtplAstToJs[type](expression, escape);
-                pushToArray(source, code.source);
-                expressionOrVariable = code.exp;
-                source.push(substitute(BUFFER_WRITE, {
-                    value: expressionOrVariable,
-                    escape: !!escape
-                }));
-                return {
-                    exp: '',
-                    source: source
-                };
-            },
-            contentStatement: function (contentStatement) {
-                /*jshint quotmark:false*/
-                return {
-                    exp: '',
-                    source: [substitute(BUFFER_WRITE, {
-                            value: wrapBySingleQuote(escapeString(contentStatement.value, 0)),
-                            escape: 0
-                        })]
-                };
-            },
-            global: function (e) {
-                return {
-                    exp: e.value,
-                    source: []
-                };
-            }
-        };
+    xtplAstToJs = {
+        conditionalOrExpression: opExpression,
+        conditionalAndExpression: opExpression,
+        relationalExpression: opExpression,
+        equalityExpression: opExpression,
+        additiveExpression: opExpression,
+        multiplicativeExpression: opExpression,
+        unaryExpression: function (e) {
+            var code = xtplAstToJs[e.value.type](e.value);
+            return {
+                exp: e.unaryType + '(' + code.exp + ')',
+                source: code.source
+            };
+        },
+        string: function (e) {
+            // same as contentNode.value
+            /*jshint quotmark:false*/
+            return {
+                exp: wrapBySingleQuote(escapeString(e.value, 1)),
+                source: []
+            };
+        },
+        number: function (e) {
+            return {
+                exp: e.value,
+                source: []
+            };
+        },
+        id: function (idNode) {
+            var source = [], depth = idNode.depth, idParts = idNode.parts, idName = guid('id');    // variable {{variable[subVariable]}}
+            // variable {{variable[subVariable]}}
+            var newParts = getIdStringFromIdParts(source, idParts);    // optimize for x.y.z
+            // optimize for x.y.z
+            source.push(substitute(SCOPE_RESOLVE, {
+                lhs: idName,
+                idParts: newParts ? newParts.join(',') : joinArrayOfString(idParts),
+                depth: depth
+            }));
+            return {
+                exp: idName,
+                source: source
+            };
+        },
+        'function': function (func, escape) {
+            return generateFunction(this, func, escape);
+        },
+        blockStatement: function (block) {
+            return generateFunction(this, block.func, block.escape, block);
+        },
+        expressionStatement: function (expressionStatement) {
+            var source = [], escape = expressionStatement.escape, code, expression = expressionStatement.value, type = expression.type, expressionOrVariable;
+            code = xtplAstToJs[type](expression, escape);
+            pushToArray(source, code.source);
+            expressionOrVariable = code.exp;
+            source.push(substitute(BUFFER_WRITE, {
+                value: expressionOrVariable,
+                escape: !!escape
+            }));
+            return {
+                exp: '',
+                source: source
+            };
+        },
+        contentStatement: function (contentStatement) {
+            /*jshint quotmark:false*/
+            return {
+                exp: '',
+                source: [substitute(BUFFER_WRITE, {
+                        value: wrapBySingleQuote(escapeString(contentStatement.value, 0)),
+                        escape: 0
+                    })]
+            };
+        },
+        global: function (e) {
+            return {
+                exp: e.value,
+                source: []
+            };
+        }
+    };
     var compiler;    /**
-     * compiler for xtemplate
-     * @class KISSY.XTemplate.compiler
-     * @singleton
-     */
+ * compiler for xtemplate
+ * @class KISSY.XTemplate.compiler
+ * @singleton
+ */
     /**
-     * compiler for xtemplate
-     * @class KISSY.XTemplate.compiler
-     * @singleton
-     */
+ * compiler for xtemplate
+ * @class KISSY.XTemplate.compiler
+ * @singleton
+ */
     compiler = {
         /**
-         * get ast of template
-         * @param {String} [name] xtemplate name
-         * @param {String} tplContent
-         * @return {Object}
-         */
+     * get ast of template
+     * @param {String} [name] xtemplate name
+     * @param {String} tplContent
+     * @return {Object}
+     */
         parse: function (tplContent, name) {
             return parser.parse(tplContent, name);
         },
         /**
-         * get template function string
-         * @param {String} tplContent
-         * @param {String} [name] xtemplate name
-         * @param {Boolean} [isModule] whether generated function is used in module
-         * @return {String}
-         */
+     * get template function string
+     * @param {String} tplContent
+     * @param {String} [name] xtemplate name
+     * @param {Boolean} [isModule] whether generated function is used in module
+     * @return {String}
+     */
         compileToStr: function (tplContent, name, isModule) {
             var func = compiler.compile(tplContent, name, isModule);
             return substitute(FUNC, {
@@ -506,12 +507,12 @@ KISSY.add('xtemplate/compiler', [
             });
         },
         /**
-         * get template function json format
-         * @param {String} [name] xtemplate name
-         * @param {String} tplContent
-         * @param {Boolean} [isModule] whether generated function is used in module
-         * @return {Object}
-         */
+     * get template function json format
+     * @param {String} [name] xtemplate name
+     * @param {String} tplContent
+     * @param {Boolean} [isModule] whether generated function is used in module
+     * @return {Object}
+     */
         compile: function (tplContent, name, isModule) {
             var root = compiler.parse(tplContent, name);
             uuid = 0;
@@ -519,25 +520,25 @@ KISSY.add('xtemplate/compiler', [
             return genTopFunction(xtplAstToJs, root.statements);
         },
         /**
-         * get template function
-         * @param {String} tplContent
-         * @param {String} name template file name
-         * @return {Function}
-         */
+     * get template function
+     * @param {String} tplContent
+     * @param {String} name template file name
+     * @return {Function}
+     */
         compileToFn: function (tplContent, name) {
             var code = compiler.compile(tplContent, name || guid('xtemplate'));    // eval is not ok for eval("(function(){})") ie
             // eval is not ok for eval("(function(){})") ie
             return Function.apply(null, code.params.concat(code.source + substitute(SOURCE_URL, { name: name })));
         }
     };
-    return compiler;
-});    /*
+    module.exports = compiler;    /*
  todo:
  need oop, new Source().xtplAstToJs()
  */
-/*
-  Generated by kison.*/
-KISSY.add('xtemplate/compiler/parser', [], function () {
+});
+KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module) {
+    /*
+ Generated by kison.*/
     /*jshint quotmark:false, loopfunc:true, indent:false, unused:false, asi:true, boss:true*/
     /* Generated by kison */
     var parser = {}, GrammarConst = {
@@ -5600,15 +5601,16 @@ KISSY.add('xtemplate/compiler/parser', [], function () {
             }
         }
     };
-    return parser;
+    module.exports = parser;
 });
-/**
+KISSY.add('xtemplate/compiler/ast', ['logger'], function (S, require, exports, module) {
+    /**
  * Ast node class for xtemplate
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('xtemplate/compiler/ast', [], function (S) {
     var ast = {};
+    var Logger = require('logger');
     function sameArray(a1, a2) {
         var l1 = a1.length, l2 = a2.length;
         if (l1 !== l2) {
@@ -5621,19 +5623,19 @@ KISSY.add('xtemplate/compiler/ast', [], function (S) {
         }
         return 1;
     }    /**
-     * @ignore
-     * @param lineNumber
-     * @param statements
-     * @param [inverse]
-     * @constructor
-     */
+ * @ignore
+ * @param lineNumber
+ * @param statements
+ * @param [inverse]
+ * @constructor
+ */
     /**
-     * @ignore
-     * @param lineNumber
-     * @param statements
-     * @param [inverse]
-     * @constructor
-     */
+ * @ignore
+ * @param lineNumber
+ * @param statements
+ * @param [inverse]
+ * @constructor
+ */
     ast.ProgramNode = function (lineNumber, statements, inverse) {
         var self = this;
         self.lineNumber = lineNumber;
@@ -5646,7 +5648,7 @@ KISSY.add('xtemplate/compiler/ast', [], function (S) {
         // no close tag
         if (!sameArray(func.id.parts, closeParts)) {
             e = 'Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + func.id.parts + '}} not {{/' + closeParts + '}}';
-            S.error(e);
+            Logger.error(e);
         }
         self.escape = escape;
         self.lineNumber = lineNumber;
@@ -5671,21 +5673,21 @@ KISSY.add('xtemplate/compiler/ast', [], function (S) {
         this.value = v;
         this.unaryType = unaryType;
     };    /**
-     * @ignore
-     * @param lineNumber
-     * @param id
-     * @param [params]
-     * @param [hash]
-     * @constructor
-     */
+ * @ignore
+ * @param lineNumber
+ * @param id
+ * @param [params]
+ * @param [hash]
+ * @constructor
+ */
     /**
-     * @ignore
-     * @param lineNumber
-     * @param id
-     * @param [params]
-     * @param [hash]
-     * @constructor
-     */
+ * @ignore
+ * @param lineNumber
+ * @param id
+ * @param [params]
+ * @param [hash]
+ * @constructor
+ */
     ast.Function = function (lineNumber, id, params, hash) {
         var self = this;
         self.lineNumber = lineNumber;
@@ -5777,5 +5779,5 @@ KISSY.add('xtemplate/compiler/ast', [], function (S) {
         self.depth = depth;
     };
     ast.Id.prototype.type = 'id';
-    return ast;
+    module.exports = ast;
 });

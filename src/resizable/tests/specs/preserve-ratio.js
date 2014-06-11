@@ -3,14 +3,17 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(function (S,util, Resizable) {
+
+    var UA = require('ua');
+    var util = require('util');
+    var Resizable = require('resizable');
     // ie9 mousemove does not fire
-    var ie = S.UA.ieMode;
+    var ie = UA.ieMode;
     if (ie === 9 || ie === 11) {
         return;
     }
 
-    var $ = S.all;
+    var $ = require('node');
 
     describe('preserveRatio works', function () {
 
@@ -99,6 +102,3 @@ KISSY.add(function (S,util, Resizable) {
             });
         });
     });
-}, {
-    requires: ['util','resizable']
-});

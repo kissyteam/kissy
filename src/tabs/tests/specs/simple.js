@@ -2,8 +2,10 @@
  * Tabs spec for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Tabs) {
-    var $ = S.all;
+
+    var Tabs = require('tabs');
+    var $ = require('node');
+    var UA = require('ua');
     /*jshint quotmark:false*/
     describe("tabs", function () {
 
@@ -77,7 +79,7 @@ KISSY.add(function (S, Tabs) {
 
             });
 
-            if (!S.UA.mobile) {
+            if (!UA.mobile) {
                 it("respond to mouse", function () {
 
                     var tabs = new Tabs({
@@ -218,6 +220,3 @@ KISSY.add(function (S, Tabs) {
 
 
     });
-}, {
-    requires: ['tabs']
-});

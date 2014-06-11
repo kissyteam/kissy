@@ -2,6 +2,7 @@
  * tc for modules config
  * @author yiminghe@gmail.com
  */
+// --no-module-wrap--
 describe('modules and packages', function () {
     var locationPrefix = location.protocol + '//' + location.host;
     var build = (location.href.indexOf('build') !== -1) ||

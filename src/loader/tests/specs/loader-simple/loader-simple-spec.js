@@ -4,6 +4,7 @@
  */
 /*jshint quotmark:false*/
 /*global $*/
+// --no-module-wrap--
 (function (S) {
     var d = S.Loader.Utils.normalizePath(window.location.href.replace(/[^/]*$/, ""),
         "../specs/loader-simple");

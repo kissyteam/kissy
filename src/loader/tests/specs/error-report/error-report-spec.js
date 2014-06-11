@@ -1,3 +1,4 @@
+// --no-module-wrap--
 var run = function (combine) {
     describe('loader should report error ' + (combine ? 'at combo mode' : ''), function () {
         var S = KISSY;

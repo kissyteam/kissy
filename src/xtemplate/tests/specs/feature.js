@@ -2,7 +2,7 @@
  * test common feature for xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
     var util = require('util');
 
@@ -676,4 +676,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

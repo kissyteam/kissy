@@ -1,4 +1,4 @@
-KISSY.add(function (S, require) {
+
     var Promise = require('promise');
     var Defer = Promise.Defer;
     require('./es6');
@@ -363,4 +363,3 @@ KISSY.add(function (S, require) {
 
         });
     });
-});

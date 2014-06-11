@@ -1,3 +1,4 @@
+// --no-module-wrap--
 describe('timeout', function () {
     var S = KISSY;
 

@@ -2,7 +2,6 @@
  * main函数
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
     /**
      * 启动 app router
      */
@@ -12,4 +11,3 @@ KISSY.add(function (S, require) {
             require('node')('#loading').hide();
         }
     });
-});

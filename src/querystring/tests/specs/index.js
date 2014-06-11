@@ -1,4 +1,4 @@
-KISSY.add(function (S, require) {
+
     var querystring = require('querystring');
     describe('querystring',function(){
         it('querystring.stringify', function () {
@@ -48,4 +48,3 @@ KISSY.add(function (S, require) {
             expect(querystring.parse('foo=1&bar=2=6').bar).toBe('2=6');
         });
     });
-});

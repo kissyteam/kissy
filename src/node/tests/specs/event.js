@@ -2,7 +2,7 @@
  * event attached for node
  * @author gonghao, yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     /*jshint quotmark:false*/
 // simulate mouse event on any element
@@ -160,4 +160,3 @@ KISSY.add(function (S, require) {
             expect(n.fireHandler('xx')).toBe(null);
         });
     });
-});

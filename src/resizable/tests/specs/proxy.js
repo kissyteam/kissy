@@ -2,15 +2,19 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,util, Resizable, ResizableProxyPlugin) {
+
+    var UA = require('ua');
+    var util = require('util');
+    var Resizable = require('resizable');
+    var ResizableProxyPlugin = require('resizable/plugin/proxy');
     /*jshint quotmark:false*/
     // ie9 mousemove does not fire
-    var ie = S.UA.ieMode;
+    var ie = UA.ieMode;
     if (ie === 9 || ie === 11) {
         return;
     }
 
-    var $ = S.all;
+    var $ = require('node');
 
     describe('proxy works', function () {
         beforeEach(function () {
@@ -117,6 +121,3 @@ KISSY.add(function (S,util, Resizable, ResizableProxyPlugin) {
             });
         });
     });
-}, {
-    requires: ['util','resizable', 'resizable/plugin/proxy']
-});

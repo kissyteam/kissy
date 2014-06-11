@@ -1,1 +1,1 @@
-node ../../../../../bin/kissy-xtemplate -p ./xtpl -s html
+node ../../../../../bin/xtemplate --no-wrap -p ./xtpl -s html

@@ -92,7 +92,7 @@ var commands = {
         }
 
         for (i = 0; i < l; i++) {
-            buffer = this.root.include(params[i], this, newScope, buffer);
+            buffer = this.root.include(params[i], this, newScope,option, buffer);
         }
 
         return buffer;

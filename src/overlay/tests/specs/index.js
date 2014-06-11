@@ -1,9 +1,5 @@
-KISSY.add(function(){
-},{
-    requires:[
-        './dialog',
-        './overlay',
-        './view',
-        './visible'
-    ]
-});
+
+require('./dialog');
+require('./overlay');
+require('./view');
+require('./visible');

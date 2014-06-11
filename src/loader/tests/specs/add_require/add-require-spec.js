@@ -1,3 +1,4 @@
+// --no-module-wrap--
 var run = function (combine) {
     /*jshint quotmark:false*/
     describe("KISSY.config('modules', {x:{requires:[]}}) " + (combine ? 'at combo mode' : ''), function () {

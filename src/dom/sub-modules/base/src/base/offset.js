@@ -104,7 +104,7 @@ util.mix(Dom,
                 container = getWindow(container);
             }
 
-            if (util.isPlainObject(alignWithTop)) {
+            if (typeof alignWithTop === 'object') {
                 allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
                 onlyScrollIfNeeded = alignWithTop.onlyScrollIfNeeded;
                 alignWithTop = alignWithTop.alignWithTop;

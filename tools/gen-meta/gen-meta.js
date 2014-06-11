@@ -12,7 +12,7 @@ program.option('--suffix [suffix]')
 var suffix = program.suffix || '/meta';
 var output = program.output;
 var dir = program.dir || path.join(root, 'src/');
-var HEAD = 'KISSY.use(\'ua, feature\', function(S, UA, Feature){';
+var HEAD = 'KISSY.use([\'ua\', \'feature\'], function(S, UA, Feature){';
 var FOOT = '});';
 var requireFiles = [];
 var jsFiles = [];

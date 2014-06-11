@@ -3,7 +3,7 @@
  * default sync for model
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var io = require('io');
     var Json = require('json');
 
@@ -48,5 +48,4 @@ KISSY.add(function (S, require) {
         return io(ioParam);
     }
 
-    return sync;
-});
+    module.exports = sync;

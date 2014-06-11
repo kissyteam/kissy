@@ -2,7 +2,7 @@
  * 全局同步函数
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var mvc = require('../mvc/');
     var Json = require('json');
     var KEY = 'KISSY_Note';
@@ -110,5 +110,4 @@ KISSY.add(function (S, require) {
         }, 500);
     };
 
-    return sync;
-});
+    module.exports = sync;

@@ -2,15 +2,18 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,util, Resizable) {
+
+    var UA = require('ua');
+    var util = require('util');
+    var Resizable = require('resizable');
     /*jshint quotmark:false*/
     // ie9 mousemove does not fire
-    var ie = S.UA.ieMode;
+    var ie = UA.ieMode;
     if (ie === 9 || ie === 11) {
         return;
     }
 
-    var $ = S.all;
+    var $ = require('node');
 
     describe('resizable works', function () {
 
@@ -454,7 +457,3 @@ KISSY.add(function (S,util, Resizable) {
             });
         });
     });
-
-}, {
-    requires: ['util','resizable']
-});

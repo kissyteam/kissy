@@ -1,4 +1,4 @@
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
 
     describe('sub template', function () {
@@ -126,4 +126,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

@@ -2,11 +2,11 @@
  * tc for kissy swf
  * @author yiminghe@gmail.com, oicuicu@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var SWF = require('swf');
     var Dom = require('dom');
     var util = require('util');
-
+    var UA = require('ua');
     function getFlashVars(swf) {
         if (Dom.nodeName(swf) === 'embed') {
             return util.unparam(swf.getAttribute('flashvars'));
@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
         return undefined;
     }
 
-    if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
+    if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
 
     } else {
         describe('flash', function () {
@@ -39,7 +39,6 @@ KISSY.add(function (S, require) {
 
             describe('flash player version', function () {
                 it('should not less than 9', function () {
-                    S.log('flash version: ' + SWF.fpv());
                     expect(SWF.fpv()).toBeDefined();
                     expect(SWF.fpv().length).toEqual(3);
                     expect(SWF.fpvGTE(9)).toBeTruthy();
@@ -80,9 +79,7 @@ KISSY.add(function (S, require) {
                     runs(function () {
                         expect(Dom.contains(document, swf1.get('swfObject'))).toBe(false);
                     });
-
                 });
-
 
                 it('can specify existing container', function () {
                     var render = Dom.create('<div class="test"></div>');
@@ -118,7 +115,7 @@ KISSY.add(function (S, require) {
                 });
 
                 it('ok with flashvars', function () {
-                    var config = S.merge(S.clone(defaultConfig), {
+                    var config = util.merge(util.clone(defaultConfig), {
                         src: '../assets/flashvars.swf',
                         params: {
                             bgcolor: '#038C3C',
@@ -173,11 +170,10 @@ KISSY.add(function (S, require) {
                     expect(swf1.get('status')).toBe(SWF.Status.TOO_LOW);
 
                     expect(SWF.getSrc(swf1.get('el')))
-                        .toBe(S.config('base') + 'swf/assets/expressInstall.swf');
+                        .toBe(KISSY.config('base') + 'swf/assets/expressInstall.swf');
 
                 });
 
             });
         });
     }
-});

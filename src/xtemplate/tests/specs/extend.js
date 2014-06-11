@@ -2,7 +2,7 @@
  * extend system for XTemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
     var util = require('util');
 
@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
 
         beforeEach(function () {
             util.each(mods, function (mod) {
-                delete S.Env.mods[mod];
+                delete KISSY.Env.mods[mod];
             });
         });
 
@@ -95,4 +95,3 @@ KISSY.add(function (S, require) {
             expect(result).toBe('title  prepend sub<  prepend base2 1 append base3 ');
         });
     });
-});

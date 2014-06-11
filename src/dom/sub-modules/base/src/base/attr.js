@@ -227,7 +227,7 @@ util.mix(Dom,
                 hook;
 
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 util.each(name, function (v, k) {
                     Dom.prop(elems, k, v);
                 });
@@ -343,7 +343,7 @@ util.mix(Dom,
                 ret;
 
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 pass = val;
                 for (var k in name) {
                     Dom.attr(els, k, name[k], pass);

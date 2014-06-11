@@ -2,7 +2,7 @@
  * 应用路由规则
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require, exports, module) {
+
     var $ = require('node');
     var NotesView = require('./NotesView');
     var EditView = require('./EditView');
@@ -132,4 +132,3 @@ KISSY.add(function (S, require, exports, module) {
             });
         }
     };
-});

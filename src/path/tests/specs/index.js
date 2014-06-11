@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(function (S, require) {
+
     var Path = require('path');
     describe("path", function () {
         it("resolve works", function () {
@@ -50,4 +50,3 @@ KISSY.add(function (S, require) {
         });
 
     });
-});

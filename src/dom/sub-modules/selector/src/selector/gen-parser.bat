@@ -1,1 +1,2 @@
-kison -k -g parser-grammar.kison
+
+node ../../../../../../node_modules/kison/bin/kison -g parser-grammar.kison

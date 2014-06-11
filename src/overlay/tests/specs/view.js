@@ -1,5 +1,6 @@
 /*jshint quotmark:false*/
-KISSY.add(function (S, UA, Node, Overlay) {
+
+    var Overlay = require('overlay');
     describe("view", function () {
         it("should reflect after create", function () {
             var overlay = new Overlay({
@@ -25,6 +26,3 @@ KISSY.add(function (S, UA, Node, Overlay) {
             overlay.destroy();
         });
     });
-},{
-    requires:"ua,node,overlay".split(',')
-});

@@ -1,3 +1,4 @@
+// --no-module-wrap--
 (function () {
     var build = location.href.indexOf('?build') !== -1;
     if(build){

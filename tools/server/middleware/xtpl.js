@@ -13,11 +13,6 @@ module.exports = function (req, res, next) {
     var filePath = path.join(kissyRoot, pathname).replace(/-coverage/, '').replace(/\.js$/, '.html');
     var name = path.basename(filePath, '.html');
 
-    var code = xtemplate.getCompileModule(filePath, name);
-    if (pathname.match(/-coverage/)) {
-        req.code = code;
-        next();
-    } else {
-        res.end(code);
-    }
+    req.code = xtemplate.getCompileModule(filePath, name);
+    next();
 };

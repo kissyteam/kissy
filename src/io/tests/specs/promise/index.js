@@ -1,13 +1,14 @@
-KISSY.add(function (S, io) {
-    var Promise = S.Promise;
 
-    var URL = '/kissy/src/io/tests/specs/promise/gen-json.jss';
+    var Promise = require('promise');
+    var io = require('io');
+
+    var mUrl = '/kissy/src/io/tests/specs/promise/gen-json.jss';
 
     describe('S.IO as a promise', function () {
         it('context should works as before', function () {
             var c = {}, ok = 0;
             io({
-                url: URL,
+                url: mUrl,
                 context: c,
                 data: {
                     x: 99
@@ -27,7 +28,7 @@ KISSY.add(function (S, io) {
         it('should support then differently', function () {
             var ok = 0,
                 r = io({
-                    url: URL,
+                    url: mUrl,
                     context: {},
                     data: {
                         x: 99
@@ -86,7 +87,7 @@ KISSY.add(function (S, io) {
 
         it('should support chained value', function () {
             var r = io({
-                url: URL,
+                url: mUrl,
                 context: {},
                 data: {
                     x: 99
@@ -112,7 +113,7 @@ KISSY.add(function (S, io) {
 
         it('should support nested promise', function () {
             var r = io({
-                url: URL,
+                url: mUrl,
                 context: {},
                 data: {
                     x: 99
@@ -123,7 +124,7 @@ KISSY.add(function (S, io) {
             r.then(function (v) {
                 expect(v[0].x).toBe('99');
                 return io({
-                    url: URL,
+                    url: mUrl,
                     context: {},
                     data: {
                         x: 101
@@ -144,7 +145,7 @@ KISSY.add(function (S, io) {
             var errorCalled = '';
             var completeCalled = 0;
             io({
-                url: URL,
+                url: mUrl,
                 data: {
                     x: 99
                 },
@@ -173,7 +174,7 @@ KISSY.add(function (S, io) {
             var errorCalled = '';
             var completeCalled = 0;
             io({
-                url: URL,
+                url: mUrl,
                 data: {
                     x: 99
                 },
@@ -204,7 +205,7 @@ KISSY.add(function (S, io) {
 
         it('should support Promise.all', function () {
             var r = io({
-                url: URL,
+                url: mUrl,
                 context: {},
                 data: {
                     x: 99
@@ -213,7 +214,7 @@ KISSY.add(function (S, io) {
             });
 
             var r2 = io({
-                url: URL,
+                url: mUrl,
                 context: {},
                 data: {
                     x: 101
@@ -234,6 +235,3 @@ KISSY.add(function (S, io) {
             }, 2000);
         });
     });
-}, {
-    requires: ['io']
-});

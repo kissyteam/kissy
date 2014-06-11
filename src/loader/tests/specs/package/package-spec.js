@@ -1,4 +1,5 @@
 /*jshint quotmark:false*/
+// --no-module-wrap--
 var run = function (combine) {
     var S = KISSY;
 

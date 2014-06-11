@@ -2,7 +2,7 @@
  * simple image-zoomer using scroll-view and touch gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var Base = require('base');
     var ScrollView = require('scroll-view');
     var ScrollbarPlugin = require('scroll-view/plugin/scrollbar');
@@ -207,7 +207,7 @@ KISSY.add(function (S, require) {
         self.set('scale', toScale);
     }
 
-    return Base.extend({
+    module.exports = Base.extend({
         closeEl: null,
 
         scrollView: null,
@@ -290,4 +290,3 @@ KISSY.add(function (S, require) {
             }
         }
     });
-});

@@ -1,5 +1,6 @@
 /*jshint quotmark:false*/
-KISSY.add(function (S, UA, Node, Overlay) {
+
+    var Overlay = require('overlay');
     describe('visible', function () {
         it("should not fire hide on show", function () {
             var overlay = new Overlay({
@@ -58,6 +59,3 @@ KISSY.add(function (S, UA, Node, Overlay) {
             overlay.destroy();
         });
     });
-},{
-    requires:"ua,node,overlay".split(',')
-});

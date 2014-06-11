@@ -2,6 +2,7 @@
  * commonjs module format tc
  * @author yiminghe@gmail.com
  */
+// --no-module-wrap--
 describe('it support commonjs require', function () {
     /*jshint quotmark:false*/
     beforeEach(function () {

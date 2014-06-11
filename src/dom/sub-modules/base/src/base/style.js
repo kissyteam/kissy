@@ -134,7 +134,7 @@ util.mix(Dom,
                 ret,
                 elem = els[0], i;
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 for (k in name) {
                     for (i = els.length - 1; i >= 0; i--) {
                         style(els[i], k, name[k]);
@@ -173,7 +173,7 @@ util.mix(Dom,
                 ret,
                 i;
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 for (k in name) {
                     for (i = els.length - 1; i >= 0; i--) {
                         style(els[i], k, name[k]);

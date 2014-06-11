@@ -19,7 +19,10 @@ function findRequires(ast) {
             if (node.type === 'CallExpression') {
                 var callee = node.callee;
                 if (callee.type === 'Identifier' && callee.name === 'require') {
-                    requires.push(node['arguments'][0].value);
+                    var args = node['arguments'];
+                    if (args.length === 1 && args[0].type === 'Literal') {
+                        requires.push(args[0].value);
+                    }
                 }
             }
         }
@@ -67,9 +70,15 @@ function compileModule(modName, codes, requires) {
 
     var modRequires = findRequires(ast);
     completeFullModuleFormat(ast, modName, modRequires);
-    codes[modName] = escodegen.generate(ast, {
-        comment: true
-    });
+    try {
+        codes[modName] = escodegen.generate(ast, {
+            comment: true
+        });
+    } catch (e) {
+        console.log('escodegen error: ' + modName);
+        //console.log(ast);
+        throw e;
+    }
     modRequires = modRequires.map(function (r) {
         return normalizePath(modName, r);
     });

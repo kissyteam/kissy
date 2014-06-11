@@ -1,6 +1,6 @@
-KISSY.add(function (S, require) {
-    var util = require('util');
 
+    var util = require('util');
+    var Logger = require('logger');
     var tpl = '<h2 class="anim-title">{title}</h2>' +
         '<p class="anim-content">Sed ut perspiciatis unde omnis iste natus error ' +
         'sit voluptatem accusantium doloremque laudantium, ' +
@@ -39,12 +39,11 @@ KISSY.add(function (S, require) {
             }, 1400);
         },
         leave: function () {
-            S.log('leave loading');
+            Logger.log('leave loading');
         },
         destroy: function () {
-            S.log('destroy loading');
+            Logger.log('destroy loading');
         }
     };
 
-    return Loading;
-});
+    module.exports = Loading;

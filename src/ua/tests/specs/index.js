@@ -2,7 +2,7 @@
  * Path spec for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var UA = require('ua');
     describe('ua', function () {
         if (!UA.ie) {
@@ -24,4 +24,3 @@ KISSY.add(function (S, require) {
             });
         }
     });
-});

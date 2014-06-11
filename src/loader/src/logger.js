@@ -1,3 +1,7 @@
+/**
+ * logger utils
+ * @author yiminghe@gmail.com
+ */
 (function (S) {
     function getLogger(logger) {
         var obj = {};
@@ -94,7 +98,6 @@
             }
         }
     };
-
 
     if ('@DEBUG@') {
         S.Config.logger = {

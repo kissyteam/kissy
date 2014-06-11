@@ -2,7 +2,7 @@
  * test escape for xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
 
     describe('escape', function () {
@@ -155,4 +155,3 @@ KISSY.add(function (S, require) {
         });
 
     });
-});

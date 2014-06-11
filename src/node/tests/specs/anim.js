@@ -2,7 +2,7 @@
  * test cases for anim on node
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     /*jshint quotmark:false*/
 
@@ -157,4 +157,3 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});

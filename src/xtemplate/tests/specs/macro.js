@@ -2,7 +2,7 @@
  * test macro for xtemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var XTemplate = require('xtemplate');
 
     describe('macro', function () {
@@ -43,4 +43,3 @@ KISSY.add(function (S, require) {
             expect(render).toBe(' child');
         });
     });
-});

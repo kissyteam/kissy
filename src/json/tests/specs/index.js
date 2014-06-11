@@ -1,7 +1,10 @@
-KISSY.add(function (S, Json, UA) {
+
     /*global global*/
     /*jshint camelcase:false*/
-    var JSON = ((typeof global === 'object') ? global : S.Env.host).JSON;
+    var Json = require('json');
+    var UA = require('ua');
+    /*global JSON:true*/
+    var JSON = ((typeof global === 'object') ? global : window).JSON;
 
     var phantomjs = UA.phantomjs;
 
@@ -357,6 +360,3 @@ KISSY.add(function (S, Json, UA) {
             });
         });
     });
-}, {
-    requires: ['json', 'ua']
-});

@@ -59,7 +59,7 @@ function renderTpl(tpl, scope, buffer) {
     // if has extend statement, only parse
     if (extendTplName) {
         delete tpl.runtime.extendTplName;
-        buffer = tpl.root.include(extendTplName, tpl, scope, buffer);
+        buffer = tpl.root.include(extendTplName, tpl, scope, null, buffer);
     }
     return buffer.end();
 }
@@ -216,13 +216,15 @@ XTemplateRuntime.prototype = {
         config.commands[commandName] = fn;
     },
 
-    include: function (subTplName, tpl, scope, buffer) {
+    include: function (subTplName, tpl, scope, option, buffer) {
         var self = this;
         subTplName = resolve(subTplName, tpl.name);
         return buffer.async(function (newBuffer) {
             self.load(subTplName, function (error, tplFn) {
                 if (error) {
                     newBuffer.error(error);
+                } else if (typeof tplFn === 'string') {
+                    newBuffer.write(tplFn, option && option.escape).end();
                 } else {
                     renderTpl({
                         root: tpl.root,

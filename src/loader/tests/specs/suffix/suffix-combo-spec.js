@@ -1,5 +1,6 @@
 /*jshint quotmark:false*/
 /*global $*/
+// --no-module-wrap--
 describe("mod with suffix", function () {
     var S = KISSY;
     beforeEach(function () {

@@ -124,12 +124,12 @@ util.mix(Dom,
          * Creates Dom elements on the fly from the provided string of raw HTML.
          * @param {String|HTMLElement} html A string of HTML to create on the fly.
          * Note that this parses HTML, not XML.
-         * @param {Object} [props] An map of attributes on the newly-created element.
+         * @param {Object} [attrs] An map of attributes on the newly-created element.
          * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
          * @param {Boolean} [_trim] internal usage
          * @return {DocumentFragment|HTMLElement}
          */
-        create: function (html, props, ownerDoc, _trim) {
+        create: function (html, attrs, ownerDoc, _trim) {
             var ret = null;
 
             if (!html) {
@@ -200,7 +200,7 @@ util.mix(Dom,
                 }
             }
 
-            return attachProps(ret, props);
+            return attrs ? setAttributes(ret, attrs) : ret;
         },
 
         _fixCloneAttributes: function (src, dest) {
@@ -508,14 +508,13 @@ function cloneWithDataAndEvent(src, dest) {
 }
 
 // 添加成员到元素中
-function attachProps(elem, props) {
-    if (util.isPlainObject(props)) {
-        if (elem.nodeType === NodeType.ELEMENT_NODE) {
-            Dom.attr(elem, props, true);
-        } else if (elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
-            // document fragment
-            Dom.attr(elem.childNodes, props, true);
-        }
+function setAttributes(elem, attrs) {
+    var nodeType = elem.nodeType;
+    if (nodeType === NodeType.ELEMENT_NODE) {
+        Dom.attr(elem, attrs, true);
+    } else if (nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
+        // document fragment
+        Dom.attr(elem.childNodes, attrs, true);
     }
     return elem;
 }

@@ -3,10 +3,11 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-KISSY.add(function (S, Menu) {
 
-    var $ = S.all,
-        KeyCode = S.Node.KeyCode;
+    var $ = require('node'),
+        UA = require('ua'),
+        Menu = require('menu'),
+        KeyCode = $.Event.KeyCode;
 
     describe('menu', function () {
 
@@ -21,7 +22,7 @@ KISSY.add(function (S, Menu) {
 
             });
 
-            if (!S.UA.mobile) {
+            if (!UA.mobile) {
                 it("highlighted works", function () {
 
                     jasmine.simulate(firstEl, 'mouseover');
@@ -316,6 +317,3 @@ KISSY.add(function (S, Menu) {
         });
 
     });
-},{
-    requires:['menu']
-});

@@ -1,8 +1,15 @@
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     var ScrollView = require('scroll-view');
     var ScrollbarPlugin = require('scroll-view/plugin/scrollbar');
+    var transformProperty = getVendorInfo('transform').name;
+    var transformOriginProperty = transformProperty + 'Origin';
+    var TapGesture = require('event/gesture/tap');
+    var tap = TapGesture.TAP;
 
+    var scrollView;
+    /*global scroll:true*/
+    var scroll;
     var VENDORS = [
             'Webkit',
             'Moz',
@@ -67,13 +74,7 @@ KISSY.add(function (S, require) {
 
     var win = $(window);
 
-    var transformProperty = getVendorInfo('transform').name;
-    var transformOriginProperty = transformProperty + 'Origin';
-    var TapGesture = require('event/gesture/tap');
-    var tap = TapGesture.TAP;
 
-    var scrollView;
-    var scroll;
     var contentEl;
     var contentRegion;
     var currentScroll;
@@ -290,7 +291,7 @@ KISSY.add(function (S, require) {
         scrollView.sync();
     }
 
-    return {
+    module.exports = {
         showImage: function (cfg) {
             initScrollView();
             resetStatus(cfg);
@@ -298,4 +299,3 @@ KISSY.add(function (S, require) {
             scrollView.sync();
         }
     };
-});

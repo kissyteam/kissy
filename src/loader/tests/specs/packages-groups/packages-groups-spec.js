@@ -3,6 +3,7 @@
  * @author 阿古
  */
 /*jshint quotmark:false*/
+// --no-module-wrap--
 describe("modules and groups", function () {
     var S = KISSY,
         Utils= S.Loader.Utils,

@@ -1,3 +1,4 @@
+// --no-module-wrap--
 describe('support require api in KISSY.add', function () {
     afterEach(function () {
         KISSY.clearLoader();

@@ -2,7 +2,7 @@
  * simple slide using scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
+
     var $ = require('node');
     var Base = require('base');
     var ScrollView = require('scroll-view');
@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
         return tpl;
     }
 
-    return Base.extend({
+    module.exports = Base.extend({
         render: function () {
             var self = this,
                 direction = self.get('direction'),
@@ -87,4 +87,3 @@ KISSY.add(function (S, require) {
             }
         }
     });
-});
