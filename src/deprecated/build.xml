@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<project name="adapter.build" default="build" basedir=".">
-    <property name="component.name" value="adapter"/>
+<project name="deprecated.build" default="build" basedir=".">
+    <property name="component.name" value="deprecated"/>
 
     <import file="../common.xml"/>
 

@@ -3,12 +3,15 @@
  * @author yiminghe@gmail.com
  **/
 
+(function () {
+
+
     var io = require('io');
     var $ = require('node');
     var util = require('util');
     var UA = require('ua');
     /*jshint quotmark:false*/
-    // travis-ci will not pass ...
+// travis-ci will not pass ...
     if (UA.phantomjs && UA.os === 'linux') {
         return;
     }
@@ -245,3 +248,4 @@
             });
         });
     });
+})();

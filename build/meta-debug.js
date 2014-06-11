@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:30
+build time: Jun 11 20:57
 */
 /**
  * @ignore
@@ -9,14 +9,7 @@ build time: May 14 22:30
  * @author yiminghe@gmail.com
  */
 
-KISSY.config({
-    modules: {
-        ajax: {
-            alias: 'io'
-        }
-    }
-});
-
+// --no-module-wrap--
 KISSY.config({
     packages: {
         gallery: {
@@ -25,10 +18,11 @@ KISSY.config({
         }
     }
 });/*jshint indent:false, quotmark:false*/
-KISSY.use('ua, feature', function(S, UA, Feature){
+KISSY.use(['ua', 'feature'], function(S, UA, Feature){
 S.config("requires",{
     "anim/base": [
         "dom",
+        "querystring",
         "promise"
     ],
     "anim/timer": [
@@ -201,9 +195,10 @@ S.config("requires",{
     ],
     "io": [
         "dom",
+        "logger",
         "event/custom",
         "promise",
-        "uri",
+        "url",
         "ua",
         "event/dom"
     ],
@@ -240,9 +235,6 @@ S.config("requires",{
         "component/extension/align",
         "component/extension/content-box"
     ],
-    "path": [
-        "util"
-    ],
     "promise": [
         "util"
     ],
@@ -254,7 +246,8 @@ S.config("requires",{
         "base"
     ],
     "router": [
-        "uri",
+        "logger",
+        "url",
         "event/dom",
         "event/custom",
         "feature"
@@ -305,14 +298,16 @@ S.config("requires",{
         "component/extension/content-box",
         "component/extension/delegate-children"
     ],
-    "uri": [
+    "url": [
+        "querystring",
         "path"
     ],
     "xtemplate": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [
-        "util"
+        "util",
+        "logger"
     ]
 });
 var win = window,
@@ -370,5 +365,6 @@ if (!isTouchGestureSupported) {
     add('event/gesture/swipe', emptyObject);
 }
 
+alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 });

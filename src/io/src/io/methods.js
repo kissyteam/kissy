@@ -282,13 +282,14 @@ util.extend(IO, Promise, {
             // so trim original query when process other query
             // and append when send
             var c = this.config,
-                uri = c.uri,
-                originalQuery = url.parse(c.url).search,
-                urlStr = url.stringify(uri, c.serializeArray);
+                uri = c.uri;
+            var search = uri.search || '';
+            delete uri.search;
+            if (search && !util.isEmptyObject(uri.query)) {
+                search = '&' + search.substring(1);
+            }
+            return url.stringify(uri, c.serializeArray) + search;
 
-            return urlStr + (originalQuery ?
-                ((uri.search ? '&' : '?') + originalQuery) :
-                '');
         }
     }
 );

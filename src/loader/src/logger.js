@@ -143,6 +143,7 @@
          */
     }
 
+    S.Logger = Logger;
     S.getLogger = Logger.getLogger;
     S.log = Logger.log;
     S.error = Logger.error;

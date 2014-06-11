@@ -8,8 +8,6 @@ var undef;
 var Path = require('path');
 var reDisallowedInProtocolOrAuth = /[#\/\?@]/g,
     reDisallowedInPathName = /[#\?]/g,
-// ?? combo of taobao
-    reDisallowedInQuery = /[#@]/g,
     reDisallowedInHash = /#/g,
     URI_SPLIT_REG = new RegExp(
             '^' +
@@ -218,7 +216,7 @@ var url = {
         }
 
         if (search) {
-            out.push(encodeSpecialChars(search, reDisallowedInQuery));
+            out.push(search);
         }
 
         if (hash) {

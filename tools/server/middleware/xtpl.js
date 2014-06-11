@@ -12,7 +12,6 @@ module.exports = function (req, res, next) {
     var pathname = url.parse(req.url).pathname;
     var filePath = path.join(kissyRoot, pathname).replace(/-coverage/, '').replace(/\.js$/, '.html');
     var name = path.basename(filePath, '.html');
-
     req.code = xtemplate.getCompileModule(filePath, name);
     next();
 };

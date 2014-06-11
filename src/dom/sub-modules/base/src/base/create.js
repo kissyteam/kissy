@@ -24,7 +24,9 @@ var doc = document,
     supportOuterHTML = doc && 'outerHTML' in doc.documentElement,
     RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
-var creators = Dom._creators,
+var creators = Dom._creators = {
+        div: defaultCreator
+    },
     create = Dom.create,
     creatorsMap = {
         area: 'map',
@@ -224,9 +226,6 @@ util.mix(Dom,
             }
         },
 
-        _creators: {
-            div: defaultCreator
-        },
 
         _defaultCreator: defaultCreator,
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:23
+build time: Jun 11 20:55
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140611202328' will replace with current timestamp when compressing.
+         * NOTICE: '20140611205517' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140611202328',
+        __BUILD_TIME: '20140611205517',
 
         /**
          * KISSY Environment.
@@ -327,6 +327,7 @@ var KISSY = (function (undefined) {
          */
     }
 
+    S.Logger = Logger;
     S.getLogger = Logger.getLogger;
     S.log = Logger.log;
     S.error = Logger.error;
@@ -2377,7 +2378,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140611202328';
+    var TIMESTAMP = '20140611205517';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3080,7 +3081,7 @@ KISSY.add('feature', ['ua'], function (S, require) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:30
+build time: Jun 11 20:57
 */
 /**
  * @ignore
@@ -3088,14 +3089,7 @@ build time: May 14 22:30
  * @author yiminghe@gmail.com
  */
 
-KISSY.config({
-    modules: {
-        ajax: {
-            alias: 'io'
-        }
-    }
-});
-
+// --no-module-wrap--
 KISSY.config({
     packages: {
         gallery: {
@@ -3104,10 +3098,11 @@ KISSY.config({
         }
     }
 });/*jshint indent:false, quotmark:false*/
-KISSY.use('ua, feature', function(S, UA, Feature){
+KISSY.use(['ua', 'feature'], function(S, UA, Feature){
 S.config("requires",{
     "anim/base": [
         "dom",
+        "querystring",
         "promise"
     ],
     "anim/timer": [
@@ -3280,9 +3275,10 @@ S.config("requires",{
     ],
     "io": [
         "dom",
+        "logger",
         "event/custom",
         "promise",
-        "uri",
+        "url",
         "ua",
         "event/dom"
     ],
@@ -3319,9 +3315,6 @@ S.config("requires",{
         "component/extension/align",
         "component/extension/content-box"
     ],
-    "path": [
-        "util"
-    ],
     "promise": [
         "util"
     ],
@@ -3333,7 +3326,8 @@ S.config("requires",{
         "base"
     ],
     "router": [
-        "uri",
+        "logger",
+        "url",
         "event/dom",
         "event/custom",
         "feature"
@@ -3384,14 +3378,16 @@ S.config("requires",{
         "component/extension/content-box",
         "component/extension/delegate-children"
     ],
-    "uri": [
+    "url": [
+        "querystring",
         "path"
     ],
     "xtemplate": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [
-        "util"
+        "util",
+        "logger"
     ]
 });
 var win = window,
@@ -3449,5 +3445,6 @@ if (!isTouchGestureSupported) {
     add('event/gesture/swipe', emptyObject);
 }
 
+alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 });

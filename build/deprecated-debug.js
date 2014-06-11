@@ -1,15 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 9 12:04
+build time: Jun 11 20:36
 */
 /**
  * adapter to transform kissy5 to kissy 1.4.x
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    S.use('util', function (S, util) {
+    // --no-module-wrap--
+    S.use('util,querystring', function (S, util, querystring) {
         util.mix(S, util);
+        S.param = querystring.stringify;
+        S.unparam = querystring.parse;
     });
 
     S.add('event', ['util', 'event/dom', 'event/custom'], function (S, require) {
@@ -27,14 +30,24 @@ build time: Jun 9 12:04
         cookie: 'Cookie',
         'dom/base': 'DOM',
         event: 'Event',
-        node: 'Node',
         io: 'IO',
         'anim/timer': 'Anim',
         'anim/transition': 'Anim',
         base: 'Base'
     };
 
-    var configs = {};
+    var configs = {
+        core: {
+            alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+        },
+        node: {
+            afterAttach: function (v) {
+                S.Node = S.NodeList = v;
+                S.one = v.one;
+                S.all = v.all;
+            }
+        }
+    };
 
     for (var m in mods) {
         /*jshint loopfunc:true*/
@@ -48,4 +61,21 @@ build time: Jun 9 12:04
     }
 
     S.config('modules', configs);
+
+    S.namespace = function () {
+        var args = S.makeArray(arguments),
+            l = args.length,
+            o = null,
+            i, j, p,
+            global = (args[l - 1] === true && l--);
+
+        for (i = 0; i < l; i++) {
+            p = ('' + args[i]).split('.');
+            o = global ? window : this;
+            for (j = (window[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                o = o[p[j]] = o[p[j]] || {};
+            }
+        }
+        return o;
+    };
 })(KISSY);

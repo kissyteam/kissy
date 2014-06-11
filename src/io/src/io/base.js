@@ -70,10 +70,8 @@ function setUpConfig(c) {
 
     uri = c.uri = url.parse(url.resolve(locationHref, c.url), true);
 
-    uri.search = null;
-
     // see method _getUrlForSend
-    uri.query = uri.query || {};
+    uri.query = {};
 
     if (!('crossDomain' in c)) {
         c.crossDomain = uri.protocol === locationUrl.prototype && uri.host === locationUrl.host;
@@ -96,7 +94,6 @@ function setUpConfig(c) {
 
     if (!c.hasContent) {
         if (c.data) {
-            querystring.parse(c.data);
             util.mix(uri.query, querystring.parse(c.data));
         }
         if (c.cache === false) {

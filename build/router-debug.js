@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:28
+build time: Jun 11 20:57
 */
 /*
 combined modules:
@@ -10,31 +10,34 @@ router/utils
 router/route
 router/request
 */
-/**
- * A express-like router
- * @author yiminghe@gmail.com
- */
 KISSY.add('router', [
     'util',
+    'logger',
     './router/utils',
     './router/route',
-    'uri',
+    'url',
     './router/request',
     'event/dom',
     'event/custom',
     'feature'
-], function (S, require, exports) {
+], function (S, require, exports, module) {
+    /**
+ * A express-like router
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
+    var Logger = require('logger');
     var middlewares = [];
     var routes = [];
     var utils = require('./router/utils');
     var Route = require('./router/route');
-    var Uri = require('uri');
+    var url = require('url');
     var Request = require('./router/request');
-    var DomEvent = require('event/dom');
+    var DomEvent = require('event/dom');    /*global CustomEvent:true, history:true*/
+    /*global CustomEvent:true, history:true*/
     var CustomEvent = require('event/custom');
     var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
-    var win = S.Env.host;
+    var win = window;
     var history = win.history;
     var supportNativeHashChange = require('feature').isHashChangeSupported();
     var supportHistoryPushState = !!(history && history.pushState);    // take a breath to avoid duplicate hashchange
@@ -57,14 +60,13 @@ KISSY.add('router', [
         }
     }    // get url path for router dispatch
     // get url path for router dispatch
-    function getUrlForRouter(url) {
-        url = url || location.href;
-        var uri = new Uri(url);
+    function getUrlForRouter(urlStr) {
+        urlStr = urlStr || location.href;
+        var uri = url.parse(urlStr);
         if (!globalConfig.useHash && supportHistoryPushState) {
-            var query = uri.query;
-            return uri.getPath().substr(globalConfig.urlRoot.length) + (query.has() ? '?' + query.toString() : '');
+            return uri.pathname.substr(globalConfig.urlRoot.length) + (uri.search || '');
         } else {
-            return utils.getHash(url);
+            return utils.getHash(urlStr);
         }
     }
     function fireMiddleWare(request, response, cb) {
@@ -123,12 +125,13 @@ KISSY.add('router', [
         next();
     }
     function dispatch(backward, replace) {
-        var url = getUrlForRouter();
-        var uri = new Uri(url);
-        var query = uri.query.get();
-        uri.query.reset();    // normalize to '/'
+        var urlStr = getUrlForRouter();
+        var uri = url.parse(urlStr, true);
+        var query = uri.query;
+        uri.search = '';
+        uri.query = {};    // normalize to '/'
         // normalize to '/'
-        var path = uri.toString() || '/';
+        var path = url.stringify(uri) || '/';
         var request = new Request({
                 query: query,
                 // backward or forward
@@ -137,8 +140,8 @@ KISSY.add('router', [
                 replace: replace === true,
                 forward: backward === false && replace === false,
                 path: path,
-                url: url,
-                originalUrl: url
+                url: urlStr,
+                originalUrl: urlStr
             });
         var response = { redirect: exports.navigate };
         exports.fire('dispatch', {
@@ -147,25 +150,25 @@ KISSY.add('router', [
         });
         fireMiddleWare(request, response, fireRoutes);
     }    /**
-     * Router using hash or html5 history
-     * @class KISSY.Router
-     * @singleton
-     */
+ * Router using hash or html5 history
+ * @class KISSY.Router
+ * @singleton
+ */
     /**
-     * Router using hash or html5 history
-     * @class KISSY.Router
-     * @singleton
-     */
+ * Router using hash or html5 history
+ * @class KISSY.Router
+ * @singleton
+ */
     util.mix(exports, CustomEvent.Target);    /**
-     * config middleware for router
-     * @param {String} prefix config prefix to decide which path is processed
-     * @param {Function} callback middleware logic function
-     */
+ * config middleware for router
+ * @param {String} prefix config prefix to decide which path is processed
+ * @param {Function} callback middleware logic function
+ */
     /**
-     * config middleware for router
-     * @param {String} prefix config prefix to decide which path is processed
-     * @param {Function} callback middleware logic function
-     */
+ * config middleware for router
+ * @param {String} prefix config prefix to decide which path is processed
+ * @param {Function} callback middleware logic function
+ */
     exports.use = function (prefix, callback) {
         if (typeof prefix !== 'string') {
             callback = prefix;
@@ -176,27 +179,33 @@ KISSY.add('router', [
             callback
         ]);
     };    /**
-     * Navigate to specified path.
-     * @static
-     * @member KISSY.Router
-     * @param {String} path Destination path.
-     * @param {Object} [opts] Config for current navigation.
-     * @param {Boolean} opts.triggerRoute Whether to trigger responding action
-     *                  even current path is same as parameter
-     */
+ * Navigate to specified path.
+ * @static
+ * @member KISSY.Router
+ * @param {String} path Destination path.
+ * @param {Object} [opts] Config for current navigation.
+ * @param {Boolean} opts.triggerRoute Whether to trigger responding action
+ *                  even current path is same as parameter
+ */
     /**
-     * Navigate to specified path.
-     * @static
-     * @member KISSY.Router
-     * @param {String} path Destination path.
-     * @param {Object} [opts] Config for current navigation.
-     * @param {Boolean} opts.triggerRoute Whether to trigger responding action
-     *                  even current path is same as parameter
-     */
+ * Navigate to specified path.
+ * @static
+ * @member KISSY.Router
+ * @param {String} path Destination path.
+ * @param {Object} [opts] Config for current navigation.
+ * @param {Boolean} opts.triggerRoute Whether to trigger responding action
+ *                  even current path is same as parameter
+ */
     exports.navigate = function (path, opts) {
         opts = opts || {};
         var replace = opts.replace || false;
-        if (getUrlForRouter() !== path) {
+        var urlStr = getUrlForRouter();
+        var uri = url.parse(urlStr);
+        if (path.charAt(0) === '?') {
+            uri.search = path;
+            path = url.stringify(uri);
+        }
+        if (urlStr !== path) {
             if (!replace) {
                 viewUniqueId++;
                 viewsHistory.push(viewUniqueId);
@@ -222,26 +231,26 @@ KISSY.add('router', [
             dispatch(false, true);
         }
     };    /**
-     * add route and its callbacks
-     * @param {String|RegExp} routePath route string or regexp
-     */
+ * add route and its callbacks
+ * @param {String|RegExp} routePath route string or regexp
+ */
     /**
-     * add route and its callbacks
-     * @param {String|RegExp} routePath route string or regexp
-     */
+ * add route and its callbacks
+ * @param {String|RegExp} routePath route string or regexp
+ */
     exports.get = function (routePath) {
         var callbacks = util.makeArray(arguments).slice(1);
         routes.push(new Route(routePath, callbacks, globalConfig));
     };    /**
-     * whether url path match config routes
-     * @param {String} path url path
-     * @returns {Boolean}
-     */
+ * whether url path match config routes
+ * @param {String} path url path
+ * @returns {Boolean}
+ */
     /**
-     * whether url path match config routes
-     * @param {String} path url path
-     * @returns {Boolean}
-     */
+ * whether url path match config routes
+ * @param {String} path url path
+ * @returns {Boolean}
+ */
     exports.matchRoute = function (path) {
         for (var i = 0, l = routes.length; i < l; i++) {
             if (routes[i].match(path)) {
@@ -250,15 +259,15 @@ KISSY.add('router', [
         }
         return false;
     };    /**
-     * remove specified route
-     * @param {String|RegExp} routePath route string or regexp
-     * @param {Function} [callback] router callback
-     */
+ * remove specified route
+ * @param {String|RegExp} routePath route string or regexp
+ * @param {Function} [callback] router callback
+ */
     /**
-     * remove specified route
-     * @param {String|RegExp} routePath route string or regexp
-     * @param {Function} [callback] router callback
-     */
+ * remove specified route
+ * @param {String|RegExp} routePath route string or regexp
+ * @param {Function} [callback] router callback
+ */
     exports.removeRoute = function (routePath, callback) {
         for (var i = routes.length - 1; i >= 0; i--) {
             var r = routes[i];
@@ -279,15 +288,15 @@ KISSY.add('router', [
         middlewares = [];
         routes = [];
     };    /**
-     * whether has specified route
-     * @param {String|RegExp} routePath route string or regexp
-     * @returns {Boolean}
-     */
+ * whether has specified route
+ * @param {String|RegExp} routePath route string or regexp
+ * @returns {Boolean}
+ */
     /**
-     * whether has specified route
-     * @param {String|RegExp} routePath route string or regexp
-     * @returns {Boolean}
-     */
+ * whether has specified route
+ * @param {String|RegExp} routePath route string or regexp
+ * @returns {Boolean}
+ */
     exports.hasRoute = function (routePath) {
         for (var i = 0, l = routes.length; i < l; i++) {
             if (routes[i].path === routePath) {
@@ -329,27 +338,27 @@ KISSY.add('router', [
         }
         dispatchByVid(vid);
     }    /**
-     * Config router
-     * @static
-     * @member KISSY.Router
-     * @param {Object} [opts]
-     * @param {Boolean} [opts.caseSensitive] enable case-sensitive routes
-     * @param {Boolean} [opts.strict] enable strict matching for trailing slashes
-     * @param {String} [opts.urlRoot] Specify url root for html5 history management.
-     * @param {Boolean} [opts.useHash] force to use hash url for navigation even for browser which support html5 history.
-     * false is only invalid for html history supported browsers
-     */
+ * Config router
+ * @static
+ * @member KISSY.Router
+ * @param {Object} [opts]
+ * @param {Boolean} [opts.caseSensitive] enable case-sensitive routes
+ * @param {Boolean} [opts.strict] enable strict matching for trailing slashes
+ * @param {String} [opts.urlRoot] Specify url root for html5 history management.
+ * @param {Boolean} [opts.useHash] force to use hash url for navigation even for browser which support html5 history.
+ * false is only invalid for html history supported browsers
+ */
     /**
-     * Config router
-     * @static
-     * @member KISSY.Router
-     * @param {Object} [opts]
-     * @param {Boolean} [opts.caseSensitive] enable case-sensitive routes
-     * @param {Boolean} [opts.strict] enable strict matching for trailing slashes
-     * @param {String} [opts.urlRoot] Specify url root for html5 history management.
-     * @param {Boolean} [opts.useHash] force to use hash url for navigation even for browser which support html5 history.
-     * false is only invalid for html history supported browsers
-     */
+ * Config router
+ * @static
+ * @member KISSY.Router
+ * @param {Object} [opts]
+ * @param {Boolean} [opts.caseSensitive] enable case-sensitive routes
+ * @param {Boolean} [opts.strict] enable strict matching for trailing slashes
+ * @param {String} [opts.urlRoot] Specify url root for html5 history management.
+ * @param {Boolean} [opts.useHash] force to use hash url for navigation even for browser which support html5 history.
+ * false is only invalid for html history supported browsers
+ */
     exports.config = function (opts) {
         if (opts.urlRoot) {
             opts.urlRoot = opts.urlRoot.replace(/\/$/, '');
@@ -357,17 +366,17 @@ KISSY.add('router', [
         util.mix(globalConfig, opts);
     };
     var started;    /**
-     * Start router (url monitor).
-     * @static
-     * @member KISSY.Router
-     * @param {Function} [callback] Callback function to be called after router is started.
-     */
+ * Start router (url monitor).
+ * @static
+ * @member KISSY.Router
+ * @param {Function} [callback] Callback function to be called after router is started.
+ */
     /**
-     * Start router (url monitor).
-     * @static
-     * @member KISSY.Router
-     * @param {Function} [callback] Callback function to be called after router is started.
-     */
+ * Start router (url monitor).
+ * @static
+ * @member KISSY.Router
+ * @param {Function} [callback] Callback function to be called after router is started.
+ */
     exports.start = function (callback) {
         if (started) {
             return callback && callback.call(exports);
@@ -381,12 +390,20 @@ KISSY.add('router', [
                 // =>
                 // process without refresh page and add history entry
                 if (hashIsValid) {
-                    if (utils.equalsIgnoreSlash(locPath, urlRoot)) {
+                    // http://x.com#!/?t=1 -> http://x.com?t=1
+                    if (!urlRoot) {
+                        var tmp = location.hash.substring(2);
+                        if (tmp[0] === '/') {
+                            tmp = tmp.substring(1);
+                        }
+                        history.replaceState({}, '', href = location.protocol + '//' + location.host + location.pathname + tmp);
+                        triggerRoute = 1;
+                    } else if (utils.equalsIgnoreSlash(locPath, urlRoot)) {
                         // put hash to path
-                        history.replaceState({}, '', utils.getFullPath(hash, urlRoot));
+                        history.replaceState({}, '', href = utils.getFullPath(hash, urlRoot));
                         triggerRoute = 1;
                     } else {
-                        S.error('router: location path must be same with urlRoot!');
+                        Logger.error('router: location path must be same with urlRoot!');
                     }
                 }
             } else if (!utils.equalsIgnoreSlash(locPath, urlRoot)) {
@@ -401,6 +418,8 @@ KISSY.add('router', [
                 useHash = true;
             }
         }    // prevent hashChange trigger on start
+             // prevent hashChange trigger on start
+        // prevent hashChange trigger on start
         // prevent hashChange trigger on start
         setTimeout(function () {
             var needReplaceHistory = supportHistoryPushState;
@@ -410,14 +429,18 @@ KISSY.add('router', [
             } else
                 // html5 triggerRoute is leaved to user decision
                 // if provide no #! hash
+                // html5 triggerRoute is leaved to user decision
+                // if provide no #! hash
                 {
                     DomEvent.on(win, 'hashchange', onHashChange);    // hash-based browser is forced to trigger route
+                                                                     // hash-based browser is forced to trigger route
+                    // hash-based browser is forced to trigger route
                     // hash-based browser is forced to trigger route
                     triggerRoute = 1;
                 }
             if (useHash) {
                 if (!getUrlForRouter()) {
-                    exports.navigate('/', { replace: 1 });
+                    exports.navigate('/', { replace: true });
                     triggerRoute = 0;
                     needReplaceHistory = false;
                 } else if (!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId) {
@@ -433,6 +456,12 @@ KISSY.add('router', [
             }    // check initial hash on start
                  // in case server does not render initial state correctly
                  // when monitor hashchange ,client must be responsible for dispatching and rendering.
+                 // check initial hash on start
+                 // in case server does not render initial state correctly
+                 // when monitor hashchange ,client must be responsible for dispatching and rendering.
+            // check initial hash on start
+            // in case server does not render initial state correctly
+            // when monitor hashchange ,client must be responsible for dispatching and rendering.
             // check initial hash on start
             // in case server does not render initial state correctly
             // when monitor hashchange ,client must be responsible for dispatching and rendering.
@@ -455,11 +484,12 @@ KISSY.add('router', [
     };
 });
 
-/**
+
+KISSY.add('router/utils', ['event/dom'], function (S, require, exports, module) {
+    /**
  * utils for router
  * @author yiminghe@gmail.com
  */
-KISSY.add('router/utils', ['event/dom'], function (S, require) {
     var utils;
     var DomEvent = require('event/dom');
     function removeVid(str) {
@@ -538,26 +568,26 @@ KISSY.add('router/utils', ['event/dom'], function (S, require) {
         },
         getVidFromHash: getVidFromHash
     };
-    return utils;
+    module.exports = utils;
 });
 
-/**
+KISSY.add('router/route', ['util'], function (S, require, exports, module) {
+    /**
  * Router data structure
  * @author yiminghe@gmail.com
  */
-KISSY.add('router/route', ['util'], function (S, require) {
     var util = require('util');    /*
-     transform route declaration to router reg
-     @param str
-     /search/:q
-     /user/*path
-     */
+ transform route declaration to router reg
+ @param str
+ /search/:q
+ /user/*path
+ */
     /*
-     transform route declaration to router reg
-     @param str
-     /search/:q
-     /user/*path
-     */
+ transform route declaration to router reg
+ @param str
+ /search/:q
+ /user/*path
+ */
     function pathRegexp(path, keys, strict, sensitive) {
         if (util.isArray(path)) {
             path = '(' + path.join('|') + ')';
@@ -610,14 +640,14 @@ KISSY.add('router/route', ['util'], function (S, require) {
             }
         }
     };
-    return Route;
+    module.exports = Route;
 });
 
-/**
+KISSY.add('router/request', [], function (S, require, exports, module) {
+    /**
  * request data structure. instance passed to router callbacks
  * @author yiminghe@gmail.com
  */
-KISSY.add('router/request', [], function () {
     function Request(data) {
         for (var d in data) {
             this[d] = data[d];
@@ -632,6 +662,6 @@ KISSY.add('router/request', [], function () {
             return self.query[name];
         }
     };
-    return Request;
+    module.exports = Request;
 });
 

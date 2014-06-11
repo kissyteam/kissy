@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 27 14:29
+build time: Jun 11 20:56
 */
 /*
 combined modules:
@@ -18,11 +18,6 @@ io/form
 io/iframe-transport
 io/methods
 */
-/**
- * @ignore
- * io shortcut
- * @author yiminghe@gmail.com
- */
 KISSY.add('io', [
     'io/form-serializer',
     'io/base',
@@ -33,7 +28,12 @@ KISSY.add('io', [
     'io/form',
     'io/iframe-transport',
     'io/methods'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * io shortcut
+ * @author yiminghe@gmail.com
+ */
     var serializer = require('io/form-serializer'), IO = require('io/base');
     var util = require('util');
     require('io/xhr-transport');
@@ -61,40 +61,40 @@ KISSY.add('io', [
     util.mix(IO, {
         serialize: serializer.serialize,
         /**
-         * perform a get request
-         * @method
-         * @param {String} url request destination
-         * @param {Object} [data] name-value object associated with this request
-         * @param {Function} [callback] success callback when this request is done
-         * @param callback.data returned from this request with type specified by dataType
-         * @param {String} callback.status status of this request with type String
-         * @param {KISSY.IO} callback.io io object of this request
-         * @param {String} [dataType] the type of data returns from this request
-         * ('xml' or 'json' or 'text')
-         * @return {KISSY.IO}
-         * @member KISSY.IO
-         * @static
-         */
+     * perform a get request
+     * @method
+     * @param {String} url request destination
+     * @param {Object} [data] name-value object associated with this request
+     * @param {Function} [callback] success callback when this request is done
+     * @param callback.data returned from this request with type specified by dataType
+     * @param {String} callback.status status of this request with type String
+     * @param {KISSY.IO} callback.io io object of this request
+     * @param {String} [dataType] the type of data returns from this request
+     * ('xml' or 'json' or 'text')
+     * @return {KISSY.IO}
+     * @member KISSY.IO
+     * @static
+     */
         get: get,
         /**
-         * preform a post request
-         * @param {String} url request destination
-         * @param {Object} [data] name-value object associated with this request
-         * @param {Function} [callback] success callback when this request is done.
-         * @param callback.data returned from this request with type specified by dataType
-         * @param {String} callback.status status of this request with type String
-         * @param {KISSY.IO} callback.io io object of this request
-         * @param {String} [dataType] the type of data returns from this request
-         * ('xml' or 'json' or 'text')
-         * @return {KISSY.IO}
-         * @member KISSY.IO
-         * @static
-         */
+     * preform a post request
+     * @param {String} url request destination
+     * @param {Object} [data] name-value object associated with this request
+     * @param {Function} [callback] success callback when this request is done.
+     * @param callback.data returned from this request with type specified by dataType
+     * @param {String} callback.status status of this request with type String
+     * @param {KISSY.IO} callback.io io object of this request
+     * @param {String} [dataType] the type of data returns from this request
+     * ('xml' or 'json' or 'text')
+     * @return {KISSY.IO}
+     * @member KISSY.IO
+     * @static
+     */
         post: function (url, data, callback, dataType) {
             if (typeof data === 'function') {
                 dataType = /**
-                 @type String
-                 @ignore*/
+             @type String
+             @ignore*/
                 callback;
                 callback = data;
                 data = undefined;
@@ -102,17 +102,17 @@ KISSY.add('io', [
             return get(url, data, callback, dataType, 'post');
         },
         /**
-         * preform a jsonp request
-         * @param {String} url request destination
-         * @param {Object} [data] name-value object associated with this request
-         * @param {Function} [callback] success callback when this request is done.
-         * @param callback.data returned from this request with type specified by dataType
-         * @param {String} callback.status status of this request with type String
-         * @param {KISSY.IO} callback.io io object of this request
-         * @return {KISSY.IO}
-         * @member KISSY.IO
-         * @static
-         */
+     * preform a jsonp request
+     * @param {String} url request destination
+     * @param {Object} [data] name-value object associated with this request
+     * @param {Function} [callback] success callback when this request is done.
+     * @param callback.data returned from this request with type specified by dataType
+     * @param {String} callback.status status of this request with type String
+     * @param {KISSY.IO} callback.io io object of this request
+     * @return {KISSY.IO}
+     * @member KISSY.IO
+     * @static
+     */
         jsonp: function (url, data, callback) {
             if (typeof data === 'function') {
                 callback = data;
@@ -123,22 +123,22 @@ KISSY.add('io', [
         // 和 S.getScript 保持一致
         // 更好的 getScript 可以用
         /*
-         IO({
-         dataType:'script'
-         });
-         */
-        getScript: S.getScript,
+     IO({
+     dataType:'script'
+     });
+     */
+        getScript: require.load,
         /**
-         * perform a get request to fetch json data from server
-         * @param {String} url request destination
-         * @param {Object} [data] name-value object associated with this request
-         * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
-         * @param {String} callback.status status of this request with type String
-         * @param {KISSY.IO} callback.io io object of this request
-         * @return {KISSY.IO}
-         * @member KISSY.IO
-         * @static
-         */
+     * perform a get request to fetch json data from server
+     * @param {String} url request destination
+     * @param {Object} [data] name-value object associated with this request
+     * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+     * @param {String} callback.status status of this request with type String
+     * @param {KISSY.IO} callback.io io object of this request
+     * @return {KISSY.IO}
+     * @member KISSY.IO
+     * @static
+     */
         getJSON: function (url, data, callback) {
             if (typeof data === 'function') {
                 callback = data;
@@ -147,25 +147,25 @@ KISSY.add('io', [
             return get(url, data, callback, 'json');
         },
         /**
-         * submit form without page refresh
-         * @param {String} url request destination
-         * @param {HTMLElement|KISSY.Node} form element tobe submited
-         * @param {Object} [data] name-value object associated with this request
-         * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
-         * @param {String} callback.status status of this request with type String
-         * @param {KISSY.IO} callback.io io object of this request
-         * @param {String} [dataType] the type of data returns from this request
-         * ('xml' or 'json' or 'text')
-         * @return {KISSY.IO}
-         * @member KISSY.IO
-         * @static
-         */
+     * submit form without page refresh
+     * @param {String} url request destination
+     * @param {HTMLElement|KISSY.Node} form element tobe submited
+     * @param {Object} [data] name-value object associated with this request
+     * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+     * @param {String} callback.status status of this request with type String
+     * @param {KISSY.IO} callback.io io object of this request
+     * @param {String} [dataType] the type of data returns from this request
+     * ('xml' or 'json' or 'text')
+     * @return {KISSY.IO}
+     * @member KISSY.IO
+     * @static
+     */
         upload: function (url, form, data, callback, dataType) {
             if (typeof data === 'function') {
                 dataType = /**
-                 @type String
-                 @ignore
-                 */
+             @type String
+             @ignore
+             */
                 callback;
                 callback = data;
                 data = undefined;
@@ -179,39 +179,39 @@ KISSY.add('io', [
                 success: callback
             });
         }
-    });    // bad compatibility
-    // bad compatibility
-    S.IO = IO;
-    return IO;
+    });
+    module.exports = IO;
 });
-/**
+KISSY.add('io/form-serializer', [
+    'util',
+    'dom',
+    'querystring'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * form data  serialization util
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form-serializer', [
-    'util',
-    'dom'
-], function (S, require) {
     var util = require('util');
     var Dom = require('dom');
+    var querystring = require('querystring');
     var rselectTextarea = /^(?:select|textarea)/i, rCRLF = /\r?\n/g, FormSerializer, rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
     function normalizeCRLF(v) {
         return v.replace(rCRLF, '\r\n');
     }
     FormSerializer = {
         /**
-         * form serialization
-         * @method
-         * @param {HTMLElement[]|HTMLElement|KISSY.Node} forms form elements
-         * @return {String} serialized string represent form elements
-         * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
-         * @member KISSY.IO
-         * @static
-         */
+     * form serialization
+     * @method
+     * @param {HTMLElement[]|HTMLElement|KISSY.Node} forms form elements
+     * @return {String} serialized string represent form elements
+     * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
+     * @member KISSY.IO
+     * @static
+     */
         serialize: function (forms, serializeArray) {
             // 名值键值对序列化,数组元素名字前不加 []
-            return util.param(FormSerializer.getFormData(forms), undefined, undefined, serializeArray || false);
+            return querystring.stringify(FormSerializer.getFormData(forms), undefined, undefined, serializeArray || false);
         },
         getFormData: function (forms) {
             var elements = [], data = {};
@@ -267,30 +267,35 @@ KISSY.add('io/form-serializer', [
         }
         return ret;
     }
-    return FormSerializer;
+    module.exports = FormSerializer;
 });
 
 
-/**
+
+KISSY.add('io/base', [
+    'util',
+    'querystring',
+    'logger',
+    'event/custom',
+    'promise',
+    'url'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', [
-    'util',
-    'event/custom',
-    'promise',
-    'uri'
-], function (S, require) {
     var util = require('util');
-    var CustomEvent = require('event/custom'), Promise = require('promise');
-    var Uri = require('uri');
-    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/, rspace = /\s+/, mirror = function (s) {
+    var querystring = require('querystring');
+    var Logger = require('logger');
+    var logger = Logger.getLogger();    /*global CustomEvent:true*/
+    /*global CustomEvent:true*/
+    var CustomEvent = require('event/custom');
+    var Promise = require('promise');
+    var url = require('url');
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/, rspace = /\s+/, mirror = function (s) {
             return s;
-        }, rnoContent = /^(?:GET|HEAD)$/, win = S.Env.host, location = win.location || {}, simulatedLocation = /**
-         @type KISSY.Uri
-         @ignore*/
-        new Uri(location.href), isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()), transports = {}, defaultConfig = {
+        }, rnoContent = /^(?:GET|HEAD)$/, locationHref = location.href, locationUrl = url.parse(locationHref), isLocal = rlocalProtocol.test(locationUrl.protocol), transports = {}, defaultConfig = {
             type: 'GET',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             async: true,
@@ -326,17 +331,18 @@ KISSY.add('io/base', [
         c = util.mix(util.clone(defaultConfig), c, { deep: true });
         c.context = context || c;
         var data, uri, type = c.type, dataType = c.dataType;
-        uri = c.uri = simulatedLocation.resolve(c.url);    // see method _getUrlForSend
+        uri = c.uri = url.parse(url.resolve(locationHref, c.url), true);
+        uri.search = null;    // see method _getUrlForSend
         // see method _getUrlForSend
-        c.uri.setQuery('');
+        uri.query = uri.query || {};
         if (!('crossDomain' in c)) {
-            c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
+            c.crossDomain = uri.protocol === locationUrl.prototype && uri.host === locationUrl.host;
         }
         type = c.type = type.toUpperCase();
         c.hasContent = !rnoContent.test(type);
         if (c.processData && (data = c.data) && typeof data !== 'string') {
             // normalize to string
-            c.data = util.param(data, undefined, undefined, c.serializeArray);
+            c.data = querystring.stringify(data, undefined, undefined, c.serializeArray);
         }    // 数据类型处理链，一步步将前面的数据类型转化成最后一个
         // 数据类型处理链，一步步将前面的数据类型转化成最后一个
         dataType = c.dataType = util.trim(dataType || '*').split(rspace);
@@ -348,357 +354,358 @@ KISSY.add('io/base', [
         }
         if (!c.hasContent) {
             if (c.data) {
-                uri.query.add(util.unparam(c.data));
+                querystring.parse(c.data);
+                util.mix(uri.query, querystring.parse(c.data));
             }
             if (c.cache === false) {
-                uri.query.set('_ksTS', util.now() + '_' + util.guid());
+                uri.query._ksTS = util.now() + '_' + util.guid();
             }
         }
         return c;
     }    /**
-     * Return a io object and send request by config.
-     *
-     * @class KISSY.IO
-     * @extends KISSY.Promise
-     *
-     * @cfg {String} url
-     * request destination
-     *
-     * @cfg {String} type request type.
-     * eg: 'get','post'
-     * Default to: 'get'
-     *
-     * @cfg {String} contentType
-     * Default to: 'application/x-www-form-urlencoded; charset=UTF-8'
-     * Data will always be transmitted to the server using UTF-8 charset
-     *
-     * @cfg {Object} accepts
-     * Default to: depends on DataType.
-     * The content type sent in request header that tells the server
-     * what kind of response it will accept in return.
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
-     *
-     * @cfg {Boolean} async
-     * Default to: true
-     * whether request is sent asynchronously
-     *
-     * @cfg {Boolean} cache
-     * Default to: true ,false for dataType 'script' and 'jsonp'
-     * if set false,will append _ksTs=Date.now() to url automatically
-     *
-     * @cfg {Object} contents
-     * a name-regexp map to determine request data's dataType
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
-     *
-     * @cfg {Object} context
-     * specify the context of this request 's callback (success,error,complete)
-     *
-     * @cfg {Object} converters
-     * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
-     * specified how to transform one dataType to another dataType
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
-     *
-     * @cfg {Boolean} crossDomain
-     * Default to: false for same-domain request,true for cross-domain request
-     * if server-side jsonp redirect to another domain, you should set this to true.
-     * if you want use script for jsonp for same domain request, you should set this to true.
-     *
-     * @cfg {Object} data
-     * Data sent to server.if processData is true,data will be serialized to String type.
-     * if value if an Array, serialization will be based on serializeArray.
-     *
-     * @cfg {String} dataType
-     * return data as a specified type
-     * Default to: Based on server contentType header
-     * 'xml' : a XML document
-     * 'text'/'html': raw server data
-     * 'script': evaluate the return data as script
-     * 'json': parse the return data as json and return the result as final data
-     * 'jsonp': load json data via jsonp
-     *
-     * @cfg {Object} headers
-     * additional name-value header to send along with this request.
-     *
-     * @cfg {String} jsonp
-     * Default to: 'callback'
-     * Override the callback function name in a jsonp request. eg:
-     * set 'callback2' , then jsonp url will append  'callback2=?'.
-     *
-     * @cfg {String} jsonpCallback
-     * Specify the callback function name for a jsonp request.
-     * set this value will replace the auto generated function name.
-     * eg:
-     * set 'customCall' , then jsonp url will append 'callback=customCall'
-     *
-     * @cfg {String} mimeType
-     * override xhr 's mime type
-     *
-     * @cfg {String} ifModified
-     * whether enter if modified mode.
-     * Defaults to false.
-     *
-     * @cfg {Boolean} processData
-     * Default to: true
-     * whether data will be serialized as String
-     *
-     * @cfg {String} scriptCharset
-     * only for dataType 'jsonp' and 'script' and 'get' type.
-     * force the script to certain charset.
-     *
-     * @cfg {Function} beforeSend
-     * beforeSend(io,config)
-     * callback function called before the request is sent.this function has 2 arguments
-     *
-     * 1. current KISSY io object
-     *
-     * 2. current io config
-     *
-     * note: can be used for add progress event listener for native xhr's upload attribute
-     * see <a href='http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress'>XMLHttpRequest2</a>
-     *
-     * @cfg {Function} success
-     * success(data,textStatus,xhr)
-     * callback function called if the request succeeds.this function has 3 arguments
-     *
-     * 1. data returned from this request with type specified by dataType
-     *
-     * 2. status of this request with type String
-     *
-     * 3. io object of this request , for details {@link KISSY.IO}
-     *
-     * @cfg {Function} error
-     * success(data,textStatus,xhr)
-     * callback function called if the request occurs error.this function has 3 arguments
-     *
-     * 1. null value
-     *
-     * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
-     *
-     * 3. io object of this request , for details {@link KISSY.IO}
-     *
-     * @cfg {Function} complete
-     * success(data,textStatus,xhr)
-     * callback function called if the request finished(success or error).this function has 3 arguments
-     *
-     * 1. null value if error occurs or data returned from server
-     *
-     * 2. status of this request with type String,such as success:'ok',
-     * error:'timeout','Not Found','parsererror:...'
-     *
-     * 3. io object of this request , for details {@link KISSY.IO}
-     *
-     * @cfg {Number} timeout
-     * Set a timeout(in seconds) for this request.if will call error when timeout
-     *
-     * @cfg {Boolean} serializeArray
-     * whether add [] to data's name when data's value is array in serialization
-     *
-     * @cfg {Object} xhrFields
-     * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
-     * note: withCredentials defaults to true.
-     *
-     * @cfg {String} username
-     * a username tobe used in response to HTTP access authentication request
-     *
-     * @cfg {String} password
-     * a password tobe used in response to HTTP access authentication request
-     *
-     * @cfg {Object} xdr
-     * cross domain request config object, contains sub config:
-     *
-     * xdr.src
-     * Default to: KISSY 's flash url
-     * flash sender url
-     *
-     * xdr.use
-     * if set to 'use', it will always use flash for cross domain request even in chrome/firefox
-     *
-     * xdr.subDomain
-     * cross sub domain request config object
-     *
-     * xdr.subDomain.proxy
-     * proxy page, eg:
-     * a.t.cn/a.htm send request to b.t.cn/b.htm:
-     *
-     * 1. a.htm set <code> document.domain='t.cn' </code>
-     *
-     * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
-     *
-     * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
-     *
-     */
+ * Return a io object and send request by config.
+ *
+ * @class KISSY.IO
+ * @extends KISSY.Promise
+ *
+ * @cfg {String} url
+ * request destination
+ *
+ * @cfg {String} type request type.
+ * eg: 'get','post'
+ * Default to: 'get'
+ *
+ * @cfg {String} contentType
+ * Default to: 'application/x-www-form-urlencoded; charset=UTF-8'
+ * Data will always be transmitted to the server using UTF-8 charset
+ *
+ * @cfg {Object} accepts
+ * Default to: depends on DataType.
+ * The content type sent in request header that tells the server
+ * what kind of response it will accept in return.
+ * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+ *
+ * @cfg {Boolean} async
+ * Default to: true
+ * whether request is sent asynchronously
+ *
+ * @cfg {Boolean} cache
+ * Default to: true ,false for dataType 'script' and 'jsonp'
+ * if set false,will append _ksTs=Date.now() to url automatically
+ *
+ * @cfg {Object} contents
+ * a name-regexp map to determine request data's dataType
+ * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+ *
+ * @cfg {Object} context
+ * specify the context of this request 's callback (success,error,complete)
+ *
+ * @cfg {Object} converters
+ * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
+ * specified how to transform one dataType to another dataType
+ * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+ *
+ * @cfg {Boolean} crossDomain
+ * Default to: false for same-domain request,true for cross-domain request
+ * if server-side jsonp redirect to another domain, you should set this to true.
+ * if you want use script for jsonp for same domain request, you should set this to true.
+ *
+ * @cfg {Object} data
+ * Data sent to server.if processData is true,data will be serialized to String type.
+ * if value if an Array, serialization will be based on serializeArray.
+ *
+ * @cfg {String} dataType
+ * return data as a specified type
+ * Default to: Based on server contentType header
+ * 'xml' : a XML document
+ * 'text'/'html': raw server data
+ * 'script': evaluate the return data as script
+ * 'json': parse the return data as json and return the result as final data
+ * 'jsonp': load json data via jsonp
+ *
+ * @cfg {Object} headers
+ * additional name-value header to send along with this request.
+ *
+ * @cfg {String} jsonp
+ * Default to: 'callback'
+ * Override the callback function name in a jsonp request. eg:
+ * set 'callback2' , then jsonp url will append  'callback2=?'.
+ *
+ * @cfg {String} jsonpCallback
+ * Specify the callback function name for a jsonp request.
+ * set this value will replace the auto generated function name.
+ * eg:
+ * set 'customCall' , then jsonp url will append 'callback=customCall'
+ *
+ * @cfg {String} mimeType
+ * override xhr 's mime type
+ *
+ * @cfg {String} ifModified
+ * whether enter if modified mode.
+ * Defaults to false.
+ *
+ * @cfg {Boolean} processData
+ * Default to: true
+ * whether data will be serialized as String
+ *
+ * @cfg {String} scriptCharset
+ * only for dataType 'jsonp' and 'script' and 'get' type.
+ * force the script to certain charset.
+ *
+ * @cfg {Function} beforeSend
+ * beforeSend(io,config)
+ * callback function called before the request is sent.this function has 2 arguments
+ *
+ * 1. current KISSY io object
+ *
+ * 2. current io config
+ *
+ * note: can be used for add progress event listener for native xhr's upload attribute
+ * see <a href='http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress'>XMLHttpRequest2</a>
+ *
+ * @cfg {Function} success
+ * success(data,textStatus,xhr)
+ * callback function called if the request succeeds.this function has 3 arguments
+ *
+ * 1. data returned from this request with type specified by dataType
+ *
+ * 2. status of this request with type String
+ *
+ * 3. io object of this request , for details {@link KISSY.IO}
+ *
+ * @cfg {Function} error
+ * success(data,textStatus,xhr)
+ * callback function called if the request occurs error.this function has 3 arguments
+ *
+ * 1. null value
+ *
+ * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
+ *
+ * 3. io object of this request , for details {@link KISSY.IO}
+ *
+ * @cfg {Function} complete
+ * success(data,textStatus,xhr)
+ * callback function called if the request finished(success or error).this function has 3 arguments
+ *
+ * 1. null value if error occurs or data returned from server
+ *
+ * 2. status of this request with type String,such as success:'ok',
+ * error:'timeout','Not Found','parsererror:...'
+ *
+ * 3. io object of this request , for details {@link KISSY.IO}
+ *
+ * @cfg {Number} timeout
+ * Set a timeout(in seconds) for this request.if will call error when timeout
+ *
+ * @cfg {Boolean} serializeArray
+ * whether add [] to data's name when data's value is array in serialization
+ *
+ * @cfg {Object} xhrFields
+ * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+ * note: withCredentials defaults to true.
+ *
+ * @cfg {String} username
+ * a username tobe used in response to HTTP access authentication request
+ *
+ * @cfg {String} password
+ * a password tobe used in response to HTTP access authentication request
+ *
+ * @cfg {Object} xdr
+ * cross domain request config object, contains sub config:
+ *
+ * xdr.src
+ * Default to: KISSY 's flash url
+ * flash sender url
+ *
+ * xdr.use
+ * if set to 'use', it will always use flash for cross domain request even in chrome/firefox
+ *
+ * xdr.subDomain
+ * cross sub domain request config object
+ *
+ * xdr.subDomain.proxy
+ * proxy page, eg:
+ * a.t.cn/a.htm send request to b.t.cn/b.htm:
+ *
+ * 1. a.htm set <code> document.domain='t.cn' </code>
+ *
+ * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
+ *
+ * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
+ *
+ */
     /**
-     * Return a io object and send request by config.
-     *
-     * @class KISSY.IO
-     * @extends KISSY.Promise
-     *
-     * @cfg {String} url
-     * request destination
-     *
-     * @cfg {String} type request type.
-     * eg: 'get','post'
-     * Default to: 'get'
-     *
-     * @cfg {String} contentType
-     * Default to: 'application/x-www-form-urlencoded; charset=UTF-8'
-     * Data will always be transmitted to the server using UTF-8 charset
-     *
-     * @cfg {Object} accepts
-     * Default to: depends on DataType.
-     * The content type sent in request header that tells the server
-     * what kind of response it will accept in return.
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
-     *
-     * @cfg {Boolean} async
-     * Default to: true
-     * whether request is sent asynchronously
-     *
-     * @cfg {Boolean} cache
-     * Default to: true ,false for dataType 'script' and 'jsonp'
-     * if set false,will append _ksTs=Date.now() to url automatically
-     *
-     * @cfg {Object} contents
-     * a name-regexp map to determine request data's dataType
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
-     *
-     * @cfg {Object} context
-     * specify the context of this request 's callback (success,error,complete)
-     *
-     * @cfg {Object} converters
-     * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
-     * specified how to transform one dataType to another dataType
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
-     *
-     * @cfg {Boolean} crossDomain
-     * Default to: false for same-domain request,true for cross-domain request
-     * if server-side jsonp redirect to another domain, you should set this to true.
-     * if you want use script for jsonp for same domain request, you should set this to true.
-     *
-     * @cfg {Object} data
-     * Data sent to server.if processData is true,data will be serialized to String type.
-     * if value if an Array, serialization will be based on serializeArray.
-     *
-     * @cfg {String} dataType
-     * return data as a specified type
-     * Default to: Based on server contentType header
-     * 'xml' : a XML document
-     * 'text'/'html': raw server data
-     * 'script': evaluate the return data as script
-     * 'json': parse the return data as json and return the result as final data
-     * 'jsonp': load json data via jsonp
-     *
-     * @cfg {Object} headers
-     * additional name-value header to send along with this request.
-     *
-     * @cfg {String} jsonp
-     * Default to: 'callback'
-     * Override the callback function name in a jsonp request. eg:
-     * set 'callback2' , then jsonp url will append  'callback2=?'.
-     *
-     * @cfg {String} jsonpCallback
-     * Specify the callback function name for a jsonp request.
-     * set this value will replace the auto generated function name.
-     * eg:
-     * set 'customCall' , then jsonp url will append 'callback=customCall'
-     *
-     * @cfg {String} mimeType
-     * override xhr 's mime type
-     *
-     * @cfg {String} ifModified
-     * whether enter if modified mode.
-     * Defaults to false.
-     *
-     * @cfg {Boolean} processData
-     * Default to: true
-     * whether data will be serialized as String
-     *
-     * @cfg {String} scriptCharset
-     * only for dataType 'jsonp' and 'script' and 'get' type.
-     * force the script to certain charset.
-     *
-     * @cfg {Function} beforeSend
-     * beforeSend(io,config)
-     * callback function called before the request is sent.this function has 2 arguments
-     *
-     * 1. current KISSY io object
-     *
-     * 2. current io config
-     *
-     * note: can be used for add progress event listener for native xhr's upload attribute
-     * see <a href='http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress'>XMLHttpRequest2</a>
-     *
-     * @cfg {Function} success
-     * success(data,textStatus,xhr)
-     * callback function called if the request succeeds.this function has 3 arguments
-     *
-     * 1. data returned from this request with type specified by dataType
-     *
-     * 2. status of this request with type String
-     *
-     * 3. io object of this request , for details {@link KISSY.IO}
-     *
-     * @cfg {Function} error
-     * success(data,textStatus,xhr)
-     * callback function called if the request occurs error.this function has 3 arguments
-     *
-     * 1. null value
-     *
-     * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
-     *
-     * 3. io object of this request , for details {@link KISSY.IO}
-     *
-     * @cfg {Function} complete
-     * success(data,textStatus,xhr)
-     * callback function called if the request finished(success or error).this function has 3 arguments
-     *
-     * 1. null value if error occurs or data returned from server
-     *
-     * 2. status of this request with type String,such as success:'ok',
-     * error:'timeout','Not Found','parsererror:...'
-     *
-     * 3. io object of this request , for details {@link KISSY.IO}
-     *
-     * @cfg {Number} timeout
-     * Set a timeout(in seconds) for this request.if will call error when timeout
-     *
-     * @cfg {Boolean} serializeArray
-     * whether add [] to data's name when data's value is array in serialization
-     *
-     * @cfg {Object} xhrFields
-     * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
-     * note: withCredentials defaults to true.
-     *
-     * @cfg {String} username
-     * a username tobe used in response to HTTP access authentication request
-     *
-     * @cfg {String} password
-     * a password tobe used in response to HTTP access authentication request
-     *
-     * @cfg {Object} xdr
-     * cross domain request config object, contains sub config:
-     *
-     * xdr.src
-     * Default to: KISSY 's flash url
-     * flash sender url
-     *
-     * xdr.use
-     * if set to 'use', it will always use flash for cross domain request even in chrome/firefox
-     *
-     * xdr.subDomain
-     * cross sub domain request config object
-     *
-     * xdr.subDomain.proxy
-     * proxy page, eg:
-     * a.t.cn/a.htm send request to b.t.cn/b.htm:
-     *
-     * 1. a.htm set <code> document.domain='t.cn' </code>
-     *
-     * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
-     *
-     * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
-     *
-     */
+ * Return a io object and send request by config.
+ *
+ * @class KISSY.IO
+ * @extends KISSY.Promise
+ *
+ * @cfg {String} url
+ * request destination
+ *
+ * @cfg {String} type request type.
+ * eg: 'get','post'
+ * Default to: 'get'
+ *
+ * @cfg {String} contentType
+ * Default to: 'application/x-www-form-urlencoded; charset=UTF-8'
+ * Data will always be transmitted to the server using UTF-8 charset
+ *
+ * @cfg {Object} accepts
+ * Default to: depends on DataType.
+ * The content type sent in request header that tells the server
+ * what kind of response it will accept in return.
+ * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+ *
+ * @cfg {Boolean} async
+ * Default to: true
+ * whether request is sent asynchronously
+ *
+ * @cfg {Boolean} cache
+ * Default to: true ,false for dataType 'script' and 'jsonp'
+ * if set false,will append _ksTs=Date.now() to url automatically
+ *
+ * @cfg {Object} contents
+ * a name-regexp map to determine request data's dataType
+ * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+ *
+ * @cfg {Object} context
+ * specify the context of this request 's callback (success,error,complete)
+ *
+ * @cfg {Object} converters
+ * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
+ * specified how to transform one dataType to another dataType
+ * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+ *
+ * @cfg {Boolean} crossDomain
+ * Default to: false for same-domain request,true for cross-domain request
+ * if server-side jsonp redirect to another domain, you should set this to true.
+ * if you want use script for jsonp for same domain request, you should set this to true.
+ *
+ * @cfg {Object} data
+ * Data sent to server.if processData is true,data will be serialized to String type.
+ * if value if an Array, serialization will be based on serializeArray.
+ *
+ * @cfg {String} dataType
+ * return data as a specified type
+ * Default to: Based on server contentType header
+ * 'xml' : a XML document
+ * 'text'/'html': raw server data
+ * 'script': evaluate the return data as script
+ * 'json': parse the return data as json and return the result as final data
+ * 'jsonp': load json data via jsonp
+ *
+ * @cfg {Object} headers
+ * additional name-value header to send along with this request.
+ *
+ * @cfg {String} jsonp
+ * Default to: 'callback'
+ * Override the callback function name in a jsonp request. eg:
+ * set 'callback2' , then jsonp url will append  'callback2=?'.
+ *
+ * @cfg {String} jsonpCallback
+ * Specify the callback function name for a jsonp request.
+ * set this value will replace the auto generated function name.
+ * eg:
+ * set 'customCall' , then jsonp url will append 'callback=customCall'
+ *
+ * @cfg {String} mimeType
+ * override xhr 's mime type
+ *
+ * @cfg {String} ifModified
+ * whether enter if modified mode.
+ * Defaults to false.
+ *
+ * @cfg {Boolean} processData
+ * Default to: true
+ * whether data will be serialized as String
+ *
+ * @cfg {String} scriptCharset
+ * only for dataType 'jsonp' and 'script' and 'get' type.
+ * force the script to certain charset.
+ *
+ * @cfg {Function} beforeSend
+ * beforeSend(io,config)
+ * callback function called before the request is sent.this function has 2 arguments
+ *
+ * 1. current KISSY io object
+ *
+ * 2. current io config
+ *
+ * note: can be used for add progress event listener for native xhr's upload attribute
+ * see <a href='http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress'>XMLHttpRequest2</a>
+ *
+ * @cfg {Function} success
+ * success(data,textStatus,xhr)
+ * callback function called if the request succeeds.this function has 3 arguments
+ *
+ * 1. data returned from this request with type specified by dataType
+ *
+ * 2. status of this request with type String
+ *
+ * 3. io object of this request , for details {@link KISSY.IO}
+ *
+ * @cfg {Function} error
+ * success(data,textStatus,xhr)
+ * callback function called if the request occurs error.this function has 3 arguments
+ *
+ * 1. null value
+ *
+ * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
+ *
+ * 3. io object of this request , for details {@link KISSY.IO}
+ *
+ * @cfg {Function} complete
+ * success(data,textStatus,xhr)
+ * callback function called if the request finished(success or error).this function has 3 arguments
+ *
+ * 1. null value if error occurs or data returned from server
+ *
+ * 2. status of this request with type String,such as success:'ok',
+ * error:'timeout','Not Found','parsererror:...'
+ *
+ * 3. io object of this request , for details {@link KISSY.IO}
+ *
+ * @cfg {Number} timeout
+ * Set a timeout(in seconds) for this request.if will call error when timeout
+ *
+ * @cfg {Boolean} serializeArray
+ * whether add [] to data's name when data's value is array in serialization
+ *
+ * @cfg {Object} xhrFields
+ * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+ * note: withCredentials defaults to true.
+ *
+ * @cfg {String} username
+ * a username tobe used in response to HTTP access authentication request
+ *
+ * @cfg {String} password
+ * a password tobe used in response to HTTP access authentication request
+ *
+ * @cfg {Object} xdr
+ * cross domain request config object, contains sub config:
+ *
+ * xdr.src
+ * Default to: KISSY 's flash url
+ * flash sender url
+ *
+ * xdr.use
+ * if set to 'use', it will always use flash for cross domain request even in chrome/firefox
+ *
+ * xdr.subDomain
+ * cross sub domain request config object
+ *
+ * xdr.subDomain.proxy
+ * proxy page, eg:
+ * a.t.cn/a.htm send request to b.t.cn/b.htm:
+ *
+ * 1. a.htm set <code> document.domain='t.cn' </code>
+ *
+ * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
+ *
+ * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
+ *
+ */
     function IO(c) {
         var self = this;
         if (!(self instanceof IO)) {
@@ -713,67 +720,67 @@ KISSY.add('io/base', [
             // 结构化数据，如 json
             responseData: null,
             /**
-             * config of current IO instance.
-             * @member KISSY.IO
-             * @property config
-             * @type Object
-             */
+         * config of current IO instance.
+         * @member KISSY.IO
+         * @property config
+         * @type Object
+         */
             config: c || {},
             timeoutTimer: null,
             /**
-             * String typed data returned from server
-             * @type String
-             */
+         * String typed data returned from server
+         * @type String
+         */
             responseText: null,
             /**
-             * xml typed data returned from server
-             * @type String
-             */
+         * xml typed data returned from server
+         * @type String
+         */
             responseXML: null,
             responseHeadersString: '',
             responseHeaders: null,
             requestHeaders: {},
             /**
-             * readyState of current request
-             * 0: initialized
-             * 1: send
-             * 4: completed
-             * @type Number
-             */
+         * readyState of current request
+         * 0: initialized
+         * 1: send
+         * 4: completed
+         * @type Number
+         */
             readyState: 0,
             state: 0,
             /**
-             * HTTP statusText of current request
-             * @type String
-             */
+         * HTTP statusText of current request
+         * @type String
+         */
             statusText: null,
             /**
-             * HTTP Status Code of current request
-             * eg:
-             * 200: ok
-             * 404: Not Found
-             * 500: Server Error
-             * @type String
-             */
+         * HTTP Status Code of current request
+         * eg:
+         * 200: ok
+         * 404: Not Found
+         * 500: Server Error
+         * @type String
+         */
             status: 0,
             transport: null
         });
         var TransportConstructor, transport;    /**
-         * fired before generating request object
-         * @event start
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
+     * fired before generating request object
+     * @event start
+     * @member KISSY.IO
+     * @static
+     * @param {KISSY.Event.CustomEvent.Object} e
+     * @param {KISSY.IO} e.io current io
+     */
         /**
-         * fired before generating request object
-         * @event start
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
+     * fired before generating request object
+     * @event start
+     * @member KISSY.IO
+     * @static
+     * @param {KISSY.Event.CustomEvent.Object} e
+     * @param {KISSY.IO} e.io current io
+     */
         IO.fire('start', {
             // 兼容
             ajaxConfig: c,
@@ -799,21 +806,21 @@ KISSY.add('io/base', [
             return self;
         }
         self.readyState = 1;    /**
-         * fired before sending request
-         * @event send
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
+     * fired before sending request
+     * @event send
+     * @member KISSY.IO
+     * @static
+     * @param {KISSY.Event.CustomEvent.Object} e
+     * @param {KISSY.IO} e.io current io
+     */
         /**
-         * fired before sending request
-         * @event send
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
+     * fired before sending request
+     * @event send
+     * @member KISSY.IO
+     * @static
+     * @param {KISSY.Event.CustomEvent.Object} e
+     * @param {KISSY.IO} e.io current io
+     */
         IO.fire('send', {
             // 兼容
             ajaxConfig: c,
@@ -830,7 +837,7 @@ KISSY.add('io/base', [
             self.state = 1;
             transport.send();
         } catch (e) {
-            S.log(e.stack || e, 'error');
+            logger.log(e.stack || e, 'error');
             if ('@DEBUG@') {
                 setTimeout(function () {
                     throw e;
@@ -847,53 +854,55 @@ KISSY.add('io/base', [
     util.mix(IO, CustomEvent.Target);
     util.mix(IO, {
         /**
-         * whether current application is a local application
-         * (protocal is file://,widget://,about://)
-         * @type {Boolean}
-         * @member KISSY.IO
-         * @static
-         */
+     * whether current application is a local application
+     * (protocal is file://,widget://,about://)
+     * @type {Boolean}
+     * @member KISSY.IO
+     * @static
+     */
         isLocal: isLocal,
         /**
-         * name-value object that set default config value for io class
-         * @param {Object} setting
-         * @member KISSY.IO
-         * @static
-         */
+     * name-value object that set default config value for io class
+     * @param {Object} setting
+     * @member KISSY.IO
+     * @static
+     */
         setupConfig: function (setting) {
             util.mix(defaultConfig, setting, { deep: true });
         },
         /**
-         * @private
-         * @member KISSY.IO
-         * @static
-         */
+     * @private
+     * @member KISSY.IO
+     * @static
+     */
         setupTransport: function (name, fn) {
             transports[name] = fn;
         },
         /**
-         * @private
-         * @member KISSY.IO
-         * @static
-         */
+     * @private
+     * @member KISSY.IO
+     * @static
+     */
         getTransport: function (name) {
             return transports[name];
         },
         /**
-         * get default config value for io request
-         * @return {Object}
-         * @member KISSY.IO
-         * @static
-         */
+     * get default config value for io request
+     * @return {Object}
+     * @member KISSY.IO
+     * @static
+     */
         getConfig: function () {
             return defaultConfig;
         }
     });
-    return IO;
-});    /*
+    module.exports = IO;    /*
  // !TODO
  // 去除 event/custom 依赖，用户不载入就不能监听
  // 载入后通过 custom.on(IO,type) 监听
+
+ 2014-06-09 yiminghe@gmail.com
+ - refactor by url module
 
  2012-08-16
  - transform IO to class, remove XhrObject class.
@@ -911,57 +920,61 @@ KISSY.add('io/base', [
  2011 yiminghe@gmail.com
  - 借鉴 jquery，优化减少闭包使用
  */
+});
 
 
 
-/**
- * @ignore
- * io xhr transport class, route subdomain, xdr
- * @author yiminghe@gmail.com
- */
+
 KISSY.add('io/xhr-transport', [
     'util',
     './base',
     './xhr-transport-base',
     './xdr-flash-transport',
-    './sub-domain-transport'
-], function (S, require) {
+    './sub-domain-transport',
+    'logger'
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * io xhr transport class, route subdomain, xdr
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var IO = require('./base'), XhrTransportBase = require('./xhr-transport-base'), XdrFlashTransport = require('./xdr-flash-transport'), SubDomainTransport = require('./sub-domain-transport');
-    var logger = S.getLogger('s/io');
-    var win = S.Env.host, doc = win.document, XDomainRequest_ = XhrTransportBase.XDomainRequest_;    // express: subdomain offset
+    var Logger = require('logger');
+    var logger = Logger.getLogger('s/io');
+    var doc = document, XDomainRequest_ = XhrTransportBase.XDomainRequest_;    // express: subdomain offset
     // express: subdomain offset
     function isSubDomain(hostname) {
         // phonegap does not have doc.domain
         return doc.domain && util.endsWith(hostname, doc.domain);
     }    /**
-     * @class
-     * @ignore
-     */
+ * @class
+ * @ignore
+ */
     /**
-     * @class
-     * @ignore
-     */
+ * @class
+ * @ignore
+ */
     function XhrTransport(io) {
         var c = io.config, crossDomain = c.crossDomain, self = this, xhr, xdrCfg = c.xdr || {}, subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
         self.io = io;
         if (crossDomain && !XhrTransportBase.supportCORS) {
             // 跨子域
-            if (isSubDomain(c.uri.getHostname())) {
+            if (isSubDomain(c.uri.hostname)) {
                 // force to not use sub domain transport
                 if (subDomain.proxy !== false) {
                     return new SubDomainTransport(io);
                 }
             }    /*
-             ie>7 通过配置 use='flash' 强制使用 flash xdr
-             使用 withCredentials 检测是否支持 CORS
-             http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
-             */
+         ie>7 通过配置 use='flash' 强制使用 flash xdr
+         使用 withCredentials 检测是否支持 CORS
+         http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+         */
             /*
-             ie>7 通过配置 use='flash' 强制使用 flash xdr
-             使用 withCredentials 检测是否支持 CORS
-             http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
-             */
+         ie>7 通过配置 use='flash' 强制使用 flash xdr
+         使用 withCredentials 检测是否支持 CORS
+         http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+         */
             if (String(xdrCfg.use) === 'flash' || !XDomainRequest_) {
                 return new XdrFlashTransport(io);
             }
@@ -976,9 +989,7 @@ KISSY.add('io/xhr-transport', [
             this.sendInternal();
         }
     });
-    IO.setupTransport('*', XhrTransport);
-    return IO;
-});    /*
+    IO.setupTransport('*', XhrTransport);    /*
  2012-11-28 note ie port problem:
  - ie 的 xhr 可以跨端口发请求，例如 localhost:8888 发请求到 localhost:9999
  - ie iframe 间访问不设置 document.domain 完全不考虑 port！
@@ -986,25 +997,29 @@ KISSY.add('io/xhr-transport', [
 
  CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-io-with-cross-origin-resource-sharing/
  */
-/**
+});
+KISSY.add('io/xhr-transport-base', [
+    'util',
+    './base',
+    'ua',
+    'logger'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport-base', [
-    'util',
-    './base',
-    'ua'
-], function (S, require) {
     var util = require('util');
     var IO = require('./base');
     var UA = require('ua');
-    var logger = S.getLogger('s/io');
-    var OK_CODE = 200, win = S.Env.host,
+    var Logger = require('logger');
+    var logger = Logger.getLogger('s/io');
+    var OK_CODE = 200, win = window,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         XDomainRequest_ = UA.ieMode > 7 && win.XDomainRequest, NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = { proto: {} }, lastModifiedCached = {}, eTagCached = {};
     IO.__lastModifiedCached = lastModifiedCached;
     IO.__eTagCached = eTagCached;
+    var supportCORS = XhrTransportBase.supportCORS = 'withCredentials' in XhrTransportBase.nativeXhr();
     function createStandardXHR(_, refWin) {
         try {
             return new (refWin || win).XMLHttpRequest();
@@ -1028,7 +1043,6 @@ KISSY.add('io/xhr-transport-base', [
         return !IO.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
     XhrTransportBase.XDomainRequest_ = XDomainRequest_;
-    var supportCORS = XhrTransportBase.supportCORS = 'withCredentials' in XhrTransportBase.nativeXhr();
     function isInstanceOfXDomainRequest(xhr) {
         return XDomainRequest_ && xhr instanceof XDomainRequest_;
     }
@@ -1231,7 +1245,7 @@ KISSY.add('io/xhr-transport-base', [
                     }
                 }
             } catch (e) {
-                S.log(e.stack || e, 'error');
+                Logger.log(e.stack || e, 'error');
                 if ('@DEBUG@') {
                     setTimeout(function () {
                         throw e;
@@ -1244,27 +1258,29 @@ KISSY.add('io/xhr-transport-base', [
             }
         }
     });
-    return XhrTransportBase;
+    module.exports = XhrTransportBase;
 });
 
-/**
+KISSY.add('io/xdr-flash-transport', [
+    'util',
+    './base',
+    'dom',
+    'logger'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xdr-flash-transport', [
-    'util',
-    './base',
-    'dom'
-], function (S, require) {
     var util = require('util');
     var IO = require('./base'), Dom = require('dom');
-    var logger = S.getLogger('s/io');
+    var Logger = require('logger');
+    var logger = Logger.getLogger('s/io');
     var
         // current running request instances
         maps = {}, ID = 'io_swf',
         // flash transporter
-        flash, doc = S.Env.host.document,
+        flash, doc = document,
         // whether create the flash transporter
         init = false;    // create the flash transporter
     // create the flash transporter
@@ -1286,7 +1302,7 @@ KISSY.add('io/xdr-flash-transport', [
         send: function () {
             var self = this, io = self.io, c = io.config, xdr = c.xdr || {};    // 不提供则使用 cdn 默认的 flash
             // 不提供则使用 cdn 默认的 flash
-            _swf(xdr.src || S.config('base') + 'io/assets/io.swf', 1, 1);    // 简便起见，用轮训
+            _swf(xdr.src || require.toUrl('../assets/io.swf'), 1, 1);    // 简便起见，用轮训
             // 简便起见，用轮训
             if (!flash) {
                 setTimeout(function () {
@@ -1351,39 +1367,41 @@ KISSY.add('io/xdr-flash-transport', [
     IO.xdrReady = function () {
         flash = doc.getElementById(ID);
     };    /*
-     when response is returned from server
-     @param e response status
-     @param o internal data
-     */
+ when response is returned from server
+ @param e response status
+ @param o internal data
+ */
     /*
-     when response is returned from server
-     @param e response status
-     @param o internal data
-     */
+ when response is returned from server
+ @param e response status
+ @param o internal data
+ */
     IO.xdrResponse = function (e, o) {
         var xhr = maps[o.uid];
         if (xhr) {
             xhr._xdrResponse(e, o);
         }
     };
-    return XdrFlashTransport;
+    module.exports = XdrFlashTransport;
 });
-/**
+KISSY.add('io/sub-domain-transport', [
+    'util',
+    'event/dom',
+    'url',
+    'dom',
+    './xhr-transport-base',
+    'logger'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/sub-domain-transport', [
-    'util',
-    'event/dom',
-    'uri',
-    'dom',
-    './xhr-transport-base'
-], function (S, require) {
     var util = require('util');
-    var Event = require('event/dom'), Uri = require('uri'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
-    var logger = S.getLogger('s/io');
-    var PROXY_PAGE = '/sub_domain_proxy.html', doc = S.Env.host.document,
+    var Event = require('event/dom'), url = require('url'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
+    var Logger = require('logger');
+    var logger = Logger.getLogger('s/io');
+    var PROXY_PAGE = '/sub_domain_proxy.html', doc = document,
         // hostname:{iframe: , ready:}
         iframeMap = {};
     function SubDomainTransport(io) {
@@ -1396,7 +1414,7 @@ KISSY.add('io/sub-domain-transport', [
         // get nativeXhr from iframe document
         // not from current document directly like XhrTransport
         send: function () {
-            var self = this, c = self.io.config, uri = c.uri, hostname = uri.getHostname(), iframe, iframeUri, iframeDesc = iframeMap[hostname];
+            var self = this, c = self.io.config, uri = c.uri, hostname = uri.hostname, iframe, iframeUri, iframeDesc = iframeMap[hostname];
             var proxy = PROXY_PAGE;
             if (c.xdr && c.xdr.subDomain && c.xdr.subDomain.proxy) {
                 proxy = c.xdr.subDomain.proxy;
@@ -1406,7 +1424,7 @@ KISSY.add('io/sub-domain-transport', [
                 if (self.nativeXhr) {
                     self.sendInternal();
                 } else {
-                    S.error('document.domain not set correctly!');
+                    Logger.error('document.domain not set correctly!');
                 }
                 return;
             }
@@ -1419,12 +1437,11 @@ KISSY.add('io/sub-domain-transport', [
                     top: '-9999px'
                 });
                 Dom.prepend(iframe, doc.body || doc.documentElement);
-                iframeUri = new Uri();
-                iframeUri.setScheme(uri.getScheme());
-                iframeUri.setPort(uri.getPort());
-                iframeUri.setHostname(hostname);
-                iframeUri.setPath(proxy);
-                iframe.src = iframeUri.toString();
+                iframeUri = {};
+                iframeUri.protocol = uri.protocol;
+                iframeUri.host = uri.host;
+                iframeUri.pathname = proxy;
+                iframe.src = url.stringify(iframeUri);
             } else {
                 iframe = iframeDesc.iframe;
             }
@@ -1432,28 +1449,30 @@ KISSY.add('io/sub-domain-transport', [
         }
     });
     function _onLoad() {
-        var self = this, c = self.io.config, uri = c.uri, hostname = uri.getHostname(), iframeDesc = iframeMap[hostname];
+        var self = this, c = self.io.config, uri = c.uri, hostname = uri.hostname, iframeDesc = iframeMap[hostname];
         iframeDesc.ready = 1;
         Event.detach(iframeDesc.iframe, 'load', _onLoad, self);
         self.send();
     }
-    return SubDomainTransport;
+    module.exports = SubDomainTransport;
 });
 
-/**
+KISSY.add('io/script-transport', [
+    'util',
+    './base',
+    'logger'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * script transport for kissy io,
  * modified version of S.getScript,
  * add abort ability
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/script-transport', [
-    'util',
-    './base'
-], function (S, require) {
     var util = require('util');
     var IO = require('./base');
-    var logger = S.getLogger('s/io');
+    var Logger = require('logger');
+    var logger = Logger.getLogger('s/io');
     var OK_CODE = 200, ERROR_CODE = 500;
     IO.setupConfig({
         accepts: { script: 'text/javascript, ' + 'application/javascript, ' + 'application/ecmascript, ' + 'application/x-ecmascript' },
@@ -1483,7 +1502,7 @@ KISSY.add('io/script-transport', [
     util.augment(ScriptTransport, {
         send: function () {
             var self = this, io = self.io, c = io.config;
-            self.script = S.getScript(io._getUrlForSend(), {
+            self.script = require.load(io._getUrlForSend(), {
                 charset: c.scriptCharset,
                 success: function () {
                     self._callback('success');
@@ -1516,20 +1535,19 @@ KISSY.add('io/script-transport', [
         }
     });
     IO.setupTransport('script', ScriptTransport);
-    return IO;
 });
-/**
+KISSY.add('io/jsonp', [
+    'util',
+    './base'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/jsonp', [
-    'util',
-    './base'
-], function (S, require) {
     var util = require('util');
     var IO = require('./base');
-    var win = S.Env.host;
+    var win = window;
     IO.setupConfig({
         jsonp: 'callback',
         jsonpCallback: function () {
@@ -1544,7 +1562,7 @@ KISSY.add('io/jsonp', [
             // https://github.com/kissyteam/kissy/issues/394
             delete c.contentType;
             var response, cJsonpCallback = c.jsonpCallback, converters, jsonpCallback = typeof cJsonpCallback === 'function' ? cJsonpCallback() : cJsonpCallback, previous = win[jsonpCallback];
-            c.uri.query.set(c.jsonp, jsonpCallback);    // build temporary JSONP function
+            c.uri.query[c.jsonp] = jsonpCallback;    // build temporary JSONP function
             // build temporary JSONP function
             win[jsonpCallback] = function (r) {
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
@@ -1595,24 +1613,27 @@ KISSY.add('io/jsonp', [
             dataType[1] = 'json';
         }
     });
-    return IO;
 });
-/**
- * @ignore
- * process form config
- * @author yiminghe@gmail.com
- */
 KISSY.add('io/form', [
     'util',
     './base',
     'dom',
+    'querystring',
     './form-serializer'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * process form config
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var IO = require('./base');
     var Dom = require('dom');
+    var querystring = require('querystring');
     var FormSerializer = require('./form-serializer');
-    var win = S.Env.host, slice = Array.prototype.slice, FormData = win.FormData;
+    var win = window, slice = Array.prototype.slice,
+        /*global FormData:true*/
+        FormData = win.FormData;
     IO.on('start', function (e) {
         var io = e.io, form, d, dataType, formParam, data, c = io.config, tmpForm = c.form;    // serialize form if needed
         // serialize form if needed
@@ -1645,7 +1666,7 @@ KISSY.add('io/form', [
                 // when FormData exists, only collect non-file type input
                 formParam = FormSerializer.getFormData(form);
                 if (c.hasContent) {
-                    formParam = util.param(formParam, undefined, undefined, c.serializeArray);
+                    formParam = querystring.stringify(formParam, undefined, undefined, c.serializeArray);
                     if (data) {
                         c.data += '&' + formParam;
                     } else {
@@ -1653,7 +1674,7 @@ KISSY.add('io/form', [
                     }
                 } else {
                     // get 直接加到 url
-                    c.uri.query.add(formParam);
+                    util.mix(c.uri.query, formParam);
                 }
             } else {
                 // for old-ie
@@ -1668,35 +1689,36 @@ KISSY.add('io/form', [
             }
         }
     });
-    return IO;
 });
-/**
- * @ignore
- * non-refresh upload file with form by iframe
- * @author yiminghe@gmail.com
- */
 KISSY.add('io/iframe-transport', [
     'util',
     'dom',
     './base',
     'event/dom',
+    'logger',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * non-refresh upload file with form by iframe
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Dom = require('dom'), IO = require('./base'), Event = require('event/dom');
-    var logger = S.getLogger('s/io');
+    var Logger = require('logger');
+    var logger = Logger.getLogger('s/io');
     var UA = require('ua');
-    var doc = S.Env.host.document, OK_CODE = 200, ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = util.clone(IO.getConfig().converters.text);    // https://github.com/kissyteam/kissy/issues/304
-                                                                                                                                                           // returned data must be escaped by server for json dataType
-                                                                                                                                                           // as data
-                                                                                                                                                           // eg:
-                                                                                                                                                           // <body>
-                                                                                                                                                           // {
-                                                                                                                                                           //    "&lt;a&gt;xx&lt;/a&gt;"
-                                                                                                                                                           // }
-                                                                                                                                                           // </body>
-                                                                                                                                                           // text or html dataType is of same effect.
-                                                                                                                                                           // same as normal ajax or html5 FileData
+    var doc = document, OK_CODE = 200, ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = util.clone(IO.getConfig().converters.text);    // https://github.com/kissyteam/kissy/issues/304
+                                                                                                                                                // returned data must be escaped by server for json dataType
+                                                                                                                                                // as data
+                                                                                                                                                // eg:
+                                                                                                                                                // <body>
+                                                                                                                                                // {
+                                                                                                                                                //    "&lt;a&gt;xx&lt;/a&gt;"
+                                                                                                                                                // }
+                                                                                                                                                // </body>
+                                                                                                                                                // text or html dataType is of same effect.
+                                                                                                                                                // same as normal ajax or html5 FileData
     // https://github.com/kissyteam/kissy/issues/304
     // returned data must be escaped by server for json dataType
     // as data
@@ -1807,8 +1829,8 @@ KISSY.add('io/iframe-transport', [
         },
         _callback: function (event) {
             var self = this, form = self.form, io = self.io, eventType = /**
-                 @type String
-                 @ignore*/
+             @type String
+             @ignore*/
                 event.type, iframeDoc, iframe = io.iframe;    // 防止重复调用 , 成功后 abort
             // 防止重复调用 , 成功后 abort
             if (!iframe) {
@@ -1845,20 +1867,20 @@ KISSY.add('io/iframe-transport', [
                          // http://help.dottoro.com/ljbcjfot.php
                          // http://msdn.microsoft.com/en-us/library/windows/desktop/ms766512(v=vs.85).aspx
                          /*
-                     In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
-                     To get an XMLDocument object that represents the embedded XML data island,
-                     use the XMLDocument property of the xml element.
-                     Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
-                     */
+                 In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
+                 To get an XMLDocument object that represents the embedded XML data island,
+                 use the XMLDocument property of the xml element.
+                 Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
+                 */
                     // ie<9
                     // http://help.dottoro.com/ljbcjfot.php
                     // http://msdn.microsoft.com/en-us/library/windows/desktop/ms766512(v=vs.85).aspx
                     /*
-                     In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
-                     To get an XMLDocument object that represents the embedded XML data island,
-                     use the XMLDocument property of the xml element.
-                     Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
-                     */
+                 In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
+                 To get an XMLDocument object that represents the embedded XML data island,
+                 use the XMLDocument property of the xml element.
+                 Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
+                 */
                     if (iframeDoc && iframeDoc.XMLDocument) {
                         io.responseXML = iframeDoc.XMLDocument;
                     } else {
@@ -1888,22 +1910,23 @@ KISSY.add('io/iframe-transport', [
         }
     });
     IO.setupTransport('iframe', IframeTransport);
-    return IO;
 });
-/**
- * @ignore
- * encapsulation of io object. as transaction object in yui3
- * @author yiminghe@gmail.com
- */
 KISSY.add('io/methods', [
     'util',
     'promise',
     './base',
-    'uri'
-], function (S, require) {
+    'logger',
+    'url'
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * encapsulation of io object. as transaction object in yui3
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Promise = require('promise'), IO = require('./base');
-    var Uri = require('uri');
+    var Logger = require('logger');
+    var url = require('url');
     var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304,
         // get individual response header from response header str
         HEADER_REG = /^(.*?):[ \t]*([^\r\n]*)\r?$/gm;
@@ -1984,20 +2007,20 @@ KISSY.add('io/methods', [
             return self;
         },
         /**
-             * get all response headers as string after request is completed.
-             * @member KISSY.IO
-             * @return {String}
-             */
+         * get all response headers as string after request is completed.
+         * @member KISSY.IO
+         * @return {String}
+         */
         getAllResponseHeaders: function () {
             var self = this;
             return self.state === 2 ? self.responseHeadersString : null;
         },
         /**
-             * get header value in response to specified header name
-             * @param {String} name header name
-             * @return {String} header value
-             * @member KISSY.IO
-             */
+         * get header value in response to specified header name
+         * @param {String} name header name
+         * @return {String} header value
+         * @member KISSY.IO
+         */
         getResponseHeader: function (name) {
             var match, responseHeaders, self = this;    // ie8 will be lowercase for content-type
             // ie8 will be lowercase for content-type
@@ -2022,11 +2045,11 @@ KISSY.add('io/methods', [
             return self;
         },
         /**
-             * cancel this request
-             * @member KISSY.IO
-             * @param {String} [statusText=abort] error reason as current request object's statusText
-             * @chainable
-             */
+         * cancel this request
+         * @member KISSY.IO
+         * @param {String} [statusText=abort] error reason as current request object's statusText
+         * @chainable
+         */
         abort: function (statusText) {
             var self = this;
             statusText = statusText || 'abort';
@@ -2037,10 +2060,10 @@ KISSY.add('io/methods', [
             return self;
         },
         /**
-             * get native XMLHttpRequest
-             * @member KISSY.IO
-             * @return {XMLHttpRequest}
-             */
+         * get native XMLHttpRequest
+         * @member KISSY.IO
+         * @return {XMLHttpRequest}
+         */
         getNativeXhr: function () {
             var transport = this.transport;
             if (transport) {
@@ -2077,7 +2100,7 @@ KISSY.add('io/methods', [
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        S.log(e.stack || e, 'error');
+                        Logger.log(e.stack || e, 'error');
                         if ('@DEBUG@') {
                             setTimeout(function () {
                                 throw e;
@@ -2098,53 +2121,53 @@ KISSY.add('io/methods', [
                 clearTimeout(timeoutTimer);
                 self.timeoutTimer = 0;
             }    /**
-                 * fired after request completes (success or error)
-                 * @event complete
-                 * @member KISSY.IO
-                 * @static
-                 * @param {KISSY.Event.CustomEvent.Object} e
-                 * @param {KISSY.IO} e.io current io
-                 */
+             * fired after request completes (success or error)
+             * @event complete
+             * @member KISSY.IO
+             * @static
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.IO} e.io current io
+             */
                  /**
-                 * fired after request succeeds
-                 * @event success
-                 * @member KISSY.IO
-                 * @static
-                 * @param {KISSY.Event.CustomEvent.Object} e
-                 * @param {KISSY.IO} e.io current io
-                 */
+             * fired after request succeeds
+             * @event success
+             * @member KISSY.IO
+             * @static
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.IO} e.io current io
+             */
                  /**
-                 * fired after request occurs error
-                 * @event error
-                 * @member KISSY.IO
-                 * @static
-                 * @param {KISSY.Event.CustomEvent.Object} e
-                 * @param {KISSY.IO} e.io current io
-                 */
+             * fired after request occurs error
+             * @event error
+             * @member KISSY.IO
+             * @static
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.IO} e.io current io
+             */
             /**
-                 * fired after request completes (success or error)
-                 * @event complete
-                 * @member KISSY.IO
-                 * @static
-                 * @param {KISSY.Event.CustomEvent.Object} e
-                 * @param {KISSY.IO} e.io current io
-                 */
+             * fired after request completes (success or error)
+             * @event complete
+             * @member KISSY.IO
+             * @static
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.IO} e.io current io
+             */
             /**
-                 * fired after request succeeds
-                 * @event success
-                 * @member KISSY.IO
-                 * @static
-                 * @param {KISSY.Event.CustomEvent.Object} e
-                 * @param {KISSY.IO} e.io current io
-                 */
+             * fired after request succeeds
+             * @event success
+             * @member KISSY.IO
+             * @static
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.IO} e.io current io
+             */
             /**
-                 * fired after request occurs error
-                 * @event error
-                 * @member KISSY.IO
-                 * @static
-                 * @param {KISSY.Event.CustomEvent.Object} e
-                 * @param {KISSY.IO} e.io current io
-                 */
+             * fired after request occurs error
+             * @event error
+             * @member KISSY.IO
+             * @static
+             * @param {KISSY.Event.CustomEvent.Object} e
+             * @param {KISSY.IO} e.io current io
+             */
             var handler = isSuccess ? 'success' : 'error', h, v = [
                     self.responseData,
                     statusText,
@@ -2172,8 +2195,8 @@ KISSY.add('io/methods', [
             // x.html?t=1%3c2
             // so trim original query when process other query
             // and append when send
-            var c = this.config, uri = c.uri, originalQuery = Uri.getComponents(c.url).query || '', url = uri.toString.call(uri, c.serializeArray);
-            return url + (originalQuery ? (uri.query.has() ? '&' : '?') + originalQuery : originalQuery);
+            var c = this.config, uri = c.uri, originalQuery = url.parse(c.url).search, urlStr = url.stringify(uri, c.serializeArray);
+            return urlStr + (originalQuery ? (uri.search ? '&' : '?') + originalQuery : '');
         }
     });
 });

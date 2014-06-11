@@ -10,6 +10,7 @@ var UA = require('ua');
 var Logger = require('logger');
 var logger = Logger.getLogger('s/io');
 var OK_CODE = 200,
+    supportCORS,
     win = window,
 // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
     XDomainRequest_ = UA.ieMode > 7 && win.XDomainRequest,
@@ -23,8 +24,20 @@ var OK_CODE = 200,
 
 IO.__lastModifiedCached = lastModifiedCached;
 IO.__eTagCached = eTagCached;
-var supportCORS = XhrTransportBase.supportCORS =
+
+XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
+    // consider ie10
+    if (!supportCORS && crossDomain && XDomainRequest_) {
+        return new XDomainRequest_();
+    }
+    // ie7 XMLHttpRequest 不能访问本地文件
+    return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
+        createActiveXHR(crossDomain, refWin);
+} : createStandardXHR;
+
+supportCORS = XhrTransportBase.supportCORS =
     ('withCredentials' in XhrTransportBase.nativeXhr());
+
 function createStandardXHR(_, refWin) {
     try {
         return new (refWin || win).XMLHttpRequest();
@@ -41,18 +54,7 @@ function createActiveXHR(_, refWin) {
     return undefined;
 }
 
-XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
-    // consider ie10
-    if (!supportCORS && crossDomain && XDomainRequest_) {
-        return new XDomainRequest_();
-    }
-    // ie7 XMLHttpRequest 不能访问本地文件
-    return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
-        createActiveXHR(crossDomain, refWin);
-} : createStandardXHR;
-
 XhrTransportBase.XDomainRequest_ = XDomainRequest_;
-
 
 function isInstanceOfXDomainRequest(xhr) {
     return XDomainRequest_ && (xhr instanceof XDomainRequest_);

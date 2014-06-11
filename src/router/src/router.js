@@ -339,7 +339,6 @@ var started;
  * @param {Function} [callback] Callback function to be called after router is started.
  */
 exports.start = function (callback) {
-
     if (started) {
         return callback && callback.call(exports);
     }
@@ -410,8 +409,9 @@ exports.start = function (callback) {
         }
         if (needReplaceHistory) {
             // fill in first state
-            history.replaceState({ vid: viewUniqueId }, '', href);
-        }    // check initial hash on start
+            history.replaceState({vid: viewUniqueId}, '', href);
+        }
+        // check initial hash on start
         // in case server does not render initial state correctly
         // when monitor hashchange ,client must be responsible for dispatching and rendering.
         // check initial hash on start

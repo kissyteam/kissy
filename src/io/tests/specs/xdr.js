@@ -2,7 +2,7 @@
  * test cases for cross domain io
  * @author yiminghe@gmail.com
  */
-
+(function(){
     var io = require('io');
     var $ = require('node');
     var UA = require('ua');
@@ -253,3 +253,4 @@
             });
         });
     });
+})();

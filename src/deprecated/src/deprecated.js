@@ -32,7 +32,7 @@
     };
 
     var configs = {
-        'core': {
+        core: {
             alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
         },
         node: {
@@ -68,7 +68,7 @@
             p = ('' + args[i]).split('.');
             o = global ? window : this;
             for (j = (window[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                o = o[p[j]] = o[p[j]] || { };
+                o = o[p[j]] = o[p[j]] || {};
             }
         }
         return o;
