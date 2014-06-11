@@ -188,7 +188,7 @@
                         expect(typeof data).toBe('object');
                         expect(data.callback).toBe('customCallback');
                     };
-                    S.getScript('/kissy/src/io/tests/data/interface.jss?callback=customCallback');
+                    io.getScript('/kissy/src/io/tests/data/interface.jss?callback=customCallback');
                 });
 
                 waitsFor(function () {
