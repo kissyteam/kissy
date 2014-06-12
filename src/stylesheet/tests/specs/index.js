@@ -5,7 +5,7 @@
  */
 
     var $ = require('node');
-    var StyleSheet = require('StyleSheet');
+    var StyleSheet = require('stylesheet');
     /*jshint quotmark:false*/
     function filter(str) {
         var left = str.indexOf('{'), right = str.indexOf('}'),

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 
-
+(function () {
     var util = require('util');
     var Router = require('router');
     /*jshint quotmark:false*/
@@ -195,3 +195,4 @@
             });
         });
     });
+})();
