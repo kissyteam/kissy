@@ -65,7 +65,7 @@
         it("nothing happens if abort after form file upload", function () {
             // error !
             var f = $('<form id="f' + util.guid((+new Date())) + '"' +
-                ' action="http://www.g.cn">' +
+                ' action="http://www.alibaba.com">' +
                 '<input name="testFile" type="file"/>' +
                 //php need []
                 '<select name="test[]" multiple>' +

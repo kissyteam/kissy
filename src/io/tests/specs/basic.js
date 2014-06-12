@@ -1,6 +1,5 @@
 /**
  * basic test cases for kissy io
- * @author lijing00333@163.com, yiminghe@gmail.com
  */
 
 var io = require('io');
@@ -9,7 +8,8 @@ var util = require('util');
 describe('io', function () {
     describe('404/301', function () {
         it('404 get error', function () {
-            var ret404, o404 = 0;
+            var ret404,
+                o404 = 0;
 
             io({
                 url: '/kissy/src/io/tests/data/404',
@@ -128,7 +128,7 @@ describe('io', function () {
             });
         });
 
-        it('404时，jsonp不触发回调', function () {
+        it('404 jsonp does not call success', function () {
             var ret404;
             io({
                 url: '/kissy/src/io/tests/data/404',
@@ -149,7 +149,7 @@ describe('io', function () {
             });
         });
 
-        it('404时，cross domain jsonp不触发回调', function () {
+        it('404 cross domain jsonp does not call success', function () {
             var ret404;
             io({
                 url: '/kissy/src/io/tests/data/404',
@@ -177,7 +177,7 @@ describe('io', function () {
     });
 
     describe('jsonp', function () {
-        it('自定义callback', function () {
+        it('custom callback', function () {
             var ok = false;
             runs(function () {
                 window.customCallback = function (data) {
@@ -220,7 +220,7 @@ describe('io', function () {
 
         });
 
-        it('自定义callbackName', function () {
+        it('custom callbackName', function () {
             var ok = false;
             runs(function () {
                 io({
@@ -241,7 +241,7 @@ describe('io', function () {
 
         });
 
-        it('不带参数请求jsonp', function () {
+        it('jsonp without params', function () {
 
             var ok = 0;
 
@@ -259,7 +259,7 @@ describe('io', function () {
 
         });
 
-        it('带参数提交jsonp，获取回调参数', function () {
+        it('jsonp with params', function () {
             var ok = 0;
             io.jsonp('/kissy/src/io/tests/data/interface.jss?sleep=0', {
                 myParam: 'taobao'
@@ -296,8 +296,8 @@ describe('io', function () {
 
     });
 
-    describe('同步请求的test case', function () {
-        it('get 同步加载,等待2秒钟继续执行', function () {
+    describe('sync test case', function () {
+        it('get sync', function () {
             var d = 0;
             io({
                 type: 'get',
@@ -311,7 +311,7 @@ describe('io', function () {
             expect(d.name).toBe('test');
         });
 
-        it('post 同步加载,等待2秒钟继续执行', function () {
+        it('post sync', function () {
             runs(function () {
                 var d = 0;
                 io({
@@ -328,8 +328,7 @@ describe('io', function () {
     });
 
     describe('post', function () {
-
-        it('能正确发起post 请求，无参数,正确获取回调参数，类型是text/json', function () {
+        it('post get text/json data', function () {
 
             var ok = false;
             io.post('/kissy/src/io/tests/data/interface.jss?t=post&contentType=text/json', function (data) {
@@ -345,8 +344,7 @@ describe('io', function () {
 
         });
 
-        it('能正确发起 post 请求，无参数,正确获取回调参数', function () {
-
+        it('post get string data', function () {
             var ok = false;
             io.post('/kissy/src/io/tests/data/interface.jss?t=post', function (data, status, xhr) {
                 ok = true;
@@ -360,11 +358,9 @@ describe('io', function () {
             waitsFor(function () {
                 return ok;
             });
-
         });
 
-
-        it('能正确发起 post 请求, 参数为json，并正确获取参数', function () {
+        it('post get json data', function () {
 
             var ok = false;
             io.post('/kissy/src/io/tests/data/interface.jss?t=post', {
@@ -388,8 +384,7 @@ describe('io', function () {
 
         });
 
-        it('能正确发起 post 请求 参数为string，并正确获取参数', function () {
-
+        it('post get string data', function () {
             var ok = false;
             io.post('/kissy/src/io/tests/data/interface.jss?t=post',
                     'name=test&company=www.taobao.com&exp=' +
@@ -411,8 +406,7 @@ describe('io', function () {
 
         });
 
-        it('正确处理 dataType 为 json 的情况', function () {
-
+        it('dataType json', function () {
             var ok, o;
 
             runs(function () {
@@ -434,7 +428,7 @@ describe('io', function () {
 
         });
 
-        it('json 参数 可以覆盖url参数', function () {
+        it('data override url', function () {
             var ok = false;
             io.post('/kissy/src/io/tests/data/interface.jss?foo=sk1', {
                 foo: 'sk2'
@@ -450,7 +444,7 @@ describe('io', function () {
 
         });
 
-        it('正确处理 dataType 为 jsonp 的情况', function () {
+        it('dataType jsonp', function () {
             var ok, o;
 
             runs(function () {
@@ -474,7 +468,7 @@ describe('io', function () {
 
         });
 
-        it('正确处理 dataType 为 script 的情况', function () {
+        it('dataType script', function () {
 
             var ok = false;
 
@@ -502,7 +496,7 @@ describe('io', function () {
 
         });
 
-        it('正确处理 dataType 为 script 的情况，并且 contentType 设置正确', function () {
+        it('data type script', function () {
 
             var ok = false;
 
@@ -532,7 +526,7 @@ describe('io', function () {
 
         });
 
-        it('正确处理 dataType 为 xml 的情况,回调参数为 xml 对象', function () {
+        it('datatype xml', function () {
             var ok = false, o;
 
             runs(function () {
@@ -551,17 +545,15 @@ describe('io', function () {
             runs(function () {
                 expect(o.childNodes.length > 0).toBe(true);
             });
-
         });
 
-
-        it('正确处理 dataType 为 xml 的情况,回调参数为json对象', function () {
+        it('dataType xml but return data format json', function () {
             var ok = false, o;
 
             runs(function () {
 
                 // 可以么？ content-type 为 xml
-                // 但实际内容也为 json ，需要自动转换成 json
+                // 但实际内容也为 json  需要自动转换成 json
                 io.post('/kissy/src/io/tests/data/xml-json.jss', function (data) {
                     ok = true;
                     o = data;
@@ -578,16 +570,16 @@ describe('io', function () {
 
         });
 
-        it('当 dataType 不为 jsonp, url 参数 post 跨域时，不触发回调', function () {
+        it('cross domain post', function () {
             var ret = 0;
 
             // get post
-            // chrome/ff send 不报异常，status 0 statusText ''
+            // chrome/ff send 不报异常 status 0 statusText ''
             // ie7 send 不报异常 status 0 statusText Security Violation
             // ie 9 10 send 报异常 error: 未指明错误
             // ch
             io({
-                url: 'http://www.google.com/',
+                url: 'http://www.alibaba.com/',
                 type: 'post',
                 error: function () {
                     var args = util.makeArray(arguments);
@@ -601,11 +593,11 @@ describe('io', function () {
             }, 10000);
         });
 
-        it('当 dataType 不为 jsonp, url 参数 get 跨域时，不触发回调', function () {
+        it('cross domain get', function () {
             var ret = 0;
 
             io({
-                url: 'http://www.google.com/',
+                url: 'http://www.alibaba.com/',
                 type: 'get',
                 error: function () {
                     var args = util.makeArray(arguments);
@@ -622,7 +614,7 @@ describe('io', function () {
             }, 10000);
         });
 
-        it('xhr 方式时，能正确设置 callback 里的 this', function () {
+        it('post context', function () {
 
             var ok = false;
 
@@ -637,7 +629,7 @@ describe('io', function () {
             });
 
         });
-        it('getScript 方式时，能正确设置 callback 里的 this', function () {
+        it('getScript context', function () {
             var ok = false;
 
             io.post('/kissy/src/io/tests/data/interface.jss?t=get&dataType=script', function () {
@@ -650,11 +642,11 @@ describe('io', function () {
             });
 
         });
-        it('能正确获取返回值', function () {
+        it('return value', function () {
             var xhr = io.post('/kissy/src/io/tests/data/interface.jss');
             expect('abort' in xhr).toBe(true);
 
-            // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
+            // 注：jQuery 里 不跨域时 jsonp 返回 xhr. 跨域时 返回 void
             xhr = io.jsonp('/kissy/src/io/tests/data/interface.jss');
             expect('abort' in xhr).toBe(true);
         });
@@ -662,9 +654,7 @@ describe('io', function () {
     });
 
     describe('get', function () {
-
-        it('能正确处理 dataType 为 html 和 text 的情况', function () {
-
+        it('datatype html text', function () {
             var ok, o;
 
             runs(function () {
@@ -685,7 +675,7 @@ describe('io', function () {
 
         });
 
-        it('能正确获取 callback 参数', function () {
+        it('get callback params', function () {
             var ok = false;
 
             io.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data, textStatus, xhr) {
@@ -707,7 +697,7 @@ describe('io', function () {
         });
 
 
-        it('能正确处理 data 参数', function () {
+        it('data works', function () {
             var ok;
 
             io.get('/kissy/src/io/tests/data/interface.jss?t=get', {'data': 'hello'}, function (data) {
@@ -721,13 +711,13 @@ describe('io', function () {
             });
         });
 
-        it('能正确处理 dataType 为 json 的情况', function () {
+        it('dataType json', function () {
             var ok, o;
 
             runs(function () {
                 //io.get('http://test.com/kissy/src/io/tests/interface.jss?t=get', function(data) {
                 // test.com -> 127.0.0.1
-                // jQuery 里，当跨域时，dataType 为 json 时，依旧会调用 xhr. KISSY 处理逻辑与 jQuery 一致。
+                // jQuery 里 当跨域时 dataType 为 json 时 依旧会调用 xhr. KISSY 处理逻辑与 jQuery 一致。
                 io.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data) {
                     ok = true;
                     o = data;
@@ -743,22 +733,22 @@ describe('io', function () {
                 expect(o.name).toBe('test');
             });
 
-            // 注意：在 jQuery 里，当 dataType 为 json, 但 url 里有 callback=? 时，会自动转换到 jsonp 模式
+            // 注意：在 jQuery 里 当 dataType 为 json, 但 url 里有 callback=? 时 会自动转换到 jsonp 模式
             // KISSY 里去掉了以上自动转换。用户必须显式指定 dataType 为 jsonp
-            // 这样的好处是去除了 callback=? 约定，用户使用上也更清晰（指定 dataType 为 jsonp 比用 callback=? 切换到 jsonp 更简单）
-            // API 的一个原则：让用户方便，但也不能宠坏用户（以某种看似简单的约定让用户继续糊涂）
+            // 这样的好处是去除了 callback=? 约定 用户使用上也更清晰（指定 dataType 为 jsonp 比用 callback=? 切换到 jsonp 更简单）
+            // API 的一个原则：让用户方便 但也不能宠坏用户（以某种看似简单的约定让用户继续糊涂）
         });
 
-        it('能正确处理 dataType 为 jsonp 的情况', function () {
+        it('dataType jsonp', function () {
             var ok, o;
 
             runs(function () {
                 ok = false;
 
                 // 注：此处的处理方式和 jQuery 不同
-                // 不跨域时，jQuery 会依旧调用 xhr 处理，得到结果后，再通过 globalEval 执行
-                // KISSY 里，无论跨不跨域，只要 dataType 为 jsonp, 都用 getScript 处理
-                // 1.2 修正，和 jquery 保持一致，ie 下可以有出错处理，也方便 abort
+                // 不跨域时 jQuery 会依旧调用 xhr 处理 得到结果后 再通过 globalEval 执行
+                // KISSY 里 无论跨不跨域 只要 dataType 为 jsonp, 都用 getScript 处理
+                // 1.2 修正 和 jquery 保持一致 ie 下可以有出错处理 也方便 abort
                 //io.get('http://test.com/kissy/src/io/tests/interface.jss?t=get', function(data) {
                 io.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data) {
                     ok = true;
@@ -776,7 +766,7 @@ describe('io', function () {
             });
         });
 
-        it('能正确处理 dataType 为 script 的情况', function () {
+        it('dataType script', function () {
             var ok;
 
             window.globalScriptTest = 0;
@@ -799,7 +789,7 @@ describe('io', function () {
             });
         });
 
-        it('能正确处理 dataType 为 xml 的情况', function () {
+        it('dataType xml', function () {
             var ok, o;
 
             runs(function () {
@@ -821,7 +811,7 @@ describe('io', function () {
         });
 
 
-        it('xhr 方式时，能正确设置 callback 里的 this', function () {
+        it('xhr this', function () {
             var ok = false;
 
             io.get('/kissy/src/io/tests/data/interface.jss?t=get', function () {
@@ -834,7 +824,7 @@ describe('io', function () {
             });
         });
 
-        it('getScript 方式时，能正确设置 callback 里的 this', function () {
+        it('getScript this', function () {
             var ok = false;
 
             io.get('/kissy/src/io/tests/data/interface.jss?t=get&dataType=script', function () {
@@ -851,12 +841,13 @@ describe('io', function () {
 
     describe('events', function () {
 
-        it('能正确触发 start/send/success/complete/end 事件，并获取到参数数据', function () {
+        it('start/send/success/complete/end event', function () {
             var ok = false, called = [];
 
             runs(function () {
                 util.each(['start', 'send', 'success', 'complete'], function (type) {
-                    io.on(type, function (ev) {
+                    io.on(type, function x(ev) {
+                        io.detach(type, x);
                         called.push(ev.type);
                         expect(ev.ajaxConfig).not.toBe(undefined);
                         expect(ev.type).toBe(type);
@@ -876,12 +867,13 @@ describe('io', function () {
             });
         });
 
-        it('能正确触发 stop/error 事件，并获取到参数数据', function () {
+        it('stop/error event', function () {
             var ok = false;
 
-            // 注：stop 需要 timeout 时触发，未模拟，没测试
+            // 注：stop 需要 timeout 时触发 未模拟 没测试
             runs(function () {
-                io.on('error', function (ev) {
+                io.on('error', function x(ev) {
+                    io.detach('error', x);
                     ok = true;
                     expect(ev.ajaxConfig).not.toBe(undefined);
                     expect(ev.type).toBe('error');

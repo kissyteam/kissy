@@ -18,6 +18,22 @@ function clearRange(ast) {
     return ast;
 }
 
+function clearRangeAndComputed(ast) {
+    if (!ast) {
+        return {};
+    }
+    ast=util.clone(ast);
+    for (var i in ast) {
+        // can not delete computed
+        if (i === 'range' || i==='computed') {
+            delete ast[i];
+        } else if (typeof ast[i] === 'object') {
+            clearRange(ast[i]);
+        }
+    }
+    return ast;
+}
+
 var calleeExpression = {
     "type": "MemberExpression",
     "object": {
@@ -44,7 +60,8 @@ exports.needModuleWrapAst = function (ast) {
     if (!ast.expression) {
         return true;
     }
-    return !util.equals(clearRange(ast.expression.callee), calleeExpression);
+
+    return !util.equals(clearRangeAndComputed(ast.expression.callee), calleeExpression);
 };
 
 exports.needModuleWrap = function (code) {

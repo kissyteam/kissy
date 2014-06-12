@@ -227,7 +227,9 @@ module.exports = Base.extend({
          * @ignore
          */
         groups: {
-            value: {}
+            valueFn: function () {
+                return {};
+            }
         },
 
         /**

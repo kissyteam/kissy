@@ -28,7 +28,7 @@ function Node(html, attrs, ownerDocument) {
     var self = this,
         domNode;
 
-    if (html instanceof Node) {
+    if (html instanceof Node && arguments.length === 1) {
         return html.slice();
     }
 
@@ -233,9 +233,7 @@ util.mix(Node, {
                 if (context.getDOMNode) {
                     context = context[0];
                 }
-                if (context.nodeType) {
-                    context = context.ownerDocument || context;
-                } else {
+                if (!context.nodeType) {
                     attrs = context;
                     context = arguments[2];
                 }

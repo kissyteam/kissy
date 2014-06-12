@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 
-
+(function () {
     var UA = require('ua');
 
     // TODO firefox, ie11 ??
@@ -52,7 +52,6 @@
                     });
                 });
             })(0);
-
 
 
             waits(30);
@@ -197,3 +196,4 @@
             });
         });
     });
+})();
