@@ -92,7 +92,7 @@ var commands = {
         }
 
         for (i = 0; i < l; i++) {
-            buffer = this.root.include(params[i], this, newScope,option, buffer);
+            buffer = this.root.include(params[i], this, newScope, option, buffer);
         }
 
         return buffer;
@@ -157,6 +157,7 @@ var commands = {
     },
 
     macro: function (scope, option, buffer, lineNumber) {
+        var hash = option.hash;
         var params = option.params;
         var macroName = params[0];
         var params1 = params.slice(1);
@@ -167,16 +168,22 @@ var commands = {
         if (option.fn) {
             macros[macroName] = {
                 paramNames: params1,
+                hash: hash,
                 fn: option.fn
             };
         } else {
-            var paramValues = {};
             var macro = macros[macroName];
+            var paramValues = macro.hash || {};
             var paramNames;
             if (macro && (paramNames = macro.paramNames)) {
                 for (var i = 0, len = paramNames.length; i < len; i++) {
                     var p = paramNames[i];
                     paramValues[p] = params1[i];
+                }
+                if (hash) {
+                    for (var h in hash) {
+                        paramValues[h] = hash[h];
+                    }
                 }
                 var newScope = new Scope(paramValues);
                 // no caller Scope
