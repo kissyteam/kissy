@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:12
+build time: Jun 12 13:54
 */
 /*
 combined modules:
@@ -103,6 +103,20 @@ KISSY.add('xtemplate/runtime', [
             callCommand: function (tpl, scope, option, buffer, parts, line) {
                 return callFn(tpl, scope, option, buffer, parts, 0, line, true);
             }
+        };
+    var loader = {
+            load: function (template, name, callback) {
+                require([name], {
+                    success: function (tpl) {
+                        callback(undefined, tpl);
+                    },
+                    error: function () {
+                        var error = 'template "' + name + '" does not exist';
+                        Logger.log(error, 'error');
+                        callback(error);
+                    }
+                });
+            }
         };    /**
  * template file name for chrome debug
  *
@@ -126,8 +140,8 @@ KISSY.add('xtemplate/runtime', [
     function XTemplateRuntime(fn, config) {
         var self = this;
         self.fn = fn;
-        config = config || {};
-        self.config = config;
+        config = self.config = config || {};
+        config.loader = config.loader || loader;
     }
     util.mix(XTemplateRuntime, {
         nativeCommands: nativeCommands,
@@ -176,26 +190,6 @@ KISSY.add('xtemplate/runtime', [
         Scope: Scope,
         nativeCommands: nativeCommands,
         utils: utils,
-        getTplContent: function (name, callback) {
-            require([name], {
-                success: function (tpl) {
-                    callback(undefined, tpl);
-                },
-                error: function () {
-                    var error = 'template "' + name + '" does not exist';
-                    Logger.log(error, 'error');
-                    callback(error);
-                }
-            });
-        },
-        /**
-     * get
-     * @cfg {Function} loader
-     * @member KISSY.XTemplate.Runtime
-     */
-        load: function (name, callback) {
-            this.getTplContent(name, callback);
-        },
         /**
      * remove command by name
      * @param commandName
@@ -220,7 +214,7 @@ KISSY.add('xtemplate/runtime', [
             var self = this;
             subTplName = resolve(subTplName, tpl.name);
             return buffer.async(function (newBuffer) {
-                self.load(subTplName, function (error, tplFn) {
+                self.config.loader.load(self, subTplName, function (error, tplFn) {
                     if (error) {
                         newBuffer.error(error);
                     } else if (typeof tplFn === 'string') {
@@ -312,6 +306,23 @@ KISSY.add('xtemplate/runtime/commands', [
     var Scope = require('./scope');
     var util = require('util');
     var commands = {
+            // range(start, stop, [step])
+            range: function (scope, option) {
+                var params = option.params;
+                var start = params[0];
+                var end = params[1];
+                var step = params[2];
+                if (!step) {
+                    step = start > end ? -1 : 1;
+                } else if (start > end && step > 0 || start < end && step < 0) {
+                    step = -step;
+                }
+                var ret = [];
+                for (var i = start; start < end ? i < end : i > end; i += step) {
+                    ret.push(i);
+                }
+                return ret;
+            },
             each: function (scope, option, buffer) {
                 var params = option.params;
                 var param0 = params[0];
@@ -444,6 +455,7 @@ KISSY.add('xtemplate/runtime/commands', [
                 return buffer;
             },
             macro: function (scope, option, buffer, lineNumber) {
+                var hash = option.hash;
                 var params = option.params;
                 var macroName = params[0];
                 var params1 = params.slice(1);
@@ -454,16 +466,22 @@ KISSY.add('xtemplate/runtime/commands', [
                 if (option.fn) {
                     macros[macroName] = {
                         paramNames: params1,
+                        hash: hash,
                         fn: option.fn
                     };
                 } else {
-                    var paramValues = {};
                     var macro = macros[macroName];
+                    var paramValues = macro.hash || {};
                     var paramNames;
                     if (macro && (paramNames = macro.paramNames)) {
                         for (var i = 0, len = paramNames.length; i < len; i++) {
                             var p = paramNames[i];
                             paramValues[p] = params1[i];
+                        }
+                        if (hash) {
+                            for (var h in hash) {
+                                paramValues[h] = hash[h];
+                            }
                         }
                         var newScope = new Scope(paramValues);    // no caller Scope
                         // no caller Scope

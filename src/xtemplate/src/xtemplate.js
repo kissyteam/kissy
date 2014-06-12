@@ -8,24 +8,29 @@ var util = require('util');
 var XTemplateRuntime = require('xtemplate/runtime');
 var Compiler = require('xtemplate/compiler');
 var cache = XTemplate.cache = {};
+var Logger = require('logger');
 
-function compile(tpl, name, config) {
-    var fn;
-
-    var cacheable = !config || config.cache !== false;
-
-    if (cacheable && (fn = cache[tpl])) {
-        return fn;
+var loader = {
+    load: function (template, name, callback) {
+        require([name], {
+            success: function (tpl) {
+                if (typeof tpl === 'string') {
+                    try {
+                        tpl = template.compile(tpl, name);
+                    } catch (e) {
+                        return callback(e);
+                    }
+                }
+                callback(undefined, tpl);
+            },
+            error: function () {
+                var error = 'template "' + name + '" does not exist';
+                Logger.log(error, 'error');
+                callback(error);
+            }
+        });
     }
-
-    fn = Compiler.compileToFn(tpl, name);
-
-    if (cacheable) {
-        cache[tpl] = fn;
-    }
-
-    return fn;
-}
+};
 
 /*
  *whether cache template string
@@ -37,39 +42,42 @@ function compile(tpl, name, config) {
 /**
  * xtemplate engine for KISSY.
  *
- *
  *      @example
  *      KISSY.use('xtemplate',function(S, XTemplate){
-     *          document.writeln(new XTemplate('{{title}}').render({title:2}));
-     *      });
- *
+ *          document.writeln(new XTemplate('{{title}}').render({title:2}));
+ *      });
  *
  * @class KISSY.XTemplate
  * @extends KISSY.XTemplate.Runtime
  */
 function XTemplate(tpl, config) {
+    var self = this;
+    config = self.config = config || {};
+    config.loader = config.loader || loader;
     if (typeof tpl === 'string') {
-        tpl = compile(tpl, config && config.name, config);
+        tpl = self.compile(tpl, config && config.name);
     }
-    XTemplate.superclass.constructor.call(this, tpl, config);
+    XTemplate.superclass.constructor.call(self, tpl, config);
 }
 
 util.extend(XTemplate, XTemplateRuntime, {
-    load: function (name, callback) {
-        this.getTplContent(name, function (error, fn) {
-            if (error) {
-                return  callback(error);
-            } else {
-                if (typeof fn === 'string') {
-                    try {
-                        fn = compile(fn, name, this.config);
-                    } catch (e) {
-                        return callback(e);
-                    }
-                }
-                callback(undefined, fn);
-            }
-        });
+    compile: function (tpl, name) {
+        var fn,
+            config = this.config;
+
+        var cacheable = !config || config.cache !== false;
+
+        if (cacheable && (fn = cache[tpl])) {
+            return fn;
+        }
+
+        fn = Compiler.compileToFn(tpl, name);
+
+        if (cacheable) {
+            cache[tpl] = fn;
+        }
+
+        return fn;
     }
 }, {
     Compiler: Compiler,

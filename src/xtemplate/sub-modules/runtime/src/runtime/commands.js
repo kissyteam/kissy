@@ -7,6 +7,23 @@
 var Scope = require('./scope');
 var util = require('util');
 var commands = {
+    // range(start, stop, [step])
+    range: function (scope, option) {
+        var params = option.params;
+        var start = params[0];
+        var end = params[1];
+        var step = params[2];
+        if (!step) {
+            step = start > end ? -1 : 1;
+        } else if (start > end && step > 0 || start < end && step < 0) {
+            step = -step;
+        }
+        var ret = [];
+        for (var i = start; start < end ? i < end : i > end; i += step) {
+            ret.push(i);
+        }
+        return ret;
+    },
     each: function (scope, option, buffer) {
         var params = option.params;
         var param0 = params[0];

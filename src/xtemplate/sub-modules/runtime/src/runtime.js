@@ -96,6 +96,21 @@ var utils = {
     }
 };
 
+var loader = {
+    load: function (template, name, callback) {
+        require([name], {
+            success: function (tpl) {
+                callback(undefined, tpl);
+            },
+            error: function () {
+                var error = 'template "' + name + '" does not exist';
+                Logger.log(error, 'error');
+                callback(error);
+            }
+        });
+    }
+};
+
 /**
  * template file name for chrome debug
  *
@@ -110,8 +125,8 @@ var utils = {
 function XTemplateRuntime(fn, config) {
     var self = this;
     self.fn = fn;
-    config = config || {};
-    self.config = config;
+    config = self.config = config || {};
+    config.loader = config.loader || loader;
 }
 
 util.mix(XTemplateRuntime, {
@@ -172,28 +187,6 @@ XTemplateRuntime.prototype = {
 
     utils: utils,
 
-    getTplContent: function (name, callback) {
-        require([name], {
-            success: function (tpl) {
-                callback(undefined, tpl);
-            },
-            error: function () {
-                var error = 'template "' + name + '" does not exist';
-                Logger.log(error, 'error');
-                callback(error);
-            }
-        });
-    },
-
-    /**
-     * get
-     * @cfg {Function} loader
-     * @member KISSY.XTemplate.Runtime
-     */
-    load: function (name, callback) {
-        this.getTplContent(name, callback);
-    },
-
     /**
      * remove command by name
      * @param commandName
@@ -220,7 +213,7 @@ XTemplateRuntime.prototype = {
         var self = this;
         subTplName = resolve(subTplName, tpl.name);
         return buffer.async(function (newBuffer) {
-            self.load(subTplName, function (error, tplFn) {
+            self.config.loader.load(self, subTplName, function (error, tplFn) {
                 if (error) {
                     newBuffer.error(error);
                 } else if (typeof tplFn === 'string') {

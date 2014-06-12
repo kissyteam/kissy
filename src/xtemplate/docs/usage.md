@@ -43,8 +43,7 @@ app.set("view engine", "xtpl");
 
 支持 true false null undefined number string
 
-
-### 不渲染模式
+### 字面模式
 
 ```
 {{%
@@ -53,7 +52,6 @@ app.set("view engine", "xtpl");
 
 %}}  // => {{x}}
 ```
-
 
 ### 注释
 
@@ -77,20 +75,33 @@ app.set("view engine", "xtpl");
 
 ### 支持变量属性获取
 
-```
-{{x.y}} // {x:{y:1}} => 1
-{{y[1]}} // {y:[1,2,3]} => 2
-{{y[x]}} // x='z', {y:{z:1}}  => 1
+``` javascript
+var x = {
+    y: 1
+};
+var y = [1, 2, 3];
+var z = {
+    q: 1
+};
+var x = 'q';
 ```
 
+```
+{{x.y}} // 1
+{{y[1]}} // 2
+{{z[x]}} // 1
+```
 
 ### 调用变量方法
 
 注意：该用法会影响性能，推荐自定义命令
 
+``` javascript
+var x = [1, 2, 3];
 ```
-// x=[1,2,3]
-{{#each(x.slice(1))}}{{this}}{{/each}} // => [2,3]
+
+```
+{{#each(x.slice(1))}}{{this}} {{/each}} // => 2 3
 ```
 
 ### 变量运算
@@ -118,14 +129,7 @@ app.set("view engine", "xtpl");
 {{/if}}
 ```
 
-### 取反操作
-
-```
-{{#if(!x)}}
-{{/if}}
-```
-
-### 关系操作
+### 逻辑操作
 
 支持 || &&
 
@@ -134,18 +138,37 @@ app.set("view engine", "xtpl");
 {{/if}}
 ```
 
+```
+{{#if(!x)}}
+{{/if}}
+```
+
 ### 循环操作
 
 可以对数组或对象进行循环操作，默认获取循环对象值为 {{this}}，键为 {{xindex}} , 也可以指定.
 
+``` javascript
+var x = ['a', 'b'];
 ```
-{{#each(x)}} // x = ['a','b']
-{{xindex}} {{this}}  //  1 a
+
+```
+{{#each(x)}}
+{{xindex}} {{this}} // 0 a 1 b
 {{/each}}
 
-{{#each(x,"value","index")}} // x = ['a','b']
-{{key}} {{value}} // 1 a
+{{#each(x,"value","index")}}
+{{key}} {{value}} // 0 a 1 b
 {{/each}}
+```
+
+### 范围循环
+
+可以对 start 和 end(不包含) 范围内的数字进行循环
+
+```
+{{#each(range(0,3))}}{{this}}{{/each}} // 012
+{{#each(range(3,0))}}{{this}}{{/each}} // 321
+{{#each(range(3,0,2))}}{{this}}{{/each}} // 31
 ```
 
 ### 设置操作
@@ -156,17 +179,17 @@ app.set("view engine", "xtpl");
 {{x}} // 1
 ```
 
-
 ### 宏
 
 ```
 // 声明
-{{#macro("test","param")}}param is {{param}}{{/macro}}
+{{#macro("test","param" default=1)}}param is {{param}} {{default}}{{/macro}}
 
 // 调用宏
-{{macro("test","2")}} // => param is 2
-```
+{{macro("test","2")}} // => param is 2 1
 
+{{macro("test", "2", 2)}} // => param is 2 2
+```
 
 ### 包含操作
 
@@ -216,9 +239,7 @@ index.xtpl
 {{/block}}
 ```
 
-
 ### 自定义命令
-
 
 #### nodejs 全局命令
 
@@ -292,7 +313,6 @@ xtpl.XTemplate.addCommand('xInline',function(scope, option,buffer){
 {{/xBlock}}
 // => 21
 ```
-
 
 #### 浏览器命令
 
