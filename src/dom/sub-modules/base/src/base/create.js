@@ -4,6 +4,7 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 var util = require('util');
+var undef;
 var Logger = require('logger');
 var logger = Logger.getLogger('s/dom');
 var Dom = require('./api');
@@ -27,7 +28,6 @@ var doc = document,
 var creators = Dom._creators = {
         div: defaultCreator
     },
-    create = Dom.create,
     creatorsMap = {
         area: 'map',
         thead: 'table',
@@ -42,21 +42,24 @@ var creators = Dom._creators = {
         legend: 'fieldset'
     }, p;
 
+var tagTpl = '<{tag}>{html}</tag>';
+
 // 残缺元素处理
 for (p in creatorsMap) {
     /*jshint loopfunc: true*/
     (function (tag) {
         creators[p] = function (html, ownerDoc) {
-            return create('<' + tag + '>' +
-                    html + '<' + '/' + tag + '>',
-                undefined, ownerDoc);
+            return Dom.create(util.substitute(tagTpl, {
+                tag: tag,
+                html: html
+            }), undef, ownerDoc);
         };
     })(creatorsMap[p]);
 }
 
 // https://github.com/kissyteam/kissy/issues/422
 creators.option = creators.optgroup = function (html, ownerDoc) {
-    return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
+    return Dom.create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
 };
 
 // help compression

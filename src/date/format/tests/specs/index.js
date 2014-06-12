@@ -9,7 +9,6 @@ var GregorianCalendar = require('date/gregorian');
 var Style = DateTimeFormat.Style;
 
 describe('DateTimeFormat', function () {
-
     describe('format', function () {
         it('works simply', function () {
             var gregorianCalendar = new GregorianCalendar(2013,
@@ -19,7 +18,6 @@ describe('DateTimeFormat', function () {
             df = new DateTimeFormat('yy-MM-dd');
             expect(df.format(gregorianCalendar)).toBe('13-07-09');
         });
-
         it('getDateTimeInstance works', function () {
             var gregorianCalendar = new GregorianCalendar(2013,
                 GregorianCalendar.JULY, 11, 14, 31, 19);
@@ -51,5 +49,4 @@ describe('DateTimeFormat', function () {
             expect(df.format(cal)).toBe(str);
         });
     });
-
 });

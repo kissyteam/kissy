@@ -844,7 +844,6 @@ function removeInlineStyle(range) {
      that our operation logic can be simpler.
      */
     range.enlarge(KER.ENLARGE_ELEMENT);
-
     var bookmark = range.createBookmark(),
         startNode = bookmark.startNode;
 
@@ -861,7 +860,8 @@ function removeInlineStyle(range) {
              outside the styles instead of removing the whole tag,
              also make sure other inner styles were well preserved.(#3309)
              */
-            if (element === startPath.block || element === startPath.blockLimit) {
+            if (element.equals(startPath.block) ||
+                element.equals(startPath.blockLimit)) {
                 break;
             }
             if (this.checkElementRemovable(element)) {
@@ -889,7 +889,6 @@ function removeInlineStyle(range) {
                     } else {
                         removeFromElement(this, element);
                     }
-
                 }
             }
         }

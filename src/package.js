@@ -10,6 +10,7 @@ var SERVER_CONFIG = {
 KISSY.config('tag', +new Date());
 var loc = location;
 if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
+    KISSY.DEV_MODE=1;
     KISSY.config('packages', {
         'anim/base': { 'base': '/kissy/src/anim/sub-modules/base/src/base' },
         'anim/timer': { 'base': '/kissy/src/anim/sub-modules/timer/src/timer' },

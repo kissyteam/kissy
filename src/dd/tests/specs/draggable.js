@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * ie9 模式下 mousemove 触发事件有问题，无法测试
  */
-
+(function(){
 var $ = require('node'),
     win = $(window),
     DD = require('dd'),
@@ -250,3 +250,4 @@ describe('draggable', function () {
         $('#drag_after').remove();
     });
 });
+})();

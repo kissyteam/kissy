@@ -6,6 +6,7 @@
 
 var Base = require('base');
 var util = require('util');
+var $ = require('node');
 module.exports = Base.extend({
     destroy: function () {
         var self = this;
@@ -16,7 +17,7 @@ module.exports = Base.extend({
         var self = this,
             h = self.get('height'),
             prefixCls = self.get('prefixCls'),
-            el = new Node(
+            el = $(
                 util.substitute('<div' +
                     ' class="{prefixCls}editor-progressbar" ' +
                     ' style="width:' +
@@ -28,7 +29,7 @@ module.exports = Base.extend({
                     '></div>', {prefixCls: prefixCls
                 })),
             container = self.get('container'),
-            p = new Node(
+            p = $(
                 util.substitute('<div style="overflow:hidden;">' +
                     '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h, 10) - 4) + 'px">' +
                     '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' +
@@ -36,7 +37,7 @@ module.exports = Base.extend({
                     '</div>', {  prefixCls: prefixCls
                 })
             ).appendTo(el),
-            title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>')
+            title = $('<span class="' + prefixCls + 'editor-progressbar-title"></span>')
                 .appendTo(el);
         if (container) {
             el.appendTo(container);

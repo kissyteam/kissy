@@ -2,7 +2,7 @@
  * @module  droppable-spec
  * @author yiminghe@gmail.com
  */
-
+(function(){
 var $ = require('node'),
     win = $(window),
     DD = require('dd'),
@@ -250,3 +250,4 @@ describe('droppable', function () {
 
     });
 });
+})();

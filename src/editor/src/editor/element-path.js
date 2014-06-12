@@ -153,4 +153,4 @@ ElementPath.prototype = {
 };
 Editor.ElementPath = ElementPath;
 
-return ElementPath;
+module.exports = ElementPath;

@@ -6,6 +6,7 @@
 
 var util = require('util');
 var Const = require('./const');
+var floor = Math.floor;
 var ACCUMULATED_DAYS_IN_MONTH
         //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
         = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
@@ -42,13 +43,13 @@ function getGregorianYearFromFixedDate(fixedDate) {
     var year;
     d0 = fixedDate - 1;
 
-    n400 = exports.floor(d0 / DAYS_OF_400YEAR);
+    n400 = floor(d0 / DAYS_OF_400YEAR);
     d1 = exports.mod(d0, DAYS_OF_400YEAR);
-    n100 = exports.floor(d1 / DAYS_OF_100YEAR);
+    n100 = floor(d1 / DAYS_OF_100YEAR);
     d2 = exports.mod(d1, DAYS_OF_100YEAR);
-    n4 = exports.floor(d2 / DAYS_OF_4YEAR);
+    n4 = floor(d2 / DAYS_OF_4YEAR);
     d3 = exports.mod(d2, DAYS_OF_4YEAR);
-    n1 = exports.floor(d3 / DAYS_OF_YEAR);
+    n1 = floor(d3 / DAYS_OF_YEAR);
 
     year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
 
@@ -70,15 +71,15 @@ util.mix(exports, {
 
     mod: function (x, y) {
         // 负数时不是镜像关系
-        return (x - y * exports.floor(x / y));
+        return (x - y * floor(x / y));
     },
 
     // month: 0 based
     getFixedDate: function (year, month, dayOfMonth) {
         var prevYear = year - 1;
         // 考虑公元前
-        return DAYS_OF_YEAR * prevYear + exports.floor(prevYear / 4) -
-            exports.floor(prevYear / 100) + exports.floor(prevYear / 400) +
+        return DAYS_OF_YEAR * prevYear + floor(prevYear / 4) -
+            floor(prevYear / 100) + floor(prevYear / 400) +
             getDayOfYear(year, month, dayOfMonth);
     },
 

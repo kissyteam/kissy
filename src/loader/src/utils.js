@@ -46,6 +46,7 @@
     if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
         (v = (m[1] || m[2]))) {
         Utils.ie = numberify(v);
+        Utils.ieMode = doc.documentMode || Utils.ie;
         Utils.trident = Utils.trident || 1;
     }
 
@@ -177,6 +178,8 @@
             }
             var parts = parentPath.split(/\//);
             var subParts = subPath.split(/\//);
+            var trailingSlash = subPath.slice(0 - 1) === '/';
+            var leadingSlash = parentPath.charAt(0) === '/';
             parts.pop();
             for (var i = 0, l = subParts.length; i < l; i++) {
                 var subPart = subParts[i];
@@ -187,7 +190,15 @@
                     parts.push(subPart);
                 }
             }
-            return parts.join('/');
+            var ret = parts.join('/');
+            // ie7 // 'x/'.split('/') ->['x'] ....
+            if (ret && trailingSlash && ret.slice(0 - 1) !== '/') {
+                ret += '/';
+            }
+            if (ret && leadingSlash && ret.charAt(0) !== '/') {
+                ret = '/' + ret;
+            }
+            return ret;
         },
 
         isSameOriginAs: function (url1, url2) {
@@ -228,7 +239,7 @@
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, _,dep) {
+                .replace(requireRegExp, function (match, _, dep) {
                     requires.push(dep);
                 });
             return requires;

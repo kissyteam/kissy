@@ -4,8 +4,6 @@
  **/
 
 (function () {
-
-
     var io = require('io');
     var $ = require('node');
     var util = require('util');

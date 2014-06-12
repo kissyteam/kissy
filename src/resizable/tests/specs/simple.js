@@ -2,7 +2,7 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-
+(function(){
     var UA = require('ua');
     var util = require('util');
     var Resizable = require('resizable');
@@ -457,3 +457,4 @@
             });
         });
     });
+})();

@@ -8,7 +8,8 @@ function clearRange(ast) {
         return {};
     }
     for (var i in ast) {
-        if (i === 'range' || i === 'computed') {
+        // can not delete computed
+        if (i === 'range') {
             delete ast[i];
         } else if (typeof ast[i] === 'object') {
             clearRange(ast[i]);
@@ -58,8 +59,8 @@ exports.wrapModule = function (code) {
         attachComment: true
     });
     var wrapAst = exports.wrapModuleAst(ast);
-    return wrapAst === ast ? code : escodegen.generate(wrapAst,{
-        comment:true
+    return wrapAst === ast ? code : escodegen.generate(wrapAst, {
+        comment: true
     });
 };
 

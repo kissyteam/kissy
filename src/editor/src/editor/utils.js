@@ -24,14 +24,17 @@ var TRUE = true,
             if (filter) {
                 url = url.replace(/\.(js|css)/i, '-' + filter + '.$1');
             }
-            if(tag){
-                if(url.indexOf('?')!==-1){
-                    url+='&t='+tag;
-                }else{
-                    url+='?t='+tag;
+            if (tag) {
+                if (url.indexOf('?') !== -1) {
+                    url += '&t=' + tag;
+                } else {
+                    url += '?t=' + tag;
                 }
             }
-            return require.toUrl('../' + url);
+            if (KISSY.DEV_MODE) {
+                url = url.replace(/^theme\//, 'theme/assets/');
+            }
+            return require.toUrl((KISSY.DEV_MODE ? '../../sub-modules/' : '../') + url);
         },
 
         lazyRun: function (obj, before, after) {

@@ -3,8 +3,9 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-var util = require('util');
-var Dom = require('dom'),
+var util = require('util'),
+    querystring = require('querystring'),
+    Dom = require('dom'),
     IO = require('./base'),
     Event = require('event/dom');
 var Logger = require('logger');
@@ -131,7 +132,7 @@ util.augment(IframeTransport, {
 
         // unparam to kv map
         if (data) {
-            query = util.unparam(data);
+            query = querystring.parse(data);
         }
 
         if (query) {

@@ -2,7 +2,7 @@
  * test drag gesture
  * @author yiminghe@gmail.com
  */
-
+(function(){
     var UA = require('ua');
     var $ = require('node');
     var DragGesture = require('event/gesture/drag');
@@ -465,3 +465,4 @@
             });
         }
     });
+})();

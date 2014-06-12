@@ -2,7 +2,7 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-
+(function(){
 var DD = require('dd'),
     Draggable = DD.Draggable,
     UA = require('ua'),
@@ -98,3 +98,4 @@ describe('scroll', function () {
         });
     });
 });
+})();

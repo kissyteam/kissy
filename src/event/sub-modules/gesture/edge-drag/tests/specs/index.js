@@ -1,7 +1,7 @@
 /**
  * tc for edge-drag gesture
  */
-
+(function() {
     var UA = require('ua');
     var Feature = require('feature');
     if (UA.phantomjs || !Feature.isTouchEventSupported()) {
@@ -1068,3 +1068,4 @@
             });
         });
     });
+})();

@@ -514,7 +514,7 @@ var Draggable = Base.extend({
          */
         node: {
             setter: function (v) {
-                if (!(v instanceof Node)) {
+                if (!(v instanceof $)) {
                     return $(v);
                 }
                 return undefined;

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:55
+build time: Jun 12 18:40
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140611205517' will replace with current timestamp when compressing.
+         * NOTICE: '20140612184004' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140611205517',
+        __BUILD_TIME: '20140612184004',
 
         /**
          * KISSY Environment.
@@ -379,6 +379,7 @@ var KISSY = (function (undefined) {
     if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
         (v = (m[1] || m[2]))) {
         Utils.ie = numberify(v);
+        Utils.ieMode = doc.documentMode || Utils.ie;
         Utils.trident = Utils.trident || 1;
     }
 
@@ -510,6 +511,8 @@ var KISSY = (function (undefined) {
             }
             var parts = parentPath.split(/\//);
             var subParts = subPath.split(/\//);
+            var trailingSlash = subPath.slice(0 - 1) === '/';
+            var leadingSlash = parentPath.charAt(0) === '/';
             parts.pop();
             for (var i = 0, l = subParts.length; i < l; i++) {
                 var subPart = subParts[i];
@@ -520,7 +523,15 @@ var KISSY = (function (undefined) {
                     parts.push(subPart);
                 }
             }
-            return parts.join('/');
+            var ret = parts.join('/');
+            // ie7 // 'x/'.split('/') ->['x'] ....
+            if (ret && trailingSlash && ret.slice(0 - 1) !== '/') {
+                ret += '/';
+            }
+            if (ret && leadingSlash && ret.charAt(0) !== '/') {
+                ret = '/' + ret;
+            }
+            return ret;
         },
 
         isSameOriginAs: function (url1, url2) {
@@ -561,7 +572,7 @@ var KISSY = (function (undefined) {
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, _,dep) {
+                .replace(requireRegExp, function (match, _, dep) {
                     requires.push(dep);
                 });
             return requires;
@@ -1053,7 +1064,7 @@ var KISSY = (function (undefined) {
             status = self.status;
             // attached or circular dependency
             if (status >= ATTACHING || status < Status.LOADED) {
-                return;
+                return self;
             }
             self.status = ATTACHING;
             if (self.cjs) {
@@ -1065,7 +1076,7 @@ var KISSY = (function (undefined) {
                 });
                 self.attachSelf();
             }
-            return self.status;
+            return self;
         },
 
         undef: function () {
@@ -1415,12 +1426,7 @@ var KISSY = (function (undefined) {
         host = S.Env.host,
         Config = S.Config,
         location = host.location,
-        locationPath = '',
         configFns = Config.fns;
-
-    if (location) {
-        locationPath = location.protocol + '//' + location.host + location.pathname;
-    }
 
     // how to load mods by path
     Config.loadModsFn = function (rs, config) {
@@ -1555,12 +1561,13 @@ var KISSY = (function (undefined) {
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
-        if (locationPath) {
-            if (base.charAt(0) === '/') {
-                base = location.protocol + '//' + location.host + base;
-            } else {
-                base = Utils.normalizePath(locationPath, base);
+        if (location) {
+            if (Utils.startsWith(base, 'http:') ||
+                Utils.startsWith(base, 'https:') ||
+                Utils.startsWith(base, 'file:')) {
+                return base;
             }
+            base = location.protocol + '//' + location.host + Utils.normalizePath(location.pathname, base);
         }
         return base;
     }
@@ -1584,7 +1591,7 @@ var KISSY = (function (undefined) {
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         ERROR = Status.ERROR,
-        oldIE = Utils.ie < 10;
+        oldIE = Utils.ieMode && Utils.ieMode < 10;
 
     function loadScripts(rss, callback, timeout) {
         var count = rss && rss.length,
@@ -2300,14 +2307,17 @@ var KISSY = (function (undefined) {
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModules(normalizedMods);
                     if (success) {
-                        try {
+                        if ('@DEBUG@') {
                             success.apply(S, [S].concat(Utils.getModulesExports(mods)));
-                        } catch (e) {
-                            S.log(e.stack || e, 'error');
-                            /*jshint loopfunc:true*/
-                            setTimeout(function () {
-                                throw e;
-                            }, 0);
+                        } else {
+                            try {
+                                success.apply(S, [S].concat(Utils.getModulesExports(mods)));
+                            } catch (e) {
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
                         }
                     }
                 } else {
@@ -2378,7 +2388,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140611205517';
+    var TIMESTAMP = '20140612184004';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

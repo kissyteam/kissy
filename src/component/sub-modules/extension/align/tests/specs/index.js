@@ -2,8 +2,8 @@ var AlignExtension = require('component/extension/align');
 var Control = require('component/control');
 /*jshint quotmark:false*/
 var Dom = require('dom');
-var $ = S.all;
-
+var $ = require('node');
+var UA = require('ua');
 var AlignControl = Control.extend([AlignExtension]);
 
 describe("extension-align", function () {
@@ -24,7 +24,6 @@ describe("extension-align", function () {
                 }
                 return true;
             },
-
 
             toBeEqual: function (expected) {
                 return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
@@ -68,7 +67,7 @@ describe("extension-align", function () {
         }
     });
 
-    if (S.UA.ios && window.frameElement) {
+    if (UA.ios && window.frameElement) {
 
     } else {
         it("getVisibleRectForElement works", function () {

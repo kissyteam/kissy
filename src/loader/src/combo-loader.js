@@ -17,7 +17,7 @@
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         ERROR = Status.ERROR,
-        oldIE = Utils.ie < 10;
+        oldIE = Utils.ieMode && Utils.ieMode < 10;
 
     function loadScripts(rss, callback, timeout) {
         var count = rss && rss.length,

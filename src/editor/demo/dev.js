@@ -1,6 +1,7 @@
-
 function preview() {
-    KISSY.all('#previewEl').html(window.newEditor.getFormatData());
+    KISSY.use('node', function (S, $) {
+        $('#previewEl').html(window.newEditor.getFormatData());
+    });
     SyntaxHighlighter.highlight();
 }
 
@@ -12,7 +13,9 @@ function getSelected() {
 function insertElement() {
     newEditor.focus();
     setTimeout(function () {
-        newEditor.insertElement(new KISSY.Node("<div>1</div>", null, newEditor.get('document')[0]));
+        KISSY.use('node', function (S, $) {
+            newEditor.insertElement(new $("<div>1</div>", null, newEditor.get('document')[0]));
+        });
     }, 50);
 }
 

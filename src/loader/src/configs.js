@@ -11,12 +11,7 @@
         host = S.Env.host,
         Config = S.Config,
         location = host.location,
-        locationPath = '',
         configFns = Config.fns;
-
-    if (location) {
-        locationPath = location.protocol + '//' + location.host + location.pathname;
-    }
 
     // how to load mods by path
     Config.loadModsFn = function (rs, config) {
@@ -151,12 +146,13 @@
         if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
-        if (locationPath) {
-            if (base.charAt(0) === '/') {
-                base = location.protocol + '//' + location.host + base;
-            } else {
-                base = Utils.normalizePath(locationPath, base);
+        if (location) {
+            if (Utils.startsWith(base, 'http:') ||
+                Utils.startsWith(base, 'https:') ||
+                Utils.startsWith(base, 'file:')) {
+                return base;
             }
+            base = location.protocol + '//' + location.host + Utils.normalizePath(location.pathname, base);
         }
         return base;
     }

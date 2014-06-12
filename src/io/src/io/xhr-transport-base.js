@@ -5,6 +5,8 @@
  */
 
 var util = require('util');
+var url = require('url');
+var querystring = require('querystring');
 var IO = require('./base');
 var UA = require('ua');
 var Logger = require('logger');
@@ -66,12 +68,12 @@ function getIfModifiedKey(c) {
     if (ifModified) {
         ifModifiedKey = c.uri;
         if (c.cache === false) {
-            ifModifiedKey = ifModifiedKey.clone();
+            ifModifiedKey = util.clone(ifModifiedKey);
             // remove random timestamp
             // random timestamp is forced to fetch code file from server
-            ifModifiedKey.query.remove('_ksTS');
+            delete ifModifiedKey.query._ksTS;
         }
-        ifModifiedKey = ifModifiedKey.toString();
+        ifModifiedKey = url.stringify(ifModifiedKey);
     }
     return ifModifiedKey;
 }
@@ -156,7 +158,7 @@ util.mix(XhrTransportBase.proto, {
             var originalSentContent = sendContent,
                 data = {};
             if (originalSentContent) {
-                data = util.unparam(originalSentContent);
+                data = querystring.parse(originalSentContent);
             }
             data = util.mix(data, files);
             sendContent = new FormData();

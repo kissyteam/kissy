@@ -77,7 +77,8 @@ describe("url", function () {
         expect(base.host).toBeFalsy();
         expect(base.pathname).toBe("d:/x.png");
         expect(base.href).toBe('file:d:/x.png');
-        expect(url.format(base)).toBe("file:d:/x.png");
+        var x = url.format(base);
+        expect(x).toBe("file:d:/x.png");
     });
 
     it('set hash works', function () {

@@ -109,6 +109,8 @@ var url = {
         var m = str.match(URI_SPLIT_REG) || [],
             ret = {};
 
+        // old ie 7:  return "" for unmatched regexp ...
+
         for (var part in REG_INFO) {
             ret[part] = m[REG_INFO[part]];
         }
@@ -123,11 +125,17 @@ var url = {
 
         var protocol = ret.protocol;
 
+        if (protocol) {
+            ret.slashes = str.lastIndexOf(protocol + '//') !== -1;
+        }
+
         // mailto: yiminghe@gmail.com
         if (protocol && !needDoubleSlash(protocol.slice(0, -1))) {
-            if (str.lastIndexOf(protocol + '//') === -1) {
+            if (!ret.slashes) {
                 str = str.slice(0, protocol.length) + '//' + str.slice(protocol.length);
-                return url.parse(str, parseQueryString);
+                ret = url.parse(str, parseQueryString);
+                ret.slashes = null;
+                return ret;
             }
         } else {
             // http://www.g.cn
@@ -162,7 +170,7 @@ var url = {
      */
     format: function (url, serializeArray) {
         var host = url.host;
-        if (host === undef) {
+        if (host === undef && url.hostname) {
             host = encodeURIComponent(url.hostname);
             if (url.port) {
                 host += ':' + url.port;
@@ -175,7 +183,9 @@ var url = {
             if (typeof query !== 'string') {
                 query = querystring.stringify(query, undef, undef, serializeArray);
             }
-            search = '?' + query;
+            if (query) {
+                search = '?' + query;
+            }
         }
 
         if (search && search.charAt(0) !== '?') {
@@ -201,7 +211,7 @@ var url = {
         }
 
         if (host !== undef) {
-            if (protocol && needDoubleSlash(protocol)) {
+            if (this.slashes || protocol && needDoubleSlash(protocol)) {
                 out.push('//');
             }
             if ((auth = url.auth)) {

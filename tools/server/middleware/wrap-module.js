@@ -30,18 +30,29 @@ module.exports = function (req, res, next) {
                 next(err);
                 return;
             }
-            if (content.indexOf('--no-module-wrap--') !== -1 ||
-                (content.indexOf('require(') === -1 && content.indexOf('module.exports') === -1)) {
-                next();
-                return;
+            if (content.indexOf('--need-module-wrap--') === -1) {
+                if (content.indexOf('--no-module-wrap--') !== -1) {
+                    next();
+                    return;
+                }
+                if (content.indexOf('require(') === -1 && !content.match(/\bexports\b/)) {
+                    next();
+                    return;
+                }
             }
-            var code = wrapModule.wrapModule(content);
-            if (pathname.match(/-coverage/)) {
-                req.code = code;
-                next();
-                return;
+            try {
+                var code = wrapModule.wrapModule(content);
+                if (pathname.match(/-coverage/)) {
+                    req.code = code;
+                    next();
+                    return;
+                }
+                res.end(code);
+            } catch (e) {
+                console.log('error in: ' + pathname);
+                console.error(e);
+                next(e);
             }
-            res.end(code);
         });
     } else {
         next();

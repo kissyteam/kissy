@@ -421,7 +421,7 @@
             status = self.status;
             // attached or circular dependency
             if (status >= ATTACHING || status < Status.LOADED) {
-                return;
+                return self;
             }
             self.status = ATTACHING;
             if (self.cjs) {
@@ -433,7 +433,7 @@
                 });
                 self.attachSelf();
             }
-            return self.status;
+            return self;
         },
 
         undef: function () {

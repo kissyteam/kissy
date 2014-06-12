@@ -2,7 +2,7 @@
  * test rotate gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-
+(function() {
     var UA = require('ua');
     var Feature = require('feature');
     if (UA.phantomjs || !Feature.isTouchEventSupported()) {
@@ -497,3 +497,4 @@
             });
         });
     });
+})();

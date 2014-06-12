@@ -113,14 +113,17 @@
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModules(normalizedMods);
                     if (success) {
-                        try {
+                        if ('@DEBUG@') {
                             success.apply(S, [S].concat(Utils.getModulesExports(mods)));
-                        } catch (e) {
-                            S.log(e.stack || e, 'error');
-                            /*jshint loopfunc:true*/
-                            setTimeout(function () {
-                                throw e;
-                            }, 0);
+                        } else {
+                            try {
+                                success.apply(S, [S].concat(Utils.getModulesExports(mods)));
+                            } catch (e) {
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
                         }
                     }
                 } else {

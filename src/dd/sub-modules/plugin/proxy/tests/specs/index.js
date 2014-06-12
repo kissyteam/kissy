@@ -2,7 +2,7 @@
  * @module  proxy-spec
  * @author yiminghe@gmail.com
  */
-
+(function(){
 var DD = require('dd'),
     Proxy = require('dd/plugin/proxy'),
     Draggable = DD.Draggable,
@@ -81,3 +81,4 @@ describe('proxy', function () {
     });
 
 });
+})();

@@ -6,6 +6,7 @@
     var io = require('io');
     var $ = require('node');
     var UA = require('ua');
+    var ports= window.SERVER_CONFIG.ports;
     /*jshint quotmark:false*/
     var host = location.hostname;
     var url = host;
@@ -13,7 +14,7 @@
         return;
     }
 
-    url += ':' + window.SERVER_CONFIG.ports[1];
+    url += ':' + ports[1];
     var testUrl = 'http://' + url + '/kissy/src/' +
         'io/tests/others/xdr/xdr.jss';
 

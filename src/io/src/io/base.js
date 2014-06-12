@@ -74,7 +74,7 @@ function setUpConfig(c) {
     uri.query = {};
 
     if (!('crossDomain' in c)) {
-        c.crossDomain = uri.protocol === locationUrl.prototype && uri.host === locationUrl.host;
+        c.crossDomain = !(uri.protocol === locationUrl.protocol && uri.host === locationUrl.host);
     }
 
     type = c.type = type.toUpperCase();

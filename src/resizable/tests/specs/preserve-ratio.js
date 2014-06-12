@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 /*jshint quotmark:false*/
-
+(function(){
     var UA = require('ua');
     var util = require('util');
     var Resizable = require('resizable');
@@ -102,3 +102,4 @@
             });
         });
     });
+})();

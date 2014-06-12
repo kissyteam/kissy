@@ -71,6 +71,7 @@ var code = ["var SERVER_CONFIG=" + serverConfig + ";",
     "KISSY.config('tag',+ new Date());" ,
     "var loc = location;",
     "if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {",
+    "KISSY.DEV_MODE = 1;",
     "KISSY.config('packages', " ,
     JSON.stringify(mod),
     ');}'].join('\n');
