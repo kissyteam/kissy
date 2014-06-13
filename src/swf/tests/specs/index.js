@@ -153,7 +153,7 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
             });
 
             it('will handle low version', function () {
-                if(KISSY.DEV_MODE){
+                if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
                     return;
                 }
                 var swf1 = new SWF({
