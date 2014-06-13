@@ -4,7 +4,7 @@
  */
 (function (S) {
     // --no-module-wrap--
-    S.use('util,querystring', function (S, util, querystring) {
+    S.use(['util','querystring'], function (S, util, querystring) {
         util.mix(S, util);
         S.param = querystring.stringify;
         S.unparam = querystring.parse;
