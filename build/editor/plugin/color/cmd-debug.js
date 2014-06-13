@@ -1,18 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/color/cmd
 */
-/**
+KISSY.add('editor/plugin/color/cmd', ['editor'], function (S, require, exports, module) {
+    /**
  * @ignore
  * color command.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/color/cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
     function applyColor(editor, c, styles) {
         var doc = editor.get('document')[0];
@@ -27,5 +27,5 @@ KISSY.add('editor/plugin/color/cmd', ['editor'], function (S, require) {
         }
         editor.execCommand('save');
     }
-    return { applyColor: applyColor };
+    module.exports = { applyColor: applyColor };
 });

@@ -1,40 +1,40 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:41
 */
 /*
 combined modules:
 component/extension/shim
 */
-/**
+KISSY.add('component/extension/shim', ['ua'], function (S, require, exports, module) {
+    /**
  * @ignore
  * create iframe shim for flash/select/office plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/shim', ['ua'], function (S, require) {
     var UA = require('ua');
     var ie6 = UA.ie === 6;
     var shimTpl = '<' + 'iframe style="position: absolute;' + 'border: none;' + // consider border
         // bug fix: 2012-11-07
         'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' + 'top: 0;' + 'opacity: 0;' + 'filter: alpha(opacity=0);' + 'left: 0;' + 'z-index: -1;' + 'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';    /**
-     * create iframe shim for mixin.
-     * @class KISSY.Component.Extension.Shim
-     */
+ * create iframe shim for mixin.
+ * @class KISSY.Component.Extension.Shim
+ */
     /**
-     * create iframe shim for mixin.
-     * @class KISSY.Component.Extension.Shim
-     */
+ * create iframe shim for mixin.
+ * @class KISSY.Component.Extension.Shim
+ */
     function Shim() {
     }
     Shim.ATTRS = {
         /**
-         * whether create shim
-         * @cfg {Boolean} shim
-         */
+     * whether create shim
+     * @cfg {Boolean} shim
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         shim: {
             // default shim for ie6
             // prevent select coming out of div
@@ -46,5 +46,5 @@ KISSY.add('component/extension/shim', ['ua'], function (S, require) {
             this.get('el').prepend(shimTpl);
         }
     };
-    return Shim;
+    module.exports = Shim;
 });

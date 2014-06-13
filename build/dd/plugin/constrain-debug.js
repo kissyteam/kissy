@@ -1,25 +1,25 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:54
+build time: Jun 13 11:43
 */
 /*
 combined modules:
 dd/plugin/constrain
 */
-/**
+KISSY.add('dd/plugin/constrain', [
+    'base',
+    'util',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/constrain', [
-    'node',
-    'base',
-    'util'
-], function (S, require, exports, module) {
-    var Node = require('node'), Base = require('base');
+    var Base = require('base');
     var util = require('util');
-    var $ = Node.all, CONSTRAIN_EVENT = '.-ks-constrain' + util.now(), WIN = S.Env.host;
+    var $ = require('node'), CONSTRAIN_EVENT = '.-ks-constrain' + util.now(), WIN = window;
     function onDragStart(e) {
         var self = this, drag = e.drag, l, t, lt, dragNode = drag.get('dragNode'), constrain = self.get('constrain');
         if (constrain) {
@@ -58,50 +58,50 @@ KISSY.add('dd/plugin/constrain', [
     function onDragEnd() {
         this.__constrainRegion = null;
     }    /**
-     * @class KISSY.DD.Plugin.Constrain
-     * @extends KISSY.Base
-     * Constrain plugin to provide ability to constrain draggable to specified region
-     */
+ * @class KISSY.DD.Plugin.Constrain
+ * @extends KISSY.Base
+ * Constrain plugin to provide ability to constrain draggable to specified region
+ */
     /**
-     * @class KISSY.DD.Plugin.Constrain
-     * @extends KISSY.Base
-     * Constrain plugin to provide ability to constrain draggable to specified region
-     */
+ * @class KISSY.DD.Plugin.Constrain
+ * @extends KISSY.Base
+ * Constrain plugin to provide ability to constrain draggable to specified region
+ */
     module.exports = Base.extend({
         pluginId: 'dd/plugin/constrain',
         __constrainRegion: null,
         /**
-         * start monitoring drag
-         * @param {KISSY.DD.Draggable} drag
-         * @private
-         */
+     * start monitoring drag
+     * @param {KISSY.DD.Draggable} drag
+     * @private
+     */
         pluginInitializer: function (drag) {
             var self = this;
             drag.on('dragstart' + CONSTRAIN_EVENT, onDragStart, self).on('dragend' + CONSTRAIN_EVENT, onDragEnd, self).on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
         },
         /**
-         * stop monitoring drag
-         * @param {KISSY.DD.Draggable} drag
-         * @private
-         */
+     * stop monitoring drag
+     * @param {KISSY.DD.Draggable} drag
+     * @private
+     */
         pluginDestructor: function (drag) {
             drag.detach(CONSTRAIN_EVENT, { context: this });
         }
     }, {
         ATTRS: {
             /**
-             * constrained container.
-             * @type {Boolean|HTMLElement|String}
-             * @property constrain
-             */
+         * constrained container.
+         * @type {Boolean|HTMLElement|String}
+         * @property constrain
+         */
             /**
-             * constrained container. true stands for viewport.
-             * Defaults: true.
-             * @cfg {Boolean|HTMLElement|String} constrain
-             */
+         * constrained container. true stands for viewport.
+         * Defaults: true.
+         * @cfg {Boolean|HTMLElement|String} constrain
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             constrain: {
                 valueFn: function () {
                     return $(WIN);

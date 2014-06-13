@@ -1,39 +1,39 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:16
+build time: Jun 13 11:43
 */
 /*
 combined modules:
 date/popup-picker
 date/popup-picker/render-xtpl
 */
-/**
- * @ignore
- * popup date picker
- * @author yiminghe@gmail.com
- */
 KISSY.add('date/popup-picker', [
     './popup-picker/render-xtpl',
     'date/picker',
     'component/extension/shim',
     'component/extension/align'
-], function (S, require) {
-    var PopupPickerTpl = require('./popup-picker/render-xtpl'), DatePicker = require('date/picker'), Shim = require('component/extension/shim'), AlignExtension = require('component/extension/align');    /**
-     * popup date picker ui component
-     * @class KISSY.Date.PopupPicker
-     * @extends KISSY.Component.Control
-     * @mixins KISSY.Component.Extension.Shim
-     * @mixins KISSY.Component.Extension.Align
-     */
+], function (S, require, exports, module) {
     /**
-     * popup date picker ui component
-     * @class KISSY.Date.PopupPicker
-     * @extends KISSY.Component.Control
-     * @mixins KISSY.Component.Extension.Shim
-     * @mixins KISSY.Component.Extension.Align
-     */
-    return DatePicker.extend([
+ * @ignore
+ * popup date picker
+ * @author yiminghe@gmail.com
+ */
+    var PopupPickerTpl = require('./popup-picker/render-xtpl'), DatePicker = require('date/picker'), Shim = require('component/extension/shim'), AlignExtension = require('component/extension/align');    /**
+ * popup date picker ui component
+ * @class KISSY.Date.PopupPicker
+ * @extends KISSY.Component.Control
+ * @mixins KISSY.Component.Extension.Shim
+ * @mixins KISSY.Component.Extension.Align
+ */
+    /**
+ * popup date picker ui component
+ * @class KISSY.Date.PopupPicker
+ * @extends KISSY.Component.Control
+ * @mixins KISSY.Component.Extension.Shim
+ * @mixins KISSY.Component.Extension.Align
+ */
+    module.exports = DatePicker.extend([
         Shim,
         AlignExtension
     ], {}, {
@@ -42,11 +42,11 @@ KISSY.add('date/popup-picker', [
     });
 });
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('date/popup-picker/render-xtpl', ['date/picker-xtpl'], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var render = function (scope, buffer, undefined) {
+    var renderXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -75,9 +75,9 @@ KISSY.add('date/popup-picker/render-xtpl', ['date/picker-xtpl'], function (S, re
         buffer.write('\r\n</div>', 0);
         return buffer;
     };
-    render.TPL_NAME = module.name;
-    render.version = '5.0.0';
-    return render;
+    renderXtplHtml.TPL_NAME = module.name;
+    renderXtplHtml.version = '5.0.0';
+    module.exports = renderXtplHtml;
 });
 
 

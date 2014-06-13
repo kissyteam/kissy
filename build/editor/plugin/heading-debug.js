@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/heading
 */
-/**
- * @ignore
- * Heading plugin for KISSY.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/heading', [
     './menubutton',
     'editor',
     './heading/cmd'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Heading plugin for KISSY.
+ * @author yiminghe@gmail.com
+ */
     require('./menubutton');
     var Editor = require('editor');
     var headingCmd = require('./heading/cmd');
@@ -84,7 +84,7 @@ KISSY.add('editor/plugin/heading', [
             });
         }
     };
-    return HeadingPlugin;
+    module.exports = HeadingPlugin;
 });
 
 

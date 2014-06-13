@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 12 13:54
+build time: Jun 13 11:54
 */
 /*
 combined modules:
@@ -14,7 +14,7 @@ KISSY.add('xtemplate', [
     'util',
     'xtemplate/runtime',
     'xtemplate/compiler',
-    'logger'
+    'logger-manager'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -25,7 +25,7 @@ KISSY.add('xtemplate', [
     var XTemplateRuntime = require('xtemplate/runtime');
     var Compiler = require('xtemplate/compiler');
     var cache = XTemplate.cache = {};
-    var Logger = require('logger');
+    var LoggerManager = require('logger-manager');
     var loader = {
             load: function (template, name, callback) {
                 require([name], {
@@ -41,7 +41,7 @@ KISSY.add('xtemplate', [
                     },
                     error: function () {
                         var error = 'template "' + name + '" does not exist';
-                        Logger.log(error, 'error');
+                        LoggerManager.log(error, 'error');
                         callback(error);
                     }
                 });
@@ -5609,14 +5609,14 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
     };
     module.exports = parser;
 });
-KISSY.add('xtemplate/compiler/ast', ['logger'], function (S, require, exports, module) {
+KISSY.add('xtemplate/compiler/ast', ['logger-manager'], function (S, require, exports, module) {
     /**
  * Ast node class for xtemplate
  * @author yiminghe@gmail.com
  * @ignore
  */
     var ast = {};
-    var Logger = require('logger');
+    var LoggerManager = require('logger-manager');
     function sameArray(a1, a2) {
         var l1 = a1.length, l2 = a2.length;
         if (l1 !== l2) {
@@ -5654,7 +5654,7 @@ KISSY.add('xtemplate/compiler/ast', ['logger'], function (S, require, exports, m
         // no close tag
         if (!sameArray(func.id.parts, closeParts)) {
             e = 'Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + func.id.parts + '}} not {{/' + closeParts + '}}';
-            Logger.error(e);
+            LoggerManager.error(e);
         }
         self.escape = escape;
         self.lineNumber = lineNumber;

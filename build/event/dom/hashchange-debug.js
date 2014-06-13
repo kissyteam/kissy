@@ -1,49 +1,90 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:38
+build time: Jun 13 11:50
 */
 /*
 combined modules:
 event/dom/hashchange
 */
-/**
- * @ignore
- * hashchange event for non-standard browser
- * @author yiminghe@gmail.com, xiaomacji@gmail.com
- */
 KISSY.add('event/dom/hashchange', [
     'util',
     'event/dom/base',
     'dom',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * hashchange event for non-standard browser
+ * @author yiminghe@gmail.com, xiaomacji@gmail.com
+ */
     var util = require('util');
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
-    var UA = require('ua'), urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, REPLACE_HISTORY = '__ks_replace_history__', ie = UA.ieMode, HASH_CHANGE = 'hashchange';
-    DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;    // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
-                                                   // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
+    var UA = require('ua'), hashChange, iframe, urlWithoutHash, Special = DomEvent.Special, win = window,
+        // 用于定时器检测，上次定时器记录的 hash 值
+        lastHash, doc = win.document, REPLACE_HISTORY = '__ks_replace_history__', ie = UA.ieMode, HASH_CHANGE = 'hashchange';
+    var POLL_INTERVAL = 50, IFRAME_TEMPLATE = '<html><head><title>' + (doc && doc.title || '') + ' - {hash}</title>{head}</head><body>{hash}</body></html>';
+    DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
+    hashChange = ie && ie < 8 ? function (hash, replaceHistory) {
+        // S.log('set iframe html :' + hash);
+        var html = util.substitute(IFRAME_TEMPLATE, {
+                // 防止 hash 里有代码造成 xss
+                // 后面通过 innerText，相当于 unEscapeHtml
+                hash: util.escapeHtml(hash),
+                // 一定要加哦
+                head: Dom.isCustomDomain() ? '<script>' + 'document.' + 'domain = "' + doc.domain + '";</script>' : ''
+            }), iframeDoc = getIframeDoc(iframe);
+        try {
+            // ie 下不留历史记录！
+            if (replaceHistory) {
+                iframeDoc.open('text/html', 'replace');
+            } else {
+                // 写入历史 hash
+                iframeDoc.open();
+            }    // 取时要用 innerText !!
+                 // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
+            // 取时要用 innerText !!
+            // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
+            iframeDoc.write(html);
+            iframeDoc.close();    // 立刻同步调用 onIframeLoad !!!!
+        } // 立刻同步调用 onIframeLoad !!!!
+        catch (e) {
+        }
+    } : // S.log('doc write error : ', 'error');
+    // S.log(e, 'error');
+    function () {
+        notifyHashChange();
+    };
+    function getHash() {
+        // 不能 location.hash
+        // 1.
+        // http://xx.com/#yy?z=1
+        // ie6 => location.hash = #yy
+        // 其他浏览器 => location.hash = #yy?z=1
+        // 2.
+        // #!/home/q={%22thedate%22:%2220121010~20121010%22}
+        // firefox 15 => #!/home/q={'thedate':'20121010~20121010'}
+        // !! :(
+        var m = location.href.match(/#.+$/);
+        return m && m[0] || '#';
+    }
+    function notifyHashChange() {
+        // S.log('hash changed : ' + getHash());
+        // does not need bubbling
+        DomEvent.fireHandler(win, HASH_CHANGE, {
+            newURL: location.href,
+            oldURL: urlWithoutHash + lastHash
+        });
+        lastHash = getHash();
+    }    // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
+         // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
     // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
     // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
     function getIframeDoc(iframe) {
         return iframe.contentWindow.document;
     }
-    var POLL_INTERVAL = 50, IFRAME_TEMPLATE = '<html><head><title>' + (doc && doc.title || '') + ' - {hash}</title>{head}</head><body>{hash}</body></html>', getHash = function () {
-            // 不能 location.hash
-            // 1.
-            // http://xx.com/#yy?z=1
-            // ie6 => location.hash = #yy
-            // 其他浏览器 => location.hash = #yy?z=1
-            // 2.
-            // #!/home/q={%22thedate%22:%2220121010~20121010%22}
-            // firefox 15 => #!/home/q={'thedate':'20121010~20121010'}
-            // !! :(
-            var m = location.href.match(/#.+$/);
-            return m && m[0] || '#';
-        }, timer,
-        // 用于定时器检测，上次定时器记录的 hash 值
-        lastHash, poll = function () {
+    var timer, poll = function () {
             var hash = getHash(), replaceHistory = 0;
             if (hash.indexOf(REPLACE_HISTORY) !== -1) {
                 replaceHistory = 1;
@@ -58,43 +99,6 @@ KISSY.add('event/dom/hashchange', [
                 hashChange(hash, replaceHistory);
             }
             timer = setTimeout(poll, POLL_INTERVAL);
-        }, hashChange = ie && ie < 8 ? function (hash, replaceHistory) {
-            // S.log('set iframe html :' + hash);
-            var html = util.substitute(IFRAME_TEMPLATE, {
-                    // 防止 hash 里有代码造成 xss
-                    // 后面通过 innerText，相当于 unEscapeHtml
-                    hash: util.escapeHtml(hash),
-                    // 一定要加哦
-                    head: Dom.isCustomDomain() ? '<script>' + 'document.' + 'domain = "' + doc.domain + '";</script>' : ''
-                }), iframeDoc = getIframeDoc(iframe);
-            try {
-                // ie 下不留历史记录！
-                if (replaceHistory) {
-                    iframeDoc.open('text/html', 'replace');
-                } else {
-                    // 写入历史 hash
-                    iframeDoc.open();
-                }    // 取时要用 innerText !!
-                     // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
-                // 取时要用 innerText !!
-                // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
-                iframeDoc.write(html);
-                iframeDoc.close();    // 立刻同步调用 onIframeLoad !!!!
-            } // 立刻同步调用 onIframeLoad !!!!
-            catch (e) {
-            }
-        } : // S.log('doc write error : ', 'error');
-        // S.log(e, 'error');
-        function () {
-            notifyHashChange();
-        }, notifyHashChange = function () {
-            // S.log('hash changed : ' + getHash());
-            // does not need bubbling
-            DomEvent.fireHandler(win, HASH_CHANGE, {
-                newURL: location.href,
-                oldURL: urlWithoutHash + lastHash
-            });
-            lastHash = getHash();
         }, setup = function () {
             if (!timer) {
                 poll();
@@ -104,14 +108,14 @@ KISSY.add('event/dom/hashchange', [
                 clearTimeout(timer);
             }
             timer = 0;
-        }, iframe;    // ie6, 7, 覆盖一些function
+        };    // ie6, 7, 覆盖一些function
     // ie6, 7, 覆盖一些function
     if (ie && ie < 8) {
         /*
-         前进后退 : start -> notifyHashChange
-         直接输入 : poll -> hashChange -> start
-         iframe 内容和 url 同步
-         */
+     前进后退 : start -> notifyHashChange
+     直接输入 : poll -> hashChange -> start
+     iframe 内容和 url 同步
+     */
         setup = function () {
             if (!iframe) {
                 var iframeSrc = Dom.getEmptyIframeSrc();    //http://www.paciellogroup.com/blog/?p=604
@@ -151,17 +155,17 @@ KISSY.add('event/dom/hashchange', [
                     } catch (e) {
                     }
                 });    /*
-                 前进后退 ： onIframeLoad -> 触发
-                 直接输入 : timer -> hashChange -> onIframeLoad -> 触发
-                 触发统一在 start(load)
-                 iframe 内容和 url 同步
-                 */
+             前进后退 ： onIframeLoad -> 触发
+             直接输入 : timer -> hashChange -> onIframeLoad -> 触发
+             触发统一在 start(load)
+             iframe 内容和 url 同步
+             */
                 /*
-                 前进后退 ： onIframeLoad -> 触发
-                 直接输入 : timer -> hashChange -> onIframeLoad -> 触发
-                 触发统一在 start(load)
-                 iframe 内容和 url 同步
-                 */
+             前进后退 ： onIframeLoad -> 触发
+             直接输入 : timer -> hashChange -> onIframeLoad -> 触发
+             触发统一在 start(load)
+             iframe 内容和 url 同步
+             */
                 var onIframeLoad = function () {
                     // S.log('iframe start load..');
                     // 2011.11.02 note: 不能用 innerHTML 会自动转义！！
@@ -210,8 +214,7 @@ KISSY.add('event/dom/hashchange', [
             }
             tearDown();
         }
-    };
-});    /*
+    };    /*
  2014-01-08
  - support newURL oldURL
  - known bugs: newURL oldURL always contains #, for example xx.com/#
@@ -225,6 +228,7 @@ KISSY.add('event/dom/hashchange', [
  refer : http://yiminghe.javaeye.com/blog/377867
  https://github.com/cowboy/jquery-hashchange
  */
+});
 
 
 

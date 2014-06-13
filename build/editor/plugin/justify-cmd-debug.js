@@ -1,18 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/justify-cmd
 */
-/**
+KISSY.add('editor/plugin/justify-cmd', ['editor'], function (S, require, exports, module) {
+    /**
  * @ignore
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/justify-cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
     var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi, defaultAlign = 'left';
     function exec(editor, textAlign) {
@@ -39,7 +39,7 @@ KISSY.add('editor/plugin/justify-cmd', ['editor'], function (S, require) {
         var align = block.css('text-align').replace(alignRemoveRegex, '') || defaultAlign;
         return align === textAlign;
     }
-    return {
+    module.exports = {
         addCommand: function (editor, command, textAlign) {
             if (!editor.hasCommand(command)) {
                 editor.addCommand(command, {

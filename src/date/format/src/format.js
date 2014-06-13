@@ -6,8 +6,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/date/format');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/date/format');
 var GregorianCalendar = require('date/gregorian');
 var defaultLocale = require('i18n!date');
 var MAX_VALUE = Number.MAX_VALUE,

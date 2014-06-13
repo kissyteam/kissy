@@ -1,34 +1,34 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/video
 */
-/**
- * @ignore
- * video button.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/video', [
     'editor',
     './flash-common/utils',
     './flash-common/base-class',
     './fake-objects',
     './button'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * video button.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var flashUtils = require('./flash-common/utils');
     var FlashBaseClass = require('./flash-common/base-class');
     var fakeObjects = require('./fake-objects');
     require('./button');
     var CLS_VIDEO = 'ke_video', TYPE_VIDEO = 'video';
-    function video(config) {
+    function Video(config) {
         this.config = config;
     }
-    video.prototype = {
+    Video.prototype = {
         pluginRenderUI: function (editor) {
             fakeObjects.init(editor);
             var dataProcessor = editor.htmlDataProcessor, dataFilter = dataProcessor && dataProcessor.dataFilter;
@@ -115,7 +115,7 @@ KISSY.add('editor/plugin/video', [
             });
         }
     };
-    return video;
+    module.exports = Video;
 });
 
 

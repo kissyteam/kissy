@@ -10,7 +10,7 @@ var SERVER_CONFIG = {
 KISSY.config('tag', +new Date());
 var loc = location;
 if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
-    KISSY.DEV_MODE=1;
+    KISSY.DEV_MODE = 1;
     KISSY.config('packages', {
         'anim/base': { 'base': '/kissy/src/anim/sub-modules/base/src/base' },
         'anim/timer': { 'base': '/kissy/src/anim/sub-modules/timer/src/timer' },
@@ -43,6 +43,7 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         'dd/plugin/constrain': { 'base': '/kissy/src/dd/sub-modules/plugin/constrain/src/constrain' },
         'dd/plugin/proxy': { 'base': '/kissy/src/dd/sub-modules/plugin/proxy/src/proxy' },
         'dd/plugin/scroll': { 'base': '/kissy/src/dd/sub-modules/plugin/scroll/src/scroll' },
+        'deprecated': { 'base': '/kissy/src/deprecated/src/deprecated' },
         'dom/base': { 'base': '/kissy/src/dom/sub-modules/base/src/base' },
         'dom/class-list': { 'base': '/kissy/src/dom/sub-modules/class-list/src/class-list' },
         'dom/ie': { 'base': '/kissy/src/dom/sub-modules/ie/src/ie' },
@@ -137,7 +138,6 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
         'editor/plugin/word-filter': { 'base': '/kissy/src/editor/sub-modules/plugin/word-filter/src/word-filter' },
         'editor/plugin/xiami-music': { 'base': '/kissy/src/editor/sub-modules/plugin/xiami-music/src/xiami-music' },
         'editor/plugin/xiami-music/dialog': { 'base': '/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog' },
-        'event': { 'base': '/kissy/src/event/src/event' },
         'event/base': { 'base': '/kissy/src/event/sub-modules/base/src/base' },
         'event/custom': { 'base': '/kissy/src/event/sub-modules/custom/src/custom' },
         'event/dom/base': { 'base': '/kissy/src/event/sub-modules/dom/base/src/base' },

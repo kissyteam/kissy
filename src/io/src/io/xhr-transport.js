@@ -9,8 +9,8 @@ var IO = require('./base'),
     XhrTransportBase = require('./xhr-transport-base'),
     XdrFlashTransport = require('./xdr-flash-transport'),
     SubDomainTransport = require('./sub-domain-transport');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/io');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/io');
 var doc = document,
 
     XDomainRequest_ = XhrTransportBase.XDomainRequest_;

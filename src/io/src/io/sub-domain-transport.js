@@ -8,8 +8,8 @@ var Event = require('event/dom'),
     url = require('url'),
     Dom = require('dom'),
     XhrTransportBase = require('./xhr-transport-base');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/io');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/io');
 var PROXY_PAGE = '/sub_domain_proxy.html',
     doc = document,
 // hostname:{iframe: , ready:}
@@ -46,7 +46,7 @@ util.augment(SubDomainTransport, XhrTransportBase.proto, {
             if (self.nativeXhr) {
                 self.sendInternal();
             } else {
-                Logger.error('document.domain not set correctly!');
+                LoggerManager.error('document.domain not set correctly!');
             }
             return;
         }

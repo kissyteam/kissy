@@ -5,7 +5,7 @@
  */
 var util = require('util');
 var stamp = util.stamp,
-    win = S.Env.host,
+    win = window,
 // note in background tab, interval is set to 1s in chrome/firefox
 // no interval change in ie for 15, if interval is less than 15
 // then in background tab interval is changed to 15

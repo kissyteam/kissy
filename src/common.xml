@@ -34,7 +34,7 @@
             <ac:then>
                 <echo>jshint ${component.src.dir}</echo>
                 <exec executable="node" failonerror="true">
-                    <arg value="${tools.dir}/jshint/bin/jshint"/>
+                    <arg value="${kissy.dir}/node_modules/jshint/bin/jshint"/>
                     <arg value="${component.src.dir}"/>
                 </exec>
             </ac:then>
@@ -157,7 +157,7 @@
     <!-- 压缩 js -->
     <target name="compress-js" depends="create-build.dir">
         <replaceregexp
-                match="^((\s*(S|KISSY|logger)\.(log|error|info|warn|debug))|(.*logger\s*=\s*(S|KISSY|Logger)\.getLogger)\s*\().+$"
+                match="^((\s*(S|KISSY|logger|LoggerManager)\.(log|error|info|warn|debug)\()|(.*logger\s*=\s*(S|KISSY|LoggerManager)\.getLogger)\s*\().+$"
                 replace=""
                 flags="g"
                 byline="true"

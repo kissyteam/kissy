@@ -2,7 +2,7 @@
  * test drag gesture
  * @author yiminghe@gmail.com
  */
-(function(){
+(function () {
     var UA = require('ua');
     var $ = require('node');
     var DragGesture = require('event/gesture/drag');
@@ -13,7 +13,7 @@
     }
 
     describe('drag gesture', function () {
-        if (!S.UA.ios) {
+        if (!UA.ios) {
             it('works for mouse', function () {
                 var d = $('<div style="position:absolute;left:0;top:0;width: 100px;height: 100px"></div>');
                 d.appendTo(document.body);
@@ -255,7 +255,6 @@
                     d.remove();
                 });
             });
-
             it('does not work for more than two touches', function () {
                 var d = $('<div style="position:absolute;left:0;top:0;width: 100px;height: 100px"></div>');
                 d.appendTo(document.body);

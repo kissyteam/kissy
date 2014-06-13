@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 
-var Logger = require('logger');
-var logger = Logger.getLogger('s/editor/flash-bridge');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/editor/flash-bridge');
 var util = require('util');
 var Editor = require('editor');
 var SWF = require('swf');

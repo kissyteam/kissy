@@ -17,8 +17,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     document.domain = location.hostname;
-    KISSY.use("dom,event/dom,util", function (S, Dom, Event,util) {
-        var UA = S.UA;
+    KISSY.use("ua,dom,event/dom,util", function (S, UA, Dom, Event, util) {
         var doFormUpload = function (o, ps, url) {
             var id = util.guid("form-upload-");
             var frame = document.createElement('iframe');
@@ -121,15 +120,14 @@
         };
 
         doFormUpload({
-                    form: S.get('#t'),
-                    callback: function (data) {
-                        alert(data.responseText);
-                    }
-                }, {
-                    s: 1
-                },
-                        'http://' + location.hostname + ':' + SERVER_CONFIG.ports[1] + '/' +
-                        'kissy/src/io/tests/subdomain/upload.jss');
+            form: S.get('#t'),
+            callback: function (data) {
+                alert(data.responseText);
+            }
+        }, {
+            s: 1
+        }, 'http://' + location.hostname + ':' + SERVER_CONFIG.ports[1] + '/' +
+                'kissy/src/io/tests/subdomain/upload.jss');
     });
 </script>
 </body>

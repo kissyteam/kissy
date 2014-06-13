@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:54
+build time: Jun 13 11:53
 */
 /*
 combined modules:
@@ -15,30 +15,23 @@ overlay/dialog
 overlay/dialog-xtpl
 overlay/popup
 */
-/**
- * @ignore
- * overlay
- * @author yiminghe@gmail.com
- */
 KISSY.add('overlay', [
     'overlay/control',
     'overlay/dialog',
     'overlay/popup'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * overlay
+ * @author yiminghe@gmail.com
+ */
     var O = require('overlay/control');
     var D = require('overlay/dialog');
     var P = require('overlay/popup');
     O.Dialog = D;
-    S.Dialog = D;
     O.Popup = P;
-    S.Overlay = O;
-    return O;
+    module.exports = O;
 });
-/**
- * @ignore
- * control for overlay
- * @author yiminghe@gmail.com
- */
 KISSY.add('overlay/control', [
     'component/container',
     'component/extension/shim',
@@ -48,7 +41,12 @@ KISSY.add('overlay/control', [
     './extension/overlay-effect',
     'component/extension/content-box',
     './overlay-xtpl'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * control for overlay
+ * @author yiminghe@gmail.com
+ */
     var Container = require('component/container');
     var Shim = require('component/extension/shim');
     var AlignExtension = require('component/extension/align');
@@ -61,28 +59,28 @@ KISSY.add('overlay/control', [
             hide: HIDE,
             destroy: 'destroy'
         };    /**
-     * KISSY Overlay Component.
-     * xclass: 'overlay'.
-     * @class KISSY.Overlay
-     * @extends KISSY.Component.Container
-     * @mixins KISSY.Component.Extension.Shim
-     * @mixins KISSY.Overlay.Extension.Effect
-     * @mixins KISSY.Overlay.Extension.Loading
-     * @mixins KISSY.Component.Extension.Align
-     * @mixins KISSY.Overlay.Extension.Mask
-     */
+ * KISSY Overlay Component.
+ * xclass: 'overlay'.
+ * @class KISSY.Overlay
+ * @extends KISSY.Component.Container
+ * @mixins KISSY.Component.Extension.Shim
+ * @mixins KISSY.Overlay.Extension.Effect
+ * @mixins KISSY.Overlay.Extension.Loading
+ * @mixins KISSY.Component.Extension.Align
+ * @mixins KISSY.Overlay.Extension.Mask
+ */
     /**
-     * KISSY Overlay Component.
-     * xclass: 'overlay'.
-     * @class KISSY.Overlay
-     * @extends KISSY.Component.Container
-     * @mixins KISSY.Component.Extension.Shim
-     * @mixins KISSY.Overlay.Extension.Effect
-     * @mixins KISSY.Overlay.Extension.Loading
-     * @mixins KISSY.Component.Extension.Align
-     * @mixins KISSY.Overlay.Extension.Mask
-     */
-    return Container.extend([
+ * KISSY Overlay Component.
+ * xclass: 'overlay'.
+ * @class KISSY.Overlay
+ * @extends KISSY.Component.Container
+ * @mixins KISSY.Component.Extension.Shim
+ * @mixins KISSY.Overlay.Extension.Effect
+ * @mixins KISSY.Overlay.Extension.Loading
+ * @mixins KISSY.Component.Extension.Align
+ * @mixins KISSY.Overlay.Extension.Mask
+ */
+    module.exports = Container.extend([
         ContentBox,
         Shim,
         Loading,
@@ -100,9 +98,9 @@ KISSY.add('overlay/control', [
             }
         },
         /**
-         * hide or destroy according to {@link KISSY.Overlay#closeAction}
-         * @chainable
-         */
+     * hide or destroy according to {@link KISSY.Overlay#closeAction}
+     * @chainable
+     */
         close: function () {
             var self = this;
             self[actions[self.get('closeAction')] || HIDE]();
@@ -112,20 +110,20 @@ KISSY.add('overlay/control', [
         ATTRS: {
             contentTpl: { value: OverlayTpl },
             /**
-             * Whether close button is visible.
-             *
-             * Defaults to: true.
-             *
-             * @cfg {Boolean} closable
-             */
+         * Whether close button is visible.
+         *
+         * Defaults to: true.
+         *
+         * @cfg {Boolean} closable
+         */
             /**
-             * Whether close button is visible.
-             * @type {Boolean}
-             * @property closable
-             */
+         * Whether close button is visible.
+         * @type {Boolean}
+         * @property closable
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             closable: {
                 value: false,
                 sync: 0,
@@ -135,66 +133,66 @@ KISSY.add('overlay/control', [
                 }
             },
             /**
-             * close button element.
-             * @type {KISSY.Node}
-             * @property closeBtn
-             * @readonly
-             */
+         * close button element.
+         * @type {KISSY.Node}
+         * @property closeBtn
+         * @readonly
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             closeBtn: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('close');
                 }
             },
             /**
-             * Whether to destroy or hide current element when click close button.
-             * Can set 'destroy' to destroy it when click close button.
-             *
-             * Defaults to: 'hide'.
-             *
-             * @cfg {String} closeAction
-             */
+         * Whether to destroy or hide current element when click close button.
+         * Can set 'destroy' to destroy it when click close button.
+         *
+         * Defaults to: 'hide'.
+         *
+         * @cfg {String} closeAction
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             closeAction: { value: HIDE },
             /**
-             * overlay can not have focus.
-             *
-             * Defaults to: false.
-             *
-             * @cfg {Boolean} focusable
-             * @protected
-             */
+         * overlay can not have focus.
+         *
+         * Defaults to: false.
+         *
+         * @cfg {Boolean} focusable
+         * @protected
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             focusable: { value: false },
             /**
-             * overlay can have text selection.
-             *
-             * Defaults to: true.
-             *
-             * @cfg {Boolean} allowTextSelection
-             * @protected
-             */
+         * overlay can have text selection.
+         *
+         * Defaults to: true.
+         *
+         * @cfg {Boolean} allowTextSelection
+         * @protected
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             allowTextSelection: { value: true },
             /**
-             * whether this component can be responsive to mouse.
-             *
-             * Defaults to: false
-             *
-             * @cfg {Boolean} handleGestureEvents
-             * @protected
-             */
+         * whether this component can be responsive to mouse.
+         *
+         * Defaults to: false
+         *
+         * @cfg {Boolean} handleGestureEvents
+         * @protected
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             handleGestureEvents: { value: false },
             visible: { value: false }
         },
@@ -204,58 +202,58 @@ KISSY.add('overlay/control', [
 
 
 
-/**
+KISSY.add('overlay/extension/loading', ['node'], function (S, require, exports, module) {
+    /**
  * @ignore
  * loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/extension/loading', ['node'], function (S, require) {
-    var Node = require('node');    /**
-     * @class KISSY.Overlay.Extension.Loading
-     * Loading extension class. Make component to be able to mask loading.
-     */
+    var $ = require('node');    /**
+ * @class KISSY.Overlay.Extension.Loading
+ * Loading extension class. Make component to be able to mask loading.
+ */
     /**
-     * @class KISSY.Overlay.Extension.Loading
-     * Loading extension class. Make component to be able to mask loading.
-     */
+ * @class KISSY.Overlay.Extension.Loading
+ * Loading extension class. Make component to be able to mask loading.
+ */
     function Loading() {
     }
     Loading.prototype = {
         /**
-         * mask component as loading
-         * @chainable
-         */
+     * mask component as loading
+     * @chainable
+     */
         loading: function () {
             var self = this;
             if (!self._loadingExtEl) {
-                self._loadingExtEl = new Node('<div ' + 'class="' + self.get('prefixCls') + 'ext-loading"' + ' style="position: absolute;' + 'border: none;' + 'width: 100%;' + 'top: 0;' + 'left: 0;' + 'z-index: 99999;' + 'height:100%;' + '*height: expression(this.parentNode.offsetHeight);' + '"/>').appendTo(self.$el);
+                self._loadingExtEl = $('<div ' + 'class="' + self.get('prefixCls') + 'ext-loading"' + ' style="position: absolute;' + 'border: none;' + 'width: 100%;' + 'top: 0;' + 'left: 0;' + 'z-index: 99999;' + 'height:100%;' + '*height: expression(this.parentNode.offsetHeight);' + '"/>').appendTo(self.$el);
             }
             self._loadingExtEl.show();
         },
         /**
-         * unmask component as loading
-         * @chainable
-         */
+     * unmask component as loading
+     * @chainable
+     */
         unloading: function () {
             if (this._loadingExtEl) {
                 this._loadingExtEl.hide();
             }
         }
     };
-    return Loading;
+    module.exports = Loading;
 });
 
-/**
- * @ignore
- * mask extension for kissy
- * @author yiminghe@gmail.com
- */
 KISSY.add('overlay/extension/mask', [
     'ua',
     'node',
     'event/gesture/tap'
-], function (S, require) {
-    var UA = require('ua'), Node = require('node'), ie6 = UA.ie === 6, $ = Node.all;
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * mask extension for kissy
+ * @author yiminghe@gmail.com
+ */
+    var UA = require('ua'), ie6 = UA.ie === 6, $ = require('node');
     var TapGesture = require('event/gesture/tap');
     var tap = TapGesture.TAP;
     function docWidth() {
@@ -266,55 +264,55 @@ KISSY.add('overlay/extension/mask', [
     }
     function initMask(self, hiddenCls) {
         var maskCls = self.getBaseCssClasses('mask'), mask = $('<div ' + ' style="width:' + docWidth() + ';' + 'left:0;' + 'top:0;' + 'height:' + docHeight() + ';' + 'position:' + (ie6 ? 'absolute' : 'fixed') + ';"' + ' class="' + maskCls + ' ' + hiddenCls + '">' + (ie6 ? '<' + 'iframe ' + 'style="position:absolute;' + 'left:' + '0' + ';' + 'top:' + '0' + ';' + 'background:red;' + 'width: expression(this.parentNode.offsetWidth);' + 'height: expression(this.parentNode.offsetHeight);' + 'filter:alpha(opacity=0);' + 'z-index:-1;"></iframe>' : '') + '</div>').prependTo('body');    /*
-         点 mask 焦点不转移
-         */
+     点 mask 焦点不转移
+     */
         /*
-         点 mask 焦点不转移
-         */
+     点 mask 焦点不转移
+     */
         mask.unselectable();
         mask.on('mousedown', function (e) {
             e.preventDefault();
         });
         return mask;
     }    /**
-     * @class KISSY.Overlay.Extension.Mask
-     * Mask extension class. Make component to be able to show with mask.
-     */
+ * @class KISSY.Overlay.Extension.Mask
+ * Mask extension class. Make component to be able to show with mask.
+ */
     /**
-     * @class KISSY.Overlay.Extension.Mask
-     * Mask extension class. Make component to be able to show with mask.
-     */
+ * @class KISSY.Overlay.Extension.Mask
+ * Mask extension class. Make component to be able to show with mask.
+ */
     function Mask() {
     }
     Mask.ATTRS = {
         /**
-         * Whether show mask layer when component shows and effect
-         *
-         * for example:
-         *
-         *      {
+     * Whether show mask layer when component shows and effect
+     *
+     * for example:
+     *
+     *      {
          *          // whether hide current component when click on mask
          *          closeOnClick: false,
          *          effect: 'fade', // slide
          *          duration: 0.5,
          *          easing: 'easingNone'
          *      }
-         *
-         * @cfg {Boolean|Object} mask
-         */
+     *
+     * @cfg {Boolean|Object} mask
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         mask: { value: false },
         /**
-         * Mask node of current component.
-         * @type {KISSY.Node}
-         * @property maskNode
-         * @readonly
-         */
+     * Mask node of current component.
+     * @type {KISSY.Node}
+     * @property maskNode
+     * @readonly
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         maskNode: {}
     };
     var NONE = 'none', effects = {
@@ -384,19 +382,19 @@ KISSY.add('overlay/extension/mask', [
             }
         }
     };
-    return Mask;
+    module.exports = Mask;
 });
 
 
-/**
+KISSY.add('overlay/extension/overlay-effect', [
+    'util',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * effect for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/extension/overlay-effect', [
-    'util',
-    'node'
-], function (S, require) {
     var effects = {
             fade: [
                 'Out',
@@ -420,7 +418,7 @@ KISSY.add('overlay/extension/overlay-effect', [
         if (self.__effectGhost) {
             self.__effectGhost.stop(1, 1);
         }
-        var el = self.$el, $ = require('node').all, effectCfg = self.get('effect'), target = $(effectCfg.target), duration = effectCfg.duration, targetBox = {
+        var el = self.$el, $ = require('node'), effectCfg = self.get('effect'), target = $(effectCfg.target), duration = effectCfg.duration, targetBox = {
                 width: target.width(),
                 height: target.height()
             }, targetOffset = target.offset(), elBox = {
@@ -501,37 +499,37 @@ KISSY.add('overlay/extension/overlay-effect', [
     function afterVisibleChange(e) {
         processEffect(this, e.newVal);
     }    /**
-     * effect extension for overlay
-     * @class KISSY.Overlay.Extension.Effect
-     */
+ * effect extension for overlay
+ * @class KISSY.Overlay.Extension.Effect
+ */
     /**
-     * effect extension for overlay
-     * @class KISSY.Overlay.Extension.Effect
-     */
+ * effect extension for overlay
+ * @class KISSY.Overlay.Extension.Effect
+ */
     function OverlayEffect() {
     }
     OverlayEffect.ATTRS = {
         /**
-         * Set v as overlay 's show effect
-         *
-         * - v.effect (String): Default:none.
-         * can be set as 'fade' or 'slide'
-         *
-         * - v.target (String|KISS.Node):
-         * The target node from which overlay should animate from while showing.
-         *
-         * - v.duration (Number): in seconds.
-         * Default:0.5.
-         *
-         * - v.easing (String|Function):
-         * for string see {@link KISSY.Anim.Easing} 's method name.
-         *
-         * @cfg {Object} effect
-         * @member KISSY.Overlay
-         */
+     * Set v as overlay 's show effect
+     *
+     * - v.effect (String): Default:none.
+     * can be set as 'fade' or 'slide'
+     *
+     * - v.target (String|KISS.Node):
+     * The target node from which overlay should animate from while showing.
+     *
+     * - v.duration (Number): in seconds.
+     * Default:0.5.
+     *
+     * - v.easing (String|Function):
+     * for string see {@link KISSY.Anim.Easing} 's method name.
+     *
+     * @cfg {Object} effect
+     * @member KISSY.Overlay
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         effect: {
             valueFn: function () {
                 return {
@@ -557,16 +555,16 @@ KISSY.add('overlay/extension/overlay-effect', [
             this.on('afterVisibleChange', afterVisibleChange, this);
         }
     };
-    return OverlayEffect;
+    module.exports = OverlayEffect;
 });
 
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var overlayXtpl = function (scope, buffer, undefined) {
+    var overlayXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -640,38 +638,38 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
         buffer.write('\r\n</div>', 0);
         return buffer;
     };
-    overlayXtpl.TPL_NAME = module.name;
-    overlayXtpl.version = '5.0.0';
-    return overlayXtpl;
+    overlayXtplHtml.TPL_NAME = module.name;
+    overlayXtplHtml.version = '5.0.0';
+    module.exports = overlayXtplHtml;
 });
-/**
- * @ignore
- * KISSY.Dialog
- * @author yiminghe@gmail.com
- */
 KISSY.add('overlay/dialog', [
     'util',
     './control',
     'node',
     './dialog-xtpl'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * KISSY.Dialog
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Overlay = require('./control');
-    var Node = require('node');
+    var $ = require('node');
     var DialogTpl = require('./dialog-xtpl');
     function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
         part.html(v);
     }    /**
-     * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'dialog'.
-     * @extends KISSY.Overlay
-     */
+ * @class KISSY.Overlay.Dialog
+ * KISSY Dialog Component. xclass: 'dialog'.
+ * @extends KISSY.Overlay
+ */
     /**
-     * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'dialog'.
-     * @extends KISSY.Overlay
-     */
+ * @class KISSY.Overlay.Dialog
+ * KISSY Dialog Component. xclass: 'dialog'.
+ * @extends KISSY.Overlay
+ */
     var Dialog = Overlay.extend({
             beforeCreateDom: function (renderData) {
                 util.mix(renderData.elAttrs, {
@@ -692,7 +690,7 @@ KISSY.add('overlay/dialog', [
                 return ghost;
             },
             handleKeyDownInternal: function (e) {
-                if (this.get('escapeToClose') && e.keyCode === Node.KeyCode.ESC) {
+                if (this.get('escapeToClose') && e.keyCode === $.Event.KeyCode.ESC) {
                     if (!(e.target.nodeName.toLowerCase() === 'select' && !e.target.disabled)) {
                         // escape at select
                         this.close();
@@ -740,78 +738,78 @@ KISSY.add('overlay/dialog', [
             ATTRS: {
                 contentTpl: { value: DialogTpl },
                 /**
-             * Header element of dialog.
-             * @type {KISSY.Node}
-             * @property header
-             * @readonly
-             */
+         * Header element of dialog.
+         * @type {KISSY.Node}
+         * @property header
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 header: {
                     selector: function () {
                         return '.' + this.getBaseCssClass('header');
                     }
                 },
                 /**
-             * Body element of dialog.
-             * @type {KISSY.Node}
-             * @property body
-             * @readonly
-             */
+         * Body element of dialog.
+         * @type {KISSY.Node}
+         * @property body
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 body: {
                     selector: function () {
                         return '.' + this.getBaseCssClass('body');
                     }
                 },
                 /**
-             * Footer element of dialog.
-             * @type {KISSY.Node}
-             * @property footer
-             * @readonly
-             */
+         * Footer element of dialog.
+         * @type {KISSY.Node}
+         * @property footer
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 footer: {
                     selector: function () {
                         return '.' + this.getBaseCssClass('footer');
                     }
                 },
                 /**
-             * Key-value map of body element's style.
-             * @cfg {Object} bodyStyle
-             */
+         * Key-value map of body element's style.
+         * @cfg {Object} bodyStyle
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 bodyStyle: { sync: 0 },
                 /**
-             * Key-value map of footer element's style.
-             * @cfg {Object} footerStyle
-             */
+         * Key-value map of footer element's style.
+         * @cfg {Object} footerStyle
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 footerStyle: { render: 1 },
                 /**
-             * Key-value map of header element's style.
-             * @cfg {Object} headerStyle
-             */
+         * Key-value map of header element's style.
+         * @cfg {Object} headerStyle
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 headerStyle: { render: 1 },
                 /**
-             * html content of header element.
-             * @cfg {KISSY.Node|String} headerContent
-             */
+         * html content of header element.
+         * @cfg {KISSY.Node|String} headerContent
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 headerContent: {
                     value: '',
                     sync: 0,
@@ -821,12 +819,12 @@ KISSY.add('overlay/dialog', [
                     }
                 },
                 /**
-             * html content of body element.
-             * @cfg {KISSY.Node|String} bodyContent
-             */
+         * html content of body element.
+         * @cfg {KISSY.Node|String} bodyContent
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 bodyContent: {
                     value: '',
                     sync: 0,
@@ -836,12 +834,12 @@ KISSY.add('overlay/dialog', [
                     }
                 },
                 /**
-             * html content of footer element.
-             * @cfg {KISSY.Node|String} footerContent
-             */
+         * html content of footer element.
+         * @cfg {KISSY.Node|String} footerContent
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 footerContent: {
                     value: '',
                     sync: 0,
@@ -851,45 +849,45 @@ KISSY.add('overlay/dialog', [
                     }
                 },
                 /**
-             * whether this component can be closed.
-             *
-             * Defaults to: true
-             *
-             * @cfg {Boolean} closable
-             * @protected
-             */
+         * whether this component can be closed.
+         *
+         * Defaults to: true
+         *
+         * @cfg {Boolean} closable
+         * @protected
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 closable: { value: true },
                 /**
-             * whether this component can be focused.
-             *
-             * Defaults to: true
-             *
-             * @cfg {Boolean} focusable
-             * @protected
-             */
+         * whether this component can be focused.
+         *
+         * Defaults to: true
+         *
+         * @cfg {Boolean} focusable
+         * @protected
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 focusable: { value: true },
                 /**
-             * whether this component can be closed by press escape key.
-             *
-             * Defaults to: true
-             *
-             * @cfg {Boolean} escapeToClose
-             * @since 1.3.0
-             */
+         * whether this component can be closed by press escape key.
+         *
+         * Defaults to: true
+         *
+         * @cfg {Boolean} escapeToClose
+         * @since 1.3.0
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 escapeToClose: { value: true }
             },
             xclass: 'dialog'
         });
-    var KEY_TAB = Node.KeyCode.TAB;    // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
+    var KEY_TAB = $.Event.KeyCode.TAB;    // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
     // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
     function trapFocus(e) {
         var self = this, keyCode = e.keyCode;
@@ -900,9 +898,9 @@ KISSY.add('overlay/dialog', [
                                // Handles the keyboard events for accessibility reasons
         // summary:
         // Handles the keyboard events for accessibility reasons
-        var node = Node.all(e.target);    // get the target node of the keypress event
-                                          // find the first and last tab focusable items in the hierarchy of the dialog container node
-                                          // do this every time if the items may be added / removed from the the dialog may change visibility or state
+        var node = $(e.target);    // get the target node of the keypress event
+                                   // find the first and last tab focusable items in the hierarchy of the dialog container node
+                                   // do this every time if the items may be added / removed from the the dialog may change visibility or state
         // get the target node of the keypress event
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
@@ -935,8 +933,7 @@ KISSY.add('overlay/dialog', [
     }    // end of function
     //stop the event if not a tab keypress
     // end of function
-    return Dialog;
-});    /**
+    module.exports = Dialog;    /**
  * @ignore
  *
  * 2012-09-06 yiminghe@gmail.com
@@ -946,12 +943,13 @@ KISSY.add('overlay/dialog', [
  * 2010-11-10 yiminghe@gmail.com
  *  重构，使用扩展类
  */
+});
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var dialogXtpl = function (scope, buffer, undefined) {
+    var dialogXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
         var option0 = {};
         var params1 = [];
@@ -1073,23 +1071,23 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
         buffer = blockCommand.call(tpl, scope, option3, buffer, 2);
         return buffer;
     };
-    dialogXtpl.TPL_NAME = module.name;
-    dialogXtpl.version = '5.0.0';
-    return dialogXtpl;
+    dialogXtplHtml.TPL_NAME = module.name;
+    dialogXtplHtml.version = '5.0.0';
+    module.exports = dialogXtplHtml;
 });
-/**
- * @ignore
- * KISSY.Popup
- * @author qiaohua@taobao.com, yiminghe@gmail.com
- */
 KISSY.add('overlay/popup', [
     './control',
     'util',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * KISSY.Popup
+ * @author qiaohua@taobao.com, yiminghe@gmail.com
+ */
     var Overlay = require('./control');
     var util = require('util');
-    var Node = require('node');
+    var $ = require('node');
     function bindTriggerMouse() {
         var self = this, trigger = self.get('trigger'), timer;
         self.__mouseEnterPopup = function (ev) {
@@ -1137,25 +1135,25 @@ KISSY.add('overlay/popup', [
     }
     function showing(ev) {
         var self = this;
-        self.set('currentTrigger', Node.one(ev.target));
+        self.set('currentTrigger', $(ev.target));
         self.show();
     }
     function hiding() {
         this.set('currentTrigger', undefined);
         this.hide();
     }    /**
-     * @class KISSY.Overlay.Popup
-     * KISSY Popup Component.
-     * xclass: 'popup'.
-     * @extends KISSY.Overlay
-     */
+ * @class KISSY.Overlay.Popup
+ * KISSY Popup Component.
+ * xclass: 'popup'.
+ * @extends KISSY.Overlay
+ */
     /**
-     * @class KISSY.Overlay.Popup
-     * KISSY Popup Component.
-     * xclass: 'popup'.
-     * @extends KISSY.Overlay
-     */
-    return Overlay.extend({
+ * @class KISSY.Overlay.Popup
+ * KISSY Popup Component.
+ * xclass: 'popup'.
+ * @extends KISSY.Overlay
+ */
+    module.exports = Overlay.extend({
         initializer: function () {
             var self = this,
                 // 获取相关联的 Dom 节点
@@ -1196,62 +1194,62 @@ KISSY.add('overlay/popup', [
     }, {
         ATTRS: {
             /**
-             * Trigger elements to show popup.
-             * @cfg {KISSY.Node} trigger
-             */
+         * Trigger elements to show popup.
+         * @cfg {KISSY.Node} trigger
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             trigger: {
                 setter: function (v) {
-                    return Node.all(v);
+                    return $(v);
                 }
             },
             /**
-             * How to activate trigger element, 'click' or 'mouse'.
-             *
-             * Defaults to: 'click'.
-             *
-             * @cfg {String} triggerType
-             */
+         * How to activate trigger element, 'click' or 'mouse'.
+         *
+         * Defaults to: 'click'.
+         *
+         * @cfg {String} triggerType
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             triggerType: { value: 'click' },
             currentTrigger: {},
             /**
-             * When trigger type is mouse, the delayed time to show popup.
-             *
-             * Defaults to: 0.1, in seconds.
-             *
-             * @cfg {Number} mouseDelay
-             */
+         * When trigger type is mouse, the delayed time to show popup.
+         *
+         * Defaults to: 0.1, in seconds.
+         *
+         * @cfg {Number} mouseDelay
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             mouseDelay: {
                 // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
                 value: 0.1
             },
             /**
-             * When trigger type is click, whether support toggle.
-             *
-             * Defaults to: false
-             *
-             * @cfg {Boolean} toggle
-             */
+         * When trigger type is click, whether support toggle.
+         *
+         * Defaults to: false
+         *
+         * @cfg {Boolean} toggle
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             toggle: {
                 // triggerType 为 click 时, Popup 是否有toggle功能
                 value: false
             }
         },
         xclass: 'popup'
-    });
-});    /**
+    });    /**
  * @ignore
  * 2011-05-17
  *  - yiminghe@gmail.com：利用 initializer , destructor ,ATTRS
  **/
+});

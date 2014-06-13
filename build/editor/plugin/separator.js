@@ -1,6 +1,6 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
-KISSY.add("editor/plugin/separator",["node"],function(d,b){function a(){}var c=b("node").all;a.prototype={pluginRenderUI:function(a){c('<span class="'+a.get("prefixCls")+'editor-toolbar-separator">&nbsp;</span>').appendTo(a.get("toolBarEl"))}};return a});
+KISSY.add("editor/plugin/separator",["node"],function(e,b,f,c){function a(){}var d=b("node");a.prototype={pluginRenderUI:function(a){d('<span class="'+a.get("prefixCls")+'editor-toolbar-separator">&nbsp;</span>').appendTo(a.get("toolBarEl"))}};c.exports=a});

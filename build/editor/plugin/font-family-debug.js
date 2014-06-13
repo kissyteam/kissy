@@ -1,24 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/font-family
 */
-/**
- * @ignore
- * font formatting for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/font-family', [
     'util',
     'editor',
     './font/ui',
     './font-family/cmd',
     './menubutton'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * font formatting for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Editor = require('editor');
     var ui = require('./font/ui');
@@ -101,7 +101,7 @@ KISSY.add('editor/plugin/font-family', [
             }, fontFamilies), ui.Select);
         }
     });
-    return FontFamilyPlugin;
+    module.exports = FontFamilyPlugin;
 });
 
 

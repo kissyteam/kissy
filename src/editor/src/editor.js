@@ -5,8 +5,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/editor');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/editor');
 var $ = require('node');
 var XTemplate = require('xtemplate/runtime');
 var iframeContentXTpl = require('editor/iframe-content-xtpl');

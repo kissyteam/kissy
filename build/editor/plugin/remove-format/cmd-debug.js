@@ -1,42 +1,42 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/remove-format/cmd
 */
-/**
+KISSY.add('editor/plugin/remove-format/cmd', [
+    'editor',
+    'dom'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Add remove-format command for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/remove-format/cmd', [
-    'editor',
-    'dom'
-], function (S, require) {
     var Editor = require('editor');
     var KER = Editor.RangeType, ElementPath = Editor.ElementPath, Dom = require('dom'),
         /*
-     A comma separated list of elements to be removed
-     when executing the "remove format" command.
-     Note that only inline elements are allowed.
-     Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
-     */
+ A comma separated list of elements to be removed
+ when executing the "remove format" command.
+ Note that only inline elements are allowed.
+ Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
+ */
         removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' + 'q,samp,small,span,strike,strong,sub,sup,tt,u,var,s',
         /*
-     A comma separated list of elements attributes to be removed
-     when executing the "remove format" command.
-     Defaults to: 'class,style,lang,width,height,align,hspace,valign'
-     */
+ A comma separated list of elements attributes to be removed
+ when executing the "remove format" command.
+ Defaults to: 'class,style,lang,width,height,align,hspace,valign'
+ */
         removeFormatAttributes = ('class,style,lang,width,height,' + 'align,hspace,valign').split(/,/), tagsRegex = new RegExp('^(?:' + removeFormatTags.replace(/,/g, '|') + ')$', 'i');
     function removeAttrs(el, attrs) {
         for (var i = 0; i < attrs.length; i++) {
             el.removeAttr(attrs[i]);
         }
     }
-    return {
+    module.exports = {
         init: function (editor) {
             if (!editor.hasCommand('removeFormat')) {
                 editor.addCommand('removeFormat', {

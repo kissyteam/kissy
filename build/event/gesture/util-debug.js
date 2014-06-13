@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
 /*
 combined modules:
@@ -11,36 +11,36 @@ event/gesture/util/touch
 event/gesture/util/single-touch
 event/gesture/util/double-touch
 */
-/**
- * utils for gesture events
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/util', [
     './util/add-event',
     './util/touch',
     './util/single-touch',
     './util/double-touch'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * utils for gesture events
+ * @author yiminghe@gmail.com
+ */
     var addGestureEvent = require('./util/add-event');
-    return {
+    module.exports = {
         addEvent: addGestureEvent,
         Touch: require('./util/touch'),
         SingleTouch: require('./util/single-touch'),
         DoubleTouch: require('./util/double-touch')
     };
 });
-/**
- * @ignore
- * base handle for touch gesture, mouse and touch normalization
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/util/add-event', [
     'util',
     'dom',
     'ua',
     'event/dom/base',
     'feature'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * base handle for touch gesture, mouse and touch normalization
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Dom = require('dom');
     var eventHandleMap = {};
@@ -376,7 +376,7 @@ KISSY.add('event/gesture/util/add-event', [
             }
         }
     }
-    return function (events, config) {
+    module.exports = function (events, config) {
         if (typeof events === 'string') {
             events = [events];
         }
@@ -391,8 +391,7 @@ KISSY.add('event/gesture/util/add-event', [
             eventHandleMap[event] = config;
             Special[event] = specialEvent;
         });
-    };
-});    /*
+    };    /*
  2013-08-29 yiminghe@gmail.com
  - ios bug
  create new element on touchend handler
@@ -418,17 +417,18 @@ KISSY.add('event/gesture/util/add-event', [
  in order to make tap/doubleTap bubbling same with native event.
  register event on document and then bubble
  */
+});
 
 
 
 
 
-/**
+KISSY.add('event/gesture/util/touch', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * touch base
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/util/touch', [], function () {
     var noop = function () {
     };
     function Touch() {
@@ -483,17 +483,17 @@ KISSY.add('event/gesture/util/touch', [], function () {
         move: noop,
         end: noop
     };
-    return Touch;
+    module.exports = Touch;
 });
-/**
+KISSY.add('event/gesture/util/single-touch', [
+    './touch',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * touch count guard
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/util/single-touch', [
-    './touch',
-    'util'
-], function (S, require) {
     var Touch = require('./touch');
     var util = require('util');
     function SingleTouch() {
@@ -510,18 +510,18 @@ KISSY.add('event/gesture/util/single-touch', [
             };
         }
     });
-    return SingleTouch;
+    module.exports = SingleTouch;
 });
-/**
- * @ignore
- * double-touch base
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/util/double-touch', [
     'dom',
     './touch',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * double-touch base
+ * @author yiminghe@gmail.com
+ */
     var Dom = require('dom');
     var Touch = require('./touch');
     var util = require('util');
@@ -537,15 +537,14 @@ KISSY.add('event/gesture/util/double-touch', [
             if (Dom.contains(t1, t2)) {
                 return t1;
             }
-            while (1) {
+            while (t2) {
                 if (Dom.contains(t2, t1)) {
                     return t2;
                 }
                 t2 = t2.parentNode;
             }
-            S.error('getCommonTarget error!');
             return undefined;
         }
     });
-    return DoubleTouch;
+    module.exports = DoubleTouch;
 });

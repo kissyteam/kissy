@@ -1,28 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:43
 */
 /*
 combined modules:
 dom/class-list
 */
-/**
+KISSY.add('dom/class-list', [
+    'util',
+    'dom/base'
+], function (S, require, exports, module) {
+    /**
  * implement class-list for ie<10
  * @ignore
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/class-list', [
-    'util',
-    'dom/base'
-], function (S, require) {
     var util = require('util');
     var Dom = require('dom/base');
     var SPACE = ' ', RE_CLASS = /[\n\t\r]/g;
     function norm(elemClass) {
         return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
     }
-    return util.mix(Dom, {
+    module.exports = util.mix(Dom, {
         _hasClass: function (elem, classNames) {
             var elemClass = elem.className, className, cl, j;
             if (elemClass) {

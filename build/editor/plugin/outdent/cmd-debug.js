@@ -1,26 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/outdent/cmd
 */
-/**
+KISSY.add('editor/plugin/outdent/cmd', [
+    'editor',
+    '../dent-cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/outdent/cmd', [
-    'editor',
-    '../dent-cmd'
-], function (S, require) {
     var Editor = require('editor');
     var dentUtils = require('../dent-cmd');
     var addCommand = dentUtils.addCommand;
     var checkOutdentActive = dentUtils.checkOutdentActive;
-    return {
+    module.exports = {
         init: function (editor) {
             addCommand(editor, 'outdent');
             var queryCmd = Editor.Utils.getQueryCmd('outdent');

@@ -34,7 +34,7 @@ var TRUE = true,
             if (KISSY.DEV_MODE) {
                 url = url.replace(/^theme\//, 'theme/assets/');
             }
-            return require.toUrl((KISSY.DEV_MODE ? '../../sub-modules/' : '../') + url);
+            return require.toUrl((KISSY.DEV_MODE ? '../../sub-modules/' : './') + url);
         },
 
         lazyRun: function (obj, before, after) {

@@ -1,27 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/italic
 */
-/**
- * @ignore
- * italic button.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/italic', [
     './font/ui',
     './italic/cmd',
     './button',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * italic button.
+ * @author yiminghe@gmail.com
+ */
     var ui = require('./font/ui');
     var cmd = require('./italic/cmd');
     require('./button');
-    var Node = require('node');
+    var $ = require('node');
     function Italic() {
     }
     Italic.prototype = {
@@ -33,7 +33,7 @@ KISSY.add('editor/plugin/italic', [
             }, ui.Button);
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === Node.KeyCode.I) {
+                    if (e.ctrlKey && e.keyCode === $.Event.KeyCode.I) {
                         editor.execCommand('italic');
                         e.preventDefault();
                     }
@@ -41,7 +41,7 @@ KISSY.add('editor/plugin/italic', [
             });
         }
     };
-    return Italic;
+    module.exports = Italic;
 });
 
 

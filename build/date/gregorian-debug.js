@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:42
 */
 /*
 combined modules:
@@ -9,81 +9,81 @@ date/gregorian
 date/gregorian/utils
 date/gregorian/const
 */
-/**
- * GregorianCalendar class for KISSY.
- * @ignore
- * @author yiminghe@gmail.com
- */
 KISSY.add('date/gregorian', [
     'util',
     './gregorian/utils',
     'i18n!date',
     './gregorian/const'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * GregorianCalendar class for KISSY.
+ * @ignore
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var toInt = parseInt;
     var Utils = require('./gregorian/utils');
     var defaultLocale = require('i18n!date');
     var Const = require('./gregorian/const');    /**
-     * GregorianCalendar class.
-     *
-     * - no arguments:
-     *   Constructs a default GregorianCalendar using the current time
-     *   in the default time zone with the default locale.
-     * - one argument timezoneOffset:
-     *   Constructs a GregorianCalendar based on the current time
-     *   in the given timezoneOffset with the default locale.
-     * - one argument locale:
-     *   Constructs a GregorianCalendar
-     *   based on the current time in the default time zone with the given locale.
-     * - two arguments
-     *   Constructs a GregorianCalendar based on the current time in the given time zone with the given locale.
-     *      - zone - the given time zone.
-     *      - aLocale - the given locale.
-     *
-     * - 3 to 6 arguments:
-     *   Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
-     *      - year - the value used to set the YEAR calendar field in the calendar.
-     *      - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g.,
-     *        0 for January.
-     *      - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
-     *      - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
-     *      - minute - the value used to set the MINUTE calendar field in the calendar.
-     *      - second - the value used to set the SECONDS calendar field in the calendar.
-     *
-     *
-     * @class KISSY.Date.Gregorian
-     */
+ * GregorianCalendar class.
+ *
+ * - no arguments:
+ *   Constructs a default GregorianCalendar using the current time
+ *   in the default time zone with the default locale.
+ * - one argument timezoneOffset:
+ *   Constructs a GregorianCalendar based on the current time
+ *   in the given timezoneOffset with the default locale.
+ * - one argument locale:
+ *   Constructs a GregorianCalendar
+ *   based on the current time in the default time zone with the given locale.
+ * - two arguments
+ *   Constructs a GregorianCalendar based on the current time in the given time zone with the given locale.
+ *      - zone - the given time zone.
+ *      - aLocale - the given locale.
+ *
+ * - 3 to 6 arguments:
+ *   Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
+ *      - year - the value used to set the YEAR calendar field in the calendar.
+ *      - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g.,
+ *        0 for January.
+ *      - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
+ *      - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
+ *      - minute - the value used to set the MINUTE calendar field in the calendar.
+ *      - second - the value used to set the SECONDS calendar field in the calendar.
+ *
+ *
+ * @class KISSY.Date.Gregorian
+ */
     /**
-     * GregorianCalendar class.
-     *
-     * - no arguments:
-     *   Constructs a default GregorianCalendar using the current time
-     *   in the default time zone with the default locale.
-     * - one argument timezoneOffset:
-     *   Constructs a GregorianCalendar based on the current time
-     *   in the given timezoneOffset with the default locale.
-     * - one argument locale:
-     *   Constructs a GregorianCalendar
-     *   based on the current time in the default time zone with the given locale.
-     * - two arguments
-     *   Constructs a GregorianCalendar based on the current time in the given time zone with the given locale.
-     *      - zone - the given time zone.
-     *      - aLocale - the given locale.
-     *
-     * - 3 to 6 arguments:
-     *   Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
-     *      - year - the value used to set the YEAR calendar field in the calendar.
-     *      - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g.,
-     *        0 for January.
-     *      - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
-     *      - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
-     *      - minute - the value used to set the MINUTE calendar field in the calendar.
-     *      - second - the value used to set the SECONDS calendar field in the calendar.
-     *
-     *
-     * @class KISSY.Date.Gregorian
-     */
+ * GregorianCalendar class.
+ *
+ * - no arguments:
+ *   Constructs a default GregorianCalendar using the current time
+ *   in the default time zone with the default locale.
+ * - one argument timezoneOffset:
+ *   Constructs a GregorianCalendar based on the current time
+ *   in the given timezoneOffset with the default locale.
+ * - one argument locale:
+ *   Constructs a GregorianCalendar
+ *   based on the current time in the default time zone with the given locale.
+ * - two arguments
+ *   Constructs a GregorianCalendar based on the current time in the given time zone with the given locale.
+ *      - zone - the given time zone.
+ *      - aLocale - the given locale.
+ *
+ * - 3 to 6 arguments:
+ *   Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
+ *      - year - the value used to set the YEAR calendar field in the calendar.
+ *      - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g.,
+ *        0 for January.
+ *      - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
+ *      - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
+ *      - minute - the value used to set the MINUTE calendar field in the calendar.
+ *      - second - the value used to set the SECONDS calendar field in the calendar.
+ *
+ *
+ * @class KISSY.Date.Gregorian
+ */
     function GregorianCalendar(timezoneOffset, locale) {
         var args = util.makeArray(arguments);
         if (typeof timezoneOffset === 'object') {
@@ -95,47 +95,47 @@ KISSY.add('date/gregorian', [
         locale = locale || defaultLocale;
         this.locale = locale;
         this.fields = [];    /**
-         * The currently set time for this date.
-         * @protected
-         * @type Number|undefined
-         */
+     * The currently set time for this date.
+     * @protected
+     * @type Number|undefined
+     */
         /**
-         * The currently set time for this date.
-         * @protected
-         * @type Number|undefined
-         */
+     * The currently set time for this date.
+     * @protected
+     * @type Number|undefined
+     */
         this.time = undefined;    /**
-         * The timezoneOffset in minutes used by this date.
-         * @type Number
-         * @protected
-         */
+     * The timezoneOffset in minutes used by this date.
+     * @type Number
+     * @protected
+     */
         /**
-         * The timezoneOffset in minutes used by this date.
-         * @type Number
-         * @protected
-         */
+     * The timezoneOffset in minutes used by this date.
+     * @type Number
+     * @protected
+     */
         this.timezoneOffset = timezoneOffset || locale.timezoneOffset;    /**
-         * The first day of the week
-         * @type Number
-         * @protected
-         */
+     * The first day of the week
+     * @type Number
+     * @protected
+     */
         /**
-         * The first day of the week
-         * @type Number
-         * @protected
-         */
+     * The first day of the week
+     * @type Number
+     * @protected
+     */
         this.firstDayOfWeek = locale.firstDayOfWeek;    /**
-         * The number of days required for the first week in a month or year,
-         * with possible values from 1 to 7.
-         * @@protected
-         * @type Number
-         */
+     * The number of days required for the first week in a month or year,
+     * with possible values from 1 to 7.
+     * @@protected
+     * @type Number
+     */
         /**
-         * The number of days required for the first week in a month or year,
-         * with possible values from 1 to 7.
-         * @@protected
-         * @type Number
-         */
+     * The number of days required for the first week in a month or year,
+     * with possible values from 1 to 7.
+     * @@protected
+     * @type Number
+     */
         this.minimalDaysInFirstWeek = locale.minimalDaysInFirstWeek;
         this.fieldsComputed = false;
         if (arguments.length >= 3) {
@@ -146,84 +146,84 @@ KISSY.add('date/gregorian', [
     util.mix(GregorianCalendar, {
         Utils: Utils,
         /**
-         * Determines if the given year is a leap year.
-         * Returns true if the given year is a leap year. To specify BC year numbers,
-         * 1 - year number must be given. For example, year BC 4 is specified as -3.
-         * @param {Number} year the given year.
-         * @returns {Boolean} true if the given year is a leap year; false otherwise.
-         * @static
-         * @method
-         */
+     * Determines if the given year is a leap year.
+     * Returns true if the given year is a leap year. To specify BC year numbers,
+     * 1 - year number must be given. For example, year BC 4 is specified as -3.
+     * @param {Number} year the given year.
+     * @returns {Boolean} true if the given year is a leap year; false otherwise.
+     * @static
+     * @method
+     */
         isLeapYear: Utils.isLeapYear,
         /**
-         * Enum indicating year field of date
-         * @type Number
-         */
+     * Enum indicating year field of date
+     * @type Number
+     */
         YEAR: 1,
         /**
-         * Enum indicating month field of date
-         * @type Number
-         */
+     * Enum indicating month field of date
+     * @type Number
+     */
         MONTH: 2,
         /**
-         * Enum indicating the day of the month
-         * @type Number
-         */
+     * Enum indicating the day of the month
+     * @type Number
+     */
         DAY_OF_MONTH: 3,
         /**
-         * Enum indicating the hour (24).
-         * @type Number
-         */
+     * Enum indicating the hour (24).
+     * @type Number
+     */
         HOUR_OF_DAY: 4,
         /**
-         * Enum indicating the minute of the day
-         * @type Number
-         */
+     * Enum indicating the minute of the day
+     * @type Number
+     */
         MINUTES: 5,
         /**
-         * Enum indicating the second of the day
-         * @type Number
-         */
+     * Enum indicating the second of the day
+     * @type Number
+     */
         SECONDS: 6,
         /**
-         * Enum indicating the millisecond of the day
-         * @type Number
-         */
+     * Enum indicating the millisecond of the day
+     * @type Number
+     */
         MILLISECONDS: 7,
         /**
-         * Enum indicating the week number within the current year
-         * @type Number
-         */
+     * Enum indicating the week number within the current year
+     * @type Number
+     */
         WEEK_OF_YEAR: 8,
         /**
-         * Enum indicating the week number within the current month
-         * @type Number
-         */
+     * Enum indicating the week number within the current month
+     * @type Number
+     */
         WEEK_OF_MONTH: 9,
         /**
-         * Enum indicating the day of the day number within the current year
-         * @type Number
-         */
+     * Enum indicating the day of the day number within the current year
+     * @type Number
+     */
         DAY_OF_YEAR: 10,
         /**
-         * Enum indicating the day of the week
-         * @type Number
-         */
+     * Enum indicating the day of the week
+     * @type Number
+     */
         DAY_OF_WEEK: 11,
         /**
-         * Enum indicating the day of the ordinal number of the day of the week
-         * @type Number
-         */
+     * Enum indicating the day of the ordinal number of the day of the week
+     * @type Number
+     */
         DAY_OF_WEEK_IN_MONTH: 12,
         /**
-         * Enum indicating am
-         * @type Number
-         */
+     * Enum indicating am
+     * @type Number
+     */
         AM: 0,
         /**
-         * Enum indicating pm
-         * @type Number
-         */
+     * Enum indicating pm
+     * @type Number
+     */
         PM: 1
     });
     var fields = [
@@ -348,33 +348,33 @@ KISSY.add('date/gregorian', [
     GregorianCalendar.prototype = {
         constructor: GregorianCalendar,
         /**
-         * Determines if current year is a leap year.
-         * Returns true if the given year is a leap year. To specify BC year numbers,
-         * 1 - year number must be given. For example, year BC 4 is specified as -3.
-         * @returns {Boolean} true if the given year is a leap year; false otherwise.
-         * @method
-         * @member KISSY.Date.Gregorian
-         */
+     * Determines if current year is a leap year.
+     * Returns true if the given year is a leap year. To specify BC year numbers,
+     * 1 - year number must be given. For example, year BC 4 is specified as -3.
+     * @returns {Boolean} true if the given year is a leap year; false otherwise.
+     * @method
+     * @member KISSY.Date.Gregorian
+     */
         isLeapYear: function () {
             return isLeapYear(this.getYear());
         },
         /**
-         * Return local info for current date instance
-         * @returns {Object}
-         */
+     * Return local info for current date instance
+     * @returns {Object}
+     */
         getLocale: function () {
             return this.locale;
         },
         /**
-         * Returns the minimum value for
-         * the given calendar field of this GregorianCalendar instance.
-         * The minimum value is defined as the smallest value
-         * returned by the get method for any possible time value,
-         * taking into consideration the current values of the getFirstDayOfWeek,
-         * getMinimalDaysInFirstWeek.
-         * @param field the calendar field.
-         * @returns {Number} the minimum value for the given calendar field.
-         */
+     * Returns the minimum value for
+     * the given calendar field of this GregorianCalendar instance.
+     * The minimum value is defined as the smallest value
+     * returned by the get method for any possible time value,
+     * taking into consideration the current values of the getFirstDayOfWeek,
+     * getMinimalDaysInFirstWeek.
+     * @param field the calendar field.
+     * @returns {Number} the minimum value for the given calendar field.
+     */
         getActualMinimum: function (field) {
             if (MIN_VALUES[field] !== undefined) {
                 return MIN_VALUES[field];
@@ -387,14 +387,14 @@ KISSY.add('date/gregorian', [
             throw new Error('minimum value not defined!');
         },
         /**
-         * Returns the maximum value for the given calendar field
-         * of this GregorianCalendar instance.
-         * The maximum value is defined as the largest value returned
-         * by the get method for any possible time value, taking into consideration
-         * the current values of the getFirstDayOfWeek, getMinimalDaysInFirstWeek methods.
-         * @param field the calendar field.
-         * @returns {Number} the maximum value for the given calendar field.
-         */
+     * Returns the maximum value for the given calendar field
+     * of this GregorianCalendar instance.
+     * The maximum value is defined as the largest value returned
+     * by the get method for any possible time value, taking into consideration
+     * the current values of the getFirstDayOfWeek, getMinimalDaysInFirstWeek methods.
+     * @param field the calendar field.
+     * @returns {Number} the maximum value for the given calendar field.
+     */
         getActualMaximum: function (field) {
             if (MAX_VALUES[field] !== undefined) {
                 return MAX_VALUES[field];
@@ -428,20 +428,20 @@ KISSY.add('date/gregorian', [
             return value;
         },
         /**
-         * Determines if the given calendar field has a value set,
-         * including cases that the value has been set by internal fields calculations
-         * triggered by a get method call.
-         * @param field the calendar field to be cleared.
-         * @returns {boolean} true if the given calendar field has a value set; false otherwise.
-         */
+     * Determines if the given calendar field has a value set,
+     * including cases that the value has been set by internal fields calculations
+     * triggered by a get method call.
+     * @param field the calendar field to be cleared.
+     * @returns {boolean} true if the given calendar field has a value set; false otherwise.
+     */
         isSet: function (field) {
             return this.fields[field] !== undefined;
         },
         /**
-         * Converts the time value (millisecond offset from the Epoch)
-         * to calendar field values.
-         * @protected
-         */
+     * Converts the time value (millisecond offset from the Epoch)
+     * to calendar field values.
+     * @protected
+     */
         computeFields: function () {
             var time = this.time;
             var timezoneOffset = this.timezoneOffset * ONE_MINUTE;
@@ -506,10 +506,10 @@ KISSY.add('date/gregorian', [
             this.fieldsComputed = true;
         },
         /**
-         * Converts calendar field values to the time value
-         * (millisecond offset from the Epoch).
-         * @protected
-         */
+     * Converts calendar field values to the time value
+     * (millisecond offset from the Epoch).
+     * @protected
+     */
         computeTime: function () {
             if (!this.isSet(YEAR)) {
                 throw new Error('year must be set for KISSY GregorianCalendar');
@@ -536,12 +536,12 @@ KISSY.add('date/gregorian', [
             this.computeFields();
         },
         /**
-         * Fills in any unset fields in the calendar fields. First,
-         * the computeTime() method is called if the time value (millisecond offset from the Epoch)
-         * has not been calculated from calendar field values.
-         * Then, the computeFields() method is called to calculate all calendar field values.
-         * @protected
-         */
+     * Fills in any unset fields in the calendar fields. First,
+     * the computeTime() method is called if the time value (millisecond offset from the Epoch)
+     * has not been calculated from calendar field values.
+     * Then, the computeFields() method is called to calculate all calendar field values.
+     * @protected
+     */
         complete: function () {
             if (this.time === undefined) {
                 this.computeTime();
@@ -626,10 +626,10 @@ KISSY.add('date/gregorian', [
             return fixedDate;
         },
         /**
-         * Returns this Calendar's time value in milliseconds
-         * @member KISSY.Date.Gregorian
-         * @returns {Number} the current time as UTC milliseconds from the epoch.
-         */
+     * Returns this Calendar's time value in milliseconds
+     * @member KISSY.Date.Gregorian
+     * @returns {Number} the current time as UTC milliseconds from the epoch.
+     */
         getTime: function () {
             if (this.time === undefined) {
                 this.computeTime();
@@ -637,88 +637,88 @@ KISSY.add('date/gregorian', [
             return this.time;
         },
         /**
-         * Sets this Calendar's current time from the given long value.
-         * @param time the new time in UTC milliseconds from the epoch.
-         */
+     * Sets this Calendar's current time from the given long value.
+     * @param time the new time in UTC milliseconds from the epoch.
+     */
         setTime: function (time) {
             this.time = time;
             this.fieldsComputed = false;
             this.complete();
         },
         /**
-         * Returns the value of the given calendar field.
-         * @param field the given calendar field.
-         * @returns {Number} the value for the given calendar field.
-         */
+     * Returns the value of the given calendar field.
+     * @param field the given calendar field.
+     * @returns {Number} the value for the given calendar field.
+     */
         get: function (field) {
             this.complete();
             return this.fields[field];
         },
         /**
-         * Returns the year of the given calendar field.
-         * @method getYear
-         * @returns {Number} the year for the given calendar field.
-         */
+     * Returns the year of the given calendar field.
+     * @method getYear
+     * @returns {Number} the year for the given calendar field.
+     */
         /**
-         * Returns the month of the given calendar field.
-         * @method getMonth
-         * @returns {Number} the month for the given calendar field.
-         */
+     * Returns the month of the given calendar field.
+     * @method getMonth
+     * @returns {Number} the month for the given calendar field.
+     */
         /**
-         * Returns the day of month of the given calendar field.
-         * @method getDayOfMonth
-         * @returns {Number} the day of month for the given calendar field.
-         */
+     * Returns the day of month of the given calendar field.
+     * @method getDayOfMonth
+     * @returns {Number} the day of month for the given calendar field.
+     */
         /**
-         * Returns the hour of day of the given calendar field.
-         * @method getHourOfDay
-         * @returns {Number} the hour of day for the given calendar field.
-         */
+     * Returns the hour of day of the given calendar field.
+     * @method getHourOfDay
+     * @returns {Number} the hour of day for the given calendar field.
+     */
         /**
-         * Returns the minute of the given calendar field.
-         * @method getMinute
-         * @returns {Number} the minute for the given calendar field.
-         */
+     * Returns the minute of the given calendar field.
+     * @method getMinute
+     * @returns {Number} the minute for the given calendar field.
+     */
         /**
-         * Returns the second of the given calendar field.
-         * @method getSecond
-         * @returns {Number} the second for the given calendar field.
-         */
+     * Returns the second of the given calendar field.
+     * @method getSecond
+     * @returns {Number} the second for the given calendar field.
+     */
         /**
-         * Returns the millisecond of the given calendar field.
-         * @method getMilliSecond
-         * @returns {Number} the millisecond for the given calendar field.
-         */
+     * Returns the millisecond of the given calendar field.
+     * @method getMilliSecond
+     * @returns {Number} the millisecond for the given calendar field.
+     */
         /**
-         * Returns the week of year of the given calendar field.
-         * @method getWeekOfYear
-         * @returns {Number} the week of year for the given calendar field.
-         */
+     * Returns the week of year of the given calendar field.
+     * @method getWeekOfYear
+     * @returns {Number} the week of year for the given calendar field.
+     */
         /**
-         * Returns the week of month of the given calendar field.
-         * @method getWeekOfMonth
-         * @returns {Number} the week of month for the given calendar field.
-         */
+     * Returns the week of month of the given calendar field.
+     * @method getWeekOfMonth
+     * @returns {Number} the week of month for the given calendar field.
+     */
         /**
-         * Returns the day of year of the given calendar field.
-         * @method getDayOfYear
-         * @returns {Number} the day of year for the given calendar field.
-         */
+     * Returns the day of year of the given calendar field.
+     * @method getDayOfYear
+     * @returns {Number} the day of year for the given calendar field.
+     */
         /**
-         * Returns the day of week of the given calendar field.
-         * @method getDayOfWeek
-         * @returns {Number} the day of week for the given calendar field.
-         */
+     * Returns the day of week of the given calendar field.
+     * @method getDayOfWeek
+     * @returns {Number} the day of week for the given calendar field.
+     */
         /**
-         * Returns the day of week in month of the given calendar field.
-         * @method getDayOfWeekInMonth
-         * @returns {Number} the day of week in month for the given calendar field.
-         */
+     * Returns the day of week in month of the given calendar field.
+     * @method getDayOfWeekInMonth
+     * @returns {Number} the day of week in month for the given calendar field.
+     */
         /**
-         * Sets the given calendar field to the given value.
-         * @param field the given calendar field.
-         * @param v the value to be set for the given calendar field.
-         */
+     * Sets the given calendar field to the given value.
+     * @param field the given calendar field.
+     * @param v the value to be set for the given calendar field.
+     */
         set: function (field, v) {
             var len = arguments.length;
             if (len === 2) {
@@ -733,75 +733,75 @@ KISSY.add('date/gregorian', [
             this.time = undefined;
         },
         /**
-         * Set the year of the given calendar field.
-         * @method setYear
-         */
+     * Set the year of the given calendar field.
+     * @method setYear
+     */
         /**
-         * Set the month of the given calendar field.
-         * @method setMonth
-         */
+     * Set the month of the given calendar field.
+     * @method setMonth
+     */
         /**
-         * Set the day of month of the given calendar field.
-         * @method setDayOfMonth
-         */
+     * Set the day of month of the given calendar field.
+     * @method setDayOfMonth
+     */
         /**
-         * Set the hour of day of the given calendar field.
-         * @method setHourOfDay
-         */
+     * Set the hour of day of the given calendar field.
+     * @method setHourOfDay
+     */
         /**
-         * Set the minute of the given calendar field.
-         * @method setMinute
-         */
+     * Set the minute of the given calendar field.
+     * @method setMinute
+     */
         /**
-         * Set the second of the given calendar field.
-         * @method setSecond
-         */
+     * Set the second of the given calendar field.
+     * @method setSecond
+     */
         /**
-         * Set the millisecond of the given calendar field.
-         * @method setMilliSecond
-         */
+     * Set the millisecond of the given calendar field.
+     * @method setMilliSecond
+     */
         /**
-         * Set the week of year of the given calendar field.
-         * @method setWeekOfYear
-         */
+     * Set the week of year of the given calendar field.
+     * @method setWeekOfYear
+     */
         /**
-         * Set the week of month of the given calendar field.
-         * @method setWeekOfMonth
-         */
+     * Set the week of month of the given calendar field.
+     * @method setWeekOfMonth
+     */
         /**
-         * Set the day of year of the given calendar field.
-         * @method setDayOfYear
-         */
+     * Set the day of year of the given calendar field.
+     * @method setDayOfYear
+     */
         /**
-         * Set the day of week of the given calendar field.
-         * @method setDayOfWeek
-         */
+     * Set the day of week of the given calendar field.
+     * @method setDayOfWeek
+     */
         /**
-         * Set the day of week in month of the given calendar field.
-         * @method setDayOfWeekInMonth
-         */
+     * Set the day of week in month of the given calendar field.
+     * @method setDayOfWeekInMonth
+     */
         /**
-         * add for specified field based on two rules:
-         *
-         *  - Add rule 1. The value of field after the call minus the value of field before the
-         *  call is amount, modulo any overflow that has occurred in field
-         *  Overflow occurs when a field value exceeds its range and,
-         *  as a result, the next larger field is incremented or
-         *  decremented and the field value is adjusted back into its range.
-         *
-         *  - Add rule 2. If a smaller field is expected to be invariant,
-         *  but it is impossible for it to be equal to its
-         *  prior value because of changes in its minimum or maximum after
-         *  field is changed, then its value is adjusted to be as close
-         *  as possible to its expected value. A smaller field represents a
-         *  smaller unit of time. HOUR_OF_DAY is a smaller field than
-         *  DAY_OF_MONTH. No adjustment is made to smaller fields
-         *  that are not expected to be invariant. The calendar system
-         *  determines what fields are expected to be invariant.
-         *
-         *
-         *      @example
-         *      KISSY.use('date/gregorian',function(S, GregorianCalendar){
+     * add for specified field based on two rules:
+     *
+     *  - Add rule 1. The value of field after the call minus the value of field before the
+     *  call is amount, modulo any overflow that has occurred in field
+     *  Overflow occurs when a field value exceeds its range and,
+     *  as a result, the next larger field is incremented or
+     *  decremented and the field value is adjusted back into its range.
+     *
+     *  - Add rule 2. If a smaller field is expected to be invariant,
+     *  but it is impossible for it to be equal to its
+     *  prior value because of changes in its minimum or maximum after
+     *  field is changed, then its value is adjusted to be as close
+     *  as possible to its expected value. A smaller field represents a
+     *  smaller unit of time. HOUR_OF_DAY is a smaller field than
+     *  DAY_OF_MONTH. No adjustment is made to smaller fields
+     *  that are not expected to be invariant. The calendar system
+     *  determines what fields are expected to be invariant.
+     *
+     *
+     *      @example
+     *      KISSY.use('date/gregorian',function(S, GregorianCalendar){
          *          var d = new GregorianCalendar();
          *          d.set(2012, GregorianCalendar.JANUARY, 31);
          *          d.add(Gregorian.MONTH,1);
@@ -811,10 +811,10 @@ KISSY.add('date/gregorian', [
          *          // 2013-2-28
          *          document.writeln('<p>'+d.getYear()+'-'+d.getMonth()+'-'+d.getDayOfWeek())
          *      });
-         *
-         * @param field the calendar field.
-         * @param {Number} amount he amount of date or time to be added to the field.
-         */
+     *
+     * @param field the calendar field.
+     * @param {Number} amount he amount of date or time to be added to the field.
+     */
         add: function (field, amount) {
             if (!amount) {
                 return;
@@ -866,69 +866,69 @@ KISSY.add('date/gregorian', [
             }
         },
         /**
-         * add the year of the given calendar field.
-         * @method addYear
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the year of the given calendar field.
+     * @method addYear
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the month of the given calendar field.
-         * @method addMonth
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the month of the given calendar field.
+     * @method addMonth
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the day of month of the given calendar field.
-         * @method addDayOfMonth
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the day of month of the given calendar field.
+     * @method addDayOfMonth
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the hour of day of the given calendar field.
-         * @method addHourOfDay
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the hour of day of the given calendar field.
+     * @method addHourOfDay
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the minute of the given calendar field.
-         * @method addMinute
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the minute of the given calendar field.
+     * @method addMinute
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the second of the given calendar field.
-         * @method addSecond
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the second of the given calendar field.
+     * @method addSecond
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the millisecond of the given calendar field.
-         * @method addMilliSecond
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the millisecond of the given calendar field.
+     * @method addMilliSecond
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the week of year of the given calendar field.
-         * @method addWeekOfYear
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the week of year of the given calendar field.
+     * @method addWeekOfYear
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the week of month of the given calendar field.
-         * @method addWeekOfMonth
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the week of month of the given calendar field.
+     * @method addWeekOfMonth
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the day of year of the given calendar field.
-         * @method addDayOfYear
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the day of year of the given calendar field.
+     * @method addDayOfYear
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the day of week of the given calendar field.
-         * @method addDayOfWeek
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the day of week of the given calendar field.
+     * @method addDayOfWeek
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * add the day of week in month of the given calendar field.
-         * @method addDayOfWeekInMonth
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * add the day of week in month of the given calendar field.
+     * @method addDayOfWeekInMonth
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * Get rolled value for the field
-         * @protected
-         */
+     * Get rolled value for the field
+     * @protected
+     */
         getRolledValue: function (value, amount, min, max) {
             var diff = value - min;
             var range = max - min + 1;
@@ -936,26 +936,26 @@ KISSY.add('date/gregorian', [
             return min + (diff + amount + range) % range;
         },
         /**
-         * Adds a signed amount to the specified calendar field without changing larger fields.
-         * A negative roll amount means to subtract from field without changing
-         * larger fields. If the specified amount is 0, this method performs nothing.
-         *
-         *
-         *
-         *      @example
-         *      var d = new GregorianCalendar();
-         *      d.set(1999, GregorianCalendar.AUGUST, 31);
-         *      // 1999-4-30
-         *      // Tuesday June 1, 1999
-         *      d.set(1999, GregorianCalendar.JUNE, 1);
-         *      d.add(Gregorian.WEEK_OF_MONTH,-1); // === d.add(Gregorian.WEEK_OF_MONTH,
-         *      d.get(Gregorian.WEEK_OF_MONTH));
-         *      // 1999-06-29
-         *
-         *
-         * @param field the calendar field.
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * Adds a signed amount to the specified calendar field without changing larger fields.
+     * A negative roll amount means to subtract from field without changing
+     * larger fields. If the specified amount is 0, this method performs nothing.
+     *
+     *
+     *
+     *      @example
+     *      var d = new GregorianCalendar();
+     *      d.set(1999, GregorianCalendar.AUGUST, 31);
+     *      // 1999-4-30
+     *      // Tuesday June 1, 1999
+     *      d.set(1999, GregorianCalendar.JUNE, 1);
+     *      d.add(Gregorian.WEEK_OF_MONTH,-1); // === d.add(Gregorian.WEEK_OF_MONTH,
+     *      d.get(Gregorian.WEEK_OF_MONTH));
+     *      // 1999-06-29
+     *
+     *
+     * @param field the calendar field.
+     * @param {Number} amount the signed amount to add to field.
+     */
         roll: function (field, amount) {
             if (!amount) {
                 return;
@@ -979,65 +979,65 @@ KISSY.add('date/gregorian', [
             }
         },
         /**
-         * roll the year of the given calendar field.
-         * @method rollYear
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the year of the given calendar field.
+     * @method rollYear
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the month of the given calendar field.
-         * @param {Number} amount the signed amount to add to field.
-         * @method rollMonth
-         */
+     * roll the month of the given calendar field.
+     * @param {Number} amount the signed amount to add to field.
+     * @method rollMonth
+     */
         /**
-         * roll the day of month of the given calendar field.
-         * @method rollDayOfMonth
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the day of month of the given calendar field.
+     * @method rollDayOfMonth
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the hour of day of the given calendar field.
-         * @method rollHourOfDay
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the hour of day of the given calendar field.
+     * @method rollHourOfDay
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the minute of the given calendar field.
-         * @method rollMinute
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the minute of the given calendar field.
+     * @method rollMinute
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the second of the given calendar field.
-         * @method rollSecond
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the second of the given calendar field.
+     * @method rollSecond
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the millisecond of the given calendar field.
-         * @method rollMilliSecond
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the millisecond of the given calendar field.
+     * @method rollMilliSecond
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the week of year of the given calendar field.
-         * @method rollWeekOfYear
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the week of year of the given calendar field.
+     * @method rollWeekOfYear
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the week of month of the given calendar field.
-         * @method rollWeekOfMonth
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the week of month of the given calendar field.
+     * @method rollWeekOfMonth
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the day of year of the given calendar field.
-         * @method rollDayOfYear
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the day of year of the given calendar field.
+     * @method rollDayOfYear
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * roll the day of week of the given calendar field.
-         * @method rollDayOfWeek
-         * @param {Number} amount the signed amount to add to field.
-         */
+     * roll the day of week of the given calendar field.
+     * @method rollDayOfWeek
+     * @param {Number} amount the signed amount to add to field.
+     */
         /**
-         * remove other priority fields when call getFixedDate
-         * precondition: other fields are all set or computed
-         * @protected
-         */
+     * remove other priority fields when call getFixedDate
+     * precondition: other fields are all set or computed
+     * @protected
+     */
         updateFieldsBySet: function (field) {
             var fields = this.fields;
             switch (field) {
@@ -1057,15 +1057,15 @@ KISSY.add('date/gregorian', [
             }
         },
         /**
-         * get current date instance's timezone offset
-         * @returns {Number}
-         */
+     * get current date instance's timezone offset
+     * @returns {Number}
+     */
         getTimezoneOffset: function () {
             return this.timezoneOffset;
         },
         /**
-         * set current date instance's timezone offset
-         */
+     * set current date instance's timezone offset
+     */
         setTimezoneOffset: function (timezoneOffset) {
             if (this.timezoneOffset !== timezoneOffset) {
                 this.fieldsComputed = undefined;
@@ -1073,8 +1073,8 @@ KISSY.add('date/gregorian', [
             }
         },
         /**
-         * set first day of week for current date instance
-         */
+     * set first day of week for current date instance
+     */
         setFirstDayOfWeek: function (firstDayOfWeek) {
             if (this.firstDayOfWeek !== firstDayOfWeek) {
                 this.firstDayOfWeek = firstDayOfWeek;
@@ -1082,19 +1082,19 @@ KISSY.add('date/gregorian', [
             }
         },
         /**
-         * Gets what the first day of the week is; e.g., SUNDAY in the U.S., MONDAY in France.
-         * @returns {Number} the first day of the week.
-         */
+     * Gets what the first day of the week is; e.g., SUNDAY in the U.S., MONDAY in France.
+     * @returns {Number} the first day of the week.
+     */
         getFirstDayOfWeek: function () {
             return this.firstDayOfWeek;
         },
         /**
-         * Sets what the minimal days required in the first week of the year are; For example,
-         * if the first week is defined as one that contains the first day of the first month of a year,
-         * call this method with value 1.
-         * If it must be a full week, use value 7.
-         * @param minimalDaysInFirstWeek the given minimal days required in the first week of the year.
-         */
+     * Sets what the minimal days required in the first week of the year are; For example,
+     * if the first week is defined as one that contains the first day of the first month of a year,
+     * call this method with value 1.
+     * If it must be a full week, use value 7.
+     * @param minimalDaysInFirstWeek the given minimal days required in the first week of the year.
+     */
         setMinimalDaysInFirstWeek: function (minimalDaysInFirstWeek) {
             if (this.minimalDaysInFirstWeek !== minimalDaysInFirstWeek) {
                 this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
@@ -1102,28 +1102,28 @@ KISSY.add('date/gregorian', [
             }
         },
         /**
-         * Gets what the minimal days required in the first week of the year are; e.g.,
-         * if the first week is defined as one that contains the first day of the first month of a year,
-         * this method returns 1.
-         * If the minimal days required must be a full week, this method returns 7.
-         * @returns {Number} the minimal days required in the first week of the year.
-         */
+     * Gets what the minimal days required in the first week of the year are; e.g.,
+     * if the first week is defined as one that contains the first day of the first month of a year,
+     * this method returns 1.
+     * If the minimal days required must be a full week, this method returns 7.
+     * @returns {Number} the minimal days required in the first week of the year.
+     */
         getMinimalDaysInFirstWeek: function () {
             return this.minimalDaysInFirstWeek;
         },
         /**
-         * Returns the number of weeks in the week year
-         * represented by this GregorianCalendar.
-         *
-         * For example, if this GregorianCalendar's date is
-         * December 31, 2008 with the ISO
-         * 8601 compatible setting, this method will return 53 for the
-         * period: December 29, 2008 to January 3, 2010
-         * while getActualMaximum(WEEK_OF_YEAR) will return
-         * 52 for the period: December 31, 2007 to December 28, 2008.
-         *
-         * @return {Number} the number of weeks in the week year.
-         */
+     * Returns the number of weeks in the week year
+     * represented by this GregorianCalendar.
+     *
+     * For example, if this GregorianCalendar's date is
+     * December 31, 2008 with the ISO
+     * 8601 compatible setting, this method will return 53 for the
+     * period: December 29, 2008 to January 3, 2010
+     * while getActualMaximum(WEEK_OF_YEAR) will return
+     * 52 for the period: December 31, 2007 to December 28, 2008.
+     *
+     * @return {Number} the number of weeks in the week year.
+     */
         getWeeksInWeekYear: function () {
             var weekYear = this.getWeekYear();
             if (weekYear === this.get(YEAR)) {
@@ -1135,13 +1135,13 @@ KISSY.add('date/gregorian', [
             return gc.getActualMaximum(WEEK_OF_YEAR);
         },
         /**
-         * Returns the week year represented by this GregorianCalendar.
-         * The dates in the weeks between 1 and the
-         * maximum week number of the week year have the same week year value
-         * that may be one year before or after the calendar year value.
-         *
-         * @return {Number} the week year represented by this GregorianCalendar.
-         */
+     * Returns the week year represented by this GregorianCalendar.
+     * The dates in the weeks between 1 and the
+     * maximum week number of the week year have the same week year value
+     * that may be one year before or after the calendar year value.
+     *
+     * @return {Number} the week year represented by this GregorianCalendar.
+     */
         getWeekYear: function () {
             var year = this.get(YEAR);    // implicitly  complete
             // implicitly  complete
@@ -1159,14 +1159,14 @@ KISSY.add('date/gregorian', [
             return year;
         },
         /**
-         * Sets this GregorianCalendar to the date given by the date specifiers - weekYear,
-         * weekOfYear, and dayOfWeek. weekOfYear follows the WEEK_OF_YEAR numbering.
-         * The dayOfWeek value must be one of the DAY_OF_WEEK values: SUNDAY to SATURDAY.
-         *
-         * @param weekYear    the week year
-         * @param weekOfYear  the week number based on weekYear
-         * @param dayOfWeek   the day of week value
-         */
+     * Sets this GregorianCalendar to the date given by the date specifiers - weekYear,
+     * weekOfYear, and dayOfWeek. weekOfYear follows the WEEK_OF_YEAR numbering.
+     * The dayOfWeek value must be one of the DAY_OF_WEEK values: SUNDAY to SATURDAY.
+     *
+     * @param weekYear    the week year
+     * @param weekOfYear  the week number based on weekYear
+     * @param dayOfWeek   the day of week value
+     */
         setWeekDate: function (weekYear, weekOfYear, dayOfWeek) {
             if (dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY) {
                 throw new Error('invalid dayOfWeek: ' + dayOfWeek);
@@ -1197,9 +1197,9 @@ KISSY.add('date/gregorian', [
             this.complete();
         },
         /**
-         * Creates and returns a copy of this object.
-         * @returns {KISSY.Date.Gregorian}
-         */
+     * Creates and returns a copy of this object.
+     * @returns {KISSY.Date.Gregorian}
+     */
         clone: function () {
             if (this.time === undefined) {
                 this.computeTime();
@@ -1209,23 +1209,23 @@ KISSY.add('date/gregorian', [
             return cal;
         },
         /**
-         * Compares this GregorianCalendar to the specified Object.
-         * The result is true if and only if the argument is a GregorianCalendar object
-         * that represents the same time value (millisecond offset from the Epoch)
-         * under the same Calendar parameters and Gregorian change date as this object.
-         * @param {KISSY.Date.Gregorian} obj the object to compare with.
-         * @returns {boolean} true if this object is equal to obj; false otherwise.
-         */
+     * Compares this GregorianCalendar to the specified Object.
+     * The result is true if and only if the argument is a GregorianCalendar object
+     * that represents the same time value (millisecond offset from the Epoch)
+     * under the same Calendar parameters and Gregorian change date as this object.
+     * @param {KISSY.Date.Gregorian} obj the object to compare with.
+     * @returns {boolean} true if this object is equal to obj; false otherwise.
+     */
         equals: function (obj) {
             return this.getTime() === obj.getTime() && this.firstDayOfWeek === obj.firstDayOfWeek && this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek;
         },
         /**
-         * Sets all the calendar field values or specified field and the time value
-         * (millisecond offset from the Epoch) of this Calendar undefined.
-         * This means that isSet() will return false for all the calendar fields,
-         * and the date and time calculations will treat the fields as if they had never been set.
-         * @param [field] the calendar field to be cleared.
-         */
+     * Sets all the calendar field values or specified field and the time value
+     * (millisecond offset from the Epoch) of this Calendar undefined.
+     * This means that isSet() will return false for all the calendar fields,
+     * and the date and time calculations will treat the fields as if they had never been set.
+     * @param [field] the calendar field to be cleared.
+     */
         clear: function (field) {
             if (field === undefined) {
                 this.field = [];
@@ -1296,8 +1296,7 @@ KISSY.add('date/gregorian', [
         return fixedDate - mod(fixedDate - dayOfWeek, 7);
     }    // ------------------- private end
     // ------------------- private end
-    return GregorianCalendar;
-});    /*
+    module.exports = GregorianCalendar;    /*
  http://docs.oracle.com/javase/7/docs/api/java/util/GregorianCalendar.html
 
  TODO
@@ -1305,18 +1304,20 @@ KISSY.add('date/gregorian', [
  - i18n
  - julian calendar
  */
+});
 
-/**
+KISSY.add('date/gregorian/utils', [
+    'util',
+    './const'
+], function (S, require, exports, module) {
+    /**
  * utils for gregorian date
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/gregorian/utils', [
-    'util',
-    './const'
-], function (S, require) {
     var util = require('util');
     var Const = require('./const');
+    var floor = Math.floor;
     var ACCUMULATED_DAYS_IN_MONTH    //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
  = //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
         [
@@ -1349,16 +1350,16 @@ KISSY.add('date/gregorian/utils', [
             273 + 1,
             304 + 1,
             334 + 1
-        ], DAYS_OF_YEAR = 365, DAYS_OF_4YEAR = 365 * 4 + 1, DAYS_OF_100YEAR = DAYS_OF_4YEAR * 25 - 1, DAYS_OF_400YEAR = DAYS_OF_100YEAR * 4 + 1, Utils = {};
+        ], DAYS_OF_YEAR = 365, DAYS_OF_4YEAR = 365 * 4 + 1, DAYS_OF_100YEAR = DAYS_OF_4YEAR * 25 - 1, DAYS_OF_400YEAR = DAYS_OF_100YEAR * 4 + 1;
     function getDayOfYear(year, month, dayOfMonth) {
-        return dayOfMonth + (isLeapYear(year) ? ACCUMULATED_DAYS_IN_MONTH_LEAP[month] : ACCUMULATED_DAYS_IN_MONTH[month]);
+        return dayOfMonth + (exports.isLeapYear(year) ? ACCUMULATED_DAYS_IN_MONTH_LEAP[month] : ACCUMULATED_DAYS_IN_MONTH[month]);
     }
     function getDayOfWeekFromFixedDate(fixedDate) {
         // The fixed day 1 (January 1, 1 Gregorian) is Monday.
         if (fixedDate >= 0) {
             return fixedDate % 7;
         }
-        return mod(fixedDate, 7);
+        return exports.mod(fixedDate, 7);
     }
     function getGregorianYearFromFixedDate(fixedDate) {
         var d0;
@@ -1367,13 +1368,13 @@ KISSY.add('date/gregorian/utils', [
         var n400, n100, n4, n1;
         var year;
         d0 = fixedDate - 1;
-        n400 = floorDivide(d0 / DAYS_OF_400YEAR);
-        d1 = mod(d0, DAYS_OF_400YEAR);
-        n100 = floorDivide(d1 / DAYS_OF_100YEAR);
-        d2 = mod(d1, DAYS_OF_100YEAR);
-        n4 = floorDivide(d2 / DAYS_OF_4YEAR);
-        d3 = mod(d2, DAYS_OF_4YEAR);
-        n1 = floorDivide(d3 / DAYS_OF_YEAR);
+        n400 = floor(d0 / DAYS_OF_400YEAR);
+        d1 = exports.mod(d0, DAYS_OF_400YEAR);
+        n100 = floor(d1 / DAYS_OF_100YEAR);
+        d2 = exports.mod(d1, DAYS_OF_100YEAR);
+        n4 = floor(d2 / DAYS_OF_4YEAR);
+        d3 = exports.mod(d2, DAYS_OF_4YEAR);
+        n1 = floor(d3 / DAYS_OF_YEAR);
         year = 400 * n400 + 100 * n100 + 4 * n4 + n1;    // ?
         // ?
         if (!(n100 === 4 || n1 === 4)) {
@@ -1381,7 +1382,7 @@ KISSY.add('date/gregorian/utils', [
         }
         return year;
     }
-    util.mix(Utils, {
+    util.mix(exports, {
         isLeapYear: function (year) {
             if ((year & 3) !== 0) {
                 return false;
@@ -1390,18 +1391,18 @@ KISSY.add('date/gregorian/utils', [
         },
         mod: function (x, y) {
             // 负数时不是镜像关系
-            return x - y * floorDivide(x / y);
+            return x - y * floor(x / y);
         },
         // month: 0 based
         getFixedDate: function (year, month, dayOfMonth) {
             var prevYear = year - 1;    // 考虑公元前
             // 考虑公元前
-            return DAYS_OF_YEAR * prevYear + floorDivide(prevYear / 4) - floorDivide(prevYear / 100) + floorDivide(prevYear / 400) + getDayOfYear(year, month, dayOfMonth);
+            return DAYS_OF_YEAR * prevYear + floor(prevYear / 4) - floor(prevYear / 100) + floor(prevYear / 400) + getDayOfYear(year, month, dayOfMonth);
         },
         getGregorianDateFromFixedDate: function (fixedDate) {
             var year = getGregorianYearFromFixedDate(fixedDate);
-            var jan1 = Utils.getFixedDate(year, Const.JANUARY, 1);
-            var isLeap = isLeapYear(year);
+            var jan1 = exports.getFixedDate(year, Const.JANUARY, 1);
+            var isLeap = exports.isLeapYear(year);
             var ACCUMULATED_DAYS = isLeap ? ACCUMULATED_DAYS_IN_MONTH_LEAP : ACCUMULATED_DAYS_IN_MONTH;
             var daysDiff = fixedDate - jan1;
             var month, i;
@@ -1423,129 +1424,127 @@ KISSY.add('date/gregorian/utils', [
             };
         }
     });
-    var floorDivide = Math.floor, isLeapYear = Utils.isLeapYear, mod = Utils.mod;
-    return Utils;
 });
-/**
+KISSY.add('date/gregorian/const', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * const for gregorian date
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/gregorian/const', [], function () {
-    return {
+    module.exports = {
         /**
-         * Enum indicating sunday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating sunday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         SUNDAY: 0,
         /**
-         * Enum indicating monday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating monday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         MONDAY: 1,
         /**
-         * Enum indicating tuesday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating tuesday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         TUESDAY: 2,
         /**
-         * Enum indicating wednesday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating wednesday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         WEDNESDAY: 3,
         /**
-         * Enum indicating thursday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating thursday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         THURSDAY: 4,
         /**
-         * Enum indicating friday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating friday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         FRIDAY: 5,
         /**
-         * Enum indicating saturday
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating saturday
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         SATURDAY: 6,
         /**
-         * Enum indicating january
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating january
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         JANUARY: 0,
         /**
-         * Enum indicating february
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating february
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         FEBRUARY: 1,
         /**
-         * Enum indicating march
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating march
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         MARCH: 2,
         /**
-         * Enum indicating april
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating april
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         APRIL: 3,
         /**
-         * Enum indicating may
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating may
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         MAY: 4,
         /**
-         * Enum indicating june
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating june
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         JUNE: 5,
         /**
-         * Enum indicating july
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating july
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         JULY: 6,
         /**
-         * Enum indicating august
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating august
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         AUGUST: 7,
         /**
-         * Enum indicating september
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating september
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         SEPTEMBER: 8,
         /**
-         * Enum indicating october
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating october
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         OCTOBER: 9,
         /**
-         * Enum indicating november
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating november
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         NOVEMBER: 10,
         /**
-         * Enum indicating december
-         * @type Number
-         * @member KISSY.Date.Gregorian
-         */
+     * Enum indicating december
+     * @type Number
+     * @member KISSY.Date.Gregorian
+     */
         DECEMBER: 11
     };
 });

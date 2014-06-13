@@ -1,30 +1,29 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:31
+build time: Jun 13 11:53
 */
 /*
 combined modules:
 scroll-view/base
 */
-/**
+KISSY.add('scroll-view/base', [
+    'anim/timer',
+    'component/container',
+    'component/extension/content-box',
+    'node',
+    'feature',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * scroll-view control
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/base', [
-    'node',
-    'anim/timer',
-    'component/container',
-    'component/extension/content-box',
-    'feature',
-    'util'
-], function (S, require) {
-    var Node = require('node');
     var TimerAnim = require('anim/timer');
     var Container = require('component/container');
     var ContentBox = require('component/extension/content-box');
-    var $ = Node.all, KeyCode = Node.KeyCode;    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var $ = require('node'), KeyCode = $.Event.KeyCode;    // http://www.html5rocks.com/en/tutorials/speed/html5/
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Feature = require('feature'),
         //        MARKER_CLS = 'ks-scroll-view-marker',
@@ -328,39 +327,39 @@ KISSY.add('scroll-view/base', [
         });
         self.fire('reflow', v);
     }    /**
-     * Make container scrollable.
-     * module scroll-view will be this class on non-touch device
-     * @class KISSY.ScrollView.Base
-     * @extend KISSY.Component.Container
-     */
+ * Make container scrollable.
+ * module scroll-view will be this class on non-touch device
+ * @class KISSY.ScrollView.Base
+ * @extend KISSY.Component.Container
+ */
     /**
-     * Make container scrollable.
-     * module scroll-view will be this class on non-touch device
-     * @class KISSY.ScrollView.Base
-     * @extend KISSY.Component.Container
-     */
-    return Container.extend([ContentBox], methods, {
+ * Make container scrollable.
+ * module scroll-view will be this class on non-touch device
+ * @class KISSY.ScrollView.Base
+ * @extend KISSY.Component.Container
+ */
+    module.exports = Container.extend([ContentBox], methods, {
         ATTRS: {
             /**
-             * scrollLeft of scroll view
-             * @property scrollLeft
-             * @type {Number}
-             */
+         * scrollLeft of scroll view
+         * @property scrollLeft
+         * @type {Number}
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             scrollLeft: {
                 render: 1,
                 value: 0
             },
             /**
-             * scrollTop of scroll view
-             * @property scrollTop
-             * @type {Number}
-             */
+         * scrollTop of scroll view
+         * @property scrollTop
+         * @type {Number}
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             scrollTop: {
                 render: 1,
                 value: 0
@@ -373,21 +372,21 @@ KISSY.add('scroll-view/base', [
             allowTextSelection: { value: true },
             handleGestureEvents: { value: false },
             /**
-             * whether to allow snap effect
-             * @cfg {Boolean} snap
-             */
+         * whether to allow snap effect
+         * @cfg {Boolean} snap
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             snap: { value: false },
             /**
-             * pageIndex, current pageIndex if allow snap
-             * @property pageIndex
-             * @type {Number}
-             */
+         * pageIndex, current pageIndex if allow snap
+         * @property pageIndex
+         * @type {Number}
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             pageIndex: { value: 0 }
         },
         xclass: 'scroll-view'

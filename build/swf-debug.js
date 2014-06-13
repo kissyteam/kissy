@@ -1,31 +1,31 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
 swf
 swf/ua
 */
-/**
- * @ignore
- * insert swf into document in an easy way
- * @author yiminghe@gmail.com, oicuicu@gmail.com
- */
 KISSY.add('swf', [
     'dom',
     'json',
     'attribute',
     'swf/ua',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * insert swf into document in an easy way
+ * @author yiminghe@gmail.com, oicuicu@gmail.com
+ */
     var Dom = require('dom');
     var Json = require('json');
     var Attribute = require('attribute');
     var FlashUA = require('swf/ua');
     var util = require('util');
-    var OLD_IE = !!S.Env.host.ActiveXObject, TYPE = 'application/x-shockwave-flash', CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000', FLASHVARS = 'flashvars', EMPTY = '', LT = '<', GT = '>', doc = S.Env.host.document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = 'object', encode = encodeURIComponent,
+    var OLD_IE = !!window.ActiveXObject, TYPE = 'application/x-shockwave-flash', CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000', FLASHVARS = 'flashvars', EMPTY = '', LT = '<', GT = '>', doc = document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = 'object', encode = encodeURIComponent,
         // flash player 的参数范围
         PARAMS = {
             // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / Json 字符串
@@ -50,15 +50,15 @@ KISSY.add('swf', [
             seamlesstabbing: EMPTY
         };
     var SWF;    /**
-     * insert a new swf into container
-     * @class KISSY.SWF
-     * @extends KISSY.Base
-     */
+ * insert a new swf into container
+ * @class KISSY.SWF
+ * @extends KISSY.Base
+ */
     /**
-     * insert a new swf into container
-     * @class KISSY.SWF
-     * @extends KISSY.Base
-     */
+ * insert a new swf into container
+ * @class KISSY.SWF
+ * @extends KISSY.Base
+ */
     SWF = Attribute.extend({
         constructor: function (config) {
             var self = this;
@@ -134,10 +134,10 @@ KISSY.add('swf', [
             }
         },
         /**
-         * Calls a specific function exposed by the SWF 's ExternalInterface.
-         * @param func {String} the name of the function to call
-         * @param args {Array} the set of arguments to pass to the function.
-         */
+     * Calls a specific function exposed by the SWF 's ExternalInterface.
+     * @param func {String} the name of the function to call
+     * @param args {Array} the set of arguments to pass to the function.
+     */
         callSWF: function (func, args) {
             var swf = this.get('el'), ret, params;
             args = args || [];
@@ -159,16 +159,16 @@ KISSY.add('swf', [
             return ret;
         },
         /**
-         * remove its container and swf element from dom
-         */
+     * remove its container and swf element from dom
+     */
         destroy: function () {
             var self = this;
             var swfObject = self.get('swfObject');    /* Cross-browser SWF removal
-             - Especially needed to safely and completely remove a SWF in Internet Explorer
-             */
+         - Especially needed to safely and completely remove a SWF in Internet Explorer
+         */
             /* Cross-browser SWF removal
-             - Especially needed to safely and completely remove a SWF in Internet Explorer
-             */
+         - Especially needed to safely and completely remove a SWF in Internet Explorer
+         */
             if (OLD_IE) {
                 swfObject.style.display = 'none';    // from swfobject
                 // from swfobject
@@ -186,56 +186,56 @@ KISSY.add('swf', [
     }, {
         ATTRS: {
             /**
-             * express install swf url.
-             * Defaults to: swfobject 's express install
-             * @cfg {String} expressInstall
-             */
+         * express install swf url.
+         * Defaults to: swfobject 's express install
+         * @cfg {String} expressInstall
+         */
             /**
-             * @ignore
-             */
-            expressInstall: { value: S.config('base') + 'swf/assets/expressInstall.swf' },
+         * @ignore
+         */
+            expressInstall: { value: require.toUrl('./assets/expressInstall.swf') },
             /**
-             * new swf 's url
-             * @cfg {String} src
-             */
+         * new swf 's url
+         * @cfg {String} src
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             src: {},
             /**
-             * minimum flash version required. eg: '10.1.250'
-             * Defaults to '9'.
-             * @cfg {String} version
-             */
+         * minimum flash version required. eg: '10.1.250'
+         * Defaults to '9'.
+         * @cfg {String} version
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             version: { value: '9' },
             /**
-             * params for swf element
-             *  - params.flashVars
-             * @cfg {Object} params
-             */
+         * params for swf element
+         *  - params.flashVars
+         * @cfg {Object} params
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             params: { value: {} },
             /**
-             * attrs for swf element
-             * @cfg {Object} attrs
-             */
+         * attrs for swf element
+         * @cfg {Object} attrs
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             attrs: { value: {} },
             /**
-             * container where flash will be appended.
-             * Defaults to: body
-             * @cfg {HTMLElement} render
-             */
+         * container where flash will be appended.
+         * Defaults to: body
+         * @cfg {HTMLElement} render
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             render: {
                 setter: function (v) {
                     if (typeof v === 'string') {
@@ -248,12 +248,12 @@ KISSY.add('swf', [
                 }
             },
             /**
-             * element where flash will be inserted before.
-             * @cfg {HTMLElement} elBefore
-             */
+         * element where flash will be inserted before.
+         * @cfg {HTMLElement} elBefore
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             elBefore: {
                 setter: function (v) {
                     if (typeof v === 'string') {
@@ -263,64 +263,64 @@ KISSY.add('swf', [
                 }
             },
             /**
-             * html document current swf belongs.
-             * Defaults to: current document
-             * @cfg {HTMLElement} document
-             */
+         * html document current swf belongs.
+         * Defaults to: current document
+         * @cfg {HTMLElement} document
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             document: { value: doc },
             /**
-             * status of current swf
-             * @property status
-             * @type {KISSY.SWF.Status}
-             * @readonly
-             */
+         * status of current swf
+         * @property status
+         * @type {KISSY.SWF.Status}
+         * @readonly
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             status: {},
             /**
-             * swf element
-             * @readonly
-             * @type {HTMLElement}
-             * @property el
-             */
+         * swf element
+         * @readonly
+         * @type {HTMLElement}
+         * @property el
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             el: {},
             /**
-             * @ignore
-             * @private
-             */
+         * @ignore
+         * @private
+         */
             swfObject: {},
             /**
-             * swf element 's outerHTML
-             * @property html
-             * @type {String}
-             * @readonly
-             */
+         * swf element 's outerHTML
+         * @property html
+         * @type {String}
+         * @readonly
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             html: {},
             /**
-             *  full or default(depends on browser object)
-             *  @cfg {KISSY.SWF.HtmlMode} htmlMode
-             */
+         *  full or default(depends on browser object)
+         *  @cfg {KISSY.SWF.HtmlMode} htmlMode
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             htmlMode: { value: 'default' }
         },
         /**
-         * get src from existing oo/oe/o/e swf element
-         * @param {HTMLElement} swf
-         * @returns {String}
-         * @static
-         */
+     * get src from existing oo/oe/o/e swf element
+     * @param {HTMLElement} swf
+     * @returns {String}
+     * @static
+     */
         getSrc: function (swf) {
             swf = Dom.get(swf);
             var srcElement = getSrcElements(swf)[0], nodeName = srcElement && Dom.nodeName(srcElement);
@@ -334,35 +334,35 @@ KISSY.add('swf', [
             return null;
         },
         /**
-         * swf status
-         * @enum {String} KISSY.SWF.Status
-         */
+     * swf status
+     * @enum {String} KISSY.SWF.Status
+     */
         Status: {
             /**
-             * flash version is too low
-             */
+         * flash version is too low
+         */
             TOO_LOW: 'flash version is too low',
             /**
-             * flash is not installed
-             */
+         * flash is not installed
+         */
             NOT_INSTALLED: 'flash is not installed',
             /**
-             * success
-             */
+         * success
+         */
             SUCCESS: 'success'
         },
         /**
-         * swf htmlMode
-         * @enum {String} KISSY.SWF.HtmlMode
-         */
+     * swf htmlMode
+     * @enum {String} KISSY.SWF.HtmlMode
+     */
         HtmlMode: {
             /**
-             * generate object structure depending on browser
-             */
+         * generate object structure depending on browser
+         */
             DEFAULT: 'default',
             /**
-             * generate object/object structure
-             */
+         * generate object/object structure
+         */
             FULL: 'full'
         },
         fpv: fpv,
@@ -454,13 +454,13 @@ KISSY.add('swf', [
         }
         return outside + inside + LT + '/' + OBJECT_TAG + GT + LT + '/' + OBJECT_TAG + GT;
     }    /*
-     将普通对象转换为 flashvars
-     eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,'z':'s%3D1%26c%3D2'})
-     */
+ 将普通对象转换为 flashvars
+ eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,'z':'s%3D1%26c%3D2'})
+ */
     /*
-     将普通对象转换为 flashvars
-     eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,'z':'s%3D1%26c%3D2'})
-     */
+ 将普通对象转换为 flashvars
+ eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,'z':'s%3D1%26c%3D2'})
+ */
     function toFlashVars(obj) {
         var arr = [], ret;
         util.each(obj, function (data, prop) {
@@ -480,26 +480,26 @@ KISSY.add('swf', [
     function stringAttr(key, value) {
         return ' ' + key + '=' + '"' + value + '"';
     }
-    return SWF;
+    module.exports = SWF;
 });
 
 
 
-/**
+KISSY.add('swf/ua', ['util'], function (S, require, exports, module) {
+    /**
  * @ignore
  * Flash UA 探测
  * @author oicuicu@gmail.com
  */
-KISSY.add('swf/ua', ['util'], function (S, require) {
-    var fpvCached, firstRun = true, win = S.Env.host;
+    var fpvCached, firstRun = true, win = window;
     var util = require('util');    /*
-     获取 Flash 版本号
-     返回数据 [M, S, R] 若未安装，则返回 undefined
-     */
+ 获取 Flash 版本号
+ 返回数据 [M, S, R] 若未安装，则返回 undefined
+ */
     /*
-     获取 Flash 版本号
-     返回数据 [M, S, R] 若未安装，则返回 undefined
-     */
+ 获取 Flash 版本号
+ 返回数据 [M, S, R] 若未安装，则返回 undefined
+ */
     function getFlashVersion() {
         var ver, SF = 'ShockwaveFlash';    // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
         // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
@@ -522,27 +522,27 @@ KISSY.add('swf/ua', ['util'], function (S, require) {
         // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
         return getArrayVersion(ver);
     }    /*
-     getArrayVersion("10.1.r53") => ["10", "1", "53"]
-     */
+ getArrayVersion("10.1.r53") => ["10", "1", "53"]
+ */
     /*
-     getArrayVersion("10.1.r53") => ["10", "1", "53"]
-     */
+ getArrayVersion("10.1.r53") => ["10", "1", "53"]
+ */
     function getArrayVersion(ver) {
         return ver.match(/\d+/g).splice(0, 3);
     }    /*
-     格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     ver 参数不符合预期时，返回 0
-     getNumberVersion("10.1 r53") => 10.00100053
-     getNumberVersion(["10", "1", "53"]) => 10.00100053
-     getNumberVersion(12.2) => 12.2
-     */
+ 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
+ ver 参数不符合预期时，返回 0
+ getNumberVersion("10.1 r53") => 10.00100053
+ getNumberVersion(["10", "1", "53"]) => 10.00100053
+ getNumberVersion(12.2) => 12.2
+ */
     /*
-     格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     ver 参数不符合预期时，返回 0
-     getNumberVersion("10.1 r53") => 10.00100053
-     getNumberVersion(["10", "1", "53"]) => 10.00100053
-     getNumberVersion(12.2) => 12.2
-     */
+ 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
+ ver 参数不符合预期时，返回 0
+ getNumberVersion("10.1 r53") => 10.00100053
+ getNumberVersion(["10", "1", "53"]) => 10.00100053
+ getNumberVersion(12.2) => 12.2
+ */
     function getNumberVersion(ver) {
         var arr = typeof ver === 'string' ? getArrayVersion(ver) : ver, ret = ver;
         if (util.isArray(arr)) {
@@ -550,30 +550,30 @@ KISSY.add('swf/ua', ['util'], function (S, require) {
         }
         return ret || 0;
     }    /*
-     pad(12, 5) => "00012"
-     */
+ pad(12, 5) => "00012"
+ */
     /*
-     pad(12, 5) => "00012"
-     */
+ pad(12, 5) => "00012"
+ */
     function pad(num, n) {
         num = num || 0;
         num += '';
         var padding = n + 1 - num.length;
         return new Array(padding > 0 ? padding : 0).join('0') + num;
     }    /**
-     * Get flash version
-     * @param {Boolean} [force] whether to avoid getting from cache
-     * @returns {String[]} eg: ["11","0","53"]
-     * @member KISSY.SWF
-     * @static
-     */
+ * Get flash version
+ * @param {Boolean} [force] whether to avoid getting from cache
+ * @returns {String[]} eg: ["11","0","53"]
+ * @member KISSY.SWF
+ * @static
+ */
     /**
-     * Get flash version
-     * @param {Boolean} [force] whether to avoid getting from cache
-     * @returns {String[]} eg: ["11","0","53"]
-     * @member KISSY.SWF
-     * @static
-     */
+ * Get flash version
+ * @param {Boolean} [force] whether to avoid getting from cache
+ * @returns {String[]} eg: ["11","0","53"]
+ * @member KISSY.SWF
+ * @static
+ */
     function fpv(force) {
         // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
         if (force || firstRun) {
@@ -582,29 +582,28 @@ KISSY.add('swf/ua', ['util'], function (S, require) {
         }
         return fpvCached;
     }    /**
-     * Checks whether current version is greater than or equal the specific version.
-     * @param {String} ver eg. "10.1.53"
-     * @param {Boolean} force whether to avoid get current version from cache
-     * @returns {Boolean}
-     * @member KISSY.SWF
-     * @static
-     */
+ * Checks whether current version is greater than or equal the specific version.
+ * @param {String} ver eg. "10.1.53"
+ * @param {Boolean} force whether to avoid get current version from cache
+ * @returns {Boolean}
+ * @member KISSY.SWF
+ * @static
+ */
     /**
-     * Checks whether current version is greater than or equal the specific version.
-     * @param {String} ver eg. "10.1.53"
-     * @param {Boolean} force whether to avoid get current version from cache
-     * @returns {Boolean}
-     * @member KISSY.SWF
-     * @static
-     */
+ * Checks whether current version is greater than or equal the specific version.
+ * @param {String} ver eg. "10.1.53"
+ * @param {Boolean} force whether to avoid get current version from cache
+ * @returns {Boolean}
+ * @member KISSY.SWF
+ * @static
+ */
     function fpvGTE(ver, force) {
         return getNumberVersion(fpv(force)) >= getNumberVersion(ver);
     }
-    return {
+    module.exports = {
         fpv: fpv,
         fpvGTE: fpvGTE
-    };
-});    /**
+    };    /**
  * @ignore
  *
  * NOTES:
@@ -622,3 +621,4 @@ KISSY.add('swf/ua', ['util'], function (S, require) {
  -    ref: http://googlechromereleases.blogspot.com/2010/03/dev-channel-update_30.html
  *
  */
+});

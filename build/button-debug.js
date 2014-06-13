@@ -1,43 +1,45 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:14
+build time: Jun 13 11:41
 */
 /*
 combined modules:
 button
 */
-/**
+KISSY.add('button', [
+    'node',
+    'component/control'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add('button', [
-    'util',
-    'node',
-    'component/control'
-], function (S, require) {
-    var util = require('util');
-    var Node = require('node'), Control = require('component/control');
-    var KeyCode = Node.KeyCode;    /**
-     * KISSY Button.
-     * @extends KISSY.Component.Control
-     * @class KISSY.Button
-     */
+    var $ = require('node');
+    var Control = require('component/control');
+    var KeyCode = $.Event.KeyCode;    /**
+ * KISSY Button.
+ * @extends KISSY.Component.Control
+ * @class KISSY.Button
+ */
     /**
-     * KISSY Button.
-     * @extends KISSY.Component.Control
-     * @class KISSY.Button
-     */
-    return Control.extend({
+ * KISSY Button.
+ * @extends KISSY.Component.Control
+ * @class KISSY.Button
+ */
+    module.exports = Control.extend({
         isButton: 1,
         beforeCreateDom: function (renderData) {
             var self = this;
-            util.mix(renderData.elAttrs, {
-                role: 'button',
-                title: renderData.tooltip,
-                'aria-describedby': renderData.describedby
-            });
+            var elAttrs = renderData.elAttrs;
+            elAttrs.role = 'button';
+            if (renderData.tooltip) {
+                elAttrs.title = renderData.tooltip;
+            }
+            if (renderData['aria-describedby']) {
+                elAttrs['aria-describedby'] = renderData.describedby;
+            }
             if (renderData.checked) {
                 renderData.elCls.push(self.getBaseCssClasses('checked'));
             }
@@ -78,73 +80,73 @@ KISSY.add('button', [
     }, {
         ATTRS: {
             /**
-             * Value associated with button component.
-             * @property value
-             */
+         * Value associated with button component.
+         * @property value
+         */
             /**
-             * Value associated with button component.
-             * @cfg {*} value
-             */
+         * Value associated with button component.
+         * @cfg {*} value
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             value: {},
             /**
-             *Aria-describedby attribute.
-             * @property describedby
-             * @type {String}
-             */
+         *Aria-describedby attribute.
+         * @property describedby
+         * @type {String}
+         */
             /**
-             *Aria-describedby attribute.
-             * @cfg {String} describedby
-             */
+         *Aria-describedby attribute.
+         * @cfg {String} describedby
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             describedby: {
                 value: '',
                 render: 1,
                 sync: 0
             },
             /**
-             * Tooltip for button.
-             * @cfg {String} tooltip
-             */
+         * Tooltip for button.
+         * @cfg {String} tooltip
+         */
             /**
-             * Tooltip for button.
-             * @property tooltip
-             * @type {String}
-             */
+         * Tooltip for button.
+         * @property tooltip
+         * @type {String}
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             tooltip: {
                 value: '',
                 render: 1,
                 sync: 0
             },
             /**
-             * Whether button can be checkable(toggle).
-             * Defaults to: false.
-             * @cfg {Boolean} checkable
-             */
+         * Whether button can be checkable(toggle).
+         * Defaults to: false.
+         * @cfg {Boolean} checkable
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             checkable: {},
             /**
-             * Whether button is checked(toggle).
-             * Defaults to: false.
-             * @type {Boolean}
-             * @property checked
-             */
+         * Whether button is checked(toggle).
+         * Defaults to: false.
+         * @type {Boolean}
+         * @property checked
+         */
             /**
-             * Whether button is checked(toggle).
-             * @cfg {Boolean} checked
-             */
+         * Whether button is checked(toggle).
+         * @cfg {Boolean} checked
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             checked: {
                 value: false,
                 render: 1,
@@ -154,5 +156,4 @@ KISSY.add('button', [
         xclass: 'button'
     });
 });
-
 

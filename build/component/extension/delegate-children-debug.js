@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:41
 */
 /*
 combined modules:
 component/extension/delegate-children
 */
-/**
- * @ignore
- * delegate events for children
- * @author yiminghe@gmail.com
- */
 KISSY.add('component/extension/delegate-children', [
     'component/control',
     'event/gesture/basic',
     'event/gesture/tap'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * delegate events for children
+ * @author yiminghe@gmail.com
+ */
     var Manager = require('component/control').Manager;
     var BasicGesture = require('event/gesture/basic');
     var TapGesture = require('event/gesture/tap');
@@ -35,13 +35,13 @@ KISSY.add('component/extension/delegate-children', [
         }
     }
     var guid = 1;    /**
-     * delegate events for component's children. for mixin.
-     * @class KISSY.Component.Extension.DelegateChildren
-     */
+ * delegate events for component's children. for mixin.
+ * @class KISSY.Component.Extension.DelegateChildren
+ */
     /**
-     * delegate events for component's children. for mixin.
-     * @class KISSY.Component.Extension.DelegateChildren
-     */
+ * delegate events for component's children. for mixin.
+ * @class KISSY.Component.Extension.DelegateChildren
+ */
     function DelegateChildren() {
         var self = this;
         self.__childClsTag = 'ks-component-child' + guid++;
@@ -74,7 +74,7 @@ KISSY.add('component/extension/delegate-children', [
                         control.handleContextMenu(e);
                         break;
                     default:
-                        S.error(e.type + ' unhandled!');
+                        throw new Error(e.type + ' unhandled!');
                     }
                 }
             }
@@ -85,16 +85,16 @@ KISSY.add('component/extension/delegate-children', [
             self.$el.delegate(events, '.' + self.__childClsTag, self.handleChildrenEvents, self);
         },
         /**
-         * Get child component which contains current event target node.
-         * @protected
-         * @param {KISSY.Event.DomEvent.Object} e event
-         * @return {KISSY.Component.Control}
-         */
+     * Get child component which contains current event target node.
+     * @protected
+     * @param {KISSY.Event.DomEvent.Object} e event
+     * @return {KISSY.Component.Control}
+     */
         getOwnerControl: function (e) {
             return Manager.getComponent(e.currentTarget.id);
         }
     };
-    return DelegateChildren;
+    module.exports = DelegateChildren;
 });
 
 

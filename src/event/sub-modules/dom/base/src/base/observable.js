@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/event');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/event');
 var BaseEvent = require('event/base');
 var Dom = require('dom');
 var Special = require('./special');

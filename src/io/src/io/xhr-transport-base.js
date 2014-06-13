@@ -9,8 +9,8 @@ var url = require('url');
 var querystring = require('querystring');
 var IO = require('./base');
 var UA = require('ua');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/io');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/io');
 var OK_CODE = 200,
     supportCORS,
     win = window,
@@ -303,7 +303,7 @@ util.mix(XhrTransportBase.proto, {
                 }
             }
         } catch (e) {
-            Logger.log(e.stack || e, 'error');
+            LoggerManager.log(e.stack || e, 'error');
             if ('@DEBUG@') {
                 setTimeout(function () {
                     throw e;

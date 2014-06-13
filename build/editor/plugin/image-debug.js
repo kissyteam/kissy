@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/image
 */
-/**
- * @ignore
- * insert image for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/image', [
     './button',
     'editor',
@@ -21,14 +16,19 @@ KISSY.add('editor/plugin/image', [
     'util',
     'ua',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * insert image for kissy editor
+ * @author yiminghe@gmail.com
+ */
     require('./button');
     var Editor = require('editor');
     require('./bubble');
     require('./contextmenu');
     var DialogLoader = require('./dialog-loader');
     var util = require('util');
-    var UA = require('ua'), Node = require('node'), $ = Node.all, checkImg = function (node) {
+    var UA = require('ua'), $ = require('node'), checkImg = function (node) {
             node = $(node);
             if (node.nodeName() === 'img' && // prevent collision with fake objects
                 !/(^|\s+)ke_/.test(node[0].className)) {
@@ -71,7 +71,7 @@ KISSY.add('editor/plugin/image', [
                         content: '\u63D2\u5165\u65B0\u884C',
                         fn: function () {
                             this.hide();
-                            var doc = editor.get('document')[0], p = new Node(doc.createElement('p'));
+                            var doc = editor.get('document')[0], p = $(doc.createElement('p'));
                             if (!UA.ie) {
                                 p._4eAppendBogus(undefined);
                             }
@@ -147,7 +147,7 @@ KISSY.add('editor/plugin/image', [
             });
         }
     };
-    return ImagePlugin;
+    module.exports = ImagePlugin;
 });
 
 

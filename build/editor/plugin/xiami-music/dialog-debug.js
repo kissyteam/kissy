@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:50
 */
 /*
 combined modules:
 editor/plugin/xiami-music/dialog
 */
-/**
- * @ignore
- * xiami-music dialog
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/xiami-music/dialog', [
     'util',
     'editor',
@@ -19,12 +14,17 @@ KISSY.add('editor/plugin/xiami-music/dialog', [
     '../menubutton',
     'dom',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * xiami-music dialog
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Editor = require('editor');
     var FlashDialog = require('../flash/dialog');
     var MenuButton = require('../menubutton');
-    var Dom = require('dom'), Node = require('node'), Utils = Editor.Utils, loading = Utils.debugUrl('theme/tao-loading.gif'), XIAMI_URL = 'http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}', CLS_XIAMI = 'ke_xiami', TYPE_XIAMI = 'xiami-music', BTIP = '\u641C \u7D22', TIP = '\u8F93\u5165\u6B4C\u66F2\u540D\u3001\u4E13\u8F91\u540D\u3001\u827A\u4EBA\u540D';
+    var Dom = require('dom'), $ = require('node'), Utils = Editor.Utils, loading = Utils.debugUrl('theme/tao-loading.gif'), XIAMI_URL = 'http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}', CLS_XIAMI = 'ke_xiami', TYPE_XIAMI = 'xiami-music', BTIP = '\u641C \u7D22', TIP = '\u8F93\u5165\u6B4C\u66F2\u540D\u3001\u4E13\u8F91\u540D\u3001\u827A\u4EBA\u540D';
     function limit(str, l) {
         if (str.length > l) {
             str = str.substring(0, l) + '...';
@@ -112,7 +112,7 @@ KISSY.add('editor/plugin/xiami-music/dialog', [
                     });
                 self._xiamiaList.html('<img style="' + 'display:block;' + 'width:32px;' + 'height:32px;' + 'margin:5px auto 0 auto;' + '" src="' + loading + '"/>' + '<p style="width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);">\u6B63\u5728\u641C\u7D22\uFF0C\u8BF7\u7A0D\u5019......</p>');
                 self._xiamiaList.show();
-                S.use('io', function (S, IO) {
+                require(['io'], function (IO) {
                     IO({
                         cache: false,
                         url: req,
@@ -131,7 +131,7 @@ KISSY.add('editor/plugin/xiami-music/dialog', [
             }
             self._xiamiaList.on('click', function (ev) {
                 ev.preventDefault();
-                var t = new Node(ev.target), add = t.closest(function (node) {
+                var t = $(ev.target), add = t.closest(function (node) {
                         return self._xiamiaList.contains(node) && Dom.hasClass(node, prefixCls + 'editor-xiami-add');
                     }, undefined), paging = t.closest(function (node) {
                         return self._xiamiaList.contains(node) && Dom.hasClass(node, prefixCls + 'editor-xiami-page-item');
@@ -243,7 +243,7 @@ KISSY.add('editor/plugin/xiami-music/dialog', [
         /*jshint camelcase:false*/
         return util.urlDecode(r.song_name) + ' - ' + util.urlDecode(r.artist_name);
     }
-    return XiamiMusicDialog;
+    module.exports = XiamiMusicDialog;
 });
 
 

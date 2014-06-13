@@ -1,24 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/resize
 */
-/**
- * @ignore
- * resize functionality
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/resize', [
     'dd',
     'node',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * resize functionality
+ * @author yiminghe@gmail.com
+ */
     var DD = require('dd');
-    var Node = require('node');
+    var $ = require('node');
     var util = require('util');
     function Resize(config) {
         this.config = config || {};
@@ -37,7 +37,7 @@ KISSY.add('editor/plugin/resize', [
                     cursor = 's-resize';
                 }
             }
-            var resizer = new Node('<div class="' + editor.get('prefixCls') + 'editor-resizer" style="cursor: ' + cursor + '"></div>').appendTo(statusBarEl);    //最大化时就不能缩放了
+            var resizer = $('<div class="' + editor.get('prefixCls') + 'editor-resizer" style="cursor: ' + cursor + '"></div>').appendTo(statusBarEl);    //最大化时就不能缩放了
             //最大化时就不能缩放了
             editor.on('maximizeWindow', function () {
                 resizer.css('display', 'none');
@@ -69,7 +69,7 @@ KISSY.add('editor/plugin/resize', [
             });
         }
     };
-    return Resize;
+    module.exports = Resize;
 });
 
 

@@ -1,27 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:23
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/source-area
 */
-/**
+KISSY.add('editor/plugin/source-area', [
+    'editor',
+    './button'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/source-area', [
-    'editor',
-    './button'
-], function (S, require) {
     var Editor = require('editor');
     require('./button');
     var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
-    function sourceArea() {
+    function SourceArea() {
     }
-    sourceArea.prototype = {
+    SourceArea.prototype = {
         pluginRenderUI: function (editor) {
             editor.addButton('sourceArea', {
                 tooltip: '\u6E90\u7801',
@@ -49,6 +49,6 @@ KISSY.add('editor/plugin/source-area', [
             });
         }
     };
-    return sourceArea;
+    module.exports = SourceArea;
 });
 

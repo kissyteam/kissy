@@ -1,37 +1,37 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:42
 */
 /*
 combined modules:
 cookie
 */
-/**
+KISSY.add('cookie', ['util'], function (S, require, exports, module) {
+    /**
  * @ignore
  * cookie
  * @author lifesinger@gmail.com
  */
-KISSY.add('cookie', ['util'], function (S, require) {
     var util = require('util');
-    var doc = S.Env.host.document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000, encode = encodeURIComponent, decode = util.urlDecode;
+    var doc = document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000, encode = encodeURIComponent, decode = util.urlDecode;
     function isNotEmptyString(val) {
         return typeof val === 'string' && val !== '';
     }    /**
-     * Provide Cookie utilities.
-     * @class KISSY.Cookie
-     * @singleton
-     */
+ * Provide Cookie utilities.
+ * @class KISSY.Cookie
+ * @singleton
+ */
     /**
-     * Provide Cookie utilities.
-     * @class KISSY.Cookie
-     * @singleton
-     */
-    S.Cookie = {
+ * Provide Cookie utilities.
+ * @class KISSY.Cookie
+ * @singleton
+ */
+    module.exports = {
         /**
-         * Returns the cookie value for given name
-         * @return {String} name The name of the cookie to retrieve
-         */
+     * Returns the cookie value for given name
+     * @return {String} name The name of the cookie to retrieve
+     */
         get: function (name) {
             var ret, m;
             if (isNotEmptyString(name)) {
@@ -42,15 +42,15 @@ KISSY.add('cookie', ['util'], function (S, require) {
             return ret;
         },
         /**
-         * Set a cookie with a given name and value
-         * @param {String} name The name of the cookie to set
-         * @param {String} val The value to set for cookie
-         * @param {Number|Date} expires
-         * if Number specified how many days this cookie will expire
-         * @param {String} domain set cookie's domain
-         * @param {String} path set cookie's path
-         * @param {Boolean} secure whether this cookie can only be sent to server on https
-         */
+     * Set a cookie with a given name and value
+     * @param {String} name The name of the cookie to set
+     * @param {String} val The value to set for cookie
+     * @param {Number|Date} expires
+     * if Number specified how many days this cookie will expire
+     * @param {String} domain set cookie's domain
+     * @param {String} path set cookie's path
+     * @param {Boolean} secure whether this cookie can only be sent to server on https
+     */
         set: function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;    // 从当前时间开始，多少天后过期
             // 从当前时间开始，多少天后过期
@@ -77,18 +77,16 @@ KISSY.add('cookie', ['util'], function (S, require) {
             doc.cookie = name + '=' + text;
         },
         /**
-         * Remove a cookie from the machine by setting its expiration date to sometime in the past
-         * @param {String} name The name of the cookie to remove.
-         * @param {String} domain The cookie's domain
-         * @param {String} path The cookie's path
-         * @param {String} secure The cookie's secure option
-         */
+     * Remove a cookie from the machine by setting its expiration date to sometime in the past
+     * @param {String} name The name of the cookie to remove.
+     * @param {String} domain The cookie's domain
+     * @param {String} path The cookie's path
+     * @param {String} secure The cookie's secure option
+     */
         remove: function (name, domain, path, secure) {
             this.set(name, '', -1, domain, path, secure);
         }
-    };
-    return S.Cookie;
-});    /*
+    };    /*
  2012.02.14 yiminghe@gmail.com
  - jsdoc added
 
@@ -99,3 +97,4 @@ KISSY.add('cookie', ['util'], function (S, require) {
  - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  独立成静态工具类的方式更优。
  */
+});

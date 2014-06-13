@@ -1,1 +1,1 @@
-{"io":["util","dom","querystring","logger","event/custom","promise","url","ua","event/dom"]}
+{"io":["util","dom","querystring","logger-manager","event/custom","promise","url","ua","event/dom"]}

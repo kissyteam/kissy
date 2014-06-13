@@ -7,8 +7,8 @@
  */
 var util = require('util');
 var IO = require('./base');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/io');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/io');
 var OK_CODE = 200,
     ERROR_CODE = 500;
 

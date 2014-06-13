@@ -1,23 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:27
+build time: Jun 13 11:52
 */
 /*
 combined modules:
 navigation-view
 */
-/**
- * navigation view to accommodate multiple views
- * @author yiminghe@gmail.com
- */
 KISSY.add('navigation-view', [
     'util',
     'feature',
     'component/container',
     'component/control',
     'component/extension/content-box'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * navigation view to accommodate multiple views
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var vendorInfo = require('feature').getCssVendorInfo('animation');
     var vendorPrefix = vendorInfo && vendorInfo.propertyNamePrefix;
@@ -207,7 +207,7 @@ KISSY.add('navigation-view', [
             fromCache: fromCache
         };
     }
-    return Container.extend([ContentBox], {
+    module.exports = Container.extend([ContentBox], {
         initializer: function () {
             this.viewStack = [];
         },
@@ -236,8 +236,10 @@ KISSY.add('navigation-view', [
         },
         replace: function (config) {
             var self = this, viewStack = self.viewStack;
-            util.mix(viewStack[viewStack.length - 1], config);
-            self.get('activeView').set(config);
+            if (viewStack.length) {
+                util.mix(viewStack[viewStack.length - 1], config);
+                self.get('activeView').set(config);
+            }
         },
         pop: function (config) {
             var self = this, viewStack = self.viewStack;
@@ -251,8 +253,8 @@ KISSY.add('navigation-view', [
         xclass: 'navigation-view',
         ATTRS: {
             /**
-             * default animation for view switch when pushed enter or pushed leave
-             */
+         * default animation for view switch when pushed enter or pushed leave
+         */
             animation: {
                 // push enter: slide-right-enter
                 // push leave: slide-left-leave

@@ -1,26 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/bold
 */
-/**
- * @ignore
- * bold command.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/bold', [
     './font/ui',
     './bold/cmd',
     'node',
     './button'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * bold command.
+ * @author yiminghe@gmail.com
+ */
     var ui = require('./font/ui');
     var cmd = require('./bold/cmd');
-    var Node = require('node');
+    var $ = require('node');
     require('./button');
     function Bold() {
     }
@@ -33,7 +33,7 @@ KISSY.add('editor/plugin/bold', [
             }, ui.Button);
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === Node.KeyCode.B) {
+                    if (e.ctrlKey && e.keyCode === $.Event.KeyCode.B) {
                         editor.execCommand('bold');
                         e.preventDefault();
                     }
@@ -41,7 +41,7 @@ KISSY.add('editor/plugin/bold', [
             });
         }
     };
-    return Bold;
+    module.exports = Bold;
 });
 
 

@@ -1,42 +1,41 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:54
+build time: Jun 13 11:43
 */
 /*
 combined modules:
 dd/plugin/proxy
 */
-/**
+KISSY.add('dd/plugin/proxy', [
+    'dd',
+    'base'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/proxy', [
-    'node',
-    'dd',
-    'base'
-], function (S, require) {
-    var Node = require('node'), DD = require('dd'), Base = require('base');
+    var DD = require('dd'), Base = require('base');
     var DDM = DD.DDM, PROXY_EVENT = '.-ks-proxy' + +new Date();    /**
-     * @extends KISSY.Base
-     * @class KISSY.DD.Plugin.Proxy
-     * Proxy plugin to provide abilities for draggable tp create a proxy drag node,
-     * instead of dragging the original node.
-     */
+ * @extends KISSY.Base
+ * @class KISSY.DD.Plugin.Proxy
+ * Proxy plugin to provide abilities for draggable tp create a proxy drag node,
+ * instead of dragging the original node.
+ */
     /**
-     * @extends KISSY.Base
-     * @class KISSY.DD.Plugin.Proxy
-     * Proxy plugin to provide abilities for draggable tp create a proxy drag node,
-     * instead of dragging the original node.
-     */
-    return Base.extend({
+ * @extends KISSY.Base
+ * @class KISSY.DD.Plugin.Proxy
+ * Proxy plugin to provide abilities for draggable tp create a proxy drag node,
+ * instead of dragging the original node.
+ */
+    module.exports = Base.extend({
         pluginId: 'dd/plugin/proxy',
         /**
-         * make this draggable object can be proxied.
-         * @param {KISSY.DD.Draggable} drag
-         * @private
-         */
+     * make this draggable object can be proxied.
+     * @param {KISSY.DD.Draggable} drag
+     * @private
+     */
         pluginInitializer: function (drag) {
             var self = this;
             function start() {
@@ -74,57 +73,56 @@ KISSY.add('dd/plugin/proxy', [
             drag.on('dragstart' + PROXY_EVENT, start).on('dragend' + PROXY_EVENT, end);
         },
         /**
-         * make this draggable object unproxied
-         * @param {KISSY.DD.Draggable} drag
-         * @private
-         */
+     * make this draggable object unproxied
+     * @param {KISSY.DD.Draggable} drag
+     * @private
+     */
         pluginDestructor: function (drag) {
             drag.detach(PROXY_EVENT);
         }
     }, {
         ATTRS: {
             /**
-             * how to get the proxy node.
-             * default clone the node itself deeply.
-             * @cfg {Function} node
-             */
+         * how to get the proxy node.
+         * default clone the node itself deeply.
+         * @cfg {Function} node
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             node: {
                 value: function (drag) {
-                    return new Node(drag.get('node').clone(true));
+                    return drag.get('node').clone(true);
                 }
             },
             /**
-             * destroy the proxy node at the end of this drag.
-             * default false
-             * @cfg {Boolean} destroyOnEnd
-             */
+         * destroy the proxy node at the end of this drag.
+         * default false
+         * @cfg {Boolean} destroyOnEnd
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             destroyOnEnd: { value: false },
             /**
-             * move the original node at the end of the drag.
-             * default true
-             * @cfg {Boolean} moveOnEnd
-             */
+         * move the original node at the end of the drag.
+         * default true
+         * @cfg {Boolean} moveOnEnd
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             moveOnEnd: { value: true },
             /**
-             * Current proxy node.
-             * @type {KISSY.Node}
-             * @property proxyNode
-             */
+         * Current proxy node.
+         * @type {KISSY.Node}
+         * @property proxyNode
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             proxyNode: {}
         }
     });
 });
-
 

@@ -8,9 +8,9 @@ document.body.focus();
 var Event = require('event/dom');
 var util = require('util');
 var ComboBox = require('combobox');
+var UA = require('ua');
 
 describe('simple combobox', function () {
-
     beforeEach(function () {
         this.addMatchers({
             toBeNearEqual: function (expected) {
@@ -296,7 +296,7 @@ describe('simple combobox', function () {
         waits(100);
     });
 
-    if (!S.UA.ios && !S.UA.android) {
+    if (!UA.ios && !UA.android) {
         it('should response to mouse', function () {
             t.focus();
 
@@ -438,11 +438,9 @@ describe('simple combobox', function () {
         });
     });
 
-
     it('clean', function () {
         runs(function () {
             comboBox.destroy();
         });
     });
-
 });

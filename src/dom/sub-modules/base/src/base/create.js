@@ -5,8 +5,8 @@
  */
 var util = require('util');
 var undef;
-var Logger = require('logger');
-var logger = Logger.getLogger('s/dom');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/dom');
 var Dom = require('./api');
 var doc = document,
     NodeType = Dom.NodeType,
@@ -228,7 +228,6 @@ util.mix(Dom,
                 }
             }
         },
-
 
         _defaultCreator: defaultCreator,
 

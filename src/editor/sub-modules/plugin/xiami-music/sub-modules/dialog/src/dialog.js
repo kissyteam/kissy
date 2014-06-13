@@ -173,7 +173,7 @@ util.extend(XiamiMusicDialog, FlashDialog, {
                 '<p style="width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);">正在搜索，请稍候......</p>');
             self._xiamiaList.show();
 
-            S.use('io', function (S, IO) {
+            require(['io'], function (IO) {
                 IO({
                     cache: false,
                     url: req,

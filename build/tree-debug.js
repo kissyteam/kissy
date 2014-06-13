@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
@@ -13,17 +13,17 @@ tree/tree-manager
 tree/check-node
 tree/check-tree
 */
-/**
- * @ignore
- * tree component for kissy
- * @author yiminghe@gmail.com
- */
 KISSY.add('tree', [
     'tree/control',
     'tree/node',
     'tree/check-node',
     'tree/check-tree'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * tree component for kissy
+ * @author yiminghe@gmail.com
+ */
     var Tree = require('tree/control');
     var TreeNode = require('tree/node');
     var CheckNode = require('tree/check-node');
@@ -31,39 +31,39 @@ KISSY.add('tree', [
     Tree.Node = TreeNode;
     Tree.CheckNode = CheckNode;
     Tree.CheckTree = CheckTree;
-    return Tree;
+    module.exports = Tree;
 });
-/**
+KISSY.add('tree/control', [
+    './node',
+    './tree-manager'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree/control', [
-    './node',
-    './tree-manager'
-], function (S, require) {
     var TreeNode = require('./node');
     var TreeManager = require('./tree-manager');    /*多继承
-     1. 继承基节点（包括可装饰儿子节点功能）
-     2. 继承 mixin 树管理功能
-     3. 继承 mixin 儿子事件代理功能
-     */
+ 1. 继承基节点（包括可装饰儿子节点功能）
+ 2. 继承 mixin 树管理功能
+ 3. 继承 mixin 儿子事件代理功能
+ */
                                                     /**
-     * KISSY Tree. xclass: 'tree'.
-     * @class KISSY.Tree
-     * @extends KISSY.Tree.Node
-     */
+ * KISSY Tree. xclass: 'tree'.
+ * @class KISSY.Tree
+ * @extends KISSY.Tree.Node
+ */
     /*多继承
-     1. 继承基节点（包括可装饰儿子节点功能）
-     2. 继承 mixin 树管理功能
-     3. 继承 mixin 儿子事件代理功能
-     */
+ 1. 继承基节点（包括可装饰儿子节点功能）
+ 2. 继承 mixin 树管理功能
+ 3. 继承 mixin 儿子事件代理功能
+ */
     /**
-     * KISSY Tree. xclass: 'tree'.
-     * @class KISSY.Tree
-     * @extends KISSY.Tree.Node
-     */
-    return TreeNode.extend([TreeManager], {
+ * KISSY Tree. xclass: 'tree'.
+ * @class KISSY.Tree
+ * @extends KISSY.Tree.Node
+ */
+    module.exports = TreeNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
             var current = this.get('selectedItem');
             if (current === this) {
@@ -90,8 +90,7 @@ KISSY.add('tree/control', [
             }
         },
         xclass: 'tree'
-    });
-});    /*
+    });    /*
  Refer:
  - http://www.w3.org/TR/wai-aria-practices/#TreeView
 
@@ -116,35 +115,36 @@ KISSY.add('tree/control', [
  home : 移动到根节点
  end : 移动到前序遍历最后一个节点
  */
-/**
+});
+KISSY.add('tree/node', [
+    'component/container',
+    'util',
+    'node',
+    'node',
+    './node-xtpl',
+    'component/extension/content-box'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree/node', [
-    'node',
-    'component/container',
-    'util',
-    './node-xtpl',
-    'component/extension/content-box'
-], function (S, require) {
-    var Node = require('node');
     var Container = require('component/container');
     var util = require('util');
-    var $ = Node.all, KeyCode = Node.KeyCode;
+    var $ = require('node'), KeyCode = require('node').Event.KeyCode;
     var SELECTED_CLS = 'selected', EXPAND_EL_CLS = 'expand-icon', COMMON_EXPAND_EL_CLS = 'expand-icon-{t}', EXPAND_ICON_EL_FILE_CLS = [COMMON_EXPAND_EL_CLS].join(' '), EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [COMMON_EXPAND_EL_CLS + 'minus'].join(' '), EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [COMMON_EXPAND_EL_CLS + 'plus'].join(' '), ICON_EL_FILE_CLS = ['file-icon'].join(' '), ICON_EL_FOLDER_EXPAND_CLS = ['expanded-folder-icon'].join(' '), ICON_EL_FOLDER_COLLAPSE_CLS = ['collapsed-folder-icon'].join(' '), ROW_EL_CLS = 'row', CHILDREN_CLS = 'children', CHILDREN_CLS_L = 'lchildren';
     var TreeNodeTpl = require('./node-xtpl');
     var ContentBox = require('component/extension/content-box');    /**
-     * Tree Node. xclass: 'tree-node'.
-     * @class KISSY.Tree.Node
-     * @extends KISSY.Component.Container
-     */
+ * Tree Node. xclass: 'tree-node'.
+ * @class KISSY.Tree.Node
+ * @extends KISSY.Component.Container
+ */
     /**
-     * Tree Node. xclass: 'tree-node'.
-     * @class KISSY.Tree.Node
-     * @extends KISSY.Component.Container
-     */
-    return Container.extend([ContentBox], {
+ * Tree Node. xclass: 'tree-node'.
+ * @class KISSY.Tree.Node
+ * @extends KISSY.Component.Container
+ */
+    module.exports = Container.extend([ContentBox], {
         beforeCreateDom: function (renderData) {
             util.mix(renderData.elAttrs, {
                 role: 'tree-node',
@@ -251,8 +251,8 @@ KISSY.add('tree/node', [
             return siblings[index - 1];
         },
         /**
-         * Select current tree node.
-         */
+     * Select current tree node.
+     */
         select: function () {
             this.set('selected', true);
         },
@@ -271,8 +271,8 @@ KISSY.add('tree/node', [
             return true;
         },
         /**
-         * override root 's renderChildren to apply depth and css recursively
-         */
+     * override root 's renderChildren to apply depth and css recursively
+     */
         createChildren: function () {
             var self = this;
             self.renderChildren.apply(self, arguments);    // only sync child sub tree at root node
@@ -326,8 +326,8 @@ KISSY.add('tree/node', [
             }
         },
         /**
-         * Expand all descend nodes of current node
-         */
+     * Expand all descend nodes of current node
+     */
         expandAll: function () {
             var self = this;
             self.set('expanded', true);
@@ -336,8 +336,8 @@ KISSY.add('tree/node', [
             });
         },
         /**
-         * Collapse all descend nodes of current node
-         */
+     * Collapse all descend nodes of current node
+     */
         collapseAll: function () {
             var self = this;
             self.set('expanded', false);
@@ -351,12 +351,12 @@ KISSY.add('tree/node', [
             // 事件代理
             handleGestureEvents: { value: false },
             /**
-             * Only For Config.
-             * Whether to force current tree node as a leaf.                 *
-             * It will change as children are added.
-             *
-             * @type {Boolean}
-             */
+         * Only For Config.
+         * Whether to force current tree node as a leaf.                 *
+         * It will change as children are added.
+         *
+         * @type {Boolean}
+         */
             isLeaf: {
                 render: 1,
                 sync: 0,
@@ -381,36 +381,36 @@ KISSY.add('tree/node', [
                 }
             },
             /**
-             * Element for expand icon.
-             * @type {KISSY.Node}
-             */
+         * Element for expand icon.
+         * @type {KISSY.Node}
+         */
             expandIconEl: {
                 selector: function () {
                     return '.' + this.getBaseCssClass(EXPAND_EL_CLS);
                 }
             },
             /**
-             * Element for icon.
-             * @type {KISSY.Node}
-             */
+         * Element for icon.
+         * @type {KISSY.Node}
+         */
             iconEl: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('icon');
                 }
             },
             /**
-             * Whether current tree node is selected.
-             * @type {Boolean}
-             */
+         * Whether current tree node is selected.
+         * @type {Boolean}
+         */
             selected: {
                 render: 1,
                 sync: 0
             },
             /**
-             * Whether current tree node is expanded.
-             * @type {Boolean}
-             * Defaults to: false.
-             */
+         * Whether current tree node is expanded.
+         * @type {Boolean}
+         * Defaults to: false.
+         */
             expanded: {
                 sync: 0,
                 value: false,
@@ -420,17 +420,17 @@ KISSY.add('tree/node', [
                 }
             },
             /**
-             * html title for current tree node.
-             * @type {String}
-             */
+         * html title for current tree node.
+         * @type {String}
+         */
             tooltip: {
                 render: 1,
                 sync: 0
             },
             /**
-             * Tree instance current tree node belongs to.
-             * @type {KISSY.Tree}
-             */
+         * Tree instance current tree node belongs to.
+         * @type {KISSY.Tree}
+         */
             tree: {
                 getter: function () {
                     var self = this, from = self;
@@ -441,9 +441,9 @@ KISSY.add('tree/node', [
                 }
             },
             /**
-             * depth of node.
-             * @type {Number}
-             */
+         * depth of node.
+         * @type {Number}
+         */
             depth: {
                 render: 1,
                 sync: 0
@@ -526,13 +526,13 @@ KISSY.add('tree/node', [
         }
         return n;
     }    /*
-     每次添加/删除节点，都检查自己以及自己子孙 class
-     每次 expand/collapse，都检查
-     */
+ 每次添加/删除节点，都检查自己以及自己子孙 class
+ 每次 expand/collapse，都检查
+ */
     /*
-     每次添加/删除节点，都检查自己以及自己子孙 class
-     每次 expand/collapse，都检查
-     */
+ 每次添加/删除节点，都检查自己以及自己子孙 class
+ 每次 expand/collapse，都检查
+ */
     function refreshCss(self) {
         self.refreshCss(isNodeSingleOrLast(self), isNodeLeaf(self));
     }
@@ -565,20 +565,21 @@ KISSY.add('tree/node', [
             c.el.setAttribute('aria-posinset', index + 1);
         }
     }    // # ------------------- private end
-});    /**
+         /**
  * @ignore
  * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  */
+});
 
 
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var node = function (scope, buffer, undefined) {
+    var nodeXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -717,54 +718,54 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
         buffer.write('\r\n>\r\n</div>', 0);
         return buffer;
     };
-    node.TPL_NAME = module.name;
-    node.version = '5.0.0';
-    return node;
+    nodeXtplHtml.TPL_NAME = module.name;
+    nodeXtplHtml.version = '5.0.0';
+    module.exports = nodeXtplHtml;
 });
 
-/**
- * @ignore
- * tree management utils
- * @author yiminghe@gmail.com
- */
 KISSY.add('tree/tree-manager', [
     'component/extension/delegate-children',
     'event/gesture/tap',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * tree management utils
+ * @author yiminghe@gmail.com
+ */
     var DelegateChildrenExtension = require('component/extension/delegate-children');
     var TapGesture = require('event/gesture/tap');
     var util = require('util');    /**
-     * Manage tree node for tree root
-     * @class KISSY.Tree.Manager
-     */
+ * Manage tree node for tree root
+ * @class KISSY.Tree.Manager
+ */
     /**
-     * Manage tree node for tree root
-     * @class KISSY.Tree.Manager
-     */
+ * Manage tree node for tree root
+ * @class KISSY.Tree.Manager
+ */
     function TreeManager() {
     }
     TreeManager.ATTRS = {
         /**
-         * Whether show root node.
-         * Defaults to: true.
-         * @cfg {Boolean} showRootNode
-         */
+     * Whether show root node.
+     * Defaults to: true.
+     * @cfg {Boolean} showRootNode
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         showRootNode: {
             value: true,
             render: 1
         },
         /**
-         * Current selected tree node.
-         * @property {KISSY.Tree.Node} selectedItem
-         * @readonly
-         */
+     * Current selected tree node.
+     * @property {KISSY.Tree.Node} selectedItem
+     * @readonly
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         selectedItem: {},
         // only root node is focusable
         focusable: { value: true },
@@ -787,34 +788,33 @@ KISSY.add('tree/tree-manager', [
             this.get('rowEl')[v ? 'show' : 'hide']();
         }
     });
-    return TreeManager;
+    module.exports = TreeManager;
 });
 
 
-/**
+KISSY.add('tree/check-node', [
+    './node',
+    'util',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * checkable tree node
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree/check-node', [
-    'node',
-    './node',
-    'util'
-], function (S, require) {
-    var Node = require('node');
     var TreeNode = require('./node');
     var util = require('util');
-    var $ = Node.all, PARTIAL_CHECK = 2, CHECK = 1, EMPTY = 0;
+    var $ = require('node'), PARTIAL_CHECK = 2, CHECK = 1, EMPTY = 0;
     var CHECK_CLS = 'checked', ALL_STATES_CLS = 'checked0 checked1 checked2';    /**
-     * Checked tree node. xclass: 'check-tree-node'.
-     * @class KISSY.Tree.CheckNode
-     * @extends KISSY.Tree.Node
-     */
+ * Checked tree node. xclass: 'check-tree-node'.
+ * @class KISSY.Tree.CheckNode
+ * @extends KISSY.Tree.Node
+ */
     /**
-     * Checked tree node. xclass: 'check-tree-node'.
-     * @class KISSY.Tree.CheckNode
-     * @extends KISSY.Tree.Node
-     */
+ * Checked tree node. xclass: 'check-tree-node'.
+ * @class KISSY.Tree.CheckNode
+ * @extends KISSY.Tree.Node
+ */
     var CheckNode = TreeNode.extend({
             handleClickInternal: function (e) {
                 var self = this, checkState, expanded = self.get('expanded'), expandIconEl = self.get('expandIconEl'), tree = self.get('tree'), target = $(e.target);    // 需要通知 tree 获得焦点
@@ -887,12 +887,12 @@ KISSY.add('tree/check-node', [
                     sync: 0
                 },
                 /**
-             * Enums for check states.
-             * CheckNode.PARTIAL_CHECK: checked partly.
-             * CheckNode.CHECK: checked completely.
-             * CheckNode.EMPTY: not checked.
-             * @type {Number}
-             */
+         * Enums for check states.
+         * CheckNode.PARTIAL_CHECK: checked partly.
+         * CheckNode.CHECK: checked completely.
+         * CheckNode.EMPTY: not checked.
+         * @type {Number}
+         */
                 checkState: {
                     // check 的三状态
                     // 0 一个不选
@@ -922,52 +922,52 @@ KISSY.add('tree/check-node', [
             },
             xclass: 'check-tree-node'
         });    /**
-     * check node's check state enum
-     * @enum {Number} KISSY.Tree.CheckNode.CheckState
-     */
+ * check node's check state enum
+ * @enum {Number} KISSY.Tree.CheckNode.CheckState
+ */
     /**
-     * check node's check state enum
-     * @enum {Number} KISSY.Tree.CheckNode.CheckState
-     */
+ * check node's check state enum
+ * @enum {Number} KISSY.Tree.CheckNode.CheckState
+ */
     CheckNode.CheckState = {
         /**
-         * checked partly.
-         */
+     * checked partly.
+     */
         PARTIAL_CHECK: PARTIAL_CHECK,
         /**
-         * checked completely.
-         */
+     * checked completely.
+     */
         CHECK: CHECK,
         /**
-         * not checked at all.
-         */
+     * not checked at all.
+     */
         EMPTY: EMPTY
     };
-    return CheckNode;
+    module.exports = CheckNode;
 });
-/**
+KISSY.add('tree/check-tree', [
+    './check-node',
+    './tree-manager'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * root node represent a check tree
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree/check-tree', [
-    './check-node',
-    './tree-manager'
-], function (S, require) {
     var CheckNode = require('./check-node');
     var TreeManager = require('./tree-manager');    /**
-     * KISSY Checked Tree. xclass: 'check-tree'.
-     * @extends KISSY.Tree.CheckNode
-     * @class KISSY.Tree.CheckTree
-     * @mixins {KISSY.Tree.Manager}
-     */
+ * KISSY Checked Tree. xclass: 'check-tree'.
+ * @extends KISSY.Tree.CheckNode
+ * @class KISSY.Tree.CheckTree
+ * @mixins {KISSY.Tree.Manager}
+ */
     /**
-     * KISSY Checked Tree. xclass: 'check-tree'.
-     * @extends KISSY.Tree.CheckNode
-     * @class KISSY.Tree.CheckTree
-     * @mixins {KISSY.Tree.Manager}
-     */
-    return CheckNode.extend([TreeManager], {
+ * KISSY Checked Tree. xclass: 'check-tree'.
+ * @extends KISSY.Tree.CheckNode
+ * @class KISSY.Tree.CheckTree
+ * @mixins {KISSY.Tree.Manager}
+ */
+    module.exports = CheckNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
             var current = this.get('selectedItem');
             if (current === this) {

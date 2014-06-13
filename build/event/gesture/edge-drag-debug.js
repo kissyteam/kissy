@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 event/gesture/edge-drag
 */
-/**
- * edge drag gesture
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/edge-drag', [
     'event/gesture/util',
     'event/dom/base',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * edge drag gesture
+ * @author yiminghe@gmail.com
+ */
     var GestureUtil = require('event/gesture/util');
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
@@ -69,83 +69,83 @@ KISSY.add('event/gesture/edge-drag', [
             self.isStarted = 1;
             self.startTime = e.timeStamp;
         }    /**
-         * fired when edge drag started
-         * @event EDGE_DRAG_START
-         * @member KISSY.Event.Gesture.EdgeDrag
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch and start touch
-         * @param {Number} e.duration time duration between current touch and start touch
-         * @param {Number} e.velocityX velocity at x-axis
-         * @param {Number} e.velocityY velocity at y-axis
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when edge drag started
+     * @event EDGE_DRAG_START
+     * @member KISSY.Event.Gesture.EdgeDrag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch and start touch
+     * @param {Number} e.duration time duration between current touch and start touch
+     * @param {Number} e.velocityX velocity at x-axis
+     * @param {Number} e.velocityY velocity at y-axis
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
              /**
-         * fired when edge drag
-         * @event EDGE_DRAG
-         * @member KISSY.Event.Gesture.EdgeDrag
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch and start touch
-         * @param {Number} e.duration time duration between current touch and start touch
-         * @param {Number} e.velocityX velocity at x-axis
-         * @param {Number} e.velocityY velocity at y-axis
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when edge drag
+     * @event EDGE_DRAG
+     * @member KISSY.Event.Gesture.EdgeDrag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch and start touch
+     * @param {Number} e.duration time duration between current touch and start touch
+     * @param {Number} e.velocityX velocity at x-axis
+     * @param {Number} e.velocityY velocity at y-axis
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
              /**
-         * fired when edge drag gesture is finished
-         * @event EDGE_DRAG_END
-         * @member KISSY.Event.Gesture.EdgeDrag
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch and start touch
-         * @param {Number} e.duration time duration between current touch and start touch
-         * @param {Number} e.velocityX velocity at x-axis
-         * @param {Number} e.velocityY velocity at y-axis
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when edge drag gesture is finished
+     * @event EDGE_DRAG_END
+     * @member KISSY.Event.Gesture.EdgeDrag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch and start touch
+     * @param {Number} e.duration time duration between current touch and start touch
+     * @param {Number} e.velocityX velocity at x-axis
+     * @param {Number} e.velocityY velocity at y-axis
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         /**
-         * fired when edge drag started
-         * @event EDGE_DRAG_START
-         * @member KISSY.Event.Gesture.EdgeDrag
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch and start touch
-         * @param {Number} e.duration time duration between current touch and start touch
-         * @param {Number} e.velocityX velocity at x-axis
-         * @param {Number} e.velocityY velocity at y-axis
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when edge drag started
+     * @event EDGE_DRAG_START
+     * @member KISSY.Event.Gesture.EdgeDrag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch and start touch
+     * @param {Number} e.duration time duration between current touch and start touch
+     * @param {Number} e.velocityX velocity at x-axis
+     * @param {Number} e.velocityY velocity at y-axis
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         /**
-         * fired when edge drag
-         * @event EDGE_DRAG
-         * @member KISSY.Event.Gesture.EdgeDrag
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch and start touch
-         * @param {Number} e.duration time duration between current touch and start touch
-         * @param {Number} e.velocityX velocity at x-axis
-         * @param {Number} e.velocityY velocity at y-axis
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when edge drag
+     * @event EDGE_DRAG
+     * @member KISSY.Event.Gesture.EdgeDrag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch and start touch
+     * @param {Number} e.duration time duration between current touch and start touch
+     * @param {Number} e.velocityX velocity at x-axis
+     * @param {Number} e.velocityY velocity at y-axis
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         /**
-         * fired when edge drag gesture is finished
-         * @event EDGE_DRAG_END
-         * @member KISSY.Event.Gesture.EdgeDrag
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch and start touch
-         * @param {Number} e.duration time duration between current touch and start touch
-         * @param {Number} e.velocityX velocity at x-axis
-         * @param {Number} e.velocityY velocity at y-axis
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when edge drag gesture is finished
+     * @event EDGE_DRAG_END
+     * @member KISSY.Event.Gesture.EdgeDrag
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch and start touch
+     * @param {Number} e.duration time duration between current touch and start touch
+     * @param {Number} e.velocityX velocity at x-axis
+     * @param {Number} e.velocityY velocity at y-axis
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         DomEvent.fire(touch.target, event, {
             originalEvent: e.originalEvent,
             pageX: touch.pageX,
@@ -185,17 +185,17 @@ KISSY.add('event/gesture/edge-drag', [
         EDGE_DRAG_END,
         EDGE_DRAG_START
     ], { handle: new EdgeDrag() });
-    return {
+    module.exports = {
         EDGE_DRAG: EDGE_DRAG,
         EDGE_DRAG_START: EDGE_DRAG_START,
         EDGE_DRAG_END: EDGE_DRAG_END
-    };
-});    /*
+    };    /*
  note:
  - android chrome will fire touchcancel before touchmove ....
 
  refer:
  - http://msdn.microsoft.com/zh-cn/library/windows/apps/hh465415.aspx
  */
+});
 
 

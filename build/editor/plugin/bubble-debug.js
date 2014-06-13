@@ -1,26 +1,25 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/bubble
 */
-/**
- * @ignore
- * bubble or tip view for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/bubble', [
     'util',
     'ua',
     'overlay',
     'editor'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * bubble or tip view for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var UA = require('ua');
-    var logger = S.getLogger('s/editor');
     var Overlay = require('overlay');
     var Editor = require('editor');
     var BUBBLE_CFG = {
@@ -151,8 +150,6 @@ KISSY.add('editor/plugin/bubble', [
                 }
                 if (!bubble.get('visible')) {
                     bubble.show();
-                } else {
-                    logger.debug('already show by selectionChange');
                 }
             }
         }

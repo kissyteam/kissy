@@ -1,28 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/remove-format
 */
-/**
- * @ignore
- * removeFormat for selection.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/remove-format', [
     'editor',
     './button',
     './remove-format/cmd'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * removeFormat for selection.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     require('./button');
     var formatCmd = require('./remove-format/cmd');
-    function removeFormat() {
+    function RemoveFormat() {
     }
-    removeFormat.prototype = {
+    RemoveFormat.prototype = {
         pluginRenderUI: function (editor) {
             formatCmd.init(editor);
             editor.addButton('removeFormat', {
@@ -36,7 +36,7 @@ KISSY.add('editor/plugin/remove-format', [
             });
         }
     };
-    return removeFormat;
+    module.exports = RemoveFormat;
 });
 
 

@@ -1,32 +1,32 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 event/gesture/shake
 */
-/**
+KISSY.add('event/gesture/shake', [
+    'event/dom/base',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/shake', [
-    'event/dom/base',
-    'util'
-], function (S, require) {
     var DomEvent = require('event/dom/base');
     var util = require('util');
-    var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = S.Env.host, devicemotion = 'devicemotion', checkShake = util.buffer(function () {
+    var Special = DomEvent.Special, start = 5, enough = 20, shaking = 0, SHAKE = 'shake', lastX, lastY, lastZ, max = Math.max, abs = Math.abs, win = window, devicemotion = 'devicemotion', checkShake = util.buffer(function () {
             if (shaking) {
                 /**
-                 * fired when shake ended
-                 * @event SHAKE
-                 * @member KISSY.Event.Gesture.Shake
-                 * @param {KISSY.Event.DomEvent.Object} e
-                 * @param {Object} e.accelerationIncludingGravity last devicemotion event's accelerationIncludingGravity
-                 */
+             * fired when shake ended
+             * @event SHAKE
+             * @member KISSY.Event.Gesture.Shake
+             * @param {KISSY.Event.DomEvent.Object} e
+             * @param {Object} e.accelerationIncludingGravity last devicemotion event's accelerationIncludingGravity
+             */
                 DomEvent.fireHandler(win, SHAKE, {
                     accelerationIncludingGravity: {
                         x: lastX,
@@ -76,8 +76,7 @@ KISSY.add('event/gesture/shake', [
         lastY = y;
         lastZ = z;
     }
-    return { SHAKE: SHAKE };
-});    /**
+    module.exports = { SHAKE: SHAKE };    /**
  * @ignore
  * refer:
  *  - http://www.mobilexweb.com/blog/safari-ios-accelerometer-websockets-html5
@@ -90,4 +89,5 @@ KISSY.add('event/gesture/shake', [
  *  - http://www.eleqtriq.com/2010/05/css-3d-matrix-transformations/
  *  - http://dev.w3.org/geo/api/spec-source-orientation
  */
+});
 

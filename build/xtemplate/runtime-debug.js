@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 12 13:54
+build time: Jun 13 11:54
 */
 /*
 combined modules:
@@ -12,7 +12,7 @@ xtemplate/runtime/linked-buffer
 */
 KISSY.add('xtemplate/runtime', [
     'util',
-    'logger',
+    'logger-manager',
     './runtime/commands',
     './runtime/scope',
     './runtime/linked-buffer'
@@ -23,7 +23,7 @@ KISSY.add('xtemplate/runtime', [
  * @ignore
  */
     var util = require('util');
-    var Logger = require('logger');
+    var LoggerManager = require('logger-manager');
     var nativeCommands = require('./runtime/commands');
     var commands = {};
     var Scope = require('./runtime/scope');
@@ -92,7 +92,7 @@ KISSY.add('xtemplate/runtime', [
             }
         }
         if (error) {
-            Logger.error(error);
+            LoggerManager.error(error);
         }
         return buffer;
     }
@@ -112,7 +112,7 @@ KISSY.add('xtemplate/runtime', [
                     },
                     error: function () {
                         var error = 'template "' + name + '" does not exist';
-                        Logger.log(error, 'error');
+                        LoggerManager.log(error, 'error');
                         callback(error);
                     }
                 });
@@ -175,7 +175,7 @@ KISSY.add('xtemplate/runtime', [
         }
         if (!parentName) {
             var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subName;
-            Logger.error(error);
+            LoggerManager.error(error);
         }
         var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
         if (cache[subName]) {

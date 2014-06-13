@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:38
+build time: Jun 13 11:50
 */
 /*
 combined modules:
@@ -16,11 +16,6 @@ event/dom/base/key-codes
 event/dom/base/special-events
 event/dom/base/mouseenter
 */
-/**
- * @ignore
- * dom event facade
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/dom/base', [
     './base/dom-event',
     './base/object',
@@ -28,14 +23,19 @@ KISSY.add('event/dom/base', [
     './base/special-events',
     './base/mouseenter',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * dom event facade
+ * @author yiminghe@gmail.com
+ */
     var DomEvent = require('./base/dom-event');
     var DomEventObject = require('./base/object');
     var KeyCode = require('./base/key-codes');
     var Special = require('./base/special-events');
     require('./base/mouseenter');
     var util = require('util');
-    return util.merge({
+    module.exports = util.merge({
         add: DomEvent.on,
         remove: DomEvent.detach,
         KeyCode: KeyCode,
@@ -43,11 +43,6 @@ KISSY.add('event/dom/base', [
         Object: DomEventObject
     }, DomEvent);
 });
-/**
- * @ignore
- * setup event/dom api module
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/dom/base/dom-event', [
     'event/base',
     './utils',
@@ -56,7 +51,12 @@ KISSY.add('event/dom/base/dom-event', [
     './observable',
     './object',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * setup event/dom api module
+ * @author yiminghe@gmail.com
+ */
     var BaseEvent = require('event/base');
     var DomEventUtils = require('./utils');
     var Dom = require('dom');
@@ -139,28 +139,28 @@ KISSY.add('event/dom/base/dom-event', [
             customEvent.detach(cfg);
         }
     }    /**
-     * Dom Event Management
-     * @private
-     * @class KISSY.Event.DomEvent
-     */
+ * Dom Event Management
+ * @private
+ * @class KISSY.Event.DomEvent
+ */
     /**
-     * Dom Event Management
-     * @private
-     * @class KISSY.Event.DomEvent
-     */
+ * Dom Event Management
+ * @private
+ * @class KISSY.Event.DomEvent
+ */
     var DomEvent = {
             /**
-         * Adds an event listener.similar to addEventListener in Dom3 Events
-         * @param targets KISSY selector
-         * @param type {String} The type of event to append.
-         * use space to separate multiple event types.
-         * @param fn {Function|Object} The event listener or event description object.
-         * @param {Function} fn.fn The event listener
-         * @param {Function} fn.context The context (this reference) in which the handler function is executed.
-         * @param {String|Function} fn.filter filter selector string or function to find right element
-         * @param {Boolean} fn.once whether fn will be removed once after it is executed.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         */
+     * Adds an event listener.similar to addEventListener in Dom3 Events
+     * @param targets KISSY selector
+     * @param type {String} The type of event to append.
+     * use space to separate multiple event types.
+     * @param fn {Function|Object} The event listener or event description object.
+     * @param {Function} fn.fn The event listener
+     * @param {Function} fn.context The context (this reference) in which the handler function is executed.
+     * @param {String|Function} fn.filter filter selector string or function to find right element
+     * @param {Boolean} fn.once whether fn will be removed once after it is executed.
+     * @param {Object} [context] The context (this reference) in which the handler function is executed.
+     */
             on: function (targets, type, fn, context) {
                 // data : 附加在回调后面的数据，delegate 检查使用
                 // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
@@ -176,19 +176,19 @@ KISSY.add('event/dom/base/dom-event', [
                 return targets;
             },
             /**
-         * Detach an event or set of events from an element. similar to removeEventListener in Dom3 Events
-         * @param targets KISSY selector
-         * @param {String|Boolean} [type] The type of event to remove.
-         * use space to separate multiple event types.
-         * or
-         * whether to remove all events from descendants nodes.
-         * @param [fn] {Function|Object} The event listener or event description object.
-         * @param {Function} fn.fn The event listener
-         * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
-         * @param {String|Function} [fn.filter] filter selector string or function to find right element
-         * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         */
+     * Detach an event or set of events from an element. similar to removeEventListener in Dom3 Events
+     * @param targets KISSY selector
+     * @param {String|Boolean} [type] The type of event to remove.
+     * use space to separate multiple event types.
+     * or
+     * whether to remove all events from descendants nodes.
+     * @param [fn] {Function|Object} The event listener or event description object.
+     * @param {Function} fn.fn The event listener
+     * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
+     * @param {String|Function} [fn.filter] filter selector string or function to find right element
+     * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
+     * @param {Object} [context] The context (this reference) in which the handler function is executed.
+     */
             detach: function (targets, type, fn, context) {
                 targets = Dom.query(targets);
                 BaseUtils.batchForType(function (targets, singleType, fn, context) {
@@ -209,15 +209,15 @@ KISSY.add('event/dom/base/dom-event', [
                 return targets;
             },
             /**
-         * Delegate event.
-         * @param targets KISSY selector
-         * @param {String|Function} filter filter selector string or function to find right element
-         * @param {String} [eventType] The type of event to delegate.
-         * use space to separate multiple event types.
-         * @param {Function} [fn] The event listener.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         *
-         */
+     * Delegate event.
+     * @param targets KISSY selector
+     * @param {String|Function} filter filter selector string or function to find right element
+     * @param {String} [eventType] The type of event to delegate.
+     * use space to separate multiple event types.
+     * @param {Function} [fn] The event listener.
+     * @param {Object} [context] The context (this reference) in which the handler function is executed.
+     *
+     */
             delegate: function (targets, eventType, filter, fn, context) {
                 return DomEvent.on(targets, eventType, {
                     fn: fn,
@@ -226,15 +226,15 @@ KISSY.add('event/dom/base/dom-event', [
                 });
             },
             /**
-         * undelegate event.
-         * @param targets KISSY selector
-         * @param {String} [eventType] The type of event to undelegate.
-         * use space to separate multiple event types.
-         * @param {String|Function} [filter] filter selector string or function to find right element
-         * @param {Function} [fn] The event listener.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         *
-         */
+     * undelegate event.
+     * @param targets KISSY selector
+     * @param {String} [eventType] The type of event to undelegate.
+     * use space to separate multiple event types.
+     * @param {String|Function} [filter] filter selector string or function to find right element
+     * @param {Function} [fn] The event listener.
+     * @param {Object} [context] The context (this reference) in which the handler function is executed.
+     *
+     */
             undelegate: function (targets, eventType, filter, fn, context) {
                 return DomEvent.detach(targets, eventType, {
                     fn: fn,
@@ -243,15 +243,15 @@ KISSY.add('event/dom/base/dom-event', [
                 });
             },
             /**
-         * fire event,simulate bubble in browser. similar to dispatchEvent in Dom3 Events
-         * @param targets html nodes
-         *
-         * @param {String} eventType event type
-         * @param [eventData] additional event data
-         * @param {Boolean} [onlyHandlers] for internal usage
-         * @return {*} return false if one of custom event 's observers (include bubbled) else
-         * return last value of custom event 's observers (include bubbled) 's return value.
-         */
+     * fire event,simulate bubble in browser. similar to dispatchEvent in Dom3 Events
+     * @param targets html nodes
+     *
+     * @param {String} eventType event type
+     * @param [eventData] additional event data
+     * @param {Boolean} [onlyHandlers] for internal usage
+     * @return {*} return false if one of custom event 's observers (include bubbled) else
+     * return last value of custom event 's observers (include bubbled) 's return value.
+     */
             fire: function (targets, eventType, eventData, onlyHandlers) {
                 var ret;    // fire(eventObject) === dispatchEvent(eventObject)
                 // fire(eventObject) === dispatchEvent(eventObject)
@@ -261,13 +261,13 @@ KISSY.add('event/dom/base/dom-event', [
                 }    // custom event firing moved to target.js
                 // custom event firing moved to target.js
                 eventData = eventData || {};    /**
-             * identify event as fired manually
-             * @ignore
-             */
+         * identify event as fired manually
+         * @ignore
+         */
                 /**
-             * identify event as fired manually
-             * @ignore
-             */
+         * identify event as fired manually
+         * @ignore
+         */
                 eventData.synthetic = 1;
                 BaseUtils.splitAndRun(eventType, function (eventType) {
                     var r, i, target, domEventObservable;
@@ -307,26 +307,26 @@ KISSY.add('event/dom/base/dom-event', [
                 return ret;
             },
             /**
-         * same with fire but:
-         * - does not cause default behavior to occur.
-         * - does not bubble up the Dom hierarchy.
-         * @param targets html nodes
-         *
-         * @param {String} eventType event type
-         * @param [eventData] additional event data
-         * @return {*} return false if one of custom event 's observers (include bubbled) else
-         * return last value of custom event 's observers (include bubbled) 's return value.
-         */
+     * same with fire but:
+     * - does not cause default behavior to occur.
+     * - does not bubble up the Dom hierarchy.
+     * @param targets html nodes
+     *
+     * @param {String} eventType event type
+     * @param [eventData] additional event data
+     * @return {*} return false if one of custom event 's observers (include bubbled) else
+     * return last value of custom event 's observers (include bubbled) 's return value.
+     */
             fireHandler: function (targets, eventType, eventData) {
                 return DomEvent.fire(targets, eventType, eventData, 1);
             },
             /**
-         * copy event from src to dest
-         *
-         * @param {HTMLElement} src srcElement
-         * @param {HTMLElement} dest destElement
-         * @private
-         */
+     * copy event from src to dest
+     *
+     * @param {HTMLElement} src srcElement
+     * @param {HTMLElement} dest destElement
+     * @private
+     */
             clone: function (src, dest) {
                 var domEventObservablesHolder, domEventObservables;
                 if (!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))) {
@@ -349,21 +349,21 @@ KISSY.add('event/dom/base/dom-event', [
                 });
             }
         };
-    return DomEvent;
-});    /*
+    module.exports = DomEvent;    /*
  2012-02-12 yiminghe@gmail.com note:
  - 普通 remove() 不管 filter 都会查，如果 fn context 相等就移除
  - undelegate() filter 为 ''，那么去除所有委托绑定的 handler
  */
+});
 
-/**
+KISSY.add('event/dom/base/utils', ['dom'], function (S, require, exports, module) {
+    /**
  * @ignore
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/utils', ['dom'], function (S, require) {
     var Dom = require('dom');
-    var EVENT_GUID = 'ksEventTargetId_' + +new Date(), doc = S.Env.host.document, simpleAdd = doc && doc.addEventListener ? function (el, type, fn, capture) {
+    var EVENT_GUID = 'ksEventTargetId_' + +new Date(), doc = document, simpleAdd = doc && doc.addEventListener ? function (el, type, fn, capture) {
             if (el.addEventListener) {
                 el.addEventListener(type, fn, !!capture);
             }
@@ -380,7 +380,7 @@ KISSY.add('event/dom/base/utils', ['dom'], function (S, require) {
                 el.detachEvent('on' + type, fn);
             }
         };
-    return {
+    module.exports = {
         simpleAdd: simpleAdd,
         simpleRemove: simpleRemove,
         data: function (elem, v) {
@@ -392,30 +392,32 @@ KISSY.add('event/dom/base/utils', ['dom'], function (S, require) {
     };
 });
 
-/**
+KISSY.add('event/dom/base/special', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special', [], function () {
-    return {};
+    module.exports = {};
 });
-/**
- * @ignore
- * custom event for dom.
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/dom/base/observable', [
     'util',
+    'logger-manager',
     'event/base',
     'dom',
     './special',
     './utils',
     './observer',
     './object'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * custom event for dom.
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
-    var logger = S.getLogger('s/event');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/event');
     var BaseEvent = require('event/base');
     var Dom = require('dom');
     var Special = require('./special');
@@ -423,31 +425,31 @@ KISSY.add('event/dom/base/observable', [
     var DomEventObserver = require('./observer');
     var DomEventObject = require('./object');
     var BaseUtils = BaseEvent.Utils;    /**
-     * custom event for dom
-     * @param {Object} cfg
-     * @private
-     * @class KISSY.Event.DomEvent.Observable
-     * @extends KISSY.Event.Observable
-     */
+ * custom event for dom
+ * @param {Object} cfg
+ * @private
+ * @class KISSY.Event.DomEvent.Observable
+ * @extends KISSY.Event.Observable
+ */
     /**
-     * custom event for dom
-     * @param {Object} cfg
-     * @private
-     * @class KISSY.Event.DomEvent.Observable
-     * @extends KISSY.Event.Observable
-     */
+ * custom event for dom
+ * @param {Object} cfg
+ * @private
+ * @class KISSY.Event.DomEvent.Observable
+ * @extends KISSY.Event.Observable
+ */
     function DomEventObservable(cfg) {
         var self = this;
         util.mix(self, cfg);
         self.reset();    /**
-         * html node which binds current custom event
-         * @cfg {HTMLElement} currentTarget
-         */
+     * html node which binds current custom event
+     * @cfg {HTMLElement} currentTarget
+     */
     }
     /**
-         * html node which binds current custom event
-         * @cfg {HTMLElement} currentTarget
-         */
+     * html node which binds current custom event
+     * @cfg {HTMLElement} currentTarget
+     */
     util.extend(DomEventObservable, BaseEvent.Observable, {
         setup: function () {
             var self = this, type = self.type, s = Special[type] || {}, currentTarget = self.currentTarget, eventDesc = DomEventUtils.data(currentTarget), handle = eventDesc.handle;    // 第一次注册该事件，dom 节点才需要注册 dom 事件
@@ -464,21 +466,21 @@ KISSY.add('event/dom/base/observable', [
             self.lastCount = 0;
         },
         /**
-         * notify current event 's observers
-         * @param {KISSY.Event.DomEvent.Object} event
-         * @return {*} return false if one of custom event 's observers  else
-         * return last value of custom event 's observers 's return value.
-         */
+     * notify current event 's observers
+     * @param {KISSY.Event.DomEvent.Object} event
+     * @return {*} return false if one of custom event 's observers  else
+     * return last value of custom event 's observers 's return value.
+     */
         notify: function (event) {
             /*
-             As some listeners may remove themselves from the
-             event, the original array length is dynamic. So,
-             let's make a copy of all listeners, so we are
-             sure we'll call all of them.
-             */
+         As some listeners may remove themselves from the
+         event, the original array length is dynamic. So,
+         let's make a copy of all listeners, so we are
+         sure we'll call all of them.
+         */
             /*
-             Dom3 Events: EventListenerList objects in the Dom are live. ??
-             */
+         Dom3 Events: EventListenerList objects in the Dom are live. ??
+         */
             var target = event.target, eventType = event.type, self = this, currentTarget = self.currentTarget, observers = self.observers, currentTarget0, allObservers = [], ret, gRet, observerObj, i, j, delegateCount = self.delegateCount || 0, len, currentTargetObservers, currentTargetObserver, observer;    // collect delegated observers and corresponding element
             // collect delegated observers and corresponding element
             if (delegateCount && target.nodeType) {
@@ -546,10 +548,10 @@ KISSY.add('event/dom/base/observable', [
             return gRet;
         },
         /**
-         * fire dom event from bottom to up , emulate dispatchEvent in Dom3 Events
-         * @param {Object|KISSY.Event.DomEvent.Object} [event] additional event data
-         * @param {Boolean} [onlyHandlers] for internal usage
-         */
+     * fire dom event from bottom to up , emulate dispatchEvent in Dom3 Events
+     * @param {Object|KISSY.Event.DomEvent.Object} [event] additional event data
+     * @param {Boolean} [onlyHandlers] for internal usage
+     */
         fire: function (event, onlyHandlers) {
             event = event || {};
             var self = this, eventType = String(self.type), domEventObservable, eventData, specialEvent = Special[eventType] || {}, bubbles = specialEvent.bubbles !== false, currentTarget = self.currentTarget;    // special fire for click/focus/blur
@@ -623,18 +625,13 @@ KISSY.add('event/dom/base/observable', [
             return gret;
         },
         /**
-         * add a observer to custom event's observers
-         * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
-         */
+     * add a observer to custom event's observers
+     * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
+     */
         on: function (cfg) {
             var self = this, observers = self.observers, s = Special[self.type] || {},
                 // clone event
                 observer = cfg instanceof DomEventObserver ? cfg : new DomEventObserver(cfg);
-            if (S.Config.debug) {
-                if (!observer.fn) {
-                    S.error('lack event handler for ' + self.type);
-                }
-            }
             if (self.findObserver(observer) === -1) {
                 // 增加 listener
                 if (observer.filter) {
@@ -654,9 +651,9 @@ KISSY.add('event/dom/base/observable', [
             }
         },
         /**
-         * remove some observers from current event 's observers by observer config param
-         * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
-         */
+     * remove some observers from current event 's observers by observer config param
+     * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
+     */
         detach: function (cfg) {
             var groupsRe, self = this, s = Special[self.type] || {}, hasFilter = 'filter' in cfg, filter = cfg.filter, context = cfg.context, fn = cfg.fn, currentTarget = self.currentTarget, observers = self.observers, groups = cfg.groups;
             if (!observers.length) {
@@ -738,17 +735,17 @@ KISSY.add('event/dom/base/observable', [
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     DomEventObservable.triggeredEvent = '';    /**
-     * get custom event from html node by event type.
-     * @param {HTMLElement} node
-     * @param {String} type event type
-     * @return {KISSY.Event.DomEvent.Observable}
-     */
+ * get custom event from html node by event type.
+ * @param {HTMLElement} node
+ * @param {String} type event type
+ * @return {KISSY.Event.DomEvent.Observable}
+ */
     /**
-     * get custom event from html node by event type.
-     * @param {HTMLElement} node
-     * @param {String} type event type
-     * @return {KISSY.Event.DomEvent.Observable}
-     */
+ * get custom event from html node by event type.
+ * @param {HTMLElement} node
+ * @param {String} type event type
+ * @return {KISSY.Event.DomEvent.Observable}
+ */
     DomEventObservable.getDomEventObservable = function (node, type) {
         var domEventObservablesHolder = DomEventUtils.data(node), domEventObservables;
         if (domEventObservablesHolder) {
@@ -766,51 +763,52 @@ KISSY.add('event/dom/base/observable', [
         }
         return domEventObservables;
     };
-    return DomEventObservable;
+    module.exports = DomEventObservable;
 });
 
-/**
- * @ignore
- * observer for dom event.
- * @author yiminghe@gmail.com
- */
+
 KISSY.add('event/dom/base/observer', [
     'event/base',
     './special',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * observer for dom event.
+ * @author yiminghe@gmail.com
+ */
     var BaseEvent = require('event/base');
     var Special = require('./special');
     var util = require('util');    /**
-     * observer for dom event
-     * @class KISSY.Event.DomEvent.Observer
-     * @extends KISSY.Event.Observer
-     * @private
-     */
+ * observer for dom event
+ * @class KISSY.Event.DomEvent.Observer
+ * @extends KISSY.Event.Observer
+ * @private
+ */
     /**
-     * observer for dom event
-     * @class KISSY.Event.DomEvent.Observer
-     * @extends KISSY.Event.Observer
-     * @private
-     */
+ * observer for dom event
+ * @class KISSY.Event.DomEvent.Observer
+ * @extends KISSY.Event.Observer
+ * @private
+ */
     function DomEventObserver(cfg) {
         DomEventObserver.superclass.constructor.call(this, cfg);    /**
-         * filter selector string or function to find right element
-         * @cfg {String} filter
-         */
+     * filter selector string or function to find right element
+     * @cfg {String} filter
+     */
                                                                     /**
-         * extra data as second parameter of listener
-         * @cfg {*} data
-         */
+     * extra data as second parameter of listener
+     * @cfg {*} data
+     */
     }
     /**
-         * filter selector string or function to find right element
-         * @cfg {String} filter
-         */
+     * filter selector string or function to find right element
+     * @cfg {String} filter
+     */
     /**
-         * extra data as second parameter of listener
-         * @cfg {*} data
-         */
+     * extra data as second parameter of listener
+     * @cfg {*} data
+     */
     util.extend(DomEventObserver, BaseEvent.Observer, {
         keys: [
             'fn',
@@ -846,20 +844,20 @@ KISSY.add('event/dom/base/observer', [
             return ret;
         }
     });
-    return DomEventObserver;
+    module.exports = DomEventObserver;
 });
-/**
+KISSY.add('event/dom/base/object', [
+    'event/base',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * event object for dom
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/object', [
-    'event/base',
-    'util'
-], function (S, require) {
     var BaseEvent = require('event/base');
     var util = require('util');
-    var DOCUMENT = S.Env.host.document, TRUE = true, FALSE = false, commonProps = [
+    var DOCUMENT = document, TRUE = true, FALSE = false, commonProps = [
             'altKey',
             'bubbles',
             'cancelable',
@@ -951,26 +949,26 @@ KISSY.add('event/dom/base/object', [
                     }
                     if (deltaX !== undefined) {
                         /**
-                         * deltaX of mousewheel event
-                         * @property deltaX
-                         * @member KISSY.Event.DomEvent.Object
-                         */
+                     * deltaX of mousewheel event
+                     * @property deltaX
+                     * @member KISSY.Event.DomEvent.Object
+                     */
                         event.deltaX = deltaX;
                     }
                     if (deltaY !== undefined) {
                         /**
-                         * deltaY of mousewheel event
-                         * @property deltaY
-                         * @member KISSY.Event.DomEvent.Object
-                         */
+                     * deltaY of mousewheel event
+                     * @property deltaY
+                     * @member KISSY.Event.DomEvent.Object
+                     */
                         event.deltaY = deltaY;
                     }
                     if (delta !== undefined) {
                         /**
-                         * delta of mousewheel event
-                         * @property delta
-                         * @member KISSY.Event.DomEvent.Object
-                         */
+                     * delta of mousewheel event
+                     * @property delta
+                     * @member KISSY.Event.DomEvent.Object
+                     */
                         event.delta = delta;
                     }
                 }
@@ -1023,367 +1021,367 @@ KISSY.add('event/dom/base/object', [
     function retFalse() {
         return FALSE;
     }    /**
-     * Do not new by yourself.
-     *
-     * KISSY 's dom event system normalizes the event object according to
-     * W3C standards.
-     *
-     * The event object is guaranteed to be passed to
-     * the event handler.
-     *
-     * Most properties from the original event are
-     * copied over and normalized to the new event object
-     * according to [W3C standards](http://www.w3.org/TR/dom/#event).
-     *
-     * @class KISSY.Event.DomEvent.Object
-     * @extends KISSY.Event.Object
-     * @private
-     * @param originalEvent native dom event
-     */
+ * Do not new by yourself.
+ *
+ * KISSY 's dom event system normalizes the event object according to
+ * W3C standards.
+ *
+ * The event object is guaranteed to be passed to
+ * the event handler.
+ *
+ * Most properties from the original event are
+ * copied over and normalized to the new event object
+ * according to [W3C standards](http://www.w3.org/TR/dom/#event).
+ *
+ * @class KISSY.Event.DomEvent.Object
+ * @extends KISSY.Event.Object
+ * @private
+ * @param originalEvent native dom event
+ */
     /**
-     * Do not new by yourself.
-     *
-     * KISSY 's dom event system normalizes the event object according to
-     * W3C standards.
-     *
-     * The event object is guaranteed to be passed to
-     * the event handler.
-     *
-     * Most properties from the original event are
-     * copied over and normalized to the new event object
-     * according to [W3C standards](http://www.w3.org/TR/dom/#event).
-     *
-     * @class KISSY.Event.DomEvent.Object
-     * @extends KISSY.Event.Object
-     * @private
-     * @param originalEvent native dom event
-     */
+ * Do not new by yourself.
+ *
+ * KISSY 's dom event system normalizes the event object according to
+ * W3C standards.
+ *
+ * The event object is guaranteed to be passed to
+ * the event handler.
+ *
+ * Most properties from the original event are
+ * copied over and normalized to the new event object
+ * according to [W3C standards](http://www.w3.org/TR/dom/#event).
+ *
+ * @class KISSY.Event.DomEvent.Object
+ * @extends KISSY.Event.Object
+ * @private
+ * @param originalEvent native dom event
+ */
     function DomEventObject(originalEvent) {
         var self = this, type = originalEvent.type;
         var isNative = typeof originalEvent.stopPropagation === 'function' || typeof originalEvent.cancelBubble === 'boolean';    /**
-         * altKey
-         * @property altKey
-         */
+     * altKey
+     * @property altKey
+     */
                                                                                                                                   /**
-         * attrChange
-         * @property attrChange
-         */
+     * attrChange
+     * @property attrChange
+     */
                                                                                                                                   /**
-         * attrName
-         * @property attrName
-         */
+     * attrName
+     * @property attrName
+     */
                                                                                                                                   /**
-         * bubbles
-         * @property bubbles
-         */
+     * bubbles
+     * @property bubbles
+     */
                                                                                                                                   /**
-         * button
-         * @property button
-         */
+     * button
+     * @property button
+     */
                                                                                                                                   /**
-         * cancelable
-         * @property cancelable
-         */
+     * cancelable
+     * @property cancelable
+     */
                                                                                                                                   /**
-         * charCode
-         * @property charCode
-         */
+     * charCode
+     * @property charCode
+     */
                                                                                                                                   /**
-         * clientX
-         * @property clientX
-         */
+     * clientX
+     * @property clientX
+     */
                                                                                                                                   /**
-         * clientY
-         * @property clientY
-         */
+     * clientY
+     * @property clientY
+     */
                                                                                                                                   /**
-         * ctrlKey
-         * @property ctrlKey
-         */
+     * ctrlKey
+     * @property ctrlKey
+     */
                                                                                                                                   /**
-         * data
-         * @property data
-         */
+     * data
+     * @property data
+     */
                                                                                                                                   /**
-         * detail
-         * @property detail
-         */
+     * detail
+     * @property detail
+     */
                                                                                                                                   /**
-         * eventPhase
-         * @property eventPhase
-         */
+     * eventPhase
+     * @property eventPhase
+     */
                                                                                                                                   /**
-         * fromElement
-         * @property fromElement
-         */
+     * fromElement
+     * @property fromElement
+     */
                                                                                                                                   /**
-         * handler
-         * @property handler
-         */
+     * handler
+     * @property handler
+     */
                                                                                                                                   /**
-         * keyCode
-         * @property keyCode
-         */
+     * keyCode
+     * @property keyCode
+     */
                                                                                                                                   /**
-         * metaKey
-         * @property metaKey
-         */
+     * metaKey
+     * @property metaKey
+     */
                                                                                                                                   /**
-         * newValue
-         * @property newValue
-         */
+     * newValue
+     * @property newValue
+     */
                                                                                                                                   /**
-         * offsetX
-         * @property offsetX
-         */
+     * offsetX
+     * @property offsetX
+     */
                                                                                                                                   /**
-         * offsetY
-         * @property offsetY
-         */
+     * offsetY
+     * @property offsetY
+     */
                                                                                                                                   /**
-         * pageX
-         * @property pageX
-         */
+     * pageX
+     * @property pageX
+     */
                                                                                                                                   /**
-         * pageY
-         * @property pageY
-         */
+     * pageY
+     * @property pageY
+     */
                                                                                                                                   /**
-         * prevValue
-         * @property prevValue
-         */
+     * prevValue
+     * @property prevValue
+     */
                                                                                                                                   /**
-         * relatedNode
-         * @property relatedNode
-         */
+     * relatedNode
+     * @property relatedNode
+     */
                                                                                                                                   /**
-         * relatedTarget
-         * @property relatedTarget
-         */
+     * relatedTarget
+     * @property relatedTarget
+     */
                                                                                                                                   /**
-         * screenX
-         * @property screenX
-         */
+     * screenX
+     * @property screenX
+     */
                                                                                                                                   /**
-         * screenY
-         * @property screenY
-         */
+     * screenY
+     * @property screenY
+     */
                                                                                                                                   /**
-         * shiftKey
-         * @property shiftKey
-         */
+     * shiftKey
+     * @property shiftKey
+     */
                                                                                                                                   /**
-         * srcElement
-         * @property srcElement
-         */
+     * srcElement
+     * @property srcElement
+     */
                                                                                                                                   /**
-         * toElement
-         * @property toElement
-         */
+     * toElement
+     * @property toElement
+     */
                                                                                                                                   /**
-         * view
-         * @property view
-         */
+     * view
+     * @property view
+     */
                                                                                                                                   /**
-         * wheelDelta
-         * @property wheelDelta
-         */
+     * wheelDelta
+     * @property wheelDelta
+     */
                                                                                                                                   /**
-         * which
-         * @property which
-         */
+     * which
+     * @property which
+     */
                                                                                                                                   /**
-         * changedTouches
-         * @property changedTouches
-         */
+     * changedTouches
+     * @property changedTouches
+     */
                                                                                                                                   /**
-         * touches
-         * @property touches
-         */
+     * touches
+     * @property touches
+     */
                                                                                                                                   /**
-         * targetTouches
-         * @property targetTouches
-         */
+     * targetTouches
+     * @property targetTouches
+     */
                                                                                                                                   /**
-         * rotation
-         * @property rotation
-         */
+     * rotation
+     * @property rotation
+     */
                                                                                                                                   /**
-         * scale
-         * @property scale
-         */
+     * scale
+     * @property scale
+     */
                                                                                                                                   /**
-         * source html node of current event
-         * @property target
-         * @type {HTMLElement}
-         */
+     * source html node of current event
+     * @property target
+     * @type {HTMLElement}
+     */
                                                                                                                                   /**
-         * current htm node which processes current event
-         * @property currentTarget
-         * @type {HTMLElement}
-         */
+     * current htm node which processes current event
+     * @property currentTarget
+     * @type {HTMLElement}
+     */
         /**
-         * altKey
-         * @property altKey
-         */
+     * altKey
+     * @property altKey
+     */
         /**
-         * attrChange
-         * @property attrChange
-         */
+     * attrChange
+     * @property attrChange
+     */
         /**
-         * attrName
-         * @property attrName
-         */
+     * attrName
+     * @property attrName
+     */
         /**
-         * bubbles
-         * @property bubbles
-         */
+     * bubbles
+     * @property bubbles
+     */
         /**
-         * button
-         * @property button
-         */
+     * button
+     * @property button
+     */
         /**
-         * cancelable
-         * @property cancelable
-         */
+     * cancelable
+     * @property cancelable
+     */
         /**
-         * charCode
-         * @property charCode
-         */
+     * charCode
+     * @property charCode
+     */
         /**
-         * clientX
-         * @property clientX
-         */
+     * clientX
+     * @property clientX
+     */
         /**
-         * clientY
-         * @property clientY
-         */
+     * clientY
+     * @property clientY
+     */
         /**
-         * ctrlKey
-         * @property ctrlKey
-         */
+     * ctrlKey
+     * @property ctrlKey
+     */
         /**
-         * data
-         * @property data
-         */
+     * data
+     * @property data
+     */
         /**
-         * detail
-         * @property detail
-         */
+     * detail
+     * @property detail
+     */
         /**
-         * eventPhase
-         * @property eventPhase
-         */
+     * eventPhase
+     * @property eventPhase
+     */
         /**
-         * fromElement
-         * @property fromElement
-         */
+     * fromElement
+     * @property fromElement
+     */
         /**
-         * handler
-         * @property handler
-         */
+     * handler
+     * @property handler
+     */
         /**
-         * keyCode
-         * @property keyCode
-         */
+     * keyCode
+     * @property keyCode
+     */
         /**
-         * metaKey
-         * @property metaKey
-         */
+     * metaKey
+     * @property metaKey
+     */
         /**
-         * newValue
-         * @property newValue
-         */
+     * newValue
+     * @property newValue
+     */
         /**
-         * offsetX
-         * @property offsetX
-         */
+     * offsetX
+     * @property offsetX
+     */
         /**
-         * offsetY
-         * @property offsetY
-         */
+     * offsetY
+     * @property offsetY
+     */
         /**
-         * pageX
-         * @property pageX
-         */
+     * pageX
+     * @property pageX
+     */
         /**
-         * pageY
-         * @property pageY
-         */
+     * pageY
+     * @property pageY
+     */
         /**
-         * prevValue
-         * @property prevValue
-         */
+     * prevValue
+     * @property prevValue
+     */
         /**
-         * relatedNode
-         * @property relatedNode
-         */
+     * relatedNode
+     * @property relatedNode
+     */
         /**
-         * relatedTarget
-         * @property relatedTarget
-         */
+     * relatedTarget
+     * @property relatedTarget
+     */
         /**
-         * screenX
-         * @property screenX
-         */
+     * screenX
+     * @property screenX
+     */
         /**
-         * screenY
-         * @property screenY
-         */
+     * screenY
+     * @property screenY
+     */
         /**
-         * shiftKey
-         * @property shiftKey
-         */
+     * shiftKey
+     * @property shiftKey
+     */
         /**
-         * srcElement
-         * @property srcElement
-         */
+     * srcElement
+     * @property srcElement
+     */
         /**
-         * toElement
-         * @property toElement
-         */
+     * toElement
+     * @property toElement
+     */
         /**
-         * view
-         * @property view
-         */
+     * view
+     * @property view
+     */
         /**
-         * wheelDelta
-         * @property wheelDelta
-         */
+     * wheelDelta
+     * @property wheelDelta
+     */
         /**
-         * which
-         * @property which
-         */
+     * which
+     * @property which
+     */
         /**
-         * changedTouches
-         * @property changedTouches
-         */
+     * changedTouches
+     * @property changedTouches
+     */
         /**
-         * touches
-         * @property touches
-         */
+     * touches
+     * @property touches
+     */
         /**
-         * targetTouches
-         * @property targetTouches
-         */
+     * targetTouches
+     * @property targetTouches
+     */
         /**
-         * rotation
-         * @property rotation
-         */
+     * rotation
+     * @property rotation
+     */
         /**
-         * scale
-         * @property scale
-         */
+     * scale
+     * @property scale
+     */
         /**
-         * source html node of current event
-         * @property target
-         * @type {HTMLElement}
-         */
+     * source html node of current event
+     * @property target
+     * @type {HTMLElement}
+     */
         /**
-         * current htm node which processes current event
-         * @property currentTarget
-         * @type {HTMLElement}
-         */
+     * current htm node which processes current event
+     * @property currentTarget
+     * @type {HTMLElement}
+     */
         DomEventObject.superclass.constructor.call(self);
         self.originalEvent = originalEvent;    // in case dom event has been mark as default prevented by lower dom node
         // in case dom event has been mark as default prevented by lower dom node
@@ -1454,8 +1452,7 @@ KISSY.add('event/dom/base/object', [
             DomEventObject.superclass.stopPropagation.call(self);
         }
     });
-    return DomEventObject;
-});    /*
+    module.exports = DomEventObject;    /*
  2012-10-30
  - consider touch properties
 
@@ -1476,470 +1473,471 @@ KISSY.add('event/dom/base/object', [
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/Dom-Level-3-Events/#events-mousewheelevents
  */
-/**
+});
+KISSY.add('event/dom/base/key-codes', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/key-codes', [], function () {
     var
         /**
-     * @enum {Number} KISSY.Event.DomEvent.KeyCode
-     * @alias KISSY.Event.KeyCode
-     * All key codes.
-     */
+ * @enum {Number} KISSY.Event.DomEvent.KeyCode
+ * @alias KISSY.Event.KeyCode
+ * All key codes.
+ */
         KeyCode = {
             /**
-         * MAC_ENTER
-         */
+     * MAC_ENTER
+     */
             MAC_ENTER: 3,
             /**
-         * BACKSPACE
-         */
+     * BACKSPACE
+     */
             BACKSPACE: 8,
             /**
-         * TAB
-         */
+     * TAB
+     */
             TAB: 9,
             /**
-         * NUMLOCK on FF/Safari Mac
-         */
+     * NUMLOCK on FF/Safari Mac
+     */
             NUM_CENTER: 12,
             // NUMLOCK on FF/Safari Mac
             /**
-         * ENTER
-         */
+     * ENTER
+     */
             ENTER: 13,
             /**
-         * SHIFT
-         */
+     * SHIFT
+     */
             SHIFT: 16,
             /**
-         * CTRL
-         */
+     * CTRL
+     */
             CTRL: 17,
             /**
-         * ALT
-         */
+     * ALT
+     */
             ALT: 18,
             /**
-         * PAUSE
-         */
+     * PAUSE
+     */
             PAUSE: 19,
             /**
-         * CAPS_LOCK
-         */
+     * CAPS_LOCK
+     */
             CAPS_LOCK: 20,
             /**
-         * ESC
-         */
+     * ESC
+     */
             ESC: 27,
             /**
-         * SPACE
-         */
+     * SPACE
+     */
             SPACE: 32,
             /**
-         * PAGE_UP
-         */
+     * PAGE_UP
+     */
             PAGE_UP: 33,
             // also NUM_NORTH_EAST
             /**
-         * PAGE_DOWN
-         */
+     * PAGE_DOWN
+     */
             PAGE_DOWN: 34,
             // also NUM_SOUTH_EAST
             /**
-         * END
-         */
+     * END
+     */
             END: 35,
             // also NUM_SOUTH_WEST
             /**
-         * HOME
-         */
+     * HOME
+     */
             HOME: 36,
             // also NUM_NORTH_WEST
             /**
-         * LEFT
-         */
+     * LEFT
+     */
             LEFT: 37,
             // also NUM_WEST
             /**
-         * UP
-         */
+     * UP
+     */
             UP: 38,
             // also NUM_NORTH
             /**
-         * RIGHT
-         */
+     * RIGHT
+     */
             RIGHT: 39,
             // also NUM_EAST
             /**
-         * DOWN
-         */
+     * DOWN
+     */
             DOWN: 40,
             // also NUM_SOUTH
             /**
-         * PRINT_SCREEN
-         */
+     * PRINT_SCREEN
+     */
             PRINT_SCREEN: 44,
             /**
-         * INSERT
-         */
+     * INSERT
+     */
             INSERT: 45,
             // also NUM_INSERT
             /**
-         * DELETE
-         */
+     * DELETE
+     */
             DELETE: 46,
             // also NUM_DELETE
             /**
-         * ZERO
-         */
+     * ZERO
+     */
             ZERO: 48,
             /**
-         * ONE
-         */
+     * ONE
+     */
             ONE: 49,
             /**
-         * TWO
-         */
+     * TWO
+     */
             TWO: 50,
             /**
-         * THREE
-         */
+     * THREE
+     */
             THREE: 51,
             /**
-         * FOUR
-         */
+     * FOUR
+     */
             FOUR: 52,
             /**
-         * FIVE
-         */
+     * FIVE
+     */
             FIVE: 53,
             /**
-         * SIX
-         */
+     * SIX
+     */
             SIX: 54,
             /**
-         * SEVEN
-         */
+     * SEVEN
+     */
             SEVEN: 55,
             /**
-         * EIGHT
-         */
+     * EIGHT
+     */
             EIGHT: 56,
             /**
-         * NINE
-         */
+     * NINE
+     */
             NINE: 57,
             /**
-         * QUESTION_MARK
-         */
+     * QUESTION_MARK
+     */
             QUESTION_MARK: 63,
             // needs localization
             /**
-         * A
-         */
+     * A
+     */
             A: 65,
             /**
-         * B
-         */
+     * B
+     */
             B: 66,
             /**
-         * C
-         */
+     * C
+     */
             C: 67,
             /**
-         * D
-         */
+     * D
+     */
             D: 68,
             /**
-         * E
-         */
+     * E
+     */
             E: 69,
             /**
-         * F
-         */
+     * F
+     */
             F: 70,
             /**
-         * G
-         */
+     * G
+     */
             G: 71,
             /**
-         * H
-         */
+     * H
+     */
             H: 72,
             /**
-         * I
-         */
+     * I
+     */
             I: 73,
             /**
-         * J
-         */
+     * J
+     */
             J: 74,
             /**
-         * K
-         */
+     * K
+     */
             K: 75,
             /**
-         * L
-         */
+     * L
+     */
             L: 76,
             /**
-         * M
-         */
+     * M
+     */
             M: 77,
             /**
-         * N
-         */
+     * N
+     */
             N: 78,
             /**
-         * O
-         */
+     * O
+     */
             O: 79,
             /**
-         * P
-         */
+     * P
+     */
             P: 80,
             /**
-         * Q
-         */
+     * Q
+     */
             Q: 81,
             /**
-         * R
-         */
+     * R
+     */
             R: 82,
             /**
-         * S
-         */
+     * S
+     */
             S: 83,
             /**
-         * T
-         */
+     * T
+     */
             T: 84,
             /**
-         * U
-         */
+     * U
+     */
             U: 85,
             /**
-         * V
-         */
+     * V
+     */
             V: 86,
             /**
-         * W
-         */
+     * W
+     */
             W: 87,
             /**
-         * X
-         */
+     * X
+     */
             X: 88,
             /**
-         * Y
-         */
+     * Y
+     */
             Y: 89,
             /**
-         * Z
-         */
+     * Z
+     */
             Z: 90,
             /**
-         * META
-         */
+     * META
+     */
             META: 91,
             // WIN_KEY_LEFT
             /**
-         * WIN_KEY_RIGHT
-         */
+     * WIN_KEY_RIGHT
+     */
             WIN_KEY_RIGHT: 92,
             /**
-         * CONTEXT_MENU
-         */
+     * CONTEXT_MENU
+     */
             CONTEXT_MENU: 93,
             /**
-         * NUM_ZERO
-         */
+     * NUM_ZERO
+     */
             NUM_ZERO: 96,
             /**
-         * NUM_ONE
-         */
+     * NUM_ONE
+     */
             NUM_ONE: 97,
             /**
-         * NUM_TWO
-         */
+     * NUM_TWO
+     */
             NUM_TWO: 98,
             /**
-         * NUM_THREE
-         */
+     * NUM_THREE
+     */
             NUM_THREE: 99,
             /**
-         * NUM_FOUR
-         */
+     * NUM_FOUR
+     */
             NUM_FOUR: 100,
             /**
-         * NUM_FIVE
-         */
+     * NUM_FIVE
+     */
             NUM_FIVE: 101,
             /**
-         * NUM_SIX
-         */
+     * NUM_SIX
+     */
             NUM_SIX: 102,
             /**
-         * NUM_SEVEN
-         */
+     * NUM_SEVEN
+     */
             NUM_SEVEN: 103,
             /**
-         * NUM_EIGHT
-         */
+     * NUM_EIGHT
+     */
             NUM_EIGHT: 104,
             /**
-         * NUM_NINE
-         */
+     * NUM_NINE
+     */
             NUM_NINE: 105,
             /**
-         * NUM_MULTIPLY
-         */
+     * NUM_MULTIPLY
+     */
             NUM_MULTIPLY: 106,
             /**
-         * NUM_PLUS
-         */
+     * NUM_PLUS
+     */
             NUM_PLUS: 107,
             /**
-         * NUM_MINUS
-         */
+     * NUM_MINUS
+     */
             NUM_MINUS: 109,
             /**
-         * NUM_PERIOD
-         */
+     * NUM_PERIOD
+     */
             NUM_PERIOD: 110,
             /**
-         * NUM_DIVISION
-         */
+     * NUM_DIVISION
+     */
             NUM_DIVISION: 111,
             /**
-         * F1
-         */
+     * F1
+     */
             F1: 112,
             /**
-         * F2
-         */
+     * F2
+     */
             F2: 113,
             /**
-         * F3
-         */
+     * F3
+     */
             F3: 114,
             /**
-         * F4
-         */
+     * F4
+     */
             F4: 115,
             /**
-         * F5
-         */
+     * F5
+     */
             F5: 116,
             /**
-         * F6
-         */
+     * F6
+     */
             F6: 117,
             /**
-         * F7
-         */
+     * F7
+     */
             F7: 118,
             /**
-         * F8
-         */
+     * F8
+     */
             F8: 119,
             /**
-         * F9
-         */
+     * F9
+     */
             F9: 120,
             /**
-         * F10
-         */
+     * F10
+     */
             F10: 121,
             /**
-         * F11
-         */
+     * F11
+     */
             F11: 122,
             /**
-         * F12
-         */
+     * F12
+     */
             F12: 123,
             /**
-         * NUMLOCK
-         */
+     * NUMLOCK
+     */
             NUMLOCK: 144,
             /**
-         * SEMICOLON
-         */
+     * SEMICOLON
+     */
             SEMICOLON: 186,
             // needs localization
             /**
-         * DASH
-         */
+     * DASH
+     */
             DASH: 189,
             // needs localization
             /**
-         * EQUALS
-         */
+     * EQUALS
+     */
             EQUALS: 187,
             // needs localization
             /**
-         * COMMA
-         */
+     * COMMA
+     */
             COMMA: 188,
             // needs localization
             /**
-         * PERIOD
-         */
+     * PERIOD
+     */
             PERIOD: 190,
             // needs localization
             /**
-         * SLASH
-         */
+     * SLASH
+     */
             SLASH: 191,
             // needs localization
             /**
-         * APOSTROPHE
-         */
+     * APOSTROPHE
+     */
             APOSTROPHE: 192,
             // needs localization
             /**
-         * SINGLE_QUOTE
-         */
+     * SINGLE_QUOTE
+     */
             SINGLE_QUOTE: 222,
             // needs localization
             /**
-         * OPEN_SQUARE_BRACKET
-         */
+     * OPEN_SQUARE_BRACKET
+     */
             OPEN_SQUARE_BRACKET: 219,
             // needs localization
             /**
-         * BACKSLASH
-         */
+     * BACKSLASH
+     */
             BACKSLASH: 220,
             // needs localization
             /**
-         * CLOSE_SQUARE_BRACKET
-         */
+     * CLOSE_SQUARE_BRACKET
+     */
             CLOSE_SQUARE_BRACKET: 221,
             // needs localization
             /**
-         * WIN_KEY
-         */
+     * WIN_KEY
+     */
             WIN_KEY: 224,
             /**
-         * MAC_FF_META
-         */
+     * MAC_FF_META
+     */
             MAC_FF_META: 224,
             // Firefox (Gecko) fires this for the meta key instead of 91
             /**
-         * WIN_IME
-         */
+     * WIN_IME
+     */
             WIN_IME: 229
         };    /*
-     whether text and modified key is entered at the same time.
-     */
+ whether text and modified key is entered at the same time.
+ */
     /*
-     whether text and modified key is entered at the same time.
-     */
+ whether text and modified key is entered at the same time.
+ */
     KeyCode.isTextModifyingKeyEvent = function (e) {
         var keyCode = e.keyCode;
         if (e.altKey && !e.ctrlKey || e.metaKey || // Function keys don't generate text
@@ -1978,11 +1976,11 @@ KISSY.add('event/dom/base/key-codes', [], function () {
             return true;
         }
     };    /*
-     whether character is entered.
-     */
+ whether character is entered.
+ */
     /*
-     whether character is entered.
-     */
+ whether character is entered.
+ */
     KeyCode.isCharacterKey = function (keyCode) {
         if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
             return true;
@@ -2020,24 +2018,24 @@ KISSY.add('event/dom/base/key-codes', [], function () {
             return false;
         }
     };
-    return KeyCode;
+    module.exports = KeyCode;
 });
-/**
- * @ignore
- * special house for special events
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/dom/base/special-events', [
     './dom-event',
     './special',
     'util',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * special house for special events
+ * @author yiminghe@gmail.com
+ */
     var DomEvent = require('./dom-event');
     var Special = require('./special');
     var util = require('util');
     var UA = require('ua'), MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
-    return util.mix(Special, {
+    module.exports = util.mix(Special, {
         mousewheel: { typeFix: MOUSE_WHEEL },
         load: {
             // defaults to bubbles as custom event
@@ -2097,16 +2095,16 @@ KISSY.add('event/dom/base/special-events', [
     });
 });
 
-/**
- * @ignore
- * event-mouseenter
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/dom/base/mouseenter', [
     'dom',
     './special',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * event-mouseenter
+ * @author yiminghe@gmail.com
+ */
     var Dom = require('dom');
     var Special = require('./special');
     var util = require('util');
@@ -2144,8 +2142,7 @@ KISSY.add('event/dom/base/mouseenter', [
                 }
             }
         };
-    });
-});    /*
+    });    /*
  yiminghe@gmail.com:2011-12-15
  - 借鉴 jq 1.7 新的架构
 
@@ -2153,3 +2150,4 @@ KISSY.add('event/dom/base/mouseenter', [
  - 根据新结构，调整 mouseenter 兼容处理
  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
+});

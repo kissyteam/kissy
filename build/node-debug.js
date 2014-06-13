@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:27
+build time: Jun 13 11:52
 */
 /*
 combined modules:
@@ -11,74 +11,69 @@ node/attach
 node/override
 node/anim
 */
-/**
- * @ignore
- * node
- * @author yiminghe@gmail.com
- */
 KISSY.add('node', [
     'node/base',
     'node/attach',
     'node/override',
     'node/anim'
-], function (S, require) {
-    var Node = require('node/base');
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * node
+ * @author yiminghe@gmail.com
+ */
+    module.exports = require('node/base');
     require('node/attach');
     require('node/override');
-    require('node/anim');    // bad! compatibility
-    // bad! compatibility
-    S.Node = Node;
-    S.all = Node.all;
-    S.one = Node.one;
-    return Node;
+    require('node/anim');
 });
-/**
- * @ignore
- * definition for node and nodelist
- * @author yiminghe@gmail.com, lifesinger@gmail.com
- */
 KISSY.add('node/base', [
     'util',
     'dom',
     'event/dom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * definition for node and nodelist
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
+ */
     var util = require('util');
     var Dom = require('dom');
     var Event = require('event/dom');
     var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList;    /**
-     * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
-     * use KISSY.all/one to retrieve NodeList instances.
-     *
-     *
-     *      @example
-     *      KISSY.all('a').attr('href','http://docs.kissyui.com');
-     *
-     * @class KISSY.Node
-     */
+ * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
+ * use KISSY.all/one to retrieve NodeList instances.
+ *
+ *
+ *      @example
+ *      KISSY.all('a').attr('href','http://docs.kissyui.com');
+ *
+ * @class KISSY.Node
+ */
     /**
-     * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
-     * use KISSY.all/one to retrieve NodeList instances.
-     *
-     *
-     *      @example
-     *      KISSY.all('a').attr('href','http://docs.kissyui.com');
-     *
-     * @class KISSY.Node
-     */
-    function Node(html, props, ownerDocument) {
+ * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
+ * use KISSY.all/one to retrieve NodeList instances.
+ *
+ *
+ *      @example
+ *      KISSY.all('a').attr('href','http://docs.kissyui.com');
+ *
+ * @class KISSY.Node
+ */
+    function Node(html, attrs, ownerDocument) {
         var self = this, domNode;
-        if (html instanceof Node) {
+        if (html instanceof Node && arguments.length === 1) {
             return html.slice();
         }
         if (!(self instanceof Node)) {
-            return new Node(html, props, ownerDocument);
+            return Node.all.apply(Node, arguments);
         }    // handle Node(''), Node(null), or Node(undefined)
         // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
             return self;
         } else if (typeof html === 'string') {
             // create from html
-            domNode = Dom.create(html, props, ownerDocument);    // ('<p>1</p><p>2</p>') 转换为 Node
+            domNode = Dom.create(html, attrs, ownerDocument);    // ('<p>1</p><p>2</p>') 转换为 Node
             // ('<p>1</p><p>2</p>') 转换为 Node
             if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
                 // fragment
@@ -100,15 +95,15 @@ KISSY.add('node/base', [
         constructor: Node,
         isNode: true,
         /**
-         * length of Node
-         * @type {Number}
-         */
+     * length of Node
+     * @type {Number}
+     */
         length: 0,
         /**
-         * Get one node at index
-         * @param {Number} index Index position.
-         * @return {KISSY.Node}
-         */
+     * Get one node at index
+     * @param {Number} index Index position.
+     * @return {KISSY.Node}
+     */
         item: function (index) {
             var self = this;
             if (typeof index === 'number') {
@@ -122,12 +117,12 @@ KISSY.add('node/base', [
             }
         },
         /**
-         * return a new Node object which consists of current node list and parameter node list.
-         * @param {KISSY.Node} selector Selector string or html string or common dom node.
-         * @param {KISSY.Node|Number} [context] Search context for selector
-         * @param {Number} [index] Insert position.
-         * @return {KISSY.Node} a new Node
-         */
+     * return a new Node object which consists of current node list and parameter node list.
+     * @param {KISSY.Node} selector Selector string or html string or common dom node.
+     * @param {KISSY.Node|Number} [context] Search context for selector
+     * @param {Number} [index] Insert position.
+     * @return {KISSY.Node} a new Node
+     */
         add: function (selector, context, index) {
             if (typeof context === 'number') {
                 index = context;
@@ -147,10 +142,10 @@ KISSY.add('node/base', [
             return ret;
         },
         /**
-         * Get part of node list.
-         * Arguments are same with Array.prototype.slice
-         * @return {KISSY.Node}
-         */
+     * Get part of node list.
+     * Arguments are same with Array.prototype.slice
+     * @return {KISSY.Node}
+     */
         slice: function () {
             // ie<9 : [1,2].slice(0 - 2,undefined) => []
             // ie<9 : [1,2].slice(0 - 2) => [1,2]
@@ -158,20 +153,20 @@ KISSY.add('node/base', [
             return new Node(slice.apply(this, arguments));
         },
         /**
-         * Retrieves the DOMNodes.
-         */
+     * Retrieves the DOMNodes.
+     */
         getDOMNodes: function () {
             return slice.call(this);
         },
         /**
-         * Applies the given function to each Node in the Node.
-         * @param {Function} fn The function to apply. It receives 3 arguments:
-         * the current node instance, the node's index,
-         * and the Node instance
-         * @param [context] An optional context to
-         * apply the function with Default context is the current Node instance
-         * @return {KISSY.Node}
-         */
+     * Applies the given function to each Node in the Node.
+     * @param {Function} fn The function to apply. It receives 3 arguments:
+     * the current node instance, the node's index,
+     * and the Node instance
+     * @param [context] An optional context to
+     * apply the function with Default context is the current Node instance
+     * @return {KISSY.Node}
+     */
         each: function (fn, context) {
             var self = this;
             util.each(self, function (n, i) {
@@ -181,33 +176,33 @@ KISSY.add('node/base', [
             return self;
         },
         /**
-         * Retrieves the DOMNode.
-         * @return {HTMLElement}
-         */
+     * Retrieves the DOMNode.
+     * @return {HTMLElement}
+     */
         getDOMNode: function () {
             return this[0];
         },
         /**
-         * return last stack node list.
-         * @return {KISSY.Node}
-         */
+     * return last stack node list.
+     * @return {KISSY.Node}
+     */
         end: function () {
             var self = this;
             return self.__parent || self;
         },
         /**
-         * return new Node which contains only nodes which passes filter
-         * @param {String|Function} filter
-         * @return {KISSY.Node}
-         */
+     * return new Node which contains only nodes which passes filter
+     * @param {String|Function} filter
+     * @return {KISSY.Node}
+     */
         filter: function (filter) {
             return new Node(Dom.filter(this, filter));
         },
         /**
-         * Get node list which are descendants of current node list.
-         * @param {String} selector Selector string
-         * @return {KISSY.Node}
-         */
+     * Get node list which are descendants of current node list.
+     * @param {String} selector Selector string
+     * @return {KISSY.Node}
+     */
         all: function (selector) {
             var ret, self = this;
             if (self.length > 0) {
@@ -219,10 +214,10 @@ KISSY.add('node/base', [
             return ret;
         },
         /**
-         * Get node list which match selector under current node list sub tree.
-         * @param {String} selector
-         * @return {KISSY.Node}
-         */
+     * Get node list which match selector under current node list sub tree.
+     * @param {String} selector
+     * @return {KISSY.Node}
+     */
         one: function (selector) {
             var self = this, all = self.all(selector), ret = all.length ? all.slice(0, 1) : null;
             if (ret) {
@@ -233,58 +228,49 @@ KISSY.add('node/base', [
     };
     util.mix(Node, {
         /**
-         * Get node list from selector or construct new node list from html string.
-         * Can also called from KISSY.all
-         * @param {String|KISSY.Node} selector Selector string or html string or common dom node.
-         * @param {String|KISSY.Node} [context] Search context for selector
-         * @return {KISSY.Node}
-         * @member KISSY.Node
-         * @static
-         */
+     * Get node list from selector or construct new node list from html string.
+     * Can also called from KISSY.all
+     * @param {String|KISSY.Node} selector Selector string or html string or common dom node.
+     * @param {String|KISSY.Node} [context] Search context for selector
+     * @return {KISSY.Node}
+     * @member KISSY.Node
+     * @static
+     */
         all: function (selector, context) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
             if (typeof selector === 'string' && (selector = util.trim(selector)) && selector.length >= 3 && util.startsWith(selector, '<') && util.endsWith(selector, '>')) {
+                var attrs;
                 if (context) {
                     if (context.getDOMNode) {
                         context = context[0];
                     }
-                    context = context.ownerDocument || context;
+                    if (!context.nodeType) {
+                        attrs = context;
+                        context = arguments[2];
+                    }
                 }
-                return new Node(selector, undefined, context);
+                return new Node(selector, attrs, context);
             }
             return new Node(Dom.query(selector, context));
         },
         /**
-         * Get node list with length of one
-         * from selector or construct new node list from html string.
-         * @param {String|KISSY.Node} selector Selector string or html string or common dom node.
-         * @param {String|KISSY.Node} [context] Search context for selector
-         * @return {KISSY.Node}
-         * @member KISSY.Node
-         * @static
-         */
+     * Get node list with length of one
+     * from selector or construct new node list from html string.
+     * @param {String|KISSY.Node} selector Selector string or html string or common dom node.
+     * @param {String|KISSY.Node} [context] Search context for selector
+     * @return {KISSY.Node}
+     * @member KISSY.Node
+     * @static
+     */
         one: function (selector, context) {
             var all = Node.all(selector, context);
             return all.length ? all.slice(0, 1) : null;
         }
-    });    /**
-     * Same with {@link KISSY.DOM.NodeType}
-     * @member KISSY.Node
-     * @property NodeType
-     * @static
-     */
-    /**
-     * Same with {@link KISSY.DOM.NodeType}
-     * @member KISSY.Node
-     * @property NodeType
-     * @static
-     */
-    Node.NodeType = NodeType;
-    Node.KeyCode = Event.KeyCode;
-    Node.REPLACE_HISTORY = Event.REPLACE_HISTORY;
-    return Node;
-});    /*
+    });
+    Node.Event = Event;
+    Node.Dom = Dom;
+    module.exports = Node;    /*
  Notes:
  2011-05-25
  - yiminghe@gmail.com：参考 jquery，只有一个 Node 对象
@@ -298,25 +284,27 @@ KISSY.add('node/base', [
  直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 Node 里。可
  以说，技术成本会制约 api 设计。
  */
+});
 
 
 
-/**
- * @ignore
- * import methods from Dom to NodeList.prototype
- * @author yiminghe@gmail.com
- */
 KISSY.add('node/attach', [
     'util',
     'dom',
     'event/dom',
     './base'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * import methods from Dom to Node.prototype
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Dom = require('dom');
-    var Event = require('event/dom');
-    var NodeList = require('./base');
-    var NLP = NodeList.prototype, makeArray = util.makeArray,
+    var Event = require('event/dom');    /*global Node:true*/
+    /*global Node:true*/
+    var Node = require('./base');
+    var NLP = Node.prototype, makeArray = util.makeArray,
         // Dom 添加到 NP 上的方法
         // if Dom methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -409,7 +397,7 @@ KISSY.add('node/attach', [
             'fire',
             'fireHandler'
         ];
-    NodeList.KeyCode = Event.KeyCode;
+    Node.KeyCode = Event.KeyCode;
     function accessNorm(fn, self, args) {
         args.unshift(self);
         var ret = Dom[fn].apply(Dom, args);
@@ -426,7 +414,7 @@ KISSY.add('node/attach', [
         } else if (ret === null) {
             return null;
         }
-        return new NodeList(ret);
+        return new Node(ret);
     }
     function accessNormIf(fn, self, index, args) {
         // get
@@ -469,61 +457,62 @@ KISSY.add('node/attach', [
             args.unshift(self);
             return Event[k].apply(Event, args);
         };
-    });
-});    /*
+    });    /*
  2011-05-24
  - yiminghe@gmail.com：
- - 将 Dom 中的方法包装成 NodeList 方法
- - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
- - 要注意链式调用，如果 Dom 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
- - 实际上可以完全使用 NodeList 来代替 Dom，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
+ - 将 Dom 中的方法包装成 Node 方法
+ - Node 方法调用参数中的 KISSY Node 要转换成第一个 HTML Node
+ - 要注意链式调用，如果 Dom 方法返回 undefined （无返回值），则 Node 对应方法返回 this
+ - 实际上可以完全使用 Node 来代替 Dom，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new Node(document) 获得
  */
-/**
- * @ignore
- * overrides methods in NodeList.prototype
- * @author yiminghe@gmail.com
- */
+});
 KISSY.add('node/override', [
     'util',
     'dom',
     './base',
     './attach'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * overrides methods in Node.prototype
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
-    var Dom = require('dom');
-    var NodeList = require('./base');
+    var Dom = require('dom');    /*global Node:true*/
+    /*global Node:true*/
+    var Node = require('./base');
     require('./attach');
-    var NLP = NodeList.prototype;    /**
-     * Insert every element in the set of newNodes to the end of every element in the set of current node list.
-     * @param {KISSY.Node} newNodes Nodes to be inserted
-     * @return {KISSY.Node} this
-     * @method append
-     * @member KISSY.Node
-     */
-                                     /**
-     * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
-     * @param {KISSY.Node} newNodes Nodes to be inserted
-     * @return {KISSY.Node} this
-     * @method prepend
-     * @member KISSY.Node
-     */
-                                     // append(node ,parent): reverse param order
-                                     // appendTo(parent,node): normal
+    var NLP = Node.prototype;    /**
+ * Insert every element in the set of newNodes to the end of every element in the set of current node list.
+ * @param {KISSY.Node} newNodes Nodes to be inserted
+ * @return {KISSY.Node} this
+ * @method append
+ * @member KISSY.Node
+ */
+                                 /**
+ * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
+ * @param {KISSY.Node} newNodes Nodes to be inserted
+ * @return {KISSY.Node} this
+ * @method prepend
+ * @member KISSY.Node
+ */
+                                 // append(node ,parent): reverse param order
+                                 // appendTo(parent,node): normal
     /**
-     * Insert every element in the set of newNodes to the end of every element in the set of current node list.
-     * @param {KISSY.Node} newNodes Nodes to be inserted
-     * @return {KISSY.Node} this
-     * @method append
-     * @member KISSY.Node
-     */
+ * Insert every element in the set of newNodes to the end of every element in the set of current node list.
+ * @param {KISSY.Node} newNodes Nodes to be inserted
+ * @return {KISSY.Node} this
+ * @method append
+ * @member KISSY.Node
+ */
     /**
-     * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
-     * @param {KISSY.Node} newNodes Nodes to be inserted
-     * @return {KISSY.Node} this
-     * @method prepend
-     * @member KISSY.Node
-     */
+ * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
+ * @param {KISSY.Node} newNodes Nodes to be inserted
+ * @return {KISSY.Node} this
+ * @method prepend
+ * @member KISSY.Node
+ */
     // append(node ,parent): reverse param order
     // appendTo(parent,node): normal
     util.each([
@@ -554,36 +543,36 @@ KISSY.add('node/override', [
         NLP[fixType] = function (others) {
             var self = this;
             if (typeof others === 'string') {
-                others = NodeList.all(others, self[0].ownerDocument);
+                others = Node.all(others, self[0].ownerDocument);
             }
             return orig.call(self, others);
         };
-    });
-});    /*
+    });    /*
  2011-04-05 yiminghe@gmail.com
  - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
 
  2011-05-24
  - yiminghe@gmail.com：
- - 重写 NodeList 的某些方法
- - 添加 one ,all ，从当前 NodeList 往下开始选择节点
+ - 重写 Node 的某些方法
+ - 添加 one ,all ，从当前 Node 往下开始选择节点
  - 处理 append ,prepend 和 Dom 的参数实际上是反过来的
- - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
+ - append/prepend 参数是节点时，如果当前 Node 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（Node）
  */
-/**
- * @ignore
- * anim-node-plugin
- * @author yiminghe@gmail.com,
- *         lifesinger@gmail.com,
- *         qiaohua@taobao.com,
- *
- */
+});
 KISSY.add('node/anim', [
     './base',
     'dom',
     'anim',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * anim-node-plugin
+ * @author yiminghe@gmail.com,
+ *         lifesinger@gmail.com,
+ *         qiaohua@taobao.com,
+ */
+    /*global Node:true*/
     var Node = require('./base');
     var Dom = require('dom');
     var Anim = require('anim');
@@ -620,10 +609,10 @@ KISSY.add('node/anim', [
     }
     util.augment(Node, {
         /**
-         * animate for current node list.
-         * @chainable
-         * @member KISSY.Node
-         */
+     * animate for current node list.
+     * @chainable
+     * @member KISSY.Node
+     */
         animate: function () {
             var self = this, l = self.length, needClone = self.length > 1, originArgs = util.makeArray(arguments);
             var cfg = originArgs[0];
@@ -649,13 +638,13 @@ KISSY.add('node/anim', [
             return self;
         },
         /**
-         * stop anim of current node list.
-         * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
-         * @param [clearQueue]
-         * @param [queue]
-         * @chainable
-         * @member KISSY.Node
-         */
+     * stop anim of current node list.
+     * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
+     * @param [clearQueue]
+     * @param [queue]
+     * @chainable
+     * @member KISSY.Node
+     */
         stop: function (end, clearQueue, queue) {
             var self = this;
             util.each(self, function (elem) {
@@ -664,12 +653,12 @@ KISSY.add('node/anim', [
             return self;
         },
         /**
-         * pause anim of current node list.
-         * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
-         * @param queue
-         * @chainable
-         * @member KISSY.Node
-         */
+     * pause anim of current node list.
+     * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
+     * @param queue
+     * @chainable
+     * @member KISSY.Node
+     */
         pause: function (end, queue) {
             var self = this;
             util.each(self, function (elem) {
@@ -678,12 +667,12 @@ KISSY.add('node/anim', [
             return self;
         },
         /**
-         * resume anim of current node list.
-         * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
-         * @param queue
-         * @chainable
-         * @member KISSY.Node
-         */
+     * resume anim of current node list.
+     * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
+     * @param queue
+     * @chainable
+     * @member KISSY.Node
+     */
         resume: function (end, queue) {
             var self = this;
             util.each(self, function (elem) {
@@ -692,10 +681,10 @@ KISSY.add('node/anim', [
             return self;
         },
         /**
-         * whether one of current node list is animating.
-         * @return {Boolean}
-         * @member KISSY.Node
-         */
+     * whether one of current node list is animating.
+     * @return {Boolean}
+     * @member KISSY.Node
+     */
         isRunning: function () {
             var self = this;
             for (var i = 0; i < self.length; i++) {
@@ -706,10 +695,10 @@ KISSY.add('node/anim', [
             return false;
         },
         /**
-         * whether one of current node list 's animation is paused.
-         * @return {Boolean}
-         * @member KISSY.Node
-         */
+     * whether one of current node list 's animation is paused.
+     * @return {Boolean}
+     * @member KISSY.Node
+     */
         isPaused: function () {
             var self = this;
             for (var i = 0; i < self.length; i++) {
@@ -720,167 +709,167 @@ KISSY.add('node/anim', [
             return false;
         }
     });    /**
-     * animate show effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method show
-     */
+ * animate show effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method show
+ */
            /**
-     * animate hide effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method hide
-     */
+ * animate hide effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method hide
+ */
            /**
-     * toggle show and hide effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method toggle
-     */
+ * toggle show and hide effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method toggle
+ */
            /**
-     * animate fadeIn effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method fadeIn
-     */
+ * animate fadeIn effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method fadeIn
+ */
            /**
-     * animate fadeOut effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method fadeOut
-     */
+ * animate fadeOut effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method fadeOut
+ */
            /**
-     * toggle fadeIn and fadeOut effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method fadeToggle
-     */
+ * toggle fadeIn and fadeOut effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method fadeToggle
+ */
            /**
-     * animate slideUp effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method slideUp
-     */
+ * animate slideUp effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method slideUp
+ */
            /**
-     * animate slideDown effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method slideDown
-     */
+ * animate slideDown effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method slideDown
+ */
            /**
-     * toggle slideUp and slideDown effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method slideToggle
-     */
+ * toggle slideUp and slideDown effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method slideToggle
+ */
     /**
-     * animate show effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method show
-     */
+ * animate show effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method show
+ */
     /**
-     * animate hide effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method hide
-     */
+ * animate hide effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method hide
+ */
     /**
-     * toggle show and hide effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method toggle
-     */
+ * toggle show and hide effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method toggle
+ */
     /**
-     * animate fadeIn effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method fadeIn
-     */
+ * animate fadeIn effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method fadeIn
+ */
     /**
-     * animate fadeOut effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method fadeOut
-     */
+ * animate fadeOut effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method fadeOut
+ */
     /**
-     * toggle fadeIn and fadeOut effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method fadeToggle
-     */
+ * toggle fadeIn and fadeOut effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method fadeToggle
+ */
     /**
-     * animate slideUp effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method slideUp
-     */
+ * animate slideUp effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method slideUp
+ */
     /**
-     * animate slideDown effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method slideDown
-     */
+ * animate slideDown effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method slideDown
+ */
     /**
-     * toggle slideUp and slideDown effect for current node list.
-     * @param {Number} duration duration of effect
-     * @param {Function} [complete] callback function on anim complete.
-     * @param {String|Function} [easing] easing type or custom function.
-     * @chainable
-     * @member KISSY.Node
-     * @method slideToggle
-     */
+ * toggle slideUp and slideDown effect for current node list.
+ * @param {Number} duration duration of effect
+ * @param {Function} [complete] callback function on anim complete.
+ * @param {String|Function} [easing] easing type or custom function.
+ * @chainable
+ * @member KISSY.Node
+ * @method slideToggle
+ */
     util.each({
         show: getFxs('show', 3),
         hide: getFxs('hide', 3),
@@ -908,11 +897,11 @@ KISSY.add('node/anim', [
             }
             return self;
         };
-    });
-});    /*
+    });    /*
  2011-11-10
  - 重写，逻辑放到 Anim 模块，这边只进行转发
 
  2011-05-17
  - yiminghe@gmail.com：添加 stop ，随时停止动画
  */
+});

@@ -1,1 +1,1 @@
-{"anim/transition":["util","dom","anim/base","feature"]}
+{"anim/transition":["util","logger-manager","dom","anim/base","feature"]}

@@ -5,8 +5,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/dom');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/dom');
 var Dom = require('dom/base');
 var cssProps = Dom._cssProps,
     UA = require('ua'),

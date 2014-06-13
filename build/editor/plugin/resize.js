@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
-KISSY.add("editor/plugin/resize",["dd","node","util"],function(o,b){function c(a){this.config=a||{}}var k=b("dd"),l=b("node"),g=b("util");c.prototype={pluginRenderUI:function(a){var b=k.Draggable,c=a.get("statusBarEl"),d=this.config.direction||["x","y"],h="se-resize";1===d.length&&(h="x"===d[0]?"e-resize":"s-resize");var e=(new l('<div class="'+a.get("prefixCls")+'editor-resizer" style="cursor: '+h+'"></div>')).appendTo(c);a.on("maximizeWindow",function(){e.css("display","none")});a.on("restoreWindow",
-function(){e.css("display","")});var f=new b({node:e,groups:!1}),i=0,j=0,m=a.get("el"),n=a.get("el");f.on("dragstart",function(){i=m.height();j=n.width();a.fire("resizeStart")});f.on("drag",function(b){g.inArray("y",d)&&a.set("height",i+b.deltaY);g.inArray("x",d)&&a.set("width",j+b.deltaX);a.fire("resize")});a.on("destroy",function(){f.destroy();e.remove()})}};return c});
+KISSY.add("editor/plugin/resize",["dd","node","util"],function(o,b,p,f){function c(a){this.config=a||{}}var l=b("dd"),m=b("node"),h=b("util");c.prototype={pluginRenderUI:function(a){var b=l.Draggable,c=a.get("statusBarEl"),d=this.config.direction||["x","y"],i="se-resize";1===d.length&&(i="x"===d[0]?"e-resize":"s-resize");var e=m('<div class="'+a.get("prefixCls")+'editor-resizer" style="cursor: '+i+'"></div>').appendTo(c);a.on("maximizeWindow",function(){e.css("display","none")});a.on("restoreWindow",
+function(){e.css("display","")});var g=new b({node:e,groups:!1}),j=0,k=0,f=a.get("el"),n=a.get("el");g.on("dragstart",function(){j=f.height();k=n.width();a.fire("resizeStart")});g.on("drag",function(b){h.inArray("y",d)&&a.set("height",j+b.deltaY);h.inArray("x",d)&&a.set("width",k+b.deltaX);a.fire("resize")});a.on("destroy",function(){g.destroy();e.remove()})}};f.exports=c});

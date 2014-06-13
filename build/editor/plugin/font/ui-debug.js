@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/font/ui
 */
-/**
- * @ignore
- * font formatting for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/font/ui', [
     'editor',
     '../button',
     '../menubutton'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * font formatting for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Button = require('../button');
     var MenuButton = require('../menubutton');
@@ -83,7 +83,7 @@ KISSY.add('editor/plugin/font/ui', [
                 mode: { value: Editor.Mode.WYSIWYG_MODE }
             }
         });
-    return {
+    module.exports = {
         Button: FontButton,
         Select: FontSelect
     };

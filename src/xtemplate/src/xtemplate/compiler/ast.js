@@ -4,7 +4,7 @@
  * @ignore
  */
 var ast = {};
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 
 function sameArray(a1, a2) {
     var l1 = a1.length, l2 = a2.length;
@@ -47,7 +47,7 @@ ast.BlockStatement = function (lineNumber, func, program, close, escape) {
             func.id.parts +
             '}} not {{/' +
             closeParts + '}}');
-        Logger.error(e);
+        LoggerManager.error(e);
     }
     self.escape = escape;
     self.lineNumber = lineNumber;

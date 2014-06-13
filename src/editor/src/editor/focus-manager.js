@@ -40,7 +40,6 @@ function blur() {
     }, 30);
 }
 
-
 /**
  * focus management for all editor instances.
  * @class KISSY.Editor.focusManager
@@ -88,9 +87,7 @@ var focusManager = module.exports = {
     }
 };
 
-
 Editor.focusManager = focusManager;
 Editor.getInstances = function () {
     return INSTANCES;
 };
-

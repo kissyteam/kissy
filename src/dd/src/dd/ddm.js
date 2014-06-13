@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('dd/ddm');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('dd/ddm');
 var Base = require('base');
 var UA = require('ua'),
     $ = require('node'),
@@ -62,7 +62,6 @@ var activeShim = function (self) {
 
     showShim(self);
 };
-
 
 /*
  负责拖动涉及的全局事件：
@@ -306,7 +305,6 @@ var DDManger = Base.extend({
     }
 });
 
-
 function showShim(self) {
     // determine cursor according to activeHandler and dragCursor
     var ah = self.get('activeDrag').get('activeHandler'),
@@ -406,4 +404,3 @@ DDM.cacheWH = cacheWH;
 DDM.PREFIX_CLS = 'ks-dd-';
 
 module.exports = DDM;
-

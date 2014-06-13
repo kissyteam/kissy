@@ -1,28 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:31
+build time: Jun 13 11:53
 */
 /*
 combined modules:
 scroll-view/plugin/pull-to-refresh
 */
-/**
+KISSY.add('scroll-view/plugin/pull-to-refresh', [
+    'base',
+    'util',
+    'node',
+    'util',
+    'feature'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * pull-to-refresh plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/pull-to-refresh', [
-    'base',
-    'node',
-    'util',
-    'util',
-    'feature'
-], function (S, require) {
     var Base = require('base');
-    var Node = require('node');
     var util = require('util');
-    var $ = Node.all;
+    var $ = require('node');
     var substitute = require('util').substitute;
     var transformVendorInfo = require('feature').getCssVendorInfo('transform');
     var transformProperty = transformVendorInfo && transformVendorInfo.propertyName;
@@ -32,16 +31,16 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
         $el.attr('class', prefixCls + 'scroll-view-pull-' + direction + '-to-refresh ' + prefixCls + 'scroll-view-' + state);
         self.get$LabelEl(direction).html(self.getStateHtml(direction, state));
     }    /**
-     * pull to refresh plugin for ScrollView
-     * @class KISSY.ScrollView.Plugin.PullToRefresh
-     * @extend KISSY.Base
-     */
+ * pull to refresh plugin for ScrollView
+ * @class KISSY.ScrollView.Plugin.PullToRefresh
+ * @extend KISSY.Base
+ */
     /**
-     * pull to refresh plugin for ScrollView
-     * @class KISSY.ScrollView.Plugin.PullToRefresh
-     * @extend KISSY.Base
-     */
-    return Base.extend({
+ * pull to refresh plugin for ScrollView
+ * @class KISSY.ScrollView.Plugin.PullToRefresh
+ * @extend KISSY.Base
+ */
+    module.exports = Base.extend({
         pluginId: this.name,
         get$El: function (direction) {
             return this['$' + direction + 'El'];
@@ -179,42 +178,42 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', [
     }, {
         ATTRS: {
             /**
-             * pulling hint html.
-             * Defaults to: Pull down to refresh...
-             * @cfg {String} pullingHtml
-             */
+         * pulling hint html.
+         * Defaults to: Pull down to refresh...
+         * @cfg {String} pullingHtml
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             pullingDownHtml: { value: 'Pull down to refresh...' },
             pullingUpHtml: { value: 'Pull up to refresh...' },
             /**
-             * releasing hint html.
-             * Defaults to: release to refresh...
-             * @cfg {String} releasingHtml
-             */
+         * releasing hint html.
+         * Defaults to: release to refresh...
+         * @cfg {String} releasingHtml
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             releasingUpHtml: { value: 'release to refresh...' },
             releasingDownHtml: { value: 'release to refresh...' },
             /**
-             * loading hint html.
-             * Defaults to: loading...
-             * @cfg {String} loadingHtml
-             */
+         * loading hint html.
+         * Defaults to: loading...
+         * @cfg {String} loadingHtml
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             loadingUpHtml: { value: 'loading...' },
             loadingDownHtml: { value: 'loading...' },
             /**
-             * load function to load data asynchronously
-             * @cfg {Function} loadFn
-             */
+         * load function to load data asynchronously
+         * @cfg {Function} loadFn
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             pullUpLoadFn: {},
             pullDownLoadFn: {},
             pullUpState: {},

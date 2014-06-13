@@ -5,7 +5,7 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 var nativeCommands = require('./runtime/commands');
 var commands = {};
 var Scope = require('./runtime/scope');
@@ -82,7 +82,7 @@ function callFn(tpl, scope, option, buffer, parts, depth, line, resolveInScope) 
         }
     }
     if (error) {
-        Logger.error(error);
+        LoggerManager.error(error);
     }
     return buffer;
 }
@@ -104,7 +104,7 @@ var loader = {
             },
             error: function () {
                 var error = 'template "' + name + '" does not exist';
-                Logger.log(error, 'error');
+                LoggerManager.log(error, 'error');
                 callback(error);
             }
         });
@@ -167,7 +167,7 @@ function resolve(subName, parentName) {
     if (!parentName) {
         var error = 'parent template does not have name' +
             ' for relative sub tpl name: ' + subName;
-        Logger.error(error);
+        LoggerManager.error(error);
     }
     var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
     if (cache[subName]) {

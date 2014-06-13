@@ -131,7 +131,7 @@
         }, getBaseInfo()));
     }
 
-    S.add('logger', function () {
-        return S.Logger;
+    S.add('logger-manager', function () {
+        return S.LoggerMangaer;
     });
 })(KISSY);

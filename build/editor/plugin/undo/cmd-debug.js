@@ -1,36 +1,36 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:23
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/undo/cmd
 */
-/**
- * @ignore
- * undo,redo manager for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/undo/cmd', [
     'editor',
     'ua',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * undo,redo manager for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var UA = require('ua'), LIMIT = 30;
     var util = require('util');    /**
-     * current editor status(including html and cursor position)
-     * @param editor
-     * @class KISSY.Editor.Undo.Snapshot
-     * @private
-     */
+ * current editor status(including html and cursor position)
+ * @param editor
+ * @class KISSY.Editor.Undo.Snapshot
+ * @private
+ */
     /**
-     * current editor status(including html and cursor position)
-     * @param editor
-     * @class KISSY.Editor.Undo.Snapshot
-     * @private
-     */
+ * current editor status(including html and cursor position)
+ * @param editor
+ * @class KISSY.Editor.Undo.Snapshot
+ * @private
+ */
     function Snapshot(editor) {
         var contents = editor.get('document')[0].body.innerHTML, self = this, selection;
         if (contents) {
@@ -50,22 +50,22 @@ KISSY.add('editor/plugin/undo/cmd', [
             return thisContents === otherContents;
         }
     };    /**
-     * manager history of editor content
-     * @param editor
-     * @class KISSY.Editor.UndoManager
-     * @private
-     */
+ * manager history of editor content
+ * @param editor
+ * @class KISSY.Editor.UndoManager
+ * @private
+ */
     /**
-     * manager history of editor content
-     * @param editor
-     * @class KISSY.Editor.UndoManager
-     * @private
-     */
+ * manager history of editor content
+ * @param editor
+ * @class KISSY.Editor.UndoManager
+ * @private
+ */
     function UndoManager(editor) {
         // redo undo history stack
         /**
-         * 编辑器状态历史保存
-         */
+     * 编辑器状态历史保存
+     */
         var self = this;
         self.history = [];    //当前所处状态对应的历史栈内下标
         //当前所处状态对应的历史栈内下标
@@ -143,8 +143,8 @@ KISSY.add('editor/plugin/undo/cmd', [
             }, 0);
         },
         /**
-         * save to history
-         */
+     * save to history
+     */
         save: function (buffer) {
             var editor = this.editor;    // 代码模式下不和可视模式下混在一起
             // 代码模式下不和可视模式下混在一起
@@ -177,8 +177,8 @@ KISSY.add('editor/plugin/undo/cmd', [
             }
         },
         /**
-         * restore from history
-         */
+     * restore from history
+     */
         restore: function (d) {
             // 代码模式下不和可视模式下混在一起
             if (this.editor.get('mode') !== Editor.Mode.WYSIWYG_MODE) {
@@ -212,7 +212,7 @@ KISSY.add('editor/plugin/undo/cmd', [
             return snapshot;
         }
     };
-    return {
+    module.exports = {
         init: function (editor) {
             if (!editor.hasCommand('save')) {
                 var undoRedo = new UndoManager(editor);

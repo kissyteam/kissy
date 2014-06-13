@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 12 18:40
+build time: Jun 13 12:13
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140612184004' will replace with current timestamp when compressing.
+         * NOTICE: '20140613121305' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140612184004',
+        __BUILD_TIME: '20140613121305',
 
         /**
          * KISSY Environment.
@@ -193,11 +193,24 @@ var KISSY = (function (undefined) {
             /*jshint loopfunc: true*/
             (function (obj, cat) {
                 obj[cat] = function (msg) {
-                    return S.log(msg, cat, logger);
+                    return LoggerManager.log(msg, cat, logger);
                 };
             })(obj, cat);
         }
         return obj;
+    }
+
+    var config = {};
+    if ('@DEBUG@') {
+        config = {
+            excludes: [
+                {
+                    logger: /^s\/.*/,
+                    maxLevel: 'info',
+                    minLevel: 'debug'
+                }
+            ]
+        };
     }
 
     var loggerLevel = {
@@ -207,7 +220,11 @@ var KISSY = (function (undefined) {
         error: 40
     };
 
-    var Logger = {
+    var LoggerManager = {
+        config: function (cfg) {
+            config = cfg || config;
+            return config;
+        },
         /**
          * Prints debug info.
          * @param msg {String} the message to log.
@@ -219,11 +236,10 @@ var KISSY = (function (undefined) {
             if ('@DEBUG@') {
                 var matched = 1;
                 if (logger) {
-                    var loggerCfg = S.Config.logger || {},
-                        list, i, l, level, minLevel, maxLevel, reg;
+                    var list, i, l, level, minLevel, maxLevel, reg;
                     cat = cat || 'debug';
                     level = loggerLevel[cat] || loggerLevel.debug;
-                    if ((list = loggerCfg.includes)) {
+                    if ((list = config.includes)) {
                         matched = 0;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
@@ -235,7 +251,7 @@ var KISSY = (function (undefined) {
                                 break;
                             }
                         }
-                    } else if ((list = loggerCfg.excludes)) {
+                    } else if ((list = config.excludes)) {
                         matched = 1;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
@@ -266,7 +282,7 @@ var KISSY = (function (undefined) {
         /**
          * get log instance for specified logger
          * @param {String} logger logger name
-         * @returns {KISSY.Logger} log instance
+         * @returns {KISSY.LoggerManager} log instance
          */
         getLogger: function (logger) {
             return getLogger(logger);
@@ -283,54 +299,44 @@ var KISSY = (function (undefined) {
         }
     };
 
-    if ('@DEBUG@') {
-        S.Config.logger = {
-            excludes: [
-                {
-                    logger: /^s\/.*/,
-                    maxLevel: 'info',
-                    minLevel: 'debug'
-                }
-            ]
-        };
-        /**
-         * Log class for specified logger
-         * @class KISSY.Logger
-         * @private
-         */
-        /**
-         * print debug log
-         * @method debug
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
+    /**
+     * Log class for specified logger
+     * @class KISSY.LoggerManager
+     * @private
+     */
+    /**
+     * print debug log
+     * @method debug
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-        /**
-         * print info log
-         * @method info
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
+    /**
+     * print info log
+     * @method info
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-        /**
-         * print warn log
-         * @method log
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
+    /**
+     * print warn log
+     * @method log
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-        /**
-         * print error log
-         * @method error
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
-    }
+    /**
+     * print error log
+     * @method error
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-    S.Logger = Logger;
-    S.getLogger = Logger.getLogger;
-    S.log = Logger.log;
-    S.error = Logger.error;
+    S.LoggerMangaer = LoggerManager;
+    S.getLogger = LoggerManager.getLogger;
+    S.log = LoggerManager.log;
+    S.error = LoggerManager.error;
+    S.Config.fns.logger = LoggerManager.config;
 })(KISSY);/**
  * @ignore
  * Utils for kissy loader
@@ -2388,7 +2394,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140612184004';
+    var TIMESTAMP = '20140613121305';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2511,26 +2517,26 @@ KISSY.add('i18n', {
         }, getBaseInfo()));
     }
 
-    S.add('logger', function () {
-        return S.Logger;
+    S.add('logger-manager', function () {
+        return S.LoggerMangaer;
     });
 })(KISSY);
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
 ua
 */
-/**
+KISSY.add('ua', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * ua
  */
-KISSY.add('ua', [], function (S) {
     /*global process*/
-    var win = S.Env.host, undef, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || '';
+    var win = typeof window !== 'undefined' ? window : {}, undef, doc = win.document, ua = win.navigator && win.navigator.userAgent || '';
     function numberify(s) {
         var c = 0;    // convert '1.2.3.4' to 1.234
         // convert '1.2.3.4' to 1.234
@@ -2561,141 +2567,141 @@ KISSY.add('ua', [], function (S) {
                 6,
                 9
             ], ieVersion, v, end, VERSION_PLACEHOLDER = '{{version}}', IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->', div = doc && doc.createElement('div'), s = [];    /**
-         * KISSY UA
-         * @class KISSY.UA
-         * @singleton
-         */
+     * KISSY UA
+     * @class KISSY.UA
+     * @singleton
+     */
         /**
-         * KISSY UA
-         * @class KISSY.UA
-         * @singleton
-         */
+     * KISSY UA
+     * @class KISSY.UA
+     * @singleton
+     */
         var UA = {
                 /**
-             * webkit version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * webkit version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 webkit: undef,
                 /**
-             * trident version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * trident version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 trident: undef,
                 /**
-             * gecko version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * gecko version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 gecko: undef,
                 /**
-             * presto version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * presto version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 presto: undef,
                 /**
-             * chrome version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * chrome version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 chrome: undef,
                 /**
-             * safari version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * safari version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 safari: undef,
                 /**
-             * firefox version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * firefox version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 firefox: undef,
                 /**
-             * ie version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * ie version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 ie: undef,
                 /**
-             * ie document mode
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * ie document mode
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 ieMode: undef,
                 /**
-             * opera version
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * opera version
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 opera: undef,
                 /**
-             * mobile browser. apple, android.
-             * @type String
-             * @member KISSY.UA
-             */
+         * mobile browser. apple, android.
+         * @type String
+         * @member KISSY.UA
+         */
                 mobile: undef,
                 /**
-             * browser render engine name. webkit, trident
-             * @type String
-             * @member KISSY.UA
-             */
+         * browser render engine name. webkit, trident
+         * @type String
+         * @member KISSY.UA
+         */
                 core: undef,
                 /**
-             * browser shell name. ie, chrome, firefox
-             * @type String
-             * @member KISSY.UA
-             */
+         * browser shell name. ie, chrome, firefox
+         * @type String
+         * @member KISSY.UA
+         */
                 shell: undef,
                 /**
-             * PhantomJS version number
-             * @type undef|Number
-             * @member KISSY.UA
-             */
+         * PhantomJS version number
+         * @type undef|Number
+         * @member KISSY.UA
+         */
                 phantomjs: undef,
                 /**
-             * operating system. android, ios, linux, windows
-             * @type string
-             * @member KISSY.UA
-             */
+         * operating system. android, ios, linux, windows
+         * @type string
+         * @member KISSY.UA
+         */
                 os: undef,
                 /**
-             * ipad ios version
-             * @type Number
-             * @member KISSY.UA
-             */
+         * ipad ios version
+         * @type Number
+         * @member KISSY.UA
+         */
                 ipad: undef,
                 /**
-             * iphone ios version
-             * @type Number
-             * @member KISSY.UA
-             */
+         * iphone ios version
+         * @type Number
+         * @member KISSY.UA
+         */
                 iphone: undef,
                 /**
-             * ipod ios
-             * @type Number
-             * @member KISSY.UA
-             */
+         * ipod ios
+         * @type Number
+         * @member KISSY.UA
+         */
                 ipod: undef,
                 /**
-             * ios version
-             * @type Number
-             * @member KISSY.UA
-             */
+         * ios version
+         * @type Number
+         * @member KISSY.UA
+         */
                 ios: undef,
                 /**
-             * android version
-             * @type Number
-             * @member KISSY.UA
-             */
+         * android version
+         * @type Number
+         * @member KISSY.UA
+         */
                 android: undef,
                 /**
-             * nodejs version
-             * @type Number
-             * @member KISSY.UA
-             */
+         * nodejs version
+         * @type Number
+         * @member KISSY.UA
+         */
                 nodejs: undef
             };    // ejecta
         // ejecta
@@ -2845,7 +2851,7 @@ KISSY.add('ua', [], function (S) {
         UA.ieMode = UA.ie && doc.documentMode || UA.ie;
         return UA;
     }
-    var UA = S.UA = getDescriptorFromUserAgent(ua);    // nodejs
+    var UA = module.exports = getDescriptorFromUserAgent(ua);    // nodejs
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
@@ -2881,9 +2887,7 @@ KISSY.add('ua', [], function (S) {
         if (className) {
             documentElement.className = (documentElement.className + className).replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
         }
-    }
-    return UA;
-});    /*
+    }    /*
  NOTES:
  2013.07.08 yiminghe@gmail.com
  - support ie11 and opera(using blink)
@@ -2908,22 +2912,23 @@ KISSY.add('ua', [], function (S) {
  皆权衡。
  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
  */
+});
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:50
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 feature
 */
-/**
+KISSY.add('feature', ['ua'], function (S, require, exports, module) {
+    /**
  * @ignore
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
  */
-KISSY.add('feature', ['ua'], function (S, require) {
-    var win = S.Env.host, Config = S.Config, UA = require('ua'), propertyPrefixes = [
+    var win = window, UA = require('ua'), propertyPrefixes = [
             'Webkit',
             'Moz',
             'O',
@@ -2935,7 +2940,7 @@ KISSY.add('feature', ['ua'], function (S, require) {
         // ie11
         isPointerSupported, isTransform3dSupported,
         // nodejs
-        documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false,
+        documentElement = doc && doc.documentElement, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false,
         // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchEventSupportedState = 'ontouchstart' in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
     if (documentElement) {
@@ -2945,7 +2950,6 @@ KISSY.add('feature', ['ua'], function (S, require) {
         }
         documentElementStyle = documentElement.style;
         isClassListSupportedState = 'classList' in documentElement;
-        navigator = win.navigator || {};
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
     }
@@ -2983,39 +2987,39 @@ KISSY.add('feature', ['ua'], function (S, require) {
         }
         return vendorInfos[name];
     }    /**
-     * browser features detection
-     * @class KISSY.Feature
-     * @private
-     * @singleton
-     */
+ * browser features detection
+ * @class KISSY.Feature
+ * @private
+ * @singleton
+ */
     /**
-     * browser features detection
-     * @class KISSY.Feature
-     * @private
-     * @singleton
-     */
-    S.Feature = {
+ * browser features detection
+ * @class KISSY.Feature
+ * @private
+ * @singleton
+ */
+    module.exports = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
-         * whether support microsoft pointer event.
-         * @type {Boolean}
-         */
+     * whether support microsoft pointer event.
+     * @type {Boolean}
+     */
         isMsPointerSupported: function () {
             // ie11 onMSPointerDown but e.type==pointerdown
             return isMsPointerSupported;
         },
         /**
-         * whether support microsoft pointer event (ie11).
-         * @type {Boolean}
-         */
+     * whether support microsoft pointer event (ie11).
+     * @type {Boolean}
+     */
         isPointerSupported: function () {
             // ie11
             return isPointerSupported;
         },
         /**
-         * whether support touch event.
-         * @return {Boolean}
-         */
+     * whether support touch event.
+     * @return {Boolean}
+     */
         isTouchEventSupported: function () {
             return isTouchEventSupportedState;
         },
@@ -3023,16 +3027,16 @@ KISSY.add('feature', ['ua'], function (S, require) {
             return isTouchEventSupportedState || isPointerSupported || isMsPointerSupported;
         },
         /**
-         * whether support device motion event
-         * @returns {boolean}
-         */
+     * whether support device motion event
+     * @returns {boolean}
+     */
         isDeviceMotionSupported: function () {
             return !!win.DeviceMotionEvent;
         },
         /**
-         * whether support hashchange event
-         * @returns {boolean}
-         */
+     * whether support hashchange event
+     * @returns {boolean}
+     */
         isHashChangeSupported: function () {
             // ie8 支持 hashchange
             // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
@@ -3040,12 +3044,12 @@ KISSY.add('feature', ['ua'], function (S, require) {
             return 'onhashchange' in win && (!ie || ie > 7);
         },
         isInputEventSupported: function () {
-            return !Config.simulateInputEvent && 'oninput' in win && (!ie || ie > 9);
+            return 'oninput' in win && (!ie || ie > 9);
         },
         /**
-         * whether support css transform 3d
-         * @returns {boolean}
-         */
+     * whether support css transform 3d
+     * @returns {boolean}
+     */
         isTransform3dSupported: function () {
             if (isTransform3dSupported !== undefined) {
                 return isTransform3dSupported;
@@ -3056,42 +3060,46 @@ KISSY.add('feature', ['ua'], function (S, require) {
                 // https://gist.github.com/lorenzopolidori/3794226
                 // ie9 does not support 3d transform
                 // http://msdn.microsoft.com/en-us/ie/ff468705
-                var el = doc.createElement('p');
-                var transformProperty = getVendorInfo('transform').name;
-                documentElement.insertBefore(el, documentElement.firstChild);
-                el.style[transformProperty] = 'translate3d(1px,1px,1px)';
-                var computedStyle = win.getComputedStyle(el);
-                var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-                documentElement.removeChild(el);
-                isTransform3dSupported = has3d !== undefined && has3d.length > 0 && has3d !== 'none';
+                try {
+                    var el = doc.createElement('p');
+                    var transformProperty = getVendorInfo('transform').propertyName;
+                    documentElement.insertBefore(el, documentElement.firstChild);
+                    el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+                    var computedStyle = win.getComputedStyle(el);
+                    var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
+                    documentElement.removeChild(el);
+                    isTransform3dSupported = has3d !== undefined && has3d.length > 0 && has3d !== 'none';
+                } catch (e) {
+                    // https://github.com/kissyteam/kissy/issues/563
+                    isTransform3dSupported = true;
+                }
             }
             return isTransform3dSupported;
         },
         /**
-         * whether support class list api
-         * @returns {boolean}
-         */
+     * whether support class list api
+     * @returns {boolean}
+     */
         isClassListSupported: function () {
             return isClassListSupportedState;
         },
         /**
-         * whether support querySelectorAll
-         * @returns {boolean}
-         */
+     * whether support querySelectorAll
+     * @returns {boolean}
+     */
         isQuerySelectorSupported: function () {
             // force to use js selector engine
-            return !Config.simulateCss3Selector && isQuerySelectorSupportedState;
+            return isQuerySelectorSupportedState;
         },
         getCssVendorInfo: function (name) {
             return getVendorInfo(name);
         }
     };
-    return S.Feature;
 });
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:57
+build time: Jun 13 11:55
 */
 /**
  * @ignore
@@ -3190,14 +3198,14 @@ S.config("requires",{
         "component/extension/align"
     ],
     "dd": [
-        "node",
         "base",
+        "node",
         "event/gesture/basic",
         "event/gesture/drag"
     ],
     "dd/plugin/constrain": [
-        "node",
-        "base"
+        "base",
+        "node"
     ],
     "dd/plugin/proxy": [
         "dd"
@@ -3285,7 +3293,6 @@ S.config("requires",{
     ],
     "io": [
         "dom",
-        "logger",
         "event/custom",
         "promise",
         "url",
@@ -3328,15 +3335,17 @@ S.config("requires",{
     "promise": [
         "util"
     ],
+    "querystring": [
+        "logger-manager"
+    ],
     "resizable": [
         "dd"
     ],
     "resizable/plugin/proxy": [
-        "node",
-        "base"
+        "base",
+        "node"
     ],
     "router": [
-        "logger",
         "url",
         "event/dom",
         "event/custom",
@@ -3392,12 +3401,14 @@ S.config("requires",{
         "querystring",
         "path"
     ],
+    "util": [
+        "logger-manager"
+    ],
     "xtemplate": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [
-        "util",
-        "logger"
+        "util"
     ]
 });
 var win = window,

@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/maximize/cmd
 */
-/**
- * @ignore
- * Add maximizeWindow/restoreWindow to Editor.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/maximize/cmd', [
     'editor',
     'event/dom',
@@ -19,13 +14,18 @@ KISSY.add('editor/plugin/maximize/cmd', [
     'ua',
     'node',
     'dom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add maximizeWindow/restoreWindow to Editor.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Event = require('event/dom');
     var util = require('util');
-    var UA = require('ua'), ie = UA.ie, doc = document, Node = require('node'), Dom = require('dom'), iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function () {
+    var UA = require('ua'), ie = UA.ie, doc = document, $ = require('node'), Dom = require('dom'), iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function () {
             if (!iframe) {
-                iframe = new Node('<' + 'iframe ' + ' style="' + 'position:absolute;' + 'top:-9999px;' + 'left:-9999px;' + '"' + ' frameborder="0">').prependTo(doc.body, undefined);
+                iframe = $('<' + 'iframe ' + ' style="' + 'position:absolute;' + 'top:-9999px;' + 'left:-9999px;' + '"' + ' frameborder="0">').prependTo(doc.body, undefined);
             }
         };
     function MaximizeCmd(editor) {
@@ -55,9 +55,9 @@ KISSY.add('editor/plugin/maximize/cmd', [
             }, 30);
         },
         /*
-         从内存恢复最大化前的外围状态信息到编辑器实际动作，
-         包括编辑器位置以及周围元素，浏览器窗口
-         */
+     从内存恢复最大化前的外围状态信息到编辑器实际动作，
+     包括编辑器位置以及周围元素，浏览器窗口
+     */
         _restoreState: function () {
             var self = this, editor = self.editor, textareaEl = editor.get('textarea'),
                 //恢复父节点的position原状态 bugfix:最大化被父元素限制
@@ -94,9 +94,9 @@ KISSY.add('editor/plugin/maximize/cmd', [
             }
         },
         /*
-         保存最大化前的外围状态信息到内存，
-         包括编辑器位置以及周围元素，浏览器窗口
-         */
+     保存最大化前的外围状态信息到内存，
+     包括编辑器位置以及周围元素，浏览器窗口
+     */
         _saveSate: function () {
             var self = this, editor = self.editor, _savedParents = [], editorEl = editor.get('el');
             self.iframeHeight = editor.get('textarea').parent().style('height');
@@ -125,9 +125,9 @@ KISSY.add('editor/plugin/maximize/cmd', [
             }
         },
         /*
-         编辑器自身核心状态保存，每次最大化最小化都要save,restore，
-         firefox修正，iframe layout变化时，range丢了
-         */
+     编辑器自身核心状态保存，每次最大化最小化都要save,restore，
+     firefox修正，iframe layout变化时，range丢了
+     */
         _saveEditorStatus: function () {
             var self = this, editor = self.editor;
             self.savedRanges = null;
@@ -139,9 +139,9 @@ KISSY.add('editor/plugin/maximize/cmd', [
             self.savedRanges = sel && sel.getRanges();
         },
         /*
-         编辑器自身核心状态恢复，每次最大化最小化都要save,restore，
-         维持编辑器核心状态不变
-         */
+     编辑器自身核心状态恢复，每次最大化最小化都要save,restore，
+     维持编辑器核心状态不变
+     */
         _restoreEditorStatus: function () {
             var self = this, editor = self.editor, sel = editor.getSelection(), savedRanges = self.savedRanges;    //firefox焦点bug
                                                                                                                    //原来是聚焦，现在刷新designmode
@@ -171,9 +171,9 @@ KISSY.add('editor/plugin/maximize/cmd', [
             }
         },
         /*
-         将编辑器最大化-实际动作
-         必须做两次，何解？？
-         */
+     将编辑器最大化-实际动作
+     必须做两次，何解？？
+     */
         _maximize: function (stop) {
             var self = this, editor = self.editor, editorEl = editor.get('el'), viewportHeight = Dom.viewportHeight(), viewportWidth = Dom.viewportWidth(), textareaEl = editor.get('textarea'), statusHeight = editor.get('statusBarEl') ? editor.get('statusBarEl')[0].offsetHeight : 0, toolHeight = editor.get('toolBarEl')[0].offsetHeight;
             if (!ie) {
@@ -249,7 +249,7 @@ KISSY.add('editor/plugin/maximize/cmd', [
             }
         }
     });
-    return {
+    module.exports = {
         init: function (editor) {
             if (!editor.hasCommand('maximizeWindow')) {
                 var maximizeCmd = new MaximizeCmd(editor);

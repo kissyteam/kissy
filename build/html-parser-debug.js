@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:26
+build time: Jun 13 11:51
 */
 /*
 combined modules:
@@ -32,11 +32,6 @@ html-parser/writer/beautify
 html-parser/writer/minify
 html-parser/writer/filter
 */
-/**
- * HtmlParser for KISSY (Editor)
- * @ignore
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser', [
     'html-parser/dtd',
     'html-parser/lexer/lexer',
@@ -47,10 +42,15 @@ KISSY.add('html-parser', [
     'html-parser/writer/filter',
     'html-parser/nodes/cdata',
     'html-parser/nodes/comment',
-    'html-parser/nodes/node',
     'html-parser/nodes/tag',
-    'html-parser/nodes/text'
-], function (S, require) {
+    'html-parser/nodes/text',
+    'html-parser/nodes/node'
+], function (S, require, exports, module) {
+    /**
+ * HtmlParser for KISSY (Editor)
+ * @ignore
+ * @author yiminghe@gmail.com
+ */
     var DTD = require('html-parser/dtd');
     var Lexer = require('html-parser/lexer/lexer');
     var Parser = require('html-parser/parser');
@@ -60,13 +60,12 @@ KISSY.add('html-parser', [
     var Filter = require('html-parser/writer/filter');
     var CData = require('html-parser/nodes/cdata');
     var Comment = require('html-parser/nodes/comment');
-    var Node = require('html-parser/nodes/node');
     var Tag = require('html-parser/nodes/tag');
     var Text = require('html-parser/nodes/text');
-    return {
+    module.exports = {
         CData: CData,
         Comment: Comment,
-        Node: Node,
+        Node: require('html-parser/nodes/node'),
         Tag: Tag,
         Text: Text,
         Lexer: Lexer,
@@ -84,8 +83,7 @@ KISSY.add('html-parser', [
         parse: function (html) {
             return new Parser(html).parse();
         }
-    };
-});    /**
+    };    /**
  * @ignore
  * refer
  *  - http://html-parser.sourceforge.net/
@@ -95,16 +93,17 @@ KISSY.add('html-parser', [
  * TODO
  *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx
  **/
-/**
+});
+KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
+    /**
  * @ignore
  * modified from ckeditor dtd by yiminghe, support html5 tag and dtd
  * @author yimingh@gmail.com
  */
-/*
+    /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
     var util = require('util');
     var merge = util.merge, A = {
             isindex: 1,
@@ -277,64 +276,64 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
             table: 1,
             ul: 1
         };    /**
-     * Holds and object representation of the HTML DTD to be used by the editor in
-     * its internal operations.
-     *
-     * Each element in the DTD is represented by a
-     * property in this object. Each property contains the list of elements that
-     * can be contained by the element. Text is represented by the #text property.
-     *
-     * Several special grouping properties are also available. Their names start
-     * with the $ character.
-     *
-     * @class KISSY.HtmlParser.Dtd
-     * @singleton
-     *
-     *
-     *      // Check if div can be contained in a p element.
-     *      alert( !!dtd[ p ][ div ] );  false
-     *      // Check if p can be contained in a div element.
-     *      alert( !!dtd[ div ][ p ] );  true
-     *      // Check if p is a block element.
-     *      alert( !!dtd.$block[ p ] );  true
-     */
+ * Holds and object representation of the HTML DTD to be used by the editor in
+ * its internal operations.
+ *
+ * Each element in the DTD is represented by a
+ * property in this object. Each property contains the list of elements that
+ * can be contained by the element. Text is represented by the #text property.
+ *
+ * Several special grouping properties are also available. Their names start
+ * with the $ character.
+ *
+ * @class KISSY.HtmlParser.Dtd
+ * @singleton
+ *
+ *
+ *      // Check if div can be contained in a p element.
+ *      alert( !!dtd[ p ][ div ] );  false
+ *      // Check if p can be contained in a div element.
+ *      alert( !!dtd[ div ][ p ] );  true
+ *      // Check if p is a block element.
+ *      alert( !!dtd.$block[ p ] );  true
+ */
     /**
-     * Holds and object representation of the HTML DTD to be used by the editor in
-     * its internal operations.
-     *
-     * Each element in the DTD is represented by a
-     * property in this object. Each property contains the list of elements that
-     * can be contained by the element. Text is represented by the #text property.
-     *
-     * Several special grouping properties are also available. Their names start
-     * with the $ character.
-     *
-     * @class KISSY.HtmlParser.Dtd
-     * @singleton
-     *
-     *
-     *      // Check if div can be contained in a p element.
-     *      alert( !!dtd[ p ][ div ] );  false
-     *      // Check if p can be contained in a div element.
-     *      alert( !!dtd[ div ][ p ] );  true
-     *      // Check if p is a block element.
-     *      alert( !!dtd.$block[ p ] );  true
-     */
+ * Holds and object representation of the HTML DTD to be used by the editor in
+ * its internal operations.
+ *
+ * Each element in the DTD is represented by a
+ * property in this object. Each property contains the list of elements that
+ * can be contained by the element. Text is represented by the #text property.
+ *
+ * Several special grouping properties are also available. Their names start
+ * with the $ character.
+ *
+ * @class KISSY.HtmlParser.Dtd
+ * @singleton
+ *
+ *
+ *      // Check if div can be contained in a p element.
+ *      alert( !!dtd[ p ][ div ] );  false
+ *      // Check if p can be contained in a div element.
+ *      alert( !!dtd[ div ][ p ] );  true
+ *      // Check if p is a block element.
+ *      alert( !!dtd.$block[ p ] );  true
+ */
     var dtd = module.exports = {
             /**
-         * The $ items have been added manually.
-         * List of elements living outside body.
-         */
+     * The $ items have been added manually.
+     * List of elements living outside body.
+     */
             $nonBodyContent: merge(V, U, headTags),
             /**
-         * List of block elements, like p or div.
-         * @type {Object}
-         */
+     * List of block elements, like p or div.
+     * @type {Object}
+     */
             $block: block,
             /**
-         * List of block limit elements.
-         * @type {Object}
-         */
+     * List of block limit elements.
+     * @type {Object}
+     */
             $blockLimit: {
                 body: 1,
                 div: 1,
@@ -344,31 +343,31 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 form: 1
             },
             /**
-         * List of inline elements
-         * @type {Object}
-         */
+     * List of inline elements
+     * @type {Object}
+     */
             $inline: L,
             // Just like span.
             /**
-         * elements which can be include in body
-         * @type {Object}
-         */
+     * elements which can be include in body
+     * @type {Object}
+     */
             $body: merge({
                 script: 1,
                 style: 1
             }, block),
             /**
-         * cdata elements
-         * @type {Object}
-         */
+     * cdata elements
+     * @type {Object}
+     */
             $cdata: {
                 script: 1,
                 style: 1
             },
             /**
-         * List of empty (self-closing) elements, like br or img.
-         * @type {Object}
-         */
+     * List of empty (self-closing) elements, like br or img.
+     * @type {Object}
+     */
             $empty: {
                 area: 1,
                 base: 1,
@@ -382,28 +381,28 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 param: 1
             },
             /**
-         * List of list item elements, like li or dd.
-         * @type {Object}
-         */
+     * List of list item elements, like li or dd.
+     * @type {Object}
+     */
             $listItem: {
                 dd: 1,
                 dt: 1,
                 li: 1
             },
             /**
-         * List of list root elements.
-         * @type {Object}
-         */
+     * List of list root elements.
+     * @type {Object}
+     */
             $list: {
                 ul: 1,
                 ol: 1,
                 dl: 1
             },
             /**
-         * Elements that accept text nodes, but are not possible to edit into
-         * the browser.
-         * @type {Object}
-         */
+     * Elements that accept text nodes, but are not possible to edit into
+     * the browser.
+     * @type {Object}
+     */
             $nonEditable: {
                 applet: 1,
                 button: 1,
@@ -417,9 +416,9 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 param: 1
             },
             /**
-         * List of elements that can be ignored if empty, like b or span.
-         * @type {Object}
-         */
+     * List of elements that can be ignored if empty, like b or span.
+     * @type {Object}
+     */
             $removeEmpty: {
                 abbr: 1,
                 acronym: 1,
@@ -451,9 +450,9 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 'var': 1
             },
             /**
-         * List of elements that have tabindex set to zero by default.
-         * @type {Object}
-         */
+     * List of elements that have tabindex set to zero by default.
+     * @type {Object}
+     */
             $tabIndex: {
                 a: 1,
                 area: 1,
@@ -464,9 +463,9 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 textarea: 1
             },
             /**
-         * List of elements used inside the table element, like tbody or td.
-         * @type {Object}
-         */
+     * List of elements used inside the table element, like tbody or td.
+     * @type {Object}
+     */
             $tableContent: {
                 caption: 1,
                 col: 1,
@@ -479,195 +478,195 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 tr: 1
             },
             /**
-         * List of elements used inside the html element
-         * @type {Object}
-         */
+     * List of elements used inside the html element
+     * @type {Object}
+     */
             html: U,
             /**
-         * List of elements used inside the head element
-         * @type {Object}
-         */
+     * List of elements used inside the head element
+     * @type {Object}
+     */
             head: T,
             /**
-         * List of elements used inside the style element
-         * @type {Object}
-         */
+     * List of elements used inside the style element
+     * @type {Object}
+     */
             style: N,
             /**
-         * List of elements used inside the body element
-         * @type {Object}
-         */
+     * List of elements used inside the body element
+     * @type {Object}
+     */
             body: P,
             /**
-         * List of elements used inside the base element
-         * @type {Object}
-         */
+     * List of elements used inside the base element
+     * @type {Object}
+     */
             base: {},
             /**
-         * List of elements used inside the link element
-         * @type {Object}
-         */
+     * List of elements used inside the link element
+     * @type {Object}
+     */
             link: {},
             /**
-         * List of elements used inside the meta element
-         * @type {Object}
-         */
+     * List of elements used inside the meta element
+     * @type {Object}
+     */
             meta: {},
             /**
-         * List of elements used inside the title element
-         * @type {Object}
-         */
+     * List of elements used inside the title element
+     * @type {Object}
+     */
             title: N,
             /**
-         * List of elements used inside the col element
-         * @type {Object}
-         */
+     * List of elements used inside the col element
+     * @type {Object}
+     */
             col: {},
             /**
-         * List of elements used inside the tr element
-         * @type {Object}
-         */
+     * List of elements used inside the tr element
+     * @type {Object}
+     */
             tr: {
                 td: 1,
                 th: 1
             },
             /**
-         * List of elements used inside the img element
-         * @type {Object}
-         */
+     * List of elements used inside the img element
+     * @type {Object}
+     */
             img: {},
             /**
-         * List of elements used inside the colgroup element
-         * @type {Object}
-         */
+     * List of elements used inside the colgroup element
+     * @type {Object}
+     */
             colgroup: { col: 1 },
             /**
-         * List of elements used inside the noscript element
-         * @type {Object}
-         */
+     * List of elements used inside the noscript element
+     * @type {Object}
+     */
             noscript: P,
             /**
-         * List of elements used inside the td element
-         * @type {Object}
-         */
+     * List of elements used inside the td element
+     * @type {Object}
+     */
             td: P,
             /**
-         * List of elements used inside the br element
-         * @type {Object}
-         */
+     * List of elements used inside the br element
+     * @type {Object}
+     */
             br: {},
             /**
-         * List of elements used inside the th element
-         * @type {Object}
-         */
+     * List of elements used inside the th element
+     * @type {Object}
+     */
             th: P,
             /**
-         * List of elements used inside the center element
-         * @type {Object}
-         */
+     * List of elements used inside the center element
+     * @type {Object}
+     */
             center: P,
             /**
-         * List of elements used inside the kbd element
-         * @type {Object}
-         */
+     * List of elements used inside the kbd element
+     * @type {Object}
+     */
             kbd: L,
             /**
-         * List of elements used inside the button element
-         * @type {Object}
-         */
+     * List of elements used inside the button element
+     * @type {Object}
+     */
             button: merge(I, E),
             /**
-         * List of elements used inside the basefont element
-         * @type {Object}
-         */
+     * List of elements used inside the basefont element
+     * @type {Object}
+     */
             basefont: {},
             /**
-         * List of elements used inside the h5 element
-         * @type {Object}
-         */
+     * List of elements used inside the h5 element
+     * @type {Object}
+     */
             h5: L,
             /**
-         * List of elements used inside the h4 element
-         * @type {Object}
-         */
+     * List of elements used inside the h4 element
+     * @type {Object}
+     */
             h4: L,
             /**
-         * List of elements used inside the samp element
-         * @type {Object}
-         */
+     * List of elements used inside the samp element
+     * @type {Object}
+     */
             samp: L,
             /**
-         * List of elements used inside the h6 element
-         * @type {Object}
-         */
+     * List of elements used inside the h6 element
+     * @type {Object}
+     */
             h6: L,
             /**
-         * List of elements used inside the ol element
-         * @type {Object}
-         */
+     * List of elements used inside the ol element
+     * @type {Object}
+     */
             ol: Q,
             /**
-         * List of elements used inside the h1 element
-         * @type {Object}
-         */
+     * List of elements used inside the h1 element
+     * @type {Object}
+     */
             h1: L,
             /**
-         * List of elements used inside the h3 element
-         * @type {Object}
-         */
+     * List of elements used inside the h3 element
+     * @type {Object}
+     */
             h3: L,
             /**
-         * List of elements used inside the option element
-         * @type {Object}
-         */
+     * List of elements used inside the option element
+     * @type {Object}
+     */
             option: N,
             /**
-         * List of elements used inside the h2 element
-         * @type {Object}
-         */
+     * List of elements used inside the h2 element
+     * @type {Object}
+     */
             h2: L,
             /**
-         * List of elements used inside the form element
-         * @type {Object}
-         */
+     * List of elements used inside the form element
+     * @type {Object}
+     */
             form: merge(A, D, E, I),
             /**
-         * List of elements used inside the select element
-         * @type {Object}
-         */
+     * List of elements used inside the select element
+     * @type {Object}
+     */
             select: {
                 optgroup: 1,
                 option: 1
             },
             /**
-         * List of elements used inside the font element
-         * @type {Object}
-         */
+     * List of elements used inside the font element
+     * @type {Object}
+     */
             font: L,
             /**
-         * List of elements used inside the ins element
-         * @type {Object}
-         */
+     * List of elements used inside the ins element
+     * @type {Object}
+     */
             ins: L,
             /**
-         * List of elements used inside the menu element
-         * @type {Object}
-         */
+     * List of elements used inside the menu element
+     * @type {Object}
+     */
             menu: Q,
             /**
-         * List of elements used inside the abbr element
-         * @type {Object}
-         */
+     * List of elements used inside the abbr element
+     * @type {Object}
+     */
             abbr: L,
             /**
-         * List of elements used inside the label element
-         * @type {Object}
-         */
+     * List of elements used inside the label element
+     * @type {Object}
+     */
             label: L,
             /**
-         * List of elements used inside the table element
-         * @type {Object}
-         */
+     * List of elements used inside the table element
+     * @type {Object}
+     */
             table: {
                 thead: 1,
                 col: 1,
@@ -678,271 +677,271 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
                 tfoot: 1
             },
             /**
-         * List of elements used inside the code element
-         * @type {Object}
-         */
+     * List of elements used inside the code element
+     * @type {Object}
+     */
             code: L,
             /**
-         * List of elements used inside the script element
-         * @type {Object}
-         */
+     * List of elements used inside the script element
+     * @type {Object}
+     */
             script: N,
             /**
-         * List of elements used inside the tfoot element
-         * @type {Object}
-         */
+     * List of elements used inside the tfoot element
+     * @type {Object}
+     */
             tfoot: M,
             /**
-         * List of elements used inside the cite element
-         * @type {Object}
-         */
+     * List of elements used inside the cite element
+     * @type {Object}
+     */
             cite: L,
             /**
-         * List of elements used inside the li element
-         * @type {Object}
-         */
+     * List of elements used inside the li element
+     * @type {Object}
+     */
             li: P,
             /**
-         * List of elements used inside the input element
-         * @type {Object}
-         */
+     * List of elements used inside the input element
+     * @type {Object}
+     */
             input: {},
             /**
-         * List of elements used inside the iframe element
-         * @type {Object}
-         */
+     * List of elements used inside the iframe element
+     * @type {Object}
+     */
             iframe: P,
             /**
-         * List of elements used inside the strong element
-         * @type {Object}
-         */
+     * List of elements used inside the strong element
+     * @type {Object}
+     */
             strong: L,
             /**
-         * List of elements used inside the textarea element
-         * @type {Object}
-         */
+     * List of elements used inside the textarea element
+     * @type {Object}
+     */
             textarea: N,
             /**
-         * List of elements used inside the noframes element
-         * @type {Object}
-         */
+     * List of elements used inside the noframes element
+     * @type {Object}
+     */
             noframes: P,
             /**
-         * List of elements used inside the big element
-         * @type {Object}
-         */
+     * List of elements used inside the big element
+     * @type {Object}
+     */
             big: L,
             /**
-         * List of elements used inside the small element
-         * @type {Object}
-         */
+     * List of elements used inside the small element
+     * @type {Object}
+     */
             small: L,
             /**
-         * List of elements used inside the span element
-         * @type {Object}
-         */
+     * List of elements used inside the span element
+     * @type {Object}
+     */
             span: L,
             /**
-         * List of elements used inside the hr element
-         * @type {Object}
-         */
+     * List of elements used inside the hr element
+     * @type {Object}
+     */
             hr: {},
             /**
-         * List of elements used inside the dt element
-         * @type {Object}
-         */
+     * List of elements used inside the dt element
+     * @type {Object}
+     */
             dt: L,
             /**
-         * List of elements used inside the sub element
-         * @type {Object}
-         */
+     * List of elements used inside the sub element
+     * @type {Object}
+     */
             sub: L,
             /**
-         * List of elements used inside the optgroup element
-         * @type {Object}
-         */
+     * List of elements used inside the optgroup element
+     * @type {Object}
+     */
             optgroup: { option: 1 },
             /**
-         * List of elements used inside the param element
-         * @type {Object}
-         */
+     * List of elements used inside the param element
+     * @type {Object}
+     */
             param: {},
             /**
-         * List of elements used inside the bdo element
-         * @type {Object}
-         */
+     * List of elements used inside the bdo element
+     * @type {Object}
+     */
             bdo: L,
             /**
-         * List of elements used inside the var element
-         * @type {Object}
-         */
+     * List of elements used inside the var element
+     * @type {Object}
+     */
             'var': L,
             /**
-         * List of elements used inside the div element
-         * @type {Object}
-         */
+     * List of elements used inside the div element
+     * @type {Object}
+     */
             div: P,
             /**
-         * List of elements used inside the object element
-         * @type {Object}
-         */
+     * List of elements used inside the object element
+     * @type {Object}
+     */
             object: O,
             /**
-         * List of elements used inside the sup element
-         * @type {Object}
-         */
+     * List of elements used inside the sup element
+     * @type {Object}
+     */
             sup: L,
             /**
-         * List of elements used inside the dd element
-         * @type {Object}
-         */
+     * List of elements used inside the dd element
+     * @type {Object}
+     */
             dd: P,
             /**
-         * List of elements used inside the strike element
-         * @type {Object}
-         */
+     * List of elements used inside the strike element
+     * @type {Object}
+     */
             strike: L,
             /**
-         * List of elements used inside the area element
-         * @type {Object}
-         */
+     * List of elements used inside the area element
+     * @type {Object}
+     */
             area: {},
             /**
-         * List of elements used inside the dir element
-         * @type {Object}
-         */
+     * List of elements used inside the dir element
+     * @type {Object}
+     */
             dir: Q,
             /**
-         * List of elements used inside the map element
-         * @type {Object}
-         */
+     * List of elements used inside the map element
+     * @type {Object}
+     */
             map: merge({
                 area: 1,
                 form: 1,
                 p: 1
             }, A, F, E),
             /**
-         * List of elements used inside the applet element
-         * @type {Object}
-         */
+     * List of elements used inside the applet element
+     * @type {Object}
+     */
             applet: O,
             /**
-         * List of elements used inside the dl element
-         * @type {Object}
-         */
+     * List of elements used inside the dl element
+     * @type {Object}
+     */
             dl: {
                 dt: 1,
                 dd: 1
             },
             /**
-         * List of elements used inside the del element
-         * @type {Object}
-         */
+     * List of elements used inside the del element
+     * @type {Object}
+     */
             del: L,
             /**
-         * List of elements used inside the isindex element
-         * @type {Object}
-         */
+     * List of elements used inside the isindex element
+     * @type {Object}
+     */
             isindex: {},
             /**
-         * List of elements used inside the fieldset element
-         * @type {Object}
-         */
+     * List of elements used inside the fieldset element
+     * @type {Object}
+     */
             fieldset: merge({ legend: 1 }, K),
             /**
-         * List of elements used inside the thead element
-         * @type {Object}
-         */
+     * List of elements used inside the thead element
+     * @type {Object}
+     */
             thead: M,
             /**
-         * List of elements used inside the ul element
-         * @type {Object}
-         */
+     * List of elements used inside the ul element
+     * @type {Object}
+     */
             ul: Q,
             /**
-         * List of elements used inside the acronym element
-         * @type {Object}
-         */
+     * List of elements used inside the acronym element
+     * @type {Object}
+     */
             acronym: L,
             /**
-         * List of elements used inside the b element
-         * @type {Object}
-         */
+     * List of elements used inside the b element
+     * @type {Object}
+     */
             b: L,
             /**
-         * List of elements used inside the a element
-         * @type {Object}
-         */
+     * List of elements used inside the a element
+     * @type {Object}
+     */
             a: J,
             /**
-         * List of elements used inside the blockquote element
-         * @type {Object}
-         */
+     * List of elements used inside the blockquote element
+     * @type {Object}
+     */
             blockquote: P,
             /**
-         * List of elements used inside the caption element
-         * @type {Object}
-         */
+     * List of elements used inside the caption element
+     * @type {Object}
+     */
             caption: L,
             /**
-         * List of elements used inside the i element
-         * @type {Object}
-         */
+     * List of elements used inside the i element
+     * @type {Object}
+     */
             i: L,
             /**
-         * List of elements used inside the u element
-         * @type {Object}
-         */
+     * List of elements used inside the u element
+     * @type {Object}
+     */
             u: L,
             /**
-         * List of elements used inside the tbody element
-         * @type {Object}
-         */
+     * List of elements used inside the tbody element
+     * @type {Object}
+     */
             tbody: M,
             /**
-         * List of elements used inside the s element
-         * @type {Object}
-         */
+     * List of elements used inside the s element
+     * @type {Object}
+     */
             s: L,
             /**
-         * List of elements used inside the address element
-         * @type {Object}
-         */
+     * List of elements used inside the address element
+     * @type {Object}
+     */
             address: merge(D, I),
             /**
-         * List of elements used inside the tt element
-         * @type {Object}
-         */
+     * List of elements used inside the tt element
+     * @type {Object}
+     */
             tt: L,
             /**
-         * List of elements used inside the legend element
-         * @type {Object}
-         */
+     * List of elements used inside the legend element
+     * @type {Object}
+     */
             legend: L,
             /**
-         * List of elements used inside the q element
-         * @type {Object}
-         */
+     * List of elements used inside the q element
+     * @type {Object}
+     */
             q: L,
             /**
-         * List of elements used inside the pre element
-         * @type {Object}
-         */
+     * List of elements used inside the pre element
+     * @type {Object}
+     */
             pre: merge(G, C),
             /**
-         * List of elements used inside the p element
-         * @type {Object}
-         */
+     * List of elements used inside the p element
+     * @type {Object}
+     */
             p: L,
             /**
-         * List of elements used inside the em element
-         * @type {Object}
-         */
+     * List of elements used inside the em element
+     * @type {Object}
+     */
             em: L,
             /**
-         * List of elements used inside the dfn element
-         * @type {Object}
-         */
+     * List of elements used inside the dfn element
+     * @type {Object}
+     */
             dfn: L
         };
     var i, html5Tags = [
@@ -967,11 +966,6 @@ KISSY.add('html-parser/dtd', ['util'], function (S, require, exports, module) {
     }
 });
 
-/**
- * @ignore
- * parse html string into Nodes
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/lexer/lexer', [
     './cursor',
     './page',
@@ -981,7 +975,12 @@ KISSY.add('html-parser/lexer/lexer', [
     '../nodes/attribute',
     '../nodes/tag',
     '../nodes/comment'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * parse html string into Nodes
+ * @author yiminghe@gmail.com
+ */
     var Cursor = require('./cursor');
     var NEGATIVE_1 = 0 - 1;
     var Page = require('./page');
@@ -991,17 +990,17 @@ KISSY.add('html-parser/lexer/lexer', [
     var Attribute = require('../nodes/attribute');
     var TagNode = require('../nodes/tag');
     var CommentNode = require('../nodes/comment');    /**
-     * Lexer for html parser
-     * @param {String} text html content
-     * @param {Object} cfg config object
-     * @class KISSY.HtmlParser.Lexer
-     */
+ * Lexer for html parser
+ * @param {String} text html content
+ * @param {Object} cfg config object
+ * @class KISSY.HtmlParser.Lexer
+ */
     /**
-     * Lexer for html parser
-     * @param {String} text html content
-     * @param {Object} cfg config object
-     * @class KISSY.HtmlParser.Lexer
-     */
+ * Lexer for html parser
+ * @param {String} text html content
+ * @param {Object} cfg config object
+ * @class KISSY.HtmlParser.Lexer
+ */
     function Lexer(text, cfg) {
         var self = this;
         self.page = new Page(text);
@@ -1018,10 +1017,10 @@ KISSY.add('html-parser/lexer/lexer', [
             return this.cursor.position;
         },
         /**
-         * get next node parsed from content
-         * @param quoteSmart
-         * @returns {KISSY.HtmlParse.Node}
-         */
+     * get next node parsed from content
+     * @param quoteSmart
+     * @returns {KISSY.HtmlParse.Node}
+     */
         nextNode: function (quoteSmart) {
             var self = this, start, ch, ret, cursor = self.cursor, page = self.page;
             start = cursor.position;
@@ -1132,15 +1131,15 @@ KISSY.add('html-parser/lexer/lexer', [
             return new CommentNode(page, start, end);
         },
         /*
-         parse tag node according to fsm
-         state 0 - outside of any attribute
-         state 1 - within attribute name
-         state 2 - equals hit
-         state 3 - within naked attribute value.
-         state 4 - within single quoted attribute value
-         state 5 - within double quoted attribute value
-         state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
-         */
+     parse tag node according to fsm
+     state 0 - outside of any attribute
+     state 1 - within attribute name
+     state 2 - equals hit
+     state 3 - within naked attribute value.
+     state 4 - within single quoted attribute value
+     state 5 - within double quoted attribute value
+     state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
+     */
         parseTag: function (start) {
             function checkError() {
                 if (strict && ch === -1 && attributes.length) {
@@ -1148,17 +1147,17 @@ KISSY.add('html-parser/lexer/lexer', [
                 }
             }
             var done, bookmarks = [], attributes = [], ch, cfg = this.cfg, strict = cfg.strict, page = this.page, state = 0, cursor = this.cursor;    /*
-             record state position
+         record state position
 
-             states 0 -> bookmarks[1]
-             states 1 -> bookmarks[2]
-             */
+         states 0 -> bookmarks[1]
+         states 1 -> bookmarks[2]
+         */
             /*
-             record state position
+         record state position
 
-             states 0 -> bookmarks[1]
-             states 1 -> bookmarks[2]
-             */
+         states 0 -> bookmarks[1]
+         states 1 -> bookmarks[2]
+         */
             bookmarks[0] = cursor.position;
             while (!done) {
                 // next possible end position for next state
@@ -1299,13 +1298,13 @@ KISSY.add('html-parser/lexer/lexer', [
             return this.makeTag(start, cursor.position, attributes);
         },
         /*
-         Parse a comment.
-         state 0 - prior to the first open delimiter (first dash)
-         state 1 - prior to the second open delimiter (second dash)
-         state 2 - prior to the first closing delimiter (first dash)
-         state 3 - prior to the second closing delimiter (second dash)
-         state 4 - prior to the terminating
-         */
+     Parse a comment.
+     state 0 - prior to the first open delimiter (first dash)
+     state 1 - prior to the second open delimiter (second dash)
+     state 2 - prior to the first closing delimiter (first dash)
+     state 3 - prior to the second closing delimiter (second dash)
+     state 4 - prior to the terminating
+     */
         parseComment: function (start, quoteSmart) {
             var done, ch, page = this.page, cursor = this.cursor, state;
             done = false;
@@ -1378,11 +1377,11 @@ KISSY.add('html-parser/lexer/lexer', [
             return this.makeComment(start, cursor.position);
         },
         /**
-         * parse a string node
-         * @private
-         * @param start
-         * @param quoteSmart strings ignore quoted contents
-         */
+     * parse a string node
+     * @private
+     * @param start
+     * @param quoteSmart strings ignore quoted contents
+     */
         parseString: function (start, quoteSmart) {
             var done = 0, ch, page = this.page, cursor = this.cursor, quote = 0;
             while (!done) {
@@ -1449,12 +1448,12 @@ KISSY.add('html-parser/lexer/lexer', [
             return this.makeString(start, cursor.position);
         },
         /**
-         * parse cdata such as code in script
-         * @private
-         * @param quoteSmart if set true end tag in quote
-         * (but not in comment mode) does not end current tag ( <script>x='<a>taobao</a>'</script> )
-         * @param tagName
-         */
+     * parse cdata such as code in script
+     * @private
+     * @param quoteSmart if set true end tag in quote
+     * (but not in comment mode) does not end current tag ( <script>x='<a>taobao</a>'</script> )
+     * @param tagName
+     */
         parseCDATA: function (quoteSmart, tagName) {
             var start, state, done, quote, ch, end, comment, mCursor = this.cursor, mPage = this.page;
             start = mCursor.position;
@@ -1558,15 +1557,15 @@ KISSY.add('html-parser/lexer/lexer', [
                         // tagName = 'textarea'
                         // <textarea><div></div></textarea>
                         /*
-                                 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+                             8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
 
-                                 The text in raw text and RCDATA elements must not contain any occurrences
-                                 of the string '</' (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
-                                 followed by characters that case-insensitively match the tag name of the element
-                                 followed by one of U+0009 CHARACTER TABULATION (tab),
-                                 U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
-                                 U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
-                                 */
+                             The text in raw text and RCDATA elements must not contain any occurrences
+                             of the string '</' (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                             followed by characters that case-insensitively match the tag name of the element
+                             followed by one of U+0009 CHARACTER TABULATION (tab),
+                             U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                             U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                             */
                         if (!tagName || mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\w/)) {
                             state = 2;
                         } else {
@@ -1648,54 +1647,54 @@ KISSY.add('html-parser/lexer/lexer', [
             return this.makeCData(start, end);
         },
         /**
-         * Generate an single quoted attribute
-         * @param attributes The list so far.
-         * @param bookmarks The array of positions.
-         * @private
-         */
+     * Generate an single quoted attribute
+     * @param attributes The list so far.
+     * @param bookmarks The array of positions.
+     * @private
+     */
         singleQuote: function (attributes, bookmarks) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), '=', page.getText(bookmarks[4] + 1, bookmarks[5]), '\''));
         },
         /**
-         * Generate an double quoted attribute
-         * @param attributes The list so far.
-         * @param bookmarks The array of positions.
-         * @private
-         */
+     * Generate an double quoted attribute
+     * @param attributes The list so far.
+     * @param bookmarks The array of positions.
+     * @private
+     */
         doubleQuote: function (attributes, bookmarks) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), '=', page.getText(bookmarks[5] + 1, bookmarks[6]), '"'));
         },
         /**
-         * Generate a standalone attribute
-         * @private
-         * @param attributes The list so far.
-         * @param bookmarks The array of positions.
-         */
+     * Generate a standalone attribute
+     * @private
+     * @param attributes The list so far.
+     * @param bookmarks The array of positions.
+     */
         standalone: function (attributes, bookmarks) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2])));
         },
         /**
-         * Generate an unquoted attribute
-         * @private
-         * @param attributes The list so far.
-         * @param bookmarks The array of positions.
-         */
+     * Generate an unquoted attribute
+     * @private
+     * @param attributes The list so far.
+     * @param bookmarks The array of positions.
+     */
         naked: function (attributes, bookmarks) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), '=', page.getText(bookmarks[3], bookmarks[4])));
         }
     };
-    return Lexer;
+    module.exports = Lexer;
 });
-/**
+KISSY.add('html-parser/lexer/cursor', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/lexer/cursor', [], function () {
     function Cursor(offset) {
         this.position = offset || 0;
     }
@@ -1713,14 +1712,14 @@ KISSY.add('html-parser/lexer/cursor', [], function () {
             this.position = Math.max(--this.position, 0);
         }
     };
-    return Cursor;
+    module.exports = Cursor;
 });
-/**
+KISSY.add('html-parser/lexer/page', ['./index'], function (S, require, exports, module) {
+    /**
  * @ignore
  * represent html source
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/lexer/page', ['./index'], function (S, require) {
     var Index = require('./index');
     function Page(source) {
         this.source = source;
@@ -1782,19 +1781,19 @@ KISSY.add('html-parser/lexer/page', ['./index'], function (S, require) {
             return this.lineIndex.col(cursor);
         }
     };
-    return Page;
+    module.exports = Page;
 });
-/**
+KISSY.add('html-parser/lexer/index', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * represent line index of each line
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/lexer/index', [], function () {
     /**
-     * Page index class.
-     * @private
-     * @class KISSY.HtmlParser.Lexer.Index
-     */
+ * Page index class.
+ * @private
+ * @class KISSY.HtmlParser.Lexer.Index
+ */
     function Index() {
         this.lineCursors = [];
     }
@@ -1814,9 +1813,9 @@ KISSY.add('html-parser/lexer/index', [], function () {
             }
         },
         /**
-         * line number of this cursor , index from zero
-         * @param cursor
-         */
+     * line number of this cursor , index from zero
+     * @param cursor
+     */
         row: function (cursor) {
             var cs = this.lineCursors;
             for (var i = 0; i < cs.length; i++) {
@@ -1858,17 +1857,18 @@ KISSY.add('html-parser/lexer/index', [], function () {
         }
         return i;
     }
-    return Index;
+    module.exports = Index;
 });
-/**
+KISSY.add('html-parser/nodes/text', [
+    './node',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/text', [
-    './node',
-    'util'
-], function (S, require) {
+    /*global Node:true*/
     var Node = require('./node');
     var util = require('util');
     function Text(v) {
@@ -1907,14 +1907,14 @@ KISSY.add('html-parser/nodes/text', [
             }
         }
     });
-    return Text;
+    module.exports = Text;
 });
-/**
+KISSY.add('html-parser/nodes/node', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * abstract class for tag and text, comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/node', [], function () {
     function lineCount(str) {
         var i = 0;    // cpu!
         // cpu!
@@ -1923,19 +1923,19 @@ KISSY.add('html-parser/nodes/node', [], function () {
         });
         return i;
     }    /**
-     * node structure from htmlparser
-     * @param page
-     * @param startPosition
-     * @param endPosition
-     * @class KISSY.HtmlParse.Node
-     */
+ * node structure from htmlparser
+ * @param page
+ * @param startPosition
+ * @param endPosition
+ * @class KISSY.HtmlParse.Node
+ */
     /**
-     * node structure from htmlparser
-     * @param page
-     * @param startPosition
-     * @param endPosition
-     * @class KISSY.HtmlParse.Node
-     */
+ * node structure from htmlparser
+ * @param page
+ * @param startPosition
+ * @param endPosition
+ * @class KISSY.HtmlParse.Node
+ */
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;
         this.page = page;
@@ -1966,9 +1966,9 @@ KISSY.add('html-parser/nodes/node', [], function () {
             return -1;
         },
         /**
-         * get outerHtml of current node
-         * @returns {String}
-         */
+     * get outerHtml of current node
+     * @returns {String}
+     */
         toHtml: function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
@@ -1982,17 +1982,17 @@ KISSY.add('html-parser/nodes/node', [], function () {
             return ret.join('');
         }
     };
-    return Node;
+    module.exports = Node;
 });
-/**
+KISSY.add('html-parser/nodes/cdata', [
+    './text',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/cdata', [
-    './text',
-    'util'
-], function (S, require) {
     var Text = require('./text');
     var util = require('util');
     function CData() {
@@ -2014,15 +2014,15 @@ KISSY.add('html-parser/nodes/cdata', [
             }
         }
     });
-    return CData;
+    module.exports = CData;
 });
-/**
+KISSY.add('html-parser/utils', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/utils', [], function () {
-    return {
+    module.exports = {
         isBooleanAttribute: function (attrName) {
             return /^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i.test(attrName);
         },
@@ -2033,8 +2033,8 @@ KISSY.add('html-parser/utils', [], function () {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
         /*
-         refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
-         */
+     refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
+     */
         isValidAttributeNameStartChar: function (ch) {
             return !this.isWhitespace(ch) && ch !== '"' && ch !== '\'' && ch !== '>' && ch !== '' < '' && ch !== '/' && ch !== '=';
         },
@@ -2048,17 +2048,17 @@ KISSY.add('html-parser/utils', [], function () {
             // ie return false, others return true
             return /^[\s\xa0]$/.test(ch);
         }
-    };
-});    /*
+    };    /*
  refer:
  -  http://www.w3.org/TR/html5/syntax.html
  */
-/**
+});
+KISSY.add('html-parser/nodes/attribute', ['util'], function (S, require, exports, module) {
+    /**
  * @ignore
  * represent attribute node in tag node
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/attribute', ['util'], function (S, require) {
     var util = require('util');
     function Attribute(name, assignment, value, quote) {
         this.nodeType = 2;
@@ -2082,19 +2082,20 @@ KISSY.add('html-parser/nodes/attribute', ['util'], function (S, require) {
         util.mix(ret, this);
         return ret;
     };
-    return Attribute;
+    module.exports = Attribute;
 });
-/**
- * @ignore
- * represent tag, it can nest other tag
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/nodes/tag', [
     './node',
     './attribute',
     '../dtd',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * represent tag, it can nest other tag
+ * @author yiminghe@gmail.com
+ */
+    /*global Node:true*/
     var Node = require('./node');
     var Attribute = require('./attribute');
     var Dtd = require('../dtd');
@@ -2106,21 +2107,21 @@ KISSY.add('html-parser/nodes/tag', [
             self.setAttribute(n, v);
         });
     }    /**
-     * Html Tag Class
-     * @param page
-     * @param startPosition
-     * @param endPosition
-     * @param attributes
-     * @class KISSY.HtmlParser.Tag
-     */
+ * Html Tag Class
+ * @param page
+ * @param startPosition
+ * @param endPosition
+ * @param attributes
+ * @class KISSY.HtmlParser.Tag
+ */
     /**
-     * Html Tag Class
-     * @param page
-     * @param startPosition
-     * @param endPosition
-     * @param attributes
-     * @class KISSY.HtmlParser.Tag
-     */
+ * Html Tag Class
+ * @param page
+ * @param startPosition
+ * @param endPosition
+ * @param attributes
+ * @class KISSY.HtmlParser.Tag
+ */
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
         self.childNodes = [];
@@ -2290,14 +2291,14 @@ KISSY.add('html-parser/nodes/tag', [
             }
         },
         /**
-         * give root node a chance to filter children first
-         */
+     * give root node a chance to filter children first
+     */
         filterChildren: function () {
             var self = this;
             if (!self.isChildrenFiltered) {
-                var writer = new (S.require('html-parser/writer/basic'))();
+                var writer = new (module.require('html-parser/writer/basic'))();
                 self._writeChildrenHTML(writer);
-                var parser = new (S.require('html-parser/parser'))(writer.getHtml()), children = parser.parse().childNodes;
+                var parser = new (module.require('html-parser/parser'))(writer.getHtml()), children = parser.parse().childNodes;
                 self.empty();
                 util.each(children, function (c) {
                     self.appendChild(c);
@@ -2306,10 +2307,10 @@ KISSY.add('html-parser/nodes/tag', [
             }
         },
         /**
-         * serialize tag to html string in writer
-         * @param writer
-         * @param filter
-         */
+     * serialize tag to html string in writer
+     * @param writer
+     * @param filter
+     */
         writeHtml: function (writer, filter) {
             var self = this, tmp, attrName, tagName = self.tagName;    // special treat for doctype
             // special treat for doctype
@@ -2373,9 +2374,9 @@ KISSY.add('html-parser/nodes/tag', [
             }
         },
         /**
-         * @param writer
-         * @protected
-         */
+     * @param writer
+     * @protected
+     */
         _writeChildrenHTML: function (writer) {
             var self = this, filter = self.isChildrenFiltered ? 0 : self.__filter;    // process its children recursively
             // process its children recursively
@@ -2384,7 +2385,7 @@ KISSY.add('html-parser/nodes/tag', [
             });
         },
         outerHtml: function () {
-            var writer = new (S.require('html-parser/writer/basic'))();
+            var writer = new (module.require('html-parser/writer/basic'))();
             this.writeHtml(writer);
             return writer.getHtml();
         }
@@ -2399,17 +2400,17 @@ KISSY.add('html-parser/nodes/tag', [
         }
         return null;
     }
-    return Tag;
+    module.exports = Tag;
 });
-/**
+KISSY.add('html-parser/nodes/comment', [
+    './text',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/comment', [
-    './text',
-    'util'
-], function (S, require) {
     var Text = require('./text');
     var util = require('util');
     function Comment() {
@@ -2440,13 +2441,8 @@ KISSY.add('html-parser/nodes/comment', [
             }
         }
     });
-    return Comment;
+    module.exports = Comment;
 });
-/**
- * @ignore
- * parse html to a hierarchy dom tree
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/parser', [
     'util',
     './dtd',
@@ -2455,7 +2451,12 @@ KISSY.add('html-parser/parser', [
     './lexer/lexer',
     './nodes/document',
     './scanner'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * parse html to a hierarchy dom tree
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var dtd = require('./dtd');
     var Tag = require('./nodes/tag');
@@ -2463,17 +2464,17 @@ KISSY.add('html-parser/parser', [
     var Lexer = require('./lexer/lexer');
     var Document = require('./nodes/document');
     var Scanner = require('./scanner');    /**
-     * Html Parse Class
-     * @param html
-     * @param opts
-     * @class KISSY.HtmlParser.Parser
-     */
+ * Html Parse Class
+ * @param html
+ * @param opts
+ * @class KISSY.HtmlParser.Parser
+ */
     /**
-     * Html Parse Class
-     * @param html
-     * @param opts
-     * @class KISSY.HtmlParser.Parser
-     */
+ * Html Parse Class
+ * @param html
+ * @param opts
+ * @class KISSY.HtmlParser.Parser
+ */
     function Parser(html, opts) {
         // fake root node
         html = util.trim(html);
@@ -2533,14 +2534,14 @@ KISSY.add('html-parser/parser', [
         var body = findTagWithName(doc, 'body', 3);
         if (body) {
             /**
-             * <body>
-             <li>2</li>
-             <span>1</span>
-             <li>2</li>
-             <span>3</span>
-             <li>2</li>
-             </body>
-             */
+         * <body>
+         <li>2</li>
+         <span>1</span>
+         <li>2</li>
+         <span>3</span>
+         <li>2</li>
+         </body>
+         */
             var parent = body.parentNode, sibling = parent.childNodes, bodyIndex = util.indexOf(body, sibling);
             if (bodyIndex !== sibling.length - 1) {
                 var fixes = sibling.slice(bodyIndex + 1, sibling.length);
@@ -2632,17 +2633,17 @@ KISSY.add('html-parser/parser', [
             }
         }
     }
-    return Parser;
+    module.exports = Parser;
 });
-/**
+KISSY.add('html-parser/nodes/fragment', [
+    './tag',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * fake document fragment
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/fragment', [
-    './tag',
-    'util'
-], function (S, require) {
     var Tag = require('./tag');
     var util = require('util');
     function Fragment() {
@@ -2660,17 +2661,17 @@ KISSY.add('html-parser/nodes/fragment', [
             this._writeChildrenHTML(writer);
         }
     });
-    return Fragment;
+    module.exports = Fragment;
 });
-/**
+KISSY.add('html-parser/nodes/document', [
+    './tag',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * fake document node
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/nodes/document', [
-    './tag',
-    'util'
-], function (S, require) {
     var Tag = require('./tag');
     var util = require('util');
     function Document() {
@@ -2684,68 +2685,66 @@ KISSY.add('html-parser/nodes/document', [
             this._writeChildrenHTML(writer);
         }
     });
-    return Document;
+    module.exports = Document;
 });
-/**
- * @ignore
- * declare and initiate sub scanners
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/scanner', [
     './scanners/tag-scanner',
     './scanners/special-scanners',
     './scanners/quote-cdata-scanner',
     './scanners/textarea-scanner'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * declare and initiate sub scanners
+ * @author yiminghe@gmail.com
+ */
     var TagScanner = require('./scanners/tag-scanner');
     var SpecialScanners = require('./scanners/special-scanners');
     require('./scanners/quote-cdata-scanner');
     require('./scanners/textarea-scanner');
-    return {
-        getScanner: function (nodeName) {
-            return SpecialScanners[nodeName] || TagScanner;
-        }
+    exports.getScanner = function (nodeName) {
+        return SpecialScanners[nodeName] || TagScanner;
     };
 });
-/**
- * @ignore
- * nest tag scanner recursively
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/scanners/tag-scanner', [
     '../dtd',
     '../nodes/tag',
     './special-scanners',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * nest tag scanner recursively
+ * @author yiminghe@gmail.com
+ */
     var dtd = require('../dtd');
     var Tag = require('../nodes/tag');
     var SpecialScanners = require('./special-scanners');
     var util = require('util');
     var
         /*
-     will create ul when encounter li and li's parent is not ul
-     */
+ will create ul when encounter li and li's parent is not ul
+ */
         wrapper = {
             li: 'ul',
             dt: 'dl',
             dd: 'dl'
         };    /*
-     refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
-     When the steps below require the UA to generate implied end tags,
-     then, while the current node is a dd element,
-     a dt element, an li element, an option element,
-     an optgroup element, a p element, an rp element, or an rt element,
-     the UA must pop the current node off the stack of open elements.
-     */
+ refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+ When the steps below require the UA to generate implied end tags,
+ then, while the current node is a dd element,
+ a dt element, an li element, an option element,
+ an optgroup element, a p element, an rp element, or an rt element,
+ the UA must pop the current node off the stack of open elements.
+ */
     /*
-     refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
-     When the steps below require the UA to generate implied end tags,
-     then, while the current node is a dd element,
-     a dt element, an li element, an option element,
-     an optgroup element, a p element, an rp element, or an rt element,
-     the UA must pop the current node off the stack of open elements.
-     */
+ refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+ When the steps below require the UA to generate implied end tags,
+ then, while the current node is a dd element,
+ a dt element, an li element, an option element,
+ an optgroup element, a p element, an rp element, or an rt element,
+ the UA must pop the current node off the stack of open elements.
+ */
     var impliedEndTag = {
             // if dd encounter another dd before encounter dl ,then close last dd
             dd: { dl: 1 },
@@ -2758,16 +2757,16 @@ KISSY.add('html-parser/scanners/tag-scanner', [
             option: { select: 1 },
             optgroup: { select: 1 }    // p? rp? rt?
         };    /*
-     close tag and check nest by xhtml dtd rules
-     <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
-     @param tag
-     */
+ close tag and check nest by xhtml dtd rules
+ <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+ @param tag
+ */
     // p? rp? rt?
     /*
-     close tag and check nest by xhtml dtd rules
-     <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
-     @param tag
-     */
+ close tag and check nest by xhtml dtd rules
+ <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+ @param tag
+ */
     function fixCloseTagByDtd(tag, opts) {
         tag.closed = 1;
         if (!opts.fixByDtd) {
@@ -2888,18 +2887,18 @@ KISSY.add('html-parser/scanners/tag-scanner', [
         });
         return 1;
     }    /*
-     checked whether tag can include node as its child according to DTD
-     */
+ checked whether tag can include node as its child according to DTD
+ */
     /*
-     checked whether tag can include node as its child according to DTD
-     */
+ checked whether tag can include node as its child according to DTD
+ */
     function canHasNodeAsChild(tag, node) {
         // document can nest any tag
         if (tag.nodeType === 9) {
             return 1;
         }
         if (!dtd[tag.tagName]) {
-            S.error('dtd[' + tag.tagName + '] === undefined!');
+            throw new Error('dtd[' + tag.tagName + '] === undefined!');
         }
         if (node.nodeType === 8) {
             return 1;
@@ -2907,243 +2906,235 @@ KISSY.add('html-parser/scanners/tag-scanner', [
         var nodeName = node.tagName || node.nodeName;
         return !!dtd[tag.tagName][nodeName];
     }
-    return {
-        scan: function (tag, lexer, opts) {
-            function closeStackOpenTag(end, from) {
-                for (i = end; i > from; i--) {
-                    var currentStackItem = stack[i], preStackItem = stack[i - 1];
-                    preStackItem.appendChild(currentStackItem);
-                    fixCloseTagByDtd(currentStackItem, opts);
-                }
-                tag = stack[from];
-                stack.length = from;
-            }    // fix
-                 // <ol><li>1<li>2</ol>
-            // fix
-            // <ol><li>1<li>2</ol>
-            function processImpliedEndTag(node) {
-                var needFix = 0, endParentTagName;    // <ul><li>1<ul><li>2</ul></ul>
-                // <ul><li>1<ul><li>2</ul></ul>
-                if (endParentTagName = impliedEndTag[node.tagName]) {
-                    var from = stack.length - 1, parent = stack[from];    // <ol><li><ol><li>
-                                                                          // parent ol break li check
-                    // <ol><li><ol><li>
-                    // parent ol break li check
-                    while (parent && !(parent.tagName in endParentTagName)) {
-                        // <ul><li>1<div><li>2</div></ul>
-                        if (parent.tagName === node.tagName) {
-                            needFix = 1;
-                            break;
-                        }
-                        from--;
-                        parent = stack[from];
-                    }
-                    if (needFix) {
-                        closeStackOpenTag(stack.length - 1, from - 1);
-                    }
-                }
-                return needFix;
+    exports.scan = function (tag, lexer, opts) {
+        function closeStackOpenTag(end, from) {
+            for (i = end; i > from; i--) {
+                var currentStackItem = stack[i], preStackItem = stack[i - 1];
+                preStackItem.appendChild(currentStackItem);
+                fixCloseTagByDtd(currentStackItem, opts);
             }
-            var node, i, stack;    // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
-                                   // stack of open elements
-            // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
-            // stack of open elements
-            stack = opts.stack = opts.stack || [];
-            do {
-                node = lexer.nextNode();
-                if (node) {
-                    if (node.nodeType === 1) {
-                        // normal end tag
-                        if (node.isEndTag() && node.tagName === tag.tagName) {
-                            node = null;
-                        } else if (!node.isEndTag()) {
-                            if (SpecialScanners[node.tagName]) {
-                                // change scanner ,such as textarea scanner ... etc
-                                SpecialScanners[node.tagName].scan(node, lexer, opts);
+            tag = stack[from];
+            stack.length = from;
+        }    // fix
+             // <ol><li>1<li>2</ol>
+        // fix
+        // <ol><li>1<li>2</ol>
+        function processImpliedEndTag(node) {
+            var needFix = 0, endParentTagName;    // <ul><li>1<ul><li>2</ul></ul>
+            // <ul><li>1<ul><li>2</ul></ul>
+            if (endParentTagName = impliedEndTag[node.tagName]) {
+                var from = stack.length - 1, parent = stack[from];    // <ol><li><ol><li>
+                                                                      // parent ol break li check
+                // <ol><li><ol><li>
+                // parent ol break li check
+                while (parent && !(parent.tagName in endParentTagName)) {
+                    // <ul><li>1<div><li>2</div></ul>
+                    if (parent.tagName === node.tagName) {
+                        needFix = 1;
+                        break;
+                    }
+                    from--;
+                    parent = stack[from];
+                }
+                if (needFix) {
+                    closeStackOpenTag(stack.length - 1, from - 1);
+                }
+            }
+            return needFix;
+        }
+        var node, i, stack;    // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
+                               // stack of open elements
+        // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
+        // stack of open elements
+        stack = opts.stack = opts.stack || [];
+        do {
+            node = lexer.nextNode();
+            if (node) {
+                if (node.nodeType === 1) {
+                    // normal end tag
+                    if (node.isEndTag() && node.tagName === tag.tagName) {
+                        node = null;
+                    } else if (!node.isEndTag()) {
+                        if (SpecialScanners[node.tagName]) {
+                            // change scanner ,such as textarea scanner ... etc
+                            SpecialScanners[node.tagName].scan(node, lexer, opts);
+                            tag.appendChild(node);
+                        } else {
+                            // now fake recursive using stack
+                            if (node.isSelfClosed) {
                                 tag.appendChild(node);
                             } else {
-                                // now fake recursive using stack
-                                if (node.isSelfClosed) {
-                                    tag.appendChild(node);
-                                } else {
-                                    // When the steps below require the UA to insert an HTML element for a token,
-                                    // the UA must first create an element for the token in the HTML namespace,
-                                    // and then append this node to the current node,
-                                    // and push it onto the stack of open elements so that it is the new current node.
-                                    // 一点改动：先放入栈中，等到结束标签再 appendChild
-                                    // fake stack
-                                    stack.push(tag);    // <ul>
-                                                        //      <li>1
-                                                        //      <li>2
-                                                        // </ul>
-                                    // <ul>
-                                    //      <li>1
-                                    //      <li>2
-                                    // </ul>
-                                    if (processImpliedEndTag(node)) {
-                                        stack.push(tag);
-                                    }
-                                    tag = node;
+                                // When the steps below require the UA to insert an HTML element for a token,
+                                // the UA must first create an element for the token in the HTML namespace,
+                                // and then append this node to the current node,
+                                // and push it onto the stack of open elements so that it is the new current node.
+                                // 一点改动：先放入栈中，等到结束标签再 appendChild
+                                // fake stack
+                                stack.push(tag);    // <ul>
+                                                    //      <li>1
+                                                    //      <li>2
+                                                    // </ul>
+                                // <ul>
+                                //      <li>1
+                                //      <li>2
+                                // </ul>
+                                if (processImpliedEndTag(node)) {
+                                    stack.push(tag);
                                 }
+                                tag = node;
                             }
-                        } else if (node.isEndTag()) {
-                            // encounter a end tag without open tag
-                            // There are two cases...
-                            // 1) The tag hasn't been registered, in which case
-                            // we just add it as a simple child, like it's
-                            // opening tag
-                            // 2) There may be an opening tag further up the
-                            // parse stack that needs closing.
-                            // So, we ask the factory for a node like this one
-                            // (since end tags never have scanners) and see
-                            // if it's scanner is a composite tag scanner.
-                            // If it is we walk up the parse stack looking for
-                            // something that needs this end tag to finish it.
-                            // If there is something, we close off all the tags
-                            // walked over and continue on as if nothing
-                            // happened.
-                            var index = -1;
-                            for (i = stack.length - 1; i >= 0; i--) {
-                                var c = stack[i];
-                                if (c.tagName === node.tagName) {
-                                    index = i;
-                                    break;
-                                }
+                        }
+                    } else if (node.isEndTag()) {
+                        // encounter a end tag without open tag
+                        // There are two cases...
+                        // 1) The tag hasn't been registered, in which case
+                        // we just add it as a simple child, like it's
+                        // opening tag
+                        // 2) There may be an opening tag further up the
+                        // parse stack that needs closing.
+                        // So, we ask the factory for a node like this one
+                        // (since end tags never have scanners) and see
+                        // if it's scanner is a composite tag scanner.
+                        // If it is we walk up the parse stack looking for
+                        // something that needs this end tag to finish it.
+                        // If there is something, we close off all the tags
+                        // walked over and continue on as if nothing
+                        // happened.
+                        var index = -1;
+                        for (i = stack.length - 1; i >= 0; i--) {
+                            var c = stack[i];
+                            if (c.tagName === node.tagName) {
+                                index = i;
+                                break;
                             }
-                            if (index !== -1) {
-                                // <div><span> <a> </div>
-                                // tag==a
-                                stack[stack.length - 1].appendChild(tag);
-                                fixCloseTagByDtd(tag, opts);
-                                closeStackOpenTag(stack.length - 1, index);
-                                node = null;
-                            }    // discard this close tag
                         }
-                    } else
-                        // discard this close tag
-                        {
-                            tag.appendChild(node);
-                        }
-                }    // fake recursive success , stack retreat
-                // fake recursive success , stack retreat
-                if (node === null) {
-                    if (stack.length > 0) {
-                        node = stack[stack.length - 1];    // fake recursion
-                        // fake recursion
-                        if (!SpecialScanners[node.tagName]) {
-                            stack.length = stack.length - 1;
-                            node.appendChild(tag);    // child fix
-                            // child fix
+                        if (index !== -1) {
+                            // <div><span> <a> </div>
+                            // tag==a
+                            stack[stack.length - 1].appendChild(tag);
                             fixCloseTagByDtd(tag, opts);
-                            tag = node;
-                        } else {
+                            closeStackOpenTag(stack.length - 1, index);
                             node = null;
-                        }
+                        }    // discard this close tag
+                    }
+                } else
+                    // discard this close tag
+                    {
+                        tag.appendChild(node);
+                    }
+            }    // fake recursive success , stack retreat
+            // fake recursive success , stack retreat
+            if (node === null) {
+                if (stack.length > 0) {
+                    node = stack[stack.length - 1];    // fake recursion
+                    // fake recursion
+                    if (!SpecialScanners[node.tagName]) {
+                        stack.length = stack.length - 1;
+                        node.appendChild(tag);    // child fix
+                        // child fix
+                        fixCloseTagByDtd(tag, opts);
+                        tag = node;
+                    } else {
+                        node = null;
                     }
                 }
-            } while (node);    // root tag fix
-            // root tag fix
-            fixCloseTagByDtd(tag, opts);
-        }
+            }
+        } while (node);    // root tag fix
+        // root tag fix
+        fixCloseTagByDtd(tag, opts);
     };
 });
-/**
+KISSY.add('html-parser/scanners/special-scanners', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * special scanners holder (textarea/style/script)
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/scanners/special-scanners', [], function () {
-    return {};
+    module.exports = {};
 });
-/**
- * @ignore
- * scanner cdata (script/textarea/style) with quote smart
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/scanners/quote-cdata-scanner', [
     './cdata-scanner',
     '../dtd',
     './special-scanners'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * scanner cdata (script/textarea/style) with quote smart
+ * @author yiminghe@gmail.com
+ */
     var CDataScanner = require('./cdata-scanner');
     var Dtd = require('../dtd');
     var SpecialScanners = require('./special-scanners');
-    var ret = {
-            scan: function (tag, lexer, opts) {
-                opts = opts || {};
-                opts.quoteSmart = 1;
-                CDataScanner.scan(tag, lexer, opts);
-                opts.quoteSmart = 0;
-            }
-        };    // script/style
+    exports.scan = function (tag, lexer, opts) {
+        opts = opts || {};
+        opts.quoteSmart = 1;
+        CDataScanner.scan(tag, lexer, opts);
+        opts.quoteSmart = 0;
+    };    // script/style
     // script/style
     for (var t in Dtd.$cdata) {
-        SpecialScanners[t] = ret;
+        SpecialScanners[t] = exports;
     }
-    return ret;
 });
-/**
+KISSY.add('html-parser/scanners/cdata-scanner', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * scanner cdata (script/textarea/style)
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/scanners/cdata-scanner', [], function () {
-    return {
-        scan: function (tag, lexer, opts) {
-            // only terminate when encounter </tag>
-            // <textarea><div></div></textarea>
-            var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName), position = lexer.getPosition(), node = lexer.nextNode();
-            if (node) {
-                // 这段应该永远不会执行到的
-                if (node.nodeType !== 1 || !(node.isEndTag() && node.tagName === tag.tagName)) {
-                    lexer.setPosition(position);
-                    node = null;
-                }
+    exports.scan = function (tag, lexer, opts) {
+        // only terminate when encounter </tag>
+        // <textarea><div></div></textarea>
+        var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName), position = lexer.getPosition(), node = lexer.nextNode();
+        if (node) {
+            // 这段应该永远不会执行到的
+            if (node.nodeType !== 1 || !(node.isEndTag() && node.tagName === tag.tagName)) {
+                lexer.setPosition(position);
+                node = null;
             }
-            tag.closed = true;
-            if (content) {
-                tag.appendChild(content);
-            }
+        }
+        tag.closed = true;
+        if (content) {
+            tag.appendChild(content);
         }
     };
 });
-/**
+KISSY.add('html-parser/scanners/textarea-scanner', [
+    './cdata-scanner',
+    './special-scanners'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * textarea data scanner
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/scanners/textarea-scanner', [
-    './cdata-scanner',
-    './special-scanners'
-], function (S, require) {
     var CDataScanner = require('./cdata-scanner');
     var SpecialScanners = require('./special-scanners');
-    SpecialScanners.textarea = {
+    module.exports = SpecialScanners.textarea = {
         scan: function (tag, lexer, opts) {
             opts = opts || {};
             CDataScanner.scan(tag, lexer, opts);
         }
     };
-    return SpecialScanners.textarea;
 });
-/**
+KISSY.add('html-parser/writer/basic', ['../utils'], function (S, require, exports, module) {
+    /**
  * @ignore
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/writer/basic', ['../utils'], function (S, require) {
     var Utils = require('../utils');
     var isBooleanAttribute = Utils.isBooleanAttribute;
     function escapeAttrValue(str) {
         return String(str).replace(/'/g, '&quot;');
     }    /**
-     * BasicWriter for html content
-     * @class KISSY.HtmlParser.BasicWriter
-     */
+ * BasicWriter for html content
+ * @class KISSY.HtmlParser.BasicWriter
+ */
     /**
-     * BasicWriter for html content
-     * @class KISSY.HtmlParser.BasicWriter
-     */
+ * BasicWriter for html content
+ * @class KISSY.HtmlParser.BasicWriter
+ */
     function BasicWriter() {
         this.output = [];
     }
@@ -3192,26 +3183,26 @@ KISSY.add('html-parser/writer/basic', ['../utils'], function (S, require) {
             this.append('<!--' + comment + '-->');
         },
         /**
-         * get the html content written to this writer
-         * @returns {string}
-         */
+     * get the html content written to this writer
+     * @returns {string}
+     */
         getHtml: function () {
             return this.output.join('');
         }
     };
-    return BasicWriter;
+    module.exports = BasicWriter;
 });
-/**
- * @ignore
- * format html prettily
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/writer/beautify', [
     './basic',
     '../dtd',
     '../utils',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * format html prettily
+ * @author yiminghe@gmail.com
+ */
     var BasicWriter = require('./basic');
     var dtd = require('../dtd');
     var Utils = require('../utils');
@@ -3379,18 +3370,18 @@ KISSY.add('html-parser/writer/beautify', [
             this.append(util.trim(text));
         }
     });
-    return BeautifyWriter;
+    module.exports = BeautifyWriter;
 });
-/**
- * @ignore
- * write html into its minified form,thanks to kangax where minify algorithm comes from
- * @author yiminghe@gmail.com
- */
 KISSY.add('html-parser/writer/minify', [
     './basic',
     '../utils',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * write html into its minified form,thanks to kangax where minify algorithm comes from
+ * @author yiminghe@gmail.com
+ */
     var BasicWriter = require('./basic');
     var Utils = require('../utils');
     var util = require('util');
@@ -3449,15 +3440,15 @@ KISSY.add('html-parser/writer/minify', [
                                                                                                            // "/* ]]> */" or "// ]]>"
 .replace(/(?:\/\*[\s\xa0]*\]\]>[\s\xa0]*\*\/|\/\/[\s\xa0]*\]\]>)[\s\xa0]*$/, '');
     }    /**
-     * MinifyWriter for html content
-     * @class KISSY.HtmlParser.MinifyWriter
-     * @extends KISSY.HtmlParser.BasicWriter
-     */
+ * MinifyWriter for html content
+ * @class KISSY.HtmlParser.MinifyWriter
+ * @extends KISSY.HtmlParser.BasicWriter
+ */
     /**
-     * MinifyWriter for html content
-     * @class KISSY.HtmlParser.MinifyWriter
-     * @extends KISSY.HtmlParser.BasicWriter
-     */
+ * MinifyWriter for html content
+ * @class KISSY.HtmlParser.MinifyWriter
+ * @extends KISSY.HtmlParser.BasicWriter
+ */
     function MinifyWriter() {
         var self = this;
         MinifyWriter.superclass.constructor.apply(self, arguments);
@@ -3465,8 +3456,8 @@ KISSY.add('html-parser/writer/minify', [
     }
     util.extend(MinifyWriter, BasicWriter, {
         /**
-         * remove non-conditional comment
-         */
+     * remove non-conditional comment
+     */
         comment: function (text) {
             if (isConditionalComment(text)) {
                 text = cleanConditionalComment(text);
@@ -3474,8 +3465,8 @@ KISSY.add('html-parser/writer/minify', [
             }
         },
         /**
-         * record pre track
-         */
+     * record pre track
+     */
         openTag: function (el) {
             var self = this;
             if (el.tagName === 'pre') {
@@ -3484,8 +3475,8 @@ KISSY.add('html-parser/writer/minify', [
             MinifyWriter.superclass.openTag.apply(self, arguments);
         },
         /**
-         * clean pre track
-         */
+     * clean pre track
+     */
         closeTag: function (el) {
             var self = this;
             if (el.tagName === 'pre') {
@@ -3494,8 +3485,8 @@ KISSY.add('html-parser/writer/minify', [
             MinifyWriter.superclass.closeTag.apply(self, arguments);
         },
         /**
-         * textarea | script | style
-         */
+     * textarea | script | style
+     */
         cdata: function (cdata) {
             cdata = removeCDATASections(cdata);
             MinifyWriter.superclass.cdata.call(this, cdata);
@@ -3521,8 +3512,8 @@ KISSY.add('html-parser/writer/minify', [
             self.append(' ', name, '=', normalizedValue);
         },
         /**
-         * note : pre is special
-         */
+     * note : pre is special
+     */
         text: function (text) {
             var self = this;
             if (!self.inPre) {
@@ -3532,25 +3523,25 @@ KISSY.add('html-parser/writer/minify', [
             self.append(text);
         }
     });
-    return MinifyWriter;
-});    /*
+    module.exports = MinifyWriter;    /*
  refer :
  - https://github.com/kangax/html-minifier/
  */
-/**
+});
+KISSY.add('html-parser/writer/filter', ['util'], function (S, require, exports, module) {
+    /**
  * @ignore
  * filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/writer/filter', ['util'], function (S, require) {
     var util = require('util');    /**
-     * Filter for Html Parse Writer
-     * @class KISSY.HtmlParser.Filter
-     */
+ * Filter for Html Parse Writer
+ * @class KISSY.HtmlParser.Filter
+ */
     /**
-     * Filter for Html Parse Writer
-     * @class KISSY.HtmlParser.Filter
-     */
+ * Filter for Html Parse Writer
+ * @class KISSY.HtmlParser.Filter
+ */
     function Filter() {
         // {priority: ?, value:?}
         this.tagNames = [];
@@ -3618,9 +3609,9 @@ KISSY.add('html-parser/writer/filter', ['util'], function (S, require) {
     Filter.prototype = {
         constructor: Filter,
         /**
-         *
-         * @param rules
-         * {
+     *
+     * @param rules
+     * {
          *   tagNames:[ [/^ke/,''] ],
          *   attributeNames:[[^on],''],
          *   tags:{
@@ -3633,8 +3624,8 @@ KISSY.add('html-parser/writer/filter', ['util'], function (S, require) {
          *   text:function(){},
          *   root:function(){}
          * }
-         * @param {Number} [priority] 值越小，优先级越高 ,最低 1
-         */
+     * @param {Number} [priority] 值越小，优先级越高 ,最低 1
+     */
         addRules: function (rules, priority) {
             priority = priority || 10;
             for (var r in rules) {
@@ -3649,9 +3640,9 @@ KISSY.add('html-parser/writer/filter', ['util'], function (S, require) {
             }
         },
         /**
-         * when encounter element name transformer ,directly transform
-         * @param v
-         */
+     * when encounter element name transformer ,directly transform
+     * @param v
+     */
         onTagName: function (v) {
             return filterName(this.tagNames, v);
         },
@@ -3722,5 +3713,5 @@ KISSY.add('html-parser/writer/filter', ['util'], function (S, require) {
             return el;
         }
     };
-    return Filter;
+    module.exports = Filter;
 });

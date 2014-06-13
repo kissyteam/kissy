@@ -1,7 +1,7 @@
 /*jshint camelcase:false*/
 var cwd = process.cwd();
 var fs = require('fs');
-var util = require(cwd + '/lib/util');
+var util = require('../../common/util');
 
 module.exports = function (app) {
     // js duck mobile

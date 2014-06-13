@@ -5,8 +5,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/dom');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/dom');
 var parser = require('./selector/parser');
 var Dom = require('dom/basic');
 logger.info('use KISSY css3 selector');
@@ -42,7 +42,6 @@ var unescape = /\\([\da-fA-F]{1,6}[\x20\t\r\n\f]?|.)/g,
             // Supplemental Plane codepoint (surrogate pair)
             String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
     };
-
 
 var matchExpr;
 
@@ -268,7 +267,6 @@ var attributeExpr = {
     }
 };
 
-
 var relativeExpr = {
     '>': {
         dir: 'parentNode',
@@ -403,7 +401,6 @@ function isXML(elem) {
     var documentElement = elem && (elem.ownerDocument || elem).documentElement;
     return documentElement ? documentElement.nodeName.toLowerCase() !== 'html' : false;
 }
-
 
 function matches(str, seeds) {
     return Dom._selectInternal(str, null, seeds);

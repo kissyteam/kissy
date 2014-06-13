@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/flash-common/base-class
 */
-/**
- * @ignore
- * BaseClass for Flash Based plugin.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/flash-common/base-class', [
     './utils',
     'base',
@@ -22,18 +17,23 @@ KISSY.add('editor/plugin/flash-common/base-class', [
     '../dialog-loader',
     '../bubble',
     '../contextmenu'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * BaseClass for Flash Based plugin.
+ * @author yiminghe@gmail.com
+ */
     var flashUtils = require('./utils');
     var Base = require('base');
     var Editor = require('editor');
-    var Node = require('node');
+    var $ = require('node');
     var UA = require('ua');
     var util = require('util');
     var DialogLoader = require('../dialog-loader');
     require('../bubble');
     require('../contextmenu');
     var tipHTML = ' <a ' + 'class="{prefixCls}editor-bubble-url" ' + 'target="_blank" ' + 'href="#">{label}</a>   |   ' + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">\u7F16\u8F91</span>   |   ' + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">\u5220\u9664</span>';
-    return Base.extend({
+    module.exports = Base.extend({
         initializer: function () {
             var self = this, cls = self.get('cls'), editor = self.get('editor'), prefixCls = editor.get('prefixCls'), children = [], bubbleId = self.get('bubbleId'), contextMenuId = self.get('contextMenuId'), contextMenuHandlers = self.get('contextMenuHandlers');
             util.each(contextMenuHandlers, function (h, content) {
@@ -84,11 +84,11 @@ KISSY.add('editor/plugin/flash-common/base-class', [
                             editor.notifySelectionChange();
                             ev.halt();
                         });    /*
-                             位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
-                             */
+                         位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
+                         */
                         /*
-                             位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
-                             */
+                         位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
+                         */
                         bubble.on('show', function () {
                             var a = bubble.get('editorSelectedEl');
                             if (a) {
@@ -117,7 +117,7 @@ KISSY.add('editor/plugin/flash-common/base-class', [
         },
         //根据图片标志触发本插件应用
         _dbClick: function (ev) {
-            var self = this, t = new Node(ev.target);
+            var self = this, t = $(ev.target);
             if (t.nodeName() === 'img' && t.hasClass(self.get('cls'), undefined)) {
                 self.show(t);
                 ev.halt();

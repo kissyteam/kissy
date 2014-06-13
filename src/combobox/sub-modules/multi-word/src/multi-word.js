@@ -25,146 +25,144 @@ function beforeVisibleChange(e) {
  * @extends KISSY.ComboBox
  * @class KISSY.ComboBox.MultiWordComboBox
  */
-return ComboBox.extend({
-        syncUI: function () {
-            var self = this,
-                menu;
-            if (self.get('alignWithCursor')) {
-                menu = self.get('menu');
-                menu.setInternal('align', null);
-                menu.on('beforeVisibleChange', beforeVisibleChange, this);
-            }
-        },
-
-        getCurrentValue: function () {
-
-            var self = this,
-                inputDesc = getInputDesc(self),
-                tokens = inputDesc.tokens,
-                tokenIndex = inputDesc.tokenIndex,
-                separator = self.get('separator'),
-                separatorType = self.get('separatorType'),
-                token = tokens[tokenIndex],
-                l = token.length - 1;
-
-            if (separatorType !== SUFFIX) {
-                if (strContainsChar(separator, token.charAt(0))) {
-                    token = token.slice(1);
-                } else {
-                    // 无效输入，前缀模式无前缀
-                    return undefined;
-                }
-            } else if (separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
-                token = token.slice(0, l);
-            }
-
-            return token;
-
-        },
-
-        setCurrentValue: function (value, setCfg) {
-            var self = this,
-                input = self.get('input'),
-                inputDesc = getInputDesc(self),
-                tokens = inputDesc.tokens,
-                tokenIndex = Math.max(0, inputDesc.tokenIndex),
-                separator = self.get('separator'),
-                cursorPosition,
-                l,
-                separatorType = self.get('separatorType'),
-                nextToken = tokens[tokenIndex + 1] || '',
-                token = tokens[tokenIndex];
-
-            if (separatorType !== SUFFIX) {
-                tokens[tokenIndex] = token.charAt(0) + value;
-                if (value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))) {
-                    // 自动加空白间隔
-                    tokens[tokenIndex] += ' ';
-                }
-            } else {
-                tokens[tokenIndex] = value;
-                l = token.length - 1;
-                // 尽量补上后缀
-                if (strContainsChar(separator, token.charAt(l))) {
-                    tokens[tokenIndex] += token.charAt(l);
-                } else if (separator.length === 1) {
-                    // 自动加后缀
-                    tokens[tokenIndex] += separator;
-                }
-            }
-
-            cursorPosition = tokens.slice(0, tokenIndex + 1).join('').length;
-
-            self.set('value', tokens.join(''), setCfg);
-
-            input.prop('selectionStart', cursorPosition);
-            input.prop('selectionEnd', cursorPosition);
-        },
-
-        alignWithCursor: function () {
-            var self = this;
-            // does not support align with separator
-            // will cause ime error
-            var menu = self.get('menu'),
-                cursorOffset,
-                input = self.get('input');
-            cursorOffset = getCursor(input);
-            menu.move(cursorOffset.left, cursorOffset.top);
+module.exports = ComboBox.extend({
+    syncUI: function () {
+        var self = this,
+            menu;
+        if (self.get('alignWithCursor')) {
+            menu = self.get('menu');
+            menu.setInternal('align', null);
+            menu.on('beforeVisibleChange', beforeVisibleChange, this);
         }
     },
-    {
-        ATTRS: {
 
-            /**
-             * Separator chars used to separator multiple inputs.
-             * Defaults to: ;,
-             * @cfg {String} separator
-             */
-            /**
-             * @ignore
-             */
-            separator: {
-                value: ',;'
-            },
+    getCurrentValue: function () {
 
-            /**
-             * Separator type.
-             * After value( 'suffix' ) or before value( 'prefix' ).
-             * Defaults to: 'suffix'
-             * @cfg {String} separatorType
-             */
-            /**
-             * @ignore
-             */
-            separatorType: {
-                value: SUFFIX
-            },
+        var self = this,
+            inputDesc = getInputDesc(self),
+            tokens = inputDesc.tokens,
+            tokenIndex = inputDesc.tokenIndex,
+            separator = self.get('separator'),
+            separatorType = self.get('separatorType'),
+            token = tokens[tokenIndex],
+            l = token.length - 1;
 
-            /**
-             * If separator wrapped by literal chars,separator become normal chars.
-             * Defaults to: "
-             * @cfg {String} literal
-             */
-            /**
-             * @ignore
-             */
-            literal: {
-                value: '"'
-            },
-
-            /**
-             * Whether align menu with individual token after separated by separator.
-             * Defaults to: false
-             * @cfg {Boolean} alignWithCursor
-             */
-            /**
-             * @ignore
-             */
-            alignWithCursor: {
+        if (separatorType !== SUFFIX) {
+            if (strContainsChar(separator, token.charAt(0))) {
+                token = token.slice(1);
+            } else {
+                // 无效输入，前缀模式无前缀
+                return undefined;
             }
+        } else if (separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
+            token = token.slice(0, l);
+        }
+
+        return token;
+
+    },
+
+    setCurrentValue: function (value, setCfg) {
+        var self = this,
+            input = self.get('input'),
+            inputDesc = getInputDesc(self),
+            tokens = inputDesc.tokens,
+            tokenIndex = Math.max(0, inputDesc.tokenIndex),
+            separator = self.get('separator'),
+            cursorPosition,
+            l,
+            separatorType = self.get('separatorType'),
+            nextToken = tokens[tokenIndex + 1] || '',
+            token = tokens[tokenIndex];
+
+        if (separatorType !== SUFFIX) {
+            tokens[tokenIndex] = token.charAt(0) + value;
+            if (value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))) {
+                // 自动加空白间隔
+                tokens[tokenIndex] += ' ';
+            }
+        } else {
+            tokens[tokenIndex] = value;
+            l = token.length - 1;
+            // 尽量补上后缀
+            if (strContainsChar(separator, token.charAt(l))) {
+                tokens[tokenIndex] += token.charAt(l);
+            } else if (separator.length === 1) {
+                // 自动加后缀
+                tokens[tokenIndex] += separator;
+            }
+        }
+
+        cursorPosition = tokens.slice(0, tokenIndex + 1).join('').length;
+
+        self.set('value', tokens.join(''), setCfg);
+
+        input.prop('selectionStart', cursorPosition);
+        input.prop('selectionEnd', cursorPosition);
+    },
+
+    alignWithCursor: function () {
+        var self = this;
+        // does not support align with separator
+        // will cause ime error
+        var menu = self.get('menu'),
+            cursorOffset,
+            input = self.get('input');
+        cursorOffset = getCursor(input);
+        menu.move(cursorOffset.left, cursorOffset.top);
+    }
+}, {
+    ATTRS: {
+        /**
+         * Separator chars used to separator multiple inputs.
+         * Defaults to: ;,
+         * @cfg {String} separator
+         */
+        /**
+         * @ignore
+         */
+        separator: {
+            value: ',;'
         },
-        xclass: 'multi-value-combobox'
-    });
+
+        /**
+         * Separator type.
+         * After value( 'suffix' ) or before value( 'prefix' ).
+         * Defaults to: 'suffix'
+         * @cfg {String} separatorType
+         */
+        /**
+         * @ignore
+         */
+        separatorType: {
+            value: SUFFIX
+        },
+
+        /**
+         * If separator wrapped by literal chars,separator become normal chars.
+         * Defaults to: "
+         * @cfg {String} literal
+         */
+        /**
+         * @ignore
+         */
+        literal: {
+            value: '"'
+        },
+
+        /**
+         * Whether align menu with individual token after separated by separator.
+         * Defaults to: false
+         * @cfg {Boolean} alignWithCursor
+         */
+        /**
+         * @ignore
+         */
+        alignWithCursor: {
+        }
+    },
+    xclass: 'multi-value-combobox'
+});
 
 // #----------------------- private start
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 16 15:11
+build time: Jun 13 11:52
 */
 /*
 combined modules:
@@ -16,11 +16,6 @@ menu/submenu
 menu/submenu-xtpl
 menu/popupmenu
 */
-/**
- * @ignore
- * menu
- * @author yiminghe@gmail.com
- */
 KISSY.add('menu', [
     'menu/control',
     'menu/menuitem',
@@ -28,43 +23,47 @@ KISSY.add('menu', [
     'menu/radio-menuitem',
     'menu/submenu',
     'menu/popupmenu'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * menu
+ * @author yiminghe@gmail.com
+ */
     var Menu = require('menu/control');
     Menu.Item = require('menu/menuitem');
     Menu.CheckItem = require('menu/check-menuitem');
     Menu.RadioItem = require('menu/radio-menuitem');
     Menu.SubMenu = require('menu/submenu');
     Menu.PopupMenu = require('menu/popupmenu');
-    return Menu;
+    module.exports = Menu;
 });
-/**
+KISSY.add('menu/control', [
+    'util',
+    'component/container',
+    'component/extension/delegate-children',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * menu control for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/control', [
-    'util',
-    'node',
-    'component/container',
-    'component/extension/delegate-children'
-], function (S, require) {
     var util = require('util');
-    var Node = require('node');
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-    var KeyCode = Node.KeyCode;    /**
-     * KISSY Menu.
-     * xclass: 'menu'.
-     * @class KISSY.Menu
-     * @extends KISSY.Component.Container
-     */
+    var KeyCode = require('node').Event.KeyCode;    /**
+ * KISSY Menu.
+ * xclass: 'menu'.
+ * @class KISSY.Menu
+ * @extends KISSY.Component.Container
+ */
     /**
-     * KISSY Menu.
-     * xclass: 'menu'.
-     * @class KISSY.Menu
-     * @extends KISSY.Component.Container
-     */
-    return Container.extend([DelegateChildrenExtension], {
+ * KISSY Menu.
+ * xclass: 'menu'.
+ * @class KISSY.Menu
+ * @extends KISSY.Component.Container
+ */
+    module.exports = Container.extend([DelegateChildrenExtension], {
         isMenu: 1,
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'menu';
@@ -128,19 +127,19 @@ KISSY.add('menu/control', [
             return undefined;
         },
         /**
-         * Attempts to handle a keyboard event;
-         * returns true if the event was handled,
-         * false otherwise.
-         * If the container is enabled, and a child is highlighted,
-         * calls the child control's {@code handleKeydown} method to give the control
-         * a chance to handle the event first.
-         * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DomEvent.Object} e Key event to handle.
-         * @return {Boolean|undefined} Whether the event was handled by the container (or one of
-         *     its children).
-         * @protected
-         *
-         */
+     * Attempts to handle a keyboard event;
+     * returns true if the event was handled,
+     * false otherwise.
+     * If the container is enabled, and a child is highlighted,
+     * calls the child control's {@code handleKeydown} method to give the control
+     * a chance to handle the event first.
+     * Protected, should only be overridden by subclasses.
+     * @param {KISSY.Event.DomEvent.Object} e Key event to handle.
+     * @return {Boolean|undefined} Whether the event was handled by the container (or one of
+     *     its children).
+     * @protected
+     *
+     */
         handleKeyDownInternal: function (e) {
             var self = this;    // Give the highlighted control the chance to handle the key event.
             // Give the highlighted control the chance to handle the key event.
@@ -200,11 +199,11 @@ KISSY.add('menu/control', [
             }
         },
         /**
-         * Whether this menu contains specified html element.
-         * @param {KISSY.Node} element html Element to be tested.
-         * @return {Boolean}
-         * @protected
-         */
+     * Whether this menu contains specified html element.
+     * @param {KISSY.Node} element html Element to be tested.
+     * @return {Boolean}
+     * @protected
+     */
         containsElement: function (element) {
             var self = this;
             var $el = self.$el;    // 隐藏当然不包含了
@@ -227,14 +226,14 @@ KISSY.add('menu/control', [
     }, {
         ATTRS: {
             /**
-             * Current highlighted child menu item.
-             * @type {KISSY.Menu.Item}
-             * @property highlightedItem
-             * @readonly
-             */
+         * Current highlighted child menu item.
+         * @type {KISSY.Menu.Item}
+         * @property highlightedItem
+         * @readonly
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             highlightedItem: { value: null },
             defaultChildCfg: {
                 valueFn: function () {
@@ -250,8 +249,7 @@ KISSY.add('menu/control', [
             var el = this.el, menuItem = e.newVal;
             el.setAttribute('aria-activedescendant', menuItem && menuItem.el.id || '');
         }
-    }
-});    /**
+    }    /**
  * @ignore
  * 普通菜单可聚焦
  * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
@@ -259,33 +257,34 @@ KISSY.add('menu/control', [
  * TODO
  *  - 去除 activeItem. done@2013-03-12
  **/
+});
 
 
 
 
-/**
+KISSY.add('menu/menuitem', [
+    'component/control',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/menuitem', [
-    'component/control',
-    'node'
-], function (S, require) {
     var Control = require('component/control');
-    var $ = require('node').all;    /**
-     * @class KISSY.Menu.Item
-     * A menu item component which menu is consisted of.
-     * xclass: 'menuitem'.
-     * @extends KISSY.Component.Control
-     */
+    var $ = require('node');    /**
+ * @class KISSY.Menu.Item
+ * A menu item component which menu is consisted of.
+ * xclass: 'menuitem'.
+ * @extends KISSY.Component.Control
+ */
     /**
-     * @class KISSY.Menu.Item
-     * A menu item component which menu is consisted of.
-     * xclass: 'menuitem'.
-     * @extends KISSY.Component.Control
-     */
-    return Control.extend({
+ * @class KISSY.Menu.Item
+ * A menu item component which menu is consisted of.
+ * xclass: 'menuitem'.
+ * @extends KISSY.Component.Control
+ */
+    module.exports = Control.extend({
         isMenuItem: 1,
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'menuitem';
@@ -293,9 +292,9 @@ KISSY.add('menu/menuitem', [
         // do not set highlighted on mousedown for touch device!
         // only set active in component/control
         /**
-         * Perform default action when click on enter on this menuitem.
-         * @protected
-         */
+     * Perform default action when click on enter on this menuitem.
+     * @protected
+     */
         handleClickInternal: function (ev) {
             var self = this;
             self.callSuper(ev);    // combobox menu tap penetration
@@ -340,10 +339,10 @@ KISSY.add('menu/menuitem', [
             }
         },
         /**
-         * Check whether this menu item contains specified element.
-         * @param {KISSY.Node} element Element to be tested.
-         * @protected
-         */
+     * Check whether this menu item contains specified element.
+     * @param {KISSY.Node} element Element to be tested.
+     * @protected
+     */
         containsElement: function (element) {
             var $el = this.$el;
             return $el && ($el[0] === element || $el.contains(element));
@@ -357,25 +356,25 @@ KISSY.add('menu/menuitem', [
     });
 });
 
-/**
- * checkable menu item
- * @ignore
- * @author yiminghe@gmail.com
- */
 KISSY.add('menu/check-menuitem', [
     './menuitem',
     'component/extension/content-box',
     './check-menuitem-xtpl'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * checkable menu item
+ * @ignore
+ * @author yiminghe@gmail.com
+ */
     var MenuItem = require('./menuitem');
     var ContentBox = require('component/extension/content-box');
     var CheckMenuItemTpl = require('./check-menuitem-xtpl');    /**
-     * @class KISSY.Menu.CheckItem
-     */
+ * @class KISSY.Menu.CheckItem
+ */
     /**
-     * @class KISSY.Menu.CheckItem
-     */
-    return MenuItem.extend([ContentBox], {
+ * @class KISSY.Menu.CheckItem
+ */
+    module.exports = MenuItem.extend([ContentBox], {
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
                 renderData.elCls.push(this.getBaseCssClasses('checked'));
@@ -395,12 +394,12 @@ KISSY.add('menu/check-menuitem', [
         ATTRS: {
             contentTpl: { value: CheckMenuItemTpl },
             /**
-             * Whether the menu item is checked.
-             * @cfg {Boolean} checked
-             */
+         * Whether the menu item is checked.
+         * @cfg {Boolean} checked
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             checked: {
                 render: 1,
                 sync: 0
@@ -411,11 +410,11 @@ KISSY.add('menu/check-menuitem', [
 });
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var checkMenuitem = function (scope, buffer, undefined) {
+    var checkMenuitemXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -446,29 +445,29 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    checkMenuitem.TPL_NAME = module.name;
-    checkMenuitem.version = '5.0.0';
-    return checkMenuitem;
+    checkMenuitemXtplHtml.TPL_NAME = module.name;
+    checkMenuitemXtplHtml.version = '5.0.0';
+    module.exports = checkMenuitemXtplHtml;
 });
-/**
- * checkable menu item
- * @ignore
- * @author yiminghe@gmail.com
- */
 KISSY.add('menu/radio-menuitem', [
     './menuitem',
     'component/extension/content-box',
     './radio-menuitem-xtpl'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * checkable menu item
+ * @ignore
+ * @author yiminghe@gmail.com
+ */
     var MenuItem = require('./menuitem');
     var ContentBox = require('component/extension/content-box');
     var RadioMenuItemTpl = require('./radio-menuitem-xtpl');    /**
-     * @class KISSY.Menu.RadioItem
-     */
+ * @class KISSY.Menu.RadioItem
+ */
     /**
-     * @class KISSY.Menu.RadioItem
-     */
-    return MenuItem.extend([ContentBox], {
+ * @class KISSY.Menu.RadioItem
+ */
+    module.exports = MenuItem.extend([ContentBox], {
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'menuitemradio';
             if (renderData.selected) {
@@ -502,17 +501,17 @@ KISSY.add('menu/radio-menuitem', [
         ATTRS: {
             contentTpl: { value: RadioMenuItemTpl },
             /**
-             * Whether the menu item is selected.
-             * @type {Boolean}
-             * @property selected
-             */
+         * Whether the menu item is selected.
+         * @type {Boolean}
+         * @property selected
+         */
             /**
-             * Whether the menu item is selected.
-             * @cfg {Boolean} selected
-             */
+         * Whether the menu item is selected.
+         * @cfg {Boolean} selected
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             selected: {
                 sync: 0,
                 render: 1
@@ -522,11 +521,11 @@ KISSY.add('menu/radio-menuitem', [
     });
 });
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var radioMenuitem = function (scope, buffer, undefined) {
+    var radioMenuitemXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -557,28 +556,27 @@ KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    radioMenuitem.TPL_NAME = module.name;
-    radioMenuitem.version = '5.0.0';
-    return radioMenuitem;
+    radioMenuitemXtplHtml.TPL_NAME = module.name;
+    radioMenuitemXtplHtml.version = '5.0.0';
+    module.exports = radioMenuitemXtplHtml;
 });
-/**
+KISSY.add('menu/submenu', [
+    'util',
+    './submenu-xtpl',
+    './menuitem',
+    'component/extension/content-box',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * submenu control for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/submenu', [
-    'util',
-    'node',
-    './submenu-xtpl',
-    './menuitem',
-    'component/extension/content-box'
-], function (S, require) {
     var util = require('util');
-    var Node = require('node');
     var SubMenuTpl = require('./submenu-xtpl');
     var MenuItem = require('./menuitem');
     var ContentBox = require('component/extension/content-box');
-    var KeyCode = Node.KeyCode, MENU_DELAY = 0.15;
+    var KeyCode = require('node').Event.KeyCode, MENU_DELAY = 0.15;
     function afterHighlightedChange(e) {
         var target = e.target, self = this;    // hover 子菜单，保持该菜单项高亮
         // hover 子菜单，保持该菜单项高亮
@@ -592,18 +590,18 @@ KISSY.add('menu/submenu', [
             }
         }
     }    /**
-     * Class representing a submenu that can be added as an item to other menus.
-     * xclass: 'submenu'.
-     * @extends KISSY.Menu.Item
-     * @class KISSY.Menu.SubMenu
-     */
+ * Class representing a submenu that can be added as an item to other menus.
+ * xclass: 'submenu'.
+ * @extends KISSY.Menu.Item
+ * @class KISSY.Menu.SubMenu
+ */
     /**
-     * Class representing a submenu that can be added as an item to other menus.
-     * xclass: 'submenu'.
-     * @extends KISSY.Menu.Item
-     * @class KISSY.Menu.SubMenu
-     */
-    return MenuItem.extend([ContentBox], {
+ * Class representing a submenu that can be added as an item to other menus.
+ * xclass: 'submenu'.
+ * @extends KISSY.Menu.Item
+ * @class KISSY.Menu.SubMenu
+ */
+    module.exports = MenuItem.extend([ContentBox], {
         isSubMenu: 1,
         decorateDom: function (el) {
             var self = this, prefixCls = self.get('prefixCls');
@@ -658,10 +656,10 @@ KISSY.add('menu/submenu', [
             }
         },
         /**
-             * Dismisses the submenu on a delay, with the result that the user needs less
-             * accuracy when moving to sub menus.
-             * @protected
-             */
+         * Dismisses the submenu on a delay, with the result that the user needs less
+         * accuracy when moving to sub menus.
+         * @protected
+         */
         _onSetHighlighted: function (v, e) {
             var self = this;
             self.callSuper(v, e);    // sync
@@ -685,15 +683,15 @@ KISSY.add('menu/submenu', [
             this.callSuper(e);
         },
         /**
-             * Handles a key event that is passed to the menu item from its parent because
-             * it is highlighted.  If the right key is pressed the sub menu takes control
-             * and delegates further key events to its menu until it is dismissed OR the
-             * left key is pressed.
-             * Protected for subclass overridden.
-             * @param {KISSY.Event.DomEvent.Object} e key event.
-             * @protected
-             * @return {Boolean|undefined} Whether the event was handled.
-             */
+         * Handles a key event that is passed to the menu item from its parent because
+         * it is highlighted.  If the right key is pressed the sub menu takes control
+         * and delegates further key events to its menu until it is dismissed OR the
+         * left key is pressed.
+         * Protected for subclass overridden.
+         * @param {KISSY.Event.DomEvent.Object} e key event.
+         * @protected
+         * @return {Boolean|undefined} Whether the event was handled.
+         */
         handleKeyDownInternal: function (e) {
             var self = this, menu = self.get('menu'), menuChildren, menuChild, hasKeyboardControl_ = menu.get('visible'), keyCode = e.keyCode;
             if (!hasKeyboardControl_) {
@@ -736,28 +734,28 @@ KISSY.add('menu/submenu', [
         ATTRS: {
             contentTpl: { value: SubMenuTpl },
             /**
-                 * The delay before opening the sub menu in seconds.  (This number is
-                 * arbitrary, it would be good to get some user studies or a designer to play
-                 * with some numbers).
-                 * Defaults to: 0.15
-                 * @cfg {Number} menuDelay
-                 */
+             * The delay before opening the sub menu in seconds.  (This number is
+             * arbitrary, it would be good to get some user studies or a designer to play
+             * with some numbers).
+             * Defaults to: 0.15
+             * @cfg {Number} menuDelay
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             menuDelay: { value: MENU_DELAY },
             /**
-                 * Menu config or instance.
-                 * @cfg {KISSY.Menu|Object} menu
-                 */
+             * Menu config or instance.
+             * @cfg {KISSY.Menu|Object} menu
+             */
             /**
-                 * Menu config or instance.
-                 * @property menu
-                 * @type {KISSY.Menu|Object}
-                 */
+             * Menu config or instance.
+             * @property menu
+             * @type {KISSY.Menu|Object}
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             menu: {
                 getter: function (v) {
                     v = v || {};
@@ -803,11 +801,11 @@ KISSY.add('menu/submenu', [
     }    // # ------------------------------------ private end
 });
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var submenu = function (scope, buffer, undefined) {
+    var submenuXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -829,39 +827,39 @@ KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
         buffer.write('submenu-arrow">\u25BA</span>', 0);
         return buffer;
     };
-    submenu.TPL_NAME = module.name;
-    submenu.version = '5.0.0';
-    return submenu;
+    submenuXtplHtml.TPL_NAME = module.name;
+    submenuXtplHtml.version = '5.0.0';
+    module.exports = submenuXtplHtml;
 });
-/**
- * @ignore
- * positionable and not focusable menu
- * @author yiminghe@gmail.com
- */
 KISSY.add('menu/popupmenu', [
     'component/extension/align',
     'component/extension/shim',
     './control',
     'component/extension/content-box'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * positionable and not focusable menu
+ * @author yiminghe@gmail.com
+ */
     var AlignExtension = require('component/extension/align');
     var Shim = require('component/extension/shim');
     var Menu = require('./control');
     var ContentBox = require('component/extension/content-box');    /**
-     * Popup Menu.
-     * xclass: 'popupmenu'.
-     * @class KISSY.Menu.PopupMenu
-     * @extends KISSY.Menu
-     * @mixins KISSY.Component.Extension.Align
-     */
+ * Popup Menu.
+ * xclass: 'popupmenu'.
+ * @class KISSY.Menu.PopupMenu
+ * @extends KISSY.Menu
+ * @mixins KISSY.Component.Extension.Align
+ */
     /**
-     * Popup Menu.
-     * xclass: 'popupmenu'.
-     * @class KISSY.Menu.PopupMenu
-     * @extends KISSY.Menu
-     * @mixins KISSY.Component.Extension.Align
-     */
-    return Menu.extend([
+ * Popup Menu.
+ * xclass: 'popupmenu'.
+ * @class KISSY.Menu.PopupMenu
+ * @extends KISSY.Menu
+ * @mixins KISSY.Component.Extension.Align
+ */
+    module.exports = Menu.extend([
         ContentBox,
         Shim,
         AlignExtension
@@ -903,10 +901,10 @@ KISSY.add('menu/popupmenu', [
         },
         isPopupMenu: 1,
         /**
-         * Suppose it has focus (as a context menu), then it must hide when lose focus.
-         * Protected, should only be overridden by subclasses.
-         * @protected
-         */
+     * Suppose it has focus (as a context menu), then it must hide when lose focus.
+     * Protected, should only be overridden by subclasses.
+     * @protected
+     */
         handleBlurInternal: function (e) {
             var self = this;
             self.callSuper(e);
@@ -916,21 +914,21 @@ KISSY.add('menu/popupmenu', [
         ATTRS: {
             // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
             /**
-             * Whether the popup menu is focusable.
-             * Defaults to: false.
-             * @type {Boolean}
-             * @ignore
-             */
+         * Whether the popup menu is focusable.
+         * Defaults to: false.
+         * @type {Boolean}
+         * @ignore
+         */
             focusable: { value: false },
             /**
-             * Whether the whole menu tree which contains popup menu hides when mouseleave.
-             * Only valid for submenu 's popupmenu.
-             * Defaults to: false.
-             * @cfg {Boolean} autoHideOnMouseLeave
-             */
+         * Whether the whole menu tree which contains popup menu hides when mouseleave.
+         * Only valid for submenu 's popupmenu.
+         * Defaults to: false.
+         * @cfg {Boolean} autoHideOnMouseLeave
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             autoHideOnMouseLeave: {},
             visible: { value: false }
         },

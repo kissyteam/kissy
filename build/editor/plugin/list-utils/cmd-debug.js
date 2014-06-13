@@ -1,30 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/list-utils/cmd
 */
-/**
- * @ignore
- * Add ul and ol command identifier for KISSY Editor.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/list-utils/cmd', [
     'editor',
     '../list-utils',
     'ua',
     'node',
     'dom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add ul and ol command identifier for KISSY Editor.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var ListUtils = require('../list-utils');
     var insertUnorderedList = 'insertUnorderedList', insertOrderedList = 'insertOrderedList', listNodeNames = {
             'ol': insertOrderedList,
             'ul': insertUnorderedList
-        }, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = require('ua'), Node = require('node'), Dom = require('dom'), headerTagRegex = /^h[1-6]$/;
+        }, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = require('ua'), $ = require('node'), Dom = require('dom'), headerTagRegex = /^h[1-6]$/;
     function ListCommand(type) {
         this.type = type;
     }
@@ -46,7 +46,7 @@ KISSY.add('editor/plugin/list-utils/cmd', [
                 selectedListItems.push(itemNode);
                 itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
             }
-            var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
+            var fakeParent = $(groupObj.root[0].ownerDocument.createElement(this.type));
             fakeParent.css('list-style-type', listStyleType);
             for (i = 0; i < selectedListItems.length; i++) {
                 var listIndex = selectedListItems[i].data('listarray_index');
@@ -54,7 +54,7 @@ KISSY.add('editor/plugin/list-utils/cmd', [
             }
             var newList = ListUtils.arrayToList(listArray, database, null, 'p');
             var child, length = newList.listNode.childNodes.length;
-            for (i = 0; i < length && (child = new Node(newList.listNode.childNodes[i])); i++) {
+            for (i = 0; i < length && (child = $(newList.listNode.childNodes[i])); i++) {
                 if (child.nodeName() === this.type) {
                     listsCreated.push(child);
                 }
@@ -70,7 +70,7 @@ KISSY.add('editor/plugin/list-utils/cmd', [
             // e.g. when we're running into table cells.
             // In such a case, enclose the childNodes of contents[0] into a <div>.
             if (contents.length === 1 && contents[0][0] === groupObj.root[0]) {
-                var divBlock = new Node(doc.createElement('div'));
+                var divBlock = $(doc.createElement('div'));
                 if (contents[0][0].nodeType !== Dom.NodeType.TEXT_NODE) {
                     contents[0]._4eMoveChildren(divBlock, undefined, undefined);
                 }
@@ -101,11 +101,11 @@ KISSY.add('editor/plugin/list-utils/cmd', [
                 return;
             }    // Insert the list to the Dom tree.
             // Insert the list to the Dom tree.
-            var insertAnchor = new Node(listContents[listContents.length - 1][0].nextSibling), listNode = new Node(doc.createElement(this.type));
+            var insertAnchor = $(listContents[listContents.length - 1][0].nextSibling), listNode = $(doc.createElement(this.type));
             listNode.css('list-style-type', listStyleType);
             listsCreated.push(listNode);
             while (listContents.length) {
-                var contentBlock = listContents.shift(), listItem = new Node(doc.createElement('li'));    // Preserve heading structure when converting to list item. (#5271)
+                var contentBlock = listContents.shift(), listItem = $(doc.createElement('li'));    // Preserve heading structure when converting to list item. (#5271)
                 // Preserve heading structure when converting to list item. (#5271)
                 if (headerTagRegex.test(contentBlock.nodeName())) {
                     listItem[0].appendChild(contentBlock[0]);
@@ -167,7 +167,7 @@ KISSY.add('editor/plugin/list-utils/cmd', [
             // Compensate <br> before/after the list node if the surrounds are non-blocks.(#3836)
             var docFragment = newList.listNode, boundaryNode, siblingNode;
             function compensateBrs(isStart) {
-                if ((boundaryNode = new Node(docFragment[isStart ? 'firstChild' : 'lastChild'])) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? 'prev' : 'next'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({ br: 1 }, undefined))) {
+                if ((boundaryNode = $(docFragment[isStart ? 'firstChild' : 'lastChild'])) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? 'prev' : 'next'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({ br: 1 }, undefined))) {
                     boundaryNode[isStart ? 'before' : 'after'](editor.get('document')[0].createElement('br'));
                 }
             }
@@ -322,7 +322,7 @@ KISSY.add('editor/plugin/list-utils/cmd', [
         }
         return false;
     }
-    return {
+    module.exports = {
         ListCommand: ListCommand,
         queryActive: queryActive
     };

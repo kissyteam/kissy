@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/draft
 */
-/**
- * @ignore
- * draft for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/draft', [
     'editor',
     'json',
@@ -21,15 +16,21 @@ KISSY.add('editor/plugin/draft', [
     './menubutton',
     'util',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * draft for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Json = require('json');
-    var Event = require('event/dom');
+    var Event = require('event/dom');    /*global localStorage:true*/
+    /*global localStorage:true*/
     var localStorage = require('./local-storage');
     var Overlay = require('overlay');
     var MenuButton = require('./menubutton');
     var util = require('util');
-    var Node = require('node'), LIMIT = 5, INTERVAL = 5, DRAFT_SAVE = 'ks-editor-draft-save20110503';
+    var $ = require('node'), LIMIT = 5, INTERVAL = 5, DRAFT_SAVE = 'ks-editor-draft-save20110503';
     function padding(n, l, p) {
         n += '';
         while (n.length < l) {
@@ -90,9 +91,9 @@ KISSY.add('editor/plugin/draft', [
             cfg.draft = cfg.draft || {};
             self.draftInterval = cfg.draft.interval = cfg.draft.interval || INTERVAL;
             self.draftLimit = cfg.draft.limit = cfg.draft.limit || LIMIT;
-            var holder = new Node('<div class="' + prefixCls + 'editor-draft">' + '<span class="' + prefixCls + 'editor-draft-title">' + '\u5185\u5BB9\u6B63\u6587\u6BCF' + cfg.draft.interval + '\u5206\u949F\u81EA\u52A8\u4FDD\u5B58\u4E00\u6B21\u3002' + '</span>' + '</div>').appendTo(statusbar);
-            self.timeTip = new Node('<span class="' + prefixCls + 'editor-draft-time"/>').appendTo(holder);
-            var save = new Node(util.substitute('<a href="#" ' + 'onclick="return false;" ' + 'class="{prefixCls}editor-button ' + '{prefixCls}editor-draft-save-btn ks-inline-block" ' + 'style="' + 'vertical-align:middle;' + 'padding:1px 9px;' + '">' + '<span class="{prefixCls}editor-draft-save">' + '</span>' + '<span>\u7ACB\u5373\u4FDD\u5B58</span>' + '</a>', { prefixCls: prefixCls })).unselectable(undefined).appendTo(holder), versions = new MenuButton({
+            var holder = $('<div class="' + prefixCls + 'editor-draft">' + '<span class="' + prefixCls + 'editor-draft-title">' + '\u5185\u5BB9\u6B63\u6587\u6BCF' + cfg.draft.interval + '\u5206\u949F\u81EA\u52A8\u4FDD\u5B58\u4E00\u6B21\u3002' + '</span>' + '</div>').appendTo(statusbar);
+            self.timeTip = $('<span class="' + prefixCls + 'editor-draft-time"/>').appendTo(holder);
+            var save = $(util.substitute('<a href="#" ' + 'onclick="return false;" ' + 'class="{prefixCls}editor-button ' + '{prefixCls}editor-draft-save-btn ks-inline-block" ' + 'style="' + 'vertical-align:middle;' + 'padding:1px 9px;' + '">' + '<span class="{prefixCls}editor-draft-save">' + '</span>' + '<span>\u7ACB\u5373\u4FDD\u5B58</span>' + '</a>', { prefixCls: prefixCls })).unselectable(undefined).appendTo(holder), versions = new MenuButton({
                     render: holder,
                     collapseOnClick: true,
                     width: '100px',
@@ -123,11 +124,11 @@ KISSY.add('editor/plugin/draft', [
                 ev.halt();
             });
             addRes.call(self, save);    /*
-             监控form提交，每次提交前保存一次，防止出错
-             */
+         监控form提交，每次提交前保存一次，防止出错
+         */
             /*
-             监控form提交，每次提交前保存一次，防止出错
-             */
+         监控form提交，每次提交前保存一次，防止出错
+         */
             if (editor.get('textarea')[0].form) {
                 (function () {
                     var textarea = editor.get('textarea'), form = textarea[0].form;
@@ -150,7 +151,7 @@ KISSY.add('editor/plugin/draft', [
             addRes.call(self, versions);
             self.holder = holder;
             if (cfg.draft.helpHTML) {
-                var help = new Node('<a ' + 'tabindex="0" ' + 'hidefocus="hidefocus" ' + 'class="' + prefixCls + 'editor-draft-help" ' + 'title="\u70B9\u51FB\u67E5\u770B\u5E2E\u52A9" ' + 'href="javascript:void(\'\u70B9\u51FB\u67E5\u770B\u5E2E\u52A9 \')">\u70B9\u51FB\u67E5\u770B\u5E2E\u52A9</a>').unselectable(undefined).appendTo(holder);
+                var help = $('<a ' + 'tabindex="0" ' + 'hidefocus="hidefocus" ' + 'class="' + prefixCls + 'editor-draft-help" ' + 'title="\u70B9\u51FB\u67E5\u770B\u5E2E\u52A9" ' + 'href="javascript:void(\'\u70B9\u51FB\u67E5\u770B\u5E2E\u52A9 \')">\u70B9\u51FB\u67E5\u770B\u5E2E\u52A9</a>').unselectable(undefined).appendTo(holder);
                 help.on('click', function () {
                     help[0].focus();
                     if (self.helpPopup && self.helpPopup.get('visible')) {
@@ -171,9 +172,9 @@ KISSY.add('editor/plugin/draft', [
             addRes.call(self, holder);
         },
         _prepareHelp: function () {
-            var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), cfg = self.config, draftCfg = cfg.draft, help = new Node(draftCfg.helpHTML || '');
+            var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), cfg = self.config, draftCfg = cfg.draft, help = $(draftCfg.helpHTML || '');
             var arrowCss = 'height:0;' + 'position:absolute;' + 'font-size:0;' + 'width:0;' + 'border:8px #000 solid;' + 'border-color:#000 transparent transparent transparent;' + 'border-style:solid dashed dashed dashed;';
-            var arrow = new Node('<div style="' + arrowCss + 'border-top-color:#CED5E0;' + '">' + '<div style="' + arrowCss + 'left:-8px;' + 'top:-10px;' + 'border-top-color:white;' + '">' + '</div>' + '</div>');
+            var arrow = $('<div style="' + arrowCss + 'border-top-color:#CED5E0;' + '">' + '<div style="' + arrowCss + 'left:-8px;' + 'top:-10px;' + 'border-top-color:white;' + '">' + '</div>' + '</div>');
             help.append(arrow);
             help.css({
                 border: '1px solid #ACB4BE',
@@ -288,7 +289,7 @@ KISSY.add('editor/plugin/draft', [
             }
         }
     });
-    return DraftPlugin;
+    module.exports = DraftPlugin;
 });
 
 

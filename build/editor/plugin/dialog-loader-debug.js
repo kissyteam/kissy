@@ -1,23 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/dialog-loader
 */
-/**
- * @ignore
- * load editor's dialog dynamically
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/dialog-loader', [
     'editor',
     'overlay',
     'dom',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * load editor's dialog dynamically
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Overlay = require('overlay');
     var Dom = require('dom');
@@ -43,7 +43,7 @@ KISSY.add('editor/plugin/dialog-loader', [
                 globalMask.hide();
             }
         };
-    return {
+    module.exports = {
         useDialog: function (editor, name, config, args) {
             // restore focus in editor
             // make dialog remember
@@ -56,7 +56,7 @@ KISSY.add('editor/plugin/dialog-loader', [
                 return;
             }
             loadMask.loading(prefixCls);
-            S.use('editor/plugin/' + name + '/dialog', function (S, Dialog) {
+            require(['editor/plugin/' + name + '/dialog'], function (Dialog) {
                 loadMask.unloading();
                 editor.addControl(name + '/dialog', new Dialog(editor, config));
                 editor.showDialog(name, args);

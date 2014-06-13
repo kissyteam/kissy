@@ -195,4 +195,3 @@ module.exports = {
         return getVendorInfo(name);
     }
 };
-

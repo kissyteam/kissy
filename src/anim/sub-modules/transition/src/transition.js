@@ -5,7 +5,7 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 var Dom = require('dom');
 var AnimBase = require('./base');
 var Feature = require('feature');
@@ -65,7 +65,7 @@ util.extend(TransitionAnim, AnimBase, {
             }
             vendorInfo = getCssVendorInfo(propertyName);
             if (!vendorInfo) {
-                Logger.log('unsupported css property for transition anim: ' + propertyName,'error');
+                LoggerManager.log('unsupported css property for transition anim: ' + propertyName,'error');
                 continue;
             }
             newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName];

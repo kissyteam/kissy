@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/focus-fix
 */
-/**
+KISSY.add('editor/plugin/focus-fix', [
+    'editor',
+    'ua'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/focus-fix', [
-    'editor',
-    'ua'
-], function (S, require) {
     var Editor = require('editor');
     var UA = require('ua'), focusManager = Editor.focusManager;
     function _show4FocusExt() {
@@ -23,15 +23,15 @@ KISSY.add('editor/plugin/focus-fix', [
         // 保存当前焦点editor
         self._focusEditor = focusManager.currentInstance();
         var editor = self._focusEditor;    /*
-         * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
-         * then IE would still leave the caret inside the editing area.
-         */
+     * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
+     * then IE would still leave the caret inside the editing area.
+     */
                                            // ie9 图片resize框，仍然会突出
                                            // ie11 still lose selection when editor is blurred
         /*
-         * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
-         * then IE would still leave the caret inside the editing area.
-         */
+     * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
+     * then IE would still leave the caret inside the editing area.
+     */
         // ie9 图片resize框，仍然会突出
         // ie11 still lose selection when editor is blurred
         if (UA.ie && editor) {
@@ -70,7 +70,7 @@ KISSY.add('editor/plugin/focus-fix', [
             editor.focus();
         }
     }
-    return {
+    module.exports = {
         init: function (self) {
             self.on('beforeVisibleChange', function (e) {
                 if (e.newVal) {

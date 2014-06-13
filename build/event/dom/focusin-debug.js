@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:38
+build time: Jun 13 11:50
 */
 /*
 combined modules:
 event/dom/focusin
 */
-/**
+KISSY.add('event/dom/focusin', [
+    'event/dom/base',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/focusin', [
-    'event/dom/base',
-    'util'
-], function (S, require) {
     var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special;
     var util = require('util');    // 让非 IE 浏览器支持 focusin/focusout
@@ -58,9 +58,7 @@ KISSY.add('event/dom/focusin', [
             var target = event.target;
             return DomEvent.fire(target, o.name);
         }
-    });
-    return DomEvent;
-});    /*
+    });    /*
  yiminghe@gmail.com: 2013-06-06
  - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
  - ie: div2 focusin input1 blur
@@ -69,4 +67,5 @@ KISSY.add('event/dom/focusin', [
  yiminghe@gmail.com: 2011-06-07
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
+});
 

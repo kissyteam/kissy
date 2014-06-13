@@ -1,6 +1,6 @@
 
     var util = require('util');
-    var Logger = require('logger');
+    var LoggerManager = require('logger-manager');
     var tpl = '<h2 class="anim-title">{title}</h2>' +
         '<p class="anim-content">Sed ut perspiciatis unde omnis iste natus error ' +
         'sit voluptatem accusantium doloremque laudantium, ' +
@@ -39,10 +39,10 @@
             }, 1400);
         },
         leave: function () {
-            Logger.log('leave loading');
+            LoggerManager.log('leave loading');
         },
         destroy: function () {
-            Logger.log('destroy loading');
+            LoggerManager.log('destroy loading');
         }
     };
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 5 23:17
+build time: Jun 13 11:40
 */
 /*
 combined modules:
@@ -9,11 +9,18 @@ anim/transition
 */
 KISSY.add('anim/transition', [
     'util',
+    'logger-manager',
     'dom',
     './base',
     'feature'
 ], function (S, require, exports, module) {
+    /**
+ * animation using css transition
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
     var util = require('util');
+    var LoggerManager = require('logger-manager');
     var Dom = require('dom');
     var AnimBase = require('./base');
     var Feature = require('feature');
@@ -67,7 +74,8 @@ KISSY.add('anim/transition', [
                 }
                 vendorInfo = getCssVendorInfo(propertyName);
                 if (!vendorInfo) {
-                    S.error('unsupported css property for transition anim: ' + propertyName);
+                    LoggerManager.log('unsupported css property for transition anim: ' + propertyName, 'error');
+                    continue;
                 }
                 newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName];
             }
@@ -76,25 +84,33 @@ KISSY.add('anim/transition', [
         doStart: function () {
             var self = this, node = self.node, elStyle = node.style, _propsData = self._propsData, original = elStyle[TRANSITION], totalDuration = 0, propsCss = {};
             util.each(_propsData, function (propData, prop) {
-                var v = propData.value;
+                var v = propData.value;    // hack, for to reflow?
+                // hack, for to reflow?
                 Dom.css(node, prop, Dom.css(node, prop));
                 propsCss[prop] = v;
                 totalDuration = Math.max(propData.duration + propData.delay, totalDuration);
-            });
+            });    // chrome none
+                   // firefox none 0s ease 0s
+            // chrome none
+            // firefox none 0s ease 0s
             if (original.indexOf('none') !== -1) {
                 original = '';
             } else if (original) {
                 original += ',';
             }
-            elStyle[TRANSITION] = original + genTransition(_propsData);
+            elStyle[TRANSITION] = original + genTransition(_propsData);    // bug when set left on relative element
+            // bug when set left on relative element
             setTimeout(function () {
                 Dom.css(node, propsCss);
-            }, 0);
+            }, 0);    // timer is more reliable and can deal with short hand css properties
+            // timer is more reliable and can deal with short hand css properties
             self._transitionEndTimer = setTimeout(function () {
                 self.stop(true);
             }, totalDuration * 1000);
         },
         beforeResume: function () {
+            // note: pause/resume in css transition is not smooth as js timer
+            // already run time before pause
             var self = this, propsData = self._propsData, tmpPropsData = util.merge(propsData), runTime = self._runTime / 1000;
             util.each(tmpPropsData, function (propData, prop) {
                 var tRunTime = runTime;
@@ -122,15 +138,21 @@ KISSY.add('anim/transition', [
                     propsCss[prop] = Dom.css(node, prop);
                 }
                 propList.push(prop);
-            });
+            });    // firefox need set transition and need set none
+            // firefox need set transition and need set none
             clear = util.trim(elStyle[TRANSITION].replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'), '$1')).replace(/^,|,,|,$/g, '') || 'none';
             elStyle[TRANSITION] = clear;
             Dom.css(node, propsCss);
         }
     });
-    util.mix(TransitionAnim, AnimBase.Statics);
-    module.exports = S.Anim = TransitionAnim;
+    util.mix(TransitionAnim, AnimBase.Statics);    // bad
+    // bad
+    module.exports = TransitionAnim;    /*
+ refer:
+ - https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties
+ */
 });
+
 
 
 

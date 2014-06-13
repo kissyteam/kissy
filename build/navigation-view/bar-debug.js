@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:27
+build time: Jun 13 11:52
 */
 /*
 combined modules:
 navigation-view/bar
 navigation-view/bar/bar-xtpl
 */
-/**
- * navigation bar to accommodate back button and title element
- * @author yiminghe@gmail.com
- */
 KISSY.add('navigation-view/bar', [
     'component/control',
     'button',
     './bar/bar-xtpl'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * navigation bar to accommodate back button and title element
+ * @author yiminghe@gmail.com
+ */
     var Control = require('component/control');
     var Button = require('button');
     var tpl = require('./bar/bar-xtpl');
@@ -123,7 +123,7 @@ KISSY.add('navigation-view/bar', [
             self[backward ? 'backward' : 'forward'](newView.get('title') || '');
         }
     }
-    return Control.extend({
+    module.exports = Control.extend({
         initializer: function () {
             this._withTitle = this.get('withTitle');
             this._stack = [];
@@ -295,11 +295,11 @@ KISSY.add('navigation-view/bar', [
 
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('navigation-view/bar/bar-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var bar = function (scope, buffer, undefined) {
+    var barXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -365,7 +365,7 @@ KISSY.add('navigation-view/bar/bar-xtpl', [], function (S, require, exports, mod
         buffer.write('"></div>\r\n</div>', 0);
         return buffer;
     };
-    bar.TPL_NAME = module.name;
-    bar.version = '5.0.0';
-    return bar;
+    barXtplHtml.TPL_NAME = module.name;
+    barXtplHtml.version = '5.0.0';
+    module.exports = barXtplHtml;
 });

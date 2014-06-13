@@ -5,22 +5,374 @@
 (function () {
     'use strict';
 
+    var isMsPointerSupported = 'msPointerEnabled' in navigator;
+    var isPointerSupported = 'pointerEnabled' in navigator;
+
+    /*jshint quotmark:false*/
+    var UA = (function () {
+        var win = typeof window !== 'undefined' ? window : {},
+            undef,
+            doc = win.document,
+            ua = win.navigator && win.navigator.userAgent || '';
+
+        function numberify(s) {
+            var c = 0;
+            // convert '1.2.3.4' to 1.234
+            return parseFloat(s.replace(/\./g, function () {
+                return (c++ === 0) ? '.' : '';
+            }));
+        }
+
+        function setTridentVersion(ua, UA) {
+            var core, m;
+            UA[core = 'trident'] = 0.1; // Trident detected, look for revision
+
+            // Get the Trident's accurate version
+            if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+                UA[core] = numberify(m[1]);
+            }
+
+            UA.core = core;
+        }
+
+        function getIEVersion(ua) {
+            var m, v;
+            if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
+                (v = (m[1] || m[2]))) {
+                return numberify(v);
+            }
+            return 0;
+        }
+
+        function getDescriptorFromUserAgent(ua) {
+            var EMPTY = '',
+                os,
+                core = EMPTY,
+                shell = EMPTY,
+                m,
+                IE_DETECT_RANGE = [6, 9],
+                ieVersion,
+                v,
+                end,
+                VERSION_PLACEHOLDER = '{{version}}',
+                IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
+                div = doc && doc.createElement('div'),
+                s = [];
+
+            var UA = {
+                /**
+                 * webkit version
+                 * @type undef|Number
+                 *
+                 */
+                webkit: undef,
+                /**
+                 * trident version
+                 * @type undef|Number
+                 *
+                 */
+                trident: undef,
+                /**
+                 * gecko version
+                 * @type undef|Number
+                 *
+                 */
+                gecko: undef,
+                /**
+                 * presto version
+                 * @type undef|Number
+                 *
+                 */
+                presto: undef,
+                /**
+                 * chrome version
+                 * @type undef|Number
+                 *
+                 */
+                chrome: undef,
+                /**
+                 * safari version
+                 * @type undef|Number
+                 *
+                 */
+                safari: undef,
+                /**
+                 * firefox version
+                 * @type undef|Number
+                 *
+                 */
+                firefox: undef,
+                /**
+                 * ie version
+                 * @type undef|Number
+                 *
+                 */
+                ie: undef,
+                /**
+                 * ie document mode
+                 * @type undef|Number
+                 *
+                 */
+                ieMode: undef,
+                /**
+                 * opera version
+                 * @type undef|Number
+                 *
+                 */
+                opera: undef,
+                /**
+                 * mobile browser. apple, android.
+                 * @type String
+                 *
+                 */
+                mobile: undef,
+                /**
+                 * browser render engine name. webkit, trident
+                 * @type String
+                 *
+                 */
+                core: undef,
+                /**
+                 * browser shell name. ie, chrome, firefox
+                 * @type String
+                 *
+                 */
+                shell: undef,
+
+                /**
+                 * PhantomJS version number
+                 * @type undef|Number
+                 *
+                 */
+                phantomjs: undef,
+
+                /**
+                 * operating system. android, ios, linux, windows
+                 * @type string
+                 *
+                 */
+                os: undef,
+
+                /**
+                 * ipad ios version
+                 * @type Number
+                 *
+                 */
+                ipad: undef,
+                /**
+                 * iphone ios version
+                 * @type Number
+                 *
+                 */
+                iphone: undef,
+                /**
+                 * ipod ios
+                 * @type Number
+                 *
+                 */
+                ipod: undef,
+                /**
+                 * ios version
+                 * @type Number
+                 *
+                 */
+                ios: undef,
+
+                /**
+                 * android version
+                 * @type Number
+                 *
+                 */
+                android: undef,
+
+                /**
+                 * nodejs version
+                 * @type Number
+                 *
+                 */
+                nodejs: undef
+            };
+
+            // ejecta
+            if (div && div.getElementsByTagName) {
+                // try to use IE-Conditional-Comment detect IE more accurately
+                // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
+                div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
+                s = div.getElementsByTagName('s');
+            }
+
+            if (s.length > 0) {
+                setTridentVersion(ua, UA);
+
+                // Detect the accurate version
+                // 注意：
+                //  UA.shell = ie, 表示外壳是 ie
+                //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
+                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
+                    div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
+                    if (s.length > 0) {
+                        UA[shell = 'ie'] = v;
+                        break;
+                    }
+                }
+
+                // https://github.com/kissyteam/kissy/issues/321
+                // win8 embed app
+                if (!UA.ie && (ieVersion = getIEVersion(ua))) {
+                    UA[shell = 'ie'] = ieVersion;
+                }
+            } else {
+                // WebKit
+                // https://github.com/kissyteam/kissy/issues/545
+                if (((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
+                    UA[core = 'webkit'] = numberify(m[1]);
+
+                    if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
+                        UA[shell = 'opera'] = numberify(m[1]);
+                    } else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                        UA[shell = 'chrome'] = numberify(m[1]);
+                    } else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+                        UA[shell = 'safari'] = numberify(m[1]);
+                    } else {
+                        // default to mobile safari
+                        UA.safari = UA.webkit;
+                    }
+
+                    // Apple Mobile
+                    if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
+                        UA.mobile = 'apple'; // iPad, iPhone or iPod Touch
+
+                        m = ua.match(/OS ([^\s]*)/);
+                        if (m && m[1]) {
+                            UA.ios = numberify(m[1].replace('_', '.'));
+                        }
+                        os = 'ios';
+                        m = ua.match(/iPad|iPod|iPhone/);
+                        if (m && m[0]) {
+                            UA[m[0].toLowerCase()] = UA.ios;
+                        }
+                    } else if (/ Android/i.test(ua)) {
+                        if (/Mobile/.test(ua)) {
+                            os = UA.mobile = 'android';
+                        }
+                        m = ua.match(/Android ([^\s]*);/);
+                        if (m && m[1]) {
+                            UA.android = numberify(m[1]);
+                        }
+                    } else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+                        UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+                    }
+
+                    if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+                        UA.phantomjs = numberify(m[1]);
+                    }
+                } else {
+                    // Presto
+                    // ref: http://www.useragentstring.com/pages/useragentstring.php
+                    if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+                        UA[core = 'presto'] = numberify(m[1]);
+
+                        // Opera
+                        if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+                            UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
+
+                            if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+                                UA[shell] = numberify(m[1]);
+                            }
+
+                            // Opera Mini
+                            if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
+                                UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                            } else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                                // Opera Mobile
+                                // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                                // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
+                                UA.mobile = m[0];
+                            }
+                        }
+                        // NOT WebKit or Presto
+                    } else {
+                        // MSIE
+                        // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                        // and analysis tools in nodejs
+                        if ((ieVersion = getIEVersion(ua))) {
+                            UA[shell = 'ie'] = ieVersion;
+                            setTridentVersion(ua, UA);
+                            // NOT WebKit, Presto or IE
+                        } else {
+                            // Gecko
+                            if ((m = ua.match(/Gecko/))) {
+                                UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
+                                if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                                    UA[core] = numberify(m[1]);
+                                    if (/Mobile|Tablet/.test(ua)) {
+                                        UA.mobile = 'firefox';
+                                    }
+                                }
+                                // Firefox
+                                if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                                    UA[shell = 'firefox'] = numberify(m[1]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!os) {
+                if ((/windows|win32/i).test(ua)) {
+                    os = 'windows';
+                } else if ((/macintosh|mac_powerpc/i).test(ua)) {
+                    os = 'macintosh';
+                } else if ((/linux/i).test(ua)) {
+                    os = 'linux';
+                } else if ((/rhino/i).test(ua)) {
+                    os = 'rhino';
+                }
+            }
+
+            UA.os = os;
+            UA.core = UA.core || core;
+            UA.shell = shell;
+            UA.ieMode = UA.ie && doc.documentMode || UA.ie;
+
+            return UA;
+        }
+
+        var UA = getDescriptorFromUserAgent(ua);
+
+// nodejs
+        if (typeof process === 'object') {
+            var versions, nodeVersion;
+            if ((versions = process.versions) && (nodeVersion = versions.node)) {
+                UA.os = process.platform;
+                UA.nodejs = numberify(nodeVersion);
+            }
+        }
+
+// use by analysis tools in nodejs
+        UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
+        return UA;
+    })();
+
     // shortcuts
     var toString = Object.prototype.toString,
         isFunction = function (o) {
-            return toString.call(o) === '[object Function]'
+            return toString.call(o) === '[object Function]';
         },
         isString = function (o) {
-            return toString.call(o) === '[object String]'
+            return toString.call(o) === '[object String]';
         },
         isBoolean = function (o) {
-            return toString.call(o) === '[object Boolean]'
+            return toString.call(o) === '[object Boolean]';
         },
         isObject = function (o) {
-            return toString.call(o) === '[object Object]'
+            return toString.call(o) === '[object Object]';
         },
         isNumber = function (o) {
-            return toString.call(o) === '[object Number]'
+            return toString.call(o) === '[object Number]';
         },
         doc = document,
 
@@ -349,7 +701,7 @@
             bubbles = true; // all mouse events bubble
         }
         if (!isBoolean(cancelable)) {
-            cancelable = (type != "mousemove"); // mousemove is the only one that can't be cancelled
+            cancelable = (type !== "mousemove"); // mousemove is the only one that can't be cancelled
         }
         if (!isObject(view)) {
             view = window; // view is typically window
@@ -409,9 +761,9 @@
              * event.
              */
             if (relatedTarget && !customEvent.relatedTarget) {
-                if (type == "mouseout") {
+                if (type === "mouseout") {
                     customEvent.toElement = relatedTarget;
-                } else if (type == "mouseover") {
+                } else if (type === "mouseover") {
                     customEvent.fromElement = relatedTarget;
                 }
             }
@@ -520,7 +872,7 @@
             bubbles = (type in bubbleEvents);  // not all events bubble
         }
         if (!isBoolean(cancelable)) {
-            cancelable = (type == "submit"); // submit is the only one that can be cancelled
+            cancelable = (type === "submit"); // submit is the only one that can be cancelled
         }
         if (!isObject(view)) {
             view = window; // view is typically window
@@ -631,8 +983,6 @@
             targetTouches = createTouchList(target, targetTouches);
         }
 
-        var UA = KISSY.UA;
-
         var customEvent;
 
         // check target
@@ -641,7 +991,7 @@
         }
 
         //check event type
-        if (typeof type == 'string') {
+        if (typeof type === 'string') {
             type = type.toLowerCase();
 
             //make sure it's a supported touch event
@@ -651,27 +1001,6 @@
         } else {
             throw new Error("simulateTouchEvent(): Event type must be a string.");
         }
-
-        // note that the caller is responsible to pass appropriate touch objects.
-        // check touch objects
-        // Android(even 4.0) doesn't define TouchList yet
-        /*if(type === 'touchstart' || type === 'touchmove') {
-         if(!touches instanceof TouchList) {
-         S.error('simulateTouchEvent(): Invalid touches. It must be a TouchList');
-         } else {
-         if(touches.length === 0) {
-         S.error('simulateTouchEvent(): No touch object found.');
-         }
-         }
-         } else if(type === 'touchend') {
-         if(!changedTouches instanceof TouchList) {
-         S.error('simulateTouchEvent(): Invalid touches. It must be a TouchList');
-         } else {
-         if(changedTouches.length === 0) {
-         S.error('simulateTouchEvent(): No touch object found.');
-         }
-         }
-         }*/
 
         if (type === 'touchstart' || type === 'touchmove') {
             if (touches.length === 0) {
@@ -788,7 +1117,6 @@
 
             //fire the event
             target.dispatchEvent(customEvent);
-            //} else if (S.isObject(doc.createEventObject)){ // Windows Mobile/IE, support later
         } else {
             throw new Error('simulateTouchEvent(): No event simulation framework present.');
         }
@@ -812,15 +1140,11 @@
          * "TouchList is not defined".
          */
         var touches = [],
-            S = KISSY,
-            UA = S.UA,
-            DOM = S.DOM,
-            touchList,
-            self = this;
+            touchList;
 
-        if (!!touchPoints && S.isArray(touchPoints)) {
+        if (!!touchPoints && Array.isArray(touchPoints)) {
             if (UA.android && UA.android >= 4.0 || UA.ios && UA.ios >= 2.0) {
-                S.each(touchPoints, function (point) {
+                touchPoints.forEach(function (point) {
                     if (!point.identifier) {
                         point.identifier = 0;
                     }
@@ -828,13 +1152,13 @@
                         point.pageX = 0;
                     }
                     if (!point.pageX && point.clientX) {
-                        point.pageX = point.clientX + DOM.scrollLeft();
+                        point.pageX = point.clientX + window.pageXOffset;
                     }
                     if (!point.pageY) {
                         point.pageY = 0;
                     }
                     if (!point.pageY && point.clientY) {
-                        point.pageY = point.clientY + DOM.scrollTop();
+                        point.pageY = point.clientY + window.pageYOffset;
                     }
                     if (!point.screenX) {
                         point.screenX = 0;
@@ -844,7 +1168,7 @@
                     }
 
                     touches.push(document.createTouch(window,
-                        point.target || target,
+                            point.target || target,
                         point.identifier,
                         point.pageX, point.pageY,
                         point.screenX, point.screenY));
@@ -862,7 +1186,7 @@
                  * simulated touch apis for these versions.
                  */
                 touchList = [];
-                S.each(touchPoints, function (point) {
+                touchPoints.forEach(function (point) {
                     if (!point.identifier) {
                         point.identifier = 0;
                     }
@@ -876,13 +1200,13 @@
                         point.pageX = 0;
                     }
                     if (!point.pageX && point.clientX) {
-                        point.pageX = point.clientX + DOM.scrollLeft();
+                        point.pageX = point.clientX + window.pageXOffset;
                     }
                     if (!point.pageY) {
                         point.pageY = 0;
                     }
                     if (!point.pageY && point.clientY) {
-                        point.pageY = point.clientY + DOM.scrollTop();
+                        point.pageY = point.clientY + window.pageYOffset;
                     }
                     if (!point.screenX) {
                         point.screenX = 0;
@@ -921,8 +1245,8 @@
             customEvent.initDeviceMotionEvent('devicemotion',
                 false, false,
                 option.acceleration,
-                option.accelerationIncludingGravity || option.acceleration,
-                option.rotationRate || {
+                    option.accelerationIncludingGravity || option.acceleration,
+                    option.rotationRate || {
                     alpha: 0,
                     beta: 0,
                     gamma: 0
@@ -944,29 +1268,28 @@
      * @static
      */
     jasmine.simulate = function (target, type, options) {
-        var UA = window.KISSY && window.KISSY.UA || {};
-        if (UA.ie && UA.ieMode < 10 && type == 'input') {
+        if (UA.ie && UA.ieMode < 10 && type === 'input') {
             return;
         }
         options = options || {};
-        if (type == 'click') {
+        if (type === 'click') {
             jasmine.simulate(target, 'mousedown', options);
             jasmine.simulate(target, 'mouseup', options);
         }
-        if (KISSY.Feature.isPointerSupported()) {
-            if (type == 'mousedown') {
+        if (isPointerSupported) {
+            if (type === 'mousedown') {
                 jasmine.simulate(target, 'pointerdown', options);
-            } else if (type == 'mouseup') {
+            } else if (type === 'mouseup') {
                 jasmine.simulate(target, 'pointerup', options);
-            } else if (type == 'mousemove') {
+            } else if (type === 'mousemove') {
                 jasmine.simulate(target, 'pointermove', options);
             }
-        } else if (KISSY.Feature.isMsPointerSupported()) {
-            if (type == 'mousedown') {
+        } else if (isMsPointerSupported) {
+            if (type === 'mousedown') {
                 jasmine.simulate(target, 'MSPointerDown', options);
-            } else if (type == 'mouseup') {
+            } else if (type === 'mouseup') {
                 jasmine.simulate(target, 'MSPointerUp', options);
-            } else if (type == 'mousemove') {
+            } else if (type === 'mousemove') {
                 jasmine.simulate(target, 'MSPointerMove', options);
             }
         }
@@ -995,7 +1318,7 @@
             } else {
                 throw new Error("simulate(): Event '" + type + "' can't be simulated.");
             }
-        } else if (type == 'devicemotion') {
+        } else if (type === 'devicemotion') {
             simulateDeviceMotionEvent(target, options);
         } else {
             throw "simulate(): Event '" + type + "' can't be simulated.";

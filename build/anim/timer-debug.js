@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 9 10:52
+build time: Jun 13 11:40
 */
 /*
 combined modules:
@@ -500,7 +500,7 @@ KISSY.add('anim/timer/manager', ['util'], function (S, require, exports, module)
  * @author yiminghe@gmail.com
  */
     var util = require('util');
-    var stamp = util.stamp, win = S.Env.host,
+    var stamp = util.stamp, win = window,
         // note in background tab, interval is set to 1s in chrome/firefox
         // no interval change in ie for 15, if interval is less than 15
         // then in background tab interval is changed to 15
@@ -596,6 +596,7 @@ KISSY.add('anim/timer/manager', ['util'], function (S, require, exports, module)
 });
 KISSY.add('anim/timer/fx', [
     'util',
+    'logger-manager',
     'dom'
 ], function (S, require, exports, module) {
     /**
@@ -604,7 +605,8 @@ KISSY.add('anim/timer/fx', [
  * @author yiminghe@gmail.com
  */
     var util = require('util');
-    var logger = S.getLogger('s/aim/timer/fx');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/aim/timer/fx');
     var Dom = require('dom');
     var undef;
     function load(self, cfg) {
@@ -755,7 +757,9 @@ KISSY.add('anim/timer/fx', [
  - jq 插件: http://plugins.jquery.com/project/2d-transform
  */
 });
+
 KISSY.add('anim/timer/color', [
+    'logger-manager',
     'util',
     './fx'
 ], function (S, require, exports, module) {
@@ -764,7 +768,8 @@ KISSY.add('anim/timer/color', [
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-    var logger = S.getLogger('s/anim/timer/color');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/anim/timer/color');
     var util = require('util');
     var Fx = require('./fx');
     var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {

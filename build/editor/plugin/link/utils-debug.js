@@ -1,23 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/link/utils
 */
-/**
+KISSY.add('editor/plugin/link/utils', [
+    'editor',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * link utils
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/link/utils', [
-    'editor',
-    'node'
-], function (S, require) {
     var Editor = require('editor');
-    var Node = require('node'), KEStyle = Editor.Style, savedHref = '_ke_saved_href', linkStyle = {
+    var $ = require('node'), KEStyle = Editor.Style, savedHref = '_ke_saved_href', linkStyle = {
             element: 'a',
             attributes: {
                 'href': '#(href)',
@@ -70,7 +70,7 @@ KISSY.add('editor/plugin/link/utils', [
             var sel = editor.getSelection(), range = sel && sel.getRanges()[0];    //编辑器没有焦点或没有选择区域时直接插入链接地址
             //编辑器没有焦点或没有选择区域时直接插入链接地址
             if (!range || range.collapsed) {
-                var a = new Node('<a>' + attr.href + '</a>', attr, editor.get('document')[0]);
+                var a = new $('<a>' + attr.href + '</a>', attr, editor.get('document')[0]);
                 editor.insertElement(a);
             } else {
                 editor.execCommand('save');
@@ -81,7 +81,7 @@ KISSY.add('editor/plugin/link/utils', [
         editor.execCommand('save');
         editor.notifySelectionChange();
     }
-    return {
+    module.exports = {
         removeLink: removeLink,
         applyLink: applyLink,
         savedHref: savedHref

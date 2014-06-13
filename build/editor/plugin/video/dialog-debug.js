@@ -1,24 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/video/dialog
 */
-/**
- * @ignore
- * video dialog
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/video/dialog', [
     'util',
     'editor',
     'io',
     '../flash/dialog',
     '../menubutton'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * video dialog
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Editor = require('editor');
     var io = require('io');
@@ -138,7 +138,7 @@ KISSY.add('editor/plugin/video/dialog', [
             }
         }
     });
-    return VideoDialog;
+    module.exports = VideoDialog;
 });
 
 

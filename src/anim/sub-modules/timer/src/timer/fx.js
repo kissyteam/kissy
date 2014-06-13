@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var logger = S.getLogger('s/aim/timer/fx');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/aim/timer/fx');
 var Dom = require('dom');
 var undef;
 

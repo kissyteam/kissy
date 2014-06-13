@@ -23,13 +23,12 @@ util.extend(DoubleTouch, Touch, {
             return t1;
         }
 
-        while (1) {
+        while (t2) {
             if (Dom.contains(t2, t1)) {
                 return t2;
             }
             t2 = t2.parentNode;
         }
-        S.error('getCommonTarget error!');
         return undefined;
     }
 });

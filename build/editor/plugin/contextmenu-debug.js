@@ -1,29 +1,29 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/contextmenu
 */
-/**
- * @ignore
- * contextmenu for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/contextmenu', [
     'editor',
     'menu',
     './focus-fix',
     'event/dom',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * contextmenu for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Menu = require('menu');
     var focusFix = require('./focus-fix');
     var Event = require('event/dom');
-    var $ = require('node').all;
+    var $ = require('node');
     Editor.prototype.addContextMenu = function (id, filter, cfg) {
         var self = this;
         cfg = cfg || {};

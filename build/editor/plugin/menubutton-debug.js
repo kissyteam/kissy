@@ -1,38 +1,38 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/menubutton
 */
-/**
- * @ignore
- * select component for kissy editor.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/menubutton', [
     'editor',
     'util',
     'menubutton'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * select component for kissy editor.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var util = require('util');
     var MenuButton = require('menubutton');    /**
-     * add select to editor toolbar
-     * @param {String} id control id
-     * @param {Object} cfg select config
-     * @param {Function} SelectType Select constructor. needs to extend {@link KISSY.MenuButton.Select}, Defaults to {@link KISSY.MenuButton.Select}.
-     * @member KISSY.Editor
-     */
+ * add select to editor toolbar
+ * @param {String} id control id
+ * @param {Object} cfg select config
+ * @param {Function} SelectType Select constructor. needs to extend {@link KISSY.MenuButton.Select}, Defaults to {@link KISSY.MenuButton.Select}.
+ * @member KISSY.Editor
+ */
     /**
-     * add select to editor toolbar
-     * @param {String} id control id
-     * @param {Object} cfg select config
-     * @param {Function} SelectType Select constructor. needs to extend {@link KISSY.MenuButton.Select}, Defaults to {@link KISSY.MenuButton.Select}.
-     * @member KISSY.Editor
-     */
+ * add select to editor toolbar
+ * @param {String} id control id
+ * @param {Object} cfg select config
+ * @param {Function} SelectType Select constructor. needs to extend {@link KISSY.MenuButton.Select}, Defaults to {@link KISSY.MenuButton.Select}.
+ * @member KISSY.Editor
+ */
     Editor.prototype.addSelect = function (id, cfg, SelectType) {
         SelectType = SelectType || MenuButton.Select;
         var self = this, prefixCls = self.get('prefixCls') + 'editor-';
@@ -60,7 +60,7 @@ KISSY.add('editor/plugin/menubutton', [
         self.addControl(id + '/select', s);
         return s;
     };
-    return MenuButton;
+    module.exports = MenuButton;
 });
 
 

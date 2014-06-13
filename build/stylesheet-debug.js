@@ -1,38 +1,38 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
 stylesheet
 */
-/**
+KISSY.add('stylesheet', ['dom'], function (S, require, exports, module) {
+    /**
  * @ignore
  * Normalize operation about stylesheet
  * @author yiminghe@gmail.com
  */
-KISSY.add('stylesheet', ['dom'], function (S, require) {
     var Dom = require('dom');    /**
-     * Normalize operation about stylesheet
-     * @class KISSY.StyleSheet
-     * @param el {HTMLElement} style/link element
-     */
+ * Normalize operation about stylesheet
+ * @class KISSY.StyleSheet
+ * @param el {HTMLElement} style/link element
+ */
     /**
-     * Normalize operation about stylesheet
-     * @class KISSY.StyleSheet
-     * @param el {HTMLElement} style/link element
-     */
+ * Normalize operation about stylesheet
+ * @class KISSY.StyleSheet
+ * @param el {HTMLElement} style/link element
+ */
     function StyleSheet(el) {
         /**
-         * style/link element or selector
-         * @cfg {HTMLElement|String} el
-         */
+     * style/link element or selector
+     * @cfg {HTMLElement|String} el
+     */
         /**
-         * style/link element
-         * @type {HTMLElement}
-         * @property el
-         */
+     * style/link element
+     * @type {HTMLElement}
+     * @property el
+     */
         if (el.el) {
             el = el.el;
         }
@@ -63,40 +63,40 @@ KISSY.add('stylesheet', ['dom'], function (S, require) {
     StyleSheet.prototype = {
         constructor: StyleSheet,
         /**
-         * Make current stylesheet enabled.
-         * @chainable
-         */
+     * Make current stylesheet enabled.
+     * @chainable
+     */
         enable: function () {
             this.sheet.disabled = false;
             return this;
         },
         /**
-         * Make current stylesheet disabled.
-         * @chainable
-         */
+     * Make current stylesheet disabled.
+     * @chainable
+     */
         disable: function () {
             this.sheet.disabled = true;
             return this;
         },
         /**
-         * Whether current stylesheet is enabled.
-         * @return {Boolean}
-         */
+     * Whether current stylesheet is enabled.
+     * @return {Boolean}
+     */
         isEnabled: function () {
             return !this.sheet.disabled;
         },
         /**
-         * Set sheet's rule by selectorText and css.
-         * @param {String} selectorText selector text separated by ,
-         * @param {Object} css style declaration object. set value to "" to unset
-         *
-         * for example:
-         *      // set
-         *      set('p',{color:'red'})
-         *      // unset
-         *      set('p',{color:''})
-         * @chainable
-         */
+     * Set sheet's rule by selectorText and css.
+     * @param {String} selectorText selector text separated by ,
+     * @param {Object} css style declaration object. set value to "" to unset
+     *
+     * for example:
+     *      // set
+     *      set('p',{color:'red'})
+     *      // unset
+     *      set('p',{color:''})
+     * @chainable
+     */
         set: function (selectorText, css) {
             var sheet = this.sheet;
             var rulesName = this.rulesName;
@@ -135,10 +135,10 @@ KISSY.add('stylesheet', ['dom'], function (S, require) {
             return this;
         },
         /**
-         * Get cssText corresponding to specified selectorText
-         * @param {String} selectorText specified selector as string
-         * @return {String} CssText corresponding to specified selectorText
-         */
+     * Get cssText corresponding to specified selectorText
+     * @param {String} selectorText specified selector as string
+     * @return {String} CssText corresponding to specified selectorText
+     */
         get: function (selectorText) {
             var rule, css, selector, cssRules = this.cssRules;
             if (selectorText) {
@@ -176,10 +176,10 @@ KISSY.add('stylesheet', ['dom'], function (S, require) {
         }
     }    // # ------------------ private end
     // # ------------------ private end
-    return StyleSheet;
-});    /**
+    module.exports = StyleSheet;    /**
  * @ignore
  * Refer
  *  - http://www.w3.org/TR/Dom-Level-2-Style/css.html
  *  - rule.style 和 el.style 效果一样，同属于 CSSStyleDeclare
  **/
+});

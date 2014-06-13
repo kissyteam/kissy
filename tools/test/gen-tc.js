@@ -8,7 +8,7 @@ var path = require('path');
 var fs = require('fs');
 var root = path.join(__dirname, '../../..');
 var kissyDir = path.join(root, 'kissy');
-var util = require(path.join(kissyDir, 'lib/util'));
+var util = require('../common/util');
 var srcDir = path.join(kissyDir, 'src/');
 var mark = '/tests/runner';
 

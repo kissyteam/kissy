@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/fore-color
 */
-/**
+KISSY.add('editor/plugin/fore-color', [
+    './color/btn',
+    './fore-color/cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * foreColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/fore-color', [
-    './color/btn',
-    './fore-color/cmd'
-], function (S, require) {
     var Button = require('./color/btn');
     var cmd = require('./fore-color/cmd');
     function ForeColorPlugin(config) {
@@ -31,6 +31,6 @@ KISSY.add('editor/plugin/fore-color', [
             });
         }
     };
-    return ForeColorPlugin;
+    module.exports = ForeColorPlugin;
 });
 

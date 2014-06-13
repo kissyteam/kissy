@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:16
+build time: Jun 13 11:43
 */
 /*
 combined modules:
@@ -17,11 +17,6 @@ dom/base/style
 dom/base/selector
 dom/base/traversal
 */
-/**
- * @ignore
- * dom
- * @author yiminghe@gmail.com
- */
 KISSY.add('dom/base', [
     './base/api',
     './base/attr',
@@ -33,7 +28,12 @@ KISSY.add('dom/base', [
     './base/style',
     './base/selector',
     './base/traversal'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * dom
+ * @author yiminghe@gmail.com
+ */
     var Dom = require('./base/api');
     require('./base/attr');
     require('./base/class');
@@ -43,89 +43,92 @@ KISSY.add('dom/base', [
     require('./base/offset');
     require('./base/style');
     require('./base/selector');
-    require('./base/traversal');    // bad! compatibility
-    // bad! compatibility
-    S.DOM = Dom;
-    return Dom;
+    require('./base/traversal');
+    module.exports = Dom;
 });
-/**
+KISSY.add('dom/base/api', [
+    'util',
+    'ua'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/api', [
-    'util',
-    'ua'
-], function (S, require) {
     var util = require('util');
-    var WINDOW = S.Env.host || {}, DOCUMENT = WINDOW.document, UA = require('ua'), RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
+    var WINDOW = window, DOCUMENT = WINDOW.document, UA = require('ua'), RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
         /**
-         * Dom Element node type.
-         * @enum {Number} KISSY.DOM.NodeType
-         */
+     * Dom Element node type.
+     * @enum {Number} KISSY.DOM.NodeType
+     */
         NodeType = {
             /**
-             * element type
-             */
+         * element type
+         */
             ELEMENT_NODE: 1,
             /**
-             * attribute node type
-             */
+         * attribute node type
+         */
             ATTRIBUTE_NODE: 2,
             /**
-             * text node type
-             */
+         * text node type
+         */
             TEXT_NODE: 3,
             /**
-             * cdata node type
-             */
+         * cdata node type
+         */
             CDATA_SECTION_NODE: 4,
             /**
-             * entity reference node type
-             */
+         * entity reference node type
+         */
             ENTITY_REFERENCE_NODE: 5,
             /**
-             * entity node type
-             */
+         * entity node type
+         */
             ENTITY_NODE: 6,
             /**
-             * processing instruction node type
-             */
+         * processing instruction node type
+         */
             PROCESSING_INSTRUCTION_NODE: 7,
             /**
-             * comment node type
-             */
+         * comment node type
+         */
             COMMENT_NODE: 8,
             /**
-             * document node type
-             */
+         * document node type
+         */
             DOCUMENT_NODE: 9,
             /**
-             * document type
-             */
+         * document type
+         */
             DOCUMENT_TYPE_NODE: 10,
             /**
-             * document fragment type
-             */
+         * document fragment type
+         */
             DOCUMENT_FRAGMENT_NODE: 11,
             /**
-             * notation type
-             */
-            NOTATION_NODE: 12
-        },
-        /**
-         * KISSY Dom Utils.
-         * Provides Dom helper methods.
-         * @class KISSY.DOM
-         * @singleton
+         * notation type
          */
-        Dom = {
+            NOTATION_NODE: 12
+        };    /**
+ * KISSY Dom Utils.
+ * Provides Dom helper methods.
+ * @class KISSY.DOM
+ * @singleton
+ */
+    /**
+ * KISSY Dom Utils.
+ * Provides Dom helper methods.
+ * @class KISSY.DOM
+ * @singleton
+ */
+    var Dom = module.exports = {
             /**
-             * Whether has been set a custom domain.
-             * Note not perfect: localhost:8888, domain='localhost'
-             * @param {Window} [win] Test window. Default current window.
-             * @return {Boolean}
-             */
+     * Whether has been set a custom domain.
+     * Note not perfect: localhost:8888, domain='localhost'
+     * @param {Window} [win] Test window. Default current window.
+     * @return {Boolean}
+     */
             isCustomDomain: function (win) {
                 win = win || WINDOW;
                 win = Dom.get(win);
@@ -134,11 +137,11 @@ KISSY.add('dom/base/api', [
             },
             // IPv6 IP support
             /**
-             * Get appropriate src for new empty iframe.
-             * Consider custom domain.
-             * @param {Window} [win] Window new iframe will be inserted into.
-             * @return {String} Src for iframe.
-             */
+     * Get appropriate src for new empty iframe.
+     * Consider custom domain.
+     * @param {Window} [win] Window new iframe will be inserted into.
+     * @return {String} Src for iframe.
+     */
             getEmptyIframeSrc: function (win) {
                 win = win || WINDOW;
                 win = Dom.get(win);
@@ -150,12 +153,12 @@ KISSY.add('dom/base/api', [
             },
             NodeType: NodeType,
             /**
-             * Return corresponding window if elem is document or window.
-             * Return global window if elem is undefined
-             * Else return false.
-             * @param {undefined|Window|HTMLDocument} [elem]
-             * @return {Window|Boolean}
-             */
+     * Return corresponding window if elem is document or window.
+     * Return global window if elem is undefined
+     * Else return false.
+     * @param {undefined|Window|HTMLDocument} [elem]
+     * @return {Window|Boolean}
+     */
             getWindow: function (elem) {
                 if (!elem) {
                     return WINDOW;
@@ -171,10 +174,10 @@ KISSY.add('dom/base/api', [
                 return doc.defaultView || doc.parentWindow;
             },
             /**
-             * Return corresponding document of this element.
-             * @param {HTMLElement|Window|HTMLDocument} [elem]
-             * @return {HTMLDocument}
-             */
+     * Return corresponding document of this element.
+     * @param {HTMLElement|Window|HTMLDocument} [elem]
+     * @return {HTMLDocument}
+     */
             getDocument: function (elem) {
                 if (!elem) {
                     return DOCUMENT;
@@ -191,10 +194,10 @@ KISSY.add('dom/base/api', [
                 return o && !o.nodeType && o.item && !o.setTimeout;
             },
             /**
-             * Get node 's nodeName in lowercase.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
-             * @return {String} el 's nodeName in lowercase
-             */
+     * Get node 's nodeName in lowercase.
+     * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+     * @return {String} el 's nodeName in lowercase
+     */
             nodeName: function (selector) {
                 var el = Dom.get(selector), nodeName = el.nodeName.toLowerCase();    // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
                 // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
@@ -207,26 +210,25 @@ KISSY.add('dom/base/api', [
                 return nodeName;
             },
             _RE_NUM_NO_PX: new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i')
-        };
-    return Dom;
-});    /*
+        };    /*
  2011-08
  - 添加节点类型枚举值，方便依赖程序清晰
  */
+});
 
 
-/**
+KISSY.add('dom/base/attr', [
+    'util',
+    './api'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/attr', [
-    'util',
-    './api'
-], function (S, require) {
     var util = require('util');
     var Dom = require('./api');
-    var doc = S.Env.host.document, NodeType = Dom.NodeType, docElement = doc && doc.documentElement, EMPTY = '', nodeName = Dom.nodeName, R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i, R_FOCUSABLE = /^(?:button|input|object|select|textarea)$/i, R_CLICKABLE = /^a(?:rea)?$/i, R_INVALID_CHAR = /:|^on/, R_RETURN = /\r/g, attrFix = {}, attrFn = {
+    var doc = document, NodeType = Dom.NodeType, docElement = doc && doc.documentElement, EMPTY = '', nodeName = Dom.nodeName, R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i, R_FOCUSABLE = /^(?:button|input|object|select|textarea)$/i, R_CLICKABLE = /^a(?:rea)?$/i, R_INVALID_CHAR = /:|^on/, R_RETURN = /\r/g, attrFix = {}, attrFn = {
             val: 1,
             css: 1,
             html: 1,
@@ -366,10 +368,10 @@ KISSY.add('dom/base/attr', [
         }
     }
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         _valHooks: valHooks,
         _propFix: propFix,
@@ -378,18 +380,18 @@ KISSY.add('dom/base/attr', [
         _attrNodeHook: attrNodeHook,
         _attrFix: attrFix,
         /**
-             * Get the value of a property for the first element in the set of matched elements.
-             * or
-             * Set one or more properties for the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector matched elements
-             * @param {String|Object} name The name of the property to set or A map of property-value pairs to set.
-             * @param {*} [value] A value to set for the property.
-             * @return {String|undefined|Boolean}
-             */
+         * Get the value of a property for the first element in the set of matched elements.
+         * or
+         * Set one or more properties for the set of matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector matched elements
+         * @param {String|Object} name The name of the property to set or A map of property-value pairs to set.
+         * @param {*} [value] A value to set for the property.
+         * @return {String|undefined|Boolean}
+         */
         prop: function (selector, name, value) {
             var elems = Dom.query(selector), i, elem, hook;    // supports hash
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 util.each(name, function (v, k) {
                     Dom.prop(elems, k, v);
                 });
@@ -415,11 +417,11 @@ KISSY.add('dom/base/attr', [
             return undefined;
         },
         /**
-             * Whether one of the matched elements has specified property name
-             * @param {HTMLElement[]|String|HTMLElement} selector 元素
-             * @param {String} name The name of property to test
-             * @return {Boolean}
-             */
+         * Whether one of the matched elements has specified property name
+         * @param {HTMLElement[]|String|HTMLElement} selector 元素
+         * @param {String} name The name of property to test
+         * @return {Boolean}
+         */
         hasProp: function (selector, name) {
             var elems = Dom.query(selector), i, len = elems.length, el;
             for (i = 0; i < len; i++) {
@@ -431,10 +433,10 @@ KISSY.add('dom/base/attr', [
             return false;
         },
         /**
-             * Remove a property for the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector matched elements
-             * @param {String} name The name of the property to remove.
-             */
+         * Remove a property for the set of matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector matched elements
+         * @param {String} name The name of the property to remove.
+         */
         removeProp: function (selector, name) {
             name = propFix[name] || name;
             var elems = Dom.query(selector), i, el;
@@ -448,49 +450,49 @@ KISSY.add('dom/base/attr', [
             }
         },
         /**
-             * Get the value of an attribute for the first element in the set of matched elements.
-             * or
-             * Set one or more attributes for the set of matched elements.
-             * @param {HTMLElement[]|HTMLElement|String} selector matched elements
-             * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
-             * @param {*} [val] A value to set for the attribute.
-             * @param {Boolean} [pass] internal use by anim
-             * @return {String|undefined}
-             */
+         * Get the value of an attribute for the first element in the set of matched elements.
+         * or
+         * Set one or more attributes for the set of matched elements.
+         * @param {HTMLElement[]|HTMLElement|String} selector matched elements
+         * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
+         * @param {*} [val] A value to set for the attribute.
+         * @param {Boolean} [pass] internal use by anim
+         * @return {String|undefined}
+         */
         attr: function (selector, name, val, pass) {
             /*
-                 Hazards From Caja Note:
+             Hazards From Caja Note:
 
-                 - In IE[67], el.setAttribute doesn't work for attributes like
-                 'class' or 'for'.  IE[67] expects you to set 'className' or
-                 'htmlFor'.  Caja use setAttributeNode solves this problem.
+             - In IE[67], el.setAttribute doesn't work for attributes like
+             'class' or 'for'.  IE[67] expects you to set 'className' or
+             'htmlFor'.  Caja use setAttributeNode solves this problem.
 
-                 - In IE[67], <input> elements can shadow attributes.  If el is a
-                 form that contains an <input> named x, then el.setAttribute(x, y)
-                 will set x's value rather than setting el's attribute.  Using
-                 setAttributeNode solves this problem.
+             - In IE[67], <input> elements can shadow attributes.  If el is a
+             form that contains an <input> named x, then el.setAttribute(x, y)
+             will set x's value rather than setting el's attribute.  Using
+             setAttributeNode solves this problem.
 
-                 - In IE[67], the style attribute can only be modified by setting
-                 el.style.cssText.  Neither setAttribute nor setAttributeNode will
-                 work.  el.style.cssText isn't bullet-proof, since it can be
-                 shadowed by <input> elements.
+             - In IE[67], the style attribute can only be modified by setting
+             el.style.cssText.  Neither setAttribute nor setAttributeNode will
+             work.  el.style.cssText isn't bullet-proof, since it can be
+             shadowed by <input> elements.
 
-                 - In IE[67], you can never change the type of an <button> element.
-                 setAttribute('type') silently fails, but setAttributeNode
-                 throws an exception.  caja : the silent failure. KISSY throws error.
+             - In IE[67], you can never change the type of an <button> element.
+             setAttribute('type') silently fails, but setAttributeNode
+             throws an exception.  caja : the silent failure. KISSY throws error.
 
-                 - In IE[67], you can never change the type of an <input> element.
-                 setAttribute('type') throws an exception.  We want the exception.
+             - In IE[67], you can never change the type of an <input> element.
+             setAttribute('type') throws an exception.  We want the exception.
 
-                 - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
-                 3rd argument.  setAttributeNode is case-insensitive.
+             - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
+             3rd argument.  setAttributeNode is case-insensitive.
 
-                 - Trying to set an invalid name like ':' is supposed to throw an
-                 error.  In IE[678] and Opera 10, it fails without an error.
-                 */
+             - Trying to set an invalid name like ':' is supposed to throw an
+             error.  In IE[678] and Opera 10, it fails without an error.
+             */
             var els = Dom.query(selector), attrNormalizer, i, el = els[0], ret;    // supports hash
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 pass = val;
                 for (var k in name) {
                     Dom.attr(els, k, name[k], pass);
@@ -558,10 +560,10 @@ KISSY.add('dom/base/attr', [
             return undefined;
         },
         /**
-             * Remove an attribute from each element in the set of matched elements.
-             * @param {HTMLElement[]|String} selector matched elements
-             * @param {String} name An attribute to remove
-             */
+         * Remove an attribute from each element in the set of matched elements.
+         * @param {HTMLElement[]|String} selector matched elements
+         * @param {String} name An attribute to remove
+         */
         removeAttr: function (selector, name) {
             name = name.toLowerCase();
             name = attrFix[name] || name;
@@ -578,12 +580,12 @@ KISSY.add('dom/base/attr', [
             }
         },
         /**
-             * Whether one of the matched elements has specified attribute
-             * @method
-             * @param {HTMLElement[]|String} selector matched elements
-             * @param {String} name The attribute to be tested
-             * @return {Boolean}
-             */
+         * Whether one of the matched elements has specified attribute
+         * @method
+         * @param {HTMLElement[]|String} selector matched elements
+         * @param {String} name The attribute to be tested
+         * @return {Boolean}
+         */
         hasAttr: docElement && !docElement.hasAttribute ? function (selector, name) {
             name = name.toLowerCase();
             var elems = Dom.query(selector), i, el, attrNode;    // from ppk :http://www.quirksmode.org/dom/w3c_core.html
@@ -611,13 +613,13 @@ KISSY.add('dom/base/attr', [
             return false;
         },
         /**
-             * Get the current value of the first element in the set of matched elements.
-             * or
-             * Set the value of each element in the set of matched elements.
-             * @param {HTMLElement[]|String} selector matched elements
-             * @param {String|String[]} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
-             * @return {undefined|String|String[]|Number}
-             */
+         * Get the current value of the first element in the set of matched elements.
+         * or
+         * Set the value of each element in the set of matched elements.
+         * @param {HTMLElement[]|String} selector matched elements
+         * @param {String|String[]} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
+         * @return {undefined|String|String[]|Number}
+         */
         val: function (selector, value) {
             var hook, ret, elem, els, i, val;    //getter
             //getter
@@ -660,13 +662,13 @@ KISSY.add('dom/base/attr', [
             return undefined;
         },
         /**
-             * Get the combined text contents of each element in the set of matched elements, including their descendants.
-             * or
-             * Set the content of each element in the set of matched elements to the specified text.
-             * @param {HTMLElement[]|HTMLElement|String} selector matched elements
-             * @param {String} [val] A string of text to set as the content of each matched element.
-             * @return {String|undefined}
-             */
+         * Get the combined text contents of each element in the set of matched elements, including their descendants.
+         * or
+         * Set the content of each element in the set of matched elements to the specified text.
+         * @param {HTMLElement[]|HTMLElement|String} selector matched elements
+         * @param {String} [val] A string of text to set as the content of each matched element.
+         * @return {String|undefined}
+         */
         text: function (selector, val) {
             var el, els, i, nodeType;    // getter
             // getter
@@ -696,9 +698,7 @@ KISSY.add('dom/base/attr', [
         _getText: function (el) {
             return el.textContent;
         }
-    });
-    return Dom;
-});    /*
+    });    /*
  NOTES:
  yiminghe@gmail.com: 2013-03-19
  - boolean property 和 attribute ie 和其他浏览器不一致，统一为类似 ie8：
@@ -726,15 +726,16 @@ KISSY.add('dom/base/attr', [
  property of an option 在 Safari 4 中已修复。
 
  */
-/**
+});
+KISSY.add('dom/base/class', [
+    './api',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * batch class operation
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/base/class', [
-    './api',
-    'util'
-], function (S, require) {
     var Dom = require('./api');
     var util = require('util');
     var slice = [].slice, NodeType = Dom.NodeType, RE_SPLIT = /[\.\s]\s*\.?/;
@@ -772,10 +773,10 @@ KISSY.add('dom/base/class', [
         };
     }
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         _hasClass: function (elem, classNames) {
             var i, l, className, classList = elem.classList;
@@ -794,13 +795,13 @@ KISSY.add('dom/base/class', [
         _removeClass: batchClassList('remove'),
         _toggleClass: batchClassList('toggle'),
         /**
-             * Determine whether any of the matched elements are assigned the given classes.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @method
-             * @param {String} className One or more class names to search for.
-             * multiple class names is separated by space
-             * @return {Boolean}
-             */
+         * Determine whether any of the matched elements are assigned the given classes.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @method
+         * @param {String} className One or more class names to search for.
+         * multiple class names is separated by space
+         * @return {Boolean}
+         */
         hasClass: function (selector, className) {
             var ret = false;
             className = strToArray(className);
@@ -814,53 +815,48 @@ KISSY.add('dom/base/class', [
             return ret;
         },
         /**
-             * Replace a class with another class for matched elements.
-             * If no oldClassName is present, the newClassName is simply added.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @method
-             * @param {String} oldClassName One or more class names to be removed from the class attribute of each matched element.
-             * multiple class names is separated by space
-             * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
-             * multiple class names is separated by space
-             */
+         * Replace a class with another class for matched elements.
+         * If no oldClassName is present, the newClassName is simply added.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @method
+         * @param {String} oldClassName One or more class names to be removed from the class attribute of each matched element.
+         * multiple class names is separated by space
+         * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
+         * multiple class names is separated by space
+         */
         replaceClass: function (selector, oldClassName, newClassName) {
             Dom.removeClass(selector, oldClassName);
             Dom.addClass(selector, newClassName);
         },
         /**
-             * Adds the specified class(es) to each of the set of matched elements.
-             * @method
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {String} className One or more class names to be added to the class attribute of each matched element.
-             * multiple class names is separated by space
-             */
+         * Adds the specified class(es) to each of the set of matched elements.
+         * @method
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @param {String} className One or more class names to be added to the class attribute of each matched element.
+         * multiple class names is separated by space
+         */
         addClass: batchEls('_addClass'),
         /**
-             * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @method
-             * @param {String} className One or more class names to be removed from the class attribute of each matched element.
-             * multiple class names is separated by space
-             */
+         * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @method
+         * @param {String} className One or more class names to be removed from the class attribute of each matched element.
+         * multiple class names is separated by space
+         */
         removeClass: batchEls('_removeClass'),
         /**
-             * Add or remove one or more classes from each element in the set of
-             * matched elements, depending on either the class's presence or the
-             * value of the switch argument.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {String} className One or more class names to be added to the class attribute of each matched element.
-             * multiple class names is separated by space
-             * @method
-             */
+         * Add or remove one or more classes from each element in the set of
+         * matched elements, depending on either the class's presence or the
+         * value of the switch argument.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @param {String} className One or more class names to be added to the class attribute of each matched element.
+         * multiple class names is separated by space
+         * @method
+         */
         toggleClass: batchEls('_toggleClass')    // @param [state] {Boolean} optional boolean to indicate whether class
                                                  // should be added or removed regardless of current state.
                                                  // latest firefox/ie10 does not support
-    });
-    // @param [state] {Boolean} optional boolean to indicate whether class
-    // should be added or removed regardless of current state.
-    // latest firefox/ie10 does not support
-    return Dom;
-});    /*
+    });    /*
  http://jsperf.com/kissy-classlist-vs-classname 17157:14741
  http://jsperf.com/kissy-1-3-vs-jquery-on-dom-class 15721:15223
 
@@ -868,20 +864,54 @@ KISSY.add('dom/base/class', [
  - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
  - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */
-/**
+});
+KISSY.add('dom/base/create', [
+    'util',
+    'logger-manager',
+    './api',
+    'ua'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/create', [
-    'util',
-    './api',
-    'ua'
-], function (S, require) {
     var util = require('util');
-    var logger = S.getLogger('s/dom');
+    var undef;
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/dom');
     var Dom = require('./api');
-    var doc = S.Env.host.document, NodeType = Dom.NodeType, UA = require('ua'), ie = UA.ieMode, DIV = 'div', PARENT_NODE = 'parentNode', DEFAULT_DIV = doc && doc.createElement(DIV), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(ie && ie < 9), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = doc && 'outerHTML' in doc.documentElement, RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;    // help compression
+    var doc = document, NodeType = Dom.NodeType, UA = require('ua'), ie = UA.ieMode, DIV = 'div', PARENT_NODE = 'parentNode', DEFAULT_DIV = doc && doc.createElement(DIV), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(ie && ie < 9), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = doc && 'outerHTML' in doc.documentElement, RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+    var creators = Dom._creators = { div: defaultCreator }, creatorsMap = {
+            area: 'map',
+            thead: 'table',
+            td: 'tr',
+            th: 'tr',
+            tr: 'tbody',
+            tbody: 'table',
+            tfoot: 'table',
+            caption: 'table',
+            colgroup: 'table',
+            col: 'colgroup',
+            legend: 'fieldset'
+        }, p;
+    var tagTpl = '<{tag}>{html}</tag>';    // 残缺元素处理
+    // 残缺元素处理
+    for (p in creatorsMap) {
+        /*jshint loopfunc: true*/
+        (function (tag) {
+            creators[p] = function (html, ownerDoc) {
+                return Dom.create(util.substitute(tagTpl, {
+                    tag: tag,
+                    html: html
+                }), undef, ownerDoc);
+            };
+        }(creatorsMap[p]));
+    }    // https://github.com/kissyteam/kissy/issues/422
+    // https://github.com/kissyteam/kissy/issues/422
+    creators.option = creators.optgroup = function (html, ownerDoc) {
+        return Dom.create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
+    };    // help compression
     // help compression
     function getElementsByTagName(el, tag) {
         return el.getElementsByTagName(tag);
@@ -933,21 +963,21 @@ KISSY.add('dom/base/create', [
         }
     }
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         /**
-             * Creates Dom elements on the fly from the provided string of raw HTML.
-             * @param {String|HTMLElement} html A string of HTML to create on the fly.
-             * Note that this parses HTML, not XML.
-             * @param {Object} [props] An map of attributes on the newly-created element.
-             * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
-             * @param {Boolean} [_trim] internal usage
-             * @return {DocumentFragment|HTMLElement}
-             */
-        create: function (html, props, ownerDoc, _trim) {
+         * Creates Dom elements on the fly from the provided string of raw HTML.
+         * @param {String|HTMLElement} html A string of HTML to create on the fly.
+         * Note that this parses HTML, not XML.
+         * @param {Object} [attrs] An map of attributes on the newly-created element.
+         * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
+         * @param {Boolean} [_trim] internal usage
+         * @return {DocumentFragment|HTMLElement}
+         */
+        create: function (html, attrs, ownerDoc, _trim) {
             var ret = null;
             if (!html) {
                 return ret;
@@ -993,10 +1023,10 @@ KISSY.add('dom/base/create', [
                     // return multiple nodes as a fragment
                     ret = nodeListToFragment(nodes);
                 } else {
-                    S.error(html + ' : create node error');
+                    logger.error(html + ' : create node error');
                 }
             }
-            return attachProps(ret, props);
+            return attrs ? setAttributes(ret, attrs) : ret;
         },
         _fixCloneAttributes: function (src, dest) {
             var nodeName = src.nodeName.toLowerCase();
@@ -1018,16 +1048,15 @@ KISSY.add('dom/base/create', [
                 }
             }
         },
-        _creators: { div: defaultCreator },
         _defaultCreator: defaultCreator,
         /**
-             * Get the HTML contents of the first element in the set of matched elements.
-             * or
-             * Set the HTML contents of each element in the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {String} [htmlString]  A string of HTML to set as the content of each matched element.
-             * @param {Boolean} [loadScripts=false] True to look for and process scripts
-             */
+         * Get the HTML contents of the first element in the set of matched elements.
+         * or
+         * Set the HTML contents of each element in the set of matched elements.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @param {String} [htmlString]  A string of HTML to set as the content of each matched element.
+         * @param {Boolean} [loadScripts=false] True to look for and process scripts
+         */
         html: function (selector, htmlString, loadScripts) {
             // supports css selector/Node/NodeList
             var els = Dom.query(selector), el = els[0], success = false, valNode, i, elem;
@@ -1078,13 +1107,13 @@ KISSY.add('dom/base/create', [
             return undefined;
         },
         /**
-             * Get the outerHTML of the first element in the set of matched elements.
-             * or
-             * Set the outerHTML of each element in the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {String} [htmlString]  A string of HTML to set as outerHTML of each matched element.
-             * @param {Boolean} [loadScripts=false] True to look for and process scripts
-             */
+         * Get the outerHTML of the first element in the set of matched elements.
+         * or
+         * Set the outerHTML of each element in the set of matched elements.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @param {String} [htmlString]  A string of HTML to set as outerHTML of each matched element.
+         * @param {Boolean} [loadScripts=false] True to look for and process scripts
+         */
         outerHtml: function (selector, htmlString, loadScripts) {
             var els = Dom.query(selector), holder, i, valNode, length = els.length, el = els[0];
             if (!el) {
@@ -1118,12 +1147,12 @@ KISSY.add('dom/base/create', [
             return undefined;
         },
         /**
-             * Remove the set of matched elements from the Dom.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
-             */
+         * Remove the set of matched elements from the Dom.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
+         */
         remove: function (selector, keepData) {
-            var el, els = Dom.query(selector), all, DOMEvent = S.require('event/dom'), i;
+            var el, els = Dom.query(selector), all, DOMEvent = module.require('event/dom'), i;
             for (i = els.length - 1; i >= 0; i--) {
                 el = els[i];
                 if (!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
@@ -1147,24 +1176,24 @@ KISSY.add('dom/base/create', [
             }
         },
         /**
-             * Create a deep copy of the first of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
-             * @param {Boolean} [deep.deep] whether perform deep copy
-             * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
-             * whether event handlers and data should be copied along with the elements.
-             * @param {Boolean} [deep.deepWithDataAndEvent=false]
-             * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
-             * if set true then deep argument must be set true as well.
-             * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
-             * whether event handlers and data should be copied along with the elements.
-             * @param {Boolean} [deepWithDataAndEvent=false]
-             * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
-             * if set true then deep argument must be set true as well.
-             * refer: https://developer.mozilla.org/En/Dom/Node.cloneNode
-             * @return {HTMLElement}
-             * @member KISSY.DOM
-             */
+         * Create a deep copy of the first of matched elements.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
+         * @param {Boolean} [deep.deep] whether perform deep copy
+         * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
+         * whether event handlers and data should be copied along with the elements.
+         * @param {Boolean} [deep.deepWithDataAndEvent=false]
+         * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+         * if set true then deep argument must be set true as well.
+         * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
+         * whether event handlers and data should be copied along with the elements.
+         * @param {Boolean} [deepWithDataAndEvent=false]
+         * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+         * if set true then deep argument must be set true as well.
+         * refer: https://developer.mozilla.org/En/Dom/Node.cloneNode
+         * @return {HTMLElement}
+         * @member KISSY.DOM
+         */
         clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
             if (typeof deep === 'object') {
                 deepWithDataAndEvent = deep.deepWithDataAndEvent;
@@ -1184,8 +1213,8 @@ KISSY.add('dom/base/create', [
             // 1. ie<9 <script>xx</script> => <script></script>
             // 2. ie will execute external script
             clone = /**
-                 @type HTMLElement
-                 @ignore*/
+             @type HTMLElement
+             @ignore*/
             elem.cloneNode(deep);
             if (elemNodeType === NodeType.ELEMENT_NODE || elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
                 // IE copies events bound via attachEvent when using cloneNode.
@@ -1210,9 +1239,9 @@ KISSY.add('dom/base/create', [
             return clone;
         },
         /**
-             * Remove(include data and event handlers) all child nodes of the set of matched elements from the Dom.
-             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             */
+         * Remove(include data and event handlers) all child nodes of the set of matched elements from the Dom.
+         * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+         */
         empty: function (selector) {
             var els = Dom.query(selector), el, i;
             for (i = els.length - 1; i >= 0; i--) {
@@ -1246,7 +1275,7 @@ KISSY.add('dom/base/create', [
     }    // 克隆除了事件的 data
     // 克隆除了事件的 data
     function cloneWithDataAndEvent(src, dest) {
-        var DOMEvent = S.require('event/dom'), srcData, d;
+        var DOMEvent = module.require('event/dom'), srcData, d;
         if (dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
             return;
         }
@@ -1262,14 +1291,13 @@ KISSY.add('dom/base/create', [
         }
     }    // 添加成员到元素中
     // 添加成员到元素中
-    function attachProps(elem, props) {
-        if (util.isPlainObject(props)) {
-            if (elem.nodeType === NodeType.ELEMENT_NODE) {
-                Dom.attr(elem, props, true);
-            } else if (elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
-                // document fragment
-                Dom.attr(elem.childNodes, props, true);
-            }
+    function setAttributes(elem, attrs) {
+        var nodeType = elem.nodeType;
+        if (nodeType === NodeType.ELEMENT_NODE) {
+            Dom.attr(elem, attrs, true);
+        } else if (nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
+            // document fragment
+            Dom.attr(elem.childNodes, attrs, true);
         }
         return elem;
     }    // 将 nodeList 转换为 fragment
@@ -1287,35 +1315,7 @@ KISSY.add('dom/base/create', [
             logger.error('Unable to convert ' + nodes + ' to fragment.');
         }
         return ret;
-    }    // 残缺元素处理
-    // 残缺元素处理
-    var creators = Dom._creators, create = Dom.create, creatorsMap = {
-            area: 'map',
-            thead: 'table',
-            td: 'tr',
-            th: 'tr',
-            tr: 'tbody',
-            tbody: 'table',
-            tfoot: 'table',
-            caption: 'table',
-            colgroup: 'table',
-            col: 'colgroup',
-            legend: 'fieldset'
-        }, p;
-    for (p in creatorsMap) {
-        /*jshint loopfunc: true*/
-        (function (tag) {
-            creators[p] = function (html, ownerDoc) {
-                return create('<' + tag + '>' + html + '<' + '/' + tag + '>', undefined, ownerDoc);
-            };
-        }(creatorsMap[p]));
-    }    // https://github.com/kissyteam/kissy/issues/422
-    // https://github.com/kissyteam/kissy/issues/422
-    creators.option = creators.optgroup = function (html, ownerDoc) {
-        return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
-    };
-    return Dom;
-});    /*
+    }    /*
  2012-01-31
  remove spurious tbody
 
@@ -1329,21 +1329,23 @@ KISSY.add('dom/base/create', [
  remove 需要对子孙节点以及自身清除事件以及自定义 data
  create 修改，支持 <style></style> ie 下直接创建
  */
-/**
+});
+
+KISSY.add('dom/base/data', [
+    'util',
+    './api'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/data', [
-    'util',
-    './api'
-], function (S, require) {
     var util = require('util');    /*jshint eqeqeq:false*/
                                    // cannot use === for window in ie8
     /*jshint eqeqeq:false*/
     // cannot use === for window in ie8
     var Dom = require('./api');
-    var win = S.Env.host, EXPANDO = '_ks_data_' + util.now(),
+    var win = window, EXPANDO = '_ks_data_' + util.now(),
         // 让每一份 kissy 的 expando 都不同
         dataCache = {},
         // 存储 node 节点的 data
@@ -1480,18 +1482,18 @@ KISSY.add('dom/base/data', [
             }
         };
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         __EXPANDO: EXPANDO,
         /**
-             * Determine whether an element has any data or specified data name associated with it.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String} [name] A string naming the piece of data to set.
-             * @return {Boolean}
-             */
+         * Determine whether an element has any data or specified data name associated with it.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String} [name] A string naming the piece of data to set.
+         * @return {Boolean}
+         */
         hasData: function (selector, name) {
             var ret = false, elems = Dom.query(selector);
             for (var i = 0; i < elems.length; i++) {
@@ -1509,20 +1511,20 @@ KISSY.add('dom/base/data', [
             return ret;
         },
         /**
-             * If name set and data unset Store arbitrary data associated with the specified element. Returns undefined.
-             * or
-             * If name set and data unset returns value at named data store for the element
-             * or
-             * If name unset and data unset returns the full data store for the element.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String} [name] A string naming the piece of data to set.
-             * @param {*} [data] The new data value.
-             * @return {Object|undefined}
-             */
+         * If name set and data unset Store arbitrary data associated with the specified element. Returns undefined.
+         * or
+         * If name set and data unset returns value at named data store for the element
+         * or
+         * If name unset and data unset returns the full data store for the element.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String} [name] A string naming the piece of data to set.
+         * @param {*} [data] The new data value.
+         * @return {Object|undefined}
+         */
         data: function (selector, name, data) {
             var elems = Dom.query(selector), elem = elems[0];    // supports hash
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 for (var k in name) {
                     Dom.data(elems, k, name[k]);
                 }
@@ -1552,12 +1554,12 @@ KISSY.add('dom/base/data', [
             return undefined;
         },
         /**
-             * Remove a previously-stored piece of data from matched elements.
-             * or
-             * Remove all data from matched elements if name unset.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String} [name] A string naming the piece of data to delete.
-             */
+         * Remove a previously-stored piece of data from matched elements.
+         * or
+         * Remove all data from matched elements if name unset.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String} [name] A string naming the piece of data to delete.
+         */
         removeData: function (selector, name) {
             var els = Dom.query(selector), elem, i;
             for (i = els.length - 1; i >= 0; i--) {
@@ -1571,13 +1573,13 @@ KISSY.add('dom/base/data', [
             }
         },
         /**
-             * clean data from element
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {Boolean} deep whether clean descendant nodes
-             */
+         * clean data from element
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {Boolean} deep whether clean descendant nodes
+         */
         cleanData: function (selector, deep) {
             var els = Dom.query(selector), elem, i;
-            var DOMEvent = S.require('event/dom');
+            var DOMEvent = module.require('event/dom');
             for (i = els.length - 1; i >= 0; i--) {
                 elem = els[i];
                 if (elem.nodeType) {
@@ -1595,21 +1597,20 @@ KISSY.add('dom/base/data', [
                 }
             }
         }
-    });
-    return Dom;
-});    /*
+    });    /*
  yiminghe@gmail.com：2011-05-31
  - 分层，节点和普通对象分开处理
  */
-/**
+});
+KISSY.add('dom/base/insertion', [
+    'util',
+    './api'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/insertion', [
-    'util',
-    './api'
-], function (S, require) {
     var util = require('util');
     var Dom = require('./api');
     var PARENT_NODE = 'parentNode', NodeType = Dom.NodeType, RE_FORM_EL = /^(?:button|input|object|select|textarea)$/i, getNodeName = Dom.nodeName, makeArray = util.makeArray, splice = [].splice, NEXT_SIBLING = 'nextSibling', R_SCRIPT_TYPE = /\/(java|ecma)script/i;
@@ -1655,7 +1656,7 @@ KISSY.add('dom/base/insertion', [
     // execute script
     function evalScript(el) {
         if (el.src) {
-            S.getScript(el.src);
+            require.load(el.src);
         } else {
             var code = util.trim(el.text || el.textContent || el.innerHTML || '');
             if (code) {
@@ -1707,18 +1708,18 @@ KISSY.add('dom/base/insertion', [
     }    // loadScripts default to false to prevent xss
     // loadScripts default to false to prevent xss
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         _fixInsertionChecked: null,
         /**
-             * Insert every element in the set of newNodes before every element in the set of refNodes.
-             * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
-             * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
-             * @param {Boolean} [loadScripts] whether execute script node
-             */
+         * Insert every element in the set of newNodes before every element in the set of refNodes.
+         * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
+         * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+         * @param {Boolean} [loadScripts] whether execute script node
+         */
         insertBefore: function (newNodes, refNodes, loadScripts) {
             insertion(newNodes, refNodes, function (newNode, refNode) {
                 if (refNode[PARENT_NODE]) {
@@ -1727,11 +1728,11 @@ KISSY.add('dom/base/insertion', [
             }, loadScripts);
         },
         /**
-             * Insert every element in the set of newNodes after every element in the set of refNodes.
-             * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
-             * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
-             * @param {Boolean} [loadScripts] whether execute script node
-             */
+         * Insert every element in the set of newNodes after every element in the set of refNodes.
+         * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
+         * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+         * @param {Boolean} [loadScripts] whether execute script node
+         */
         insertAfter: function (newNodes, refNodes, loadScripts) {
             insertion(newNodes, refNodes, function (newNode, refNode) {
                 if (refNode[PARENT_NODE]) {
@@ -1740,32 +1741,32 @@ KISSY.add('dom/base/insertion', [
             }, loadScripts);
         },
         /**
-             * Insert every element in the set of newNodes to the end of every element in the set of parents.
-             * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
-             * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
-             * @param {Boolean} [loadScripts] whether execute script node
-             */
+         * Insert every element in the set of newNodes to the end of every element in the set of parents.
+         * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
+         * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+         * @param {Boolean} [loadScripts] whether execute script node
+         */
         appendTo: function (newNodes, parents, loadScripts) {
             insertion(newNodes, parents, function (newNode, parent) {
                 parent.appendChild(newNode);
             }, loadScripts);
         },
         /**
-             * Insert every element in the set of newNodes to the beginning of every element in the set of parents.
-             * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
-             * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
-             * @param {Boolean} [loadScripts] whether execute script node
-             */
+         * Insert every element in the set of newNodes to the beginning of every element in the set of parents.
+         * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
+         * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+         * @param {Boolean} [loadScripts] whether execute script node
+         */
         prependTo: function (newNodes, parents, loadScripts) {
             insertion(newNodes, parents, function (newNode, parent) {
                 parent.insertBefore(newNode, parent.firstChild);
             }, loadScripts);
         },
         /**
-             * Wrap a node around all elements in the set of matched elements
-             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
-             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
-             */
+         * Wrap a node around all elements in the set of matched elements
+         * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+         * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+         */
         wrapAll: function (wrappedNodes, wrapperNode) {
             // deep clone
             wrapperNode = Dom.clone(Dom.get(wrapperNode), true);
@@ -1780,10 +1781,10 @@ KISSY.add('dom/base/insertion', [
             Dom.appendTo(wrappedNodes, wrapperNode);
         },
         /**
-             * Wrap a node around each element in the set of matched elements
-             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
-             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
-             */
+         * Wrap a node around each element in the set of matched elements
+         * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+         * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+         */
         wrap: function (wrappedNodes, wrapperNode) {
             wrappedNodes = Dom.query(wrappedNodes);
             wrapperNode = Dom.get(wrapperNode);
@@ -1792,10 +1793,10 @@ KISSY.add('dom/base/insertion', [
             });
         },
         /**
-             * Wrap a node around the childNodes of each element in the set of matched elements.
-             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
-             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
-             */
+         * Wrap a node around the childNodes of each element in the set of matched elements.
+         * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+         * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+         */
         wrapInner: function (wrappedNodes, wrapperNode) {
             wrappedNodes = Dom.query(wrappedNodes);
             wrapperNode = Dom.get(wrapperNode);
@@ -1809,10 +1810,10 @@ KISSY.add('dom/base/insertion', [
             });
         },
         /**
-             * Remove the parents of the set of matched elements from the Dom,
-             * leaving the matched elements in their place.
-             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
-             */
+         * Remove the parents of the set of matched elements from the Dom,
+         * leaving the matched elements in their place.
+         * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+         */
         unwrap: function (wrappedNodes) {
             wrappedNodes = Dom.query(wrappedNodes);
             util.each(wrappedNodes, function (w) {
@@ -1821,10 +1822,10 @@ KISSY.add('dom/base/insertion', [
             });
         },
         /**
-             * Replace each element in the set of matched elements with the provided newNodes.
-             * @param {HTMLElement|HTMLElement[]|String} selector set of matched elements
-             * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
-             */
+         * Replace each element in the set of matched elements with the provided newNodes.
+         * @param {HTMLElement|HTMLElement[]|String} selector set of matched elements
+         * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
+         */
         replaceWith: function (selector, newNodes) {
             var nodes = Dom.query(selector);
             newNodes = Dom.query(newNodes);
@@ -1840,9 +1841,7 @@ KISSY.add('dom/base/insertion', [
         after: 'insertAfter'
     }, function (value, key) {
         Dom[key] = Dom[value];
-    });
-    return Dom;
-});    /*
+    });    /*
  2012-04-05 yiminghe@gmail.com
  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
 
@@ -1851,39 +1850,40 @@ KISSY.add('dom/base/insertion', [
  Dom.append('.multi1','.multi2');
 
  */
-/**
- * @ignore
- * @author  lifesinger@gmail.com
- *          yiminghe@gmail.com
- */
+});
 KISSY.add('dom/base/offset', [
     'util',
     './api',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * @author  lifesinger@gmail.com
+ *          yiminghe@gmail.com
+ */
     var util = require('util');
     var Dom = require('./api');
-    var win = S.Env.host, UA = require('ua'), doc = win.document, NodeType = Dom.NodeType, docElem = doc && doc.documentElement, getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
+    var win = window, UA = require('ua'), doc = win.document, NodeType = Dom.NodeType, docElem = doc && doc.documentElement, getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         /**
-             * Get the current coordinates of the first element in the set of matched elements, relative to the document.
-             * or
-             * Set the current coordinates of every element in the set of matched elements, relative to the document.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {Object} [coordinates ] An object containing the properties top and left,
-             * which are integers indicating the new top and left coordinates for the elements.
-             * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
-             * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
-             * @param {Window} [relativeWin] The window to measure relative to. If relativeWin
-             *     is not in the ancestor frame chain of the element, we measure relative to
-             *     the top-most window.
-             * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
-             */
+         * Get the current coordinates of the first element in the set of matched elements, relative to the document.
+         * or
+         * Set the current coordinates of every element in the set of matched elements, relative to the document.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {Object} [coordinates ] An object containing the properties top and left,
+         * which are integers indicating the new top and left coordinates for the elements.
+         * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
+         * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
+         * @param {Window} [relativeWin] The window to measure relative to. If relativeWin
+         *     is not in the ancestor frame chain of the element, we measure relative to
+         *     the top-most window.
+         * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
+         */
         offset: function (selector, coordinates, relativeWin) {
             var elem;    // getter
             // getter
@@ -1904,19 +1904,19 @@ KISSY.add('dom/base/offset', [
             return undefined;
         },
         /**
-             * scrolls the first of matched elements into container view
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
-             * @param {Boolean|Object} [alignWithTop=true]If true, the scrolled element is aligned with the top of the scroll area.
-             * If false, it is aligned with the bottom.
-             * @param {Boolean} [alignWithTop.allowHorizontalScroll=true] Whether trigger horizontal scroll.
-             * @param {Boolean} [alignWithTop.onlyScrollIfNeeded=false] scrollIntoView when element is out of view
-             * and set top to false or true automatically if top is undefined
-             * @param {Boolean} [allowHorizontalScroll=true] Whether trigger horizontal scroll.
-             * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-             *        http://yiminghe.javaeye.com/blog/390732
-             */
+         * scrolls the first of matched elements into container view
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
+         * @param {Boolean|Object} [alignWithTop=true]If true, the scrolled element is aligned with the top of the scroll area.
+         * If false, it is aligned with the bottom.
+         * @param {Boolean} [alignWithTop.allowHorizontalScroll=true] Whether trigger horizontal scroll.
+         * @param {Boolean} [alignWithTop.onlyScrollIfNeeded=false] scrollIntoView when element is out of view
+         * and set top to false or true automatically if top is undefined
+         * @param {Boolean} [allowHorizontalScroll=true] Whether trigger horizontal scroll.
+         * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
+         */
         scrollIntoView: function (selector, container, alignWithTop, allowHorizontalScroll) {
             var elem, onlyScrollIfNeeded;
             if (!(elem = Dom.get(selector))) {
@@ -1932,7 +1932,7 @@ KISSY.add('dom/base/offset', [
             if (container.nodeType === NodeType.DOCUMENT_NODE) {
                 container = getWindow(container);
             }
-            if (util.isPlainObject(alignWithTop)) {
+            if (typeof alignWithTop === 'object') {
                 allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
                 onlyScrollIfNeeded = alignWithTop.onlyScrollIfNeeded;
                 alignWithTop = alignWithTop.alignWithTop;
@@ -2029,46 +2029,46 @@ KISSY.add('dom/base/offset', [
             }
         },
         /**
-             * Get the width of document
-             * @param {Window} [win=window] Window to be referred.
-             * @method
-             */
+         * Get the width of document
+         * @param {Window} [win=window] Window to be referred.
+         * @method
+         */
         docWidth: 0,
         /**
-             * Get the height of document
-             * @param {Window} [win=window] Window to be referred.
-             * @method
-             */
+         * Get the height of document
+         * @param {Window} [win=window] Window to be referred.
+         * @method
+         */
         docHeight: 0,
         /**
-             * Get the height of window
-             * @param {Window} [win=window] Window to be referred.
-             * @method
-             */
+         * Get the height of window
+         * @param {Window} [win=window] Window to be referred.
+         * @method
+         */
         viewportHeight: 0,
         /**
-             * Get the width of document
-             * @param {Window} [win=window] Window to be referred.
-             * @method
-             */
+         * Get the width of document
+         * @param {Window} [win=window] Window to be referred.
+         * @method
+         */
         viewportWidth: 0,
         /**
-             * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
-             * or
-             * Set the current vertical position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
-             * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @method
-             */
+         * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
+         * or
+         * Set the current vertical position of the scroll bar for each of the set of matched elements.
+         * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
+         * @param {Number} value An integer indicating the new position to set the scroll bar to.
+         * @method
+         */
         scrollTop: 0,
         /**
-             * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
-             * or
-             * Set the current horizontal position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
-             * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @method
-             */
+         * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
+         * or
+         * Set the current horizontal position of the scroll bar for each of the set of matched elements.
+         * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
+         * @param {Number} value An integer indicating the new position to set the scroll bar to.
+         * @method
+         */
         scrollLeft: 0
     });    // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
            // http://www.quirksmode.org/dom/w3c_cssom.html
@@ -2248,9 +2248,7 @@ KISSY.add('dom/base/offset', [
             ret[key] = current + offset[key] - old[key];
         }
         Dom.css(elem, ret);
-    }
-    return Dom;
-});    /*
+    }    /*
  2013-07 A tale if two viewports
  - A tale of two viewports: http://www.quirksmode.org/mobile/viewports.html
 
@@ -2268,21 +2266,24 @@ KISSY.add('dom/base/offset', [
  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */
-/**
+});
+KISSY.add('dom/base/style', [
+    'util',
+    'logger-manager',
+    './api',
+    'feature',
+    'ua'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/style', [
-    'util',
-    './api',
-    'feature',
-    'ua'
-], function (S, require) {
     var util = require('util');
-    var logger = S.getLogger('s/dom');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/dom');
     var Dom = require('./api');
-    var globalWindow = S.Env.host, getCssVendorInfo = require('feature').getCssVendorInfo, UA = require('ua'), BOX_MODELS = [
+    var globalWindow = window, getCssVendorInfo = require('feature').getCssVendorInfo, UA = require('ua'), BOX_MODELS = [
             'margin',
             'border',
             'padding'
@@ -2319,10 +2320,10 @@ KISSY.add('dom/base/style', [
         return oldDisplay;
     }
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         _cssHooks: cssHooks,
         _cssProps: cssProps,
@@ -2352,18 +2353,18 @@ KISSY.add('dom/base/style', [
             return val;
         },
         /**
-             *  Get inline style property from the first element of matched elements
-             *  or
-             *  Set one or more CSS properties for the set of matched elements.
-             *  @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             *  @param {String|Object} name A CSS property. or A map of property-value pairs to set.
-             *  @param [val] A value to set for the property.
-             *  @return {undefined|String}
-             */
+         *  Get inline style property from the first element of matched elements
+         *  or
+         *  Set one or more CSS properties for the set of matched elements.
+         *  @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         *  @param {String|Object} name A CSS property. or A map of property-value pairs to set.
+         *  @param [val] A value to set for the property.
+         *  @return {undefined|String}
+         */
         style: function (selector, name, val) {
             var els = Dom.query(selector), k, ret, elem = els[0], i;    // supports hash
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 for (k in name) {
                     for (i = els.length - 1; i >= 0; i--) {
                         style(els[i], k, name[k]);
@@ -2385,18 +2386,18 @@ KISSY.add('dom/base/style', [
             return undefined;
         },
         /**
-             * Get the computed value of a style property for the first element in the set of matched elements.
-             * or
-             * Set one or more CSS properties for the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Object} name A CSS property. or A map of property-value pairs to set.
-             * @param [val] A value to set for the property.
-             * @return {undefined|String}
-             */
+         * Get the computed value of a style property for the first element in the set of matched elements.
+         * or
+         * Set one or more CSS properties for the set of matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {String|Object} name A CSS property. or A map of property-value pairs to set.
+         * @param [val] A value to set for the property.
+         * @return {undefined|String}
+         */
         css: function (selector, name, val) {
             var els = Dom.query(selector), elem = els[0], k, hook, ret, i;    // supports hash
             // supports hash
-            if (util.isPlainObject(name)) {
+            if (typeof name === 'object') {
                 for (k in name) {
                     for (i = els.length - 1; i >= 0; i--) {
                         style(els[i], k, name[k]);
@@ -2425,9 +2426,9 @@ KISSY.add('dom/base/style', [
             return undefined;
         },
         /**
-             * Display the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
-             */
+         * Display the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+         */
         show: function (selector) {
             var els = Dom.query(selector), tagName, old, elem, i;
             for (i = els.length - 1; i >= 0; i--) {
@@ -2443,9 +2444,9 @@ KISSY.add('dom/base/style', [
             }
         },
         /**
-             * Hide the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
-             */
+         * Hide the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+         */
         hide: function (selector) {
             var els = Dom.query(selector), elem, i;
             for (i = els.length - 1; i >= 0; i--) {
@@ -2460,9 +2461,9 @@ KISSY.add('dom/base/style', [
             }
         },
         /**
-             * Display or hide the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
-             */
+         * Display or hide the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+         */
         toggle: function (selector) {
             var els = Dom.query(selector), elem, i;
             for (i = els.length - 1; i >= 0; i--) {
@@ -2475,18 +2476,18 @@ KISSY.add('dom/base/style', [
             }
         },
         /**
-             * Creates a stylesheet from a text blob of rules.
-             * These rules will be wrapped in a style tag and appended to the HEAD of the document.
-             * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
-             * @param {Window} [refWin=window] Window which will accept this stylesheet
-             * @param {String} [cssText] The text containing the css rules
-             * @param {String} [id] An id to add to the stylesheet for later removal
-             */
+         * Creates a stylesheet from a text blob of rules.
+         * These rules will be wrapped in a style tag and appended to the HEAD of the document.
+         * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
+         * @param {Window} [refWin=window] Window which will accept this stylesheet
+         * @param {String} [cssText] The text containing the css rules
+         * @param {String} [id] An id to add to the stylesheet for later removal
+         */
         addStyleSheet: function (refWin, cssText, id) {
             if (typeof refWin === 'string') {
                 id = cssText;
                 cssText = /**@type String
-                     @ignore*/
+                 @ignore*/
                 refWin;
                 refWin = globalWindow;
             }
@@ -2510,85 +2511,85 @@ KISSY.add('dom/base/style', [
             }
         },
         /**
-             * Make matched elements unselectable
-             * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
-             */
+         * Make matched elements unselectable
+         * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
+         */
         unselectable: userSelectProperty ? function (selector) {
+            var els = Dom.query(selector);
+            for (var j = els.length - 1; j >= 0; j--) {
+                els[j].style[userSelectProperty] = 'none';
+            }
+        } : function (selector) {
             var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
+            excludes = [
+                'iframe',
+                'textarea',
+                'input',
+                'select'
+            ];
             for (j = _els.length - 1; j >= 0; j--) {
                 elem = _els[j];
                 style = elem.style;
                 els = elem.getElementsByTagName('*');
                 elem.setAttribute('unselectable', 'on');
-                excludes = [
-                    'iframe',
-                    'textarea',
-                    'input',
-                    'select'
-                ];
                 while (e = els[i++]) {
                     if (!util.inArray(getNodeName(e), excludes)) {
                         e.setAttribute('unselectable', 'on');
                     }
                 }
             }
-        } : function (selector) {
-            var els = Dom.query(selector);
-            for (var j = els.length - 1; j >= 0; j--) {
-                els[j].style[userSelectProperty] = 'none';
-            }
         },
         /**
-             * Get the current computed width for the first element in the set of matched elements, including padding but not border.
-             * @method
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @return {Number}
-             */
+         * Get the current computed width for the first element in the set of matched elements, including padding but not border.
+         * @method
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @return {Number}
+         */
         innerWidth: 0,
         /**
-             * Get the current computed height for the first element in the set of matched elements, including padding but not border.
-             * @method
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @return {Number}
-             */
+         * Get the current computed height for the first element in the set of matched elements, including padding but not border.
+         * @method
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @return {Number}
+         */
         innerHeight: 0,
         /**
-             *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
-             * @method
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
-             * @return {Number}
-             */
+         *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
+         * @method
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
+         * @return {Number}
+         */
         outerWidth: 0,
         /**
-             * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
-             * @method
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
-             * @return {Number}
-             */
+         * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
+         * @method
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
+         * @return {Number}
+         */
         outerHeight: 0,
         /**
-             * Get the current computed width for the first element in the set of matched elements.
-             * or
-             * Set the CSS width of each element in the set of matched elements.
-             * @method
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Number} [value]
-             * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
-             * @return {Number|undefined}
-             */
+         * Get the current computed width for the first element in the set of matched elements.
+         * or
+         * Set the CSS width of each element in the set of matched elements.
+         * @method
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Number} [value]
+         * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
+         * @return {Number|undefined}
+         */
         width: 0,
         /**
-             * Get the current computed height for the first element in the set of matched elements.
-             * or
-             * Set the CSS height of each element in the set of matched elements.
-             * @method
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Number} [value]
-             * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
-             * @return {Number|undefined}
-             */
+         * Get the current computed height for the first element in the set of matched elements.
+         * or
+         * Set the CSS height of each element in the set of matched elements.
+         * @method
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Number} [value]
+         * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
+         * @return {Number|undefined}
+         */
         height: 0
     });
     util.each([
@@ -2628,15 +2629,15 @@ KISSY.add('dom/base/style', [
             }
             return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
         };    /**
-         * @ignore
-         */
+     * @ignore
+     */
         /**
-         * @ignore
-         */
+     * @ignore
+     */
         cssHooks[name] = {
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             get: function (elem, computed) {
                 var val;
                 if (computed) {
@@ -2785,21 +2786,21 @@ KISSY.add('dom/base/style', [
         }
         return computedStyle;
     }    /*
-     得到元素的大小信息
-     @param elem
-     @param name
-     @param {String} [extra]  'padding' : (css width) + padding
-     'border' : (css width) + padding + border
-     'margin' : (css width) + padding + border + margin
-     */
+ 得到元素的大小信息
+ @param elem
+ @param name
+ @param {String} [extra]  'padding' : (css width) + padding
+ 'border' : (css width) + padding + border
+ 'margin' : (css width) + padding + border + margin
+ */
     /*
-     得到元素的大小信息
-     @param elem
-     @param name
-     @param {String} [extra]  'padding' : (css width) + padding
-     'border' : (css width) + padding + border
-     'margin' : (css width) + padding + border + margin
-     */
+ 得到元素的大小信息
+ @param elem
+ @param name
+ @param {String} [extra]  'padding' : (css width) + padding
+ 'border' : (css width) + padding + border
+ 'margin' : (css width) + padding + border + margin
+ */
     function getWH(elem, name, extra) {
         if (util.isWindow(elem)) {
             return name === WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
@@ -2880,9 +2881,7 @@ KISSY.add('dom/base/style', [
             offsetParent = offsetParent.offsetParent;
         }
         return offsetParent;
-    }
-    return Dom;
-});    /*
+    }    /*
  2011-12-21
  - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
  - w3c 为准，这里不 fix 了
@@ -2891,19 +2890,20 @@ KISSY.add('dom/base/style', [
  - 调整结构，减少耦合
  - fix css('height') === auto
  */
+});
 
-/**
+KISSY.add('dom/base/selector', [
+    './api',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * simple selector for dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/selector', [
-    './api',
-    'util'
-], function (S, require) {
     var Dom = require('./api');
     var util = require('util');
-    var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = 'getElementsByClassName' in doc, isArray = util.isArray, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = ' ', push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = util.trim;
+    var doc = document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = 'getElementsByClassName' in doc, isArray = util.isArray, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = ' ', push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = util.trim;
     function queryEach(f) {
         var self = this, l = self.length, i;
         for (i = 0; i < l; i++) {
@@ -3073,10 +3073,10 @@ KISSY.add('dom/base/selector', [
             return bit ? -1 : 1;
         };
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         _getElementsByTagName: function (name, context) {
             // can not use getElementsByTagName for fragment
@@ -3102,37 +3102,37 @@ KISSY.add('dom/base/selector', [
             return makeArray(context.querySelectorAll(str));
         },
         /**
-             * Accepts a string containing a CSS selector which is then used to match a set of elements.
-             * Note: do not pass form.elements to this function
-             * @param {String|HTMLElement[]} selector
-             * A string containing a selector expression.
-             * or
-             * array of HTMLElements.
-             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement} [context] context under which to find elements matching selector.
-             * @return {HTMLElement[]} The array of found HTMLElements
-             * @method
-             */
+         * Accepts a string containing a CSS selector which is then used to match a set of elements.
+         * Note: do not pass form.elements to this function
+         * @param {String|HTMLElement[]} selector
+         * A string containing a selector expression.
+         * or
+         * array of HTMLElements.
+         * @param {String|HTMLElement[]|HTMLDocument|HTMLElement} [context] context under which to find elements matching selector.
+         * @return {HTMLElement[]} The array of found HTMLElements
+         * @method
+         */
         query: query,
         /**
-             * Accepts a string containing a CSS selector which is then used to match a set of elements.
-             * @param {String|HTMLElement[]} selector
-             * A string containing a selector expression.
-             * or
-             * array of HTMLElements.
-             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|Window} [context] context under which to find elements matching selector.
-             * @return {HTMLElement} The first of found HTMLElements
-             */
+         * Accepts a string containing a CSS selector which is then used to match a set of elements.
+         * @param {String|HTMLElement[]} selector
+         * A string containing a selector expression.
+         * or
+         * array of HTMLElements.
+         * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|Window} [context] context under which to find elements matching selector.
+         * @return {HTMLElement} The first of found HTMLElements
+         */
         get: function (selector, context) {
             return query(selector, context)[0] || null;
         },
         /**
-             * Sorts an array of Dom elements, in place, with the duplicates removed.
-             * Note that this only works on arrays of Dom elements, not strings or numbers.
-             * @param {HTMLElement[]} The Array of Dom elements.
-             * @method
-             * @return {HTMLElement[]}
-             * @member KISSY.DOM
-             */
+         * Sorts an array of Dom elements, in place, with the duplicates removed.
+         * Note that this only works on arrays of Dom elements, not strings or numbers.
+         * @param {HTMLElement[]} The Array of Dom elements.
+         * @method
+         * @return {HTMLElement[]}
+         * @member KISSY.DOM
+         */
         unique: function () {
             var hasDuplicate, baseHasDuplicate = true;    // Here we check if the JavaScript engine is using some sort of
                                                           // optimization where it does not always call our comparison
@@ -3175,13 +3175,13 @@ KISSY.add('dom/base/selector', [
             };
         }(),
         /**
-             * Reduce the set of matched elements to those that match the selector or pass the function's test.
-             * @param {String|HTMLElement[]} selector Matched elements
-             * @param {String|Function} filter Selector string or filter function
-             * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
-             * @return {HTMLElement[]}
-             * @member KISSY.DOM
-             */
+         * Reduce the set of matched elements to those that match the selector or pass the function's test.
+         * @param {String|HTMLElement[]} selector Matched elements
+         * @param {String|Function} filter Selector string or filter function
+         * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
+         * @return {HTMLElement[]}
+         * @member KISSY.DOM
+         */
         filter: function (selector, filter, context) {
             var elems = query(selector, context), id, tag, match, cls, ret = [];
             if (typeof filter === 'string' && (filter = trim(filter)) && (match = rSimpleSelector.exec(filter))) {
@@ -3215,152 +3215,151 @@ KISSY.add('dom/base/selector', [
             return ret;
         },
         /**
-             * Returns true if the matched element(s) pass the filter test
-             * @param {String|HTMLElement[]} selector Matched elements
-             * @param {String|Function} filter Selector string or filter function
-             * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
-             * @member KISSY.DOM
-             * @return {Boolean}
-             */
+         * Returns true if the matched element(s) pass the filter test
+         * @param {String|HTMLElement[]} selector Matched elements
+         * @param {String|Function} filter Selector string or filter function
+         * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
+         * @member KISSY.DOM
+         * @return {Boolean}
+         */
         test: function (selector, filter, context) {
             var elements = query(selector, context);
             return elements.length && Dom.filter(elements, filter, context).length === elements.length;
         }
-    });
-    return Dom;
-});    /**
+    });    /**
  * @ignore
  * bachi selector optimize - 2013-07-17
  * - http://jsperf.com/queryselctor-vs-getelementbyclassname2
  * yiminghe@gmail.com - 2013-03-26
  * - refactor to use own css3 selector engine
  */
-/**
+});
+KISSY.add('dom/base/traversal', [
+    'util',
+    './api'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/traversal', [
-    'util',
-    './api'
-], function (S, require) {
     var util = require('util');
     var Dom = require('./api');
     var NodeType = Dom.NodeType, CONTAIN_MASK = 16;
     util.mix(Dom, /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
+     * @override KISSY.DOM
+     * @class
+     * @singleton
+     */
     {
         _contains: function (a, b) {
             return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
         },
         /**
-             * Get the first element that matches the filter,
-             * beginning at the first element of matched elements and progressing up through the Dom tree.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function|String[]|Function[]} filter Selector string or filter function or array
-             * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
-             * @return {HTMLElement|HTMLElement[]}
-             *  if filter is array, return all ancestors (include this) which match filter.
-             *  else return closest parent (include this) which matches filter.
-             */
+         * Get the first element that matches the filter,
+         * beginning at the first element of matched elements and progressing up through the Dom tree.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function|String[]|Function[]} filter Selector string or filter function or array
+         * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
+         * @return {HTMLElement|HTMLElement[]}
+         *  if filter is array, return all ancestors (include this) which match filter.
+         *  else return closest parent (include this) which matches filter.
+         */
         closest: function (selector, filter, context, allowTextNode) {
             return nth(selector, filter, 'parentNode', function (elem) {
                 return elem.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE;
             }, context, true, allowTextNode);
         },
         /**
-             * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function|String[]|Function[]} [filter] Selector string or filter function or array
-             * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
-             * @return {HTMLElement|HTMLElement[]}
-             *  if filter is array, return all ancestors which match filter.
-             *  else return closest parent which matches filter.
-             */
+         * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function|String[]|Function[]} [filter] Selector string or filter function or array
+         * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
+         * @return {HTMLElement|HTMLElement[]}
+         *  if filter is array, return all ancestors which match filter.
+         *  else return closest parent which matches filter.
+         */
         parent: function (selector, filter, context) {
             return nth(selector, filter, 'parentNode', function (elem) {
                 return elem.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE;
             }, context, undefined);
         },
         /**
-             * Get the first child of the first element in the set of matched elements.
-             * If a filter is provided, it retrieves the next child only if it matches that filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement}
-             */
+         * Get the first child of the first element in the set of matched elements.
+         * If a filter is provided, it retrieves the next child only if it matches that filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement}
+         */
         first: function (selector, filter, allowTextNode) {
             var elem = Dom.get(selector);
             return nth(elem && elem.firstChild, filter, 'nextSibling', undefined, undefined, true, allowTextNode);
         },
         /**
-             * Get the last child of the first element in the set of matched elements.
-             * If a filter is provided, it retrieves the previous child only if it matches that filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement}
-             */
+         * Get the last child of the first element in the set of matched elements.
+         * If a filter is provided, it retrieves the previous child only if it matches that filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement}
+         */
         last: function (selector, filter, allowTextNode) {
             var elem = Dom.get(selector);
             return nth(elem && elem.lastChild, filter, 'previousSibling', undefined, undefined, true, allowTextNode);
         },
         /**
-             * Get the immediately following sibling of the first element in the set of matched elements.
-             * If a filter is provided, it retrieves the next child only if it matches that filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement}
-             */
+         * Get the immediately following sibling of the first element in the set of matched elements.
+         * If a filter is provided, it retrieves the next child only if it matches that filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement}
+         */
         next: function (selector, filter, allowTextNode) {
             return nth(selector, filter, 'nextSibling', undefined, undefined, undefined, allowTextNode);
         },
         /**
-             * Get the immediately preceding  sibling of the first element in the set of matched elements.
-             * If a filter is provided, it retrieves the previous child only if it matches that filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement}
-             */
+         * Get the immediately preceding  sibling of the first element in the set of matched elements.
+         * If a filter is provided, it retrieves the previous child only if it matches that filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement}
+         */
         prev: function (selector, filter, allowTextNode) {
             return nth(selector, filter, 'previousSibling', undefined, undefined, undefined, allowTextNode);
         },
         /**
-             * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement[]}
-             */
+         * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement[]}
+         */
         siblings: function (selector, filter, allowTextNode) {
             return getSiblings(selector, filter, true, allowTextNode);
         },
         /**
-             * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement[]}
-             */
+         * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement[]}
+         */
         children: function (selector, filter) {
             return getSiblings(selector, filter, undefined);
         },
         /**
-             * Get the childNodes of the first element in the set of matched elements (includes text and comment nodes),
-             * optionally filtered by a filter.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
-             * @return {HTMLElement[]}
-             */
+         * Get the childNodes of the first element in the set of matched elements (includes text and comment nodes),
+         * optionally filtered by a filter.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+         * @param {String|Function} [filter] Selector string or filter function
+         * @return {HTMLElement[]}
+         */
         contents: function (selector, filter) {
             return getSiblings(selector, filter, undefined, 1);
         },
         /**
-             * Check to see if a Dom node is within another Dom node.
-             * @param {HTMLElement|String} container The Dom element that may contain the other element.
-             * @param {HTMLElement|String} contained The Dom element that may be contained by the other element.
-             * @return {Boolean}
-             */
+         * Check to see if a Dom node is within another Dom node.
+         * @param {HTMLElement|String} container The Dom element that may contain the other element.
+         * @param {HTMLElement|String} contained The Dom element that may be contained by the other element.
+         * @return {Boolean}
+         */
         contains: function (container, contained) {
             container = Dom.get(container);
             contained = Dom.get(contained);
@@ -3370,10 +3369,10 @@ KISSY.add('dom/base/traversal', [
             return false;
         },
         /**
-             * search for a given element from among the matched elements.
-             * @param {HTMLElement|String} selector elements or selector string to find matched elements.
-             * @param {HTMLElement|String} s2 elements or selector string to find matched elements.
-             */
+         * search for a given element from among the matched elements.
+         * @param {HTMLElement|String} selector elements or selector string to find matched elements.
+         * @param {HTMLElement|String} s2 elements or selector string to find matched elements.
+         */
         index: function (selector, s2) {
             var els = Dom.query(selector), c, n = 0, p, els2, el = els[0];
             if (!s2) {
@@ -3396,12 +3395,12 @@ KISSY.add('dom/base/traversal', [
             return util.indexOf(els2[0], els);
         },
         /**
-             * Check to see if a Dom node is equal with another Dom node.
-             * @param {HTMLElement|String} n1
-             * @param {HTMLElement|String} n2
-             * @return {Boolean}
-             * @member KISSY.DOM
-             */
+         * Check to see if a Dom node is equal with another Dom node.
+         * @param {HTMLElement|String} n1
+         * @param {HTMLElement|String} n2
+         * @return {Boolean}
+         * @member KISSY.DOM
+         */
         equals: function (n1, n2) {
             n1 = Dom.query(n1);
             n2 = Dom.query(n2);
@@ -3503,9 +3502,7 @@ KISSY.add('dom/base/traversal', [
             }
         }
         return ret;
-    }
-    return Dom;
-});    /*
+    }    /*
  2012-04-05 yiminghe@gmail.com
  - 增加 contents 方法
 
@@ -3518,3 +3515,4 @@ KISSY.add('dom/base/traversal', [
  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  */
+});

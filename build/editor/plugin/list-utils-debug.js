@@ -1,33 +1,33 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/list-utils
 */
-/**
- * @ignore
- * list Utils
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/list-utils', [
     'node',
     'dom',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * list Utils
+ * @author yiminghe@gmail.com
+ */
     var listNodeNames = {
             ol: 1,
             ul: 1
-        }, Node = require('node'), Dom = require('dom'), NodeType = Dom.NodeType, UA = require('ua'), list = {
+        }, $ = require('node'), Dom = require('dom'), NodeType = Dom.NodeType, UA = require('ua'), list = {
             /*
-             * Convert a Dom list tree into a data structure that is easier to
-             * manipulate. This operation should be non-intrusive in the sense that it
-             * does not change the Dom tree, with the exception that it may add some
-             * markers to the list item nodes when database is specified.
-             * 扁平化处理，深度遍历，利用 indent 和顺序来表示一棵树
-             */
+         * Convert a Dom list tree into a data structure that is easier to
+         * manipulate. This operation should be non-intrusive in the sense that it
+         * does not change the Dom tree, with the exception that it may add some
+         * markers to the list item nodes when database is specified.
+         * 扁平化处理，深度遍历，利用 indent 和顺序来表示一棵树
+         */
             listToArray: function (listNode, database, baseArray, baseIndentLevel, grandparentNode) {
                 if (!listNodeNames[listNode.nodeName()]) {
                     return [];
@@ -40,7 +40,7 @@ KISSY.add('editor/plugin/list-utils', [
                 }    // Iterate over all list items to and look for inner lists.
                 // Iterate over all list items to and look for inner lists.
                 for (var i = 0, count = listNode[0].childNodes.length; i < count; i++) {
-                    var listItem = new Node(listNode[0].childNodes[i]);    // It may be a text node or some funny stuff.
+                    var listItem = $(listNode[0].childNodes[i]);    // It may be a text node or some funny stuff.
                     // It may be a text node or some funny stuff.
                     if (listItem.nodeName() !== 'li') {
                         continue;
@@ -64,7 +64,7 @@ KISSY.add('editor/plugin/list-utils', [
                     }
                     baseArray.push(itemObj);
                     for (var j = 0, itemChildCount = listItem[0].childNodes.length, child; j < itemChildCount; j++) {
-                        child = new Node(listItem[0].childNodes[j]);
+                        child = $(listItem[0].childNodes[j]);
                         if (child[0].nodeType === Dom.NodeType.ELEMENT_NODE && listNodeNames[child.nodeName()]) {
                             // Note the recursion here, it pushes inner list items with
                             // +1 indentation in the correct order.
@@ -113,7 +113,7 @@ KISSY.add('editor/plugin/list-utils', [
                             //为什么要把属性去掉？？？#3857
                             if (item.grandparent.nodeName() !== 'td') {
                                 currentListItem = doc.createElement(paragraphMode);
-                                item.element._4eCopyAttributes(new Node(currentListItem));
+                                item.element._4eCopyAttributes($(currentListItem));
                             } else {
                                 currentListItem = doc.createDocumentFragment();
                             }
@@ -122,7 +122,7 @@ KISSY.add('editor/plugin/list-utils', [
                             var ic = item.contents[i].clone(true);    //如果是list中，应该只退出ul，保留margin-left
                             //如果是list中，应该只退出ul，保留margin-left
                             if (currentListItem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
-                                item.element._4eCopyAttributes(new Node(ic));
+                                item.element._4eCopyAttributes($(ic));
                             }
                             currentListItem.appendChild(ic[0]);
                         }
@@ -157,7 +157,7 @@ KISSY.add('editor/plugin/list-utils', [
                 }    // Clear marker attributes for the new list tree made of cloned nodes, if any.
                 // Clear marker attributes for the new list tree made of cloned nodes, if any.
                 if (database) {
-                    var currentNode = new Node(retval.firstChild);
+                    var currentNode = $(retval.firstChild);
                     while (currentNode && currentNode[0]) {
                         if (currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
                             currentNode._4eClearMarkers(database, true);
@@ -171,7 +171,7 @@ KISSY.add('editor/plugin/list-utils', [
                 };
             }
         };
-    return list;
+    module.exports = list;
 });
 
 

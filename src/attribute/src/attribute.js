@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 var util = require('util');
-var logger = require('logger');
+var LoggerManger = require('logger-manager');
 /* global CustomEvent: true */
 var CustomEvent = require('event/custom');
 
@@ -432,7 +432,7 @@ util.augment(Attribute, CustomEvent.Target, {
             cfg = util.merge(attrConfig);
         if (cfg.value && typeof cfg.value === 'object') {
             cfg.value = util.clone(cfg.value);
-            logger.log('please use valueFn instead of value for ' + name + ' attribute', 'warn');
+            LoggerManger.log('please use valueFn instead of value for ' + name + ' attribute', 'warn');
         }
         if ((attr = attrs[name])) {
             util.mix(attr, cfg, override);

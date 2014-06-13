@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/preview
 */
-/**
+KISSY.add('editor/plugin/preview', [
+    './button',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * preview for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/preview', [
-    './button',
-    'util'
-], function (S, require) {
     var win = window;
     require('./button');
     function Preview() {
@@ -53,6 +53,6 @@ KISSY.add('editor/plugin/preview', [
             });
         }
     };
-    return Preview;
+    module.exports = Preview;
 });
 

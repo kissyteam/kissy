@@ -2,7 +2,7 @@
  * test swipe gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-(function() {
+(function () {
     var UA = require('ua');
     var Feature = require('feature');
     if (UA.phantomjs || !Feature.isTouchEventSupported()) {
@@ -105,7 +105,7 @@
         }
 
         // chrome emulate bug
-        if (!S.UA.chrome) {
+        if (!UA.chrome) {
             it('fires vertical', function () {
                 swipe('pageY');
             });

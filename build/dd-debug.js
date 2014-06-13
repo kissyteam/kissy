@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:55
+build time: Jun 13 11:43
 */
 /*
 combined modules:
@@ -12,79 +12,108 @@ dd/draggable-delegate
 dd/droppable-delegate
 dd/droppable
 */
-/**
- * @ignore
- * dd support for kissy
- * @author yiminghe@gmail.com
- */
 KISSY.add('dd', [
     'dd/ddm',
     'dd/draggable',
     'dd/draggable-delegate',
     'dd/droppable-delegate',
     'dd/droppable'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * dd support for kissy
+ * @author yiminghe@gmail.com
+ */
     var DDM = require('dd/ddm'), Draggable = require('dd/draggable'), DraggableDelegate = require('dd/draggable-delegate'), DroppableDelegate = require('dd/droppable-delegate'), Droppable = require('dd/droppable');
-    var DD = {
-            Draggable: Draggable,
-            DDM: DDM,
-            Droppable: Droppable,
-            DroppableDelegate: DroppableDelegate,
-            DraggableDelegate: DraggableDelegate
-        };
-    KISSY.DD = DD;
-    return DD;
+    module.exports = {
+        Draggable: Draggable,
+        DDM: DDM,
+        Droppable: Droppable,
+        DroppableDelegate: DroppableDelegate,
+        DraggableDelegate: DraggableDelegate
+    };
 });
-/**
+KISSY.add('dd/ddm', [
+    'util',
+    'logger-manager',
+    'base',
+    'ua',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', [
-    'util',
-    'node',
-    'base',
-    'ua'
-], function (S, require) {
     var util = require('util');
-    var logger = S.getLogger('dd/ddm');
-    var Node = require('node'), Base = require('base');
-    var UA = require('ua'), $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;    /*
-     负责拖动涉及的全局事件：
-     1.全局统一的鼠标移动监控
-     2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
-     3.为了跨越 iframe 而统一在底下的遮罩层
-     */
-                                                                                                                                                                            /**
-     * @class KISSY.DD.DDM
-     * @singleton
-     * @private
-     * @extends KISSY.Base
-     * Manager for Drag and Drop.
-     */
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('dd/ddm');
+    var Base = require('base');
+    var UA = require('ua'), $ = require('node'), win = window, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
+    var adjustShimSize = util.throttle(function () {
+            var self = this, activeDrag;
+            if ((activeDrag = self.get('activeDrag')) && activeDrag.get('shim')) {
+                self._shim.css({
+                    width: $doc.width(),
+                    height: $doc.height()
+                });
+            }
+        }, MOVE_DELAY);    /*
+ 垫片只需创建一次
+ */
     /*
-     负责拖动涉及的全局事件：
-     1.全局统一的鼠标移动监控
-     2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
-     3.为了跨越 iframe 而统一在底下的遮罩层
-     */
+ 垫片只需创建一次
+ */
+    var activeShim = function (self) {
+        //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
+        self._shim = $('<div ' + 'style="' + //red for debug
+        'background-color:red;' + 'position:' + (ie6 ? 'absolute' : 'fixed') + ';' + 'left:0;' + 'width:100%;' + 'height:100%;' + 'top:0;' + 'cursor:' + self.get('dragCursor') + ';' + 'z-index:' + //覆盖iframe上面即可
+        SHIM_Z_INDEX + ';' + '"><' + '/div>').prependTo(doc.body || doc.documentElement)    //0.5 for debug
+.css('opacity', 0);
+        activeShim = showShim;
+        if (ie6) {
+            // ie6 不支持 fixed 以及 width/height 100%
+            // support dd-scroll
+            // prevent empty when scroll outside initial window
+            $win.on('resize scroll', adjustShimSize, self);
+        }
+        showShim(self);
+    };    /*
+ 负责拖动涉及的全局事件：
+ 1.全局统一的鼠标移动监控
+ 2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
+ 3.为了跨越 iframe 而统一在底下的遮罩层
+ */
+          /**
+ * @class KISSY.DD.DDM
+ * @singleton
+ * @private
+ * @extends KISSY.Base
+ * Manager for Drag and Drop.
+ */
+    /*
+ 负责拖动涉及的全局事件：
+ 1.全局统一的鼠标移动监控
+ 2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
+ 3.为了跨越 iframe 而统一在底下的遮罩层
+ */
     /**
-     * @class KISSY.DD.DDM
-     * @singleton
-     * @private
-     * @extends KISSY.Base
-     * Manager for Drag and Drop.
-     */
+ * @class KISSY.DD.DDM
+ * @singleton
+ * @private
+ * @extends KISSY.Base
+ * Manager for Drag and Drop.
+ */
     var DDManger = Base.extend({
             /**
-         * @ignore
-         */
+     * @ignore
+     */
             addDrop: function (d) {
                 this.get('drops').push(d);
             },
             /**
-         * @ignore
-         */
+     * @ignore
+     */
             removeDrop: function (d) {
                 var self = this, drops = self.get('drops'), index = util.indexOf(d, drops);
                 if (index !== -1) {
@@ -92,11 +121,11 @@ KISSY.add('dd/ddm', [
                 }
             },
             /**
-         * 真正开始 drag
-         * 当前拖动对象通知全局：我要开始啦
-         * 全局设置当前拖动对象
-         * @ignore
-         */
+     * 真正开始 drag
+     * 当前拖动对象通知全局：我要开始啦
+     * 全局设置当前拖动对象
+     * @ignore
+     */
             start: function (e, drag) {
                 var self = this;
                 self.setInternal('activeDrag', drag);    // 真正开始移动了才激活垫片
@@ -115,8 +144,8 @@ KISSY.add('dd/ddm', [
                 }
             },
             /**
-         * @ignore
-         */
+     * @ignore
+     */
             addValidDrop: function (drop) {
                 this.get('validDrops').push(drop);
             },
@@ -194,9 +223,9 @@ KISSY.add('dd/ddm', [
                 }
             },
             /**
-         * 全局通知当前拖动对象：结束拖动了！
-         * @ignore
-         */
+     * 全局通知当前拖动对象：结束拖动了！
+     * @ignore
+     */
             end: function (e) {
                 var self = this, activeDrop = self.get('activeDrop');
                 if (self._shim) {
@@ -212,94 +241,65 @@ KISSY.add('dd/ddm', [
         }, {
             ATTRS: {
                 /**
-             * cursor style when dragging,if shimmed the shim will get the cursor.
-             * Defaults to: 'move'.
-             * @property dragCursor
-             * @type {String}
-             */
+         * cursor style when dragging,if shimmed the shim will get the cursor.
+         * Defaults to: 'move'.
+         * @property dragCursor
+         * @type {String}
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 dragCursor: { value: 'move' },
                 /**
-             * currently active draggable object
-             * @type {KISSY.DD.Draggable}
-             * @readonly
-             * @property activeDrag
-             */
+         * currently active draggable object
+         * @type {KISSY.DD.Draggable}
+         * @readonly
+         * @property activeDrag
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 activeDrag: {},
                 /**
-             * currently active droppable object
-             * @type {KISSY.DD.Droppable}
-             * @readonly
-             * @property activeDrop
-             */
+         * currently active droppable object
+         * @type {KISSY.DD.Droppable}
+         * @readonly
+         * @property activeDrop
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 activeDrop: {},
                 /**
-             * an array of drop targets.
-             * @property drops
-             * @type {KISSY.DD.Droppable[]}
-             * @private
-             */
+         * an array of drop targets.
+         * @property drops
+         * @type {KISSY.DD.Droppable[]}
+         * @private
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 drops: {
                     valueFn: function () {
                         return [];
                     }
                 },
                 /**
-             * a array of the valid drop targets for this interaction
-             * @property validDrops
-             * @type {KISSY.DD.Droppable[]}
-             * @private
-             */
+         * a array of the valid drop targets for this interaction
+         * @property validDrops
+         * @type {KISSY.DD.Droppable[]}
+         * @private
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 validDrops: {
                     valueFn: function () {
                         return [];
                     }
                 }
             }
-        });    /*
-     垫片只需创建一次
-     */
-    /*
-     垫片只需创建一次
-     */
-    var activeShim = function (self) {
-        //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
-        self._shim = $('<div ' + 'style="' + //red for debug
-        'background-color:red;' + 'position:' + (ie6 ? 'absolute' : 'fixed') + ';' + 'left:0;' + 'width:100%;' + 'height:100%;' + 'top:0;' + 'cursor:' + self.get('dragCursor') + ';' + 'z-index:' + //覆盖iframe上面即可
-        SHIM_Z_INDEX + ';' + '"><' + '/div>').prependTo(doc.body || doc.documentElement)    //0.5 for debug
-.css('opacity', 0);
-        activeShim = showShim;
-        if (ie6) {
-            // ie6 不支持 fixed 以及 width/height 100%
-            // support dd-scroll
-            // prevent empty when scroll outside initial window
-            $win.on('resize scroll', adjustShimSize, self);
-        }
-        showShim(self);
-    };
-    var adjustShimSize = util.throttle(function () {
-            var self = this, activeDrag;
-            if ((activeDrag = self.get('activeDrag')) && activeDrag.get('shim')) {
-                self._shim.css({
-                    width: $doc.width(),
-                    height: $doc.height()
-                });
-            }
-        }, MOVE_DELAY);
+        });
     function showShim(self) {
         // determine cursor according to activeHandler and dragCursor
         var ah = self.get('activeDrag').get('activeHandler'), cur = 'auto';
@@ -381,29 +381,30 @@ KISSY.add('dd/ddm', [
     DDM.area = area;
     DDM.cacheWH = cacheWH;
     DDM.PREFIX_CLS = 'ks-dd-';
-    return DDM;
+    module.exports = DDM;
 });
 
 
 
 
-/**
- * @ignore
- * dd support for kissy, drag for dd
- * @author yiminghe@gmail.com
- */
+
 KISSY.add('dd/draggable', [
-    'node',
     'event/gesture/basic',
     './ddm',
     'base',
     'event/gesture/drag',
     'util',
-    'ua'
-], function (S, require) {
-    var Node = require('node'), BasicGesture = require('event/gesture/basic'), DDM = require('./ddm'), Base = require('base'), DragGesture = require('event/gesture/drag');
+    'ua',
+    'node'
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * dd support for kissy, drag for dd
+ * @author yiminghe@gmail.com
+ */
+    var BasicGesture = require('event/gesture/basic'), DDM = require('./ddm'), Base = require('base'), DragGesture = require('event/gesture/drag');
     var util = require('util');
-    var UA = require('ua'), $ = Node.all, $doc = $(document), each = util.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+    var UA = require('ua'), $ = require('node'), doc = document, $doc = $(doc), each = util.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS;
     function checkValid(fn) {
         return function () {
             if (this._isValidDrag) {
@@ -425,304 +426,304 @@ KISSY.add('dd/draggable', [
     var onDragEnd = checkValid(function (e) {
             this._end(e);
         });    /**
-     * @class KISSY.DD.Draggable
-     * @extends KISSY.Base
-     * Provide abilities to make specified node draggable
-     */
+ * @class KISSY.DD.Draggable
+ * @extends KISSY.Base
+ * Provide abilities to make specified node draggable
+ */
     /**
-     * @class KISSY.DD.Draggable
-     * @extends KISSY.Base
-     * Provide abilities to make specified node draggable
-     */
+ * @class KISSY.DD.Draggable
+ * @extends KISSY.Base
+ * Provide abilities to make specified node draggable
+ */
     var Draggable = Base.extend({
             initializer: function () {
                 var self = this;
                 self.addTarget(DDM);
                 self._allowMove = self.get('move');    /**
-             * fired when need to compute draggable 's position during dragging
-             * @event dragalign
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired when need to compute draggable 's position during dragging
+         * @event dragalign
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired when need to get draggable 's position during dragging
-             * @event dragalign
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired when need to get draggable 's position during dragging
+         * @event dragalign
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired during dragging
-             * @event drag
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.left node 's supposed position left
-             * @param e.top node 's supposed position top
-             * @param e.pageX mouse position left
-             * @param e.pageY mouse position top
-             */
+         * fired during dragging
+         * @event drag
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.left node 's supposed position left
+         * @param e.top node 's supposed position top
+         * @param e.pageX mouse position left
+         * @param e.pageY mouse position top
+         */
                                                        /**
-             * fired during dragging
-             * @event drag
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.left node 's supposed position left
-             * @param e.top node 's supposed position top
-             * @param e.pageX mouse position left
-             * @param e.pageY mouse position top
-             */
+         * fired during dragging
+         * @event drag
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.left node 's supposed position left
+         * @param e.top node 's supposed position top
+         * @param e.pageX mouse position left
+         * @param e.pageY mouse position top
+         */
                                                        /**
-             * fired after drop a draggable onto a droppable object
-             * @event dragdrophit
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after drop a draggable onto a droppable object
+         * @event dragdrophit
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after drop a draggable onto a droppable object
-             * @event dragdrophit
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after drop a draggable onto a droppable object
+         * @event dragdrophit
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after drag
-             * @event dragend
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drag
+         * @event dragend
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired after drag
-             * @event dragend
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drag
+         * @event dragend
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired after drop a draggable onto nothing
-             * @event dragdropmiss
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drop a draggable onto nothing
+         * @event dragdropmiss
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired after drop a draggable onto nothing
-             * @event dragdropmiss
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drop a draggable onto nothing
+         * @event dragdropmiss
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired after a draggable leaves a droppable
-             * @event dragexit
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable leaves a droppable
+         * @event dragexit
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after a draggable leaves a droppable
-             * @event dragexit
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable leaves a droppable
+         * @event dragexit
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dragenter
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseenter a droppable object
+         * @event dragenter
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dragenter
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseenter a droppable object
+         * @event dragenter
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after a draggable object mouseover a droppable object
-             * @event dragover
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseover a droppable object
+         * @event dragover
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after a draggable object mouseover a droppable object
-             * @event dragover
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseover a droppable object
+         * @event dragover
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                                        /**
-             * fired after a draggable object start to drag
-             * @event dragstart
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after a draggable object start to drag
+         * @event dragstart
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
                                                        /**
-             * fired after a draggable object start to drag
-             * @event dragstart
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after a draggable object start to drag
+         * @event dragstart
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             },
             /**
-             * fired when need to compute draggable 's position during dragging
-             * @event dragalign
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired when need to compute draggable 's position during dragging
+         * @event dragalign
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired when need to get draggable 's position during dragging
-             * @event dragalign
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired when need to get draggable 's position during dragging
+         * @event dragalign
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired during dragging
-             * @event drag
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.left node 's supposed position left
-             * @param e.top node 's supposed position top
-             * @param e.pageX mouse position left
-             * @param e.pageY mouse position top
-             */
+         * fired during dragging
+         * @event drag
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.left node 's supposed position left
+         * @param e.top node 's supposed position top
+         * @param e.pageX mouse position left
+         * @param e.pageY mouse position top
+         */
             /**
-             * fired during dragging
-             * @event drag
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.left node 's supposed position left
-             * @param e.top node 's supposed position top
-             * @param e.pageX mouse position left
-             * @param e.pageY mouse position top
-             */
+         * fired during dragging
+         * @event drag
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.left node 's supposed position left
+         * @param e.top node 's supposed position top
+         * @param e.pageX mouse position left
+         * @param e.pageY mouse position top
+         */
             /**
-             * fired after drop a draggable onto a droppable object
-             * @event dragdrophit
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after drop a draggable onto a droppable object
+         * @event dragdrophit
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after drop a draggable onto a droppable object
-             * @event dragdrophit
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after drop a draggable onto a droppable object
+         * @event dragdrophit
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after drag
-             * @event dragend
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drag
+         * @event dragend
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired after drag
-             * @event dragend
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drag
+         * @event dragend
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired after drop a draggable onto nothing
-             * @event dragdropmiss
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drop a draggable onto nothing
+         * @event dragdropmiss
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired after drop a draggable onto nothing
-             * @event dragdropmiss
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after drop a draggable onto nothing
+         * @event dragdropmiss
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired after a draggable leaves a droppable
-             * @event dragexit
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable leaves a droppable
+         * @event dragexit
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after a draggable leaves a droppable
-             * @event dragexit
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable leaves a droppable
+         * @event dragexit
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dragenter
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseenter a droppable object
+         * @event dragenter
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dragenter
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseenter a droppable object
+         * @event dragenter
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after a draggable object mouseover a droppable object
-             * @event dragover
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseover a droppable object
+         * @event dragover
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after a draggable object mouseover a droppable object
-             * @event dragover
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseover a droppable object
+         * @event dragover
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
             /**
-             * fired after a draggable object start to drag
-             * @event dragstart
-             * @member KISSY.DD.DDM
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after a draggable object start to drag
+         * @event dragstart
+         * @member KISSY.DD.DDM
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             /**
-             * fired after a draggable object start to drag
-             * @event dragstart
-             * @member KISSY.DD.Draggable
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param e.drag current draggable object
-             */
+         * fired after a draggable object start to drag
+         * @event dragstart
+         * @member KISSY.DD.Draggable
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param e.drag current draggable object
+         */
             _onSetNode: function (n) {
                 var self = this;    // dragNode is equal to node in single mode
                 // dragNode is equal to node in single mode
@@ -890,9 +891,9 @@ KISSY.add('dd/draggable', [
                 }
             },
             /**
-         * force to stop this drag operation
-         * @member KISSY.DD.Draggable
-         */
+     * force to stop this drag operation
+     * @member KISSY.DD.Draggable
+     */
             stopDrag: function () {
                 if (this._isValidDrag) {
                     this._end();
@@ -943,10 +944,10 @@ KISSY.add('dd/draggable', [
                 this.fire('dragover', e);
             },
             /**
-         * make the drag node undraggable
-         * @member KISSY.DD.Draggable
-         * @private
-         */
+     * make the drag node undraggable
+     * @member KISSY.DD.Draggable
+     * @private
+     */
             destructor: function () {
                 this.stop();
             }
@@ -954,58 +955,58 @@ KISSY.add('dd/draggable', [
             name: 'Draggable',
             ATTRS: {
                 /**
-             * the dragged node. maybe a proxy node.
-             * @property node
-             * @type {HTMLElement|KISSY.Node}
-             * @readonly
-             */
+         * the dragged node. maybe a proxy node.
+         * @property node
+         * @type {HTMLElement|KISSY.Node}
+         * @readonly
+         */
                 /**
-             * the dragged node.
-             * @cfg {HTMLElement|KISSY.Node} node
-             */
+         * the dragged node.
+         * @cfg {HTMLElement|KISSY.Node} node
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 node: {
                     setter: function (v) {
-                        if (!(v instanceof Node)) {
+                        if (!(v instanceof $)) {
                             return $(v);
                         }
                         return undefined;
                     }
                 },
                 /**
-             * the draggable element.
-             * @property dragNode
-             * @type {HTMLElement}
-             * @readonly
-             */
+         * the draggable element.
+         * @property dragNode
+         * @type {HTMLElement}
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 dragNode: {},
                 /**
-             * use protective shim to cross iframe.
-             *
-             * Defaults to: false
-             *
-             * @cfg {Boolean} shim
-             *
-             */
+         * use protective shim to cross iframe.
+         *
+         * Defaults to: false
+         *
+         * @cfg {Boolean} shim
+         *
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 shim: { value: false },
                 /**
-             * valid handlers to initiate a drag operation.
-             *
-             * Default same with {@link KISSY.DD.Draggable#cfg-node} config.
-             *
-             * @cfg {HTMLElement[]|Function[]|String[]} handlers
-             */
+         * valid handlers to initiate a drag operation.
+         *
+         * Default same with {@link KISSY.DD.Draggable#cfg-node} config.
+         *
+         * @cfg {HTMLElement[]|Function[]|String[]} handlers
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 handlers: {
                     valueFn: function () {
                         return [];
@@ -1033,133 +1034,133 @@ KISSY.add('dd/draggable', [
                     }
                 },
                 /**
-             * the handler which fired the drag event.
-             * @type {KISSY.Node}
-             * @property activeHandler
-             * @readonly
-             */
+         * the handler which fired the drag event.
+         * @type {KISSY.Node}
+         * @property activeHandler
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 activeHandler: {},
                 /**
-             * drop mode.
-             * @cfg {KISSY.DD.Draggable.DropMode} mode
-             */
+         * drop mode.
+         * @cfg {KISSY.DD.Draggable.DropMode} mode
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 mode: { value: 'point' },
                 /**
-             * set to disable this draggable so that it can not be dragged.
-             *
-             * Defaults to: false
-             *
-             * @type {Boolean}
-             * @property disabled
-             */
+         * set to disable this draggable so that it can not be dragged.
+         *
+         * Defaults to: false
+         *
+         * @type {Boolean}
+         * @property disabled
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 disabled: { value: false },
                 /**
-             * whether the drag node moves with cursor, can be used to resize element.
-             *
-             * Defaults to: false
-             *
-             * @cfg {Boolean} move
-             */
+         * whether the drag node moves with cursor, can be used to resize element.
+         *
+         * Defaults to: false
+         *
+         * @cfg {Boolean} move
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 move: { value: false },
                 /**
-             * whether a drag operation can only be trigged by primary(left) mouse button.
-             * Setting false will allow for all mousedown events to trigger drag.
-             * @cfg {Boolean} primaryButtonOnly
-             */
+         * whether a drag operation can only be trigged by primary(left) mouse button.
+         * Setting false will allow for all mousedown events to trigger drag.
+         * @cfg {Boolean} primaryButtonOnly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 primaryButtonOnly: { value: true },
                 /**
-             * whether halt mousedown event.
-             *
-             * Defaults to: true
-             *
-             * @cfg {Boolean} halt
-             */
+         * whether halt mousedown event.
+         *
+         * Defaults to: true
+         *
+         * @cfg {Boolean} halt
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 halt: { value: true },
                 /**
-             * groups this draggable object belongs to, can interact with droppable.
-             * if this draggable does not want to interact with droppable for performance,
-             * can set this to false.
-             * for example:
-             *      @example
-             *      {
+         * groups this draggable object belongs to, can interact with droppable.
+         * if this draggable does not want to interact with droppable for performance,
+         * can set this to false.
+         * for example:
+         *      @example
+         *      {
              *          'group1':1,
              *          'group2':1
              *      }
-             *
-             * @cfg {Object} groups
-             */
+         *
+         * @cfg {Object} groups
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 groups: { value: true },
                 /**
-             * node position ar drag start.
-             * only valid when move is set to true.
-             *
-             * for example:
-             *      @example
-             *      {
+         * node position ar drag start.
+         * only valid when move is set to true.
+         *
+         * for example:
+         *      @example
+         *      {
              *          left: 100,
              *          top: 200
              *      }
-             *
-             * @property startNodePos
-             * @type {Object}
-             * @readonly
-             */
+         *
+         * @property startNodePos
+         * @type {Object}
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 startNodePos: {},
                 /**
-             * The xy that the node will be set to.
-             * Changing this will alter the position as it's dragged.
-             * only valid when move is set to true.
-             * @property actualPos
-             * @type {Object}
-             * @readonly
-             */
+         * The xy that the node will be set to.
+         * Changing this will alter the position as it's dragged.
+         * only valid when move is set to true.
+         * @property actualPos
+         * @type {Object}
+         * @readonly
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 actualPos: {},
                 preventDefaultOnMove: { value: true }
             },
             inheritedStatics: {
                 /**
-             * drag drop mode enum.
-             * @enum {String} KISSY.DD.Draggable.DropMode
-             */
+         * drag drop mode enum.
+         * @enum {String} KISSY.DD.Draggable.DropMode
+         */
                 DropMode: {
                     /**
-                 * In point mode, a Drop is targeted by the cursor being over the Target
-                 */
+             * In point mode, a Drop is targeted by the cursor being over the Target
+             */
                     POINT: 'point',
                     /**
-                 * In intersect mode, a Drop is targeted by 'part' of the drag node being over the Target
-                 */
+             * In intersect mode, a Drop is targeted by 'part' of the drag node being over the Target
+             */
                     INTERSECT: 'intersect',
                     /**
-                 * In strict mode, a Drop is targeted by the 'entire' drag node being over the Target
-                 */
+             * In strict mode, a Drop is targeted by the 'entire' drag node being over the Target
+             */
                     STRICT: 'strict'
                 }
             }
@@ -1185,25 +1186,25 @@ KISSY.add('dd/draggable', [
             doc.body.setCapture();
         }
     }    /*
-     1. keeps IE from blowing up on images as drag handlers.
-     IE 在 img 上拖动时默认不能拖动（不触发 mousemove，mouseup 事件，mouseup 后接着触发 mousemove ...）
-     2. 防止 html5 draggable 元素的拖放默认行为 (选中文字拖放)
-     3. 防止默认的选择文本行为(??场景？)
-     */
+ 1. keeps IE from blowing up on images as drag handlers.
+ IE 在 img 上拖动时默认不能拖动（不触发 mousemove，mouseup 事件，mouseup 后接着触发 mousemove ...）
+ 2. 防止 html5 draggable 元素的拖放默认行为 (选中文字拖放)
+ 3. 防止默认的选择文本行为(??场景？)
+ */
     /*
-     1. keeps IE from blowing up on images as drag handlers.
-     IE 在 img 上拖动时默认不能拖动（不触发 mousemove，mouseup 事件，mouseup 后接着触发 mousemove ...）
-     2. 防止 html5 draggable 元素的拖放默认行为 (选中文字拖放)
-     3. 防止默认的选择文本行为(??场景？)
-     */
+ 1. keeps IE from blowing up on images as drag handlers.
+ IE 在 img 上拖动时默认不能拖动（不触发 mousemove，mouseup 事件，mouseup 后接着触发 mousemove ...）
+ 2. 防止 html5 draggable 元素的拖放默认行为 (选中文字拖放)
+ 3. 防止默认的选择文本行为(??场景？)
+ */
     function preventDefault(e) {
         e.preventDefault();
     }    /*
-     keeps IE from selecting text
-     */
+ keeps IE from selecting text
+ */
     /*
-     keeps IE from selecting text
-     */
+ keeps IE from selecting text
+ */
     function fixIESelect() {
         return false;
     }
@@ -1211,33 +1212,33 @@ KISSY.add('dd/draggable', [
         this._isValidDrag = 0;
         this.onGestureStart(e);
     }
-    return Draggable;
+    module.exports = Draggable;
 });
 
 
-/**
+KISSY.add('dd/draggable-delegate', [
+    './ddm',
+    './draggable',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable-delegate', [
-    'node',
-    './ddm',
-    './draggable'
-], function (S, require) {
-    var Node = require('node'), DDM = require('./ddm'), Draggable = require('./draggable'), PREFIX_CLS = DDM.PREFIX_CLS, $ = Node.all;    /**
-     * @extends KISSY.DD.Draggable
-     * @class KISSY.DD.DraggableDelegate
-     * drag multiple nodes under a container element
-     * using only one draggable instance as a delegate.
-     */
+    var DDM = require('./ddm'), Draggable = require('./draggable'), PREFIX_CLS = DDM.PREFIX_CLS, $ = require('node');    /**
+ * @extends KISSY.DD.Draggable
+ * @class KISSY.DD.DraggableDelegate
+ * drag multiple nodes under a container element
+ * using only one draggable instance as a delegate.
+ */
     /**
-     * @extends KISSY.DD.Draggable
-     * @class KISSY.DD.DraggableDelegate
-     * drag multiple nodes under a container element
-     * using only one draggable instance as a delegate.
-     */
-    return Draggable.extend({
+ * @extends KISSY.DD.Draggable
+ * @class KISSY.DD.DraggableDelegate
+ * drag multiple nodes under a container element
+ * using only one draggable instance as a delegate.
+ */
+    module.exports = Draggable.extend({
         // override Draggable
         _onSetNode: function () {
         },
@@ -1253,8 +1254,8 @@ KISSY.add('dd/draggable-delegate', [
             return this.get('container');
         },
         /*
-             父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-             */
+         父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+         */
         onGestureStart: function (ev) {
             var self = this, handler, node;
             if (!self._checkDragStartValid(ev)) {
@@ -1285,8 +1286,8 @@ KISSY.add('dd/draggable-delegate', [
             self._prepare(ev);
         },
         /*
-             得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
-             */
+         得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
+         */
         _getHandler: function (target) {
             var self = this, node = self.get('container'), handlers = self.get('handlers');
             while (target && target[0] !== node[0]) {
@@ -1301,44 +1302,44 @@ KISSY.add('dd/draggable-delegate', [
             return null;
         },
         /*
-             找到真正应该移动的节点，对应 selector 属性选择器字符串
-             */
+         找到真正应该移动的节点，对应 selector 属性选择器字符串
+         */
         _getNode: function (h) {
             return h.closest(this.get('selector'), this.get('container'));
         }
     }, {
         ATTRS: {
             /**
-                 * a selector query to get the container to listen for mousedown events on.
-                 * All 'draggable selector' should be a child of this container
-                 * @cfg {HTMLElement|String} container
-                 */
+             * a selector query to get the container to listen for mousedown events on.
+             * All 'draggable selector' should be a child of this container
+             * @cfg {HTMLElement|String} container
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             container: {
                 setter: function (v) {
                     return $(v);
                 }
             },
             /**
-                 * a selector query to get the children of container to make draggable elements from.
-                 * usually as for tag.cls.
-                 * @cfg {String} selector
-                 */
+             * a selector query to get the children of container to make draggable elements from.
+             * usually as for tag.cls.
+             * @cfg {String} selector
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             selector: {},
             /**
-                 * handlers to initiate drag operation.
-                 * can only be as form of tag.cls.
-                 * default {@link #selector}
-                 * @cfg {String[]} handlers
-                 **/
+             * handlers to initiate drag operation.
+             * can only be as form of tag.cls.
+             * default {@link #selector}
+             * @cfg {String[]} handlers
+             **/
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             handlers: {
                 valueFn: function () {
                     return [];
@@ -1349,18 +1350,18 @@ KISSY.add('dd/draggable-delegate', [
         }
     });
 });
-/**
- * @ignore
- * only one droppable instance for multiple droppable nodes
- * @author yiminghe@gmail.com
- */
 KISSY.add('dd/droppable-delegate', [
     'node',
     './ddm',
     './droppable',
     'util'
-], function (S, require) {
-    var Node = require('node'), DDM = require('./ddm'), Droppable = require('./droppable');
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * only one droppable instance for multiple droppable nodes
+ * @author yiminghe@gmail.com
+ */
+    var $ = require('node'), DDM = require('./ddm'), Droppable = require('./droppable');
     var util = require('util');
     function dragStart() {
         var self = this, container = self.get('container'), allNodes = [], selector = self.get('selector');
@@ -1371,24 +1372,24 @@ KISSY.add('dd/droppable-delegate', [
         });
         self.__allNodes = allNodes;
     }    /**
-     * @class KISSY.DD.DroppableDelegate
-     * @extend KISSY.DD.Droppable
-     * Make multiple nodes droppable under a container using only one droppable instance.
-     */
+ * @class KISSY.DD.DroppableDelegate
+ * @extend KISSY.DD.Droppable
+ * Make multiple nodes droppable under a container using only one droppable instance.
+ */
     /**
-     * @class KISSY.DD.DroppableDelegate
-     * @extend KISSY.DD.Droppable
-     * Make multiple nodes droppable under a container using only one droppable instance.
-     */
+ * @class KISSY.DD.DroppableDelegate
+ * @extend KISSY.DD.Droppable
+ * Make multiple nodes droppable under a container using only one droppable instance.
+ */
     var DroppableDelegate = Droppable.extend({
             initializer: function () {
                 // 提高性能，拖放开始时缓存代理节点
                 DDM.on('dragstart', dragStart, this);
             },
             /**
-         * get droppable node by delegation
-         * @protected
-         */
+     * get droppable node by delegation
+     * @protected
+     */
             getNodeFromTarget: function (ev, dragNode, proxyNode) {
                 var pointer = {
                         left: ev.pageX,
@@ -1445,52 +1446,52 @@ KISSY.add('dd/droppable-delegate', [
         }, {
             ATTRS: {
                 /**
-             * last droppable target node.
-             * @property lastNode
-             * @private
-             */
+         * last droppable target node.
+         * @property lastNode
+         * @private
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 lastNode: {},
                 /**
-             * a selector query to get the children of container to make droppable elements from.
-             * usually as for tag.cls.
-             * @cfg {String} selector
-             */
+         * a selector query to get the children of container to make droppable elements from.
+         * usually as for tag.cls.
+         * @cfg {String} selector
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 selector: {},
                 /**
-             * a selector query to get the container to listen for mousedown events on.
-             * All 'draggable selector' should be a child of this container
-             * @cfg {String|HTMLElement} container
-             */
+         * a selector query to get the container to listen for mousedown events on.
+         * All 'draggable selector' should be a child of this container
+         * @cfg {String|HTMLElement} container
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 container: {
                     setter: function (v) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 }
             }
         });
-    return DroppableDelegate;
+    module.exports = DroppableDelegate;
 });
-/**
- * @ignore
- * droppable for kissy
- * @author yiminghe@gmail.com
- */
 KISSY.add('dd/droppable', [
     'node',
     './ddm',
     'base',
     'util'
-], function (S, require) {
-    var Node = require('node'), DDM = require('./ddm'), Base = require('base'), PREFIX_CLS = DDM.PREFIX_CLS;
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * droppable for kissy
+ * @author yiminghe@gmail.com
+ */
+    var $ = require('node'), DDM = require('./ddm'), Base = require('base'), PREFIX_CLS = DDM.PREFIX_CLS;
     var util = require('util');
     function validDrop(dropGroups, dragGroups) {
         if (dragGroups === true) {
@@ -1503,162 +1504,162 @@ KISSY.add('dd/droppable', [
         }
         return 0;
     }    /**
-     * @class KISSY.DD.Droppable
-     * @extends KISSY.Base
-     * Make a node droppable.
-     */
+ * @class KISSY.DD.Droppable
+ * @extends KISSY.Base
+ * Make a node droppable.
+ */
     /**
-     * @class KISSY.DD.Droppable
-     * @extends KISSY.Base
-     * Make a node droppable.
-     */
-    return Base.extend({
+ * @class KISSY.DD.Droppable
+ * @extends KISSY.Base
+ * Make a node droppable.
+ */
+    module.exports = Base.extend({
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
             DDM.addDrop(this);    /**
-             * fired after a draggable leaves a droppable
-             * @event dropexit
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable leaves a droppable
+         * @event dropexit
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             *
-             * fired after a draggable leaves a droppable
-             * @event dropexit
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         *
+         * fired after a draggable leaves a droppable
+         * @event dropexit
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dropenter
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseenter a droppable object
+         * @event dropenter
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dropenter
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         * fired after a draggable object mouseenter a droppable object
+         * @event dropenter
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             *
-             * fired after a draggable object mouseover a droppable object
-             * @event dropover
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         *
+         * fired after a draggable object mouseover a droppable object
+         * @event dropover
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             *
-             * fired after a draggable object mouseover a droppable object
-             * @event dropover
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         *
+         * fired after a draggable object mouseover a droppable object
+         * @event dropover
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             *
-             * fired after drop a draggable onto a droppable object
-             * @event drophit
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         *
+         * fired after drop a draggable onto a droppable object
+         * @event drophit
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
                                   /**
-             *
-             * fired after drop a draggable onto a droppable object
-             * @event drophit
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+         *
+         * fired after drop a draggable onto a droppable object
+         * @event drophit
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
         },
         /**
-             * fired after a draggable leaves a droppable
-             * @event dropexit
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             *
-             * fired after a draggable leaves a droppable
-             * @event dropexit
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dropenter
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             * fired after a draggable object mouseenter a droppable object
-             * @event dropenter
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             *
-             * fired after a draggable object mouseover a droppable object
-             * @event dropover
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             *
-             * fired after a draggable object mouseover a droppable object
-             * @event dropover
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             *
-             * fired after drop a draggable onto a droppable object
-             * @event drophit
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-             *
-             * fired after drop a draggable onto a droppable object
-             * @event drophit
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-        /**
-         * Get drop node from target
-         * @protected
+         * fired after a draggable leaves a droppable
+         * @event dropexit
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
          */
+        /**
+         *
+         * fired after a draggable leaves a droppable
+         * @event dropexit
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+         * fired after a draggable object mouseenter a droppable object
+         * @event dropenter
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+         * fired after a draggable object mouseenter a droppable object
+         * @event dropenter
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+         *
+         * fired after a draggable object mouseover a droppable object
+         * @event dropover
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+         *
+         * fired after a draggable object mouseover a droppable object
+         * @event dropover
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+         *
+         * fired after drop a draggable onto a droppable object
+         * @event drophit
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+         *
+         * fired after drop a draggable onto a droppable object
+         * @event drophit
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+        /**
+     * Get drop node from target
+     * @protected
+     */
         getNodeFromTarget: function (ev, dragNode, proxyNode) {
             var node = this.get('node'), domNode = node[0];    // 排除当前拖放和代理节点
             // 排除当前拖放和代理节点
@@ -1712,9 +1713,9 @@ KISSY.add('dd/droppable', [
             self.fire('drophit', ret);
         },
         /**
-         * make this droppable' element undroppable
-         * @private
-         */
+     * make this droppable' element undroppable
+     * @private
+     */
         destructor: function () {
             DDM.removeDrop(this);
         }
@@ -1722,44 +1723,48 @@ KISSY.add('dd/droppable', [
         name: 'Droppable',
         ATTRS: {
             /**
-             * droppable element
-             * @cfg {String|HTMLElement|KISSY.Node} node
-             * @member KISSY.DD.Droppable
-             */
+         * droppable element
+         * @cfg {String|HTMLElement|KISSY.Node} node
+         * @member KISSY.DD.Droppable
+         */
             /**
-             * droppable element
-             * @type {KISSY.Node}
-             * @property node
-             * @member KISSY.DD.Droppable
-             */
+         * droppable element
+         * @type {KISSY.Node}
+         * @property node
+         * @member KISSY.DD.Droppable
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             node: {
                 setter: function (v) {
                     if (v) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 }
             },
             /**
-             * groups this droppable object belongs to.
-             * @cfg {Object|Boolean} groups
-             * @member KISSY.DD.Droppable
-             */
+         * groups this droppable object belongs to.
+         * @cfg {Object|Boolean} groups
+         * @member KISSY.DD.Droppable
+         */
             /**
-             * @ignore
-             */
-            groups: { value: {} },
+         * @ignore
+         */
+            groups: {
+                valueFn: function () {
+                    return {};
+                }
+            },
             /**
-             * whether droppable is disabled
-             * @type {Boolean}
-             * @property disabled
-             * @member KISSY.DD.Droppable
-             */
+         * whether droppable is disabled
+         * @type {Boolean}
+         * @property disabled
+         * @member KISSY.DD.Droppable
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             disabled: {}
         }
     });

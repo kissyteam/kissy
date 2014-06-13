@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/indent
 */
-/**
- * @ignore
- * Add indent button.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/indent', [
     'editor',
     './indent/cmd',
     './button'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add indent button.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var indexCmd = require('./indent/cmd');
     require('./button');
@@ -37,7 +37,7 @@ KISSY.add('editor/plugin/indent', [
             });
         }
     };
-    return Indent;
+    module.exports = Indent;
 });
 
 

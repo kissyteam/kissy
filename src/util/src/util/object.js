@@ -5,8 +5,8 @@
  */
 
 var util = require('./base');
-var Logger = require('logger');
-var logger = Logger.getLogger('util');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('util');
 var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
     STAMP_MARKER = '__~ks_stamped',
     host = typeof window === 'undefined' ? global : window,

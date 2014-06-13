@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:26
+build time: Jun 13 11:52
 */
 /**
  * use document.write to load external css files in block loading ways.
@@ -10,6 +10,7 @@ build time: May 14 22:26
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // --no-module-wrap--
     var isDebug;
 
     function each(arr, fn) {

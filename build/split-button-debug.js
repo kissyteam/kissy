@@ -1,35 +1,35 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
 split-button
 */
-/**
- * @ignore
- * SplitButton for KISSY. Combination of button and menubutton.
- * @author yiminghe@gmail.com
- */
 KISSY.add('split-button', [
     'component/container',
     'button',
     'menubutton'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * SplitButton for KISSY. Combination of button and menubutton.
+ * @author yiminghe@gmail.com
+ */
     var Container = require('component/container');
     require('button');
     require('menubutton');    /**
-     * split button container for menubutton and button
-     * @class KISSY.SplitButton
-     * @extend KISSY.Component.Container
-     */
+ * split button container for menubutton and button
+ * @class KISSY.SplitButton
+ * @extend KISSY.Component.Container
+ */
     /**
-     * split button container for menubutton and button
-     * @class KISSY.SplitButton
-     * @extend KISSY.Component.Container
-     */
-    return Container.extend({
+ * split button container for menubutton and button
+ * @class KISSY.SplitButton
+ * @extend KISSY.Component.Container
+ */
+    module.exports = Container.extend({
         renderUI: function () {
             var self = this, alignWithEl = self.get('alignWithEl'), menuButton = self.get('children')[1], menu = menuButton.get('menu');
             if (alignWithEl) {
@@ -41,13 +41,13 @@ KISSY.add('split-button', [
             handleGestureEvents: { value: false },
             focusable: { value: false },
             /**
-             * whether align menubutton with button.
-             * Defaults to: true
-             * @cfg {Boolean} alignWithEl
-             */
+         * whether align menubutton with button.
+         * Defaults to: true
+         * @cfg {Boolean} alignWithEl
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             alignWithEl: { value: true },
             children: {
                 value: [
@@ -56,16 +56,16 @@ KISSY.add('split-button', [
                 ]
             },
             /**
-             * menubutton component
-             * @cfg {KISSY.MenuButton} menuButton
-             */
+         * menubutton component
+         * @cfg {KISSY.MenuButton} menuButton
+         */
             /**
-             * menubutton component
-             * @property {KISSY.MenuButton} menuButton
-             */
+         * menubutton component
+         * @property {KISSY.MenuButton} menuButton
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             menuButton: {
                 getter: function () {
                     return this.get('children')[1];
@@ -75,16 +75,16 @@ KISSY.add('split-button', [
                 }
             },
             /**
-             * button component
-             * @cfg {KISSY.Button} button
-             */
+         * button component
+         * @cfg {KISSY.Button} button
+         */
             /**
-             * button component
-             * @property {KISSY.Button} button
-             */
+         * button component
+         * @property {KISSY.Button} button
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             button: {
                 getter: function () {
                     return this.get('children')[0];

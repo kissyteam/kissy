@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/color/btn
 */
-/**
- * @ignore
- * color button.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/color/btn', [
     'editor',
     '../button',
@@ -19,12 +14,17 @@ KISSY.add('editor/plugin/color/btn', [
     '../dialog-loader',
     'node',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * color button.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Button = require('../button');
     var Overlay4E = require('../overlay');
     var DialogLoader = require('../dialog-loader');
-    var Node = require('node');
+    var $ = require('node');
     var util = require('util');
     var COLORS = [
             [
@@ -186,7 +186,7 @@ KISSY.add('editor/plugin/color/btn', [
             },
             _selectColor: function (ev) {
                 ev.halt();
-                var self = this, editor = self.get('editor'), prefixCls = editor.get('prefixCls'), t = new Node(ev.target);
+                var self = this, editor = self.get('editor'), prefixCls = editor.get('prefixCls'), t = $(ev.target);
                 if (t.hasClass(prefixCls + 'editor-color-a')) {
                     self.fire('selectColor', { color: t.style('background-color') });
                 } else if (t.hasClass(prefixCls + 'editor-color-remove')) {
@@ -236,7 +236,7 @@ KISSY.add('editor/plugin/color/btn', [
             runCmd(editor, cmdType, indicator.style('background-color'));
         });
     };
-    return ColorButton;
+    module.exports = ColorButton;
 });
 
 

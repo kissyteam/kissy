@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:50
 */
 /*
 combined modules:
@@ -9,27 +9,27 @@ event/dom/ie
 event/dom/ie/change
 event/dom/ie/submit
 */
-/**
+KISSY.add('event/dom/ie', [
+    './ie/change',
+    './ie/submit'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * patch collection for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie', [
-    './ie/change',
-    './ie/submit'
-], function (S, require) {
     require('./ie/change');
     require('./ie/submit');
 });
-/**
+KISSY.add('event/dom/ie/change', [
+    'event/dom/base',
+    'dom'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/change', [
-    'event/dom/base',
-    'dom'
-], function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
     var Special = DomEvent.Special, R_FORM_EL = /^(?:textarea|input|select)$/i;
@@ -138,15 +138,15 @@ KISSY.add('event/dom/ie/change', [
 });
 
 
-/**
+KISSY.add('event/dom/ie/submit', [
+    'event/dom/base',
+    'dom'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', [
-    'event/dom/base',
-    'dom'
-], function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
     var Special = DomEvent.Special, getNodeName = Dom.nodeName;
@@ -201,8 +201,8 @@ KISSY.add('event/dom/ie/submit', [
             // fire from parentNode. if form.on('submit') , this logic is never run!
             DomEvent.fire(self.parentNode, 'submit', e);
         }
-    }
-});    /*
+    }    /*
  modified from jq, fix submit in ie<9
  - http://bugs.jquery.com/ticket/11049
  */
+});

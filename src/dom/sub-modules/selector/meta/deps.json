@@ -1,1 +1,1 @@
-{"dom/selector":["util","dom/basic"]}
+{"dom/selector":["util","logger-manager","dom/basic"]}

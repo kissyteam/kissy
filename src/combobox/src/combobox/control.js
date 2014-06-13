@@ -5,8 +5,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('combobox');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('combobox');
 var $ = require('node');
 var Control = require('component/control');
 var ComboboxTpl = require('./combobox-xtpl');
@@ -774,7 +774,6 @@ function renderData(data) {
 // #------------------------private end
 
 module.exports = ComboBox;
-
 
 /**
  * @ignore

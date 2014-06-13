@@ -1,1 +1,1 @@
-{"anim/timer":["dom","util","anim/base","feature"]}
+{"anim/timer":["dom","util","anim/base","logger-manager","feature"]}

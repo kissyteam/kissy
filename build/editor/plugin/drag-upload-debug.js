@@ -1,28 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/drag-upload
 */
-/**
- * @ignore
- * drag file support for html5 file&dd
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/drag-upload', [
     'util',
     'editor',
     'event/dom',
     'node',
     'dom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * drag file support for html5 file&dd
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Editor = require('editor');
     var Event = require('event/dom');
-    var Node = require('node'), Utils = Editor.Utils, Dom = require('dom');
+    var $ = require('node'), Utils = Editor.Utils, Dom = require('dom');
     function dragUpload(config) {
         this.config = config || {};
     }
@@ -79,7 +79,7 @@ KISSY.add('editor/plugin/drag-upload', [
                         if (size / 1000 > sizeLimit) {
                             continue;
                         }
-                        var img = new Node('<img ' + 'src="' + Utils.debugUrl('theme/tao-loading.gif') + '"/>');
+                        var img = $('<img ' + 'src="' + Utils.debugUrl('theme/tao-loading.gif') + '"/>');
                         var nakeImg = img[0];
                         ap.insertBefore(nakeImg, archor);
                         var np = nakeImg.parentNode, npName = Dom.nodeName(np);    // 防止拖放导致插入到 body 以外
@@ -149,13 +149,13 @@ KISSY.add('editor/plugin/drag-upload', [
             }
         }
     });
-    return dragUpload;
-});    /**
+    module.exports = dragUpload;    /**
  * @ignore
  * refer:
  * - http://www.html5rocks.com/tutorials/file/filesystem/
  * - http://yiminghe.iteye.com/blog/848613
  */
+});
 
 
 

@@ -1,1 +1,1 @@
-{"editor/plugin/flash-bridge":["util","editor","swf","event/custom"]}
+{"editor/plugin/flash-bridge":["logger-manager","util","editor","swf","event/custom"]}

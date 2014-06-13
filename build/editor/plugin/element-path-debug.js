@@ -1,23 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/element-path
 */
-/**
+KISSY.add('editor/plugin/element-path', [
+    'editor',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * ElementPath for debug.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/element-path', [
-    'editor',
-    'node'
-], function (S, require) {
     var Editor = require('editor');
-    var Node = require('node');
+    var $ = require('node');
     var CLASS = 'editor-element-path';
     function ElementPaths(cfg) {
         var self = this;
@@ -28,7 +28,7 @@ KISSY.add('editor/plugin/element-path', [
     ElementPaths.prototype = {
         _init: function () {
             var self = this, cfg = self.cfg, editor = cfg.editor;
-            self.holder = new Node('<span>');
+            self.holder = $('<span>');
             self.holder.appendTo(editor.get('statusBarEl'), undefined);
             editor.on('selectionChange', self._selectionChange, self);
             Editor.Utils.sourceDisable(editor, self);
@@ -49,7 +49,7 @@ KISSY.add('editor/plugin/element-path', [
             for (i = 0; i < elements.length; i++) {
                 element = elements[i];    // 考虑 fake objects
                 // 考虑 fake objects
-                var type = element.attr('_ke_real_element_type') || element.nodeName(), a = new Node('<a ' + 'href="javascript(\'' + type + '\')" ' + 'class="' + prefixCls + CLASS + '">' + type + '</a>');
+                var type = element.attr('_ke_real_element_type') || element.nodeName(), a = $('<a ' + 'href="javascript(\'' + type + '\')" ' + 'class="' + prefixCls + CLASS + '">' + type + '</a>');
                 self._cache.push(a);    /*jshint loopfunc:true*/
                 /*jshint loopfunc:true*/
                 (function (element) {
@@ -78,6 +78,6 @@ KISSY.add('editor/plugin/element-path', [
             });
         }
     };
-    return ElementPathPlugin;
+    module.exports = ElementPathPlugin;
 });
 

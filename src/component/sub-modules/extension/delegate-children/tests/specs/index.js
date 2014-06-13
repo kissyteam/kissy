@@ -2,6 +2,8 @@ var Container = require('component/container');
 var Control = require('component/control');
 var DelegateChildrenExtension = require('component/extension/delegate-children');
 var Feature = require('feature');
+var UA = require('ua');
+
 /*jshint quotmark:false*/
 function invalidNode(n) {
     return n == null || n.nodeType === 11;
@@ -50,7 +52,7 @@ describe("delegate children works", function () {
             c.render();
 
             // ie11 bug
-            if (S.UA.ieMode === 11) {
+            if (UA.ieMode === 11) {
                 return;
             }
 

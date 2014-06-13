@@ -99,58 +99,58 @@
 <script src="/kissy/src/package.js"></script>
 
 <script>
-    // safari transform3d bug
-    if (KISSY.UA.safari && !KISSY.UA.mobile && KISSY.Feature) {
-        KISSY.Feature.isTransform3dSupported = function () {
-            return false
-        }
-    }
-
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    KISSY.use('scroll-view,scroll-view/plugin/scrollbar,uri', function (S, ScrollView, ScrollbarPlugin, Uri) {
-        var $ = S.all;
-        var num = new Uri(location.href).getQuery().get('num') || '41';
+    KISSY.use('util,ua,feature,node,scroll-view,scroll-view/plugin/scrollbar,url',
+            function (S, util, UA, Feature, $, ScrollView, ScrollbarPlugin, url) {
+                // safari transform3d bug
+                if (UA.safari && !UA.mobile && Feature) {
+                    Feature.isTransform3dSupported = function () {
+                        return false
+                    }
+                }
 
-        $('#header, #footer').on('touchmove', function (e) {
-            e.preventDefault();
-        });
+                var num = url.parse(location.href).query.num || '41';
 
-        num = parseInt(num);
+                $('#header, #footer').on('touchmove', function (e) {
+                    e.preventDefault();
+                });
 
-        var str = '';
-        for (var i = 1; i < num; i++) {
-            if (i % 2) {
-                str += '<p><a href="http://m.taobao.com">line ' + i + '</a></p>';
-            } else {
-                str += '<p><input value="input ' + i + '"/></p>';
-            }
+                num = parseInt(num);
 
-        }
-        S.all('#thelist').html(str);
+                var str = '';
+                for (var i = 1; i < num; i++) {
+                    if (i % 2) {
+                        str += '<p><a href="http://m.taobao.com">line ' + i + '</a></p>';
+                    } else {
+                        str += '<p><input value="input ' + i + '"/></p>';
+                    }
 
-        $('#add').on('click', function () {
-            $('#thelist').append('<p>line ' + (++i) + '</p>');
-            scrollView.sync();
-            scrollView.scrollTo({
-                top: scrollView.scrollHeight - scrollView.clientHeight
+                }
+                $('#thelist').html(str);
+
+                $('#add').on('click', function () {
+                    $('#thelist').append('<p>line ' + (++i) + '</p>');
+                    scrollView.sync();
+                    scrollView.scrollTo({
+                        top: scrollView.scrollHeight - scrollView.clientHeight
+                    });
+                });
+
+                window.scrollView = new ScrollView({
+                    srcNode: '#wrapper',
+                    plugins: [new ScrollbarPlugin({})]
+                }).render();
+
+                $(window).on('resize orientationchange', UA.ieMode < 9 ?
+                        util.buffer(scrollView.sync, 30) :
+                        scrollView.sync, scrollView);
+
+                // hide address bar
+                setTimeout(function () {
+                    window.scrollTo(0, 0);
+                }, 0);
             });
-        });
-
-        window.scrollView = new ScrollView({
-            srcNode: '#wrapper',
-            plugins: [new ScrollbarPlugin({})]
-        }).render();
-
-        S.all(window).on('resize orientationchange', S.UA.ieMode < 9 ?
-                S.buffer(scrollView.sync, 30) :
-                scrollView.sync, scrollView);
-
-        // hide address bar
-        setTimeout(function () {
-            window.scrollTo(0, 0);
-        }, 0);
-    });
 </script>
 </body>
 </html>

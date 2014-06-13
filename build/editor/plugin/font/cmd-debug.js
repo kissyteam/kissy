@@ -1,18 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/font/cmd
 */
-/**
+KISSY.add('editor/plugin/font/cmd', ['editor'], function (S, require, exports, module) {
+    /**
  * @ignore
  * font command.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/font/cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
     var getQueryCmd = Editor.Utils.getQueryCmd;
     function getValueFromSingle(element, styleObj) {
@@ -55,7 +55,7 @@ KISSY.add('editor/plugin/font/cmd', ['editor'], function (S, require) {
         }
         return v;
     }
-    return {
+    module.exports = {
         addButtonCmd: function (editor, cmdType, style) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {

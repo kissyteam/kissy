@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 30 14:51
+build time: Jun 13 11:41
 */
 /*
 combined modules:
 combobox/multi-word
 combobox/multi-word/cursor
 */
-/**
+KISSY.add('combobox/multi-word', [
+    './multi-word/cursor',
+    'combobox'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add('combobox/multi-word', [
-    './multi-word/cursor',
-    'combobox'
-], function (S, require) {
     var SUFFIX = 'suffix', rWhitespace = /\s|\xa0/;
     var getCursor = require('./multi-word/cursor');
     var ComboBox = require('combobox');
@@ -28,16 +28,16 @@ KISSY.add('combobox/multi-word', [
             this.alignWithCursor();
         }
     }    /**
-     * KISSY MultiWordComboBox.
-     * @extends KISSY.ComboBox
-     * @class KISSY.ComboBox.MultiWordComboBox
-     */
+ * KISSY MultiWordComboBox.
+ * @extends KISSY.ComboBox
+ * @class KISSY.ComboBox.MultiWordComboBox
+ */
     /**
-     * KISSY MultiWordComboBox.
-     * @extends KISSY.ComboBox
-     * @class KISSY.ComboBox.MultiWordComboBox
-     */
-    return ComboBox.extend({
+ * KISSY MultiWordComboBox.
+ * @extends KISSY.ComboBox
+ * @class KISSY.ComboBox.MultiWordComboBox
+ */
+    module.exports = ComboBox.extend({
         syncUI: function () {
             var self = this, menu;
             if (self.get('alignWithCursor')) {
@@ -96,41 +96,41 @@ KISSY.add('combobox/multi-word', [
     }, {
         ATTRS: {
             /**
-                 * Separator chars used to separator multiple inputs.
-                 * Defaults to: ;,
-                 * @cfg {String} separator
-                 */
+         * Separator chars used to separator multiple inputs.
+         * Defaults to: ;,
+         * @cfg {String} separator
+         */
             /**
-                 * @ignore
-                 */
+         * @ignore
+         */
             separator: { value: ',;' },
             /**
-                 * Separator type.
-                 * After value( 'suffix' ) or before value( 'prefix' ).
-                 * Defaults to: 'suffix'
-                 * @cfg {String} separatorType
-                 */
+         * Separator type.
+         * After value( 'suffix' ) or before value( 'prefix' ).
+         * Defaults to: 'suffix'
+         * @cfg {String} separatorType
+         */
             /**
-                 * @ignore
-                 */
+         * @ignore
+         */
             separatorType: { value: SUFFIX },
             /**
-                 * If separator wrapped by literal chars,separator become normal chars.
-                 * Defaults to: "
-                 * @cfg {String} literal
-                 */
+         * If separator wrapped by literal chars,separator become normal chars.
+         * Defaults to: "
+         * @cfg {String} literal
+         */
             /**
-                 * @ignore
-                 */
+         * @ignore
+         */
             literal: { value: '"' },
             /**
-                 * Whether align menu with individual token after separated by separator.
-                 * Defaults to: false
-                 * @cfg {Boolean} alignWithCursor
-                 */
+         * Whether align menu with individual token after separated by separator.
+         * Defaults to: false
+         * @cfg {Boolean} alignWithCursor
+         */
             /**
-                 * @ignore
-                 */
+         * @ignore
+         */
             alignWithCursor: {}
         },
         xclass: 'multi-value-combobox'
@@ -203,7 +203,7 @@ KISSY.add('combobox/multi-word', [
             tokenIndex: tokenIndex
         };
     }    // #------------------------private end
-});    /**
+         /**
  * @ignore
  *
  * !TODO
@@ -224,18 +224,18 @@ KISSY.add('combobox/multi-word', [
  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
  **/
-/**
+});
+KISSY.add('combobox/multi-word/cursor', [
+    'util',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * get cursor position of input
  * @author yiminghe@gmail.com
  */
-KISSY.add('combobox/multi-word/cursor', [
-    'node',
-    'util'
-], function (S, require) {
-    var Node = require('node');
     var util = require('util');
-    var $ = Node.all, FAKE_DIV_HTML = '<div style="' + 'z-index:-9999;' + 'overflow:hidden;' + 'position: fixed;' + 'left:-9999px;' + 'top:-9999px;' + 'opacity:0;' + // firefox default normal,need to force to use pre-wrap
+    var $ = require('node'), FAKE_DIV_HTML = '<div style="' + 'z-index:-9999;' + 'overflow:hidden;' + 'position: fixed;' + 'left:-9999px;' + 'top:-9999px;' + 'opacity:0;' + // firefox default normal,need to force to use pre-wrap
         'white-space:pre-wrap;' + 'word-wrap:break-word;' + '"></div>', FAKE_DIV, MARKER = '<span>' + // must has content
         // or else <br/><span></span> can not get right coordinates
         'x' + '</span>', STYLES = [
@@ -302,7 +302,7 @@ KISSY.add('combobox/multi-word/cursor', [
     };    // firefox not support, chrome support
     // firefox not support, chrome support
     supportInputScrollLeft = false;
-    return function (elem) {
+    module.exports = function (elem) {
         var $elem = $(elem);
         elem = $elem[0];
         var doc = elem.ownerDocument, $doc = $(doc), elemOffset, range, fake, selectionStart, offset, marker, elemScrollTop = elem.scrollTop, elemScrollLeft = elem.scrollLeft;
@@ -325,7 +325,7 @@ KISSY.add('combobox/multi-word/cursor', [
         }
         fake = getFakeDiv($elem);
         selectionStart = elem.selectionStart;
-        fake.html(S.escapeHtml(elem.value.substring(0, selectionStart - 1)) + // marker
+        fake.html(util.escapeHtml(elem.value.substring(0, selectionStart - 1)) + // marker
         MARKER);    // can not set fake to scrollTop，marker is always at bottom of marker
                     // when cursor at the middle of textarea , error occurs
                     // fake.scrollTop = elemScrollTop;

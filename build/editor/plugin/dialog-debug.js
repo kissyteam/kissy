@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/dialog
 */
-/**
- * @ignore
- * custom dialog for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/dialog', [
     'editor',
     'overlay',
@@ -19,14 +14,19 @@ KISSY.add('editor/plugin/dialog', [
     'dd/plugin/constrain',
     'component/plugin/drag',
     'dom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * custom dialog for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Overlay = require('overlay');
     var focusFix = require('./focus-fix');
     var ConstrainPlugin = require('dd/plugin/constrain');
     var DragPlugin = require('component/plugin/drag');
     var Dom = require('dom');
-    return Overlay.Dialog.extend({
+    module.exports = Overlay.Dialog.extend({
         initializer: function () {
             this.plug(new DragPlugin({
                 handlers: ['.ks-editor-dialog-header'],

@@ -1,25 +1,25 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/unordered-list/cmd
 */
-/**
+KISSY.add('editor/plugin/unordered-list/cmd', [
+    'editor',
+    '../list-utils/cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * ol command
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/unordered-list/cmd', [
-    'editor',
-    '../list-utils/cmd'
-], function (S, require) {
     var Editor = require('editor');
     var listCmd = require('../list-utils/cmd');
     var insertUnorderedList = 'insertUnorderedList', ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, ulCmd = new ListCommand('ul');
-    return {
+    module.exports = {
         init: function (editor) {
             if (!editor.hasCommand(insertUnorderedList)) {
                 editor.addCommand(insertUnorderedList, {

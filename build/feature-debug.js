@@ -1,19 +1,19 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:50
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 feature
 */
-/**
+KISSY.add('feature', ['ua'], function (S, require, exports, module) {
+    /**
  * @ignore
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
  */
-KISSY.add('feature', ['ua'], function (S, require) {
-    var win = S.Env.host, Config = S.Config, UA = require('ua'), propertyPrefixes = [
+    var win = window, UA = require('ua'), propertyPrefixes = [
             'Webkit',
             'Moz',
             'O',
@@ -25,7 +25,7 @@ KISSY.add('feature', ['ua'], function (S, require) {
         // ie11
         isPointerSupported, isTransform3dSupported,
         // nodejs
-        documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false,
+        documentElement = doc && doc.documentElement, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false,
         // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchEventSupportedState = 'ontouchstart' in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
     if (documentElement) {
@@ -35,7 +35,6 @@ KISSY.add('feature', ['ua'], function (S, require) {
         }
         documentElementStyle = documentElement.style;
         isClassListSupportedState = 'classList' in documentElement;
-        navigator = win.navigator || {};
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
     }
@@ -73,39 +72,39 @@ KISSY.add('feature', ['ua'], function (S, require) {
         }
         return vendorInfos[name];
     }    /**
-     * browser features detection
-     * @class KISSY.Feature
-     * @private
-     * @singleton
-     */
+ * browser features detection
+ * @class KISSY.Feature
+ * @private
+ * @singleton
+ */
     /**
-     * browser features detection
-     * @class KISSY.Feature
-     * @private
-     * @singleton
-     */
-    S.Feature = {
+ * browser features detection
+ * @class KISSY.Feature
+ * @private
+ * @singleton
+ */
+    module.exports = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
-         * whether support microsoft pointer event.
-         * @type {Boolean}
-         */
+     * whether support microsoft pointer event.
+     * @type {Boolean}
+     */
         isMsPointerSupported: function () {
             // ie11 onMSPointerDown but e.type==pointerdown
             return isMsPointerSupported;
         },
         /**
-         * whether support microsoft pointer event (ie11).
-         * @type {Boolean}
-         */
+     * whether support microsoft pointer event (ie11).
+     * @type {Boolean}
+     */
         isPointerSupported: function () {
             // ie11
             return isPointerSupported;
         },
         /**
-         * whether support touch event.
-         * @return {Boolean}
-         */
+     * whether support touch event.
+     * @return {Boolean}
+     */
         isTouchEventSupported: function () {
             return isTouchEventSupportedState;
         },
@@ -113,16 +112,16 @@ KISSY.add('feature', ['ua'], function (S, require) {
             return isTouchEventSupportedState || isPointerSupported || isMsPointerSupported;
         },
         /**
-         * whether support device motion event
-         * @returns {boolean}
-         */
+     * whether support device motion event
+     * @returns {boolean}
+     */
         isDeviceMotionSupported: function () {
             return !!win.DeviceMotionEvent;
         },
         /**
-         * whether support hashchange event
-         * @returns {boolean}
-         */
+     * whether support hashchange event
+     * @returns {boolean}
+     */
         isHashChangeSupported: function () {
             // ie8 支持 hashchange
             // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
@@ -130,12 +129,12 @@ KISSY.add('feature', ['ua'], function (S, require) {
             return 'onhashchange' in win && (!ie || ie > 7);
         },
         isInputEventSupported: function () {
-            return !Config.simulateInputEvent && 'oninput' in win && (!ie || ie > 9);
+            return 'oninput' in win && (!ie || ie > 9);
         },
         /**
-         * whether support css transform 3d
-         * @returns {boolean}
-         */
+     * whether support css transform 3d
+     * @returns {boolean}
+     */
         isTransform3dSupported: function () {
             if (isTransform3dSupported !== undefined) {
                 return isTransform3dSupported;
@@ -146,35 +145,39 @@ KISSY.add('feature', ['ua'], function (S, require) {
                 // https://gist.github.com/lorenzopolidori/3794226
                 // ie9 does not support 3d transform
                 // http://msdn.microsoft.com/en-us/ie/ff468705
-                var el = doc.createElement('p');
-                var transformProperty = getVendorInfo('transform').name;
-                documentElement.insertBefore(el, documentElement.firstChild);
-                el.style[transformProperty] = 'translate3d(1px,1px,1px)';
-                var computedStyle = win.getComputedStyle(el);
-                var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-                documentElement.removeChild(el);
-                isTransform3dSupported = has3d !== undefined && has3d.length > 0 && has3d !== 'none';
+                try {
+                    var el = doc.createElement('p');
+                    var transformProperty = getVendorInfo('transform').propertyName;
+                    documentElement.insertBefore(el, documentElement.firstChild);
+                    el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+                    var computedStyle = win.getComputedStyle(el);
+                    var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
+                    documentElement.removeChild(el);
+                    isTransform3dSupported = has3d !== undefined && has3d.length > 0 && has3d !== 'none';
+                } catch (e) {
+                    // https://github.com/kissyteam/kissy/issues/563
+                    isTransform3dSupported = true;
+                }
             }
             return isTransform3dSupported;
         },
         /**
-         * whether support class list api
-         * @returns {boolean}
-         */
+     * whether support class list api
+     * @returns {boolean}
+     */
         isClassListSupported: function () {
             return isClassListSupportedState;
         },
         /**
-         * whether support querySelectorAll
-         * @returns {boolean}
-         */
+     * whether support querySelectorAll
+     * @returns {boolean}
+     */
         isQuerySelectorSupported: function () {
             // force to use js selector engine
-            return !Config.simulateCss3Selector && isQuerySelectorSupportedState;
+            return isQuerySelectorSupportedState;
         },
         getCssVendorInfo: function (name) {
             return getVendorInfo(name);
         }
     };
-    return S.Feature;
 });

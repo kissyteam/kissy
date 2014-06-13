@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:56
+build time: Jun 13 11:52
 */
 /*
 combined modules:
@@ -275,7 +275,7 @@ KISSY.add('io/form-serializer', [
 KISSY.add('io/base', [
     'util',
     'querystring',
-    'logger',
+    'logger-manager',
     'event/custom',
     'promise',
     'url'
@@ -287,8 +287,8 @@ KISSY.add('io/base', [
  */
     var util = require('util');
     var querystring = require('querystring');
-    var Logger = require('logger');
-    var logger = Logger.getLogger();    /*global CustomEvent:true*/
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger();    /*global CustomEvent:true*/
     /*global CustomEvent:true*/
     var CustomEvent = require('event/custom');
     var Promise = require('promise');
@@ -331,12 +331,11 @@ KISSY.add('io/base', [
         c = util.mix(util.clone(defaultConfig), c, { deep: true });
         c.context = context || c;
         var data, uri, type = c.type, dataType = c.dataType;
-        uri = c.uri = url.parse(url.resolve(locationHref, c.url), true);
-        uri.search = null;    // see method _getUrlForSend
+        uri = c.uri = url.parse(url.resolve(locationHref, c.url), true);    // see method _getUrlForSend
         // see method _getUrlForSend
-        uri.query = uri.query || {};
+        uri.query = {};
         if (!('crossDomain' in c)) {
-            c.crossDomain = uri.protocol === locationUrl.prototype && uri.host === locationUrl.host;
+            c.crossDomain = !(uri.protocol === locationUrl.protocol && uri.host === locationUrl.host);
         }
         type = c.type = type.toUpperCase();
         c.hasContent = !rnoContent.test(type);
@@ -354,7 +353,6 @@ KISSY.add('io/base', [
         }
         if (!c.hasContent) {
             if (c.data) {
-                querystring.parse(c.data);
                 util.mix(uri.query, querystring.parse(c.data));
             }
             if (c.cache === false) {
@@ -931,7 +929,7 @@ KISSY.add('io/xhr-transport', [
     './xhr-transport-base',
     './xdr-flash-transport',
     './sub-domain-transport',
-    'logger'
+    'logger-manager'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -940,8 +938,8 @@ KISSY.add('io/xhr-transport', [
  */
     var util = require('util');
     var IO = require('./base'), XhrTransportBase = require('./xhr-transport-base'), XdrFlashTransport = require('./xdr-flash-transport'), SubDomainTransport = require('./sub-domain-transport');
-    var Logger = require('logger');
-    var logger = Logger.getLogger('s/io');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/io');
     var doc = document, XDomainRequest_ = XhrTransportBase.XDomainRequest_;    // express: subdomain offset
     // express: subdomain offset
     function isSubDomain(hostname) {
@@ -1000,9 +998,11 @@ KISSY.add('io/xhr-transport', [
 });
 KISSY.add('io/xhr-transport-base', [
     'util',
+    'url',
+    'querystring',
     './base',
     'ua',
-    'logger'
+    'logger-manager'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -1010,16 +1010,26 @@ KISSY.add('io/xhr-transport-base', [
  * @author yiminghe@gmail.com
  */
     var util = require('util');
+    var url = require('url');
+    var querystring = require('querystring');
     var IO = require('./base');
     var UA = require('ua');
-    var Logger = require('logger');
-    var logger = Logger.getLogger('s/io');
-    var OK_CODE = 200, win = window,
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/io');
+    var OK_CODE = 200, supportCORS, win = window,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         XDomainRequest_ = UA.ieMode > 7 && win.XDomainRequest, NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = { proto: {} }, lastModifiedCached = {}, eTagCached = {};
     IO.__lastModifiedCached = lastModifiedCached;
     IO.__eTagCached = eTagCached;
-    var supportCORS = XhrTransportBase.supportCORS = 'withCredentials' in XhrTransportBase.nativeXhr();
+    XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
+        // consider ie10
+        if (!supportCORS && crossDomain && XDomainRequest_) {
+            return new XDomainRequest_();
+        }    // ie7 XMLHttpRequest 不能访问本地文件
+        // ie7 XMLHttpRequest 不能访问本地文件
+        return !IO.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
+    } : createStandardXHR;
+    supportCORS = XhrTransportBase.supportCORS = 'withCredentials' in XhrTransportBase.nativeXhr();
     function createStandardXHR(_, refWin) {
         try {
             return new (refWin || win).XMLHttpRequest();
@@ -1034,14 +1044,6 @@ KISSY.add('io/xhr-transport-base', [
         }
         return undefined;
     }
-    XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
-        // consider ie10
-        if (!supportCORS && crossDomain && XDomainRequest_) {
-            return new XDomainRequest_();
-        }    // ie7 XMLHttpRequest 不能访问本地文件
-        // ie7 XMLHttpRequest 不能访问本地文件
-        return !IO.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
-    } : createStandardXHR;
     XhrTransportBase.XDomainRequest_ = XDomainRequest_;
     function isInstanceOfXDomainRequest(xhr) {
         return XDomainRequest_ && xhr instanceof XDomainRequest_;
@@ -1051,13 +1053,13 @@ KISSY.add('io/xhr-transport-base', [
         if (ifModified) {
             ifModifiedKey = c.uri;
             if (c.cache === false) {
-                ifModifiedKey = ifModifiedKey.clone();    // remove random timestamp
-                                                          // random timestamp is forced to fetch code file from server
+                ifModifiedKey = util.clone(ifModifiedKey);    // remove random timestamp
+                                                              // random timestamp is forced to fetch code file from server
                 // remove random timestamp
                 // random timestamp is forced to fetch code file from server
-                ifModifiedKey.query.remove('_ksTS');
+                delete ifModifiedKey.query._ksTS;
             }
-            ifModifiedKey = ifModifiedKey.toString();
+            ifModifiedKey = url.stringify(ifModifiedKey);
         }
         return ifModifiedKey;
     }
@@ -1116,7 +1118,7 @@ KISSY.add('io/xhr-transport-base', [
             if (files) {
                 var originalSentContent = sendContent, data = {};
                 if (originalSentContent) {
-                    data = util.unparam(originalSentContent);
+                    data = querystring.parse(originalSentContent);
                 }
                 data = util.mix(data, files);
                 sendContent = new FormData();
@@ -1245,7 +1247,7 @@ KISSY.add('io/xhr-transport-base', [
                     }
                 }
             } catch (e) {
-                Logger.log(e.stack || e, 'error');
+                LoggerManager.log(e.stack || e, 'error');
                 if ('@DEBUG@') {
                     setTimeout(function () {
                         throw e;
@@ -1265,7 +1267,7 @@ KISSY.add('io/xdr-flash-transport', [
     'util',
     './base',
     'dom',
-    'logger'
+    'logger-manager'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -1274,8 +1276,8 @@ KISSY.add('io/xdr-flash-transport', [
  */
     var util = require('util');
     var IO = require('./base'), Dom = require('dom');
-    var Logger = require('logger');
-    var logger = Logger.getLogger('s/io');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/io');
     var
         // current running request instances
         maps = {}, ID = 'io_swf',
@@ -1390,7 +1392,7 @@ KISSY.add('io/sub-domain-transport', [
     'url',
     'dom',
     './xhr-transport-base',
-    'logger'
+    'logger-manager'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -1399,8 +1401,8 @@ KISSY.add('io/sub-domain-transport', [
  */
     var util = require('util');
     var Event = require('event/dom'), url = require('url'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
-    var Logger = require('logger');
-    var logger = Logger.getLogger('s/io');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/io');
     var PROXY_PAGE = '/sub_domain_proxy.html', doc = document,
         // hostname:{iframe: , ready:}
         iframeMap = {};
@@ -1424,7 +1426,7 @@ KISSY.add('io/sub-domain-transport', [
                 if (self.nativeXhr) {
                     self.sendInternal();
                 } else {
-                    Logger.error('document.domain not set correctly!');
+                    LoggerManager.error('document.domain not set correctly!');
                 }
                 return;
             }
@@ -1460,7 +1462,7 @@ KISSY.add('io/sub-domain-transport', [
 KISSY.add('io/script-transport', [
     'util',
     './base',
-    'logger'
+    'logger-manager'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -1471,8 +1473,8 @@ KISSY.add('io/script-transport', [
  */
     var util = require('util');
     var IO = require('./base');
-    var Logger = require('logger');
-    var logger = Logger.getLogger('s/io');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/io');
     var OK_CODE = 200, ERROR_CODE = 500;
     IO.setupConfig({
         accepts: { script: 'text/javascript, ' + 'application/javascript, ' + 'application/ecmascript, ' + 'application/x-ecmascript' },
@@ -1692,10 +1694,11 @@ KISSY.add('io/form', [
 });
 KISSY.add('io/iframe-transport', [
     'util',
+    'querystring',
     'dom',
     './base',
     'event/dom',
-    'logger',
+    'logger-manager',
     'ua'
 ], function (S, require, exports, module) {
     /**
@@ -1703,10 +1706,9 @@ KISSY.add('io/iframe-transport', [
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-    var util = require('util');
-    var Dom = require('dom'), IO = require('./base'), Event = require('event/dom');
-    var Logger = require('logger');
-    var logger = Logger.getLogger('s/io');
+    var util = require('util'), querystring = require('querystring'), Dom = require('dom'), IO = require('./base'), Event = require('event/dom');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/io');
     var UA = require('ua');
     var doc = document, OK_CODE = 200, ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = util.clone(IO.getConfig().converters.text);    // https://github.com/kissyteam/kissy/issues/304
                                                                                                                                                 // returned data must be escaped by server for json dataType
@@ -1809,7 +1811,7 @@ KISSY.add('io/iframe-transport', [
             });    // unparam to kv map
             // unparam to kv map
             if (data) {
-                query = util.unparam(data);
+                query = querystring.parse(data);
             }
             if (query) {
                 fields = addDataToForm(query, form, c.serializeArray);
@@ -1915,7 +1917,7 @@ KISSY.add('io/methods', [
     'util',
     'promise',
     './base',
-    'logger',
+    'logger-manager',
     'url'
 ], function (S, require, exports, module) {
     /**
@@ -1925,7 +1927,7 @@ KISSY.add('io/methods', [
  */
     var util = require('util');
     var Promise = require('promise'), IO = require('./base');
-    var Logger = require('logger');
+    var LoggerManager = require('logger-manager');
     var url = require('url');
     var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304,
         // get individual response header from response header str
@@ -2100,7 +2102,7 @@ KISSY.add('io/methods', [
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        Logger.log(e.stack || e, 'error');
+                        LoggerManager.log(e.stack || e, 'error');
                         if ('@DEBUG@') {
                             setTimeout(function () {
                                 throw e;
@@ -2195,8 +2197,13 @@ KISSY.add('io/methods', [
             // x.html?t=1%3c2
             // so trim original query when process other query
             // and append when send
-            var c = this.config, uri = c.uri, originalQuery = url.parse(c.url).search, urlStr = url.stringify(uri, c.serializeArray);
-            return urlStr + (originalQuery ? (uri.search ? '&' : '?') + originalQuery : '');
+            var c = this.config, uri = c.uri;
+            var search = uri.search || '';
+            delete uri.search;
+            if (search && !util.isEmptyObject(uri.query)) {
+                search = '&' + search.substring(1);
+            }
+            return url.stringify(uri, c.serializeArray) + search;
         }
     });
 });

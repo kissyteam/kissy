@@ -1,26 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/checkbox-source-area
 */
-/**
- * @ignore
- * checkbox source editor for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/checkbox-source-area', [
     'editor',
     'util',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * checkbox source editor for kissy editor
+ * @author yiminghe@gmail.com
+ */
     // 'editor', '../font/cmd'
     var Editor = require('editor');
     var util = require('util');
-    var Node = require('node');
+    var $ = require('node');
     var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
     function CheckboxSourceArea(editor) {
         var self = this;
@@ -30,7 +30,7 @@ KISSY.add('editor/plugin/checkbox-source-area', [
     util.augment(CheckboxSourceArea, {
         _init: function () {
             var self = this, editor = self.editor, statusBarEl = editor.get('statusBarEl');
-            self.holder = new Node('<span ' + 'style="zoom:1;display:inline-block;height:22px;line-height:22px;">' + '<label style="vertical-align:middle;">' + '<input style="margin:0 5px;" type="checkbox" />' + '\u7F16\u8F91\u6E90\u4EE3\u7801</label>' + '</span>');
+            self.holder = $('<span ' + 'style="zoom:1;display:inline-block;height:22px;line-height:22px;">' + '<label style="vertical-align:middle;">' + '<input style="margin:0 5px;" type="checkbox" />' + '\u7F16\u8F91\u6E90\u4EE3\u7801</label>' + '</span>');
             self.holder.appendTo(statusBarEl);
             var el = self.el = self.holder.one('input');
             el.on('click', self._check, self);
@@ -65,7 +65,7 @@ KISSY.add('editor/plugin/checkbox-source-area', [
             });
         }
     });
-    return CheckboxSourceAreaPlugin;
+    module.exports = CheckboxSourceAreaPlugin;
 });
 
 

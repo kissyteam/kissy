@@ -1,6 +1,5 @@
 var esprima = require('esprima');
-var util = require('../../lib/util');
-var escodegen = require('escodegen');
+var util = require('../common/util');
 
 /*jshint quotmark:false */
 function clearRange(ast) {
@@ -22,10 +21,10 @@ function clearRangeAndComputed(ast) {
     if (!ast) {
         return {};
     }
-    ast=util.clone(ast);
+    ast = util.clone(ast);
     for (var i in ast) {
         // can not delete computed
-        if (i === 'range' || i==='computed') {
+        if (i === 'range' || i === 'computed') {
             delete ast[i];
         } else if (typeof ast[i] === 'object') {
             clearRange(ast[i]);
@@ -72,13 +71,10 @@ exports.needModuleWrap = function (code) {
 };
 
 exports.wrapModule = function (code) {
-    var ast = esprima.parse(code, {
-        attachComment: true
-    });
-    var wrapAst = exports.wrapModuleAst(ast);
-    return wrapAst === ast ? code : escodegen.generate(wrapAst, {
-        comment: true
-    });
+    if (exports.needModuleWrap(code)) {
+        return ['KISSY.add(function(S, require, exports, module){', code, '});'].join('\n');
+    }
+    return code;
 };
 
 exports.wrapModuleAst = function (ast) {

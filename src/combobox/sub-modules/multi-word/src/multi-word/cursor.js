@@ -94,7 +94,7 @@ findSupportInputScrollLeft = function () {
 // firefox not support, chrome support
 supportInputScrollLeft = false;
 
-return function (elem) {
+module.exports = function (elem) {
     var $elem = $(elem);
     elem = $elem[0];
     var doc = elem.ownerDocument,
@@ -132,7 +132,7 @@ return function (elem) {
 
     selectionStart = elem.selectionStart;
 
-    fake.html(S.escapeHtml(elem.value.substring(0, selectionStart - 1)) +
+    fake.html(util.escapeHtml(elem.value.substring(0, selectionStart - 1)) +
         // marker
         MARKER);
 

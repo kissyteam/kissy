@@ -1,14 +1,16 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:58
 */
 /*jshint indent:false, quotmark:false*/
-KISSY.use('ua, feature', function(S, UA, Feature){
+KISSY.use(['ua', 'feature'], function(S, UA, Feature){
 S.config("requires",{
     "editor": [
         "util",
+        "logger-manager",
         "node",
+        "xtemplate/runtime",
         "ua",
         "html-parser",
         "component/control",
@@ -277,7 +279,8 @@ S.config("requires",{
     ],
     "editor/plugin/progressbar": [
         "base",
-        "util"
+        "util",
+        "node"
     ],
     "editor/plugin/remove-format": [
         "editor/plugin/button",

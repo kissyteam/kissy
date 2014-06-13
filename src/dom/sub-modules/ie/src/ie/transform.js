@@ -61,19 +61,12 @@ cssHooks.transform = {
             afterCenter = getCenterByOrigin(value, origin, center);
             afterCenter.x = afterCenter[0][0];
             afterCenter.y = afterCenter[1][0];
-            matrixVal = [
-                    'progid:DXImageTransform.Microsoft.Matrix(' +
-                    'M11=' + value[0][0],
-                    'M12=' + value[0][1],
-                    'M21=' + value[1][0],
-                    'M22=' + value[1][1],
+            matrixVal = ['progid:DXImageTransform.Microsoft.Matrix(M11=' + value[0][0],
+                    'M12=' + value[0][1], 'M21=' + value[1][0], 'M22=' + value[1][1],
                 // no effect in this filter set
                 // but used for get to keep status
                 // Dom.css(t,'transform',Dom.css(t,'transform'))
-                    'Dx=' + value[0][2],
-                    'Dy=' + value[1][2],
-                'SizingMethod="auto expand"'
-            ].join(',') + ')';
+                    'Dx=' + value[0][2], 'Dy=' + value[1][2], 'SizingMethod="auto expand"'].join(',') + ')';
         } else {
             matrixVal = '';
         }

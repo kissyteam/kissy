@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:57
+build time: Jun 13 11:55
 */
 /**
  * @ignore
@@ -100,14 +100,14 @@ S.config("requires",{
         "component/extension/align"
     ],
     "dd": [
-        "node",
         "base",
+        "node",
         "event/gesture/basic",
         "event/gesture/drag"
     ],
     "dd/plugin/constrain": [
-        "node",
-        "base"
+        "base",
+        "node"
     ],
     "dd/plugin/proxy": [
         "dd"
@@ -195,7 +195,6 @@ S.config("requires",{
     ],
     "io": [
         "dom",
-        "logger",
         "event/custom",
         "promise",
         "url",
@@ -238,15 +237,17 @@ S.config("requires",{
     "promise": [
         "util"
     ],
+    "querystring": [
+        "logger-manager"
+    ],
     "resizable": [
         "dd"
     ],
     "resizable/plugin/proxy": [
-        "node",
-        "base"
+        "base",
+        "node"
     ],
     "router": [
-        "logger",
         "url",
         "event/dom",
         "event/custom",
@@ -302,12 +303,14 @@ S.config("requires",{
         "querystring",
         "path"
     ],
+    "util": [
+        "logger-manager"
+    ],
     "xtemplate": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [
-        "util",
-        "logger"
+        "util"
     ]
 });
 var win = window,

@@ -1,24 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:32
+build time: Jun 13 11:53
 */
 /*
 combined modules:
 scroll-view/touch
 */
-/**
- * @ignore
- * allow body to drag
- * @author yiminghe@gmail.com
- */
 KISSY.add('scroll-view/touch', [
     'util',
     './base',
     'anim/timer',
     'event/gesture/basic',
     'event/gesture/drag'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * allow body to drag
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var ScrollViewBase = require('./base');
     var TimerAnim = require('anim/timer');
@@ -350,18 +350,18 @@ KISSY.add('scroll-view/touch', [
 [// click
         action](BasicGesture.START, onGestureStart, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
     }    /**
-     * allow touch drag for scroll view.
-     * module scroll-view will be this class on touch device
-     * @class KISSY.ScrollView.Drag
-     * @extends KISSY.ScrollView.Base
-     */
+ * allow touch drag for scroll view.
+ * module scroll-view will be this class on touch device
+ * @class KISSY.ScrollView.Drag
+ * @extends KISSY.ScrollView.Base
+ */
     /**
-     * allow touch drag for scroll view.
-     * module scroll-view will be this class on touch device
-     * @class KISSY.ScrollView.Drag
-     * @extends KISSY.ScrollView.Base
-     */
-    return ScrollViewBase.extend({
+ * allow touch drag for scroll view.
+ * module scroll-view will be this class on touch device
+ * @class KISSY.ScrollView.Drag
+ * @extends KISSY.ScrollView.Base
+ */
+    module.exports = ScrollViewBase.extend({
         initializer: function () {
             var self = this;
             self._preventDefaultY = self.get('preventDefaultY');
@@ -396,96 +396,95 @@ KISSY.add('scroll-view/touch', [
     }, {
         ATTRS: {
             /**
-                 * whether allow drag in x direction when content size is less than container size.
-                 * Defaults to: true, does not allow.
-                 * @cfg {Boolean} lockX
-                 */
+             * whether allow drag in x direction when content size is less than container size.
+             * Defaults to: true, does not allow.
+             * @cfg {Boolean} lockX
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             lockX: { value: true },
             /**
-                 * whether allow browser default action on x direction if reach x direction limitation.
-                 * Defaults to: true, does not allow.
-                 * @cfg {Boolean} preventDefaultX
-                 */
+             * whether allow browser default action on x direction if reach x direction limitation.
+             * Defaults to: true, does not allow.
+             * @cfg {Boolean} preventDefaultX
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             preventDefaultX: { value: true },
             /**
-                 * whether allow drag in y direction when content size is less than container size.
-                 * Defaults to: false, allow.
-                 * @cfg {Boolean} lockY
-                 */
+             * whether allow drag in y direction when content size is less than container size.
+             * Defaults to: false, allow.
+             * @cfg {Boolean} lockY
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             lockY: { value: false },
             /**
-                 * whether allow browser default action on y direction if reach y direction limitation.
-                 * Defaults to: true, does not allow.
-                 * @cfg {Boolean} preventDefaultY
-                 */
+             * whether allow browser default action on y direction if reach y direction limitation.
+             * Defaults to: true, does not allow.
+             * @cfg {Boolean} preventDefaultY
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             preventDefaultY: { value: false },
             /**
-                 * snapDuration, Defaults to 0.3
-                 * @cfg {Number} snapDuration
-                 */
+             * snapDuration, Defaults to 0.3
+             * @cfg {Number} snapDuration
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             snapDuration: { value: 0.3 },
             /**
-                 * snapEasing, Defaults to 'easeOut'
-                 * @cfg {String} snapEasing
-                 */
+             * snapEasing, Defaults to 'easeOut'
+             * @cfg {String} snapEasing
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             snapEasing: { value: 'easeOut' },
             /**
-                 * px diff to start x or y snap gesture
-                 * Defaults to: 5.
-                 * @cfg {Boolean} snapThreshold
-                 */
+             * px diff to start x or y snap gesture
+             * Defaults to: 5.
+             * @cfg {Boolean} snapThreshold
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             snapThreshold: { value: 5 },
             /**
-                 * whether allow bounce effect
-                 * Defaults to: true.
-                 * @cfg {Boolean} bounce
-                 */
+             * whether allow bounce effect
+             * Defaults to: true.
+             * @cfg {Boolean} bounce
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             bounce: { value: true },
             /**
-                 * bounce effect duration.
-                 * Defaults to: 0.4.
-                 * @cfg {Number} bounceDuration
-                 */
+             * bounce effect duration.
+             * Defaults to: 0.4.
+             * @cfg {Number} bounceDuration
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             bounceDuration: { value: 0.4 },
             /**
-                 * bounce easing config.
-                 * Defaults to: easeOut.
-                 * @cfg {Boolean} bounceEasing
-                 */
+             * bounce easing config.
+             * Defaults to: easeOut.
+             * @cfg {Boolean} bounceEasing
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             bounceEasing: { value: 'easeOut' }
         }
-    });
-});    /**
+    });    /**
  * @ignore
  * refer
  * - https://developers.google.com/mobile/articles/webapp_fixed_ui
@@ -494,6 +493,7 @@ KISSY.add('scroll-view/touch', [
  * - http://cubiq.org/iscroll-4
  * - http://developer.apple.com/library/ios/#documentation/uikit/reference/UIScrollView_Class/Reference/UIScrollView.html
  */
+});
 
 
 

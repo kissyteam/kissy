@@ -1,28 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:23
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/smiley
 */
-/**
- * @ignore
- * smiley button
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/smiley', [
     'editor',
     './overlay',
     './button',
     'node',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * smiley button
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Overlay4E = require('./overlay');
     require('./button');
-    var $ = require('node').all;
+    var $ = require('node');
     var util = require('util');
     var smileyMarkup = '<div class="{prefixCls}editor-smiley-sprite">';
     for (var i = 0; i <= 98; i++) {
@@ -64,7 +64,7 @@ KISSY.add('editor/plugin/smiley', [
                                 smiley.get('el').on('click', function (ev) {
                                     var t = $(ev.target), icon;
                                     if (t.nodeName() === 'a' && (icon = t.attr('data-icon'))) {
-                                        var img = $('<img ' + 'alt="" src="' + icon + '"/>', null, editor.get('document')[0]);
+                                        var img = $('<img ' + 'alt="" src="' + icon + '"/>', editor.get('document')[0]);
                                         editor.insertElement(img);
                                     }
                                 });
@@ -100,7 +100,7 @@ KISSY.add('editor/plugin/smiley', [
             });
         }
     };
-    return Smiley;
+    module.exports = Smiley;
 });
 
 

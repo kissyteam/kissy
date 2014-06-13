@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 11 20:57
+build time: Jun 13 11:53
 */
 /*
 combined modules:
@@ -12,7 +12,7 @@ router/request
 */
 KISSY.add('router', [
     'util',
-    'logger',
+    'logger-manager',
     './router/utils',
     './router/route',
     'url',
@@ -26,7 +26,7 @@ KISSY.add('router', [
  * @author yiminghe@gmail.com
  */
     var util = require('util');
-    var Logger = require('logger');
+    var LoggerManager = require('logger-manager');
     var middlewares = [];
     var routes = [];
     var utils = require('./router/utils');
@@ -403,7 +403,7 @@ KISSY.add('router', [
                         history.replaceState({}, '', href = utils.getFullPath(hash, urlRoot));
                         triggerRoute = 1;
                     } else {
-                        Logger.error('router: location path must be same with urlRoot!');
+                        LoggerManager.error('router: location path must be same with urlRoot!');
                     }
                 }
             } else if (!utils.equalsIgnoreSlash(locPath, urlRoot)) {

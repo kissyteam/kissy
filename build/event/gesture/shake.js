@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
-KISSY.add("event/gesture/shake",["event/dom/base","util"],function(m,d){function j(a){var b=a.accelerationIncludingGravity,a=b.x,d=b.y,b=b.z,f;void 0!==c&&(f=n(g(a-c),g(d-h),g(b-i)),f>o&&k(),f>p&&(e=1));c=a;h=d;i=b}var l=d("event/dom/base"),q=d("util"),r=l.Special,o=5,p=20,e=0,c,h,i,n=Math.max,g=Math.abs,a=m.Env.host,k=q.buffer(function(){e&&(l.fireHandler(a,"shake",{accelerationIncludingGravity:{x:c,y:h,z:i}}),c=void 0,e=0)},250);r.shake={setup:function(){this===a&&a.addEventListener("devicemotion",
-j,!1)},tearDown:function(){this===a&&(k.stop(),c=void 0,e=0,a.removeEventListener("devicemotion",j,!1))}};return{SHAKE:"shake"}});
+KISSY.add("event/gesture/shake",["event/dom/base","util"],function(j,b,r,n){function k(a){var c=a.accelerationIncludingGravity,a=c.x,b=c.y,c=c.z,f;void 0!==d&&(f=o(g(a-d),g(b-h),g(c-i)),f>p&&l(),f>q&&(e=1));d=a;h=b;i=c}var m=b("event/dom/base"),j=b("util"),b=m.Special,p=5,q=20,e=0,d,h,i,o=Math.max,g=Math.abs,a=window,l=j.buffer(function(){e&&(m.fireHandler(a,"shake",{accelerationIncludingGravity:{x:d,y:h,z:i}}),d=void 0,e=0)},250);b.shake={setup:function(){this===a&&a.addEventListener("devicemotion",
+k,!1)},tearDown:function(){this===a&&(l.stop(),d=void 0,e=0,a.removeEventListener("devicemotion",k,!1))}};n.exports={SHAKE:"shake"}});

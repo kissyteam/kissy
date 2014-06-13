@@ -1,24 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/font-size
 */
-/**
- * @ignore
- * font formatting for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/font-size', [
     'editor',
     './font/ui',
     './font-size/cmd',
     './menubutton',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * font formatting for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var ui = require('./font/ui');
     var cmd = require('./font-size/cmd');
@@ -65,7 +65,7 @@ KISSY.add('editor/plugin/font-size', [
             }, fontSizeConfig), ui.Select);
         }
     });
-    return FontSizePlugin;
+    module.exports = FontSizePlugin;
 });
 
 

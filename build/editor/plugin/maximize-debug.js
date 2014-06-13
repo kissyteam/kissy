@@ -1,27 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/maximize
 */
-/**
+KISSY.add('editor/plugin/maximize', [
+    './maximize/cmd',
+    './button'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Maximize plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/maximize', [
-    './maximize/cmd',
-    './button'
-], function (S, require) {
     var maximizeCmd = require('./maximize/cmd');
     require('./button');
     var MAXIMIZE_CLASS = 'maximize', RESTORE_CLASS = 'restore', MAXIMIZE_TIP = '\u5168\u5C4F', RESTORE_TIP = '\u53D6\u6D88\u5168\u5C4F';
-    function maximizePlugin() {
+    function MaximizePlugin() {
     }
-    maximizePlugin.prototype = {
+    MaximizePlugin.prototype = {
         pluginRenderUI: function (editor) {
             maximizeCmd.init(editor);
             editor.addButton('maximize', {
@@ -46,6 +46,6 @@ KISSY.add('editor/plugin/maximize', [
             });
         }
     };
-    return maximizePlugin;
+    module.exports = MaximizePlugin;
 });
 

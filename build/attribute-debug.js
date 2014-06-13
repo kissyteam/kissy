@@ -1,22 +1,25 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:13
+build time: Jun 13 11:40
 */
 /*
 combined modules:
 attribute
 */
-/**!
+KISSY.add('attribute', [
+    'util',
+    'logger-manager',
+    'event/custom'
+], function (S, require, exports, module) {
+    /**!
  * @ignore
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute', [
-    'util',
-    'event/custom'
-], function (S, require) {
     var util = require('util');
+    var LoggerManger = require('logger-manager');    /* global CustomEvent: true */
+    /* global CustomEvent: true */
     var CustomEvent = require('event/custom');
     function bind(v) {
         if (v === util.noop) {
@@ -58,22 +61,22 @@ KISSY.add('attribute', [
         }
         return ret || {};
     }    /*
-     o, [x,y,z] => o[x][y][z]
-     */
+ o, [x,y,z] => o[x][y][z]
+ */
     /*
-     o, [x,y,z] => o[x][y][z]
-     */
+ o, [x,y,z] => o[x][y][z]
+ */
     function getValueByPath(o, path) {
         for (var i = 0, len = path.length; o !== undefined && i < len; i++) {
             o = o[path[i]];
         }
         return o;
     }    /*
-     o, [x,y,z], val => o[x][y][z]=val
-     */
+ o, [x,y,z], val => o[x][y][z]=val
+ */
     /*
-     o, [x,y,z], val => o[x][y][z]=val
-     */
+ o, [x,y,z], val => o[x][y][z]=val
+ */
     function setValueByPath(o, path, val) {
         var len = path.length - 1, s = o;
         if (len >= 0) {
@@ -189,13 +192,13 @@ KISSY.add('attribute', [
         }
         return undefined;
     }    /**
-     * attribute management
-     * @class KISSY.Attribute
-     */
+ * attribute management
+ * @class KISSY.Attribute
+ */
     /**
-     * attribute management
-     * @class KISSY.Attribute
-     */
+ * attribute management
+ * @class KISSY.Attribute
+ */
     function Attribute(config) {
         var self = this, c = self.constructor;    // save user config
         // save user config
@@ -337,17 +340,17 @@ KISSY.add('attribute', [
             return member.apply(obj, args || []);
         },
         /**
-         * get un-cloned attr config collections
-         * @return {Object}
-         * @private
-         */
+     * get un-cloned attr config collections
+     * @return {Object}
+     * @private
+     */
         getAttrs: function () {
             return this.__attrs || (this.__attrs = {});
         },
         /**
-         * get un-cloned attr value collections
-         * @return {Object}
-         */
+     * get un-cloned attr value collections
+     * @return {Object}
+     */
         getAttrVals: function () {
             var self = this, o = {}, a, attrs = self.getAttrs();
             for (a in attrs) {
@@ -356,29 +359,29 @@ KISSY.add('attribute', [
             return o;
         },
         /**
-         * Adds an attribute with the provided configuration to the host object.
-         * @param {String} name attrName
-         * @param {Object} attrConfig The config supports the following properties
-         * @param [attrConfig.value] simple object or system native object
-         * @param [attrConfig.valueFn] a function which can return current attribute 's default value
-         * @param {Function} [attrConfig.setter] call when set attribute 's value
-         * pass current attribute 's value as parameter
-         * if return value is not undefined,set returned value as real value
-         * @param {Function} [attrConfig.getter] call when get attribute 's value
-         * pass current attribute 's value as parameter
-         * return getter's returned value to invoker
-         * @param {Function} [attrConfig.validator]  call before set attribute 's value
-         * if return false,cancel this set action
-         * @param {Boolean} [override] whether override existing attribute config ,default true
-         * @chainable
-         */
+     * Adds an attribute with the provided configuration to the host object.
+     * @param {String} name attrName
+     * @param {Object} attrConfig The config supports the following properties
+     * @param [attrConfig.value] simple object or system native object
+     * @param [attrConfig.valueFn] a function which can return current attribute 's default value
+     * @param {Function} [attrConfig.setter] call when set attribute 's value
+     * pass current attribute 's value as parameter
+     * if return value is not undefined,set returned value as real value
+     * @param {Function} [attrConfig.getter] call when get attribute 's value
+     * pass current attribute 's value as parameter
+     * return getter's returned value to invoker
+     * @param {Function} [attrConfig.validator]  call before set attribute 's value
+     * if return false,cancel this set action
+     * @param {Boolean} [override] whether override existing attribute config ,default true
+     * @chainable
+     */
         addAttr: function (name, attrConfig, override) {
             var self = this, attrs = self.getAttrs(), attr,
                 // shadow clone
                 cfg = util.merge(attrConfig);
             if (cfg.value && typeof cfg.value === 'object') {
                 cfg.value = util.clone(cfg.value);
-                S.log('please use valueFn instead of value for ' + name + ' attribute', 'warn');
+                LoggerManger.log('please use valueFn instead of value for ' + name + ' attribute', 'warn');
             }
             if (attr = attrs[name]) {
                 util.mix(attr, cfg, override);
@@ -388,11 +391,11 @@ KISSY.add('attribute', [
             return self;
         },
         /**
-         * Configures a group of attributes, and sets initial values.
-         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-         * @param {Object} initialValues user defined initial values
-         * @chainable
-         */
+     * Configures a group of attributes, and sets initial values.
+     * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+     * @param {Object} initialValues user defined initial values
+     * @chainable
+     */
         addAttrs: function (attrConfigs, initialValues) {
             var self = this;
             util.each(attrConfigs, function (attrConfig, name) {
@@ -404,17 +407,17 @@ KISSY.add('attribute', [
             return self;
         },
         /**
-         * Checks if the given attribute has been added to the host.
-         * @param {String} name attribute name
-         * @return {Boolean}
-         */
+     * Checks if the given attribute has been added to the host.
+     * @param {String} name attribute name
+     * @return {Boolean}
+     */
         hasAttr: function (name) {
             return this.getAttrs().hasOwnProperty(name);
         },
         /**
-         * Removes an attribute from the host object.
-         * @chainable
-         */
+     * Removes an attribute from the host object.
+     * @chainable
+     */
         removeAttr: function (name) {
             var self = this;
             var __attrVals = getAttrVals(self);
@@ -426,14 +429,14 @@ KISSY.add('attribute', [
             return self;
         },
         /**
-         * Sets the value of an attribute.
-         * @param {String|Object} name attribute 's name or attribute name and value map
-         * @param [value] attribute 's value
-         * @param {Object} [opts] some options
-         * @param {Boolean} [opts.silent] whether fire change event
-         * @param {Function} [opts.error] error handler
-         * @return {Boolean} whether pass validator
-         */
+     * Sets the value of an attribute.
+     * @param {String|Object} name attribute 's name or attribute name and value map
+     * @param [value] attribute 's value
+     * @param {Object} [opts] some options
+     * @param {Boolean} [opts.silent] whether fire change event
+     * @param {Function} [opts.error] error handler
+     * @return {Boolean} whether pass validator
+     */
         set: function (name, value, opts) {
             var self = this, e;
             if (typeof name !== 'string') {
@@ -480,10 +483,10 @@ KISSY.add('attribute', [
             return setInternal(self, name, value, opts);
         },
         /**
-         * internal use, no event involved, just set.
-         * override by model
-         * @protected
-         */
+     * internal use, no event involved, just set.
+     * override by model
+     * @protected
+     */
         setInternal: function (name, value) {
             var self = this, setValue,
                 // if host does not have meta info corresponding to (name,value)
@@ -506,10 +509,10 @@ KISSY.add('attribute', [
             return undefined;
         },
         /**
-         * Gets the current value of the attribute.
-         * @param {String} name attribute 's name
-         * @return {*}
-         */
+     * Gets the current value of the attribute.
+     * @param {String} name attribute 's name
+     * @return {*}
+     */
         get: function (name) {
             var self = this, dot = '.', path, attrVals = getAttrVals(self), attrConfig, getter, ret;
             if (name.indexOf(dot) !== -1) {
@@ -535,13 +538,13 @@ KISSY.add('attribute', [
             return ret;
         },
         /**
-         * Resets the value of an attribute.just reset what addAttr set
-         * (not what invoker set when call new Xx(cfg))
-         * @param {String} name name of attribute
-         * @param {Object} [opts] some options
-         * @param {Boolean} [opts.silent] whether fire change event
-         * @chainable
-         */
+     * Resets the value of an attribute.just reset what addAttr set
+     * (not what invoker set when call new Xx(cfg))
+     * @param {String} name name of attribute
+     * @param {Object} [opts] some options
+     * @param {Boolean} [opts.silent] whether fire change event
+     * @chainable
+     */
         reset: function (name, opts) {
             var self = this;
             if (typeof name === 'string') {
@@ -553,7 +556,7 @@ KISSY.add('attribute', [
                 }
             }
             opts = /**@type Object
-             @ignore*/
+         @ignore*/
             name;
             var attrs = self.getAttrs(), values = {};    // reset all
             // reset all
@@ -596,10 +599,11 @@ KISSY.add('attribute', [
         }
         return undefined;
     }
-    return Attribute;
-});    /*
+    module.exports = Attribute;    /*
  2011-10-18
  get/set sub attribute value ,set('x.y',val) x 最好为 {} ，不要是 new Clz() 出来的
  add validator
  */
+});
+
 

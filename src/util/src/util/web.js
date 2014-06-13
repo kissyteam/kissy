@@ -5,9 +5,9 @@
  */
 
 var util = require('./base');
-var Logger = require('logger');
-var logger = Logger.getLogger('util');
-var win = window,
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('util');
+var win = typeof window !== 'undefined' ? window : {},
     undef,
     doc = win.document || {},
     docElem = doc.documentElement,
@@ -112,7 +112,7 @@ util.mix(util, {
             try {
                 fn(KISSY);
             } catch (e) {
-                Logger.log(e.stack || e, 'error');
+                LoggerManager.log(e.stack || e, 'error');
                 setTimeout(function () {
                     throw e;
                 }, 0);
@@ -161,7 +161,7 @@ function fireReady() {
         try {
             callbacks[i](KISSY);
         } catch (e) {
-            Logger.log(e.stack || e, 'error');
+            LoggerManager.log(e.stack || e, 'error');
             /*jshint loopfunc:true*/
             setTimeout(function () {
                 throw e;

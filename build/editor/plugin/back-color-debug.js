@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:43
 */
 /*
 combined modules:
 editor/plugin/back-color
 */
-/**
+KISSY.add('editor/plugin/back-color', [
+    './color/btn',
+    './back-color/cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * backColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/back-color', [
-    './color/btn',
-    './back-color/cmd'
-], function (S, require) {
     var Button = require('./color/btn');
     var cmd = require('./back-color/cmd');
     function BackColor(config) {
@@ -31,6 +31,6 @@ KISSY.add('editor/plugin/back-color', [
             });
         }
     };
-    return BackColor;
+    module.exports = BackColor;
 });
 

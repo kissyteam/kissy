@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/heading/cmd
 */
-/**
+KISSY.add('editor/plugin/heading/cmd', ['editor'], function (S, require, exports, module) {
+    /**
  * @ignore
  * Adds a heading tag around a selection or insertion point line.
  * Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6")
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/heading/cmd', ['editor'], function (S, require) {
     var Editor = require('editor');
-    return {
+    module.exports = {
         init: function (editor) {
             if (!editor.hasCommand('heading')) {
                 editor.addCommand('heading', {

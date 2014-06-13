@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/dom');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/dom');
 var Dom = require('./api');
 var globalWindow = window,
     getCssVendorInfo = require('feature').getCssVendorInfo,
@@ -677,7 +677,6 @@ function getOffsetParent(el) {
     }
     return offsetParent;
 }
-
 
 /*
  2011-12-21

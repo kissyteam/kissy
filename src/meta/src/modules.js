@@ -81,14 +81,14 @@ S.config("requires",{
         "component/extension/align"
     ],
     "dd": [
-        "node",
         "base",
+        "node",
         "event/gesture/basic",
         "event/gesture/drag"
     ],
     "dd/plugin/constrain": [
-        "node",
-        "base"
+        "base",
+        "node"
     ],
     "dd/plugin/proxy": [
         "dd"
@@ -176,7 +176,6 @@ S.config("requires",{
     ],
     "io": [
         "dom",
-        "logger",
         "event/custom",
         "promise",
         "url",
@@ -219,15 +218,17 @@ S.config("requires",{
     "promise": [
         "util"
     ],
+    "querystring": [
+        "logger-manager"
+    ],
     "resizable": [
         "dd"
     ],
     "resizable/plugin/proxy": [
-        "node",
-        "base"
+        "base",
+        "node"
     ],
     "router": [
-        "logger",
         "url",
         "event/dom",
         "event/custom",
@@ -283,12 +284,14 @@ S.config("requires",{
         "querystring",
         "path"
     ],
+    "util": [
+        "logger-manager"
+    ],
     "xtemplate": [
         "xtemplate/runtime"
     ],
     "xtemplate/runtime": [
-        "util",
-        "logger"
+        "util"
     ]
 });
 var win = window,

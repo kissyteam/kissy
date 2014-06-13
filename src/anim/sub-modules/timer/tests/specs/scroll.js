@@ -4,6 +4,8 @@
  */
 var Dom = require('dom');
 var Anim = require('anim');
+var UA = require('ua');
+
 describe('anim-scroll', function () {
 
     beforeEach(function () {
@@ -51,7 +53,7 @@ describe('anim-scroll', function () {
 
     // ios iframe 下不能滚动 window?
     // hhttp://www.google.nl/search?q=ipad+iframe+scrolling
-    if (!S.UA.ios || !window.frameElement) {
+    if (!UA.ios || !window.frameElement) {
         it('should animate scroll correctly for window', function () {
             Dom.append(Dom.create('<div style="height:2000px"/>'), document.body);
             Dom.scrollTop(window, 0);

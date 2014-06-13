@@ -4,7 +4,9 @@
  */
 
 var Anim = require('anim');
+var UA = require('ua');
 var $ = require('node');
+
 describe('anim-frame config', function () {
     it('accept custom animation property', function () {
         //非标准的css属性渐变
@@ -32,7 +34,7 @@ describe('anim-frame config', function () {
     });
 
     it('support fx extension', function () {
-        if (!S.UA.webkit) {
+        if (!UA.webkit) {
             return;
         }
 

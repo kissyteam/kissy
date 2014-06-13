@@ -1,28 +1,28 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/outdent
 */
-/**
- * @ignore
- * Add indent button.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/outdent', [
     'editor',
     './button',
     './outdent/cmd'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add indent button.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     require('./button');
     var indexCmd = require('./outdent/cmd');
-    function outdent() {
+    function Outdent() {
     }
-    outdent.prototype = {
+    Outdent.prototype = {
         pluginRenderUI: function (editor) {
             indexCmd.init(editor);
             editor.addButton('outdent', {
@@ -50,7 +50,7 @@ KISSY.add('editor/plugin/outdent', [
             });
         }
     };
-    return outdent;
+    module.exports = Outdent;
 });
 
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 27 14:12
+build time: Jun 13 11:52
 */
 /*
 combined modules:
@@ -11,53 +11,51 @@ menubutton/menubutton-xtpl
 menubutton/select
 menubutton/option
 */
-/**
- * menubutton
- * @ignore
- * @author yiminghe@gmail.com
- */
 KISSY.add('menubutton', [
     'menubutton/control',
     'menubutton/select',
     'menubutton/option'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * menubutton
+ * @ignore
+ * @author yiminghe@gmail.com
+ */
     var MenuButton = require('menubutton/control');
     var Select = require('menubutton/select');
-    var Option = require('menubutton/option');
     MenuButton.Select = Select;
-    MenuButton.Option = Option;
-    return MenuButton;
+    MenuButton.Option = require('menubutton/option');
+    module.exports = MenuButton;
 });
-/**
+KISSY.add('menubutton/control', [
+    'button',
+    'component/extension/content-box',
+    'node',
+    './menubutton-xtpl',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * combination of menu and button ,similar to native select
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('menubutton/control', [
-    'node',
-    'button',
-    'component/extension/content-box',
-    './menubutton-xtpl',
-    'util'
-], function (S, require) {
-    var Node = require('node');
     var Button = require('button');
     var ContentBox = require('component/extension/content-box');
-    var KeyCode = Node.KeyCode;
+    var KeyCode = require('node').Event.KeyCode;
     var MenuButtonTpl = require('./menubutton-xtpl');
     var util = require('util');    /**
-     * A menu button component, consist of a button and a drop down popup menu.
-     * xclass: 'menu-button'.
-     * @class KISSY.MenuButton
-     * @extends KISSY.Button
-     */
+ * A menu button component, consist of a button and a drop down popup menu.
+ * xclass: 'menu-button'.
+ * @class KISSY.MenuButton
+ * @extends KISSY.Button
+ */
     /**
-     * A menu button component, consist of a button and a drop down popup menu.
-     * xclass: 'menu-button'.
-     * @class KISSY.MenuButton
-     * @extends KISSY.Button
-     */
-    return Button.extend([ContentBox], {
+ * A menu button component, consist of a button and a drop down popup menu.
+ * xclass: 'menu-button'.
+ * @class KISSY.MenuButton
+ * @extends KISSY.Button
+ */
+    module.exports = Button.extend([ContentBox], {
         isMenuButton: 1,
         decorateDom: function (el) {
             var self = this, prefixCls = self.get('prefixCls');
@@ -116,14 +114,14 @@ KISSY.add('menubutton/control', [
             self.on('click', onMenuItemClick, self);
         },
         /**
-         * Handle keydown/up event.
-         * If drop down menu is visible then handle event to menu.
-         * Returns true if the event was handled, falsy otherwise.
-         * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DomEvent.Object} e key event to handle.
-         * @return {Boolean|undefined} True Whether the key event was handled.
-         * @protected
-         */
+     * Handle keydown/up event.
+     * If drop down menu is visible then handle event to menu.
+     * Returns true if the event was handled, falsy otherwise.
+     * Protected, should only be overridden by subclasses.
+     * @param {KISSY.Event.DomEvent.Object} e key event to handle.
+     * @return {Boolean|undefined} True Whether the key event was handled.
+     * @protected
+     */
         handleKeyDownInternal: function (e) {
             var self = this, keyCode = e.keyCode, type = String(e.type), menu = self.get('menu');    // space 只在 keyup 时处理
             // space 只在 keyup 时处理
@@ -154,12 +152,12 @@ KISSY.add('menubutton/control', [
             return undefined;
         },
         /**
-         * Perform default action for menubutton.
-         * Toggle the drop down menu to show or hide.
-         * Protected, should only be overridden by subclasses.
-         * @protected
-         *
-         */
+     * Perform default action for menubutton.
+     * Toggle the drop down menu to show or hide.
+     * Protected, should only be overridden by subclasses.
+     * @protected
+     *
+     */
         handleClickInternal: function () {
             var self = this;    // does not fire click from menubutton
                                 // self.callSuper(e);
@@ -168,13 +166,13 @@ KISSY.add('menubutton/control', [
             self.set('collapsed', !self.get('collapsed'));
         },
         /**
-         * Handles blur event.
-         * When it loses keyboard focus, close the drop dow menu.
-         * @param {KISSY.Event.DomEvent.Object} e Blur event.
-         * Protected, should only be overridden by subclasses.
-         * @protected
-         *
-         */
+     * Handles blur event.
+     * When it loses keyboard focus, close the drop dow menu.
+     * @param {KISSY.Event.DomEvent.Object} e Blur event.
+     * Protected, should only be overridden by subclasses.
+     * @protected
+     *
+     */
         handleBlurInternal: function (e) {
             var self = this;
             self.callSuper(e);    // such as : click the document
@@ -182,27 +180,27 @@ KISSY.add('menubutton/control', [
             self.set('collapsed', true);
         },
         /**
-         * Adds a new menu item at the end of the menu.
-         * @param {KISSY.Menu.Item} item Menu item to add to the menu.
-         * @param {Number} index position to insert
-         */
+     * Adds a new menu item at the end of the menu.
+     * @param {KISSY.Menu.Item} item Menu item to add to the menu.
+     * @param {Number} index position to insert
+     */
         addItem: function (item, index) {
             var menu = this.get('menu');
             menu.addChild(item, index);
         },
         /**
-         * Remove a existing menu item from drop down menu.
-         * @param c {KISSY.Menu.Item} Existing menu item.
-         * @param [destroy=true] {Boolean} Whether destroy removed menu item.
-         */
+     * Remove a existing menu item from drop down menu.
+     * @param c {KISSY.Menu.Item} Existing menu item.
+     * @param [destroy=true] {Boolean} Whether destroy removed menu item.
+     */
         removeItem: function (c, destroy) {
             var menu = this.get('menu');
             menu.removeChild(c, destroy);
         },
         /**
-         * Remove all menu items from drop down menu.
-         * @param [destroy] {Boolean} Whether destroy removed menu items.
-         */
+     * Remove all menu items from drop down menu.
+     * @param [destroy] {Boolean} Whether destroy removed menu items.
+     */
         removeItems: function (destroy) {
             var menu = this.get('menu');
             if (menu) {
@@ -214,9 +212,9 @@ KISSY.add('menubutton/control', [
             }
         },
         /**
-         * Returns the child menu item of drop down menu at the given index, or null if the index is out of bounds.
-         * @param {Number} index 0-based index.
-         */
+     * Returns the child menu item of drop down menu at the given index, or null if the index is out of bounds.
+     * @param {Number} index 0-based index.
+     */
         getItemAt: function (index) {
             var menu = this.get('menu');
             return menu.get('rendered') && menu.getChildAt(index);
@@ -235,35 +233,35 @@ KISSY.add('menubutton/control', [
         ATTRS: {
             contentTpl: { value: MenuButtonTpl },
             /**
-             * Whether drop down menu is same width with button.
-             * Defaults to: true.
-             * @cfg {Boolean} matchElWidth
-             */
+         * Whether drop down menu is same width with button.
+         * Defaults to: true.
+         * @cfg {Boolean} matchElWidth
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             matchElWidth: { value: true },
             /**
-             * Whether hide drop down menu when click drop down menu item.
-             * eg: u do not want to set true when menu has checked menuitem.
-             * Defaults to: false
-             * @cfg {Boolean} collapseOnClick
-             */
+         * Whether hide drop down menu when click drop down menu item.
+         * eg: u do not want to set true when menu has checked menuitem.
+         * Defaults to: false
+         * @cfg {Boolean} collapseOnClick
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             collapseOnClick: { value: false },
             /**
-             * Drop down menu associated with this menubutton.
-             * @cfg {KISSY.Menu|Object} menu
-             */
+         * Drop down menu associated with this menubutton.
+         * @cfg {KISSY.Menu|Object} menu
+         */
             /**
-             * Drop down menu associated with this menubutton.
-             * @property {KISSY.Menu} menu
-             */
+         * Drop down menu associated with this menubutton.
+         * @property {KISSY.Menu} menu
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             menu: {
                 getter: function (v) {
                     v = v || {};
@@ -281,12 +279,12 @@ KISSY.add('menubutton/control', [
                 }
             },
             /**
-             * Whether drop menu is shown.
-             * @property {Boolean} collapsed
-             */
+         * Whether drop menu is shown.
+         * @property {Boolean} collapsed
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             collapsed: {
                 value: true,
                 render: 1,
@@ -313,9 +311,9 @@ KISSY.add('menubutton/control', [
 /** Compiled By kissy-xtemplate */
 /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, module) {
-    var menubutton = function (scope, buffer, undefined) {
+    var menubuttonXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -358,23 +356,22 @@ KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, modul
         buffer.write('">\r\n    </div>\r\n</div>', 0);
         return buffer;
     };
-    menubutton.TPL_NAME = module.name;
-    menubutton.version = '5.0.0';
-    return menubutton;
+    menubuttonXtplHtml.TPL_NAME = module.name;
+    menubuttonXtplHtml.version = '5.0.0';
+    module.exports = menubuttonXtplHtml;
 });
 
-/**
- * @ignore
- * manage a list of single-select options
- * @author yiminghe@gmail.com
- */
 KISSY.add('menubutton/select', [
     'node',
     './control',
     'util'
-], function (S, require) {
-    var Node = require('node');
-    var $ = Node.all;
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * manage a list of single-select options
+ * @author yiminghe@gmail.com
+ */
+    var $ = require('node');
     var MenuButton = require('./control');
     var util = require('util');
     function getSelectedItem(self) {
@@ -436,15 +433,15 @@ KISSY.add('menubutton/select', [
         // 可能设置到 select content 的内容并不和 menuitem 的内容完全一致
         self.set('content', textContent || content || self.get('defaultCaption'));
     }    /*
-     Handle click on drop down menu.
-     Set selected menu item as current selectedItem and hide drop down menu.
-     Protected, should only be overridden by subclasses.
-     */
+ Handle click on drop down menu.
+ Set selected menu item as current selectedItem and hide drop down menu.
+ Protected, should only be overridden by subclasses.
+ */
     /*
-     Handle click on drop down menu.
-     Set selected menu item as current selectedItem and hide drop down menu.
-     Protected, should only be overridden by subclasses.
-     */
+ Handle click on drop down menu.
+ Set selected menu item as current selectedItem and hide drop down menu.
+ Protected, should only be overridden by subclasses.
+ */
     function handleMenuClick(e) {
         var self = this, target = e.target;
         if (target.isMenuItem) {
@@ -458,39 +455,39 @@ KISSY.add('menubutton/select', [
             }
         }
     }    /**
-     * Select component which supports single selection from a drop down menu
-     * with semantics similar to native HTML select.
-     * xclass: 'select'.
-     * @class KISSY.MenuButton.Select
-     * @extends KISSY.MenuButton
-     */
+ * Select component which supports single selection from a drop down menu
+ * with semantics similar to native HTML select.
+ * xclass: 'select'.
+ * @class KISSY.MenuButton.Select
+ * @extends KISSY.MenuButton
+ */
     /**
-     * Select component which supports single selection from a drop down menu
-     * with semantics similar to native HTML select.
-     * xclass: 'select'.
-     * @class KISSY.MenuButton.Select
-     * @extends KISSY.MenuButton
-     */
+ * Select component which supports single selection from a drop down menu
+ * with semantics similar to native HTML select.
+ * xclass: 'select'.
+ * @class KISSY.MenuButton.Select
+ * @extends KISSY.MenuButton
+ */
     var Select = MenuButton.extend({
             bindUI: function () {
                 this.on('click', handleMenuClick, this);
                 this.on('show', _handleMenuShow, this);
             },
             /**
-             * Removes all menu items from current select, and set selectedItem to null.
-             *
-             */
+         * Removes all menu items from current select, and set selectedItem to null.
+         *
+         */
             removeItems: function () {
                 var self = this;
                 self.callSuper.apply(self, arguments);
                 self.set('value', null);
             },
             /**
-             * Remove specified item from current select.
-             * If specified item is selectedItem, then set selectedItem to null.
-             * @param c {KISSY.MenuButton.Option} Existing menu item.
-             * @param [destroy=true] {Boolean} Whether destroy removed menu item.
-             */
+         * Remove specified item from current select.
+         * If specified item is selectedItem, then set selectedItem to null.
+         * @param c {KISSY.MenuButton.Option} Existing menu item.
+         * @param [destroy=true] {Boolean} Whether destroy removed menu item.
+         */
             removeItem: function (c, destroy) {
                 var self = this;
                 self.callSuper(c, destroy);
@@ -509,22 +506,22 @@ KISSY.add('menubutton/select', [
         }, {
             ATTRS: {
                 /**
-                 * Get current select 's value.
-                 */
+             * Get current select 's value.
+             */
                 value: {},
                 /**
-                 * Default caption to be shown when no option is selected.
-                 * @type {String}
-                 */
+             * Default caption to be shown when no option is selected.
+             * @type {String}
+             */
                 defaultCaption: { value: '' },
                 collapseOnClick: { value: true }
             },
             /**
-             * Generate a select component from native select element.
-             * @param {HTMLElement} element Native html select element.
-             * @param {Object} cfg Extra configuration for current select component.
-             * @member KISSY.MenuButton.Select
-             */
+         * Generate a select component from native select element.
+         * @param {HTMLElement} element Native html select element.
+         * @param {Object} cfg Extra configuration for current select component.
+         * @member KISSY.MenuButton.Select
+         */
             decorate: function (element, cfg) {
                 element = $(element);
                 cfg = cfg || {};
@@ -550,7 +547,7 @@ KISSY.add('menubutton/select', [
                 delete cfg.menuCfg;
                 select = new Select(util.mix(cfg, selectedItem)).render();
                 if (name = element.attr('name')) {
-                    var input = new Node('<input' + ' type="hidden"' + ' name="' + name + '" value="' + curValue + '">').insertBefore(element, undefined);
+                    var input = $('<input' + ' type="hidden"' + ' name="' + name + '" value="' + curValue + '">').insertBefore(element, undefined);
                     select.on('afterValueChange', function (e) {
                         input.val(e.newVal || '');
                     });
@@ -560,35 +557,35 @@ KISSY.add('menubutton/select', [
             },
             xclass: 'select'
         });
-    return Select;
-});    /*
+    module.exports = Select;    /*
  TODO
  how to emulate multiple ?
  */
-/**
+});
+KISSY.add('menubutton/option', ['menu'], function (S, require, exports, module) {
+    /**
  * represent a menu option , just make it selectable and can have select status
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('menubutton/option', ['menu'], function (S, require) {
     var Menu = require('menu');    /**
-     * Option for Select component.
-     * xclass: 'option'.
-     * @class KISSY.MenuButton.Option
-     * @extends KISSY.Menu.Item
-     */
+ * Option for Select component.
+ * xclass: 'option'.
+ * @class KISSY.MenuButton.Option
+ * @extends KISSY.Menu.Item
+ */
     /**
-     * Option for Select component.
-     * xclass: 'option'.
-     * @class KISSY.MenuButton.Option
-     * @extends KISSY.Menu.Item
-     */
-    return Menu.RadioItem.extend({}, {
+ * Option for Select component.
+ * xclass: 'option'.
+ * @class KISSY.MenuButton.Option
+ * @extends KISSY.Menu.Item
+ */
+    module.exports = Menu.RadioItem.extend({}, {
         ATTRS: {
             /**
-             * String will be used as select 's content if selected.
-             * @type {String}
-             */
+         * String will be used as select 's content if selected.
+         * @type {String}
+         */
             textContent: {}
         },
         xclass: 'option'

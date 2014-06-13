@@ -1,28 +1,29 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/color/dialog
 */
-/**
- * @ignore
- * color picker
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/color/dialog', [
     'editor',
     'util',
     '../dialog',
-    'dom'
-], function (S, require) {
+    'dom',
+    'node'
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * color picker
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var util = require('util');
     var Dialog4E = require('../dialog');
     var map = util.map, Dom = require('dom');
-    var $ = Node.all;    //获取颜色数组
+    var $ = require('node');    //获取颜色数组
     //获取颜色数组
     function getData(color) {
         if (util.isArray(color)) {
@@ -247,8 +248,9 @@ KISSY.add('editor/plugin/color/dialog', [
             destroyRes.call(this);
         }
     });
-    return ColorPicker;
+    module.exports = ColorPicker;
 });
+
 
 
 

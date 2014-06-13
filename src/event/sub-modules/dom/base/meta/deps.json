@@ -1,1 +1,1 @@
-{"event/dom/base":["util","event/base","dom","ua"]}
+{"event/dom/base":["util","event/base","dom","logger-manager","ua"]}

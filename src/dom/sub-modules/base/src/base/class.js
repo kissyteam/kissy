@@ -147,7 +147,6 @@ util.mix(Dom,
         // latest firefox/ie10 does not support
     });
 
-
 /*
  http://jsperf.com/kissy-classlist-vs-classname 17157:14741
  http://jsperf.com/kissy-1-3-vs-jquery-on-dom-class 15721:15223

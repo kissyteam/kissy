@@ -1,18 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:46
 */
 /*
 combined modules:
 editor/plugin/fore-color/cmd
 */
-/**
+KISSY.add('editor/plugin/fore-color/cmd', ['../color/cmd'], function (S, require, exports, module) {
+    /**
  * @ignore
  * foreColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/fore-color/cmd', ['../color/cmd'], function (S, require) {
     var cmd = require('../color/cmd');
     var COLOR_STYLES = {
             element: 'span',
@@ -27,7 +27,7 @@ KISSY.add('editor/plugin/fore-color/cmd', ['../color/cmd'], function (S, require
                 return !(el.nodeName() === 'a' || el.all('a').length);
             }
         };
-    return {
+    module.exports = {
         init: function (editor) {
             if (!editor.hasCommand('foreColor')) {
                 editor.addCommand('foreColor', {

@@ -5,8 +5,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/promise');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/promise');
 var PROMISE_VALUE = '__promise_value',
     PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
     PROMISE_PENDINGS = '__promise_pendings';
@@ -220,7 +220,7 @@ Promise.prototype = {
     done: function (fulfilled, rejected) {
         var self = this,
             onUnhandledError = function (e) {
-                Logger.log(e.stack || e, 'error');
+                LoggerManager.log(e.stack || e, 'error');
                 setTimeout(function () {
                     throw e;
                 }, 0);
@@ -532,7 +532,6 @@ util.mix(Promise, {
 });
 
 module.exports = Promise;
-
 
 /*
  refer:

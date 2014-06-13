@@ -1,105 +1,105 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 event/gesture/drag
 */
-/**
- * @ignore
- * gesture drag
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/drag', [
     'event/gesture/util',
     'event/dom/base',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * gesture drag
+ * @author yiminghe@gmail.com
+ */
     var GestureUtil = require('event/gesture/util');
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;    /**
-     * fired when drag started
-     * @event DRAG_START
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+ * fired when drag started
+ * @event DRAG_START
+ * @member KISSY.Event.Gesture.Drag
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX drag point pageX
+ * @param {Number} e.pageY drag point pageY
+ * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+ * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+ * @param {Number} e.startTime drag start time
+ * @param {String} e.gestureType 'mouse' or 'touch'
+ * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+ */
                                                   /**
-     * fired when drag.
-     * preventDefault this event to prevent native behavior
-     * @event DRAG
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+ * fired when drag.
+ * preventDefault this event to prevent native behavior
+ * @event DRAG
+ * @member KISSY.Event.Gesture.Drag
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX drag point pageX
+ * @param {Number} e.pageY drag point pageY
+ * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+ * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+ * @param {Number} e.startTime drag start time
+ * @param {String} e.gestureType 'mouse' or 'touch'
+ * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+ */
                                                   /**
-     * fired when drag gesture is finished
-     * @event DRAG_END
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+ * fired when drag gesture is finished
+ * @event DRAG_END
+ * @member KISSY.Event.Gesture.Drag
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX drag point pageX
+ * @param {Number} e.pageY drag point pageY
+ * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+ * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+ * @param {Number} e.startTime drag start time
+ * @param {String} e.gestureType 'mouse' or 'touch'
+ * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+ */
     /**
-     * fired when drag started
-     * @event DRAG_START
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+ * fired when drag started
+ * @event DRAG_START
+ * @member KISSY.Event.Gesture.Drag
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX drag point pageX
+ * @param {Number} e.pageY drag point pageY
+ * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+ * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+ * @param {Number} e.startTime drag start time
+ * @param {String} e.gestureType 'mouse' or 'touch'
+ * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+ */
     /**
-     * fired when drag.
-     * preventDefault this event to prevent native behavior
-     * @event DRAG
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+ * fired when drag.
+ * preventDefault this event to prevent native behavior
+ * @event DRAG
+ * @member KISSY.Event.Gesture.Drag
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX drag point pageX
+ * @param {Number} e.pageY drag point pageY
+ * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+ * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+ * @param {Number} e.startTime drag start time
+ * @param {String} e.gestureType 'mouse' or 'touch'
+ * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+ */
     /**
-     * fired when drag gesture is finished
-     * @event DRAG_END
-     * @member KISSY.Event.Gesture.Drag
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
-     * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
-     * @param {Number} e.startTime drag start time
-     * @param {String} e.gestureType 'mouse' or 'touch'
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+ * fired when drag gesture is finished
+ * @event DRAG_END
+ * @member KISSY.Event.Gesture.Drag
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX drag point pageX
+ * @param {Number} e.pageY drag point pageY
+ * @param {Number} e.deltaX deltaX between current pageX and drag start pageX
+ * @param {Number} e.deltaY deltaY between current pageY and drag start pageY
+ * @param {Number} e.startTime drag start time
+ * @param {String} e.gestureType 'mouse' or 'touch'
+ * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+ */
     var DRAG_START = 'ksDragStart', DRAG_END = 'ksDragEnd',
         //DRAG_PRE = 'ksDragging',
         DRAG = 'ksDrag', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
@@ -224,7 +224,7 @@ KISSY.add('event/gesture/drag', [
         DRAG,
         DRAG_END
     ], { handle: new Drag() });
-    return {
+    module.exports = {
         //DRAG_PRE: DRAG_PRE,
         DRAG_START: DRAG_START,
         DRAG: DRAG,

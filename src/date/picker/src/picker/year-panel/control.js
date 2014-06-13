@@ -92,7 +92,7 @@ function onDecadePanelSelect(e) {
     this.get('decadePanel').hide();
 }
 
-return Control.extend({
+module.exports = Control.extend({
     beforeCreateDom: function (renderData) {
         var self = this;
         var value = self.get('value');

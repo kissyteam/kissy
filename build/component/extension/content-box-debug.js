@@ -1,32 +1,32 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:14
+build time: Jun 13 11:41
 */
 /*
 combined modules:
 component/extension/content-box
 component/extension/content-box/content-xtpl
 */
-/**
+KISSY.add('component/extension/content-box', ['./content-box/content-xtpl'], function (S, require, exports, module) {
+    /**
  * @ignore
  * common content box render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/content-box', ['./content-box/content-xtpl'], function (S, require) {
     function shortcut(self) {
         var contentEl = self.get('contentEl');
         self.$contentEl = self.$contentEl = contentEl;
         self.contentEl = self.contentEl = contentEl[0];
     }
     var contentTpl = require('./content-box/content-xtpl');    /**
-     * content-render extension for component system
-     * @class KISSY.Component.Extension.ContentBox
-     */
+ * content-render extension for component system
+ * @class KISSY.Component.Extension.ContentBox
+ */
     /**
-     * content-render extension for component system
-     * @class KISSY.Component.Extension.ContentBox
-     */
+ * content-render extension for component system
+ * @class KISSY.Component.Extension.ContentBox
+ */
     function ContentBox() {
     }
     ContentBox.prototype = {
@@ -62,14 +62,14 @@ KISSY.add('component/extension/content-box', ['./content-box/content-xtpl'], fun
             }
         }
     };
-    return ContentBox;
+    module.exports = ContentBox;
 });
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('component/extension/content-box/content-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var contentXtpl = function (scope, buffer, undefined) {
+    var contentXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -88,7 +88,7 @@ KISSY.add('component/extension/content-box/content-xtpl', [], function (S, requi
         buffer.write('</div>', 0);
         return buffer;
     };
-    contentXtpl.TPL_NAME = module.name;
-    contentXtpl.version = '5.0.0';
-    return contentXtpl;
+    contentXtplHtml.TPL_NAME = module.name;
+    contentXtplHtml.version = '5.0.0';
+    module.exports = contentXtplHtml;
 });

@@ -1,23 +1,23 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/link/dialog
 */
-/**
- * @ignore
- * link dialog
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/link/dialog', [
     'util',
     'editor',
     '../dialog',
     './utils'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * link dialog
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Editor = require('editor');
     var Dialog4E = require('../dialog');
@@ -91,7 +91,7 @@ KISSY.add('editor/plugin/link/dialog', [
             self._prepareShow();
         }
     });
-    return LinkDialog;
+    module.exports = LinkDialog;
 });
 
 

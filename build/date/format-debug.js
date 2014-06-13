@@ -1,93 +1,95 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:42
 */
 /*
 combined modules:
 date/format
 */
-/**
+KISSY.add('date/format', [
+    'util',
+    'logger-manager',
+    'date/gregorian',
+    'i18n!date'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * DateTimeFormat for KISSY.
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/format', [
-    'util',
-    'date/gregorian',
-    'i18n!date'
-], function (S, require) {
     var util = require('util');
-    var logger = S.getLogger('s/date/format');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/date/format');
     var GregorianCalendar = require('date/gregorian');
     var defaultLocale = require('i18n!date');
     var MAX_VALUE = Number.MAX_VALUE,
         /**
-         * date or time style enum
-         * @enum {Number} KISSY.Date.Formatter.Style
-         */
+     * date or time style enum
+     * @enum {Number} KISSY.Date.Formatter.Style
+     */
         DateTimeStyle = {
             /**
-             * full style
-             */
+         * full style
+         */
             FULL: 0,
             /**
-             * long style
-             */
+         * long style
+         */
             LONG: 1,
             /**
-             * medium style
-             */
+         * medium style
+         */
             MEDIUM: 2,
             /**
-             * short style
-             */
+         * short style
+         */
             SHORT: 3
         };    /*
-     Letter    Date or Time Component    Presentation    Examples
-     G    Era designator    Text    AD
-     y    Year    Year    1996; 96
-     M    Month in year    Month    July; Jul; 07
-     w    Week in year    Number    27
-     W    Week in month    Number    2
-     D    Day in year    Number    189
-     d    Day in month    Number    10
-     F    Day of week in month    Number    2
-     E    Day in week    Text    Tuesday; Tue
-     a    Am/pm marker    Text    PM
-     H    Hour in day (0-23)    Number    0
-     k    Hour in day (1-24)    Number    24
-     K    Hour in am/pm (0-11)    Number    0
-     h    Hour in am/pm (1-12)    Number    12
-     m    Minute in hour    Number    30
-     s    Second in minute    Number    55
-     S    Millisecond    Number    978
-     x z    Time zone    General time zone    Pacific Standard Time; PST; GMT-08:00
-     Z    Time zone    RFC 822 time zone    -0800
-     */
+ Letter    Date or Time Component    Presentation    Examples
+ G    Era designator    Text    AD
+ y    Year    Year    1996; 96
+ M    Month in year    Month    July; Jul; 07
+ w    Week in year    Number    27
+ W    Week in month    Number    2
+ D    Day in year    Number    189
+ d    Day in month    Number    10
+ F    Day of week in month    Number    2
+ E    Day in week    Text    Tuesday; Tue
+ a    Am/pm marker    Text    PM
+ H    Hour in day (0-23)    Number    0
+ k    Hour in day (1-24)    Number    24
+ K    Hour in am/pm (0-11)    Number    0
+ h    Hour in am/pm (1-12)    Number    12
+ m    Minute in hour    Number    30
+ s    Second in minute    Number    55
+ S    Millisecond    Number    978
+ x z    Time zone    General time zone    Pacific Standard Time; PST; GMT-08:00
+ Z    Time zone    RFC 822 time zone    -0800
+ */
     /*
-     Letter    Date or Time Component    Presentation    Examples
-     G    Era designator    Text    AD
-     y    Year    Year    1996; 96
-     M    Month in year    Month    July; Jul; 07
-     w    Week in year    Number    27
-     W    Week in month    Number    2
-     D    Day in year    Number    189
-     d    Day in month    Number    10
-     F    Day of week in month    Number    2
-     E    Day in week    Text    Tuesday; Tue
-     a    Am/pm marker    Text    PM
-     H    Hour in day (0-23)    Number    0
-     k    Hour in day (1-24)    Number    24
-     K    Hour in am/pm (0-11)    Number    0
-     h    Hour in am/pm (1-12)    Number    12
-     m    Minute in hour    Number    30
-     s    Second in minute    Number    55
-     S    Millisecond    Number    978
-     x z    Time zone    General time zone    Pacific Standard Time; PST; GMT-08:00
-     Z    Time zone    RFC 822 time zone    -0800
-     */
+ Letter    Date or Time Component    Presentation    Examples
+ G    Era designator    Text    AD
+ y    Year    Year    1996; 96
+ M    Month in year    Month    July; Jul; 07
+ w    Week in year    Number    27
+ W    Week in month    Number    2
+ D    Day in year    Number    189
+ d    Day in month    Number    10
+ F    Day of week in month    Number    2
+ E    Day in week    Text    Tuesday; Tue
+ a    Am/pm marker    Text    PM
+ H    Hour in day (0-23)    Number    0
+ k    Hour in day (1-24)    Number    24
+ K    Hour in am/pm (0-11)    Number    0
+ h    Hour in am/pm (1-12)    Number    12
+ m    Minute in hour    Number    30
+ s    Second in minute    Number    55
+ S    Millisecond    Number    978
+ x z    Time zone    General time zone    Pacific Standard Time; PST; GMT-08:00
+ Z    Time zone    RFC 822 time zone    -0800
+ */
     var patternChars = new Array(GregorianCalendar.DAY_OF_WEEK_IN_MONTH + 2).join('1');
     var ERA = 0;
     var calendarIndexMap = {};
@@ -108,9 +110,9 @@ KISSY.add('date/format', [
         calendarIndexMap[v] = index;
     });
     patternChars = /**
-     @ignore
-     @type String
-     */
+ @ignore
+ @type String
+ */
     patternChars.join('') + 'ahkKZE';
     function encode(lastField, count, compiledPattern) {
         compiledPattern.push({
@@ -221,255 +223,255 @@ KISSY.add('date/format', [
         buffer.push(value + '');
         return buffer.join('');
     }    /**
-     *
-     * date time formatter for KISSY gregorian date.
-     *
-     *      @example
-     *      KISSY.use('date/format,date/gregorian',function(S, DateFormat, GregorianCalendar){
+ *
+ * date time formatter for KISSY gregorian date.
+ *
+ *      @example
+ *      KISSY.use('date/format,date/gregorian',function(S, DateFormat, GregorianCalendar){
      *          var calendar = new GregorianCalendar(2013,9,24);
      *          // ' to escape
      *          var formatter = new DateFormat("'today is' ''yyyy/MM/dd a''");
      *          document.write(formatter.format(calendar));
      *      });
-     *
-     * @class KISSY.Date.Formatter
-     * @param {String} pattern patter string of date formatter
-     *
-     * <table border="1">
-     * <thead valign="bottom">
-     * <tr><th class="head">Letter</th>
-     * <th class="head">Date or Time Component</th>
-     * <th class="head">Presentation</th>
-     * <th class="head">Examples</th>
-     * </tr>
-     * </thead>
-     * <tbody valign="top">
-     * <tr><td>G</td>
-     * <td>Era designator</td>
-     * <td>Text</td>
-     * <td>AD</td>
-     * </tr>
-     * <tr><td>y</td>
-     * <td>Year</td>
-     * <td>Year</td>
-     * <td>1996; 96</td>
-     * </tr>
-     * <tr><td>M</td>
-     * <td>Month in year</td>
-     * <td>Month</td>
-     * <td>July; Jul; 07</td>
-     * </tr>
-     * <tr><td>w</td>
-     * <td>Week in year</td>
-     * <td>Number</td>
-     * <td>27</td>
-     * </tr>
-     * <tr><td>W</td>
-     * <td>Week in month</td>
-     * <td>Number</td>
-     * <td>2</td>
-     * </tr>
-     * <tr><td>D</td>
-     * <td>Day in year</td>
-     * <td>Number</td>
-     * <td>189</td>
-     * </tr>
-     * <tr><td>d</td>
-     * <td>Day in month</td>
-     * <td>Number</td>
-     * <td>10</td>
-     * </tr>
-     * <tr><td>F</td>
-     * <td>Day of week in month</td>
-     * <td>Number</td>
-     * <td>2</td>
-     * </tr>
-     * <tr><td>E</td>
-     * <td>Day in week</td>
-     * <td>Text</td>
-     * <td>Tuesday; Tue</td>
-     * </tr>
-     * <tr><td>a</td>
-     * <td>Am/pm marker</td>
-     * <td>Text</td>
-     * <td>PM</td>
-     * </tr>
-     * <tr><td>H</td>
-     *       <td>Hour in day (0-23)</td>
-     * <td>Number</td>
-     * <td>0</td>
-     * </tr>
-     * <tr><td>k</td>
-     *       <td>Hour in day (1-24)</td>
-     * <td>Number</td>
-     * <td>24</td>
-     * </tr>
-     * <tr><td>K</td>
-     * <td>Hour in am/pm (0-11)</td>
-     * <td>Number</td>
-     * <td>0</td>
-     * </tr>
-     * <tr><td>h</td>
-     * <td>Hour in am/pm (1-12)</td>
-     * <td>Number</td>
-     * <td>12</td>
-     * </tr>
-     * <tr><td>m</td>
-     * <td>Minute in hour</td>
-     * <td>Number</td>
-     * <td>30</td>
-     * </tr>
-     * <tr><td>s</td>
-     * <td>Second in minute</td>
-     * <td>Number</td>
-     * <td>55</td>
-     * </tr>
-     * <tr><td>S</td>
-     * <td>Millisecond</td>
-     * <td>Number</td>
-     * <td>978</td>
-     * </tr>
-     * <tr><td>x/z</td>
-     * <td>Time zone</td>
-     * <td>General time zone</td>
-     * <td>Pacific Standard Time; PST; GMT-08:00</td>
-     * </tr>
-     * <tr><td>Z</td>
-     * <td>Time zone</td>
-     * <td>RFC 822 time zone</td>
-     * <td>-0800</td>
-     * </tr>
-     * </tbody>
-     * </table>
+ *
+ * @class KISSY.Date.Formatter
+ * @param {String} pattern patter string of date formatter
+ *
+ * <table border="1">
+ * <thead valign="bottom">
+ * <tr><th class="head">Letter</th>
+ * <th class="head">Date or Time Component</th>
+ * <th class="head">Presentation</th>
+ * <th class="head">Examples</th>
+ * </tr>
+ * </thead>
+ * <tbody valign="top">
+ * <tr><td>G</td>
+ * <td>Era designator</td>
+ * <td>Text</td>
+ * <td>AD</td>
+ * </tr>
+ * <tr><td>y</td>
+ * <td>Year</td>
+ * <td>Year</td>
+ * <td>1996; 96</td>
+ * </tr>
+ * <tr><td>M</td>
+ * <td>Month in year</td>
+ * <td>Month</td>
+ * <td>July; Jul; 07</td>
+ * </tr>
+ * <tr><td>w</td>
+ * <td>Week in year</td>
+ * <td>Number</td>
+ * <td>27</td>
+ * </tr>
+ * <tr><td>W</td>
+ * <td>Week in month</td>
+ * <td>Number</td>
+ * <td>2</td>
+ * </tr>
+ * <tr><td>D</td>
+ * <td>Day in year</td>
+ * <td>Number</td>
+ * <td>189</td>
+ * </tr>
+ * <tr><td>d</td>
+ * <td>Day in month</td>
+ * <td>Number</td>
+ * <td>10</td>
+ * </tr>
+ * <tr><td>F</td>
+ * <td>Day of week in month</td>
+ * <td>Number</td>
+ * <td>2</td>
+ * </tr>
+ * <tr><td>E</td>
+ * <td>Day in week</td>
+ * <td>Text</td>
+ * <td>Tuesday; Tue</td>
+ * </tr>
+ * <tr><td>a</td>
+ * <td>Am/pm marker</td>
+ * <td>Text</td>
+ * <td>PM</td>
+ * </tr>
+ * <tr><td>H</td>
+ *       <td>Hour in day (0-23)</td>
+ * <td>Number</td>
+ * <td>0</td>
+ * </tr>
+ * <tr><td>k</td>
+ *       <td>Hour in day (1-24)</td>
+ * <td>Number</td>
+ * <td>24</td>
+ * </tr>
+ * <tr><td>K</td>
+ * <td>Hour in am/pm (0-11)</td>
+ * <td>Number</td>
+ * <td>0</td>
+ * </tr>
+ * <tr><td>h</td>
+ * <td>Hour in am/pm (1-12)</td>
+ * <td>Number</td>
+ * <td>12</td>
+ * </tr>
+ * <tr><td>m</td>
+ * <td>Minute in hour</td>
+ * <td>Number</td>
+ * <td>30</td>
+ * </tr>
+ * <tr><td>s</td>
+ * <td>Second in minute</td>
+ * <td>Number</td>
+ * <td>55</td>
+ * </tr>
+ * <tr><td>S</td>
+ * <td>Millisecond</td>
+ * <td>Number</td>
+ * <td>978</td>
+ * </tr>
+ * <tr><td>x/z</td>
+ * <td>Time zone</td>
+ * <td>General time zone</td>
+ * <td>Pacific Standard Time; PST; GMT-08:00</td>
+ * </tr>
+ * <tr><td>Z</td>
+ * <td>Time zone</td>
+ * <td>RFC 822 time zone</td>
+ * <td>-0800</td>
+ * </tr>
+ * </tbody>
+ * </table>
 
-     * @param {Object} locale locale object
-     * @param {Number} timeZoneOffset time zone offset by minutes
-     */
+ * @param {Object} locale locale object
+ * @param {Number} timeZoneOffset time zone offset by minutes
+ */
     /**
-     *
-     * date time formatter for KISSY gregorian date.
-     *
-     *      @example
-     *      KISSY.use('date/format,date/gregorian',function(S, DateFormat, GregorianCalendar){
+ *
+ * date time formatter for KISSY gregorian date.
+ *
+ *      @example
+ *      KISSY.use('date/format,date/gregorian',function(S, DateFormat, GregorianCalendar){
      *          var calendar = new GregorianCalendar(2013,9,24);
      *          // ' to escape
      *          var formatter = new DateFormat("'today is' ''yyyy/MM/dd a''");
      *          document.write(formatter.format(calendar));
      *      });
-     *
-     * @class KISSY.Date.Formatter
-     * @param {String} pattern patter string of date formatter
-     *
-     * <table border="1">
-     * <thead valign="bottom">
-     * <tr><th class="head">Letter</th>
-     * <th class="head">Date or Time Component</th>
-     * <th class="head">Presentation</th>
-     * <th class="head">Examples</th>
-     * </tr>
-     * </thead>
-     * <tbody valign="top">
-     * <tr><td>G</td>
-     * <td>Era designator</td>
-     * <td>Text</td>
-     * <td>AD</td>
-     * </tr>
-     * <tr><td>y</td>
-     * <td>Year</td>
-     * <td>Year</td>
-     * <td>1996; 96</td>
-     * </tr>
-     * <tr><td>M</td>
-     * <td>Month in year</td>
-     * <td>Month</td>
-     * <td>July; Jul; 07</td>
-     * </tr>
-     * <tr><td>w</td>
-     * <td>Week in year</td>
-     * <td>Number</td>
-     * <td>27</td>
-     * </tr>
-     * <tr><td>W</td>
-     * <td>Week in month</td>
-     * <td>Number</td>
-     * <td>2</td>
-     * </tr>
-     * <tr><td>D</td>
-     * <td>Day in year</td>
-     * <td>Number</td>
-     * <td>189</td>
-     * </tr>
-     * <tr><td>d</td>
-     * <td>Day in month</td>
-     * <td>Number</td>
-     * <td>10</td>
-     * </tr>
-     * <tr><td>F</td>
-     * <td>Day of week in month</td>
-     * <td>Number</td>
-     * <td>2</td>
-     * </tr>
-     * <tr><td>E</td>
-     * <td>Day in week</td>
-     * <td>Text</td>
-     * <td>Tuesday; Tue</td>
-     * </tr>
-     * <tr><td>a</td>
-     * <td>Am/pm marker</td>
-     * <td>Text</td>
-     * <td>PM</td>
-     * </tr>
-     * <tr><td>H</td>
-     *       <td>Hour in day (0-23)</td>
-     * <td>Number</td>
-     * <td>0</td>
-     * </tr>
-     * <tr><td>k</td>
-     *       <td>Hour in day (1-24)</td>
-     * <td>Number</td>
-     * <td>24</td>
-     * </tr>
-     * <tr><td>K</td>
-     * <td>Hour in am/pm (0-11)</td>
-     * <td>Number</td>
-     * <td>0</td>
-     * </tr>
-     * <tr><td>h</td>
-     * <td>Hour in am/pm (1-12)</td>
-     * <td>Number</td>
-     * <td>12</td>
-     * </tr>
-     * <tr><td>m</td>
-     * <td>Minute in hour</td>
-     * <td>Number</td>
-     * <td>30</td>
-     * </tr>
-     * <tr><td>s</td>
-     * <td>Second in minute</td>
-     * <td>Number</td>
-     * <td>55</td>
-     * </tr>
-     * <tr><td>S</td>
-     * <td>Millisecond</td>
-     * <td>Number</td>
-     * <td>978</td>
-     * </tr>
-     * <tr><td>x/z</td>
-     * <td>Time zone</td>
-     * <td>General time zone</td>
-     * <td>Pacific Standard Time; PST; GMT-08:00</td>
-     * </tr>
-     * <tr><td>Z</td>
-     * <td>Time zone</td>
-     * <td>RFC 822 time zone</td>
-     * <td>-0800</td>
-     * </tr>
-     * </tbody>
-     * </table>
+ *
+ * @class KISSY.Date.Formatter
+ * @param {String} pattern patter string of date formatter
+ *
+ * <table border="1">
+ * <thead valign="bottom">
+ * <tr><th class="head">Letter</th>
+ * <th class="head">Date or Time Component</th>
+ * <th class="head">Presentation</th>
+ * <th class="head">Examples</th>
+ * </tr>
+ * </thead>
+ * <tbody valign="top">
+ * <tr><td>G</td>
+ * <td>Era designator</td>
+ * <td>Text</td>
+ * <td>AD</td>
+ * </tr>
+ * <tr><td>y</td>
+ * <td>Year</td>
+ * <td>Year</td>
+ * <td>1996; 96</td>
+ * </tr>
+ * <tr><td>M</td>
+ * <td>Month in year</td>
+ * <td>Month</td>
+ * <td>July; Jul; 07</td>
+ * </tr>
+ * <tr><td>w</td>
+ * <td>Week in year</td>
+ * <td>Number</td>
+ * <td>27</td>
+ * </tr>
+ * <tr><td>W</td>
+ * <td>Week in month</td>
+ * <td>Number</td>
+ * <td>2</td>
+ * </tr>
+ * <tr><td>D</td>
+ * <td>Day in year</td>
+ * <td>Number</td>
+ * <td>189</td>
+ * </tr>
+ * <tr><td>d</td>
+ * <td>Day in month</td>
+ * <td>Number</td>
+ * <td>10</td>
+ * </tr>
+ * <tr><td>F</td>
+ * <td>Day of week in month</td>
+ * <td>Number</td>
+ * <td>2</td>
+ * </tr>
+ * <tr><td>E</td>
+ * <td>Day in week</td>
+ * <td>Text</td>
+ * <td>Tuesday; Tue</td>
+ * </tr>
+ * <tr><td>a</td>
+ * <td>Am/pm marker</td>
+ * <td>Text</td>
+ * <td>PM</td>
+ * </tr>
+ * <tr><td>H</td>
+ *       <td>Hour in day (0-23)</td>
+ * <td>Number</td>
+ * <td>0</td>
+ * </tr>
+ * <tr><td>k</td>
+ *       <td>Hour in day (1-24)</td>
+ * <td>Number</td>
+ * <td>24</td>
+ * </tr>
+ * <tr><td>K</td>
+ * <td>Hour in am/pm (0-11)</td>
+ * <td>Number</td>
+ * <td>0</td>
+ * </tr>
+ * <tr><td>h</td>
+ * <td>Hour in am/pm (1-12)</td>
+ * <td>Number</td>
+ * <td>12</td>
+ * </tr>
+ * <tr><td>m</td>
+ * <td>Minute in hour</td>
+ * <td>Number</td>
+ * <td>30</td>
+ * </tr>
+ * <tr><td>s</td>
+ * <td>Second in minute</td>
+ * <td>Number</td>
+ * <td>55</td>
+ * </tr>
+ * <tr><td>S</td>
+ * <td>Millisecond</td>
+ * <td>Number</td>
+ * <td>978</td>
+ * </tr>
+ * <tr><td>x/z</td>
+ * <td>Time zone</td>
+ * <td>General time zone</td>
+ * <td>Pacific Standard Time; PST; GMT-08:00</td>
+ * </tr>
+ * <tr><td>Z</td>
+ * <td>Time zone</td>
+ * <td>RFC 822 time zone</td>
+ * <td>-0800</td>
+ * </tr>
+ * </tbody>
+ * </table>
 
-     * @param {Object} locale locale object
-     * @param {Number} timeZoneOffset time zone offset by minutes
-     */
+ * @param {Object} locale locale object
+ * @param {Number} timeZoneOffset time zone offset by minutes
+ */
     function DateTimeFormat(pattern, locale, timeZoneOffset) {
         this.locale = locale || defaultLocale;
         this.pattern = compile(pattern);
@@ -720,14 +722,14 @@ KISSY.add('date/format', [
     }
     util.augment(DateTimeFormat, {
         /**
-         * format a GregorianDate instance according to specified pattern
-         * @param {KISSY.Date.Gregorian} calendar GregorianDate instance
-         * @returns {string} formatted string of GregorianDate instance
-         */
+     * format a GregorianDate instance according to specified pattern
+     * @param {KISSY.Date.Gregorian} calendar GregorianDate instance
+     * @returns {string} formatted string of GregorianDate instance
+     */
         format: function (calendar) {
             var time = calendar.getTime();
             calendar = /**@type {KISSY.Date.Gregorian}
-             @ignore*/
+         @ignore*/
             new GregorianCalendar(this.timezoneOffset, this.locale);
             calendar.setTime(time);
             var i, ret = [], pattern = this.pattern, len = pattern.length;
@@ -742,13 +744,13 @@ KISSY.add('date/format', [
             return ret.join('');
         },
         /**
-         * parse a formatted string of GregorianDate instance according to specified pattern
-         * @param {String} dateStr formatted string of GregorianDate
-         * @returns {KISSY.Date.Gregorian}
-         */
+     * parse a formatted string of GregorianDate instance according to specified pattern
+     * @param {String} dateStr formatted string of GregorianDate
+     * @returns {KISSY.Date.Gregorian}
+     */
         parse: function (dateStr) {
             var calendar = /**@type {KISSY.Date.Gregorian}
-                 @ignore*/
+             @ignore*/
                 new GregorianCalendar(this.timezoneOffset, this.locale), i, j, tmp = {}, obeyCount = false, dateStrLen = dateStr.length, errorIndex = -1, startIndex = 0, oldStartIndex = 0, pattern = this.pattern, len = pattern.length;
             loopPattern: {
                 for (i = 0; errorIndex < 0 && i < len; i++) {
@@ -799,37 +801,37 @@ KISSY.add('date/format', [
     util.mix(DateTimeFormat, {
         Style: DateTimeStyle,
         /**
-         * get a formatter instance of short style pattern.
-         * en-us: M/d/yy h:mm a
-         * zh-cn: yy-M-d ah:mm
-         * @param {Object} locale locale object
-         * @param {Number} timeZoneOffset time zone offset by minutes
-         * @returns {KISSY.Date.Gregorian}
-         * @static
-         */
+     * get a formatter instance of short style pattern.
+     * en-us: M/d/yy h:mm a
+     * zh-cn: yy-M-d ah:mm
+     * @param {Object} locale locale object
+     * @param {Number} timeZoneOffset time zone offset by minutes
+     * @returns {KISSY.Date.Gregorian}
+     * @static
+     */
         getInstance: function (locale, timeZoneOffset) {
             return this.getDateTimeInstance(DateTimeStyle.SHORT, DateTimeStyle.SHORT, locale, timeZoneOffset);
         },
         /**
-         * get a formatter instance of specified date style.
-         * @param {KISSY.Date.Formatter.Style} dateStyle date format style
-         * @param {Object} locale
-         * @param {Number} timeZoneOffset time zone offset by minutes
-         * @returns {KISSY.Date.Gregorian}
-         * @static
-         */
+     * get a formatter instance of specified date style.
+     * @param {KISSY.Date.Formatter.Style} dateStyle date format style
+     * @param {Object} locale
+     * @param {Number} timeZoneOffset time zone offset by minutes
+     * @returns {KISSY.Date.Gregorian}
+     * @static
+     */
         getDateInstance: function (dateStyle, locale, timeZoneOffset) {
             return this.getDateTimeInstance(dateStyle, undefined, locale, timeZoneOffset);
         },
         /**
-         * get a formatter instance of specified date style and time style.
-         * @param {KISSY.Date.Formatter.Style} dateStyle date format style
-         * @param {KISSY.Date.Formatter.Style} timeStyle time format style
-         * @param {Object} locale
-         * @param {Number} timeZoneOffset time zone offset by minutes
-         * @returns {KISSY.Date.Gregorian}
-         * @static
-         */
+     * get a formatter instance of specified date style and time style.
+     * @param {KISSY.Date.Formatter.Style} dateStyle date format style
+     * @param {KISSY.Date.Formatter.Style} timeStyle time format style
+     * @param {Object} locale
+     * @param {Number} timeZoneOffset time zone offset by minutes
+     * @returns {KISSY.Date.Gregorian}
+     * @static
+     */
         getDateTimeInstance: function (dateStyle, timeStyle, locale, timeZoneOffset) {
             locale = locale || defaultLocale;
             var datePattern = '';
@@ -854,18 +856,19 @@ KISSY.add('date/format', [
             return new DateTimeFormat(pattern, locale, timeZoneOffset);
         },
         /**
-         * get a formatter instance of specified time style.
-         * @param {KISSY.Date.Formatter.Style} timeStyle time format style
-         * @param {Object} locale
-         * @param {Number} timeZoneOffset time zone offset by minutes
-         * @returns {KISSY.Date.Gregorian}
-         * @static
-         */
+     * get a formatter instance of specified time style.
+     * @param {KISSY.Date.Formatter.Style} timeStyle time format style
+     * @param {Object} locale
+     * @param {Number} timeZoneOffset time zone offset by minutes
+     * @returns {KISSY.Date.Gregorian}
+     * @static
+     */
         getTimeInstance: function (timeStyle, locale, timeZoneOffset) {
             return this.getDateTimeInstance(undefined, timeStyle, locale, timeZoneOffset);
         }
     });
-    return DateTimeFormat;
+    module.exports = DateTimeFormat;
 });
+
 
 

@@ -5,8 +5,8 @@
  */
 
 var util = require('util');
-var Logger = require('logger');
-var logger = Logger.getLogger('s/editor');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/editor');
 var Editor = require('./base');
 var KERange = require('./range');
 var KES = require('./selection');
@@ -301,7 +301,6 @@ util.augment(Paste, {
         }, 0);
     }
 });
-
 
 // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
 function fixCut(editor) {

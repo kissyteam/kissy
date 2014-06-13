@@ -3,53 +3,55 @@
  * @author yiminghe@gmail.com
  */
 
-    var Dom = require('dom');
-    describe('input-selection', function () {
-        it('works for ie', function () {
-            var textarea = Dom.create('<textarea></textarea>');
-            Dom.append(textarea, document.body);
+var Dom = require('dom');
+var UA = require('ua');
 
-            textarea.value = '1\n2\n3';
-            // \n will be '\r\n' in ie<9
-            // alert(textarea.value.length);
+describe('input-selection', function () {
+    it('works for ie', function () {
+        var textarea = Dom.create('<textarea></textarea>');
+        Dom.append(textarea, document.body);
 
-            var docMode = S.UA.ieMode;
+        textarea.value = '1\n2\n3';
+        // \n will be '\r\n' in ie<9
+        // alert(textarea.value.length);
 
-            if (docMode < 9) {
+        var docMode = UA.ieMode;
 
-                waits(100);
-                runs(function () {
-                    textarea.focus();
-                });
+        if (docMode < 9) {
 
-                waits(100);
-                // '1\r\n2\r\n3\r\n';
-                runs(function () {
-                    Dom.prop(textarea, 'selectionStart', 1);
-                    Dom.prop(textarea, 'selectionEnd', 4);
-                    expect(document.selection.createRange().text).toBe('\r\n2');
-                });
+            waits(100);
+            runs(function () {
+                textarea.focus();
+            });
 
-                waits(1000);
-                runs(function () {
-                    Dom.prop(textarea, 'selectionStart', 6);
-                    expect(document.selection.createRange().text).toBe('');
-                    expect(Dom.prop(textarea, 'selectionStart')).toBe(6);
-                    expect(Dom.prop(textarea, 'selectionEnd')).toBe(6);
-                });
-                waits(1000);
-                runs(function () {
-                    Dom.prop(textarea, 'selectionEnd', 3);
-                    expect(document.selection.createRange().text).toBe('');
-                    expect(Dom.prop(textarea, 'selectionStart')).toBe(3);
-                    expect(Dom.prop(textarea, 'selectionEnd')).toBe(3);
-                });
-            } else {
-                expect('other ok').toBe('other ok');
-            }
+            waits(100);
+            // '1\r\n2\r\n3\r\n';
+            runs(function () {
+                Dom.prop(textarea, 'selectionStart', 1);
+                Dom.prop(textarea, 'selectionEnd', 4);
+                expect(document.selection.createRange().text).toBe('\r\n2');
+            });
+
             waits(1000);
             runs(function () {
-                Dom.remove(textarea);
+                Dom.prop(textarea, 'selectionStart', 6);
+                expect(document.selection.createRange().text).toBe('');
+                expect(Dom.prop(textarea, 'selectionStart')).toBe(6);
+                expect(Dom.prop(textarea, 'selectionEnd')).toBe(6);
             });
+            waits(1000);
+            runs(function () {
+                Dom.prop(textarea, 'selectionEnd', 3);
+                expect(document.selection.createRange().text).toBe('');
+                expect(Dom.prop(textarea, 'selectionStart')).toBe(3);
+                expect(Dom.prop(textarea, 'selectionEnd')).toBe(3);
+            });
+        } else {
+            expect('other ok').toBe('other ok');
+        }
+        waits(1000);
+        runs(function () {
+            Dom.remove(textarea);
         });
     });
+});

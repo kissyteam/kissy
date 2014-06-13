@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/xiami-music
 */
-/**
- * @ignore
- * xiami-music button
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/xiami-music', [
     'editor',
     './flash-common/base-class',
@@ -19,7 +14,12 @@ KISSY.add('editor/plugin/xiami-music', [
     './fake-objects',
     './button',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * xiami-music button
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var FlashBaseClass = require('./flash-common/base-class');
     var flashUtils = require('./flash-common/utils');
@@ -121,7 +121,7 @@ KISSY.add('editor/plugin/xiami-music', [
             });
         }
     };
-    return XiamiMusicPlugin;
+    module.exports = XiamiMusicPlugin;
 });
 
 

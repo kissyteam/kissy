@@ -1,1 +1,1 @@
-{"date/format":["util","date/gregorian","i18n!date"]}
+{"date/format":["util","logger-manager","date/gregorian","i18n!date"]}

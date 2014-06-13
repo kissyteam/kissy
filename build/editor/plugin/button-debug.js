@@ -1,39 +1,39 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/button
 */
-/**
- * @ignore
- * Encapsulate KISSY toggle button for kissy editor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/button', [
     'util',
     'editor',
     'button'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Encapsulate KISSY toggle button for kissy editor
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');    // 'editor', '../font/cmd'
     // 'editor', '../font/cmd'
     var Editor = require('editor');
     var Button = require('button');    /**
-     * add button to editor
-     * @param {String} id control id
-     * @param {Object} cfg button config
-     * @param {Function} ButtonType button constructor. needs to extend {@link KISSY.Button}, Defaults to {@link KISSY.Button}.
-     * @member KISSY.Editor
-     */
+ * add button to editor
+ * @param {String} id control id
+ * @param {Object} cfg button config
+ * @param {Function} ButtonType button constructor. needs to extend {@link KISSY.Button}, Defaults to {@link KISSY.Button}.
+ * @member KISSY.Editor
+ */
     /**
-     * add button to editor
-     * @param {String} id control id
-     * @param {Object} cfg button config
-     * @param {Function} ButtonType button constructor. needs to extend {@link KISSY.Button}, Defaults to {@link KISSY.Button}.
-     * @member KISSY.Editor
-     */
+ * add button to editor
+ * @param {String} id control id
+ * @param {Object} cfg button config
+ * @param {Function} ButtonType button constructor. needs to extend {@link KISSY.Button}, Defaults to {@link KISSY.Button}.
+ * @member KISSY.Editor
+ */
     Editor.prototype.addButton = function (id, cfg, ButtonType) {
         if (ButtonType === undefined) {
             ButtonType = Button;
@@ -66,7 +66,7 @@ KISSY.add('editor/plugin/button', [
         self.addControl(id + '/button', b);
         return b;
     };
-    return Button;
+    module.exports = Button;
 });
 
 

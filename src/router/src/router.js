@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 var middlewares = [];
 var routes = [];
 var utils = require('./router/utils');
@@ -364,7 +364,7 @@ exports.start = function (callback) {
                     history.replaceState({}, '', href = utils.getFullPath(hash, urlRoot));
                     triggerRoute = 1;
                 } else {
-                    Logger.error('router: location path must be same with urlRoot!');
+                    LoggerManager.error('router: location path must be same with urlRoot!');
                 }
             }
         } else if (!utils.equalsIgnoreSlash(locPath, urlRoot)) {

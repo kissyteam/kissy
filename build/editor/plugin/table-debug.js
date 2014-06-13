@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:23
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/table
 */
-/**
- * @ignore
- * Add table plugin for KISSY.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/table', [
     'editor',
     './dialog-loader',
@@ -21,14 +16,19 @@ KISSY.add('editor/plugin/table', [
     'ua',
     'dom',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add table plugin for KISSY.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var Walker = Editor.Walker;
     var DialogLoader = require('./dialog-loader');
     require('./contextmenu');
     require('./button');
     var util = require('util');
-    var UA = require('ua'), Dom = require('dom'), Node = require('node'), tableRules = [
+    var UA = require('ua'), Dom = require('dom'), $ = require('node'), tableRules = [
             'tr',
             'th',
             'td',
@@ -91,7 +91,7 @@ KISSY.add('editor/plugin/table', [
         for (var i = 0; i < $cells.length; i++) {
             $cells[i].innerHTML = '';
             if (!OLD_IE) {
-                new Node($cells[i])._4eAppendBogus(undefined);
+                $($cells[i])._4eAppendBogus(undefined);
             }
         }
     }
@@ -139,14 +139,14 @@ KISSY.add('editor/plugin/table', [
             // 1. Into next sibling row if any;
             // 2. Into previous sibling row if any;
             // 3. Into table's parent element if it's the very last row.
-            cursorPosition = new Node(nextRowIndex < rowCount && table[0].rows[nextRowIndex] || previousRowIndex > 0 && table[0].rows[previousRowIndex] || table[0].parentNode);
+            cursorPosition = $(nextRowIndex < rowCount && table[0].rows[nextRowIndex] || previousRowIndex > 0 && table[0].rows[previousRowIndex] || table[0].parentNode);
             for (i = rowsToDelete.length; i >= 0; i--) {
                 if (rowsToDelete[i]) {
                     deleteRows(rowsToDelete[i]);
                 }
             }
             return cursorPosition;
-        } else if (selectionOrRow instanceof Node) {
+        } else if (selectionOrRow instanceof $) {
             table = selectionOrRow.parent('table');
             if (table[0].rows.length === 1) {
                 table.remove();
@@ -171,12 +171,12 @@ KISSY.add('editor/plugin/table', [
             if ($row.cells.length < cellIndex + 1) {
                 continue;
             }
-            cell = new Node($row.cells[cellIndex].cloneNode(undefined));
+            cell = $($row.cells[cellIndex].cloneNode(undefined));
             if (!OLD_IE) {
                 cell._4eAppendBogus(undefined);
             }    // Get back the currently selected cell.
             // Get back the currently selected cell.
-            var baseCell = new Node($row.cells[cellIndex]);
+            var baseCell = $($row.cells[cellIndex]);
             if (insertBefore) {
                 cell.insertBefore(baseCell);
             } else {
@@ -209,7 +209,7 @@ KISSY.add('editor/plugin/table', [
                 break;
             }
         }
-        return targetCell ? new Node(targetCell) : table.prev();
+        return targetCell ? $(targetCell) : table.prev();
     }
     function deleteColumns(selectionOrCell) {
         var i;
@@ -222,7 +222,7 @@ KISSY.add('editor/plugin/table', [
                 }
             }
             return elementToFocus;
-        } else if (selectionOrCell instanceof Node) {
+        } else if (selectionOrCell instanceof $) {
             // Get the cell's table.
             var table = selectionOrCell.parent('table');    //该单元格所属的列已经被删除了
             //该单元格所属的列已经被删除了
@@ -242,8 +242,8 @@ KISSY.add('editor/plugin/table', [
              */
             for (i = table[0].rows.length - 1; i >= 0; i--) {
                 // Get the row.
-                var row = new Node(table[0].rows[i]);    // If the cell to be removed is the first one and
-                                                         //  the row has just one cell.
+                var row = $(table[0].rows[i]);    // If the cell to be removed is the first one and
+                                                  //  the row has just one cell.
                 // If the cell to be removed is the first one and
                 //  the row has just one cell.
                 if (!cellIndex && row[0].cells.length === 1) {
@@ -482,7 +482,7 @@ KISSY.add('editor/plugin/table', [
             });
         }
     });
-    return TablePlugin;
+    module.exports = TablePlugin;
 });
 
 

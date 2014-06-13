@@ -32,24 +32,25 @@
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    KISSY.use('scroll-view,scroll-view/plugin/scrollbar,event/gesture/tap', function (S, ScrollView, ScrollbarPlugin, TapGesture) {
-        var egg = 'http://img01.taobaocdn.com/tps/i1/T1I7N3XphaXXazKpz.-1920-1200.jpg';
-        window.scrollView = new ScrollView({
-            content: '<img id="t" src="http://img03.taobaocdn.com/tps/i3/T1icl2XxVfXXazKpz.-1920-1200.jpg"' +
-                    ' width="1920" height="1200"/>',
-            elCls: 'pic-viewer',
-            plugins: [new ScrollbarPlugin({})]
-        }).render();
+    KISSY.use('ua,node,scroll-view,scroll-view/plugin/scrollbar,event/gesture/tap',
+            function (S, UA, Node,ScrollView, ScrollbarPlugin, TapGesture) {
+                var egg = 'http://img01.taobaocdn.com/tps/i1/T1I7N3XphaXXazKpz.-1920-1200.jpg';
+                window.scrollView = new ScrollView({
+                    content: '<img id="t" src="http://img03.taobaocdn.com/tps/i3/T1icl2XxVfXXazKpz.-1920-1200.jpg"' +
+                            ' width="1920" height="1200"/>',
+                    elCls: 'pic-viewer',
+                    plugins: [new ScrollbarPlugin({})]
+                }).render();
 
-        var t = document.getElementById('t');
+                var t = document.getElementById('t');
 
-        S.all(document).on(TapGesture.DOUBLE_TAP, function () {
-            t.src = egg;
-        });
+                $(document).on(TapGesture.DOUBLE_TAP, function () {
+                    t.src = egg;
+                });
 
-        S.all(window).on('resize orientationchange', S.UA.ieMode < 9 ?
-                S.buffer(scrollView.sync, 30) :
-                scrollView.sync, scrollView);
-    });
+                $(window).on('resize orientationchange', UA.ieMode < 9 ?
+                        S.buffer(scrollView.sync, 30) :
+                        scrollView.sync, scrollView);
+            });
 </script>
 </body>

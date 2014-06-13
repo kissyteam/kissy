@@ -4,7 +4,7 @@ var request = require('request');
 var fs = require('fs');
 var path = require('path');
 var cwd = process.cwd();
-var util = require(cwd + '/lib/util.js');
+var util = require('../../common/util');
 var kissyRoot = path.join(__dirname, '../../../');
 var xtemplate = require(kissyRoot + '/bin/xtemplate');
 

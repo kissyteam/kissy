@@ -1,29 +1,29 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/fake-objects
 */
-/**
- * @ignore
- * fakeObjects for music ,video,flash
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/fake-objects', [
     'editor',
     'html-parser',
     'util',
     'node',
     'dom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * fakeObjects for music ,video,flash
+ * @author yiminghe@gmail.com
+ */
     /*jshint camelcase:false*/
     var Editor = require('editor');
     var HtmlParser = require('html-parser');
     var util = require('util');
-    var Node = require('node'), Dom = require('dom'), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
+    var $ = require('node'), Dom = require('dom'), Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
     Editor.addMembers({
         //ie6 ,object outHTML error
         createFakeElement: function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
@@ -54,14 +54,14 @@ KISSY.add('editor/plugin/fake-objects', [
             if (isResizable) {
                 attributes._ke_resizable = isResizable;
             }
-            return new Node('<img/>', attributes, self.get('document')[0]);
+            return new $('<img/>', attributes, self.get('document')[0]);
         },
         restoreRealElement: function (fakeElement) {
             if (parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE) {
                 return null;
             }
             var html = util.urlDecode(fakeElement.attr('_ke_real_element'));
-            var temp = new Node('<div>', null, this.get('document')[0]);
+            var temp = $('<div>', this.get('document')[0]);
             temp.html(html);    // When returning the node, remove it from its parent to detach it.
             // When returning the node, remove it from its parent to detach it.
             return temp.first().remove();
@@ -100,7 +100,7 @@ KISSY.add('editor/plugin/fake-objects', [
                 }
             }
         };
-    return {
+    module.exports = {
         init: function (editor) {
             var dataProcessor = editor.htmlDataProcessor, htmlFilter = dataProcessor && dataProcessor.htmlFilter;
             if (dataProcessor.createFakeParserElement) {
@@ -115,7 +115,7 @@ KISSY.add('editor/plugin/fake-objects', [
                         return null;
                     }
                     var html = util.urlDecode(fakeElement.attr('_ke_real_element'));
-                    var temp = new Node('<div>', null, editor.get('document')[0]);
+                    var temp = $('<div>', editor.get('document')[0]);
                     temp.html(html);    // When returning the node, remove it from its parent to detach it.
                     // When returning the node, remove it from its parent to detach it.
                     return temp.first().remove();

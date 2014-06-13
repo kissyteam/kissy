@@ -6,7 +6,7 @@ var cwd = process.cwd();
 var fs = require('fs');
 var url = require('url');
 var path = require('path');
-var wrapModule = require('../../util/wrap-module');
+var wrapModule = require('../../common/wrap-module');
 
 function getContent(req, pathname, callback) {
     if (req.code) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 30 14:52
+build time: Jun 13 11:41
 */
 /*
 combined modules:
@@ -11,60 +11,62 @@ combobox/combobox-xtpl
 combobox/local-data-source
 combobox/remote-data-source
 */
-/**
- * @ignore
- * Export ComboBox.
- * @author yiminghe@gmail.com
- */
 KISSY.add('combobox', [
     'combobox/control',
     'combobox/local-data-source',
     'combobox/remote-data-source'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Export ComboBox.
+ * @author yiminghe@gmail.com
+ */
     var ComboBox = require('combobox/control');
     var LocalDataSource = require('combobox/local-data-source');
     var RemoteDataSource = require('combobox/remote-data-source');
     ComboBox.LocalDataSource = LocalDataSource;
     ComboBox.RemoteDataSource = RemoteDataSource;
-    return ComboBox;
+    module.exports = ComboBox;
 });
-/**
- * @ignore
- * Input wrapper for ComboBox component.
- * @author yiminghe@gmail.com
- */
 KISSY.add('combobox/control', [
     'util',
+    'logger-manager',
     'node',
     'component/control',
     './combobox-xtpl',
     'menu'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Input wrapper for ComboBox component.
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
-    var logger = S.getLogger('combobox');
-    var Node = require('node');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('combobox');
+    var $ = require('node');
     var Control = require('component/control');
     var ComboboxTpl = require('./combobox-xtpl');    // provide popupmenu xclass
     // provide popupmenu xclass
     require('menu');
-    var ComboBox, KeyCode = Node.KeyCode;    /**
-     * KISSY ComboBox.
-     * xclass: 'combobox'.
-     * @extends KISSY.Component.Control
-     * @class KISSY.ComboBox
-     */
+    var ComboBox, KeyCode = $.Event.KeyCode;    /**
+ * KISSY ComboBox.
+ * xclass: 'combobox'.
+ * @extends KISSY.Component.Control
+ * @class KISSY.ComboBox
+ */
     /**
-     * KISSY ComboBox.
-     * xclass: 'combobox'.
-     * @extends KISSY.Component.Control
-     * @class KISSY.ComboBox
-     */
+ * KISSY ComboBox.
+ * xclass: 'combobox'.
+ * @extends KISSY.Component.Control
+ * @class KISSY.ComboBox
+ */
     ComboBox = Control.extend({
         initializer: function () {
             /**
-             * fired after data is rendered into combobox menu
-             * @event afterRenderData
-             */
+         * fired after data is rendered into combobox menu
+         * @event afterRenderData
+         */
             this.publish('afterRenderData', { bubbles: false });
         },
         // user's input text.
@@ -74,19 +76,19 @@ KISSY.add('combobox/control', [
         bindUI: function () {
             var self = this, input = self.get('input');
             input.on('input', onValueChange, self);    /**
-             * fired after combobox 's collapsed attribute is changed.
-             * @event afterCollapsedChange
-             * @param e
-             * @param e.newVal current value
-             * @param e.prevVal previous value
-             */
+         * fired after combobox 's collapsed attribute is changed.
+         * @event afterCollapsedChange
+         * @param e
+         * @param e.newVal current value
+         * @param e.prevVal previous value
+         */
             /**
-             * fired after combobox 's collapsed attribute is changed.
-             * @event afterCollapsedChange
-             * @param e
-             * @param e.newVal current value
-             * @param e.prevVal previous value
-             */
+         * fired after combobox 's collapsed attribute is changed.
+         * @event afterCollapsedChange
+         * @param e
+         * @param e.newVal current value
+         * @param e.prevVal previous value
+         */
             self.on('click', onMenuItemClick, self);
             var menu = self.get('menu');
             if (menu.get('rendered')) {
@@ -101,10 +103,10 @@ KISSY.add('combobox/control', [
             self.$el.getWindow().detach('resize', onWindowResize, self);
         },
         /**
-         * normalize returned data
-         * @protected
-         * @param data
-         */
+     * normalize returned data
+     * @protected
+     * @param data
+     */
         normalizeData: function (data) {
             var self = this, contents, v, i, c;
             if (data && data.length) {
@@ -127,18 +129,18 @@ KISSY.add('combobox/control', [
             return contents;
         },
         /**
-         * get value
-         * @protected
-         */
+     * get value
+     * @protected
+     */
         getCurrentValue: function () {
             return this.get('value');
         },
         /**
-         * set value
-         * @protected
-         * @method
-         * @member KISSY.ComboBox
-         */
+     * set value
+     * @protected
+     * @method
+     * @member KISSY.ComboBox
+     */
         setCurrentValue: function (value, setCfg) {
             this.set('value', value, setCfg);
         },
@@ -286,9 +288,9 @@ KISSY.add('combobox/control', [
             }
         },
         /**
-         * fetch comboBox list by value and show comboBox list
-         * @param {String} value value for fetching comboBox list
-         */
+     * fetch comboBox list by value and show comboBox list
+     * @param {String} value value for fetching comboBox list
+     */
         sendRequest: function (value) {
             var self = this, dataSource = self.get('dataSource');
             dataSource.fetchData(value, renderData, self);
@@ -323,25 +325,25 @@ KISSY.add('combobox/control', [
         ATTRS: {
             contentTpl: { value: ComboboxTpl },
             /**
-             * Input element of current combobox.
-             * @type {KISSY.Node}
-             * @property input
-             */
+         * Input element of current combobox.
+         * @type {KISSY.Node}
+         * @property input
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             input: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('input');
                 }
             },
             /**
-             * initial value for input
-             * @cfg {String} inputValue
-             */
+         * initial value for input
+         * @cfg {String} inputValue
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             value: {
                 value: '',
                 sync: 0,
@@ -351,21 +353,21 @@ KISSY.add('combobox/control', [
                 }
             },
             /**
-             * trigger arrow element
-             * @ignore
-             */
+         * trigger arrow element
+         * @ignore
+         */
             trigger: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('trigger');
                 }
             },
             /**
-             * placeholder
-             * @cfg {String} placeholder
-             */
+         * placeholder
+         * @cfg {String} placeholder
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             placeholder: {
                 render: 1,
                 sync: 0,
@@ -375,9 +377,9 @@ KISSY.add('combobox/control', [
                 }
             },
             /**
-             * label for placeholder in ie
-             * @ignore
-             */
+         * label for placeholder in ie
+         * @ignore
+         */
             placeholderEl: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('placeholder');
@@ -389,18 +391,18 @@ KISSY.add('combobox/control', [
                 }
             },
             /**
-             * custom validation function
-             * @type Function
-             * @property validator
-             */
+         * custom validation function
+         * @type Function
+         * @property validator
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             validator: {},
             /**
-             * invalid tag el
-             * @ignore
-             */
+         * invalid tag el
+         * @ignore
+         */
             invalidEl: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('invalid-el');
@@ -408,30 +410,30 @@ KISSY.add('combobox/control', [
             },
             allowTextSelection: { value: true },
             /**
-             * Whether show combobox trigger.
-             * Defaults to: true.
-             * @cfg {Boolean} hasTrigger
-             */
+         * Whether show combobox trigger.
+         * Defaults to: true.
+         * @cfg {Boolean} hasTrigger
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             hasTrigger: {
                 value: true,
                 sync: 0,
                 render: 1
             },
             /**
-             * ComboBox dropDown menuList or config
-             * @cfg {KISSY.Menu.PopupMenu|Object} menu
-             */
+         * ComboBox dropDown menuList or config
+         * @cfg {KISSY.Menu.PopupMenu|Object} menu
+         */
             /**
-             * ComboBox dropDown menuList or config
-             * @property menu
-             * @type {KISSY.Menu.PopupMenu}
-             */
+         * ComboBox dropDown menuList or config
+         * @property menu
+         * @type {KISSY.Menu.PopupMenu}
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             menu: {
                 getter: function (v) {
                     v = v || {};
@@ -461,79 +463,79 @@ KISSY.add('combobox/control', [
                 }
             },
             /**
-             * Whether combobox menu is hidden.
-             * @type {Boolean}
-             * @property collapsed
-             */
+         * Whether combobox menu is hidden.
+         * @type {Boolean}
+         * @property collapsed
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             collapsed: {
                 render: 1,
                 sync: 0,
                 value: true
             },
             /**
-             * dataSource for comboBox.
-             * @cfg {KISSY.ComboBox.LocalDataSource|KISSY.ComboBox.RemoteDataSource|Object} dataSource
-             */
+         * dataSource for comboBox.
+         * @cfg {KISSY.ComboBox.LocalDataSource|KISSY.ComboBox.RemoteDataSource|Object} dataSource
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             dataSource: {},
             // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
             /**
-             * maxItemCount max count of data to be shown
-             * @cfg {Number} maxItemCount
-             */
+         * maxItemCount max count of data to be shown
+         * @cfg {Number} maxItemCount
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             maxItemCount: { value: 99999 },
             /**
-             * Whether drop down menu is same width with input.
-             * Defaults to: true.
-             * @cfg {Boolean} matchElWidth
-             */
+         * Whether drop down menu is same width with input.
+         * Defaults to: true.
+         * @cfg {Boolean} matchElWidth
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             matchElWidth: { value: true },
             /**
-             * Format function to return array of
-             * html/text/menu item attributes from array of data.
-             * @cfg {Function} format
-             */
+         * Format function to return array of
+         * html/text/menu item attributes from array of data.
+         * @cfg {Function} format
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             format: {},
             /**
-             * Whether update input's value at keydown or up when combobox menu shows.
-             * Default to: true
-             * @cfg {Boolean} updateInputOnDownUp
-             */
+         * Whether update input's value at keydown or up when combobox menu shows.
+         * Default to: true
+         * @cfg {Boolean} updateInputOnDownUp
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             updateInputOnDownUp: { value: true },
             /**
-             * Whether or not the first row should be highlighted by default.
-             * Defaults to: false
-             * @cfg {Boolean} autoHighlightFirst
-             */
+         * Whether or not the first row should be highlighted by default.
+         * Defaults to: false
+         * @cfg {Boolean} autoHighlightFirst
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             autoHighlightFirst: {},
             /**
-             * whether highlight item when item content is same with user input.
-             * Defaults to: true
-             * @cfg {Boolean} highlightMatchItem
-             */
+         * whether highlight item when item content is same with user input.
+         * Defaults to: true
+         * @cfg {Boolean} highlightMatchItem
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             highlightMatchItem: { value: true }
         },
         xclass: 'combobox'
@@ -687,8 +689,7 @@ KISSY.add('combobox/control', [
         }
     }    // #------------------------private end
     // #------------------------private end
-    return ComboBox;
-});    /**
+    module.exports = ComboBox;    /**
  * @ignore
  *
  * !TODO
@@ -709,6 +710,8 @@ KISSY.add('combobox/control', [
  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
  **/
+});
+
 
 
 
@@ -717,7 +720,7 @@ KISSY.add('combobox/control', [
 KISSY.add('combobox/combobox-xtpl', [], function (S, require, exports, module) {
     var comboboxXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -891,36 +894,36 @@ KISSY.add('combobox/combobox-xtpl', [], function (S, require, exports, module) {
     };
     comboboxXtplHtml.TPL_NAME = module.name;
     comboboxXtplHtml.version = '5.0.0';
-    return comboboxXtplHtml;
+    module.exports = comboboxXtplHtml;
 });
 
-/**
+KISSY.add('combobox/local-data-source', [
+    'attribute',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add('combobox/local-data-source', [
-    'attribute',
-    'util'
-], function (S, require) {
     var Attribute = require('attribute');
     var util = require('util');    /**
-     * Local dataSource for comboBox.
-     * @extends KISSY.Base
-     * @class KISSY.ComboBox.LocalDataSource
-     */
+ * Local dataSource for comboBox.
+ * @extends KISSY.Base
+ * @class KISSY.ComboBox.LocalDataSource
+ */
     /**
-     * Local dataSource for comboBox.
-     * @extends KISSY.Base
-     * @class KISSY.ComboBox.LocalDataSource
-     */
-    return Attribute.extend({
+ * Local dataSource for comboBox.
+ * @extends KISSY.Base
+ * @class KISSY.ComboBox.LocalDataSource
+ */
+    module.exports = Attribute.extend({
         /**
-         * Data source interface. How to get data for comboBox.
-         * @param {String} inputVal current active input's value
-         * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback 's execution context
-         */
+     * Data source interface. How to get data for comboBox.
+     * @param {String} inputVal current active input's value
+     * @param {Function} callback callback to notify comboBox when data is ready
+     * @param {Object} context callback 's execution context
+     */
         fetchData: function (inputVal, callback, context) {
             var parse = this.get('parse'), data = this.get('data');
             data = parse(inputVal, data);
@@ -929,18 +932,18 @@ KISSY.add('combobox/local-data-source', [
     }, {
         ATTRS: {
             /**
-             * array of static data for comboBox
-             * @cfg {Object[]} data
-             */
+         * array of static data for comboBox
+         * @cfg {Object[]} data
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             data: { value: [] },
             /**
-             * parse data function.
-             * Defaults to: index of match.
-             * @cfg {Function} parse
-             */
+         * parse data function.
+         * Defaults to: index of match.
+         * @cfg {Function} parse
+         */
             parse: { value: parser }
         }
     });
@@ -959,33 +962,33 @@ KISSY.add('combobox/local-data-source', [
     }
 });
 
-/**
+KISSY.add('combobox/remote-data-source', [
+    'io',
+    'attribute'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add('combobox/remote-data-source', [
-    'io',
-    'attribute'
-], function (S, require) {
     var IO = require('io');
     var Attribute = require('attribute');    /**
-     * dataSource which wrap {@link KISSY.IO} utility.
-     * @class KISSY.ComboBox.RemoteDataSource
-     * @extends KISSY.Base
-     */
+ * dataSource which wrap {@link KISSY.IO} utility.
+ * @class KISSY.ComboBox.RemoteDataSource
+ * @extends KISSY.Base
+ */
     /**
-     * dataSource which wrap {@link KISSY.IO} utility.
-     * @class KISSY.ComboBox.RemoteDataSource
-     * @extends KISSY.Base
-     */
-    return Attribute.extend({
+ * dataSource which wrap {@link KISSY.IO} utility.
+ * @class KISSY.ComboBox.RemoteDataSource
+ * @extends KISSY.Base
+ */
+    module.exports = Attribute.extend({
         /**
-         * Data source interface. How to get data for comboBox
-         * @param {String} inputVal current active input's value
-         * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback 's execution context
-         */
+     * Data source interface. How to get data for comboBox
+     * @param {String} inputVal current active input's value
+     * @param {Function} callback callback to notify comboBox when data is ready
+     * @param {Object} context callback 's execution context
+     */
         fetchData: function (inputVal, callback, context) {
             var self = this, v, paramName = self.get('paramName'), parse = self.get('parse'), cache = self.get('cache'), allowEmpty = self.get('allowEmpty');
             self.caches = self.caches || {};
@@ -1021,48 +1024,48 @@ KISSY.add('combobox/remote-data-source', [
     }, {
         ATTRS: {
             /**
-             * Used as parameter name to send combobox input's value to server.
-             * Defaults to: 'q'
-             * @cfg  {String} paramName
-             */
+         * Used as parameter name to send combobox input's value to server.
+         * Defaults to: 'q'
+         * @cfg  {String} paramName
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             paramName: { value: 'q' },
             /**
-             * whether send empty to server when input val is empty.
-             * Defaults to: false
-             * @cfg {Boolean} allowEmpty
-             */
+         * whether send empty to server when input val is empty.
+         * Defaults to: false
+         * @cfg {Boolean} allowEmpty
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             allowEmpty: {},
             /**
-             * Whether server response data is cached.
-             * Defaults to: false
-             * @cfg {Boolean} cache
-             */
+         * Whether server response data is cached.
+         * Defaults to: false
+         * @cfg {Boolean} cache
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             cache: {},
             /**
-             * Serve as a parse function to parse server
-             * response to return a valid array of data for comboBox.
-             * @cfg {Function} parse
-             */
+         * Serve as a parse function to parse server
+         * response to return a valid array of data for comboBox.
+         * @cfg {Function} parse
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             parse: {},
             /**
-             * IO configuration.same as {@link KISSY.IO}
-             * @cfg {Object} xhrCfg
-             */
+         * IO configuration.same as {@link KISSY.IO}
+         * @cfg {Object} xhrCfg
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             xhrCfg: {
                 valueFn: function () {
                     return {};

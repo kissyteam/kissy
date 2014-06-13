@@ -64,7 +64,7 @@ util.mix(util, {
      * @return {String} encoded url part string.
      * @member KISSY
      */
-    'urlEncode': function (s) {
+    urlEncode: function (s) {
         return encodeURIComponent(String(s));
     },
 

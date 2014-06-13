@@ -1,28 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
 toolbar
 */
-/**
+KISSY.add('toolbar', [
+    'component/container',
+    'component/extension/delegate-children',
+    'util',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add('toolbar', [
-    'component/container',
-    'component/extension/delegate-children',
-    'node',
-    'util'
-], function (S, require) {
     var Container = require('component/container');
     var DelegateChildrenExtension = require('component/extension/delegate-children');
-    var Node = require('node');
     var util = require('util');
-    var KeyCode = Node.KeyCode;
+    var KeyCode = require('node').Event.KeyCode;
     function getNextEnabledItem(index, direction, self) {
         var children = self.get('children'), count = 0, childrenLength = children.length;
         if (index === undefined) {
@@ -79,22 +78,22 @@ KISSY.add('toolbar', [
         }
         return null;
     }    /**
-     * Toolbar component for KISSY. xclass: 'toolbar'.
-     * @class KISSY.Toolbar
-     * @extends KISSY.Component.Container
-     */
+ * Toolbar component for KISSY. xclass: 'toolbar'.
+ * @class KISSY.Toolbar
+ * @extends KISSY.Component.Container
+ */
     /**
-     * Toolbar component for KISSY. xclass: 'toolbar'.
-     * @class KISSY.Toolbar
-     * @extends KISSY.Component.Container
-     */
-    return Container.extend([DelegateChildrenExtension], {
+ * Toolbar component for KISSY. xclass: 'toolbar'.
+ * @class KISSY.Toolbar
+ * @extends KISSY.Component.Container
+ */
+    module.exports = Container.extend([DelegateChildrenExtension], {
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'toolbar';
         },
         /**
-         * Protected.
-         */
+     * Protected.
+     */
         bindUI: function () {
             var self = this;
             self.on('afterCollapsedChange', afterCollapsedChange, self);

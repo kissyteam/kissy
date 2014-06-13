@@ -6,7 +6,7 @@
 var util = require('util');
 var Promise = require('promise'),
     IO = require('./base');
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 var url = require('url');
 var OK_CODE = 200,
     MULTIPLE_CHOICES = 300,
@@ -202,7 +202,7 @@ util.extend(IO, Promise, {
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        Logger.log(e.stack || e, 'error');
+                        LoggerManager.log(e.stack || e, 'error');
                         if ('@DEBUG@') {
                             setTimeout(function () {
                                 throw e;

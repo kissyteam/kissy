@@ -1,41 +1,41 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:26
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 filter-menu
 filter-menu/render-xtpl
 */
-/**
- * @ignore
- * menu where items can be filtered based on user keyboard input
- * @author yiminghe@gmail.com
- */
 KISSY.add('filter-menu', [
     'menu',
     './filter-menu/render-xtpl',
     'component/extension/content-box',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * menu where items can be filtered based on user keyboard input
+ * @author yiminghe@gmail.com
+ */
     var Menu = require('menu');
     var FilterMenuTpl = require('./filter-menu/render-xtpl');
     var HIT_CLS = 'menuitem-hit';
     var ContentBox = require('component/extension/content-box');
     var util = require('util');    /**
-     * Filter Menu for KISSY.
-     * xclass: 'filter-menu'.
-     * @extends KISSY.Menu
-     * @class KISSY.FilterMenu
-     */
+ * Filter Menu for KISSY.
+ * xclass: 'filter-menu'.
+ * @extends KISSY.Menu
+ * @class KISSY.FilterMenu
+ */
     /**
-     * Filter Menu for KISSY.
-     * xclass: 'filter-menu'.
-     * @extends KISSY.Menu
-     * @class KISSY.FilterMenu
-     */
-    return Menu.extend([ContentBox], {
+ * Filter Menu for KISSY.
+ * xclass: 'filter-menu'.
+ * @extends KISSY.Menu
+ * @class KISSY.FilterMenu
+ */
+    module.exports = Menu.extend([ContentBox], {
         bindUI: function () {
             var self = this, filterInput = self.get('filterInput');    /*监控键盘事件*/
             /*监控键盘事件*/
@@ -80,9 +80,9 @@ KISSY.add('filter-menu', [
             return this.get('filterInput');
         },
         /**
-             * Specify how to filter items.
-             * @param {String} str User input.
-             */
+         * Specify how to filter items.
+         * @param {String} str User input.
+         */
         filterItems: function (str) {
             var self = this, prefixCls = self.get('prefixCls'), _placeholderEl = self.get('placeholderEl'), filterInput = self.get('filterInput');    // 有过滤条件提示隐藏,否则提示显示
             // 有过滤条件提示隐藏,否则提示显示
@@ -163,8 +163,8 @@ KISSY.add('filter-menu', [
             });
         },
         /**
-             * Reset user input.
-             */
+         * Reset user input.
+         */
         reset: function () {
             var self = this;
             self.set('filterStr', '');
@@ -186,12 +186,12 @@ KISSY.add('filter-menu', [
                 }
             },
             /**
-                 * Hit info string
-                 * @cfg {String} placeholder
-                 */
+             * Hit info string
+             * @cfg {String} placeholder
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             placeholder: {
                 render: 1,
                 sync: 0,
@@ -206,26 +206,26 @@ KISSY.add('filter-menu', [
                 }
             },
             /**
-                 * Filter string
-                 * @cfg {String} filterStr
-                 */
+             * Filter string
+             * @cfg {String} filterStr
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             filterStr: {},
             /**
-                 * user entered string list when allowMultiple.
-                 * @type {String[]}
-                 * @ignore
-                 */
+             * user entered string list when allowMultiple.
+             * @type {String[]}
+             * @ignore
+             */
             enteredItems: { value: [] },
             /**
-                 * Whether to allow input multiple.
-                 * @cfg {Boolean} allowMultiple
-                 */
+             * Whether to allow input multiple.
+             * @cfg {Boolean} allowMultiple
+             */
             /**
-                 * @ignore
-                 */
+             * @ignore
+             */
             allowMultiple: { value: false }
         },
         xclass: 'filter-menu'
@@ -233,11 +233,11 @@ KISSY.add('filter-menu', [
 });
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('filter-menu/render-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var render = function (scope, buffer, undefined) {
+    var renderXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -295,8 +295,8 @@ KISSY.add('filter-menu/render-xtpl', [], function (S, require, exports, module) 
         buffer.write('</div>', 0);
         return buffer;
     };
-    render.TPL_NAME = module.name;
-    render.version = '5.0.0';
-    return render;
+    renderXtplHtml.TPL_NAME = module.name;
+    renderXtplHtml.version = '5.0.0';
+    module.exports = renderXtplHtml;
 });
 

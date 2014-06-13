@@ -1,25 +1,25 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:50
 */
 /*
 combined modules:
 event/gesture/basic
 */
-/**
+KISSY.add('event/gesture/basic', [
+    'event/dom/base',
+    'event/gesture/util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * touch event logic module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/gesture/basic', [
-    'event/dom/base',
-    'event/gesture/util'
-], function (S, require) {
     var DomEvent = require('event/dom/base');
     var GestureUtil = require('event/gesture/util');
     var addGestureEvent = GestureUtil.addEvent;
-    var BasicGesture = {
+    var BasicGesture = module.exports = {
             START: 'ksGestureStart',
             MOVE: 'ksGestureMove',
             END: 'ksGestureEnd'
@@ -40,10 +40,9 @@ KISSY.add('event/gesture/basic', [
     }
     addBasicGestureEvent(BasicGesture.START, 'onTouchStart');
     addBasicGestureEvent(BasicGesture.MOVE, 'onTouchMove');
-    addBasicGestureEvent(BasicGesture.END, 'onTouchEnd');
-    return BasicGesture;
-});    /*
+    addBasicGestureEvent(BasicGesture.END, 'onTouchEnd');    /*
  yiminghe@gmail.com - 2014-03-13
  - enumeration should be uppercase. deprecated lower case
  */
+});
 

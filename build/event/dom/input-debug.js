@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:50
 */
 /*
 combined modules:
 event/dom/input
 */
-/**
+KISSY.add('event/dom/input', [
+    'event/dom/base',
+    'dom'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * html input event polyfill
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/input', [
-    'event/dom/base',
-    'dom'
-], function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
     var noop = function () {
@@ -112,9 +112,9 @@ KISSY.add('event/dom/input', [
             // start input monitor
             DomEvent.on(t, 'input', noop);
         }
-    }
-});    /*
+    }    /*
  2014-01-06
  - native propertychange/input is buggy in ie9
  */
+});
 

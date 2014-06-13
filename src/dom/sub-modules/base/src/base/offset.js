@@ -459,7 +459,6 @@ function setOffset(elem, offset) {
     Dom.css(elem, ret);
 }
 
-
 /*
  2013-07 A tale if two viewports
  - A tale of two viewports: http://www.quirksmode.org/mobile/viewports.html

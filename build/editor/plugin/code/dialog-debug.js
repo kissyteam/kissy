@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/code/dialog
 */
-/**
- * @ignore
- * insert program code dialog
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/code/dialog', [
     'util',
     'editor',
@@ -20,7 +15,12 @@ KISSY.add('editor/plugin/code/dialog', [
     '../dialog',
     'node',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * insert program code dialog
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Editor = require('editor');
     var MenuButton = require('menubutton');
@@ -28,7 +28,7 @@ KISSY.add('editor/plugin/code/dialog', [
     var NodeType = require('dom').NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
     var Dialog4E = require('../dialog');
-    var $ = require('node').all;
+    var $ = require('node');
     var UA = require('ua');
     var codeTypes = [
             [
@@ -207,7 +207,7 @@ KISSY.add('editor/plugin/code/dialog', [
             this.dialog.show();
         }
     });
-    return CodeDialog;
+    module.exports = CodeDialog;
 });
 
 

@@ -1,19 +1,19 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/separator
 */
-/**
+KISSY.add('editor/plugin/separator', ['node'], function (S, require, exports, module) {
+    /**
  * @ignore
  * separator for button
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/separator', ['node'], function (S, require) {
-    var $ = require('node').all;
+    var $ = require('node');
     function Separator() {
     }
     Separator.prototype = {
@@ -21,5 +21,5 @@ KISSY.add('editor/plugin/separator', ['node'], function (S, require) {
             $('<span ' + 'class="' + editor.get('prefixCls') + 'editor-toolbar-separator">&nbsp;' + '</span>').appendTo(editor.get('toolBarEl'));
         }
     };
-    return Separator;
+    module.exports = Separator;
 });

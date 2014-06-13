@@ -1,27 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:20
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/justify-left
 */
-/**
- * @ignore
- * justifyLeft button.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/justify-left', [
     'editor',
     './justify-left/cmd',
     './button',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * justifyLeft button.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var justifyCenterCmd = require('./justify-left/cmd');
     require('./button');
-    var Node = require('node');
+    var $ = require('node');
     function exec() {
         var editor = this.get('editor');
         editor.execCommand('justifyLeft');
@@ -55,7 +55,7 @@ KISSY.add('editor/plugin/justify-left', [
             });
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode === Node.KeyCode.L) {
+                    if (e.ctrlKey && e.keyCode === $.Event.KeyCode.L) {
                         editor.execCommand('justifyLeft');
                         e.preventDefault();
                     }
@@ -63,7 +63,7 @@ KISSY.add('editor/plugin/justify-left', [
             });
         }
     };
-    return justifyLeft;
+    module.exports = justifyLeft;
 });
 
 

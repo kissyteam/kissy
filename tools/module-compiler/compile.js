@@ -9,7 +9,7 @@ var esprima = require('esprima');
 var S = require('../../lib/loader');
 var estraverse = require('estraverse');
 var escodegen = require('escodegen');
-var wrapModule = require('../util/wrap-module');
+var wrapModule = require('../common/wrap-module');
 var normalizePath = S.Loader.Utils.normalizePath;
 
 function findRequires(ast) {

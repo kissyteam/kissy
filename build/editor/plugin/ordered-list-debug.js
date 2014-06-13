@@ -1,31 +1,31 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/ordered-list
 */
-/**
+KISSY.add('editor/plugin/ordered-list', [
+    './list-utils/btn',
+    './ordered-list/cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/ordered-list', [
-    './list-utils/btn',
-    './ordered-list/cmd'
-], function (S, require) {
     var ListButton = require('./list-utils/btn');
     var ListCmd = require('./ordered-list/cmd');
-    function orderedList() {
+    function OrderedList() {
     }
-    orderedList.prototype = {
+    OrderedList.prototype = {
         pluginRenderUI: function (editor) {
             ListCmd.init(editor);
             ListButton.init(editor, {
                 cmdType: 'insertOrderedList',
-                buttonId: 'orderedList',
+                buttonId: 'OrderedList',
                 menu: {
                     width: 75,
                     children: [
@@ -65,6 +65,6 @@ KISSY.add('editor/plugin/ordered-list', [
             });
         }
     };
-    return orderedList;
+    module.exports = OrderedList;
 });
 

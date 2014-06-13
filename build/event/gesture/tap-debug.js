@@ -1,98 +1,98 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 event/gesture/tap
 */
-/**
- * @ignore
- * gesture tap
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/tap', [
     'event/gesture/util',
     'event/dom/base',
     'ua',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * gesture tap
+ * @author yiminghe@gmail.com
+ */
     var GestureUtil = require('event/gesture/util');
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
     var UA = require('ua');
     var util = require('util');    /**
-     * fired when tap.
-     * @event TAP
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     */
+ * fired when tap.
+ * @event TAP
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ */
                                    /**
-     * fired when singleTap.
-     * @event SINGLE_TAP
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     * @param {Number} e.duration time duration(s) between current time and last touch start
-     */
+ * fired when singleTap.
+ * @event SINGLE_TAP
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ * @param {Number} e.duration time duration(s) between current time and last touch start
+ */
                                    /**
-     * fired when doubleTap.
-     * @event DOUBLE_TAP
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     * @param {Number} e.duration time duration(s) between current time and last touch up
-     */
+ * fired when doubleTap.
+ * @event DOUBLE_TAP
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ * @param {Number} e.duration time duration(s) between current time and last touch up
+ */
                                    /**
-     * fired when tapHold.
-     * @event TAP_HOLD
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     * @param {Number} e.duration time duration(s) between current time and current touch start
-     */
+ * fired when tapHold.
+ * @event TAP_HOLD
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ * @param {Number} e.duration time duration(s) between current time and current touch start
+ */
     /**
-     * fired when tap.
-     * @event TAP
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     */
+ * fired when tap.
+ * @event TAP
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ */
     /**
-     * fired when singleTap.
-     * @event SINGLE_TAP
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     * @param {Number} e.duration time duration(s) between current time and last touch start
-     */
+ * fired when singleTap.
+ * @event SINGLE_TAP
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ * @param {Number} e.duration time duration(s) between current time and last touch start
+ */
     /**
-     * fired when doubleTap.
-     * @event DOUBLE_TAP
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     * @param {Number} e.duration time duration(s) between current time and last touch up
-     */
+ * fired when doubleTap.
+ * @event DOUBLE_TAP
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ * @param {Number} e.duration time duration(s) between current time and last touch up
+ */
     /**
-     * fired when tapHold.
-     * @event TAP_HOLD
-     * @member KISSY.Event.Gesture.Tap
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX tap pageX
-     * @param {Number} e.pageY tap pageY
-     * @param {Number} e.duration time duration(s) between current time and current touch start
-     */
+ * fired when tapHold.
+ * @event TAP_HOLD
+ * @member KISSY.Event.Gesture.Tap
+ * @param {KISSY.Event.DomEvent.Object} e
+ * @param {Number} e.pageX tap pageX
+ * @param {Number} e.pageY tap pageY
+ * @param {Number} e.duration time duration(s) between current time and current touch start
+ */
     var SINGLE_TAP = 'singleTap', DOUBLE_TAP = 'doubleTap', TAP_HOLD = 'tapHold', TAP = 'tap', TAP_HOLD_DELAY = 1000,
         // same with native click delay
         SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
@@ -233,13 +233,12 @@ KISSY.add('event/gesture/tap', [
         SINGLE_TAP,
         TAP_HOLD
     ], { handle: new Tap() });
-    return {
+    module.exports = {
         TAP: TAP,
         SINGLE_TAP: SINGLE_TAP,
         DOUBLE_TAP: DOUBLE_TAP,
         TAP_HOLD: TAP_HOLD
-    };
-});    /**
+    };    /**
  * @ignore
  * yiminghe@gmail.com 2013-12-20
  *
@@ -263,6 +262,7 @@ KISSY.add('event/gesture/tap', [
  *
  * https://developers.google.com/mobile/articles/fast_buttons
  */
+});
 
 
 

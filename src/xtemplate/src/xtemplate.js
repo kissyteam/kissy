@@ -8,7 +8,7 @@ var util = require('util');
 var XTemplateRuntime = require('xtemplate/runtime');
 var Compiler = require('xtemplate/compiler');
 var cache = XTemplate.cache = {};
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 
 var loader = {
     load: function (template, name, callback) {
@@ -25,7 +25,7 @@ var loader = {
             },
             error: function () {
                 var error = 'template "' + name + '" does not exist';
-                Logger.log(error, 'error');
+                LoggerManager.log(error, 'error');
                 callback(error);
             }
         });

@@ -1,59 +1,59 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:42
 */
 /*
 combined modules:
 component/plugin/resize
 */
-/**
+KISSY.add('component/plugin/resize', ['resizable'], function (S, require, exports, module) {
+    /**
  * @ignore
  * resize plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/resize', ['resizable'], function (S, require) {
     var Resizable = require('resizable');    /**
-     * resize plugin for kissy component
-     *
-     *      @example
-     *      var o =new Overlay.Dialog({
+ * resize plugin for kissy component
+ *
+ *      @example
+ *      var o =new Overlay.Dialog({
      *          plugins:[
      *              new ResizePlugin({
      *                  handles: ['t','tr']
      *              })
      *          ]
      *      })
-     *      // or
-     *      o.plug(new ResizePlugin({
+ *      // or
+ *      o.plug(new ResizePlugin({
      *          handles: ['t','tr']
      *      });
-     *
-     *
-     * @class KISSY.Component.Plugin.Resize
-     * @extends KISSY.Resizable
-     */
+ *
+ *
+ * @class KISSY.Component.Plugin.Resize
+ * @extends KISSY.Resizable
+ */
     /**
-     * resize plugin for kissy component
-     *
-     *      @example
-     *      var o =new Overlay.Dialog({
+ * resize plugin for kissy component
+ *
+ *      @example
+ *      var o =new Overlay.Dialog({
      *          plugins:[
      *              new ResizePlugin({
      *                  handles: ['t','tr']
      *              })
      *          ]
      *      })
-     *      // or
-     *      o.plug(new ResizePlugin({
+ *      // or
+ *      o.plug(new ResizePlugin({
      *          handles: ['t','tr']
      *      });
-     *
-     *
-     * @class KISSY.Component.Plugin.Resize
-     * @extends KISSY.Resizable
-     */
-    return Resizable.extend({
+ *
+ *
+ * @class KISSY.Component.Plugin.Resize
+ * @extends KISSY.Resizable
+ */
+    module.exports = Resizable.extend({
         pluginBindUI: function (component) {
             var $el = component.$el, self = this;
             self.set('node', $el);

@@ -1,26 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/list-utils/btn
 */
-/**
- * @ignore
- * Common btn for list.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/list-utils/btn', [
     'editor',
     '../button',
     '../menubutton'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Common btn for list.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     require('../button');
     require('../menubutton');
-    return {
+    module.exports = {
         init: function (editor, cfg) {
             var buttonId = cfg.buttonId, cmdType = cfg.cmdType, tooltip = cfg.tooltip;
             var button = editor.addButton(buttonId, {

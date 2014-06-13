@@ -1,30 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/page-break
 */
-/**
- * @ignore
- * pagebreak functionality
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/page-break', [
     'editor',
     './fake-objects',
     './button',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * pagebreak functionality
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var fakeObjects = require('./fake-objects');
     require('./button');
-    var Node = require('node'), CLS = 'ke_pagebreak', TYPE = 'div', PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
-    function pageBreak() {
+    var $ = require('node'), CLS = 'ke_pagebreak', TYPE = 'div', PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
+    function PageBreak() {
     }
-    pageBreak.prototype = {
+    PageBreak.prototype = {
         pluginRenderUI: function (editor) {
             fakeObjects.init(editor);
             var dataProcessor = editor.htmlDataProcessor, dataFilter = dataProcessor && dataProcessor.dataFilter;
@@ -52,8 +52,9 @@ KISSY.add('editor/plugin/page-break', [
                 tooltip: '\u5206\u9875',
                 listeners: {
                     click: function () {
-                        var real = new Node(PAGE_BREAK_MARKUP, null, editor.get('document')[0]), substitute = editor.createFakeElement(real, CLS, TYPE, //不可缩放，也不用
-                            false, PAGE_BREAK_MARKUP);
+                        var real = $(PAGE_BREAK_MARKUP, editor.get('document')[0]),
+                            //不可缩放，也不用
+                            substitute = editor.createFakeElement(real, CLS, TYPE, false, PAGE_BREAK_MARKUP);
                         editor.focus();
                         var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
                         if (!range) {
@@ -75,7 +76,7 @@ KISSY.add('editor/plugin/page-break', [
             });
         }
     };
-    return pageBreak;
+    module.exports = PageBreak;
 });
 
 

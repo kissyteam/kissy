@@ -8,7 +8,7 @@ var util = require('util');
 var engine = require('dom/selector');
 var select = engine.select;
 var matches = engine.matches;
-var Logger = require('logger');
+var LoggerManager = require('logger-manager');
 var ieVersion = require('ua').ie;
 var jQuery = window.jQuery;
 var sizzle = window.Sizzle;
@@ -983,7 +983,7 @@ describe("pseudo - :lang", function () {
             }
             expect(r).toBe(true);
             if (!r) {
-                Logger.log('error:' + text + " should match " + selector);
+                LoggerManager.log('error:' + text + " should match " + selector);
             }
 
         },
@@ -991,7 +991,7 @@ describe("pseudo - :lang", function () {
             var r = matchesSelector(elem, selector);
             expect(r).toBe(false);
             if (r) {
-                Logger.log('error:' + text + " should fail " + selector);
+                LoggerManager.log('error:' + text + " should fail " + selector);
             }
         };
 

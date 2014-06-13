@@ -3,7 +3,8 @@
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-var logger = S.getLogger('s/anim/timer/color');
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger('s/anim/timer/color');
 var util = require('util');
 var Fx = require('./fx');
 var HEX_BASE = 16,

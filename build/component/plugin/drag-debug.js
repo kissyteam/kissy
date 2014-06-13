@@ -1,18 +1,18 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:15
+build time: Jun 13 11:41
 */
 /*
 combined modules:
 component/plugin/drag
 */
-/**
+KISSY.add('component/plugin/drag', ['dd'], function (S, require, exports, module) {
+    /**
  * @ignore
  * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/drag', ['dd'], function (S, require) {
     var DD = require('dd');
     function onDragEnd() {
         var component = this.component;
@@ -22,11 +22,11 @@ KISSY.add('component/plugin/drag', ['dd'], function (S, require) {
             offset.top
         ]);
     }    /**
-     * drag plugin for kissy component
-     *
-     *      @example
-     *      KISY.use('overlay,component/plugin/drag,dd/plugin/proxy',
-     *      function(S,Overlay,DragPlugin,ProxyPlugin){
+ * drag plugin for kissy component
+ *
+ *      @example
+ *      KISY.use('overlay,component/plugin/drag,dd/plugin/proxy',
+ *      function(S,Overlay,DragPlugin,ProxyPlugin){
      *        var o =new Overlay.Dialog({
      *          plugins:[
      *              new DragPlugin({
@@ -40,17 +40,17 @@ KISSY.add('component/plugin/drag', ['dd'], function (S, require) {
      *          handles:[function(){ return o.get('header'); }]
      *        });
      *      });
-     *
-     *
-     * @class KISSY.Component.Plugin.Drag
-     * @extends KISSY.DD.Draggable
-     */
+ *
+ *
+ * @class KISSY.Component.Plugin.Drag
+ * @extends KISSY.DD.Draggable
+ */
     /**
-     * drag plugin for kissy component
-     *
-     *      @example
-     *      KISY.use('overlay,component/plugin/drag,dd/plugin/proxy',
-     *      function(S,Overlay,DragPlugin,ProxyPlugin){
+ * drag plugin for kissy component
+ *
+ *      @example
+ *      KISY.use('overlay,component/plugin/drag,dd/plugin/proxy',
+ *      function(S,Overlay,DragPlugin,ProxyPlugin){
      *        var o =new Overlay.Dialog({
      *          plugins:[
      *              new DragPlugin({
@@ -64,12 +64,12 @@ KISSY.add('component/plugin/drag', ['dd'], function (S, require) {
      *          handles:[function(){ return o.get('header'); }]
      *        });
      *      });
-     *
-     *
-     * @class KISSY.Component.Plugin.Drag
-     * @extends KISSY.DD.Draggable
-     */
-    return DD.Draggable.extend({
+ *
+ *
+ * @class KISSY.Component.Plugin.Drag
+ * @extends KISSY.DD.Draggable
+ */
+    module.exports = DD.Draggable.extend({
         pluginId: 'component/plugin/drag',
         pluginBindUI: function (component) {
             this.set('node', component.$el);

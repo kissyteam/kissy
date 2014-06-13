@@ -1,27 +1,27 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:24
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/word-filter
 */
-/**
- * @ignore
- * clean html pasted from word. modified from ckeditor.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/word-filter', [
     'html-parser',
     'util',
     'node',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * clean html pasted from word. modified from ckeditor.
+ * @author yiminghe@gmail.com
+ */
     /*jshint loopfunc:true*/
     var HtmlParser = require('html-parser');
     var util = require('util');
-    var $ = require('node').all, UA = require('ua'), dtd = HtmlParser.DTD, wordFilter = new HtmlParser.Filter(), cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i,
+    var $ = require('node'), UA = require('ua'), dtd = HtmlParser.DTD, wordFilter = new HtmlParser.Filter(), cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i,
         // e.g. 0px 0pt 0px
         emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/, romanLiteralPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$', lowerRomanLiteralRegex = new RegExp(romanLiteralPattern), upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()), orderedPatterns = {
             'decimal': /\d+/,
@@ -118,13 +118,13 @@ KISSY.add('editor/plugin/word-filter', [
             element.removeAttribute('style');
         }
     }    /*
-     Convert the specified CSS length value to the calculated pixel length inside this page.
-     <strong>Note:</strong> Percentage based value is left intact.
-     */
+ Convert the specified CSS length value to the calculated pixel length inside this page.
+ <strong>Note:</strong> Percentage based value is left intact.
+ */
     /*
-     Convert the specified CSS length value to the calculated pixel length inside this page.
-     <strong>Note:</strong> Percentage based value is left intact.
-     */
+ Convert the specified CSS length value to the calculated pixel length inside this page.
+ <strong>Note:</strong> Percentage based value is left intact.
+ */
     var convertToPx = function () {
             var calculator;
             return function (cssLength) {
@@ -302,9 +302,9 @@ KISSY.add('editor/plugin/word-filter', [
                 element.setAttribute('ke:list', 1);
             },
             /*
-         Try to collect all list items among the children and establish one
-         or more HTML list structures for them.
-         */
+     Try to collect all list items among the children and establish one
+     or more HTML list structures for them.
+     */
             assembleList: function (element) {
                 var children = element.childNodes || [], child, listItem,
                     // The current processing ke:li element.
@@ -440,18 +440,18 @@ KISSY.add('editor/plugin/word-filter', [
                 }
             },
             /*
-         A simple filter which always rejecting.
-         */
+     A simple filter which always rejecting.
+     */
             falsyFilter: function () {
                 return false;
             },
             /*
-         A filter dedicated on the 'style' attribute filtering, e.g. dropping/replacing style properties.
-         @param styles {Array} in form of [ styleNameRegexp, styleValueRegexp,
-         newStyleValue/newStyleGenerator, newStyleName ] where only the first
-         parameter is mandatory.
-         @param [whitelist] {Boolean} Whether the {@param styles} will be considered as a white-list.
-         */
+     A filter dedicated on the 'style' attribute filtering, e.g. dropping/replacing style properties.
+     @param styles {Array} in form of [ styleNameRegexp, styleValueRegexp,
+     newStyleValue/newStyleGenerator, newStyleName ] where only the first
+     parameter is mandatory.
+     @param [whitelist] {Boolean} Whether the {@param styles} will be considered as a white-list.
+     */
             stylesFilter: function (styles, whitelist) {
                 return function (styleText, element) {
                     var rules = [];    // html-encoded quote might be introduced by 'font-family'
@@ -511,9 +511,9 @@ KISSY.add('editor/plugin/word-filter', [
                 };
             },
             /*
-         A filter which will be used to apply inline css style according the stylesheet
-         definition rules, is generated lazily when filtering.
-         */
+     A filter which will be used to apply inline css style according the stylesheet
+     definition rules, is generated lazily when filtering.
+     */
             applyStyleFilter: null
         };    // 1. move consistent list item styles up to list root.
               // 2. clear out unnecessary list item numbering.
@@ -1059,7 +1059,7 @@ KISSY.add('editor/plugin/word-filter', [
             } : falsyFilter
         });
     }());
-    return {
+    module.exports = {
         toDataFormat: function (html, editor) {
             // Firefox will be confused by those downlevel-revealed IE conditional
             // comments, fixing them first( convert it to upperlevel-revealed one ).

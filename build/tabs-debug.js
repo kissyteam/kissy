@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:29
+build time: Jun 13 11:54
 */
 /*
 combined modules:
@@ -12,11 +12,6 @@ tabs/tab
 tabs/tab-xtpl
 tabs/panel
 */
-/**
- * @ignore
- * KISSY Tabs Component.
- * @author yiminghe@gmail.com
- */
 KISSY.add('tabs', [
     'component/container',
     'tabs/bar',
@@ -24,7 +19,12 @@ KISSY.add('tabs', [
     'tabs/tab',
     'tabs/panel',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * KISSY Tabs Component.
+ * @author yiminghe@gmail.com
+ */
     var Container = require('component/container');
     var Bar = require('tabs/bar');
     var Body = require('tabs/body');
@@ -32,6 +32,12 @@ KISSY.add('tabs', [
     var Panel = require('tabs/panel');
     var CLS = 'top bottom left right';
     var util = require('util');
+    var BarIndexMap = {
+            top: 0,
+            left: 0,
+            bottom: 1,
+            right: 0
+        };
     function setBar(children, barOrientation, bar) {
         children[BarIndexMap[barOrientation]] = bar;
     }
@@ -51,15 +57,15 @@ KISSY.add('tabs', [
         ret.closable = item.closable;
         return ret;
     }    /**
-     * Tabs for KISSY
-     * @class KISSY.Tabs
-     * @extends KISSY.Component.Container
-     */
+ * Tabs for KISSY
+ * @class KISSY.Tabs
+ * @extends KISSY.Component.Container
+ */
     /**
-     * Tabs for KISSY
-     * @class KISSY.Tabs
-     * @extends KISSY.Component.Container
-     */
+ * Tabs for KISSY
+ * @class KISSY.Tabs
+ * @extends KISSY.Component.Container
+ */
     var Tabs = Container.extend({
             initializer: function () {
                 var self = this, items = self.get('items');    // items sugar
@@ -101,71 +107,71 @@ KISSY.add('tabs', [
             bindUI: function () {
                 this.on('afterSelectedTabChange', afterSelectedTabChange);
                 this.on('afterTabClose', afterTabClose);    /**
-             * fired when selected tab is changed
-             * @event afterSelectedTabChange
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.newVal selected tab
-             */
+         * fired when selected tab is changed
+         * @event afterSelectedTabChange
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.newVal selected tab
+         */
                                                             /**
-             * fired before selected tab is changed
-             * @event beforeSelectedTabChange
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
-             */
+         * fired before selected tab is changed
+         * @event beforeSelectedTabChange
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
+         */
                                                             /**
-             * fired when tab is closed
-             * @event afterTabClose
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.target closed tab
-             */
+         * fired when tab is closed
+         * @event afterTabClose
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.target closed tab
+         */
                                                             /**
-             * fired before tab is closed
-             * @event beforeTabClose
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.target tab to be closed
-             */
+         * fired before tab is closed
+         * @event beforeTabClose
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.target tab to be closed
+         */
             },
             /**
-             * fired when selected tab is changed
-             * @event afterSelectedTabChange
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.newVal selected tab
-             */
-            /**
-             * fired before selected tab is changed
-             * @event beforeSelectedTabChange
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
-             */
-            /**
-             * fired when tab is closed
-             * @event afterTabClose
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.target closed tab
-             */
-            /**
-             * fired before tab is closed
-             * @event beforeTabClose
-             * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEvent.Object} e
-             * @param {KISSY.Tabs.Tab} e.target tab to be closed
-             */
-            /**
-         * add one item to tabs
-         * @param {Object} item item description
-         * @param {String} item.content tab panel html
-         * @param {String} item.title tab bar html
-         * @param {String} item.closable whether this tab is closable
-         * @param {Number} index insert index
-         * @chainable
+         * fired when selected tab is changed
+         * @event afterSelectedTabChange
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.newVal selected tab
          */
+            /**
+         * fired before selected tab is changed
+         * @event beforeSelectedTabChange
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
+         */
+            /**
+         * fired when tab is closed
+         * @event afterTabClose
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.target closed tab
+         */
+            /**
+         * fired before tab is closed
+         * @event beforeTabClose
+         * @member KISSY.Tabs
+         * @param {KISSY.Event.CustomEvent.Object} e
+         * @param {KISSY.Tabs.Tab} e.target tab to be closed
+         */
+            /**
+     * add one item to tabs
+     * @param {Object} item item description
+     * @param {String} item.content tab panel html
+     * @param {String} item.title tab bar html
+     * @param {String} item.closable whether this tab is closable
+     * @param {Number} index insert index
+     * @chainable
+     */
             addItem: function (item, index) {
                 var self = this, bar = self.get('bar'), selectedTab, tabItem, panelItem, barChildren = bar.get('children'), body = self.get('body');
                 if (typeof index === 'undefined') {
@@ -183,20 +189,20 @@ KISSY.add('tabs', [
                 return self;
             },
             /**
-         * remove specified tab from current tabs
-         * @param {Number} index
-         * @param {Boolean} destroy whether destroy specified tab and panel
-         * @chainable
-         */
+     * remove specified tab from current tabs
+     * @param {Number} index
+     * @param {Boolean} destroy whether destroy specified tab and panel
+     * @chainable
+     */
             removeItemAt: function (index, destroy) {
                 var self = this, bar = /**
-                 @ignore
-                 @type KISSY.Component.Control
-                 */
+             @ignore
+             @type KISSY.Component.Control
+             */
                     self.get('bar'), barCs = bar.get('children'), tab = bar.getChildAt(index), body = /**
-                 @ignore
-                 @type KISSY.Component.Control
-                 */
+             @ignore
+             @type KISSY.Component.Control
+             */
                     self.get('body');
                 if (tab.get('selected')) {
                     if (barCs.length === 1) {
@@ -212,29 +218,29 @@ KISSY.add('tabs', [
                 return self;
             },
             /**
-         * remove item by specified tab
-         * @param {KISSY.Tabs.Tab} tab
-         * @param {Boolean} destroy whether destroy specified tab and panel
-         * @chainable
-         */
+     * remove item by specified tab
+     * @param {KISSY.Tabs.Tab} tab
+     * @param {Boolean} destroy whether destroy specified tab and panel
+     * @chainable
+     */
             removeItemByTab: function (tab, destroy) {
                 var index = util.indexOf(tab, this.get('bar').get('children'));
                 return this.removeItemAt(index, destroy);
             },
             /**
-         * remove item by specified panel
-         * @param {KISSY.Tabs.Panel} panel
-         * @param {Boolean} destroy whether destroy specified tab and panel
-         * @chainable
-         */
+     * remove item by specified panel
+     * @param {KISSY.Tabs.Panel} panel
+     * @param {Boolean} destroy whether destroy specified tab and panel
+     * @chainable
+     */
             removeItemByPanel: function (panel, destroy) {
                 var index = util.indexOf(panel, this.get('body').get('children'));
                 return this.removeItemAt(index, destroy);
             },
             /**
-         * get selected tab instance
-         * @return {KISSY.Tabs.Tab}
-         */
+     * get selected tab instance
+     * @return {KISSY.Tabs.Tab}
+     */
             getSelectedTab: function () {
                 var self = this, bar = self.get('bar'), child = null;
                 util.each(bar.get('children'), function (c) {
@@ -247,9 +253,9 @@ KISSY.add('tabs', [
                 return child;
             },
             /**
-         * get selected tab instance
-         * @return {KISSY.Tabs.Tab}
-         */
+     * get selected tab instance
+     * @return {KISSY.Tabs.Tab}
+     */
             getSelectedPanel: function () {
                 var self = this, body = self.get('body'), child = null;
                 util.each(body.get('children'), function (c) {
@@ -262,36 +268,36 @@ KISSY.add('tabs', [
                 return child;
             },
             /**
-         * get all tabs
-         * @return {KISSY.Tabs.Tab[]}
-         */
+     * get all tabs
+     * @return {KISSY.Tabs.Tab[]}
+     */
             getTabs: function () {
                 return this.get('bar').get('children');
             },
             /**
-         * get all tabs
-         * @return {KISSY.Tabs.Panel[]}
-         */
+     * get all tabs
+     * @return {KISSY.Tabs.Panel[]}
+     */
             getPanels: function () {
                 return this.get('body').get('children');
             },
             /**
-         * @ignore
-         */
+     * @ignore
+     */
             getTabAt: function (index) {
                 return this.get('bar').get('children')[index];
             },
             /**
-         * @ignore
-         */
+     * @ignore
+     */
             getPanelAt: function (index) {
                 return this.get('body').get('children')[index];
             },
             /**
-         * set tab as selected
-         * @param {KISSY.Tabs.Tab} tab
-         * @chainable
-         */
+     * set tab as selected
+     * @param {KISSY.Tabs.Tab} tab
+     * @chainable
+     */
             setSelectedTab: function (tab) {
                 var self = this, bar = self.get('bar'), body = self.get('body');
                 bar.set('selectedTab', tab);
@@ -299,10 +305,10 @@ KISSY.add('tabs', [
                 return this;
             },
             /**
-         * set panel as selected
-         * @param {KISSY.Tabs.Panel} panel
-         * @chainable
-         */
+     * set panel as selected
+     * @param {KISSY.Tabs.Panel} panel
+     * @chainable
+     */
             setSelectedPanel: function (panel) {
                 var self = this, bar = self.get('bar'), body = self.get('body'), selectedPanelIndex = util.indexOf(panel, body.get('children'));
                 body.set('selectedPanelIndex', selectedPanelIndex);
@@ -316,28 +322,28 @@ KISSY.add('tabs', [
         }, {
             ATTRS: {
                 /**
-             * tabs config, eg: {title:'', content:'', selected:false, closable:false}
-             * @cfg {Object} item
-             */
+         * tabs config, eg: {title:'', content:'', selected:false, closable:false}
+         * @cfg {Object} item
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 items: {},
                 /**
-             * tabs trigger event type, mouse or click
-             * @cfg {String} changeType
-             */
+         * tabs trigger event type, mouse or click
+         * @cfg {String} changeType
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 changeType: {},
                 /**
-             * whether allow tab to lazy render
-             * @cfg {Boolean} lazyRender
-             */
+         * whether allow tab to lazy render
+         * @cfg {Boolean} lazyRender
+         */
                 /**
-             * @ignore
-             */
+         * @ignore
+         */
                 lazyRender: { value: false },
                 // real attribute
                 handleGestureEvents: { value: false },
@@ -354,10 +360,10 @@ KISSY.add('tabs', [
                     }
                 },
                 /**
-             * tab bar orientation.
-             * eg: 'left' 'right' 'top' 'bottom'
-             * @cfg {String} barOrientation
-             */
+         * tab bar orientation.
+         * eg: 'left' 'right' 'top' 'bottom'
+         * @cfg {String} barOrientation
+         */
                 barOrientation: {
                     render: 1,
                     sync: 0,
@@ -370,64 +376,58 @@ KISSY.add('tabs', [
             },
             xclass: 'tabs'
         });    /**
-     * Tab bar orientation.
-     * @enum {String} KISSY.Tabs.Orientation
-     */
+ * Tab bar orientation.
+ * @enum {String} KISSY.Tabs.Orientation
+ */
     /**
-     * Tab bar orientation.
-     * @enum {String} KISSY.Tabs.Orientation
-     */
+ * Tab bar orientation.
+ * @enum {String} KISSY.Tabs.Orientation
+ */
     Tabs.Orientation = {
         /**
-         * top
-         */
+     * top
+     */
         TOP: 'top',
         /**
-         * bottom
-         */
+     * bottom
+     */
         BOTTOM: 'bottom',
         /**
-         * left
-         */
+     * left
+     */
         LEFT: 'left',
         /**
-         * right
-         */
+     * right
+     */
         RIGHT: 'right'
     };
-    var BarIndexMap = {
-            top: 0,
-            left: 0,
-            bottom: 1,
-            right: 0
-        };
     Tabs.ChangeType = Bar.ChangeType;
     Tabs.Bar = Bar;
     Tabs.Body = Body;
     Tabs.Panel = Panel;
-    return Tabs;
+    module.exports = Tabs;
 });
 
-/**
+KISSY.add('tabs/bar', [
+    'toolbar',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * TabBar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add('tabs/bar', [
-    'toolbar',
-    'util'
-], function (S, require) {
     var Toolbar = require('toolbar');
     var util = require('util');    /**
-     * tab bar container for tab tabs.xclass: 'tabs-bar'.
-     * @class  KISSY.Tabs.Bar
-     * @extends KISSY.Toolbar
-     */
+ * tab bar container for tab tabs.xclass: 'tabs-bar'.
+ * @class  KISSY.Tabs.Bar
+ * @extends KISSY.Toolbar
+ */
     /**
-     * tab bar container for tab tabs.xclass: 'tabs-bar'.
-     * @class  KISSY.Tabs.Bar
-     * @extends KISSY.Toolbar
-     */
+ * tab bar container for tab tabs.xclass: 'tabs-bar'.
+ * @class  KISSY.Tabs.Bar
+ * @extends KISSY.Toolbar
+ */
     var TabBar = Toolbar.extend({
             beforeCreateDom: function (renderData) {
                 renderData.elAttrs.role = 'tablist';
@@ -489,47 +489,47 @@ KISSY.add('tabs/bar', [
             },
             xclass: 'tabs-bar'
         });    /**
-     * tabs change type
-     * @enum {String}  KISSY.Tabs.ChangeType
-     */
+ * tabs change type
+ * @enum {String}  KISSY.Tabs.ChangeType
+ */
     /**
-     * tabs change type
-     * @enum {String}  KISSY.Tabs.ChangeType
-     */
+ * tabs change type
+ * @enum {String}  KISSY.Tabs.ChangeType
+ */
     TabBar.ChangeType = {
         /**
-         * click
-         */
+     * click
+     */
         CLICK: 'click',
         /**
-         * mouse
-         */
+     * mouse
+     */
         MOUSE: 'mouse'
     };
-    return TabBar;
+    module.exports = TabBar;
 });
 
 
-/**
+KISSY.add('tabs/body', [
+    'component/container',
+    'util'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Body for tab panels.
  * @author yiminghe@gmail.com
  */
-KISSY.add('tabs/body', [
-    'component/container',
-    'util'
-], function (S, require) {
     var Container = require('component/container');
     var util = require('util');    /**
-     * tab body container for tab panels.xclass: 'tabs-body'.
-     * @class  KISSY.Tabs.Body
-     * @extends KISSY.Component.Container
-     */
+ * tab body container for tab panels.xclass: 'tabs-body'.
+ * @class  KISSY.Tabs.Body
+ * @extends KISSY.Component.Container
+ */
     /**
-     * tab body container for tab panels.xclass: 'tabs-body'.
-     * @class  KISSY.Tabs.Body
-     * @extends KISSY.Component.Container
-     */
+ * tab body container for tab panels.xclass: 'tabs-body'.
+ * @class  KISSY.Tabs.Body
+ * @extends KISSY.Component.Container
+ */
     var TabBody = Container.extend({
             bindUI: function () {
                 var self = this;
@@ -590,34 +590,34 @@ KISSY.add('tabs/body', [
         }
         return TabBody.superclass[method].call(self, index);
     }
-    return TabBody;
+    module.exports = TabBody;
 });
-/**
- * @ignore
- * Single tab in tab bar.
- * @author yiminghe@gmail.com
- */
 KISSY.add('tabs/tab', [
     'button',
     './tab-xtpl',
     'component/extension/content-box'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Single tab in tab bar.
+ * @author yiminghe@gmail.com
+ */
     var Button = require('button');
     var TabTpl = require('./tab-xtpl');
     var ContentBox = require('component/extension/content-box');
     function close() {
         this.fire('afterTabClose');
     }    /**
-     * KISSY.Tabs.Tab. xclass:'tabs-tab'
-     * @class KISSY.Tabs.Tab
-     * @extends KISSY.Button
-     */
+ * KISSY.Tabs.Tab. xclass:'tabs-tab'
+ * @class KISSY.Tabs.Tab
+ * @extends KISSY.Button
+ */
     /**
-     * KISSY.Tabs.Tab. xclass:'tabs-tab'
-     * @class KISSY.Tabs.Tab
-     * @extends KISSY.Button
-     */
-    return Button.extend([ContentBox], {
+ * KISSY.Tabs.Tab. xclass:'tabs-tab'
+ * @class KISSY.Tabs.Tab
+ * @extends KISSY.Button
+ */
+    module.exports = Button.extend([ContentBox], {
         initializer: function () {
             this.publish('beforeTabClose', {
                 defaultFn: close,
@@ -658,12 +658,12 @@ KISSY.add('tabs/tab', [
             handleGestureEvents: { value: false },
             focusable: { value: false },
             /**
-             * whether closable
-             * @cfg {Boolean} closable
-             */
+         * whether closable
+         * @cfg {Boolean} closable
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             closable: {
                 value: false,
                 render: 1,
@@ -678,12 +678,12 @@ KISSY.add('tabs/tab', [
                 }
             },
             /**
-             * whether selected
-             * @cfg {Boolean} selected
-             */
+         * whether selected
+         * @cfg {Boolean} selected
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             selected: {
                 render: 1,
                 sync: 0,
@@ -697,11 +697,11 @@ KISSY.add('tabs/tab', [
 });
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var tabXtpl = function (scope, buffer, undefined) {
+    var tabXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -742,28 +742,28 @@ KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
         buffer = ifCommand.call(tpl, scope, option4, buffer, 2);
         return buffer;
     };
-    tabXtpl.TPL_NAME = module.name;
-    tabXtpl.version = '5.0.0';
-    return tabXtpl;
+    tabXtplHtml.TPL_NAME = module.name;
+    tabXtplHtml.version = '5.0.0';
+    module.exports = tabXtplHtml;
 });
 
-/**
+KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, module) {
+    /**
  * @ignore
  * single tab panel.
  * @author yiminghe@gmail.com
  */
-KISSY.add('tabs/panel', ['component/container'], function (S, require) {
     var Container = require('component/container');    /**
-     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
-     * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Container
-     */
+ * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
+ * @class  KISSY.Tabs.Panel
+ * @extends KISSY.Component.Container
+ */
     /**
-     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
-     * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Container
-     */
-    return Container.extend({
+ * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
+ * @class  KISSY.Tabs.Panel
+ * @extends KISSY.Component.Container
+ */
+    module.exports = Container.extend({
         isTabsPanel: 1,
         beforeCreateDom: function (renderData) {
             var self = this;
@@ -782,12 +782,12 @@ KISSY.add('tabs/panel', ['component/container'], function (S, require) {
     }, {
         ATTRS: {
             /**
-             * whether selected
-             * @cfg {Boolean} selected
-             */
+         * whether selected
+         * @cfg {Boolean} selected
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             selected: {
                 render: 1,
                 sync: 0,

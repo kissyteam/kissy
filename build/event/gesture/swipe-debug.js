@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 26 21:39
+build time: Jun 13 11:51
 */
 /*
 combined modules:
 event/gesture/swipe
 */
-/**
- * @ignore
- * gesture swipe
- * @author yiminghe@gmail.com
- */
 KISSY.add('event/gesture/swipe', [
     'event/gesture/util',
     'event/dom/base',
     'util'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * gesture swipe
+ * @author yiminghe@gmail.com
+ */
     var GestureUtil = require('event/gesture/util');
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
@@ -68,77 +68,77 @@ KISSY.add('event/gesture/swipe', [
         } else {
             event = SWIPE;
         }    /**
-         * fired when swipe.
-         * preventDefault this event to prevent native behavior
-         * @event SWIPE
-         * @member KISSY.Event.Gesture.Swipe
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch point and start touch point
-         * @param {Number} e.duration time duration(s) between current touch point and start touch point
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when swipe.
+     * preventDefault this event to prevent native behavior
+     * @event SWIPE
+     * @member KISSY.Event.Gesture.Swipe
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch point and start touch point
+     * @param {Number} e.duration time duration(s) between current touch point and start touch point
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
              /**
-         * fired when swipe gesture is finished.
-         * preventDefault this event to prevent native behavior
-         * @event SWIPE_END
-         * @member KISSY.Event.Gesture.Swipe
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch point and start touch point
-         * @param {Number} e.duration time duration(s) between current touch point and start touch point
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when swipe gesture is finished.
+     * preventDefault this event to prevent native behavior
+     * @event SWIPE_END
+     * @member KISSY.Event.Gesture.Swipe
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch point and start touch point
+     * @param {Number} e.duration time duration(s) between current touch point and start touch point
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
              /**
-         * fired when swipe started.
-         * preventDefault this event to prevent native behavior
-         * @event SWIPE_START
-         * @member KISSY.Event.Gesture.Swipe
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch point and start touch point
-         * @param {Number} e.duration time duration(s) between current touch point and start touch point
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when swipe started.
+     * preventDefault this event to prevent native behavior
+     * @event SWIPE_START
+     * @member KISSY.Event.Gesture.Swipe
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch point and start touch point
+     * @param {Number} e.duration time duration(s) between current touch point and start touch point
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         /**
-         * fired when swipe.
-         * preventDefault this event to prevent native behavior
-         * @event SWIPE
-         * @member KISSY.Event.Gesture.Swipe
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch point and start touch point
-         * @param {Number} e.duration time duration(s) between current touch point and start touch point
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when swipe.
+     * preventDefault this event to prevent native behavior
+     * @event SWIPE
+     * @member KISSY.Event.Gesture.Swipe
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch point and start touch point
+     * @param {Number} e.duration time duration(s) between current touch point and start touch point
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         /**
-         * fired when swipe gesture is finished.
-         * preventDefault this event to prevent native behavior
-         * @event SWIPE_END
-         * @member KISSY.Event.Gesture.Swipe
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch point and start touch point
-         * @param {Number} e.duration time duration(s) between current touch point and start touch point
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when swipe gesture is finished.
+     * preventDefault this event to prevent native behavior
+     * @event SWIPE_END
+     * @member KISSY.Event.Gesture.Swipe
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch point and start touch point
+     * @param {Number} e.duration time duration(s) between current touch point and start touch point
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         /**
-         * fired when swipe started.
-         * preventDefault this event to prevent native behavior
-         * @event SWIPE_START
-         * @member KISSY.Event.Gesture.Swipe
-         * @param {KISSY.Event.DomEvent.Object} e
-         * @param {Number} e.pageX drag point pageX
-         * @param {Number} e.pageY drag point pageY
-         * @param {Number} e.distance distance between current touch point and start touch point
-         * @param {Number} e.duration time duration(s) between current touch point and start touch point
-         * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-         */
+     * fired when swipe started.
+     * preventDefault this event to prevent native behavior
+     * @event SWIPE_START
+     * @member KISSY.Event.Gesture.Swipe
+     * @param {KISSY.Event.DomEvent.Object} e
+     * @param {Number} e.pageX drag point pageX
+     * @param {Number} e.pageY drag point pageY
+     * @param {Number} e.distance distance between current touch point and start touch point
+     * @param {Number} e.duration time duration(s) between current touch point and start touch point
+     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
+     */
         DomEvent.fire(touch.target, event, {
             originalEvent: e.originalEvent,
             pageX: touch.pageX,
@@ -177,7 +177,7 @@ KISSY.add('event/gesture/swipe', [
         SWIPE_START,
         SWIPE_END
     ], { handle: new Swipe() });
-    return {
+    module.exports = {
         SWIPE: SWIPE,
         SWIPE_START: SWIPE_START,
         SWIPE_END: SWIPE_END

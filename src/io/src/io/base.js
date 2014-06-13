@@ -5,8 +5,8 @@
  */
 var util = require('util');
 var querystring = require('querystring');
-var Logger = require('logger');
-var logger = Logger.getLogger();
+var LoggerManager = require('logger-manager');
+var logger = LoggerManager.getLogger();
 /*global CustomEvent:true*/
 var CustomEvent = require('event/custom');
 var Promise = require('promise');

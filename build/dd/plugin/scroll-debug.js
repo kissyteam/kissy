@@ -1,47 +1,47 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:55
+build time: Jun 13 11:43
 */
 /*
 combined modules:
 dd/plugin/scroll
 */
-/**
- * @ignore
- * auto scroll for drag object's container
- * @author yiminghe@gmail.com
- */
 KISSY.add('dd/plugin/scroll', [
     'util',
     'node',
     'dd',
     'base'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * auto scroll for drag object's container
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
-    var Node = require('node'), DD = require('dd'), Base = require('base');
-    var DDM = DD.DDM, win = S.Env.host, SCROLL_EVENT = '.-ks-dd-scroll' + util.now(), RATE = [
+    var $ = require('node'), DD = require('dd'), Base = require('base');
+    var DDM = DD.DDM, win = window, SCROLL_EVENT = '.-ks-dd-scroll' + util.now(), RATE = [
             10,
             10
         ], ADJUST_DELAY = 100, DIFF = [
             20,
             20
         ], isWin = util.isWindow;    /**
-     * @class KISSY.DD.Plugin.Scroll
-     * @extends KISSY.Base
-     * Scroll plugin to make parent node scroll while dragging.
-     */
+ * @class KISSY.DD.Plugin.Scroll
+ * @extends KISSY.Base
+ * Scroll plugin to make parent node scroll while dragging.
+ */
     /**
-     * @class KISSY.DD.Plugin.Scroll
-     * @extends KISSY.Base
-     * Scroll plugin to make parent node scroll while dragging.
-     */
-    return Base.extend({
+ * @class KISSY.DD.Plugin.Scroll
+ * @extends KISSY.Base
+ * Scroll plugin to make parent node scroll while dragging.
+ */
+    module.exports = Base.extend({
         pluginId: 'dd/plugin/scroll',
         /**
-         * Get container node region.
-         * @private
-         */
+     * Get container node region.
+     * @private
+     */
         getRegion: function (node) {
             if (isWin(node[0])) {
                 return {
@@ -56,9 +56,9 @@ KISSY.add('dd/plugin/scroll', [
             }
         },
         /**
-         * Get container node offset.
-         * @private
-         */
+     * Get container node offset.
+     * @private
+     */
         getOffset: function (node) {
             if (isWin(node[0])) {
                 return {
@@ -70,9 +70,9 @@ KISSY.add('dd/plugin/scroll', [
             }
         },
         /**
-         * Get container node scroll.
-         * @private
-         */
+     * Get container node scroll.
+     * @private
+     */
         getScroll: function (node) {
             return {
                 left: node.scrollLeft(),
@@ -80,26 +80,26 @@ KISSY.add('dd/plugin/scroll', [
             };
         },
         /**
-         * scroll container node.
-         * @private
-         */
+     * scroll container node.
+     * @private
+     */
         setScroll: function (node, r) {
             node.scrollLeft(r.left);
             node.scrollTop(r.top);
         },
         /**
-         * make node not to scroll while this drag object is dragging
-         * @param {KISSY.DD.Draggable} drag
-         * @private
-         */
+     * make node not to scroll while this drag object is dragging
+     * @param {KISSY.DD.Draggable} drag
+     * @private
+     */
         pluginDestructor: function (drag) {
             drag.detach(SCROLL_EVENT);
         },
         /**
-         * make node to scroll while this drag object is dragging
-         * @param {KISSY.DD.Draggable} drag
-         * @private
-         */
+     * make node to scroll while this drag object is dragging
+     * @param {KISSY.DD.Draggable} drag
+     * @private
+     */
         pluginInitializer: function (drag) {
             var self = this, node = self.get('node');
             var rate = self.get('rate'), diff = self.get('diff'), event,
@@ -204,38 +204,38 @@ KISSY.add('dd/plugin/scroll', [
     }, {
         ATTRS: {
             /**
-             * node to be scrolled while dragging
-             * @cfg {Window|String|HTMLElement} node
-             */
+         * node to be scrolled while dragging
+         * @cfg {Window|String|HTMLElement} node
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             node: {
                 // value:window：不行，默认值一定是简单对象
                 valueFn: function () {
-                    return Node.one(win);
+                    return $(win);
                 },
                 setter: function (v) {
-                    return Node.one(v);
+                    return $(v);
                 }
             },
             /**
-             * adjust velocity, larger faster
-             * default [10,10]
-             * @cfg {Number[]} rate
-             */
+         * adjust velocity, larger faster
+         * default [10,10]
+         * @cfg {Number[]} rate
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             rate: { value: RATE },
             /**
-             * the margin to make node scroll, easier to scroll for node if larger.
-             * default  [20,20]
-             * @cfg {number[]} diff
-             */
+         * the margin to make node scroll, easier to scroll for node if larger.
+         * default  [20,20]
+         * @cfg {number[]} diff
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             diff: { value: DIFF }
         }
     });

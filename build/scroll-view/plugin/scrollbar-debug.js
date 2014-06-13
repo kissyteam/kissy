@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 19 20:31
+build time: Jun 13 11:53
 */
 /*
 combined modules:
@@ -9,15 +9,15 @@ scroll-view/plugin/scrollbar
 scroll-view/plugin/scrollbar/control
 scroll-view/plugin/scrollbar/scrollbar-xtpl
 */
-/**
+KISSY.add('scroll-view/plugin/scrollbar', [
+    'base',
+    './scrollbar/control'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * scrollbar plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/scrollbar', [
-    'base',
-    './scrollbar/control'
-], function (S, require) {
     var Base = require('base');
     var ScrollBar = require('./scrollbar/control');
     function onScrollViewReflow() {
@@ -58,16 +58,16 @@ KISSY.add('scroll-view/plugin/scrollbar', [
             self.scrollBarY = new ScrollBar(cfg).render();
         }
     }    /**
-     * ScrollBar plugin for ScrollView.
-     * @class KISSY.ScrollView.Plugin.ScrollBar
-     * @extend KISSY.Base
-     */
+ * ScrollBar plugin for ScrollView.
+ * @class KISSY.ScrollView.Plugin.ScrollBar
+ * @extend KISSY.Base
+ */
     /**
-     * ScrollBar plugin for ScrollView.
-     * @class KISSY.ScrollView.Plugin.ScrollBar
-     * @extend KISSY.Base
-     */
-    return Base.extend({
+ * ScrollBar plugin for ScrollView.
+ * @class KISSY.ScrollView.Plugin.ScrollBar
+ * @extend KISSY.Base
+ */
+    module.exports = Base.extend({
         pluginId: this.name,
         pluginBindUI: function (scrollView) {
             var self = this;
@@ -89,39 +89,34 @@ KISSY.add('scroll-view/plugin/scrollbar', [
     }, {
         ATTRS: {
             /**
-             * minimum scrollbar length.
-             * Defaults to 20.
-             * @cfg {Number} minLength
-             */
+         * minimum scrollbar length.
+         * Defaults to 20.
+         * @cfg {Number} minLength
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             minLength: {},
             /**
-             * whether auto hide x scrollbar like ios
-             * @cfg {Boolean} autoHideX
-             */
+         * whether auto hide x scrollbar like ios
+         * @cfg {Boolean} autoHideX
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             autoHideX: {},
             /**
-             * whether auto hide y scrollbar like ios
-             * @cfg {Boolean} autoHideY
-             */
+         * whether auto hide y scrollbar like ios
+         * @cfg {Boolean} autoHideY
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             autoHideY: {}
         }
     });
 });
 
-/**
- * @ignore
- * scrollbar for KISSY scroll-view
- * @author yiminghe@gmail.com
- */
 KISSY.add('scroll-view/plugin/scrollbar/control', [
     'ua',
     'util',
@@ -130,7 +125,12 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
     'event/gesture/drag',
     './scrollbar-xtpl',
     'feature'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * scrollbar for KISSY scroll-view
+ * @author yiminghe@gmail.com
+ */
     var UA = require('ua');
     var util = require('util');
     var Control = require('component/control');
@@ -344,36 +344,36 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
             this.dragEl.style[transformProperty] = 'translateX(' + this.get('dragLeft') + 'px)' + ' translateY(' + v + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
         };
     }    /**
-     * @class KISSY.ScrollView.ScrollBar
-     * @extend KISSY.Component.Control
-     * @private
-     */
+ * @class KISSY.ScrollView.ScrollBar
+ * @extend KISSY.Component.Control
+ * @private
+ */
     /**
-     * @class KISSY.ScrollView.ScrollBar
-     * @extend KISSY.Component.Control
-     * @private
-     */
-    return Control.extend(methods, {
+ * @class KISSY.ScrollView.ScrollBar
+ * @extend KISSY.Component.Control
+ * @private
+ */
+    module.exports = Control.extend(methods, {
         ATTRS: {
             /**
-             * minimum scrollbar length.
-             * Defaults to 20.
-             * @cfg {Number} minLength
-             */
+         * minimum scrollbar length.
+         * Defaults to 20.
+         * @cfg {Number} minLength
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             minLength: { value: MIN_BAR_LENGTH },
             scrollView: {},
             axis: { render: 1 },
             /**
-             * whether auto hide scrollbar after scroll end.
-             * Defaults: true for ios device, false for non-touch device.
-             * @cfg {Boolean} autoHide
-             */
+         * whether auto hide scrollbar after scroll end.
+         * Defaults: true for ios device, false for non-touch device.
+         * @cfg {Boolean} autoHide
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             autoHide: { value: UA.ios },
             visible: {
                 valueFn: function () {
@@ -381,12 +381,12 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
                 }
             },
             /**
-             * second of hide delay for scrollbar if allow autoHide
-             * @cfg {Number} hideDelay
-             */
+         * second of hide delay for scrollbar if allow autoHide
+         * @cfg {Number} hideDelay
+         */
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             hideDelay: { value: 0.1 },
             dragWidth: {
                 setter: function (v) {
@@ -448,11 +448,11 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
 
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var scrollbar = function (scope, buffer, undefined) {
+    var scrollbarXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
         var option0 = { escape: 1 };
         var params1 = [];
@@ -561,7 +561,7 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         buffer.write('">\r\n</div>\r\n</div>\r\n</div>', 0);
         return buffer;
     };
-    scrollbar.TPL_NAME = module.name;
-    scrollbar.version = '5.0.0';
-    return scrollbar;
+    scrollbarXtplHtml.TPL_NAME = module.name;
+    scrollbarXtplHtml.version = '5.0.0';
+    module.exports = scrollbarXtplHtml;
 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:14
+build time: Jun 13 11:41
 */
 /*
 combined modules:
@@ -9,11 +9,6 @@ component/control
 component/control/manager
 component/control/render-xtpl
 */
-/**
- * @ignore
- * Base Control class for KISSY Component.
- * @author yiminghe@gmail.com
- */
 KISSY.add('component/control', [
     'util',
     'node',
@@ -25,9 +20,14 @@ KISSY.add('component/control', [
     'ua',
     'feature',
     'xtemplate/runtime'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Base Control class for KISSY Component.
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
-    var Node = require('node');
+    var $ = require('node');
     var BasicGesture = require('event/gesture/basic');
     var TapGesture = require('event/gesture/tap');
     var Manager = require('./control/manager');
@@ -42,8 +42,7 @@ KISSY.add('component/control', [
     var noop = util.noop;
     var XTemplateRuntime = require('xtemplate/runtime');
     var trim = util.trim;
-    var $ = Node.all;
-    var doc = S.Env.host.document;
+    var doc = document;
     function normalExtras(extras) {
         if (!extras) {
             extras = [''];
@@ -93,28 +92,28 @@ KISSY.add('component/control', [
     function getBaseCssClassCmd() {
         return this.root.config.control.getBaseCssClass(arguments[1].params[0]);
     }    /**
-     * Base Control class for KISSY Component.
-     * @extends KISSY.Base
-     * @class KISSY.Component.Control
-     */
+ * Base Control class for KISSY Component.
+ * @extends KISSY.Base
+ * @class KISSY.Component.Control
+ */
     /**
-     * Base Control class for KISSY Component.
-     * @extends KISSY.Base
-     * @class KISSY.Component.Control
-     */
-    var Control = Base.extend({
+ * Base Control class for KISSY Component.
+ * @extends KISSY.Base
+ * @class KISSY.Component.Control
+ */
+    var Control = module.exports = Base.extend({
             /**
-             * mark current instance as control instance.
-             *
-             * access this property directly.
-             *
-             * for example:
-             *
-             *      menu.isControl // => true
-             *
-             * @type {Boolean}
-             * @member KISSY.Component.Control
-             */
+         * mark current instance as control instance.
+         *
+         * access this property directly.
+         *
+         * for example:
+         *
+         *      menu.isControl // => true
+         *
+         * @type {Boolean}
+         * @member KISSY.Component.Control
+         */
             isControl: true,
             bindInternal: noop,
             syncInternal: noop,
@@ -169,9 +168,9 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Constructor(or get) view object to create ui elements.
-             * @protected
-             */
+         * Constructor(or get) view object to create ui elements.
+         * @protected
+         */
             createDom: function () {
                 var self = this;    // initialize view
                                     // allow custom view instance
@@ -191,9 +190,9 @@ KISSY.add('component/control', [
                 applyParser.call(self, srcNode);
             },
             /**
-             * Call view object to render ui elements.
-             * @protected
-             */
+         * Call view object to render ui elements.
+         * @protected
+         */
             renderUI: function () {
                 var self = this;    // after create
                 // after create
@@ -236,18 +235,18 @@ KISSY.add('component/control', [
             },
             syncUI: noop,
             /**
-             * create dom structure of this component
-             * (control will delegate to render).
-             * @chainable
-             */
+         * create dom structure of this component
+         * (control will delegate to render).
+         * @chainable
+         */
             create: function () {
                 var self = this;
                 if (!self.get('created')) {
                     /**
-                     * @event beforeCreateDom
-                     * fired before root node is created
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeCreateDom
+                 * fired before root node is created
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('beforeCreateDom');
                     var srcNode = self.get('srcNode');    // collect attr value from dom nodes
                     // collect attr value from dom nodes
@@ -261,96 +260,96 @@ KISSY.add('component/control', [
                         self.createDom();
                     }
                     self.__callPluginsMethod('pluginCreateDom');    /**
-                     * @event afterCreateDom
-                     * fired when root node is created
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event afterCreateDom
-                     * fired when root node is created
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('afterCreateDom');
                     self.setInternal('created', true);
                 }
                 return self;
             },
             /**
-             * Put dom structure of this component to document, bind event and sync attribute.
-             * @chainable
-             */
+         * Put dom structure of this component to document, bind event and sync attribute.
+         * @chainable
+         */
             render: function () {
                 var self = this;    // 是否已经渲染过
                 // 是否已经渲染过
                 if (!self.get('rendered')) {
                     self.create();    /**
-                     * @event beforeRenderUI
-                     * fired when root node is ready
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeRenderUI
+                 * fired when root node is ready
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event beforeRenderUI
-                     * fired when root node is ready
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeRenderUI
+                 * fired when root node is ready
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('beforeRenderUI');
                     self.renderUI();
                     self.__callPluginsMethod('pluginRenderUI');    /**
-                     * @event afterRenderUI
-                     * fired after root node is rendered into dom
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterRenderUI
+                 * fired after root node is rendered into dom
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event afterRenderUI
-                     * fired after root node is rendered into dom
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterRenderUI
+                 * fired after root node is rendered into dom
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('afterRenderUI');    /**
-                     * @event beforeBindUI
-                     * fired before component 's internal event is bind.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeBindUI
+                 * fired before component 's internal event is bind.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event beforeBindUI
-                     * fired before component 's internal event is bind.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeBindUI
+                 * fired before component 's internal event is bind.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('beforeBindUI');
                     Control.superclass.bindInternal.call(self);
                     self.bindUI();
                     self.__callPluginsMethod('pluginBindUI');    /**
-                     * @event afterBindUI
-                     * fired when component 's internal event is bind.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterBindUI
+                 * fired when component 's internal event is bind.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event afterBindUI
-                     * fired when component 's internal event is bind.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterBindUI
+                 * fired when component 's internal event is bind.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('afterBindUI');    /**
-                     * @event beforeSyncUI
-                     * fired before component 's internal state is synchronized.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeSyncUI
+                 * fired before component 's internal state is synchronized.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event beforeSyncUI
-                     * fired before component 's internal state is synchronized.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event beforeSyncUI
+                 * fired before component 's internal state is synchronized.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('beforeSyncUI');
                     Control.superclass.syncInternal.call(self);
                     self.syncUI();
                     self.__callPluginsMethod('pluginSyncUI');    /**
-                     * @event afterSyncUI
-                     * fired after component 's internal state is synchronized.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterSyncUI
+                 * fired after component 's internal state is synchronized.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     /**
-                     * @event afterSyncUI
-                     * fired after component 's internal state is synchronized.
-                     * @param {KISSY.Event.CustomEvent.Object} e
-                     */
+                 * @event afterSyncUI
+                 * fired after component 's internal state is synchronized.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
                     self.fire('afterSyncUI');
                     self.setInternal('rendered', true);
                 }
@@ -382,10 +381,10 @@ KISSY.add('component/control', [
                 return self;
             },
             /**
-             * Returns the dom element which is responsible for listening keyboard events.
-             * @return {KISSY.Node}
-             * @ignore
-             */
+         * Returns the dom element which is responsible for listening keyboard events.
+         * @return {KISSY.Node}
+         * @ignore
+         */
             getKeyEventTarget: function () {
                 return this.$el;
             },
@@ -395,10 +394,10 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handle mouseenter events. If the component is not disabled, highlights it.
-             * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
-             */
+         * Handle mouseenter events. If the component is not disabled, highlights it.
+         * @protected
+         * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
+         */
             handleMouseEnterInternal: function (ev) {
                 this.set('highlighted', !!ev);
             },
@@ -408,10 +407,10 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handle mouseleave events. If the component is not disabled, de-highlights it.
-             * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
-             */
+         * Handle mouseleave events. If the component is not disabled, de-highlights it.
+         * @protected
+         * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
+         */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
                 self.set('active', false);
@@ -423,13 +422,13 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handles mousedown events. If the component is not disabled,
-             * If the component is activeable, then activate it.
-             * If the component is focusable, then focus it,
-             * else prevent it from receiving keyboard focus.
-             * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
-             */
+         * Handles mousedown events. If the component is not disabled,
+         * If the component is activeable, then activate it.
+         * If the component is focusable, then focus it,
+         * else prevent it from receiving keyboard focus.
+         * @protected
+         * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
+         */
             handleMouseDownInternal: function (ev) {
                 var self = this, n, isMouseActionButton = ev.which === 1;
                 if (isMouseActionButton || isTouchGestureSupported) {
@@ -460,12 +459,12 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handles mouseup events.
-             * If this component is not disabled, performs its associated action by calling
-             * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
-             * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
-             */
+         * Handles mouseup events.
+         * If this component is not disabled, performs its associated action by calling
+         * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
+         * @protected
+         * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
+         */
             handleMouseUpInternal: function (ev) {
                 var self = this;    // 左键
                 // 左键
@@ -479,9 +478,9 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handles context menu.
-             * @protected
-             */
+         * Handles context menu.
+         * @protected
+         */
             handleContextMenuInternal: function () {
             },
             handleFocus: function () {
@@ -490,9 +489,9 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handles focus events. Style focused class.
-             * @protected
-             */
+         * Handles focus events. Style focused class.
+         * @protected
+         */
             handleFocusInternal: function () {
                 this.focus();
                 this.fire('focus');
@@ -503,9 +502,9 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Handles blur events. Remove focused class.
-             * @protected
-             */
+         * Handles blur events. Remove focused class.
+         * @protected
+         */
             handleBlurInternal: function () {
                 this.blur();
                 this.fire('blur');
@@ -519,12 +518,12 @@ KISSY.add('component/control', [
                 return undefined;
             },
             /**
-             * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
-             * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
-             */
+         * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
+         * @protected
+         * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
+         */
             handleKeyDownInternal: function (ev) {
-                if (ev.keyCode === Node.KeyCode.ENTER) {
+                if (ev.keyCode === $.Event.KeyCode.ENTER) {
                     return this.handleClickInternal(ev);
                 }
                 return undefined;
@@ -535,9 +534,9 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * Performs the appropriate action when this component is activated by the user.
-             * @protected
-             */
+         * Performs the appropriate action when this component is activated by the user.
+         * @protected
+         */
             handleClickInternal: function () {
                 // ie11 does not focus right
                 var self = this;
@@ -571,10 +570,10 @@ KISSY.add('component/control', [
                 }).render(renderData);
             },
             /**
-             * Get component's constructor from KISSY Node.
-             * @param prefixCls
-             * @param {KISSY.Node} childNode Child component's root node.
-             */
+         * Get component's constructor from KISSY Node.
+         * @param prefixCls
+         * @param {KISSY.Node} childNode Child component's root node.
+         */
             getComponentConstructorByNode: function (prefixCls, childNode) {
                 var cls = childNode[0].className;    // 过滤掉特定前缀
                 // 过滤掉特定前缀
@@ -601,10 +600,10 @@ KISSY.add('component/control', [
                 return re;
             },
             /**
-             * Get all css class name to be applied to the root element of this component for given extra class names.
-             * the css class names are prefixed with component name.
-             * @param extras {String[]|String} class names without prefixCls and current component class name.
-             */
+         * Get all css class name to be applied to the root element of this component for given extra class names.
+         * the css class names are prefixed with component name.
+         * @param extras {String[]|String} class names without prefixCls and current component class name.
+         */
             getBaseCssClasses: function (extras) {
                 extras = normalExtras(extras);
                 var componentCssClasses = this.getComponentCssClasses(), i = 0, cls = '', l = componentCssClasses.length, prefixCls = this.get('prefixCls');
@@ -614,11 +613,11 @@ KISSY.add('component/control', [
                 return trim(cls);
             },
             /**
-             * Get full class name (with prefix) for current component
-             * @param extras {String[]|String} class names without prefixCls and current component class name.
-             * @method
-             * @return {String} class name with prefixCls and current component class name.
-             */
+         * Get full class name (with prefix) for current component
+         * @param extras {String[]|String} class names without prefixCls and current component class name.
+         * @method
+         * @return {String} class name with prefixCls and current component class name.
+         */
             getBaseCssClass: function (extras) {
                 return trim(prefixExtra(this.get('prefixCls'), this.getComponentCssClasses()[0], normalExtras(extras)));
             },
@@ -626,9 +625,9 @@ KISSY.add('component/control', [
                 return Manager.createComponent(cfg, parent || this);
             },
             /**
-             * show component
-             * @chainable
-             */
+         * show component
+         * @chainable
+         */
             show: function () {
                 var self = this;
                 self.render();
@@ -636,9 +635,9 @@ KISSY.add('component/control', [
                 return self;
             },
             /**
-             * hide component
-             * @chainable
-             */
+         * hide component
+         * @chainable
+         */
             hide: function () {
                 var self = this;
                 self.set('visible', false);
@@ -685,15 +684,15 @@ KISSY.add('component/control', [
                 this.fire(visible ? 'show' : 'hide');
             },
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             _onSetHighlighted: function (v) {
                 var self = this, componentCls = self.getBaseCssClasses('hover'), el = self.$el;
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             _onSetDisabled: function (v) {
                 var self = this, componentCls = self.getBaseCssClasses('disabled'), el = self.$el;
                 el[v ? 'addClass' : 'removeClass'](componentCls).attr('aria-disabled', v);
@@ -703,8 +702,8 @@ KISSY.add('component/control', [
                 }
             },
             /**
-             * @ignore
-             */
+         * @ignore
+         */
             _onSetActive: function (v) {
                 var self = this, componentCls = self.getBaseCssClasses('active');
                 self.$el[v ? 'addClass' : 'removeClass'](componentCls).attr('aria-pressed', !!v);
@@ -718,8 +717,6 @@ KISSY.add('component/control', [
                     try {
                         target.focus();
                     } catch (e) {
-                        S.log(target);
-                        S.log('focus error', 'warn');
                     }
                 } else {
                     // force to move focus if just this.set('focused',false);
@@ -738,8 +735,8 @@ KISSY.add('component/control', [
                 this.$el.offset({ top: y });
             },
             /**
-             * @protected
-             */
+         * @protected
+         */
             destructor: function (destroy) {
                 var self = this;    // remove instance from manager
                 // remove instance from manager
@@ -765,17 +762,17 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * component's html content. Note: content and srcNode can not be set both!
-                 * @type {String|KISSY.Node}
-                 * @property content
-                 */
+             * component's html content. Note: content and srcNode can not be set both!
+             * @type {String|KISSY.Node}
+             * @property content
+             */
                 /**
-                 * component's html content. Note: content and srcNode can not be set both!
-                 * @cfg {String|KISSY.Node} content
-                 */
+             * component's html content. Note: content and srcNode can not be set both!
+             * @cfg {String|KISSY.Node} content
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 content: {
                     parse: function (el) {
                         return el.html();
@@ -785,44 +782,44 @@ KISSY.add('component/control', [
                     value: ''
                 },
                 /**
-                 * component's width
-                 * @type {Number|String}
-                 * @property width
-                 */
+             * component's width
+             * @type {Number|String}
+             * @property width
+             */
                 /**
-                 * component's width
-                 * @cfg {Number|String} width
-                 */
+             * component's width
+             * @cfg {Number|String} width
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 width: {
                     render: 1,
                     sync: 0
                 },
                 /**
-                 * component's height
-                 * @type {Number|String}
-                 * @property height
-                 */
+             * component's height
+             * @type {Number|String}
+             * @property height
+             */
                 /**
-                 * component's height
-                 * @cfg {Number|String} height
-                 */
+             * component's height
+             * @cfg {Number|String} height
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 height: {
                     render: 1,
                     sync: 0
                 },
                 /**
-                 * css class of component's root element
-                 * @cfg {String} elCls
-                 */
+             * css class of component's root element
+             * @cfg {String} elCls
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 elCls: {
                     render: 1,
                     valueFn: function () {
@@ -836,12 +833,12 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * name-value pair css style of component's root element
-                 * @cfg {Object} elStyle
-                 */
+             * name-value pair css style of component's root element
+             * @cfg {Object} elStyle
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 elStyle: {
                     render: 1,
                     valueFn: function () {
@@ -849,12 +846,12 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * name-value pair attribute of component's root element
-                 * @cfg {Object} elAttrs
-                 */
+             * name-value pair attribute of component's root element
+             * @cfg {Object} elAttrs
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 elAttrs: {
                     render: 1,
                     valueFn: function () {
@@ -862,39 +859,39 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * Horizontal axis
-                 * @type {Number}
-                 * @property x
-                 */
+             * Horizontal axis
+             * @type {Number}
+             * @property x
+             */
                 /**
-                 * Horizontal axis
-                 * @cfg {Number} x
-                 */
+             * Horizontal axis
+             * @cfg {Number} x
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 x: {},
                 /**
-                 * Vertical axis
-                 * @type {Number}
-                 * @property y
-                 */
+             * Vertical axis
+             * @type {Number}
+             * @property y
+             */
                 /**
-                 * Vertical axis
-                 * @cfg {Number} y
-                 */
+             * Vertical axis
+             * @cfg {Number} y
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 y: {},
                 /**
-                 * Horizontal and vertical axis.
-                 * @ignore
-                 * @type {Number[]}
-                 */
+             * Horizontal and vertical axis.
+             * @ignore
+             * @type {Number[]}
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 xy: {
                     setter: function (v) {
                         var self = this, xy = util.makeArray(v);
@@ -916,103 +913,103 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * z-index value.
-                 * @type {Number}
-                 * @property zIndex
-                 */
+             * z-index value.
+             * @type {Number}
+             * @property zIndex
+             */
                 /**
-                 * z-index value.
-                 * @cfg {Number} zIndex
-                 */
+             * z-index value.
+             * @cfg {Number} zIndex
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 zIndex: {
                     render: 1,
                     sync: 0
                 },
                 /**
-                 * whether this component is visible after created.
-                 *
-                 * will add/remove css class {prefix}{component}-hidden to component's root el.
-                 *
-                 * @cfg {Boolean} visible
-                 */
+             * whether this component is visible after created.
+             *
+             * will add/remove css class {prefix}{component}-hidden to component's root el.
+             *
+             * @cfg {Boolean} visible
+             */
                 /**
-                 * whether this component is visible.
-                 *
-                 * will add/remove css class {prefix}{component}-hidden to component's root el.
-                 *
-                 * @type {Boolean}
-                 * @property visible
-                 */
+             * whether this component is visible.
+             *
+             * will add/remove css class {prefix}{component}-hidden to component's root el.
+             *
+             * @type {Boolean}
+             * @property visible
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 visible: {
                     render: 1,
                     sync: 0,
                     value: true
                 },
                 /**
-                 * Whether this component can be activated.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @cfg {Boolean} activeable
-                 * @protected
-                 */
+             * Whether this component can be activated.
+             *
+             * Defaults to: true.
+             *
+             * @cfg {Boolean} activeable
+             * @protected
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 activeable: { value: true },
                 /**
-                 * Whether this component has focus.
-                 * @type {Boolean}
-                 * @property focused
-                 */
+             * Whether this component has focus.
+             * @type {Boolean}
+             * @property focused
+             */
                 /**
-                 * Whether this component has focus on initialization.
-                 * @cfg {Boolean} focused
-                 */
+             * Whether this component has focus on initialization.
+             * @cfg {Boolean} focused
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 focused: {},
                 /**
-                 * Whether this component is activated.
-                 * @type {Boolean}
-                 * @property active
-                 */
+             * Whether this component is activated.
+             * @type {Boolean}
+             * @property active
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 active: { value: false },
                 /**
-                 * Whether this component is highlighted.
-                 * @type {Boolean}
-                 * @property highlighted
-                 */
+             * Whether this component is highlighted.
+             * @type {Boolean}
+             * @property highlighted
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 highlighted: {
                     render: 1,
                     sync: 0,
                     value: false
                 },
                 /**
-                 * Whether this component is disabled.
-                 * @type {Boolean}
-                 * @property disabled
-                 */
+             * Whether this component is disabled.
+             * @type {Boolean}
+             * @property disabled
+             */
                 /**
-                 * Whether this component is disabled.
-                 * @cfg {Boolean} disabled
-                 */
+             * Whether this component is disabled.
+             * @cfg {Boolean} disabled
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 disabled: {
                     render: 1,
                     sync: 0,
@@ -1022,37 +1019,37 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * Whether this component is rendered.
-                 * @type {Boolean}
-                 * @property rendered
-                 * @readonly
-                 */
+             * Whether this component is rendered.
+             * @type {Boolean}
+             * @property rendered
+             * @readonly
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 rendered: { value: false },
                 /**
-                 * Whether this component 's dom structure is created.
-                 * @type {Boolean}
-                 * @property created
-                 * @readonly
-                 */
+             * Whether this component 's dom structure is created.
+             * @type {Boolean}
+             * @property created
+             * @readonly
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 created: { value: false },
                 /**
-                 * archor element where component append to
-                 * @cfg {KISSY.Node} render
-                 */
+             * archor element where component append to
+             * @cfg {KISSY.Node} render
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 render: {},
                 /**
-                 * component id
-                 * @cfg {String} id
-                 */
+             * component id
+             * @cfg {String} id
+             */
                 id: {
                     render: 1,
                     parse: function (el) {
@@ -1068,117 +1065,117 @@ KISSY.add('component/control', [
                     }
                 },
                 /**
-                 * archor element where component insert before
-                 * @cfg {KISSY.Node} elBefore
-                 */
+             * archor element where component insert before
+             * @cfg {KISSY.Node} elBefore
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 elBefore: {},
                 /**
-                 * root element of current component
-                 * @type {KISSY.Node}
-                 * @readonly
-                 * @property el
-                 */
+             * root element of current component
+             * @type {KISSY.Node}
+             * @readonly
+             * @property el
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 el: {
                     getter: function () {
                         return this.$el;
                     }
                 },
                 /**
-                 * kissy node or css selector to find the first match node
-                 * parsed for configuration values.
-                 *
-                 * @cfg {KISSY.Node|String} srcNode
-                 */
+             * kissy node or css selector to find the first match node
+             * parsed for configuration values.
+             *
+             * @cfg {KISSY.Node|String} srcNode
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 srcNode: {
                     setter: function (v) {
                         return $(v);
                     }
                 },
                 /**
-                 * Enables or disables gesture event(mouse/gestureStart/gestureEnd) handling for the component.
-                 * Containers may set this attribute to disable gesture event handling
-                 * in their child component.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @cfg {Boolean} handleGestureEvents
-                 * @protected
-                 */
+             * Enables or disables gesture event(mouse/gestureStart/gestureEnd) handling for the component.
+             * Containers may set this attribute to disable gesture event handling
+             * in their child component.
+             *
+             * Defaults to: true.
+             *
+             * @cfg {Boolean} handleGestureEvents
+             * @protected
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 handleGestureEvents: { value: true },
                 /**
-                 * Whether this component can get focus.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @protected
-                 * @cfg {Boolean} focusable
-                 */
+             * Whether this component can get focus.
+             *
+             * Defaults to: true.
+             *
+             * @protected
+             * @cfg {Boolean} focusable
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 focusable: { value: true },
                 /**
-                 * 1. Whether allow select this component's text.<br/>
-                 * 2. Whether not to lose last component's focus if click current one (set false).
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} allowTextSelection
-                 * @protected
-                 */
+             * 1. Whether allow select this component's text.<br/>
+             * 2. Whether not to lose last component's focus if click current one (set false).
+             *
+             * Defaults to: false
+             *
+             * @cfg {Boolean} allowTextSelection
+             * @protected
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 allowTextSelection: {
                     // 和 focusable 分离
                     // grid 需求：容器允许选择里面内容
                     value: false
                 },
                 /**
-                 * This component's prefix css class.
-                 * @cfg {String} prefixCls
-                 */
+             * This component's prefix css class.
+             * @cfg {String} prefixCls
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 prefixCls: {
                     render: 1,
-                    value: S.config('component/prefixCls') || 'ks-'
+                    value: 'ks-'
                 },
                 /**
-                 * This component's prefix xclass. Only be used in cfg.
-                 * To use this property as 'xclass' when not specified 'xclass' and 'xtype'
-                 * @cfg {String} prefixXClass
-                 */
+             * This component's prefix xclass. Only be used in cfg.
+             * To use this property as 'xclass' when not specified 'xclass' and 'xtype'
+             * @cfg {String} prefixXClass
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 prefixXClass: {},
                 /**
-                 * This component's parent component.
-                 * @type {KISSY.Component.Control}
-                 * @property parent
-                 * @readonly
-                 */
+             * This component's parent component.
+             * @type {KISSY.Component.Control}
+             * @property parent
+             * @readonly
+             */
                 /**
-                 * This component's parent component.
-                 * @cfg {KISSY.Component.Control} parent
-                 */
+             * This component's parent component.
+             * @cfg {KISSY.Component.Control} parent
+             */
                 /**
-                 * @ignore
-                 */
+             * @ignore
+             */
                 parent: {
                     setter: function (p, prev) {
                         if (prev = this.get('parent')) {
@@ -1192,43 +1189,43 @@ KISSY.add('component/control', [
                 XTemplate: { value: XTemplateRuntime }
             }
         });    /**
-     * create a new control extend component/control, extensions and static/prototype properties/methods.
-     * @param {Function[]} [extensions] extension classes
-     * @param {Object} [px] key-value map for prototype properties/methods.
-     * @param {Object} [sx] key-value map for static properties/methods.
-     * @param {String} [sx.xclass] new Control 's xclass.
-     * @return {Function} new control which extend called, it also has a static extend method
-     * @static
-     *
-     * for example:
-     *
-     *      var Parent = Control.extend({
+ * create a new control extend component/control, extensions and static/prototype properties/methods.
+ * @param {Function[]} [extensions] extension classes
+ * @param {Object} [px] key-value map for prototype properties/methods.
+ * @param {Object} [sx] key-value map for static properties/methods.
+ * @param {String} [sx.xclass] new Control 's xclass.
+ * @return {Function} new control which extend called, it also has a static extend method
+ * @static
+ *
+ * for example:
+ *
+ *      var Parent = Control.extend({
      *          isParent: 1
      *      });
-     *      var Child = Parent.extend({
+ *      var Child = Parent.extend({
      *          isChild: 1,
      *          isParent: 0
      *      })
-     */
+ */
     /**
-     * create a new control extend component/control, extensions and static/prototype properties/methods.
-     * @param {Function[]} [extensions] extension classes
-     * @param {Object} [px] key-value map for prototype properties/methods.
-     * @param {Object} [sx] key-value map for static properties/methods.
-     * @param {String} [sx.xclass] new Control 's xclass.
-     * @return {Function} new control which extend called, it also has a static extend method
-     * @static
-     *
-     * for example:
-     *
-     *      var Parent = Control.extend({
+ * create a new control extend component/control, extensions and static/prototype properties/methods.
+ * @param {Function[]} [extensions] extension classes
+ * @param {Object} [px] key-value map for prototype properties/methods.
+ * @param {Object} [sx] key-value map for static properties/methods.
+ * @param {String} [sx.xclass] new Control 's xclass.
+ * @return {Function} new control which extend called, it also has a static extend method
+ * @static
+ *
+ * for example:
+ *
+ *      var Parent = Control.extend({
      *          isParent: 1
      *      });
-     *      var Child = Parent.extend({
+ *      var Child = Parent.extend({
      *          isChild: 1,
      *          isParent: 0
      *      })
-     */
+ */
     Control.extend = function extend(extensions, px, sx) {
         /*jshint unused: false*/
         var args = util.makeArray(arguments), self = this, xclass, argsLen = args.length, last = args[argsLen - 1];
@@ -1242,9 +1239,7 @@ KISSY.add('component/control', [
         }
         return NewClass;
     };
-    Control.Manager = Manager;
-    return Control;
-});    /*
+    Control.Manager = Manager;    /*
  yiminghe@gmail.com - 2014.04.08
  - use event modules: event/gesture/basic, event/gesture/tap
  - remove render layer
@@ -1292,77 +1287,78 @@ KISSY.add('component/control', [
  Refer
  - http://martinfowler.com/eaaDev/uiArchs.html
  */
+});
 
 
 
 
-/**
+KISSY.add('component/control/manager', [], function (S, require, exports, module) {
+    /**
  * @ignore
  * storage for component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/control/manager', [], function () {
     var basePriority = 0, Manager,
         // 不带前缀 prefixCls
         /*
-     'menu' :{
-     constructor:Menu
-     }
-     */
+ 'menu' :{
+ constructor:Menu
+ }
+ */
         uis = {}, componentInstances = {};    /**
-     * @class KISSY.Component.Manager
-     * @member Component
-     * @singleton
-     * Manage component metadata.
-     */
+ * @class KISSY.Component.Manager
+ * @member Component
+ * @singleton
+ * Manage component metadata.
+ */
     /**
-     * @class KISSY.Component.Manager
-     * @member Component
-     * @singleton
-     * Manage component metadata.
-     */
-    Manager = {
+ * @class KISSY.Component.Manager
+ * @member Component
+ * @singleton
+ * Manage component metadata.
+ */
+    module.exports = Manager = {
         __instances: componentInstances,
         /**
-         * associate id with component
-         * @param {KISSY.Component.Control} component
-         */
+     * associate id with component
+     * @param {KISSY.Component.Control} component
+     */
         addComponent: function (component) {
             componentInstances[component.get('id')] = component;
         },
         /**
-         * remove association id with component
-         */
+     * remove association id with component
+     */
         removeComponent: function (component) {
             delete componentInstances[component.get('id')];
         },
         /**
-         * get component by id
-         * @param {String} id
-         * @return {KISSY.Component.Control}
-         */
+     * get component by id
+     * @param {String} id
+     * @return {KISSY.Component.Control}
+     */
         getComponent: function (id) {
             return componentInstances[id];
         },
         /**
-         * Create a component instance using json with xclass.
-         * @param {Object|KISSY.Component.Control} component Component's json notation with xclass attribute.
-         * @param {String} component.xclass Component to be newed 's xclass.
-         * @param {KISSY.Component.Control} parent Component From which new component generated will inherit prefixCls
-         * if component 's prefixCls is undefined.
-         * @member KISSY.Component
-         * @return KISSY.Component.Control
-         *
-         *  for example:
-         *
-         *      create({
+     * Create a component instance using json with xclass.
+     * @param {Object|KISSY.Component.Control} component Component's json notation with xclass attribute.
+     * @param {String} component.xclass Component to be newed 's xclass.
+     * @param {KISSY.Component.Control} parent Component From which new component generated will inherit prefixCls
+     * if component 's prefixCls is undefined.
+     * @member KISSY.Component
+     * @return KISSY.Component.Control
+     *
+     *  for example:
+     *
+     *      create({
      *          xclass:'menu',
      *          children:[{
      *              xclass:'menuitem',
      *              content:"1"
      *          }]
      *      })
-         */
+     */
         createComponent: function (component, parent) {
             var ChildConstructor, xclass;
             if (component) {
@@ -1391,11 +1387,11 @@ KISSY.add('component/control/manager', [], function () {
             return component;
         },
         /**
-         * Get component constructor by css class name.
-         * @param {String} classNames Class names separated by space.
-         * @return {Function}
-         * @method
-         */
+     * Get component constructor by css class name.
+     * @param {String} classNames Class names separated by space.
+     * @return {Function}
+     * @method
+     */
         getConstructorByXClass: function (classNames) {
             var cs = classNames.split(/\s+/), p = -1, t, i, uic, ui = null;
             for (i = 0; i < cs.length; i++) {
@@ -1408,11 +1404,11 @@ KISSY.add('component/control/manager', [], function () {
             return ui;
         },
         /**
-         * Associate css class with component constructor.
-         * @param {String} className Component's class name.
-         * @param {Function} ComponentConstructor Component's constructor.
-         * @method
-         */
+     * Associate css class with component constructor.
+     * @param {String} className Component's class name.
+     * @param {Function} ComponentConstructor Component's constructor.
+     * @method
+     */
         setConstructorByXClass: function (className, ComponentConstructor) {
             uis[className] = {
                 constructor: ComponentConstructor,
@@ -1420,15 +1416,14 @@ KISSY.add('component/control/manager', [], function () {
             };
         }
     };
-    return Manager;
 });
 
 /** Compiled By kissy-xtemplate */
+/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
 KISSY.add('component/control/render-xtpl', [], function (S, require, exports, module) {
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    var render = function (scope, buffer, undefined) {
+    var renderXtplHtml = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div id="', 0);
         var id0 = scope.resolve(['id'], 0);
         buffer.write(id0, true);
@@ -1492,9 +1487,9 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
         buffer.write('\r\n">', 0);
         return buffer;
     };
-    render.TPL_NAME = module.name;
-    render.version = '5.0.0';
-    return render;
+    renderXtplHtml.TPL_NAME = module.name;
+    renderXtplHtml.version = '5.0.0';
+    module.exports = renderXtplHtml;
 });
 
 

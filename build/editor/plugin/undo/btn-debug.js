@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:23
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/undo/btn
 */
-/**
+KISSY.add('editor/plugin/undo/btn', [
+    '../button',
+    'editor'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * undo button
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/undo/btn', [
-    '../button',
-    'editor'
-], function (S, require) {
     var Button = require('../button');
     var Editor = require('editor');
     var UndoBtn = Button.extend({
@@ -84,7 +84,7 @@ KISSY.add('editor/plugin/undo/btn', [
                 }
             }
         });
-    return {
+    module.exports = {
         RedoBtn: RedoBtn,
         UndoBtn: UndoBtn
     };

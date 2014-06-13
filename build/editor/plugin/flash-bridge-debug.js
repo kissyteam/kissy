@@ -1,27 +1,30 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/flash-bridge
 */
-/**
- * @ignore
- * simplified flash bridge for yui swf
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/flash-bridge', [
+    'logger-manager',
     'util',
     'editor',
     'swf',
     'event/custom'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * simplified flash bridge for yui swf
+ * @author yiminghe@gmail.com
+ */
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/editor/flash-bridge');
     var util = require('util');
-    var logger = S.getLogger('s/editor/plugin/flash-bridge');
     var Editor = require('editor');
-    var SWF = require('swf');
+    var SWF = require('swf');    /*global CustomEvent:true*/
+    /*global CustomEvent:true*/
     var CustomEvent = require('event/custom');
     var instances = {};
     function FlashBridge(cfg) {
@@ -115,8 +118,9 @@ KISSY.add('editor/plugin/flash-bridge', [
         }
     };
     Editor.FlashBridge = FlashBridge;
-    return FlashBridge;
+    module.exports = FlashBridge;
 });
+
 
 
 

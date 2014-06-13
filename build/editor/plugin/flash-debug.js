@@ -1,24 +1,24 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:19
+build time: Jun 13 11:45
 */
 /*
 combined modules:
 editor/plugin/flash
 */
-/**
- * @ignore
- * Add flash plugin.
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/flash', [
     'editor',
     './flash-common/base-class',
     './flash-common/utils',
     './fake-objects',
     './button'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add flash plugin.
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     var FlashBaseClass = require('./flash-common/base-class');
     var flashUtils = require('./flash-common/utils');
@@ -89,7 +89,7 @@ KISSY.add('editor/plugin/flash', [
             });
         }
     };
-    return FlashPlugin;
+    module.exports = FlashPlugin;
 });
 
 

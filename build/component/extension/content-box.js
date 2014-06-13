@@ -1,8 +1,8 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:14
+build time: Jun 13 11:41
 */
-KISSY.add("component/extension/content-box",["./content-box/content-xtpl"],function(b,h){function g(a){var d=a.get("contentEl");a.$contentEl=a.$contentEl=d;a.contentEl=a.contentEl=d[0]}function c(){}var e=h("./content-box/content-xtpl");c.prototype={__createDom:function(){g(this)},__decorateDom:function(){g(this)},getChildrenContainerEl:function(){return this.get("contentEl")},_onSetContent:function(a){var d=this.$contentEl;d.html(a);this.get("allowTextSelection")||d.unselectable()}};c.ATTRS={contentTpl:{value:e},
-contentEl:{selector:function(){return"."+this.getBaseCssClass("content")}},content:{parse:function(){return this.get("contentEl").html()}}};return c});
-KISSY.add("component/extension/content-box/content-xtpl",[],function(b,h,g,c){b=function(e,a,d){var f=this.root.utils.callFn;a.write('<div class="',0);var b={escape:1},c=[];c.push("content");b.params=c;if((f=f(this,e,b,a,["getBaseCssClasses"],0,1))&&f.isBuffer)a=f,f=d;a.write(f,!0);a.write('">',0);e=e.resolve(["content"],0);a.write(e,!1);a.write("</div>",0);return a};b.TPL_NAME=c.name;b.version="5.0.0";return b});
+KISSY.add("component/extension/content-box",["./content-box/content-xtpl"],function(b,e,h,d){function f(a){var c=a.get("contentEl");a.$contentEl=a.$contentEl=c;a.contentEl=a.contentEl=c[0]}function a(){}b=e("./content-box/content-xtpl");a.prototype={__createDom:function(){f(this)},__decorateDom:function(){f(this)},getChildrenContainerEl:function(){return this.get("contentEl")},_onSetContent:function(a){var c=this.$contentEl;c.html(a);this.get("allowTextSelection")||c.unselectable()}};a.ATTRS={contentTpl:{value:b},
+contentEl:{selector:function(){return"."+this.getBaseCssClass("content")}},content:{parse:function(){return this.get("contentEl").html()}}};d.exports=a});
+KISSY.add("component/extension/content-box/content-xtpl",[],function(b,e,h,d){b=function(b,a,d){var c=this.root.utils.callFn;a.write('<div class="',0);var e={escape:1},g=[];g.push("content");e.params=g;if((c=c(this,b,e,a,["getBaseCssClasses"],0,1))&&c.isBuffer)a=c,c=d;a.write(c,!0);a.write('">',0);b=b.resolve(["content"],0);a.write(b,!1);a.write("</div>",0);return a};b.TPL_NAME=d.name;b.version="5.0.0";d.exports=b});

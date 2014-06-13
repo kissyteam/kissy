@@ -1,6 +1,6 @@
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
-var util = require(cwd + '/lib/util');
+var util = require('../../common/util');
 var fs = require('fs');
 
 module.exports = function (req, res, next) {

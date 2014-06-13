@@ -1,31 +1,33 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:22
+build time: Jun 13 11:48
 */
 /*
 combined modules:
 editor/plugin/progressbar
 */
-/**
+KISSY.add('editor/plugin/progressbar', [
+    'base',
+    'util',
+    'node'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * progressbar ui
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/progressbar', [
-    'base',
-    'util'
-], function (S, require) {
     var Base = require('base');
     var util = require('util');
-    return Base.extend({
+    var $ = require('node');
+    module.exports = Base.extend({
         destroy: function () {
             var self = this;
             self.detach();
             self.el.remove();
         },
         initializer: function () {
-            var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = new Node(util.substitute('<div' + ' class="{prefixCls}editor-progressbar" ' + ' style="width:' + self.get('width') + ';' + 'height:' + h + ';"' + '></div>', { prefixCls: prefixCls })), container = self.get('container'), p = new Node(util.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h, 10) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + '</div>' + '</div>', { prefixCls: prefixCls })).appendTo(el), title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>').appendTo(el);
+            var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = $(util.substitute('<div' + ' class="{prefixCls}editor-progressbar" ' + ' style="width:' + self.get('width') + ';' + 'height:' + h + ';"' + '></div>', { prefixCls: prefixCls })), container = self.get('container'), p = $(util.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h, 10) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + '</div>' + '</div>', { prefixCls: prefixCls })).appendTo(el), title = $('<span class="' + prefixCls + 'editor-progressbar-title"></span>').appendTo(el);
             if (container) {
                 el.appendTo(container);
             }
@@ -51,4 +53,5 @@ KISSY.add('editor/plugin/progressbar', [
         }
     });
 });
+
 

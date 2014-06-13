@@ -1,21 +1,21 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/bold/cmd
 */
-/**
+KISSY.add('editor/plugin/bold/cmd', [
+    'editor',
+    '../font/cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * bold command.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/bold/cmd', [
-    'editor',
-    '../font/cmd'
-], function (S, require) {
     var Editor = require('editor');
     var Cmd = require('../font/cmd');
     var BOLD_STYLE = new Editor.Style({
@@ -28,7 +28,7 @@ KISSY.add('editor/plugin/bold/cmd', [
                 }
             ]
         });
-    return {
+    module.exports = {
         init: function (editor) {
             Cmd.addButtonCmd(editor, 'bold', BOLD_STYLE);
         }

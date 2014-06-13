@@ -1,17 +1,12 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:21
+build time: Jun 13 11:47
 */
 /*
 combined modules:
 editor/plugin/link
 */
-/**
- * @ignore
- * link editor support for kissy editor ,innovation from google doc and ckeditor
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/link', [
     './button',
     './bubble',
@@ -20,14 +15,19 @@ KISSY.add('editor/plugin/link', [
     './link/utils',
     './dialog-loader',
     'node'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * link editor support for kissy editor ,innovation from google doc and ckeditor
+ * @author yiminghe@gmail.com
+ */
     require('./button');
     require('./bubble');
     var util = require('util');
     var Editor = require('editor');
     var Utils = require('./link/utils');
     var DialogLoader = require('./dialog-loader');
-    var $ = require('node').all, tipHTML = '<a ' + 'href="" ' + ' target="_blank" ' + 'class="{prefixCls}editor-bubble-url">' + '\u5728\u65B0\u7A97\u53E3\u67E5\u770B' + '</a>  \u2013  ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">' + '\u7F16\u8F91' + '</span>   |   ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">' + '\u53BB\u9664' + '</span>';
+    var $ = require('node'), tipHTML = '<a ' + 'href="" ' + ' target="_blank" ' + 'class="{prefixCls}editor-bubble-url">' + '\u5728\u65B0\u7A97\u53E3\u67E5\u770B' + '</a>  \u2013  ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">' + '\u7F16\u8F91' + '</span>   |   ' + ' <span ' + 'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">' + '\u53BB\u9664' + '</span>';
     function checkLink(lastElement) {
         lastElement = $(lastElement);
         return lastElement.closest('a', undefined);
@@ -81,7 +81,7 @@ KISSY.add('editor/plugin/link', [
             });
         }
     };
-    return LinkPlugin;
+    module.exports = LinkPlugin;
 });
 
 

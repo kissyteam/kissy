@@ -182,7 +182,6 @@ var Dom = module.exports = {
     _RE_NUM_NO_PX: new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i')
 };
 
-
 /*
  2011-08
  - 添加节点类型枚举值，方便依赖程序清晰

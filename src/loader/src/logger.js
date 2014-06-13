@@ -9,11 +9,24 @@
             /*jshint loopfunc: true*/
             (function (obj, cat) {
                 obj[cat] = function (msg) {
-                    return S.log(msg, cat, logger);
+                    return LoggerManager.log(msg, cat, logger);
                 };
             })(obj, cat);
         }
         return obj;
+    }
+
+    var config = {};
+    if ('@DEBUG@') {
+        config = {
+            excludes: [
+                {
+                    logger: /^s\/.*/,
+                    maxLevel: 'info',
+                    minLevel: 'debug'
+                }
+            ]
+        };
     }
 
     var loggerLevel = {
@@ -23,7 +36,11 @@
         error: 40
     };
 
-    var Logger = {
+    var LoggerManager = {
+        config: function (cfg) {
+            config = cfg || config;
+            return config;
+        },
         /**
          * Prints debug info.
          * @param msg {String} the message to log.
@@ -35,11 +52,10 @@
             if ('@DEBUG@') {
                 var matched = 1;
                 if (logger) {
-                    var loggerCfg = S.Config.logger || {},
-                        list, i, l, level, minLevel, maxLevel, reg;
+                    var list, i, l, level, minLevel, maxLevel, reg;
                     cat = cat || 'debug';
                     level = loggerLevel[cat] || loggerLevel.debug;
-                    if ((list = loggerCfg.includes)) {
+                    if ((list = config.includes)) {
                         matched = 0;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
@@ -51,7 +67,7 @@
                                 break;
                             }
                         }
-                    } else if ((list = loggerCfg.excludes)) {
+                    } else if ((list = config.excludes)) {
                         matched = 1;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
@@ -82,7 +98,7 @@
         /**
          * get log instance for specified logger
          * @param {String} logger logger name
-         * @returns {KISSY.Logger} log instance
+         * @returns {KISSY.LoggerManager} log instance
          */
         getLogger: function (logger) {
             return getLogger(logger);
@@ -99,52 +115,42 @@
         }
     };
 
-    if ('@DEBUG@') {
-        S.Config.logger = {
-            excludes: [
-                {
-                    logger: /^s\/.*/,
-                    maxLevel: 'info',
-                    minLevel: 'debug'
-                }
-            ]
-        };
-        /**
-         * Log class for specified logger
-         * @class KISSY.Logger
-         * @private
-         */
-        /**
-         * print debug log
-         * @method debug
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
+    /**
+     * Log class for specified logger
+     * @class KISSY.LoggerManager
+     * @private
+     */
+    /**
+     * print debug log
+     * @method debug
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-        /**
-         * print info log
-         * @method info
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
+    /**
+     * print info log
+     * @method info
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-        /**
-         * print warn log
-         * @method log
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
+    /**
+     * print warn log
+     * @method log
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-        /**
-         * print error log
-         * @method error
-         * @member KISSY.Logger
-         * @param {String} str log str
-         */
-    }
+    /**
+     * print error log
+     * @method error
+     * @member KISSY.LoggerManager
+     * @param {String} str log str
+     */
 
-    S.Logger = Logger;
-    S.getLogger = Logger.getLogger;
-    S.log = Logger.log;
-    S.error = Logger.error;
+    S.LoggerMangaer = LoggerManager;
+    S.getLogger = LoggerManager.getLogger;
+    S.log = LoggerManager.log;
+    S.error = LoggerManager.error;
+    S.Config.fns.logger = LoggerManager.config;
 })(KISSY);

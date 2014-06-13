@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:43
 */
 /*
 combined modules:
@@ -14,11 +14,6 @@ dom/ie/transform
 dom/ie/input-selection
 dom/ie/attr
 */
-/**
- * @ignore
- * dirty hack for ie
- * @author yiminghe@gmail.com
- */
 KISSY.add('dom/ie', [
     './ie/create',
     './ie/insertion',
@@ -27,25 +22,30 @@ KISSY.add('dom/ie', [
     './ie/transform',
     './ie/input-selection',
     './ie/attr'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * dirty hack for ie
+ * @author yiminghe@gmail.com
+ */
     require('./ie/create');
     require('./ie/insertion');
     require('./ie/style');
     require('./ie/traversal');
     require('./ie/transform');
     require('./ie/input-selection');
-    return require('./ie/attr');
+    require('./ie/attr');
 });
-/**
- * @ignore
- * ie create hack
- * @author yiminghe@gmail.com
- */
 KISSY.add('dom/ie/create', [
     'util',
     'dom/base',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * ie create hack
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Dom = require('dom/base');    // wierd ie cloneNode fix from jq
     // wierd ie cloneNode fix from jq
@@ -129,26 +129,26 @@ KISSY.add('dom/ie/create', [
 
 
 
-/**
+KISSY.add('dom/ie/insertion', [
+    'dom/base',
+    'ua'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/insertion', [
-    'dom/base',
-    'ua'
-], function (S, require) {
     var Dom = require('dom/base');
     var UA = require('ua');
     if (UA.ieMode < 8) {
         /*
-         ie 6,7 lose checked status when append to dom
-         var c=S.all('<input />');
-         c.attr('type','radio');
-         c.attr('checked',true);
-         S.all('#t').append(c);
-         alert(c[0].checked);
-         */
+     ie 6,7 lose checked status when append to dom
+     var c=S.all('<input />');
+     c.attr('type','radio');
+     c.attr('checked',true);
+     S.all('#t').append(c);
+     alert(c[0].checked);
+     */
         Dom._fixInsertionChecked = function fixChecked(ret) {
             for (var i = 0; i < ret.length; i++) {
                 var el = ret[i];
@@ -172,20 +172,22 @@ KISSY.add('dom/ie/insertion', [
         }
     }
 });
-/**
+KISSY.add('dom/ie/style', [
+    'util',
+    'logger-manager',
+    'dom/base',
+    'ua'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * style hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/style', [
-    'util',
-    'dom/base',
-    'ua'
-], function (S, require) {
     var util = require('util');
-    var logger = S.getLogger('s/dom');
+    var LoggerManager = require('logger-manager');
+    var logger = LoggerManager.getLogger('s/dom');
     var Dom = require('dom/base');
-    var cssProps = Dom._cssProps, UA = require('ua'), FLOAT = 'float', HUNDRED = 100, doc = S.Env.host.document, docElem = doc && doc.documentElement, OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;    // float is keyword
+    var cssProps = Dom._cssProps, UA = require('ua'), FLOAT = 'float', HUNDRED = 100, doc = document, docElem = doc && doc.documentElement, OPACITY = 'opacity', STYLE = 'style', RE_POS = /^(top|right|bottom|left)$/, FILTER = 'filter', CURRENT_STYLE = 'currentStyle', RUNTIME_STYLE = 'runtimeStyle', LEFT = 'left', PX = 'px', cssHooks = Dom._cssHooks, backgroundPosition = 'backgroundPosition', R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;    // float is keyword
     // float is keyword
     cssProps[FLOAT] = 'styleFloat';    // odd backgroundPosition
     // odd backgroundPosition
@@ -237,15 +239,15 @@ KISSY.add('dom/ie/style', [
     } catch (ex) {
         logger.debug('IE filters ActiveX is disabled. ex = ' + ex);
     }    /*
-     border fix
-     ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
-     (default is 'medium')
-     */
+ border fix
+ ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
+ (default is 'medium')
+ */
     /*
-     border fix
-     ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
-     (default is 'medium')
-     */
+ border fix
+ ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
+ (default is 'medium')
+ */
     var IE8 = UA.ie === 8, BORDER_MAP = {}, BORDERS = [
             '',
             'Top',
@@ -312,8 +314,7 @@ KISSY.add('dom/ie/style', [
             elem[RUNTIME_STYLE][LEFT] = rsLeft;
         }
         return ret === '' ? 'auto' : ret;
-    };
-});    /*
+    };    /*
  NOTES:
 
  yiminghe@gmail.com: 2012-11-27
@@ -329,12 +330,14 @@ KISSY.add('dom/ie/style', [
  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值
  - opacity 的实现，参考自 jquery
  */
-/**
+});
+
+KISSY.add('dom/ie/traversal', ['dom/base'], function (S, require, exports, module) {
+    /**
  * @ignore
  * traversal ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/traversal', ['dom/base'], function (S, require) {
     var Dom = require('dom/base');
     Dom._contains = function (a, b) {
         if (a.nodeType === Dom.NodeType.DOCUMENT_NODE) {
@@ -393,15 +396,15 @@ KISSY.add('dom/ie/traversal', ['dom/base'], function (S, require) {
         return el;
     };
 });
-/**
+KISSY.add('dom/ie/transform', [
+    'util',
+    'dom/base'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * transform hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/transform', [
-    'util',
-    'dom/base'
-], function (S, require) {
     var util = require('util');
     var Dom = require('dom/base');
     var cssHooks = Dom._cssHooks;
@@ -450,7 +453,7 @@ KISSY.add('dom/ie/transform', [
                 afterCenter.x = afterCenter[0][0];
                 afterCenter.y = afterCenter[1][0];
                 matrixVal = [
-                    'progid:DXImageTransform.Microsoft.Matrix(' + 'M11=' + value[0][0],
+                    'progid:DXImageTransform.Microsoft.Matrix(M11=' + value[0][0],
                     'M12=' + value[0][1],
                     'M21=' + value[1][0],
                     'M22=' + value[1][1],
@@ -678,19 +681,19 @@ KISSY.add('dom/ie/transform', [
     // converts an angle string in any unit to a radian Float
     function toRadian(value) {
         return value.indexOf('deg') > -1 ? parseInt(value, 10) * (Math.PI * 2 / 360) : parseFloat(value);
-    }
-});    /**
+    }    /**
  * @ignore
  * refer:
  * - https://github.com/louisremi/jquery.transform.js
  * - http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
  */
-/**
+});
+KISSY.add('dom/ie/input-selection', ['dom/base'], function (S, require, exports, module) {
+    /**
  * @ignore
  * handle input selection and cursor position ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/input-selection', ['dom/base'], function (S, require) {
     var Dom = require('dom/base');
     var propHooks = Dom._propHooks;    // note :
                                        // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
@@ -801,16 +804,16 @@ KISSY.add('dom/ie/input-selection', ['dom/base'], function (S, require) {
         }
     }
 });
-/**
- * @ignore
- * attr ie hack
- * @author yiminghe@gmail.com
- */
 KISSY.add('dom/ie/attr', [
     'util',
     'dom/base',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * attr ie hack
+ * @author yiminghe@gmail.com
+ */
     var util = require('util');
     var Dom = require('dom/base');
     var attrHooks = Dom._attrHooks, attrNodeHook = Dom._attrNodeHook, NodeType = Dom.NodeType, valHooks = Dom._valHooks, propFix = Dom._propFix, HREF = 'href', hrefFix, IE_VERSION = require('ua').ieMode;
@@ -925,10 +928,9 @@ KISSY.add('dom/ie/attr', [
         }
         return ret;
     }
-    Dom._getText = getText;
-    return Dom;
-});    /**
+    Dom._getText = getText;    /**
  * @ignore
  * 2012-11-27 yiminghe@gmail.com note:
  *  no need for feature detection for old-ie!
  */
+});

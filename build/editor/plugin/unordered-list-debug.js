@@ -1,26 +1,26 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:23
+build time: Jun 13 11:49
 */
 /*
 combined modules:
 editor/plugin/unordered-list
 */
-/**
+KISSY.add('editor/plugin/unordered-list', [
+    './list-utils/btn',
+    './unordered-list/cmd'
+], function (S, require, exports, module) {
+    /**
  * @ignore
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/unordered-list', [
-    './list-utils/btn',
-    './unordered-list/cmd'
-], function (S, require) {
     var ListButton = require('./list-utils/btn');
     var ListCmd = require('./unordered-list/cmd');
-    function unorderedList() {
+    function UnorderedList() {
     }
-    unorderedList.prototype = {
+    UnorderedList.prototype = {
         pluginRenderUI: function (editor) {
             ListCmd.init(editor);
             ListButton.init(editor, {
@@ -47,6 +47,6 @@ KISSY.add('editor/plugin/unordered-list', [
             });
         }
     };
-    return unorderedList;
+    module.exports = UnorderedList;
 });
 

@@ -1,22 +1,22 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:17
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/code
 */
-/**
- * @ignore
- * insert program code
- * @author yiminghe@gmail.com
- */
 KISSY.add('editor/plugin/code', [
     'editor',
     './button',
     './dialog-loader'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * insert program code
+ * @author yiminghe@gmail.com
+ */
     var Editor = require('editor');
     require('./button');
     var DialogLoader = require('./dialog-loader');
@@ -35,7 +35,7 @@ KISSY.add('editor/plugin/code', [
             });
         }
     };
-    return CodePlugin;
+    module.exports = CodePlugin;
 });
 
 

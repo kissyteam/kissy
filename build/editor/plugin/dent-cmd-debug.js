@@ -1,34 +1,34 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: May 14 22:18
+build time: Jun 13 11:44
 */
 /*
 combined modules:
 editor/plugin/dent-cmd
 */
-/**
- * @ignore
- * Add indent and outdent command identifier for KISSY Editor.
- * @author yiminghe@gmail.com
- */
-/*
- Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
- */
 KISSY.add('editor/plugin/dent-cmd', [
     'editor',
     './list-utils',
     'dom',
     'node',
     'ua'
-], function (S, require) {
+], function (S, require, exports, module) {
+    /**
+ * @ignore
+ * Add indent and outdent command identifier for KISSY Editor.
+ * @author yiminghe@gmail.com
+ */
+    /*
+ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.html or http://ckeditor.com/license
+ */
     var Editor = require('editor');
     var ListUtils = require('./list-utils');
     var listNodeNames = {
             ol: 1,
             ul: 1
-        }, Walker = Editor.Walker, Dom = require('dom'), Node = require('node'), UA = require('ua'), isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = 'margin-left', INDENT_OFFSET = 40, INDENT_UNIT = 'px', isNotBookmark = Walker.bookmark(false, true);
+        }, Walker = Editor.Walker, Dom = require('dom'), $ = require('node'), UA = require('ua'), isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = 'margin-left', INDENT_OFFSET = 40, INDENT_UNIT = 'px', isNotBookmark = Walker.bookmark(false, true);
     function isListItem(node) {
         return node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) === 'li';
     }
@@ -85,7 +85,7 @@ KISSY.add('editor/plugin/dent-cmd', [
             listArray[i].indent += indentOffset;    // Make sure the newly created sublist get a brand-new element of the same type. (#5372)
             // Make sure the newly created sublist get a brand-new element of the same type. (#5372)
             var listRoot = listArray[i].parent;
-            listArray[i].parent = new Node(listRoot[0].ownerDocument.createElement(listRoot.nodeName()));
+            listArray[i].parent = $(listRoot[0].ownerDocument.createElement(listRoot.nodeName()));
         }    /*
          嵌到下层的li
          <li>鼠标所在开始</li>
@@ -128,7 +128,7 @@ KISSY.add('editor/plugin/dent-cmd', [
             if ((parentLiElement = listNode.parent()) && parentLiElement.nodeName() === 'li') {
                 var children = newList.listNode.childNodes, count = children.length, child;
                 for (i = count - 1; i >= 0; i--) {
-                    if ((child = new Node(children[i])) && child.nodeName() === 'li') {
+                    if ((child = $(children[i])) && child.nodeName() === 'li') {
                         pendingList.push(child);
                     }
                 }
@@ -241,7 +241,7 @@ KISSY.add('editor/plugin/dent-cmd', [
             });
         }
     }
-    return {
+    module.exports = {
         checkOutdentActive: function (elementPath) {
             var blockLimit = elementPath.blockLimit;
             if (elementPath.contains(listNodeNames)) {
