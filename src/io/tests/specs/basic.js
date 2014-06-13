@@ -161,11 +161,15 @@ describe('io', function () {
                 },
                 error: function () {
                     var args = util.makeArray(arguments);
-                    expect(util.inArray(args[1], [
-                        "script error",
-                        "parser error"
-                    ]))
-                        .toBe(true);
+                    if (args[1].indexOf('not call jsonpCallback') !== -1) {
+
+                    } else {
+                        expect(util.inArray(args[1], [
+                            "script error",
+                            "parser error"
+                        ]))
+                            .toBe(true);
+                    }
                     ret404 = 0;
                 }
             });

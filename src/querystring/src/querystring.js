@@ -55,6 +55,7 @@ module.exports = {
             key, i, v, len, val;
         for (key in o) {
             val = o[key];
+            var originalKey = key;
             key = urlEncode(key);
 
             // val is valid non-array value
@@ -69,7 +70,7 @@ module.exports = {
                 for (i = 0, len = val.length; i < len; ++i) {
                     v = val[i];
                     if (isValidParamValue(v)) {
-                        buf.push(key, (serializeArray ? urlEncode('[]') : EMPTY));
+                        buf.push(key, (serializeArray && (originalKey.slice(0 - 2) !== '[]') ? urlEncode('[]') : EMPTY));
                         if (v !== undef) {
                             buf.push(eq, urlEncode(v + EMPTY));
                         }

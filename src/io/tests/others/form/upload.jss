@@ -1,7 +1,7 @@
 module.exports = function (req, res) {
-
     //setTimeout(function () {
-    var t = {}, query = req.body;
+    var t = {},
+        query = req.body;
     if (query.test) {
         t.test = query.test;
     }
@@ -22,6 +22,4 @@ module.exports = function (req, res) {
     //},
     // >10 will error for phantomjs!
     //10);
-
-
 };

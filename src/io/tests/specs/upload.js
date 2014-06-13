@@ -74,7 +74,10 @@
                 '</select>' +
                 '</form>').appendTo('body');
 
-            var re = [], ok, d;
+            var re = [],
+                ok, d;
+
+
 
             var xhr = io({
                 url: '/kissy/src/io/tests/others/form/upload.jss',
@@ -108,7 +111,6 @@
         });
 
         it("fileupload support xml return data", function () {
-
             var form = $('<form>' +
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
@@ -139,7 +141,6 @@
         });
 
         it("fileupload support html return data", function () {
-
             var form = $('<form>' +
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
@@ -222,13 +223,16 @@
 
             var uploadRc = 'http://' + url + '/kissy/src/io/tests/others/form/upload.jss';
 
+            window.ioDEBUG = 1;
+
             io({
                 type: 'post',
                 form: form[0],
                 dataType: 'json',
                 url: uploadRc,
                 success: function () {
-                    ok = 0;
+                    // ie8 can cross port
+                    ok = 1;
                 },
                 error: function (data, statusText) {
                     // cors 无出错信息

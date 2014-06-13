@@ -48,7 +48,7 @@ function handleResponseData(io) {
             }
         }
 
-        // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
+        // 服务器端没有告知（并且客户端没有 mime type ）默认 text 类型
         dataType[0] = dataType[0] || 'text';
 
         // 获得合适的初始数据

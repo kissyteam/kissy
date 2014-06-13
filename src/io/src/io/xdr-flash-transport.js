@@ -52,8 +52,15 @@ util.augment(XdrFlashTransport, {
             io = self.io,
             c = io.config,
             xdr = c.xdr || {};
+        if (!xdr.src) {
+            if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
+                xdr.src = require.toUrl('../../assets/io.swf');
+            } else {
+                xdr.src = require.toUrl('./assets/io.swf');
+            }
+        }
         // 不提供则使用 cdn 默认的 flash
-        _swf(xdr.src || require.toUrl('../assets/io.swf'), 1, 1);
+        _swf(xdr.src, 1, 1);
         // 简便起见，用轮训
         if (!flash) {
             setTimeout(function () {
@@ -143,5 +150,6 @@ IO.xdrResponse = function (e, o) {
         xhr._xdrResponse(e, o);
     }
 };
-
+// needed by flash!
+KISSY.IO = IO;
 module.exports = XdrFlashTransport;

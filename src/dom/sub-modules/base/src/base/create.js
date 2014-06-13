@@ -42,7 +42,7 @@ var creators = Dom._creators = {
         legend: 'fieldset'
     }, p;
 
-var tagTpl = '<{tag}>{html}</tag>';
+var tagTpl = '<{tag}>{html}</{tag}>';
 
 // 残缺元素处理
 for (p in creatorsMap) {

@@ -95,6 +95,11 @@
                      includes="assets/**/*"/>
             <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
         </copy>
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="${component.work.dir}"
+                     excludes="**/*.less,**/*.sass"
+                     includes="assets/**/*.swf"/>
+        </copy>
     </target>
 
     <!-- 打包本模块并抽取依赖 -->

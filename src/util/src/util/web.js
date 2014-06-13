@@ -146,7 +146,7 @@ util.mix(util, {
     }
 });
 
-util.parserXML = util.parseXml;
+util.parseXML = util.parseXml;
 
 function fireReady() {
     if (domReady) {

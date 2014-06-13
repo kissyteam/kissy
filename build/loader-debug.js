@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 12:13
+build time: Jun 13 16:22
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140613121305' will replace with current timestamp when compressing.
+         * NOTICE: '20140613162210' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140613121305',
+        __BUILD_TIME: '20140613162210',
 
         /**
          * KISSY Environment.
@@ -366,6 +366,17 @@ var KISSY = (function (undefined) {
         }));
     }
 
+    function splitSlash(str) {
+        var parts = str.split(/\//);
+        if (str.charAt(0) === '/' && parts[0]) {
+            parts.unshift('');
+        }
+        if (str.charAt(str.length - 1) === '/' && str.length > 1 && parts[parts.length - 1]) {
+            parts.push('');
+        }
+        return parts;
+    }
+
     var m, v,
         ua = (host.navigator || {}).userAgent || '';
 
@@ -515,10 +526,8 @@ var KISSY = (function (undefined) {
             if (firstChar !== '.') {
                 return subPath;
             }
-            var parts = parentPath.split(/\//);
-            var subParts = subPath.split(/\//);
-            var trailingSlash = subPath.slice(0 - 1) === '/';
-            var leadingSlash = parentPath.charAt(0) === '/';
+            var parts = splitSlash(parentPath);
+            var subParts = splitSlash(subPath);
             parts.pop();
             for (var i = 0, l = subParts.length; i < l; i++) {
                 var subPart = subParts[i];
@@ -529,15 +538,7 @@ var KISSY = (function (undefined) {
                     parts.push(subPart);
                 }
             }
-            var ret = parts.join('/');
-            // ie7 // 'x/'.split('/') ->['x'] ....
-            if (ret && trailingSlash && ret.slice(0 - 1) !== '/') {
-                ret += '/';
-            }
-            if (ret && leadingSlash && ret.charAt(0) !== '/') {
-                ret = '/' + ret;
-            }
-            return ret;
+            return parts.join('/').replace(/\/+/, '/');
         },
 
         isSameOriginAs: function (url1, url2) {
@@ -2394,7 +2395,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140613121305';
+    var TIMESTAMP = '20140613162210';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

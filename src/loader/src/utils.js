@@ -27,6 +27,17 @@
         }));
     }
 
+    function splitSlash(str) {
+        var parts = str.split(/\//);
+        if (str.charAt(0) === '/' && parts[0]) {
+            parts.unshift('');
+        }
+        if (str.charAt(str.length - 1) === '/' && str.length > 1 && parts[parts.length - 1]) {
+            parts.push('');
+        }
+        return parts;
+    }
+
     var m, v,
         ua = (host.navigator || {}).userAgent || '';
 
@@ -176,10 +187,8 @@
             if (firstChar !== '.') {
                 return subPath;
             }
-            var parts = parentPath.split(/\//);
-            var subParts = subPath.split(/\//);
-            var trailingSlash = subPath.slice(0 - 1) === '/';
-            var leadingSlash = parentPath.charAt(0) === '/';
+            var parts = splitSlash(parentPath);
+            var subParts = splitSlash(subPath);
             parts.pop();
             for (var i = 0, l = subParts.length; i < l; i++) {
                 var subPart = subParts[i];
@@ -190,15 +199,7 @@
                     parts.push(subPart);
                 }
             }
-            var ret = parts.join('/');
-            // ie7 // 'x/'.split('/') ->['x'] ....
-            if (ret && trailingSlash && ret.slice(0 - 1) !== '/') {
-                ret += '/';
-            }
-            if (ret && leadingSlash && ret.charAt(0) !== '/') {
-                ret = '/' + ret;
-            }
-            return ret;
+            return parts.join('/').replace(/\/+/, '/');
         },
 
         isSameOriginAs: function (url1, url2) {

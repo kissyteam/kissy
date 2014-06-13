@@ -6,8 +6,8 @@
 /*global $*/
 // --no-module-wrap--
 (function (S) {
-    var d = S.Loader.Utils.normalizePath(window.location.href.replace(/[^/]*$/, ""),
-        "../specs/loader-simple");
+    var d = location.protocol + '//' + location.host +
+        S.Loader.Utils.normalizePath(location.pathname.replace(/[^/]+$/, ""), "../specs/loader-simple");
     var run = function (combine) {
         describe("loader-simple " + (combine ? 'at combo mode' : ''), function () {
             beforeEach(function () {

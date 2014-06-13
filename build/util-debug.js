@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:54
+build time: Jun 13 15:33
 */
 /*
 combined modules:
@@ -1503,7 +1503,7 @@ KISSY.add('util/web', [
                 }, POLL_INTERVAL, true);
         }
     });
-    util.parserXML = util.parseXml;
+    util.parseXML = util.parseXml;
     function fireReady() {
         if (domReady) {
             return;

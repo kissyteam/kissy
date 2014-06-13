@@ -192,7 +192,6 @@ util.augment(IframeTransport, {
         io.iframe = null;
 
         if (eventType === 'load') {
-
             try {
                 iframeDoc = iframe.contentWindow.document;
                 // ie<9

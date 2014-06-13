@@ -153,7 +153,9 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
             });
 
             it('will handle low version', function () {
-
+                if(KISSY.DEV_MODE){
+                    return;
+                }
                 var swf1 = new SWF({
                     src: '../assets/test.swf',
                     attrs: {

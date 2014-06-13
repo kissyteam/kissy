@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:43
+build time: Jun 13 14:13
 */
 /*
 combined modules:
@@ -895,7 +895,7 @@ KISSY.add('dom/base/create', [
             col: 'colgroup',
             legend: 'fieldset'
         }, p;
-    var tagTpl = '<{tag}>{html}</tag>';    // 残缺元素处理
+    var tagTpl = '<{tag}>{html}</{tag}>';    // 残缺元素处理
     // 残缺元素处理
     for (p in creatorsMap) {
         /*jshint loopfunc: true*/

@@ -8,12 +8,9 @@
     var DragGesture = require('event/gesture/drag');
     var ie = UA.ieMode;
     var Feature = require('feature');
-    if (ie === 9 || ie === 11) {
-        return;
-    }
 
     describe('drag gesture', function () {
-        if (!UA.ios) {
+        if (!UA.ios&& UA.ieMode >= 10) {
             it('works for mouse', function () {
                 var d = $('<div style="position:absolute;left:0;top:0;width: 100px;height: 100px"></div>');
                 d.appendTo(document.body);
@@ -22,7 +19,7 @@
                 var end = 0;
 
                 d.on(DragGesture.DRAG_START, function (e) {
-                    expect(e.gestureType).toBe('mouse');
+                    expect(e.gestureType||'mouse').toBe('mouse');
                     start = 1;
                     expect(e.pageX).toBe(14);
                     expect(e.pageY).toBe(14);
@@ -30,7 +27,7 @@
                 });
 
                 d.on(DragGesture.DRAG, function (e) {
-                    expect(e.gestureType).toBe('mouse');
+                    expect(e.gestureType||'mouse').toBe('mouse');
                     move = 1;
                     expect(e.pageX).toBe(16);
                     expect(e.pageY).toBe(16);
@@ -38,13 +35,14 @@
                 });
 
                 d.on(DragGesture.DRAG_END, function (e) {
-                    expect(e.gestureType).toBe('mouse');
+                    expect(e.gestureType||'mouse').toBe('mouse');
                     end = 1;
                     expect(e.pageX).toBe(16);
                     expect(e.pageY).toBe(16);
                     expect(e.velocityX).not.toBe(0);
                     expect(e.velocityY).not.toBe(0);
                 });
+
                 runs(function () {
                     jasmine.simulate(d[0], 'mousedown', {
                         clientX: 10,
@@ -69,7 +67,7 @@
                     });
                 });
 
-                waits(100);
+                waits(10);
                 runs(function () {
                     jasmine.simulate(document, 'mousemove', {
                         clientX: 16,
@@ -78,7 +76,7 @@
                 });
 
 
-                waits(300);
+                waits(30);
                 runs(function () {
                     jasmine.simulate(document, 'mouseup', {
                         clientX: 26,

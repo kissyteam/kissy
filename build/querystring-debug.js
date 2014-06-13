@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:53
+build time: Jun 13 15:35
 */
 /*
 combined modules:
@@ -54,6 +54,7 @@ KISSY.add('querystring', ['logger-manager'], function (S, require, exports, modu
             var buf = [], key, i, v, len, val;
             for (key in o) {
                 val = o[key];
+                var originalKey = key;
                 key = urlEncode(key);    // val is valid non-array value
                 // val is valid non-array value
                 if (isValidParamValue(val)) {
@@ -67,7 +68,7 @@ KISSY.add('querystring', ['logger-manager'], function (S, require, exports, modu
                     for (i = 0, len = val.length; i < len; ++i) {
                         v = val[i];
                         if (isValidParamValue(v)) {
-                            buf.push(key, serializeArray ? urlEncode('[]') : EMPTY);
+                            buf.push(key, serializeArray && originalKey.slice(0 - 2) !== '[]' ? urlEncode('[]') : EMPTY);
                             if (v !== undef) {
                                 buf.push(eq, urlEncode(v + EMPTY));
                             }

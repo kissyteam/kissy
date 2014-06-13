@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:52
+build time: Jun 13 15:28
 */
 /*
 combined modules:
@@ -1302,9 +1302,16 @@ KISSY.add('io/xdr-flash-transport', [
     util.augment(XdrFlashTransport, {
         // rewrite send to support flash xdr
         send: function () {
-            var self = this, io = self.io, c = io.config, xdr = c.xdr || {};    // 不提供则使用 cdn 默认的 flash
+            var self = this, io = self.io, c = io.config, xdr = c.xdr || {};
+            if (!xdr.src) {
+                if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
+                    xdr.src = require.toUrl('../../assets/io.swf');
+                } else {
+                    xdr.src = require.toUrl('./assets/io.swf');
+                }
+            }    // 不提供则使用 cdn 默认的 flash
             // 不提供则使用 cdn 默认的 flash
-            _swf(xdr.src || require.toUrl('../assets/io.swf'), 1, 1);    // 简便起见，用轮训
+            _swf(xdr.src, 1, 1);    // 简便起见，用轮训
             // 简便起见，用轮训
             if (!flash) {
                 setTimeout(function () {
@@ -1383,7 +1390,9 @@ KISSY.add('io/xdr-flash-transport', [
         if (xhr) {
             xhr._xdrResponse(e, o);
         }
-    };
+    };    // needed by flash!
+    // needed by flash!
+    KISSY.IO = IO;
     module.exports = XdrFlashTransport;
 });
 KISSY.add('io/sub-domain-transport', [
@@ -1954,8 +1963,8 @@ KISSY.add('io/methods', [
                         break;
                     }
                 }
-            }    // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
-            // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
+            }    // 服务器端没有告知（并且客户端没有 mime type ）默认 text 类型
+            // 服务器端没有告知（并且客户端没有 mime type ）默认 text 类型
             dataType[0] = dataType[0] || 'text';    // 获得合适的初始数据
             // 获得合适的初始数据
             for (var dataTypeIndex = 0; dataTypeIndex < dataType.length; dataTypeIndex++) {

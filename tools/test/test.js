@@ -7,23 +7,28 @@
     var S = KISSY;
     window.tests = [];
     var testIframe;
-    var uri = new S.Uri(location.href);
-    var testBuild = uri.getQuery().has('build');
+    var testBuild = location.search.indexOf('build') !== -1;
 
-    if (!uri.getQuery().has('once')) {
+    function indexOf(one, arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === one) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    if (location.search.indexOf('once') === -1) {
         if (('onmessage' in window) && window.addEventListener) {
-            S.log('using onmessage');
-
-            window.addEventListener("message", function (e) {
-                if (e.data == "next") {
+            window.addEventListener('message', function (e) {
+                if (e.data === 'next') {
                     SNext();
                 }
             }, false);
 
         } else {
-            S.log('window.name');
             setInterval(function () {
-                if (window.name == 'next') {
+                if (window.name === 'next') {
                     SNext();
                     window.name = '';
                 }
@@ -35,11 +40,10 @@
         // event hash change ,ie error
         index++;
         if (tests[index]) {
-            S.log('run: ' + tests[index]);
             window.scrollTo(0, 0);
             location.hash = tests[index];
             setTimeout(function () {
-                testIframe.src = tests[index] + "?" + (+new Date())
+                testIframe.src = tests[index] + '?' + (+new Date())
                     + (testBuild ? '&build' : '');
             }, 50);
         }
@@ -56,7 +60,7 @@
         document.getElementById('iframe').appendChild(testIframe);
         var hash = location.hash.replace(/^#/, '');
         if (hash) {
-            index = S.indexOf(hash, tests);
+            index = indexOf(hash, tests);
             if (index > 0) {
                 index--;
             }

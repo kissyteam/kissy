@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:54
+build time: Jun 13 16:28
 */
 /*
 combined modules:
@@ -25,6 +25,10 @@ KISSY.add('swf', [
     var Attribute = require('attribute');
     var FlashUA = require('swf/ua');
     var util = require('util');
+    var swfUrl = './swf/assets/expressInstall.swf';
+    if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
+        swfUrl = '../assets/expressInstall.swf';
+    }
     var OLD_IE = !!window.ActiveXObject, TYPE = 'application/x-shockwave-flash', CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000', FLASHVARS = 'flashvars', EMPTY = '', LT = '<', GT = '>', doc = document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = 'object', encode = encodeURIComponent,
         // flash player 的参数范围
         PARAMS = {
@@ -193,7 +197,7 @@ KISSY.add('swf', [
             /**
          * @ignore
          */
-            expressInstall: { value: require.toUrl('./assets/expressInstall.swf') },
+            expressInstall: { value: require.toUrl(swfUrl) },
             /**
          * new swf 's url
          * @cfg {String} src

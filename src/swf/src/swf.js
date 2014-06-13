@@ -9,7 +9,10 @@ var Json = require('json');
 var Attribute = require('attribute');
 var FlashUA = require('swf/ua');
 var util = require('util');
-
+var swfUrl = './swf/assets/expressInstall.swf';
+if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
+    swfUrl = '../assets/expressInstall.swf';
+}
 var OLD_IE = !!window.ActiveXObject,
     TYPE = 'application/x-shockwave-flash',
     CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
@@ -222,7 +225,7 @@ SWF = Attribute.extend({
          * @ignore
          */
         expressInstall: {
-            value: require.toUrl('./assets/expressInstall.swf')
+            value: require.toUrl(swfUrl)
         },
 
         /**
