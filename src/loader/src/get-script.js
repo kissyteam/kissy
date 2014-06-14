@@ -89,6 +89,8 @@
         if (css) {
             node.href = url;
             node.rel = 'stylesheet';
+            // set media to something non-matching to ensure it'll fetch without blocking render
+            node.media = "async";
         } else {
             node.src = url;
             node.async = true;
@@ -162,6 +164,10 @@
             // css order matters
             // so can not use css in head
             headNode.appendChild(node);
+            // set media back to `all` so that the stylesheet applies once it loads
+            setTimeout(function(){
+                node.media = 'all';
+            }, 0);
         } else {
             // can use js in head
             headNode.insertBefore(node, headNode.firstChild);
