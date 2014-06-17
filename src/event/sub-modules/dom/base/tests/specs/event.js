@@ -3,645 +3,645 @@
  * @author yiminghe@gmail.com, gonghao@ghsky.com
  */
 
-    var Dom = require('dom');
-    var io = require('io');
-    var Event = require('event/dom');
-    var util = require('util');
-    var tpl = '';
-    /*jshint quotmark:false*/
+var Dom = require('dom');
+var io = require('io');
+var Event = require('event/dom');
+var util = require('util');
+var tpl = '';
+/*jshint quotmark:false*/
 
-    function isFunction(v) {
-        return typeof v === 'function';
+function isFunction(v) {
+    return typeof v === 'function';
+}
+
+io({
+    url: './specs/event.html',
+    async: false,
+    success: function (d) {
+        tpl = d;
     }
+});
 
-    io({
-        url: './specs/event.html',
-        async: false,
-        success: function (d) {
-            tpl = d;
-        }
+var DomEventUtils = KISSY.require('event/dom/base/utils');
+
+describe('event', function () {
+
+    var doc = document,
+
+        HAPPENED = 'happened',
+        FIRST = '1',
+        SECOND = '2',
+        SEP = '-',
+    // simulate mouse event on any element
+        simulate = function (target, type, relatedTarget) {
+            if (typeof target === 'string') {
+                target = Dom.get(target);
+            }
+            jasmine.simulate(target, type, { relatedTarget: relatedTarget });
+        };
+
+    beforeEach(function () {
+        Dom.prepend(Dom.create(tpl), 'body');
     });
 
-    var DomEventUtils = S.require('event/dom/base/utils');
+    afterEach(function () {
+        Dom.remove('#event-test-data');
+    });
 
-    describe('event', function () {
+    describe('add event', function () {
 
-        var doc = document,
+        it('should support batch adding.', function () {
+            var lis = Dom.query('#bar li'), total = lis.length, count = 0;
 
-            HAPPENED = 'happened',
-            FIRST = '1',
-            SECOND = '2',
-            SEP = '-',
-        // simulate mouse event on any element
-            simulate = function (target, type, relatedTarget) {
-                if (typeof target === 'string') {
-                    target = Dom.get(target);
+            Event.on(lis, 'click', function () {
+                count++;
+            });
+
+            // click all lis
+            util.each(lis, function (li) {
+                simulate(li, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(count).toEqual(total);
+            });
+        });
+
+        it('should execute in order.', function () {
+            var a = Dom.get('#link-a');
+            var result = [];
+            Event.on(a, 'click', function () {
+                result.push(FIRST);
+            });
+
+            Event.on(a, 'click', function () {
+                result.push(SECOND);
+            });
+
+            // click a
+            result = [];
+            simulate(a, 'click');
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+                Event.remove(a);
+            });
+        });
+
+        it("should support data bind when on and unbind when remove", function () {
+            var a = Dom.get('#link-a'), data;
+            Event.on(a, 'click', {
+                fn: function (e, d) {
+                    data = d;
+                },
+                data: {
+                    y: 1
                 }
-                jasmine.simulate(target, type, { relatedTarget: relatedTarget });
-            };
-
-        beforeEach(function () {
-            Dom.prepend(Dom.create(tpl), 'body');
+            });
+            simulate(a, 'click');
+            waits(0);
+            runs(function () {
+                expect(data.y).toBe(1);
+                Event.remove(a);
+            });
+            runs(function () {
+                data = null;
+                simulate(a, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(data).toBe(null);
+            });
         });
 
-        afterEach(function () {
-            Dom.remove('#event-test-data');
-        });
+        it('should prevent default behavior (do nothing if using "return false;").', function () {
+            var cb1 = Dom.get('#checkbox-1'), cb2 = Dom.get('#checkbox-2');
 
-        describe('add event', function () {
+            // init
+            cb1.checked = false;
+            cb2.checked = false;
 
-            it('should support batch adding.', function () {
-                var lis = Dom.query('#bar li'), total = lis.length, count = 0;
-
-                Event.on(lis, 'click', function () {
-                    count++;
-                });
-
-                // click all lis
-                util.each(lis, function (li) {
-                    simulate(li, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(count).toEqual(total);
-                });
+            Event.on(cb1, 'click', function (evt) {
+                evt.preventDefault();
+            });
+            Event.on(cb2, 'click', function () {
+                return false;
             });
 
-            it('should execute in order.', function () {
-                var a = Dom.get('#link-a');
-                var result = [];
-                Event.on(a, 'click', function () {
-                    result.push(FIRST);
-                });
+            // click the checkbox
+            cb1.click();
+            cb2.click();
+            waits(0);
+            runs(function () {
+                expect(cb1.checked).toBeFalsy();
+                expect(cb2.checked).toBeFalsy();
+            });
+        });
 
-                Event.on(a, 'click', function () {
-                    result.push(SECOND);
-                });
+        it('should stop event\'s propagation.', function () {
+            var liTemp = Dom.get('#li-c'), c1 = Dom.get('#link-c1'), c2 = Dom.get('#link-c2');
+            var result;
+            Event.on(c2, 'click', function (evt) {
+                evt.stopPropagation();
+            });
+            Event.on(liTemp, 'click', function () {
+                result = HAPPENED;
+            });
 
-                // click a
+            // click c1
+            runs(function () {
+                result = null;
+                simulate(c1, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(result).toEqual(HAPPENED);
+            });
+
+            // click c2
+            runs(function () {
+                result = null;
+                simulate(c2, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(result).toBeNull();
+            });
+        });
+
+        it("should stop event's propagation immediately.", function () {
+            var liD = Dom.get('#li-d'), d1 = Dom.get('#link-d1'), d2 = Dom.get('#link-d2');
+            var result = [];
+            Event.on(d1, 'click', function () {
+                result.push(FIRST);
+            });
+            Event.on(d1, 'click', function () {
+                result.push(SECOND);
+            });
+
+            Event.on(d2, 'click', function (evt) {
+                result.push(FIRST);
+                evt.stopImmediatePropagation();
+            });
+            Event.on(d2, 'click', function () {
+                result.push(SECOND);
+            });
+
+            Event.on(liD, 'click', function () {
+                result.push(HAPPENED);
+            });
+
+            // click d1
+            runs(function () {
                 result = [];
-                simulate(a, 'click');
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
-                    Event.remove(a);
-                });
+                simulate(d1, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
             });
 
-            it("should support data bind when on and unbind when remove", function () {
-                var a = Dom.get('#link-a'), data;
-                Event.on(a, 'click', {
-                    fn: function (e, d) {
-                        data = d;
-                    },
-                    data: {
-                        y: 1
-                    }
-                });
-                simulate(a, 'click');
-                waits(0);
-                runs(function () {
-                    expect(data.y).toBe(1);
-                    Event.remove(a);
-                });
-                runs(function () {
-                    data = null;
-                    simulate(a, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(data).toBe(null);
-                });
+            // click d2
+            runs(function () {
+                result = [];
+                simulate(d2, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([FIRST].join(SEP));
+            });
+        });
+
+        it('should do nothing else to event\'s propagation if using "return false;".', function () {
+            var liE = Dom.get('#li-e'), e1 = Dom.get('#link-e1'), e2 = Dom.get('#link-e2');
+            var result = [];
+            Event.on(e1, 'click', function () {
+                result.push(FIRST);
+            });
+            Event.on(e1, 'click', function () {
+                result.push(SECOND);
             });
 
-            it('should prevent default behavior (do nothing if using "return false;").', function () {
-                var cb1 = Dom.get('#checkbox-1'), cb2 = Dom.get('#checkbox-2');
-
-                // init
-                cb1.checked = false;
-                cb2.checked = false;
-
-                Event.on(cb1, 'click', function (evt) {
-                    evt.preventDefault();
-                });
-                Event.on(cb2, 'click', function () {
-                    return false;
-                });
-
-                // click the checkbox
-                cb1.click();
-                cb2.click();
-                waits(0);
-                runs(function () {
-                    expect(cb1.checked).toBeFalsy();
-                    expect(cb2.checked).toBeFalsy();
-                });
+            Event.on(e2, 'click', function () {
+                result.push(FIRST);
+                return false;
+            });
+            Event.on(e2, 'click', function () {
+                result.push(SECOND);
             });
 
-            it('should stop event\'s propagation.', function () {
-                var liTemp = Dom.get('#li-c'), c1 = Dom.get('#link-c1'), c2 = Dom.get('#link-c2');
-                var result;
-                Event.on(c2, 'click', function (evt) {
-                    evt.stopPropagation();
-                });
-                Event.on(liTemp, 'click', function () {
-                    result = HAPPENED;
-                });
-
-                // click c1
-                runs(function () {
-                    result = null;
-                    simulate(c1, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(result).toEqual(HAPPENED);
-                });
-
-                // click c2
-                runs(function () {
-                    result = null;
-                    simulate(c2, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(result).toBeNull();
-                });
+            Event.on(liE, 'click', function () {
+                result.push(HAPPENED);
             });
 
-            it("should stop event's propagation immediately.", function () {
-                var liD = Dom.get('#li-d'), d1 = Dom.get('#link-d1'), d2 = Dom.get('#link-d2');
-                var result = [];
-                Event.on(d1, 'click', function () {
-                    result.push(FIRST);
-                });
-                Event.on(d1, 'click', function () {
-                    result.push(SECOND);
-                });
-
-                Event.on(d2, 'click', function (evt) {
-                    result.push(FIRST);
-                    evt.stopImmediatePropagation();
-                });
-                Event.on(d2, 'click', function () {
-                    result.push(SECOND);
-                });
-
-                Event.on(liD, 'click', function () {
-                    result.push(HAPPENED);
-                });
-
-                // click d1
-                runs(function () {
-                    result = [];
-                    simulate(d1, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
-                });
-
-                // click d2
-                runs(function () {
-                    result = [];
-                    simulate(d2, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([FIRST].join(SEP));
-                });
+            // click e1
+            runs(function () {
+                result = [];
+                simulate(e1, 'click');
+            });
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
             });
 
-            it('should do nothing else to event\'s propagation if using "return false;".', function () {
-                var liE = Dom.get('#li-e'), e1 = Dom.get('#link-e1'), e2 = Dom.get('#link-e2');
-                var result = [];
-                Event.on(e1, 'click', function () {
-                    result.push(FIRST);
-                });
-                Event.on(e1, 'click', function () {
-                    result.push(SECOND);
-                });
-
-                Event.on(e2, 'click', function () {
-                    result.push(FIRST);
-                    return false;
-                });
-                Event.on(e2, 'click', function () {
-                    result.push(SECOND);
-                });
-
-                Event.on(liE, 'click', function () {
-                    result.push(HAPPENED);
-                });
-
-                // click e1
-                runs(function () {
-                    result = [];
-                    simulate(e1, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
-                });
-
-                // click e2
-                runs(function () {
-                    result = [];
-                    simulate(e2, 'click');
-                });
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
-                });
+            // click e2
+            runs(function () {
+                result = [];
+                simulate(e2, 'click');
             });
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+            });
+        });
 
-            it('isDefaultPrevented is set correctly', function () {
-                var ok = 0;
+        it('isDefaultPrevented is set correctly', function () {
+            var ok = 0;
+            Event.on('#event-test-data', 'click', function (e) {
+                expect(e.isDefaultPrevented()).toBe(true);
+                ok = 1;
+            });
+            Event.on('#link-f', 'click', function (e) {
+                e.preventDefault();
+            });
+            jasmine.simulate(Dom.get('#link-f'), 'click');
+            waitsFor(function () {
+                return ok;
+            });
+            runs(function () {
+                Event.detach('#event-test-data');
+                ok = 0;
                 Event.on('#event-test-data', 'click', function (e) {
-                    expect(e.isDefaultPrevented()).toBe(true);
+                    expect(e.isDefaultPrevented()).toBe(false);
                     ok = 1;
                 });
-                Event.on('#link-f', 'click', function (e) {
-                    e.preventDefault();
-                });
-                jasmine.simulate(Dom.get('#link-f'), 'click');
-                waitsFor(function () {
-                    return ok;
-                });
-                runs(function () {
-                    Event.detach('#event-test-data');
-                    ok = 0;
-                    Event.on('#event-test-data', 'click', function (e) {
-                        expect(e.isDefaultPrevented()).toBe(false);
-                        ok = 1;
-                    });
-                    jasmine.simulate(Dom.get('#link-g'), 'click');
-                });
-                waitsFor(function () {
-                    return ok;
-                });
+                jasmine.simulate(Dom.get('#link-g'), 'click');
+            });
+            waitsFor(function () {
+                return ok;
+            });
+        });
+    });
+
+    describe('remove event', function () {
+
+        it('should remove the specified event handler function.', function () {
+            var f = Dom.get('#link-f');
+            var result = [];
+
+            function foo() {
+                result = HAPPENED;
+            }
+
+            Event.on(f, 'click', foo);
+
+            Event.on(f, 'click', foo);
+
+            Event.remove(f, 'click', foo);
+
+            // click f
+            result = null;
+            simulate(f, 'click');
+            waits(0);
+            runs(function () {
+                expect(result).toBeNull();
             });
         });
 
-        describe('remove event', function () {
 
-            it('should remove the specified event handler function.', function () {
-                var f = Dom.get('#link-f');
-                var result = [];
+        it('should remove the specified event handler function and context.', function () {
+            var f = Dom.get('#link-f');
 
-                function foo() {
-                    result = HAPPENED;
-                }
+            Event.detach(f);
 
-                Event.on(f, 'click', foo);
+            var result = [], context = {};
 
-                Event.on(f, 'click', foo);
+            function foo() {
+                result = HAPPENED;
+            }
 
-                Event.remove(f, 'click', foo);
+            Event.on(f, 'click', foo, context);
 
-                // click f
-                result = null;
-                simulate(f, 'click');
-                waits(0);
-                runs(function () {
-                    expect(result).toBeNull();
-                });
+            Event.remove(f, 'click', foo, context);
+
+            // click f
+            result = null;
+            simulate(f, 'click');
+            waits(0);
+            runs(function () {
+                expect(result).toBeNull();
+            });
+        });
+
+        it('should remove all the event handlers of the specified event type.', function () {
+            var g = Dom.get('#link-g');
+            var result = [];
+            Event.on(g, 'click', function () {
+                result.push(FIRST);
+            });
+            Event.on(g, 'click', function () {
+                result.push(SECOND);
             });
 
+            Event.remove(g, 'click');
 
-            it('should remove the specified event handler function and context.', function () {
-                var f = Dom.get('#link-f');
+            // click g
+            result = [];
+            simulate(g, 'click');
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([].join(SEP));
+            });
+        });
 
-                Event.detach(f);
+        it('should remove all the event handler of the specified element', function () {
+            var h = Dom.get('#link-h');
 
-                var result = [], context = {};
+            var result = [];
 
-                function foo() {
-                    result = HAPPENED;
-                }
-
-                Event.on(f, 'click', foo, context);
-
-                Event.remove(f, 'click', foo, context);
-
-                // click f
-                result = null;
-                simulate(f, 'click');
-                waits(0);
-                runs(function () {
-                    expect(result).toBeNull();
-                });
+            Event.on(h, 'click', function () {
+                result.push(FIRST);
             });
 
-            it('should remove all the event handlers of the specified event type.', function () {
-                var g = Dom.get('#link-g');
-                var result = [];
-                Event.on(g, 'click', function () {
-                    result.push(FIRST);
-                });
-                Event.on(g, 'click', function () {
-                    result.push(SECOND);
-                });
-
-                Event.remove(g, 'click');
-
-                // click g
-                result = [];
-                simulate(g, 'click');
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([].join(SEP));
-                });
+            Event.on(h, 'click', function () {
+                result.push(SECOND);
             });
 
-            it('should remove all the event handler of the specified element', function () {
-                var h = Dom.get('#link-h');
+            Event.remove(h);
 
-                var result = [];
-
-                Event.on(h, 'click', function () {
-                    result.push(FIRST);
-                });
-
-                Event.on(h, 'click', function () {
-                    result.push(SECOND);
-                });
-
-                Event.remove(h);
-
-                // click h
-                result = [];
-                simulate(h, 'click');
-                waits(0);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([].join(SEP));
-                });
+            // click h
+            result = [];
+            simulate(h, 'click');
+            waits(0);
+            runs(function () {
+                expect(result.join(SEP)).toEqual([].join(SEP));
             });
+        });
 
 
-            it('call remove event from descendants', function () {
+        it('call remove event from descendants', function () {
 
-                var bar = Dom.get('#bar'),
-                    foo = Dom.get('#foo'),
-                    bard = 0,
-                    bard1 = 0,
-                    food = 0,
-                    food1 = 0;
-
-                Event.on(bar, {
-                    'o': {
-                        fn: function () {
-                            bard = 1;
-                        }
-                    },
-                    'o1': {
-                        fn: function () {
-                            bard1 = 1;
-                        }
-                    }
-                });
-
-                Event.on(foo, {
-                    'w': {
-                        fn: function () {
-                            food = 1;
-                        }
-                    },
-                    'w1': {
-                        fn: function () {
-                            food1 = 1;
-                        }
-                    }
-                });
-
-                Event.fire(bar, 'o');
-                Event.fire(foo, 'w');
-                Event.fire(bar, 'o1');
-                Event.fire(foo, 'w1');
-
-                expect(bard).toBe(1);
-                expect(food).toBe(1);
-                expect(bard1).toBe(1);
-                expect(food1).toBe(1);
-
-                bard = 0;
-                food = 0;
-                bard1 = 0;
+            var bar = Dom.get('#bar'),
+                foo = Dom.get('#foo'),
+                bard = 0,
+                bard1 = 0,
+                food = 0,
                 food1 = 0;
 
-                Event.detach(foo, {
-                    'o': {
-                        deep: true
-                    },
-                    'w': {
-                        deep: true
+            Event.on(bar, {
+                'o': {
+                    fn: function () {
+                        bard = 1;
                     }
-                });
-
-                Event.fire(bar, 'o');
-                Event.fire(foo, 'w');
-                Event.fire(bar, 'o1');
-                Event.fire(foo, 'w1');
-
-                expect(bard).toBe(0);
-                expect(food).toBe(0);
-                expect(bard1).toBe(1);
-                expect(food1).toBe(1);
-
-                bard = 0;
-                food = 0;
-                bard1 = 0;
-                food1 = 0;
-
-                Event.detach(foo, {
-                    '': {
-                        deep: true
+                },
+                'o1': {
+                    fn: function () {
+                        bard1 = 1;
                     }
-                });
-
-                Event.fire(bar, 'o');
-                Event.fire(foo, 'w');
-                Event.fire(bar, 'o1');
-                Event.fire(foo, 'w1');
-
-                expect(bard).toBe(0);
-                expect(food).toBe(0);
-                expect(bard1).toBe(0);
-                expect(food1).toBe(0);
-
-            });
-        });
-
-
-        describe('event handler context', function () {
-
-            it('should treat the element itself as the context.', function () {
-
-                var foo = Dom.get('#foo');
-
-                Event.on(foo, 'click', function () {
-                    expect(this).toBe(foo);
-                });
-
-                // click foo
-                simulate(foo, 'click');
+                }
             });
 
-            it('should support using custom object as the context.', function () {
-
-                var bar = Dom.get('#bar'),
-                    TEST = {
-                        foo: 'only for tesing'
-                    };
-
-                Event.on(bar, 'click', function () {
-                    expect(this).toBe(TEST);
-                }, TEST);
+            Event.on(foo, {
+                'w': {
+                    fn: function () {
+                        food = 1;
+                    }
+                },
+                'w1': {
+                    fn: function () {
+                        food1 = 1;
+                    }
+                }
             });
 
-            it('should guarantee separate event adding function keeps separate context.', function () {
-                Event.on(doc, 'click', handler, {id: FIRST});
-                Event.on(doc, 'click', handler, {id: SECOND});
-                var result = [];
+            Event.fire(bar, 'o');
+            Event.fire(foo, 'w');
+            Event.fire(bar, 'o1');
+            Event.fire(foo, 'w1');
 
-                function handler() {
-                    result.push(this.id);
+            expect(bard).toBe(1);
+            expect(food).toBe(1);
+            expect(bard1).toBe(1);
+            expect(food1).toBe(1);
+
+            bard = 0;
+            food = 0;
+            bard1 = 0;
+            food1 = 0;
+
+            Event.detach(foo, {
+                'o': {
+                    deep: true
+                },
+                'w': {
+                    deep: true
                 }
-
-                // click the document twice
-                simulate(doc, 'click');
-                simulate(doc, 'click');
-                waits(10);
-                runs(function () {
-                    expect(result[1]).not.toEqual(result[2]);
-                });
             });
 
-            it('should guarantee separate event adding function keeps separate context with multiple event.', function () {
-                Event.detach(doc);
-                var re = [];
+            Event.fire(bar, 'o');
+            Event.fire(foo, 'w');
+            Event.fire(bar, 'o1');
+            Event.fire(foo, 'w1');
 
-                Event.on(doc, 'click keydown', handler, {id: FIRST});
-                Event.on(doc, 'click keydown', handler, {id: SECOND});
-                function handler() {
-                    re.push(this.id);
+            expect(bard).toBe(0);
+            expect(food).toBe(0);
+            expect(bard1).toBe(1);
+            expect(food1).toBe(1);
+
+            bard = 0;
+            food = 0;
+            bard1 = 0;
+            food1 = 0;
+
+            Event.detach(foo, {
+                '': {
+                    deep: true
                 }
-
-                // click the document twice
-                runs(function () {
-                    simulate(doc, 'click');
-                });
-                waits(10);
-                runs(function () {
-                    simulate(doc, 'keydown');
-                });
-                waits(10);
-                runs(function () {
-                    expect(re).toEqual([FIRST, SECOND, FIRST, SECOND]);
-                });
             });
-        });
 
+            Event.fire(bar, 'o');
+            Event.fire(foo, 'w');
+            Event.fire(bar, 'o1');
+            Event.fire(foo, 'w1');
 
-        it('should no memory leak for dom node', function () {
-
-            var domNode = Dom.create("<div></div>"), noop = function () {
-            }, noop2 = function () {
-            }, noop3 = function () {
-            };
-
-            Event.on(domNode, 'click', noop);
-            Event.on(domNode, 'click', noop2);
-            Event.on(domNode, 'click', noop3);
-            Event.on(domNode, 'keydown', noop);
-
-            (function () {
-                var eventDesc = DomEventUtils.data(domNode);
-                var num = 0;
-                for (var i in eventDesc) {
-                    expect(util.inArray(i, ["handle", "observables"]))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(2);
-                expect(isFunction(eventDesc.handle)).toBe(true);
-                var domEventObservables = eventDesc.observables;
-                num = 0;
-                for (i in domEventObservables) {
-
-                    expect(util.inArray(i, ['click', 'keydown']))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(2);
-                var clickEventObserver = domEventObservables.click;
-                expect(clickEventObserver.observers.length).toBe(3);
-            })();
-
-            Event.remove(domNode, 'click', noop);
-
-            (function () {
-                var domEventObservablesHolder = DomEventUtils.data(domNode);
-                var num = 0;
-                for (var i in domEventObservablesHolder) {
-
-                    expect(util.inArray(i, ["handle", "observables"]))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(2);
-                expect(isFunction(domEventObservablesHolder.handle)).toBe(true);
-                var domEventObservables = domEventObservablesHolder.observables;
-                num = 0;
-                for (i in domEventObservables) {
-
-                    expect(util.inArray(i, ['click', 'keydown']))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(2);
-                var clickEventObserver = domEventObservables.click;
-                expect(clickEventObserver.observers.length).toBe(2);
-            })();
-
-            Event.remove(domNode, 'click');
-
-            (function () {
-                var domEventObservablesHolder = DomEventUtils.data(domNode);
-                var num = 0;
-                for (var i in domEventObservablesHolder) {
-
-                    expect(util.inArray(i, ["handle", "observables"]))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(2);
-                expect(isFunction(domEventObservablesHolder.handle)).toBe(true);
-                var domEventObservables = domEventObservablesHolder.observables;
-                num = 0;
-                for (i in domEventObservables) {
-
-                    expect(util.inArray(i, ['keydown']))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(1);
-                var clickEventObserver = domEventObservables.click;
-                expect(clickEventObserver).toBeUndefined();
-            })();
-
-            Event.remove(domNode);
-
-            (function () {
-                var eventDesc = DomEventUtils.data(domNode);
-                expect(eventDesc).toBe(undefined);
-            })();
+            expect(bard).toBe(0);
+            expect(food).toBe(0);
+            expect(bard1).toBe(0);
+            expect(food1).toBe(0);
 
         });
     });
+
+
+    describe('event handler context', function () {
+
+        it('should treat the element itself as the context.', function () {
+
+            var foo = Dom.get('#foo');
+
+            Event.on(foo, 'click', function () {
+                expect(this).toBe(foo);
+            });
+
+            // click foo
+            simulate(foo, 'click');
+        });
+
+        it('should support using custom object as the context.', function () {
+
+            var bar = Dom.get('#bar'),
+                TEST = {
+                    foo: 'only for tesing'
+                };
+
+            Event.on(bar, 'click', function () {
+                expect(this).toBe(TEST);
+            }, TEST);
+        });
+
+        it('should guarantee separate event adding function keeps separate context.', function () {
+            Event.on(doc, 'click', handler, {id: FIRST});
+            Event.on(doc, 'click', handler, {id: SECOND});
+            var result = [];
+
+            function handler() {
+                result.push(this.id);
+            }
+
+            // click the document twice
+            simulate(doc, 'click');
+            simulate(doc, 'click');
+            waits(10);
+            runs(function () {
+                expect(result[1]).not.toEqual(result[2]);
+            });
+        });
+
+        it('should guarantee separate event adding function keeps separate context with multiple event.', function () {
+            Event.detach(doc);
+            var re = [];
+
+            Event.on(doc, 'click keydown', handler, {id: FIRST});
+            Event.on(doc, 'click keydown', handler, {id: SECOND});
+            function handler() {
+                re.push(this.id);
+            }
+
+            // click the document twice
+            runs(function () {
+                simulate(doc, 'click');
+            });
+            waits(10);
+            runs(function () {
+                simulate(doc, 'keydown');
+            });
+            waits(10);
+            runs(function () {
+                expect(re).toEqual([FIRST, SECOND, FIRST, SECOND]);
+            });
+        });
+    });
+
+
+    it('should no memory leak for dom node', function () {
+
+        var domNode = Dom.create("<div></div>"), noop = function () {
+        }, noop2 = function () {
+        }, noop3 = function () {
+        };
+
+        Event.on(domNode, 'click', noop);
+        Event.on(domNode, 'click', noop2);
+        Event.on(domNode, 'click', noop3);
+        Event.on(domNode, 'keydown', noop);
+
+        (function () {
+            var eventDesc = DomEventUtils.data(domNode);
+            var num = 0;
+            for (var i in eventDesc) {
+                expect(util.inArray(i, ["handle", "observables"]))
+                    .toBe(true);
+                num++;
+
+            }
+            expect(num).toBe(2);
+            expect(isFunction(eventDesc.handle)).toBe(true);
+            var domEventObservables = eventDesc.observables;
+            num = 0;
+            for (i in domEventObservables) {
+
+                expect(util.inArray(i, ['click', 'keydown']))
+                    .toBe(true);
+                num++;
+
+            }
+            expect(num).toBe(2);
+            var clickEventObserver = domEventObservables.click;
+            expect(clickEventObserver.observers.length).toBe(3);
+        })();
+
+        Event.remove(domNode, 'click', noop);
+
+        (function () {
+            var domEventObservablesHolder = DomEventUtils.data(domNode);
+            var num = 0;
+            for (var i in domEventObservablesHolder) {
+
+                expect(util.inArray(i, ["handle", "observables"]))
+                    .toBe(true);
+                num++;
+
+            }
+            expect(num).toBe(2);
+            expect(isFunction(domEventObservablesHolder.handle)).toBe(true);
+            var domEventObservables = domEventObservablesHolder.observables;
+            num = 0;
+            for (i in domEventObservables) {
+
+                expect(util.inArray(i, ['click', 'keydown']))
+                    .toBe(true);
+                num++;
+
+            }
+            expect(num).toBe(2);
+            var clickEventObserver = domEventObservables.click;
+            expect(clickEventObserver.observers.length).toBe(2);
+        })();
+
+        Event.remove(domNode, 'click');
+
+        (function () {
+            var domEventObservablesHolder = DomEventUtils.data(domNode);
+            var num = 0;
+            for (var i in domEventObservablesHolder) {
+
+                expect(util.inArray(i, ["handle", "observables"]))
+                    .toBe(true);
+                num++;
+
+            }
+            expect(num).toBe(2);
+            expect(isFunction(domEventObservablesHolder.handle)).toBe(true);
+            var domEventObservables = domEventObservablesHolder.observables;
+            num = 0;
+            for (i in domEventObservables) {
+
+                expect(util.inArray(i, ['keydown']))
+                    .toBe(true);
+                num++;
+
+            }
+            expect(num).toBe(1);
+            var clickEventObserver = domEventObservables.click;
+            expect(clickEventObserver).toBeUndefined();
+        })();
+
+        Event.remove(domNode);
+
+        (function () {
+            var eventDesc = DomEventUtils.data(domNode);
+            expect(eventDesc).toBe(undefined);
+        })();
+
+    });
+});

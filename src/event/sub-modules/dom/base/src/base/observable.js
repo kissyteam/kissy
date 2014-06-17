@@ -76,18 +76,10 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
             self = this,
             currentTarget = self.currentTarget,
             observers = self.observers,
-            currentTarget0,
             allObservers = [],
-            ret,
-            gRet,
-            observerObj,
-            i,
-            j,
+            currentTarget0, ret, gRet, observerObj, i, j, len,
             delegateCount = self.delegateCount || 0,
-            len,
-            currentTargetObservers,
-            currentTargetObserver,
-            observer;
+            currentTargetObservers, currentTargetObserver, observer;
 
         // collect delegated observers and corresponding element
         if (delegateCount && target.nodeType) {
@@ -309,7 +301,8 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
             groupsRe = BaseUtils.getGroupsRe(groups);
         }
 
-        var i, j, t, observer, observerContext, len = observers.length;
+        var i, j, t, observer, observerContext,
+            len = observers.length;
 
         // 移除 fn
         if (fn || hasFilter || groupsRe) {

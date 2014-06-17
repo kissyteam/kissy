@@ -33,7 +33,6 @@ function Observer(cfg) {
 }
 
 Observer.prototype = {
-
     constructor: Observer,
 
     /**
@@ -96,7 +95,6 @@ Observer.prototype = {
 
         return self.notifyInternal(event, ce);
     }
-
 };
 
 module.exports = Observer;

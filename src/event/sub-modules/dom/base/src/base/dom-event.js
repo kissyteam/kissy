@@ -165,16 +165,11 @@ var DomEvent = {
      * @param {Object} [context] The context (this reference) in which the handler function is executed.
      */
     detach: function (targets, type, fn, context) {
-
         targets = Dom.query(targets);
 
         BaseUtils.batchForType(function (targets, singleType, fn, context) {
-
             var cfg = BaseUtils.normalizeParam(singleType, fn, context),
-                i,
-                j,
-                elChildren,
-                t;
+                i, j, elChildren, t;
 
             singleType = cfg.type;
 
@@ -189,11 +184,9 @@ var DomEvent = {
                     }
                 }
             }
-
         }, 1, targets, type, fn, context);
 
         return targets;
-
     },
 
     /**
