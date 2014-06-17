@@ -147,14 +147,15 @@ addGestureEvent([SWIPE], {
 
     add: function (observer) {
         var config = observer.config;
-        var self = this;
-        if (config.preventDefault) {
+        var preventDefault = config.preventDefault;
+        if (preventDefault) {
+            var filter = config.filter;
             observer._preventFn = function (e) {
-                if (!config.filter || matchFilter(e.target, self, config.filter)) {
-                    e._ksSwipePrevent = config.preventDefault;
+                if (!filter || matchFilter(e.target, e.currentTarget, filter)) {
+                    e._ksSwipePrevent = preventDefault;
                 }
             };
-            self.addEventListener('touchmove', observer._preventFn);
+            this.addEventListener('touchmove', observer._preventFn);
         }
     },
 
