@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:43
+build time: Jun 17 21:48
 */
 /**
  * adapter to transform kissy5 to kissy 1.4.x
@@ -9,7 +9,7 @@ build time: Jun 13 11:43
  */
 (function (S) {
     // --no-module-wrap--
-    S.use('util,querystring', function (S, util, querystring) {
+    S.use(['util','querystring'], function (S, util, querystring) {
         util.mix(S, util);
         S.param = querystring.stringify;
         S.unparam = querystring.parse;

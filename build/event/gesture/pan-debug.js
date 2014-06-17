@@ -1,13 +1,13 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:51
+build time: Jun 17 21:55
 */
 /*
 combined modules:
-event/gesture/drag
+event/gesture/pan
 */
-KISSY.add('event/gesture/drag', [
+KISSY.add('event/gesture/pan', [
     'event/gesture/util',
     'event/dom/base',
     'util'
@@ -22,7 +22,7 @@ KISSY.add('event/gesture/drag', [
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;    /**
  * fired when drag started
- * @event DRAG_START
+ * @event PAN_START
  * @member KISSY.Event.Gesture.Drag
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX drag point pageX
@@ -36,7 +36,7 @@ KISSY.add('event/gesture/drag', [
                                                   /**
  * fired when drag.
  * preventDefault this event to prevent native behavior
- * @event DRAG
+ * @event PAN
  * @member KISSY.Event.Gesture.Drag
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX drag point pageX
@@ -49,7 +49,7 @@ KISSY.add('event/gesture/drag', [
  */
                                                   /**
  * fired when drag gesture is finished
- * @event DRAG_END
+ * @event PAN_END
  * @member KISSY.Event.Gesture.Drag
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX drag point pageX
@@ -62,7 +62,7 @@ KISSY.add('event/gesture/drag', [
  */
     /**
  * fired when drag started
- * @event DRAG_START
+ * @event PAN_START
  * @member KISSY.Event.Gesture.Drag
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX drag point pageX
@@ -76,7 +76,7 @@ KISSY.add('event/gesture/drag', [
     /**
  * fired when drag.
  * preventDefault this event to prevent native behavior
- * @event DRAG
+ * @event PAN
  * @member KISSY.Event.Gesture.Drag
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX drag point pageX
@@ -89,7 +89,7 @@ KISSY.add('event/gesture/drag', [
  */
     /**
  * fired when drag gesture is finished
- * @event DRAG_END
+ * @event PAN_END
  * @member KISSY.Event.Gesture.Drag
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX drag point pageX
@@ -100,9 +100,9 @@ KISSY.add('event/gesture/drag', [
  * @param {String} e.gestureType 'mouse' or 'touch'
  * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
  */
-    var DRAG_START = 'ksDragStart', DRAG_END = 'ksDragEnd',
+    var PAN_START = 'panStart', PAN_END = 'panEnd',
         //DRAG_PRE = 'ksDragging',
-        DRAG = 'ksDrag', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
+        PAN = 'pan', SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
     var doc = document;
     var util = require('util');
     function getDistance(p1, p2) {
@@ -132,10 +132,10 @@ KISSY.add('event/gesture/drag', [
                 }
                 self.isStarted = true;
             }    // call e.preventDefault() to prevent native browser behavior
-                 // DRAG_START is fired in touchmove!
+                 // PAN_START is fired in touchmove!
             // call e.preventDefault() to prevent native browser behavior
-            // DRAG_START is fired in touchmove!
-            DomEvent.fire(self.dragTarget, DRAG_START, getEventObject(self, e));
+            // PAN_START is fired in touchmove!
+            DomEvent.fire(self.dragTarget, PAN_START, getEventObject(self, e));
         } else {
         }
     }
@@ -201,7 +201,7 @@ KISSY.add('event/gesture/drag', [
                 startDrag(self, e);
             } else {
                 sample(self, e);
-                DomEvent.fire(self.dragTarget, DRAG, getEventObject(self, e));
+                DomEvent.fire(self.dragTarget, PAN, getEventObject(self, e));
             }
         },
         end: function (e) {
@@ -210,7 +210,7 @@ KISSY.add('event/gesture/drag', [
             var currentTime = e.timeStamp;
             var velocityX = (currentTouch.pageX - self.lastPos.pageX) / (currentTime - self.lastTime);
             var velocityY = (currentTouch.pageY - self.lastPos.pageY) / (currentTime - self.lastTime);
-            DomEvent.fire(self.dragTarget, DRAG_END, getEventObject(self, e, {
+            DomEvent.fire(self.dragTarget, PAN_END, getEventObject(self, e, {
                 velocityX: velocityX || 0,
                 velocityY: velocityY || 0
             }));
@@ -220,15 +220,15 @@ KISSY.add('event/gesture/drag', [
         }
     });
     addGestureEvent([
-        DRAG_START,
-        DRAG,
-        DRAG_END
+        PAN_START,
+        PAN,
+        PAN_END
     ], { handle: new Drag() });
     module.exports = {
         //DRAG_PRE: DRAG_PRE,
-        DRAG_START: DRAG_START,
-        DRAG: DRAG,
-        DRAG_END: DRAG_END
+        PAN_START: PAN_START,
+        PAN: PAN,
+        PAN_END: PAN_END
     };
 });
 

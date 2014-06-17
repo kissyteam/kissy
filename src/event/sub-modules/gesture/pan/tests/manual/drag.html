@@ -38,7 +38,7 @@
 <div style="height: 900px;"></div>
 <div style="height: 900px;"></div>
 <script>
-    KISSY.use('node,event/gesture/drag', function (S, Node, DragGesture) {
+    KISSY.use('node,event/gesture/pan', function (S, Node, PanGesture) {
         var left = 0;
         var top = 0;
         var $ = Node.all;
@@ -46,19 +46,19 @@
         t.on('dragstart', function (e) {
             e.preventDefault();
         });
-        t.on(DragGesture.DRAG_START, function (e) {
+        t.on(PanGesture.PAN_START, function (e) {
             e.preventDefault();
             left = parseInt(t.css('left'));
             top = parseInt(t.css('top'));
         });
-        t.on(DragGesture.DRAG, function (e) {
+        t.on(PanGesture.PAN, function (e) {
             t.css({
                 left: e.deltaX + left,
                 top: e.deltaY + top
             });
             e.preventDefault();
         });
-        t.on(DragGesture.DRAG_END, function (e) {
+        t.on(PanGesture.PAN_END, function (e) {
             log(e.direction + ' : ' + e.velocityX + ' : ' + e.velocityY);
         });
     });

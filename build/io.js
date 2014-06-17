@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 15:28
+build time: Jun 17 21:56
 */
 KISSY.add("io","io/form-serializer,io/base,util,io/xhr-transport,io/script-transport,io/jsonp,io/form,io/iframe-transport,io/methods".split(","),function(l,a,n,k){function f(a,d,e,i,j){if(typeof d==="function"){i=e;e=d;d=void 0}return c({type:j||"get",url:a,data:d,success:e,dataType:i})}var l=a("io/form-serializer"),c=a("io/base"),n=a("util");a("io/xhr-transport");a("io/script-transport");a("io/jsonp");a("io/form");a("io/iframe-transport");a("io/methods");n.mix(c,{serialize:l.serialize,get:f,post:function(a,
 c,e,i){if(typeof c==="function"){i=e;e=c;c=void 0}return f(a,c,e,i,"post")},jsonp:function(a,c,e){if(typeof c==="function"){e=c;c=void 0}return f(a,c,e,"jsonp")},getScript:a.load,getJSON:function(a,c,e){if(typeof c==="function"){e=c;c=void 0}return f(a,c,e,"json")},upload:function(a,d,e,i,j){if(typeof e==="function"){j=i;i=e;e=void 0}return c({url:a,type:"post",dataType:j,form:d,data:e,success:i})}});k.exports=c});

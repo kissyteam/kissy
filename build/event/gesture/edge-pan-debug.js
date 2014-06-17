@@ -1,13 +1,13 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:51
+build time: Jun 17 21:55
 */
 /*
 combined modules:
-event/gesture/edge-drag
+event/gesture/edge-pan
 */
-KISSY.add('event/gesture/edge-drag', [
+KISSY.add('event/gesture/edge-pan', [
     'event/gesture/util',
     'event/dom/base',
     'util'
@@ -20,7 +20,7 @@ KISSY.add('event/gesture/edge-drag', [
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
-    var EDGE_DRAG_START = 'edgeDragStart', EDGE_DRAG = 'edgeDrag', EDGE_DRAG_END = 'edgeDragEnd', MIN_EDGE_DISTANCE = 60;
+    var EDGE_PAN_START = 'edgePanStart', EDGE_PAN = 'edgePan', EDGE_PAN_END = 'edgePanEnd', MIN_EDGE_DISTANCE = 60;
     var util = require('util');
     function fire(self, e, move) {
         var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, event, direction = self.direction;
@@ -40,16 +40,16 @@ KISSY.add('event/gesture/edge-drag', [
         var velocityX, velocityY;
         var duration = e.timeStamp - self.startTime;
         if (!move) {
-            event = EDGE_DRAG_END;
+            event = EDGE_PAN_END;
             if (direction === 'left' || direction === 'right') {
                 velocityX = distance / duration;
             } else {
                 velocityY = distance / duration;
             }
         } else if (self.isStarted) {
-            event = EDGE_DRAG;
+            event = EDGE_PAN;
         } else {
-            event = EDGE_DRAG_START;
+            event = EDGE_PAN_START;
             var win = window;
             var invalidRegion = {
                     left: win.pageXOffset + MIN_EDGE_DISTANCE,
@@ -70,7 +70,7 @@ KISSY.add('event/gesture/edge-drag', [
             self.startTime = e.timeStamp;
         }    /**
      * fired when edge drag started
-     * @event EDGE_DRAG_START
+     * @event EDGE_PAN_START
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -83,7 +83,7 @@ KISSY.add('event/gesture/edge-drag', [
      */
              /**
      * fired when edge drag
-     * @event EDGE_DRAG
+     * @event EDGE_PAN
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -96,7 +96,7 @@ KISSY.add('event/gesture/edge-drag', [
      */
              /**
      * fired when edge drag gesture is finished
-     * @event EDGE_DRAG_END
+     * @event EDGE_PAN_END
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -109,7 +109,7 @@ KISSY.add('event/gesture/edge-drag', [
      */
         /**
      * fired when edge drag started
-     * @event EDGE_DRAG_START
+     * @event EDGE_PAN_START
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -122,7 +122,7 @@ KISSY.add('event/gesture/edge-drag', [
      */
         /**
      * fired when edge drag
-     * @event EDGE_DRAG
+     * @event EDGE_PAN
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -135,7 +135,7 @@ KISSY.add('event/gesture/edge-drag', [
      */
         /**
      * fired when edge drag gesture is finished
-     * @event EDGE_DRAG_END
+     * @event EDGE_PAN_END
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -181,14 +181,14 @@ KISSY.add('event/gesture/edge-drag', [
         }
     });
     addGestureEvent([
-        EDGE_DRAG,
-        EDGE_DRAG_END,
-        EDGE_DRAG_START
+        EDGE_PAN,
+        EDGE_PAN_END,
+        EDGE_PAN_START
     ], { handle: new EdgeDrag() });
     module.exports = {
-        EDGE_DRAG: EDGE_DRAG,
-        EDGE_DRAG_START: EDGE_DRAG_START,
-        EDGE_DRAG_END: EDGE_DRAG_END
+        EDGE_PAN: EDGE_PAN,
+        EDGE_PAN_START: EDGE_PAN_START,
+        EDGE_PAN_END: EDGE_PAN_END
     };    /*
  note:
  - android chrome will fire touchcancel before touchmove ....

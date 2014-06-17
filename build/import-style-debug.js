@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:52
+build time: Jun 17 21:56
 */
 /**
  * use document.write to load external css files in block loading ways.

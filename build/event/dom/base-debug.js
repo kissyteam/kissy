@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:50
+build time: Jun 17 21:55
 */
 /*
 combined modules:
@@ -344,7 +344,7 @@ KISSY.add('event/dom/base/dom-event', [
                         // context undefined
                         // 不能 this 写死在 handlers 中
                         // 否则不能保证 clone 时的 this
-                        addInternal(dest, type, observer);
+                        addInternal(dest, type, observer.config);
                     });
                 });
             }
@@ -451,6 +451,7 @@ KISSY.add('event/dom/base/observable', [
      * @cfg {HTMLElement} currentTarget
      */
     util.extend(DomEventObservable, BaseEvent.Observable, {
+        constructor: DomEventObservable,
         setup: function () {
             var self = this, type = self.type, s = Special[type] || {}, currentTarget = self.currentTarget, eventDesc = DomEventUtils.data(currentTarget), handle = eventDesc.handle;    // 第一次注册该事件，dom 节点才需要注册 dom 事件
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
@@ -458,7 +459,6 @@ KISSY.add('event/dom/base/observable', [
                 DomEventUtils.simpleAdd(currentTarget, type, handle);
             }
         },
-        constructor: DomEventObservable,
         reset: function () {
             var self = this;
             DomEventObservable.superclass.reset.call(self);
@@ -481,7 +481,7 @@ KISSY.add('event/dom/base/observable', [
             /*
          Dom3 Events: EventListenerList objects in the Dom are live. ??
          */
-            var target = event.target, eventType = event.type, self = this, currentTarget = self.currentTarget, observers = self.observers, currentTarget0, allObservers = [], ret, gRet, observerObj, i, j, delegateCount = self.delegateCount || 0, len, currentTargetObservers, currentTargetObserver, observer;    // collect delegated observers and corresponding element
+            var target = event.target, eventType = event.type, self = this, currentTarget = self.currentTarget, observers = self.observers, allObservers = [], currentTarget0, ret, gRet, observerObj, i, j, len, delegateCount = self.delegateCount || 0, currentTargetObservers, currentTargetObserver, observer;    // collect delegated observers and corresponding element
             // collect delegated observers and corresponding element
             if (delegateCount && target.nodeType) {
                 while (target !== currentTarget) {
@@ -490,7 +490,7 @@ KISSY.add('event/dom/base/observable', [
                         currentTargetObservers = [];
                         for (i = 0; i < delegateCount; i++) {
                             observer = observers[i];
-                            filter = observer.filter;
+                            filter = observer.config.filter;
                             key = filter + '';
                             matched = cachedMatch[key];
                             if (matched === undefined) {
@@ -634,11 +634,11 @@ KISSY.add('event/dom/base/observable', [
                 observer = cfg instanceof DomEventObserver ? cfg : new DomEventObserver(cfg);
             if (self.findObserver(observer) === -1) {
                 // 增加 listener
-                if (observer.filter) {
+                if (observer.config.filter) {
                     observers.splice(self.delegateCount, 0, observer);
                     self.delegateCount++;
                 } else {
-                    if (observer.last) {
+                    if (observer.config.last) {
                         observers.push(observer);
                         self.lastCount++;
                     } else {
@@ -668,9 +668,10 @@ KISSY.add('event/dom/base/observable', [
                 context = context || currentTarget;
                 for (i = 0, j = 0, t = []; i < len; ++i) {
                     observer = observers[i];
-                    observerContext = observer.context || currentTarget;
+                    var observerConfig = observer.config;
+                    observerContext = observerConfig.context || currentTarget;
                     if (context !== observerContext || // 指定了函数，函数不相等，保留
-                        fn && fn !== observer.fn || // 1.没指定函数
+                        fn && fn !== observerConfig.fn || // 1.没指定函数
                         // 1.1 没有指定选择器,删掉 else2
                         // 1.2 指定选择器,字符串为空
                         // 1.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
@@ -684,14 +685,14 @@ KISSY.add('event/dom/base/observable', [
                         // 2.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
                         // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
                         // 2.4 指定选择器,字符串不为空,字符串不相等,保留
-                        hasFilter && (filter && filter !== observer.filter || !filter && !observer.filter) || // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
-                        groupsRe && !observer.groups.match(groupsRe)) {
+                        hasFilter && (filter && filter !== observerConfig.filter || !filter && !observerConfig.filter) || // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
+                        groupsRe && !observerConfig.groups.match(groupsRe)) {
                         t[j++] = observer;
                     } else {
-                        if (observer.filter && self.delegateCount) {
+                        if (observerConfig.filter && self.delegateCount) {
                             self.delegateCount--;
                         }
-                        if (observer.last && self.lastCount) {
+                        if (observerConfig.last && self.lastCount) {
                             self.lastCount--;
                         }
                         if (s.remove) {
@@ -821,7 +822,7 @@ KISSY.add('event/dom/base/observer', [
         ],
         notifyInternal: function (event, ce) {
             var self = this, s, t, ret, type = event.type, originalType;
-            if (originalType = self.originalType) {
+            if (originalType = self.config.originalType) {
                 event.type = originalType;
             } else {
                 originalType = type;

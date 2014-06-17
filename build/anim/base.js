@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:40
+build time: Jun 17 21:45
 */
 KISSY.add("anim/base","dom,querystring,./base/utils,./base/queue,promise,util".split(","),function(m,h,q,n){function l(i,b,g,p,k){if(i.node)k=i;else{if(typeof b==="string"){b=e.parse(""+b,";",":");c.each(b,function(i,a){var d=c.trim(a);d&&(b[d]=c.trim(i));(!d||d!==a)&&delete b[a]})}if(c.isPlainObject(g))k=c.clone(g);else{k={complete:k};if(g)k.duration=g;if(p)k.easing=p}k.node=i;k.to=b}k=c.merge(o,k);l.superclass.constructor.call(this);a.Defer(this);this.config=k;i=k.node;c.isPlainObject(i)||(i=d.get(k.node));
 this.node=this.el=i;this._backupProps={};this._propsData={};var i={},b=k.to,j;for(j in b)i[f(j)]=b[j];k.to=i}var d=h("dom"),e=h("querystring"),g=h("./base/utils"),j=h("./base/queue"),a=h("promise"),c=h("util"),b=d.NodeType,f=c.camelCase,m=c.noop,p={toggle:1,hide:1,show:1},o={duration:1,easing:"linear"};c.extend(l,a,{prepareFx:m,runInternal:function(){var i=this,a=i.config,f=i.node,e,k=i._backupProps,j=i._propsData,h=a.to,l=a.delay||0,m=a.duration;g.saveRunningAnim(i);c.each(h,function(i,b){c.isPlainObject(i)||

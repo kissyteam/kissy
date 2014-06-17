@@ -41,7 +41,7 @@ var util = require('util');
 
 /**
  * fired when tapHold.
- * @event TAP_HOLD
+ * @event HOLD
  * @member KISSY.Event.Gesture.Tap
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX tap pageX
@@ -51,7 +51,7 @@ var util = require('util');
 
 var SINGLE_TAP = 'singleTap',
     DOUBLE_TAP = 'doubleTap',
-    TAP_HOLD = 'tapHold',
+    HOLD = 'hold',
     TAP = 'tap',
     TAP_HOLD_DELAY = 1000,
 // same with native click delay
@@ -94,7 +94,7 @@ util.extend(Tap, SingleTouch, {
             }, self.lastXY);
             self.tapHoldTimer = 0;
             self.lastXY = 0;
-            DomEvent.fire(currentTouch.target, TAP_HOLD, eventObj);
+            DomEvent.fire(currentTouch.target, HOLD, eventObj);
         }, TAP_HOLD_DELAY);
 
         self.isStarted = true;
@@ -214,7 +214,7 @@ util.extend(Tap, SingleTouch, {
     }
 });
 
-addGestureEvent([TAP, DOUBLE_TAP, SINGLE_TAP, TAP_HOLD], {
+addGestureEvent([TAP, DOUBLE_TAP, SINGLE_TAP, HOLD], {
     handle: new Tap()
 });
 
@@ -222,7 +222,7 @@ module.exports = {
     TAP: TAP,
     SINGLE_TAP: SINGLE_TAP,
     DOUBLE_TAP: DOUBLE_TAP,
-    TAP_HOLD: TAP_HOLD
+    HOLD: HOLD
 };
 /**
  * @ignore

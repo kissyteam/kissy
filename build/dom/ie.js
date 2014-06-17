@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:43
+build time: Jun 17 21:48
 */
 KISSY.add("dom/ie","./ie/create,./ie/insertion,./ie/style,./ie/traversal,./ie/transform,./ie/input-selection,./ie/attr".split(","),function(o,e){e("./ie/create");e("./ie/insertion");e("./ie/style");e("./ie/traversal");e("./ie/transform");e("./ie/input-selection");e("./ie/attr")});
 KISSY.add("dom/ie/create",["util","dom/base","ua"],function(o,e){var j=e("util"),m=e("dom/base");m._fixCloneAttributes=function(a,c){c.clearAttributes&&c.clearAttributes();c.mergeAttributes&&c.mergeAttributes(a);var b=c.nodeName.toLowerCase(),d=a.childNodes,h=(a.type||"").toLowerCase();if("object"===b&&!c.childNodes.length)for(b=0;b<d.length;b++)c.appendChild(d[b].cloneNode(!0));else if("input"===b&&("checkbox"===h||"radio"===h)){if(d=a.checked)c.defaultChecked=c.checked=d;d=a.value;c.value!==d&&

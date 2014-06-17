@@ -10,7 +10,7 @@ var TimerAnim = require('anim/timer');
 var OUT_OF_BOUND_FACTOR = 0.5;
 var MAX_SWIPE_VELOCITY = 6;
 var BasicGesture = require('event/gesture/basic');
-var DragGesture = require('event/gesture/drag');
+var PanGesture = require('event/gesture/pan');
 
 function onDragScroll(self, e, scrollType) {
     if (forbidDrag(self, scrollType)) {
@@ -377,11 +377,11 @@ function onGestureStart(e) {
 function bindUI(self) {
     var action = self.get('disabled') ? 'detach' : 'on';
     // bind to $el in case $contentEl is out of bound
-    self.$el[action](DragGesture.DRAG_START, onDragStartHandler, self)
+    self.$el[action](PanGesture.PAN_START, onDragStartHandler, self)
         // click
         [action](BasicGesture.START, onGestureStart, self)
-        [action](DragGesture.DRAG, onDragHandler, self)
-        [action](DragGesture.DRAG_END, onDragEndHandler, self);
+        [action](PanGesture.PAN, onDragHandler, self)
+        [action](PanGesture.PAN_END, onDragEndHandler, self);
 }
 
 /**

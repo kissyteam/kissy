@@ -7,9 +7,9 @@ var GestureUtil = require('event/gesture/util');
 var addGestureEvent = GestureUtil.addEvent;
 var DomEvent = require('event/dom/base');
 var SingleTouch = GestureUtil.SingleTouch;
-var EDGE_DRAG_START = 'edgeDragStart',
-    EDGE_DRAG = 'edgeDrag',
-    EDGE_DRAG_END = 'edgeDragEnd',
+var EDGE_PAN_START = 'edgePanStart',
+    EDGE_PAN = 'edgePan',
+    EDGE_PAN_END = 'edgePanEnd',
     MIN_EDGE_DISTANCE = 60;
 var util = require('util');
 function fire(self, e, move) {
@@ -46,16 +46,16 @@ function fire(self, e, move) {
     var duration = (e.timeStamp - self.startTime);
 
     if (!move) {
-        event = EDGE_DRAG_END;
+        event = EDGE_PAN_END;
         if (direction === 'left' || direction === 'right') {
             velocityX = distance / duration;
         } else {
             velocityY = distance / duration;
         }
     } else if (self.isStarted) {
-        event = EDGE_DRAG;
+        event = EDGE_PAN;
     } else {
-        event = EDGE_DRAG_START;
+        event = EDGE_PAN_START;
         var win = window;
         var invalidRegion = {
             left: win.pageXOffset + MIN_EDGE_DISTANCE,
@@ -79,7 +79,7 @@ function fire(self, e, move) {
 
     /**
      * fired when edge drag started
-     * @event EDGE_DRAG_START
+     * @event EDGE_PAN_START
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -93,7 +93,7 @@ function fire(self, e, move) {
 
     /**
      * fired when edge drag
-     * @event EDGE_DRAG
+     * @event EDGE_PAN
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -107,7 +107,7 @@ function fire(self, e, move) {
 
     /**
      * fired when edge drag gesture is finished
-     * @event EDGE_DRAG_END
+     * @event EDGE_PAN_END
      * @member KISSY.Event.Gesture.EdgeDrag
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
@@ -168,14 +168,14 @@ util.extend(EdgeDrag, SingleTouch, {
     }
 });
 
-addGestureEvent([EDGE_DRAG, EDGE_DRAG_END, EDGE_DRAG_START], {
+addGestureEvent([EDGE_PAN, EDGE_PAN_END, EDGE_PAN_START], {
     handle: new EdgeDrag()
 });
 
 module.exports = {
-    EDGE_DRAG: EDGE_DRAG,
-    EDGE_DRAG_START: EDGE_DRAG_START,
-    EDGE_DRAG_END: EDGE_DRAG_END
+    EDGE_PAN: EDGE_PAN,
+    EDGE_PAN_START: EDGE_PAN_START,
+    EDGE_PAN_END: EDGE_PAN_END
 };
 
 /*

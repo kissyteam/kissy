@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:58
+build time: Jun 17 21:54
 */
 /*
 combined modules:
@@ -1393,10 +1393,11 @@ KISSY.add('editor/utils', [
                         url += '?t=' + tag;
                     }
                 }
-                if (KISSY.DEV_MODE) {
+                if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
                     url = url.replace(/^theme\//, 'theme/assets/');
+                    return require.toUrl('../../sub-modules/' + url);
                 }
-                return require.toUrl((KISSY.DEV_MODE ? '../../sub-modules/' : './') + url);
+                return require.toUrl('./' + url);
             },
             lazyRun: function (obj, before, after) {
                 var b = obj[before], a = obj[after];

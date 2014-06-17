@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:51
+build time: Jun 17 21:56
 */
 KISSY.add("filter-menu",["menu","./filter-menu/render-xtpl","component/extension/content-box","util"],function(h,i,k,j){var h=i("menu"),k=i("./filter-menu/render-xtpl"),d=i("component/extension/content-box"),b=i("util");j.exports=h.extend([d],{bindUI:function(){this.get("filterInput").on("input",this.handleFilterEvent,this)},handleMouseEnterInternal:function(c){this.callSuper(c);this.getKeyEventTarget()[0].select()},handleFilterEvent:function(){var c;c=this.get("filterInput");var b=this.get("highlightedItem");
 this.set("filterStr",c.val());c=c.val();this.get("allowMultiple")&&(c=c.replace(/^.+,/,""));if(!c&&b)b.set("highlighted",!1);else if(c&&(!b||!b.get("visible")))(b=this._getNextEnabledHighlighted(0,1))&&b.set("highlighted",!0)},_onSetFilterStr:function(b){this.filterItems(b)},_onSetPlaceholder:function(b){this.get("placeholderEl").html(b)},getKeyEventTarget:function(){return this.get("filterInput")},filterItems:function(c){var f=this.get("prefixCls"),a=this.get("placeholderEl"),e=this.get("filterInput");

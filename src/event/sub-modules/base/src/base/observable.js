@@ -22,7 +22,6 @@ function Observable(cfg) {
 }
 
 Observable.prototype = {
-
     constructor: Observable,
 
     /**
@@ -73,7 +72,8 @@ Observable.prototype = {
      * @return {Number} observer's index in observers
      */
     findObserver: function (observer) {
-        var observers = this.observers, i;
+        var observers = this.observers,
+            i;
 
         for (i = observers.length - 1; i >= 0; --i) {
             /*

@@ -33,6 +33,8 @@ function DomEventObservable(cfg) {
 }
 
 util.extend(DomEventObservable, BaseEvent.Observable, {
+    constructor: DomEventObservable,
+
     setup: function () {
         var self = this,
             type = self.type,
@@ -45,8 +47,6 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
             DomEventUtils.simpleAdd(currentTarget, type, handle);
         }
     },
-
-    constructor: DomEventObservable,
 
     reset: function () {
         var self = this;
@@ -90,7 +90,7 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
                     currentTargetObservers = [];
                     for (i = 0; i < delegateCount; i++) {
                         observer = observers[i];
-                        filter = observer.filter;
+                        filter = observer.config.filter;
                         key = filter + '';
                         matched = cachedMatch[key];
                         if (matched === undefined) {
@@ -259,11 +259,11 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
 
         if (self.findObserver(observer) === -1) {
             // 增加 listener
-            if (observer.filter) {
+            if (observer.config.filter) {
                 observers.splice(self.delegateCount, 0, observer);
                 self.delegateCount++;
             } else {
-                if (observer.last) {
+                if (observer.config.last) {
                     observers.push(observer);
                     self.lastCount++;
                 } else {
@@ -310,11 +310,12 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
 
             for (i = 0, j = 0, t = []; i < len; ++i) {
                 observer = observers[i];
-                observerContext = observer.context || currentTarget;
+                var observerConfig = observer.config;
+                observerContext = observerConfig.context || currentTarget;
                 if (
                     (context !== observerContext) ||
                     // 指定了函数，函数不相等，保留
-                    (fn && fn !== observer.fn) ||
+                    (fn && fn !== observerConfig.fn) ||
                     // 1.没指定函数
                     // 1.1 没有指定选择器,删掉 else2
                     // 1.2 指定选择器,字符串为空
@@ -332,20 +333,20 @@ util.extend(DomEventObservable, BaseEvent.Observable, {
                     (
                         hasFilter &&
                         (
-                            (filter && filter !== observer.filter) ||
-                            (!filter && !observer.filter)
+                            (filter && filter !== observerConfig.filter) ||
+                            (!filter && !observerConfig.filter)
                             )
                         ) ||
 
                     // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
-                    (groupsRe && !observer.groups.match(groupsRe))
+                    (groupsRe && !observerConfig.groups.match(groupsRe))
                     ) {
                     t[j++] = observer;
                 } else {
-                    if (observer.filter && self.delegateCount) {
+                    if (observerConfig.filter && self.delegateCount) {
                         self.delegateCount--;
                     }
-                    if (observer.last && self.lastCount) {
+                    if (observerConfig.last && self.lastCount) {
                         self.lastCount--;
                     }
                     if (s.remove) {

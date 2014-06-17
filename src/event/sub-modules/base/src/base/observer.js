@@ -12,7 +12,7 @@ var util = require('util');
  * @param {Object} cfg
  */
 function Observer(cfg) {
-    util.mix(this, cfg);
+    this.config = cfg || {};
 
     /**
      * context in which observer's fn runs
@@ -43,7 +43,7 @@ Observer.prototype = {
     equals: function (s2) {
         var self = this;
         return !!util.reduce(self.keys, function (v, k) {
-            return v && (self[k] === s2[k]);
+            return v && (self.config[k] === s2.config[k]);
         }, 1);
     },
 
@@ -55,9 +55,10 @@ Observer.prototype = {
      */
     simpleNotify: function (event, ce) {
         var ret,
-            self = this;
-        ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
-        if (self.once) {
+            self = this,
+            config = self.config;
+        ret = config.fn.call(config.context || ce.currentTarget, event, config.data);
+        if (config.once) {
             //noinspection JSUnresolvedFunction
             ce.removeObserver(self);
         }
@@ -86,10 +87,11 @@ Observer.prototype = {
      */
     notify: function (event, ce) {
         var self = this,
+            config = self.config,
             _ksGroups = event._ksGroups;
 
         // handler's group does not match specified groups (at fire step)
-        if (_ksGroups && (!self.groups || !(self.groups.match(_ksGroups)))) {
+        if (_ksGroups && (!config.groups || !(config.groups.match(_ksGroups)))) {
             return undef;
         }
 

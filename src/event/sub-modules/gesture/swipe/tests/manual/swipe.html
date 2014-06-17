@@ -11,7 +11,6 @@
     <script src="/kissy/src/log.js"></script>
 </head>
 <body>
-
 <h1>open in ios safari test swipe event</h1>
 
 <h2>swipe</h2>
@@ -46,27 +45,56 @@
 
 <br>
 <button id='remove'>remove</button>
+
+<br><br><br><br><br>
+<div id="d">
+    <div id="x" class="x" style="width: 200px;height: 200px;border: 1px solid red;display: inline-block;">
+x
+    </div>
+
+    <div id="y" class="y" style="width: 200px;height: 200px;border: 1px solid red;display: inline-block;">
+y
+    </div>
+</div>
+
 <div style="height: 900px;"></div>
 <script>
-    KISSY.use('event/dom,node,event/gesture/swipe', function (S, Event, Node, SwipeType) {
+    KISSY.use(['event/dom', 'node', 'event/gesture/swipe'], function (S, Event, Node, SwipeType) {
         var $ = Node.all;
-        var SWIPING = SwipeType.SWIPING;
         var SWIPE = SwipeType.SWIPE;
 
         $('.placeholder').append('<p><a href="http://www.g.cn">google</a></p> ' +
                 new Array(2).join('<p> ' + (new Array(2).join('h')) + '  </p>'));
 
-        Event.on('#t', SWIPING, function (e) {
-            //log(e.direction + ' : ' + e.distance);
-            //if (e.distance && (e.direction === 'left' || e.direction === 'right')) {
-            e.preventDefault();
-            //}
+        Event.on('#t', SWIPE, {
+            fn: function (e) {
+                log(e.target.id + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
+            },
+            preventDefault: {
+                left: 1,
+                right: 1,
+                up: 1,
+                down: 1
+            }
         });
 
-        Event.on('#t2,#t', SWIPE, {
+        Event.on('#t2', SWIPE, {
             fn: function (e) {
                 log(e.target.id + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
             }
+        });
+
+        $('#d').on(SWIPE,{
+            fn: function (e) {
+                log(e.target.id + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
+            },
+            preventDefault: {
+                left: 1,
+                right: 1,
+                up: 1,
+                down: 1
+            },
+            filter:'.x'
         });
 
         $('#remove').on('click', function () {

@@ -206,15 +206,15 @@
             ]
         },
         {
-            "name": "event/gesture/drag",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/drag/tests/runner",
+            "name": "event/gesture/edge-pan",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/edge-pan/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
-            "name": "event/gesture/edge-drag",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/edge-drag/tests/runner",
+            "name": "event/gesture/pan",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/pan/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]

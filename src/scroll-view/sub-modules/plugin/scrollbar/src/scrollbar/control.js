@@ -8,7 +8,7 @@ var UA = require('ua');
 var util = require('util');
 var Control = require('component/control');
 var BasicGesture = require('event/gesture/basic');
-var DragGesture = require('event/gesture/drag');
+var PanGesture = require('event/gesture/pan');
 var ScrollBarTpl = require('./scrollbar-xtpl');
 
 var MIN_BAR_LENGTH = 20;
@@ -186,9 +186,9 @@ function bindDrag(self, disabled) {
     var action = disabled ? 'detach' : 'on';
     if (!self.get('autoHide')) {
         self.$dragEl[action](['dragstart', 'mousedown'], preventDefault)
-            [action](DragGesture.DRAG_END, halt, self)
-            [action](DragGesture.DRAG_START, onDragStartHandler, self)
-            [action](DragGesture.DRAG, onDragHandler, self);
+            [action](PanGesture.PAN_END, halt, self)
+            [action](PanGesture.PAN_START, onDragStartHandler, self)
+            [action](PanGesture.PAN, onDragHandler, self);
         util.each([self.$downBtn, self.$upBtn], function (b) {
             b[action](BasicGesture.START, onUpDownBtnMouseDown, self)
                 [action](BasicGesture.END, onUpDownBtnMouseUp, self);

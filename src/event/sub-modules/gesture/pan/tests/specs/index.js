@@ -5,7 +5,7 @@
 (function () {
     var UA = require('ua');
     var $ = require('node');
-    var DragGesture = require('event/gesture/drag');
+    var PanGesture = require('event/gesture/pan');
     var ie = UA.ieMode;
     var Feature = require('feature');
 
@@ -18,7 +18,7 @@
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAG_START, function (e) {
+                d.on(PanGesture.PAN_START, function (e) {
                     expect(e.gestureType||'mouse').toBe('mouse');
                     start = 1;
                     expect(e.pageX).toBe(14);
@@ -26,7 +26,7 @@
                     e.preventDefault();
                 });
 
-                d.on(DragGesture.DRAG, function (e) {
+                d.on(PanGesture.PAN, function (e) {
                     expect(e.gestureType||'mouse').toBe('mouse');
                     move = 1;
                     expect(e.pageX).toBe(16);
@@ -34,7 +34,7 @@
                     e.preventDefault();
                 });
 
-                d.on(DragGesture.DRAG_END, function (e) {
+                d.on(PanGesture.PAN_END, function (e) {
                     expect(e.gestureType||'mouse').toBe('mouse');
                     end = 1;
                     expect(e.pageX).toBe(16);
@@ -102,7 +102,7 @@
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAG_START, function (e) {
+                d.on(PanGesture.PAN_START, function (e) {
                     expect(e.gestureType).toBe('touch');
                     start = 1;
                     expect(e.pageX).toBe(14);
@@ -110,7 +110,7 @@
                     e.preventDefault();
                 });
 
-                d.on(DragGesture.DRAG, function (e) {
+                d.on(PanGesture.PAN, function (e) {
                     expect(e.gestureType).toBe('touch');
                     move = 1;
                     expect(e.pageX).toBe(16);
@@ -118,7 +118,7 @@
                     e.preventDefault();
                 });
 
-                d.on(DragGesture.DRAG_END, function (e) {
+                d.on(PanGesture.PAN_END, function (e) {
                     expect(e.gestureType).toBe('touch');
                     end = 1;
                     expect(e.pageX).toBe(16);
@@ -260,7 +260,7 @@
                 var move = 0;
                 var end = 0;
 
-                d.on(DragGesture.DRAG_START, function (e) {
+                d.on(PanGesture.PAN_START, function (e) {
                     expect(e.gestureType).toBe('touch');
                     start = 1;
                     expect(e.pageX).toBe(14);
@@ -268,7 +268,7 @@
                     e.preventDefault();
                 });
 
-                d.on(DragGesture.DRAG, function (e) {
+                d.on(PanGesture.PAN, function (e) {
                     expect(e.gestureType).toBe('touch');
                     move = 1;
                     expect(e.pageX).toBe(16);
@@ -276,7 +276,7 @@
                     e.preventDefault();
                 });
 
-                d.on(DragGesture.DRAG_END, function (e) {
+                d.on(PanGesture.PAN_END, function (e) {
                     expect(e.gestureType).toBe('touch');
                     end = 1;
                     expect(e.pageX).toBe(16);

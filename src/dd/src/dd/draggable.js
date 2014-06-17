@@ -7,7 +7,7 @@
 var BasicGesture = require('event/gesture/basic'),
     DDM = require('./ddm'),
     Base = require('base'),
-    DragGesture = require('event/gesture/drag');
+    PanGesture = require('event/gesture/pan');
 var util = require('util');
 var UA = require('ua'),
     $ = require('node'),
@@ -239,9 +239,9 @@ var Draggable = Base.extend({
         var self = this,
             node = self.getEventTargetEl();
         if (node) {
-            node.on(DragGesture.DRAG_START, onDragStart, self)
-                .on(DragGesture.DRAG, onDrag, self)
-                .on(DragGesture.DRAG_END, onDragEnd, self)
+            node.on(PanGesture.PAN_START, onDragStart, self)
+                .on(PanGesture.PAN, onDrag, self)
+                .on(PanGesture.PAN_END, onDragEnd, self)
                 .on(BasicGesture.START, onGestureStart, self)
                 .on('dragstart', preventDefault);
         }
@@ -251,9 +251,9 @@ var Draggable = Base.extend({
         var self = this,
             node = self.getEventTargetEl();
         if (node) {
-            node.detach(DragGesture.DRAG_START, onDragStart, self)
-                .detach(DragGesture.DRAG, onDrag, self)
-                .detach(DragGesture.DRAG_END, onDragEnd, self)
+            node.detach(PanGesture.PAN_START, onDragStart, self)
+                .detach(PanGesture.PAN, onDrag, self)
+                .detach(PanGesture.PAN_END, onDragEnd, self)
                 .detach(BasicGesture.START, onGestureStart, self)
                 .detach('dragstart', preventDefault);
         }

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:53
+build time: Jun 17 21:58
 */
 /*
 combined modules:
@@ -12,7 +12,7 @@ KISSY.add('scroll-view/touch', [
     './base',
     'anim/timer',
     'event/gesture/basic',
-    'event/gesture/drag'
+    'event/gesture/pan'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -25,7 +25,7 @@ KISSY.add('scroll-view/touch', [
     var OUT_OF_BOUND_FACTOR = 0.5;
     var MAX_SWIPE_VELOCITY = 6;
     var BasicGesture = require('event/gesture/basic');
-    var DragGesture = require('event/gesture/drag');
+    var PanGesture = require('event/gesture/pan');
     function onDragScroll(self, e, scrollType) {
         if (forbidDrag(self, scrollType)) {
             return;
@@ -346,9 +346,9 @@ KISSY.add('scroll-view/touch', [
     function bindUI(self) {
         var action = self.get('disabled') ? 'detach' : 'on';    // bind to $el in case $contentEl is out of bound
         // bind to $el in case $contentEl is out of bound
-        self.$el[action](DragGesture.DRAG_START, onDragStartHandler, self)    // click
+        self.$el[action](PanGesture.PAN_START, onDragStartHandler, self)    // click
 [// click
-        action](BasicGesture.START, onGestureStart, self)[action](DragGesture.DRAG, onDragHandler, self)[action](DragGesture.DRAG_END, onDragEndHandler, self);
+        action](BasicGesture.START, onGestureStart, self)[action](PanGesture.PAN, onDragHandler, self)[action](PanGesture.PAN_END, onDragEndHandler, self);
     }    /**
  * allow touch drag for scroll view.
  * module scroll-view will be this class on touch device

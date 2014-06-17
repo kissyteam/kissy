@@ -96,8 +96,8 @@ bug in ios if native scroll exists
     <div style="position: absolute; bottom: 0">top bar</div>
 </div>
 <script>
-    KISSY.use('util,node,event/gesture/tap,event/gesture/edge-drag', function (S, util,
-                                                                               Node, TapGesture, EdgeDragGesture) {
+    KISSY.use('util,node,event/gesture/tap,event/gesture/edge-pan', function (S, util,
+                                                                               Node, TapGesture, EdgePanGesture) {
         var $ = Node.all;
         var win = $(win);
         var TAP = TapGesture.TAP;
@@ -177,7 +177,7 @@ bug in ios if native scroll exists
             node.direction = direction;
         });
 
-        $(window).on(EdgeDragGesture.EDGE_DRAG, function (e) {
+        $(window).on(EdgePanGesture.EDGE_PAN, function (e) {
             var direction = e.direction;
             var node = map[direction];
             e.preventDefault();
@@ -199,7 +199,7 @@ bug in ios if native scroll exists
 
         var factor = 4;
 
-        $(window).on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+        $(window).on(EdgePanGesture.EDGE_PAN_END, function (e) {
             var direction = e.direction;
             var node = map[direction];
             if (node.active) {

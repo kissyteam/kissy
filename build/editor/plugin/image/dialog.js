@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:46
+build time: Jun 17 21:51
 */
 KISSY.add("editor/plugin/image/dialog","util,editor,io,../dialog,xtemplate/runtime,tabs,../menubutton,./dialog/dialog-xtpl,ua,node".split(","),function(h,f,u,l){function d(b){for(;b;){var a=b.nodeName();if(a==="a")return b;if(r.$block[a]||r.$blockLimit[a])break;b=b.parent()}return null}function a(b,a){this.editor=b;this.imageCfg=a||{};this.suffix=(this.cfg=this.imageCfg.upload||null)&&this.cfg.suffix||"png,jpg,jpeg,gif";this.suffixReg=RegExp(this.suffix.split(/,/).join("|")+"$","i");this.suffixWarning=
 "\u53ea\u5141\u8bb8\u540e\u7f00\u540d\u4e3a"+this.suffix+"\u7684\u56fe\u7247"}var c=f("util"),i=f("editor"),v=f("io"),w=f("../dialog"),x=f("xtemplate/runtime"),y=f("tabs"),z=f("../menubutton"),A=f("./dialog/dialog-xtpl"),r=i.XHTML_DTD,s=f("ua"),n=f("node"),j="\u8bf7\u70b9\u51fb\u6d4f\u89c8\u4e0a\u4f20\u56fe\u7247",k=i.Utils.valInput;a.prototype={_prepare:function(){var b=this,a=b.editor.get("prefixCls")+"editor-";b.dialog=b.d=(new w({width:500,headerContent:"\u56fe\u7247",bodyContent:(new x(A)).render({prefixCls:a}),footerContent:c.substitute('<div style="padding:5px 20px 20px;"><a href="javascript:void(\'\u786e\u5b9a\')" class="{prefixCls}img-insert {prefixCls}button ks-inline-block" style="margin-right:30px;">\u786e\u5b9a</a> <a  href="javascript:void(\'\u53d6\u6d88\')" class="{prefixCls}img-cancel {prefixCls}button ks-inline-block">\u53d6\u6d88</a></div>',

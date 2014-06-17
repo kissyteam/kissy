@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 16:22
+build time: Jun 17 21:56
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140613162210' will replace with current timestamp when compressing.
+         * NOTICE: '20140617215650' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140613162210',
+        __BUILD_TIME: '20140617215650',
 
         /**
          * KISSY Environment.
@@ -1249,7 +1249,8 @@ var KISSY = (function (undefined) {
 (function (S) {
     // --no-module-wrap--
     var MILLISECONDS_OF_SECOND = 1000,
-        doc = S.Env.host.document,
+        win = S.Env.host,
+        doc = win.document,
         Utils = S.Loader.Utils,
     // solve concurrent requesting same script file
         jsCssCallbacks = {},
@@ -1289,11 +1290,7 @@ var KISSY = (function (undefined) {
         // eg: /??dom.js,event.js , ? , should not be encoded
         var config = success,
             css = Utils.endsWith(url, '.css'),
-            error,
-            timeout,
-            attrs,
-            callbacks,
-            timer;
+            error, timeout, attrs, callbacks, timer;
 
         if (typeof config === 'object') {
             success = config.success;
@@ -1301,6 +1298,19 @@ var KISSY = (function (undefined) {
             timeout = config.timeout;
             charset = config.charset;
             attrs = config.attrs;
+        }
+
+        if (css && Utils.ieMode < 10) {
+            if (doc.getElementsByTagName('style').length + doc.getElementsByTagName('link').length >= 31) {
+                if (win.console) {
+                    win.console.error('style and link\'s number is more than 31.' +
+                        'ie < 10 can not insert link: ' + url);
+                }
+                if (error) {
+                    error();
+                }
+                return;
+            }
         }
 
         callbacks = jsCssCallbacks[url] = jsCssCallbacks[url] || [];
@@ -1332,6 +1342,8 @@ var KISSY = (function (undefined) {
         if (css) {
             node.href = url;
             node.rel = 'stylesheet';
+            // set media to something non-matching to ensure it'll fetch without blocking render
+            node.media = 'async';
         } else {
             node.src = url;
             node.async = true;
@@ -1343,6 +1355,11 @@ var KISSY = (function (undefined) {
             var index = error,
                 fn;
             clearTimer();
+            // set media back to `all` so that the stylesheet applies once it loads
+            // https://github.com/filamentgroup/loadCSS
+            if (css) {
+                node.media = 'all';
+            }
             Utils.each(jsCssCallbacks[url], function (callback) {
                 if ((fn = callback[index])) {
                     fn.call(node);
@@ -2395,7 +2412,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140613162210';
+    var TIMESTAMP = '20140617215650';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

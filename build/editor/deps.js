@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:58
+build time: Jun 17 21:54
 */
 /*jshint indent:false, quotmark:false*/
 KISSY.use(['ua', 'feature'], function(S, UA, Feature){

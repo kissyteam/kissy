@@ -12,9 +12,7 @@ var DomEvent = require('event/dom/base');
 var Special = DomEvent.Special;
 var key = util.guid('touch-handle'),
     Feature = require('feature'),
-    gestureStartEvent,
-    gestureMoveEvent,
-    gestureEndEvent;
+    gestureStartEvent, gestureMoveEvent, gestureEndEvent;
 
 function isTouchEvent(type) {
     return util.startsWith(type, 'touch');

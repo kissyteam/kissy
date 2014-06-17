@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:53
+build time: Jun 17 21:58
 */
 /*
 combined modules:
@@ -122,7 +122,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
     'util',
     'component/control',
     'event/gesture/basic',
-    'event/gesture/drag',
+    'event/gesture/pan',
     './scrollbar-xtpl',
     'feature'
 ], function (S, require, exports, module) {
@@ -135,7 +135,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
     var util = require('util');
     var Control = require('component/control');
     var BasicGesture = require('event/gesture/basic');
-    var DragGesture = require('event/gesture/drag');
+    var PanGesture = require('event/gesture/pan');
     var ScrollBarTpl = require('./scrollbar-xtpl');
     var MIN_BAR_LENGTH = 20;
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
@@ -258,7 +258,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
             self.$dragEl[action]([
                 'dragstart',
                 'mousedown'
-            ], preventDefault)[action](DragGesture.DRAG_END, halt, self)[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](DragGesture.DRAG, onDragHandler, self);
+            ], preventDefault)[action](PanGesture.PAN_END, halt, self)[action](PanGesture.PAN_START, onDragStartHandler, self)[action](PanGesture.PAN, onDragHandler, self);
             util.each([
                 self.$downBtn,
                 self.$upBtn

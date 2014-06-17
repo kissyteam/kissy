@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:44
+build time: Jun 17 21:49
 */
 KISSY.add("editor/plugin/dent-cmd",["editor","./list-utils","dom","node","ua"],function(B,k,C,v){function q(c){return c.nodeType===l.NodeType.ELEMENT_NODE&&"li"===l.nodeName(c)}function w(c,d,e){for(var f=c.startContainer,a=c.endContainer;f&&!f.parent().equals(d);)f=f.parent();for(;a&&!a.parent().equals(d);)a=a.parent();if(f&&a){for(var b=f,f=[],i=!1;!i;)b.equals(a)&&(i=!0),f.push(b),b=b.next();if(!(1>f.length)){var g=d._4eParents(!0,void 0);g.each(function(a,b){g[b]=a});for(a=0;a<g.length;a++)if(o[g[a].nodeName()]){d=
 g[a];break}for(var b="indent"===e?1:-1,a=f[0],i=f[f.length-1],f={},h=r.listToArray(d,f),k=h[i.data("listarray_index")].indent,a=a.data("listarray_index");a<=i.data("listarray_index");a++){h[a].indent+=b;var n=h[a].parent;h[a].parent=s(n[0].ownerDocument.createElement(n.nodeName()))}for(a=i.data("listarray_index")+1;a<h.length&&h[a].indent>k;a++)h[a].indent+=b;var i=r.arrayToList(h,f,null,"p"),b=[],m;if("outdent"===e&&(m=d.parent())&&"li"===m.nodeName())for(var e=i.listNode.childNodes,j,a=e.length-

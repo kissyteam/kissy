@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:54
+build time: Jun 17 21:58
 */
 KISSY.add("tabs","component/container,tabs/bar,tabs/body,tabs/tab,tabs/panel,util".split(","),function(f,b,i,h){function d(e){this.removeItemByTab(e.target)}function a(e){this.setSelectedTab(e.newVal)}function j(e){var a={};a.content=e.title;a.selected=e.selected;a.closable=e.closable;return a}var c=b("component/container"),f=b("tabs/bar"),i=b("tabs/body");b("tabs/tab");var l=b("tabs/panel"),k=b("util"),g={top:0,left:0,bottom:1,right:0},b=c.extend({initializer:function(){var e=this.get("items");if(e){var a=
 this.get("children"),c=this.get("barOrientation"),b,d=this.get("prefixCls"),f={prefixCls:d,xclass:"tabs-bar",changeType:this.get("changeType"),children:[]},d={prefixCls:d,xclass:"tabs-body",lazyRender:this.get("lazyRender"),children:[]},h=f.children,l=d.children;k.each(e,function(e){b=b||e.selected;h.push(j(e));l.push({content:e.content,selected:e.selected})});if(!b&&h.length){h[0].selected=true;l[0].selected=true}a[g[c]]=f;a[1-g[c]]=d}},beforeCreateDom:function(e){e.elCls.push(this.getBaseCssClass(this.get("barOrientation")))},

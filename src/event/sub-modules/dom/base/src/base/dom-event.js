@@ -30,10 +30,8 @@ function fixType(cfg, type) {
 }
 
 function addInternal(currentTarget, type, cfg) {
-    var domEventObservablesHolder,
-        domEventObservable,
-        domEventObservables,
-        handle;
+    var domEventObservablesHolder, domEventObservable,
+        domEventObservables, handle;
 
     cfg = util.merge(cfg);
     type = fixType(cfg, type);
@@ -253,10 +251,7 @@ var DomEvent = {
         eventData.synthetic = 1;
 
         BaseUtils.splitAndRun(eventType, function (eventType) {
-            var r,
-                i,
-                target,
-                domEventObservable;
+            var r, i, target, domEventObservable;
 
             BaseUtils.fillGroupsForEvent(eventType, eventData);
 
@@ -321,8 +316,7 @@ var DomEvent = {
      * @private
      */
     clone: function (src, dest) {
-        var domEventObservablesHolder,
-            domEventObservables;
+        var domEventObservablesHolder, domEventObservables;
         if (!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))) {
             return;
         }
@@ -338,7 +332,7 @@ var DomEvent = {
                 // context undefined
                 // 不能 this 写死在 handlers 中
                 // 否则不能保证 clone 时的 this
-                addInternal(dest, type, observer);
+                addInternal(dest, type, observer.config);
             });
         });
     }

@@ -1,5 +1,5 @@
 /**
- * tc for edge-drag gesture
+ * tc for edge-pan gesture
  */
 (function() {
     var UA = require('ua');
@@ -8,7 +8,7 @@
         return;
     }
     var $ = require('node');
-    var EdgeDragGesture = require('event/gesture/edge-drag');
+    var EdgePanGesture = require('event/gesture/edge-pan');
     var ie = UA.ieMode;
     if (ie === 9 || ie === 11) {
         return;
@@ -18,7 +18,7 @@
     var right = win.width();
     var bottom = win.height();
 
-    describe('edge-drag gesture', function () {
+    describe('edge-pan gesture', function () {
         afterEach(function () {
             win.detach();
         });
@@ -29,7 +29,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('right');
                     start = 1;
                     expect(e.pageX).toBe(11);
@@ -37,14 +37,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('right');
                     move = 1;
                     expect(e.pageX).toBe(81);
                     expect(e.pageY).toBe(1);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('right');
                     end = 1;
                     expect(e.pageX).toBe(81);
@@ -159,20 +159,20 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     start = 1;
                     expect(e.pageX).toBe(11);
                     expect(e.pageY).toBe(11);
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     move = 1;
                     expect(e.pageX).toBe(81);
                     expect(e.pageY).toBe(81);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     end = 1;
                     expect(e.pageX).toBe(81);
                     expect(e.pageY).toBe(81);
@@ -288,7 +288,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('left');
                     start = 1;
                     expect(e.pageX).toBe(right - 11);
@@ -296,14 +296,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('left');
                     move = 1;
                     expect(e.pageX).toBe(right - 81);
                     expect(e.pageY).toBe(1);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('left');
                     end = 1;
                     expect(e.pageX).toBe(right - 81);
@@ -418,7 +418,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('left');
                     start = 1;
                     expect(e.pageX).toBe(right - 11);
@@ -426,14 +426,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('left');
                     move = 1;
                     expect(e.pageX).toBe(right - 81);
                     expect(e.pageY).toBe(1);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('left');
                     end = 1;
                     expect(e.pageX).toBe(right - 81);
@@ -550,7 +550,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('down');
                     start = 1;
                     expect(e.pageX).toBe(1);
@@ -558,14 +558,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('down');
                     move = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(81);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('down');
                     end = 1;
                     expect(e.pageX).toBe(1);
@@ -680,7 +680,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('down');
                     start = 1;
                     expect(e.pageX).toBe(1);
@@ -688,14 +688,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('down');
                     move = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(bottom - 81);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('down');
                     end = 1;
                     expect(e.pageX).toBe(1);
@@ -812,7 +812,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('up');
                     start = 1;
                     expect(e.pageX).toBe(1);
@@ -820,14 +820,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('up');
                     move = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(bottom - 81);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('up');
                     end = 1;
                     expect(e.pageX).toBe(1);
@@ -942,7 +942,7 @@
                 var move = 0;
                 var end = 0;
 
-                win.on(EdgeDragGesture.EDGE_DRAG_START, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_START, function (e) {
                     expect(e.direction).toBe('down');
                     start = 1;
                     expect(e.pageX).toBe(1);
@@ -950,14 +950,14 @@
                     e.preventDefault();
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN, function (e) {
                     expect(e.direction).toBe('down');
                     move = 1;
                     expect(e.pageX).toBe(1);
                     expect(e.pageY).toBe(bottom - 81);
                 });
 
-                win.on(EdgeDragGesture.EDGE_DRAG_END, function (e) {
+                win.on(EdgePanGesture.EDGE_PAN_END, function (e) {
                     expect(e.direction).toBe('down');
                     end = 1;
                     expect(e.pageX).toBe(1);

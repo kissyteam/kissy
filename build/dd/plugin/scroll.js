@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:43
+build time: Jun 17 21:47
 */
 KISSY.add("dd/plugin/scroll",["util","node","dd","base"],function(l,c,v,s){var n=c("util"),r=c("node"),l=c("dd"),c=c("base"),j=l.DDM,t=window,k=".-ks-dd-scroll"+n.now(),u=100,o=n.isWindow;s.exports=c.extend({pluginId:"dd/plugin/scroll",getRegion:function(a){return o(a[0])?{width:a.width(),height:a.height()}:{width:a.outerWidth(),height:a.outerHeight()}},getOffset:function(a){return o(a[0])?{left:a.scrollLeft(),top:a.scrollTop()}:a.offset()},getScroll:function(a){return{left:a.scrollLeft(),top:a.scrollTop()}},
 setScroll:function(a,c){a.scrollLeft(c.left);a.scrollTop(c.top)},pluginDestructor:function(a){a.detach(k)},pluginInitializer:function(a){function c(){if(o(f[0]))return 0;var d=a.mousePos,e=j.region(f);return!j.inRegion(e,d)?(clearTimeout(i),i=0,1):0}function l(){if(!c()){var d=g.getRegion(f),k=d.width,d=d.height,b=g.getScroll(f),j=n.clone(b),m=!1;e.top-d>=-p[1]&&(b.top+=q[1],m=!0);e.top<=p[1]&&(b.top-=q[1],m=!0);e.left-k>=-p[0]&&(b.left+=q[0],m=!0);e.left<=p[0]&&(b.left-=q[0],m=!0);m?(g.setScroll(f,

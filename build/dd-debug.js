@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:43
+build time: Jun 17 21:48
 */
 /*
 combined modules:
@@ -392,7 +392,7 @@ KISSY.add('dd/draggable', [
     'event/gesture/basic',
     './ddm',
     'base',
-    'event/gesture/drag',
+    'event/gesture/pan',
     'util',
     'ua',
     'node'
@@ -402,7 +402,7 @@ KISSY.add('dd/draggable', [
  * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-    var BasicGesture = require('event/gesture/basic'), DDM = require('./ddm'), Base = require('base'), DragGesture = require('event/gesture/drag');
+    var BasicGesture = require('event/gesture/basic'), DDM = require('./ddm'), Base = require('base'), PanGesture = require('event/gesture/pan');
     var util = require('util');
     var UA = require('ua'), $ = require('node'), doc = document, $doc = $(doc), each = util.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS;
     function checkValid(fn) {
@@ -744,13 +744,13 @@ KISSY.add('dd/draggable', [
             start: function () {
                 var self = this, node = self.getEventTargetEl();
                 if (node) {
-                    node.on(DragGesture.DRAG_START, onDragStart, self).on(DragGesture.DRAG, onDrag, self).on(DragGesture.DRAG_END, onDragEnd, self).on(BasicGesture.START, onGestureStart, self).on('dragstart', preventDefault);
+                    node.on(PanGesture.PAN_START, onDragStart, self).on(PanGesture.PAN, onDrag, self).on(PanGesture.PAN_END, onDragEnd, self).on(BasicGesture.START, onGestureStart, self).on('dragstart', preventDefault);
                 }
             },
             stop: function () {
                 var self = this, node = self.getEventTargetEl();
                 if (node) {
-                    node.detach(DragGesture.DRAG_START, onDragStart, self).detach(DragGesture.DRAG, onDrag, self).detach(DragGesture.DRAG_END, onDragEnd, self).detach(BasicGesture.START, onGestureStart, self).detach('dragstart', preventDefault);
+                    node.detach(PanGesture.PAN_START, onDragStart, self).detach(PanGesture.PAN, onDrag, self).detach(PanGesture.PAN_END, onDragEnd, self).detach(BasicGesture.START, onGestureStart, self).detach('dragstart', preventDefault);
                 }
             },
             _onSetDisabled: function (d) {

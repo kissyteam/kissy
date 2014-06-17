@@ -85,20 +85,17 @@ util.extend(CustomEventObservable, BaseEvent.Observable, {
 
         // gRet === false prevent
         if (bubbles && !customEventObject.isPropagationStopped()) {
-
             parents = currentTarget.getTargets();
 
             parentsLen = parents && parents.length || 0;
 
             for (i = 0; i < parentsLen && !customEventObject.isPropagationStopped(); i++) {
-
                 ret = parents[i].fire(type, customEventObject);
 
                 // false 优先返回
                 if (gRet !== false && ret !== undefined) {
                     gRet = ret;
                 }
-
             }
         }
 
@@ -174,13 +171,14 @@ util.extend(CustomEventObservable, BaseEvent.Observable, {
 
             for (i = 0, j = 0, t = []; i < len; ++i) {
                 observer = observers[i];
-                observerContext = observer.context || currentTarget;
+                var observerConfig = observer.config;
+                observerContext = observerConfig.context || currentTarget;
                 if (
                     (context !== observerContext) ||
                     // 指定了函数，函数不相等，保留
-                    (fn && fn !== observer.fn) ||
+                    (fn && fn !== observerConfig.fn) ||
                     // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
-                    (groupsRe && !observer.groups.match(groupsRe))
+                    (groupsRe && !observerConfig.groups.match(groupsRe))
                     ) {
                     t[j++] = observer;
                 }

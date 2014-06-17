@@ -34,7 +34,7 @@ util.extend(DomEventObserver, BaseEvent.Observer, {
             type = event.type,
             originalType;
 
-        if ((originalType = self.originalType)) {
+        if ((originalType = self.config.originalType)) {
             event.type = originalType;
         } else {
             originalType = type;

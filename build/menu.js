@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:52
+build time: Jun 17 21:57
 */
 KISSY.add("menu","menu/control,menu/menuitem,menu/check-menuitem,menu/radio-menuitem,menu/submenu,menu/popupmenu".split(","),function(d,c,g,f){d=c("menu/control");d.Item=c("menu/menuitem");d.CheckItem=c("menu/check-menuitem");d.RadioItem=c("menu/radio-menuitem");d.SubMenu=c("menu/submenu");d.PopupMenu=c("menu/popupmenu");f.exports=d});
 KISSY.add("menu/control",["util","component/container","component/extension/delegate-children","node"],function(d,c,g,f){function b(a){a.target.isMenu&&(a=a.newVal,this.el.setAttribute("aria-activedescendant",a&&a.el.id||""))}var a=c("util"),d=c("component/container"),g=c("component/extension/delegate-children"),i=c("node").Event.KeyCode;f.exports=d.extend([g],{isMenu:1,beforeCreateDom:function(a){a.elAttrs.role="menu"},bindUI:function(){this.on("afterHighlightedItemChange",b,this)},_onSetHighlightedItem:function(a,

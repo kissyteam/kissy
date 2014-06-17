@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:41
+build time: Jun 17 21:46
 */
 KISSY.add("component/extension/content-box",["./content-box/content-xtpl"],function(b,e,h,d){function f(a){var c=a.get("contentEl");a.$contentEl=a.$contentEl=c;a.contentEl=a.contentEl=c[0]}function a(){}b=e("./content-box/content-xtpl");a.prototype={__createDom:function(){f(this)},__decorateDom:function(){f(this)},getChildrenContainerEl:function(){return this.get("contentEl")},_onSetContent:function(a){var c=this.$contentEl;c.html(a);this.get("allowTextSelection")||c.unselectable()}};a.ATTRS={contentTpl:{value:b},
 contentEl:{selector:function(){return"."+this.getBaseCssClass("content")}},content:{parse:function(){return this.get("contentEl").html()}}};d.exports=a});

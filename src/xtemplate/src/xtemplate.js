@@ -6,6 +6,7 @@
 
 var util = require('util');
 var XTemplateRuntime = require('xtemplate/runtime');
+
 var Compiler = require('xtemplate/compiler');
 var cache = XTemplate.cache = {};
 var LoggerManager = require('logger-manager');
