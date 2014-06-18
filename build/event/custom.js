@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:55
+build time: Jun 18 13:18
 */
 KISSY.add("event/custom",["./custom/target","util","./custom/object"],function(f,d,l,i){f=d("./custom/target");l=d("util");i.exports={Target:f,Object:d("./custom/object"),global:l.mix({},f)}});
 KISSY.add("event/custom/target",["event/base","./observable","util"],function(f,d,l,i){var f=d("event/base"),h=d("./observable"),k=d("util"),j=f.Utils,n=j.splitAndRun;i.exports={isTarget:1,getCustomEventObservable:function(a,b){var c,g=this.getCustomEvents();c=g&&g[a];!c&&b&&(c=g[a]=new h({currentTarget:this,type:a}));return c},fire:function(a,b){var c=this,g,o=c.getTargets(),p=o&&o.length;a.isEventObject&&(b=a,a=a.type);b=b||{};n(a,function(a){var e;j.fillGroupsForEvent(a,b);a=b.type;if((e=c.getCustomEventObservable(a))||

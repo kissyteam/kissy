@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:45
+build time: Jun 18 13:09
 */
 KISSY.add("anim/transition",["util","logger-manager","dom","./base","feature"],function(l,i,r,n){function o(d){var c="";g.each(d,function(a,b){c&&(c+=",");c+=b+" "+a.duration+"s "+a.easing+" "+a.delay+"s"});return c}function p(d){return d.replace(/[A-Z]/g,function(c){return"-"+c.toLowerCase()})}function h(d,c,a,b,f){if(!(this instanceof h))return new h(d,c,a,b,f);h.superclass.constructor.apply(this,arguments)}var g=i("util");i("logger-manager");var j=i("dom"),l=i("./base"),m=i("feature").getCssVendorInfo,
 k=m("transition").propertyName,q={ease:1,linear:1,"ease-in":1,"ease-out":1,"ease-in-out":1};g.extend(h,l,{prepareFx:function(){var d=this._propsData,c={},a,b;for(b in d)a=d[b],"string"===typeof a.easing?!g.startsWith(a.easing,"cubic-bezier")&&!q[a.easing]&&(a.easing="linear"):a.easing="linear",(a=m(b))&&(c[p(a.propertyName)]=d[b]);this._propsData=c},doStart:function(){var d=this,c=d.node,a=c.style,b=d._propsData,f=a[k],e=0,h={};g.each(b,function(b,a){var d=b.value;j.css(c,a,j.css(c,a));h[a]=d;e=Math.max(b.duration+

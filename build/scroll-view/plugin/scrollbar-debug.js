@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:58
+build time: Jun 18 13:22
 */
 /*
 combined modules:
@@ -355,6 +355,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
  */
     module.exports = Control.extend(methods, {
         ATTRS: {
+            handleGestureEvents: { value: false },
+            focusable: { value: false },
+            allowTextSelection: { value: false },
             /**
          * minimum scrollbar length.
          * Defaults to 20.
@@ -436,7 +439,6 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
                     return '.' + this.getBaseCssClass('track');
                 }
             },
-            focusable: { value: false },
             contentTpl: { value: ScrollBarTpl }
         },
         xclass: 'scrollbar'

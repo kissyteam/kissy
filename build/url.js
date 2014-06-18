@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:59
+build time: Jun 18 13:23
 */
 KISSY.add("url",["querystring","path"],function(u,k,v,p){function l(b){":"===b.slice(-1)&&(b=b.slice(0,-1));return"http"===b||"https"===b||"ftp"===b||"gopher"===b||"file"===b}function j(b,f){return encodeURI(b).replace(f,function(b){b=b.charCodeAt(0).toString(16);return"%"+(1===b.length?"0"+b:b)})}var m=k("querystring"),q=k("path"),n=/[#\/\?@]/g,r=/[#\?]/g,s=/#/g,t=RegExp("^([\\w\\d+.-]+:)?(?://(?:([^/?#@]*)@)?([\\w\\d\\-\\u0100-\\uffff.+%]*|\\[[^\\]]+\\])(?::([0-9]+))?)?([^?#]+)?(\\?[^#]*)?(#.*)?$"),
 o={protocol:1,auth:2,hostname:3,port:4,pathname:5,search:6,hash:7},i={parse:function(b,f){var d=b.match(t)||[],a={},e;for(e in o)a[e]=d[o[e]];a.protocol&&(a.protocol=a.protocol.toLowerCase());a.hostname&&(a.hostname=a.hostname.toLowerCase());if(d=a.protocol)a.slashes=-1!==b.lastIndexOf(d+"//");if(d&&!l(d.slice(0,-1))){if(!a.slashes)return b=b.slice(0,d.length)+"//"+b.slice(d.length),a=i.parse(b,f),a.slashes=null,a}else a.hostname&&!a.pathname&&(a.pathname="/");a.path=a.pathname;a.search&&(a.path+=

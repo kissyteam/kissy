@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:58
+build time: Jun 18 13:21
 */
 /*
 combined modules:
@@ -340,6 +340,12 @@ KISSY.add('scroll-view/base', [
  */
     module.exports = Container.extend([ContentBox], methods, {
         ATTRS: {
+            focusable: {
+                // need process keydown
+                value: true
+            },
+            allowTextSelection: { value: true },
+            handleGestureEvents: { value: false },
             /**
          * scrollLeft of scroll view
          * @property scrollLeft
@@ -365,12 +371,6 @@ KISSY.add('scroll-view/base', [
                 value: 0
             },
             dimension: {},
-            focusable: {
-                // need process keydown
-                value: true
-            },
-            allowTextSelection: { value: true },
-            handleGestureEvents: { value: false },
             /**
          * whether to allow snap effect
          * @cfg {Boolean} snap

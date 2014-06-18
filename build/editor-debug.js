@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:54
+build time: Jun 18 13:18
 */
 /*
 combined modules:
@@ -1203,6 +1203,9 @@ KISSY.add('editor/base', [
         Config: {},
         XHTML_DTD: HtmlParser.DTD,
         ATTRS: {
+            handleGestureEvents: { value: false },
+            focusable: { value: false },
+            allowTextSelection: { value: true },
             contentTpl: { value: RenderTpl },
             height: { value: 300 },
             /**
@@ -1254,8 +1257,6 @@ KISSY.add('editor/base', [
                     return '.' + this.getBaseCssClass('status');
                 }
             },
-            handleGestureEvents: { value: false },
-            focusable: { value: false },
             /**
          * editor mode.
          * wysiswyg mode:1

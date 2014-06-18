@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:56
+build time: Jun 18 13:19
 */
 KISSY.add("event/gesture/tap",["event/gesture/util","event/dom/base","ua","util"],function(n,k,i,p){function q(a){a.preventDefault()}function m(a){a.singleTapTimer&&(clearTimeout(a.singleTapTimer),a.singleTapTimer=0);a.tapHoldTimer&&(clearTimeout(a.tapHoldTimer),a.tapHoldTimer=0)}function l(){l.superclass.constructor.apply(this,arguments)}var i=k("event/gesture/util"),n=i.addEvent,g=k("event/dom/base"),i=i.SingleTouch,o=k("ua"),j=k("util"),r=g.Object;j.extend(l,i,{start:function(a){var b=this;l.superclass.start.call(b,
 a);m(b);var c=b.lastTouches[0];b.tapHoldTimer=setTimeout(function(){var d=j.mix({which:1,duration:(j.now()-a.timeStamp)/1E3},b.lastXY);b.tapHoldTimer=0;b.lastXY=0;g.fire(c.target,"hold",d)},1E3);b.isStarted=!0},move:function(){var a;if(!(a=this.lastXY))return!1;var b=this.lastTouches[0];if(!b||5<Math.abs(b.pageX-a.pageX)||5<Math.abs(b.pageY-a.pageY))return m(this),!1},end:function(a,b){var c=this,d;m(c);if(!b&&(d=c.lastXY)){var e=c.lastTouches[0].target,h=new r(a.originalEvent);j.mix(h,{type:"tap",

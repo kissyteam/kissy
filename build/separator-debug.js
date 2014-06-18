@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:58
+build time: Jun 18 13:22
 */
 /*
 combined modules:
@@ -29,14 +29,10 @@ KISSY.add('separator', ['component/control'], function (S, require, exports, mod
         }
     }, {
         ATTRS: {
-            /**
-         * Un-focusable.
-         * readonly.
-         * Defaults to: false.
-         */
+            handleGestureEvents: { value: false },
             focusable: { value: false },
-            disabled: { value: true },
-            handleGestureEvents: { value: false }
+            allowTextSelection: { value: false },
+            disabled: { value: true }
         },
         xclass: 'separator'
     });

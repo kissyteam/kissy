@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:47
+build time: Jun 18 13:11
 */
 /*
 combined modules:
@@ -434,8 +434,10 @@ KISSY.add('date/picker', [
     }, {
         xclass: 'date-picker',
         ATTRS: {
-            contentTpl: { value: PickerTpl },
+            handleGestureEvents: { value: true },
             focusable: { value: true },
+            allowTextSelection: { value: false },
+            contentTpl: { value: PickerTpl },
             /**
          * current selected value of current date picker
          * @cfg {KISSY.Date.Gregorian} value

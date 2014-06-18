@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 22:12
+build time: Jun 18 13:19
 */
 /*
 combined modules:
@@ -64,7 +64,7 @@ KISSY.add('event/gesture/swipe', [
         if (ing) {
             var prevent = e.originalEvent._ksSwipePrevent;
             if (prevent) {
-                if (prevent[direction]) {
+                if (prevent === true || prevent[direction]) {
                     e.preventDefault();
                 }
             }
@@ -142,14 +142,15 @@ KISSY.add('event/gesture/swipe', [
         handle: new Swipe(),
         add: function (observer) {
             var config = observer.config;
-            var self = this;
-            if (config.preventDefault) {
+            var preventDefault = config.preventDefault;
+            if (preventDefault) {
+                var filter = config.filter;
                 observer._preventFn = function (e) {
-                    if (!config.filter || matchFilter(e.target, self, config.filter)) {
-                        e._ksSwipePrevent = config.preventDefault;
+                    if (!filter || matchFilter(e.target, e.currentTarget, filter)) {
+                        e._ksSwipePrevent = preventDefault;
                     }
                 };
-                self.addEventListener('touchmove', observer._preventFn);
+                this.addEventListener('touchmove', observer._preventFn);
             }
         },
         remove: function (observer) {

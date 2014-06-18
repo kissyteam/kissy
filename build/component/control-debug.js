@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:46
+build time: Jun 18 13:10
 */
 /*
 combined modules:
@@ -1113,7 +1113,7 @@ KISSY.add('component/control', [
                 /**
              * @ignore
              */
-                handleGestureEvents: { value: true },
+                handleGestureEvents: { value: false },
                 /**
              * Whether this component can get focus.
              *
@@ -1125,7 +1125,7 @@ KISSY.add('component/control', [
                 /**
              * @ignore
              */
-                focusable: { value: true },
+                focusable: { value: false },
                 /**
              * 1. Whether allow select this component's text.<br/>
              * 2. Whether not to lose last component's focus if click current one (set false).
@@ -1138,11 +1138,7 @@ KISSY.add('component/control', [
                 /**
              * @ignore
              */
-                allowTextSelection: {
-                    // 和 focusable 分离
-                    // grid 需求：容器允许选择里面内容
-                    value: false
-                },
+                allowTextSelection: { value: true },
                 /**
              * This component's prefix css class.
              * @cfg {String} prefixCls

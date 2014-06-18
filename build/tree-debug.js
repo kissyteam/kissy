@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:59
+build time: Jun 18 13:22
 */
 /*
 combined modules:
@@ -347,9 +347,10 @@ KISSY.add('tree/node', [
         }
     }, {
         ATTRS: {
-            contentTpl: { value: TreeNodeTpl },
-            // 事件代理
+            allowTextSelection: { value: true },
+            focusable: { value: false },
             handleGestureEvents: { value: false },
+            contentTpl: { value: TreeNodeTpl },
             /**
          * Only For Config.
          * Whether to force current tree node as a leaf.                 *
@@ -448,7 +449,6 @@ KISSY.add('tree/node', [
                 render: 1,
                 sync: 0
             },
-            focusable: { value: false },
             defaultChildCfg: {
                 valueFn: function () {
                     return { xclass: 'tree-node' };
@@ -746,6 +746,9 @@ KISSY.add('tree/tree-manager', [
     function TreeManager() {
     }
     TreeManager.ATTRS = {
+        allowTextSelection: { value: true },
+        focusable: { value: true },
+        handleGestureEvents: { value: true },
         /**
      * Whether show root node.
      * Defaults to: true.
@@ -766,10 +769,7 @@ KISSY.add('tree/tree-manager', [
         /**
      * @ignore
      */
-        selectedItem: {},
-        // only root node is focusable
-        focusable: { value: true },
-        handleGestureEvents: { value: true }
+        selectedItem: {}
     };
     util.augment(TreeManager, DelegateChildrenExtension, {
         isTree: 1,

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:45
+build time: Jun 18 13:09
 */
 KISSY.add("anim/timer","dom,util,./base,./timer/easing,./timer/manager,./timer/fx,./timer/color,./timer/transform,./timer/short-hand".split(","),function(h,f,q,l){function g(b,m,a,k,d){if(!(this instanceof g))return new g(b,m,a,k,d);g.superclass.constructor.apply(this,arguments)}var j=f("dom"),e=f("util"),h=f("./base"),c=f("./timer/easing"),b=f("./timer/manager"),n=f("./timer/fx");f("./timer/color");f("./timer/transform");var p=f("./timer/short-hand"),i=/^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;e.extend(g,
 h,{prepareFx:function(){var b=this.node,m=this._propsData;e.each(m,function(a){a.duration=a.duration*1E3;a.delay=a.delay*1E3;if(typeof a.easing==="string")a.easing=c.toFn(a.easing)});e.each(p,function(a,d){var k,c=m[d],f;if(c){f=c.value;k={};e.each(a,function(a){k[a]=j.css(b,a)});j.css(b,d,f);e.each(k,function(a,d){d in m||(m[d]=e.merge(c,{value:j.css(b,d)}));j.css(b,d,a)});delete m[d]}});var a,k,d,g,f,r,h,l=0,s;e.isPlainObject(b)&&(l=1);for(a in m){k=m[a];d=k.value;r={isCustomFx:l,prop:a,anim:this,

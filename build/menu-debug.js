@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:57
+build time: Jun 18 13:20
 */
 /*
 combined modules:
@@ -225,6 +225,9 @@ KISSY.add('menu/control', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: true },
+            focusable: { value: true },
+            allowTextSelection: { value: false },
             /**
          * Current highlighted child menu item.
          * @type {KISSY.Menu.Item}
@@ -349,8 +352,9 @@ KISSY.add('menu/menuitem', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: false },
             focusable: { value: false },
-            handleGestureEvents: { value: false }
+            allowTextSelection: { value: false }
         },
         xclass: 'menuitem'
     });
@@ -912,14 +916,9 @@ KISSY.add('menu/popupmenu', [
         }
     }, {
         ATTRS: {
-            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-            /**
-         * Whether the popup menu is focusable.
-         * Defaults to: false.
-         * @type {Boolean}
-         * @ignore
-         */
+            handleGestureEvents: { value: true },
             focusable: { value: false },
+            allowTextSelection: { value: false },
             /**
          * Whether the whole menu tree which contains popup menu hides when mouseleave.
          * Only valid for submenu 's popupmenu.

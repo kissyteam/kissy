@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:48
+build time: Jun 18 13:11
 */
 /**
  * adapter to transform kissy5 to kissy 1.4.x

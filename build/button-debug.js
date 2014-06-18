@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:45
+build time: Jun 18 13:09
 */
 /*
 combined modules:
@@ -79,6 +79,9 @@ KISSY.add('button', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: true },
+            focusable: { value: true },
+            allowTextSelection: { value: false },
             /**
          * Value associated with button component.
          * @property value

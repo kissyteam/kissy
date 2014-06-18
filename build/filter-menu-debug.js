@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:56
+build time: Jun 18 13:20
 */
 /*
 combined modules:
@@ -173,8 +173,10 @@ KISSY.add('filter-menu', [
         }
     }, {
         ATTRS: {
-            contentTpl: { value: FilterMenuTpl },
+            handleGestureEvents: { value: true },
+            focusable: { value: true },
             allowTextSelection: { value: true },
+            contentTpl: { value: FilterMenuTpl },
             filterInput: {
                 selector: function () {
                     return '.' + this.getBaseCssClass('input');

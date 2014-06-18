@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:57
+build time: Jun 18 13:21
 */
 /*
 combined modules:
@@ -108,6 +108,9 @@ KISSY.add('overlay/control', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: false },
+            focusable: { value: false },
+            allowTextSelection: { value: true },
             contentTpl: { value: OverlayTpl },
             /**
          * Whether close button is visible.
@@ -158,42 +161,6 @@ KISSY.add('overlay/control', [
          * @ignore
          */
             closeAction: { value: HIDE },
-            /**
-         * overlay can not have focus.
-         *
-         * Defaults to: false.
-         *
-         * @cfg {Boolean} focusable
-         * @protected
-         */
-            /**
-         * @ignore
-         */
-            focusable: { value: false },
-            /**
-         * overlay can have text selection.
-         *
-         * Defaults to: true.
-         *
-         * @cfg {Boolean} allowTextSelection
-         * @protected
-         */
-            /**
-         * @ignore
-         */
-            allowTextSelection: { value: true },
-            /**
-         * whether this component can be responsive to mouse.
-         *
-         * Defaults to: false
-         *
-         * @cfg {Boolean} handleGestureEvents
-         * @protected
-         */
-            /**
-         * @ignore
-         */
-            handleGestureEvents: { value: false },
             visible: { value: false }
         },
         xclass: 'overlay'
@@ -736,6 +703,7 @@ KISSY.add('overlay/dialog', [
             }
         }, {
             ATTRS: {
+                focusable: { value: true },
                 contentTpl: { value: DialogTpl },
                 /**
          * Header element of dialog.
@@ -860,18 +828,6 @@ KISSY.add('overlay/dialog', [
          * @ignore
          */
                 closable: { value: true },
-                /**
-         * whether this component can be focused.
-         *
-         * Defaults to: true
-         *
-         * @cfg {Boolean} focusable
-         * @protected
-         */
-                /**
-         * @ignore
-         */
-                focusable: { value: true },
                 /**
          * whether this component can be closed by press escape key.
          *

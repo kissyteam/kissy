@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:57
+build time: Jun 18 13:21
 */
 KISSY.add("node",["node/base","node/attach","node/override","node/anim"],function(m,f,i,l){l.exports=f("node/base");f("node/attach");f("node/override");f("node/anim")});
 KISSY.add("node/base",["util","dom","event/dom"],function(m,f,i,l){function c(g,j,f){var h;if(g instanceof c&&1===arguments.length)return g.slice();if(!(this instanceof c))return c.all.apply(c,arguments);if(g)if("string"===typeof g){if(h=k.create(g,j,f),h.nodeType===b.DOCUMENT_FRAGMENT_NODE)return a.apply(this,d(h.childNodes)),this}else{if(e.isArray(g)||n(g))return a.apply(this,d(g)),this;h=g}else return this;this[0]=h;this.length=1;return this}var e=f("util"),k=f("dom"),m=f("event/dom"),h=Array.prototype,

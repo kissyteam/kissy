@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:58
+build time: Jun 18 13:22
 */
 /*
 combined modules:
@@ -321,6 +321,9 @@ KISSY.add('tabs', [
             }
         }, {
             ATTRS: {
+                handleGestureEvents: { value: false },
+                allowTextSelection: { value: true },
+                focusable: { value: false },
                 /**
          * tabs config, eg: {title:'', content:'', selected:false, closable:false}
          * @cfg {Object} item
@@ -345,10 +348,6 @@ KISSY.add('tabs', [
          * @ignore
          */
                 lazyRender: { value: false },
-                // real attribute
-                handleGestureEvents: { value: false },
-                allowTextSelection: { value: true },
-                focusable: { value: false },
                 bar: {
                     getter: function () {
                         return this.get('children')[BarIndexMap[this.get('barOrientation')]];
@@ -568,11 +567,11 @@ KISSY.add('tabs/body', [
             }
         }, {
             ATTRS: {
-                selectedPanelIndex: {},
                 allowTextSelection: { value: true },
                 focusable: { value: false },
-                lazyRender: {},
                 handleGestureEvents: { value: false },
+                selectedPanelIndex: {},
+                lazyRender: {},
                 defaultChildCfg: {
                     valueFn: function () {
                         return { xclass: 'tabs-panel' };
@@ -654,9 +653,10 @@ KISSY.add('tabs/tab', [
         }
     }, {
         ATTRS: {
-            contentTpl: { value: TabTpl },
-            handleGestureEvents: { value: false },
+            allowTextSelection: { value: false },
             focusable: { value: false },
+            handleGestureEvents: { value: false },
+            contentTpl: { value: TabTpl },
             /**
          * whether closable
          * @cfg {Boolean} closable
@@ -781,6 +781,9 @@ KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, 
         }
     }, {
         ATTRS: {
+            allowTextSelection: { value: true },
+            focusable: { value: false },
+            handleGestureEvents: { value: false },
             /**
          * whether selected
          * @cfg {Boolean} selected
@@ -794,9 +797,7 @@ KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, 
                 parse: function (el) {
                     return el.hasClass(this.getBaseCssClass('selected'));
                 }
-            },
-            focusable: { value: false },
-            allowTextSelection: { value: true }
+            }
         },
         xclass: 'tabs-panel'
     });

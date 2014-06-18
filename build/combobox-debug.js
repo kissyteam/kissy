@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 17 21:45
+build time: Jun 18 13:09
 */
 /*
 combined modules:
@@ -323,6 +323,9 @@ KISSY.add('combobox/control', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: true },
+            focusable: { value: true },
+            allowTextSelection: { value: true },
             contentTpl: { value: ComboboxTpl },
             /**
          * Input element of current combobox.
@@ -408,7 +411,6 @@ KISSY.add('combobox/control', [
                     return '.' + this.getBaseCssClass('invalid-el');
                 }
             },
-            allowTextSelection: { value: true },
             /**
          * Whether show combobox trigger.
          * Defaults to: true.

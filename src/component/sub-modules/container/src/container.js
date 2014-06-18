@@ -23,6 +23,8 @@ function defAddChild(e) {
 
     c.setInternal('parent', self);
 
+    // NOTE 20140618
+    // child can not render into a documentFragment(parent is not in dom tree)
     if (self.get('rendered')) {
         self.renderChild(index);
     }
