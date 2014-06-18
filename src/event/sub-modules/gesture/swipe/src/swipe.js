@@ -69,7 +69,7 @@ function fire(self, e, ing) {
     if (ing) {
         var prevent = e.originalEvent._ksSwipePrevent;
         if (prevent) {
-            if (prevent[direction]) {
+            if (prevent === true || prevent[direction]) {
                 e.preventDefault();
             }
         }
