@@ -58,7 +58,7 @@
 
 <script>
 
-    KISSY.use('scroll-view,scroll-view/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+    KISSY.use('node,scroll-view,scroll-view/plugin/scrollbar', function (S,$, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
 
             if (1) {
@@ -67,7 +67,7 @@
                     content += '<p class="row">' + i + ': ' + new Array(10).join(' long ') + '</p>';
                 }
 
-                S.all('#native').html(content);
+                $('#native').html(content);
 
                 window.scrollView = new ScrollView({
                     width: 320,
@@ -84,20 +84,20 @@
                     S.log(e.direction);
                 });
 
-                S.all('#destroy').on('click', function () {
+                $('#destroy').on('click', function () {
                     scrollView.destroy();
-                    S.all('#destroy').attr('disabled', true);
+                    $('#destroy').attr('disabled', true);
                 });
 
-                S.all('#disable').on('click', function () {
+                $('#disable').on('click', function () {
                     scrollView.set('disabled', true);
                 });
 
-                S.all('#enable').on('click', function () {
+                $('#enable').on('click', function () {
                     scrollView.set('disabled', false);
                 });
 
-                S.all('<div style="height:100px"></div>').appendTo('body');
+                $('<div style="height:100px"></div>').appendTo('body');
 
 
                 new ScrollView({
@@ -113,7 +113,7 @@
                 }).render();
             }
 
-            S.all('<h2>un-scrollable test</h2>').appendTo('body');
+            $('<h2>un-scrollable test</h2>').appendTo('body');
 
 
             new ScrollView({
@@ -122,7 +122,7 @@
                 content: '<p>test</p>'
             }).render();
 
-            S.all('<div style="height:1000px"></div>').appendTo('body');
+            $('<div style="height:1000px"></div>').appendTo('body');
 
         });
     });

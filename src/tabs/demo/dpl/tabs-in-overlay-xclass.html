@@ -22,7 +22,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("overlay,tabs", function (S, Overlay, Tabs) {
+    KISSY.use("overlay,tabs,node", function (S, Overlay, Tabs,$) {
 
         (function () {
 
@@ -59,7 +59,7 @@
                 ]
             });
 
-            S.all('#show').on('click', function () {
+            $('#show').on('click', function () {
                 o.show();
             });
 

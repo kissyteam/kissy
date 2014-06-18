@@ -80,9 +80,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     var styleSheet1, styleSheet2;
-    KISSY.use("stylesheet,core", function (S, StyleSheet) {
-        var $ = S.all;
-
+    KISSY.use("stylesheet,node", function (S, StyleSheet,$) {
         styleSheet1 = new StyleSheet(S.get("#link1"));
         styleSheet2 = new StyleSheet(S.get("#style1"));
 

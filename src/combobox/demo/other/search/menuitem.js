@@ -2,7 +2,7 @@ var $ = require('node');
 var util = require('util');
 var Menu = require('menu');
 var KeyCode = $.Event.KeyCode;
-return Menu.Item.extend({
+module.exports = Menu.Item.extend({
     handleKeyDownInternal: function (e) {
         if (e.keyCode === KeyCode.LEFT) {
 

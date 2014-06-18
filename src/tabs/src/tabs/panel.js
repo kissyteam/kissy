@@ -30,6 +30,18 @@ module.exports = Container.extend({
     }
 }, {
     ATTRS: {
+        allowTextSelection: {
+            value: true
+        },
+
+        focusable: {
+            value: false
+        },
+
+        handleGestureEvents: {
+            value: false
+        },
+
         /**
          * whether selected
          * @cfg {Boolean} selected
@@ -43,12 +55,6 @@ module.exports = Container.extend({
             parse: function (el) {
                 return el.hasClass(this.getBaseCssClass('selected'));
             }
-        },
-        focusable: {
-            value: false
-        },
-        allowTextSelection: {
-            value: true
         }
     },
     xclass: 'tabs-panel'

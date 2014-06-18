@@ -100,8 +100,7 @@
         return js_beautify(str, opts);
     }
 
-    KISSY.use("xtemplate,node", function (S, XTemplate) {
-        var $ = S.all;
+    KISSY.use("xtemplate,node", function (S, XTemplate,$) {
         $('#parse').on('click', function () {
             debugger
             var g = XTemplate.compiler.compileToStr($('#tpl').val());

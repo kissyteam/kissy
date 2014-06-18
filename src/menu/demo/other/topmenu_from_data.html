@@ -71,8 +71,8 @@
         }
     ];
 
-    KISSY.use("util,menu,separator", function (S, util,Menu) {
-        var context = S.all("#context");
+    KISSY.use("menu,separator,node", function (S, Menu,Separator,$) {
+        var context = $("#context");
 
         function generatePopupMenu(items, cfg) {
             var sb = {

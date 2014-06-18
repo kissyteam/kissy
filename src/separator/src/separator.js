@@ -17,22 +17,20 @@ module.exports = Control.extend({
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: false
+        },
 
-        /**
-         * Un-focusable.
-         * readonly.
-         * Defaults to: false.
-         */
         focusable: {
+            value: false
+        },
+
+        allowTextSelection: {
             value: false
         },
 
         disabled: {
             value: true
-        },
-
-        handleGestureEvents: {
-            value: false
         }
     },
     xclass: 'separator'

@@ -338,6 +338,18 @@ ComboBox = Control.extend({
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: true
+        },
+
+        focusable: {
+            value: true
+        },
+
+        allowTextSelection: {
+            value: true
+        },
+
         contentTpl: {
             value: ComboboxTpl
         },
@@ -433,10 +445,6 @@ ComboBox = Control.extend({
             selector: function () {
                 return '.' + this.getBaseCssClass('invalid-el');
             }
-        },
-
-        allowTextSelection: {
-            value: true
         },
 
         /**

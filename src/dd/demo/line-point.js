@@ -2,7 +2,7 @@
  * using dd to draw three mutual-crossed lines to cross four points
  * @author yiminghe@gmail.com
  */
-KISSY.use('dd,util', function (S, DD,util) {
+KISSY.use('dd,util,node', function (S, DD,util,$) {
 
     function inRange(x, min, max, estimated) {
         return x >= min && x <= max ||
@@ -40,8 +40,6 @@ KISSY.use('dd,util', function (S, DD,util) {
         }
     });
 
-
-    var $ = S.all;
     var canvas = document.getElementById("canvas");
     if (canvas.getContext) {
         var ctx = canvas.getContext("2d");

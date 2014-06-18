@@ -45,7 +45,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox,util", function (S, ComboBox,util) {
+    KISSY.use("combobox,util,node", function (S, ComboBox,util,$) {
         /*
          local dataSource
          */
@@ -61,7 +61,7 @@
 
             var basicComboBox = new ComboBox({
                 width: 100,
-                srcNode: S.one("#combobox"),
+                srcNode: $("#combobox"),
                 // 初始就聚焦
                 focused: true,
                 hasTrigger: false,
@@ -73,14 +73,14 @@
 
             var x = 1;
 
-            S.all(window).on('beforeunload', function () {
+            $(window).on('beforeunload', function () {
                 x = 0;
             });
 
             // ie needs setTimeout 0
             setTimeout(function () {
                 // 得到焦点时展示全部
-                S.one("#inp").on('focus', function () {
+                $("#inp").on('focus', function () {
                     if (x) {
                         basicComboBox.sendRequest('');
                     }
@@ -94,7 +94,7 @@
 
             var basicComboBox = new ComboBox({
                 render: "#newNew",
-                // width:S.one("#inp").css('width'),
+                // width:$("#inp").css('width'),
                 dataSource: new ComboBox.LocalDataSource({
                     data: data
                 }),

@@ -82,11 +82,15 @@ module.exports = Control.extend({
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: false
+        },
+
         focusable: {
             value: false
         },
 
-        handleGestureEvents: {
+        allowTextSelection: {
             value: false
         }
     },

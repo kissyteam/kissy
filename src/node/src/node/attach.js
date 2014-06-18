@@ -183,5 +183,5 @@ util.each(EVENT_INCLUDES_RET, function (k) {
  - Node 方法调用参数中的 KISSY Node 要转换成第一个 HTML Node
  - 要注意链式调用，如果 Dom 方法返回 undefined （无返回值），则 Node 对应方法返回 this
  - 实际上可以完全使用 Node 来代替 Dom，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new Node(document) 获得
+ - 存在 window/document 虚节点，通过 $(window), $(document) 获得
  */

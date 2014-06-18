@@ -404,6 +404,19 @@ function reflow(v, e) {
  */
 module.exports = Container.extend([ContentBox], methods, {
     ATTRS: {
+        focusable: {
+            // need process keydown
+            value: true
+        },
+
+        allowTextSelection: {
+            value: true
+        },
+
+        handleGestureEvents: {
+            value: false
+        },
+
         /**
          * scrollLeft of scroll view
          * @property scrollLeft
@@ -416,6 +429,7 @@ module.exports = Container.extend([ContentBox], methods, {
             render: 1,
             value: 0
         },
+
         /**
          * scrollTop of scroll view
          * @property scrollTop
@@ -431,19 +445,6 @@ module.exports = Container.extend([ContentBox], methods, {
 
         dimension: {},
 
-        focusable: {
-            // need process keydown
-            value: true
-        },
-
-        allowTextSelection: {
-            value: true
-        },
-
-        handleGestureEvents: {
-            value: false
-        },
-
         /**
          * whether to allow snap effect
          * @cfg {Boolean} snap
@@ -454,6 +455,7 @@ module.exports = Container.extend([ContentBox], methods, {
         snap: {
             value: false
         },
+
         /**
          * pageIndex, current pageIndex if allow snap
          * @property pageIndex

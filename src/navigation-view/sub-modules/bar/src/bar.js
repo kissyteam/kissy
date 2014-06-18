@@ -293,43 +293,56 @@ module.exports = Control.extend({
     xclass: 'navigation-bar',
 
     ATTRS: {
-        contentTpl: {
-            value: tpl
-        },
         handleGestureEvents: {
             value: false
         },
+
         focusable: {
             value: false
         },
+
+        allowTextSelection: {
+            value: true
+        },
+
+        contentTpl: {
+            value: tpl
+        },
+
         centerEl: {
             selector: function () {
                 return '.' + this.getBaseCssClass('center');
             }
         },
+
         contentEl: {
             selector: function () {
                 return '.' + this.getBaseCssClass('content');
             }
         },
+
         titleEl: {
             selector: function () {
                 return '.' + this.getBaseCssClass('title');
             }
         },
+
         title: {
             value: '',
             render: 1,
             sync: 0
         },
+
         withBackButton: {
             value: 1
         },
+
         withTitle: {
             value: 1,
             render: 1,
             sync: 0
         },
+
         backText: {
             value: 'Back',
             render: 1,

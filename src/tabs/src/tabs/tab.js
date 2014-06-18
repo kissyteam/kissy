@@ -59,15 +59,22 @@ module.exports = Button.extend([ContentBox], {
     }
 }, {
     ATTRS: {
-        contentTpl: {
-            value: TabTpl
-        },
-        handleGestureEvents: {
+        allowTextSelection: {
             value: false
         },
+
         focusable: {
             value: false
         },
+
+        handleGestureEvents: {
+            value: false
+        },
+
+        contentTpl: {
+            value: TabTpl
+        },
+
         /**
          * whether closable
          * @cfg {Boolean} closable
@@ -83,11 +90,13 @@ module.exports = Button.extend([ContentBox], {
                 return !!this.get('closeBtn');
             }
         },
+
         closeBtn: {
             selector: function () {
                 return '.' + this.getBaseCssClass('close');
             }
         },
+
         /**
          * whether selected
          * @cfg {Boolean} selected

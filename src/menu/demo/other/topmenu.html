@@ -39,8 +39,8 @@
 <script>
 
 
-    KISSY.use("menu,separator", function (S, Menu,Separator) {
-        var context = S.all("#context");
+    KISSY.use("menu,separator,node", function (S, Menu,Separator,$) {
+        var context = $("#context");
 
         var sb = new Menu.PopupMenu({
             // boolean，是否鼠标脱离菜单后自动隐藏

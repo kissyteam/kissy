@@ -14,8 +14,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.ready(function () {
-        KISSY.use("overlay", function (S, Overlay) {
-            var $ = S.all;
+        KISSY.use("overlay,node", function (S, Overlay,$) {
             var a = new Overlay({
                 closable:true,
                 width:440,

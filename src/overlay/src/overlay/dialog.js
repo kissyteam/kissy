@@ -96,6 +96,10 @@ var Dialog = Overlay.extend({
     }
 }, {
     ATTRS: {
+        focusable: {
+            value: true
+        },
+
         contentTpl: {
             value: DialogTpl
         },
@@ -230,21 +234,6 @@ var Dialog = Overlay.extend({
          * @ignore
          */
         closable: {
-            value: true
-        },
-
-        /**
-         * whether this component can be focused.
-         *
-         * Defaults to: true
-         *
-         * @cfg {Boolean} focusable
-         * @protected
-         */
-        /**
-         * @ignore
-         */
-        focusable: {
             value: true
         },
 

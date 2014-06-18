@@ -210,6 +210,18 @@ module.exports = Container.extend([
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: true
+        },
+
+        focusable: {
+            value: true
+        },
+
+        allowTextSelection: {
+            value: false
+        },
+
         /**
          * Current highlighted child menu item.
          * @type {KISSY.Menu.Item}

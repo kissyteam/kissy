@@ -1,6 +1,6 @@
 var Menu = require('menu');
 var $ = require('node');
-return Menu.Item.extend({
+module.exports = Menu.Item.extend({
     createDom: function () {
         this.$el.append('<span class="del">del</span>');
     },

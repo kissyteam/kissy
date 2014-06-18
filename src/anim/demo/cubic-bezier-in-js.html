@@ -48,9 +48,9 @@
 <script>
 
     KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
-        S.all('#run').on('click', function () {
-            S.all('.demo').removeClass('run cubic').css('left', 10);
-            S.all('#run').attr('disabled', true);
+        Node.all('#run').on('click', function () {
+            Node.all('.demo').removeClass('run cubic').css('left', 10);
+            Node.all('#run').attr('disabled', true);
 
             new TimerAnim('#demo1', {
                 left: 500
@@ -58,10 +58,10 @@
                 duration: 2,
                 easing: 'ease-out',
                 complete: function () {
-                    S.all('#run').attr('disabled', false);
+                    Node.all('#run').attr('disabled', false);
                 }
             }).run();
-            S.all('#demoCss').addClass('run').css('left', 500);
+            Node.all('#demoCss').addClass('run').css('left', 500);
 
 
             new TimerAnim('#demo2', {
@@ -82,7 +82,7 @@
                 easing: 'cubic-bezier(1,0.22,0,0.84)'
             }).run();
 
-            S.all('#demoCubic').addClass('cubic').css('left', 500);
+            Node.all('#demoCubic').addClass('cubic').css('left', 500);
         });
     });
 </script>

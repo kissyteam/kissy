@@ -296,8 +296,7 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('split-button', function (S, SplitButton) {
-        var $ = S.all;
+    KISSY.use('node,split-button', function (S,$, SplitButton) {
         $(".ks-split-button").each(function (n) {
             new SplitButton({
                 srcNode: n,

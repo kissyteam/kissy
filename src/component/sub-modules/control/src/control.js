@@ -1228,7 +1228,7 @@ var Control = module.exports = Base.extend({
              * @ignore
              */
             handleGestureEvents: {
-                value: true
+                value: false
             },
 
             /**
@@ -1243,7 +1243,7 @@ var Control = module.exports = Base.extend({
              * @ignore
              */
             focusable: {
-                value: true
+                value: false
             },
 
             /**
@@ -1259,9 +1259,7 @@ var Control = module.exports = Base.extend({
              * @ignore
              */
             allowTextSelection: {
-                // 和 focusable 分离
-                // grid 需求：容器允许选择里面内容
-                value: false
+                value: true
             },
 
             /**

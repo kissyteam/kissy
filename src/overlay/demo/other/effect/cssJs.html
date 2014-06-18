@@ -19,7 +19,7 @@
 
 <script>
 
-        KISSY.use("overlay", function (S, Overlay) {
+        KISSY.use("overlay,node", function (S, Overlay,$) {
             var o = new Overlay.Dialog({
                 width:500,
                 height:500,
@@ -36,7 +36,7 @@
                     effect:'fade'
                 }
             });
-            S.all("#t2").on("click", function () {
+            $("#t2").on("click", function () {
                 o.center().show();
             });
             o.on('show',function(){

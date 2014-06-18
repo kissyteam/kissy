@@ -25,10 +25,10 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script>
 
-    KISSY.use('node',function (S) {
-        var $ = S.all, ret = [];
+    KISSY.use('node',function (S,$) {
+        var ret = [];
 
-        S.one("#holder").children().each(function (h) {
+        $("#holder").children().each(function (h) {
             var name = h.nodeName();
             ret.push("**********************************");
             ret.push(name + " font-size : " + h.css("font-size"));

@@ -492,13 +492,22 @@ module.exports = Control.extend({
 }, {
     xclass: 'date-picker',
     ATTRS: {
-        contentTpl: {
-            value: PickerTpl
+        handleGestureEvents: {
+            value: true
         },
 
         focusable: {
             value: true
         },
+
+        allowTextSelection: {
+            value: false
+        },
+
+        contentTpl: {
+            value: PickerTpl
+        },
+
         /**
          * current selected value of current date picker
          * @cfg {KISSY.Date.Gregorian} value
@@ -515,21 +524,25 @@ module.exports = Control.extend({
                 return date;
             }
         },
+
         previousYearBtn: {
             selector: function () {
                 return '.' + this.getBaseCssClass('prev-year-btn');
             }
         },
+
         nextYearBtn: {
             selector: function () {
                 return '.' + this.getBaseCssClass('next-year-btn');
             }
         },
+
         previousMonthBtn: {
             selector: function () {
                 return '.' + this.getBaseCssClass('prev-month-btn');
             }
         },
+
         monthSelectEl: {
             selector: function () {
                 return '.' + this.getBaseCssClass('month-select');
@@ -540,9 +553,11 @@ module.exports = Control.extend({
                 return '.' + this.getBaseCssClass('month-select-content');
             }
         },
+
         monthPanel: {
             valueFn: setUpMonthPanel
         },
+
         nextMonthBtn: {
             selector: function () {
                 return '.' + this.getBaseCssClass('next-month-btn');
@@ -553,16 +568,19 @@ module.exports = Control.extend({
                 return '.' + this.getBaseCssClass('clear-btn');
             }
         },
+
         tbodyEl: {
             selector: function () {
                 return '.' + this.getBaseCssClass('tbody');
             }
         },
+
         todayBtnEl: {
             selector: function () {
                 return '.' + this.getBaseCssClass('today-btn');
             }
         },
+
         /**
          * function used to render a date cell
          *
@@ -576,6 +594,7 @@ module.exports = Control.extend({
          * @ignore
          */
         dateRender: {},
+
         /**
          * function used to judge whether this date cell is disabled
          *
@@ -590,6 +609,7 @@ module.exports = Control.extend({
          * @ignore
          */
         disabledDate: {},
+
         /**
          * locale object for date picker
          * @cfg {Object} locale
@@ -600,6 +620,7 @@ module.exports = Control.extend({
         locale: {
             value: locale
         },
+
         /**
          * whether to show today button.
          * Defaults to true.
@@ -612,6 +633,7 @@ module.exports = Control.extend({
             render: 1,
             value: true
         },
+
         /**
          * whether to show clear button.
          * Defaults to true.
@@ -624,10 +646,12 @@ module.exports = Control.extend({
             render: 1,
             value: true
         },
+
         clear: {
             render: 1,
             value: false
         },
+
         /**
          * whether to show week number column.
          * Defaults to true.

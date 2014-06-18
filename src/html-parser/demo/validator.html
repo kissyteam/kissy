@@ -18,10 +18,10 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("html-parser,core", function (S, HtmlParser) {
+    KISSY.use("html-parser,node", function (S, HtmlParser,$) {
         var Lexer = HtmlParser.Lexer;
-        S.one("#start").on("click", function () {
-            var inp = S.one("#inp").val();
+        $("#start").on("click", function () {
+            var inp = $("#inp").val();
             var lexer = new Lexer(inp);
             var stack = [];
             var node = lexer.nextNode();

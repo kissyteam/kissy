@@ -316,8 +316,7 @@ footer {
 </section>
 
 <script>
-    KISSY.use('node', function (S) {
-        var $ = S.all;
+    KISSY.use('node', function (S,$) {
         $('#basic').delegate('mouseenter', '.square', function (e) {
             var currentTarget = $(e.currentTarget);
             if (!currentTarget.isRunning()) {

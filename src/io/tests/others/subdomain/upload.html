@@ -23,17 +23,17 @@
         document.domain = location.hostname;
     }
 
-    KISSY.use("io,node,json,cookie", function (S, io) {
-        S.one('#upload').on('click', function (e) {
+    KISSY.use("io,node,json,cookie", function (S, io,$,JSON) {
+        $('#upload').on('click', function (e) {
             e.halt();
             io({
                 type: 'post',
-                form: S.get('#t'),
+                form: $('#t')[0],
                 dataType: 'json', // 取 body.text
                 url: 'http://' + location.hostname + ':'+port+'/kissy/src/io/tests/others/subdomain/upload.jss',
                 success: function (data) {
                     alert(data);
-                    alert(S.JSON.stringify(data));
+                    alert(JSON.stringify(data));
                 }
             });
         });

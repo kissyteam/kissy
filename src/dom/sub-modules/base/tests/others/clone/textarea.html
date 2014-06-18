@@ -14,12 +14,12 @@
 </div>
 <script>
     var S = KISSY;
-    KISSY.use('node', function () {
-        S.one('.textarea-id').val("textarea can't be cloned");
-        S.one('.text-id').val('text value can be cloned');
-        S.one('#foo').append(S.one('#cloned-id').clone(true));
+    KISSY.use('node', function (S,$) {
+        $('.textarea-id').val("textarea can't be cloned");
+        $('.text-id').val('text value can be cloned');
+        $('#foo').append($('#cloned-id').clone(true));
         $('#foo2').append($('#cloned-id')[0].cloneNode(true));
-        alert(S.one('#foo .textarea-id').val());
+        alert($('#foo .textarea-id').val());
     });
 </script>
 </body>

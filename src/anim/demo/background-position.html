@@ -18,10 +18,10 @@ background-image: url("http://img03.taobaocdn.com/tps/i3/T1UfsTXotcXXb6hPny-500-
 <script>
 
     KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
-        S.all('#run').on('click', function () {
+        Node.all('#run').on('click', function () {
             this.disabled = true;
             var start = (+new Date());
-            var t = S.all('#t');
+            var t = Node.all('#t');
             new TimerAnim(t, {
                 height: 190,
                 left: {

@@ -103,9 +103,7 @@
     </script>
 
     <script>
-        KISSY.use("overlay,button", function (S, Overlay, Button) {
-            var $ = S.all;
-
+        KISSY.use("overlay,button,node", function (S, Overlay, Button,$) {
             var b = new Button({
                 srcNode: '#hover'
             }).render();
@@ -151,9 +149,7 @@
     </script>
 
     <script>
-        KISSY.use("overlay,button", function (S, Overlay, Button) {
-            var $ = S.all;
-
+        KISSY.use("overlay,button,node", function (S, Overlay, Button,$) {
             var d = new Overlay.Popup({
                 trigger: "#tip",
                 elCls: "ks-popup-top",

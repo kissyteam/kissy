@@ -73,9 +73,8 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("node,menu,separator", function (S, Node, Menu) {
-
-        var $ = S.all;
+    KISSY.use("menu,separator,node", function (S, Menu,Separator,$) {
+        var context = $("#context");
 
         var menu1 = new Menu({
             render: "#menuitem_container1",

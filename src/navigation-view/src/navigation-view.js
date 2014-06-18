@@ -94,6 +94,15 @@ var LoadingView = Control.extend({
         handleGestureEvents: {
             value: false
         },
+
+        focusable: {
+            value: false
+        },
+
+        allowTextSelection: {
+            value: true
+        },
+
         visible: {
             value: false
         }

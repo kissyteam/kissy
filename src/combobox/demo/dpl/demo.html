@@ -138,10 +138,10 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     /**/
-    KISSY.use('combobox', function (S, ComboBox) {
+    KISSY.use('combobox,node', function (S, ComboBox,$) {
         var data = ["a123456", "b12345", "c3464356", "d23434"];
         var basicComboBox = new ComboBox({
-            srcNode: S.one("#J_AutoComplete"),
+            srcNode: $("#J_AutoComplete"),
             validator: function (v, complete) {
                 complete(!v ? "必填" : "");
             },
@@ -156,7 +156,7 @@
         basicComboBox.render();
 
         // 得到焦点时展示全部
-        S.one("#inp").on('focus', function () {
+        $("#inp").on('focus', function () {
             basicComboBox.sendRequest('');
         });
         /**/
@@ -196,11 +196,11 @@
         });
     });
 
-    KISSY.use('combobox', function (S, ComboBox) {
+    KISSY.use('combobox,node', function (S, ComboBox,$) {
         var data = ["a123456", "b12345", "c3464356", "d23434"];
 
         var basicComboBox = new ComboBox({
-            srcNode: S.one("#J_Combox"),
+            srcNode: $("#J_Combox"),
             width: 200,
             dataSource: new ComboBox.LocalDataSource({
                 data: data
@@ -240,8 +240,7 @@
      * checked combobox
      */
 
-    KISSY.use('combobox,util', function (S, ComboBox,util) {
-        var $ = S.all;
+    KISSY.use('combobox,util,node', function (S, ComboBox,util,$) {
         var data = ["a1234567", "a123456", "b12345", "c3464356", "d23434"];
 
         var basicComboBox = new ComboBox({

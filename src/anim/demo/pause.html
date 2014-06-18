@@ -22,8 +22,9 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("node", function (S) {
-        var $ = S.all, startTime,
+    KISSY.use("node", function (S,Node) {
+        var $ = Node.all,
+                startTime,
                 startPause = 0,
                 pauseTime = 0,
                 endTime;

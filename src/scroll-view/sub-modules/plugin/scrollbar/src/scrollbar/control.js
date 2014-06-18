@@ -309,6 +309,18 @@ if (supportCss3) {
  */
 module.exports = Control.extend(methods, {
     ATTRS: {
+        handleGestureEvents: {
+            value: false
+        },
+
+        focusable: {
+            value: false
+        },
+
+        allowTextSelection: {
+            value: false
+        },
+
         /**
          * minimum scrollbar length.
          * Defaults to 20.
@@ -412,10 +424,6 @@ module.exports = Control.extend(methods, {
             selector: function () {
                 return '.' + this.getBaseCssClass('track');
             }
-        },
-
-        focusable: {
-            value: false
         },
 
         contentTpl: {

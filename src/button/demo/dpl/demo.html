@@ -154,14 +154,14 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("button", function (S, Button) {
-        S.all("#table .ks-button,#common .ks-button").each(function (n) {
+    KISSY.use("button,node", function (S, Button,$) {
+        $("#table .ks-button,#common .ks-button").each(function (n) {
             new Button({
                 srcNode:n
             }).render();
         });
 
-        S.all("#checkable .ks-button").each(function (n) {
+        $("#checkable .ks-button").each(function (n) {
             new Button({
                 srcNode:n,
                 checkable:true

@@ -26,6 +26,18 @@ module.exports = Control.extend({
     XHTML_DTD: HtmlParser.DTD,
 
     ATTRS: {
+        handleGestureEvents: {
+            value: false
+        },
+
+        focusable: {
+            value: false
+        },
+
+        allowTextSelection: {
+            value: true
+        },
+
         contentTpl: {
             value: RenderTpl
         },
@@ -89,14 +101,6 @@ module.exports = Control.extend({
             selector: function () {
                 return '.' + this.getBaseCssClass('status');
             }
-        },
-
-        handleGestureEvents: {
-            value: false
-        },
-
-        focusable: {
-            value: false
         },
 
         /**

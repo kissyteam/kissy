@@ -57,6 +57,18 @@ module.exports = Container.extend([
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: false
+        },
+
+        focusable: {
+            value: false
+        },
+
+        allowTextSelection: {
+            value: true
+        },
+
         contentTpl: {
             value: OverlayTpl
         },
@@ -113,51 +125,6 @@ module.exports = Container.extend([
          */
         closeAction: {
             value: HIDE
-        },
-
-        /**
-         * overlay can not have focus.
-         *
-         * Defaults to: false.
-         *
-         * @cfg {Boolean} focusable
-         * @protected
-         */
-        /**
-         * @ignore
-         */
-        focusable: {
-            value: false
-        },
-
-        /**
-         * overlay can have text selection.
-         *
-         * Defaults to: true.
-         *
-         * @cfg {Boolean} allowTextSelection
-         * @protected
-         */
-        /**
-         * @ignore
-         */
-        allowTextSelection: {
-            value: true
-        },
-
-        /**
-         * whether this component can be responsive to mouse.
-         *
-         * Defaults to: false
-         *
-         * @cfg {Boolean} handleGestureEvents
-         * @protected
-         */
-        /**
-         * @ignore
-         */
-        handleGestureEvents: {
-            value: false
         },
 
         visible: {

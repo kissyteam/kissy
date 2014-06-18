@@ -20,8 +20,8 @@
 <script>
     document.domain = location.hostname;
 
-    KISSY.use("io,node,json", function (S, io) {
-        S.one('#upload').on('click',function(){
+    KISSY.use("io,node,json", function (S, io,$) {
+        $('#upload').on('click',function(){
             io({
                 form: S.get('#t'),
                 type:'post',

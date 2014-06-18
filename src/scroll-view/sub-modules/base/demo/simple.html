@@ -45,7 +45,7 @@
 <div id="native"></div>
 <button id="destroy">destroy</button>
 <script>
-    KISSY.use('scroll-view/base', function (S, ScrollView) {
+    KISSY.use('scroll-view/base,node', function (S, ScrollView,$) {
         var content = '';
         for (var i = 0; i < 10; i++) {
             content += '<p>' + i + '</p>';
@@ -55,7 +55,7 @@
             content += '<p>' + i + '</p>';
         }
 
-        S.all('#native').html(content);
+        $('#native').html(content);
 
         var scrollView = new ScrollView({
             width: 320,
@@ -63,12 +63,12 @@
             content: content
         }).render();
 
-        S.all('#destroy').on('click', function () {
+        $('#destroy').on('click', function () {
             scrollView.destroy();
-            S.all('#destroy').attr('disabled', true);
+            $('#destroy').attr('disabled', true);
         });
 
-        S.all('<div style="height: 1000px"></div>').appendTo(document.body);
+        $('<div style="height: 1000px"></div>').appendTo(document.body);
     });
 </script>
 </body>

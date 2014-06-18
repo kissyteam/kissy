@@ -56,8 +56,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
 
-    KISSY.use("xtemplate,node", function (S, XTemplate) {
-        var $ = S.all;
+    KISSY.use("xtemplate,node", function (S, XTemplate,$) {
         $('#parse').on('click', function () {
             debugger
             var g = XTemplate.compiler.parse($('#tpl').val());

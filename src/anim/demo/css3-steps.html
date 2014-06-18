@@ -48,8 +48,7 @@
 
 <script>
 
-    KISSY.use('node', function (S) {
-        var $ = S.all;
+    KISSY.use('node', function (S,$) {
         $('#run').on('click', function () {
             $('.demo').removeClass('run-start run-end').css('left', 10);
             setTimeout(function () {
