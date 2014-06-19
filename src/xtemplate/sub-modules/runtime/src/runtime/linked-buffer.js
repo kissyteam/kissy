@@ -84,3 +84,8 @@ LinkedBuffer.prototype = {
 LinkedBuffer.Buffer = Buffer;
 
 module.exports = LinkedBuffer;
+
+/**
+ * 2014-06-19 yiminghe@gmail.com
+ * string concat is faster than array join: 85ms<-> 131ms
+ */

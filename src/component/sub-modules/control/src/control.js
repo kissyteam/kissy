@@ -594,8 +594,7 @@ var Control = module.exports = Base.extend({
             var self = this;
             renderData = renderData || self.renderData;
             renderCommands = renderCommands || self.renderCommands;
-            var XTemplate = self.get('XTemplate');
-            return new XTemplate(tpl, {
+            return new XTemplateRuntime(tpl, {
                 control: self,
                 commands: renderCommands
             }).render(renderData);
@@ -1306,10 +1305,6 @@ var Control = module.exports = Base.extend({
                         this.addTarget(p);
                     }
                 }
-            },
-
-            XTemplate: {
-                value: XTemplateRuntime
             }
         }
     });

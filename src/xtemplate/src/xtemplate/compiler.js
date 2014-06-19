@@ -451,7 +451,7 @@ compiler = {
      * @return {String}
      */
     compileToStr: function (tplContent, name, isModule) {
-        var func = compiler.compile(tplContent, name, isModule);
+        var func = compiler.compileToJson(tplContent, name, isModule);
         return substitute(FUNC, {
             params: func.params.join(','),
             body: func.source
@@ -464,7 +464,7 @@ compiler = {
      * @param {Boolean} [isModule] whether generated function is used in module
      * @return {Object}
      */
-    compile: function (tplContent, name, isModule) {
+    compileToJson: function (tplContent, name, isModule) {
         var root = compiler.parse(tplContent, name);
         uuid = 0;
         xtplAstToJs.isModule = isModule;
@@ -476,8 +476,8 @@ compiler = {
      * @param {String} name template file name
      * @return {Function}
      */
-    compileToFn: function (tplContent, name) {
-        var code = compiler.compile(tplContent, name || guid('xtemplate'));
+    compile: function (tplContent, name) {
+        var code = compiler.compileToJson(tplContent, name || guid('xtemplate'));
         // eval is not ok for eval("(function(){})") ie
         return Function.apply(null, code.params
             .concat(code.source + substitute(SOURCE_URL, {

@@ -127,6 +127,7 @@ function XTemplateRuntime(fn, config) {
     self.fn = fn;
     config = self.config = config || {};
     config.loader = config.loader || loader;
+    this.subNameResolveCache = {};
 }
 
 util.mix(XTemplateRuntime, {
@@ -157,26 +158,6 @@ util.mix(XTemplateRuntime, {
         delete commands[commandName];
     }
 });
-
-var subNameResolveCache = {};
-
-function resolve(subName, parentName) {
-    if (subName.charAt(0) !== '.') {
-        return subName;
-    }
-    if (!parentName) {
-        var error = 'parent template does not have name' +
-            ' for relative sub tpl name: ' + subName;
-        LoggerManager.error(error);
-    }
-    var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
-    if (cache[subName]) {
-        return cache[subName];
-    }
-    subName = cache[subName] = getSubNameFromParentName(parentName, subName);
-    //console.log('resolve: ' + name + ' : ' + subName);
-    return subName;
-}
 
 XTemplateRuntime.prototype = {
     constructor: XTemplateRuntime,
@@ -209,9 +190,26 @@ XTemplateRuntime.prototype = {
         config.commands[commandName] = fn;
     },
 
+    resolve: function (subName, parentName) {
+        if (subName.charAt(0) !== '.') {
+            return subName;
+        }
+        if (!parentName) {
+            var error = 'parent template does not have name' +
+                ' for relative sub tpl name: ' + subName;
+            LoggerManager.error(error);
+        }
+        var nameResolveCache = this.subNameResolveCache[parentName] = this.subNameResolveCache[parentName] || {};
+        if (nameResolveCache[subName]) {
+            return nameResolveCache[subName];
+        }
+        subName = nameResolveCache[subName] = getSubNameFromParentName(parentName, subName);
+        return subName;
+    },
+
     include: function (subTplName, tpl, scope, option, buffer) {
         var self = this;
-        subTplName = resolve(subTplName, tpl.name);
+        subTplName = self.resolve(subTplName, tpl.name);
         return buffer.async(function (newBuffer) {
             self.config.loader.load(self, subTplName, function (error, tplFn) {
                 if (error) {

@@ -24,6 +24,7 @@ var commands = {
         }
         return ret;
     },
+
     each: function (scope, option, buffer) {
         var params = option.params;
         var param0 = params[0];

@@ -133,17 +133,6 @@ describe('feature', function () {
         expect(render).toBe('1');
     });
 
-    it('support cache', function () {
-        var tpl = '{{title}}';
-        expect(new XTemplate(tpl).fn).toBe(new XTemplate(tpl).fn);
-        expect(new XTemplate(tpl, {
-            cache: true
-        }).fn).toBe(new XTemplate(tpl).fn);
-        expect(new XTemplate(tpl, {
-            cache: false
-        }).fn).not.toBe(new XTemplate(tpl).fn);
-    });
-
     it('support {{#if}} {{@', function () {
         var tpl = '{{#if(title)}}has title{{/if}}\n' +
             '{{@if(title2)}}has title2{{else}}not has title2{{/if}}';

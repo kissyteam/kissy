@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:10
+build time: Jun 19 20:00
 */
 /*
 combined modules:
@@ -563,8 +563,7 @@ KISSY.add('component/control', [
                 var self = this;
                 renderData = renderData || self.renderData;
                 renderCommands = renderCommands || self.renderCommands;
-                var XTemplate = self.get('XTemplate');
-                return new XTemplate(tpl, {
+                return new XTemplateRuntime(tpl, {
                     control: self,
                     commands: renderCommands
                 }).render(renderData);
@@ -1181,8 +1180,7 @@ KISSY.add('component/control', [
                             this.addTarget(p);
                         }
                     }
-                },
-                XTemplate: { value: XTemplateRuntime }
+                }
             }
         });    /**
  * create a new control extend component/control, extensions and static/prototype properties/methods.

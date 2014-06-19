@@ -143,7 +143,7 @@ var x = [1, 2, 3];
 {{/if}}
 ```
 
-### 循环操作
+### 循环
 
 可以对数组或对象进行循环操作，默认获取循环对象值为 {{this}}，键为 {{xindex}} , 也可以指定.
 
@@ -252,6 +252,20 @@ xtpl.XTemplate.addCommand('xInline',function(scope, option){
 });
 ```
 
+此时模板中可通过 {{}} 来转义命令返回的内容.
+
+
+或使用 buffer (详见下面 Buffer api)
+
+``` javascript
+var xtpl = require('xtpl');
+xtpl.XTemplate.addCommand('xInline',function(scope, option, buffer){
+  return buffer.write(option.params[0]+'1');
+});
+```
+
+此时模板不能控制命令返回内容是否转义.
+
 ```
 {{xInline(1)}} // => 2
 ```
@@ -337,3 +351,65 @@ KISSY.use('xtemplate/runtime',function(S,XTemplate){
     })...
 });
 ```
+
+### Buffer api
+
+#### method
+
+
+Buffer write(data:String, escape:Boolean): 写数据到缓冲区
+
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th style="width: 100px;">name</th>
+        <th style="width: 50px;">type</th>
+        <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>data</td>
+        <td>String</td>
+        <td>将要写到缓冲区的字符串</td>
+    </tr>
+    <tr>
+            <td>escape</td>
+            <td>Boolean</td>
+            <td>是否转义</td>
+        </tr>
+    </tbody>
+</table>
+
+
+Buffer async(fn:Function): 产生新的异步缓冲区，新的缓冲区为 fn 回调函数的第一个参数
+
+
+Buffer end(data, escape): 参数含义同 write 函数。 标志缓冲区数据填充完毕，用于通知异步缓冲区的结束。
+
+
+Buffer error(reason): 触发 render 异步回调为失败。 reason 为回调的第一个参数.
+
+
+### Scope api
+
+
+#### member
+
+parent: 上级作用域
+
+root: 顶层作用域
+
+
+#### method
+
+void setParent(scope: Scope): 设置当前作用域的上级作用域
+
+void setData(data): 设置当前作用域内数据
+
+var getData(): 获取当前作用域内数据
+
+void set(name,value): 设置当前作用域内附属数据
+
+void get(name): 获取当前作用域内数据值（包括附属数据）
