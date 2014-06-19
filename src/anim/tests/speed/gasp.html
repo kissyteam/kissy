@@ -81,6 +81,7 @@
     KISSY.use('anim/timer,node', function (S, Anim, $) {
         var win = $(window);
         var inProgress;
+        var centerX, centerY;
         var button = document.getElementById("start"),
                 dotQtyInput = document.getElementById("dotQuantity"),
                 engineInput = document.getElementById("engine"),
@@ -94,8 +95,7 @@
             tween: function (dot) {
                 dot.style.cssText = startingCSS;
                 var angle = Math.random() * Math.PI * 2;
-
-                new Anim(dot, {
+                var anim = new Anim(dot, {
                             left: Math.cos(angle) * radius + centerX,
                             top: Math.sin(angle) * radius + centerY,
                             width: 32,
@@ -107,7 +107,8 @@
                                 tests.kissy.tween(dot)
                             }
                         }
-                ).run();
+                );
+                anim.run();
             },
             stop: function (dot) {
                 //dot.stop(true);

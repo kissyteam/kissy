@@ -25,7 +25,8 @@ var defaultConfig = {
 
 // stop(true) will run complete function synchronously
 function syncComplete(self) {
-    var _backupProps, complete = self.config.complete;
+    var _backupProps,
+        complete = self.config.complete;
     // only recover after complete anim
     if (!util.isEmptyObject(_backupProps = self._backupProps)) {
         Dom.css(self.node, _backupProps);

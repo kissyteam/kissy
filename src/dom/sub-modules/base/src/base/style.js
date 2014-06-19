@@ -136,21 +136,23 @@ util.mix(Dom,
             // supports hash
             if (typeof name === 'object') {
                 for (k in name) {
+                    k = camelCase(k);
                     for (i = els.length - 1; i >= 0; i--) {
-                        style(els[i], k, name[k]);
+                        style(els[i], k, name[k], 1);
                     }
                 }
                 return undefined;
             }
+            name = camelCase(name);
             if (val === undefined) {
                 ret = '';
                 if (elem) {
-                    ret = style(elem, name, val);
+                    ret = style(elem, name, val, 1);
                 }
                 return ret;
             } else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name, val);
+                    style(els[i], name, val, 1);
                 }
             }
             return undefined;
@@ -196,7 +198,7 @@ util.mix(Dom,
                 return (typeof ret === 'undefined') ? '' : ret;
             } else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name, val);
+                    style(els[i], name, val, 1);
                 }
             }
             return undefined;
@@ -479,15 +481,14 @@ function swap(elem, options, callback) {
     }
 }
 
-function style(elem, name, val) {
+function style(elem, name, val, camelCased) {
     var elStyle,
         ret,
         hook;
-    if (elem.nodeType === 3 ||
-        elem.nodeType === 8 || !(elStyle = elem.style)) {
+    if (!(elStyle = elem.style)) {
         return undefined;
     }
-    name = camelCase(name);
+    name = camelCased ? name : camelCase(name);
     hook = cssHooks[name];
     name = normalizeCssPropName(name);
     // setter

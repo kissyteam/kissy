@@ -31,6 +31,15 @@ if (0) {
     };
 }
 
+//function check() {
+//    if (runnings.head === runnings.tail) {
+//        if (runnings.head && (runnings.head._ksNext || runnings.head._ksPrev)) {
+//            debugger
+//        }
+//        return;
+//    }
+//}
+
 var runnings = {
     head: null,
     tail: null
@@ -42,6 +51,7 @@ var manager = module.exports = {
     timer: null,
 
     start: function (anim) {
+        //check();
         anim._ksNext = anim._ksPrev = null;
         if (!runnings.head) {
             runnings.head = runnings.tail = anim;
@@ -50,6 +60,7 @@ var manager = module.exports = {
             runnings.tail._ksNext = anim;
             runnings.tail = anim;
         }
+        //check();
         manager.startTimer();
     },
 
@@ -58,6 +69,7 @@ var manager = module.exports = {
     },
 
     notRun: function (anim) {
+        //check();
         if (anim._ksPrev) {
             if (runnings.tail === anim) {
                 runnings.tail = anim._ksPrev;
@@ -67,11 +79,15 @@ var manager = module.exports = {
                 anim._ksNext._ksPrev = anim._ksPrev;
             }
         } else {
-            runnings.head = runnings.tail = anim._ksNext;
+            runnings.head = anim._ksNext;
+            if (runnings.tail === anim) {
+                runnings.tail = runnings.head;
+            }
             if (runnings.head) {
                 runnings.head._ksPrev = null;
             }
         }
+        //check();
         anim._ksNext = anim._ksPrev = null;
         if (!runnings.head) {
             manager.stopTimer();
@@ -110,12 +126,19 @@ var manager = module.exports = {
 
     runFrames: function () {
         var anim = runnings.head;
+        //var num = 0;
+        //var anims = [];
         while (anim) {
+            //anims.push(anim);
             var next = anim._ksNext;
             // in case anim is stopped
             anim.frame();
             anim = next;
+            //num++;
         }
+//        anims.forEach(function (a) {
+//            a.frame();
+//        });
         return !runnings.head;
     }
 };
