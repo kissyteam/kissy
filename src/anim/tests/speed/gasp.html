@@ -52,21 +52,22 @@
                     <option value="3000">3000</option>
                 </select>
             </li>
-            <li style="display:none">
+            <li>
                 Duration:
                 <select id="duration" size="1">
                     <option value="0.5">0.5 seconds</option>
                     <option value="0.75" selected="selected">0.75 seconds</option>
                     <option value="1">1 second</option>
                     <option value="5">5 seconds</option>
+                    <option value="58">58 seconds</option>
                 </select>
             </li>
             <li>
                 Engine:
                 <select id="engine" size="1">
                     <option value="kissy">KISSY-Animation</option>
+                    <option value="transition">KISSY-Transition</option>
                     <option value="gsap">GSAP</option>
-
                 </select>
             </li>
             <li>
@@ -78,7 +79,7 @@
 </div>
 </body>
 <script type="text/javascript">
-    KISSY.use('anim/timer,node', function (S, Anim, $) {
+    KISSY.use('anim/timer,node,anim/transition', function (S, Anim, $, Transition) {
         var win = $(window);
         var inProgress;
         var centerX, centerY;
@@ -89,7 +90,7 @@
         var tests = {};
         var duration = 0.75;
         var rawDots;
-        //jQuery
+
         tests.kissy = {
             milliseconds: true,
             tween: function (dot) {
@@ -100,6 +101,33 @@
                             top: Math.sin(angle) * radius + centerY,
                             width: 32,
                             height: 32
+                        }, {
+                            duration: duration,
+                            delay: Math.random() * duration,
+                            complete: function () {
+                                tests.kissy.tween(dot)
+                            }
+                        }
+                );
+                anim.run();
+            },
+            stop: function (dot) {
+                //dot.stop(true);
+                Anim.stop(dot);
+            },
+            nativeSize: false
+        };
+
+        tests.transition = {
+            milliseconds: true,
+            tween: function (dot) {
+                dot.style.cssText = startingCSS;
+                var angle = Math.random() * Math.PI * 2;
+                var anim = new Transition(dot, {
+                            left: Math.cos(angle) * radius + centerX + 'px',
+                            top: Math.sin(angle) * radius + centerY + 'px',
+                            width: 32 + 'px',
+                            height: 32 + 'px'
                         }, {
                             duration: duration,
                             delay: Math.random() * duration,
@@ -143,6 +171,7 @@
         var currentTest;
 
         function toggleTest() {
+            duration = parseFloat($('#duration').val());
             inProgress = !inProgress;
             if (inProgress) {
                 button.innerHTML = " STOP ";
@@ -168,7 +197,6 @@
                     container.removeChild(rawDots[i]); //removes dot(s)
                 }
             }
-
         }
 
         document.getElementById('start').onclick = toggleTest;
