@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:09
+build time: Jun 19 15:32
 */
 /*
 combined modules:
@@ -104,8 +104,8 @@ KISSY.add('anim/timer', [
                 parts = val.match(NUMBER_REG);
                 if (parts) {
                     to = parseFloat(parts[2]);
-                    unit = parts[3];    // 有单位但单位不是 px
-                    // 有单位但单位不是 px
+                    unit = parts[3];    // unit is not px
+                    // unit is not px
                     if (unit && unit !== 'px' && from) {
                         var tmpCur = 0, to2 = to;
                         do {
@@ -493,14 +493,13 @@ KISSY.add('anim/timer/easing', [], function (S, require, exports, module) {
  };
  */
 });
-KISSY.add('anim/timer/manager', ['util'], function (S, require, exports, module) {
+KISSY.add('anim/timer/manager', [], function (S, require, exports, module) {
     /**
  * @ignore
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-    var util = require('util');
-    var stamp = util.stamp, win = window,
+    var win = window,
         // note in background tab, interval is set to 1s in chrome/firefox
         // no interval change in ie for 15, if interval is less than 15
         // then in background tab interval is changed to 15
@@ -529,67 +528,87 @@ KISSY.add('anim/timer/manager', ['util'], function (S, require, exports, module)
             clearTimeout(timer);
         };
     }
-    module.exports = {
-        runnings: {},
-        timer: null,
-        start: function (anim) {
-            var self = this, kv = stamp(anim);
-            if (self.runnings[kv]) {
-                return;
-            }
-            self.runnings[kv] = anim;
-            self.startTimer();
-        },
-        stop: function (anim) {
-            this.notRun(anim);
-        },
-        notRun: function (anim) {
-            var self = this, kv = stamp(anim);
-            delete self.runnings[kv];
-            if (util.isEmptyObject(self.runnings)) {
-                self.stopTimer();
-            }
-        },
-        pause: function (anim) {
-            this.notRun(anim);
-        },
-        resume: function (anim) {
-            this.start(anim);
-        },
-        startTimer: function () {
-            var self = this;
-            if (!self.timer) {
-                self.timer = requestAnimationFrameFn(function run() {
-                    if (self.runFrames()) {
-                        self.stopTimer();
-                    } else {
-                        self.timer = requestAnimationFrameFn(run);
+    var runnings = {
+            head: null,
+            tail: null
+        };
+    var manager = module.exports = {
+            runnings: runnings,
+            timer: null,
+            start: function (anim) {
+                anim._ksNext = anim._ksPrev = null;
+                if (!runnings.head) {
+                    runnings.head = runnings.tail = anim;
+                } else {
+                    anim._ksPrev = runnings.tail;
+                    runnings.tail._ksNext = anim;
+                    runnings.tail = anim;
+                }
+                manager.startTimer();
+            },
+            stop: function (anim) {
+                this.notRun(anim);
+            },
+            notRun: function (anim) {
+                if (anim._ksPrev) {
+                    if (runnings.tail === anim) {
+                        runnings.tail = anim._ksPrev;
                     }
-                });
+                    anim._ksPrev._ksNext = anim._ksNext;
+                    if (anim._ksNext) {
+                        anim._ksNext._ksPrev = anim._ksPrev;
+                    }
+                } else {
+                    runnings.head = runnings.tail = anim._ksNext;
+                    if (runnings.head) {
+                        runnings.head._ksPrev = null;
+                    }
+                }
+                anim._ksNext = anim._ksPrev = null;
+                if (!runnings.head) {
+                    manager.stopTimer();
+                }
+            },
+            pause: function (anim) {
+                this.notRun(anim);
+            },
+            resume: function (anim) {
+                this.start(anim);
+            },
+            startTimer: function () {
+                var self = this;
+                if (!self.timer) {
+                    self.timer = requestAnimationFrameFn(function run() {
+                        if (self.runFrames()) {
+                            self.stopTimer();
+                        } else {
+                            self.timer = requestAnimationFrameFn(run);
+                        }
+                    });
+                }
+            },
+            stopTimer: function () {
+                var self = this, t = self.timer;
+                if (t) {
+                    cancelAnimationFrameFn(t);
+                    self.timer = 0;
+                }
+            },
+            runFrames: function () {
+                var anim = runnings.head;
+                while (anim) {
+                    var next = anim._ksNext;    // in case anim is stopped
+                    // in case anim is stopped
+                    anim.frame();
+                    anim = next;
+                }
+                return !runnings.head;
             }
-        },
-        stopTimer: function () {
-            var self = this, t = self.timer;
-            if (t) {
-                cancelAnimationFrameFn(t);
-                self.timer = 0;
-            }
-        },
-        runFrames: function () {
-            var self = this, r, flag, runnings = self.runnings;
-            for (r in runnings) {
-                // in case stop in frame
-                runnings[r].frame();
-            }    //noinspection LoopStatementThatDoesntLoopJS
-            //noinspection LoopStatementThatDoesntLoopJS
-            for (r in runnings) {
-                flag = 0;
-                break;
-            }
-            return flag === undefined;
-        }
-    };    /**
+        };    /**
  * @ignore
+ *
+ * 2014-06-19
+ * - try linked list https://github.com/kissyteam/kissy/issues/651
  *
  * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
  */
@@ -609,6 +628,7 @@ KISSY.add('anim/timer/fx', [
     var logger = LoggerManager.getLogger('s/aim/timer/fx');
     var Dom = require('dom');
     var undef;
+    var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
     function load(self, cfg) {
         util.mix(self, cfg);
         self.pos = 0;
@@ -696,18 +716,26 @@ KISSY.add('anim/timer/fx', [
      *
      */
         cur: function () {
-            var self = this, prop = self.prop, type, parsed, r, node = self.anim.node;    //不是css 或者 attribute 的缓动
-            //不是css 或者 attribute 的缓动
+            var self = this, prop = self.prop, type, parsed, r, node = self.anim.node;    //不是 css 或者 attribute 的缓动
+            //不是 css 或者 attribute 的缓动
             if (self.isCustomFx) {
                 return node[prop] || 0;
             }
             if (!(type = self.type)) {
-                type = self.type = isAttr(node, prop) ? 'attr' : 'css';
+                type = self.type = (r = isAttr(node, prop)) !== null ? 'attr' : 'css';
             }
             if (type === 'attr') {
-                r = Dom.attr(node, prop, undef, 1);
+                r = r === undefined ? Dom.attr(node, prop, undef, 1) : r;
             } else {
-                r = Dom.css(node, prop);
+                r = Dom.style(node, prop);
+                var parts = r.match(NUMBER_REG);
+                if (parts) {
+                    var unit = parts[3];    // unit is not px
+                    // unit is not px
+                    if (unit && unit !== 'px') {
+                        r = Dom.css(node, prop);
+                    }
+                }
             }    // Empty strings, null, undefined and 'auto' are converted to 0,
                  // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
                  // simple values such as '10px' are parsed to Float.
@@ -718,11 +746,13 @@ KISSY.add('anim/timer/fx', [
         }
     };
     function isAttr(node, prop) {
+        var value;    // support scrollTop/Left now!
         // support scrollTop/Left now!
-        if ((!node.style || node.style[prop] == null) && Dom.attr(node, prop, undef, 1) != null) {
-            return 1;
+        if ((!node.style || node.style[prop] == null) && // undefined
+            (value = Dom.attr(node, prop, undef, 1)) != null) {
+            return value;
         }
-        return 0;
+        return null;
     }
     function getPos(anim, propData) {
         var t = util.now(), runTime, startTime = anim.startTime, delay = propData.delay, duration = propData.duration;

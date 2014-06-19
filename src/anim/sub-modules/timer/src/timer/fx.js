@@ -8,6 +8,7 @@ var LoggerManager = require('logger-manager');
 var logger = LoggerManager.getLogger('s/aim/timer/fx');
 var Dom = require('dom');
 var undef;
+var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
 function load(self, cfg) {
     util.mix(self, cfg);
@@ -115,21 +116,27 @@ Fx.prototype = {
     cur: function () {
         var self = this,
             prop = self.prop,
-            type,
-            parsed,
-            r,
+            type, parsed, r,
             node = self.anim.node;
-        //不是css 或者 attribute 的缓动
+        //不是 css 或者 attribute 的缓动
         if (self.isCustomFx) {
             return node[prop] || 0;
         }
         if (!(type = self.type)) {
-            type = self.type = isAttr(node, prop) ? 'attr' : 'css';
+            type = self.type = ((r = isAttr(node, prop)) !== null) ? 'attr' : 'css';
         }
         if (type === 'attr') {
-            r = Dom.attr(node, prop, undef, 1);
+            r = r === undefined ? Dom.attr(node, prop, undef, 1) : r;
         } else {
-            r = Dom.css(node, prop);
+            r = Dom.style(node, prop);
+            var parts = r.match(NUMBER_REG);
+            if (parts) {
+                var unit = parts[3];
+                // unit is not px
+                if (unit && unit !== 'px') {
+                    r = Dom.css(node, prop);
+                }
+            }
         }
         // Empty strings, null, undefined and 'auto' are converted to 0,
         // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
@@ -141,12 +148,14 @@ Fx.prototype = {
 };
 
 function isAttr(node, prop) {
+    var value;
     // support scrollTop/Left now!
     if ((!node.style || node.style[ prop ] == null) &&
-        Dom.attr(node, prop, undef, 1) != null) {
-        return 1;
+        // undefined
+        (value = Dom.attr(node, prop, undef, 1)) != null) {
+        return value;
     }
-    return 0;
+    return null;
 }
 
 function getPos(anim, propData) {

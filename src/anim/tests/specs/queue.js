@@ -246,7 +246,9 @@ describe('anim-queue', function () {
         }, {
             duration: 0.3,
             queue: 'now'
-        }).animate({
+        });
+
+        test.animate({
             height: '200px'
         }, {
             duration: 0.3,

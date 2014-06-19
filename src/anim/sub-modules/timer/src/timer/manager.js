@@ -3,9 +3,7 @@
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-var util = require('util');
-var stamp = util.stamp,
-    win = window,
+var win = window,
 // note in background tab, interval is set to 1s in chrome/firefox
 // no interval change in ie for 15, if interval is less than 15
 // then in background tab interval is changed to 15
@@ -33,19 +31,26 @@ if (0) {
     };
 }
 
-module.exports = {
-    runnings: {},
+var runnings = {
+    head: null,
+    tail: null
+};
+
+var manager = module.exports = {
+    runnings: runnings,
 
     timer: null,
 
     start: function (anim) {
-        var self = this,
-            kv = stamp(anim);
-        if (self.runnings[kv]) {
-            return;
+        anim._ksNext = anim._ksPrev = null;
+        if (!runnings.head) {
+            runnings.head = runnings.tail = anim;
+        } else {
+            anim._ksPrev = runnings.tail;
+            runnings.tail._ksNext = anim;
+            runnings.tail = anim;
         }
-        self.runnings[kv] = anim;
-        self.startTimer();
+        manager.startTimer();
     },
 
     stop: function (anim) {
@@ -53,11 +58,23 @@ module.exports = {
     },
 
     notRun: function (anim) {
-        var self = this,
-            kv = stamp(anim);
-        delete self.runnings[kv];
-        if (util.isEmptyObject(self.runnings)) {
-            self.stopTimer();
+        if (anim._ksPrev) {
+            if (runnings.tail === anim) {
+                runnings.tail = anim._ksPrev;
+            }
+            anim._ksPrev._ksNext = anim._ksNext;
+            if (anim._ksNext) {
+                anim._ksNext._ksPrev = anim._ksPrev;
+            }
+        } else {
+            runnings.head = runnings.tail = anim._ksNext;
+            if (runnings.head) {
+                runnings.head._ksPrev = null;
+            }
+        }
+        anim._ksNext = anim._ksPrev = null;
+        if (!runnings.head) {
+            manager.stopTimer();
         }
     },
 
@@ -92,24 +109,21 @@ module.exports = {
     },
 
     runFrames: function () {
-        var self = this,
-            r,
-            flag,
-            runnings = self.runnings;
-        for (r in runnings) {
-            // in case stop in frame
-            runnings[r].frame();
+        var anim = runnings.head;
+        while (anim) {
+            var next = anim._ksNext;
+            // in case anim is stopped
+            anim.frame();
+            anim = next;
         }
-        //noinspection LoopStatementThatDoesntLoopJS
-        for (r in runnings) {
-            flag = 0;
-            break;
-        }
-        return flag === undefined;
+        return !runnings.head;
     }
 };
 /**
  * @ignore
+ *
+ * 2014-06-19
+ * - try linked list https://github.com/kissyteam/kissy/issues/651
  *
  * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
  */

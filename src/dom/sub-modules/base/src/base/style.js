@@ -168,10 +168,7 @@ util.mix(Dom,
         css: function (selector, name, val) {
             var els = Dom.query(selector),
                 elem = els[0],
-                k,
-                hook,
-                ret,
-                i;
+                k, hook, ret, i;
             // supports hash
             if (typeof name === 'object') {
                 for (k in name) {

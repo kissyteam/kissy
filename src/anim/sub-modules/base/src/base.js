@@ -17,7 +17,7 @@ var Dom = require('dom'),
         hide: 1,
         show: 1
     };
-
+var undef;
 var defaultConfig = {
     duration: 1,
     easing: 'linear'
@@ -183,19 +183,23 @@ util.extend(AnimBase, Promise, {
                 });
                 elStyle.overflow = 'hidden';
                 // inline element should has layout/inline-block
-                if (Dom.css(node, 'display') === 'inline' &&
-                    Dom.css(node, 'float') === 'none') {
-                    elStyle.zoom = 1;
-                    elStyle.display = 'inline-block';
-                }
+                // performance! user should set himself
+                // https://github.com/kissyteam/kissy/issues/651
+//                if (Dom.css(node, 'display') === 'inline' &&
+//                    Dom.css(node, 'float') === 'none') {
+//                    elStyle.zoom = 1;
+//                    elStyle.display = 'inline-block';
+//                }
             }
 
             var exit, hidden;
-            hidden = (Dom.css(node, 'display') === 'none');
             util.each(_propsData, function (_propData, prop) {
                 val = _propData.value;
                 // 直接结束
                 if (specialVals[val]) {
+                    if (hidden === undef) {
+                        hidden = (Dom.css(node, 'display') === 'none');
+                    }
                     if (val === 'hide' && hidden || val === 'show' && !hidden) {
                         // need to invoke complete
                         self.stop(true);

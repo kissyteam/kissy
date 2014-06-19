@@ -108,7 +108,7 @@ util.extend(TimerAnim, AnimBase, {
                 to = parseFloat(parts[2]);
                 unit = parts[3];
 
-                // 有单位但单位不是 px
+                // unit is not px
                 if (unit && unit !== 'px' && from) {
                     var tmpCur = 0,
                         to2 = to;
