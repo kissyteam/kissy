@@ -74,19 +74,16 @@
         </subant>
     </target>
 
-    <target name="sync">
+    <target name="commit">
         <input addproperty="git.commit.message">
             git commit message :
         </input>
         <ac:if>
-
             <ac:not>
                 <equals arg1="${git.commit.message}" arg2="">
                 </equals>
             </ac:not>
-
             <ac:then>
-
                 <exec executable="cmd"
                       failonerror="true">
                     <arg line="/c cd ../"/>
@@ -99,10 +96,11 @@
                 <exec executable="cmd" failonerror="true">
                     <arg line="/c git commit -am '${git.commit.message}'"/>
                 </exec>
-
             </ac:then>
         </ac:if>
+    </target>
 
+    <target name="sync" depends="commit">
         <exec executable="cmd" failonerror="true">
             <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
         </exec>
@@ -121,30 +119,7 @@
     </target>
 
 
-    <target name="sync-dev">
-        <input addproperty="git.commit.message">
-            git commit message :
-        </input>
-        <ac:if>
-
-            <ac:not>
-                <equals arg1="${git.commit.message}" arg2="">
-                </equals>
-            </ac:not>
-
-            <ac:then>
-
-                <exec executable="cmd"
-                      failonerror="true">
-                    <arg line="/c git add ."/>
-                </exec>
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git commit -am '${git.commit.message}'"/>
-                </exec>
-
-            </ac:then>
-        </ac:if>
-
+    <target name="sync-dev" depends="commit">
         <exec executable="cmd" failonerror="true">
             <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
         </exec>
@@ -152,7 +127,6 @@
         <exec executable="cmd" failonerror="true">
             <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
         </exec>
-
     </target>
 
     <target name="update-version">
