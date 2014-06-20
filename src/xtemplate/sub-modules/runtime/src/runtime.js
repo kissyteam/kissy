@@ -245,6 +245,12 @@ XTemplateRuntime.prototype = {
         }
         option = option || {};
         callback = callback || function (error, ret) {
+            if (error) {
+                if (!(error instanceof Error)) {
+                    error = new Error(error);
+                }
+                throw error;
+            }
             html = ret;
         };
 

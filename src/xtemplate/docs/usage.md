@@ -1,10 +1,89 @@
+## 基本 api
+
+### Class
+
+XTemplate/XTemplateRuntime
+
+构造器参数
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th style="width: 100px;">name</th>
+        <th style="width: 50px;">type</th>
+        <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>content</td>
+        <td>String</td>
+        <td>模板字符串</td>
+    </tr>
+    <tr>
+            <td>config</td>
+            <td>Object</td>
+            <td>
+            对象属性含义：
+            <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width: 100px;">name</th>
+                        <th style="width: 50px;">type</th>
+                        <th>description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>模板名字，用于编译时报错</td>
+                    </tr>
+                    <tr>
+                        <td>commands</td>
+                        <td>Object</td>
+                        <td>命令定义，详见下文</td>
+                        </tr>
+                    </tbody>
+                </table></td>
+        </tr>
+    </tbody>
+</table>
+
+### Methods
+
+String render(data:Object, callback:Function): 渲染数据，参数含义如下
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th style="width: 100px;">name</th>
+        <th style="width: 50px;">type</th>
+        <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>data</td>
+        <td>Object</td>
+        <td>数据对象</td>
+    </tr>
+    <tr>
+            <td>callback</td>
+            <td>Function</td>
+            <td>完毕回调，第一个参数为 error，第二个参数为渲染结果。如果不提供，同步命令下 render 返回渲染结果。</td>
+        </tr>
+    </tbody>
+</table>
+
+
 ## 浏览器端使用
 
 ### 未预编译
 
 ``` javascript
 KISSY.use('xtemplate',function(S,XTemplate){
-  new XTemplate('{{x}}').render({x:1},function(error,z){
+  new XTemplate('{{x}}',{name: 'x-tpl'}).render({x:1},function(error,z){
     // z=>1
   });
 })
@@ -18,8 +97,8 @@ kissy-xtemplate -p x/   // x/ 为模板文件目录，后缀为 -xtpl.html
 ```
 
 ``` javascript
-KISSY.use('xtemplate/runtime,a/b-xtpl',function(S,XTemplate,bXtpl){
-  new XTemplate(bXtpl).render({x:1},function(error,z){
+KISSY.use('xtemplate/runtime,a/b-xtpl',function(S,XTemplateRuntime,bXtpl){
+  new XTemplateRuntime(bXtpl).render({x:1},function(error,z){
     // z=>1
   });
 })
@@ -354,8 +433,7 @@ KISSY.use('xtemplate/runtime',function(S,XTemplate){
 
 ### Buffer api
 
-#### method
-
+#### Methods
 
 Buffer write(data:String, escape:Boolean): 写数据到缓冲区
 
@@ -385,9 +463,7 @@ Buffer write(data:String, escape:Boolean): 写数据到缓冲区
 
 Buffer async(fn:Function): 产生新的异步缓冲区，新的缓冲区为 fn 回调函数的第一个参数
 
-
 Buffer end(data, escape): 参数含义同 write 函数。 标志缓冲区数据填充完毕，用于通知异步缓冲区的结束。
-
 
 Buffer error(reason): 触发 render 异步回调为失败。 reason 为回调的第一个参数.
 
@@ -395,14 +471,14 @@ Buffer error(reason): 触发 render 异步回调为失败。 reason 为回调的
 ### Scope api
 
 
-#### member
+#### Members
 
 parent: 上级作用域
 
 root: 顶层作用域
 
 
-#### method
+#### Methods
 
 void setParent(scope: Scope): 设置当前作用域的上级作用域
 
