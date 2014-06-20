@@ -11,7 +11,12 @@ function invalidNode(n) {
 
 describe("delegate children works", function () {
     var MyContainer = Container.extend([DelegateChildrenExtension], {}, {
-        xclass: 'MyContainer'
+        xclass: 'MyContainer',
+        ATTRS: {
+            handleGestureEvents: {
+                value: true
+            }
+        }
     });
 
     it("should attach its methods", function () {
