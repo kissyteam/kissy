@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 19 20:10
+build time: Jun 20 16:51
 */
 /*
 combined modules:
@@ -26,7 +26,8 @@ KISSY.add('xtemplate', [
     var Compiler = require('xtemplate/compiler');
     var LoggerManager = require('logger-manager');
     var loader = {
-            load: function (template, name, callback) {
+            load: function (params, callback) {
+                var name = params.name;
                 require([name], {
                     success: function (tpl) {
                         if (typeof tpl === 'string') {

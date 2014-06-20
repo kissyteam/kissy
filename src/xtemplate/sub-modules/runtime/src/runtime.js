@@ -97,13 +97,13 @@ var utils = {
 };
 
 var loader = {
-    load: function (template, name, callback) {
-        require([name], {
+    load: function (params, callback) {
+        require([params.name], {
             success: function (tpl) {
                 callback(undefined, tpl);
             },
             error: function () {
-                var error = 'template "' + name + '" does not exist';
+                var error = 'template "' + params.name + '" does not exist';
                 LoggerManager.log(error, 'error');
                 callback(error);
             }
@@ -211,7 +211,12 @@ XTemplateRuntime.prototype = {
         var self = this;
         subTplName = self.resolve(subTplName, tpl.name);
         return buffer.async(function (newBuffer) {
-            self.config.loader.load(self, subTplName, function (error, tplFn) {
+            self.config.loader.load({
+                template: self,
+                name: subTplName,
+                scope: scope,
+                option: option
+            }, function (error, tplFn) {
                 if (error) {
                     newBuffer.error(error);
                 } else if (typeof tplFn === 'string') {

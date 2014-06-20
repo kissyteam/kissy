@@ -80,14 +80,20 @@ Scope.prototype = {
 
     resolve: function (parts, depth) {
         var self = this;
+        var v;
 
         if (!depth && parts.length === 1) {
-            return self.get(parts[0]);
+            v = self.get(parts[0]);
+            if (v !== undef) {
+                return v;
+            } else {
+                depth = 1;
+            }
         }
 
         var len = parts.length,
             scope = self,
-            i, v;
+            i;
 
         // root keyword for root self
         if (len && parts[0] === 'root') {
@@ -98,6 +104,10 @@ Scope.prototype = {
             while (scope && depth--) {
                 scope = scope.parent;
             }
+        }
+
+        if (!scope) {
+            return undef;
         }
 
         if (!len) {

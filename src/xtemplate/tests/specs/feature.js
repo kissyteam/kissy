@@ -291,6 +291,21 @@ describe('feature', function () {
     });
 
     describe('each', function () {
+        it('support access parent scope',function(){
+            var tpl = '{{#each (data)}}{{r}}{{xindex}}:{{this}}{{/each}}';
+            var data = {
+                r:'!',
+                data: {
+                    x: 1,
+                    y: 2
+                }
+            };
+
+            var render = new XTemplate(tpl).render(data);
+
+            expect(render).toBe('!x:1!y:2');
+        });
+
         it('support xindex name', function () {
             var tpl = '{{#each(data, "v", "i")}}{{i}}: {{v}}{{/each}}';
             var data = {

@@ -11,7 +11,8 @@ var Compiler = require('xtemplate/compiler');
 var LoggerManager = require('logger-manager');
 
 var loader = {
-    load: function (template, name, callback) {
+    load: function (params, callback) {
+        var name = params.name;
         require([name], {
             success: function (tpl) {
                 if (typeof tpl === 'string') {
