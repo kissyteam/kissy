@@ -1,3 +1,5 @@
+<a href="http://jsperf.com/xtpl">http://jsperf.com/xtpl</a>
+<br><br><br>
 <script type="jade" id="testJade">
 doctype html
 html(lang="en")
@@ -22,6 +24,7 @@ html(lang="en")
         ul
             each val, index in lis
                 li= index + ': ' + val.d + ' of '+title
+
 
 
 
@@ -61,6 +64,7 @@ html(lang="en")
 
 
 
+
 </script>
 <script type="handlebars" id="testHandlebars">
 <!DOCTYPE html>
@@ -92,6 +96,7 @@ html(lang="en")
      </ul>
 </body>
 </html>
+
 </script>
 
 <script type="dustjs" id="testDustjs">
@@ -126,10 +131,9 @@ html(lang="en")
 </html>
 
 
+
 </script>
-<p>
-    <a href="http://jsperf.com/jade-xtpl">http://jsperf.com/jade-xtpl</a>
-</p>
+
 <pre id="ret"></pre>
 <script src="/kissy/tools/third-party/jade.js"></script>
 <script src="/kissy/tools/third-party/handlebars-v1.3.0.js"></script>
