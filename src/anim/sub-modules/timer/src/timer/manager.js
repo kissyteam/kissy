@@ -106,10 +106,9 @@ var manager = module.exports = {
         var self = this;
         if (!self.timer) {
             self.timer = requestAnimationFrameFn(function run() {
+                self.timer = requestAnimationFrameFn(run);
                 if (self.runFrames()) {
                     self.stopTimer();
-                } else {
-                    self.timer = requestAnimationFrameFn(run);
                 }
             });
         }
