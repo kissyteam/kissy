@@ -77,7 +77,7 @@
         return o;
     };
 
-    KISSY.use('UA',function(S,UA){
+    KISSY.use('UA', function (S, UA) {
         S.UA = UA;
     });
 })(KISSY);

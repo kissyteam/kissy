@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:11
+build time: Jun 23 17:04
 */
 /**
  * adapter to transform kissy5 to kissy 1.4.x
@@ -9,7 +9,7 @@ build time: Jun 18 13:11
  */
 (function (S) {
     // --no-module-wrap--
-    S.use(['util','querystring'], function (S, util, querystring) {
+    S.use(['util', 'querystring'], function (S, util, querystring) {
         util.mix(S, util);
         S.param = querystring.stringify;
         S.unparam = querystring.parse;
@@ -19,7 +19,7 @@ build time: Jun 18 13:11
         var Event = S.Event = {};
         var util = require('util');
         util.mix(Event, require('event/dom'));
-        Event.Target = require('event/custom').Target;
+        S.EventTarget = Event.Target = require('event/custom').Target;
         S.log('event module is deprecated! please use \'event/dom\' or \'event/custom\' module instead.');
         return Event;
     });
@@ -29,8 +29,6 @@ build time: Jun 18 13:11
         json: 'JSON',
         cookie: 'Cookie',
         'dom/base': 'DOM',
-        event: 'Event',
-        io: 'IO',
         'anim/timer': 'Anim',
         'anim/transition': 'Anim',
         base: 'Base'
@@ -39,6 +37,11 @@ build time: Jun 18 13:11
     var configs = {
         core: {
             alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+        },
+        io: {
+            afterAttach: function (v) {
+                S.ajax = S.Ajax = S.io = S.IO = v;
+            }
         },
         node: {
             afterAttach: function (v) {
@@ -78,4 +81,8 @@ build time: Jun 18 13:11
         }
         return o;
     };
+
+    KISSY.use('UA', function (S, UA) {
+        S.UA = UA;
+    });
 })(KISSY);
