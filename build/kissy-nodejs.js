@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.32
+Copyright 2014, KISSY UI Library v1.32
 MIT Licensed
-build time: Nov 25 18:40
+build time: Jun 23 16:43
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20131125184002' will replace with current timestamp when compressing.
+         * NOTICE: '20140623164333' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131125184002',
+        __BUILD_TIME: '20140623164333',
         /**
          * KISSY Environment.
          * @private
@@ -4647,7 +4647,7 @@ var KISSY = (function (undefined) {
  */
 (function (S, undefined) {
 
-    var Loader, Status, Utils, UA,
+    var Loader, Status, Utils, UA, ieMode,
     // standard browser 如果 add 没有模块名，模块定义先暂存这里
         currentMod = undefined,
     // ie 开始载入脚本的时间
@@ -4660,6 +4660,7 @@ var KISSY = (function (undefined) {
     Status = Loader.Status;
     Utils = Loader.Utils;
     UA = S.UA;
+    ieMode = UA.ie && S.Env.host.document.documentMode || UA.ie;
     LOADING = Status.LOADING;
     LOADED = Status.LOADED;
     ERROR = Status.ERROR;
@@ -4866,7 +4867,7 @@ var KISSY = (function (undefined) {
         if (typeof name === 'function') {
             config = fn;
             fn = name;
-            if (UA.ie) {
+            if (ieMode && ieMode < 10) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
                 // S.log('ie get modName by interactive: ' + name);
@@ -5551,7 +5552,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20131125184002'
+            tag: '20140623164333'
         }, getBaseInfo()));
     }
 

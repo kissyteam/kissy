@@ -5,7 +5,7 @@
  */
 (function (S, undefined) {
 
-    var Loader, Status, Utils, UA,
+    var Loader, Status, Utils, UA, ieMode,
     // standard browser 如果 add 没有模块名，模块定义先暂存这里
         currentMod = undefined,
     // ie 开始载入脚本的时间
@@ -18,6 +18,7 @@
     Status = Loader.Status;
     Utils = Loader.Utils;
     UA = S.UA;
+    ieMode = UA.ie && S.Env.host.document.documentMode || UA.ie;
     LOADING = Status.LOADING;
     LOADED = Status.LOADED;
     ERROR = Status.ERROR;
@@ -224,7 +225,7 @@
         if (typeof name === 'function') {
             config = fn;
             fn = name;
-            if (UA.ie) {
+            if (ieMode && ieMode < 10) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
                 // S.log('ie get modName by interactive: ' + name);
