@@ -53,7 +53,7 @@ describe("custom_event", function () {
 
         expect(ret).toEqual([1, 2]);
 
-        expect(t.getCustomEvents().click.hasObserver())
+        expect(t.getEventListeners('click').hasObserver())
             .toBeFalsy();
     });
 
@@ -301,7 +301,7 @@ describe("custom_event", function () {
         eventTarget.on('click', noop3);
         eventTarget.on('keydown', noop);
         (function () {
-            var customEventObservables = eventTarget.getCustomEvents();
+            var customEventObservables = eventTarget.getEventListeners();
 
             var num = 0;
             for (var i in customEventObservables) {
@@ -317,7 +317,7 @@ describe("custom_event", function () {
         eventTarget.detach('click', noop);
 
         (function () {
-            var customEventObservables = eventTarget.getCustomEvents();
+            var customEventObservables = eventTarget.getEventListeners();
             var num = 0;
 
             for (var i in customEventObservables) {
@@ -334,8 +334,7 @@ describe("custom_event", function () {
         eventTarget.detach('click');
 
         (function () {
-            var customEventObservables = eventTarget.getCustomEvents();
-
+            var customEventObservables = eventTarget.getEventListeners();
             expect(customEventObservables.keydown.hasObserver()).toBeTruthy();
             var clickObserver = customEventObservables.click;
             expect(clickObserver.hasObserver()).toBeFalsy();
@@ -344,11 +343,10 @@ describe("custom_event", function () {
         eventTarget.detach();
 
         (function () {
-            var customEventObservables = eventTarget.getCustomEvents();
+            var customEventObservables = eventTarget.getEventListeners();
             for (var o in customEventObservables) {
                 expect(customEventObservables[o].hasObserver()).toBeFalsy();
             }
-
         })();
     });
 

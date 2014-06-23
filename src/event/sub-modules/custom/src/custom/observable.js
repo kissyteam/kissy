@@ -104,7 +104,7 @@ util.extend(CustomEventObservable, BaseEvent.Observable, {
         // child defaultFn last
         if (defaultFn && !customEventObject.isDefaultPrevented()) {
             var target = customEventObject.target,
-                lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
+                lowestCustomEventObservable = target.getEventListeners(customEventObject.type);
             if ((!self.defaultTargetOnly &&
                 // defaults to false
                 (!lowestCustomEventObservable || !lowestCustomEventObservable.defaultTargetOnly)) ||

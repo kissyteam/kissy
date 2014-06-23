@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:18
+build time: Jun 23 16:30
 */
 /*
 combined modules:
@@ -347,6 +347,10 @@ KISSY.add('event/dom/base/dom-event', [
                         addInternal(dest, type, observer.config);
                     });
                 });
+            },
+            getEventListeners: function (target, type) {
+                var observables = (DomEventObservable.getDomEventObservablesHolder(target) || { observables: {} }).observables;
+                return type ? observables[type] : observables;
             }
         };
     module.exports = DomEvent;    /*

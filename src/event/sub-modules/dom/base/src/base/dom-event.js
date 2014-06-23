@@ -335,6 +335,13 @@ var DomEvent = {
                 addInternal(dest, type, observer.config);
             });
         });
+    },
+
+    getEventListeners: function (target, type) {
+        var observables = (DomEventObservable.getDomEventObservablesHolder(target) || {
+            observables: {}
+        }).observables;
+        return type ? observables[type] : observables;
     }
 };
 

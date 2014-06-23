@@ -37,29 +37,19 @@ var Utils = BaseEvent.Utils,
 
 var KS_CUSTOM_EVENTS = '__~ks_custom_events';
 
+function getCustomEventObservable(self, type) {
+    var customEvent = self.getEventListeners(type);
+    if (!customEvent) {
+        customEvent = self.getEventListeners()[type] = new CustomEventObservable({
+            currentTarget: self,
+            type: type
+        });
+    }
+    return customEvent;
+}
+
 module.exports = {
     isTarget: 1,
-
-    /**
-     * Get custom event for specified event
-     * @private
-     * @param {String} type event type
-     * @param {Boolean} [create] whether create custom event on fly
-     * @return {KISSY.Event.CustomEvent.CustomEventObservable}
-     */
-    getCustomEventObservable: function (type, create) {
-        var self = this,
-            customEvent,
-            customEventObservables = self.getCustomEvents();
-        customEvent = customEventObservables && customEventObservables[type];
-        if (!customEvent && create) {
-            customEvent = customEventObservables[type] = new CustomEventObservable({
-                currentTarget: self,
-                type: type
-            });
-        }
-        return customEvent;
-    },
 
     /**
      * Fire a custom event by name.
@@ -93,7 +83,7 @@ module.exports = {
 
             // default bubble true
             // if bubble false, it must has customEvent structure set already
-            customEventObservable = self.getCustomEventObservable(type);
+            customEventObservable = self.getEventListeners(type);
 
             // optimize performance for empty event listener
             if (!customEventObservable && !hasTargets) {
@@ -144,7 +134,7 @@ module.exports = {
             self = this;
 
         splitAndRun(type, function (t) {
-            customEventObservable = self.getCustomEventObservable(t, true);
+            customEventObservable = getCustomEventObservable(self, t);
             util.mix(customEventObservable, cfg);
         });
 
@@ -191,8 +181,9 @@ module.exports = {
         return this[KS_BUBBLE_TARGETS] || (this[KS_BUBBLE_TARGETS] = []);
     },
 
-    getCustomEvents: function () {
-        return this[KS_CUSTOM_EVENTS] || (this[KS_CUSTOM_EVENTS] = {});
+    getEventListeners: function (type) {
+        var observables = this[KS_CUSTOM_EVENTS] || (this[KS_CUSTOM_EVENTS] = {});
+        return type ? observables[type] : observables;
     },
 
     /**
@@ -206,13 +197,10 @@ module.exports = {
     on: function (type, fn, context) {
         var self = this;
         Utils.batchForType(function (type, fn, context) {
-            var cfg = Utils.normalizeParam(type, fn, context),
-                customEvent;
+            var cfg = Utils.normalizeParam(type, fn, context);
             type = cfg.type;
-            customEvent = self.getCustomEventObservable(type, true);
-            if (customEvent) {
-                customEvent.on(cfg);
-            }
+            var customEvent = getCustomEventObservable(self, type);
+            customEvent.on(cfg);
         }, 0, type, fn, context);
         return self; // chain
     },
@@ -228,18 +216,15 @@ module.exports = {
     detach: function (type, fn, context) {
         var self = this;
         Utils.batchForType(function (type, fn, context) {
-            var cfg = Utils.normalizeParam(type, fn, context),
-                customEvents,
-                customEvent;
+            var cfg = Utils.normalizeParam(type, fn, context);
             type = cfg.type;
             if (type) {
-                customEvent = self.getCustomEventObservable(type, true);
+                var customEvent = self.getEventListeners(type);
                 if (customEvent) {
                     customEvent.detach(cfg);
                 }
             } else {
-                customEvents = self.getCustomEvents();
-                util.each(customEvents, function (customEvent) {
+                util.each(self.getEventListeners(), function (customEvent) {
                     customEvent.detach(cfg);
                 });
             }

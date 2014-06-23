@@ -25,9 +25,7 @@ io({
 var DomEventUtils = KISSY.require('event/dom/base/utils');
 
 describe('event', function () {
-
     var doc = document,
-
         HAPPENED = 'happened',
         FIRST = '1',
         SECOND = '2',
@@ -49,13 +47,20 @@ describe('event', function () {
     });
 
     describe('add event', function () {
-
         it('should support batch adding.', function () {
-            var lis = Dom.query('#bar li'), total = lis.length, count = 0;
+            var lis = Dom.query('#bar li'),
+                total = lis.length,
+                count = 0;
 
-            Event.on(lis, 'click', function () {
+            function click() {
                 count++;
-            });
+            }
+
+            Event.on(lis, 'click', click);
+
+            var observable = Event.getEventListeners(lis[0], 'click');
+            expect(observable).not.toBeFalsy();
+            expect(observable.observers[0].config.fn).toBe(click);
 
             // click all lis
             util.each(lis, function (li) {
@@ -472,7 +477,6 @@ describe('event', function () {
         });
     });
 
-
     describe('event handler context', function () {
 
         it('should treat the element itself as the context.', function () {
@@ -541,7 +545,6 @@ describe('event', function () {
             });
         });
     });
-
 
     it('should no memory leak for dom node', function () {
 
