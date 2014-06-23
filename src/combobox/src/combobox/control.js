@@ -140,23 +140,35 @@ ComboBox = Control.extend({
         } else if (!v && clearEl) {
             clearEl.hide();
         }
+
+        if (self._placeholderMode === 'native') {
+            var placeholderEl = self.get('placeholderEl');
+            if (placeholderEl) {
+                if (!v) {
+                    placeholderEl.show();
+                } else {
+                    placeholderEl.hide();
+                }
+            }
+        }
     },
 
     handleFocusInternal: function () {
-        var self = this,
-            placeholderEl;
+        var self = this;
         clearDismissTimer(self);
         if (self.get('invalidEl')) {
             setInvalid(self, false);
         }
-        if ((placeholderEl = self.get('placeholderEl'))) {
-            placeholderEl.hide();
+        var placeholderEl = self.get('placeholderEl');
+        if (placeholderEl) {
+            if (self._placeholderMode !== 'native') {
+                placeholderEl.hide();
+            }
         }
     },
 
     handleBlurInternal: function (e) {
-        var self = this,
-            placeholderEl = self.get('placeholderEl');
+        var self = this;
         self.callSuper(e);
         delayHide(self);
         if (self.get('invalidEl')) {
@@ -170,6 +182,8 @@ ComboBox = Control.extend({
                 }
             });
         }
+        var placeholderEl = self.get('placeholderEl');
+
         if (placeholderEl && !self.get('value')) {
             placeholderEl.show();
         }
@@ -420,6 +434,12 @@ ComboBox = Control.extend({
             }
         },
 
+        placeholderMode: {
+            setter: function (v) {
+                this._placeholderMode = v;
+            }
+        },
+
         clearEl: {
             selector: function () {
                 return ('.' + this.getBaseCssClass('clear'));
@@ -597,7 +617,6 @@ ComboBox = Control.extend({
 });
 
 // #----------------------- private start
-
 function getFirstEnabledItem(children) {
     for (var i = 0; i < children.length; i++) {
         if (!children[i].get('disabled')) {
