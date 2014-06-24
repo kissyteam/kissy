@@ -1,3 +1,9 @@
+---
+layout: default
+title: xtpl overview
+---
+{% raw %}
+
 ## 基本 api
 
 ### Class
@@ -5,6 +11,7 @@
 XTemplate/XTemplateRuntime
 
 构造器参数
+
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -50,9 +57,13 @@ XTemplate/XTemplateRuntime
     </tbody>
 </table>
 
+
 ### Methods
 
-String render(data:Object, callback:Function): 渲染数据，参数含义如下
+
+```javascript
+String render(data:Object, callback:Function) // 渲染数据，参数含义如下
+```
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -77,11 +88,22 @@ String render(data:Object, callback:Function): 渲染数据，参数含义如下
 </table>
 
 
+
 ## 浏览器端使用
+
+### 载入 kissy
+
+
+```html
+<script src='http://g.tbcdn.cn/kissy/edge/2014.06.23/seed.js'
+
+data-config='{combine:true}'></script>
+```
 
 ### 未预编译
 
-``` javascript
+
+```javascript
 KISSY.use('xtemplate',function(S,XTemplate){
   new XTemplate('{{x}}',{name: 'x-tpl'}).render({x:1},function(error,z){
     // z=>1
@@ -91,12 +113,13 @@ KISSY.use('xtemplate',function(S,XTemplate){
 
 ### 预编译
 
+
 ```
-npm install kissy@5.0.0-alpha.2 -g
+npm install kissy@5.0.0-alpha.4 -g
 kissy-xtemplate -p x/   // x/ 为模板文件目录，后缀为 -xtpl.html
 ```
 
-``` javascript
+```javascript
 KISSY.use('xtemplate/runtime,a/b-xtpl',function(S,XTemplateRuntime,bXtpl){
   new XTemplateRuntime(bXtpl).render({x:1},function(error,z){
     // z=>1
@@ -106,11 +129,15 @@ KISSY.use('xtemplate/runtime,a/b-xtpl',function(S,XTemplateRuntime,bXtpl){
 
 ## node 下使用
 
-包：https://www.npmjs.org/package/xtpl
+安装:
+
+```
+npm install xtpl
+```
 
 express 下使用:
 
-``` javascript
+```javascript
 app.set("view engine", "xtpl");
 ```
 
@@ -124,6 +151,7 @@ app.set("view engine", "xtpl");
 
 ### 字面模式
 
+
 ```
 {{%
 
@@ -133,6 +161,7 @@ app.set("view engine", "xtpl");
 ```
 
 ### 注释
+
 
 ```
 {{! zhu shi }}
@@ -154,7 +183,8 @@ app.set("view engine", "xtpl");
 
 ### 支持变量属性获取
 
-``` javascript
+
+```javascript
 var x = {
     y: 1
 };
@@ -175,7 +205,7 @@ var x = 'q';
 
 注意：该用法会影响性能，推荐自定义命令
 
-``` javascript
+```javascript
 var x = [1, 2, 3];
 ```
 
@@ -198,7 +228,7 @@ var x = [1, 2, 3];
 支持 === !=== > >= < <=
 
 ```
-{{#if( x===1)}}
+{{#if( x===1 )}}
 1
 {{else}}
 2
@@ -226,7 +256,7 @@ var x = [1, 2, 3];
 
 可以对数组或对象进行循环操作，默认获取循环对象值为 {{this}}，键为 {{xindex}} , 也可以指定.
 
-``` javascript
+```javascript
 var x = ['a', 'b'];
 ```
 
@@ -252,6 +282,7 @@ var x = ['a', 'b'];
 
 ### 设置操作
 
+
 ```
 {{set(x=1)}}
 
@@ -259,6 +290,7 @@ var x = ['a', 'b'];
 ```
 
 ### 宏
+
 
 ```
 // 声明
@@ -272,12 +304,14 @@ var x = ['a', 'b'];
 
 ### 包含操作
 
-x.xtpl:
+x.xtpl
+
 ```
 {{z}}
 ```
 
 y.xtpl
+
 ```
 {{include("x")}}
 ```
@@ -286,7 +320,7 @@ y.xtpl
 
 layout.xtpl
 
-``` html
+```html
 <!doctype html>
 <html>
     <head>
@@ -304,7 +338,7 @@ layout.xtpl
 
 index.xtpl
 
-``` html
+```html
 {{extend ("./layout1")}}
 
 // 填
@@ -320,11 +354,13 @@ index.xtpl
 
 ### 自定义命令
 
+
 #### nodejs 全局命令
+
 
 同步调用行内：
 
-``` javascript
+```javascript
 var xtpl = require('xtpl');
 xtpl.XTemplate.addCommand('xInline',function(scope, option){
   return option.params[0]+'1';
@@ -336,7 +372,7 @@ xtpl.XTemplate.addCommand('xInline',function(scope, option){
 
 或使用 buffer (详见下面 Buffer api)
 
-``` javascript
+```javascript
 var xtpl = require('xtpl');
 xtpl.XTemplate.addCommand('xInline',function(scope, option, buffer){
   return buffer.write(option.params[0]+'1');
@@ -351,7 +387,7 @@ xtpl.XTemplate.addCommand('xInline',function(scope, option, buffer){
 
 同步调用块级：
 
-``` javascript
+```javascript
 var xtpl = require('xtpl');
 xtpl.XTemplate.addCommand('xBlock',function(scope, option, buffer){
   return option.fn(scope, buffer)+option.params[0];
@@ -367,7 +403,7 @@ xtpl.XTemplate.addCommand('xBlock',function(scope, option, buffer){
 
 异步调用行内
 
-``` javascript
+```javascript
 var xtpl = require('xtpl');
 xtpl.XTemplate.addCommand('xInline',function(scope, option,buffer){
   buffer = buffer.async(function(newBuffer){
@@ -385,7 +421,7 @@ xtpl.XTemplate.addCommand('xInline',function(scope, option,buffer){
 
 异步调用块级：
 
-``` javascript
+```javascript
 var xtpl = require('xtpl');
 xtpl.XTemplate.addCommand('xInline',function(scope, option,buffer){
   buffer = buffer.async(function(newBuffer){
@@ -409,19 +445,26 @@ xtpl.XTemplate.addCommand('xInline',function(scope, option,buffer){
 
 #### 浏览器命令
 
+
 全局：
 
-``` javascript
+```javascript
 KISSY.use('xtemplate/runtime',function(S,XTemplate){
-    XTemplate.addCommand(...) // 同 node
+    XTemplate.addCommand(...) // 同 nodejs
 });
 ```
 
 局部：
 
-``` javascript
-KISSY.use('xtemplate/runtime',function(S,XTemplate){
-    new XTemplate('{{x()}}',{
+x-xtpl.html:
+
+```
+{{x()}}
+```
+
+```javascript
+KISSY.use('xtemplate/runtime, x-xtpl',function(S,XTemplate,x){
+    new XTemplate(x, {
         commands:{
             x:function(){
                 // ... 同 node
@@ -435,8 +478,10 @@ KISSY.use('xtemplate/runtime',function(S,XTemplate){
 
 #### Methods
 
-Buffer write(data:String, escape:Boolean): 写数据到缓冲区
 
+```javascript
+Buffer write(data:String, escape:Boolean) // 写数据到缓冲区
+```
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -461,31 +506,40 @@ Buffer write(data:String, escape:Boolean): 写数据到缓冲区
 </table>
 
 
-Buffer async(fn:Function): 产生新的异步缓冲区，新的缓冲区为 fn 回调函数的第一个参数
 
-Buffer end(data, escape): 参数含义同 write 函数。 标志缓冲区数据填充完毕，用于通知异步缓冲区的结束。
+```javascript
+Buffer async(fn:Function) // 产生新的异步缓冲区，新的缓冲区为 fn 回调函数的第一个参数
 
-Buffer error(reason): 触发 render 异步回调为失败。 reason 为回调的第一个参数.
+Buffer end(data, escape) // 参数含义同 write 函数。 标志缓冲区数据填充完毕，用于通知异步缓冲区的结束。
 
+Buffer error(reason) // 触发 render 异步回调为失败。 reason 为回调的第一个参数.
+```
 
 ### Scope api
 
 
 #### Members
 
-parent: 上级作用域
 
-root: 顶层作用域
+```javascript
+parent // 上级作用域
 
+root // 顶层作用域
+```
 
 #### Methods
 
-void setParent(scope: Scope): 设置当前作用域的上级作用域
 
-void setData(data): 设置当前作用域内数据
+```javascript
+void setParent(scope: Scope) // 设置当前作用域的上级作用域
 
-var getData(): 获取当前作用域内数据
+void setData(data) // 设置当前作用域内数据
 
-void set(name,value): 设置当前作用域内附属数据
+var getData() // 获取当前作用域内数据
 
-void get(name): 获取当前作用域内数据值（包括附属数据）
+void set(name, value) // 设置当前作用域内附属数据
+
+void get(name) // 获取当前作用域内数据值（包括附属数据）
+```
+
+{% endraw %}
