@@ -19,10 +19,12 @@ var jasmineEnv = jasmineExports.jasmine.getEnv();
 var showColors = true;
 
 function onComplete(runner) {
-    var description = runner.queue.blocks[0].description;
-    console.log(description + ' ↑ \n');
-    console.log(new Array(20).join('-'));
-    console.log('\n');
+    if (runner.queue.blocks.length) {
+        var description = runner.queue.blocks[0].description;
+        console.log(description + ' ↑ \n');
+        console.log(new Array(20).join('-'));
+        console.log('\n');
+    }
     if (runner.results().failedCount !== 0) {
         process.exit(1);
     }
