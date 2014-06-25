@@ -68,7 +68,7 @@
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
                 <exec executable="node" failonerror="true">
-                    <arg value="${kissy.dir}/node_modules/xtpl/bin/xtpl"/>
+                    <arg value="${kissy.dir}/bin/xtemplate"/>
                     <arg value="-s"/>
                     <arg value="html"/>
                     <arg value="-p"/>
