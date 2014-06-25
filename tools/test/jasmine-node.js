@@ -6,9 +6,7 @@
 
 // global
 var sys = require('sys');
-
 var jasmineExports = require('../jasmine/jasmine');
-
 var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
 
 for (var k in jasmineExports) {
@@ -18,7 +16,6 @@ for (var k in jasmineExports) {
 var jasmineEnv = jasmineExports.jasmine.getEnv();
 
 // ------------ configs start
-
 var showColors = true;
 
 function onComplete(runner) {
@@ -38,6 +35,4 @@ jasmineEnv.addReporter(new jasmineNode.TerminalVerboseReporter({
 }));
 
 // ------------ configs end
-
-require('../../tests/');
 jasmineEnv.execute();
