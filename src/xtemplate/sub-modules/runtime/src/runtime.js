@@ -203,11 +203,14 @@ XTemplateRuntime.prototype = {
 
     include: function (subTplName, tpl, scope, option, buffer) {
         var self = this;
-        subTplName = self.resolve(subTplName, tpl.name);
+        var parentName = tpl.name;
+        var resolvedSubTplName = self.resolve(subTplName, parentName);
         return buffer.async(function (newBuffer) {
             self.config.loader.load({
-                template: self,
-                name: subTplName,
+                root: self,
+                parentName: parentName,
+                originalName: subTplName,
+                name: resolvedSubTplName,
                 scope: scope,
                 option: option
             }, function (error, tplFn) {
@@ -219,7 +222,7 @@ XTemplateRuntime.prototype = {
                     renderTpl({
                         root: tpl.root,
                         fn: tplFn,
-                        name: subTplName,
+                        name: resolvedSubTplName,
                         runtime: tpl.runtime
                     }, scope, newBuffer);
                 }
