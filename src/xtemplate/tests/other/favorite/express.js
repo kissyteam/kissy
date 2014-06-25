@@ -5,7 +5,7 @@ var data = require('./data.json');
 app.set('view engine', 'xtpl');
 var viewDir = path.join(__dirname, 'xtpl').replace(/\\/g, '/');
 app.set('views', viewDir);
-var xtpl = require('../../../../../lib/xtemplate');
+var xtpl = require('xtpl');
 //xtpl = require('xtpl');
 require('./command').addMyCommand(xtpl.XTemplate);
 app.engine('xtpl', xtpl.__express);

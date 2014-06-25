@@ -48,7 +48,8 @@
         "kison": "*",
         "node-jscover": "*",
         "mime": "~1.2.11",
-        "jshint": "~2.5.1"
+        "jshint": "~2.5.1",
+        "xtpl":"~0.12.0"
     },
     "dependencies": {
         "estraverse": "~1.5.0",

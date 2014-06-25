@@ -11,7 +11,7 @@ var encoding = 'utf-8';
 
 var S = require('../lib/loader'),
     util = require('../lib/util'),
-    XTemplateCompiler = require('../lib/xtemplate').XTemplate.Compiler,
+    XTemplateCompiler = require('../lib/xtemplate').Compiler,
     chokidar = require('chokidar'),
     fs = require('fs'),
     path = require('path');

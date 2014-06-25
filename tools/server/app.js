@@ -15,7 +15,7 @@ function startServer(port) {
 
     app.set('view engine', 'html');
     app.set('views', path.join(__dirname, 'views'));
-    app.engine('html', require('../../lib/xtemplate').__express);
+    app.engine('html', require('xtpl').renderFile);
 
     app.locals({
         travisJobId: process.env.TRAVIS_JOB_ID
