@@ -37,7 +37,6 @@ var suffixReg = new RegExp('\\.' + util.escapeRegExp(suffix) + '$', 'g');
 
 folderPath = path.resolve(cwd, folderPath);
 
-
 function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
 }
@@ -59,7 +58,6 @@ function generate(filePath) {
         compile(filePath, modulePath, kwrap);
     }
 }
-
 
 if (program.watch) {
     var watcher = chokidar.watch(folderPath, {ignored: /^\./, persistent: true});
