@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:09
+build time: Jun 25 13:14
 */
 /*
 combined modules:
@@ -165,19 +165,24 @@ KISSY.add('combobox/control', [
             } else if (!v && clearEl) {
                 clearEl.hide();
             }
+            var placeholderEl = self.get('placeholderEl');
+            if (placeholderEl) {
+                if (!v) {
+                    placeholderEl.show();
+                } else {
+                    placeholderEl.hide();
+                }
+            }
         },
         handleFocusInternal: function () {
-            var self = this, placeholderEl;
+            var self = this;
             clearDismissTimer(self);
             if (self.get('invalidEl')) {
                 setInvalid(self, false);
             }
-            if (placeholderEl = self.get('placeholderEl')) {
-                placeholderEl.hide();
-            }
         },
         handleBlurInternal: function (e) {
-            var self = this, placeholderEl = self.get('placeholderEl');
+            var self = this;
             self.callSuper(e);
             delayHide(self);
             if (self.get('invalidEl')) {
@@ -190,9 +195,6 @@ KISSY.add('combobox/control', [
                         setInvalid(self, false);
                     }
                 });
-            }
-            if (placeholderEl && !self.get('value')) {
-                placeholderEl.show();
             }
         },
         handleMouseDownInternal: function (e) {
@@ -717,10 +719,9 @@ KISSY.add('combobox/control', [
 
 
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('combobox/combobox-xtpl', [], function (S, require, exports, module) {
-    var comboboxXtplHtml = function (scope, buffer, undefined) {
+    var comboboxXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -894,9 +895,8 @@ KISSY.add('combobox/combobox-xtpl', [], function (S, require, exports, module) {
         buffer.write('">clear</div></div>\r\n</div>\r\n', 0);
         return buffer;
     };
-    comboboxXtplHtml.TPL_NAME = module.name;
-    comboboxXtplHtml.version = '5.0.0';
-    module.exports = comboboxXtplHtml;
+    comboboxXtpl.TPL_NAME = module.name;
+    module.exports = comboboxXtpl;
 });
 
 KISSY.add('combobox/local-data-source', [

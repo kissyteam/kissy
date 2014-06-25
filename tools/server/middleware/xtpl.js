@@ -1,6 +1,6 @@
 var path = require('path');
 var kissyRoot = path.join(__dirname, '../../../');
-var xtemplate = require(kissyRoot + '/bin/xtemplate');
+var compileXtplCode = require('xtpl/lib/compile');
 var url = require('url');
 
 module.exports = function (req, res, next) {
@@ -11,7 +11,6 @@ module.exports = function (req, res, next) {
     }
     var pathname = url.parse(req.url).pathname;
     var filePath = path.join(kissyRoot, pathname).replace(/-coverage/, '').replace(/\.js$/, '.html');
-    var name = path.basename(filePath, '.html');
-    req.code = xtemplate.getCompileModule(filePath, name);
+    req.code = compileXtplCode(filePath);
     next();
 };

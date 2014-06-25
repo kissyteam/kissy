@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 20 16:51
+build time: Jun 25 13:18
 */
 KISSY.add("xtemplate",["util","xtemplate/runtime","xtemplate/compiler","logger-manager"],function(b,h,n,t){function i(a,c){c=this.config=c||{};c.loader=c.loader||f;"string"===typeof a&&(a=e.compile(a,c&&c.name));i.superclass.constructor.call(this,a,c)}var b=h("util"),n=h("xtemplate/runtime"),e=h("xtemplate/compiler");h("logger-manager");var f={load:function(a,c){var d=a.name;h([d],{success:function(a){if("string"===typeof a)try{a=e.compile(a,d)}catch(b){return c(b)}c(void 0,a)},error:function(){c('template "'+
 d+'" does not exist')}})}};b.extend(i,n,{},{compile:e.compile,Compiler:e,Scope:n.Scope,RunTime:n,addCommand:n.addCommand,removeCommand:n.removeCommand});t.exports=i});

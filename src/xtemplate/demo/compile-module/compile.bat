@@ -1,1 +1,1 @@
-kissy-xtemplate -p ./
+xtpl -p ./

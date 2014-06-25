@@ -141,14 +141,12 @@ ComboBox = Control.extend({
             clearEl.hide();
         }
 
-        if (self._placeholderMode === 'native') {
-            var placeholderEl = self.get('placeholderEl');
-            if (placeholderEl) {
-                if (!v) {
-                    placeholderEl.show();
-                } else {
-                    placeholderEl.hide();
-                }
+        var placeholderEl = self.get('placeholderEl');
+        if (placeholderEl) {
+            if (!v) {
+                placeholderEl.show();
+            } else {
+                placeholderEl.hide();
             }
         }
     },
@@ -158,12 +156,6 @@ ComboBox = Control.extend({
         clearDismissTimer(self);
         if (self.get('invalidEl')) {
             setInvalid(self, false);
-        }
-        var placeholderEl = self.get('placeholderEl');
-        if (placeholderEl) {
-            if (self._placeholderMode !== 'native') {
-                placeholderEl.hide();
-            }
         }
     },
 
@@ -181,11 +173,6 @@ ComboBox = Control.extend({
                     setInvalid(self, false);
                 }
             });
-        }
-        var placeholderEl = self.get('placeholderEl');
-
-        if (placeholderEl && !self.get('value')) {
-            placeholderEl.show();
         }
     },
 
@@ -431,12 +418,6 @@ ComboBox = Control.extend({
         placeholderEl: {
             selector: function () {
                 return ('.' + this.getBaseCssClass('placeholder'));
-            }
-        },
-
-        placeholderMode: {
-            setter: function (v) {
-                this._placeholderMode = v;
             }
         },
 

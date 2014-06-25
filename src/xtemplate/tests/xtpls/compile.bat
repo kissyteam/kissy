@@ -1,1 +1,1 @@
-node ../../../../bin/kissy-xtemplate -p ./
+node ../../../../node_modules/bin/xtpl -p ./ -s html

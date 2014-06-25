@@ -48,12 +48,6 @@ function getSubNameFromParentName(parentName, subName) {
 }
 
 function renderTpl(tpl, scope, buffer) {
-    var fn = tpl.fn;
-    if (fn.version && KISSY.version !== fn.version) {
-        throw new Error('current xtemplate file(' + tpl.name +
-            ')(v' + fn.version + ')need to be recompiled using current kissy(v' +
-            KISSY.version + ')!');
-    }
     buffer = tpl.fn(scope, buffer);
     var extendTplName = tpl.runtime.extendTplName;
     // if has extend statement, only parse

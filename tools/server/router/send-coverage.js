@@ -5,8 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var cwd = process.cwd();
 var util = require('../../common/util');
-var kissyRoot = path.join(__dirname, '../../../');
-var xtemplate = require(kissyRoot + '/bin/xtemplate');
+var compileXtplCode = require('xtpl/lib/compile');
 
 function getSourceInfo(f, postData) {
     var source_files = postData.source_files,
@@ -107,7 +106,7 @@ module.exports = function (app) {
                     source = fs.readFileSync(path.join(srcPath, f), 'utf8');
                 } else {
                     f = f.replace(/\.js$/, '.html');
-                    source = xtemplate.getCompileModule(path.join(srcPath, f), path.basename(f, '.html'));
+                    source = compileXtplCode(path.join(srcPath, f));
                 }
                 source_files.push({
                     name: name,

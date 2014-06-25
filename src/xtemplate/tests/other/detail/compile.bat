@@ -1,1 +1,1 @@
-node ../../../../../bin/xtemplate --no-wrap -p ./xtpl -s html
+node ../../../../../node_modules/xtpl/bin --no-wrap -p ./xtpl -s html

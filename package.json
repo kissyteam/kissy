@@ -1,6 +1,6 @@
 {
     "name": "kissy",
-    "version": "5.0.0-alpha.4",
+    "version": "5.0.0-alpha.5",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
     "homepage": "http://docs.kissyui.com",
@@ -19,9 +19,6 @@
     ],
     "engines": {
         "node": "~0.10"
-    },
-    "bin": {
-        "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "directories": {
         "lib": "./lib/"
@@ -49,7 +46,7 @@
         "node-jscover": "*",
         "mime": "~1.2.11",
         "jshint": "~2.5.1",
-        "xtpl":"~0.12.0"
+        "xtpl":"~0.13.0"
     },
     "dependencies": {
         "estraverse": "~1.5.0",
