@@ -1,6 +1,6 @@
 {
     "name": "kissy",
-    "version": "5.0.0-alpha.8",
+    "version": "5.0.0-alpha.9",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
     "homepage": "http://docs.kissyui.com",
@@ -24,7 +24,7 @@
         "lib": "./lib/"
     },
     "bin": {
-        "kissy-xtemplate": "./bin/xtemplate"
+        "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "scripts": {
         "test": "node ./tools/test/jasmine-node",
