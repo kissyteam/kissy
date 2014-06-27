@@ -430,7 +430,7 @@ var compiler;
 
 /**
  * compiler for xtemplate
- * @class KISSY.XTemplate.compiler
+ * @class KISSY.XTemplate.Compiler
  * @singleton
  */
 compiler = {

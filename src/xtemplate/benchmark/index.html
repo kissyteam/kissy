@@ -1,0 +1,74 @@
+<h1>xtemplate benchmark</h1>
+<div id="log" style="padding:10px;border: 1px solid red;"></div>
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/??benchmark.js,handlebars.js,dust-full.js,jade.js,nunjucks.js">
+</script>
+<script src="/kissy/build/seed-debug.js" data-config="{combine:true}"></script>
+<script>
+    KISSY.use(['node', 'io', 'util', 'promise', 'xtemplate'], function (S, $, io, util, Promise, XTemplate) {
+        var logEl = $('#log');
+
+        function log(str) {
+            logEl.append('<p>' + str + '</p>');
+        }
+
+        function benchmark(files) {
+            var ios = util.map(files, function (f) {
+                return io({
+                    url: 'tpl/' + f + '.html'
+                })
+            });
+            var compilers = [];
+            var data = {
+                title: 'Demo',
+                youAreUsingJade: true,
+                lis: [
+                    {
+                        d: 'one'
+                    },
+                    {
+                        d: 'two'
+                    },
+                    {
+                        d: 'three'
+                    }
+                ]
+            };
+            log('loading: ' + (files));
+            Promise.all(ios).then(function () {
+                log('benchmarking: ' + (files));
+                var args = util.makeArray(arguments)[0];
+                compilers.push(new XTemplate(args[0][0], {name: files[0]}));
+                compilers.push(dust.compile(args[1][0], files[1]));
+                compilers.push(jade.compile(args[2][0]));
+                compilers.push(nunjucks.compile(args[3][0]));
+                compilers.push(Handlebars.compile(args[4][0]));
+
+                var suite = new Benchmark.Suite;
+                suite.add(files[0], function () {
+                    compilers[0].render(data);
+                });
+                suite.add(files[1], function () {
+                    dust.render(files[1], data, function () {
+                    });
+                });
+                suite.add(files[2], function () {
+                    compilers[2](data);
+                });
+                suite.add(files[3], function () {
+                    compilers[3].render(data);
+                });
+                suite.add(files[4], function () {
+                    compilers[4](data);
+                });
+
+                suite.on('cycle', function (event) {
+                    log(String(event.target));
+                }).run({ 'async': true });
+
+            });
+        }
+
+        var files = ['common', 'common-dust', 'common-jade', 'common-nunjunks', 'common-handlebars'];
+        benchmark(files);
+    });
+</script>

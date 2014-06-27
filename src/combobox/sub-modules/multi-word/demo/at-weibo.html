@@ -56,13 +56,13 @@
                     var v = data[i] + "";
                     if (query) {
                         ret[i] = {
-                            content: S.escapeHtml(v)
+                            content: util.escapeHtml(v)
                                     .replace(new RegExp(util.escapeRegExp(query), "g"),
                                             "<b>$&</b>")
                         };
                     } else {
                         ret[i] = {
-                            content: S.escapeHtml(v)
+                            content: util.escapeHtml(v)
                         };
                     }
                 }

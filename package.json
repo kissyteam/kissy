@@ -27,7 +27,6 @@
         "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "scripts": {
-        "test": "node ./tools/test/jasmine-node",
         "start": "node ./tools/server/start",
         "stop": "node ./tools/server/stop"
     },

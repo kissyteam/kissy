@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="../../css/assets/dpl/base.css"/>
     <link rel="stylesheet" href="../../css/assets/dpl/forms.css"/>
     <link rel="stylesheet" href="../../button/assets/dpl.css"/>
-    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+    <script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/syntaxhighlighter/scripts/shCore.js"></script>
+    <script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/syntaxhighlighter/scripts/shBrushJScript.js"></script>
     <link type="text/css" rel="stylesheet"
-          href="/kissy/tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
-    <script src="/kissy/tools/third-party/beautify.js"></script>
+          href="http://g.tbcdn.cn/kissy/third-party/0.1.0/syntaxhighlighter/styles/shCoreDefault.css"/>
+    <script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/beautify.js"></script>
     <title> simple xtemplate </title>
 </head>
 <body>
@@ -58,8 +58,7 @@
 
     KISSY.use("xtemplate,node", function (S, XTemplate,$) {
         $('#parse').on('click', function () {
-            debugger
-            var g = XTemplate.compiler.parse($('#tpl').val());
+            var g = XTemplate.Compiler.parse($('#tpl').val());
             S.log(g);
         });
     });
