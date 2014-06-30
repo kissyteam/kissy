@@ -1,6 +1,6 @@
 <h1>xtemplate benchmark</h1>
 <div id="log" style="padding:10px;border: 1px solid red;"></div>
-<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/??benchmark.js,handlebars.js,dust-full.js,jade.js,nunjucks.js">
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/??benchmark.js,handlebars.js,dust-full.js,jade.js,nunjucks.js,visionmedia-ejs.js">
 </script>
 <script src="/kissy/build/seed-debug.js" data-config="{combine:true}"></script>
 <script>
@@ -42,6 +42,7 @@
                 compilers.push(jade.compile(args[2][0]));
                 compilers.push(nunjucks.compile(args[3][0]));
                 compilers.push(Handlebars.compile(args[4][0]));
+                compilers.push(ejs.compile(args[5][0]));
 
                 var suite = new Benchmark.Suite;
                 suite.add(files[0], function () {
@@ -60,15 +61,17 @@
                 suite.add(files[4], function () {
                     compilers[4](data);
                 });
+                suite.add(files[5], function () {
+                    compilers[5](data);
+                });
 
                 suite.on('cycle', function (event) {
                     log(String(event.target));
                 }).run({ 'async': true });
-
             });
         }
 
-        var files = ['common', 'common-dust', 'common-jade', 'common-nunjunks', 'common-handlebars'];
+        var files = ['common', 'common-dust', 'common-jade', 'common-nunjunks', 'common-handlebars', 'common-ejs'];
         benchmark(files);
     });
 </script>
