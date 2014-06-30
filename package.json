@@ -27,6 +27,7 @@
         "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "scripts": {
+        "test":"sleep 2 && exit 0",
         "start": "DEBUG=kissy node ./tools/server/start",
         "stop": "DEBUG=kissy  node ./tools/server/stop"
     },
