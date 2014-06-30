@@ -9,7 +9,7 @@ node_js:
 
 before_script:
   - npm start &
-
+  - npm test
 script:
   - phantomjs --version
   - phantomjs ./tools/test/jasmine-phantomjs.js
