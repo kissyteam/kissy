@@ -27,8 +27,8 @@
         "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "scripts": {
-        "start": "node ./tools/server/start",
-        "stop": "node ./tools/server/stop"
+        "start": "DEBUG=kissy node ./tools/server/start",
+        "stop": "DEBUG=kissy  node ./tools/server/stop"
     },
     "devDependencies": {
         "express": "3.3.4",
