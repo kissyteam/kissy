@@ -238,6 +238,8 @@ if (supportEvent) {
 }
 
 try {
-    doc.execCommand('BackgroundImageCache', false, true);
+    if (doc.execCommand) {
+        doc.execCommand('BackgroundImageCache', false, true);
+    }
 } catch (e) {
 }
