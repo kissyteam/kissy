@@ -127,6 +127,11 @@ module.exports = Container.extend([
             value: HIDE
         },
 
+        closeText: {
+            value: 'close',
+            render: 1
+        },
+
         visible: {
             value: false
         }

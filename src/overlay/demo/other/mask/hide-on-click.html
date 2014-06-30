@@ -21,37 +21,35 @@
 </div>
 
 <script>
-        var S = KISSY;
-        var start = (+new Date());
-        S.use("overlay,node", function (S, Overlay,$) {
-            alert("loaded: " + ((+new Date()) - start));
-            var o = new Overlay.Dialog({
-                width: 500,
-                height: 500,
-                mask: {
-                    closeOnClick: 1
-                },
+    var S = KISSY;
+    var start = (+new Date());
+    S.use("overlay,node", function (S, Overlay, $) {
+        alert("loaded: " + ((+new Date()) - start));
+        var o = new Overlay.Dialog({
+            width: 500,
+            height: 500,
+            mask: {
+                closeOnClick: 1
+            },
 //                closeAction:'destroy',
 //                effect: {
 //                    effect: 'fade'
 //                },
-                zIndex: 1000
-            });
-
-            o.on('show', function () {
-                S.log('show');
-            });
-
-            o.on('hide', function () {
-                S.log('hide');
-            });
-
-            $("#t2").on("click", function () {
-                o.show().center();
-            });
-
+            zIndex: 1000
         });
 
+        o.on('show', function () {
+            S.log('show');
+        });
+
+        o.on('hide', function () {
+            S.log('hide');
+        });
+
+        $("#t2").on("click", function () {
+            o.show().center();
+        });
+    });
 </script>
 </body>
 </html>

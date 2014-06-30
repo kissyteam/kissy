@@ -18,36 +18,35 @@
     <button id="t2" class="ks-button">open dialog with mask anim</button>
 </div>
 <script>
-        var S=KISSY;
-        var start = (+new Date());
-        S.use("overlay,node", function (S, Overlay,$) {
-            alert("loaded: " + ((+new Date()) - start));
-            var o = new Overlay.Dialog({
-                width: 500,
-                height: 500,
-                mask: {
-                    effect: 'fade'
-                },
+    var S = KISSY;
+    var start = (+new Date());
+    S.use("overlay,node", function (S, Overlay, $) {
+        alert("loaded: " + ((+new Date()) - start));
+        var o = new Overlay.Dialog({
+            width: 500,
+            height: 500,
+            closeText:'c',
+            mask: {
+                effect: 'fade'
+            },
 //                effect: {
 //                    effect: 'fade'
 //                },
-                zIndex: 1000
-            });
-
-            o.on('show', function () {
-                S.log('show event');
-            });
-
-            o.on('hide', function () {
-                S.log('hide event');
-            });
-
-            $("#t2").on("click", function () {
-                o.show().center();
-            });
-
+            zIndex: 1000
         });
 
+        o.on('show', function () {
+            S.log('show event');
+        });
+
+        o.on('hide', function () {
+            S.log('hide event');
+        });
+
+        $("#t2").on("click", function () {
+            o.show().center();
+        });
+    });
 </script>
 </body>
 </html>
