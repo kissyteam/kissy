@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 25 14:48
+build time: Jul 1 15:53
 */
 KISSY.add("xtemplate/runtime",["util","logger-manager","./runtime/commands","./runtime/scope","./runtime/linked-buffer"],function(p,h,n,l){function j(a,g,b){var b=a.fn(g,b),f=a.runtime.extendTplName;f&&(delete a.runtime.extendTplName,b=a.root.include(f,a,g,null,b));return b.end()}function i(a,g,f,d,e,c,j,i){var k;if(!c){k=a.runtime.commands;var h=a.root.config.commands,m=e[0];k=k&&k[m]||h&&h[m]||b[m];if(1!==e.length&&k){h=e.length;for(m=1;m<h&&!(k=k[e[m]],!k);m++);}}if(k)return k.call(a,g,f,d,j);
 e.join(".");return i&&(a=g.resolve(e.slice(0,-1),c),e=a[e[e.length-1]])?e.apply(a,f.params):d}function c(a,g){this.fn=a;g=this.config=g||{};g.loader=g.loader||e;this.subNameResolveCache={}}p=h("util");h("logger-manager");var n=h("./runtime/commands"),b={},a=h("./runtime/scope"),f=h("./runtime/linked-buffer"),d={callFn:function(a,g,b,f,d,e,c){return i(a,g,b,f,d,e,c,!0)},callCommand:function(a,g,b,f,d,e){return i(a,g,b,f,d,0,e,!0)}},e={load:function(a,b){h([a.name],{success:function(a){b(void 0,a)},

@@ -312,6 +312,9 @@ function cubicBezierFunction(p1x, p1y, p2x, p2y) {
 
 module.exports = Easing;
 /*
+ 2014-07-01 yiminghe@gmail.com
+ - https://github.com/danro/easing-js/blob/master/easing.js
+
  2013-01-04 yiminghe@gmail.com
  - js 模拟 cubic-bezier
 
