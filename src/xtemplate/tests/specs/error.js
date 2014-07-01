@@ -16,7 +16,17 @@ describe('error detection', function () {
         } catch (e) {
             ret = e.message;
         }
-        expect(ret.indexOf('expect LPAREN')).not.toBe(-1);
+        expect(ret.indexOf('expect shift:LPAREN, shift:MINUS, shift:NOT, shift:STRING, shift:GLOBAL, shift:NUMBER')).not.toBe(-1);
+    });
+
+    it('error when string include \\n', function () {
+        var ret;
+        try {
+            ret = new XTemplate("\n\n\n\n{{ x + '1\n222222' }}",{name:'string'}).render();
+        } catch (e) {
+            ret = e.message;
+        }
+        expect(ret.indexOf("\n    {{ x + '1 222222' }}\n-----------^")).not.toBe(-1);
     });
 
     it('detect lexer error', function () {
@@ -26,7 +36,7 @@ describe('error detection', function () {
         } catch (e) {
             ret = e.message;
         }
-        expect(ret.indexOf('expect LPAREN')).not.toBe(-1);
+        expect(ret.indexOf('expect shift:LPAREN, shift:MINUS, shift:NOT, shift:STRING, shift:GLOBAL, shift:NUMBER, shift:ID')).not.toBe(-1);
     });
 
     it('detect un-closed block tag', function () {

@@ -577,7 +577,7 @@
                 {
                     state: codeSection,
                     // notice escape string
-                    regexp: /^"(\\[\s\S]|[^\\"])*"/,
+                    regexp: /^"(\\[\s\S]|[^\\"\n])*"/,
                     action: function () {
                         this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
                     },
@@ -586,7 +586,7 @@
                 {
                     state: codeSection,
                     // notice escape string
-                    regexp: /^'(\\[\s\S]|[^\\'])*'/,
+                    regexp: /^'(\\[\s\S]|[^\\'\n])*'/,
                     action: function () {
                         this.text = this.text.slice(1, -1).replace(/\\'/g, '\'');
                     },
