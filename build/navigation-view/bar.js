@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:21
+build time: Jul 1 23:07
 */
 KISSY.add("navigation-view/bar",["component/control","button","./bar/bar-xtpl"],function(l,m,p,o){function h(a){var b;b=a.clone(!0);b[0].id=a[0].id+"-proxy";a.parent().append(b);var d=a.offset();b.css("position","absolute");b.offset(d);b.css({width:a.css("width"),height:a.css("height")});return b}function g(a,b,d){a.animate(b,{duration:0.25,easing:"ease-in-out",complete:d})}function q(a,b,d,c){var e=a.get("el"),g=a.get("titleEl"),a=Math.min(e[0].offsetWidth/3,200),f=b[0].offsetWidth,b=e[0].offsetWidth,
 e=g.offset().left-e.offset().left,g=g[0].offsetWidth,i=d.width,h;c?(d=-i,i=Math.min(e-i,a)):(i=-i,d=Math.min(e,a));a={element:{from:{transform:"translateX("+d+"px) translateZ(0)"},to:{transform:"translateX(0) translateZ(0)",opacity:1}},ghost:{to:{transform:"translateX("+i+"px) translateZ(0)",opacity:0}}};f=-e+f;g>e&&(h=-e-g);c?(i=b-e-g,d=void 0!==h?h:f):(i=void 0!==h?h:f,d=Math.max(0,b-e-g));return{back:a,title:{element:{from:{transform:"translateX("+d+"px) translateZ(0)"},to:{transform:"translateX(0) translateZ(0)",
@@ -13,4 +13,4 @@ null}):(i.remove(),c.ghostBackEl=null);e=c.get("titleEl");e.stop(!0);var j=h(e.p
 ATTRS:{handleGestureEvents:{value:!1},focusable:{value:!1},allowTextSelection:{value:!0},contentTpl:{value:m},centerEl:{selector:function(){return"."+this.getBaseCssClass("center")}},contentEl:{selector:function(){return"."+this.getBaseCssClass("content")}},titleEl:{selector:function(){return"."+this.getBaseCssClass("title")}},title:{value:"",render:1,sync:0},withBackButton:{value:1},withTitle:{value:1,render:1,sync:0},backText:{value:"Back",render:1,sync:0}}})});
 KISSY.add("navigation-view/bar/bar-xtpl",[],function(l,m,p,o){l=function(h,g,l){var j=this,m=j.root.utils.callFn,f=j.root.nativeCommands["if"];g.write("",0);var k={escape:1},n=[],a=h.resolve(["withTitle"],0);n.push(a);k.params=n;k.fn=function(a,d){d.write('\r\n<div class="',0);var c={escape:1},e=[];e.push("title-wrap");c.params=e;if((c=m(j,a,c,d,["getBaseCssClasses"],0,2))&&c.isBuffer)d=c,c=l;d.write(c,!0);d.write('">\r\n    <div class="',0);c={escape:1};e=[];e.push("title");c.params=e;if((c=m(j,
 a,c,d,["getBaseCssClasses"],0,3))&&c.isBuffer)d=c,c=l;d.write(c,!0);d.write('">',0);c=a.resolve(["title"],0);d.write(c,!0);d.write("</div>\r\n</div>\r\n",0);return d};g=f.call(j,h,k,g,1);g.write('\r\n<div class="',0);f={escape:1};k=[];k.push("content");f.params=k;if((f=m(j,h,f,g,["getBaseCssClasses"],0,6))&&f.isBuffer)g=f,f=l;g.write(f,!0);g.write('">\r\n    <div class="',0);f={escape:1};k=[];k.push("center");f.params=k;if((h=m(j,h,f,g,["getBaseCssClasses"],0,7))&&h.isBuffer)g=h,h=l;g.write(h,!0);
-g.write('"></div>\r\n</div>',0);return g};l.TPL_NAME=o.name;l.version="5.0.0";o.exports=l});
+g.write('"></div>\r\n</div>',0);return g};l.TPL_NAME=o.name;o.exports=l});

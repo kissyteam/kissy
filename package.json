@@ -28,8 +28,8 @@
     },
     "scripts": {
         "test":"sleep 2 && exit 0",
-        "start": "DEBUG=kissy node ./tools/server/start",
-        "stop": "DEBUG=kissy  node ./tools/server/stop"
+        "start": "node ./tools/server/start",
+        "stop": "node ./tools/server/stop"
     },
     "devDependencies": {
         "express": "3.3.4",

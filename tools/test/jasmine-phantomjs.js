@@ -8,7 +8,7 @@
 /*global phantom*/
 var page = require('webpage').create();
 var specified = '';
-var tests = require('./tc.js')(), index = -1;
+var tests = require('../gen/tc.js')(), index = -1;
 var start = Date.now();
 var args = require('system').args;
 var srcMode = 0;
@@ -84,5 +84,5 @@ function next(url) {
 
 // specified = '/kissy/src/loader/tests/runner/test.html';
 // specified = '/src/seed/tests/specs/package-raw/test-combo.html';
-// specified = '/kissy/src/io/tests/runner';
+// specified = '/kissy/src/io/-/tests/runner';
 next(specified);

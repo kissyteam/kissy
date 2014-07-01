@@ -107,11 +107,11 @@ username 为你的 github 用户名
 
 你也可以测试单个模块，
 例如 dom：
-[http://localhost:8888/kissy/src/dom/sub-modules/base/tests/runner/test.jss](http://localhost:8888/kissy/src/dom/sub-modules/base/tests/runner/test.jss)
+[http://localhost:8888/kissy/src/dom/base/tests/runner/test.jss](http://localhost:8888/kissy/src/dom/base/tests/runner/test.jss)
 
 你也可以查看单个模块的测试覆盖率，
 例如 dom：
-[http://localhost:8888/kissy/src/dom/sub-modules/base/coverage/runner/test.jss](http://localhost:8888/kissy/src/dom/sub-modules/base/coverage/runner/test.jss)
+[http://localhost:8888/kissy/src/dom/base/coverage/runner/test.jss](http://localhost:8888/kissy/src/dom/base/coverage/runner/test.jss)
 
 #### 新增模块
 

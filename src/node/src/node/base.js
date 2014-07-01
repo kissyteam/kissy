@@ -78,7 +78,7 @@ Node.prototype = {
      */
     item: function (index) {
         var self = this;
-        index = parseInt(index);
+        index = parseInt(index, 10);
         return typeof index === 'number' && !isNaN(index) && index < self.length ? new Node(self[index]) : null;
     },
 

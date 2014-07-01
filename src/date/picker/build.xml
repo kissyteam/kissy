@@ -1,6 +1,0 @@
-<project name="date/picker.build" default="build" basedir=".">
-    <property name="component.name" value="date/picker"/>
-    <import file="../../dpl-css.xml"/>
-    <import file="../../common.xml"/>
-</project>
-

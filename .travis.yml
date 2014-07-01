@@ -12,4 +12,4 @@ before_script:
   - npm test
 script:
   - phantomjs --version
-  - phantomjs ./tools/test/jasmine-phantomjs.js
+  - ./tools/test/run-phantomjs.sh

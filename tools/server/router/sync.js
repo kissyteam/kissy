@@ -1,4 +1,4 @@
-var serverConfig = require('../server.json');
+var serverConfig = require('../config');
 var exec = require('child_process').exec;
 var path = require('path');
 var fs = require('fs');

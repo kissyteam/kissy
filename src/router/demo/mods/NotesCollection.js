@@ -6,7 +6,7 @@
     /*
      笔记列表模型
      */
-    module.exports = require('../mvc/').Collection.extend({}, {
+    module.exports = require('../mvc/index').Collection.extend({}, {
         ATTRS: {
             sync:{
                 value:require('./sync')

@@ -1,0 +1,32 @@
+<meta charset='utf-8'/>
+<script  src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script >
+    KISSY.ready(function(S) {
+        S.use("io", function(S, io) {
+            if (true) {
+                debugger
+                io({
+                            url:"jsonp.jss",
+                            dataType:'jsonp',
+                            forceScript:true,
+                            success:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(1);
+                            },
+                            error:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(2);
+                            },
+                            complete:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(3);
+                            }
+                        });
+            }
+        });
+    });
+</script>

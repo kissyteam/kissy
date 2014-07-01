@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:18
+build time: Jul 1 23:05
 */
 KISSY.add("editor/plugin/xiami-music","editor,./flash-common/base-class,./flash-common/utils,./fake-objects,./button,util".split(","),function(b,a,o,l){function i(){i.superclass.constructor.apply(this,arguments)}function g(h){this.config=h||{}}var m=a("editor"),b=a("./flash-common/base-class"),k=a("./flash-common/utils"),n=a("./fake-objects");a("./button");a("util").extend(i,b,{_updateTip:function(h,a){var e=this.get("editor").restoreRealElement(a);if(e){h.html(a.attr("title"));h.attr("href",this._getFlashUrl(e))}}});
 g.prototype={pluginRenderUI:function(a){function j(f){return/xiami\.com/i.test(f)}n.init(a);var e=a.htmlDataProcessor,b=e&&e.dataFilter;b&&b.addRules({tags:{object:function(f){var a=f.getAttribute("title"),c,d;c=f.getAttribute("classid");var b=f.childNodes;if(!c){for(c=0;c<b.length;c++){d=b[c];if(d.nodeName==="embed"){if(!k.isFlashEmbed(d))break;if(j(d.attributes.src))return e.createFakeParserElement(f,"ke_xiami","xiami-music",true,{title:a})}}return null}for(c=0;c<b.length;c++){d=b[c];if(d.nodeName===

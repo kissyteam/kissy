@@ -6,7 +6,7 @@
 
 var fs = require('fs');
 var Path = require('path');
-var util = require(Path.join(process.cwd(), 'lib/util'));
+var util = require('../common/util');
 var iconv;
 try {
     iconv = require('iconv-lite');

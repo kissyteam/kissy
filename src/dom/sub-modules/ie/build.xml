@@ -1,5 +1,0 @@
-<project name="dom/ie.build" default="build" basedir=".">
-    <property name="component.name" value="dom/ie"/>
-
-    <import file="../../../common.xml"/>
-</project>

@@ -1,6 +1,0 @@
-<project name="anim/base.build" default="build" basedir=".">
-
-    <property name="component.name" value="anim/base"/>
-
-    <import file="../../../common.xml"/>
-</project>

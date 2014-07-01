@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 19 16:35
+build time: Jul 1 22:56
 */
 /*
 combined modules:
@@ -464,6 +464,9 @@ KISSY.add('anim/timer/easing', [], function (S, require, exports, module) {
         return solve;
     }
     module.exports = Easing;    /*
+ 2014-07-01 yiminghe@gmail.com
+ - https://github.com/danro/easing-js/blob/master/easing.js
+
  2013-01-04 yiminghe@gmail.com
  - js 模拟 cubic-bezier
 
@@ -601,10 +604,9 @@ KISSY.add('anim/timer/manager', [], function (S, require, exports, module) {
                 var self = this;
                 if (!self.timer) {
                     self.timer = requestAnimationFrameFn(function run() {
+                        self.timer = requestAnimationFrameFn(run);
                         if (self.runFrames()) {
                             self.stopTimer();
-                        } else {
-                            self.timer = requestAnimationFrameFn(run);
                         }
                     });
                 }

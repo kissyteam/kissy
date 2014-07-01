@@ -11,8 +11,9 @@
     <property name="component.src.dir" location="./src/"/>
     <property name="component.coverage.dir" location="./coverage/src/"/>
     <property name="component.meta.dir" location="./meta/"/>
-    <property name="component.assets.dir" location="./assets/"/>
+    <property name="component.assets.dir" location="../assets"/>
     <property name="component.src.dir.tmp" location="./tmp/"/>
+    <property name="component.assets.dir.tmp" location="${component.src.dir.tmp}/assets"/>
     <property name="component.src.dir.kmc.tmp" location="./kmc-tmp/"/>
     <property name="component.files" value="**/*.*"/>
 
@@ -63,6 +64,12 @@
         </condition>
     </target>
 
+    <target name="check-assets">
+        <condition property="component.assets.dir.exists">
+            <available file="${component.assets.dir}" type="dir"/>
+        </condition>
+    </target>
+
     <target name="tpl2mod" depends="check-src">
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
@@ -90,18 +97,23 @@
     <target name="before-concat"/>
     <target name="after-concat"/>
 
-    <target name="concat-css">
-        <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.work.dir}"
-                     excludes="**/*.less,**/*.sass"
-                     includes="assets/**/*"/>
-            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
-        </copy>
-        <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.work.dir}"
-                     excludes="**/*.less,**/*.sass"
-                     includes="assets/**/*.swf"/>
-        </copy>
+    <target name="concat-css" depends="check-assets">
+        <ac:if>
+            <ac:isset property="component.assets.dir.exists"/>
+            <ac:then>
+                <copy todir="${component.assets.dir.tmp}">
+                    <fileset dir="${component.assets.dir}"
+                             excludes="**/*.less,**/*.sass"
+                             includes="**/*"/>
+                    <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
+                </copy>
+                <copy todir="${component.assets.dir.tmp}">
+                    <fileset dir="${component.assets.dir}"
+                             excludes="**/*.less,**/*.sass"
+                             includes="**/*.swf"/>
+                </copy>
+            </ac:then>
+        </ac:if>
     </target>
 
     <!-- 打包本模块并抽取依赖 -->
@@ -380,7 +392,7 @@
 
     <target name="build-all" depends="check-src">
         <subant target="build" failonerror="true" inheritall="false">
-            <fileset dir="./" includes="**/build.xml" excludes="build.xml"/>
+            <fileset dir="../" includes="**/build.xml" excludes="-/build.xml"/>
         </subant>
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>

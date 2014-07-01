@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="data-spm" content="1" data-spm-protocol="i"/>
+    <meta name="viewport"
+          content="width=device-width,
+           initial-scale=1.0,
+          maximum-scale=1.0,
+           minimum-scale=1.0,
+           user-scalable=no">
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/src/navigation-view/assets/native-scroll.css" rel="stylesheet">
+    <style>
+        body,html {
+            height: 100%;
+        }
+
+        .ks-navigation-bar {
+            position: fixed;
+            height: 47px;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .ks-navigation-view-content {
+            margin-top: 47px;
+        }
+
+        ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            color: #000;
+            background: white;
+            border: 1px solid #aaa;
+            padding-left: 0;
+        }
+
+        .nav > li {
+            text-indent: 0;
+            font-size: 1.5em;
+            margin: 0;
+            display: block;
+            position: relative;
+            list-style-type: none;
+            vertical-align: middle;
+            box-sizing: border-box;
+            padding: .5em .7em;
+            padding-left: 1em;
+            line-height: 1.6em;
+            overflow: hidden;
+            color: #000;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            border-top: 1px solid rgba(180, 180, 180, 0.5);
+        }
+
+        .nav > li:first-child {
+            border-top: 0;
+        }
+
+        .nav a {
+            line-height: inherit;
+            text-decoration: none;
+            margin: -0.5em -0.7em;
+            margin-left: -1em;
+            padding-left: 1em;
+            color: #000;
+            display: block;
+            position: relative;
+            list-style-type: none;
+            vertical-align: middle;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: .5em .7em;
+        }
+
+        .nav a:after {
+            -webkit-text-fill-color: #fff;
+            -webkit-transform: rotate(45deg);
+            vertical-align: middle;
+            margin-left: -0.2rem;
+            border-style: solid;
+            border-color: #777;
+            content: "\a0";
+            display: block;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            margin-top: -0.32rem;
+            color: #999ea9;
+            width: .66rem;
+            height: .64rem;
+            border-width: 0;
+            -webkit-box-shadow: inset -0.2rem .2rem 0 #999ea9;
+            box-shadow: inset -0.2rem .2rem 0;
+        }
+
+        .nav .list-item-active a {
+            background: #d9d9d9;
+        }
+
+        .ks-navigation-view-content {
+            background: #eeeeee;
+        }
+
+        .anim-title {
+            text-align: center;
+            font-size: 18px;
+            line-height: 24px;
+            color: #444;
+            text-shadow: rgba(255, 255, 255, 0.3) 0 1px 0;
+            padding: 10px;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .anim-content {
+            text-align: center;
+            font-size: 18px;
+            line-height: 24px;
+            color: #444;
+            text-shadow: rgba(255, 255, 255, 0.3) 0 1px 0;
+            padding: 10px;
+            width: 75%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script src="/kissy/src/log.js"></script>
+<script>
+    window.PAGE_VIEW = 'demo/page-view';
+</script>
+<script src="demo.js"></script>
+</body>
+</html>

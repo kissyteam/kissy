@@ -1,0 +1,39 @@
+<meta charset='utf-8'/>
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script> KISSY.use("io", function (S, io) {
+        io({
+            url: "../../data/ifModified.jss",
+            ifModified: true,
+            dataType: 'text',
+            complete: function (data, s, jq) {
+                S.log(data);
+                S.log(s);
+                S.log(jq.getAllResponseHeaders());
+                S.log("next .........");
+
+                setTimeout(function () {
+
+                    io({
+                        url: "../../data/ifModified.jss",
+                        ifModified: true,
+                        headers: {
+                            "If-Modified-Since": "Thu, 18 Jul 2002 15:48:32 GMT"
+                        },
+                        dataType: 'text',
+                        complete: function (data, status, jq) {
+                            S.log(data);
+                            S.log(status);
+                            S.log(jq.getAllResponseHeaders());
+                            //console.log(arguments);
+                        }
+                    });
+
+                }, 100);
+
+
+            }
+        });
+    });
+
+</script>

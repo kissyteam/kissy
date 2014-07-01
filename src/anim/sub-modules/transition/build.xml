@@ -1,5 +1,0 @@
-<project name="anim/transition.build" default="build" basedir=".">
-    <property name="component.name" value="anim/transition"/>
-
-    <import file="../../../common.xml"/>
-</project>

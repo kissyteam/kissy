@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:21
+build time: Jul 1 23:07
 */
 KISSY.add("navigation-view",["util","feature","component/container","component/control","component/extension/content-box"],function(h,g,k,r){function l(a,c,b){return a+"navigation-view-"+("anim-"+c+"-"+(b?"enter":"leave"))+" "+a+"navigation-view-anim-ing"}function m(a,c,b){a=a.get("animation");return"string"===typeof a?a:b?c?a[1]:a[0]:c?a[0]:a[1]}function i(a,c,b){j(a);b=m(a,c,b);"none"===b?c?a.show():a.hide():(a.show(),a.$el.addClass(a._viewAnimCss=l(a.get("prefixCls"),b,c)))}function j(a){a._viewAnimCss&&
 (a.$el.removeClass(a._viewAnimCss),a._viewAnimCss=null)}function n(a,c,b){var e=a.loadingView,d=c.view,c=c.fromCache,f=a.get("activeView");a.fire("beforeInnerViewChange",{oldView:f,newView:d,backward:b});f&&f.leave&&f.leave();a.set("activeView",d);d.enter&&d.enter({fromCache:c});(c=d.promise)?(f?(i(f,!1,b),e.transition(!0,b)):e.show(),c.then(function(){if(a.get("activeView")===d){e.hide();d.show();a.fire("afterInnerViewChange",{newView:d,oldView:f,backward:b})}})):(e.get("visible")?(e.transition(!1,

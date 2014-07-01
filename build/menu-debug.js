@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:20
+build time: Jul 1 23:07
 */
 /*
 combined modules:
@@ -413,10 +413,9 @@ KISSY.add('menu/check-menuitem', [
     });
 });
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module) {
-    var checkMenuitemXtplHtml = function (scope, buffer, undefined) {
+    var checkMenuitemXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -449,9 +448,8 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    checkMenuitemXtplHtml.TPL_NAME = module.name;
-    checkMenuitemXtplHtml.version = '5.0.0';
-    module.exports = checkMenuitemXtplHtml;
+    checkMenuitemXtpl.TPL_NAME = module.name;
+    module.exports = checkMenuitemXtpl;
 });
 KISSY.add('menu/radio-menuitem', [
     './menuitem',
@@ -524,10 +522,9 @@ KISSY.add('menu/radio-menuitem', [
         xclass: 'radio-menuitem'
     });
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module) {
-    var radioMenuitemXtplHtml = function (scope, buffer, undefined) {
+    var radioMenuitemXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -560,9 +557,8 @@ KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    radioMenuitemXtplHtml.TPL_NAME = module.name;
-    radioMenuitemXtplHtml.version = '5.0.0';
-    module.exports = radioMenuitemXtplHtml;
+    radioMenuitemXtpl.TPL_NAME = module.name;
+    module.exports = radioMenuitemXtpl;
 });
 KISSY.add('menu/submenu', [
     'util',
@@ -804,10 +800,9 @@ KISSY.add('menu/submenu', [
         this.get('menu').hide();
     }    // # ------------------------------------ private end
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
-    var submenuXtplHtml = function (scope, buffer, undefined) {
+    var submenuXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -831,9 +826,8 @@ KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
         buffer.write('submenu-arrow">\u25BA</span>', 0);
         return buffer;
     };
-    submenuXtplHtml.TPL_NAME = module.name;
-    submenuXtplHtml.version = '5.0.0';
-    module.exports = submenuXtplHtml;
+    submenuXtpl.TPL_NAME = module.name;
+    module.exports = submenuXtpl;
 });
 KISSY.add('menu/popupmenu', [
     'component/extension/align',

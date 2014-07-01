@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:12
+build time: Jul 1 22:59
 */
 KISSY.add("dom/selector",["util","logger-manager","./selector/parser","dom/basic"],function(F,v,J,D){function a(b){return b.replace(x,K)}function s(b,c){do b=b[c];while(b&&1!==b.nodeType);return b}function t(b){var c=0,g=0;if("number"===typeof b)g=b;else if("odd"===b)c=2,g=1;else if("even"===b)c=2,g=0;else if(b=b.replace(/\s/g,"").match(k))b[1]?(c=parseInt(b[2],10),isNaN(c)&&(c="-"===b[2]?-1:1)):c=0,g=parseInt(b[3],10)||0;return{a:c,b:g}}function m(b,c,g,a){if(0===c){if(b===g)return a}else if(0<=
 (b-g)/c&&0===(b-g)%c&&a)return 1}function p(b,c){return n._selectInternal(b,null,c)}function H(b,c){if(!c)return!0;if(!b||9===b.nodeType)return!1;var g=1,a=c.suffix,e,h;"tag"===c.t&&(g&=w.tag(b,c.value));if(g&&a){e=a.length;for(h=0;g&&h<e;h++){var d=a[h],f=d.t;w[f]&&(g&=w[f](b,d.value))}}return g}function h(b,c){var g=1,a=b,h,e=c;do if(g&=H(b,c)){c=c&&c.prev;if(!c)return!0;h=A[c.nextCombinator];b=s(b,h.dir);if(!h.immediate)return{el:b,match:c}}else if(h=A[c.nextCombinator],h.immediate)break;else return{el:b&&

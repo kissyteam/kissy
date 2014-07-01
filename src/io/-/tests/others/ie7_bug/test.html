@@ -1,0 +1,18 @@
+
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+
+<script >
+    KISSY.use("io,json", function (S, io, Json) {
+        io({
+            url:'//'+location.hostname+':'+SERVER_CONFIG.ports[0]+'/kissy/src/io/-/tests/io-json.jss',
+            dataType:'json',
+            success:function (d) {
+                alert(Json.stringify(d));
+            },
+            error:function (d, s) {
+                alert(s.message);
+            }
+        });
+    });
+</script>

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:21
+build time: Jul 1 23:07
 */
 /*
 combined modules:
@@ -106,15 +106,8 @@ KISSY.add('node/base', [
      */
         item: function (index) {
             var self = this;
-            if (typeof index === 'number') {
-                if (index >= self.length) {
-                    return null;
-                } else {
-                    return new Node(self[index]);
-                }
-            } else {
-                return new Node(index);
-            }
+            index = parseInt(index, 10);
+            return typeof index === 'number' && !isNaN(index) && index < self.length ? new Node(self[index]) : null;
         },
         /**
      * return a new Node object which consists of current node list and parameter node list.

@@ -1,5 +1,5 @@
 <project name="swf.build" default="build" basedir=".">
     <property name="component.name" value="swf"/>
-
+    <property name="component.assets.dir" location="./assets"/>
     <import file="../common.xml"/>
 </project>

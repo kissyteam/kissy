@@ -6,8 +6,7 @@ var mime = require('mime');
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
 var currentDir = __dirname;
-var serverConfig = JSON.parse(fs.readFileSync(currentDir + '/server.json'));
-var debug = require('debug')('kissy');
+var serverConfig = require(currentDir + '/config.js');
 
 function startServer(port) {
     var express = require('express');
@@ -28,7 +27,7 @@ function startServer(port) {
 
         //监听domain的错误事件
         d.on('error', function (err) {
-            debug(err);
+            console.log(err,'error');
             res.render('err', {
                 err: err && err.stack
             });
@@ -105,9 +104,9 @@ function startServer(port) {
         process.exit(0);
     });
 
-    app.get('/try', function (req,res) {
-        res.render('try',{
-            x:1
+    app.get('/try', function (req, res) {
+        res.render('try', {
+            x: 1
         });
     });
 
@@ -123,6 +122,8 @@ function startServer(port) {
 
     require('./router/docs')(app);
 
+    require('./router/gen')(app);
+
     require('./router/plato')(app);
 
     require('./router/sync')(app);
@@ -136,11 +137,9 @@ function startServer(port) {
 
     require('./router/send-coverage')(app);
 
-    var codes = require('../test/tc.js')();
-
     app.get('/kissy/test', function (req, res) {
         res.render('test', {
-            tests: codes
+            tests: require('../common/gen-tc').getData()
         });
     });
 
@@ -148,5 +147,6 @@ function startServer(port) {
 }
 
 serverConfig.ports.forEach(function (port) {
+    console.log('start server at port: ' + port);
     startServer(port);
 });

@@ -1,0 +1,5 @@
+<project name="event/dom/base.build" default="build">
+    <property name="component.name" value="event/dom/base"/>
+
+    <import file="../../../common.xml"/>
+</project>

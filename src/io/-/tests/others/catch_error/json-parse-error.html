@@ -1,0 +1,14 @@
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script>
+    KISSY.use("io", function (S, io) {
+
+        io({
+            url: '../../data/xml.jss',
+            dataType: 'json'
+        }).then(function (a1, a2, a3, a4) {
+                    throw new Error("haha !");
+         }).done();
+
+    });
+</script>

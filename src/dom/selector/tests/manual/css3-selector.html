@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div id="t">
+    <div class="inner">
+        <form>
+            <div>
+                <ul>
+                    <li>
+
+                    </li>
+                    <li class="my">
+
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ul>
+    <li class="my">
+
+    </li>
+</ul>
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/sizzle.js"></script>
+<script>
+    KISSY.use('dom/selector', function (S, engine) {
+        var start= (+new Date());
+        var els = engine.select('#t > .inner form ul > li.my');
+        S.log((+new Date())-start);
+        S.log(els);
+        start= (+new Date());
+         els = Sizzle('#t > .inner form ul > li.my');
+        S.log((+new Date())-start);
+        S.log(els);
+    });
+</script>
+</body>
+</html>

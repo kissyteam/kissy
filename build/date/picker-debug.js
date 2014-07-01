@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:11
+build time: Jul 1 22:58
 */
 /*
 combined modules:
@@ -1032,10 +1032,9 @@ KISSY.add('date/picker/decade-panel/control', [
     });
 });
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], function (S, require, exports, module) {
-    var decadePanelXtplHtml = function (scope, buffer, undefined) {
+    var decadePanelXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -1150,14 +1149,12 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
         return buffer;
     };
-    decadePanelXtplHtml.TPL_NAME = module.name;
-    decadePanelXtplHtml.version = '5.0.0';
-    module.exports = decadePanelXtplHtml;
+    decadePanelXtpl.TPL_NAME = module.name;
+    module.exports = decadePanelXtpl;
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exports, module) {
-    var decadesXtplHtml = function (scope, buffer, undefined) {
+    var decadesXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -1304,15 +1301,13 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
         buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
         return buffer;
     };
-    decadesXtplHtml.TPL_NAME = module.name;
-    decadesXtplHtml.version = '5.0.0';
-    module.exports = decadesXtplHtml;
+    decadesXtpl.TPL_NAME = module.name;
+    module.exports = decadesXtpl;
 });
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports, module) {
-    var yearsXtplHtml = function (scope, buffer, undefined) {
+    var yearsXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -1451,14 +1446,12 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
         buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
         return buffer;
     };
-    yearsXtplHtml.TPL_NAME = module.name;
-    yearsXtplHtml.version = '5.0.0';
-    module.exports = yearsXtplHtml;
+    yearsXtpl.TPL_NAME = module.name;
+    module.exports = yearsXtpl;
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (S, require, exports, module) {
-    var yearPanelXtplHtml = function (scope, buffer, undefined) {
+    var yearPanelXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -1600,14 +1593,12 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
         return buffer;
     };
-    yearPanelXtplHtml.TPL_NAME = module.name;
-    yearPanelXtplHtml.version = '5.0.0';
-    module.exports = yearPanelXtplHtml;
+    yearPanelXtpl.TPL_NAME = module.name;
+    module.exports = yearPanelXtpl;
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, exports, module) {
-    var monthsXtplHtml = function (scope, buffer, undefined) {
+    var monthsXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -1694,14 +1685,12 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
         buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
         return buffer;
     };
-    monthsXtplHtml.TPL_NAME = module.name;
-    monthsXtplHtml.version = '5.0.0';
-    module.exports = monthsXtplHtml;
+    monthsXtpl.TPL_NAME = module.name;
+    module.exports = monthsXtpl;
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], function (S, require, exports, module) {
-    var monthPanelXtplHtml = function (scope, buffer, undefined) {
+    var monthPanelXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -1840,7 +1829,6 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
         return buffer;
     };
-    monthPanelXtplHtml.TPL_NAME = module.name;
-    monthPanelXtplHtml.version = '5.0.0';
-    module.exports = monthPanelXtplHtml;
+    monthPanelXtpl.TPL_NAME = module.name;
+    module.exports = monthPanelXtpl;
 });

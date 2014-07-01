@@ -5,7 +5,7 @@
     /*
      笔记模型
      */
-    module.exports = require('../mvc/').Model.extend({},{
+    module.exports = require('../mvc/index').Model.extend({},{
         ATTRS:{
             sync:{
                 value:require('./sync')

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:20
+build time: Jul 1 22:55
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140618132035' will replace with current timestamp when compressing.
+         * NOTICE: '20140701225543' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140618132035',
+        __BUILD_TIME: '20140701225543',
 
         /**
          * KISSY Environment.
@@ -1471,18 +1471,22 @@ var KISSY = (function (undefined) {
 
         var packageBase = packageInfo.getBase();
         var packageName = packageInfo.name;
-        var extname = '.' + mod.getType();
+        var extname = mod.getType();
+        var suffix = '.' + extname;
 
         if (!subPath) {
             // special for css module
             name = name.replace(/\.css$/, '');
-            filter = packageInfo.getFilter();
+            filter = packageInfo.getFilter() || '';
 
-            if (filter) {
-                filter = '-' + filter;
+            if (typeof filter === 'function') {
+                subPath = filter(name, extname);
+            } else if (typeof filter === 'string') {
+                if (filter) {
+                    filter = '-' + filter;
+                }
+                subPath = name + filter + suffix;
             }
-
-            subPath = name + filter + extname;
         }
 
         // core package
@@ -1491,14 +1495,14 @@ var KISSY = (function (undefined) {
         } else if (name === packageName) {
             // packageName: a/y use('a/y');
             // do not use this on production, can not be combo ed with other modules from same package
-            url = packageBase.substring(0, packageBase.length - 1) + filter + extname;
+            url = packageBase.substring(0, packageBase.length - 1) + filter + suffix;
         } else {
             subPath = subPath.substring(packageName.length + 1);
             url = packageBase + subPath;
         }
 
         if ((t = mod.getTag())) {
-            t += extname;
+            t += suffix;
             url += '?t=' + t;
         }
         return url;
@@ -2412,7 +2416,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140618132035';
+    var TIMESTAMP = '20140701225543';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2542,7 +2546,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:22
+build time: Jul 1 23:09
 */
 /*
 combined modules:
@@ -2934,7 +2938,7 @@ KISSY.add('ua', [], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:20
+build time: Jul 1 23:06
 */
 /*
 combined modules:
@@ -3117,7 +3121,7 @@ KISSY.add('feature', ['ua'], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 18 13:23
+build time: Jul 1 23:09
 */
 /**
  * @ignore
