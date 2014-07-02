@@ -111,17 +111,17 @@ username 为你的 github 用户名
 
 你也可以查看单个模块的测试覆盖率，
 例如 dom：
-[http://localhost:8888/kissy/src/dom/base/coverage/runner/test.jss](http://localhost:8888/kissy/src/dom/base/coverage/runner/test.jss)
+[http://localhost:8888/kissy/src/dom/base/tests/coverage](http://localhost:8888/kissy/src/dom/base/tests/coverage)
 
 #### 新增模块
 
-新增模块请复制已有模块的目录结构后，清楚 src，demo 等子目录的内容后添加模块（TODO 增加新增模块模版）。
+新增模块请复制已有模块的目录结构后，清楚 src, demo, - 等子目录的内容后添加模块（TODO 增加新增模块模版）。
 
 在 src 目录下编写源码，
 demo 目录增加 demo ，
 tests/runner/test.jss 申明依赖的外部 css 和外部 js，
 修改 build.xml 中的当前模块名，
-sub-modules 中增加子模块。
+
 
 最后重启 web 环境
 
@@ -159,7 +159,7 @@ build KISSY 时间很长，需要耐心等待
 
 继续看下你的用例的覆盖率
 
-运行 http://localhost:8888/kissy/src/$module$/coverage/runner/test.jss
+运行 http://localhost:8888/kissy/src/$module$/tests/coverage
 
 $module$ 为你修改的模块名
 
