@@ -10,6 +10,8 @@ node_js:
 before_script:
   - npm start &
   - npm test
+
 script:
   - phantomjs --version
-  - ./tools/test/run-phantomjs.sh
+  - node tools/test/gen-tc-for-phantom
+  - phantomjs tools/test/jasmine-phantomjs.js
