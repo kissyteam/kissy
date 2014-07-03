@@ -91,9 +91,16 @@ var utils = {
 };
 
 var loader = {
+    cache: {},
     load: function (params, callback) {
-        require([params.name], {
+        var name = params.name;
+        var cache = this.cache;
+        if (cache[name]) {
+            return callback(undefined, cache[name]);
+        }
+        require([name], {
             success: function (tpl) {
+                cache[name] = tpl;
                 callback(undefined, tpl);
             },
             error: function () {

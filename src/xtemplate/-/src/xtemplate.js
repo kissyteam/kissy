@@ -11,8 +11,13 @@ var Compiler = require('xtemplate/compiler');
 var LoggerManager = require('logger-manager');
 
 var loader = {
+    cache: {},
     load: function (params, callback) {
         var name = params.name;
+        var cache = this.cache;
+        if (cache[name]) {
+            return callback(undefined, cache[name]);
+        }
         require([name], {
             success: function (tpl) {
                 if (typeof tpl === 'string') {
@@ -22,6 +27,7 @@ var loader = {
                         return callback(e);
                     }
                 }
+                cache[name] = tpl;
                 callback(undefined, tpl);
             },
             error: function () {

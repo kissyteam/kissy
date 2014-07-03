@@ -9,21 +9,18 @@
     </script>
 </head>
 <body>
-    <h1>Jade - node template engine</h1>
+    <h1>handlebars - node template engine</h1>
     <div id="container" class="col"></div>
-    {{#if (youAreUsingJade)}}
+    {{#if using}}
         <p>You are amazing</p>
     {{else}}
         <p>Get on it!</p>
     {{/if}}
-    <p>Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.</p>
+    <p>paragraph paragraph paragraph paragraph</p>
     <ul>
-    {{#each (lis)}}
-        <li>{{xindex}}: {{d}} of {{title}}</li>
-    </ul>
+    {{#each lis}}
+        <li>{{@index}}: {{d}} of {{title}}</li>
     {{/each}}
+     </ul>
 </body>
 </html>

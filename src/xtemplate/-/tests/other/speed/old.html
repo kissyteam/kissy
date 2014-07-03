@@ -10,7 +10,7 @@ html(lang="en")
     body
         h1 Jade - node template engine
         #container.col
-        if youAreUsingJade
+        if using
             p You are amazing
         else
             p Get on it!
@@ -41,15 +41,12 @@ html(lang="en")
 <body>
     <h1>Jade - node template engine</h1>
     <div id="container" class="col"></div>
-    {{#if (youAreUsingJade)}}
+    {{#if (using)}}
         <p>You are amazing</p>
     {{else}}
         <p>Get on it!</p>
     {{/if}}
-    <p>Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.</p>
+    <p>paragraph paragraph paragraph paragraph</p>
     <ul>
     {{#each (lis)}}
         <li>{{xindex}}: {{d}} of {{title}}</li>
@@ -76,15 +73,12 @@ html(lang="en")
 <body>
     <h1>Jade - node template engine</h1>
     <div id="container" class="col"></div>
-    {{#if youAreUsingJade}}
+    {{#if using}}
         <p>You are amazing</p>
     {{else}}
         <p>Get on it!</p>
     {{/if}}
-    <p>Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.</p>
+    <p>paragraph paragraph paragraph paragraph</p>
     <ul>
     {{#each lis}}
         <li>{{@index}}: {{d}} of {{title}}</li>
@@ -108,15 +102,12 @@ html(lang="en")
 <body>
     <h1>Jade - node template engine</h1>
     <div id="container" class="col"></div>
-    {?youAreUsingJade}
+    {?using}
         <p>You are amazing</p>
     {:else}
         <p>Get on it!</p>
-    {/youAreUsingJade}
-    <p>Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.</p>
+    {/using}
+    <p>paragraph paragraph paragraph paragraph</p>
     <ul>
     {#lis}
         <li> {d} : {d} of {title}</li>
@@ -160,7 +151,7 @@ html(lang="en")
                     }
                     var html = fn({
                         title: 'Jade Demo',
-                        youAreUsingJade: true,
+                        using: true,
                         lis: [
                             {d: 'one'},
                             {d: 'two'},
@@ -180,7 +171,7 @@ html(lang="en")
             var fn = Handlebars.compile(getElementById('testHandlebars').innerHTML.trim());
             fn({
                 title: 'Jade Demo',
-                youAreUsingJade: true,
+                using: true,
                 lis: [
                     {d: 'one'},
                     {d: 'two'},
@@ -196,7 +187,7 @@ html(lang="en")
                     }
                     var html = fn({
                         title: 'Jade Demo',
-                        youAreUsingJade: true,
+                        using: true,
                         lis: [
                             {d: 'one'},
                             {d: 'two'},
@@ -224,7 +215,7 @@ html(lang="en")
                     }
                     dust.render("intro", {
                         title: 'Jade Demo',
-                        youAreUsingJade: true,
+                        using: true,
                         lis: [
                             {d: 'one'},
                             {d: 'two'},
@@ -254,7 +245,7 @@ html(lang="en")
                     }
                     var html = tpl.render({
                         title: 'Jade Demo',
-                        youAreUsingJade: true,
+                        using: true,
                         lis: [
                             {d: 'one'},
                             {d: 'two'},

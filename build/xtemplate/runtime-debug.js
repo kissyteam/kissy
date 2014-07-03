@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 3 20:15
 */
 /*
 combined modules:
@@ -101,9 +101,16 @@ KISSY.add('xtemplate/runtime', [
             }
         };
     var loader = {
+            cache: {},
             load: function (params, callback) {
-                require([params.name], {
+                var name = params.name;
+                var cache = this.cache;
+                if (cache[name]) {
+                    return callback(undefined, cache[name]);
+                }
+                require([name], {
                     success: function (tpl) {
+                        cache[name] = tpl;
                         callback(undefined, tpl);
                     },
                     error: function () {

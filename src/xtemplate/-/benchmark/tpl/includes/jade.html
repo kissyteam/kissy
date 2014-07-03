@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+    head
+        title= title
+        script(type='text/javascript').
+            if (foo) {
+                bar(1 + 5)
+            }
+    body
+        h1 Jade - node template engine
+        #container.col
+        if using
+            p You are amazing
+        else
+            p Get on it!
+        p.
+            Jade is a terse and simple
+            templating language with a
+            strong focus on performance
+            and powerful features.
+        ul
+            each val, index in lis
+                li= index + ': ' + val.d + ' of '+title
