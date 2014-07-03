@@ -11,6 +11,7 @@ describe('extend', function () {
 
     beforeEach(function () {
         util.each(mods, function (mod) {
+            delete XTemplate.loader.cache[mod];
             delete KISSY.Env.mods[mod];
         });
     });

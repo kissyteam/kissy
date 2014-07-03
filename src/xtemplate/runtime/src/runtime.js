@@ -132,6 +132,8 @@ function XTemplateRuntime(fn, config) {
 }
 
 util.mix(XTemplateRuntime, {
+    loader: loader,
+
     nativeCommands: nativeCommands,
 
     utils: utils,

@@ -63,6 +63,8 @@ function XTemplate(tpl, config) {
 util.extend(XTemplate, XTemplateRuntime, {}, {
     compile: Compiler.compile,
 
+    loader: loader,
+
     Compiler: Compiler,
 
     Scope: XTemplateRuntime.Scope,
