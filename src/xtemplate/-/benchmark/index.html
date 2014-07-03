@@ -20,11 +20,11 @@
 
 
 
-<script src="tpl/includes/nunjucks.js"></script>
+<script src="views/includes/nunjucks.js"></script>
 <script>
     KISSY.use(['node', 'io', 'util', 'promise', 'xtemplate'], function (S, $, io, util, Promise, XTemplate) {
         var logEl = $('#log');
-        var nunjucksEnv = nunjucks.configure('tpl');
+        var nunjucksEnv = nunjucks.configure('views');
 
         function reverseEach(arr, fn) {
             util.each(arr.concat().reverse(), fn);
@@ -44,7 +44,7 @@
                 flatFiles.push(fs);
                 all.push.apply(all, util.map(fs, function (f) {
                     return io({
-                        url: 'tpl/' + f + '.html',
+                        url: 'views/' + f + '.html',
                         success: function (data) {
                             ios[type][f] = data;
                         }
