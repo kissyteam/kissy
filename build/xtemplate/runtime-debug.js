@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 3 20:15
+build time: Jul 4 10:51
 */
 /*
 combined modules:
@@ -148,6 +148,7 @@ KISSY.add('xtemplate/runtime', [
         this.subNameResolveCache = {};
     }
     util.mix(XTemplateRuntime, {
+        loader: loader,
         nativeCommands: nativeCommands,
         utils: utils,
         /**
