@@ -7,13 +7,16 @@
 var program = require('commander');
 var compileModuleCode = require('../lib/xtemplate/compile-module');
 var encoding = 'utf-8';
-var util = require('../lib/util'),
-    chokidar = require('chokidar'),
-    fs = require('fs'),
-    path = require('path');
+var util = require('../lib/util');
+var chokidar = require('chokidar');
+var fs = require('fs');
+var path = require('path');
+var fsExtra = require('fs-extra');
+var cwd = process.cwd();
 
 program
     .option('-p, --folderPath <folderPath>', 'Set template folder path')
+    .option('-o, --outPath [outPath]', 'Set template js path, default to folderPath')
     .option('-s, --suffix [suffix]', 'Set xtemplate file suffix', '')
     .option('-w, --watch', 'Watch xtemplate file change')
     .option('--no-kwrap', 'Wrap code by KISSY module')
@@ -28,17 +31,28 @@ options.forEach(function (o) {
     }
 });
 
-var folderPath = program.folderPath,
-    suffix = program.suffix || 'xtpl',
-    kwrap = program.kwrap,
-    cwd = process.cwd();
+var folderPath = path.resolve(cwd, program.folderPath);
+var outPath = program.outPath;
+if (outPath) {
+    outPath = path.resolve(cwd, program.outPath);
+}
+var suffix = program.suffix || 'xtpl';
+var kwrap = program.kwrap;
 
 var suffixReg = new RegExp('\\.' + util.escapeRegExp(suffix) + '$', 'g');
-
-folderPath = path.resolve(cwd, folderPath);
+var folderPathReg = new RegExp('^' + util.escapeRegExp(normalizeSlash(folderPath)), 'i');
 
 function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
+}
+
+function getGenerateFilePath(srcPath) {
+    if (outPath) {
+        srcPath = normalizeSlash(srcPath);
+        return srcPath.replace(folderPathReg, outPath);
+    } else {
+        return srcPath;
+    }
 }
 
 function compile(tplFilePath, modulePath, kwrap) {
@@ -47,6 +61,7 @@ function compile(tplFilePath, modulePath, kwrap) {
         encoding: encoding,
         path: tplFilePath
     });
+    fsExtra.mkdirsSync(path.dirname(modulePath));
     fs.writeFileSync(modulePath, moduleCode, encoding);
     console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
 }
@@ -54,7 +69,7 @@ function compile(tplFilePath, modulePath, kwrap) {
 function generate(filePath) {
     var modulePath;
     if (filePath.match(suffixReg)) {
-        modulePath = filePath.replace(suffixReg, '.js');
+        modulePath = getGenerateFilePath(filePath.replace(suffixReg, '.js'));
         compile(filePath, modulePath, kwrap);
     }
 }
