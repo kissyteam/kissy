@@ -169,14 +169,6 @@ ast.Number = function (lineNumber, value) {
 
 ast.Number.prototype.type = 'number';
 
-ast.Global = function (lineNumber, value) {
-    var self = this;
-    self.lineNumber = lineNumber;
-    self.value = value;
-};
-
-ast.Global.prototype.type = 'global';
-
 ast.Hash = function (lineNumber) {
     var self = this,
         value = {};

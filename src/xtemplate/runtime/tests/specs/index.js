@@ -1,2 +1,1 @@
-
-    require('src/xtemplate/-/tests/specs/');
+require('src/xtemplate/-/tests/specs/');

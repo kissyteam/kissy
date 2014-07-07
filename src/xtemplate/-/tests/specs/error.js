@@ -16,7 +16,7 @@ describe('error detection', function () {
         } catch (e) {
             ret = e.message;
         }
-        expect(ret.indexOf('expect shift:LPAREN, shift:MINUS, shift:NOT, shift:STRING, shift:GLOBAL, shift:NUMBER')).not.toBe(-1);
+        expect(ret.indexOf('expect shift:LPAREN, shift:MINUS, shift:NOT, shift:STRING, shift:NUMBER')).not.toBe(-1);
     });
 
     it('error when string include \\n', function () {
@@ -36,7 +36,7 @@ describe('error detection', function () {
         } catch (e) {
             ret = e.message;
         }
-        expect(ret.indexOf('expect shift:LPAREN, shift:MINUS, shift:NOT, shift:STRING, shift:GLOBAL, shift:NUMBER, shift:ID')).not.toBe(-1);
+        expect(ret.indexOf('expect shift:LPAREN, shift:MINUS, shift:NOT, shift:STRING, shift:NUMBER, shift:ID')).not.toBe(-1);
     });
 
     it('detect un-closed block tag', function () {

@@ -14,6 +14,17 @@ describe('expression', function () {
         expect(render).toBe('1');
     });
 
+    it('support keyword prefix',function(){
+       var tpl = '{{trueX}} {{falseX}} {{nullX}} {{undefinedX}}';
+        var render = new XTemplate(tpl).render({
+            trueX:1,
+            falseX:2,
+            nullX:3,
+            undefinedX:4
+        });
+        expect(render).toBe('1 2 3 4');
+    });
+
     it('distinguish {{}} from {{}}}', function () {
         var tpl = '{{1}}}';
 
@@ -64,7 +75,6 @@ describe('expression', function () {
     });
 
     it('support expression for variable', function () {
-
         var tpl = '{{n+3*4/2}}';
 
         var data = {
@@ -72,11 +82,9 @@ describe('expression', function () {
         };
 
         expect(new XTemplate(tpl).render(data)).toBe('7');
-
     });
 
     it('support expression for variable in string', function () {
-
         var tpl = '{{n+" is good"}}';
 
         var data = {
@@ -167,7 +175,6 @@ describe('expression', function () {
             };
 
             expect(new XTemplate(tpl).render(data)).toBe('13-3-6|20-5-6|');
-
         });
 
         it('support relational expression in with', function () {

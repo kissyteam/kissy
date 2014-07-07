@@ -291,10 +291,10 @@ describe('feature', function () {
     });
 
     describe('each', function () {
-        it('support access parent scope',function(){
+        it('support access parent scope', function () {
             var tpl = '{{#each (data)}}{{r}}{{xindex}}:{{this}}{{/each}}';
             var data = {
-                r:'!',
+                r: '!',
                 data: {
                     x: 1,
                     y: 2

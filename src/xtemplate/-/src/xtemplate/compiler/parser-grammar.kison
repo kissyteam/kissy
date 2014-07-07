@@ -277,13 +277,6 @@
             },
             {
                 symbol: 'primaryExpression',
-                rhs: ['GLOBAL'],
-                action: function () {
-                    return new this.yy.Global(this.lexer.lineNumber, this.$1);
-                }
-            },
-            {
-                symbol: 'primaryExpression',
                 rhs: ['id']
             },
             {
@@ -591,11 +584,6 @@
                         this.text = this.text.slice(1, -1).replace(/\\'/g, '\'');
                     },
                     token: 'STRING'
-                },
-                {
-                    state: codeSection,
-                    regexp: /^(?:true|false|null|undefined)/,
-                    token: 'GLOBAL'
                 },
                 {
                     state: codeSection,

@@ -52,6 +52,10 @@ var substitute = util.substitute;
 var nativeCommands = XTemplateRuntime.nativeCommands;
 var nativeUtils = XTemplateRuntime.utils;
 
+var globals = {
+};
+globals['undefined'] = globals['null'] = globals['true'] = globals['false'] = 1;
+
 var t;
 
 for (t in nativeUtils) {
@@ -72,6 +76,13 @@ var doubleReg = /\\*"/g,
     singleReg = /\\*'/g,
     arrayPush = [].push,
     uuid = 0;
+
+function isGlobalId(node) {
+    if (globals[node.string]) {
+        return 1;
+    }
+    return 0;
+}
 
 function guid(str) {
     return str + (uuid++);
@@ -355,6 +366,12 @@ xtplAstToJs = {
     },
 
     id: function (idNode) {
+        if (isGlobalId(idNode)) {
+            return {
+                exp: idNode.string,
+                source: []
+            };
+        }
         var source = [],
             depth = idNode.depth,
             idParts = idNode.parts,
@@ -415,13 +432,6 @@ xtplAstToJs = {
                     escape: 0
                 })
             ]
-        };
-    },
-
-    global: function (e) {
-        return {
-            exp: e.value,
-            source: []
         };
     }
 };
