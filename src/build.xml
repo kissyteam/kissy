@@ -93,7 +93,7 @@
 
                 <exec executable="cmd"
                       failonerror="true">
-                    <arg line="/c git add ."/>
+                    <arg line="/c git add --all"/>
                 </exec>
                 <exec executable="cmd" failonerror="true">
                     <arg line="/c git commit -am '${git.commit.message}'"/>

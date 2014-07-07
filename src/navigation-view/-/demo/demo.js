@@ -1,6 +1,6 @@
 KISSY.config('packages', {
     demo: {
-        base: '/kissy/src/navigation-view/demo'
+        base: '/kissy/src/navigation-view/-/demo'
     }
 });
 

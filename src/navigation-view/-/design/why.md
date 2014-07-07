@@ -45,4 +45,4 @@ kissy 希望能够得到大家的帮助，贡献代码者均是该组件的作�
 
 代码： [https://github.com/kissyteam/kissy/tree/master/src/navigation-view](https://github.com/kissyteam/kissy/tree/master/src/navigation-view)
 
-demo： [http://dev.kissyui.com/kissy/src/navigation-view/demo/navigation-view.html](http://dev.kissyui.com/kissy/src/navigation-view/demo/navigation-view.html)
+demo： [http://dev.kissyui.com/kissy/src/navigation-view/-/demo/navigation-view.html](http://dev.kissyui.com/kissy/src/navigation-view/-/demo/navigation-view.html)
