@@ -1,35 +1,39 @@
 <!doctype html>
-<!doctype html>
 <html>
 <head>
-<script src="/kissy/build/seed-debug.js"></script>
-
-<script src="../easing.js"></script>
-<script src="../base.js"></script>
-<script src="../manager.js"></script>
-<script src="../color.js"></script>
-<script src="../fx.js"></script>
-<script src="../../anim.js"></script>
-<script src="../queue.js"></script>
-<script src="http://localhost/lib/jquery/dist/jquery.js"></script>
+    <meta name="viewport"
+          content="width=device-width,
+           initial-scale=1.0,
+          maximum-scale=1.0,
+           minimum-scale=1.0,
+           user-scalable=no">
+    <script src="/kissy/build/seed-debug.js"></script>
+    <script src="/gen/dev.js"></script>
 </head>
 <body>
 <button id='scroll'>scroll</button>
-<div style='height:2000px;'>
+<div id="p">
 </div>
+<button id="detect">detect</button>
 <script>
-
-    KISSY.use("node,anim", function(S, Node, Anim) {
-
-        Node.all("#scroll").on("click", function() {
+    KISSY.use("node,anim/timer", function (S, $, Anim) {
+        $("#scroll").on("click", function () {
             var a = Anim(window, {
-                scrollTop:1000
+                scrollTop: 1000
             });
             a.run();
         });
-
+        var p = $('#p');
+        for (var i = 0; i < 70; i++) {
+            p.append('<p>' + i + '</p>');
+        }
+        var win = $(window);
+        var detect = $('#detect');
+        detect.on('click', function () {
+            alert(win.scrollTop());
+            win.scrollTop(0);
+        });
     });
-
 </script>
 </body>
 </html>

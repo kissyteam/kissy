@@ -1292,6 +1292,18 @@
             } else if (type === 'mousemove') {
                 jasmine.simulate(target, 'MSPointerMove', options);
             }
+        } else if ("ontouchstart" in window) {
+            var obj = {
+                touches: [options],
+                changedTouches: [options]
+            };
+            if (type === 'mousedown') {
+                jasmine.simulate(target, 'touchstart', obj);
+            } else if (type === 'mouseup') {
+                jasmine.simulate(target, 'touchend', obj);
+            } else if (type === 'mousemove') {
+                jasmine.simulate(target, 'touchmove', obj);
+            }
         }
         if (mouseEvents[type]) {
             simulateMouseEvent(target, type, options.bubbles,

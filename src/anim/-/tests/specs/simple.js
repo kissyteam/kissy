@@ -232,7 +232,7 @@ describe("anim-simple", function () {
 
         anim.run();
 
-        waits(100);
+        waits(300);
 
         runs(function () {
             expect(normalizeColor(Dom.css(test1, "borderTopColor")))

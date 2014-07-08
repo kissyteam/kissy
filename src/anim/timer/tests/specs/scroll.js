@@ -51,15 +51,11 @@ describe('anim-scroll', function () {
         });
     });
 
-    // ios iframe 下不能滚动 window?
-    // hhttp://www.google.nl/search?q=ipad+iframe+scrolling
-    if (!UA.ios || !window.frameElement) {
+    if (!window.frameElement) {
         it('should animate scroll correctly for window', function () {
             Dom.append(Dom.create('<div style="height:2000px"/>'), document.body);
             Dom.scrollTop(window, 0);
-
             waits(300);
-
             var anim;
 
             runs(function () {
@@ -68,15 +64,20 @@ describe('anim-scroll', function () {
                 }, 0.5).run();
             });
 
-            waits(100);
-
+            waits(300);
             runs(function () {
                 expect(Dom.scrollTop(window)).not.toBe(0);
             });
+
             waits(600);
             runs(function () {
                 expect(Dom.scrollTop(window)).toBe(100);
+                anim.stop();
             });
+            // wierd android browser
+            if (UA.android) {
+                return;
+            }
             runs(function () {
                 Dom.scrollTop(window, 0);
                 anim = new Anim(window, {
@@ -84,19 +85,18 @@ describe('anim-scroll', function () {
                 }, 0.5).run();
             });
 
-
-            waits(100);
+            waits(300);
             runs(function () {
                 expect(Dom.scrollTop(window)).not.toBe(0);
                 anim.stop();
             });
+
             waits(600);
             runs(function () {
                 expect(Dom.scrollTop(window)).not.toBe(100);
                 expect(Dom.scrollTop(window)).not.toBe(0);
             });
 
-
             runs(function () {
                 Dom.scrollTop(window, 0);
                 anim = new Anim(window, {
@@ -104,8 +104,7 @@ describe('anim-scroll', function () {
                 }, 0.5).run();
             });
 
-
-            waits(100);
+            waits(300);
             runs(function () {
                 expect(Dom.scrollTop(window)).not.toBe(0);
                 anim.stop(true);

@@ -21,8 +21,7 @@ describe('promise api', function () {
             return ok;
         });
         runs(function () {
-            expect(ps.length).toBeGreaterThan(10);
-            expect(ps[0]).toBeLessThan(0.3);
+            expect(ps[0]).toBeLessThan(0.8);
             expect(ps[ps.length - 1]).toBeGreaterThan(0.9);
         });
     });

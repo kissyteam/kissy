@@ -59,8 +59,8 @@ describe('anim-frame config', function () {
         runs(function () {
             var m = div.style('-webkit-transform')
                 .match(/translate\(([\d.]+)px\s*,\s*([\d.]+)px\)/);
-            expect(Math.abs(50 - parseFloat(m[1]))).toBeLessThan(2);
-            expect(Math.abs(50 - parseFloat(m[2]))).toBeLessThan(2);
+            expect(Math.abs(50 - parseFloat(m[1]))).toBeLessThan(10);
+            expect(Math.abs(50 - parseFloat(m[2]))).toBeLessThan(10);
         });
 
         waits(1500);
@@ -216,7 +216,7 @@ describe('anim-frame config', function () {
             },
             complete: function () {
                 called = 1;
-                expect((+new Date()) - start).toBeLessThan(100);
+                expect((+new Date()) - start).toBeLessThan(1000);
             }
         });
 
@@ -249,7 +249,7 @@ describe('anim-frame config', function () {
             },
             complete: function () {
                 called = 1;
-                expect((+new Date()) - start).toBeLessThan(100);
+                expect((+new Date()) - start).toBeLessThan(1000);
             }
         });
 

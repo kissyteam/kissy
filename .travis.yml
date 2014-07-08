@@ -1,17 +1,20 @@
 language: node_js
-
 notifications:
-    email:
-        - yiminghe@gmail.com
-
+  email:
+  - yiminghe@gmail.com
 node_js:
   - 0.10
-
 before_script:
   - npm start &
   - npm test
-
 script:
   - phantomjs --version
   - node tools/test/gen-tc-for-phantom
   - phantomjs tools/test/jasmine-phantomjs.js
+  - node tools/saucelabs/test
+addons:
+  sauce_connect: true
+env:
+  global:
+  - secure: I+g5GNtxMVL6/4BgJT5DwfqV7TDgBmIb/sS2aSOUxOF7eRYl5pkJozTIn+xkBcAAr+xnGopDtaC9EvYNodV5GVNFSWfRT6SSCXVviu6UyB52EfeavO9Umop91D25W/nsplDbYbk9fbYEG1mcQT8aFE7NE0XKF/IDNviUj1N0JAc=
+  - secure: TFOucVwAlg4cEqlEiB22l4usj7b2x8zIfxrjf4e7JlYRUQC5uLqPijoPnusDUBSrIxwuI+Vwfn2Y2sJkdDMmW5YmSI5Vqsp9+mQNCv29uexe3Ow1spWw7j5qSFM4U8tF5oWNnfSDFutfWof+IFnbIAyaSd+fuRaUC3GkyWpcFqY=
