@@ -4,8 +4,8 @@ var TestRunner = require('./TestRunner');
 
 var username = process.env.SAUCE_USERNAME,
     key = process.env.SAUCE_ACCESS_KEY,
-    tunneled = !process.env.TRAVIS_JOB_ID,
-    identifier = Math.floor((new Date()).getTime() / 1000 - 1230768000).toString();
+    tunneled = true,
+    identifier = process.env.TRAVIS_JOB_ID || Math.floor((new Date()).getTime() / 1000 - 1230768000).toString();
 
 function reportProgress(notification) {
     switch (notification.type) {

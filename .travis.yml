@@ -12,11 +12,6 @@ script:
   - node tools/test/gen-tc-for-phantom
   - phantomjs tools/test/jasmine-phantomjs.js
   - node tools/saucelabs/test
-addons:
-  sauce_connect:
-    username: "kissy"
-    access_key:
-      secure: "aiOfEa+qpnlqyQwDO54BuKf/glkJa12fOjalnE//TB4FbYQdJYsed+Xly8YZjcXpEYicFXiMn5L+RucCANTUnA4PczMRHAJIWCywQsQh22EidkA4DyaNEy9OPUL9kRr/C4qjfsMVFJXvOQ4zinPAZxMRMTFbWCnCQ3vbG7B0t0M="
 branches:
   except:
     - dev
