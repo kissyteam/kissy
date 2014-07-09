@@ -1276,33 +1276,35 @@
             jasmine.simulate(target, 'mousedown', options);
             jasmine.simulate(target, 'mouseup', options);
         }
-        if (isPointerSupported) {
-            if (type === 'mousedown') {
-                jasmine.simulate(target, 'pointerdown', options);
-            } else if (type === 'mouseup') {
-                jasmine.simulate(target, 'pointerup', options);
-            } else if (type === 'mousemove') {
-                jasmine.simulate(target, 'pointermove', options);
-            }
-        } else if (isMsPointerSupported) {
-            if (type === 'mousedown') {
-                jasmine.simulate(target, 'MSPointerDown', options);
-            } else if (type === 'mouseup') {
-                jasmine.simulate(target, 'MSPointerUp', options);
-            } else if (type === 'mousemove') {
-                jasmine.simulate(target, 'MSPointerMove', options);
-            }
-        } else if ("ontouchstart" in window) {
-            var obj = {
-                touches: [options],
-                changedTouches: [options]
-            };
-            if (type === 'mousedown') {
-                jasmine.simulate(target, 'touchstart', obj);
-            } else if (type === 'mouseup') {
-                jasmine.simulate(target, 'touchend', obj);
-            } else if (type === 'mousemove') {
-                jasmine.simulate(target, 'touchmove', obj);
+        if (!UA.phantomjs) {
+            if (isPointerSupported) {
+                if (type === 'mousedown') {
+                    jasmine.simulate(target, 'pointerdown', options);
+                } else if (type === 'mouseup') {
+                    jasmine.simulate(target, 'pointerup', options);
+                } else if (type === 'mousemove') {
+                    jasmine.simulate(target, 'pointermove', options);
+                }
+            } else if (isMsPointerSupported) {
+                if (type === 'mousedown') {
+                    jasmine.simulate(target, 'MSPointerDown', options);
+                } else if (type === 'mouseup') {
+                    jasmine.simulate(target, 'MSPointerUp', options);
+                } else if (type === 'mousemove') {
+                    jasmine.simulate(target, 'MSPointerMove', options);
+                }
+            } else if ("ontouchstart" in window) {
+                var obj = {
+                    touches: [options],
+                    changedTouches: [options]
+                };
+                if (type === 'mousedown') {
+                    jasmine.simulate(target, 'touchstart', obj);
+                } else if (type === 'mouseup') {
+                    jasmine.simulate(target, 'touchend', obj);
+                } else if (type === 'mousemove') {
+                    jasmine.simulate(target, 'touchmove', obj);
+                }
             }
         }
         if (mouseEvents[type]) {
