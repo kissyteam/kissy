@@ -11,7 +11,7 @@ script:
 - phantomjs --version
 - node tools/test/gen-tc-for-phantom
 - phantomjs tools/test/jasmine-phantomjs.js
-- node tools/saucelabs/test
+- if (($?)); then exit 1; else node tools/saucelabs/test; fi
 branches:
   except:
   - dev
