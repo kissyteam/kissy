@@ -202,7 +202,6 @@ util.extend(IO, Promise, {
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        LoggerManager.log(e.stack || e, 'error');
                         if ('@DEBUG@') {
                             setTimeout(function () {
                                 throw e;

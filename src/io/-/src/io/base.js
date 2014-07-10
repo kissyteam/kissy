@@ -422,7 +422,6 @@ function IO(c) {
         self.state = 1;
         transport.send();
     } catch (e) {
-        logger.log(e.stack || e, 'error');
         if ('@DEBUG@') {
             setTimeout(function () {
                 throw e;

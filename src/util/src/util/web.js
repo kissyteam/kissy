@@ -109,13 +109,16 @@ util.mix(util, {
      */
     ready: function (fn) {
         if (domReady) {
-            try {
+            if ('@DEBUG@') {
                 fn(KISSY);
-            } catch (e) {
-                LoggerManager.log(e.stack || e, 'error');
-                setTimeout(function () {
-                    throw e;
-                }, 0);
+            } else {
+                try {
+                    fn(KISSY);
+                } catch (e) {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
             }
         } else {
             callbacks.push(fn);
@@ -158,14 +161,17 @@ function fireReady() {
     }
     domReady = 1;
     for (var i = 0; i < callbacks.length; i++) {
-        try {
+        if ('@DEBUG@') {
             callbacks[i](KISSY);
-        } catch (e) {
-            LoggerManager.log(e.stack || e, 'error');
-            /*jshint loopfunc:true*/
-            setTimeout(function () {
-                throw e;
-            }, 0);
+        } else {
+            try {
+                callbacks[i](KISSY);
+            } catch (e) {
+                /*jshint loopfunc:true*/
+                setTimeout(function () {
+                    throw e;
+                }, 0);
+            }
         }
     }
 }

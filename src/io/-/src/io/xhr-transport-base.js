@@ -303,7 +303,6 @@ util.mix(XhrTransportBase.proto, {
                 }
             }
         } catch (e) {
-            LoggerManager.log(e.stack || e, 'error');
             if ('@DEBUG@') {
                 setTimeout(function () {
                     throw e;
