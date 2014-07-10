@@ -9,7 +9,8 @@
 [![Stories in Ready](https://badge.waffle.io/kissyteam/kissy.png)](https://waffle.io/kissyteam/kissy)
 [![Dependency Status](https://gemnasium.com/kissyteam/kissy.png)](https://gemnasium.com/kissyteam/kissy)
 [![Nodejitsu Deploy Status Badges](https://webhooks.nodejitsu.com/yiminghe/kissy.png)](https://webops.nodejitsu.com#yiminghe/kissy)
-
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/kissy.svg)](https://saucelabs.com/u/kissy)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/kissy)](https://saucelabs.com/u/kissy)
 
 
 > A Powerful JavaScript Framework
