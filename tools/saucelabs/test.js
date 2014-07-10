@@ -5,6 +5,7 @@
 (function () {
     if (!process.env.SAUCE_ACCESS_KEY) {
         console.log('does not have sauce access key!');
+        console.log(process.env);
         return;
     }
 
