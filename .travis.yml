@@ -1,21 +1,21 @@
 language: node_js
 notifications:
   email:
-    - yiminghe@gmail.com
+  - yiminghe@gmail.com
 node_js:
-  - 0.10
+- 0.1
 before_script:
-  - npm start &
-  - npm test
+- npm start &
+- npm test
 script:
-  - phantomjs --version
-  - node tools/test/gen-tc-for-phantom
-  - phantomjs tools/test/jasmine-phantomjs.js
-  - node tools/saucelabs/test
+- phantomjs --version
+- node tools/test/gen-tc-for-phantom
+- phantomjs tools/test/jasmine-phantomjs.js
+- node tools/saucelabs/test
 branches:
   except:
-    - dev
+  - dev
 env:
   global:
-    - secure: "I+g5GNtxMVL6/4BgJT5DwfqV7TDgBmIb/sS2aSOUxOF7eRYl5pkJozTIn+xkBcAAr+xnGopDtaC9EvYNodV5GVNFSWfRT6SSCXVviu6UyB52EfeavO9Umop91D25W/nsplDbYbk9fbYEG1mcQT8aFE7NE0XKF/IDNviUj1N0JAc="
-    - secure: "TFOucVwAlg4cEqlEiB22l4usj7b2x8zIfxrjf4e7JlYRUQC5uLqPijoPnusDUBSrIxwuI+Vwfn2Y2sJkdDMmW5YmSI5Vqsp9+mQNCv29uexe3Ow1spWw7j5qSFM4U8tF5oWNnfSDFutfWof+IFnbIAyaSd+fuRaUC3GkyWpcFqY="
+  - secure: LgCBGS7ziPvoXkgOk/ilmDuPadR7m+2uHIByrSwPQEIuYkmB1Yk7OFuNaFr41zWiQUTAvOxG8rwqnvs6bxPvLlQb8WHJuVSQM6YZ+1gG+rjZV3QQcElBGhF4FXEm6KDKWBHj7HxjgQrrkV9LA0S6ZtynY1xxXBClG3G1v0Bzb0c=
+  - secure: TQ26n+hMLQ8b3RW3djT35kimmihLU5vlusNPrF01HpfgTNDUCZC/81BRz0gVl4jB+H1vMjhaekATIRA15Z7ky+gX6ypExfiMRQqQizOrDRmZ9cFTGic8Wo7aXpr3VQxEbnlxrFq8PY/U+c835YV1H//w3IsFPKbYmv26w96CSlI=
