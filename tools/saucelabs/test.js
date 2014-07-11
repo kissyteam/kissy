@@ -9,9 +9,10 @@
         return;
     }
 
+    var Format = require('../../lib/date/format');
+    var now = new Format('yyyy/M/d-hh:mm:ss').format(new Date());
     var runSauceLabs = require('./run/index');
-
-    var buildId = process.env.TRAVIS_JOB_ID || 'local:' + new Date().valueOf();
+    var buildId = process.env.TRAVIS_JOB_ID || 'local:' + now;
 
     function getOptionTemplate() {
         return {
