@@ -17,7 +17,10 @@
 {{else}}
 <p>Get on it!</p>
 {{/if}}
-<p>paragraph paragraph paragraph paragraph</p>
+<p>Jade is a terse and simple
+    templating language with a
+    strong focus on performance
+    and powerful features.</p>
 <ul>
     {{#each (lis)}}
     <li>{{xindex}}: {{d}} of {{title}}</li>
@@ -25,3 +28,4 @@
 {{/each}}
 </body>
 </html>
+{{include ('includes/xtpl-part')}}

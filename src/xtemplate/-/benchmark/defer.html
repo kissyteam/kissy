@@ -14,9 +14,7 @@
 </script>
 <script src="/kissy/build/seed-debug.js"></script>
 <!--<script src="/gen/dev.js"></script>-->
-
-
-<script src="views/includes/nunjucks.js"></script>
+<script src="views/includes/nunjucks-part.js"></script>
 <script>
     KISSY.use(['node', 'io', 'util', 'promise', 'xtemplate'], function (S, $, io, util, Promise, XTemplate) {
         var logEl = $('#log');
@@ -117,7 +115,7 @@
                 var ret;
 
                 ret = compilers.xtpl.main.render(data);
-                console.log(ret);
+                //console.log(ret);
                 ret = null;
                 dust.render(files.dust[0], data, function (e, content) {
                     if (e) {
@@ -125,17 +123,17 @@
                     }
                     ret = content;
                 });
-                console.log(ret);
+                //console.log(ret);
                 ret = null;
                 //ret = compilers.jade.main(data);
                 ret = null;
 
                 ret = compilers.nunjucks.main.render(data);
-                console.log(ret);
+                //console.log(ret);
 
                 ret = null;
                 ret = compilers.handlebars.main(data);
-                console.log(ret);
+                //console.log(ret);
                 ret = null;
                 //ret = compilers.ejs.main(data);
 
@@ -202,12 +200,12 @@
         };
 
         var includes = {
-            // ejs: ['includes/common-ejs', 'includes/ejs'],
-            xtpl: ['includes/common', 'includes/xtpl'],
-            dust: ['includes/common-dust', 'includes/dust'],
-            // jade: ['includes/common-jade', 'includes/jade'],
-            nunjucks: ['includes/common-nunjucks'],
-            handlebars: ['includes/common-handlebars', 'includes/handlebars']
+            // ejs: ['includes/ejs', 'includes/ejs'],
+            xtpl: ['includes/xtpl', 'includes/xtpl'],
+            dust: ['includes/dust', 'includes/dust'],
+            // jade: ['includes/jade', 'includes/jade'],
+            nunjucks: ['includes/nunjucks'],
+            handlebars: ['includes/handlebars', 'includes/handlebars']
         };
         log('<span style="font-size: 30px;font-weight: bold;">include benchmark:</span>');
         benchmark(includes).then(function () {

@@ -1,4 +1,4 @@
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["includes/nunjucks.html"] = (function() {function root(env, context, frame, runtime, cb) {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["includes/nunjucks-part.html"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
 var output = "";
