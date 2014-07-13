@@ -32,18 +32,22 @@
 
         var packageBase = packageInfo.getBase();
         var packageName = packageInfo.name;
-        var extname = '.' + mod.getType();
+        var extname = mod.getType();
+        var suffix = '.' + extname;
 
         if (!subPath) {
             // special for css module
             name = name.replace(/\.css$/, '');
-            filter = packageInfo.getFilter();
+            filter = packageInfo.getFilter() || '';
 
-            if (filter) {
-                filter = '-' + filter;
+            if (typeof filter === 'function') {
+                subPath = filter(name, extname);
+            } else if (typeof filter === 'string') {
+                if (filter) {
+                    filter = '-' + filter;
+                }
+                subPath = name + filter + suffix;
             }
-
-            subPath = name + filter + extname;
         }
 
         // core package
@@ -52,14 +56,14 @@
         } else if (name === packageName) {
             // packageName: a/y use('a/y');
             // do not use this on production, can not be combo ed with other modules from same package
-            url = packageBase.substring(0, packageBase.length - 1) + filter + extname;
+            url = packageBase.substring(0, packageBase.length - 1) + filter + suffix;
         } else {
             subPath = subPath.substring(packageName.length + 1);
             url = packageBase + subPath;
         }
 
         if ((t = mod.getTag())) {
-            t += extname;
+            t += suffix;
             url += '?t=' + t;
         }
         return url;

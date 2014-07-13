@@ -8,7 +8,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY Anim Target</title>
     <script src="/kissy/build/seed-debug.js"></script>
-    <script src="/kissy/src/package.js"></script>
+    <script src="/gen/dev.js"></script>
     <link rel="stylesheet" href="../assets/cool.css"/>
     <style>
         .ks-overlay-ghost {
@@ -27,7 +27,7 @@
 </div>
 
 <script>
-    KISSY.use("overlay", function (S, Overlay) {
+    KISSY.use("overlay,node", function (S, Overlay,$) {
         var o = new Overlay.Dialog({
             width: 500,
             height: 500,
@@ -38,10 +38,10 @@
             effect: {
                 duration: .2,
                 easing: 'easingStrong',
-                target: S.all('#t2')
+                target: $('#t2')
             }
         });
-        S.all("#t2").on("click", function () {
+        $("#t2").on("click", function () {
             o.center().show();
         });
         o.on('show', function () {

@@ -24,7 +24,7 @@
         'i18n',
         'init'];
     if (coverage) {
-        window.document.write('<script src="/kissy/tools/jscover/assets/jscoverage.js">' + '<' + '/script>');
+        window.document.write('<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/jscover/jscoverage.js">' + '<' + '/script>');
     }
     for (var i = 0; i < files.length; i++) {
         window.document.write('<script src="' + dir +

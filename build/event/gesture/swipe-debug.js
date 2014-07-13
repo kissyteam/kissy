@@ -1,30 +1,33 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:51
+build time: Jul 1 23:06
 */
 /*
 combined modules:
 event/gesture/swipe
 */
 KISSY.add('event/gesture/swipe', [
+    'util',
+    'dom',
     'event/gesture/util',
-    'event/dom/base',
-    'util'
+    'event/dom/base'
 ], function (S, require, exports, module) {
     /**
  * @ignore
  * gesture swipe
  * @author yiminghe@gmail.com
  */
+    var util = require('util');
+    var Dom = require('dom');
     var GestureUtil = require('event/gesture/util');
     var addGestureEvent = GestureUtil.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureUtil.SingleTouch;
-    var SWIPE = 'swipe', SWIPE_START = 'swipeStart', SWIPE_END = 'swipeEnd', MAX_DURATION = 1000, MAX_OFFSET = 35, MIN_DISTANCE = 50;
-    var util = require('util');
+    var SWIPE = 'swipe', MAX_DURATION = 1000, MAX_OFFSET = 35, MIN_DISTANCE = 50;
     function fire(self, e, ing) {
-        var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, time = e.timeStamp, direction;
+        var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, direction, time = e.timeStamp;
+        self.isStarted = 1;
         if (time - self.startTime > MAX_DURATION) {
             return false;
         }
@@ -34,15 +37,14 @@ KISSY.add('event/gesture/swipe', [
         if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
             self.isHorizontal = 0;
         }
-        if (ing) {
-            if (self.isVertical && self.isHorizontal) {
-                if (absDeltaY > absDeltaX) {
-                    self.isHorizontal = 0;
-                } else {
-                    self.isVertical = 0;
-                }
+        if (self.isVertical && self.isHorizontal) {
+            if (absDeltaY > absDeltaX) {
+                self.isHorizontal = 0;
+            } else {
+                self.isVertical = 0;
             }
-        } else {
+        }
+        if (!ing) {
             if (self.isVertical && absDeltaY < MIN_DISTANCE) {
                 self.isVertical = 0;
             }
@@ -59,31 +61,19 @@ KISSY.add('event/gesture/swipe', [
         } else {
             return false;
         }
-        var event;
-        if (!ing) {
-            event = SWIPE_END;
-        } else if (direction && !self.isStarted) {
-            self.isStarted = 1;
-            event = SWIPE_START;
-        } else {
-            event = SWIPE;
+        if (ing) {
+            var prevent = e.originalEvent._ksSwipePrevent;
+            if (prevent) {
+                if (prevent === true || prevent[direction]) {
+                    e.preventDefault();
+                }
+            }
+            return;
         }    /**
-     * fired when swipe.
-     * preventDefault this event to prevent native behavior
-     * @event SWIPE
-     * @member KISSY.Event.Gesture.Swipe
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.distance distance between current touch point and start touch point
-     * @param {Number} e.duration time duration(s) between current touch point and start touch point
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
-             /**
      * fired when swipe gesture is finished.
      * preventDefault this event to prevent native behavior
      * @event SWIPE_END
-     * @member KISSY.Event.Gesture.Swipe
+     * @member KISSY.Event.Gesture.SWIPE
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
      * @param {Number} e.pageY drag point pageY
@@ -91,35 +81,12 @@ KISSY.add('event/gesture/swipe', [
      * @param {Number} e.duration time duration(s) between current touch point and start touch point
      * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
      */
-             /**
-     * fired when swipe started.
-     * preventDefault this event to prevent native behavior
-     * @event SWIPE_START
-     * @member KISSY.Event.Gesture.Swipe
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.distance distance between current touch point and start touch point
-     * @param {Number} e.duration time duration(s) between current touch point and start touch point
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
-        /**
-     * fired when swipe.
-     * preventDefault this event to prevent native behavior
-     * @event SWIPE
-     * @member KISSY.Event.Gesture.Swipe
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.distance distance between current touch point and start touch point
-     * @param {Number} e.duration time duration(s) between current touch point and start touch point
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
+             // _ksSwipePrevent
         /**
      * fired when swipe gesture is finished.
      * preventDefault this event to prevent native behavior
      * @event SWIPE_END
-     * @member KISSY.Event.Gesture.Swipe
+     * @member KISSY.Event.Gesture.SWIPE
      * @param {KISSY.Event.DomEvent.Object} e
      * @param {Number} e.pageX drag point pageX
      * @param {Number} e.pageY drag point pageY
@@ -127,19 +94,8 @@ KISSY.add('event/gesture/swipe', [
      * @param {Number} e.duration time duration(s) between current touch point and start touch point
      * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
      */
-        /**
-     * fired when swipe started.
-     * preventDefault this event to prevent native behavior
-     * @event SWIPE_START
-     * @member KISSY.Event.Gesture.Swipe
-     * @param {KISSY.Event.DomEvent.Object} e
-     * @param {Number} e.pageX drag point pageX
-     * @param {Number} e.pageY drag point pageY
-     * @param {Number} e.distance distance between current touch point and start touch point
-     * @param {Number} e.duration time duration(s) between current touch point and start touch point
-     * @param {String} e.direction drag start direction 'up' or 'down' or 'left' or 'right'
-     */
-        DomEvent.fire(touch.target, event, {
+        // _ksSwipePrevent
+        DomEvent.fire(touch.target, SWIPE, {
             originalEvent: e.originalEvent,
             pageX: touch.pageX,
             pageY: touch.pageY,
@@ -148,7 +104,6 @@ KISSY.add('event/gesture/swipe', [
             distance: distance,
             duration: (e.timeStamp - self.startTime) / 1000
         });
-        return undefined;
     }
     function Swipe() {
     }
@@ -172,16 +127,41 @@ KISSY.add('event/gesture/swipe', [
             return fire(this, e, 0);
         }
     });
-    addGestureEvent([
-        SWIPE,
-        SWIPE_START,
-        SWIPE_END
-    ], { handle: new Swipe() });
-    module.exports = {
-        SWIPE: SWIPE,
-        SWIPE_START: SWIPE_START,
-        SWIPE_END: SWIPE_END
-    };
+    function matchFilter(target, currentTarget, filter) {
+        var ret = false;
+        while (target !== currentTarget) {
+            ret = Dom.test(target, filter);
+            if (ret) {
+                break;
+            }
+            target = target.parentNode;
+        }
+        return ret;
+    }
+    addGestureEvent([SWIPE], {
+        handle: new Swipe(),
+        add: function (observer) {
+            var config = observer.config;
+            var preventDefault = config.preventDefault;
+            if (preventDefault) {
+                var filter = config.filter;
+                observer._preventFn = function (e) {
+                    if (!filter || matchFilter(e.target, e.currentTarget, filter)) {
+                        e._ksSwipePrevent = preventDefault;
+                    }
+                };
+                this.addEventListener('touchmove', observer._preventFn);
+            }
+        },
+        remove: function (observer) {
+            if (observer._preventFn) {
+                this.removeEventListener('touchmove', observer._preventFn);
+                observer._preventFn = null;
+            }
+        }
+    });
+    module.exports = { SWIPE: SWIPE };
 });
+
 
 

@@ -343,6 +343,18 @@ var Tabs = Container.extend({
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: false
+        },
+
+        allowTextSelection: {
+            value: true
+        },
+
+        focusable: {
+            value: false
+        },
+
         /**
          * tabs config, eg: {title:'', content:'', selected:false, closable:false}
          * @cfg {Object} item
@@ -370,19 +382,6 @@ var Tabs = Container.extend({
          * @ignore
          */
         lazyRender: {
-            value: false
-        },
-
-        // real attribute
-        handleGestureEvents: {
-            value: false
-        },
-
-        allowTextSelection: {
-            value: true
-        },
-
-        focusable: {
             value: false
         },
 

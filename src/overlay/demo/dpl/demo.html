@@ -7,11 +7,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY Overlay</title>
-    <link href="../../../../src/css/assets/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/assets/dpl/base.css" rel="stylesheet"/>
     <link href="../../assets/dpl.css" rel="stylesheet"/>
-    <link href="../../../../src/button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
     <script src="/kissy/build/seed-debug.js"></script>
-    <script src="/kissy/src/package.js"></script>
+    <script src="/gen/dev.js"></script>
 </head>
 <body>
 <div class="container">
@@ -103,9 +103,7 @@
     </script>
 
     <script>
-        KISSY.use("overlay,button", function (S, Overlay, Button) {
-            var $ = S.all;
-
+        KISSY.use("overlay,button,node", function (S, Overlay, Button,$) {
             var b = new Button({
                 srcNode: '#hover'
             }).render();
@@ -151,9 +149,7 @@
     </script>
 
     <script>
-        KISSY.use("overlay,button", function (S, Overlay, Button) {
-            var $ = S.all;
-
+        KISSY.use("overlay,button,node", function (S, Overlay, Button,$) {
             var d = new Overlay.Popup({
                 trigger: "#tip",
                 elCls: "ks-popup-top",

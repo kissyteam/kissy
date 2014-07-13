@@ -220,7 +220,6 @@ Promise.prototype = {
     done: function (fulfilled, rejected) {
         var self = this,
             onUnhandledError = function (e) {
-                LoggerManager.log(e.stack || e, 'error');
                 setTimeout(function () {
                     throw e;
                 }, 0);

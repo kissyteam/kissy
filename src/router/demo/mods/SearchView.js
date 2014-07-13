@@ -1,6 +1,6 @@
 
     var $ = require('node');
-    var mvc = require('../mvc/');
+    var mvc = require('../mvc/index');
     var Template = require('xtemplate');
     var router=require('router');
     var util = require('util');

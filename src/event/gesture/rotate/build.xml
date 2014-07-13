@@ -1,0 +1,4 @@
+<project name="event/gesture/rotate.build" default="build">
+    <property name="component.name" value="event/gesture/rotate"/>
+    <import file="../../../common.xml"/>
+</project>

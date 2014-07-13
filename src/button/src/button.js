@@ -73,6 +73,18 @@ module.exports = Control.extend({
     }
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: true
+        },
+
+        focusable: {
+            value: true
+        },
+
+        allowTextSelection: {
+            value: false
+        },
+
         /**
          * Value associated with button component.
          * @property value
@@ -85,6 +97,7 @@ module.exports = Control.extend({
          * @ignore
          */
         value: {},
+
         /**
          *Aria-describedby attribute.
          * @property describedby
@@ -102,6 +115,7 @@ module.exports = Control.extend({
             render: 1,
             sync: 0
         },
+
         /**
          * Tooltip for button.
          * @cfg {String} tooltip

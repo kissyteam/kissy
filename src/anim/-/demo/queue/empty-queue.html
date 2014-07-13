@@ -1,0 +1,16 @@
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script>
+    KISSY.use('node', function (S, Node) {
+        var start = (+new Date());
+        var body = Node.all('body');
+        body.animate({}, {
+            duration: 1
+        }).animate({}, {
+                    duration: 1,
+                    complete: function () {
+                        S.log((+new Date()) - start);
+                    }
+                });
+    });
+</script>

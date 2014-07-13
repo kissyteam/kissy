@@ -1,0 +1,34 @@
+<script  src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+
+<form>
+    <input name="test4[]" value="t6"/>
+    <input name="test4[]" value="t7"/>
+    <input name="testFile" type="file"/>
+    <select name="test[]" multiple>
+        <option value="t1" selected>v</option>
+        <option value="t2" selected>v2</option>
+    </select>
+</form>
+
+<script >
+    KISSY.ready(function(S) {
+        S.use("io", function(S, io) {
+            io({
+                url:"upload.jss",
+                form:'#f',
+                data:{
+                    "test2":["t2","t3"],
+                    "test3":"t4"
+                },
+                success:function(data) {
+                    console.log(data);
+                },
+                //timeout:1,
+                type:'post',
+                // dataType:'xml',
+                dataType:'json'
+            });
+        });
+    });
+</script>

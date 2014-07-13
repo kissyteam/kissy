@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:52
+build time: Jul 1 23:07
 */
 /*
 combined modules:
@@ -95,6 +95,8 @@ KISSY.add('navigation-view', [
             xclass: 'navigation-view-loading',
             ATTRS: {
                 handleGestureEvents: { value: false },
+                focusable: { value: false },
+                allowTextSelection: { value: true },
                 visible: { value: false }
             }
         });

@@ -4,7 +4,7 @@
  */
 (function (S) {
     // --no-module-wrap--
-    S.use(['util','querystring'], function (S, util, querystring) {
+    S.use(['util', 'querystring'], function (S, util, querystring) {
         util.mix(S, util);
         S.param = querystring.stringify;
         S.unparam = querystring.parse;
@@ -14,7 +14,7 @@
         var Event = S.Event = {};
         var util = require('util');
         util.mix(Event, require('event/dom'));
-        Event.Target = require('event/custom').Target;
+        S.EventTarget = Event.Target = require('event/custom').Target;
         S.log('event module is deprecated! please use \'event/dom\' or \'event/custom\' module instead.');
         return Event;
     });
@@ -24,8 +24,6 @@
         json: 'JSON',
         cookie: 'Cookie',
         'dom/base': 'DOM',
-        event: 'Event',
-        io: 'IO',
         'anim/timer': 'Anim',
         'anim/transition': 'Anim',
         base: 'Base'
@@ -34,6 +32,11 @@
     var configs = {
         core: {
             alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+        },
+        io: {
+            afterAttach: function (v) {
+                S.ajax = S.Ajax = S.io = S.IO = v;
+            }
         },
         node: {
             afterAttach: function (v) {
@@ -73,4 +76,8 @@
         }
         return o;
     };
+
+    KISSY.use('UA', function (S, UA) {
+        S.UA = UA;
+    });
 })(KISSY);

@@ -510,8 +510,8 @@
 </div>
 <script src="/kissy/build/seed-debug.js"></script>
 <script>
-    KISSY.use("toolbar,button", function (S, Toolbar, Button) {
-        S.all(".ks-button").each(function (n) {
+    KISSY.use("toolbar,button,node", function (S, Toolbar, Button,$) {
+        $(".ks-button").each(function (n) {
             new Button({
                 srcNode:n
             }).render();

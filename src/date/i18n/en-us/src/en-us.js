@@ -20,6 +20,6 @@ module.exports = {
     shortWeekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ampms: ['AM', 'PM'],
     datePatterns: ['EEEE, MMMM d, yyyy', 'MMMM d, yyyy', 'MMM d, yyyy', 'M/d/yy'],
-    timePatterns: ['h:mm:ss \'GMT\'Z', 'h:mm:ss a \'GMT\'Z', 'h:mm:ss a', 'h:mm a'],
+    timePatterns: ['h:mm:ss a \'GMT\'Z', 'h:mm:ss a', 'h:mm:ss a', 'h:mm a'],
     dateTimePattern: '{date} {time}'
 };

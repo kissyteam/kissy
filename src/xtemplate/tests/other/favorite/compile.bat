@@ -1,1 +1,0 @@
-node ../../../../../bin/xtemplate --no-wrap -p ./xtpl -s xtpl

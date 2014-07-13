@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="../assets/cool.css"/>
 <script src="/kissy/build/seed-debug.js"></script>
-    <script src="/kissy/src/package.js"></script>
+    <script src="/gen/dev.js"></script>
 </head>
 <body>
 <button id='show'>show</button>
@@ -24,8 +24,7 @@ height: 500px;border: 1px solid red;">
 
 </div>
 <script>
-    KISSY.use("overlay", function (S, Overlay) {
-
+    KISSY.use("overlay,node", function (S, Overlay,$) {
         var o = new Overlay.Dialog({
             headerContent:"哈哈",
             bodyContent:"嘿嘿",
@@ -34,16 +33,15 @@ height: 500px;border: 1px solid red;">
             height:300
         });
 
-        S.one("#show").on("click",function(){
+        $("#show").on("click",function(){
             o.center('#wrap');
             o.show();
 
         });
 
-        S.one("#hide").on("click",function(){
+        $("#hide").on("click",function(){
             o.hide();
         });
-
     });
 </script>
 </body>

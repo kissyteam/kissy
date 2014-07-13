@@ -24,8 +24,7 @@
 
 <script src="/kissy/build/seed-debug.js"></script>
 <script>
-    KISSY.use('node',function (S) {
-        var $ = S.all;
+    KISSY.use('node',function (S,$) {
         var offset = $("#t").offset();
         alert("left: " + offset.left + "\n" + "top : " + offset.top);
     });

@@ -266,7 +266,9 @@ util.mix(util, {
         },
     /**
      * Converts object to a TRUE array.
-     * // do not pass form.elements to this function ie678 bug
+     * do not pass form.elements to this function ie678 bug.
+     * passing arguments is not recommended.
+     * https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
      * @param o {object|Array} array like object or array
      * @return {Array} native Array
      * @member KISSY

@@ -4,11 +4,11 @@
  */
 (function () {
     var log_div;
-    
-    function create(html){
-    	var div=document.createElement('div');
-    	div.innerHTML=html;
-      return div.firstChild;
+
+    function create(html) {
+        var div = document.createElement('div');
+        div.innerHTML = html;
+        return div.firstChild;
     }
 
     function log(str) {
@@ -17,7 +17,7 @@
             height = 200;
         }
         if (!log_div) {
-            log_div =create('<div style="position:fixed;' +
+            log_div = create('<div style="position:fixed;' +
                 'right:0;top:0;width:200px;' +
                 'z-index:9999;' +
                 'height:' + height + 'px;' +

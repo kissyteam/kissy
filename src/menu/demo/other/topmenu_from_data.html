@@ -36,7 +36,7 @@
 
 </div>
 <script src="/kissy/build/seed-debug.js"></script>
-<script src="/kissy/src/package.js"></script>
+<script src="/gen/dev.js"></script>
 <script>
 
     var data = [
@@ -71,8 +71,8 @@
         }
     ];
 
-    KISSY.use("util,menu,separator", function (S, util,Menu) {
-        var context = S.all("#context");
+    KISSY.use("menu,separator,node", function (S, Menu,Separator,$) {
+        var context = $("#context");
 
         function generatePopupMenu(items, cfg) {
             var sb = {

@@ -1,0 +1,26 @@
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/jquery.js"></script>
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script>
+    $(function () {
+        $.io({
+            url: "http://" + location.hostname + ":" + SERVER_CONFIG.ports[1] + "/kissy/src/io/-/tests/script.jss",
+            dataType: 'script',
+            success: function () {
+                var args = $.makeArray(arguments);
+                debugger
+                console.log(1);
+            },
+            error: function () {
+                var args = $.makeArray(arguments);
+                debugger
+                console.log(2);
+            },
+            complete: function () {
+                var args = $.makeArray(arguments);
+                debugger
+                console.log(3);
+            }
+        });
+    });
+</script>

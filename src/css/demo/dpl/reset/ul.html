@@ -26,8 +26,8 @@
 <script src="/kissy/build/seed-debug.js"></script>
 <script>
 
-    KISSY.use('node',function (S) {
-        var $ = S.all, ret = [];
+    KISSY.use('node',function (S,$) {
+        var ret = [];
         ret.push("margin-left : " + $("#t").css("margin-left"));
         ret.push("margin-right : " + $("#t").css("margin-right"));
         ret.push("margin-top : " + $("#t").css("margin-top"));

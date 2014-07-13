@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/kissy/build/seed-debug.js"></script>
+    <script src="../../easing.js"></script>
+    <script src="../../base.js"></script>
+    <script src="../../manager.js"></script>
+    <script src="../../color.js"></script>
+    <script src="../../fx.js"></script>
+    <script src="../../queue.js"></script>
+    <script src="../../../anim.js"></script>
+    <script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/jquery.js"></script>
+</head>
+<body>
+<div style="width:100px;height:100px;border: 1px solid red;" id="toggle">
+    toggle
+</div>
+<button id="tb">fadeIn button</button>
+<button id="jqtb3">jq fadeIn button</button>
+<script>
+    $('#toggle').css("opacity", 0.5).css("display","none");
+
+    KISSY.use("node", function(S, Node) {
+        var $ = Node.all;
+        $('#tb').on("click", function() {
+            $('#toggle').fadeIn(1);
+        });
+    });
+
+
+    $('#jqtb3').on("click", function() {
+        $('#toggle').fadeIn(1000);
+    });
+</script>
+</body>
+</html>

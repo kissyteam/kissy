@@ -288,13 +288,20 @@ module.exports = Container.extend([ContentBox], {
     }
 }, {
     ATTRS: {
-        contentTpl: {
-            value: TreeNodeTpl
+        allowTextSelection: {
+            value: true
         },
 
-        // 事件代理
+        focusable: {
+            value: false
+        },
+
         handleGestureEvents: {
             value: false
+        },
+
+        contentTpl: {
+            value: TreeNodeTpl
         },
 
         /**
@@ -404,10 +411,6 @@ module.exports = Container.extend([ContentBox], {
         depth: {
             render: 1,
             sync: 0
-        },
-
-        focusable: {
-            value: false
         },
 
         defaultChildCfg: {

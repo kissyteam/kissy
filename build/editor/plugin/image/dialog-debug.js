@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:46
+build time: Jul 1 23:02
 */
 /*
 combined modules:
@@ -402,10 +402,9 @@ KISSY.add('editor/plugin/image/dialog', [
 
 
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('editor/plugin/image/dialog/dialog-xtpl', [], function (S, require, exports, module) {
-    var dialogXtplHtml = function (scope, buffer, undefined) {
+    var dialogXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class=\'', 0);
@@ -501,8 +500,7 @@ KISSY.add('editor/plugin/image/dialog/dialog-xtpl', [], function (S, require, ex
         buffer.write('img-link-blank\'\r\n                            style=\'vertical-align:middle;\r\n                margin-left:5px;\'\r\n                            type=\'checkbox\'/>\r\n                    &nbsp; \u5728\u65B0\u7A97\u53E3\u6253\u5F00\u94FE\u63A5\r\n                </label>\r\n            </td>\r\n        </tr>\r\n    </table>\r\n</div>\r\n', 0);
         return buffer;
     };
-    dialogXtplHtml.TPL_NAME = module.name;
-    dialogXtplHtml.version = '5.0.0';
-    module.exports = dialogXtplHtml;
+    dialogXtpl.TPL_NAME = module.name;
+    module.exports = dialogXtpl;
 });
 

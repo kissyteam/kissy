@@ -1,0 +1,264 @@
+<script type="jade" id="testJade">
+doctype html
+html(lang="en")
+    head
+        title= title
+        script(type='text/javascript').
+            if (foo) {
+                bar(1 + 5)
+            }
+    body
+        h1 Jade - node template engine
+        #container.col
+        if using
+            p You are amazing
+        else
+            p Get on it!
+        p.
+            Jade is a terse and simple
+            templating language with a
+            strong focus on performance
+            and powerful features.
+        ul
+            each val, index in lis
+                li= index + ': ' + val.d + ' of '+title
+
+
+
+
+</script>
+<script type="xtpl" id="testXtpl">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+    <script type="text/javascript">
+    if (foo) {
+        bar(1 + 5)
+    }
+    &lt;/script>
+</head>
+<body>
+    <h1>Jade - node template engine</h1>
+    <div id="container" class="col"></div>
+    {{#if (using)}}
+        <p>You are amazing</p>
+    {{else}}
+        <p>Get on it!</p>
+    {{/if}}
+    <p>paragraph paragraph paragraph paragraph</p>
+    <ul>
+    {{#each (lis)}}
+        <li>{{xindex}}: {{d}} of {{title}}</li>
+    {{/each}}
+    </ul>
+</body>
+</html>
+
+
+
+
+</script>
+<script type="handlebars" id="testHandlebars">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+    <script type="text/javascript">
+    if (foo) {
+        bar(1 + 5)
+    }
+    &lt;/script>
+</head>
+<body>
+    <h1>Jade - node template engine</h1>
+    <div id="container" class="col"></div>
+    {{#if using}}
+        <p>You are amazing</p>
+    {{else}}
+        <p>Get on it!</p>
+    {{/if}}
+    <p>paragraph paragraph paragraph paragraph</p>
+    <ul>
+    {{#each lis}}
+        <li>{{@index}}: {{d}} of {{title}}</li>
+    {{/each}}
+     </ul>
+</body>
+</html>
+</script>
+
+<script type="dustjs" id="testDustjs">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{title}</title>
+    <script type="text/javascript">
+    if (foo)
+        bar(1 + 5)
+
+    &lt;/script>
+</head>
+<body>
+    <h1>Jade - node template engine</h1>
+    <div id="container" class="col"></div>
+    {?using}
+        <p>You are amazing</p>
+    {:else}
+        <p>Get on it!</p>
+    {/using}
+    <p>paragraph paragraph paragraph paragraph</p>
+    <ul>
+    {#lis}
+        <li> {d} : {d} of {title}</li>
+    {/lis}
+     </ul>
+</body>
+</html>
+
+
+</script>
+<p>
+    <a href="http://jsperf.com/jade-xtpl">http://jsperf.com/jade-xtpl</a>
+</p>
+<pre id="ret"></pre>
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/jade.js"></script>
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/handlebars-v1.3.0.js"></script>
+<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/dust-full.js"></script>
+<script src="http://g.tbcdn.cn/kissy/k/1.4.2/seed.js"></script>
+<button id="startJade">startJade</button>
+<button id="startXtpl">startXtpl</button>
+<button id="startDustjs">startDustjs</button>
+<button id="startHandlebars">startHandlebars</button>
+<script>
+    (function () {
+        var debug = location.href.indexOf('debug') > -1;
+        var ret = getElementById('ret');
+
+        function getElementById(str) {
+            return document.getElementById(str);
+        }
+
+        (function () {
+            // Compile a function
+            var fn = jade.compile(getElementById('testJade').innerHTML.trim());
+            getElementById('startJade').onclick = function () {
+                console.time('jade');
+                for (var i = 0; i < 10000; i++) {
+                    // Render the function
+                    if (debug) {
+                        debugger;
+                    }
+                    var html = fn({
+                        title: 'Jade Demo',
+                        using: true,
+                        lis: [
+                            {d: 'one'},
+                            {d: 'two'},
+                            {d: 'three'}
+                        ]
+                    });
+                    if (debug) {
+                        break;
+                    }
+                }
+                console.timeEnd('jade');
+                ret.innerText = html;
+            };
+        })();
+
+        (function () {
+            var fn = Handlebars.compile(getElementById('testHandlebars').innerHTML.trim());
+            fn({
+                title: 'Jade Demo',
+                using: true,
+                lis: [
+                    {d: 'one'},
+                    {d: 'two'},
+                    {d: 'three'}
+                ]
+            });
+            getElementById('startHandlebars').onclick = function () {
+                console.time('handleBars');
+                for (var i = 0; i < 10000; i++) {
+                    // Render the function
+                    if (debug) {
+                        debugger;
+                    }
+                    var html = fn({
+                        title: 'Jade Demo',
+                        using: true,
+                        lis: [
+                            {d: 'one'},
+                            {d: 'two'},
+                            {d: 'three'}
+                        ]
+                    });
+                    if (debug) {
+                        break;
+                    }
+                }
+                console.timeEnd('handleBars');
+                ret.innerText = html;
+            };
+        })();
+
+        (function () {
+            var compiled = dust.compile(getElementById('testDustjs').innerHTML.trim(), 'intro');
+            dust.loadSource(compiled);
+            getElementById('startDustjs').onclick = function () {
+                console.time('dustjs');
+                for (var i = 0; i < 10000; i++) {
+                    // Render the function
+                    if (debug) {
+                        debugger;
+                    }
+                    dust.render("intro", {
+                        title: 'Jade Demo',
+                        using: true,
+                        lis: [
+                            {d: 'one'},
+                            {d: 'two'},
+                            {d: 'three'}
+                        ]
+                    }, function (err, out) {
+                        html = out;
+                    });
+                    if (debug) {
+                        break;
+                    }
+                }
+                console.timeEnd('dustjs');
+                ret.innerText = html;
+            };
+        })();
+
+        KISSY.use('xtemplate', function (S, XTemplate) {
+            var str = getElementById('testXtpl').innerHTML.trim();
+            new XTemplate(str);
+            getElementById('startXtpl').onclick = function () {
+                console.time('xtpl');
+                var tpl = new XTemplate(str);
+                for (var i = 0; i < 10000; i++) {
+                    if (debug) {
+                        debugger;
+                    }
+                    var html = tpl.render({
+                        title: 'Jade Demo',
+                        using: true,
+                        lis: [
+                            {d: 'one'},
+                            {d: 'two'},
+                            {d: 'three'}
+                        ]
+                    });
+                    if (debug) {
+                        break;
+                    }
+                }
+                console.timeEnd('xtpl');
+                ret.innerText = html;
+            };
+        });
+    })();
+</script>

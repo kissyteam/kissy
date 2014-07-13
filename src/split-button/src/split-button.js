@@ -27,9 +27,15 @@ module.exports = Container.extend({
         handleGestureEvents: {
             value: false
         },
+
         focusable: {
             value: false
         },
+
+        allowTextSelection: {
+            value: true
+        },
+
         /**
          * whether align menubutton with button.
          * Defaults to: true
@@ -41,6 +47,7 @@ module.exports = Container.extend({
         alignWithEl: {
             value: true
         },
+
         children: {
             value: [
                 {
@@ -51,6 +58,7 @@ module.exports = Container.extend({
                 }
             ]
         },
+
         /**
          * menubutton component
          * @cfg {KISSY.MenuButton} menuButton

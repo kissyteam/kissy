@@ -1,8 +1,8 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:41
+build time: Jul 1 22:57
 */
-KISSY.add("component/extension/content-box",["./content-box/content-xtpl"],function(b,e,h,d){function f(a){var c=a.get("contentEl");a.$contentEl=a.$contentEl=c;a.contentEl=a.contentEl=c[0]}function a(){}b=e("./content-box/content-xtpl");a.prototype={__createDom:function(){f(this)},__decorateDom:function(){f(this)},getChildrenContainerEl:function(){return this.get("contentEl")},_onSetContent:function(a){var c=this.$contentEl;c.html(a);this.get("allowTextSelection")||c.unselectable()}};a.ATTRS={contentTpl:{value:b},
+KISSY.add("component/extension/content-box",["./content-box/content-xtpl"],function(c,f,g,d){function e(a){var b=a.get("contentEl");a.$contentEl=a.$contentEl=b;a.contentEl=a.contentEl=b[0]}function a(){}c=f("./content-box/content-xtpl");a.prototype={__createDom:function(){e(this)},__decorateDom:function(){e(this)},getChildrenContainerEl:function(){return this.get("contentEl")},_onSetContent:function(a){var b=this.$contentEl;b.html(a);this.get("allowTextSelection")||b.unselectable()}};a.ATTRS={contentTpl:{value:c},
 contentEl:{selector:function(){return"."+this.getBaseCssClass("content")}},content:{parse:function(){return this.get("contentEl").html()}}};d.exports=a});
-KISSY.add("component/extension/content-box/content-xtpl",[],function(b,e,h,d){b=function(b,a,d){var c=this.root.utils.callFn;a.write('<div class="',0);var e={escape:1},g=[];g.push("content");e.params=g;if((c=c(this,b,e,a,["getBaseCssClasses"],0,1))&&c.isBuffer)a=c,c=d;a.write(c,!0);a.write('">',0);b=b.resolve(["content"],0);a.write(b,!1);a.write("</div>",0);return a};b.TPL_NAME=d.name;b.version="5.0.0";d.exports=b});
+KISSY.add("component/extension/content-box/content-xtpl",[],function(c,f,g,d){c=function(e,a,c){var b=this.root.utils.callFn;a.write('<div class="',0);var d={escape:1},f=[];f.push("content");d.params=f;if((b=b(this,e,d,a,["getBaseCssClasses"],0,1))&&b.isBuffer)a=b,b=c;a.write(b,!0);a.write('">',0);e=e.resolve(["content"],0);a.write(e,!1);a.write("</div>",0);return a};c.TPL_NAME=d.name;d.exports=c});

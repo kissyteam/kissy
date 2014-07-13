@@ -1,0 +1,18 @@
+
+<script src="../../../../../build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script type="text/javascript">
+
+    KISSY.use('io', function (S, IO) {
+        var io = IO({
+            url: './t.json',
+            dataType: 'json',
+            success: function (d) {
+                setTimeout(function () {
+                    console.log(io.config.uri.toString());
+                    console.log(d.x);
+                }, 0);
+            }
+        })
+    })
+</script>

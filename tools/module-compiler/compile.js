@@ -62,6 +62,7 @@ function compileModule(modName, codes, requires) {
         return;
     }
     var code = fs.readFileSync(mod.getUrl());
+
     var ast = esprima.parse(code, {
         attachComment: true
     });

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:53
+build time: Jul 1 23:08
 */
 /*
 combined modules:
@@ -108,6 +108,9 @@ KISSY.add('overlay/control', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: false },
+            focusable: { value: false },
+            allowTextSelection: { value: true },
             contentTpl: { value: OverlayTpl },
             /**
          * Whether close button is visible.
@@ -158,42 +161,10 @@ KISSY.add('overlay/control', [
          * @ignore
          */
             closeAction: { value: HIDE },
-            /**
-         * overlay can not have focus.
-         *
-         * Defaults to: false.
-         *
-         * @cfg {Boolean} focusable
-         * @protected
-         */
-            /**
-         * @ignore
-         */
-            focusable: { value: false },
-            /**
-         * overlay can have text selection.
-         *
-         * Defaults to: true.
-         *
-         * @cfg {Boolean} allowTextSelection
-         * @protected
-         */
-            /**
-         * @ignore
-         */
-            allowTextSelection: { value: true },
-            /**
-         * whether this component can be responsive to mouse.
-         *
-         * Defaults to: false
-         *
-         * @cfg {Boolean} handleGestureEvents
-         * @protected
-         */
-            /**
-         * @ignore
-         */
-            handleGestureEvents: { value: false },
+            closeText: {
+                value: 'close',
+                render: 1
+            },
             visible: { value: false }
         },
         xclass: 'overlay'
@@ -559,10 +530,9 @@ KISSY.add('overlay/extension/overlay-effect', [
 });
 
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
-    var overlayXtplHtml = function (scope, buffer, undefined) {
+    var overlayXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -578,13 +548,13 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
             params3.push(id4);
             option2.params = params3;
             option2.fn = function (scope, buffer) {
-                buffer.write('\r\n        <a href="javascript:void(\'close\')"\r\n           class="', 0);
+                buffer.write('\r\n        <a href="javascript:void(\'close\')"\r\n           aria-label="Close"\r\n           class="', 0);
                 var option5 = { escape: 1 };
                 var params6 = [];
                 params6.push('close');
                 option5.params = params6;
                 var callRet7;
-                callRet7 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses'], 0, 4);
+                callRet7 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses'], 0, 5);
                 if (callRet7 && callRet7.isBuffer) {
                     buffer = callRet7;
                     callRet7 = undefined;
@@ -596,13 +566,16 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
                 params9.push('close-x');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 7);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
                 }
                 buffer.write(callRet10, true);
-                buffer.write('">close</span>\r\n        </a>\r\n    ', 0);
+                buffer.write('">', 0);
+                var id11 = scope.resolve(['closeText'], 0);
+                buffer.write(id11, false);
+                buffer.write('</span>\r\n        </a>\r\n    ', 0);
                 return buffer;
             };
             buffer = ifCommand.call(tpl, scope, option2, buffer, 2);
@@ -611,36 +584,35 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
         };
         buffer = blockCommand.call(tpl, scope, option0, buffer, 1);
         buffer.write('\r\n\r\n<div class="', 0);
-        var option11 = { escape: 1 };
-        var params12 = [];
-        params12.push('content');
-        option11.params = params12;
-        var callRet13;
-        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 0, 11);
-        if (callRet13 && callRet13.isBuffer) {
-            buffer = callRet13;
-            callRet13 = undefined;
+        var option12 = { escape: 1 };
+        var params13 = [];
+        params13.push('content');
+        option12.params = params13;
+        var callRet14;
+        callRet14 = callFnUtil(tpl, scope, option12, buffer, ['getBaseCssClasses'], 0, 12);
+        if (callRet14 && callRet14.isBuffer) {
+            buffer = callRet14;
+            callRet14 = undefined;
         }
-        buffer.write(callRet13, true);
+        buffer.write(callRet14, true);
         buffer.write('">\r\n    ', 0);
-        var option14 = { escape: 1 };
-        var params15 = [];
-        params15.push('ks-overlay-content');
-        option14.params = params15;
-        option14.fn = function (scope, buffer) {
+        var option15 = { escape: 1 };
+        var params16 = [];
+        params16.push('ks-overlay-content');
+        option15.params = params16;
+        option15.fn = function (scope, buffer) {
             buffer.write('\r\n        ', 0);
-            var id16 = scope.resolve(['content'], 0);
-            buffer.write(id16, false);
+            var id17 = scope.resolve(['content'], 0);
+            buffer.write(id17, false);
             buffer.write('\r\n    ', 0);
             return buffer;
         };
-        buffer = blockCommand.call(tpl, scope, option14, buffer, 12);
+        buffer = blockCommand.call(tpl, scope, option15, buffer, 13);
         buffer.write('\r\n</div>', 0);
         return buffer;
     };
-    overlayXtplHtml.TPL_NAME = module.name;
-    overlayXtplHtml.version = '5.0.0';
-    module.exports = overlayXtplHtml;
+    overlayXtpl.TPL_NAME = module.name;
+    module.exports = overlayXtpl;
 });
 KISSY.add('overlay/dialog', [
     'util',
@@ -736,6 +708,7 @@ KISSY.add('overlay/dialog', [
             }
         }, {
             ATTRS: {
+                focusable: { value: true },
                 contentTpl: { value: DialogTpl },
                 /**
          * Header element of dialog.
@@ -861,18 +834,6 @@ KISSY.add('overlay/dialog', [
          */
                 closable: { value: true },
                 /**
-         * whether this component can be focused.
-         *
-         * Defaults to: true
-         *
-         * @cfg {Boolean} focusable
-         * @protected
-         */
-                /**
-         * @ignore
-         */
-                focusable: { value: true },
-                /**
          * whether this component can be closed by press escape key.
          *
          * Defaults to: true
@@ -944,10 +905,9 @@ KISSY.add('overlay/dialog', [
  *  重构，使用扩展类
  */
 });
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, exports, module) {
-    var dialogXtplHtml = function (scope, buffer, undefined) {
+    var dialogXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -1071,9 +1031,8 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
         buffer = blockCommand.call(tpl, scope, option3, buffer, 2);
         return buffer;
     };
-    dialogXtplHtml.TPL_NAME = module.name;
-    dialogXtplHtml.version = '5.0.0';
-    module.exports = dialogXtplHtml;
+    dialogXtpl.TPL_NAME = module.name;
+    module.exports = dialogXtpl;
 });
 KISSY.add('overlay/popup', [
     './control',

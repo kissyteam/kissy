@@ -1,16 +1,20 @@
 language: node_js
-
 notifications:
-    email:
-        - yiminghe@gmail.com
-
+  email:
+  - yiminghe@gmail.com
 node_js:
-  - 0.10
-
+- 0.1
 before_script:
-  - npm start &
-
+- npm start &
+- npm test
 script:
-  - npm test
-  - phantomjs --version
-  - phantomjs ./tools/test/jasmine-phantomjs.js
+- phantomjs --version
+- node tools/test/gen-tc-for-phantom
+- phantomjs tools/test/jasmine-phantomjs.js
+branches:
+  except:
+  - dev
+env:
+  global:
+  - secure: LgCBGS7ziPvoXkgOk/ilmDuPadR7m+2uHIByrSwPQEIuYkmB1Yk7OFuNaFr41zWiQUTAvOxG8rwqnvs6bxPvLlQb8WHJuVSQM6YZ+1gG+rjZV3QQcElBGhF4FXEm6KDKWBHj7HxjgQrrkV9LA0S6ZtynY1xxXBClG3G1v0Bzb0c=
+  - secure: TQ26n+hMLQ8b3RW3djT35kimmihLU5vlusNPrF01HpfgTNDUCZC/81BRz0gVl4jB+H1vMjhaekATIRA15Z7ky+gX6ypExfiMRQqQizOrDRmZ9cFTGic8Wo7aXpr3VQxEbnlxrFq8PY/U+c835YV1H//w3IsFPKbYmv26w96CSlI=

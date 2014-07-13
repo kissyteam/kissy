@@ -214,6 +214,18 @@ module.exports = Button.extend([ContentBox], {
 
 }, {
     ATTRS: {
+        handleGestureEvents: {
+            value: true
+        },
+
+        focusable: {
+            value: true
+        },
+
+        allowTextSelection: {
+            value: false
+        },
+
         contentTpl: {
             value: MenuButtonTpl
         },

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:54
+build time: Jul 4 10:51
 */
 /*
 combined modules:
@@ -61,10 +61,6 @@ KISSY.add('xtemplate/runtime', [
         return parts.join('/');
     }
     function renderTpl(tpl, scope, buffer) {
-        var fn = tpl.fn;
-        if (fn.version && KISSY.version !== fn.version) {
-            throw new Error('current xtemplate file(' + tpl.name + ')(v' + fn.version + ')need to be recompiled using current kissy(v' + KISSY.version + ')!');
-        }
         buffer = tpl.fn(scope, buffer);
         var extendTplName = tpl.runtime.extendTplName;    // if has extend statement, only parse
         // if has extend statement, only parse
@@ -105,13 +101,20 @@ KISSY.add('xtemplate/runtime', [
             }
         };
     var loader = {
-            load: function (template, name, callback) {
+            cache: {},
+            load: function (params, callback) {
+                var name = params.name;
+                var cache = this.cache;
+                if (cache[name]) {
+                    return callback(undefined, cache[name]);
+                }
                 require([name], {
                     success: function (tpl) {
+                        cache[name] = tpl;
                         callback(undefined, tpl);
                     },
                     error: function () {
-                        var error = 'template "' + name + '" does not exist';
+                        var error = 'template "' + params.name + '" does not exist';
                         LoggerManager.log(error, 'error');
                         callback(error);
                     }
@@ -142,8 +145,10 @@ KISSY.add('xtemplate/runtime', [
         self.fn = fn;
         config = self.config = config || {};
         config.loader = config.loader || loader;
+        this.subNameResolveCache = {};
     }
     util.mix(XTemplateRuntime, {
+        loader: loader,
         nativeCommands: nativeCommands,
         utils: utils,
         /**
@@ -168,23 +173,6 @@ KISSY.add('xtemplate/runtime', [
             delete commands[commandName];
         }
     });
-    var subNameResolveCache = {};
-    function resolve(subName, parentName) {
-        if (subName.charAt(0) !== '.') {
-            return subName;
-        }
-        if (!parentName) {
-            var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subName;
-            LoggerManager.error(error);
-        }
-        var cache = subNameResolveCache[parentName] = subNameResolveCache[parentName] || {};
-        if (cache[subName]) {
-            return cache[subName];
-        }
-        subName = cache[subName] = getSubNameFromParentName(parentName, subName);    //console.log('resolve: ' + name + ' : ' + subName);
-        //console.log('resolve: ' + name + ' : ' + subName);
-        return subName;
-    }
     XTemplateRuntime.prototype = {
         constructor: XTemplateRuntime,
         Scope: Scope,
@@ -210,11 +198,34 @@ KISSY.add('xtemplate/runtime', [
             config.commands = config.commands || {};
             config.commands[commandName] = fn;
         },
+        resolve: function (subName, parentName) {
+            if (subName.charAt(0) !== '.') {
+                return subName;
+            }
+            if (!parentName) {
+                var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subName;
+                LoggerManager.error(error);
+            }
+            var nameResolveCache = this.subNameResolveCache[parentName] = this.subNameResolveCache[parentName] || {};
+            if (nameResolveCache[subName]) {
+                return nameResolveCache[subName];
+            }
+            subName = nameResolveCache[subName] = getSubNameFromParentName(parentName, subName);
+            return subName;
+        },
         include: function (subTplName, tpl, scope, option, buffer) {
             var self = this;
-            subTplName = resolve(subTplName, tpl.name);
+            var parentName = tpl.name;
+            var resolvedSubTplName = self.resolve(subTplName, parentName);
             return buffer.async(function (newBuffer) {
-                self.config.loader.load(self, subTplName, function (error, tplFn) {
+                self.config.loader.load({
+                    root: self,
+                    parentName: parentName,
+                    originalName: subTplName,
+                    name: resolvedSubTplName,
+                    scope: scope,
+                    option: option
+                }, function (error, tplFn) {
                     if (error) {
                         newBuffer.error(error);
                     } else if (typeof tplFn === 'string') {
@@ -223,7 +234,7 @@ KISSY.add('xtemplate/runtime', [
                         renderTpl({
                             root: tpl.root,
                             fn: tplFn,
-                            name: subTplName,
+                            name: resolvedSubTplName,
                             runtime: tpl.runtime
                         }, scope, newBuffer);
                     }
@@ -247,6 +258,12 @@ KISSY.add('xtemplate/runtime', [
             }
             option = option || {};
             callback = callback || function (error, ret) {
+                if (error) {
+                    if (!(error instanceof Error)) {
+                        error = new Error(error);
+                    }
+                    throw error;
+                }
                 html = ret;
             };
             var name = self.config.name;
@@ -569,10 +586,16 @@ KISSY.add('xtemplate/runtime/scope', [], function (S, require, exports, module) 
         },
         resolve: function (parts, depth) {
             var self = this;
+            var v;
             if (!depth && parts.length === 1) {
-                return self.get(parts[0]);
+                v = self.get(parts[0]);
+                if (v !== undef) {
+                    return v;
+                } else {
+                    depth = 1;
+                }
             }
-            var len = parts.length, scope = self, i, v;    // root keyword for root self
+            var len = parts.length, scope = self, i;    // root keyword for root self
             // root keyword for root self
             if (len && parts[0] === 'root') {
                 parts.shift();
@@ -582,6 +605,9 @@ KISSY.add('xtemplate/runtime/scope', [], function (S, require, exports, module) 
                 while (scope && depth--) {
                     scope = scope.parent;
                 }
+            }
+            if (!scope) {
+                return undef;
             }
             if (!len) {
                 return scope.data;
@@ -675,5 +701,8 @@ KISSY.add('xtemplate/runtime/linked-buffer', ['util'], function (S, require, exp
         }
     };
     LinkedBuffer.Buffer = Buffer;
-    module.exports = LinkedBuffer;
+    module.exports = LinkedBuffer;    /**
+ * 2014-06-19 yiminghe@gmail.com
+ * string concat is faster than array join: 85ms<-> 131ms
+ */
 });

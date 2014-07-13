@@ -1,0 +1,30 @@
+<meta charset='utf-8'/>
+<script  src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script >
+    KISSY.ready(function(S) {
+        S.use("io", function(S, io) {
+            if (true) {
+                io({
+                            url:"404",
+                            dataType:'jsonp',
+                            forceScript:true,
+                            success:function() {
+                                var args = S.makeArray(arguments);
+                                console.log(1);
+                            },
+                            // ie : parseerror ，成功 load，但是没有执行 callback ,script -> json 出错
+                            // firefox : scripterror , 没有成功 load，直接错了
+                            error:function() {
+                                var args = S.makeArray(arguments);
+                                console.log(2);
+                            },
+                            complete:function() {
+                                var args = S.makeArray(arguments);
+                                console.log(3);
+                            }
+                        });
+            }
+        });
+    });
+</script>

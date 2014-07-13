@@ -97,19 +97,22 @@
                 var unloadModsLen = unloadedMods.length;
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
                 if (errorList.length) {
-                    if (error) {
-                        try {
-                            error.apply(S, errorList);
-                        } catch (e) {
-                            S.log(e.stack || e, 'error');
-                            /*jshint loopfunc:true*/
-                            setTimeout(function () {
-                                throw e;
-                            }, 0);
-                        }
-                    }
                     S.log(errorList, 'error');
                     S.log('loader: load above modules error', 'error');
+                    if (error) {
+                        if ('@DEBUG@') {
+                            error.apply(S, errorList);
+                        } else {
+                            try {
+                                error.apply(S, errorList);
+                            } catch (e) {
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+                        }
+                    }
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModules(normalizedMods);
                     if (success) {

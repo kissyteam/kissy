@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{title}</title>
+    <script type="text/javascript">
+    if (foo)
+        bar(1 + 5)
+
+    </script>
+</head>
+<body>
+    <h1>dust - node template engine</h1>
+    <div id="container" class="col"></div>
+    {?using}
+        <p>You are amazing</p>
+    {:else}
+        <p>Get on it!</p>
+    {/using}
+    <p>paragraph paragraph paragraph paragraph paragraph</p>
+    <ul>
+    {#lis}
+        <li> {d} : {d} of {title}</li>
+    {/lis}
+     </ul>
+</body>
+</html>

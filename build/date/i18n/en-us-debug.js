@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:42
+build time: Jul 11 16:54
 */
 /*
 combined modules:
@@ -80,8 +80,8 @@ KISSY.add('date/i18n/en-us', [], function (S, require, exports, module) {
             'M/d/yy'
         ],
         timePatterns: [
-            'h:mm:ss \'GMT\'Z',
             'h:mm:ss a \'GMT\'Z',
+            'h:mm:ss a',
             'h:mm:ss a',
             'h:mm a'
         ],

@@ -105,11 +105,11 @@
 
 
 <script src="/kissy/build/seed-debug.js"></script>
-<script src="/kissy/src/package.js"></script>
+<script src="/gen/dev.js"></script>
 <script>
 
     KISSY.ready(function (S) {
-        S.use("util,menu,filter-menu", function (S, util,Menu,FilterMenu) {
+        S.use("util,menu,filter-menu,node", function (S, util,Menu,FilterMenu,$) {
             if (1)(function () {
 
                 var m1 = new Menu.Item({
@@ -206,7 +206,7 @@
                 });
 
 
-                S.all("#reset").on("click", function () {
+                $("#reset").on("click", function () {
                     filterMenu.reset();
                 });
             })();

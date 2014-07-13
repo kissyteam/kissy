@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:41
+build time: Jul 1 22:57
 */
 /*
 combined modules:
@@ -563,8 +563,7 @@ KISSY.add('component/control', [
                 var self = this;
                 renderData = renderData || self.renderData;
                 renderCommands = renderCommands || self.renderCommands;
-                var XTemplate = self.get('XTemplate');
-                return new XTemplate(tpl, {
+                return new XTemplateRuntime(tpl, {
                     control: self,
                     commands: renderCommands
                 }).render(renderData);
@@ -1113,7 +1112,7 @@ KISSY.add('component/control', [
                 /**
              * @ignore
              */
-                handleGestureEvents: { value: true },
+                handleGestureEvents: { value: false },
                 /**
              * Whether this component can get focus.
              *
@@ -1125,7 +1124,7 @@ KISSY.add('component/control', [
                 /**
              * @ignore
              */
-                focusable: { value: true },
+                focusable: { value: false },
                 /**
              * 1. Whether allow select this component's text.<br/>
              * 2. Whether not to lose last component's focus if click current one (set false).
@@ -1138,11 +1137,7 @@ KISSY.add('component/control', [
                 /**
              * @ignore
              */
-                allowTextSelection: {
-                    // 和 focusable 分离
-                    // grid 需求：容器允许选择里面内容
-                    value: false
-                },
+                allowTextSelection: { value: true },
                 /**
              * This component's prefix css class.
              * @cfg {String} prefixCls
@@ -1185,8 +1180,7 @@ KISSY.add('component/control', [
                             this.addTarget(p);
                         }
                     }
-                },
-                XTemplate: { value: XTemplateRuntime }
+                }
             }
         });    /**
  * create a new control extend component/control, extensions and static/prototype properties/methods.
@@ -1418,10 +1412,9 @@ KISSY.add('component/control/manager', [], function (S, require, exports, module
     };
 });
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('component/control/render-xtpl', [], function (S, require, exports, module) {
-    var renderXtplHtml = function (scope, buffer, undefined) {
+    var renderXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div id="', 0);
@@ -1487,9 +1480,8 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
         buffer.write('\r\n">', 0);
         return buffer;
     };
-    renderXtplHtml.TPL_NAME = module.name;
-    renderXtplHtml.version = '5.0.0';
-    module.exports = renderXtplHtml;
+    renderXtpl.TPL_NAME = module.name;
+    module.exports = renderXtpl;
 });
 
 

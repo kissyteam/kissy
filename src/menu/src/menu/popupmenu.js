@@ -70,14 +70,15 @@ module.exports = Menu.extend([
     }
 }, {
     ATTRS: {
-        // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-        /**
-         * Whether the popup menu is focusable.
-         * Defaults to: false.
-         * @type {Boolean}
-         * @ignore
-         */
+        handleGestureEvents: {
+            value: true
+        },
+
         focusable: {
+            value: false
+        },
+
+        allowTextSelection: {
             value: false
         },
 

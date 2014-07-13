@@ -1,9 +1,0 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Jun 13 11:51
-*/
-KISSY.add("event/gesture/drag",["event/gesture/util","event/dom/base","util"],function(h,g,e,n){function m(b,c){var a=b.lastTouches[0],f=c.timeStamp;f-b.lastTime>o&&(b.lastPos={pageX:a.pageX,pageY:a.pageY},b.lastTime=f)}function k(b,c,a){var f=b.startPos,a=a||{},d=b.lastTouches[0];a.which=1;a.pageX=d.pageX;a.pageY=d.pageY;a.originalEvent=c.originalEvent;a.deltaX=d.pageX-f.pageX;a.deltaY=d.pageY-f.pageY;a.startTime=b.startTime;a.startPos=b.startPos;a.gestureType=c.gestureType;a.direction=b.direction;
-return a}function i(){}var e=g("event/gesture/util"),h=e.addEvent,l=g("event/dom/base"),e=e.SingleTouch,o=300,j=document;g("util").extend(i,e,{start:function(){i.superclass.start.apply(this,arguments);var b=this.lastTouches[0];this.lastTime=this.startTime;this.dragTarget=b.target;this.startPos=this.lastPos={pageX:b.pageX,pageY:b.pageY};this.direction=null},move:function(b){i.superclass.move.apply(this,arguments);if(this.isStarted)m(this,b),l.fire(this.dragTarget,"ksDrag",k(this,b));else{var c=b,a=
-this.lastTouches[0],f=this.startPos;if(!this.direction){var d=c.pageX-this.startPos.pageX,e=c.pageY-this.startPos.pageY,g=Math.abs(d),h=Math.abs(e);this.direction=g>h?0>d?"left":"right":0>e?"up":"down"}d=a.pageX-f.pageX;a=a.pageY-f.pageY;3<Math.sqrt(d*d+a*a)&&(this.isStarted?m(this,c):(j.body.setCapture&&j.body.setCapture(),this.isStarted=!0),l.fire(this.dragTarget,"ksDragStart",k(this,c)))}},end:function(b){var c=this.lastTouches[0],a=b.timeStamp;l.fire(this.dragTarget,"ksDragEnd",k(this,b,{velocityX:(c.pageX-
-this.lastPos.pageX)/(a-this.lastTime)||0,velocityY:(c.pageY-this.lastPos.pageY)/(a-this.lastTime)||0}));j.body.releaseCapture&&j.body.releaseCapture()}});h(["ksDragStart","ksDrag","ksDragEnd"],{handle:new i});n.exports={DRAG_START:"ksDragStart",DRAG:"ksDrag",DRAG_END:"ksDragEnd"}});

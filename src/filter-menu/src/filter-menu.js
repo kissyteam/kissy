@@ -176,12 +176,20 @@ module.exports = Menu.extend([ContentBox], {
     },
     {
         ATTRS: {
-            contentTpl: {
-                value: FilterMenuTpl
+            handleGestureEvents: {
+                value: true
+            },
+
+            focusable: {
+                value: true
             },
 
             allowTextSelection: {
                 value: true
+            },
+
+            contentTpl: {
+                value: FilterMenuTpl
             },
 
             filterInput: {

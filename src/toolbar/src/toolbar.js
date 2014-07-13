@@ -219,10 +219,24 @@ module.exports = Container.extend([DelegateChildrenExtension], {
 }, {
     xclass: 'toolbar',
     ATTRS: {
+        allowTextSelection: {
+            value: true
+        },
+
+        focusable: {
+            value: true
+        },
+
+        handleGestureEvents: {
+            value: true
+        },
+
         // 当前的高亮项
         highlightedItem: {},
+
         // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
         expandedItem: {},
+
         defaultChildCfg: {
             valueFn: function () {
                 return {

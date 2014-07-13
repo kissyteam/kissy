@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:54
+build time: Jul 1 23:09
 */
 /*
 combined modules:
@@ -40,6 +40,7 @@ KISSY.add('split-button', [
         ATTRS: {
             handleGestureEvents: { value: false },
             focusable: { value: false },
+            allowTextSelection: { value: true },
             /**
          * whether align menubutton with button.
          * Defaults to: true

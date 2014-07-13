@@ -1,7 +1,7 @@
 var cwd = process.cwd();
 var util = require('../../common/util');
 var fs = require('fs');
-var serverConfig = JSON.parse(fs.readFileSync(__dirname + '/../server.json'));
+var serverConfig = require(__dirname + '/../config.js');
 var config = {
     server: serverConfig
 };

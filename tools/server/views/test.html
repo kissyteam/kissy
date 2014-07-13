@@ -3,32 +3,20 @@
 <script src="/kissy/build/seed-debug.js"></script>
 {{/block}}
 {{#block ('body')}}
-    <h1>KISSY 集成化测试</h1>
-    <div id="iframe">
-
-    </div>
-
-    <script src="/kissy/tools/test/test.js"></script>
-
-    <script>
-    (function(){
-        function endsWith(str, suffix) {
-            var ind = str.length - suffix.length;
-            return ind >= 0 && str.indexOf(suffix, ind) === ind;
-        }
+<h1>KISSY 集成化测试</h1>
+<div id="iframe"></div>
+<script src="/gen/tests.js"></script>
+<script>
+    (function () {
         var onlySrc = location.href.indexOf('onlySrc') !== -1;
-        var t;
-        {{#each (tests)}}
-        t='{{{this}}}';
-        if(!endsWith(t,'?coverage') && t!='/send-to-coveralls'){
-            if(onlySrc && t.indexOf(t,'?build')!== -1){
-
-            }else{
-                tests.push(t);
+        for (var i = tests.length - 1; i >= 0; i--) {
+            var t = tests[i];
+            if (onlySrc && t.indexOf(t, '?build') !== -1) {
+                tests.splice(i, 1);
             }
         }
-        {{/each}}
         document.write(tests.join("<br>"));
     })();
-    </script>
+</script>
+<script src="/kissy/src/test.js"></script>
 {{/block}}

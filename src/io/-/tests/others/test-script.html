@@ -1,0 +1,32 @@
+
+<script  src="/kissy/build/seed-debug.js" charset="utf-8"></script>
+<script src="/gen/dev.js"></script>
+<script >
+    KISSY.ready(function(S) {
+        S.use("io", function(S, io) {
+            if (true) {
+                io({
+                            url:"404",
+                            // dataType:'xml',
+                            // dataType:'json',
+                            dataType:'script',
+                            success:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(1);
+                            },
+                            error:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(2);
+                            },
+                            complete:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(3);
+                            }
+                        });
+            }
+        });
+    });
+</script>

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:41
+build time: Jul 1 22:57
 */
 /*
 combined modules:
@@ -26,7 +26,10 @@ KISSY.add('component/container', [
         // construct
         children = self.get('children');
         c = children[index];
-        c.setInternal('parent', self);
+        c.setInternal('parent', self);    // NOTE 20140618
+                                          // child can not render into a documentFragment(parent is not in dom tree)
+        // NOTE 20140618
+        // child can not render into a documentFragment(parent is not in dom tree)
         if (self.get('rendered')) {
             self.renderChild(index);
         }

@@ -1,4 +1,4 @@
-<project name="date/picker/i18n/zh-cn.build" default="build" basedir=".">
+<project name="date/picker/i18n/zh-cn.build" default="build" basedir="">
     <property name="component.name" value="date/picker/i18n/zh-cn"/>
     <import file="../../../../common.xml"/>
     <target name="tpl2mod"/>

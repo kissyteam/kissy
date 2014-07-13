@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../../../css/assets/dpl/base.css"/>
     <link rel="stylesheet" href="../../../../button/assets/dpl.css"/>
     <script src="/kissy/build/seed-debug.js"></script>
-    <script src="/kissy/src/package.js"></script>
+    <script src="/gen/dev.js"></script>
     <link rel="stylesheet" href="../assets/cool.css"/>
 </head>
 <body>
@@ -21,37 +21,35 @@
 </div>
 
 <script>
-        var S = KISSY;
-        var start = (+new Date());
-        S.use("overlay", function (S, Overlay) {
-            alert("loaded: " + ((+new Date()) - start));
-            var o = new Overlay.Dialog({
-                width: 500,
-                height: 500,
-                mask: {
-                    closeOnClick: 1
-                },
+    var S = KISSY;
+    var start = (+new Date());
+    S.use("overlay,node", function (S, Overlay, $) {
+        alert("loaded: " + ((+new Date()) - start));
+        var o = new Overlay.Dialog({
+            width: 500,
+            height: 500,
+            mask: {
+                closeOnClick: 1
+            },
 //                closeAction:'destroy',
 //                effect: {
 //                    effect: 'fade'
 //                },
-                zIndex: 1000
-            });
-
-            o.on('show', function () {
-                S.log('show');
-            });
-
-            o.on('hide', function () {
-                S.log('hide');
-            });
-
-            S.all("#t2").on("click", function () {
-                o.show().center();
-            });
-
+            zIndex: 1000
         });
 
+        o.on('show', function () {
+            S.log('show');
+        });
+
+        o.on('hide', function () {
+            S.log('hide');
+        });
+
+        $("#t2").on("click", function () {
+            o.show().center();
+        });
+    });
 </script>
 </body>
 </html>

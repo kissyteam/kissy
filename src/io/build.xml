@@ -1,6 +1,0 @@
-<project name="io.build" default="build" basedir=".">
-    <property name="component.name" value="io"/>
-
-    <import file="../common.xml"/>
-</project>
-

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 
-    var mvc = require('../mvc/');
+    var mvc = require('../mvc/index');
     var Json = require('json');
     var KEY = 'KISSY_Note';
     var util = require('util');

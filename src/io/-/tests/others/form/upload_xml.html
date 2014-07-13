@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+</head>
+<body>
+<form>
+    <input name="test" value='1'/>
+    <input name="test2" value='2'/>
+    <input name="testFile" type="file"/>
+</form>
+
+<script src="/kissy/build/seed-debug.js"></script>
+<script src="/gen/dev.js"></script>
+<script> KISSY.use("io,dom,json", function (S, io,Dom) {
+        io({
+            form: Dom.get('#t'),
+            type:'post',
+            dataType: 'xml',
+            url: '../../tests/data/xml.jss',
+            success: function (data) {
+                alert(data.nodeType);
+                alert(data.documentElement.nodeType);
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

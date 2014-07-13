@@ -1,8 +1,4 @@
-KISSY.use('menu,util', function (S, Menu,util) {
-
-
-    var $ = S.all;
-
+KISSY.use('menu,util,node', function (S, Menu,util,$) {
     new Menu({
         width: 200,
         render: '#index',

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+    <script type="text/javascript">
+        if (foo) {
+            bar(1 + 5)
+        }
+    </script>
+</head>
+<body>
+<h1>xtpl - node template engine</h1>
+
+<div id="container" class="col"></div>
+{{#if (using)}}
+<p>You are amazing</p>
+{{else}}
+<p>Get on it!</p>
+{{/if}}
+<p>Jade is a terse and simple
+    templating language with a
+    strong focus on performance
+    and powerful features.</p>
+<ul>
+    {{#each (lis)}}
+    <li>{{xindex}}: {{d}} of {{title}}</li>
+</ul>
+{{/each}}
+</body>
+</html>
+{{include ('includes/xtpl_part')}}

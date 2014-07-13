@@ -28,12 +28,12 @@ margin:50px auto;">
     在此区域点右键
 </div>
 <script src="/kissy/build/seed-debug.js"></script>
-<script src="/kissy/src/package.js"></script>
+<script src="/gen/dev.js"></script>
 <script>
 
 
-    KISSY.use("menu,separator", function (S, Menu, Separator) {
-        var context = S.all("#context");
+    KISSY.use("menu,separator,node", function (S, Menu, Separator,$) {
+        var context = $("#context");
         var sb = new Menu.PopupMenu({
             autoHideOnMouseLeave: true,
             elStyle: {

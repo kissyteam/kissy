@@ -1,1 +1,0 @@
-require('./xtemplate-spec');

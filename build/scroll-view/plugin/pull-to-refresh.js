@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:53
+build time: Jul 1 23:08
 */
 KISSY.add("scroll-view/plugin/pull-to-refresh",["base","util","node","util","feature"],function(f,e,n,k){function g(a,b,d){a.isLoading="loading"===b;var c=a.scrollView.get("prefixCls");a.get$El(d).attr("class",c+"scroll-view-pull-"+d+"-to-refresh "+c+"scroll-view-"+b);a.get$LabelEl(d).html(a.getStateHtml(d,b))}var f=e("base"),h=e("util"),l=e("node"),m=e("util").substitute,i=(e=e("feature").getCssVendorInfo("transform"))&&e.propertyName;k.exports=f.extend({pluginId:this.name,get$El:function(a){return this["$"+
 a+"El"]},getEl:function(a){return this.get$El(a)[0]},get$LabelEl:function(a){return this["$"+a+"LabelEl"]},getStateHtml:function(a,b){a=h.ucfirst(a);return this.get(b+a+"Html")},_onSetPullUpState:function(a){g(this,a,"up")},_onSetPullDownState:function(a){g(this,a,"down")},_onScrollMove:function(){if(!this.isLoading){var a=this.scrollView.get("scrollTop");0>a?this.get$El("down")&&this.set("pullDownState",a>-this.pulldownElHeight?"pulling":"releasing"):a>this.scrollView.maxScroll.top&&this.get$El("up")&&

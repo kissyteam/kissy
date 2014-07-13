@@ -84,7 +84,7 @@ S.config("requires",{
         "base",
         "node",
         "event/gesture/basic",
-        "event/gesture/drag"
+        "event/gesture/pan"
     ],
     "dd/plugin/constrain": [
         "base",
@@ -140,10 +140,10 @@ S.config("requires",{
     "event/gesture/basic": [
         "event/gesture/util"
     ],
-    "event/gesture/drag": [
+    "event/gesture/edge-pan": [
         "event/gesture/util"
     ],
-    "event/gesture/edge-drag": [
+    "event/gesture/pan": [
         "event/gesture/util"
     ],
     "event/gesture/pinch": [
@@ -246,11 +246,11 @@ S.config("requires",{
     ],
     "scroll-view/plugin/scrollbar": [
         "component/control",
-        "event/gesture/drag"
+        "event/gesture/pan"
     ],
     "scroll-view/touch": [
         "scroll-view/base",
-        "event/gesture/drag"
+        "event/gesture/pan"
     ],
     "separator": [
         "component/control"
@@ -330,7 +330,7 @@ alias('event/dom', [
     UA.ie ? '' : 'event/dom/focusin'
 ]);
 if (!isTouchGestureSupported) {
-    add('event/gesture/edge-drag', emptyObject);
+    add('event/gesture/edge-pan', emptyObject);
 }
 
 if (!isTouchGestureSupported) {

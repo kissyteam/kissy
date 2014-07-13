@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:53
+build time: Jul 1 23:08
 */
 /*
 combined modules:
@@ -122,7 +122,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
     'util',
     'component/control',
     'event/gesture/basic',
-    'event/gesture/drag',
+    'event/gesture/pan',
     './scrollbar-xtpl',
     'feature'
 ], function (S, require, exports, module) {
@@ -135,7 +135,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
     var util = require('util');
     var Control = require('component/control');
     var BasicGesture = require('event/gesture/basic');
-    var DragGesture = require('event/gesture/drag');
+    var PanGesture = require('event/gesture/pan');
     var ScrollBarTpl = require('./scrollbar-xtpl');
     var MIN_BAR_LENGTH = 20;
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
@@ -258,7 +258,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
             self.$dragEl[action]([
                 'dragstart',
                 'mousedown'
-            ], preventDefault)[action](DragGesture.DRAG_END, halt, self)[action](DragGesture.DRAG_START, onDragStartHandler, self)[action](DragGesture.DRAG, onDragHandler, self);
+            ], preventDefault)[action](PanGesture.PAN_END, halt, self)[action](PanGesture.PAN_START, onDragStartHandler, self)[action](PanGesture.PAN, onDragHandler, self);
             util.each([
                 self.$downBtn,
                 self.$upBtn
@@ -355,6 +355,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
  */
     module.exports = Control.extend(methods, {
         ATTRS: {
+            handleGestureEvents: { value: false },
+            focusable: { value: false },
+            allowTextSelection: { value: false },
             /**
          * minimum scrollbar length.
          * Defaults to 20.
@@ -436,7 +439,6 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
                     return '.' + this.getBaseCssClass('track');
                 }
             },
-            focusable: { value: false },
             contentTpl: { value: ScrollBarTpl }
         },
         xclass: 'scrollbar'
@@ -447,10 +449,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', [
 
 
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, require, exports, module) {
-    var scrollbarXtplHtml = function (scope, buffer, undefined) {
+    var scrollbarXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -561,7 +562,6 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         buffer.write('">\r\n</div>\r\n</div>\r\n</div>', 0);
         return buffer;
     };
-    scrollbarXtplHtml.TPL_NAME = module.name;
-    scrollbarXtplHtml.version = '5.0.0';
-    module.exports = scrollbarXtplHtml;
+    scrollbarXtpl.TPL_NAME = module.name;
+    module.exports = scrollbarXtpl;
 });

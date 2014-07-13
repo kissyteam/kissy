@@ -15,6 +15,18 @@ function TreeManager() {
 }
 
 TreeManager.ATTRS = {
+    allowTextSelection: {
+        value: true
+    },
+
+    focusable: {
+        value: true
+    },
+
+    handleGestureEvents: {
+        value: true
+    },
+
     /**
      * Whether show root node.
      * Defaults to: true.
@@ -35,16 +47,7 @@ TreeManager.ATTRS = {
     /**
      * @ignore
      */
-    selectedItem: {},
-
-    // only root node is focusable
-    focusable: {
-        value: true
-    },
-
-    handleGestureEvents: {
-        value: true
-    }
+    selectedItem: {}
 };
 
 util.augment(TreeManager, DelegateChildrenExtension, {

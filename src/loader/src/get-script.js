@@ -6,7 +6,8 @@
 (function (S) {
     // --no-module-wrap--
     var MILLISECONDS_OF_SECOND = 1000,
-        doc = S.Env.host.document,
+        win = S.Env.host,
+        doc = win.document,
         Utils = S.Loader.Utils,
     // solve concurrent requesting same script file
         jsCssCallbacks = {},
@@ -46,11 +47,7 @@
         // eg: /??dom.js,event.js , ? , should not be encoded
         var config = success,
             css = Utils.endsWith(url, '.css'),
-            error,
-            timeout,
-            attrs,
-            callbacks,
-            timer;
+            error, timeout, attrs, callbacks, timer;
 
         if (typeof config === 'object') {
             success = config.success;
@@ -58,6 +55,19 @@
             timeout = config.timeout;
             charset = config.charset;
             attrs = config.attrs;
+        }
+
+        if (css && Utils.ieMode < 10) {
+            if (doc.getElementsByTagName('style').length + doc.getElementsByTagName('link').length >= 31) {
+                if (win.console) {
+                    win.console.error('style and link\'s number is more than 31.' +
+                        'ie < 10 can not insert link: ' + url);
+                }
+                if (error) {
+                    error();
+                }
+                return;
+            }
         }
 
         callbacks = jsCssCallbacks[url] = jsCssCallbacks[url] || [];

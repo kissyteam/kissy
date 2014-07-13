@@ -55,19 +55,24 @@ var TabBody = Container.extend({
     }
 }, {
     ATTRS: {
-        selectedPanelIndex: {
-        },
         allowTextSelection: {
             value: true
         },
+
         focusable: {
             value: false
         },
-        lazyRender: {
-        },
+
         handleGestureEvents: {
             value: false
         },
+
+        selectedPanelIndex: {
+        },
+
+        lazyRender: {
+        },
+
         defaultChildCfg: {
             valueFn: function () {
                 return {

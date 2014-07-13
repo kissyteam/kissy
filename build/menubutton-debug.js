@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:52
+build time: Jul 1 23:07
 */
 /*
 combined modules:
@@ -231,6 +231,9 @@ KISSY.add('menubutton/control', [
         }
     }, {
         ATTRS: {
+            handleGestureEvents: { value: true },
+            focusable: { value: true },
+            allowTextSelection: { value: false },
             contentTpl: { value: MenuButtonTpl },
             /**
          * Whether drop down menu is same width with button.
@@ -308,10 +311,9 @@ KISSY.add('menubutton/control', [
 
 
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, module) {
-    var menubuttonXtplHtml = function (scope, buffer, undefined) {
+    var menubuttonXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -356,9 +358,8 @@ KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, modul
         buffer.write('">\r\n    </div>\r\n</div>', 0);
         return buffer;
     };
-    menubuttonXtplHtml.TPL_NAME = module.name;
-    menubuttonXtplHtml.version = '5.0.0';
-    module.exports = menubuttonXtplHtml;
+    menubuttonXtpl.TPL_NAME = module.name;
+    module.exports = menubuttonXtpl;
 });
 
 KISSY.add('menubutton/select', [

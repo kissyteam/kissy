@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:54
+build time: Jul 1 23:09
 */
 /*
 combined modules:
@@ -321,6 +321,9 @@ KISSY.add('tabs', [
             }
         }, {
             ATTRS: {
+                handleGestureEvents: { value: false },
+                allowTextSelection: { value: true },
+                focusable: { value: false },
                 /**
          * tabs config, eg: {title:'', content:'', selected:false, closable:false}
          * @cfg {Object} item
@@ -345,10 +348,6 @@ KISSY.add('tabs', [
          * @ignore
          */
                 lazyRender: { value: false },
-                // real attribute
-                handleGestureEvents: { value: false },
-                allowTextSelection: { value: true },
-                focusable: { value: false },
                 bar: {
                     getter: function () {
                         return this.get('children')[BarIndexMap[this.get('barOrientation')]];
@@ -568,11 +567,11 @@ KISSY.add('tabs/body', [
             }
         }, {
             ATTRS: {
-                selectedPanelIndex: {},
                 allowTextSelection: { value: true },
                 focusable: { value: false },
-                lazyRender: {},
                 handleGestureEvents: { value: false },
+                selectedPanelIndex: {},
+                lazyRender: {},
                 defaultChildCfg: {
                     valueFn: function () {
                         return { xclass: 'tabs-panel' };
@@ -654,9 +653,10 @@ KISSY.add('tabs/tab', [
         }
     }, {
         ATTRS: {
-            contentTpl: { value: TabTpl },
-            handleGestureEvents: { value: false },
+            allowTextSelection: { value: false },
             focusable: { value: false },
+            handleGestureEvents: { value: false },
+            contentTpl: { value: TabTpl },
             /**
          * whether closable
          * @cfg {Boolean} closable
@@ -696,10 +696,9 @@ KISSY.add('tabs/tab', [
     });
 });
 
-/** Compiled By kissy-xtemplate */
-/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+/** Compiled By xtpl */
 KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
-    var tabXtplHtml = function (scope, buffer, undefined) {
+    var tabXtpl = function (scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -742,9 +741,8 @@ KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
         buffer = ifCommand.call(tpl, scope, option4, buffer, 2);
         return buffer;
     };
-    tabXtplHtml.TPL_NAME = module.name;
-    tabXtplHtml.version = '5.0.0';
-    module.exports = tabXtplHtml;
+    tabXtpl.TPL_NAME = module.name;
+    module.exports = tabXtpl;
 });
 
 KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, module) {
@@ -781,6 +779,9 @@ KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, 
         }
     }, {
         ATTRS: {
+            allowTextSelection: { value: true },
+            focusable: { value: false },
+            handleGestureEvents: { value: false },
             /**
          * whether selected
          * @cfg {Boolean} selected
@@ -794,9 +795,7 @@ KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, 
                 parse: function (el) {
                     return el.hasClass(this.getBaseCssClass('selected'));
                 }
-            },
-            focusable: { value: false },
-            allowTextSelection: { value: true }
+            }
         },
         xclass: 'tabs-panel'
     });

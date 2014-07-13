@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jun 13 11:51
+build time: Jul 1 23:06
 */
 /*
 combined modules:
@@ -51,7 +51,7 @@ KISSY.add('event/gesture/tap', [
  */
                                    /**
  * fired when tapHold.
- * @event TAP_HOLD
+ * @event HOLD
  * @member KISSY.Event.Gesture.Tap
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX tap pageX
@@ -86,14 +86,14 @@ KISSY.add('event/gesture/tap', [
  */
     /**
  * fired when tapHold.
- * @event TAP_HOLD
+ * @event HOLD
  * @member KISSY.Event.Gesture.Tap
  * @param {KISSY.Event.DomEvent.Object} e
  * @param {Number} e.pageX tap pageX
  * @param {Number} e.pageY tap pageY
  * @param {Number} e.duration time duration(s) between current time and current touch start
  */
-    var SINGLE_TAP = 'singleTap', DOUBLE_TAP = 'doubleTap', TAP_HOLD = 'tapHold', TAP = 'tap', TAP_HOLD_DELAY = 1000,
+    var SINGLE_TAP = 'singleTap', DOUBLE_TAP = 'doubleTap', HOLD = 'hold', TAP = 'tap', TAP_HOLD_DELAY = 1000,
         // same with native click delay
         SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
     function preventDefault(e) {
@@ -125,7 +125,7 @@ KISSY.add('event/gesture/tap', [
                     }, self.lastXY);
                 self.tapHoldTimer = 0;
                 self.lastXY = 0;
-                DomEvent.fire(currentTouch.target, TAP_HOLD, eventObj);
+                DomEvent.fire(currentTouch.target, HOLD, eventObj);
             }, TAP_HOLD_DELAY);
             self.isStarted = true;
             return undefined;
@@ -231,13 +231,13 @@ KISSY.add('event/gesture/tap', [
         TAP,
         DOUBLE_TAP,
         SINGLE_TAP,
-        TAP_HOLD
+        HOLD
     ], { handle: new Tap() });
     module.exports = {
         TAP: TAP,
         SINGLE_TAP: SINGLE_TAP,
         DOUBLE_TAP: DOUBLE_TAP,
-        TAP_HOLD: TAP_HOLD
+        HOLD: HOLD
     };    /**
  * @ignore
  * yiminghe@gmail.com 2013-12-20

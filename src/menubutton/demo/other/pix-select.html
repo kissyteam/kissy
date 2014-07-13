@@ -53,12 +53,11 @@
     </div>
 
     <script src="/kissy/build/seed-debug.js"></script>
-    <script src="/kissy/src/package.js"></script>
+    <script src="/gen/dev.js"></script>
 
     <script>
-        KISSY.use('menubutton,node', function (S, MenuButton) {
-            var $ = S.all;
-            var s = S.one("#decorateSelect");
+        KISSY.use('menubutton,node', function (S, MenuButton,$) {
+            var s = $("#decorateSelect");
             for (var i = 0; i < 20; i++) {
                 s.append("<option value='" + i + "'  " + (i % 2 == 1 ? "class='ks-option-even'" : "") + "  >项目" + i + "</option>")
             }

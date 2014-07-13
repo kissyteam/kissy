@@ -1,6 +1,0 @@
-<project name="event/custom.build" default="build" basedir=".">
-    <property name="component.name" value="event/custom"/>
-    <property name="component.isNode" value="1"/>
-    <import file="../../../common.xml"/>
-    <target name="tpl2mod"/>
-</project>

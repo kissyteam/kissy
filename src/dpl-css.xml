@@ -1,9 +1,14 @@
-<project name="dpl-css">
-    <target name="concat-css">
-        <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.work.dir}"
-                     includes="assets/**/dpl.css"/>
-            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
-        </copy>
+<project name="dpl-css" xmlns:ac="antlib:net.sf.antcontrib">
+    <target name="concat-css" depends="check-assets">
+        <ac:if>
+            <ac:isset property="component.assets.dir.exists"/>
+            <ac:then>
+                <copy todir="${component.assets.dir.tmp}">
+                    <fileset dir="${component.assets.dir}"
+                             includes="**/dpl.css"/>
+                    <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-debug.\2"/>
+                </copy>
+            </ac:then>
+        </ac:if>
     </target>
 </project>
