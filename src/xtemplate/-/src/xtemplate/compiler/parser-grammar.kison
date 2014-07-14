@@ -70,7 +70,7 @@
 
             {
                 symbol: 'function',
-                rhs: ['id', 'LPAREN', 'params', 'COMMA', 'hash', 'RPAREN'],
+                rhs: ['id', 'L_PAREN', 'params', 'COMMA', 'hash', 'R_PAREN'],
                 action: function () {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3, this.$5);
                 }
@@ -78,21 +78,21 @@
 
             {
                 symbol: 'function',
-                rhs: ['id', 'LPAREN', 'params', 'RPAREN'],
+                rhs: ['id', 'L_PAREN', 'params', 'R_PAREN'],
                 action: function () {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3);
                 }
             },
             {
                 symbol: 'function',
-                rhs: ['id', 'LPAREN', 'hash', 'RPAREN'],
+                rhs: ['id', 'L_PAREN', 'hash', 'R_PAREN'],
                 action: function () {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1, null, this.$3);
                 }
             },
             {
                 symbol: 'function',
-                rhs: ['id', 'LPAREN', 'RPAREN'],
+                rhs: ['id', 'L_PAREN', 'R_PAREN'],
                 action: function () {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1);
                 }
@@ -125,15 +125,60 @@
                 rhs: ['conditionalOrExpression']
             },
             {
+                symbol: 'expression',
+                rhs: ['L_BRACKET', 'listExpression', 'R_BRACKET'],
+                action: function () {
+                    return new this.yy.ArrayExpression(this.$2);
+                }
             },
-            }
+            {
+                symbol: 'expression',
+                rhs: ['L_BRACE', 'jsonExpression', 'R_BRACE'],
+                action: function () {
+                    return new this.yy.JsonExpression(this.$2);
+                }
+            },
+            {
+                symbol: 'jsonPart',
+                rhs: ['STRING', 'COLON', 'expression'],
+                action: function () {
+                    return [this.$1, this.$3];
+                }
+            },
+            {
+                symbol: 'jsonPart',
+                rhs: ['ID', 'COLON', 'expression'],
+                action: function () {
+                    return [this.$1, this.$3];
+                }
+            },
+            {
+                symbol: 'jsonExpression',
+                rhs: ['jsonPart'],
+                action: function () {
+                    return [this.$1];
+                }
+            },
+            {
+                symbol: 'jsonExpression',
+                rhs: ['jsonExpression', 'COMMA', 'jsonPart'],
+                action: function () {
+                    this.$1.push(this.$3);
+                }
+            },
             {
                 symbol: 'listExpression',
-                rhs: ['conditionalOrExpression']
+                rhs: ['expression'],
+                action: function () {
+                    return [this.$1];
+                }
             },
             {
                 symbol: 'listExpression',
-                rhs: ['conditionalOrExpression', 'COMMA','listExpression']
+                rhs: ['listExpression', 'COMMA', 'expression'],
+                action: function () {
+                    this.$1.push(this.$3);
+                }
             },
             {
                 symbol: 'conditionalOrExpression',
@@ -292,7 +337,7 @@
             },
             {
                 symbol: 'primaryExpression',
-                rhs: ['LPAREN', 'expression', 'RPAREN'],
+                rhs: ['L_PAREN', 'expression', 'R_PAREN'],
                 action: function () {
                     return this.$2;
                 }
@@ -345,7 +390,7 @@
             },
             {
                 symbol: 'idSegments',
-                rhs: ['idSegments', 'SQUARE_BRACKET_START', 'expression', 'SQUARE_BRACKET_END'],
+                rhs: ['idSegments', 'L_BRACKET', 'expression', 'R_BRACKET'],
                 action: function () {
                     this.$1.push(this.$3);
                 }
@@ -501,12 +546,12 @@
                 {
                     state: codeSection,
                     regexp: /^\(/,
-                    token: 'LPAREN'
+                    token: 'L_PAREN'
                 },
                 {
                     state: codeSection,
                     regexp: /^\)/,
-                    token: 'RPAREN'
+                    token: 'R_PAREN'
                 },
                 {
                     state: codeSection,
@@ -629,16 +674,31 @@
                 {
                     state: codeSection,
                     regexp: /^\[/,
-                    token: 'SQUARE_BRACKET_START'
+                    token: 'L_BRACKET'
                 },
                 {
                     state: codeSection,
                     regexp: /^\]/,
-                    token: 'SQUARE_BRACKET_END'
+                    token: 'R_BRACKET'
                 },
                 {
                     state: codeSection,
-                    regexp: /^[a-zA-Z0-9_$]+/,
+                    regexp: /^\{/,
+                    token: 'L_BRACE'
+                },
+                {
+                    state: codeSection,
+                    regexp: /^\:/,
+                    token: 'COLON'
+                },
+                {
+                    state: codeSection,
+                    regexp: /^\}/,
+                    token: 'R_BRACE'
+                },
+                {
+                    state: codeSection,
+                    regexp: /^[a-zA-Z_$][a-zA-Z0-9_$]*/,
                     token: 'ID'
                 }
             ]
@@ -653,5 +713,4 @@
  *   {{n - 1}} expression: n-1
  *   {{n -1}} param n(-1)
  *   remove support for -1
- *
  */

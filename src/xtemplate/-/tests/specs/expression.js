@@ -14,13 +14,13 @@ describe('expression', function () {
         expect(render).toBe('1');
     });
 
-    it('support keyword prefix',function(){
-       var tpl = '{{trueX}} {{falseX}} {{nullX}} {{undefinedX}}';
+    it('support keyword prefix', function () {
+        var tpl = '{{trueX}} {{falseX}} {{nullX}} {{undefinedX}}';
         var render = new XTemplate(tpl).render({
-            trueX:1,
-            falseX:2,
-            nullX:3,
-            undefinedX:4
+            trueX: 1,
+            falseX: 2,
+            nullX: 3,
+            undefinedX: 4
         });
         expect(render).toBe('1 2 3 4');
     });
@@ -192,7 +192,6 @@ describe('expression', function () {
             };
 
             expect(new XTemplate(tpl).render(data)).toBe('6');
-
         });
 
         it('allows short circuit of &&', function () {
@@ -208,12 +207,10 @@ describe('expression', function () {
                 }
             }).render(data)).toBe('not ok');
             expect(run).toBe(0);
-        });
 
-        it('allows short circuit of &&', function () {
-            var tpl = '{{#if(arr && run())}}ok{{else}}not ok{{/if}}';
-            var run = 0;
-            var data = {
+            tpl = '{{#if(arr && run())}}ok{{else}}not ok{{/if}}';
+            run = 0;
+            data = {
                 arr: 1
             };
             expect(new XTemplate(tpl, {
@@ -290,5 +287,49 @@ describe('expression', function () {
                 x: 1
             });
         expect(content).toBe('2');
+    });
+
+    describe('array expression',function(){
+        it('support simple array',function(){
+           var tpl='{{[1,2]}}';
+            var content = new XTemplate(tpl, {
+            }).render({
+                });
+            expect(content).toBe('1,2');
+        });
+
+        it('support each',function(){
+            var tpl='{{#each([1,2])}}{{this}}{{#if(xindex !== 1)}}+{{/if}}{{/each}}';
+            var content = new XTemplate(tpl, {
+            }).render({
+                });
+            expect(content).toBe('1+2');
+        });
+    });
+
+    describe('json expression',function(){
+        it('id: support with',function(){
+            var tpl='{{# with({x:2}) }}{{x}}{{/with}}';
+            var content = new XTemplate(tpl, {
+            }).render({
+                });
+            expect(content).toBe('2');
+        });
+
+        it('quote: support with',function(){
+            var tpl='{{# with({"x":2}) }}{{x}}{{/with}}';
+            var content = new XTemplate(tpl, {
+            }).render({
+                });
+            expect(content).toBe('2');
+        });
+
+        it('support each',function(){
+            var tpl='{{#each({"x":2})}}{{xindex}}+{{this}}{{/each}}';
+            var content = new XTemplate(tpl, {
+            }).render({
+                });
+            expect(content).toBe('x+2');
+        });
     });
 });

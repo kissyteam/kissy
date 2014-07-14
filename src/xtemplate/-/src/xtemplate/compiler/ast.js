@@ -178,6 +178,18 @@ ast.Hash = function (lineNumber) {
 
 ast.Hash.prototype.type = 'hash';
 
+ast.ArrayExpression = function (list) {
+    this.list = list;
+};
+
+ast.ArrayExpression.prototype.type = 'arrayExpression';
+
+ast.JsonExpression = function (json) {
+    this.json = json;
+};
+
+ast.JsonExpression.prototype.type = 'jsonExpression';
+
 ast.Id = function (lineNumber, raw) {
     var self = this,
         parts = [],

@@ -329,6 +329,41 @@ function generateFunction(xtplAstToJs, func, escape, block) {
 }
 
 xtplAstToJs = {
+    arrayExpression: function (e) {
+        var list = e.list;
+        var len = list.length;
+        var r;
+        var source = [];
+        var exp = [];
+        for (var i = 0; i < len; i++) {
+            r = xtplAstToJs[list[i].type](list[i]);
+            source.push.apply(source, r.source);
+            exp.push(r.exp);
+        }
+        return {
+            exp: '[' + exp.join(',') + ']',
+            source: source
+        };
+    },
+
+    jsonExpression: function (e) {
+        var json = e.json;
+        var len = json.length;
+        var r;
+        var source = [];
+        var exp = [];
+        for (var i = 0; i < len; i++) {
+            var item = json[i];
+            r = xtplAstToJs[item[1].type](item[1]);
+            source.push.apply(source, r.source);
+            exp.push('"' + item[0] + '": ' + r.exp);
+        }
+        return {
+            exp: '{' + exp.join(',') + '}',
+            source: source
+        };
+    },
+
     conditionalOrExpression: opExpression,
 
     conditionalAndExpression: opExpression,
