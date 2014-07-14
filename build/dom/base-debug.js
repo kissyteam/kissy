@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:59
+build time: Jul 14 18:56
 */
 /*
 combined modules:
@@ -911,7 +911,9 @@ KISSY.add('dom/base/create', [
     // https://github.com/kissyteam/kissy/issues/422
     creators.option = creators.optgroup = function (html, ownerDoc) {
         return Dom.create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
-    };    // help compression
+    };    // html() need
+    // html() need
+    creatorsMap.option = creatorsMap.optgroup = 1;    // help compression
     // help compression
     function getElementsByTagName(el, tag) {
         return el.getElementsByTagName(tag);

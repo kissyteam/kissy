@@ -62,6 +62,9 @@ creators.option = creators.optgroup = function (html, ownerDoc) {
     return Dom.create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
 };
 
+// html() need
+creatorsMap.option = creatorsMap.optgroup = 1;
+
 // help compression
 function getElementsByTagName(el, tag) {
     return el.getElementsByTagName(tag);
@@ -268,7 +271,6 @@ util.mix(Dom,
                 // fix #103,some html element can not be set through innerHTML
                 if (!htmlString.match(/<(?:script|style|link)/i) &&
                     (!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[(htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase()]) {
-
                     try {
                         for (i = els.length - 1; i >= 0; i--) {
                             elem = els[i];
@@ -282,7 +284,6 @@ util.mix(Dom,
                         // a <= '<a>'
                         // a.innerHTML='<p>1</p>';
                     }
-
                 }
 
                 if (!success) {
