@@ -125,6 +125,17 @@
                 rhs: ['conditionalOrExpression']
             },
             {
+            },
+            }
+            {
+                symbol: 'listExpression',
+                rhs: ['conditionalOrExpression']
+            },
+            {
+                symbol: 'listExpression',
+                rhs: ['conditionalOrExpression', 'COMMA','listExpression']
+            },
+            {
                 symbol: 'conditionalOrExpression',
                 rhs: ['conditionalAndExpression']
             },
@@ -334,7 +345,7 @@
             },
             {
                 symbol: 'idSegments',
-                rhs: ['idSegments', 'REF_START', 'expression', 'REF_END'],
+                rhs: ['idSegments', 'SQUARE_BRACKET_START', 'expression', 'SQUARE_BRACKET_END'],
                 action: function () {
                     this.$1.push(this.$3);
                 }
@@ -618,12 +629,12 @@
                 {
                     state: codeSection,
                     regexp: /^\[/,
-                    token: 'REF_START'
+                    token: 'SQUARE_BRACKET_START'
                 },
                 {
                     state: codeSection,
                     regexp: /^\]/,
-                    token: 'REF_END'
+                    token: 'SQUARE_BRACKET_END'
                 },
                 {
                     state: codeSection,

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 14 12:41
 */
 /*
 combined modules:
@@ -67,11 +67,13 @@ KISSY.add('swf', [
         constructor: function (config) {
             var self = this;
             self.callSuper(config);
-            var expressInstall = self.get('expressInstall'), swf, html, id, htmlMode = self.get('htmlMode'), flashVars, params = self.get('params'), attrs = self.get('attrs'), doc = self.get('document'), placeHolder = Dom.create('<span>', undefined, doc), elBefore = self.get('elBefore'), installedSrc = self.get('src'), hasNoId = !('id' in attrs), idRegExp, version = self.get('version');
-            id = attrs.id = attrs.id || util.guid('ks-swf-');
-            if (hasNoId) {
-                idRegExp = new RegExp('\\s+id\\s*=\\s*[\'"]?' + util.escapeRegExp(id) + '[\'"]?', 'i');
-            }    // 2. flash 插件没有安装
+            var expressInstall = self.get('expressInstall'), swf, html, id, htmlMode = self.get('htmlMode'), flashVars, params = self.get('params'), attrs = self.get('attrs'), doc = self.get('document'), placeHolder = Dom.create('<span>', undefined, doc), elBefore = self.get('elBefore'), installedSrc = self.get('src'), idRegExp, version = self.get('version');    // https://github.com/kissyteam/kissy/issues/663
+                                                                                                                                                                                                                                                                                                                                                                             // must has a id
+                                                                                                                                                                                                                                                                                                                                                                             // or else can not callSWF function in ie6-10
+            // https://github.com/kissyteam/kissy/issues/663
+            // must has a id
+            // or else can not callSWF function in ie6-10
+            id = attrs.id = attrs.id || util.guid('ks-swf-' + util.now() + '-');    // 2. flash 插件没有安装
             // 2. flash 插件没有安装
             if (!fpv()) {
                 self.set('status', SWF.Status.NOT_INSTALLED);
@@ -125,9 +127,6 @@ KISSY.add('swf', [
                 }
             } else {
                 self.set('swfObject', swf);
-            }
-            if (hasNoId) {
-                Dom.removeAttr(swf, 'id');
             }    // bug fix: 重新获取对象,否则还是老对象.
                  // 如 入口为 div 如果不重新获取则仍然是 div longzang | 2010/8/9
             // bug fix: 重新获取对象,否则还是老对象.

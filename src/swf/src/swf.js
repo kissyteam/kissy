@@ -74,15 +74,13 @@ SWF = Attribute.extend({
             placeHolder = Dom.create('<span>', undefined, doc),
             elBefore = self.get('elBefore'),
             installedSrc = self.get('src'),
-            hasNoId = !('id' in attrs),
             idRegExp,
             version = self.get('version');
 
-        id = attrs.id = attrs.id || util.guid('ks-swf-');
-
-        if (hasNoId) {
-            idRegExp = new RegExp('\\s+id\\s*=\\s*[\'"]?' + util.escapeRegExp(id) + '[\'"]?', 'i');
-        }
+        // https://github.com/kissyteam/kissy/issues/663
+        // must has a id
+        // or else can not callSWF function in ie6-10
+        id = attrs.id = attrs.id || util.guid('ks-swf-' + (util.now()) + '-');
 
         // 2. flash 插件没有安装
         if (!fpv()) {
@@ -152,10 +150,6 @@ SWF = Attribute.extend({
             self.set('swfObject', swf);
         }
 
-        if (hasNoId) {
-            Dom.removeAttr(swf, 'id');
-        }
-
         // bug fix: 重新获取对象,否则还是老对象.
         // 如 入口为 div 如果不重新获取则仍然是 div longzang | 2010/8/9
         self.set('el', swf);
@@ -171,8 +165,7 @@ SWF = Attribute.extend({
      */
     callSWF: function (func, args) {
         var swf = this.get('el'),
-            ret,
-            params;
+            ret, params;
         args = args || [];
         try {
             if (swf[func]) {

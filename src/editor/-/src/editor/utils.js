@@ -33,7 +33,7 @@ var TRUE = true,
             }
             if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
                 url = url.replace(/^theme\//, 'theme/assets/');
-                return require.toUrl('../../' + url);
+                return require.toUrl('../../../' + url);
             }
             return require.toUrl('./' + url);
         },
