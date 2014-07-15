@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 14 17:59
+build time: Jul 15 19:08
 */
 /*
 combined modules:
@@ -168,17 +168,17 @@ KISSY.add('xtemplate/compiler', [
     parser.yy = require('./compiler/ast');
     var nativeCode = [];
     var substitute = util.substitute;
+    var each = util.each;
     var nativeCommands = XTemplateRuntime.nativeCommands;
     var nativeUtils = XTemplateRuntime.utils;
     var globals = {};
     globals['undefined'] = globals['null'] = globals['true'] = globals['false'] = 1;
-    var t;
-    for (t in nativeUtils) {
-        nativeCode.push(substitute(DECLARE_UTILS, { name: t }));
-    }
-    for (t in nativeCommands) {
-        nativeCode.push(substitute(DECLARE_NATIVE_COMMANDS, { name: t }));
-    }
+    each(nativeUtils, function (v, name) {
+        nativeCode.push(substitute(DECLARE_UTILS, { name: name }));
+    });
+    each(nativeCommands, function (v, name) {
+        nativeCode.push(substitute(DECLARE_NATIVE_COMMANDS, { name: name }));
+    });
     nativeCode = 'var ' + nativeCode.join(',\n') + ';';
     var doubleReg = /\\*"/g, singleReg = /\\*'/g, arrayPush = [].push, uuid = 0;
     function isGlobalId(node) {
@@ -308,7 +308,7 @@ KISSY.add('xtemplate/compiler', [
         if (params) {
             var paramsName = guid('params');
             source.push('var ' + paramsName + ' = [];');
-            util.each(params, function (param) {
+            each(params, function (param) {
                 var nextIdNameCode = xtplAstToJs[param.type](param);
                 pushToArray(source, nextIdNameCode.source);
                 source.push(paramsName + '.push(' + nextIdNameCode.exp + ');');
@@ -318,7 +318,7 @@ KISSY.add('xtemplate/compiler', [
         if (hash) {
             var hashName = guid('hash');
             source.push('var ' + hashName + ' = {};');
-            util.each(hash.value, function (v, key) {
+            each(hash.value, function (v, key) {
                 var nextIdNameCode = xtplAstToJs[v.type](v);
                 pushToArray(source, nextIdNameCode.source);
                 source.push(hashName + '[' + wrapByDoubleQuote(key) + '] = ' + nextIdNameCode.exp + ';');
@@ -331,15 +331,70 @@ KISSY.add('xtemplate/compiler', [
         };
     }
     function generateFunction(xtplAstToJs, func, escape, block) {
-        var source = [], functionConfigCode, optionName, id = func.id, idName, idString = id.string, idParts = id.parts, lineNumber = id.lineNumber;
+        var source = [];
+        var functionConfigCode, optionName, idName;
+        var id = func.id;
+        var idString = id.string;
+        var idParts = id.parts;
+        var lineNumber = id.lineNumber;
+        var i;
+        if (idString === 'elseif') {
+            return {
+                exp: '',
+                source: []
+            };
+        }
         functionConfigCode = genOptionFromFunction(func, escape);
         optionName = functionConfigCode.exp;
         pushToArray(source, functionConfigCode.source);
         if (block) {
             var programNode = block.program;
-            source.push(optionName + '.fn = ' + genFunction(programNode.statements).join('\n') + ';');
-            if (programNode.inverse) {
-                source.push(optionName + '.inverse = ' + genFunction(programNode.inverse).join('\n') + ';');
+            var inverse = programNode.inverse;
+            var elseIfs = [];
+            var elseIf, functionValue, statement;
+            var statements = programNode.statements;
+            var thenStatements = [];
+            for (i = 0; i < statements.length; i++) {
+                statement = statements[i];
+                if (statement.type === 'expressionStatement' && (functionValue = statement.value) && functionValue.type === 'function' && functionValue.id.string === 'elseif') {
+                    if (elseIf) {
+                        elseIfs.push(elseIf);
+                    }
+                    elseIf = {
+                        condition: functionValue.params[0],
+                        statements: []
+                    };
+                } else if (elseIf) {
+                    elseIf.statements.push(statement);
+                } else {
+                    thenStatements.push(statement);
+                }
+            }
+            if (elseIf) {
+                elseIfs.push(elseIf);
+            }    // find elseIfs
+            // find elseIfs
+            source.push(optionName + '.fn = ' + genFunction(thenStatements).join('\n') + ';');
+            if (inverse) {
+                source.push(optionName + '.inverse = ' + genFunction(inverse).join('\n') + ';');
+            }
+            if (elseIfs.length) {
+                var elseIfsVariable = guid('elseIfs');
+                source.push('var ' + elseIfsVariable + ' = []');
+                for (i = 0; i < elseIfs.length; i++) {
+                    var elseIfStatement = elseIfs[i];
+                    var elseIfVariable = guid('elseIf');
+                    source.push('var ' + elseIfVariable + ' = {}');
+                    var condition = elseIfStatement.condition;
+                    var conditionCode = xtplAstToJs[condition.type](condition);
+                    source.push(elseIfVariable + '.test = function(scope){');
+                    pushToArray(source, conditionCode.source);
+                    source.push('return (' + conditionCode.exp + ');');
+                    source.push('};');
+                    source.push(elseIfVariable + '.fn = ' + genFunction(elseIfStatement.statements).join('\n') + ';');
+                    source.push(elseIfsVariable + '.push(' + elseIfVariable + ');');
+                }
+                source.push(optionName + '.elseIfs = ' + elseIfsVariable + ';');
             }
         }
         if (xtplAstToJs.isModule) {
@@ -1857,65 +1912,65 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                     },
                     '3': {
                         'am': 18,
-                        'ao': 19,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'an': 19,
+                        'ao': 20,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '5': { 'al': 30 },
                     '11': {
                         'am': 18,
+                        'an': 19,
                         'ao': 35,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '12': {
                         'am': 18,
+                        'an': 19,
                         'bb': 36,
-                        'bc': 27,
-                        'an': 28,
+                        'bc': 28,
                         'be': 10
                     },
                     '13': {
                         'am': 18,
+                        'an': 19,
                         'bb': 37,
-                        'bc': 27,
-                        'an': 28,
+                        'bc': 28,
                         'be': 10
                     },
                     '16': {
                         'am': 18,
+                        'an': 19,
                         'ao': 38,
+                        'as': 21,
                         'at': 39,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '17': {
-                        'av': 42,
-                        'au': 43
+                        'au': 42,
+                        'av': 43
                     },
                     '29': {
                         'ak': 58,
@@ -1928,193 +1983,193 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                     },
                     '32': {
                         'am': 18,
-                        'ap': 62,
-                        'ar': 63,
-                        'ao': 64,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'aq': 65,
+                        'an': 19,
+                        'ao': 62,
+                        'ap': 63,
+                        'aq': 64,
+                        'ar': 65,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'bd': 66,
-                        'an': 28,
                         'be': 10
                     },
                     '34': {
                         'am': 18,
+                        'an': 19,
                         'ao': 68,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '45': {
                         'am': 18,
+                        'an': 19,
                         'aw': 76,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '46': {
                         'am': 18,
+                        'an': 19,
                         'ax': 77,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '47': {
                         'am': 18,
+                        'an': 19,
                         'ay': 78,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '48': {
                         'am': 18,
+                        'an': 19,
                         'ay': 79,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '49': {
                         'am': 18,
+                        'an': 19,
                         'az': 80,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '50': {
                         'am': 18,
+                        'an': 19,
                         'az': 81,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '51': {
                         'am': 18,
+                        'an': 19,
                         'az': 82,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '52': {
                         'am': 18,
+                        'an': 19,
                         'az': 83,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '53': {
                         'am': 18,
+                        'an': 19,
                         'ba': 84,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '54': {
                         'am': 18,
+                        'an': 19,
                         'ba': 85,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '55': {
                         'am': 18,
+                        'an': 19,
                         'bb': 86,
-                        'bc': 27,
-                        'an': 28,
+                        'bc': 28,
                         'be': 10
                     },
                     '56': {
                         'am': 18,
+                        'an': 19,
                         'bb': 87,
-                        'bc': 27,
-                        'an': 28,
+                        'bc': 28,
                         'be': 10
                     },
                     '57': {
                         'am': 18,
+                        'an': 19,
                         'bb': 88,
-                        'bc': 27,
-                        'an': 28,
+                        'bc': 28,
                         'be': 10
                     },
                     '58': { 'al': 30 },
                     '70': {
                         'am': 18,
+                        'an': 19,
                         'ao': 96,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '72': {
                         'am': 18,
+                        'an': 19,
                         'ao': 97,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '73': {
                         'am': 18,
+                        'an': 19,
                         'ao': 98,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '74': { 'av': 99 },
@@ -2124,33 +2179,33 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                     },
                     '90': {
                         'am': 18,
+                        'an': 19,
                         'ao': 101,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'an': 28,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'be': 10
                     },
                     '91': {
                         'am': 18,
-                        'ar': 102,
-                        'ao': 64,
-                        'as': 20,
-                        'aw': 21,
-                        'ax': 22,
-                        'ay': 23,
-                        'az': 24,
-                        'ba': 25,
-                        'bb': 26,
-                        'bc': 27,
-                        'aq': 103,
+                        'an': 19,
+                        'ao': 62,
+                        'aq': 102,
+                        'ar': 103,
+                        'as': 21,
+                        'aw': 22,
+                        'ax': 23,
+                        'ay': 24,
+                        'az': 25,
+                        'ba': 26,
+                        'bb': 27,
+                        'bc': 28,
                         'bd': 66,
-                        'an': 28,
                         'be': 10
                     },
                     '93': { 'bd': 105 }
@@ -2877,12 +2932,91 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                     },
                     '19': {
                         'h': [
+                            2,
+                            49
+                        ],
+                        'k': [
+                            2,
+                            49
+                        ],
+                        'l': [
+                            2,
+                            49
+                        ],
+                        'm': [
+                            2,
+                            49
+                        ],
+                        'n': [
+                            2,
+                            49
+                        ],
+                        'o': [
+                            2,
+                            49
+                        ],
+                        'p': [
+                            2,
+                            49
+                        ],
+                        'q': [
+                            2,
+                            49
+                        ],
+                        'r': [
+                            2,
+                            49
+                        ],
+                        's': [
+                            2,
+                            49
+                        ],
+                        't': [
+                            2,
+                            49
+                        ],
+                        'u': [
+                            2,
+                            49
+                        ],
+                        'v': [
+                            2,
+                            49
+                        ],
+                        'w': [
+                            2,
+                            49
+                        ],
+                        'j': [
+                            2,
+                            49
+                        ],
+                        'ae': [
+                            2,
+                            49
+                        ],
+                        'g': [
+                            2,
+                            49
+                        ],
+                        'ah': [
+                            2,
+                            49
+                        ],
+                        'i': [
+                            1,
+                            undefined,
+                            32
+                        ]
+                    },
+                    '20': {
+                        'h': [
                             1,
                             undefined,
                             44
                         ]
                     },
-                    '20': {
+                    '21': {
                         'h': [
                             2,
                             15
@@ -2909,7 +3043,7 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             45
                         ]
                     },
-                    '21': {
+                    '22': {
                         'h': [
                             2,
                             24
@@ -2940,7 +3074,7 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             46
                         ]
                     },
-                    '22': {
+                    '23': {
                         'h': [
                             2,
                             26
@@ -2980,7 +3114,7 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             48
                         ]
                     },
-                    '23': {
+                    '24': {
                         'h': [
                             2,
                             28
@@ -3038,7 +3172,7 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             52
                         ]
                     },
-                    '24': {
+                    '25': {
                         'h': [
                             2,
                             31
@@ -3102,7 +3236,7 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             54
                         ]
                     },
-                    '25': {
+                    '26': {
                         'h': [
                             2,
                             36
@@ -3179,231 +3313,152 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             57
                         ]
                     },
-                    '26': {
-                        'h': [
-                            2,
-                            39
-                        ],
-                        'k': [
-                            2,
-                            39
-                        ],
-                        'l': [
-                            2,
-                            39
-                        ],
-                        'm': [
-                            2,
-                            39
-                        ],
-                        'n': [
-                            2,
-                            39
-                        ],
-                        'o': [
-                            2,
-                            39
-                        ],
-                        'p': [
-                            2,
-                            39
-                        ],
-                        'q': [
-                            2,
-                            39
-                        ],
-                        'r': [
-                            2,
-                            39
-                        ],
-                        's': [
-                            2,
-                            39
-                        ],
-                        't': [
-                            2,
-                            39
-                        ],
-                        'u': [
-                            2,
-                            39
-                        ],
-                        'v': [
-                            2,
-                            39
-                        ],
-                        'w': [
-                            2,
-                            39
-                        ],
-                        'j': [
-                            2,
-                            39
-                        ],
-                        'ae': [
-                            2,
-                            39
-                        ],
-                        'g': [
-                            2,
-                            39
-                        ],
-                        'ah': [
-                            2,
-                            39
-                        ]
-                    },
                     '27': {
                         'h': [
                             2,
-                            45
+                            39
                         ],
                         'k': [
                             2,
-                            45
+                            39
                         ],
                         'l': [
                             2,
-                            45
+                            39
                         ],
                         'm': [
                             2,
-                            45
+                            39
                         ],
                         'n': [
                             2,
-                            45
+                            39
                         ],
                         'o': [
                             2,
-                            45
+                            39
                         ],
                         'p': [
                             2,
-                            45
+                            39
                         ],
                         'q': [
                             2,
-                            45
+                            39
                         ],
                         'r': [
                             2,
-                            45
+                            39
                         ],
                         's': [
                             2,
-                            45
+                            39
                         ],
                         't': [
                             2,
-                            45
+                            39
                         ],
                         'u': [
                             2,
-                            45
+                            39
                         ],
                         'v': [
                             2,
-                            45
+                            39
                         ],
                         'w': [
                             2,
-                            45
+                            39
                         ],
                         'j': [
                             2,
-                            45
+                            39
                         ],
                         'ae': [
                             2,
-                            45
+                            39
                         ],
                         'g': [
                             2,
-                            45
+                            39
                         ],
                         'ah': [
                             2,
-                            45
+                            39
                         ]
                     },
                     '28': {
                         'h': [
                             2,
-                            49
+                            45
                         ],
                         'k': [
                             2,
-                            49
+                            45
                         ],
                         'l': [
                             2,
-                            49
+                            45
                         ],
                         'm': [
                             2,
-                            49
+                            45
                         ],
                         'n': [
                             2,
-                            49
+                            45
                         ],
                         'o': [
                             2,
-                            49
+                            45
                         ],
                         'p': [
                             2,
-                            49
+                            45
                         ],
                         'q': [
                             2,
-                            49
+                            45
                         ],
                         'r': [
                             2,
-                            49
+                            45
                         ],
                         's': [
                             2,
-                            49
+                            45
                         ],
                         't': [
                             2,
-                            49
+                            45
                         ],
                         'u': [
                             2,
-                            49
+                            45
                         ],
                         'v': [
                             2,
-                            49
+                            45
                         ],
                         'w': [
                             2,
-                            49
+                            45
                         ],
                         'j': [
                             2,
-                            49
+                            45
                         ],
                         'ae': [
                             2,
-                            49
+                            45
                         ],
                         'g': [
                             2,
-                            49
+                            45
                         ],
                         'ah': [
                             2,
-                            49
-                        ],
-                        'i': [
-                            1,
-                            undefined,
-                            32
+                            45
                         ]
                     },
                     '29': {
@@ -3754,16 +3809,6 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                         ]
                     },
                     '42': {
-                        'ah': [
-                            2,
-                            20
-                        ],
-                        'g': [
-                            2,
-                            20
-                        ]
-                    },
-                    '43': {
                         'g': [
                             1,
                             undefined,
@@ -3773,6 +3818,16 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             1,
                             undefined,
                             75
+                        ]
+                    },
+                    '43': {
+                        'ah': [
+                            2,
+                            20
+                        ],
+                        'g': [
+                            2,
+                            20
                         ]
                     },
                     '44': {
@@ -4404,6 +4459,16 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                     },
                     '62': {
                         'g': [
+                            2,
+                            14
+                        ],
+                        'j': [
+                            2,
+                            14
+                        ]
+                    },
+                    '63': {
+                        'g': [
                             1,
                             undefined,
                             91
@@ -4414,27 +4479,7 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             92
                         ]
                     },
-                    '63': {
-                        'g': [
-                            2,
-                            13
-                        ],
-                        'j': [
-                            2,
-                            13
-                        ]
-                    },
                     '64': {
-                        'g': [
-                            2,
-                            14
-                        ],
-                        'j': [
-                            2,
-                            14
-                        ]
-                    },
-                    '65': {
                         'g': [
                             1,
                             undefined,
@@ -4444,6 +4489,16 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             1,
                             undefined,
                             94
+                        ]
+                    },
+                    '65': {
+                        'g': [
+                            2,
+                            13
+                        ],
+                        'j': [
+                            2,
+                            13
                         ]
                     },
                     '66': {
@@ -6015,16 +6070,6 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                     },
                     '102': {
                         'g': [
-                            2,
-                            12
-                        ],
-                        'j': [
-                            2,
-                            12
-                        ]
-                    },
-                    '103': {
-                        'g': [
                             1,
                             undefined,
                             93
@@ -6033,6 +6078,16 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                             1,
                             undefined,
                             107
+                        ]
+                    },
+                    '103': {
+                        'g': [
+                            2,
+                            12
+                        ],
+                        'j': [
+                            2,
+                            12
                         ]
                     },
                     '104': {
@@ -6155,9 +6210,19 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                 }
             };
             parser.parse = function parse(input, filename) {
-                var self = this, lexer = self.lexer, state, symbol, action, table = self.table, gotos = table.gotos, tableAction = table.action, productions = self.productions, valueStack = [null],
-                    // for debug info
-                    prefix = filename ? 'in file: ' + filename + ' ' : '', stack = [0];
+                var state, symbol, ret, action, $$;
+                var self = this;
+                var lexer = self.lexer;
+                var table = self.table;
+                var gotos = table.gotos;
+                var tableAction = table.action;
+                var productions = self.productions;
+                var valueStack = [null];    // for debug info
+                                            // for debug info
+                // for debug info
+                // for debug info
+                var prefix = filename ? 'in file: ' + filename + ' ' : '';
+                var stack = [0];
                 lexer.resetInput(input);
                 while (1) {
                     // retrieve state number from top of stack
@@ -6172,19 +6237,20 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                         action = null;
                     }
                     if (!action) {
-                        var expected = [], error;    //#JSCOVERAGE_IF
-                                                     //#JSCOVERAGE_IF
+                        var expected = [];
+                        var error;    //#JSCOVERAGE_IF
+                                      //#JSCOVERAGE_IF
                         //#JSCOVERAGE_IF
                         //#JSCOVERAGE_IF
                         if (tableAction[state]) {
-                            for (var symbolForState in tableAction[state]) {
-                                action = tableAction[state][symbolForState][GrammarConst.TYPE_INDEX];
+                            each(tableAction[state], function (v, symbolForState) {
+                                action = v[GrammarConst.TYPE_INDEX];
                                 var map = [];
                                 map[GrammarConst.SHIFT_TYPE] = 'shift';
                                 map[GrammarConst.REDUCE_TYPE] = 'reduce';
                                 map[GrammarConst.ACCEPT_TYPE] = 'accept';
                                 expected.push(map[action] + ':' + self.lexer.mapReverseSymbol(symbolForState));
-                            }
+                            });
                         }
                         error = prefix + 'syntax error at line ' + lexer.lineNumber + ':\n' + lexer.showDebugInfo() + '\n' + 'expect ' + expected.join(', ');
                         throw new Error(error);
@@ -6203,8 +6269,14 @@ KISSY.add('xtemplate/compiler/parser', [], function (S, require, exports, module
                         symbol = null;
                         break;
                     case GrammarConst.REDUCE_TYPE:
-                        var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];    // default to $$ = $1
-                                                                                                                                                                                                                                                                                                                                     // default to $$ = $1
+                        var production = productions[action[GrammarConst.PRODUCTION_INDEX]];
+                        var reducedSymbol = production.symbol || production[0];
+                        var reducedAction = production.action || production[2];
+                        var reducedRhs = production.rhs || production[1];
+                        var len = reducedRhs.length;
+                        var i = 0;
+                        $$ = valueStack[valueStack.length - len];    // default to $$ = $1
+                                                                     // default to $$ = $1
                         // default to $$ = $1
                         // default to $$ = $1
                         ret = undefined;

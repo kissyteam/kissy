@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 4 10:51
+build time: Jul 15 19:08
 */
 /*
 combined modules:
@@ -392,15 +392,32 @@ KISSY.add('xtemplate/runtime/commands', [
                 var params = option.params;
                 var param0 = params[0];
                 if (param0) {
-                    if (option.fn) {
-                        buffer = option.fn(scope, buffer);
+                    var fn = option.fn;
+                    if (fn) {
+                        buffer = fn(scope, buffer);
                     }
-                } else if (option.inverse) {
-                    buffer = option.inverse(scope, buffer);
+                } else {
+                    var matchElseIf = false;
+                    var elseIfs = option.elseIfs;
+                    var inverse = option.inverse;
+                    if (elseIfs) {
+                        for (var i = 0, len = elseIfs.length; i < len; i++) {
+                            var elseIf = elseIfs[i];
+                            matchElseIf = elseIf.test(scope);
+                            if (matchElseIf) {
+                                buffer = elseIf.fn(scope, buffer);
+                                break;
+                            }
+                        }
+                    }
+                    if (!matchElseIf && inverse) {
+                        buffer = inverse(scope, buffer);
+                    }
                 }
                 return buffer;
             },
             // lhs does not support property reference
+            // only create or set at current scope
             // {{set( x[1] = 2 )}}
             set: function (scope, option, buffer) {
                 scope.mix(option.hash);

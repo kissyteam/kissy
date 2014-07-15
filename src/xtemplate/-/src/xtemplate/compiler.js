@@ -49,6 +49,7 @@ var parser = require('./compiler/parser');
 parser.yy = require('./compiler/ast');
 var nativeCode = [];
 var substitute = util.substitute;
+var each = util.each;
 var nativeCommands = XTemplateRuntime.nativeCommands;
 var nativeUtils = XTemplateRuntime.utils;
 
@@ -56,19 +57,17 @@ var globals = {
 };
 globals['undefined'] = globals['null'] = globals['true'] = globals['false'] = 1;
 
-var t;
-
-for (t in nativeUtils) {
+each(nativeUtils, function (v, name) {
     nativeCode.push(substitute(DECLARE_UTILS, {
-        name: t
+        name: name
     }));
-}
+});
 
-for (t in nativeCommands) {
+each(nativeCommands, function (v, name) {
     nativeCode.push(substitute(DECLARE_NATIVE_COMMANDS, {
-        name: t
+        name: name
     }));
-}
+});
 
 nativeCode = 'var ' + nativeCode.join(',\n') + ';';
 
@@ -228,7 +227,7 @@ function genOptionFromFunction(func, escape) {
     if (params) {
         var paramsName = guid('params');
         source.push('var ' + paramsName + ' = [];');
-        util.each(params, function (param) {
+        each(params, function (param) {
             var nextIdNameCode = xtplAstToJs[param.type](param);
             pushToArray(source, nextIdNameCode.source);
             source.push(paramsName + '.push(' + nextIdNameCode.exp + ');');
@@ -239,7 +238,7 @@ function genOptionFromFunction(func, escape) {
     if (hash) {
         var hashName = guid('hash');
         source.push('var ' + hashName + ' = {};');
-        util.each(hash.value, function (v, key) {
+        each(hash.value, function (v, key) {
             var nextIdNameCode = xtplAstToJs[v.type](v);
             pushToArray(source, nextIdNameCode.source);
             source.push(hashName + '[' + wrapByDoubleQuote(key) + '] = ' + nextIdNameCode.exp + ';');
@@ -254,24 +253,74 @@ function genOptionFromFunction(func, escape) {
 }
 
 function generateFunction(xtplAstToJs, func, escape, block) {
-    var source = [],
-        functionConfigCode,
-        optionName,
-        id = func.id,
-        idName,
-        idString = id.string,
-        idParts = id.parts,
-        lineNumber = id.lineNumber;
-
+    var source = [];
+    var functionConfigCode, optionName, idName;
+    var id = func.id;
+    var idString = id.string;
+    var idParts = id.parts;
+    var lineNumber = id.lineNumber;
+    var i;
+    if (idString === 'elseif') {
+        return {
+            exp: '',
+            source: []
+        };
+    }
     functionConfigCode = genOptionFromFunction(func, escape);
     optionName = functionConfigCode.exp;
     pushToArray(source, functionConfigCode.source);
 
     if (block) {
         var programNode = block.program;
-        source.push(optionName + '.fn = ' + genFunction(programNode.statements).join('\n') + ';');
-        if (programNode.inverse) {
-            source.push(optionName + '.inverse = ' + genFunction(programNode.inverse).join('\n') + ';');
+        var inverse = programNode.inverse;
+        var elseIfs = [];
+        var elseIf, functionValue, statement;
+        var statements = programNode.statements;
+        var thenStatements = [];
+        for (i = 0; i < statements.length; i++) {
+            statement = statements[i];
+            if (statement.type === 'expressionStatement' &&
+                (functionValue = statement.value) &&
+                functionValue.type === 'function' &&
+                functionValue.id.string === 'elseif') {
+                if (elseIf) {
+                    elseIfs.push(elseIf);
+                }
+                elseIf = {
+                    condition: functionValue.params[0],
+                    statements: []
+                };
+            } else if (elseIf) {
+                elseIf.statements.push(statement);
+            } else {
+                thenStatements.push(statement);
+            }
+        }
+        if (elseIf) {
+            elseIfs.push(elseIf);
+        }
+        // find elseIfs
+        source.push(optionName + '.fn = ' + genFunction(thenStatements).join('\n') + ';');
+        if (inverse) {
+            source.push(optionName + '.inverse = ' + genFunction(inverse).join('\n') + ';');
+        }
+        if (elseIfs.length) {
+            var elseIfsVariable = guid('elseIfs');
+            source.push('var ' + elseIfsVariable + ' = []');
+            for (i = 0; i < elseIfs.length; i++) {
+                var elseIfStatement = elseIfs[i];
+                var elseIfVariable = guid('elseIf');
+                source.push('var ' + elseIfVariable + ' = {}');
+                var condition = elseIfStatement.condition;
+                var conditionCode = xtplAstToJs[condition.type](condition);
+                source.push(elseIfVariable + '.test = function(scope){');
+                pushToArray(source, conditionCode.source);
+                source.push('return (' + conditionCode.exp + ');');
+                source.push('};');
+                source.push(elseIfVariable + '.fn = ' + genFunction(elseIfStatement.statements).join('\n') + ';');
+                source.push(elseIfsVariable + '.push(' + elseIfVariable + ');');
+            }
+            source.push(optionName + '.elseIfs = ' + elseIfsVariable + ';');
         }
     }
 
