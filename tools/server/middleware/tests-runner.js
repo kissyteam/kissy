@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
         next();
         return;
     }
-    var componentName = m[1].slice(prefix.length).replace(/sub-modules\//g, '');
+    var componentName = m[1].slice(prefix.length).replace(/\/-(?=\/|$)/g, '');
     res.render('runner', {
         component: componentName,
         query: req.query
