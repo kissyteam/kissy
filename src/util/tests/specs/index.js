@@ -2,9 +2,12 @@ var util = require('util');
 var UA = require('ua');
 /*jshint quotmark:false*/
 describe('util', function () {
-    var host = S.Env.host,
-        doc = host.document,
-        web = host.setInterval;
+    var host = typeof window !== undefined ? window : '';
+    if (!host) {
+        return;
+    }
+    var doc = host.document;
+    var web = host.setInterval;
 
     function fn() {
     }
@@ -1048,13 +1051,13 @@ describe('util', function () {
     describe("util.ready", function () {
         it('util.ready simple works', function () {
             var r;
-            util.ready(function (s) {
-                r = s;
+            util.ready(function () {
+                r = 1;
             });
 
             waits(100);
             runs(function () {
-                expect(r).toBe(S);
+                expect(r).toBe(1);
             });
         });
 
@@ -1066,13 +1069,13 @@ describe('util', function () {
                     throw "1";
                 });
 
-                util.ready(function (s) {
-                    r = s;
+                util.ready(function () {
+                    r = 1;
                 });
 
                 waits(100);
                 runs(function () {
-                    expect(r).toBe(S);
+                    expect(r).toBe(1);
                 });
             });
         }

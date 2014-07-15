@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:55
+build time: Jul 15 20:52
 */
 /*
 combined modules:
@@ -919,9 +919,8 @@ KISSY.add('util/object', [
      * when naming packages. Reserved words may work in some browsers and not others.
      *
      *      @example
-     *      util.namespace('KISSY.app'); // returns KISSY.app
      *      util.namespace('app.Shop',a); // returns a.app.Shop
-     *      util.namespace('TB.app.Shop'); // returns TB.app.Shop
+     *      util.namespace('app.Shop'); // returns app.Shop
      *
      * @return {Object}  A reference to the last namespace object created
      * @member KISSY
@@ -1473,13 +1472,16 @@ KISSY.add('util/web', [
      */
         ready: function (fn) {
             if (domReady) {
-                try {
-                    fn(KISSY);
-                } catch (e) {
-                    LoggerManager.log(e.stack || e, 'error');
-                    setTimeout(function () {
-                        throw e;
-                    }, 0);
+                if ('@DEBUG@') {
+                    fn();
+                } else {
+                    try {
+                        fn();
+                    } catch (e) {
+                        setTimeout(function () {
+                            throw e;
+                        }, 0);
+                    }
                 }
             } else {
                 callbacks.push(fn);
@@ -1519,14 +1521,17 @@ KISSY.add('util/web', [
         }
         domReady = 1;
         for (var i = 0; i < callbacks.length; i++) {
-            try {
-                callbacks[i](KISSY);
-            } catch (e) {
-                LoggerManager.log(e.stack || e, 'error');    /*jshint loopfunc:true*/
-                /*jshint loopfunc:true*/
-                setTimeout(function () {
-                    throw e;
-                }, 0);
+            if ('@DEBUG@') {
+                callbacks[i]();
+            } else {
+                try {
+                    callbacks[i]();
+                } catch (e) {
+                    /*jshint loopfunc:true*/
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
             }
         }
     }    //  Binds ready events.

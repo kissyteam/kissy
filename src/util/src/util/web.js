@@ -110,10 +110,10 @@ util.mix(util, {
     ready: function (fn) {
         if (domReady) {
             if ('@DEBUG@') {
-                fn(KISSY);
+                fn();
             } else {
                 try {
-                    fn(KISSY);
+                    fn();
                 } catch (e) {
                     setTimeout(function () {
                         throw e;
@@ -162,10 +162,10 @@ function fireReady() {
     domReady = 1;
     for (var i = 0; i < callbacks.length; i++) {
         if ('@DEBUG@') {
-            callbacks[i](KISSY);
+            callbacks[i]();
         } else {
             try {
-                callbacks[i](KISSY);
+                callbacks[i]();
             } catch (e) {
                 /*jshint loopfunc:true*/
                 setTimeout(function () {

@@ -389,9 +389,8 @@ mix(util, {
      * when naming packages. Reserved words may work in some browsers and not others.
      *
      *      @example
-     *      util.namespace('KISSY.app'); // returns KISSY.app
      *      util.namespace('app.Shop',a); // returns a.app.Shop
-     *      util.namespace('TB.app.Shop'); // returns TB.app.Shop
+     *      util.namespace('app.Shop'); // returns app.Shop
      *
      * @return {Object}  A reference to the last namespace object created
      * @member KISSY
