@@ -47,9 +47,10 @@ module.exports = Container.extend([
     },
 
     _onSetVisible: function (v, e) {
-        this.callSuper(v, e);
+        var self = this;
+        self.callSuper(v, e);
         var highlightedItem;
-        if (!v && (highlightedItem = this.get('highlightedItem'))) {
+        if (!v && (highlightedItem = self.get('highlightedItem'))) {
             highlightedItem.set('highlighted', false);
         }
     },
@@ -59,19 +60,21 @@ module.exports = Container.extend([
     },
 
     handleMouseEnterInternal: function (e) {
-        this.callSuper(e);
-        var rootMenu = this.getRootMenu();
+        var self = this;
+        self.callSuper(e);
+        var rootMenu = self.getRootMenu();
         // maybe called by popupmenu, no submenu
-        if (rootMenu !== this && rootMenu._popupAutoHideTimer) {
+        if (rootMenu !== self && rootMenu._popupAutoHideTimer) {
             clearTimeout(rootMenu._popupAutoHideTimer);
             rootMenu._popupAutoHideTimer = null;
         }
     },
 
     handleBlurInternal: function (e) {
-        this.callSuper(e);
+        var self = this;
+        self.callSuper(e);
         var highlightedItem;
-        if ((highlightedItem = this.get('highlightedItem'))) {
+        if ((highlightedItem = self.get('highlightedItem'))) {
             highlightedItem.set('highlighted', false);
         }
     },
@@ -79,16 +82,16 @@ module.exports = Container.extend([
     //dir : -1 ,+1
     //skip disabled items
     _getNextEnabledHighlighted: function (index, dir) {
-        var children = this.get('children'),
-            len = children.length,
-            o = index;
+        var children = this.get('children');
+        var len = children.length;
+        var cur = index;
         do {
-            var c = children[index];
+            var c = children[cur];
             if (!c.get('disabled') && (c.get('visible') !== false)) {
-                return children[index];
+                return children[cur];
             }
-            index = (index + dir + len) % len;
-        } while (index !== o);
+            cur = (cur + dir + len) % len;
+        } while (cur !== index);
         return undefined;
     },
 
@@ -108,7 +111,6 @@ module.exports = Container.extend([
      */
     handleKeyDownInternal: function (e) {
         var self = this;
-
         // Give the highlighted control the chance to handle the key event.
         var highlightedItem = self.get('highlightedItem');
 
@@ -117,8 +119,8 @@ module.exports = Container.extend([
             return true;
         }
 
-        var children = self.get('children'),
-            len = children.length;
+        var children = self.get('children');
+        var len = children.length;
 
         if (len === 0) {
             return undefined;
@@ -185,7 +187,6 @@ module.exports = Container.extend([
      */
     containsElement: function (element) {
         var self = this;
-
         var $el = self.$el;
 
         // 隐藏当然不包含了

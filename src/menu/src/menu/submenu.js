@@ -8,9 +8,8 @@ var util = require('util');
 var SubMenuTpl = require('./submenu-xtpl');
 var MenuItem = require('./menuitem');
 var ContentBox = require('component/extension/content-box');
-
-var KeyCode = require('node').Event.KeyCode,
-    MENU_DELAY = 0.15;
+var KeyCode = require('node').Event.KeyCode;
+var MENU_DELAY = 0.15;
 
 function afterHighlightedChange(e) {
     var target = e.target,
@@ -37,13 +36,12 @@ module.exports = MenuItem.extend([ContentBox], {
         isSubMenu: 1,
 
         decorateDom: function (el) {
-            var self = this,
-                prefixCls = self.get('prefixCls');
+            var self = this;
+            var prefixCls = self.get('prefixCls');
             var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
             var docBody = popupMenuEl[0].ownerDocument.body;
             docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
-            var PopupMenuClass =
-                this.getComponentConstructorByNode(prefixCls, popupMenuEl);
+            var PopupMenuClass = self.getComponentConstructorByNode(prefixCls, popupMenuEl);
             self.setInternal('menu', new PopupMenuClass({
                 srcNode: popupMenuEl,
                 prefixCls: prefixCls
@@ -87,8 +85,7 @@ module.exports = MenuItem.extend([ContentBox], {
             var menu = self.get('menu');
             if (menu.get('visible')) {
                 // 延迟 highlighted
-                self._dismissTimer = util.later(hideMenu,
-                        self.get('menuDelay') * 1000, false, self);
+                self._dismissTimer = util.later(hideMenu, self.get('menuDelay') * 1000, false, self);
             }
         },
 

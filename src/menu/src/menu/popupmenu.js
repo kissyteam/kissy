@@ -27,7 +27,7 @@ module.exports = Menu.extend([
             cur = self,
             last;
         do {
-            // 沿着 menu，menuitem 链
+            // 沿着 menu menuitem 链
             last = cur;
             cur = cur.get('parent');
         } while (cur && (cur.isMenuItem || cur.isMenu));
@@ -84,7 +84,7 @@ module.exports = Menu.extend([
 
         /**
          * Whether the whole menu tree which contains popup menu hides when mouseleave.
-         * Only valid for submenu 's popupmenu.
+         * Only valid for submenu's popupmenu.
          * Defaults to: false.
          * @cfg {Boolean} autoHideOnMouseLeave
          */

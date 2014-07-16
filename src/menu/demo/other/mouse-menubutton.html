@@ -50,7 +50,7 @@
                 prefixCls:"nav-",
                 width:90,
                 // boolean，是否鼠标脱离菜单后自动隐藏全部下拉菜单
-                // autoHideOnMouseLeave:true,
+                autoHideOnMouseLeave:true,
                 children:[
                     new Menu.Item({
                         prefixCls:"nav-",
@@ -93,7 +93,7 @@
         menu.render();
 
         menu.on("click", function (e) {
-            alert(e.target.get("content"));
+            S.log(e.target.get("content"));
         });
     });
 </script>
