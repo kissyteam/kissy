@@ -26,7 +26,7 @@ var CHECK_BUFFER = ['if({name} && {name}.isBuffer){',
     '{name} = undefined;',
     '}'].join('\n');
 
-var FUNC = ['function({params}){',
+var FUNC = ['function {functionName}({params}){',
     '{body}',
     '}'].join('\n');
 
@@ -539,29 +539,30 @@ compiler = {
     },
     /**
      * get template function string
-     * @param {String} tplContent
-     * @param {String} [name] xtemplate name
-     * @param {Boolean} [isModule] whether generated function is used in module
+     * @param {String} param.content
+     * @param {String} [param.name] xtemplate name
+     * @param {Boolean} [param.isModule] whether generated function is used in module
      * @return {String}
      */
-    compileToStr: function (tplContent, name, isModule) {
-        var func = compiler.compileToJson(tplContent, name, isModule);
+    compileToStr: function (param) {
+        var func = compiler.compileToJson(param);
         return substitute(FUNC, {
+            functionName: param.functionName || '',
             params: func.params.join(','),
             body: func.source
         });
     },
     /**
      * get template function json format
-     * @param {String} [name] xtemplate name
-     * @param {String} tplContent
-     * @param {Boolean} [isModule] whether generated function is used in module
+     * @param {String} [param.name] xtemplate name
+     * @param {String} param.content
+     * @param {Boolean} [param.isModule] whether generated function is used in module
      * @return {Object}
      */
-    compileToJson: function (tplContent, name, isModule) {
-        var root = compiler.parse(tplContent, name);
+    compileToJson: function (param) {
+        var root = compiler.parse(param.content, param.name);
         uuid = 0;
-        xtplAstToJs.isModule = isModule;
+        xtplAstToJs.isModule = param.isModule;
         return genTopFunction(xtplAstToJs, root.statements);
     },
     /**
@@ -571,7 +572,10 @@ compiler = {
      * @return {Function}
      */
     compile: function (tplContent, name) {
-        var code = compiler.compileToJson(tplContent, name || guid('xtemplate'));
+        var code = compiler.compileToJson({
+            content: tplContent,
+            name: name || guid('xtemplate')
+        });
         // eval is not ok for eval("(function(){})") ie
         return Function.apply(null, code.params
             .concat(code.source + substitute(SOURCE_URL, {

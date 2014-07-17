@@ -6,8 +6,12 @@
 [![Coverage Status](https://coveralls.io/repos/kissyteam/kissy/badge.png?branch=master)](https://coveralls.io/r/kissyteam/kissy?branch=master)
 [![Stories in Ready](https://badge.waffle.io/kissyteam/kissy.png)](https://waffle.io/kissyteam/kissy)
 [![Dependency Status](https://gemnasium.com/kissyteam/kissy.png)](https://gemnasium.com/kissyteam/kissy)
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/kissy.svg)](https://saucelabs.com/u/kissy)
+[![Bower version](https://badge.fury.io/bo/kissy.svg)](http://badge.fury.io/bo/kissy)
+[![Bountysource](https://www.bountysource.com/badge/team?team_id=846&style=bounties_posted)](https://www.bountysource.com/teams/kissy/bounties?utm_source=kissy&utm_medium=shield&utm_campaign=bounties_posted)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/kissy)](https://saucelabs.com/u/kissy)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/kissy.svg)](https://saucelabs.com/u/kissy)
+
 
 
 > A Powerful JavaScript Framework

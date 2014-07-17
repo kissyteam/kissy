@@ -6,19 +6,17 @@
  */
 var program = require('commander');
 var compileModuleCode = require('../lib/xtemplate/compile-module');
-var encoding = 'utf-8';
 var util = require('../lib/util');
-var chokidar = require('chokidar');
 var fs = require('fs');
 var path = require('path');
 var fsExtra = require('fs-extra');
+var walk = require('walk');
 var cwd = process.cwd();
 
 program
     .option('-p, --folderPath <folderPath>', 'Set template folder path')
     .option('-o, --outPath [outPath]', 'Set template js path, default to folderPath')
     .option('-s, --suffix [suffix]', 'Set xtemplate file suffix', '')
-    .option('-w, --watch', 'Watch xtemplate file change')
     .option('--no-kwrap', 'Wrap code by KISSY module')
     .parse(process.argv);
 
@@ -31,14 +29,14 @@ options.forEach(function (o) {
     }
 });
 
+var encoding = 'utf-8';
 var folderPath = path.resolve(cwd, program.folderPath);
 var outPath = program.outPath;
 if (outPath) {
-    outPath = path.resolve(cwd, program.outPath);
+    outPath = path.resolve(cwd, outPath);
 }
 var suffix = program.suffix || 'xtpl';
 var kwrap = program.kwrap;
-
 var suffixReg = new RegExp('\\.' + util.escapeRegExp(suffix) + '$', 'g');
 var folderPathReg = new RegExp('^' + util.escapeRegExp(normalizeSlash(folderPath)), 'i');
 
@@ -74,16 +72,10 @@ function generate(filePath) {
     }
 }
 
-if (program.watch) {
-    var watcher = chokidar.watch(folderPath, {ignored: /^\./, persistent: true});
-    watcher.on('add', generate).on('change', generate);
-} else {
-    var walk = require('walk');
-    //noinspection JSUnresolvedFunction
-    var walker = walk.walk(folderPath);
-    walker.on('file', function (root, fileStats, next) {
-        var filePath = normalizeSlash(root + '/' + fileStats.name);
-        generate(filePath);
-        next();
-    });
-}
+
+var walker = walk.walk(folderPath);
+walker.on('file', function (root, fileStats, next) {
+    var filePath = normalizeSlash(root + '/' + fileStats.name);
+    generate(filePath);
+    next();
+});

@@ -100,9 +100,11 @@
         return js_beautify(str, opts);
     }
 
-    KISSY.use("xtemplate,node,util", function (S, XTemplate,$,util) {
+    KISSY.use("xtemplate,node,util", function (S, XTemplate, $, util) {
         $('#parse').on('click', function () {
-            var g = XTemplate.Compiler.compileToStr($('#tpl').val());
+            var g = XTemplate.Compiler.compileToStr({
+                content: $('#tpl').val()
+            });
             $('#gen').html('<pre class="brush: js;">' +
                     util.escapeHtml(js_beauty(g)) + '</pre>');
             SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
