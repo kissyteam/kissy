@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:21
+build time: Jul 18 14:01
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -1302,7 +1302,7 @@ select style for kissy editor
 .ks-editor-big-menu-button-content {
     padding-left: 5px;
 }.ks-editor-smiley-sprite {
-    background: url("http://a.tbcdn.cn/sys/wangwang/smiley/sprite.png") no-repeat scroll -1px 0 transparent;
+    background: url("//gtms02.alicdn.com/tps/i2/TB1YlqeFVXXXXbRXXXXHshc0FXX-288-235.png") no-repeat scroll -1px 0 transparent;
     height: 235px;
     width: 288px;
     margin: 5px;

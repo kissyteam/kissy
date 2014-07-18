@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:27
+build time: Jul 18 14:03
 */
 KISSY.add("json",["./json/stringify","./json/parse"],function(l,h,m,g){l=h("./json/stringify");h=h("./json/parse");g.exports={stringify:l,parse:h}});
 KISSY.add("json/stringify",["./quote","util"],function(l,h,m,g){function a(a){return 10>a?"0"+a:a}function n(k,j,b,i,c,e,f){var d=j[k];if(d&&"object"===typeof d)if("function"===typeof d.toJSON)d=d.toJSON(k);else if(d instanceof Date)d=isFinite(d.valueOf())?d.getUTCFullYear()+"-"+a(d.getUTCMonth()+1)+"-"+a(d.getUTCDate())+"T"+a(d.getUTCHours())+":"+a(d.getUTCMinutes())+":"+a(d.getUTCSeconds())+"Z":null;else if(d instanceof String||d instanceof Number||d instanceof Boolean)d=d.valueOf();void 0!==b&&

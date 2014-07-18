@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:19
+build time: Jul 18 13:55
 */
 KISSY.add("dom/base","./base/api,./base/attr,./base/class,./base/create,./base/data,./base/insertion,./base/offset,./base/style,./base/selector,./base/traversal".split(","),function(x,k,r,t){x=k("./base/api");k("./base/attr");k("./base/class");k("./base/create");k("./base/data");k("./base/insertion");k("./base/offset");k("./base/style");k("./base/selector");k("./base/traversal");t.exports=x});
 KISSY.add("dom/base/api",["util","ua"],function(x,k,r,t){var m=k("util"),e=window,j=e.document,l=k("ua"),d={ELEMENT_NODE:1,ATTRIBUTE_NODE:2,TEXT_NODE:3,CDATA_SECTION_NODE:4,ENTITY_REFERENCE_NODE:5,ENTITY_NODE:6,PROCESSING_INSTRUCTION_NODE:7,COMMENT_NODE:8,DOCUMENT_NODE:9,DOCUMENT_TYPE_NODE:10,DOCUMENT_FRAGMENT_NODE:11,NOTATION_NODE:12},h=t.exports={isCustomDomain:function(a){var a=a||e,a=h.get(a),g=a.document.domain,a=a.location.hostname;return g!==a&&g!=="["+a+"]"},getEmptyIframeSrc:function(a){a=

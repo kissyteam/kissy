@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:18
+build time: Jul 18 13:54
 */
 .ks-date-picker {
   box-shadow: 1px 1px 0 #ccc;
@@ -30,14 +30,14 @@ build time: Jul 18 12:18
 .ks-date-picker-prev-year-btn,
 .ks-date-picker-next-year-btn,
 .ks-date-picker-header {
-  background-image: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+  background-image: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-ie6 .ks-date-picker-prev-month-btn,
 .ks-ie6 .ks-date-picker-next-month-btn,
 .ks-ie6 .ks-date-picker-prev-year-btn,
 .ks-ie6 .ks-date-picker-next-year-btn,
 .ks-ie6 .ks-date-picker-header {
-  background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
+  background-image: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-date-picker-header {
   background-repeat: repeat-x;
@@ -126,7 +126,7 @@ build time: Jul 18 12:18
 .ks-date-picker-month-select:hover {
   color: #f0ff00;
   border: 1px solid #8cc6ff;
-  background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+  background: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
   background-position: 0 -268px;
 }
 .ks-date-picker-week-number-cell {
@@ -244,12 +244,12 @@ build time: Jul 18 12:18
 .ks-date-picker-decade-panel-prev-century-btn,
 .ks-date-picker-decade-panel-next-century-btn,
 .ks-date-picker-decade-panel-header {
-  background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+  background: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-ie6 .ks-date-picker-decade-panel-prev-century-btn,
 .ks-ie6 .ks-date-picker-decade-panel-next-century-btn,
 .ks-ie6 .ks-date-picker-decade-panel-header {
-  background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
+  background-image: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-date-picker-decade-panel-header {
   background-repeat: repeat-x;
@@ -339,12 +339,12 @@ build time: Jul 18 12:18
 .ks-date-picker-month-panel-prev-year-btn,
 .ks-date-picker-month-panel-next-year-btn,
 .ks-date-picker-month-panel-header {
-  background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+  background: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-ie6 .ks-date-picker-month-panel-prev-year-btn,
 .ks-ie6 .ks-date-picker-month-panel-next-year-btn,
 .ks-ie6 .ks-date-picker-month-panel-header {
-  background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
+  background-image: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-date-picker-month-panel-header {
   background-repeat: repeat-x;
@@ -409,7 +409,7 @@ build time: Jul 18 12:18
 .ks-date-picker-month-panel-year-select:hover {
   color: #f0ff00;
   border: 1px solid #8cc6ff;
-  background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png') 0 -268px;
+  background: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png') 0 -268px;
 }
 .ks-date-picker-month-panel-next-year-btn {
   background-position: 0 0;
@@ -468,12 +468,12 @@ build time: Jul 18 12:18
 .ks-date-picker-year-panel-prev-decade-btn,
 .ks-date-picker-year-panel-next-decade-btn,
 .ks-date-picker-year-panel-header {
-  background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+  background: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-ie6 .ks-date-picker-year-panel-prev-decade-btn,
 .ks-ie6 .ks-date-picker-year-panel-next-decade-btn,
 .ks-ie6 .ks-date-picker-year-panel-header {
-  background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
+  background-image: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
 }
 .ks-date-picker-year-panel-header {
   background-repeat: repeat-x;
@@ -537,7 +537,7 @@ build time: Jul 18 12:18
 .ks-date-picker-year-panel-decade-select:hover {
   color: #f0ff00;
   border: 1px solid #8cc6ff;
-  background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+  background: url('//gtms04.alicdn.com/tps/i4/TB1.L9bFVXXXXbAXpXXDM4qIXXX-19-300.png');
   background-position: 0 -268px;
 }
 .ks-date-picker-year-panel-next-decade-btn {

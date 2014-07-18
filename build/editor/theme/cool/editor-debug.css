@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:21
+build time: Jul 18 14:01
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -374,32 +374,32 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-sourceArea {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -0px;
 }
 
 .ks-editor-toolbar-preview {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -16px;
 }
 
 .ks-editor-toolbar-bold {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -32px;
 }
 
 .ks-editor-toolbar-italic {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -48px;
 }
 
 .ks-editor-toolbar-underline {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -64px;
     height: 11px;
     margin-top: 5px;
@@ -410,8 +410,8 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-strikeThrough {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -75px;
     height: 11px;
     margin-top: 4px;
@@ -419,15 +419,15 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-orderedList {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -86px;
     margin-right: 0;
 }
 
 .ks-editor-toolbar-unorderedList {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -102px;
     margin-right: 0;
 }
@@ -468,38 +468,38 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-outdent {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -118px;
 }
 
 .ks-editor-toolbar-indent {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -134px;
 }
 
 .ks-editor-toolbar-justifyLeft {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -150px;
 }
 
 .ks-editor-toolbar-justifyCenter {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -166px;
 }
 
 .ks-editor-toolbar-justifyRight {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -182px;
 }
 
 .ks-editor-toolbar-image {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -198px;
 }
 
@@ -510,8 +510,8 @@ ks-editor-toolbar-padding {
 
 .ks-editor-toolbar-backColor,
 .ks-editor-toolbar-foreColor {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -214px;
     width: 18px;
     height: 15px;
@@ -526,8 +526,8 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-foreColor {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -229px;
 }
 
@@ -563,82 +563,82 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-undo {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -243px;
 }
 
 .ks-editor-toolbar-redo {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -258px;
     height: 15px;
     margin: 3px 4px;
 }
 
 .ks-editor-toolbar-table {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -273px;
 }
 
 .ks-editor-toolbar-template {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -289px;
 }
 
 .ks-editor-toolbar-maximize {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -305px;
 }
 
 .ks-editor-toolbar-flash {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -321px;
 }
 
 .ks-editor-toolbar-link {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -337px;
 }
 
 .ks-editor-toolbar-music {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -353px;
 }
 
 .ks-editor-toolbar-xiamiMusic {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -353px;
 }
 
 .ks-editor-toolbar-video {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -369px;
 }
 
 .ks-editor-toolbar-smiley {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -385px;
 }
 
 .ks-editor-toolbar-removeFormat {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -401px;
 }
 
 .ks-editor-toolbar-pageBreak {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -417px;
     height: 12px;
     margin-top: 4px;
@@ -646,14 +646,14 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-code {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -428px;
 }
 
 .ks-editor-toolbar-restore {
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -444px;
 }
 
@@ -713,8 +713,8 @@ LoVe F HAte
     white-space: nowrap;
     box-shadow: 0 1px 1px #E4E4E4;
     background: #e8ebee repeat-x left top;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -460px;
 }
 
@@ -752,8 +752,8 @@ LoVe F HAte
     text-decoration: none;
     border-color: rgb(232, 204, 160);
     background: #f5e7ce repeat-x left top;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -486px;
 }
 
@@ -955,8 +955,8 @@ a.ks-editor-color-remove:hover {
 
 .ks-editor-draft-save {
     background: no-repeat scroll 0 1px transparent;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -512px;
     width: 18px;
     height: 15px;
@@ -977,8 +977,8 @@ a.ks-editor-color-remove:hover {
 .ks-editor-draft-help {
     /*不能使用 center center ,ie 对于容器理解有误,text-indent会增加容器*/
     background: no-repeat;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -529px;
     width: 14px;
     overflow: hidden;
@@ -1089,8 +1089,8 @@ menu style for kissy editor ,include contextmenu and select menu
 
 .ks-editor-dialog-header {
     background: repeat-x scroll 0 0 #D6DBE2;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -541px;
     border-bottom: 1px solid #ACB4BE;
     font-size: 14px;
@@ -1119,8 +1119,8 @@ menu style for kissy editor ,include contextmenu and select menu
 .ks-editor-dialog-close-x {
     display: block;
     background: no-repeat;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -571px;
     height: 13px;
     text-indent: -9999px;
@@ -1185,8 +1185,8 @@ menu style for kissy editor ,include contextmenu and select menu
 **/
 .ks-editor-resizer {
     background: no-repeat right bottom;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -584px;
     height: 10px;
     width: 10px;
@@ -1238,8 +1238,8 @@ select style for kissy editor
 .ks-editor-big-menu-button-dropdown,
 .ks-editor-big-menu-button-dropdown-inner {
     background: no-repeat scroll center center transparent;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -594px;
     width: 7px;
     height: 3px;
@@ -1284,8 +1284,8 @@ select style for kissy editor
     padding-left: 6px;
     padding-right: 6px;
     background: #e8ebee repeat-x left top;
-  background-image: url('http://gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
-  -background-image: url('http://gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
+  background-image: url('//gtms02.alicdn.com/tps/i2/TB1NwCcFVXXXXXNXpXXNahlJpXX-24-597.png');
+  -background-image: url('//gtms03.alicdn.com/tps/i3/TB13CybFVXXXXcGXXXXNahlJpXX-24-597.png');
   background-position: left -460px;
     -background-image: none;
     height: 24px;
@@ -1302,7 +1302,7 @@ select style for kissy editor
 .ks-editor-big-menu-button-content {
     padding-left: 5px;
 }.ks-editor-smiley-sprite {
-    background: url("http://a.tbcdn.cn/sys/wangwang/smiley/sprite.png") no-repeat scroll -1px 0 transparent;
+    background: url("//gtms02.alicdn.com/tps/i2/TB1YlqeFVXXXXbRXXXXHshc0FXX-288-235.png") no-repeat scroll -1px 0 transparent;
     height: 235px;
     width: 288px;
     margin: 5px;

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:18
+build time: Jul 18 13:54
 */
 KISSY.add("dd",["dd/ddm","dd/draggable","dd/draggable-delegate","dd/droppable-delegate","dd/droppable"],function(j,b,m,n){var j=b("dd/ddm"),m=b("dd/draggable"),l=b("dd/draggable-delegate"),i=b("dd/droppable-delegate"),b=b("dd/droppable");n.exports={Draggable:m,DDM:j,Droppable:b,DroppableDelegate:i,DraggableDelegate:l}});
 KISSY.add("dd/ddm",["util","logger-manager","base","ua","node"],function(j,b,m,n){function l(c){var a=c.get("activeDrag").get("activeHandler"),b="auto";a&&(b=a.css("cursor"));"auto"===b&&(b=c.get("dragCursor"));c._shim.css({cursor:b,display:"block"});t&&q.call(c)}function i(c){var a=c.get("drops");c.setInternal("validDrops",[]);a.length&&s.each(a,function(c){c._active()})}function d(c){var a=c.get("drops");c.setInternal("validDrops",[]);a.length&&s.each(a,function(c){c._deActive()})}function h(c){var a=

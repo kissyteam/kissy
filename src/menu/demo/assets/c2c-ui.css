@@ -98,7 +98,7 @@
     height: 20px;
     width: 20px;
     /* Client apps may override the URL at which they serve the sprite. */
-    background: url(http://img01.taobaocdn.com/tps/i1/T1xqXwXmRuXXXXXXXX-22-44.png) no-repeat -1px -1px;
+    background: url(//img01.taobaocdn.com/tps/i1/T1xqXwXmRuXXXXXXXX-22-44.png) no-repeat -1px -1px;
     vertical-align: top;
     position: absolute;
     right: 0;

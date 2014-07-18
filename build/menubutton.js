@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:27
+build time: Jul 18 14:03
 */
 KISSY.add("menubutton",["menubutton/control","menubutton/select","menubutton/option"],function(g,f,i,h){g=f("menubutton/control");i=f("menubutton/select");g.Select=i;g.Option=f("menubutton/option");h.exports=g});
 KISSY.add("menubutton/control",["button","component/extension/content-box","node","./menubutton-xtpl","util"],function(g,f,i,h){function k(a){a.target.isMenuItem&&this.get("collapseOnClick")&&this.set("collapsed",!0)}function e(a){a.target.isMenu&&(a=a.newVal,this.el.setAttribute("aria-activedescendant",a&&a.el.id||""))}var g=f("button"),i=f("component/extension/content-box"),j=f("node").Event.KeyCode,l=f("./menubutton-xtpl"),d=f("util");h.exports=g.extend([i],{isMenuButton:1,decorateDom:function(a){var b=

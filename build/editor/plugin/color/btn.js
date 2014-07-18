@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:20
+build time: Jul 18 13:56
 */
 KISSY.add("editor/plugin/color/btn","editor,../button,../overlay,../dialog-loader,node,util".split(","),function(g,e,t,n){function k(a,b,d){setTimeout(function(){a.execCommand(b,d)},0)}var i=e("editor"),g=e("../button"),o=e("../overlay"),p=e("../dialog-loader"),q=e("node"),l=e("util"),r=[["000","444","666","999","CCC","EEE","F3F3F3","FFF"],["F00","F90","FF0","0F0","0FF","00F","90F","F0F"],["F4CCCC","FCE5CD","FFF2CC","D9EAD3","D0E0E3","CFE2F3","D9D2E9","EAD1DC","EA9999","F9CB9C","FFE599","B6D7A8",
 "A2C4C9","9FC5E8","B4A7D6","D5A6BD","E06666","F6B26B","FFD966","93C47D","76A5AF","6FA8DC","8E7CC3","C27BAD","CC0000","E69138","F1C232","6AA84F","45818E","3D85C6","674EA7","A64D79","990000","B45F06","BF9000","38761D","134F5C","0B5394","351C75","741B47","660000","783F04","7F6000","274E13","0C343D","073763","20124D","4C1130"]],b;(function(){b='<div class="{prefixCls}editor-color-panel"><a class="{prefixCls}editor-color-remove" href="javascript:void(\'\u6e05\u9664\');">\u6e05\u9664</a>';for(var a=0;a<3;a++){b=b+'<div class="{prefixCls}editor-color-palette"><table>';

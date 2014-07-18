@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:28
+build time: Jul 18 14:04
 */
 KISSY.add("overlay",["overlay/control","overlay/dialog","overlay/popup"],function(j,f,m,h){j=f("overlay/control");m=f("overlay/dialog");f=f("overlay/popup");j.Dialog=m;j.Popup=f;h.exports=j});
 KISSY.add("overlay/control","component/container,component/extension/shim,component/extension/align,./extension/loading,./extension/mask,./extension/overlay-effect,component/extension/content-box,./overlay-xtpl".split(","),function(j,f,m,h){var j=f("component/container"),m=f("component/extension/shim"),n=f("component/extension/align"),g=f("./extension/loading"),i=f("./extension/mask"),b=f("./extension/overlay-effect"),e=f("component/extension/content-box"),f=f("./overlay-xtpl"),k={hide:"hide",destroy:"destroy"};

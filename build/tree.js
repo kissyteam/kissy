@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:29
+build time: Jul 18 14:05
 */
 KISSY.add("tree",["tree/control","tree/node","tree/check-node","tree/check-tree"],function(f,b,j,g){var f=b("tree/control"),j=b("tree/node"),l=b("tree/check-node"),b=b("tree/check-tree");f.Node=j;f.CheckNode=l;f.CheckTree=b;g.exports=f});
 KISSY.add("tree/control",["./node","./tree-manager"],function(f,b,j,g){f=b("./node");b=b("./tree-manager");g.exports=f.extend([b],{handleKeyDownInternal:function(b){var c=this.get("selectedItem");return c===this?this.callSuper(b):c&&c.handleKeyDownInternal(b)},_onSetFocused:function(b){this.callSuper(b);b&&!this.get("selectedItem")&&this.select()}},{ATTRS:{defaultChildCfg:{valueFn:function(){return{xclass:"tree-node"}}}},xclass:"tree"})});

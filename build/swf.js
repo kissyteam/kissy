@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:29
+build time: Jul 18 14:05
 */
 KISSY.add("swf",["dom","json","attribute","swf/ua","util"],function(u,i,k,v){function p(a){var d=g;m.each(a,function(a,b){b=b.toLowerCase();b in z?d+=h(b,a):b===A&&(d+=h(b,q(a)))});return d}function n(a,d,l,b){var e=g,c=g;m.each(d,function(a,b){e+=" "+b+'="'+a+'"'});b?(e+=' classid="'+B+'"',c+=h("movie",a)):(e+=' data="'+a+'"',e+=' type="'+C+'"');c+=p(l);return r+s+e+t+c}function q(a){var d=[];m.each(a,function(a,b){"string"!==typeof a&&(a=w.stringify(a));a&&d.push(b+"="+D(a))});return d.join("&")}
 function h(a,d){return'<param name="'+a+'" value="'+d+'"></param>'}var c=i("dom"),w=i("json"),u=i("attribute"),k=i("swf/ua"),m=i("util"),f="./swf/assets/expressInstall.swf";"undefined"!==typeof KISSY&&KISSY.DEV_MODE&&(f="../assets/expressInstall.swf");var j=!!window.ActiveXObject,C="application/x-shockwave-flash",B="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000",A="flashvars",g="",r="<",t=">",E=document,x=k.fpv,F=k.fpvGEQ,y=k.fpvGTE,s="object",D=encodeURIComponent,z={wmode:g,allowscriptaccess:g,allownetworking:g,

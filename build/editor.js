@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:19
+build time: Jul 18 13:55
 */
 KISSY.add("editor","util,logger-manager,node,xtemplate/runtime,editor/iframe-content-xtpl,editor/base,editor/utils,editor/focus-manager,editor/clipboard,editor/enter-key,editor/html-data-processor,editor/selection-fix,editor/styles,editor/dom-iterator,editor/z-index-manager,ua".split(","),function(z,f,C,x){function s(v,a){var n=v.get("textarea"),c=v.get("toolBarEl"),b=v.get("statusBarEl"),a=parseInt(a,10),a=a-((c&&c.outerHeight()||0)+(b&&b.outerHeight()||0));n.parent().css(A,a);n.css(A,a)}function r(v,
 a){var n=v.body;J(function(){v.designMode="on";setTimeout(function P(){v.designMode="off";n.focus();if(!P.retry)P.retry=m},50)},function(){v.designMode="off";n.setAttribute("contentEditable",false);n.setAttribute("contentEditable",true);a||r(v,1)})}function p(v){var a=v.get("textarea")[0],n=v.get("window"),b=v.get("document"),e=b[0];if(i.webkit){b.on("click",function(v){var a=d(v.target);w.inArray(a.nodeName(),["input","select"])&&v.preventDefault()});b.on("mouseup",function(v){var a=d(v.target);

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 12:16
+build time: Jul 18 13:53
 */
 KISSY.add("component/container",["util","component/control"],function(f,g,m,i){function j(a){var b=a.component,c=this.get("children"),a=a.index;c.splice(a,0,b);c=this.get("children");b=c[a];b.setInternal("parent",this);this.get("rendered")&&this.renderChild(a);this.fire("afterAddChild",{component:b,index:a})}function k(a){var b=a.component,c=a.destroy,d=this.get("children"),a=a.index;-1!==a&&d.splice(a,1);b.setInternal("parent",null);b.destroy&&b.destroy(c);this.fire("afterRemoveChild",{component:b,
 index:a})}var h=g("util"),f=g("component/control"),l=f.Manager;i.exports=f.extend({isContainer:!0,initializer:function(){var a=this.get("prefixCls"),b=this.get("defaultChildCfg");this.publish("beforeAddChild",{defaultFn:j,defaultTargetOnly:!0});this.publish("beforeRemoveChild",{defaultFn:k,defaultTargetOnly:!0});b.prefixCls=b.prefixCls||a},decorateDom:function(){var a=this,b=a.getChildrenContainerEl(),c=a.get("defaultChildCfg"),d=c.prefixCls,e=c.xclass,f=[];b.children().each(function(b){var g=a.getComponentConstructorByNode(d,
