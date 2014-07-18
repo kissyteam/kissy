@@ -1,6 +1,5 @@
 var $ = require('node');
 var Base = require('base');
-var Color = require('color');
 var Overlay = require('overlay');
 var TapGesture = require('event/gesture/tap');
 var tap = TapGesture.TAP;
@@ -9,12 +8,8 @@ var BasicGesture = require('event/gesture/basic');
 var methods = {
     initializer: function () {
         var self = this,
-            canvas = self.get('canvas'),
-            color = self.get('color');
-
-        self.set('ctx', canvas[0].getContext('2d'));
-        self.set('colorHex', new Color(color).toHex());
-
+            canvas = self.get('canvas');
+        self.ctx = canvas[0].getContext('2d');
         self.bindEvt();
         self.overlay();
         self.reset();
@@ -50,31 +45,38 @@ var methods = {
     bindEvt: function () {
         var self = this,
             canvas = self.get('canvas'),
-            ctx = self.get('ctx'),
+            ctx = self.ctx,
             clientOffset = canvas.offset(),
-            w = canvas.width(), h = canvas.height(),
+            w = canvas[0].width, h = canvas[0].height,
             clientOffsetX = clientOffset.left,
             clientOffsetY = clientOffset.top,
             oldX,
             oldY,
             curX,
             curY,
-            color = self.get('color'),
 
             isOver = function () {
                 var data = ctx.getImageData(0, 0, w, h).data;
-
                 //剩余像素（未被刮开）点数。#CCC ,255
                 for (var i = 0, j = 0, k = 0; i < data.length; i += 4, k++) {
-                    if ((data[i] === color.r) &&
-                        (data[i + 1] === color.g) &&
-                        (data[i + 2] === color.b) &&
-                        (data[i + 3] === color.a)) {
+                    if ((data[i] === 0) &&
+                        (data[i + 1] === 0) &&
+                        (data[i + 2] === 0) &&
+                        (data[i + 3] === 0)) {
+                        // j++;
+                    } else {
                         j++;
                     }
+//                    if ((data[i] === color.r) &&
+//                        (data[i + 1] === color.g) &&
+//                        (data[i + 2] === color.b) &&
+//                        (data[i + 3] === color.a)) {
+//                        j++;
+//                    }
                 }
-
-                if ((j / (w * h)) < 0.7) {
+                var rate = (j / (w * h));
+                console.log(rate);
+                if (rate < 0.7) {
                     self.getPuzzle();
                 }
             },
@@ -82,9 +84,8 @@ var methods = {
             touchMove = function (ev) {
                 ev.preventDefault();
 
-                var pageX = ev.changedTouches ? ev.changedTouches[0].pageX : ev.pageX,
-                    pageY = ev.changedTouches ? ev.changedTouches[0].pageY : ev.pageY;
-
+                var pageX = ev.pageX,
+                    pageY = ev.pageY;
 
                 curX = pageX - clientOffsetX;
                 curY = pageY - clientOffsetY;
@@ -109,8 +110,8 @@ var methods = {
 
         canvas.on(BasicGesture.START, function (ev) {
             ev.preventDefault();
-            var pageX = ev.changedTouches ? ev.changedTouches[0].pageX : ev.pageX,
-                pageY = ev.changedTouches ? ev.changedTouches[0].pageY : ev.pageY;
+            var pageX = ev.pageX,
+                pageY = ev.pageY;
 
             //设置笔触.
             ctx.globalCompositeOperation = 'destination-out';
@@ -126,7 +127,6 @@ var methods = {
             ctx.beginPath();
             ctx.moveTo(oldX, oldY);
 
-
             canvas.on(BasicGesture.MOVE, touchMove);
             canvas.on(BasicGesture.END, touchEnd);
         });
@@ -134,29 +134,26 @@ var methods = {
     reset: function () {
         var self = this,
             canvas = self.get('canvas'),
-            ctx = self.get('ctx'),
-            w = canvas.width(), h = canvas.height(),
-            maskColorHex = self.get('colorHex');
+            ctx = self.ctx,
+            w = canvas[0].width,
+            h = canvas[0].height;
         //初始化的操作
         canvas[0].width = w; //强刷.
         ctx.globalCompositeOperation = 'source-over'; //解决部分手机白屏.
-        ctx.fillStyle = maskColorHex;
+        ctx.fillStyle = self.get('color');
         ctx.fillRect(0, 0, w, h);
     },
     start: function () {
         var self = this,
             overlay = self.get('overlay'),
             el = overlay.get('contentEl');
-
         el.html('<div class="bd">刮一刮图层，可以刮出红包</div><div class="ft"><button class="ok J_Start">开始刮奖</button></div>');
         overlay.show();
-
     },
     getPuzzle: function () {
         var self = this,
             overlay = self.get('overlay'),
             el = overlay.get('contentEl');
-
         el.html('<div class="bd"><p>很遗憾，没有刮到红包 :(</p><p>' + self.failTxt() + '</p><p class="fail"></p></div><div class="ft"><button class="cancel J_Cancel">不玩了</button><button class="ok J_Start">刮下一张</button></div>');
         overlay.show();
     },
@@ -295,16 +292,8 @@ var gglAttrs = {
                 return  $(v);
             }
         },
-        ctx: {
-            value: {}
-        },
         color: {
-            value: {
-                r: 204,
-                g: 204,
-                b: 204,
-                a: 255
-            }
+            value: '#ccc'
         },
         eraserWidth: {
             value: 30

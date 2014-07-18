@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,27 +5,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <title>lottery demo</title>
     <style>
-        body{
+        body {
             background: url(http://a.tbcdn.cn/mw/app/lottery/20131111/images/s_bd.jpg);
         }
 
-        .gg-wrap{
-            margin:50px auto;
+        .gg-wrap {
+            margin: 50px auto;
             width: 300px;
         }
-        .gg-container{
+
+        .gg-container {
             width: 300px;
             background: url('http://a.tbcdn.cn/mw/app/lottery/20131111/images/s_stamp.png') no-repeat;
             background-size: contain;
         }
-        .gg-canvas{
-            width:280px;
-            height:156px;
+
+        .gg-canvas {
             margin: 10px 10px;
             background: url('http://a.tbcdn.cn/mw/app/lottery/20131111/images/s_fail.png') no-repeat;
             background-position: center;
         }
-        .gg-title{
+
+        .gg-title {
             width: 305px;
             height: 120px;
             margin-bottom: -15px;
@@ -35,20 +35,23 @@
             background-size: contain;
         }
 
-        .gg-dialog{
+        .gg-dialog {
             width: 250px;
-            padding:10px;
+            padding: 10px;
             background: #fee767;
             border-radius: 10px;
             text-align: center;;
         }
-        .gg-dialog .bd{
-            padding:10px 0;
+
+        .gg-dialog .bd {
+            padding: 10px 0;
         }
-        .gg-dialog .ft{
-            padding:10px 0;
+
+        .gg-dialog .ft {
+            padding: 10px 0;
         }
-        .gg-dialog .fail{
+
+        .gg-dialog .fail {
             width: 80px;
             height: 40px;
             margin: 0 auto 15px;
@@ -56,23 +59,27 @@
             background-size: contain;
             background-position: center;
         }
-        .gg-dialog button{
+
+        .gg-dialog button {
             width: 100px;
             height: 40px;
             color: white;
             font-weight: bold;
             line-height: 35px;
             border-radius: 4px;
-            border-width:0px;
+            border-width: 0px;
         }
-        .gg-dialog button:first-child{
-            margin-right:10px;
+
+        .gg-dialog button:first-child {
+            margin-right: 10px;
         }
-        .gg-dialog .ok{
-            background-image: -webkit-gradient(linear,left top,left bottom,from(#ef5032),to(#cc3a23));
+
+        .gg-dialog .ok {
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ef5032), to(#cc3a23));
         }
-        .gg-dialog .cancel{
-            background-image: -webkit-gradient(linear,left top,left bottom,from(#898988),to(#424242));
+
+        .gg-dialog .cancel {
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#898988), to(#424242));
         }
 
         .ks-dialog, .ks-overlay {
@@ -91,9 +98,10 @@
         }
 
         .ks-overlay-mask {
-            background-color: rgba(0,0,0,.3);
+            background-color: rgba(0, 0, 0, .3);
         }
-            /* }} */
+
+        /* }} */
 
 
     </style>
@@ -102,7 +110,7 @@
         KISSY.config({
             packages: {
                 lottery: {
-                    tag:Math.random(),
+                    tag: Math.random(),
                     base: './lottery'
                 }
             }
@@ -111,19 +119,18 @@
 </head>
 <body>
 <h1>πŒπŒ¿÷</h1>
+
 <div class="gg-wrap">
     <div class="gg-title"></div>
     <div class="gg-container">
-        <canvas id="gg-canvas" class="gg-canvas"> </canvas>
+        <canvas id="gg-canvas" class="gg-canvas" width="280" height="156"></canvas>
     </div>
 </div>
 
 <script>
-    KISSY.use("lottery",function(S,Lottery){
-        S.ready(function(){
-            new Lottery({
-                canvas:"#gg-canvas"
-            });
+    KISSY.use("lottery", function (S, Lottery) {
+        new Lottery({
+            canvas: "#gg-canvas"
         });
     });
 </script>
