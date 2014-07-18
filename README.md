@@ -24,18 +24,16 @@
 
 ## Vision
 
-模块化，高扩展性，组件齐全，接口一致，自主开发，适合多种应用场景
+模块化，跨终端，高扩展性，组件齐全，接口一致，自主开发，适合多种应用场景
 
 
 ## Structure
 
- - bin:           kissy-nodejs 命令行执行文件
- - build:         构建好的用于 web 的发布文件
- - lib:           用于 nodejs 的代码文件
- - tests:         nodejs 下的测试用例
+ - build:         用于 web 的发布模块
+ - lib:           用于 nodejs 的发布模块
  - docs:          从源码目录内文件抽取的文档资源
  - src:           源码、测试等开发资源
- - tools:         打包压缩等自动化工具
+ - tools:         开发工具集合
 
 
 ## Convention

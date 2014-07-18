@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:08
+build time: Jul 18 12:28
 */
 /*
 combined modules:
@@ -530,9 +530,10 @@ KISSY.add('overlay/extension/overlay-effect', [
 });
 
 
-/** Compiled By xtpl */
 KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
-    var overlayXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function overlayXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -611,8 +612,7 @@ KISSY.add('overlay/overlay-xtpl', [], function (S, require, exports, module) {
         buffer.write('\r\n</div>', 0);
         return buffer;
     };
-    overlayXtpl.TPL_NAME = module.name;
-    module.exports = overlayXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('overlay/dialog', [
     'util',
@@ -905,9 +905,10 @@ KISSY.add('overlay/dialog', [
  *  重构，使用扩展类
  */
 });
-/** Compiled By xtpl */
 KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, exports, module) {
-    var dialogXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function dialogXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -1031,8 +1032,7 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
         buffer = blockCommand.call(tpl, scope, option3, buffer, 2);
         return buffer;
     };
-    dialogXtpl.TPL_NAME = module.name;
-    module.exports = dialogXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('overlay/popup', [
     './control',

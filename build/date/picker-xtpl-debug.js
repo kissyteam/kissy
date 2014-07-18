@@ -1,15 +1,16 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:58
+build time: Jul 18 12:18
 */
 /*
 combined modules:
 date/picker-xtpl
 */
-/** Compiled By xtpl */
 KISSY.add('date/picker-xtpl', [], function (S, require, exports, module) {
-    var pickerXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function pickerXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -326,6 +327,5 @@ KISSY.add('date/picker-xtpl', [], function (S, require, exports, module) {
         buffer = ifCommand.call(tpl, scope, option65, buffer, 63);
         return buffer;
     };
-    pickerXtpl.TPL_NAME = module.name;
-    module.exports = pickerXtpl;
+    module.exports.TPL_NAME = module.name;
 });

@@ -1,6 +1,5 @@
 <project name="editor/theme.build" default="build" basedir=".">
     <property name="component.name" value="editor/theme"/>
-    <property name="component.assets.dir" value="./assets"/>
 
     <import file="../../common.xml"/>
 

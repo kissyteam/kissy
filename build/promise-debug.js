@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:08
+build time: Jul 18 12:28
 */
 /*
 combined modules:
@@ -237,7 +237,6 @@ KISSY.add('promise', [
      */
         done: function (fulfilled, rejected) {
             var self = this, onUnhandledError = function (e) {
-                    LoggerManager.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);

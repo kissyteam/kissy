@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:07
+build time: Jul 18 12:27
 */
 /*
 combined modules:
@@ -295,9 +295,10 @@ KISSY.add('navigation-view/bar', [
 });
 
 
-/** Compiled By xtpl */
 KISSY.add('navigation-view/bar/bar-xtpl', [], function (S, require, exports, module) {
-    var barXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function barXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('', 0);
@@ -365,6 +366,5 @@ KISSY.add('navigation-view/bar/bar-xtpl', [], function (S, require, exports, mod
         buffer.write('"></div>\r\n</div>', 0);
         return buffer;
     };
-    barXtpl.TPL_NAME = module.name;
-    module.exports = barXtpl;
+    module.exports.TPL_NAME = module.name;
 });

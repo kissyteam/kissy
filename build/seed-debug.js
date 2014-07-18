@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:55
+build time: Jul 18 12:15
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140701225543' will replace with current timestamp when compressing.
+         * NOTICE: '20140718121535' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140701225543',
+        __BUILD_TIME: '20140718121535',
 
         /**
          * KISSY Environment.
@@ -2319,19 +2319,22 @@ var KISSY = (function (undefined) {
                 var unloadModsLen = unloadedMods.length;
                 logger.debug(tryCount + ' check duration ' + (+new Date() - start));
                 if (errorList.length) {
-                    if (error) {
-                        try {
-                            error.apply(S, errorList);
-                        } catch (e) {
-                            S.log(e.stack || e, 'error');
-                            /*jshint loopfunc:true*/
-                            setTimeout(function () {
-                                throw e;
-                            }, 0);
-                        }
-                    }
                     S.log(errorList, 'error');
                     S.log('loader: load above modules error', 'error');
+                    if (error) {
+                        if ('@DEBUG@') {
+                            error.apply(S, errorList);
+                        } else {
+                            try {
+                                error.apply(S, errorList);
+                            } catch (e) {
+                                /*jshint loopfunc:true*/
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+                        }
+                    }
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModules(normalizedMods);
                     if (success) {
@@ -2416,7 +2419,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140701225543';
+    var TIMESTAMP = '20140718121535';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -2546,7 +2549,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 18 12:29
 */
 /*
 combined modules:
@@ -2938,7 +2941,7 @@ KISSY.add('ua', [], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:06
+build time: Jul 18 12:27
 */
 /*
 combined modules:
@@ -3121,7 +3124,7 @@ KISSY.add('feature', ['ua'], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 18 12:29
 */
 /**
  * @ignore

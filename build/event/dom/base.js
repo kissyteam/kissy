@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:05
+build time: Jul 18 12:25
 */
 KISSY.add("event/dom/base","./base/dom-event,./base/object,./base/key-codes,./base/special-events,./base/mouseenter,util".split(","),function(d,b,j,i){var d=b("./base/dom-event"),j=b("./base/object"),a=b("./base/key-codes"),h=b("./base/special-events");b("./base/mouseenter");b=b("util");i.exports=b.merge({add:d.on,remove:d.detach,KeyCode:a,Special:h,Object:j},d)});
 KISSY.add("event/dom/base/dom-event","event/base,./utils,dom,./special,./observable,./object,util".split(","),function(d,b,j,i){function a(e,c){var a=o[c]||{},g;if(!e.originalType&&(g=a.typeFix)){e.originalType=c;c=g}return c}function h(e,c,n){var f,b,l,n=g.merge(n),c=a(n,c);f=m.getDomEventObservablesHolder(e,1);if(!(l=f.handle)){l=f.handle=function(c){var e=c.type,a=l.currentTarget;if(!(m.triggeredEvent===e||typeof KISSY==="undefined"))if(e=m.getDomEventObservable(a,e)){c.currentTarget=a;c=new q(c);

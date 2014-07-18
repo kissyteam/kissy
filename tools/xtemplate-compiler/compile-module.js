@@ -1,5 +1,5 @@
 var path = require('path');
-var XTemplateCompiler = require('../xtemplate').Compiler;
+var XTemplateCompiler = require('../../lib/xtemplate').Compiler;
 var fs = require('fs');
 var esprima = require('esprima');
 var escodegen = require('escodegen');

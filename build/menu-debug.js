@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:07
+build time: Jul 18 12:27
 */
 /*
 combined modules:
@@ -88,9 +88,10 @@ KISSY.add('menu/control', [
             }
         },
         _onSetVisible: function (v, e) {
-            this.callSuper(v, e);
+            var self = this;
+            self.callSuper(v, e);
             var highlightedItem;
-            if (!v && (highlightedItem = this.get('highlightedItem'))) {
+            if (!v && (highlightedItem = self.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
             }
         },
@@ -98,32 +99,36 @@ KISSY.add('menu/control', [
             return this;
         },
         handleMouseEnterInternal: function (e) {
-            this.callSuper(e);
-            var rootMenu = this.getRootMenu();    // maybe called by popupmenu, no submenu
+            var self = this;
+            self.callSuper(e);
+            var rootMenu = self.getRootMenu();    // maybe called by popupmenu, no submenu
             // maybe called by popupmenu, no submenu
-            if (rootMenu !== this && rootMenu._popupAutoHideTimer) {
+            if (rootMenu !== self && rootMenu._popupAutoHideTimer) {
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
         },
         handleBlurInternal: function (e) {
-            this.callSuper(e);
+            var self = this;
+            self.callSuper(e);
             var highlightedItem;
-            if (highlightedItem = this.get('highlightedItem')) {
+            if (highlightedItem = self.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);
             }
         },
         //dir : -1 ,+1
         //skip disabled items
         _getNextEnabledHighlighted: function (index, dir) {
-            var children = this.get('children'), len = children.length, o = index;
+            var children = this.get('children');
+            var len = children.length;
+            var cur = index;
             do {
-                var c = children[index];
+                var c = children[cur];
                 if (!c.get('disabled') && c.get('visible') !== false) {
-                    return children[index];
+                    return children[cur];
                 }
-                index = (index + dir + len) % len;
-            } while (index !== o);
+                cur = (cur + dir + len) % len;
+            } while (cur !== index);
             return undefined;
         },
         /**
@@ -148,7 +153,8 @@ KISSY.add('menu/control', [
             if (highlightedItem && highlightedItem.handleKeyDownInternal(e)) {
                 return true;
             }
-            var children = self.get('children'), len = children.length;
+            var children = self.get('children');
+            var len = children.length;
             if (len === 0) {
                 return undefined;
             }
@@ -413,9 +419,10 @@ KISSY.add('menu/check-menuitem', [
     });
 });
 
-/** Compiled By xtpl */
 KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module) {
-    var checkMenuitemXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function checkMenuitemXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -448,8 +455,7 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    checkMenuitemXtpl.TPL_NAME = module.name;
-    module.exports = checkMenuitemXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('menu/radio-menuitem', [
     './menuitem',
@@ -522,9 +528,10 @@ KISSY.add('menu/radio-menuitem', [
         xclass: 'radio-menuitem'
     });
 });
-/** Compiled By xtpl */
 KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module) {
-    var radioMenuitemXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function radioMenuitemXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -557,8 +564,7 @@ KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module)
         buffer.write('</div>', 0);
         return buffer;
     };
-    radioMenuitemXtpl.TPL_NAME = module.name;
-    module.exports = radioMenuitemXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('menu/submenu', [
     'util',
@@ -576,7 +582,8 @@ KISSY.add('menu/submenu', [
     var SubMenuTpl = require('./submenu-xtpl');
     var MenuItem = require('./menuitem');
     var ContentBox = require('component/extension/content-box');
-    var KeyCode = require('node').Event.KeyCode, MENU_DELAY = 0.15;
+    var KeyCode = require('node').Event.KeyCode;
+    var MENU_DELAY = 0.15;
     function afterHighlightedChange(e) {
         var target = e.target, self = this;    // hover 子菜单，保持该菜单项高亮
         // hover 子菜单，保持该菜单项高亮
@@ -604,11 +611,12 @@ KISSY.add('menu/submenu', [
     module.exports = MenuItem.extend([ContentBox], {
         isSubMenu: 1,
         decorateDom: function (el) {
-            var self = this, prefixCls = self.get('prefixCls');
+            var self = this;
+            var prefixCls = self.get('prefixCls');
             var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
             var docBody = popupMenuEl[0].ownerDocument.body;
             docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
-            var PopupMenuClass = this.getComponentConstructorByNode(prefixCls, popupMenuEl);
+            var PopupMenuClass = self.getComponentConstructorByNode(prefixCls, popupMenuEl);
             self.setInternal('menu', new PopupMenuClass({
                 srcNode: popupMenuEl,
                 prefixCls: prefixCls
@@ -800,9 +808,10 @@ KISSY.add('menu/submenu', [
         this.get('menu').hide();
     }    // # ------------------------------------ private end
 });
-/** Compiled By xtpl */
 KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
-    var submenuXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function submenuXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -826,8 +835,7 @@ KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
         buffer.write('submenu-arrow">\u25BA</span>', 0);
         return buffer;
     };
-    submenuXtpl.TPL_NAME = module.name;
-    module.exports = submenuXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('menu/popupmenu', [
     'component/extension/align',
@@ -866,7 +874,7 @@ KISSY.add('menu/popupmenu', [
         getRootMenu: function () {
             var self = this, cur = self, last;
             do {
-                // 沿着 menu，menuitem 链
+                // 沿着 menu menuitem 链
                 last = cur;
                 cur = cur.get('parent');
             } while (cur && (cur.isMenuItem || cur.isMenu));
@@ -915,7 +923,7 @@ KISSY.add('menu/popupmenu', [
             allowTextSelection: { value: false },
             /**
          * Whether the whole menu tree which contains popup menu hides when mouseleave.
-         * Only valid for submenu 's popupmenu.
+         * Only valid for submenu's popupmenu.
          * Defaults to: false.
          * @cfg {Boolean} autoHideOnMouseLeave
          */

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:57
+build time: Jul 18 12:17
 */
 KISSY.add("component/extension/align",["util","node","ua"],function(y,m,z,u){function n(a){var c=a.ownerDocument.body,d=k(a).css("position");if(!("fixed"===d||"absolute"===d))return"html"===a.nodeName.toLowerCase()?null:a.parentNode;for(a=a.parentNode;a&&a!==c;a=a.parentNode)if(d=k(a).css("position"),"static"!==d)return a;return null}function o(a){var c,d,b={left:0,right:Infinity,top:0,bottom:Infinity},f;f=a.ownerDocument;d=k(f).getWindow();c=f.body;for(f=f.documentElement;a=n(a);)if((!v.ie||0!==
 a.clientWidth)&&a!==c&&a!==f&&"visible"!==k(a).css("overflow")){var h=k(a).offset();h.left+=a.clientLeft;h.top+=a.clientTop;b.top=Math.max(b.top,h.top);b.right=Math.min(b.right,h.left+a.clientWidth);b.bottom=Math.min(b.bottom,h.top+a.clientHeight);b.left=Math.max(b.left,h.left)}f=d.scrollLeft();a=d.scrollTop();b.left=Math.max(b.left,f);b.top=Math.max(b.top,a);c=d.width();d=d.height();b.right=Math.min(b.right,f+c);b.bottom=Math.min(b.bottom,a+d);return 0<=b.top&&0<=b.left&&b.bottom>b.top&&b.right>

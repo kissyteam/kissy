@@ -1,9 +1,9 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:55
+build time: Jul 18 12:15
 */
-var KISSY=function(c){var n;n={__BUILD_TIME:"20140701225543",Env:{host:this,mods:{}},Config:{debug:"",packages:{},fns:{}},version:"5.0.0",config:function(i,m){var k,j,o=n.Config,f=o.fns;if("string"===typeof i)k=f[i],m===c?j=k?k.call(this):o[i]:k?j=k.call(this,m):o[i]=m;else for(var b in i)m=i[b],(k=f[b])?k.call(this,m):o[b]=m;return j}};var p=n.Loader={};"undefined"!==typeof location&&-1!==location.search.indexOf("ks-debug")&&(n.Config.debug=!0);p.Status={ERROR:-1,INIT:0,LOADING:1,LOADED:2,ATTACHING:3,
+var KISSY=function(c){var n;n={__BUILD_TIME:"20140718121535",Env:{host:this,mods:{}},Config:{debug:"",packages:{},fns:{}},version:"5.0.0",config:function(i,m){var k,j,o=n.Config,f=o.fns;if("string"===typeof i)k=f[i],m===c?j=k?k.call(this):o[i]:k?j=k.call(this,m):o[i]=m;else for(var b in i)m=i[b],(k=f[b])?k.call(this,m):o[b]=m;return j}};var p=n.Loader={};"undefined"!==typeof location&&-1!==location.search.indexOf("ks-debug")&&(n.Config.debug=!0);p.Status={ERROR:-1,INIT:0,LOADING:1,LOADED:2,ATTACHING:3,
 ATTACHED:4};return n}();(function(c){function n(c){var j={},o;for(o in i)(function(f,b){f[b]=function(l){return m.log(l,b,c)}})(j,o);return j}var p={},i={debug:10,info:20,warn:30,error:40},m={config:function(c){return p=c||p},log:function(){},getLogger:function(c){return n(c)},error:function(){}};c.LoggerMangaer=m;c.getLogger=m.getLogger;c.log=m.log;c.error=m.error;c.Config.fns.logger=m.config})(KISSY);
 (function(c){function n(a){var d=0;return parseFloat(a.replace(/\./g,function(){return 0===d++?".":""}))}function p(a){var d=a.split(/\//);"/"===a.charAt(0)&&d[0]&&d.unshift("");"/"===a.charAt(a.length-1)&&1<a.length&&d[d.length-1]&&d.push("");return d}function i(a){var d=[],e;for(e in a)d.push(e);return d}function m(a,d){for(var e in d)a[e]=d[e];return a}var k=c.Loader,c=c.Env,j=c.mods,o=Array.prototype.map,c=c.host,f=k.Utils={},b=c.document,l,g,c=(c.navigator||{}).userAgent||"";if(((l=c.match(/AppleWebKit\/([\d.]*)/))||
 (l=c.match(/Safari\/([\d.]*)/)))&&l[1])f.webkit=n(l[1]);if(l=c.match(/Trident\/([\d.]*)/))f.trident=n(l[1]);if(l=c.match(/Gecko/))if(f.gecko=0.1,(l=c.match(/rv:([\d.]*)/))&&l[1])f.gecko=n(l[1]);if((l=c.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/))&&(g=l[1]||l[2]))f.ie=n(g),f.ieMode=b.documentMode||f.ie,f.trident=f.trident||1;var h=/http(s)?:\/\/([^/]+)(?::(\d+))?/,q=/(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,s=/[^.'"]\s*require\s*\((['"])([^)]+)\1\)/g,t=Array.isArray||function(a){return"[object Array]"===
@@ -38,12 +38,12 @@ g[j]||[],l[j])for(i in l[j][m])d(j,i,l[j][m][i]);return g},flush:function(){if(t
 (function(c){var n=c.Loader,p=n.Utils,i=p.createModule,m=n.ComboLoader;p.mix(c,{getModule:function(c){return i(c)},getPackage:function(k){return c.Config.packages[k]},add:function(c,j,i){m.add(c,j,i,arguments.length)},use:function(k,j){function i(){++l;var k=[];h=f.calculate(h,k);var m=h.length;if(k.length){if(b)try{b.apply(c,k)}catch(a){setTimeout(function(){throw a;},0)}}else if(f.isCompleteLoading()){if(p.attachModules(n),j)try{j.apply(c,[c].concat(p.getModulesExports(g)))}catch(d){setTimeout(function(){throw d;
 },0)}}else f.callback=i,m&&f.use(h)}var f,b,l=0;"string"===typeof k&&(k=k.replace(/\s+/g,"").split(","));"object"===typeof j&&(b=j.error,j=j.success);var g=p.createModules(k),h=[];p.each(g,function(b){h.push.apply(h,b.getNormalizedModules())});var n=h;f=new m(i);i();return c},require:function(c){return i(c).getExports()},undef:function(c){c=i(c).getNormalizedModules();p.each(c,function(c){c.undef()})}})})(KISSY);KISSY.add("i18n",{alias:function(c,n){return n+"/i18n/"+c.Config.lang}});
 (function(c){function n(c){var g=c.src||"";if(!g.match(b))return 0;var c=(c=c.getAttribute("data-config"))?(new Function("return "+c))():{},h=c.comboPrefix||j,i=c.comboSep||o,n,p=g.indexOf(h);-1===p?n=g.replace(f,"$1"):(n=g.substring(0,p),"/"!==n.charAt(n.length-1)&&(n+="/"),h=g.substring(p+h.length).split(i),m.each(h,function(a){if(a.match(b))return n+=a.replace(f,"$1"),!1}));"tag"in c||(h=g.lastIndexOf("?t="),-1!==h&&(g=g.substring(h+1),c.tag=m.getHash(k+g)));c.base=c.base||n;return c}function p(){var b=
-i.getElementsByTagName("script"),c,f;for(c=b.length-1;0<=c;c--)if(f=n(b[c]))return f;return null}var i=c.Env.host&&c.Env.host.document,m=c.Loader.Utils,k="20140701225543",j="??",o=",",f=/^(.*)(seed|loader)(?:-debug|-coverage)?\.js[^/]*/i,b=/(seed|loader)(?:-debug|-coverage)?\.js/i;c.config({comboPrefix:j,comboSep:o,charset:"utf-8",filter:"",lang:"zh-cn"});c.config("packages",{core:{filter:c.Config.debug?"debug":""}});i&&i.getElementsByTagName&&c.config(m.mix({comboMaxUrlLength:2E3,comboMaxFileNum:40},
+i.getElementsByTagName("script"),c,f;for(c=b.length-1;0<=c;c--)if(f=n(b[c]))return f;return null}var i=c.Env.host&&c.Env.host.document,m=c.Loader.Utils,k="20140718121535",j="??",o=",",f=/^(.*)(seed|loader)(?:-debug|-coverage)?\.js[^/]*/i,b=/(seed|loader)(?:-debug|-coverage)?\.js/i;c.config({comboPrefix:j,comboSep:o,charset:"utf-8",filter:"",lang:"zh-cn"});c.config("packages",{core:{filter:c.Config.debug?"debug":""}});i&&i.getElementsByTagName&&c.config(m.mix({comboMaxUrlLength:2E3,comboMaxFileNum:40},
 p()));c.add("logger-manager",function(){return c.LoggerMangaer})})(KISSY);
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 18 12:29
 */
 KISSY.add("ua",[],function(e,l,n,h){function f(b){var d=0;return parseFloat(b.replace(/\./g,function(){return 0===d++?".":""}))}function o(b,d){var g;d.trident=0.1;if((g=b.match(/Trident\/([\d.]*)/))&&g[1])d.trident=f(g[1]);d.core="trident"}function p(b){var d,g;return(d=b.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/))&&(g=d[1]||d[2])?f(g):0}function q(b){var e,g="",k="",a,h=[6,9],j,i=m&&m.createElement("div"),l=[],c={webkit:d,trident:d,gecko:d,presto:d,chrome:d,safari:d,firefox:d,ie:d,ieMode:d,
 opera:d,mobile:d,core:d,shell:d,phantomjs:d,os:d,ipad:d,iphone:d,ipod:d,ios:d,android:d,nodejs:d};i&&i.getElementsByTagName&&(i.innerHTML="<\!--[if IE {{version}}]><s></s><![endif]--\>".replace("{{version}}",""),l=i.getElementsByTagName("s"));if(0<l.length){o(b,c);a=h[0];for(h=h[1];a<=h;a++)if(i.innerHTML="<\!--[if IE {{version}}]><s></s><![endif]--\>".replace("{{version}}",a),0<l.length){c[k="ie"]=a;break}if(!c.ie&&(j=p(b)))c[k="ie"]=j}else if(((a=b.match(/AppleWebKit\/([\d.]*)/))||(a=b.match(/Safari\/([\d.]*)/)))&&
@@ -54,7 +54,7 @@ typeof window?window:{},d,m=e.document,h=h.exports=q(e.navigator&&e.navigator.us
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:06
+build time: Jul 18 12:27
 */
 KISSY.add("feature",["ua"],function(j,r,w,s){function t(a,b){return b.toUpperCase()}function k(a){-1!==a.indexOf("-")&&(a=a.replace(u,t));if(a in c)return c[a];if(!h||a in h)c[a]={propertyName:a,propertyNamePrefix:""};else{for(var b=a.charAt(0).toUpperCase()+a.slice(1),d,g=0;g<v;g++){var e=n[g];d=e+b;d in h&&(c[a]={propertyName:d,propertyNamePrefix:e})}c[a]=c[a]||null}return c[a]}var e=window,j=r("ua"),n=["Webkit","Moz","O","ms"],v=n.length,i=e.document||{},l,m,d,b=i&&i.documentElement,h,o=!0,p=!1,
 q="ontouchstart"in i&&!j.phantomjs,c={},f=j.ieMode;b&&(b.querySelector&&8!==f&&(p=!0),h=b.style,o="classList"in b,l="msPointerEnabled"in navigator,m="pointerEnabled"in navigator);var u=/-([a-z])/gi;s.exports={isMsPointerSupported:function(){return l},isPointerSupported:function(){return m},isTouchEventSupported:function(){return q},isTouchGestureSupported:function(){return q||m||l},isDeviceMotionSupported:function(){return!!e.DeviceMotionEvent},isHashChangeSupported:function(){return"onhashchange"in
@@ -63,7 +63,7 @@ getCssVendorInfo:function(a){return k(a)}}});
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 18 12:29
 */
 KISSY.config({packages:{gallery:{base:"https"===location.protocol?"https://s.tbcdn.cn/s/kissy/gallery":"http://a.tbcdn.cn/s/kissy/gallery"}}});
 KISSY.use(["ua","feature"],function(f,g,a){function c(a,c){var b;"string"===typeof a?(b={},b[a]=c):b=a;f.config("alias",b)}f.config("requires",{"anim/base":["dom","querystring","promise"],"anim/timer":["anim/base","feature"],"anim/transition":["anim/base","feature"],attribute:["event/custom"],base:["attribute"],button:["component/control"],color:["attribute"],combobox:["menu","io"],"combobox/multi-word":["combobox"],"component/container":["component/control"],"component/control":["node","event/gesture/basic",

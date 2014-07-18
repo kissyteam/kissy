@@ -5,7 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var cwd = process.cwd();
 var util = require('../../common/util');
-var compileXtplCode = require(path.join(cwd,'lib/xtemplate/compile-module'));
+var compileXtplCode = require(path.join(cwd, 'tools/xtemplate-compiler/compile-module'));
 
 function getSourceInfo(f, postData) {
     var source_files = postData.source_files,

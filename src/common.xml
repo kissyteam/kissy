@@ -11,7 +11,7 @@
     <property name="component.src.dir" location="./src/"/>
     <property name="component.coverage.dir" location="./coverage/src/"/>
     <property name="component.meta.dir" location="./meta/"/>
-    <property name="component.assets.dir" location="../assets"/>
+    <property name="component.assets.dir" location="./assets"/>
     <property name="component.src.dir.tmp" location="./tmp/"/>
     <property name="component.assets.dir.tmp" location="${component.src.dir.tmp}/assets"/>
     <property name="component.src.dir.kmc.tmp" location="./kmc-tmp/"/>
@@ -75,7 +75,7 @@
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
                 <exec executable="node" failonerror="true">
-                    <arg value="${kissy.dir}/bin/xtemplate"/>
+                    <arg value="${tools.dir}/xtemplate-compiler/compile"/>
                     <arg value="-s"/>
                     <arg value="html"/>
                     <arg value="-p"/>

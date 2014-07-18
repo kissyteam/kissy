@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:07
+build time: Jul 18 12:27
 */
 /*
 combined modules:
@@ -311,9 +311,10 @@ KISSY.add('menubutton/control', [
 
 
 
-/** Compiled By xtpl */
 KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, module) {
-    var menubuttonXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function menubuttonXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -358,8 +359,7 @@ KISSY.add('menubutton/menubutton-xtpl', [], function (S, require, exports, modul
         buffer.write('">\r\n    </div>\r\n</div>', 0);
         return buffer;
     };
-    menubuttonXtpl.TPL_NAME = module.name;
-    module.exports = menubuttonXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 
 KISSY.add('menubutton/select', [

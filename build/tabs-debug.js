@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 18 12:29
 */
 /*
 combined modules:
@@ -696,9 +696,10 @@ KISSY.add('tabs/tab', [
     });
 });
 
-/** Compiled By xtpl */
 KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
-    var tabXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function tabXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -741,8 +742,7 @@ KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
         buffer = ifCommand.call(tpl, scope, option4, buffer, 2);
         return buffer;
     };
-    tabXtpl.TPL_NAME = module.name;
-    module.exports = tabXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 
 KISSY.add('tabs/panel', ['component/container'], function (S, require, exports, module) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 22:59
+build time: Jul 18 12:19
 */
 /*
 combined modules:
@@ -1138,9 +1138,10 @@ KISSY.add('editor', [
 
 
 
-/** Compiled By xtpl */
 KISSY.add('editor/iframe-content-xtpl', [], function (S, require, exports, module) {
-    var iframeContentXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function iframeContentXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<!doctype html>\r\n<html>\r\n<head>', 0);
@@ -1164,8 +1165,7 @@ KISSY.add('editor/iframe-content-xtpl', [], function (S, require, exports, modul
         buffer.write('\r\n</body> \r\n</html>', 0);
         return buffer;
     };
-    iframeContentXtpl.TPL_NAME = module.name;
-    module.exports = iframeContentXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('editor/base', [
     'util',
@@ -1290,9 +1290,10 @@ KISSY.add('editor/base', [
 
 
 
-/** Compiled By xtpl */
 KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
-    var renderXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function renderXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -1352,8 +1353,7 @@ KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
         buffer.write('editor-status">\r\n\r\n</div>', 0);
         return buffer;
     };
-    renderXtpl.TPL_NAME = module.name;
-    module.exports = renderXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 KISSY.add('editor/utils', [
     'util',
@@ -1392,7 +1392,7 @@ KISSY.add('editor/utils', [
                 }
                 if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
                     url = url.replace(/^theme\//, 'theme/assets/');
-                    return require.toUrl('../../' + url);
+                    return require.toUrl('../../../' + url);
                 }
                 return require.toUrl('./' + url);
             },

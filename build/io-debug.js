@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:07
+build time: Jul 18 12:27
 */
 /*
 combined modules:
@@ -275,7 +275,6 @@ KISSY.add('io/form-serializer', [
 KISSY.add('io/base', [
     'util',
     'querystring',
-    'logger-manager',
     'event/custom',
     'promise',
     'url'
@@ -286,9 +285,7 @@ KISSY.add('io/base', [
  * @author yiminghe@gmail.com
  */
     var util = require('util');
-    var querystring = require('querystring');
-    var LoggerManager = require('logger-manager');
-    var logger = LoggerManager.getLogger();    /*global CustomEvent:true*/
+    var querystring = require('querystring');    /*global CustomEvent:true*/
     /*global CustomEvent:true*/
     var CustomEvent = require('event/custom');
     var Promise = require('promise');
@@ -835,7 +832,6 @@ KISSY.add('io/base', [
             self.state = 1;
             transport.send();
         } catch (e) {
-            logger.log(e.stack || e, 'error');
             if ('@DEBUG@') {
                 setTimeout(function () {
                     throw e;
@@ -919,7 +915,6 @@ KISSY.add('io/base', [
  - 借鉴 jquery，优化减少闭包使用
  */
 });
-
 
 
 
@@ -1247,7 +1242,6 @@ KISSY.add('io/xhr-transport-base', [
                     }
                 }
             } catch (e) {
-                LoggerManager.log(e.stack || e, 'error');
                 if ('@DEBUG@') {
                     setTimeout(function () {
                         throw e;
@@ -1262,6 +1256,7 @@ KISSY.add('io/xhr-transport-base', [
     });
     module.exports = XhrTransportBase;
 });
+
 
 KISSY.add('io/xdr-flash-transport', [
     'util',
@@ -1926,7 +1921,6 @@ KISSY.add('io/methods', [
     'util',
     'promise',
     './base',
-    'logger-manager',
     'url'
 ], function (S, require, exports, module) {
     /**
@@ -1936,7 +1930,6 @@ KISSY.add('io/methods', [
  */
     var util = require('util');
     var Promise = require('promise'), IO = require('./base');
-    var LoggerManager = require('logger-manager');
     var url = require('url');
     var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304,
         // get individual response header from response header str
@@ -2111,7 +2104,6 @@ KISSY.add('io/methods', [
                         statusText = 'success';
                         isSuccess = true;
                     } catch (e) {
-                        LoggerManager.log(e.stack || e, 'error');
                         if ('@DEBUG@') {
                             setTimeout(function () {
                                 throw e;

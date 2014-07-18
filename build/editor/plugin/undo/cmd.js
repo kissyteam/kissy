@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:05
+build time: Jul 18 12:25
 */
 KISSY.add("editor/plugin/undo/cmd",["editor","ua","util"],function(o,f,p,j){function h(a){var c=a.get("document")[0].body.innerHTML,b;c&&(b=a.getSelection());this.contents=c;this.bookmarks=b&&b.createBookmarks2(!0)}function i(a){this.history=[];this.index=-1;this.editor=a;this.bufferRunner=k.buffer(this.save,500,this);this._init()}var g=f("editor"),l=f("ua"),k=f("util");h.prototype={equals:function(a){return this.contents===a.contents}};var m={16:1,17:1,18:1},n={37:1,38:1,39:1,40:1,33:1,34:1};i.prototype=
 {_keyMonitor:function(){var a=this,c=a.editor;c.docReady(function(){c.get("document").on("keydown",function(b){var d=b.keyCode;d in n||d in m||(90===d&&(b.ctrlKey||b.metaKey)?(!1!==c.fire("beforeRedo")&&a.restore(-1),b.halt()):89===d&&(b.ctrlKey||b.metaKey)?(!1!==c.fire("beforeUndo")&&a.restore(1),b.halt()):!1!==c.fire("beforeSave",{buffer:1})&&a.save(1))})})},_init:function(){var a=this,c=a.editor;a._keyMonitor();setTimeout(function(){if(c.get("mode")===g.Mode.WYSIWYG_MODE)if(c.isDocReady())a.save();

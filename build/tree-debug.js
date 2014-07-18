@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 1 23:09
+build time: Jul 18 12:29
 */
 /*
 combined modules:
@@ -574,9 +574,10 @@ KISSY.add('tree/node', [
 
 
 
-/** Compiled By xtpl */
 KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
-    var nodeXtpl = function (scope, buffer, undefined) {
+    /* Compiled By XTemplate */
+    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
+    module.exports = function nodeXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
         var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
         buffer.write('<div class="', 0);
@@ -717,8 +718,7 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
         buffer.write('\r\n>\r\n</div>', 0);
         return buffer;
     };
-    nodeXtpl.TPL_NAME = module.name;
-    module.exports = nodeXtpl;
+    module.exports.TPL_NAME = module.name;
 });
 
 KISSY.add('tree/tree-manager', [

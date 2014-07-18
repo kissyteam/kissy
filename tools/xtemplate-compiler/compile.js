@@ -5,8 +5,8 @@
  * @author yiminghe@gmail.com
  */
 var program = require('commander');
-var compileModuleCode = require('../lib/xtemplate/compile-module');
-var util = require('../lib/util');
+var compileModuleCode = require('./compile-module');
+var util = require('../common/util');
 var fs = require('fs');
 var path = require('path');
 var fsExtra = require('fs-extra');

@@ -1,6 +1,6 @@
 var path = require('path');
 var kissyRoot = path.join(__dirname, '../../../');
-var compileXtplCode = require(kissyRoot+'lib/xtemplate/compile-module');
+var compileXtplCode = require(kissyRoot + 'tools/xtemplate-compiler/compile-module');
 var url = require('url');
 
 module.exports = function (req, res, next) {

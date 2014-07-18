@@ -6,7 +6,6 @@
 var util = require('util');
 var Promise = require('promise'),
     IO = require('./base');
-var LoggerManager = require('logger-manager');
 var url = require('url');
 var OK_CODE = 200,
     MULTIPLE_CHOICES = 300,
