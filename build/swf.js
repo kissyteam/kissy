@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.44
 MIT Licensed
-build time: May 22 12:31
+build time: Jul 23 14:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -66,11 +66,8 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
   SWF = Attribute.extend({constructor:function(config) {
     var self = this;
     self.callSuper(config);
-    var expressInstall = self.get("expressInstall"), swf, html, id, htmlMode = self.get("htmlMode"), flashVars, params = self.get("params"), attrs = self.get("attrs"), doc = self.get("document"), placeHolder = Dom.create("<span>", undefined, doc), elBefore = self.get("elBefore"), installedSrc = self.get("src"), hasNoId = !("id" in attrs), idRegExp, version = self.get("version");
+    var expressInstall = self.get("expressInstall"), swf, html, id, htmlMode = self.get("htmlMode"), flashVars, params = self.get("params"), attrs = self.get("attrs"), doc = self.get("document"), placeHolder = Dom.create("<span>", undefined, doc), elBefore = self.get("elBefore"), installedSrc = self.get("src"), version = self.get("version");
     id = attrs.id = attrs.id || S.guid("ks-swf-");
-    if(hasNoId) {
-      idRegExp = new RegExp("\\s+id\\s*=\\s*['\"]?" + S.escapeRegExp(id) + "['\"]?", "i")
-    }
     if(!fpv()) {
       self.set("status", SWF.Status.NOT_INSTALLED);
       return
@@ -94,7 +91,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
     }else {
       html = _stringSWFDefault(installedSrc, attrs, params)
     }
-    self.set("html", idRegExp ? html.replace(idRegExp, "") : html);
+    self.set("html", html);
     if(elBefore) {
       Dom.insertBefore(placeHolder, elBefore)
     }else {
@@ -114,9 +111,6 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
       }
     }else {
       self.set("swfObject", swf)
-    }
-    if(hasNoId) {
-      Dom.removeAttr(swf, "id")
     }
     self.set("el", swf);
     if(!self.get("status")) {

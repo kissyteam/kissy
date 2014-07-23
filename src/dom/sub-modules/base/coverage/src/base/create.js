@@ -420,6 +420,7 @@ if (! _$jscoverage['/base/create.js']) {
   _$jscoverage['/base/create.js'].lineData[524] = 0;
   _$jscoverage['/base/create.js'].lineData[532] = 0;
   _$jscoverage['/base/create.js'].lineData[533] = 0;
+  _$jscoverage['/base/create.js'].lineData[535] = 0;
   _$jscoverage['/base/create.js'].lineData[536] = 0;
 }
 if (! _$jscoverage['/base/create.js'].functionData) {
@@ -1404,6 +1405,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[533]++;
   return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
 };
+  _$jscoverage['/base/create.js'].lineData[535]++;
+  creatorsMap.option = creatorsMap.optgroup = 1;
   _$jscoverage['/base/create.js'].lineData[536]++;
   return Dom;
 });

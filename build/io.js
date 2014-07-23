@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.44
 MIT Licensed
-build time: May 27 14:25
+build time: Jul 23 14:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -48,11 +48,11 @@ KISSY.add("io/form-serializer", ["dom"], function(S, require) {
         val = normalizeCRLF(val)
       }
       vs = data[el.name];
-      if(!vs) {
+      if(vs === undefined) {
         data[el.name] = val;
         return
       }
-      if(vs && !S.isArray(vs)) {
+      if(!S.isArray(vs)) {
         vs = data[el.name] = [vs]
       }
       vs.push.apply(vs, S.makeArray(val))

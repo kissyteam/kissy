@@ -70,15 +70,9 @@ KISSY.add(function (S, require) {
                 placeHolder = Dom.create('<span>', undefined, doc),
                 elBefore = self.get('elBefore'),
                 installedSrc = self.get('src'),
-                hasNoId = !('id' in attrs),
-                idRegExp,
                 version = self.get('version');
 
             id = attrs.id = attrs.id || S.guid('ks-swf-');
-
-            if (hasNoId) {
-                idRegExp = new RegExp('\\s+id\\s*=\\s*[\'"]?' + S.escapeRegExp(id) + '[\'"]?', 'i');
-            }
 
             // 2. flash 插件没有安装
             if (!fpv()) {
@@ -122,7 +116,7 @@ KISSY.add(function (S, require) {
             }
 
             // ie 再取 target.innerHTML 属性大写，很多多与属性，等
-            self.set('html', idRegExp ? html.replace(idRegExp, '') : html);
+            self.set('html', html);
 
             if (elBefore) {
                 Dom.insertBefore(placeHolder, elBefore);
@@ -146,10 +140,6 @@ KISSY.add(function (S, require) {
                 }
             } else {
                 self.set('swfObject', swf);
-            }
-
-            if (hasNoId) {
-                Dom.removeAttr(swf, 'id');
             }
 
             // bug fix: 重新获取对象,否则还是老对象.

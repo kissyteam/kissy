@@ -27,7 +27,7 @@ KISSY.add(function (S, require) {
         serialize: function (forms, serializeArray) {
             // 名值键值对序列化,数组元素名字前不加 []
             return S.param(FormSerializer.getFormData(forms), undefined, undefined,
-                serializeArray || false);
+                    serializeArray || false);
         },
 
         getFormData: function (forms) {
@@ -47,10 +47,10 @@ KISSY.add(function (S, require) {
                     (
                         // radio,checkbox 被选择了
                         el.checked ||
-                            // select 或者 textarea
-                            rselectTextarea.test(el.nodeName) ||
-                            // input 类型
-                            rinput.test(el.type)
+                        // select 或者 textarea
+                        rselectTextarea.test(el.nodeName) ||
+                        // input 类型
+                        rinput.test(el.type)
                         );
 
                 // 这样子才取值
@@ -72,11 +72,11 @@ KISSY.add(function (S, require) {
                 }
 
                 vs = data[el.name];
-                if (!vs) {
+                if (vs === undefined) {
                     data[el.name] = val;
                     return;
                 }
-                if (vs && !S.isArray(vs)) {
+                if (!S.isArray(vs)) {
                     // 多个元素重名时搞成数组
                     vs = data[el.name] = [vs];
                 }

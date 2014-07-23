@@ -532,7 +532,7 @@ KISSY.add(function (S, require) {
     creators.option = creators.optgroup = function (html, ownerDoc) {
         return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
     };
-
+    creatorsMap.option = creatorsMap.optgroup = 1;
     return Dom;
 });
 
