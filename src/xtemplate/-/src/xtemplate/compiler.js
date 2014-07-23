@@ -144,7 +144,7 @@ function opExpression(e) {
     pushToArray(source, code1Source);
     source.push('var ' + exp + ' = ' + exp1 + ';');
     if (type === '&&' || type === '||') {
-        source.push('if(' + (type === '&&' ? '' : '!') + '(' + exp1 + ')){');
+        source.push('if(' + (type === '&&' ? '' : '!') + '(' + exp + ')){');
         pushToArray(source, code2Source);
         source.push(exp + ' = ' + exp2 + ';');
         source.push('}');

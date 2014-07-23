@@ -74,7 +74,6 @@ SWF = Attribute.extend({
             placeHolder = Dom.create('<span>', undefined, doc),
             elBefore = self.get('elBefore'),
             installedSrc = self.get('src'),
-            idRegExp,
             version = self.get('version');
 
         // https://github.com/kissyteam/kissy/issues/663
@@ -124,7 +123,7 @@ SWF = Attribute.extend({
         }
 
         // ie 再取 target.innerHTML 属性大写，很多多与属性，等
-        self.set('html', idRegExp ? html.replace(idRegExp, '') : html);
+        self.set('html', html);
 
         if (elBefore) {
             Dom.insertBefore(placeHolder, elBefore);
