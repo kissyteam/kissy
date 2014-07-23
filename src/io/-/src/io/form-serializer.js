@@ -73,11 +73,11 @@ FormSerializer = {
             }
 
             vs = data[el.name];
-            if (!vs) {
+            if (vs === undefined) {
                 data[el.name] = val;
                 return;
             }
-            if (vs && !util.isArray(vs)) {
+            if (!util.isArray(vs)) {
                 // 多个元素重名时搞成数组
                 vs = data[el.name] = [vs];
             }

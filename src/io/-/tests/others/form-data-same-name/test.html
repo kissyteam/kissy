@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script  src="/kissy/build/seed-debug.js"></script>
+    <script src="/gen/dev.js"></script>
+</head>
+<body>
+<form action="do.jss" id="J_form">
+    <input type="file" name="upload" />
+    <input type="text" name="ip" />
+    <input type="text" name="ip" />
+    <input type="submit" id="J_submit" />
+</form>
+<script>
+    KISSY.use('io,node',function(S,IO,Node) {
+        console.log(Node.one('#J_submit'));
+        Node.one('#J_submit').on('click', function(e) {
+            e.halt();
+            new IO({
+                url:'do.jss',
+                type:"post",
+                dataType: 'json',
+                form: '#J_form',
+                processData:false,
+                success:function (d) {
+                    console.log(d);
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

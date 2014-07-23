@@ -35,6 +35,8 @@ function get(url, data, callback, dataType, type) {
 util.mix(IO, {
     serialize: serializer.serialize,
 
+    getFormData: serializer.getFormData,
+
     /**
      * perform a get request
      * @method

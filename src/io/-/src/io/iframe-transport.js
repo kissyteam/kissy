@@ -71,16 +71,18 @@ function createIframe(xhr) {
 }
 
 function addDataToForm(query, form, serializeArray) {
-    var ret = [], isArray, vs, i, e;
+    var ret = [], isArray, i, e;
     util.each(query, function (data, k) {
         isArray = util.isArray(data);
-        vs = util.makeArray(data);
+        if (!isArray) {
+            data = [data];
+        }
         // 数组和原生一样对待，创建多个同名输入域
-        for (i = 0; i < vs.length; i++) {
+        for (i = 0; i < data.length; i++) {
             e = doc.createElement('input');
             e.type = 'hidden';
             e.name = k + (isArray && serializeArray ? '[]' : '');
-            e.value = vs[i];
+            e.value = data[i];
             Dom.append(e, form);
             ret.push(e);
         }

@@ -139,7 +139,6 @@ util.mix(XhrTransportBase.proto, {
 
         var xRequestHeader = requestHeaders['X-Requested-With'];
 
-        //
         if (xRequestHeader === false) {
             delete requestHeaders['X-Requested-With'];
         }
