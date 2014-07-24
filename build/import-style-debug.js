@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:03
+build time: Jul 24 19:32
 */
 /**
  * use document.write to load external css files in block loading ways.
@@ -10,130 +10,38 @@ build time: Jul 18 14:03
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    // --no-module-wrap--
-    var isDebug;
+    var method = 'writeln';
 
-    function each(arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
-            if (fn(arr[i], i, arr) === false) {
-                return;
-            }
-        }
-    }
-
-    function startsWith(str, prefix) {
-        return str.lastIndexOf(prefix, 0) === 0;
-    }
-
-    /**
-     * use document.write to load module's css dependency or css module in block loading ways.
-     * @param {String[]} modNames css/js module names
-     * @member KISSY
-     */
     function importStyle(modNames) {
+        if (typeof modNames === 'string') {
+            modNames = modNames.split(',');
+        }
         var Utils = S.Loader.Utils;
-
-        modNames = Utils.getModNamesAsArray(modNames);
-        modNames = Utils.normalizeModNames(S, modNames);
-
-        var cssList = [],
-            doc = S.Env.host.document,
-            Config = S.Config,
-            cssCache = {},
-            stack = [],
-            stackCache = {},
-            processed = {};
-        isDebug = Config.debug;
-        each(modNames, function (modName) {
-            var mod = S.Loader.Utils.getOrCreateModuleInfo(S, modName);
-            collectCss(mod, cssList, stack, cssCache, stackCache, processed);
+        var Status = S.Loader.Status;
+        var each = Utils.each;
+        var ComboLoader = S.Loader.ComboLoader;
+        var loader = new ComboLoader();
+        var mods = Utils.createModules(modNames);
+        var unloadedMods = [];
+        each(mods, function (mod) {
+            unloadedMods.push.apply(unloadedMods, mod.getNormalizedModules());
         });
-        if (cssList.length) {
-            if (Config.combine) {
-                var comboPrefix = Config.comboPrefix,
-                    comboSep = Config.comboSep,
-                    maxFileNum = Config.comboMaxFileNum,
-                    maxUrlLength = Config.comboMaxUrlLength;
-                var prefix = '';
-                var suffix = '';
-                var combined = [];
-                var combinedUrl = [];
-                for (var i = 0; i < cssList.length; i++) {
-                    var currentCss = cssList[i];
-                    var currentPackage = currentCss.getPackage();
-                    var packagePath = currentPackage.getBase();
-                    // map individual module
-                    var fullpath = currentCss.getPath();
-                    if (!currentPackage.isCombine() || !startsWith(fullpath, packagePath)) {
-                        doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
-                        continue;
-                    }
-                    var path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
-                    combined.push(currentCss);
-                    combinedUrl.push(path);
-                    if (combined.length === 1) {
-                        prefix = packagePath + comboPrefix;
-                        if (currentPackage.getTag()) {
-                            suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
-                        }
-                    } else {
-                        if ((combinedUrl.length > maxFileNum) ||
-                            (prefix.length + combinedUrl.join(comboSep).length +
-                                suffix.length > maxUrlLength) ||
-                            combined[0].getPackage() !== currentPackage) {
-                            combined.pop();
-                            combinedUrl.pop();
-                            doc.writeln('<link href="' +
-                                (prefix + combinedUrl.join(comboSep) + suffix) +
-                                '"  rel="stylesheet"/>');
-                            combined = [];
-                            combinedUrl = [];
-                            i--;
-                        }
-                    }
-                }
-                if (combinedUrl.length) {
-                    doc.writeln('<link href="' +
-                        (prefix + combinedUrl.join(comboSep) + suffix) +
-                        '"  rel="stylesheet"/>');
-                }
+        unloadedMods = loader.calculate(unloadedMods, []);
+        var unloadedCssMods = [];
+        each(unloadedMods, function (mod) {
+            if (mod.getType() === 'css') {
+                mod.status = Status.ATTACHED;
+                unloadedCssMods.push(mod);
             } else {
-                each(cssList, function (css) {
-                    doc.writeln('<link href="' + css.Path() + '"  rel="stylesheet"/>');
-                });
+                mod.status = Status.INIT;
             }
-        }
-    }
-
-    function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
-        var name = mod.name;
-        if (isDebug && stackCache[name]) {
-            S.error('circular dependencies found: ' + stack);
-            return;
-        }
-        if (processed[name]) {
-            return;
-        }
-        processed[name] = 1;
-        if (mod.getType() === 'css') {
-            if (!cssCache[name]) {
-                mod.status = 4;
-                cssList.push(mod);
-                cssCache[name] = 1;
-            }
-            return;
-        }
-        var requires = mod.getRequiredMods();
-        if (isDebug) {
-            stackCache[name] = 1;
-            stack.push(name);
-        }
-        each(requires, function (r) {
-            collectCss(r, cssList, stack, cssCache, stackCache, processed);
         });
-        if (isDebug) {
-            stack.pop();
-            delete stackCache[name];
+        var comboUrls = loader.getComboUrls(unloadedCssMods);
+        // load css first to avoid page blink
+        if (comboUrls.css) {
+            each(comboUrls.css, function (rs) {
+                document[method](' <link rel="stylesheet" href="' + rs.url + '">');
+            });
         }
     }
 
