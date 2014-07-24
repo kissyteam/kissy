@@ -337,6 +337,10 @@ jasmine.KissyReport = (function () {
     Report.prototype.reportRunnerResults = function (runner) {
         if (window._$jscoverage && window.jscoverage_serializeCoverageToJSON) {
             printCoverageInfo(this.component);
+            if (window.opener) {
+                window.opener.document.getElementById('summaryTab').click();
+                window.close();
+            }
         }
         if (window._$jscoverage && window.jscoverage_serializeCoverageToJSON && phantomjs && window.travisJobId) {
             var json = window.jscoverage_serializeCoverageToJSON();
