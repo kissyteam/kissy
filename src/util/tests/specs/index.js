@@ -16,6 +16,32 @@ describe('util', function () {
     }
 
     describe('util.mix', function () {
+        it('allow non structured deep mix', function () {
+            var a = {x: 2};
+            var b = {y: 2};
+            a.arr = [b, b];
+
+            (function () {
+                var n = {};
+                util.mix(n, a, {
+                    deep: true,
+                    structured: false
+                });
+                expect(n).toEqual(a);
+                expect(n.arr[0]).not.toBe(n.arr[1]);
+                expect(n.arr[0]).toEqual(n.arr[1]);
+            })();
+
+            (function () {
+                var n = {};
+                util.mix(n, a, {
+                    deep: true
+                });
+                expect(n).toEqual(a);
+                expect(n.arr[0]).toBe(n.arr[1]);
+            })();
+        });
+
         it('can be tolerant', function () {
             util.mix({}, false);
             util.mix({}, null);
@@ -625,111 +651,134 @@ describe('util', function () {
         expect(util.isPlainObject(host)).toBe(false);
     });
 
-    it('util.clone', function () {
-        // non array or plain object, just return
-        expect(util.clone()).toBe(undefined);
-        expect(util.clone(null)).toBe(null);
-        expect(util.clone(1)).toBe(1);
-        expect(util.clone(true)).toBe(true);
-        expect(util.clone('a')).toBe('a');
-        expect(util.clone(fn)).toBe(fn);
+    describe('util.clone', function () {
+        it('works',function(){
+            // non array or plain object, just return
+            expect(util.clone()).toBe(undefined);
+            expect(util.clone(null)).toBe(null);
+            expect(util.clone(1)).toBe(1);
+            expect(util.clone(true)).toBe(true);
+            expect(util.clone('a')).toBe('a');
+            expect(util.clone(fn)).toBe(fn);
 
-        var date = new Date();
-        expect(util.clone(date)).toEqual(date);
-        expect(util.clone(date)).not.toBe(date);
+            var date = new Date();
+            expect(util.clone(date)).toEqual(date);
+            expect(util.clone(date)).not.toBe(date);
 
 
-        var reg = /i/i;
-        expect(util.clone(reg)).toEqual(reg);
+            var reg = /i/i;
+            expect(util.clone(reg)).toEqual(reg);
 
-        // phantomjs cache??
-        if (!UA.phantomjs) {
-            expect(util.clone(reg)).not.toBe(reg);
-        }
+            // phantomjs cache??
+            if (!UA.phantomjs) {
+                expect(util.clone(reg)).not.toBe(reg);
+            }
 
-        // clone plain object
-        var t = { a: 0, b: { b1: 1, b2: 'a' } };
-        var t2 = util.clone(t);
-        t.a = 1;
-        expect(t2.a).toBe(0);
-        expect(t2.b.b1).toBe(1);
-        t2.b.b2 = 'b';
-        expect(t2.b.b2).toBe('b');
+            // clone plain object
+            var t = { a: 0, b: { b1: 1, b2: 'a' } };
+            var t2 = util.clone(t);
+            t.a = 1;
+            expect(t2.a).toBe(0);
+            expect(t2.b.b1).toBe(1);
+            t2.b.b2 = 'b';
+            expect(t2.b.b2).toBe('b');
 
-        // clone array
-        var t3 = ['a', 2, 3, t];
-        var t4 = util.clone(t3);
-        t3[1] = 1;
-        t3.push(5);
-        expect(t4[1]).toBe(2);
-        expect(t4.length).toBe(4);
+            // clone array
+            var t3 = ['a', 2, 3, t];
+            var t4 = util.clone(t3);
+            t3[1] = 1;
+            t3.push(5);
+            expect(t4[1]).toBe(2);
+            expect(t4.length).toBe(4);
 
-        // recursive clone
-        var CLONE_MARKER = '__~ks_cloned',
-            Tom = {
-                x: 1
-            },
-            Green = {
-                father: Tom,
-                x: 1
-            };
-        Tom.son = Green;
+            // recursive clone
+            var CLONE_MARKER = '__~ks_cloned',
+                Tom = {
+                    x: 1
+                },
+                Green = {
+                    father: Tom,
+                    x: 1
+                };
+            Tom.son = Green;
 
-        var Tom2 = util.clone(Tom);
-        expect(Tom2.son).toEqual(Green);
-        expect(Tom2.son).not.toBe(Green);
-        Tom2.son.x = 2;
-        expect(Green.x).toBe(1);
+            var Tom2 = util.clone(Tom);
+            expect(Tom2.son).toEqual(Green);
+            expect(Tom2.son).not.toBe(Green);
+            Tom2.son.x = 2;
+            expect(Green.x).toBe(1);
 
-        expect(Tom2[CLONE_MARKER]).toBeUndefined();
+            expect(Tom2[CLONE_MARKER]).toBeUndefined();
 
-        var Green2 = util.clone(Green);
-        expect(Green2.father).toEqual(Tom);
-        expect(Green2.father).not.toBe(Tom);
-        expect(Green2[CLONE_MARKER]).toBeUndefined();
+            var Green2 = util.clone(Green);
+            expect(Green2.father).toEqual(Tom);
+            expect(Green2.father).not.toBe(Tom);
+            expect(Green2[CLONE_MARKER]).toBeUndefined();
 
-        // filter function
-        var t5 = [1, 2, 3, 4, 5, 6];
-        var t6 = util.clone(t5, function (v) {
-            return v % 2 === 0;
+            // filter function
+            var t5 = [1, 2, 3, 4, 5, 6];
+            var t6 = util.clone(t5, function (v) {
+                return v % 2 === 0;
+            });
+            expect(t6.length).toBe(3);
+            expect(t6[0]).toBe(2);
+            expect(t6[1]).toBe(4);
+            expect(t6[2]).toBe(6);
+
+
+            // array of object
+            var t7 = [],
+                t20 = {x: 6},
+                t21 = {x: 7},
+                t22 = [t20, t21],
+                t8 = {x: 1, z: t7, q: t22},
+                t9 = {y: 1, z: t7, q: t22};
+            t7.push(t8, t9);
+            var t10 = util.clone(t7);
+            expect(t10).not.toBe(t7);
+            expect(t10).toEqual(t7);
+            expect(t10 === t7).toBe(false);
+
+
+            // 复制后仍是同一数组
+            expect(t10[0].z === t10).toBe(true);
+            expect(t10[0].z).toBe(t10);
+            expect(t10[0].z).not.toBe(t7);
+            expect(t10[0].z).toEqual(t7);
+
+            // 复制后仍是同一数组
+            expect(t10[1].q).toBe(t10[0].q);
+            expect(t10[1].q).not.toBe(t22);
+            expect(t10[1].q).toEqual(t22);
+
+            t10[0].x = 2;
+            t10[1].y = 2;
+            // 不改变原始数据
+            expect(t10.length).toBe(2);
+            expect(t8.x).toBe(1);
+            expect(t9.y).toBe(1);
         });
-        expect(t6.length).toBe(3);
-        expect(t6[0]).toBe(2);
-        expect(t6[1]).toBe(4);
-        expect(t6[2]).toBe(6);
 
+       it('allow non structured clone',function(){
+           var a = {x: 2};
+           var b = {y: 2};
+           a.arr = [b, b];
 
-        // array of object
-        var t7 = [],
-            t20 = {x: 6},
-            t21 = {x: 7},
-            t22 = [t20, t21],
-            t8 = {x: 1, z: t7, q: t22},
-            t9 = {y: 1, z: t7, q: t22};
-        t7.push(t8, t9);
-        var t10 = util.clone(t7);
-        expect(t10).not.toBe(t7);
-        expect(t10).toEqual(t7);
-        expect(t10 === t7).toBe(false);
+           (function () {
+               var n = util.clone(a, {
+                   structured: false
+               });
+               expect(n).toEqual(a);
+               expect(n.arr[0]).not.toBe(n.arr[1]);
+               expect(n.arr[0]).toEqual(n.arr[1]);
+           })();
 
-
-        // 复制后仍是同一数组
-        expect(t10[0].z === t10).toBe(true);
-        expect(t10[0].z).toBe(t10);
-        expect(t10[0].z).not.toBe(t7);
-        expect(t10[0].z).toEqual(t7);
-
-        // 复制后仍是同一数组
-        expect(t10[1].q).toBe(t10[0].q);
-        expect(t10[1].q).not.toBe(t22);
-        expect(t10[1].q).toEqual(t22);
-
-        t10[0].x = 2;
-        t10[1].y = 2;
-        // 不改变原始数据
-        expect(t10.length).toBe(2);
-        expect(t8.x).toBe(1);
-        expect(t9.y).toBe(1);
+           (function () {
+               var n = util.clone(a);
+               expect(n).toEqual(a);
+               expect(n.arr[0]).toBe(n.arr[1]);
+           })();
+       });
     });
 
     it('util.trim', function () {

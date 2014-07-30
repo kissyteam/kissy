@@ -7,30 +7,30 @@
 var util = require('./base');
 var LoggerManager = require('logger-manager');
 var logger = LoggerManager.getLogger('util');
-var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
-    STAMP_MARKER = '__~ks_stamped',
-    host = typeof window === 'undefined' ? global : window,
-    undef,
-    CLONE_MARKER = '__~ks_cloned',
-    toString = ({}).toString,
-    COMPARE_MARKER = '__~ks_compared',
-    Obj = Object,
-    objectCreate = Obj.create;
+var undef;
+var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR';
+var STAMP_MARKER = '__~ks_stamped';
+var host = typeof window === 'undefined' ? global : window;
+var CLONE_MARKER = '__~ks_cloned';
+var toString = ({}).toString;
+var COMPARE_MARKER = '__~ks_compared';
+var Obj = Object;
+var objectCreate = Obj.create;
 
 // bug in native ie678, not in simulated ie9
-var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
-    enumProperties = [
-        'constructor',
-        'hasOwnProperty',
-        'isPrototypeOf',
-        'propertyIsEnumerable',
-        'toString',
-        'toLocaleString',
-        'valueOf'
-    ];
+var hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString'));
+var enumProperties = [
+    'constructor',
+    'hasOwnProperty',
+    'isPrototypeOf',
+    'propertyIsEnumerable',
+    'toString',
+    'toLocaleString',
+    'valueOf'
+];
 
 function hasKey(obj, keyName) {
-    return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
+    return (obj !== null && obj !== undef) && obj[keyName] !== undef;
 }
 
 function cleanAndReturn(a, b, ret) {
@@ -244,12 +244,14 @@ mix(util, {
      *     util.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
      */
     mix: function (r, s, ov, wl, deep) {
+        var structured;
         if (typeof ov === 'object') {
             wl = /**
              @ignore
              @type {String[]|Function}
              */ov.whitelist;
             deep = ov.deep;
+            structured = ov.structured;
             ov = ov.overwrite;
         }
 
@@ -264,10 +266,14 @@ mix(util, {
             ov = true;
         }
 
-        var cache = [],
-            c,
-            i = 0;
-        mixInternal(r, s, ov, wl, deep, cache);
+        if (structured === undef) {
+            structured = true;
+        }
+
+        var cache = [];
+        var i = 0;
+        var c;
+        mixInternal(r, s, ov, wl, deep, cache, structured);
         while ((c = cache[i++])) {
             delete c[MIX_CIRCULAR_DETECTION];
         }
@@ -419,19 +425,32 @@ mix(util, {
         // initially empty. This is used to handle duplicate references.
         // In each pair of objects, one is called the source object
         // and the other the destination object.
-        var memory = {},
-            ret = cloneInternal(input, filter, memory);
-        util.each(memory, function (v) {
-            // 清理在源对象上做的标记
-            v = v.input;
-            if (v[CLONE_MARKER]) {
-                try {
-                    delete v[CLONE_MARKER];
-                } catch (e) {
-                    v[CLONE_MARKER] = undefined;
+        var structured;
+        if (typeof filter === 'object') {
+            structured = filter.structured;
+            filter = filter.filter;
+        }
+        if (structured === undef) {
+            structured = true;
+        }
+        var memory;
+        if (structured) {
+            memory = {};
+        }
+        var ret = cloneInternal(input, filter, memory, structured);
+        if (structured) {
+            util.each(memory, function (v) {
+                // 清理在源对象上做的标记
+                v = v.input;
+                if (v[CLONE_MARKER]) {
+                    try {
+                        delete v[CLONE_MARKER];
+                    } catch (e) {
+                        v[CLONE_MARKER] = undef;
+                    }
                 }
-            }
-        });
+            });
+        }
         memory = null;
         return ret;
     }
@@ -458,7 +477,7 @@ function mix(r, s) {
     }
 }
 
-function mixInternal(r, s, ov, wl, deep, cache) {
+function mixInternal(r, s, ov, wl, deep, cache, structured) {
     if (!s || !r) {
         return r;
     }
@@ -477,7 +496,7 @@ function mixInternal(r, s, ov, wl, deep, cache) {
         p = keys[i];
         if (p !== MIX_CIRCULAR_DETECTION) {
             // no hasOwnProperty judge!
-            _mix(p, r, s, ov, wl, deep, cache);
+            _mix(p, r, s, ov, wl, deep, cache, structured);
         }
     }
 
@@ -488,7 +507,7 @@ function removeConstructor(k, v) {
     return k === 'constructor' ? undef : v;
 }
 
-function _mix(p, r, s, ov, wl, deep, cache) {
+function _mix(p, r, s, ov, wl, deep, cache, structured) {
     // 要求覆盖
     // 或者目的不存在
     // 或者深度mix
@@ -508,7 +527,7 @@ function _mix(p, r, s, ov, wl, deep, cache) {
         }
         // 来源是数组和对象，并且要求深度 mix
         if (deep && src && (util.isArray(src) || util.isPlainObject(src))) {
-            if (src[MIX_CIRCULAR_DETECTION]) {
+            if (structured && src[MIX_CIRCULAR_DETECTION]) {
                 r[p] = src[MIX_CIRCULAR_DETECTION];
             } else {
                 // 目标值为对象或数组，直接 mix
@@ -517,7 +536,7 @@ function _mix(p, r, s, ov, wl, deep, cache) {
                     target :
                     (util.isArray(src) ? [] : {});
                 r[p] = clone;
-                mixInternal(clone, src, ov, wl, true, cache);
+                mixInternal(clone, src, ov, wl, true, cache, structured);
             }
         } else if (src !== undef && (ov || !(p in r))) {
             r[p] = src;
@@ -525,12 +544,10 @@ function _mix(p, r, s, ov, wl, deep, cache) {
     }
 }
 
-function cloneInternal(input, f, memory) {
-    var destination = input,
-        isArray,
-        isPlainObject,
-        k,
-        stamp;
+function cloneInternal(input, f, memory, structured) {
+    var destination = input;
+    var isArray, isPlainObject, k, stamp;
+
     if (!input) {
         return destination;
     }
@@ -538,7 +555,7 @@ function cloneInternal(input, f, memory) {
     // If input is the source object of a pair of objects in memory,
     // then return the destination object in that pair of objects .
     // and abort these steps.
-    if (input[CLONE_MARKER]) {
+    if (structured && input[CLONE_MARKER]) {
         // 对应的克隆后对象
         return memory[input[CLONE_MARKER]].destination;
     } else if (typeof input === 'object') {
@@ -552,13 +569,15 @@ function cloneInternal(input, f, memory) {
         } else if ((isPlainObject = util.isPlainObject(input))) {
             destination = {};
         }
-        // Add a mapping from input (the source object)
-        // to output (the destination object) to memory.
-        // 做标记
-        // stamp can not be
-        input[CLONE_MARKER] = (stamp = util.guid('c'));
-        // 存储源对象以及克隆后的对象
-        memory[stamp] = {destination: destination, input: input};
+        if (structured) {
+            // Add a mapping from input (the source object)
+            // to output (the destination object) to memory.
+            // 做标记
+            // stamp can not be
+            input[CLONE_MARKER] = (stamp = util.guid('c'));
+            // 存储源对象以及克隆后的对象
+            memory[stamp] = {destination: destination, input: input};
+        }
     }
     // If input is an Array object or an Object object,
     // then, for each enumerable property in input,
@@ -570,13 +589,13 @@ function cloneInternal(input, f, memory) {
     // clone it
     if (isArray) {
         for (var i = 0; i < destination.length; i++) {
-            destination[i] = cloneInternal(destination[i], f, memory);
+            destination[i] = cloneInternal(destination[i], f, memory, structured);
         }
     } else if (isPlainObject) {
         for (k in input) {
             if (k !== CLONE_MARKER &&
                 (!f || (f.call(input, input[k], k, input) !== false))) {
-                destination[k] = cloneInternal(input[k], f, memory);
+                destination[k] = cloneInternal(input[k], f, memory, structured);
             }
         }
     }
