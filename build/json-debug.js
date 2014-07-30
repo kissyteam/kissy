@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:03
+build time: Jul 30 14:53
 */
 /*
 combined modules:
@@ -237,11 +237,12 @@ KISSY.add('json/quote', ['util'], function (S, require, exports, module) {
             '\r': '\\r',
             '\t': '\\t',
             '"': '\\"'
-        }, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
+        }, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\\\|\\\/|\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
     util.each(CONTROL_MAP, function (original, encoded) {
         REVERSE_CONTROL_MAP[original] = encoded;
     });
     REVERSE_CONTROL_MAP['\\/'] = '/';
+    REVERSE_CONTROL_MAP['\\\\'] = '\\';
     module.exports = {
         quote: function (value) {
             return '"' + value.replace(QUOTE_REG, function (m) {
