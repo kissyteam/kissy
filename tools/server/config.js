@@ -1,8 +1,8 @@
 var SERVER_CONFIG = {
-    "ports": [8888, 9999],
-    "codeDir": "/home/admin/cai/www/dev.kissyui.com/kissy",
-    "newDocsDir": "/home/admin/cai/www/docs.kissyui.com/docs.kissyui.com/",
-    "docsDir": "/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
+    'ports': [8888, 9999],
+    'codeDir': '/alidata/www/dev.kissyui.com/kissy',
+    'newDocsDir': '/alidata/www/docs.kissyui.com/docs.kissyui.com/',
+    'docsDir': '/alidata/www/docs.kissyui.com/kissyteam.github.com'
 };
 
 if (typeof module !== 'undefined') {
