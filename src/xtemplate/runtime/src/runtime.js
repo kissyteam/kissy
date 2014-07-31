@@ -269,8 +269,8 @@ XTemplateRuntime.prototype = {
         if (!name && fn.TPL_NAME) {
             name = fn.TPL_NAME;
         }
-        var scope = new Scope(data),
-            buffer = new LinkedBuffer(callback).head;
+        var scope = new Scope(data);
+        var buffer = new XTemplateRuntime.LinkedBuffer(callback, self.config).head;
         renderTpl({
             name: name,
             fn: fn,
@@ -284,6 +284,7 @@ XTemplateRuntime.prototype = {
 };
 
 XTemplateRuntime.Scope = Scope;
+XTemplateRuntime.LinkedBuffer = LinkedBuffer;
 
 module.exports = XTemplateRuntime;
 

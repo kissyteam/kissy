@@ -8,7 +8,7 @@ var util = require('util');
 
 function Buffer(list) {
     this.list = list;
-    this.data = '';
+    this.init();
 }
 
 Buffer.prototype = {
@@ -16,9 +16,17 @@ Buffer.prototype = {
 
     isBuffer: 1,
 
+    init: function () {
+        this.data = '';
+    },
+
+    append: function (data) {
+        this.data += data;
+    },
+
     write: function (data, escape) {
         if (data || data === 0) {
-            this.data += escape ? util.escapeHtml(data) : data;
+            this.append(escape ? util.escapeHtml(data) : data);
         }
         return this;
     },
@@ -55,29 +63,42 @@ Buffer.prototype = {
     }
 };
 
-function LinkedBuffer(callback) {
+function LinkedBuffer(callback, config) {
     var self = this;
+    self.config = config;
     self.head = new Buffer(self);
     self.callback = callback;
-    self.data = '';
+    this.init();
 }
 
 LinkedBuffer.prototype = {
     constructor: LinkedBuffer,
+
+    init: function () {
+        this.data = '';
+    },
+
+    append: function (data) {
+        this.data += data;
+    },
+
+    end: function () {
+        this.callback(null, this.data);
+    },
 
     flush: function () {
         var self = this;
         var fragment = self.head;
         while (fragment) {
             if (fragment.ready) {
-                self.data += fragment.data;
+                this.append(fragment.data);
             } else {
                 return;
             }
             fragment = fragment.next;
             self.head = fragment;
         }
-        self.callback(null, self.data);
+        self.end();
     }
 };
 

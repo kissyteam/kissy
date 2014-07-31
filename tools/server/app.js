@@ -1,6 +1,5 @@
 /*jshint camelcase:false*/
 var path = require('path');
-var fs = require('fs');
 var mime = require('mime');
 //noinspection JSUnresolvedVariable
 var cwd = process.cwd();
@@ -20,33 +19,9 @@ function startServer(port) {
         travisJobId: process.env.TRAVIS_JOB_ID
     });
 
-    var domain = require('domain');
-
     app.use(function (req, res, next) {
-        var d = domain.create();
-
-        //监听domain的错误事件
-        d.on('error', function (err) {
-            console.log(err,'error');
-            res.render('err', {
-                err: err && err.stack
-            });
-            d.dispose();
-        });
-
-        d.add(req);
-        d.add(res);
-        d.run(next);
-    });
-
-    var extensionReg = /.*\.(js|css)$/;
-
-    app.use(function (req, res, next) {
-        var m = req.path.match(extensionReg) || req.url.match(extensionReg);
-        if (m && m[1]) {
-            res.charset = 'utf-8';
-            res.set('content-type', mime.lookup(m[1]));
-        }
+        res.charset = 'utf-8';
+        res.set('content-type', mime.lookup(path.extname(req.path) || '.html'));
         next();
     });
 
