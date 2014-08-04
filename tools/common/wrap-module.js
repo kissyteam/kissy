@@ -72,7 +72,7 @@ exports.needModuleWrap = function (code) {
 
 exports.wrapModule = function (code) {
     if (exports.needModuleWrap(code)) {
-        return ['KISSY.add(function(S, require, exports, module){', code, '});'].join('\n');
+        return ['KISSY.add(function(S, require, exports, module){ ' + code, '});'].join('\n');
     }
     return code;
 };

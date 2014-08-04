@@ -37,13 +37,11 @@ function fire(stream, event) {
     if (stream.handler) {
         event = stream.handler(event);
     }
+    stream._event = event;
     if (!event) {
         return;
     }
-
-    stream._event = event;
-
-    var listeners = this._listeners;
+    var listeners = stream._listeners;
     for (var i = 0, l = listeners.length; i < l; i++) {
         listeners[i].fn.call(listeners[i].context, event);
     }
@@ -66,7 +64,7 @@ function propagate(v) {
 }
 
 function subscribe(stream) {
-    if (stream.unSubscribeFn) {
+    if (stream._listeners.length) {
         return;
     }
     if (stream._subscribeFn) {
@@ -75,26 +73,29 @@ function subscribe(stream) {
         stream._unSubscribeFn = NOP;
     }
     var children = stream._children;
-    for (var i = 0, l = children.length; i++; i < l) {
+    for (var i = 0, l = children.length; i < l; i++) {
         children[i].on(propagate, stream);
     }
 }
 
 function unSubscribe(stream) {
-    if (!stream.unSubscribeFn) {
+    if (stream._listeners.length) {
         return;
     }
     var children = stream._children;
-    for (var i = 0, l = children.length; i++; i < l) {
-        children[i].detach('value', propagate, stream);
+    for (var i = 0, l = children.length; i < l; i++) {
+        children[i].detach(propagate, stream);
     }
-    stream.unSubscribeFn();
-    stream.unSubscribeFn = null;
+    stream._unSubscribeFn();
+    stream._unSubscribeFn = null;
 }
 
 function addChild(stream, child) {
     stream._children.push(child);
-    child.on(propagate, stream);
+    // already start subscribe
+    if (stream._unSubscribeFn) {
+        child.on(propagate, stream);
+    }
 }
 
 function indexOfListener(stream, fn, context) {
@@ -109,25 +110,32 @@ function indexOfListener(stream, fn, context) {
 
 function combineHandler(event) {
     var property = this;
-    var _event = property._event;
-    var child = _event.target;
+    var _events = property._events;
+    var child = event.target;
     var children = property._children;
     var l = children.length;
     var i;
-    for (i = 0; i++; i < l) {
+    for (i = 0; i < l; i++) {
         if (children[i] === child) {
-            _event[i] = event;
+            _events[i] = event;
+            break;
         }
     }
-    if (l !== _event.length) {
+    if (l !== _events.length) {
         return;
     }
-    for (i = 0; i++; i < l) {
-        if (!_event[i]) {
+    var composedValue = [];
+    for (i = 0; i < l; i++) {
+        if (_events[i]) {
+            composedValue[i] = _events[i].value;
+        } else {
             return;
         }
     }
-    return _event;
+    return {
+        target: this,
+        value: composedValue
+    };
 }
 
 mix(EventStream.prototype, {
@@ -139,6 +147,18 @@ mix(EventStream.prototype, {
                 value: fn(e.value)
             };
         };
+        addChild(fin, this);
+        return fin;
+    },
+
+    flatMap: function (fn) {
+        // TODO
+        // fn return EventStream or Property
+        var fin = new this.constructor();
+        fin.handler = function (e) {
+            fn(e);
+        };
+        addChild(fin, this);
         return fin;
     },
 
@@ -146,18 +166,18 @@ mix(EventStream.prototype, {
         var fin = new this.constructor();
         fin.handler = function (e) {
             var v = fn(e.value);
-            if (!v) {
-                return;
+            if (v) {
+                return {
+                    target: e.target,
+                    value: e.value
+                };
             }
-            return {
-                target: e.target,
-                value: e.value
-            };
         };
+        addChild(fin, this);
         return fin;
     },
 
-    startWith: function (value) {
+    startsWith: function (value) {
         if (!this._event) {
             this._event = {
                 value: value,
@@ -203,9 +223,10 @@ mix(EventStream.prototype, {
     },
 
     combine: function () {
+        // composable
         var args = arguments;
         var fin = new Property();
-        fin._event = [];
+        fin._events = [];
         fin.handler = combineHandler;
         addChild(fin, this);
         for (var i = 0, l = args.length; i < l; i++) {
@@ -224,6 +245,8 @@ NOP.prototype = EventStream.prototype;
 Property.prototype = new NOP();
 
 mix(Property.prototype, {
+    constructor: Property,
+
     on: function (fn, context) {
         if (this._event) {
             fn.call(context, this._event);
@@ -232,7 +255,7 @@ mix(Property.prototype, {
     }
 });
 
-reactive.createStream = function (subscribeFn) {
+reactive.createEventStream = function (subscribeFn) {
     return new EventStream(subscribeFn);
 };
 
