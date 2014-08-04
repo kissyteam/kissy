@@ -1,7 +1,13 @@
-var serverConfig = require('../config');
 var exec = require('child_process').exec;
 var path = require('path');
 var fs = require('fs');
+var codeDir = path.resolve(__dirname,'../../../');
+var newDocsDir = path.resolve(codeDir,'../../docs.kissyui.com/docs.kissyui.com');
+var docsDir = path.resolve(newDocsDir,'../kissyteam.github.com');
+
+console.log(codeDir);
+console.log(newDocsDir);
+console.log(docsDir);
 
 function sync(dir, callback, errorCallback) {
     exec('cd ' + dir + ' && git reset --hard && git pull origin && git merge origin/master',
@@ -30,16 +36,14 @@ function updateBranch(branchDir, branch, callback, errorCallback) {
 }
 
 function syncCode(callback, errorCallback) {
-    sync(serverConfig.codeDir, callback, errorCallback);
+    sync(codeDir, callback, errorCallback);
 }
 
 function syncDocs(callback, errorCallback) {
-    sync(serverConfig.docsDir, callback, errorCallback);
+    sync(docsDir, callback, errorCallback);
 }
 
 function syncDocsBranch(branch, callback, errorCallback) {
-    var docsDir = serverConfig.docsDir;
-    var newDocsDir = serverConfig.newDocsDir;
     var newDocsBranchDir = path.join(newDocsDir, branch + '/build');
     var docsBranchDir = path.join(docsDir, branch);
     if (!fs.existsSync(docsBranchDir)) {
