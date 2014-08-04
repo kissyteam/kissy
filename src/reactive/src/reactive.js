@@ -248,10 +248,10 @@ mix(Property.prototype, {
     constructor: Property,
 
     on: function (fn, context) {
+        EventStream.prototype.on.apply(this, arguments);
         if (this._event) {
             fn.call(context, this._event);
         }
-        EventStream.prototype.on.apply(this, arguments);
     }
 });
 

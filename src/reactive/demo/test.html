@@ -28,20 +28,19 @@
             return function () {
                 t.oninput = null;
             }
-        }).startWith(t.value);
+        }).startsWith(t.value);
 
-        var t2Property = reactive.createProperty(function (sink) {
+        var t2Property = reactive.createProperty(function (pushEvent) {
             t2.oninput = function () {
-                sink(t2.value)
+                pushEvent(t2.value)
             };
             return function () {
 
                 t2.oninput = null;
             }
-        }).startWith(t2.value);
+        }).startsWith(t2.value);
 
-        var resultProperty = tProperty.combine(t2Property).map(function () {
-            var args = arguments;
+        var resultProperty = tProperty.combine(t2Property).map(function (args) {
             return parseInt(args[0]) + parseInt(args[1]);
         });
 
