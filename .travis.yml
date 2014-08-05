@@ -10,6 +10,7 @@ before_script:
 script:
 - phantomjs --version
 - node tools/test/gen-tc-for-phantom
+- node tools/test/check-server-start
 - phantomjs tools/test/jasmine-phantomjs.js
 branches:
   except:

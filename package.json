@@ -24,7 +24,7 @@
         "lib": "./lib/"
     },
     "scripts": {
-        "test": "sleep 2 && exit 0",
+        "test": "exit 0",
         "start": "node ./tools/server/start",
         "stop": "node ./tools/server/stop"
     },
