@@ -21,7 +21,11 @@ function startServer(port) {
 
     app.use(function (req, res, next) {
         res.charset = 'utf-8';
-        res.set('content-type', mime.lookup(path.extname(req.path) || '.html'));
+        var extname = path.extname(req.path) || '.html';
+        if (extname === '.jss') {
+            extname = '.html';
+        }
+        res.set('content-type', mime.lookup(extname));
         next();
     });
 
