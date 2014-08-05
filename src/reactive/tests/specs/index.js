@@ -1,5 +1,14 @@
 var reactive = require('reactive');
 
+function indexOf(array, item) {
+    for (var i = 0, l = array.length; i < l; i++) {
+        if (array[i] === item) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 describe('reactive', function () {
     it('works', function () {
         var clear = 0;
@@ -92,6 +101,41 @@ describe('reactive', function () {
         });
     });
 
+    it('will remove child when child end', function () {
+        var ok, end;
+        var stream = reactive.createEventStream(function (fire) {
+            setTimeout(function () {
+                fire(1);
+            }, 0);
+
+            setTimeout(function () {
+                fire(reactive.END);
+                setTimeout(function () {
+                    end = 1;
+                }, 0);
+            }, 100);
+        });
+
+        var stream2 = stream.map(function (v) {
+            return v + 1;
+        });
+
+        stream2.onValue(function (v) {
+            expect(v).toBe(2);
+            ok = 1;
+        });
+
+        expect(indexOf(stream2._children, stream)).not.toBe(-1);
+
+        waitsFor(function () {
+            return ok && end;
+        });
+
+        runs(function () {
+            expect(indexOf(stream2._children, stream)).toBe(-1);
+        });
+    });
+
     it('startsWith works for property', function () {
         var finished = 0;
         var ok = [];
@@ -160,7 +204,6 @@ describe('reactive', function () {
             expect(asyncValue).toBe(0);
         });
     });
-
 
     it('property can access fire value', function () {
         var ok;
@@ -252,6 +295,39 @@ describe('reactive', function () {
         fin.onValue(function (v) {
             expect(v[0]).toBe(1);
             expect(v[1]).toBe(2);
+            ok = 1;
+        });
+
+        waitsFor(function () {
+            return ok;
+        });
+    });
+
+    it('flatMap works', function () {
+        var ok;
+
+        var stream = reactive.createEventStream(function (fire) {
+            setTimeout(function () {
+                fire(1);
+            }, 0);
+        });
+
+        stream.id = 1;
+
+        var stream2 = stream.flatMap(function (v) {
+            var stream3 = reactive.createEventStream(function (fire) {
+                setTimeout(function () {
+                    fire(v + 1);
+                }, 0);
+            });
+            stream3.id = 3;
+            return stream3;
+        });
+
+        stream2.id = 2;
+
+        stream2.onValue(function (v) {
+            expect(v).toBe(2);
             ok = 1;
         });
 

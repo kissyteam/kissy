@@ -10,6 +10,15 @@ var reactive = module.exports = {
 function NOP() {
 }
 
+function indexOf(array, item) {
+    for (var i = 0, l = array.length; i < l; i++) {
+        if (array[i] === item) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 function mix(source, dest) {
     for (var d in dest) {
         source[d] = dest[d];
@@ -26,6 +35,7 @@ function bind(fn, context) {
 function EventStream(subscribeFn) {
     var self = this;
     this._listeners = [];
+    this._endListeners = [];
     this._subscribeFn = subscribeFn;
     this._children = [];
     this._pushEvent = bind(pushEvent, self);
@@ -41,21 +51,24 @@ function fire(stream, event) {
     if (!event) {
         return;
     }
-    var listeners = stream._listeners;
+    var listeners = stream._listeners.concat();
     for (var i = 0, l = listeners.length; i < l; i++) {
+        event.currentTarget = stream;
         listeners[i].fn.call(listeners[i].context, event);
     }
 }
 
 function pushEvent(v) {
+    var self = this;
     if (v === reactive.END) {
-        unSubscribe(this);
+        unSubscribe(self);
+        fireEnd(self);
     } else {
         v = {
             value: v,
-            target: this
+            target: self
         };
-        fire(this, v);
+        fire(self, v);
     }
 }
 
@@ -90,8 +103,40 @@ function unSubscribe(stream) {
     stream._unSubscribeFn = null;
 }
 
+function onEnd(stream, fn) {
+    stream._endListeners.push(fn);
+}
+
+function detachEnd(stream, fn) {
+    var index = indexOf(stream._endListeners, fn);
+    if (index !== -1) {
+        stream._endListeners.splice(index, 1);
+    }
+}
+
+function fireEnd(stream) {
+    var _endListeners = stream._endListeners.concat();
+    for (var i = 0, l = _endListeners.length; i < l; i++) {
+        _endListeners[i]();
+    }
+}
+
 function addChild(stream, child) {
-    stream._children.push(child);
+    var children = stream._children;
+    children.push(child);
+    function onChildEnd() {
+        var index = indexOf(children, child);
+        if (index !== -1) {
+            children.splice(index, 1);
+        }
+        // no other children
+        if (children.length === 0) {
+            fireEnd(stream);
+        }
+        detachEnd(child, onChildEnd);
+    }
+
+    onEnd(child, onChildEnd);
     // already start subscribe
     if (stream._unSubscribeFn) {
         child.on(propagate, stream);
@@ -109,10 +154,10 @@ function indexOfListener(stream, fn, context) {
 }
 
 function combineHandler(event) {
-    var property = this;
-    var _events = property._events;
+    var self = this;
+    var _events = self._events;
     var child = event.target;
-    var children = property._children;
+    var children = self._children;
     var l = children.length;
     var i;
     for (i = 0; i < l; i++) {
@@ -151,17 +196,6 @@ mix(EventStream.prototype, {
         return fin;
     },
 
-    flatMap: function (fn) {
-        // TODO
-        // fn return EventStream or Property
-        var fin = new this.constructor();
-        fin.handler = function (e) {
-            fn(e);
-        };
-        addChild(fin, this);
-        return fin;
-    },
-
     filter: function (fn) {
         var fin = new this.constructor();
         fin.handler = function (e) {
@@ -174,6 +208,23 @@ mix(EventStream.prototype, {
             }
         };
         addChild(fin, this);
+        return fin;
+    },
+
+    flatMap: function (fn) {
+        var self = this;
+        var fin = new self.constructor();
+        fin.handler = function (e) {
+            // do not re wrap generated stream
+            if (self === e.currentTarget) {
+                var value = e.value;
+                var newStream = fn(value);
+                addChild(fin, newStream);
+            } else {
+                return e;
+            }
+        };
+        addChild(fin, self);
         return fin;
     },
 
