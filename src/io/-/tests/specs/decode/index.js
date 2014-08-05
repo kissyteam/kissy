@@ -17,7 +17,6 @@ describe('IO', function () {
                 ok = 1;
             }
         });
-
         waitsFor(function () {
             return ok;
         });
