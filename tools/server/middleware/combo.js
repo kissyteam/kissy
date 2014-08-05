@@ -2,6 +2,8 @@ var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
 var util = require('../../common/util');
 var fs = require('fs');
+var mime = require('mime');
+var Path = require('path');
 
 module.exports = function (req, res, next) {
     var query = req.query, k,
@@ -26,6 +28,8 @@ module.exports = function (req, res, next) {
         }
         combo = combo.slice(1, nextQ);
         var files = combo.split(',');
+        var extname = Path.extname(files[0]) || '.html';
+        res.set('content-type', mime.lookup(extname));
         util.each(files, function (f) {
             codes.push(fs.readFileSync(path + f));
         });
