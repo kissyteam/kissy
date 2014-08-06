@@ -14,13 +14,7 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "docs",
-    "reports",
-    "tools",
-    "bin",
-    "node_modules",
-    "bower_components",
-    "src"
+    "**/*",
+    "!build/"
   ]
 }
