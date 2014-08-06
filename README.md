@@ -17,8 +17,6 @@
 > A Powerful JavaScript Framework
 
  * Source: <http://github.com/kissyteam/kissy>
- * Docs: <http://docs.kissyui.com/>
- * History: <http://github.com/kissyteam/kissy/blob/master/HISTORY.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
  * Contributing Guide: <http://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md>
 
@@ -41,12 +39,12 @@
  * KISSY 源码规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/kissy-source-style.html>
  * HTML 编码规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/html-coding-style.html>
  * CSS 编码规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/css-coding-style.html>
- * 组件开发规范: <http://docs.kissyui.com/1.4/docs/html/tutorials/workflow/dev-spec.html>
 
 ## Questions?
 
+ - Blog: <http://blog.kissyui.com>
  - Docs: <http://docs.kissyui.com>
  - Bug：<http://github.com/kissyteam/kissy/issues>
- - 邮件：<kissyteam@gmail.com>
+ - Email：<kissyteam@gmail.com>
  - Twitter: <http://twitter.com/#!/kissyteam>
  - Google Group: <http://groups.google.com/group/kissy-ui>
