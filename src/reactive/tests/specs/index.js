@@ -303,7 +303,7 @@ describe('reactive', function () {
         });
     });
 
-    it('flatMap works', function () {
+    it('map works', function () {
         var ok;
 
         var stream = reactive.createEventStream(function (fire) {
@@ -314,10 +314,11 @@ describe('reactive', function () {
 
         stream.id = 1;
 
-        var stream2 = stream.flatMap(function (v) {
+        var stream2 = stream.map(function (v) {
             var stream3 = reactive.createEventStream(function (fire) {
                 setTimeout(function () {
                     fire(v + 1);
+                    fire(reactive.END);
                 }, 0);
             });
             stream3.id = 3;
@@ -326,13 +327,27 @@ describe('reactive', function () {
 
         stream2.id = 2;
 
-        stream2.onValue(function (v) {
-            expect(v).toBe(2);
+        var stream3 = stream2.map(function (v) {
+            return v + 1;
+        });
+
+        stream3.onValue(function (v) {
+            expect(stream2._children.length).toBe(2);
+            expect(stream3._children.length).toBe(1);
+            expect(v).toBe(3);
             ok = 1;
         });
 
+        expect(stream2._children.length).toBe(1);
+        expect(stream3._children.length).toBe(1);
+
         waitsFor(function () {
             return ok;
+        });
+
+        runs(function () {
+            expect(stream3._children.length).toBe(1);
+            expect(stream2._children.length).toBe(1);
         });
     });
 });

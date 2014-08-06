@@ -42,7 +42,7 @@
 
         var resultProperty = tProperty.combine(t2Property).map(function (args) {
             return parseInt(args[0]) + parseInt(args[1]);
-        }).flatMap(function(v){
+        }).map(function(v){
             // emulate server validation
             return reactive.createEventStream(function(fire){
                 setTimeout(function(){

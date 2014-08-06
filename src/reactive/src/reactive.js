@@ -66,6 +66,7 @@ function pushEvent(v) {
     } else {
         v = {
             value: v,
+            currentTarget: self,
             target: self
         };
         fire(self, v);
@@ -179,22 +180,13 @@ function combineHandler(event) {
     }
     return {
         target: this,
+        currentTarget: this,
         value: composedValue
     };
 }
 
 mix(EventStream.prototype, {
-    map: function (fn) {
-        var fin = new this.constructor();
-        fin.handler = function (e) {
-            return {
-                target: e.target,
-                value: fn(e.value)
-            };
-        };
-        addChild(fin, this);
-        return fin;
-    },
+    isEventStream: 1,
 
     filter: function (fn) {
         var fin = new this.constructor();
@@ -211,15 +203,22 @@ mix(EventStream.prototype, {
         return fin;
     },
 
-    flatMap: function (fn) {
+    map: function (fn) {
         var self = this;
         var fin = new self.constructor();
         fin.handler = function (e) {
             // do not re wrap generated stream
             if (self === e.currentTarget) {
                 var value = e.value;
-                var newStream = fn(value);
-                addChild(fin, newStream);
+                var mapped = fn(value);
+                if (mapped && mapped.isEventStream) {
+                    addChild(fin, mapped);
+                } else {
+                    return {
+                        target: e.target,
+                        value: mapped
+                    };
+                }
             } else {
                 return e;
             }
@@ -229,13 +228,15 @@ mix(EventStream.prototype, {
     },
 
     startsWith: function (value) {
-        if (!this._event) {
-            this._event = {
+        var self = this;
+        if (!self._event) {
+            self._event = {
                 value: value,
-                target: this
+                currentTarget: self,
+                target: self
             };
         }
-        return this;
+        return self;
     },
 
     onValue: function (fn, context) {

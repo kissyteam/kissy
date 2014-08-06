@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 5 17:58
+build time: Aug 6 11:08
 */
 /*
 combined modules:
@@ -66,6 +66,7 @@ KISSY.add('reactive', [], function (S, require, exports, module) {
         } else {
             v = {
                 value: v,
+                currentTarget: self,
                 target: self
             };
             fire(self, v);
@@ -169,37 +170,12 @@ KISSY.add('reactive', [], function (S, require, exports, module) {
         }
         return {
             target: this,
+            currentTarget: this,
             value: composedValue
         };
     }
     mix(EventStream.prototype, {
-        map: function (fn) {
-            var fin = new this.constructor();
-            fin.handler = function (e) {
-                return {
-                    target: e.target,
-                    value: fn(e.value)
-                };
-            };
-            addChild(fin, this);
-            return fin;
-        },
-        flatMap: function (fn) {
-            var self = this;
-            var fin = new self.constructor();
-            fin.handler = function (e) {
-                // do not re wrap generated stream
-                if (self === e.currentTarget) {
-                    var value = e.value;
-                    var newStream = fn(value);
-                    addChild(fin, newStream);
-                } else {
-                    return e;
-                }
-            };
-            addChild(fin, self);
-            return fin;
-        },
+        isEventStream: 1,
         filter: function (fn) {
             var fin = new this.constructor();
             fin.handler = function (e) {
@@ -214,14 +190,39 @@ KISSY.add('reactive', [], function (S, require, exports, module) {
             addChild(fin, this);
             return fin;
         },
+        map: function (fn) {
+            var self = this;
+            var fin = new self.constructor();
+            fin.handler = function (e) {
+                // do not re wrap generated stream
+                if (self === e.currentTarget) {
+                    var value = e.value;
+                    var mapped = fn(value);
+                    if (mapped && mapped.isEventStream) {
+                        addChild(fin, mapped);
+                    } else {
+                        return {
+                            target: e.target,
+                            value: mapped
+                        };
+                    }
+                } else {
+                    return e;
+                }
+            };
+            addChild(fin, self);
+            return fin;
+        },
         startsWith: function (value) {
-            if (!this._event) {
-                this._event = {
+            var self = this;
+            if (!self._event) {
+                self._event = {
                     value: value,
-                    target: this
+                    currentTarget: self,
+                    target: self
                 };
             }
-            return this;
+            return self;
         },
         onValue: function (fn, context) {
             var self = this;
