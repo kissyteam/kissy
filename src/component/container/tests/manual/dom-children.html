@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <script src="/kissy/build/seed-debug.js"></script>
+    <script src="/gen/dev.js"></script>
+</head>
+<body>
+<div id="holder">
+</div>
+<script>
+    KISSY.use('component/container,node,component/control', function (S, Container, $, Control) {
+        var control = new Control({
+            content: 'control'
+        });
+        var container = new Container({
+            render: '#holder',
+            children: [$('<div>dom1</div>'), control, $('<div>dom3</div>')]
+        });
+        container.render();
+        // container.destroy();
+    });
+</script>
+</body>
+</html>

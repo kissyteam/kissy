@@ -5,13 +5,38 @@
 
 var Control = require('component/control');
 var Container = require('component/container');
+var $ = require('node');
 
 /*jshint quotmark:false*/
 function invalidNode(n) {
     return n == null || n.nodeType === 11;
 }
 
-describe("container", function () {
+describe('container', function () {
+    it('support dom node', function () {
+        var control = new Control({
+            content: 'control'
+        });
+        var a,b;
+        var container = new Container({
+            render: 'body',
+            children: [a=$('<div>dom1</div>'), control, b=$('<div>dom3</div>')]
+        });
+        container.render();
+        var containerChildren = container.get('children');
+        expect(containerChildren.length).toBe(3);
+        expect(containerChildren[0]).toBe(a);
+        expect(containerChildren[2]).toBe(b);
+        var children = container.$el.children();
+        expect(children.length).toBe(3);
+        expect(children[0]).toBe(a[0]);
+        expect(children[2]).toBe(b[0]);
+        container.destroy();
+        expect(container.get('children').length).toBe(0);
+        children = container.$el.children();
+        expect(children.length).toBe(0);
+    });
+
     describe('container.destroy', function () {
         it('will remove node by default', function () {
             var my = new Container({
@@ -48,7 +73,6 @@ describe("container", function () {
     });
 
     describe('addChild/removeChild event', function () {
-
         it('can listen and preventDefault', function () {
             var c = new Container({
                 content: "xx"
@@ -171,7 +195,6 @@ describe("container", function () {
             })();
         });
 
-
         it('can bubble', function () {
             var c = new Container({
                 content: "xx"
@@ -206,13 +229,10 @@ describe("container", function () {
     });
 
     describe('parent', function () {
-
         it('parent can be changed', function () {
-
             var c1 = new Container({
                 content: "xx"
             });
-
 
             var c2 = new Container({
                 content: "xx"
@@ -259,9 +279,7 @@ describe("container", function () {
             expect(c1.get('el')).toBeFalsy();
         });
 
-
         it('parent can be changed after render', function () {
-
             var c1 = new Container({
                 content: "xx"
             }).render();
@@ -318,7 +336,6 @@ describe("container", function () {
             c1.destroy();
             c2.destroy();
         });
-
     });
 
     describe("xclass", function () {
@@ -353,7 +370,6 @@ describe("container", function () {
         }, {
             xclass: 'a-b-d'
         });
-
 
         it('only xclass', function () {
             var a = new A({

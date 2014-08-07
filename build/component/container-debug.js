@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:53
+build time: Aug 7 15:48
 */
 /*
 combined modules:
@@ -25,9 +25,12 @@ KISSY.add('component/container', [
         children.splice(index, 0, c);    // construct
         // construct
         children = self.get('children');
-        c = children[index];
-        c.setInternal('parent', self);    // NOTE 20140618
-                                          // child can not render into a documentFragment(parent is not in dom tree)
+        c = children[index];    // in case dom node
+        // in case dom node
+        if (c.setInternal) {
+            c.setInternal('parent', self);
+        }    // NOTE 20140618
+             // child can not render into a documentFragment(parent is not in dom tree)
         // NOTE 20140618
         // child can not render into a documentFragment(parent is not in dom tree)
         if (self.get('rendered')) {
@@ -44,10 +47,16 @@ KISSY.add('component/container', [
         if (index !== -1) {
             children.splice(index, 1);
         }
-        c.setInternal('parent', null);    // c is still json
+        if (c.setInternal) {
+            c.setInternal('parent', null);
+        }    // c is still json
         // c is still json
         if (c.destroy) {
             c.destroy(destroy);
+        } else if (c.isNode) {
+            if (destroy) {
+                c.remove();
+            }
         }
         self.fire('afterRemoveChild', {
             component: c,
@@ -86,6 +95,8 @@ KISSY.add('component/container', [
                 var ChildUI = self.getComponentConstructorByNode(prefixCls, c) || defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
                 if (ChildUI) {
                     childrenComponents.push(new ChildUI(util.merge(defaultChildCfg, { srcNode: c })));
+                } else {
+                    childrenComponents.push(c);
                 }
             });
             self.set('children', childrenComponents);
@@ -132,8 +143,12 @@ KISSY.add('component/container', [
             return children[index];
         },
         renderChild: function (childIndex) {
-            var self = this, children = self.get('children');
-            self.createChild(childIndex).render();
+            var self = this;
+            var children = self.get('children');
+            var c = self.createChild(childIndex);
+            if (!c.isNode) {
+                c.render();
+            }
             self.fire('afterRenderChild', {
                 component: children[childIndex],
                 index: childIndex
@@ -145,18 +160,25 @@ KISSY.add('component/container', [
             contentEl = self.getChildrenContainerEl();
             domContentEl = contentEl[0];
             elBefore = domContentEl.children[childIndex] || null;
-            if (c.get('rendered')) {
-                cEl = c.el;
+            if (c.isNode) {
+                cEl = c.isNode ? c[0] : c.el;
                 if (cEl.parentNode !== domContentEl) {
                     domContentEl.insertBefore(cEl, elBefore);
                 }
             } else {
-                if (elBefore) {
-                    c.set('elBefore', elBefore);
+                if (c.get('rendered')) {
+                    cEl = c.isNode ? c[0] : c.el;
+                    if (cEl.parentNode !== domContentEl) {
+                        domContentEl.insertBefore(cEl, elBefore);
+                    }
                 } else {
-                    c.set('render', contentEl);
+                    if (elBefore) {
+                        c.set('elBefore', elBefore);
+                    } else {
+                        c.set('render', contentEl);
+                    }
+                    c.create();
                 }
-                c.create();
             }
             self.fire('afterCreateChild', {
                 component: c,
@@ -247,7 +269,7 @@ KISSY.add('component/container', [
                     var defaultChildCfg = null, i, c, self = this;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
-                        if (!c.isControl) {
+                        if (!c.isControl && !c.isNode) {
                             defaultChildCfg = defaultChildCfg || self.get('defaultChildCfg');
                             util.mix(c, defaultChildCfg, false);
                             v[i] = this.createComponent(c);

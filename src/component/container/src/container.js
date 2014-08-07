@@ -21,7 +21,10 @@ function defAddChild(e) {
 
     c = children[index];
 
-    c.setInternal('parent', self);
+    // in case dom node
+    if (c.setInternal) {
+        c.setInternal('parent', self);
+    }
 
     // NOTE 20140618
     // child can not render into a documentFragment(parent is not in dom tree)
@@ -45,11 +48,17 @@ function defRemoveChild(e) {
         children.splice(index, 1);
     }
 
-    c.setInternal('parent', null);
+    if (c.setInternal) {
+        c.setInternal('parent', null);
+    }
 
     // c is still json
     if (c.destroy) {
         c.destroy(destroy);
+    } else if (c.isNode) {
+        if (destroy) {
+            c.remove();
+        }
     }
 
     self.fire('afterRemoveChild', {
@@ -103,6 +112,8 @@ module.exports = Control.extend({
                 childrenComponents.push(new ChildUI(util.merge(defaultChildCfg, {
                     srcNode: c
                 })));
+            } else {
+                childrenComponents.push(c);
             }
         });
         self.set('children', childrenComponents);
@@ -160,11 +171,12 @@ module.exports = Control.extend({
     },
 
     renderChild: function (childIndex) {
-        var self = this,
-            children = self.get('children');
-
-        self.createChild(childIndex).render();
-
+        var self = this;
+        var children = self.get('children');
+        var c = self.createChild(childIndex);
+        if (!c.isNode) {
+            c.render();
+        }
         self.fire('afterRenderChild', {
             component: children[childIndex],
             index: childIndex
@@ -183,18 +195,26 @@ module.exports = Control.extend({
         contentEl = self.getChildrenContainerEl();
         domContentEl = contentEl[0];
         elBefore = domContentEl.children[childIndex] || null;
-        if (c.get('rendered')) {
-            cEl = c.el;
+        if (c.isNode) {
+            cEl = c.isNode ? c[0] : c.el;
             if (cEl.parentNode !== domContentEl) {
                 domContentEl.insertBefore(cEl, elBefore);
             }
         } else {
-            if (elBefore) {
-                c.set('elBefore', elBefore);
+
+            if (c.get('rendered')) {
+                cEl = c.isNode ? c[0] : c.el;
+                if (cEl.parentNode !== domContentEl) {
+                    domContentEl.insertBefore(cEl, elBefore);
+                }
             } else {
-                c.set('render', contentEl);
+                if (elBefore) {
+                    c.set('elBefore', elBefore);
+                } else {
+                    c.set('render', contentEl);
+                }
+                c.create();
             }
-            c.create();
         }
         self.fire('afterCreateChild', {
             component: c,
@@ -296,7 +316,7 @@ module.exports = Control.extend({
                     self = this;
                 for (i = 0; i < v.length; i++) {
                     c = v[i];
-                    if (!c.isControl) {
+                    if (!c.isControl && !c.isNode) {
                         defaultChildCfg = defaultChildCfg || self.get('defaultChildCfg');
                         util.mix(c, defaultChildCfg, false);
                         v[i] = this.createComponent(c);
