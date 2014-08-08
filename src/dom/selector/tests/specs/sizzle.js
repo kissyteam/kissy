@@ -577,7 +577,7 @@ describe("attributes", function () {
     t("Attribute Equals1", "#qunit-fixture a[rel='bookmark']", ["simon1"]);
     t("Attribute Equals2", "#qunit-fixture a[rel='bookmark']", ["simon1"]);
     t("Attribute Equals3", "#qunit-fixture a[rel=bookmark]", ["simon1"]);
-    t("Attribute Equals4", "#qunit-fixture a[href='http://www.google.com/']", ["google"]);
+    t("Attribute Equals4", "#qunit-fixture a[href='//www.google.com/']", ["google"]);
     t("Attribute Equals5", "#qunit-fixture a[ rel = 'bookmark' ]", ["simon1"]);
     t("Attribute Equals6 Number", "#qunit-fixture option[value=1]",
         ["option1b", "option2b", "option3b", "option4b", "option5c"]);
@@ -610,7 +610,7 @@ describe("attributes", function () {
 
     t("Attribute selector using UTF8", "span[lang=中文]", ["台北"]);
 
-    t("Attribute Begins With", "a[href ^= 'http://www']", ["google", "yahoo"]);
+    t("Attribute Begins With", "a[href ^= '//www']", ["google", "yahoo"]);
     t("Attribute Ends With", "a[href $= 'org/']", ["mark"]);
     t("Attribute Contains", "a[href *= 'google']", ["google", "groups"]);
 
