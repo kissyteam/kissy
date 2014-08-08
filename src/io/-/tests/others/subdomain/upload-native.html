@@ -24,7 +24,7 @@
     }
     KISSY.use("io,node,json", function (S, io,$) {
         $('#t').attr({
-            action: 'http://' + location.hostname + ':' + port + '/kissy/src/io/-/tests/others/subdomain/upload.jss',
+            action: '//' + location.hostname + ':' + port + '/kissy/src/io/-/tests/others/subdomain/upload.jss',
             method: 'post',
             enctype: 'multipart/form-data',
             encoding: 'multipart/form-data'

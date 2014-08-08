@@ -92,7 +92,7 @@
 
         stream = stream.map(function (v) {
             return reactive.createEventStream(function (fire) {
-                io.jsonp('http://suggest.m.taobao.com/rpc/sug.json', {
+                io.jsonp('//suggest.m.taobao.com/rpc/sug.json', {
                     q: v
                 }, function (data) {
                     fire([v, data]);

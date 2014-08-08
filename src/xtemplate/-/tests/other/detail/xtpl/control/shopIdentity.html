@@ -1,13 +1,13 @@
 <span class="others" data-spm="991222469">
 
 	{{@if (shopIdentity.data.alipayCompanyAuth)}}
-		<a title="支付宝企业认证" href="http://help.alipay.com/lab/210321-232507/0-232507.htm" target="_blank"><i class="icon-qyrz"></i></a>
+		<a title="支付宝企业认证" href="//help.alipay.com/lab/210321-232507/0-232507.htm" target="_blank"><i class="icon-qyrz"></i></a>
 	{{else}}
         {{@if (shopIdentity.data.alipayPersionAuth)}}
-		    <a title="支付宝个人认证" href="http://help.alipay.com/lab/210120-210321/0-210321.htm" target="_blank"><i class="icon-grrz"></i></a>
+		    <a title="支付宝个人认证" href="//help.alipay.com/lab/210120-210321/0-210321.htm" target="_blank"><i class="icon-grrz"></i></a>
 	    {{else}}
             {{#if (shopIdentity.data.personalAuth)}}
-		        <a title="淘宝个人实名认证" href="http://service.taobao.com/support/5-27-31/help-1055.htm" target="_blank"><i class="icon-grrz"></i></a>
+		        <a title="淘宝个人实名认证" href="//service.taobao.com/support/5-27-31/help-1055.htm" target="_blank"><i class="icon-grrz"></i></a>
             {{/if}}
         {{/if}}
 	{{/if}}

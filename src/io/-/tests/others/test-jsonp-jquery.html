@@ -1,11 +1,11 @@
 <meta charset='utf-8'/>
-<script src="http://g.tbcdn.cn/kissy/third-party/0.1.0/jquery.js"></script>
+<script src="//g.tbcdn.cn/kissy/third-party/0.1.0/jquery.js"></script>
 <script src="/kissy/build/seed-debug.js"></script>
 <script src="/gen/dev.js"></script>
 <script>
     $(function () {
         $.io({
-            url: "http://" + location.hostname + ":" + SERVER_CONFIG.ports[1] + "/kissy/src/" +
+            url: "//" + location.hostname + ":" + SERVER_CONFIG.ports[1] + "/kissy/src/" +
                     "io/-/tests/jsonp.jss",
             dataType: 'jsonp',
             //forceScript:true,

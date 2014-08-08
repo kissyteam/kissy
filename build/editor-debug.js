@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:55
+build time: Aug 8 13:44
 */
 /*
 combined modules:
@@ -997,8 +997,9 @@ KISSY.add('editor', [
         focusManager.add(self);
     }
     function prepareIFrameHTML(id, customStyle, customLink, data) {
-        var links = '', i;
-        var innerCssFile = Utils.debugUrl('theme/iframe.css');
+        var links = '';
+        var i;
+        var innerCssFile = require.resolve('editor/assets/iframe.css');
         customLink = customLink.concat([]);
         customLink.unshift(innerCssFile);
         for (i = 0; i < customLink.length; i++) {
@@ -1299,58 +1300,58 @@ KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
         buffer.write('<div class="', 0);
         var id0 = scope.resolve(['prefixCls'], 0);
         buffer.write(id0, true);
-        buffer.write('editor-tools">\r\n\r\n</div>\r\n\r\n<!--\r\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\r\nios \u4E0D\u80FD\u653E\u5728 iframe \u4E0A\uFF01\r\n-->\r\n\r\n<div class="', 0);
+        buffer.write('editor-tools">\n\n</div>\n\n<!--\n//johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4E0D\u80FD\u653E\u5728 iframe \u4E0A\uFF01\n-->\n\n<div class="', 0);
         var id1 = scope.resolve(['prefixCls'], 0);
         buffer.write(id1, true);
-        buffer.write('editor-textarea-wrap"\r\n\r\n', 0);
+        buffer.write('editor-textarea-wrap"\n\n', 0);
         var option2 = { escape: 1 };
         var params3 = [];
         var id4 = scope.resolve(['mobile'], 0);
         params3.push(id4);
         option2.params = params3;
         option2.fn = function (scope, buffer) {
-            buffer.write('\r\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\r\n', 0);
+            buffer.write('\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n', 0);
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option2, buffer, 12);
-        buffer.write('\r\n>\r\n\r\n<textarea class="', 0);
+        buffer.write('\n>\n\n<textarea class="', 0);
         var id5 = scope.resolve(['prefixCls'], 0);
         buffer.write(id5, true);
-        buffer.write('editor-textarea"\r\n\r\n', 0);
+        buffer.write('editor-textarea"\n\n', 0);
         var option6 = { escape: 1 };
         var params7 = [];
         var id8 = scope.resolve(['textareaAttrs'], 0);
         params7.push(id8);
         option6.params = params7;
         option6.fn = function (scope, buffer) {
-            buffer.write('\r\n', 0);
+            buffer.write('\n', 0);
             var id9 = scope.resolve(['xindex'], 0);
             buffer.write(id9, true);
             buffer.write('="', 0);
             var id10 = scope.resolve(['this'], 0);
             buffer.write(id10, true);
-            buffer.write('"\r\n', 0);
+            buffer.write('"\n', 0);
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option6, buffer, 19);
-        buffer.write('\r\n\r\n', 0);
+        buffer.write('\n\n', 0);
         var option11 = { escape: 1 };
         var params12 = [];
         var id13 = scope.resolve(['mode'], 0);
         params12.push(id13);
         option11.params = params12;
         option11.fn = function (scope, buffer) {
-            buffer.write('\r\nstyle="display:none"\r\n', 0);
+            buffer.write('\nstyle="display:none"\n', 0);
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option11, buffer, 23);
-        buffer.write('\r\n\r\n>', 0);
+        buffer.write('\n\n>', 0);
         var id14 = scope.resolve(['data'], 0);
         buffer.write(id14, true);
-        buffer.write('</textarea>\r\n\r\n</div>\r\n\r\n<div class="', 0);
+        buffer.write('</textarea>\n\n</div>\n\n<div class="', 0);
         var id15 = scope.resolve(['prefixCls'], 0);
         buffer.write(id15, true);
-        buffer.write('editor-status">\r\n\r\n</div>', 0);
+        buffer.write('editor-status">\n\n</div>\n', 0);
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1377,24 +1378,8 @@ KISSY.add('editor/utils', [
      * @singleton
      */
         Utils = {
-            debugUrl: function (url) {
-                var filter = module.getPackage() && module.getPackage().getFilter();
-                var tag = module.getTag();
-                if (filter) {
-                    url = url.replace(/\.(js|css)/i, '-' + filter + '.$1');
-                }
-                if (tag) {
-                    if (url.indexOf('?') !== -1) {
-                        url += '&t=' + tag;
-                    } else {
-                        url += '?t=' + tag;
-                    }
-                }
-                if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
-                    url = url.replace(/^theme\//, 'theme/assets/');
-                    return require.toUrl('../../../' + url);
-                }
-                return require.toUrl('./' + url);
+            debugUrl: function () {
+                return '';
             },
             lazyRun: function (obj, before, after) {
                 var b = obj[before], a = obj[after];

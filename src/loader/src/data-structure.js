@@ -140,7 +140,7 @@
 
         var require = self._require = function (moduleName) {
             if (typeof moduleName === 'string') {
-                var requiresModule = createModule(self.resolve(moduleName));
+                var requiresModule = self.resolve(moduleName);
                 Utils.attachModules(requiresModule.getNormalizedModules());
                 return requiresModule.getExports();
             } else {
@@ -150,7 +150,7 @@
 
         require.async = function (mods) {
             for (var i = 0; i < mods.length; i++) {
-                mods[i] = self.resolve(mods[i]);
+                mods[i] = self.resolve(mods[i]).name;
             }
             var args = makeArray(arguments);
             args[0] = mods;
@@ -159,7 +159,7 @@
         };
 
         require.resolve = function (relativeName) {
-            return self.resolve(relativeName);
+            return self.resolve(relativeName).getUrl();
         };
 
         require.toUrl = function (path) {
@@ -189,17 +189,11 @@
         constructor: Module,
 
         require: function (moduleName) {
-            return S.require(this.resolve(moduleName));
+            return this.resolve(moduleName).getExports();
         },
 
         resolve: function (relativeName) {
-            return Utils.normalizePath(this.name, relativeName);
-//            var resolveCache = this.resolveCache;
-//            if (resolveCache[relativeName]) {
-//                return resolveCache[relativeName];
-//            }
-//            resolveCache[relativeName] = Utils.normalizePath(this.name, relativeName);
-//            return resolveCache[relativeName];
+            return createModule(Utils.normalizePath(this.name, relativeName));
         },
 
         add: function (loader) {
@@ -460,7 +454,7 @@
         requires = requires || [];
         var l = requires.length;
         for (var i = 0; i < l; i++) {
-            requires[i] = self.resolve(requires[i]);
+            requires[i] = self.resolve(requires[i]).name;
         }
         return requires;
     }

@@ -30,7 +30,7 @@
                 type: 'post',
                 form: $('#t')[0],
                 dataType: 'json', // 取 body.text
-                url: 'http://' + location.hostname + ':'+port+'/kissy/src/io/-/tests/others/subdomain/upload.jss',
+                url: '//' + location.hostname + ':'+port+'/kissy/src/io/-/tests/others/subdomain/upload.jss',
                 success: function (data) {
                     alert(data);
                     alert(JSON.stringify(data));

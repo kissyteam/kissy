@@ -17,7 +17,6 @@ var header = [
     "KISSY.config('tag',+ new Date());" ,
     "var loc = location;",
     "if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {",
-    "KISSY.DEV_MODE = 1;",
     "KISSY.config('packages', "
 ].join('\n');
 
@@ -31,7 +30,7 @@ function collectSrcDir(dir, allSrc) {
         var c = dir + f;
         var state = fs.statSync(c);
         if (state.isDirectory()) {
-            if (f === 'src') {
+            if (f === 'src' || f === 'assets') {
                 c = c.replace(/\/-$/, '');
                 allSrc.push(c);
             } else {
@@ -47,10 +46,18 @@ module.exports = function () {
     var mod = {};
     allSrc.forEach(function (v) {
         v = '/kissy/' + v.replace(cwd + '/', '');
-        var name = v.substring(base.length, v.length - suffixLen).replace(/\/-(\/|$)/, '$1');
-        mod[name] = {
-            base: v + '/' + path.basename(name)
-        };
+        var name;
+        if (path.basename(v) === 'src') {
+            name = v.substring(base.length, v.length - suffixLen).replace(/\/-(\/|$)/, '$1');
+            mod[name] = {
+                base: v + '/' + path.basename(name)
+            };
+        } else {
+            name = v.substring(base.length).replace(/\/-(\/|$)/, '$1');
+            mod[name] = {
+                base: v
+            };
+        }
     });
     return [header, JSON.stringify(mod, null, 4), ');}'].join('\n');
 };

@@ -36,7 +36,7 @@
 
         // 全局事件
         IO.on('start', function () {
-            $('#console').html('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>');
+            $('#console').html('<p><img src="//img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>');
         });
 
         IO.on('complete', function () {
@@ -76,7 +76,7 @@
         // JSONP
         $('#jsonp').on('click', function () {
 
-            IO.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+            IO.jsonp('//query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
                     function (data) {
                         log(Json.stringify(data));
                     }

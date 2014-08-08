@@ -256,10 +256,12 @@
             }
 
             if (module) {
-                mix(module, cfg);
-                // module definition changes requires
-                if (cfg && cfg.requires) {
-                    module.setRequiresModules(cfg.requires);
+                if (cfg) {
+                    mix(module, cfg);
+                    // module definition changes requires
+                    if (cfg.requires) {
+                        module.setRequiresModules(cfg.requires);
+                    }
                 }
                 return module;
             }

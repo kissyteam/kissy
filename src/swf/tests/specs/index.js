@@ -153,9 +153,6 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
             });
 
             it('will handle low version', function () {
-                if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
-                    return;
-                }
                 var swf1 = new SWF({
                     src: '../assets/test.swf',
                     attrs: {
@@ -171,8 +168,7 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
 
                 expect(swf1.get('status')).toBe(SWF.Status.TOO_LOW);
 
-                expect(SWF.getSrc(swf1.get('el')))
-                    .toBe(KISSY.config('base') + 'swf/assets/expressInstall.swf');
+                expect(SWF.getSrc(swf1.get('el')).indexOf('swf/assets/expressInstall.swf')).not.toBe(-1);
             });
         });
     });

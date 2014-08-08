@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:05
+build time: Aug 8 13:36
 */
 /*
 combined modules:
@@ -26,9 +26,6 @@ KISSY.add('swf', [
     var FlashUA = require('swf/ua');
     var util = require('util');
     var swfUrl = './swf/assets/expressInstall.swf';
-    if (typeof KISSY !== 'undefined' && KISSY.DEV_MODE) {
-        swfUrl = '../assets/expressInstall.swf';
-    }
     var OLD_IE = !!window.ActiveXObject, TYPE = 'application/x-shockwave-flash', CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000', FLASHVARS = 'flashvars', EMPTY = '', LT = '<', GT = '>', doc = document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = 'object', encode = encodeURIComponent,
         // flash player 的参数范围
         PARAMS = {
@@ -67,9 +64,9 @@ KISSY.add('swf', [
         constructor: function (config) {
             var self = this;
             self.callSuper(config);
-            var expressInstall = self.get('expressInstall'), swf, html, id, htmlMode = self.get('htmlMode'), flashVars, params = self.get('params'), attrs = self.get('attrs'), doc = self.get('document'), placeHolder = Dom.create('<span>', undefined, doc), elBefore = self.get('elBefore'), installedSrc = self.get('src'), idRegExp, version = self.get('version');    // https://github.com/kissyteam/kissy/issues/663
-                                                                                                                                                                                                                                                                                                                                                                             // must has a id
-                                                                                                                                                                                                                                                                                                                                                                             // or else can not callSWF function in ie6-10
+            var expressInstall = self.get('expressInstall'), swf, html, id, htmlMode = self.get('htmlMode'), flashVars, params = self.get('params'), attrs = self.get('attrs'), doc = self.get('document'), placeHolder = Dom.create('<span>', undefined, doc), elBefore = self.get('elBefore'), installedSrc = self.get('src'), version = self.get('version');    // https://github.com/kissyteam/kissy/issues/663
+                                                                                                                                                                                                                                                                                                                                                                   // must has a id
+                                                                                                                                                                                                                                                                                                                                                                   // or else can not callSWF function in ie6-10
             // https://github.com/kissyteam/kissy/issues/663
             // must has a id
             // or else can not callSWF function in ie6-10
@@ -107,7 +104,7 @@ KISSY.add('swf', [
                 html = _stringSWFDefault(installedSrc, attrs, params);
             }    // ie 再取 target.innerHTML 属性大写，很多多与属性，等
             // ie 再取 target.innerHTML 属性大写，很多多与属性，等
-            self.set('html', idRegExp ? html.replace(idRegExp, '') : html);
+            self.set('html', html);
             if (elBefore) {
                 Dom.insertBefore(placeHolder, elBefore);
             } else {
@@ -196,7 +193,7 @@ KISSY.add('swf', [
             /**
          * @ignore
          */
-            expressInstall: { value: require.toUrl(swfUrl) },
+            expressInstall: { value: require.resolve(swfUrl) },
             /**
          * new swf 's url
          * @cfg {String} src

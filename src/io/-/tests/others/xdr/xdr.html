@@ -4,7 +4,7 @@
 <script src="/gen/dev.js"></script>
 <script type="text/javascript">
     document.writeln('<iframe src="' +
-            'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/' +
+            '//' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/' +
             'io/-/tests/others/xdr/set-cookie.html' +
             '"></iframe>')
 </script>
@@ -20,12 +20,12 @@
                     },
                     cache: false,
                     dataType: 'json',
-                    url: 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/' +
+                    url: '//' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/' +
                             'io/-/tests/others/xdr/xdr.jss',
                     xhrFields: {
                         // Cannot use wildcard in Access-Control-Allow-Origin
                         // when credentials flag is true.
-                        // Access-Control-Allow-Origin:http://localhost
+                        // Access-Control-Allow-Origin://localhost
                         // 必须设置完全 hostname 匹配
 
                         // firefox , chrome 携带 cookie

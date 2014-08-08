@@ -1,0 +1,33 @@
+<div class="{{prefixCls}}editor-tools">
+
+</div>
+
+<!--
+//johanbrook.com/browsers/native-momentum-scrolling-ios-5/
+ios 不能放在 iframe 上！
+-->
+
+<div class="{{prefixCls}}editor-textarea-wrap"
+
+{{#if (mobile)}}
+style="overflow:scroll;-webkit-overflow-scrolling:touch;"
+{{/if}}
+>
+
+<textarea class="{{prefixCls}}editor-textarea"
+
+{{#each (textareaAttrs)}}
+{{xindex}}="{{this}}"
+{{/each}}
+
+{{#if (mode)}}
+style="display:none"
+{{/if}}
+
+>{{data}}</textarea>
+
+</div>
+
+<div class="{{prefixCls}}editor-status">
+
+</div>
