@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:06
+build time: Aug 11 10:12
 */
 /**
  * @ignore
@@ -128,6 +128,10 @@ S.config("requires",{
     "dom/selector": [
         "util",
         "dom/basic"
+    ],
+    "editor": [
+        "html-parser",
+        "component/control"
     ],
     "event": [
         "event/dom",
