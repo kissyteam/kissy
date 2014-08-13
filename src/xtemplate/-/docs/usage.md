@@ -95,7 +95,7 @@ String render(data:Object, callback:Function) // 渲染数据，参数含义如�
 
 
 ```html
-<script src='http://g.tbcdn.cn/kissy/edge/2014.06.23/seed.js'
+<script src='http://g.alicdn.com/kissy/edge/2014.06.23/seed.js'
 
 data-config='{combine:true}'></script>
 ```

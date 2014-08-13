@@ -96,7 +96,13 @@ module.exports = function (app) {
             detail.lineData.shift();
             var lineData = detail.lineData;
             // remove leading slash
-            var name = component + f.slice(1);
+            if (f.charAt(0) === '/') {
+                f = f.slice(1);
+            }
+            if (component && component.charAt(component.length - 1) !== '/') {
+                component += '/';
+            }
+            var name = component + f;
             var info = getSourceInfo(name, postData);
             if (info) {
                 merge(info.coverage, lineData);

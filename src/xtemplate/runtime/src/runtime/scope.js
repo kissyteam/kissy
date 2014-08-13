@@ -61,7 +61,7 @@ Scope.prototype = {
             return v;
         }
 
-        if (data !== undef) {
+        if (data !== undef && data !== null) {
             v = data[name];
         }
 

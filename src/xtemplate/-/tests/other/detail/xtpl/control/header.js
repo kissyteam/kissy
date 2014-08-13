@@ -24,7 +24,7 @@ var headerHtml = function (scope, buffer, undefined) {
             'itemTitle'
         ], 0);
     buffer.write(id2, true);
-    buffer.write('">\r\n    <link href="http://img.taobaocdn.com/favicon.ico" rel="icon" type="image/x-icon">\r\n    <link href="http://img.taobaocdn.com/favicon.ico" rel="shortcut icon" type="image/x-icon">\r\n    <link rel="stylesheet" href="//g.tbcdn.cn/??tb/global/', 0);
+    buffer.write('">\r\n    <link href="http://img.taobaocdn.com/favicon.ico" rel="icon" type="image/x-icon">\r\n    <link href="http://img.taobaocdn.com/favicon.ico" rel="shortcut icon" type="image/x-icon">\r\n    <link rel="stylesheet" href="//g.alicdn.com/??tb/global/', 0);
     var id3 = scope.resolve([
             'renderConfig',
             'globalVersion'

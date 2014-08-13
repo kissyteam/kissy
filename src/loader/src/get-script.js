@@ -100,7 +100,8 @@
             node.href = url;
             node.rel = 'stylesheet';
             // set media to something non-matching to ensure it'll fetch without blocking render
-            node.media = 'async';
+            // can not pass test
+            //node.media = 'async';
         } else {
             node.src = url;
             node.async = true;
@@ -112,11 +113,6 @@
             var index = error,
                 fn;
             clearTimer();
-            // set media back to `all` so that the stylesheet applies once it loads
-            // https://github.com/filamentgroup/loadCSS
-            if (css) {
-                node.media = 'all';
-            }
             Utils.each(jsCssCallbacks[url], function (callback) {
                 if ((fn = callback[index])) {
                     fn.call(node);

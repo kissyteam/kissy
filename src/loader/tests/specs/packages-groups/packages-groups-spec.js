@@ -93,7 +93,7 @@ describe("modules and groups", function () {
                 },
                 "test": {
                     group: "my",
-                    base: "http://g.tbcdn.cn/test"
+                    base: "http://g.alicdn.com/test"
                 }
             },
             modules: {
@@ -108,7 +108,7 @@ describe("modules and groups", function () {
         expect(js.length).toBe(2);
         expect(js[0].url.substring(js[0].url.indexOf('??')))
             .toBe("??a.js");
-        expect(js[1].url).toBe("http://g.tbcdn.cn/test/??x.js");
+        expect(js[1].url).toBe("http://g.alicdn.com/test/??x.js");
     });
 
     it("combo packages with different charset", function () {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 8 13:34
+build time: Aug 13 18:33
 */
 /**
  * @ignore
@@ -36,11 +36,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140808133439' will replace with current timestamp when compressing.
+         * NOTICE: '20140813183328' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140808133439',
+        __BUILD_TIME: '20140813183328',
 
         /**
          * KISSY Environment.
@@ -1341,7 +1341,8 @@ var KISSY = (function (undefined) {
             node.href = url;
             node.rel = 'stylesheet';
             // set media to something non-matching to ensure it'll fetch without blocking render
-            node.media = 'async';
+            // can not pass test
+            //node.media = 'async';
         } else {
             node.src = url;
             node.async = true;
@@ -1353,11 +1354,6 @@ var KISSY = (function (undefined) {
             var index = error,
                 fn;
             clearTimer();
-            // set media back to `all` so that the stylesheet applies once it loads
-            // https://github.com/filamentgroup/loadCSS
-            if (css) {
-                node.media = 'all';
-            }
             Utils.each(jsCssCallbacks[url], function (callback) {
                 if ((fn = callback[index])) {
                     fn.call(node);
@@ -1435,7 +1431,8 @@ var KISSY = (function (undefined) {
  - getScript
  - 404 in ie<9 trigger success , others trigger error
  - syntax error in all trigger success
- *//**
+ */
+/**
  * @ignore
  * Declare config info for KISSY.
  * @author yiminghe@gmail.com
@@ -2417,7 +2414,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140808133439';
+    var TIMESTAMP = '20140813183328';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

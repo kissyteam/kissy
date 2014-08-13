@@ -6,6 +6,7 @@
 require('./error');
 require('./escape');
 require('./feature');
+require('./each');
 require('./if');
 require('./command');
 require('./expression');

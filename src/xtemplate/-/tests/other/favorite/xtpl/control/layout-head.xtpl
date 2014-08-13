@@ -19,9 +19,9 @@
 {{vmcommon ("global/js.html", "kissy=1.4.1" ) }}
 {{vmcommon ("global/css.html") }}
 
-<script src="http://g.tbcdn.cn/kissy/k/1.4.1/import-style-min.js" data-config="{combine:true}"></script>
+<script src="http://g.alicdn.com/kissy/k/1.4.1/import-style-min.js" data-config="{combine:true}"></script>
 <script id="J_ConfigScript" src="{{config.server}}/{{config.version}}/c/config/pkg.js" data-v="{{config.version}}" type="text/javascript"></script>
 <script src="{{config.server}}/{{config.version}}/deps.js"></script>
-<link href="http://g.tbcdn.cn/tbc/search-suggest/1.0.30/new_searchbox-min.css" rel="stylesheet"/>
+<link href="http://g.alicdn.com/tbc/search-suggest/1.0.30/new_searchbox-min.css" rel="stylesheet"/>
 <script>KISSY.importStyle('mercury/p/{{info.jsmod}}/index');</script>
 <script src="http://a.tbcdn.cn/p/snsdk/core.js"></script>

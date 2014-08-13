@@ -58,7 +58,7 @@ var layoutHeadXtpl = function (scope, buffer, undefined) {
         callRet10 = undefined;
     }
     buffer.write(callRet10, true);
-    buffer.write('\r\n\r\n<script src="http://g.tbcdn.cn/kissy/k/1.4.1/import-style-min.js" data-config="{combine:true}"></script>\r\n<script id="J_ConfigScript" src="', 0);
+    buffer.write('\r\n\r\n<script src="http://g.alicdn.com/kissy/k/1.4.1/import-style-min.js" data-config="{combine:true}"></script>\r\n<script id="J_ConfigScript" src="', 0);
     var id11 = scope.resolve([
             'config',
             'server'
@@ -88,7 +88,7 @@ var layoutHeadXtpl = function (scope, buffer, undefined) {
             'version'
         ], 0);
     buffer.write(id15, true);
-    buffer.write('/deps.js"></script>\r\n<link href="http://g.tbcdn.cn/tbc/search-suggest/1.0.30/new_searchbox-min.css" rel="stylesheet"/>\r\n<script>KISSY.importStyle(\'mercury/p/', 0);
+    buffer.write('/deps.js"></script>\r\n<link href="http://g.alicdn.com/tbc/search-suggest/1.0.30/new_searchbox-min.css" rel="stylesheet"/>\r\n<script>KISSY.importStyle(\'mercury/p/', 0);
     var id16 = scope.resolve([
             'info',
             'jsmod'

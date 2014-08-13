@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 31 23:10
+build time: Aug 13 18:33
 */
 /*
 combined modules:
@@ -590,7 +590,7 @@ KISSY.add('xtemplate/runtime/scope', [], function (S, require, exports, module) 
             if (v !== undef) {
                 return v;
             }
-            if (data !== undef) {
+            if (data !== undef && data !== null) {
                 v = data[name];
             }
             if (v !== undef) {

@@ -1,7 +1,7 @@
 KISSY.use('util, node', function (S, util, Node) {
     S.config('packages', {
         'editor-plugins': {
-            base: 'http://g.tbcdn.cn/kg/editor-plugins/0.1.0/',
+            base: 'http://g.alicdn.com/kg/editor-plugins/0.1.0/',
             filter: S.Config.debug ? 'debug' : ''
         }
     });

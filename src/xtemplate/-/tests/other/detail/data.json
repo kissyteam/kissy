@@ -20,7 +20,7 @@
             "countUrl": "http://count.tbcdn.cn/counter3?keys=SM_368_sm-1922423456,ICE_3_feedcount-36739629847,SM_368_dsr-1922423456",
             "daily": true,
             "evn": 0,
-            "fbPath": "http://g.tbcdn.cn",
+            "fbPath": "http://g.alicdn.com",
             "ifq": "http://ajax.tbcdn.cn/json/ifq.htm?id=36739629847&sid=1922423456&sbn=5741172cf39ea663909ab921f36c1117&p=1&al=false&ap=0&ss=0&free=1&q=1&ex=0&exs=0&shid=107934820&at=b&ct=0&userId=1922423456&m=true&sj=true",
             "itemId": 36739629847,
             "loginUrl": "https://login.taobao.com/member/login.jhtml",
@@ -334,7 +334,7 @@
         "assetsPath": "tb/item-touch/",
         "assetsVersion": "2.1.2",
         "isDev": false,
-        "assetsHost": "http://g.tbcdn.cn/",
+        "assetsHost": "http://g.alicdn.com/",
         "hosts": {
             "detail": "http://item.taobao.com/modulet/data.do"
         },
