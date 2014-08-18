@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.45
 MIT Licensed
-build time: May 22 12:29
+build time: Aug 18 12:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,16 +14,18 @@ build time: May 22 12:29
 */
 
 KISSY.add("json/quote", [], function(S) {
-  var CONTROL_MAP = {"\u0008":"\\b", "\u000c":"\\f", "\n":"\\n", "\r":"\\r", "\t":"\\t", '"':'\\"'}, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
-  S.each(CONTROL_MAP, function(original, encoded) {
+  var util = S;
+  var CONTROL_MAP = {"\u0008":"\\b", "\u000c":"\\f", "\n":"\\n", "\r":"\\r", "\t":"\\t", '"':'\\"'}, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\\\|\\\/|\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
+  util.each(CONTROL_MAP, function(original, encoded) {
     REVERSE_CONTROL_MAP[original] = encoded
   });
   REVERSE_CONTROL_MAP["\\/"] = "/";
+  REVERSE_CONTROL_MAP["\\\\"] = "\\";
   return{quote:function(value) {
     return'"' + value.replace(QUOTE_REG, function(m) {
       var v;
       if(!(v = CONTROL_MAP[m])) {
-        v = "\\u" + ("0000" + m.charCodeAt(0).toString(16)).slice(-4)
+        v = "\\u" + ("0000" + m.charCodeAt(0).toString(16)).slice(0 - 4)
       }
       return v
     }) + '"'

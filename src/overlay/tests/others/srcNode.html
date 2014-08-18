@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
+    <style id="jsbin-css">
+        .esaettrth6068711popup02 {
+            width: 20px;
+            height: 20px;
+            background: #f00;
+        }
+
+        .tb-shop-popup-show {
+            display: block;
+            visibility: visible;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="esaettrth6068711popup02"></div>
+<div class="J_TWidget hidden" data-widget-type="Popup">
+    <div class="popup">
+        <div class="pic"></div>
+    </div>
+</div>
+<script>
+    KISSY.use("dom,overlay", function (S, DOM, Overlay) {
+        var elem = DOM.get('.J_TWidget');
+        DOM.hide(elem);
+// 删除原有的 visibility
+        var cssText = elem.style.cssText.replace(/visibility\:\s*hidden(\s*;)?/i, "");
+        elem.style.cssText = cssText;
+        DOM.addClass(elem, "hidden");
+// 符合新 Overlay 规范
+        DOM.html(elem, '<div class="ks-popup-content">' + DOM.html(elem) + '</div>');
+//DOM.addClass(DOM.get('.popup'), 'ks-popup-content')
+// 默认显示
+        DOM.addClass(elem, 'tb-shop-popup-show');
+// 校正和初始化
+        DOM.css(elem, {
+            "display": "block",
+            "position": "absolute",
+            "left": "-9999px",
+            "top": "-9999px",
+            "zIndex": 999999
+        });
+        new Overlay.Popup({
+            "trigger": DOM.get('.esaettrth6068711popup02'),
+            "triggerType": 'mouse',
+            "srcNode": elem,
+            "align": {node: null,
+                points: ['tr', 'tl']
+            },
+            "zIndex": 999999
+        });
+    })
+</script>
+</body>
+</html>

@@ -26,6 +26,9 @@
                 gallery: {
                     base: prefix
                 },
+                kg: {
+                    base: '//g.alicdn.com/'
+                },
                 mobile: {
                     base: prefix
                 }

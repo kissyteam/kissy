@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.45
 MIT Licensed
-build time: May 27 14:01
+build time: Aug 18 12:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -226,6 +226,17 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
   function getBaseCssClassCmd() {
     return this.config.view.getBaseCssClass(arguments[1].params[0])
   }
+  function findComponentCss(css, prefixCls) {
+    var csses = css.split(/\s+/);
+    var newCss = [];
+    for(var i = 0, l = csses.length;i < l;i++) {
+      var c = S.trim(csses[i]);
+      if(c && S.startsWith(c, prefixCls)) {
+        newCss.push(c.substring(prefixCls.length))
+      }
+    }
+    return newCss.join(" ")
+  }
   return ComponentProcess.extend({isRender:true, createInternal:function() {
     var self = this, srcNode = self.control.get("srcNode");
     if(srcNode) {
@@ -340,8 +351,8 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
   }, getComponentConstructorByNode:function(prefixCls, childNode) {
     var cls = childNode[0].className;
     if(cls) {
-      cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-      return Manager.getConstructorByXClass(cls)
+      var componentCss = findComponentCss(cls, prefixCls);
+      return Manager.getConstructorByXClass(componentCss)
     }
     return null
   }, getComponentCssClasses:function() {

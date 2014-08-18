@@ -230,21 +230,23 @@ if (! _$jscoverage['/json/quote.js']) {
   _$jscoverage['/json/quote.js'] = {};
   _$jscoverage['/json/quote.js'].lineData = [];
   _$jscoverage['/json/quote.js'].lineData[6] = 0;
-  _$jscoverage['/json/quote.js'].lineData[8] = 0;
-  _$jscoverage['/json/quote.js'].lineData[20] = 0;
-  _$jscoverage['/json/quote.js'].lineData[21] = 0;
-  _$jscoverage['/json/quote.js'].lineData[24] = 0;
+  _$jscoverage['/json/quote.js'].lineData[12] = 0;
+  _$jscoverage['/json/quote.js'].lineData[13] = 0;
+  _$jscoverage['/json/quote.js'].lineData[25] = 0;
   _$jscoverage['/json/quote.js'].lineData[26] = 0;
-  _$jscoverage['/json/quote.js'].lineData[28] = 0;
   _$jscoverage['/json/quote.js'].lineData[29] = 0;
   _$jscoverage['/json/quote.js'].lineData[30] = 0;
-  _$jscoverage['/json/quote.js'].lineData[31] = 0;
-  _$jscoverage['/json/quote.js'].lineData[33] = 0;
+  _$jscoverage['/json/quote.js'].lineData[32] = 0;
+  _$jscoverage['/json/quote.js'].lineData[34] = 0;
+  _$jscoverage['/json/quote.js'].lineData[35] = 0;
+  _$jscoverage['/json/quote.js'].lineData[36] = 0;
   _$jscoverage['/json/quote.js'].lineData[37] = 0;
-  _$jscoverage['/json/quote.js'].lineData[38] = 0;
   _$jscoverage['/json/quote.js'].lineData[39] = 0;
-  _$jscoverage['/json/quote.js'].lineData[40] = 0;
-  _$jscoverage['/json/quote.js'].lineData[42] = 0;
+  _$jscoverage['/json/quote.js'].lineData[43] = 0;
+  _$jscoverage['/json/quote.js'].lineData[44] = 0;
+  _$jscoverage['/json/quote.js'].lineData[45] = 0;
+  _$jscoverage['/json/quote.js'].lineData[46] = 0;
+  _$jscoverage['/json/quote.js'].lineData[48] = 0;
 }
 if (! _$jscoverage['/json/quote.js'].functionData) {
   _$jscoverage['/json/quote.js'].functionData = [];
@@ -257,69 +259,73 @@ if (! _$jscoverage['/json/quote.js'].functionData) {
 }
 if (! _$jscoverage['/json/quote.js'].branchData) {
   _$jscoverage['/json/quote.js'].branchData = {};
-  _$jscoverage['/json/quote.js'].branchData['30'] = [];
-  _$jscoverage['/json/quote.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/json/quote.js'].branchData['39'] = [];
-  _$jscoverage['/json/quote.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/json/quote.js'].branchData['36'] = [];
+  _$jscoverage['/json/quote.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/json/quote.js'].branchData['45'] = [];
+  _$jscoverage['/json/quote.js'].branchData['45'][1] = new BranchData();
 }
-_$jscoverage['/json/quote.js'].branchData['39'][1].init(44, 29, '!(v = REVERSE_CONTROL_MAP[m])');
-function visit45_39_1(result) {
-  _$jscoverage['/json/quote.js'].branchData['39'][1].ranCondition(result);
+_$jscoverage['/json/quote.js'].branchData['45'][1].init(44, 29, '!(v = REVERSE_CONTROL_MAP[m])');
+function visit45_45_1(result) {
+  _$jscoverage['/json/quote.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/quote.js'].branchData['30'][1].init(44, 21, '!(v = CONTROL_MAP[m])');
-function visit44_30_1(result) {
-  _$jscoverage['/json/quote.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/json/quote.js'].branchData['36'][1].init(44, 21, '!(v = CONTROL_MAP[m])');
+function visit44_36_1(result) {
+  _$jscoverage['/json/quote.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/json/quote.js'].lineData[6]++;
 KISSY.add(function(S) {
   _$jscoverage['/json/quote.js'].functionData[0]++;
-  _$jscoverage['/json/quote.js'].lineData[8]++;
+  _$jscoverage['/json/quote.js'].lineData[12]++;
+  var util = S;
+  _$jscoverage['/json/quote.js'].lineData[13]++;
   var CONTROL_MAP = {
   '\b': '\\b', 
   '\f': '\\f', 
   '\n': '\\n', 
   '\r': '\\r', 
   '\t': '\\t', 
-  '"': '\\"'}, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
-  _$jscoverage['/json/quote.js'].lineData[20]++;
-  S.each(CONTROL_MAP, function(original, encoded) {
+  '"': '\\"'}, REVERSE_CONTROL_MAP = {}, QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g, UN_QUOTE_REG = /\\\\|\\\/|\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
+  _$jscoverage['/json/quote.js'].lineData[25]++;
+  util.each(CONTROL_MAP, function(original, encoded) {
   _$jscoverage['/json/quote.js'].functionData[1]++;
-  _$jscoverage['/json/quote.js'].lineData[21]++;
+  _$jscoverage['/json/quote.js'].lineData[26]++;
   REVERSE_CONTROL_MAP[original] = encoded;
 });
-  _$jscoverage['/json/quote.js'].lineData[24]++;
+  _$jscoverage['/json/quote.js'].lineData[29]++;
   REVERSE_CONTROL_MAP['\\/'] = '/';
-  _$jscoverage['/json/quote.js'].lineData[26]++;
+  _$jscoverage['/json/quote.js'].lineData[30]++;
+  REVERSE_CONTROL_MAP['\\\\'] = '\\';
+  _$jscoverage['/json/quote.js'].lineData[32]++;
   return {
   quote: function(value) {
   _$jscoverage['/json/quote.js'].functionData[2]++;
-  _$jscoverage['/json/quote.js'].lineData[28]++;
+  _$jscoverage['/json/quote.js'].lineData[34]++;
   return '"' + value.replace(QUOTE_REG, function(m) {
   _$jscoverage['/json/quote.js'].functionData[3]++;
-  _$jscoverage['/json/quote.js'].lineData[29]++;
+  _$jscoverage['/json/quote.js'].lineData[35]++;
   var v;
-  _$jscoverage['/json/quote.js'].lineData[30]++;
-  if (visit44_30_1(!(v = CONTROL_MAP[m]))) {
-    _$jscoverage['/json/quote.js'].lineData[31]++;
-    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(-4);
+  _$jscoverage['/json/quote.js'].lineData[36]++;
+  if (visit44_36_1(!(v = CONTROL_MAP[m]))) {
+    _$jscoverage['/json/quote.js'].lineData[37]++;
+    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(0 - 4);
   }
-  _$jscoverage['/json/quote.js'].lineData[33]++;
+  _$jscoverage['/json/quote.js'].lineData[39]++;
   return v;
 }) + '"';
 }, 
   unQuote: function(value) {
   _$jscoverage['/json/quote.js'].functionData[4]++;
-  _$jscoverage['/json/quote.js'].lineData[37]++;
+  _$jscoverage['/json/quote.js'].lineData[43]++;
   return value.slice(1, value.length - 1).replace(UN_QUOTE_REG, function(m) {
   _$jscoverage['/json/quote.js'].functionData[5]++;
-  _$jscoverage['/json/quote.js'].lineData[38]++;
+  _$jscoverage['/json/quote.js'].lineData[44]++;
   var v;
-  _$jscoverage['/json/quote.js'].lineData[39]++;
-  if (visit45_39_1(!(v = REVERSE_CONTROL_MAP[m]))) {
-    _$jscoverage['/json/quote.js'].lineData[40]++;
+  _$jscoverage['/json/quote.js'].lineData[45]++;
+  if (visit45_45_1(!(v = REVERSE_CONTROL_MAP[m]))) {
+    _$jscoverage['/json/quote.js'].lineData[46]++;
     v = String.fromCharCode(parseInt(m.slice(2), 16));
   }
-  _$jscoverage['/json/quote.js'].lineData[42]++;
+  _$jscoverage['/json/quote.js'].lineData[48]++;
   return v;
 });
 }};

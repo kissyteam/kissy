@@ -97,6 +97,18 @@ KISSY.add(function (S, require) {
         return this.config.view.getBaseCssClass(arguments[1].params[0]);
     }
 
+    function findComponentCss(css, prefixCls) {
+        var csses = css.split(/\s+/);
+        var newCss = [];
+        for (var i = 0, l = csses.length; i < l; i++) {
+            var c = S.trim(csses[i]);
+            if (c && S.startsWith(c, prefixCls)) {
+                newCss.push(c.substring(prefixCls.length));
+            }
+        }
+        return newCss.join(' ');
+    }
+
     /**
      * Base Render class for KISSY Component.
      * @class KISSY.Component.Control.Process
@@ -292,8 +304,8 @@ KISSY.add(function (S, require) {
             var cls = childNode[0].className;
             // 过滤掉特定前缀
             if (cls) {
-                cls = cls.replace(new RegExp('\\b' + prefixCls, 'ig'), '');
-                return Manager.getConstructorByXClass(cls);
+                var componentCss = findComponentCss(cls,prefixCls);
+                return Manager.getConstructorByXClass(componentCss);
             }
             return null;
         },

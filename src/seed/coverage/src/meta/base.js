@@ -272,6 +272,8 @@ function visit523_21_1(result) {
   packages: {
   gallery: {
   base: prefix}, 
+  kg: {
+  base: '//g.alicdn.com/'}, 
   mobile: {
   base: prefix}}});
   }
