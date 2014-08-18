@@ -3,71 +3,144 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S, require) {
-    var Dom = require('dom');
-    var Event = require('event/dom');
-    var AnimBase = require('./base');
+KISSY.add(function (S, require, exports, module) {
+    function upperCase() {
+        return arguments[1].toUpperCase();
+    }
 
-    var Features = S.Features;
-    var vendorPrefix = Features.getVendorCssPropPrefix('transition');
-    var R_UPPER = /([A-Z]|^ms)/g;
-    var TRANSITION_END_EVENT = vendorPrefix ?
-        // webkitTransitionEnd !
-        (vendorPrefix.toLowerCase() + 'TransitionEnd') :
-        // https://github.com/kissyteam/kissy/issues/538
-        'transitionend webkitTransitionEnd';
-    var TRANSITION = Features.getVendorCssPropName('transition');
+    var RE_DASH = /-([a-z])/ig;
+    var propertyPrefixes = [
+            'Webkit',
+            'Moz',
+            'O',
+            // ms is special .... !
+            'ms'
+        ],
+        propertyPrefixesLength = propertyPrefixes.length;
+    var vendorInfos = {};
+    var documentElementStyle = document.documentElement.style;
+
+    function getVendorInfo(name) {
+        if (name.indexOf('-') !== -1) {
+            name = name.replace(RE_DASH, upperCase);
+        }
+        if (name in vendorInfos) {
+            return vendorInfos[name];
+        }
+        // if already prefixed or need not to prefix
+        if (!documentElementStyle || name in documentElementStyle) {
+            vendorInfos[name] = {
+                propertyName: name,
+                propertyNamePrefix: ''
+            };
+        } else {
+            var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1),
+                vendorName;
+
+            for (var i = 0; i < propertyPrefixesLength; i++) {
+                var propertyNamePrefix = propertyPrefixes[i];
+                vendorName = propertyNamePrefix + upperFirstName;
+                if (vendorName in documentElementStyle) {
+                    vendorInfos[name] = {
+                        propertyName: vendorName,
+                        propertyNamePrefix: propertyNamePrefix
+                    };
+                }
+            }
+
+            vendorInfos[name] = vendorInfos[name] || null;
+        }
+        return  vendorInfos[name];
+    }
+
+    /**
+     * animation using css transition
+     * @author yiminghe@gmail.com
+     * @ignore
+     */
+    var util = S;
+    var Dom = require('dom');
+    var AnimBase = require('./base');
+    var transitionVendorInfo = getVendorInfo('transition');
+    var TRANSITION = transitionVendorInfo.propertyName;
+    var DEFAULT_EASING = 'linear';
+    var css3Anim = {
+        ease: 1,
+        linear: 1,
+        'ease-in': 1,
+        'ease-out': 1,
+        'ease-in-out': 1
+    };
 
     function genTransition(propsData) {
         var str = '';
-        S.each(propsData, function (propData, prop) {
+        util.each(propsData, function (propData, prop) {
             if (str) {
                 str += ',';
             }
-            str += prop + ' ' +
-                propData.duration +
-                's ' + propData.easing +
-                ' ' + propData.delay + 's';
+            str += prop + ' ' + propData.duration + 's ' +
+                propData.easing + ' ' + propData.delay + 's';
         });
         return str;
     }
 
-    function TransitionAnim() {
-        TransitionAnim.superclass.constructor.apply(this, arguments);
+    function unCamelCase(propertyName) {
+        return propertyName.replace(/[A-Z]/g, function (m) {
+            return '-' + m.toLowerCase();
+        });
     }
 
-    S.extend(TransitionAnim, AnimBase, {
+    function TransitionAnim(node, to, duration, easing, complete) {
+        var self = this;
+        if (!(self instanceof  TransitionAnim)) {
+            return new TransitionAnim(node, to, duration, easing, complete);
+        }
+        TransitionAnim.superclass.constructor.apply(self, arguments);
+    }
+
+    util.extend(TransitionAnim, AnimBase, {
+        prepareFx: function () {
+            var self = this,
+                propsData = self._propsData;
+            var newProps = {};
+            var val;
+            var vendorInfo;
+            for (var propertyName in propsData) {
+                val = propsData[propertyName];
+                if (typeof val.easing === 'string') {
+                    if (!util.startsWith(val.easing, 'cubic-bezier') && !css3Anim[val.easing]) {
+                        val.easing = DEFAULT_EASING;
+                    }
+                } else {
+                    val.easing = DEFAULT_EASING;
+                }
+                vendorInfo = getVendorInfo(propertyName);
+                if (!vendorInfo) {
+                    S.log('unsupported css property for transition anim: ' + propertyName, 'error');
+                    continue;
+                }
+                newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName];
+            }
+            self._propsData = newProps;
+        },
+
         doStart: function () {
             var self = this,
                 node = self.node,
                 elStyle = node.style,
                 _propsData = self._propsData,
                 original = elStyle[TRANSITION],
-                transform,
+                totalDuration = 0,
                 propsCss = {};
-            if ((transform = _propsData.transform)) {
-                delete _propsData.transform;
-                _propsData[Features.getVendorCssPropName('transform')
-                    .replace(R_UPPER, '-$1').toLowerCase()] = transform;
-            }
-            S.each(_propsData, function (propData, prop) {
-                var v = propData.value,
-                    currentValue = Dom.css(node, prop);
-                if (typeof v === 'number') {
-                    currentValue = parseFloat(currentValue);
-                }
-                if (currentValue === v) {
-                    // browser does not trigger _onTransitionEnd if from is same with to
-                    setTimeout(function () {
-                        self._onTransitionEnd({
-                            originalEvent: {
-                                propertyName: prop
-                            }
-                        });
-                    }, 0);
-                }
+
+            util.each(_propsData, function (propData, prop) {
+                var v = propData.value;
+                // hack, for to reflow?
+                Dom.css(node, prop, Dom.css(node, prop));
                 propsCss[prop] = v;
+                totalDuration = Math.max(propData.duration + propData.delay, totalDuration);
             });
+
             // chrome none
             // firefox none 0s ease 0s
             if (original.indexOf('none') !== -1) {
@@ -76,13 +149,17 @@ KISSY.add(function (S, require) {
                 original += ',';
             }
 
-            // S.log('before start: '+original);
             elStyle[TRANSITION] = original + genTransition(_propsData);
-            // S.log('after start: '+elStyle[TRANSITION]);
 
-            Event.on(node, TRANSITION_END_EVENT, self._onTransitionEnd, self);
+            // bug when set left on relative element
+            setTimeout(function () {
+                Dom.css(node, propsCss);
+            }, 0);
 
-            Dom.css(node, propsCss);
+            // timer is more reliable and can deal with short hand css properties
+            self._transitionEndTimer = setTimeout(function () {
+                self.stop(true);
+            }, totalDuration * 1000);
         },
 
         beforeResume: function () {
@@ -90,9 +167,9 @@ KISSY.add(function (S, require) {
             // already run time before pause
             var self = this,
                 propsData = self._propsData,
-                tmpPropsData = S.merge(propsData),
+                tmpPropsData = util.merge(propsData),
                 runTime = self._runTime / 1000;
-            S.each(tmpPropsData, function (propData, prop) {
+            util.each(tmpPropsData, function (propData, prop) {
                 var tRunTime = runTime;
                 if (propData.delay >= tRunTime) {
                     propData.delay -= tRunTime;
@@ -108,33 +185,6 @@ KISSY.add(function (S, require) {
             });
         },
 
-        _onTransitionEnd: function (e) {
-            e = e.originalEvent;
-            var self = this,
-                allCompleted = 1,
-                propsData = self._propsData;
-            // other anim on the same element
-            if (!propsData[e.propertyName]) {
-                return;
-            }
-            // webkitTransitionEnd transitionend are both bind for
-            // https://github.com/kissyteam/kissy/issues/538
-            if (propsData[e.propertyName].pos === 1) {
-                return;
-            }
-            propsData[e.propertyName].pos = 1;
-            S.each(propsData, function (propData) {
-                if (propData.pos !== 1) {
-                    allCompleted = 0;
-                    return false;
-                }
-                return undefined;
-            });
-            if (allCompleted) {
-                self.stop(true);
-            }
-        },
-
         doStop: function (finish) {
             var self = this,
                 node = self.node,
@@ -144,8 +194,12 @@ KISSY.add(function (S, require) {
                 clear,
                 propsCss = {};
 
-            Event.detach(node, TRANSITION_END_EVENT, self._onTransitionEnd, self);
-            S.each(_propsData, function (propData, prop) {
+            if (self._transitionEndTimer) {
+                clearTimeout(self._transitionEndTimer);
+                self._transitionEndTimer = null;
+            }
+
+            util.each(_propsData, function (propData, prop) {
                 if (!finish) {
                     propsCss[prop] = Dom.css(node, prop);
                 }
@@ -153,9 +207,9 @@ KISSY.add(function (S, require) {
             });
 
             // firefox need set transition and need set none
-            clear = S.trim(elStyle[TRANSITION]
-                    .replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'),
-                        '$1'))
+            clear = util.trim(elStyle[TRANSITION]
+                .replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'),
+                '$1'))
                 .replace(/^,|,,|,$/g, '') || 'none';
 
             elStyle[TRANSITION] = clear;
@@ -163,7 +217,14 @@ KISSY.add(function (S, require) {
         }
     });
 
-    return TransitionAnim;
+    util.mix(TransitionAnim, AnimBase.Statics);
+
+// bad
+    module.exports = TransitionAnim;
+    /*
+     refer:
+     - https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties
+     */
 });
 /*
  refer:
