@@ -2306,7 +2306,17 @@ var modulex = (function (undefined) {
     mx.add('logger-manager', function () {
         return mx.LoggerMangaer;
     });
-})(modulex);/**
+})(modulex);
+/**
+ * @ignore
+ * i18n plugin for modulex loader
+ * @author yiminghe@gmail.com
+ */
+modulex.add('i18n', {
+    alias: function (mx, name) {
+        return name + '/i18n/' + mx.Config.lang;
+    }
+});/**
  * @ignore
  * implement getScript for nodejs synchronously.
  * so loader need not to be changed.
