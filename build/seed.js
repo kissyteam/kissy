@@ -1,5 +1,5 @@
 /*
-Copyright 2014, KISSY v1.45
+Copyright 2014, KISSY v1.46
 MIT Licensed
 build time: Aug 18 12:19
 */
@@ -121,7 +121,7 @@ var KISSY = (function (undefined) {
          * NOTICE: '1.45' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.45',
+        version:'1.46',
 
         /**
          * set KISSY configuration
