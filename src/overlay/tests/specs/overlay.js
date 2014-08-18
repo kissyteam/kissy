@@ -25,7 +25,8 @@ describe("overlay", function () {
 
         beforeEach(function () {
             var render = $('<div class="popup ks-overlay" style="width:400px">' +
-                '<div class="ks-overlay-content">pre-render</div>' +
+                '<div class="ks-overlay-content"><p>pre-render</p>' +
+                '<div class="popup"></div></dov></div>' +
                 '</div>').prependTo('body');
 
             o = new Overlay({
@@ -37,6 +38,14 @@ describe("overlay", function () {
             o.destroy();
         });
 
+        it('children works', function () {
+            o.render();
+            var childrenContainerEl = o.getChildrenContainerEl()[0];
+            expect(o.get('children').length).toBe(2);
+            expect(o.get('children')[0][0]).toBe(childrenContainerEl.childNodes[0]);
+            expect(o.get('children')[1][0]).toBe(childrenContainerEl.childNodes[1]);
+        });
+
 //           srcNode 情况下可以了，恰好只能 el
         it("渲染前取不到 el 元素", function () {
             expect(o.get('el')).toBeUndefined();
@@ -46,7 +55,7 @@ describe("overlay", function () {
         it("渲染后可以取到元素", function () {
             o.render();
             expect(o.get('el')[0].nodeType).toBe(1);
-            expect(o.get('content')).toBe('pre-render');
+            expect(o.get('content').toLowerCase()).toBe('<p>pre-render</p><div class="popup"></div>');
         });
 
         it("渲染后元素会正确配置", function () {

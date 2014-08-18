@@ -10,6 +10,9 @@ var KISSY = (function () {
     S.error = modulex.error;
     S.getLogger = modulex.getLogger;
     S.nodeRequire = modulex.nodeRequire;
+    S.getModule = modulex.getModule;
+    S.getPackage = modulex.getPackage;
+    S.Loader = modulex.Loader;
 
     function wrap(fn) {
         function wrapped() {
@@ -17,6 +20,7 @@ var KISSY = (function () {
             args.unshift(S);
             fn.apply(this, args);
         }
+
         wrapped.toString = function () {
             return fn.toString();
         };

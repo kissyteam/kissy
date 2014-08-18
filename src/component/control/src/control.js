@@ -83,6 +83,17 @@ function getBaseCssClassCmd() {
     return this.root.config.control.getBaseCssClass(arguments[1].params[0]);
 }
 
+function findComponentCss(css, prefixCls) {
+    var csses = css.split(/\s+/);
+    var newCss = [];
+    for (var i = 0, l = csses.length; i < l; i++) {
+        var c = util.trim(csses[i]);
+        if (c && util.startsWith(c, prefixCls)) {
+            newCss.push(c.substring(prefixCls.length));
+        }
+    }
+    return newCss.join(' ');
+}
 /**
  * Base Control class for KISSY Component.
  * @extends KISSY.Base
@@ -609,7 +620,7 @@ var Control = module.exports = Base.extend({
             var cls = childNode[0].className;
             // 过滤掉特定前缀
             if (cls) {
-                cls = cls.replace(new RegExp('\\b' + prefixCls, 'ig'), '');
+                cls = findComponentCss(cls, prefixCls);
                 return Manager.getConstructorByXClass(cls);
             }
             return null;

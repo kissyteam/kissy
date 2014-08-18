@@ -6,11 +6,41 @@ var fs = require('fs');
 var esprima = require('esprima');
 /*global S: true*/
 /*jshint quotmark:false */
-var S = require('../../lib/loader');
+var S = require('../../build/seed-nodejs');
 var estraverse = require('estraverse');
 var escodegen = require('escodegen');
 var wrapModule = require('../common/wrap-module');
-var normalizePath = S.Loader.Utils.normalizePath;
+
+function splitSlash(str) {
+    var parts = str.split(/\//);
+    if (str.charAt(0) === '/' && parts[0]) {
+        parts.unshift('');
+    }
+    if (str.charAt(str.length - 1) === '/' && str.length > 1 && parts[parts.length - 1]) {
+        parts.push('');
+    }
+    return parts;
+}
+
+function normalizePath(parentPath, subPath) {
+    var firstChar = subPath.charAt(0);
+    if (firstChar !== '.') {
+        return subPath;
+    }
+    var parts = splitSlash(parentPath);
+    var subParts = splitSlash(subPath);
+    parts.pop();
+    for (var i = 0, l = subParts.length; i < l; i++) {
+        var subPart = subParts[i];
+        if (subPart === '.') {
+        } else if (subPart === '..') {
+            parts.pop();
+        } else {
+            parts.push(subPart);
+        }
+    }
+    return parts.join('/').replace(/\/+/, '/');
+}
 
 function findRequires(ast) {
     var requires = [];

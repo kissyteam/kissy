@@ -2394,6 +2394,9 @@ var KISSY = (function () {
     S.error = modulex.error;
     S.getLogger = modulex.getLogger;
     S.nodeRequire = modulex.nodeRequire;
+    S.getModule = modulex.getModule;
+    S.getPackage = modulex.getPackage;
+    S.Loader = modulex.Loader;
 
     function wrap(fn) {
         function wrapped() {
@@ -2401,6 +2404,7 @@ var KISSY = (function () {
             args.unshift(S);
             fn.apply(this, args);
         }
+
         wrapped.toString = function () {
             return fn.toString();
         };
@@ -2420,7 +2424,7 @@ var KISSY = (function () {
     S.use = function () {
         var args = slice.call(arguments, 0);
         if (typeof args[0] === 'string') {
-            S.log('use\'s first argument should be array of string!, now is:' + args[0]);
+            S.log('use\'s first argument should be array of string!, now is: ' + args[0]);
             args[0] = args[0].split(/\s*,\s*/);
         }
         var callback = args[1];

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:53
+build time: Aug 18 14:55
 */
 /*
 combined modules:
@@ -91,6 +91,17 @@ KISSY.add('component/control', [
     }
     function getBaseCssClassCmd() {
         return this.root.config.control.getBaseCssClass(arguments[1].params[0]);
+    }
+    function findComponentCss(css, prefixCls) {
+        var csses = css.split(/\s+/);
+        var newCss = [];
+        for (var i = 0, l = csses.length; i < l; i++) {
+            var c = util.trim(csses[i]);
+            if (c && util.startsWith(c, prefixCls)) {
+                newCss.push(c.substring(prefixCls.length));
+            }
+        }
+        return newCss.join(' ');
     }    /**
  * Base Control class for KISSY Component.
  * @extends KISSY.Base
@@ -577,7 +588,7 @@ KISSY.add('component/control', [
                 var cls = childNode[0].className;    // 过滤掉特定前缀
                 // 过滤掉特定前缀
                 if (cls) {
-                    cls = cls.replace(new RegExp('\\b' + prefixCls, 'ig'), '');
+                    cls = findComponentCss(cls, prefixCls);
                     return Manager.getConstructorByXClass(cls);
                 }
                 return null;
@@ -1417,7 +1428,7 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function renderXtpl(scope, buffer, undefined) {
         var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
+        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'];
         buffer.write('<div id="', 0);
         var id0 = scope.resolve(['id'], 0);
         buffer.write(id0, true);
