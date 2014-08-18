@@ -27,8 +27,7 @@
 
 ## Structure
 
- - build:         用于 web 的发布模块
- - lib:           用于 nodejs 的发布模块
+ - build:         用于发布的模块
  - docs:          从源码目录内文件抽取的文档资源
  - src:           源码、测试等开发资源
  - tools:         开发工具集合

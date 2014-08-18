@@ -12,7 +12,7 @@ try {
     iconv = require('iconv-lite');
 } catch (e) {
 }
-var XTemplate = require(Path.join(process.cwd(), 'lib/xtemplate'));
+var XTemplate = require(Path.join(process.cwd(), 'build/seed-nodejs')).nodeRequire('xtemplate');
 
 var globalConfig = {
     encoding: 'utf-8'

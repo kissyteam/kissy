@@ -1,5 +1,5 @@
 var path = require('path');
-var XTemplateCompiler = require('../../lib/xtemplate').Compiler;
+var XTemplateCompiler = require('../../build/seed-nodejs').nodeRequire('xtemplate').Compiler;
 var fs = require('fs');
 var esprima = require('esprima');
 var escodegen = require('escodegen');

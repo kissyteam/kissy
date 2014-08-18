@@ -21,6 +21,7 @@
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
     <property name="kissy.lib.dir" location="${kissy.dir}/lib/build/"/>
     <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
+    <property name="bower.dir" location="${kissy.dir}/bower_components"/>
 
     <property name="version" value="5.0.0"/>
     <property name="cdn.version" value="5.0.0"/>

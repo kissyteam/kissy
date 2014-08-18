@@ -1,6 +1,6 @@
 {
     "name": "kissy",
-    "version": "5.0.0-alpha.11",
+    "version": "5.0.0-alpha.12",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
     "homepage": "http://docs.kissyui.com",
@@ -20,9 +20,7 @@
     "engines": {
         "node": "~0.10"
     },
-    "directories": {
-        "lib": "./lib/"
-    },
+    "main":"./build/",
     "scripts": {
         "test": "exit 0",
         "start": "node ./tools/server/start",

@@ -19,6 +19,7 @@
     "es3": true,
     "globals": {
         "KISSY": false,
+        "modulex": false,
         "describe": false,
         "expect": false,
         "runs": false,

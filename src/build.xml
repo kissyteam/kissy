@@ -35,17 +35,24 @@
     <target name="build-seed">
         <concat destfile="${kissy.build.dir}/seed-debug.js"
                 encoding="${charset}" outputencoding="${charset}">
-            <path location="${kissy.build.dir}/loader-debug.js"/>
+            <path location="${bower.dir}/modulex/build/modulex-debug.js"/>
+            <path location="${kissy.src.dir}/loader/src/loader.js"/>
             <path location="${kissy.build.dir}/ua-debug.js"/>
             <path location="${kissy.build.dir}/feature-debug.js"/>
             <path location="${kissy.build.dir}/meta-debug.js"/>
         </concat>
         <concat destfile="${kissy.build.dir}/seed.js"
                 encoding="${charset}" outputencoding="${charset}">
-            <path location="${kissy.build.dir}/loader.js"/>
+            <path location="${bower.dir}/modulex/build/modulex.js"/>
+            <path location="${kissy.src.dir}/loader/src/loader.js"/>
             <path location="${kissy.build.dir}/ua.js"/>
             <path location="${kissy.build.dir}/feature.js"/>
             <path location="${kissy.build.dir}/meta.js"/>
+        </concat>
+        <concat destfile="${kissy.build.dir}/seed-nodejs.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <path location="${bower.dir}/modulex/build/modulex-nodejs.js"/>
+            <path location="${kissy.src.dir}/loader/src/loader.js"/>
         </concat>
     </target>
 

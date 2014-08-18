@@ -10,6 +10,9 @@ KISSY.config({
         gallery: {
             base: location.protocol === 'https' ?
                 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'
+        },
+        kg: {
+            base: '//g.alicdn.com/kg/'
         }
     }
 });
