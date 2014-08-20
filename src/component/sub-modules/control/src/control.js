@@ -262,7 +262,9 @@ KISSY.add(function (S, require) {
                     if (self.get('focusable')) {
                         self.focus();
                     }
-                    if (!self.get('allowTextSelection') && ev.originalEvent.type.toLowerCase().indexOf('mouse') !== -1) {
+                    var type = ev.originalEvent.type.toLowerCase();
+                    if (!self.get('allowTextSelection') &&
+                        (type.indexOf('mouse') !== -1 || type.indexOf('pointer') !== -1)) {
                         // firefox /chrome/ie9/i10 不会引起焦点转移
                         // invalid for ie10 buggy?
                         n = ev.target.nodeName;
