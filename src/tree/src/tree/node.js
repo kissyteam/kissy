@@ -184,7 +184,9 @@ module.exports = Container.extend([ContentBox], {
             self.set('expanded', !expanded);
         } else {
             self.select();
-            self.fire('click');
+            self.fire('click', {
+                domEvent: e
+            });
         }
         return true;
     },
