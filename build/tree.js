@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: May 22 12:31
+build time: Aug 20 18:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -229,7 +229,6 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
     switch(keyCode) {
       case KeyCode.ENTER:
         return self.handleClickInternal(e);
-        break;
       case KeyCode.HOME:
         nodeToBeSelected = tree;
         break;
@@ -298,7 +297,7 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
       self.set("expanded", !expanded)
     }else {
       self.select();
-      self.fire("click")
+      self.fire("click", {domEvent:e})
     }
     return true
   }, createChildren:function() {
@@ -483,7 +482,6 @@ KISSY.add("tree/check-node", ["node", "./node"], function(S, require) {
       checkState = CHECK
     }
     self.set("checkState", checkState);
-    self.fire("click");
     return true
   }, _onSetCheckState:function(s) {
     var self = this, parent = self.get("parent"), checkCount, i, c, cState, cs;

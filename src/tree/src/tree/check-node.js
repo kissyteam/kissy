@@ -45,8 +45,6 @@ KISSY.add(function (S, require) {
             }
 
             self.set('checkState', checkState);
-
-            self.fire('click');
             return true;
         },
 

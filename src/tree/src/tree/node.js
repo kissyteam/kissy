@@ -45,7 +45,6 @@ KISSY.add(function (S, require) {
             switch (keyCode) {
                 case KeyCode.ENTER:
                     return self.handleClickInternal(e);
-                    break;
 
                 // home
                 // 移到树的顶层节点
@@ -155,7 +154,9 @@ KISSY.add(function (S, require) {
                 self.set('expanded', !expanded);
             } else {
                 self.select();
-                self.fire('click');
+                self.fire('click', {
+                    domEvent: e
+                });
             }
             return true;
         },
