@@ -1,1 +1,0 @@
-node ../../../../node_modules/bin/xtpl -p ./ -s html

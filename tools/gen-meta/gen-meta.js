@@ -12,6 +12,7 @@ program.option('--suffix [suffix]')
 var suffix = program.suffix || '/meta';
 var output = program.output;
 var dir = program.dir || path.join(root, 'src/');
+var bowerDir = path.join(root, 'bower_components/');
 var HEAD = 'KISSY.use([\'ua\', \'feature\'], function(S, UA, Feature){';
 var FOOT = '});';
 var requireFiles = [];
@@ -28,19 +29,21 @@ function mix(r, s) {
     }
 }
 
-function getFiles(dir) {
+function getFiles(dir, ignoreMeta) {
     dir = dir.replace(/\\/g, '/');
     var files = fs.readdirSync(dir);
     for (var i in files) {
         if (!files.hasOwnProperty(i)) {
             continue;
         }
-        var name = dir + '/' + files[i];
+        var file = files[i];
+        var name = dir + '/' + file;
         if (fs.statSync(name).isDirectory()) {
-            getFiles(name);
+            getFiles(name, ignoreMeta);
+        } else if (ignoreMeta && endsWith(file, 'deps.json')) {
+            requireFiles.push(name);
         } else if (endsWith(dir, suffix)) {
-            var file = files[i];
-            if (file === 'deps.json') {
+            if (endsWith(file, 'deps.json')) {
                 requireFiles.push(name);
             } else if (endsWith(file, '.js')) {
                 jsFiles.push(name);
@@ -50,6 +53,7 @@ function getFiles(dir) {
 }
 
 getFiles(dir);
+getFiles(bowerDir, true);
 
 var requires = {};
 var jsCode = [''];

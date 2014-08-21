@@ -521,12 +521,10 @@ var modulex = (function (undefined) {
             return urlParts1[0] === urlParts2[0];
         },
 
-
         // get document head
         docHead: function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
-
 
         // Returns hash code of a string djb2 algorithm
         getHash: function (str) {
@@ -2180,6 +2178,9 @@ var modulex = (function (undefined) {
         use: function (modNames, success) {
             var loader, error;
             var tryCount = 0;
+            if (typeof modNames === 'string') {
+                modNames = modNames.split(/\s*,\s*/);
+            }
             if (typeof success === 'object') {
                 //noinspection JSUnresolvedVariable
                 error = success.error;
@@ -2433,10 +2434,6 @@ var KISSY = (function () {
 
     S.use = function () {
         var args = slice.call(arguments, 0);
-        if (typeof args[0] === 'string') {
-            S.log('use\'s first argument should be array of string!, now is: ' + args[0]);
-            args[0] = args[0].split(/\s*,\s*/);
-        }
         var callback = args[1];
         if (typeof callback === 'function') {
             args[1] = wrap(args[1]);

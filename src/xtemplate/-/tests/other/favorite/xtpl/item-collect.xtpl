@@ -1,6 +1,0 @@
-{{extend ("./layout/item-collect-layout") }}
-
-{{#block ("content") }}
-    {{include ("./page/item-collect-page") }}
-{{/block}}
-

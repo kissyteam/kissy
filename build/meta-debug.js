@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 11 10:12
+build time: Aug 21 21:57
 */
 /**
  * @ignore
@@ -15,9 +15,13 @@ KISSY.config({
         gallery: {
             base: location.protocol === 'https' ?
                 'https://s.tbcdn.cn/s/kissy/gallery' : 'http://a.tbcdn.cn/s/kissy/gallery'
+        },
+        kg: {
+            base: '//g.alicdn.com/kg/'
         }
     }
-});/*jshint indent:false, quotmark:false*/
+});
+/*jshint indent:false, quotmark:false*/
 KISSY.use(['ua', 'feature'], function(S, UA, Feature){
 S.config("requires",{
     "anim/base": [
@@ -312,9 +316,6 @@ S.config("requires",{
     ],
     "xtemplate": [
         "xtemplate/runtime"
-    ],
-    "xtemplate/runtime": [
-        "util"
     ]
 });
 var win = window,

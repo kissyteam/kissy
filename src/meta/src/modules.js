@@ -293,9 +293,6 @@ S.config("requires",{
     ],
     "xtemplate": [
         "xtemplate/runtime"
-    ],
-    "xtemplate/runtime": [
-        "util"
     ]
 });
 var win = window,
