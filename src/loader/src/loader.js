@@ -39,10 +39,6 @@ var KISSY = (function () {
 
     S.use = function () {
         var args = slice.call(arguments, 0);
-        if (typeof args[0] === 'string') {
-            S.log('use\'s first argument should be array of string!, now is: ' + args[0]);
-            args[0] = args[0].split(/\s*,\s*/);
-        }
         var callback = args[1];
         if (typeof callback === 'function') {
             args[1] = wrap(args[1]);
