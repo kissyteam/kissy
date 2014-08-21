@@ -3081,7 +3081,7 @@ KISSY.add('feature', ['ua'], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 21 21:57
+build time: Aug 21 22:00
 */
 /**
  * @ignore
