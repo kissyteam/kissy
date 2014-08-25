@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 8 13:44
+build time: Aug 22 16:07
 */
 /*
 combined modules:
@@ -1400,7 +1400,7 @@ KISSY.add('io/sub-domain-transport', [
  * @author yiminghe@gmail.com
  */
     var util = require('util');
-    var Event = require('event/dom'), url = require('url'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
+    var DomEvent = require('event/dom'), url = require('url'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
     var LoggerManager = require('logger-manager');
     var logger = LoggerManager.getLogger('s/io');
     var PROXY_PAGE = '/sub_domain_proxy.html', doc = document,
@@ -1447,13 +1447,13 @@ KISSY.add('io/sub-domain-transport', [
             } else {
                 iframe = iframeDesc.iframe;
             }
-            Event.on(iframe, 'load', _onLoad, self);
+            DomEvent.on(iframe, 'load', _onLoad, self);
         }
     });
     function _onLoad() {
         var self = this, c = self.io.config, uri = c.uri, hostname = uri.hostname, iframeDesc = iframeMap[hostname];
         iframeDesc.ready = 1;
-        Event.detach(iframeDesc.iframe, 'load', _onLoad, self);
+        DomEvent.detach(iframeDesc.iframe, 'load', _onLoad, self);
         self.send();
     }
     module.exports = SubDomainTransport;
@@ -1706,7 +1706,8 @@ KISSY.add('io/iframe-transport', [
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-    var util = require('util'), querystring = require('querystring'), Dom = require('dom'), IO = require('./base'), Event = require('event/dom');
+    var util = require('util'), querystring = require('querystring'), Dom = require('dom'), IO = require('./base');
+    var DomEvent = require('event/dom');
     var LoggerManager = require('logger-manager');
     var logger = LoggerManager.getLogger('s/io');
     var UA = require('ua');
@@ -1820,7 +1821,7 @@ KISSY.add('io/iframe-transport', [
             }
             self.fields = fields;
             function go() {
-                Event.on(iframe, 'load error', self._callback, self);
+                DomEvent.on(iframe, 'load error', self._callback, self);
                 form.submit();
             }    // ie6 need a breath
             // ie6 need a breath
@@ -1849,7 +1850,7 @@ KISSY.add('io/iframe-transport', [
                 Dom.attr(form, self.attrs);
             }
             removeFieldsFromData(this.fields);
-            Event.detach(iframe);
+            DomEvent.detach(iframe);
             setTimeout(function () {
                 // firefox will keep loading if not set timeout
                 Dom.remove(iframe);

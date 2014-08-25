@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:04
+build time: Aug 22 16:07
 */
 /*
 combined modules:
@@ -39,7 +39,7 @@ KISSY.add('node/base', [
  */
     var util = require('util');
     var Dom = require('dom');
-    var Event = require('event/dom');
+    var DomEvent = require('event/dom');
     var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList;    /**
  * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
  * use KISSY.all/one to retrieve NodeList instances.
@@ -261,7 +261,7 @@ KISSY.add('node/base', [
             return all.length ? all.slice(0, 1) : null;
         }
     });
-    Node.Event = Event;
+    Node.DomEvent = DomEvent;
     Node.Dom = Dom;
     module.exports = Node;    /*
  Notes:
@@ -294,7 +294,7 @@ KISSY.add('node/attach', [
  */
     var util = require('util');
     var Dom = require('dom');
-    var Event = require('event/dom');    /*global Node:true*/
+    var DomEvent = require('event/dom');    /*global Node:true*/
     /*global Node:true*/
     var Node = require('./base');
     var NLP = Node.prototype, makeArray = util.makeArray,
@@ -390,7 +390,7 @@ KISSY.add('node/attach', [
             'fire',
             'fireHandler'
         ];
-    Node.KeyCode = Event.KeyCode;
+    Node.KeyCode = DomEvent.KeyCode;
     function accessNorm(fn, self, args) {
         args.unshift(self);
         var ret = Dom[fn].apply(Dom, args);
@@ -440,7 +440,7 @@ KISSY.add('node/attach', [
         NLP[k] = function () {
             var self = this, args = makeArray(arguments);
             args.unshift(self);
-            Event[k].apply(Event, args);
+            DomEvent[k].apply(DomEvent, args);
             return self;
         };
     });
@@ -448,7 +448,7 @@ KISSY.add('node/attach', [
         NLP[k] = function () {
             var self = this, args = makeArray(arguments);
             args.unshift(self);
-            return Event[k].apply(Event, args);
+            return DomEvent[k].apply(DomEvent, args);
         };
     });    /*
  2011-05-24

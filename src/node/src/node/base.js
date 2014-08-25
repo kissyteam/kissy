@@ -6,7 +6,7 @@
 
 var util = require('util');
 var Dom = require('dom');
-var Event = require('event/dom');
+var DomEvent = require('event/dom');
 var AP = Array.prototype,
     slice = AP.slice,
     NodeType = Dom.NodeType,
@@ -251,7 +251,7 @@ util.mix(Node, {
     }
 });
 
-Node.Event = Event;
+Node.DomEvent = DomEvent;
 
 Node.Dom = Dom;
 

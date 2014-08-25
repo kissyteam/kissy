@@ -5,7 +5,7 @@
  */
 var util = require('util');
 var Dom = require('dom');
-var Event = require('event/dom');
+var DomEvent = require('event/dom');
 /*global Node:true*/
 var Node = require('./base');
 var NLP = Node.prototype,
@@ -104,7 +104,7 @@ var NLP = Node.prototype,
         'fireHandler'
     ];
 
-Node.KeyCode = Event.KeyCode;
+Node.KeyCode = DomEvent.KeyCode;
 
 function accessNorm(fn, self, args) {
     args.unshift(self);
@@ -162,7 +162,7 @@ util.each(EVENT_INCLUDES_SELF, function (k) {
         var self = this,
             args = makeArray(arguments);
         args.unshift(self);
-        Event[k].apply(Event, args);
+        DomEvent[k].apply(DomEvent, args);
         return self;
     };
 });
@@ -172,7 +172,7 @@ util.each(EVENT_INCLUDES_RET, function (k) {
         var self = this,
             args = makeArray(arguments);
         args.unshift(self);
-        return Event[k].apply(Event, args);
+        return DomEvent[k].apply(DomEvent, args);
     };
 });
 

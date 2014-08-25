@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:05
+build time: Aug 22 16:09
 */
 KISSY.add("toolbar",["component/container","component/extension/delegate-children","util","node"],function(j,h,k,l){function g(a,b,c){var c=c.get("children"),d=0,e=c.length;if(void 0===a&&(a=1===b?0:e-1,!c[a].get("disabled")))return c[a];do d++,a=(a+e+b)%e;while(d<e&&c[a].get("disabled"));return d!==e?c[a]:null}function m(a){a.newVal?this.set("expandedItem",null):this.set("expandedItem",a.target)}function n(a){var b=a.target;if(this!==b&&(b.isMenuItem||b.isButton))a.newVal?(a=this.get("children"),
 this.get("expandedItem")&&i.inArray(b,a)&&this.set("expandedItem",b.isMenuButton?b:null),this.set("highlightedItem",b)):a.byPassSetToolbarHighlightedItem||this.set("highlightedItem",null)}var j=h("component/container"),k=h("component/extension/delegate-children"),i=h("util"),f=h("node").Event.KeyCode;l.exports=j.extend([k],{beforeCreateDom:function(a){a.elAttrs.role="toolbar"},bindUI:function(){this.on("afterCollapsedChange",m,this);this.on("afterHighlightedChange",n,this)},handleBlurInternal:function(a){var b;

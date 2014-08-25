@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:05
+build time: Aug 22 16:09
 */
 /*
 combined modules:
@@ -266,7 +266,7 @@ KISSY.add('tree/node', [
                 self.set('expanded', !expanded);
             } else {
                 self.select();
-                self.fire('click');
+                self.fire('click', { domEvent: e });
             }
             return true;
         },
@@ -578,144 +578,158 @@ KISSY.add('tree/node-xtpl', [], function (S, require, exports, module) {
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function nodeXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('row');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, true);
-        buffer.write('\r\n     ', 0);
+        buffer.writeEscaped(callRet2);
+        buffer.write('\r\n     ');
         var option3 = { escape: 1 };
         var params4 = [];
-        var id5 = scope.resolve(['selected'], 0);
+        var id5 = scope.resolve(['selected']);
         params4.push(id5);
         option3.params = params4;
         option3.fn = function (scope, buffer) {
-            buffer.write('\r\n        ', 0);
+            buffer.write('\r\n        ');
             var option6 = { escape: 1 };
             var params7 = [];
             params7.push('selected');
             option6.params = params7;
             var callRet8;
-            callRet8 = callFnUtil(tpl, scope, option6, buffer, ['getBaseCssClasses'], 0, 3);
+            callRet8 = callFnUtil(tpl, scope, option6, buffer, ['getBaseCssClasses'], 3);
             if (callRet8 && callRet8.isBuffer) {
                 buffer = callRet8;
                 callRet8 = undefined;
             }
-            buffer.write(callRet8, true);
-            buffer.write('\r\n     ', 0);
+            buffer.writeEscaped(callRet8);
+            buffer.write('\r\n     ');
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option3, buffer, 2);
-        buffer.write('\r\n     ">\r\n    <div class="', 0);
+        buffer.write('\r\n     ">\r\n    <div class="');
         var option9 = { escape: 1 };
         var params10 = [];
         params10.push('expand-icon');
         option9.params = params10;
         var callRet11;
-        callRet11 = callFnUtil(tpl, scope, option9, buffer, ['getBaseCssClasses'], 0, 6);
+        callRet11 = callFnUtil(tpl, scope, option9, buffer, ['getBaseCssClasses'], 6);
         if (callRet11 && callRet11.isBuffer) {
             buffer = callRet11;
             callRet11 = undefined;
         }
-        buffer.write(callRet11, true);
-        buffer.write('">\r\n    </div>\r\n    ', 0);
+        buffer.writeEscaped(callRet11);
+        buffer.write('">\r\n    </div>\r\n    ');
         var option12 = { escape: 1 };
         var params13 = [];
-        var id14 = scope.resolve(['checkable'], 0);
+        var id14 = scope.resolve(['checkable']);
         params13.push(id14);
         option12.params = params13;
         option12.fn = function (scope, buffer) {
-            buffer.write('\r\n    <div class="', 0);
+            buffer.write('\r\n    <div class="');
             var option15 = { escape: 1 };
             var params16 = [];
             var exp18 = 'checked';
-            var id17 = scope.resolve(['checkState'], 0);
+            var id17 = scope.resolve(['checkState']);
             exp18 = 'checked' + id17;
             params16.push(exp18);
             option15.params = params16;
             var callRet19;
-            callRet19 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 0, 9);
+            callRet19 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 9);
             if (callRet19 && callRet19.isBuffer) {
                 buffer = callRet19;
                 callRet19 = undefined;
             }
-            buffer.write(callRet19, true);
-            buffer.write(' ', 0);
+            buffer.writeEscaped(callRet19);
+            buffer.write(' ');
             var option20 = { escape: 1 };
             var params21 = [];
             params21.push('checked');
             option20.params = params21;
             var callRet22;
-            callRet22 = callFnUtil(tpl, scope, option20, buffer, ['getBaseCssClasses'], 0, 9);
+            callRet22 = callFnUtil(tpl, scope, option20, buffer, ['getBaseCssClasses'], 9);
             if (callRet22 && callRet22.isBuffer) {
                 buffer = callRet22;
                 callRet22 = undefined;
             }
-            buffer.write(callRet22, true);
-            buffer.write('"></div>\r\n    ', 0);
+            buffer.writeEscaped(callRet22);
+            buffer.write('"></div>\r\n    ');
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option12, buffer, 8);
-        buffer.write('\r\n    <div class="', 0);
+        buffer.write('\r\n    <div class="');
         var option23 = { escape: 1 };
         var params24 = [];
         params24.push('icon');
         option23.params = params24;
         var callRet25;
-        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 0, 11);
+        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 11);
         if (callRet25 && callRet25.isBuffer) {
             buffer = callRet25;
             callRet25 = undefined;
         }
-        buffer.write(callRet25, true);
-        buffer.write('">\r\n\r\n    </div>\r\n    <div class="', 0);
+        buffer.writeEscaped(callRet25);
+        buffer.write('">\r\n\r\n    </div>\r\n    <div class="');
         var option26 = { escape: 1 };
         var params27 = [];
         params27.push('content');
         option26.params = params27;
         var callRet28;
-        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 0, 14);
+        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 14);
         if (callRet28 && callRet28.isBuffer) {
             buffer = callRet28;
             callRet28 = undefined;
         }
-        buffer.write(callRet28, true);
-        buffer.write('">', 0);
-        var id29 = scope.resolve(['content'], 0);
-        buffer.write(id29, false);
-        buffer.write('</div>\r\n</div>\r\n<div class="', 0);
+        buffer.writeEscaped(callRet28);
+        buffer.write('">');
+        var id29 = scope.resolve(['content']);
+        buffer.write(id29);
+        buffer.write('</div>\r\n</div>\r\n<div class="');
         var option30 = { escape: 1 };
         var params31 = [];
         params31.push('children');
         option30.params = params31;
         var callRet32;
-        callRet32 = callFnUtil(tpl, scope, option30, buffer, ['getBaseCssClasses'], 0, 16);
+        callRet32 = callFnUtil(tpl, scope, option30, buffer, ['getBaseCssClasses'], 16);
         if (callRet32 && callRet32.isBuffer) {
             buffer = callRet32;
             callRet32 = undefined;
         }
-        buffer.write(callRet32, true);
-        buffer.write('"\r\n', 0);
+        buffer.writeEscaped(callRet32);
+        buffer.write('"\r\n');
         var option33 = { escape: 1 };
         var params34 = [];
-        var id35 = scope.resolve(['expanded'], 0);
+        var id35 = scope.resolve(['expanded']);
         params34.push(!id35);
         option33.params = params34;
         option33.fn = function (scope, buffer) {
-            buffer.write('\r\nstyle="display:none"\r\n', 0);
+            buffer.write('\r\nstyle="display:none"\r\n');
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option33, buffer, 17);
-        buffer.write('\r\n>\r\n</div>', 0);
+        buffer.write('\r\n>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

@@ -2506,7 +2506,7 @@ var KISSY = (function () {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:05
+build time: Aug 22 16:09
 */
 /*
 combined modules:
@@ -2785,35 +2785,33 @@ KISSY.add('ua', [], function (S, require, exports, module) {
                             UA.mobile = m[0];
                         }
                     }    // NOT WebKit or Presto
-                } else
+                } else {
                     // NOT WebKit or Presto
-                    {
-                        // MSIE
-                        // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
-                        // and analysis tools in nodejs
-                        if (ieVersion = getIEVersion(ua)) {
-                            UA[shell = 'ie'] = ieVersion;
-                            setTridentVersion(ua, UA);    // NOT WebKit, Presto or IE
-                        } else
-                            // NOT WebKit, Presto or IE
-                            {
-                                // Gecko
-                                if (m = ua.match(/Gecko/)) {
-                                    UA[core = 'gecko'] = 0.1;    // Gecko detected, look for revision
-                                    // Gecko detected, look for revision
-                                    if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
-                                        UA[core] = numberify(m[1]);
-                                        if (/Mobile|Tablet/.test(ua)) {
-                                            UA.mobile = 'firefox';
-                                        }
-                                    }    // Firefox
-                                    // Firefox
-                                    if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                                        UA[shell = 'firefox'] = numberify(m[1]);
-                                    }
+                    // MSIE
+                    // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                    // and analysis tools in nodejs
+                    if (ieVersion = getIEVersion(ua)) {
+                        UA[shell = 'ie'] = ieVersion;
+                        setTridentVersion(ua, UA);    // NOT WebKit, Presto or IE
+                    } else {
+                        // NOT WebKit, Presto or IE
+                        // Gecko
+                        if (m = ua.match(/Gecko/)) {
+                            UA[core = 'gecko'] = 0.1;    // Gecko detected, look for revision
+                            // Gecko detected, look for revision
+                            if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                                UA[core] = numberify(m[1]);
+                                if (/Mobile|Tablet/.test(ua)) {
+                                    UA.mobile = 'firefox';
                                 }
+                            }    // Firefox
+                            // Firefox
+                            if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                                UA[shell = 'firefox'] = numberify(m[1]);
                             }
+                        }
                     }
+                }
             }
         }
         if (!os) {
@@ -2898,7 +2896,7 @@ KISSY.add('ua', [], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:03
+build time: Aug 22 16:06
 */
 /*
 combined modules:
@@ -3081,7 +3079,7 @@ KISSY.add('feature', ['ua'], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 21 22:00
+build time: Aug 22 16:09
 */
 /**
  * @ignore

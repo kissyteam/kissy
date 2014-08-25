@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:05
+build time: Aug 22 16:09
 */
 /*
 combined modules:
@@ -700,43 +700,57 @@ KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function tabXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('content');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, true);
-        buffer.write('">', 0);
-        var id3 = scope.resolve(['content'], 0);
-        buffer.write(id3, false);
-        buffer.write('</div>\r\n', 0);
+        buffer.writeEscaped(callRet2);
+        buffer.write('">');
+        var id3 = scope.resolve(['content']);
+        buffer.write(id3);
+        buffer.write('</div>\r\n');
         var option4 = { escape: 1 };
         var params5 = [];
-        var id6 = scope.resolve(['closable'], 0);
+        var id6 = scope.resolve(['closable']);
         params5.push(id6);
         option4.params = params5;
         option4.fn = function (scope, buffer) {
-            buffer.write('\r\n<span class="', 0);
+            buffer.write('\r\n<span class="');
             var option7 = { escape: 1 };
             var params8 = [];
             params8.push('close');
             option7.params = params8;
             var callRet9;
-            callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 3);
+            callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 3);
             if (callRet9 && callRet9.isBuffer) {
                 buffer = callRet9;
                 callRet9 = undefined;
             }
-            buffer.write(callRet9, true);
-            buffer.write('">close</span>\r\n', 0);
+            buffer.writeEscaped(callRet9);
+            buffer.write('">close</span>\r\n');
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option4, buffer, 2);

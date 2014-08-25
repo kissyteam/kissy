@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 7 15:48
+build time: Aug 22 16:02
 */
 KISSY.add("component/container",["util","component/control"],function(f,g,m,i){function j(b){var a=b.component,c=this.get("children"),b=b.index;c.splice(b,0,a);c=this.get("children");a=c[b];a.setInternal&&a.setInternal("parent",this);this.get("rendered")&&this.renderChild(b);this.fire("afterAddChild",{component:a,index:b})}function k(b){var a=b.component,c=b.destroy,d=this.get("children"),b=b.index;-1!==b&&d.splice(b,1);a.setInternal&&a.setInternal("parent",null);a.destroy?a.destroy(c):a.isNode&&
 c&&a.remove();this.fire("afterRemoveChild",{component:a,index:b})}var h=g("util"),f=g("component/control"),l=f.Manager;i.exports=f.extend({isContainer:!0,initializer:function(){var b=this.get("prefixCls"),a=this.get("defaultChildCfg");this.publish("beforeAddChild",{defaultFn:j,defaultTargetOnly:!0});this.publish("beforeRemoveChild",{defaultFn:k,defaultTargetOnly:!0});a.prefixCls=a.prefixCls||b},decorateDom:function(){var b=this,a=b.getChildrenContainerEl(),c=b.get("defaultChildCfg"),d=c.prefixCls,

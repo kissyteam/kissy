@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 18 14:55
+build time: Aug 22 16:02
 */
 /*
 combined modules:
@@ -1427,69 +1427,83 @@ KISSY.add('component/control/render-xtpl', [], function (S, require, exports, mo
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function renderXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'];
-        buffer.write('<div id="', 0);
-        var id0 = scope.resolve(['id'], 0);
-        buffer.write(id0, true);
-        buffer.write('"\r\n class="', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div id="');
+        var id0 = scope.resolve(['id']);
+        buffer.writeEscaped(id0);
+        buffer.write('"\r\n class="');
         var option1 = { escape: 1 };
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option1, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet2 = callFnUtil(tpl, scope, option1, buffer, ['getBaseCssClasses'], 2);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, true);
-        buffer.write('\r\n', 0);
+        buffer.writeEscaped(callRet2);
+        buffer.write('\r\n');
         var option3 = { escape: 1 };
         var params4 = [];
-        var id5 = scope.resolve(['elCls'], 0);
+        var id5 = scope.resolve(['elCls']);
         params4.push(id5);
         option3.params = params4;
         option3.fn = function (scope, buffer) {
-            buffer.write('\r\n ', 0);
-            var id6 = scope.resolve(['this'], 0);
-            buffer.write(id6, true);
-            buffer.write('\r\n', 0);
+            buffer.write('\r\n ');
+            var id6 = scope.resolve(['this']);
+            buffer.writeEscaped(id6);
+            buffer.write('\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-        buffer.write('\r\n"\r\n\r\n', 0);
+        buffer.write('\r\n"\r\n\r\n');
         var option7 = { escape: 1 };
         var params8 = [];
-        var id9 = scope.resolve(['elAttrs'], 0);
+        var id9 = scope.resolve(['elAttrs']);
         params8.push(id9);
         option7.params = params8;
         option7.fn = function (scope, buffer) {
-            buffer.write('\r\n ', 0);
-            var id10 = scope.resolve(['xindex'], 0);
-            buffer.write(id10, true);
-            buffer.write('="', 0);
-            var id11 = scope.resolve(['this'], 0);
-            buffer.write(id11, true);
-            buffer.write('"\r\n', 0);
+            buffer.write('\r\n ');
+            var id10 = scope.resolve(['xindex']);
+            buffer.writeEscaped(id10);
+            buffer.write('="');
+            var id11 = scope.resolve(['this']);
+            buffer.writeEscaped(id11);
+            buffer.write('"\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option7, buffer, 8);
-        buffer.write('\r\n\r\nstyle="\r\n', 0);
+        buffer.write('\r\n\r\nstyle="\r\n');
         var option12 = { escape: 1 };
         var params13 = [];
-        var id14 = scope.resolve(['elStyle'], 0);
+        var id14 = scope.resolve(['elStyle']);
         params13.push(id14);
         option12.params = params13;
         option12.fn = function (scope, buffer) {
-            buffer.write('\r\n ', 0);
-            var id15 = scope.resolve(['xindex'], 0);
-            buffer.write(id15, true);
-            buffer.write(':', 0);
-            var id16 = scope.resolve(['this'], 0);
-            buffer.write(id16, true);
-            buffer.write(';\r\n', 0);
+            buffer.write('\r\n ');
+            var id15 = scope.resolve(['xindex']);
+            buffer.writeEscaped(id15);
+            buffer.write(':');
+            var id16 = scope.resolve(['this']);
+            buffer.writeEscaped(id16);
+            buffer.write(';\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option12, buffer, 13);
-        buffer.write('\r\n">', 0);
+        buffer.write('\r\n">');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

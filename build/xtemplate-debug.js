@@ -25,8 +25,6 @@ xtemplateCompilerParser = function (exports) {
         };
       /*jslint quotmark: false*/
       /*jslint quotmark: false*/
-      /*jslint quotmark: false*/
-      /*jslint quotmark: false*/
       function mix(to, from) {
         for (var f in from) {
           to[f] = from[f];
@@ -94,44 +92,8 @@ xtemplateCompilerParser = function (exports) {
          }
          ]
          */
-        /*
-         lex rules.
-         @type {Object[]}
-         @example
-         [
-         {
-         regexp:'\\w+',
-         state:['xx'],
-         token:'c',
-         // this => lex
-         action:function(){}
-         }
-         ]
-         */
-        /*
-         lex rules.
-         @type {Object[]}
-         @example
-         [
-         {
-         regexp:'\\w+',
-         state:['xx'],
-         token:'c',
-         // this => lex
-         action:function(){}
-         }
-         ]
-         */
         self.rules = [];
         mix(self, cfg);
-        /*
-         Input languages
-         @type {String}
-         */
-        /*
-         Input languages
-         @type {String}
-         */
         /*
          Input languages
          @type {String}
@@ -159,8 +121,6 @@ xtemplateCompilerParser = function (exports) {
         },
         'getCurrentRules': function () {
           var self = this, currentState = self.stateStack[self.stateStack.length - 1], rules = [];
-          //#JSCOVERAGE_IF
-          //#JSCOVERAGE_IF
           //#JSCOVERAGE_IF
           //#JSCOVERAGE_IF
           if (self.mapState) {
@@ -194,11 +154,7 @@ xtemplateCompilerParser = function (exports) {
           matched = matched.slice(0, matched.length - match.length);
           //#JSCOVERAGE_IF 0
           //#JSCOVERAGE_IF 0
-          //#JSCOVERAGE_IF 0
-          //#JSCOVERAGE_IF 0
           var past = (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') + matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/g, ' '), next = match + input;
-          //#JSCOVERAGE_ENDIF
-          //#JSCOVERAGE_ENDIF
           //#JSCOVERAGE_ENDIF
           //#JSCOVERAGE_ENDIF
           next = next.slice(0, DEBUG_CONTEXT_LIMIT).replace(/\n/g, ' ') + (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
@@ -217,8 +173,6 @@ xtemplateCompilerParser = function (exports) {
           }
           //#JSCOVERAGE_IF
           //#JSCOVERAGE_IF
-          //#JSCOVERAGE_IF
-          //#JSCOVERAGE_IF
           if (reverseSymbolMap) {
             return reverseSymbolMap[rs];
           } else {
@@ -235,11 +189,7 @@ xtemplateCompilerParser = function (exports) {
             rule = rules[i];
             //#JSCOVERAGE_IF 0
             //#JSCOVERAGE_IF 0
-            //#JSCOVERAGE_IF 0
-            //#JSCOVERAGE_IF 0
             var regexp = rule.regexp || rule[1], token = rule.token || rule[0], action = rule.action || rule[2] || undefined;
-            //#JSCOVERAGE_ENDIF
-            //#JSCOVERAGE_ENDIF
             //#JSCOVERAGE_ENDIF
             //#JSCOVERAGE_ENDIF
             if (m = input.match(regexp)) {
@@ -256,21 +206,13 @@ xtemplateCompilerParser = function (exports) {
               var match;
               // for error report
               // for error report
-              // for error report
-              // for error report
               match = self.match = m[0];
-              // all matches
-              // all matches
               // all matches
               // all matches
               self.matches = m;
               // may change by user
               // may change by user
-              // may change by user
-              // may change by user
               self.text = match;
-              // matched content utils now
-              // matched content utils now
               // matched content utils now
               // matched content utils now
               self.matched += match;
@@ -318,10 +260,6 @@ xtemplateCompilerParser = function (exports) {
                     return new Array(m.length / 2 + 1).join('\\');
                   });
                 }
-                // https://github.com/kissyteam/kissy/issues/330
-                // return even empty
-                // https://github.com/kissyteam/kissy/issues/330
-                // return even empty
                 // https://github.com/kissyteam/kissy/issues/330
                 // return even empty
                 // https://github.com/kissyteam/kissy/issues/330
@@ -5624,8 +5562,6 @@ xtemplateCompilerParser = function (exports) {
         var valueStack = [null];
         // for debug info
         // for debug info
-        // for debug info
-        // for debug info
         var prefix = filename ? 'in file: ' + filename + ' ' : '';
         var stack = [0];
         lexer.resetInput(input);
@@ -5644,8 +5580,6 @@ xtemplateCompilerParser = function (exports) {
           if (!action) {
             var expected = [];
             var error;
-            //#JSCOVERAGE_IF
-            //#JSCOVERAGE_IF
             //#JSCOVERAGE_IF
             //#JSCOVERAGE_IF
             if (tableAction[state]) {
@@ -5667,11 +5601,7 @@ xtemplateCompilerParser = function (exports) {
             valueStack.push(lexer.text);
             // push state
             // push state
-            // push state
-            // push state
             stack.push(action[GrammarConst.TO_INDEX]);
-            // allow to read more
-            // allow to read more
             // allow to read more
             // allow to read more
             symbol = null;
@@ -5684,8 +5614,6 @@ xtemplateCompilerParser = function (exports) {
             var len = reducedRhs.length;
             var i = 0;
             $$ = valueStack[valueStack.length - len];
-            // default to $$ = $1
-            // default to $$ = $1
             // default to $$ = $1
             // default to $$ = $1
             ret = undefined;
@@ -5746,13 +5674,6 @@ xtemplateCompilerAst = function (exports) {
    * @param [inverse]
    * @constructor
    */
-  /**
-   * @ignore
-   * @param lineNumber
-   * @param statements
-   * @param [inverse]
-   * @constructor
-   */
   ast.ProgramNode = function (lineNumber, statements, inverse) {
     var self = this;
     self.lineNumber = lineNumber;
@@ -5762,7 +5683,6 @@ xtemplateCompilerAst = function (exports) {
   ast.ProgramNode.prototype.type = 'program';
   ast.BlockStatement = function (lineNumber, func, program, close, escape) {
     var closeParts = close.parts, self = this, e;
-    // no close tag
     // no close tag
     if (!sameArray(func.id.parts, closeParts)) {
       e = 'Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + func.id.parts + '}} not {{/' + closeParts + '}}';
@@ -5791,14 +5711,6 @@ xtemplateCompilerAst = function (exports) {
     this.value = v;
     this.unaryType = unaryType;
   };
-  /**
-   * @ignore
-   * @param lineNumber
-   * @param id
-   * @param [params]
-   * @param [hash]
-   * @constructor
-   */
   /**
    * @ignore
    * @param lineNumber
@@ -6387,6 +6299,7 @@ xtemplate = function (exports) {
   XTemplate.prototype.constructor = XTemplate;
   exports = util.mix(XTemplate, {
     compile: Compiler.compile,
+    version: '1.1.1',
     loader: loader,
     Compiler: Compiler,
     Scope: XTemplateRuntime.Scope,

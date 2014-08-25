@@ -6,8 +6,8 @@
 var util = require('util'),
     querystring = require('querystring'),
     Dom = require('dom'),
-    IO = require('./base'),
-    Event = require('event/dom');
+    IO = require('./base');
+var DomEvent = require('event/dom');
 var LoggerManager = require('logger-manager');
 var logger = LoggerManager.getLogger('s/io');
 var UA = require('ua');
@@ -144,7 +144,7 @@ util.augment(IframeTransport, {
         self.fields = fields;
 
         function go() {
-            Event.on(iframe, 'load error', self._callback, self);
+            DomEvent.on(iframe, 'load error', self._callback, self);
             form.submit();
         }
 
@@ -183,7 +183,7 @@ util.augment(IframeTransport, {
 
         removeFieldsFromData(this.fields);
 
-        Event.detach(iframe);
+        DomEvent.detach(iframe);
 
         setTimeout(function () {
             // firefox will keep loading if not set timeout

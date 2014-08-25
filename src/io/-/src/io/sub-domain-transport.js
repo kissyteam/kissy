@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var Event = require('event/dom'),
+var DomEvent = require('event/dom'),
     url = require('url'),
     Dom = require('dom'),
     XhrTransportBase = require('./xhr-transport-base');
@@ -69,7 +69,7 @@ util.augment(SubDomainTransport, XhrTransportBase.proto, {
             iframe = iframeDesc.iframe;
         }
 
-        Event.on(iframe, 'load', _onLoad, self);
+        DomEvent.on(iframe, 'load', _onLoad, self);
 
     }
 });
@@ -81,7 +81,7 @@ function _onLoad() {
         hostname = uri.hostname,
         iframeDesc = iframeMap[hostname];
     iframeDesc.ready = 1;
-    Event.detach(iframeDesc.iframe, 'load', _onLoad, self);
+    DomEvent.detach(iframeDesc.iframe, 'load', _onLoad, self);
     self.send();
 }
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:52
+build time: Aug 22 16:01
 */
 /*
 combined modules:
@@ -1048,13 +1048,12 @@ KISSY.add('anim/timer/transform', [
                 skew = -skew;
                 scaleX = -scaleX;
             }    // matrix is singular and cannot be interpolated
-        } else
+        } else {
             // matrix is singular and cannot be interpolated
-            {
-                // In this case the elem shouldn't be rendered, hence scale == 0
-                scaleX = scaleY = skew = 0;
-            }    // The recomposition order is very important
-                 // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
+            // In this case the elem shouldn't be rendered, hence scale == 0
+            scaleX = scaleY = skew = 0;
+        }    // The recomposition order is very important
+             // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
         // The recomposition order is very important
         // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
         return {

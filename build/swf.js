@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 8 13:36
+build time: Aug 22 16:09
 */
 KISSY.add("swf",["dom","json","attribute","swf/ua","util"],function(u,i,j,v){function p(a){var d=e;l.each(a,function(a,b){b=b.toLowerCase();b in z?d+=h(b,a):b===A&&(d+=h(b,q(a)))});return d}function m(a,d,k,b){var f=e,c=e;l.each(d,function(a,b){f+=" "+b+'="'+a+'"'});b?(f+=' classid="'+B+'"',c+=h("movie",a)):(f+=' data="'+a+'"',f+=' type="'+g+'"');c+=p(k);return r+s+f+t+c}function q(a){var d=[];l.each(a,function(a,b){"string"!==typeof a&&(a=w.stringify(a));a&&d.push(b+"="+C(a))});return d.join("&")}
 function h(a,d){return'<param name="'+a+'" value="'+d+'"></param>'}var c=i("dom"),w=i("json"),u=i("attribute"),j=i("swf/ua"),l=i("util"),n=!!window.ActiveXObject,g="application/x-shockwave-flash",B="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000",A="flashvars",e="",r="<",t=">",D=document,x=j.fpv,E=j.fpvGEQ,y=j.fpvGTE,s="object",C=encodeURIComponent,z={wmode:e,allowscriptaccess:e,allownetworking:e,allowfullscreen:e,play:"false",loop:e,menu:e,quality:e,scale:e,salign:e,bgcolor:e,devicefont:e,hasPriority:e,

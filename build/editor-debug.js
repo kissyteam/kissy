@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 8 13:44
+build time: Aug 22 16:05
 */
 /*
 combined modules:
@@ -740,9 +740,9 @@ KISSY.add('editor', [
             }, 0);
         }    // IE standard compliant in editing frame doesn't focus the editor when
              // clicking outside actual content, manually apply the focus. (#1659)
-        // IE standard compliant in editing frame doesn't focus the editor when
-        // clicking outside actual content, manually apply the focus. (#1659)
-        if (// ie6,7 点击滚动条失效
+        if (// IE standard compliant in editing frame doesn't focus the editor when
+            // clicking outside actual content, manually apply the focus. (#1659)
+            // ie6,7 点击滚动条失效
             // IS_IE
             // && doc.compatMode === 'CSS1Compat'
             // wierd ,sometimes ie9 break
@@ -1143,27 +1143,41 @@ KISSY.add('editor/iframe-content-xtpl', [], function (S, require, exports, modul
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function iframeContentXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<!doctype html>\r\n<html>\r\n<head>', 0);
-        var id0 = scope.resolve(['doctype'], 0);
-        buffer.write(id0, false);
-        buffer.write('\r\n    <title>', 0);
-        var id1 = scope.resolve(['title'], 0);
-        buffer.write(id1, false);
-        buffer.write('</title>\r\n    ', 0);
-        var id2 = scope.resolve(['style'], 0);
-        buffer.write(id2, false);
-        buffer.write('\r\n    ', 0);
-        var id3 = scope.resolve(['links'], 0);
-        buffer.write(id3, false);
-        buffer.write('\r\n    </head> \r\n<body class="ks-editor">\r\n', 0);
-        var id4 = scope.resolve(['data'], 0);
-        buffer.write(id4, false);
-        buffer.write('\r\n', 0);
-        var id5 = scope.resolve(['script'], 0);
-        buffer.write(id5, false);
-        buffer.write('\r\n</body> \r\n</html>', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<!doctype html>\r\n<html>\r\n<head>');
+        var id0 = scope.resolve(['doctype']);
+        buffer.write(id0);
+        buffer.write('\r\n    <title>');
+        var id1 = scope.resolve(['title']);
+        buffer.write(id1);
+        buffer.write('</title>\r\n    ');
+        var id2 = scope.resolve(['style']);
+        buffer.write(id2);
+        buffer.write('\r\n    ');
+        var id3 = scope.resolve(['links']);
+        buffer.write(id3);
+        buffer.write('\r\n    </head> \r\n<body class="ks-editor">\r\n');
+        var id4 = scope.resolve(['data']);
+        buffer.write(id4);
+        buffer.write('\r\n');
+        var id5 = scope.resolve(['script']);
+        buffer.write(id5);
+        buffer.write('\r\n</body> \r\n</html>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1295,63 +1309,77 @@ KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function renderXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="', 0);
-        var id0 = scope.resolve(['prefixCls'], 0);
-        buffer.write(id0, true);
-        buffer.write('editor-tools">\n\n</div>\n\n<!--\n//johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4E0D\u80FD\u653E\u5728 iframe \u4E0A\uFF01\n-->\n\n<div class="', 0);
-        var id1 = scope.resolve(['prefixCls'], 0);
-        buffer.write(id1, true);
-        buffer.write('editor-textarea-wrap"\n\n', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="');
+        var id0 = scope.resolve(['prefixCls']);
+        buffer.writeEscaped(id0);
+        buffer.write('editor-tools">\r\n\r\n</div>\r\n\r\n<!--\r\n//johanbrook.com/browsers/native-momentum-scrolling-ios-5/\r\nios \u4E0D\u80FD\u653E\u5728 iframe \u4E0A\uFF01\r\n-->\r\n\r\n<div class="');
+        var id1 = scope.resolve(['prefixCls']);
+        buffer.writeEscaped(id1);
+        buffer.write('editor-textarea-wrap"\r\n\r\n');
         var option2 = { escape: 1 };
         var params3 = [];
-        var id4 = scope.resolve(['mobile'], 0);
+        var id4 = scope.resolve(['mobile']);
         params3.push(id4);
         option2.params = params3;
         option2.fn = function (scope, buffer) {
-            buffer.write('\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n', 0);
+            buffer.write('\r\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\r\n');
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option2, buffer, 12);
-        buffer.write('\n>\n\n<textarea class="', 0);
-        var id5 = scope.resolve(['prefixCls'], 0);
-        buffer.write(id5, true);
-        buffer.write('editor-textarea"\n\n', 0);
+        buffer.write('\r\n>\r\n\r\n<textarea class="');
+        var id5 = scope.resolve(['prefixCls']);
+        buffer.writeEscaped(id5);
+        buffer.write('editor-textarea"\r\n\r\n');
         var option6 = { escape: 1 };
         var params7 = [];
-        var id8 = scope.resolve(['textareaAttrs'], 0);
+        var id8 = scope.resolve(['textareaAttrs']);
         params7.push(id8);
         option6.params = params7;
         option6.fn = function (scope, buffer) {
-            buffer.write('\n', 0);
-            var id9 = scope.resolve(['xindex'], 0);
-            buffer.write(id9, true);
-            buffer.write('="', 0);
-            var id10 = scope.resolve(['this'], 0);
-            buffer.write(id10, true);
-            buffer.write('"\n', 0);
+            buffer.write('\r\n');
+            var id9 = scope.resolve(['xindex']);
+            buffer.writeEscaped(id9);
+            buffer.write('="');
+            var id10 = scope.resolve(['this']);
+            buffer.writeEscaped(id10);
+            buffer.write('"\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option6, buffer, 19);
-        buffer.write('\n\n', 0);
+        buffer.write('\r\n\r\n');
         var option11 = { escape: 1 };
         var params12 = [];
-        var id13 = scope.resolve(['mode'], 0);
+        var id13 = scope.resolve(['mode']);
         params12.push(id13);
         option11.params = params12;
         option11.fn = function (scope, buffer) {
-            buffer.write('\nstyle="display:none"\n', 0);
+            buffer.write('\r\nstyle="display:none"\r\n');
             return buffer;
         };
         buffer = ifCommand.call(tpl, scope, option11, buffer, 23);
-        buffer.write('\n\n>', 0);
-        var id14 = scope.resolve(['data'], 0);
-        buffer.write(id14, true);
-        buffer.write('</textarea>\n\n</div>\n\n<div class="', 0);
-        var id15 = scope.resolve(['prefixCls'], 0);
-        buffer.write(id15, true);
-        buffer.write('editor-status">\n\n</div>\n', 0);
+        buffer.write('\r\n\r\n>');
+        var id14 = scope.resolve(['data']);
+        buffer.writeEscaped(id14);
+        buffer.write('</textarea>\r\n\r\n</div>\r\n\r\n<div class="');
+        var id15 = scope.resolve(['prefixCls']);
+        buffer.writeEscaped(id15);
+        buffer.write('editor-status">\r\n\r\n</div>\r\n');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -5127,10 +5155,10 @@ KISSY.add('editor/selection', [
         selectElement: function (element) {
             var range, self = this, doc = self.document;
             if (OLD_IE) {
-                //do not use empty()，编辑器内滚动条重置了
-                //选择的 img 内容前后莫名被清除
-                //self.getNative().empty();
                 try {
+                    //do not use empty()，编辑器内滚动条重置了
+                    //选择的 img 内容前后莫名被清除
+                    //self.getNative().empty();
                     // Try to select the node as a control.
                     range = doc.body.createControlRange();
                     range.addElement(element[0]);
@@ -5312,9 +5340,9 @@ KISSY.add('editor/selection', [
     function (forceExpand) {
         var self = this, collapsed = self.collapsed, isStartMarkerAlone, dummySpan;    //选的是元素，直接使用selectElement
                                                                                        //还是有差异的，特别是img选择框问题
-        //选的是元素，直接使用selectElement
-        //还是有差异的，特别是img选择框问题
-        if (//ie8 有问题？？
+        if (//选的是元素，直接使用selectElement
+            //还是有差异的，特别是img选择框问题
+            //ie8 有问题？？
             //UA.ieEngine!=8 &&
             self.startContainer[0] === self.endContainer[0] && self.endOffset - self.startOffset === 1) {
             var selEl = self.startContainer[0].childNodes[self.startOffset];
@@ -5846,12 +5874,12 @@ KISSY.add('editor/html-data-processor', [
      以及ie下自动添加的 &nbsp;
      以及其他浏览器段落末尾添加的占位符
      */
-        /*
+        (function () {
+            /*
      去除firefox代码末尾自动添加的 <br/>
      以及ie下自动添加的 &nbsp;
      以及其他浏览器段落末尾添加的占位符
      */
-        (function () {
             // Regex to scan for &nbsp; at the end of blocks,
             // which are actually placeholders.
             // Safari transforms the &nbsp; to \xa0. (#4172)
@@ -6153,11 +6181,11 @@ KISSY.add('editor/selection-fix', [
                                                                                                    //ie中事件都是同步，focus();xx(); 会立即触发事件处理函数，然后再运行xx();
                                                                                                    // In IE6/7 the blinking cursor appears, but contents are
                                                                                                    // not editable. (#5634)
-        //ie 焦点管理不行 (ie9 也不行) ,编辑器 iframe 失去焦点，选择区域/光标位置也丢失了
-        //ie中事件都是同步，focus();xx(); 会立即触发事件处理函数，然后再运行xx();
-        // In IE6/7 the blinking cursor appears, but contents are
-        // not editable. (#5634)
-        if (//ie8 的 7 兼容模式
+        if (//ie 焦点管理不行 (ie9 也不行) ,编辑器 iframe 失去焦点，选择区域/光标位置也丢失了
+            //ie中事件都是同步，focus();xx(); 会立即触发事件处理函数，然后再运行xx();
+            // In IE6/7 the blinking cursor appears, but contents are
+            // not editable. (#5634)
+            //ie8 的 7 兼容模式
             UA.ieMode < 8) {
             // The 'click' event is not fired when clicking the
             // scrollbars, so we can use it to check whether
@@ -6238,8 +6266,8 @@ KISSY.add('editor/selection-fix', [
             // If we have saved a range, restore it at this
             // point.
             if (savedRange) {
-                // Well not break because of this.
                 try {
+                    // Well not break because of this.
                     // S.log("body focusin");
                     // 如果不是 mousedown 引起的 focus
                     if (restoreEnabled) {

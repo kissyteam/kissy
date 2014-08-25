@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:54
+build time: Aug 22 16:04
 */
 /*
 combined modules:
@@ -1036,105 +1036,119 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function decadePanelXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, true);
-        buffer.write('">\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet2);
+        buffer.write('">\r\n    <a class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('prev-century-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 2);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
-        buffer.write(callRet5, true);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="', 0);
-        var id6 = scope.resolve(['previousCenturyLabel'], 0);
-        buffer.write(id6, true);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <div class="', 0);
+        buffer.writeEscaped(callRet5);
+        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        var id6 = scope.resolve(['previousCenturyLabel']);
+        buffer.writeEscaped(id6);
+        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <div class="');
         var option7 = { escape: 1 };
         var params8 = [];
         params8.push('century');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 8);
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 8);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
-        buffer.write(callRet9, true);
-        buffer.write('">\r\n                ', 0);
-        var id10 = scope.resolve(['startYear'], 0);
-        buffer.write(id10, true);
-        buffer.write('-', 0);
-        var id11 = scope.resolve(['endYear'], 0);
-        buffer.write(id11, true);
-        buffer.write('\r\n    </div>\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet9);
+        buffer.write('">\r\n                ');
+        var id10 = scope.resolve(['startYear']);
+        buffer.writeEscaped(id10);
+        buffer.write('-');
+        var id11 = scope.resolve(['endYear']);
+        buffer.writeEscaped(id11);
+        buffer.write('\r\n    </div>\r\n    <a class="');
         var option12 = { escape: 1 };
         var params13 = [];
         params13.push('next-century-btn');
         option12.params = params13;
         var callRet14;
-        callRet14 = callFnUtil(tpl, scope, option12, buffer, ['getBaseCssClasses'], 0, 11);
+        callRet14 = callFnUtil(tpl, scope, option12, buffer, ['getBaseCssClasses'], 11);
         if (callRet14 && callRet14.isBuffer) {
             buffer = callRet14;
             callRet14 = undefined;
         }
-        buffer.write(callRet14, true);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="', 0);
-        var id15 = scope.resolve(['nextCenturyLabel'], 0);
-        buffer.write(id15, true);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="', 0);
+        buffer.writeEscaped(callRet14);
+        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        var id15 = scope.resolve(['nextCenturyLabel']);
+        buffer.writeEscaped(id15);
+        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
         var option16 = { escape: 1 };
         var params17 = [];
         params17.push('body');
         option16.params = params17;
         var callRet18;
-        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 18);
+        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 18);
         if (callRet18 && callRet18.isBuffer) {
             buffer = callRet18;
             callRet18 = undefined;
         }
-        buffer.write(callRet18, true);
-        buffer.write('">\r\n    <table class="', 0);
+        buffer.writeEscaped(callRet18);
+        buffer.write('">\r\n    <table class="');
         var option19 = { escape: 1 };
         var params20 = [];
         params20.push('table');
         option19.params = params20;
         var callRet21;
-        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 19);
+        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 19);
         if (callRet21 && callRet21.isBuffer) {
             buffer = callRet21;
             callRet21 = undefined;
         }
-        buffer.write(callRet21, true);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="', 0);
+        buffer.writeEscaped(callRet21);
+        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
         var option22 = { escape: 1 };
         var params23 = [];
         params23.push('tbody');
         option22.params = params23;
         var callRet24;
-        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 0, 20);
+        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 20);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
         }
-        buffer.write(callRet24, true);
-        buffer.write('">\r\n        ', 0);
+        buffer.writeEscaped(callRet24);
+        buffer.write('">\r\n        ');
         var option25 = {};
         var params26 = [];
         params26.push('./decades-xtpl');
@@ -1146,8 +1160,8 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
             buffer = callRet27;
             callRet27 = undefined;
         }
-        buffer.write(callRet27, false);
-        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
+        buffer.write(callRet27);
+        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1156,147 +1170,161 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function decadesXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('');
         var option0 = { escape: 1 };
         var params1 = [];
-        var id2 = scope.resolve(['decades'], 0);
+        var id2 = scope.resolve(['decades']);
         params1.push(id2);
         option0.params = params1;
         option0.fn = function (scope, buffer) {
-            buffer.write('\r\n<tr role="row">\r\n    ', 0);
+            buffer.write('\r\n<tr role="row">\r\n    ');
             var option3 = { escape: 1 };
             var params4 = [];
-            var id6 = scope.resolve(['xindex'], 0);
+            var id6 = scope.resolve(['xindex']);
             var id5 = scope.resolve([
                     'decades',
                     id6
-                ], 0);
+                ]);
             params4.push(id5);
             option3.params = params4;
             option3.fn = function (scope, buffer) {
-                buffer.write('\r\n    <td role="gridcell"\r\n        class="', 0);
+                buffer.write('\r\n    <td role="gridcell"\r\n        class="');
                 var option7 = { escape: 1 };
                 var params8 = [];
                 params8.push('cell');
                 option7.params = params8;
                 var callRet9;
-                callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 5);
+                callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 5);
                 if (callRet9 && callRet9.isBuffer) {
                     buffer = callRet9;
                     callRet9 = undefined;
                 }
-                buffer.write(callRet9, true);
-                buffer.write('\r\n        ', 0);
+                buffer.writeEscaped(callRet9);
+                buffer.write('\r\n        ');
                 var option10 = { escape: 1 };
                 var params11 = [];
-                var id12 = scope.resolve(['startDecade'], 0);
+                var id12 = scope.resolve(['startDecade']);
                 var exp14 = id12;
-                var id13 = scope.resolve(['year'], 0);
+                var id13 = scope.resolve(['year']);
                 exp14 = id12 <= id13;
                 var exp18 = exp14;
-                if (exp14) {
-                    var id15 = scope.resolve(['year'], 0);
+                if (exp18) {
+                    var id15 = scope.resolve(['year']);
                     var exp17 = id15;
-                    var id16 = scope.resolve(['endDecade'], 0);
+                    var id16 = scope.resolve(['endDecade']);
                     exp17 = id15 <= id16;
                     exp18 = exp17;
                 }
                 params11.push(exp18);
                 option10.params = params11;
                 option10.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ', 0);
+                    buffer.write('\r\n         ');
                     var option19 = { escape: 1 };
                     var params20 = [];
                     params20.push('selected-cell');
                     option19.params = params20;
                     var callRet21;
-                    callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 7);
+                    callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 7);
                     if (callRet21 && callRet21.isBuffer) {
                         buffer = callRet21;
                         callRet21 = undefined;
                     }
-                    buffer.write(callRet21, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet21);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option10, buffer, 6);
-                buffer.write('\r\n        ', 0);
+                buffer.write('\r\n        ');
                 var option22 = { escape: 1 };
                 var params23 = [];
-                var id24 = scope.resolve(['startDecade'], 0);
+                var id24 = scope.resolve(['startDecade']);
                 var exp26 = id24;
-                var id25 = scope.resolve(['startYear'], 0);
+                var id25 = scope.resolve(['startYear']);
                 exp26 = id24 < id25;
                 params23.push(exp26);
                 option22.params = params23;
                 option22.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ', 0);
+                    buffer.write('\r\n         ');
                     var option27 = { escape: 1 };
                     var params28 = [];
                     params28.push('last-century-cell');
                     option27.params = params28;
                     var callRet29;
-                    callRet29 = callFnUtil(tpl, scope, option27, buffer, ['getBaseCssClasses'], 0, 10);
+                    callRet29 = callFnUtil(tpl, scope, option27, buffer, ['getBaseCssClasses'], 10);
                     if (callRet29 && callRet29.isBuffer) {
                         buffer = callRet29;
                         callRet29 = undefined;
                     }
-                    buffer.write(callRet29, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet29);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option22, buffer, 9);
-                buffer.write('\r\n        ', 0);
+                buffer.write('\r\n        ');
                 var option30 = { escape: 1 };
                 var params31 = [];
-                var id32 = scope.resolve(['endDecade'], 0);
+                var id32 = scope.resolve(['endDecade']);
                 var exp34 = id32;
-                var id33 = scope.resolve(['endYear'], 0);
+                var id33 = scope.resolve(['endYear']);
                 exp34 = id32 > id33;
                 params31.push(exp34);
                 option30.params = params31;
                 option30.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ', 0);
+                    buffer.write('\r\n         ');
                     var option35 = { escape: 1 };
                     var params36 = [];
                     params36.push('next-century-cell');
                     option35.params = params36;
                     var callRet37;
-                    callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 0, 13);
+                    callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 13);
                     if (callRet37 && callRet37.isBuffer) {
                         buffer = callRet37;
                         callRet37 = undefined;
                     }
-                    buffer.write(callRet37, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet37);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option30, buffer, 12);
-                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
+                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                 var option38 = { escape: 1 };
                 var params39 = [];
                 params39.push('decade');
                 option38.params = params39;
                 var callRet40;
-                callRet40 = callFnUtil(tpl, scope, option38, buffer, ['getBaseCssClasses'], 0, 19);
+                callRet40 = callFnUtil(tpl, scope, option38, buffer, ['getBaseCssClasses'], 19);
                 if (callRet40 && callRet40.isBuffer) {
                     buffer = callRet40;
                     callRet40 = undefined;
                 }
-                buffer.write(callRet40, true);
-                buffer.write('">\r\n            ', 0);
-                var id41 = scope.resolve(['startDecade'], 0);
-                buffer.write(id41, true);
-                buffer.write('-', 0);
-                var id42 = scope.resolve(['endDecade'], 0);
-                buffer.write(id42, true);
-                buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
+                buffer.writeEscaped(callRet40);
+                buffer.write('">\r\n            ');
+                var id41 = scope.resolve(['startDecade']);
+                buffer.writeEscaped(id41);
+                buffer.write('-');
+                var id42 = scope.resolve(['endDecade']);
+                buffer.writeEscaped(id42);
+                buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
                 return buffer;
             };
             buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-            buffer.write('\r\n</tr>\r\n', 0);
+            buffer.write('\r\n</tr>\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
@@ -1309,139 +1337,153 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function yearsXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('');
         var option0 = { escape: 1 };
         var params1 = [];
-        var id2 = scope.resolve(['years'], 0);
+        var id2 = scope.resolve(['years']);
         params1.push(id2);
         option0.params = params1;
         option0.fn = function (scope, buffer) {
-            buffer.write('\r\n<tr role="row">\r\n    ', 0);
+            buffer.write('\r\n<tr role="row">\r\n    ');
             var option3 = { escape: 1 };
             var params4 = [];
-            var id6 = scope.resolve(['xindex'], 0);
+            var id6 = scope.resolve(['xindex']);
             var id5 = scope.resolve([
                     'years',
                     id6
-                ], 0);
+                ]);
             params4.push(id5);
             option3.params = params4;
             option3.fn = function (scope, buffer) {
-                buffer.write('\r\n    <td role="gridcell"\r\n        title="', 0);
-                var id7 = scope.resolve(['title'], 0);
-                buffer.write(id7, true);
-                buffer.write('"\r\n        class="', 0);
+                buffer.write('\r\n    <td role="gridcell"\r\n        title="');
+                var id7 = scope.resolve(['title']);
+                buffer.writeEscaped(id7);
+                buffer.write('"\r\n        class="');
                 var option8 = { escape: 1 };
                 var params9 = [];
                 params9.push('cell');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 6);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
                 }
-                buffer.write(callRet10, true);
-                buffer.write('\r\n        ', 0);
+                buffer.writeEscaped(callRet10);
+                buffer.write('\r\n        ');
                 var option11 = { escape: 1 };
                 var params12 = [];
-                var id13 = scope.resolve(['content'], 0);
+                var id13 = scope.resolve(['content']);
                 var exp15 = id13;
-                var id14 = scope.resolve(['year'], 0);
+                var id14 = scope.resolve(['year']);
                 exp15 = id13 === id14;
                 params12.push(exp15);
                 option11.params = params12;
                 option11.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ', 0);
+                    buffer.write('\r\n         ');
                     var option16 = { escape: 1 };
                     var params17 = [];
                     params17.push('selected-cell');
                     option16.params = params17;
                     var callRet18;
-                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 8);
+                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 8);
                     if (callRet18 && callRet18.isBuffer) {
                         buffer = callRet18;
                         callRet18 = undefined;
                     }
-                    buffer.write(callRet18, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet18);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option11, buffer, 7);
-                buffer.write('\r\n        ', 0);
+                buffer.write('\r\n        ');
                 var option19 = { escape: 1 };
                 var params20 = [];
-                var id21 = scope.resolve(['content'], 0);
+                var id21 = scope.resolve(['content']);
                 var exp23 = id21;
-                var id22 = scope.resolve(['startYear'], 0);
+                var id22 = scope.resolve(['startYear']);
                 exp23 = id21 < id22;
                 params20.push(exp23);
                 option19.params = params20;
                 option19.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ', 0);
+                    buffer.write('\r\n         ');
                     var option24 = { escape: 1 };
                     var params25 = [];
                     params25.push('last-decade-cell');
                     option24.params = params25;
                     var callRet26;
-                    callRet26 = callFnUtil(tpl, scope, option24, buffer, ['getBaseCssClasses'], 0, 11);
+                    callRet26 = callFnUtil(tpl, scope, option24, buffer, ['getBaseCssClasses'], 11);
                     if (callRet26 && callRet26.isBuffer) {
                         buffer = callRet26;
                         callRet26 = undefined;
                     }
-                    buffer.write(callRet26, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet26);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option19, buffer, 10);
-                buffer.write('\r\n        ', 0);
+                buffer.write('\r\n        ');
                 var option27 = { escape: 1 };
                 var params28 = [];
-                var id29 = scope.resolve(['content'], 0);
+                var id29 = scope.resolve(['content']);
                 var exp31 = id29;
-                var id30 = scope.resolve(['endYear'], 0);
+                var id30 = scope.resolve(['endYear']);
                 exp31 = id29 > id30;
                 params28.push(exp31);
                 option27.params = params28;
                 option27.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ', 0);
+                    buffer.write('\r\n         ');
                     var option32 = { escape: 1 };
                     var params33 = [];
                     params33.push('next-decade-cell');
                     option32.params = params33;
                     var callRet34;
-                    callRet34 = callFnUtil(tpl, scope, option32, buffer, ['getBaseCssClasses'], 0, 14);
+                    callRet34 = callFnUtil(tpl, scope, option32, buffer, ['getBaseCssClasses'], 14);
                     if (callRet34 && callRet34.isBuffer) {
                         buffer = callRet34;
                         callRet34 = undefined;
                     }
-                    buffer.write(callRet34, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet34);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option27, buffer, 13);
-                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
+                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                 var option35 = { escape: 1 };
                 var params36 = [];
                 params36.push('year');
                 option35.params = params36;
                 var callRet37;
-                callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 0, 20);
+                callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 20);
                 if (callRet37 && callRet37.isBuffer) {
                     buffer = callRet37;
                     callRet37 = undefined;
                 }
-                buffer.write(callRet37, true);
-                buffer.write('">\r\n            ', 0);
-                var id38 = scope.resolve(['content'], 0);
-                buffer.write(id38, true);
-                buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
+                buffer.writeEscaped(callRet37);
+                buffer.write('">\r\n            ');
+                var id38 = scope.resolve(['content']);
+                buffer.writeEscaped(id38);
+                buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
                 return buffer;
             };
             buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-            buffer.write('\r\n</tr>\r\n', 0);
+            buffer.write('\r\n</tr>\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
@@ -1453,132 +1495,146 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function yearPanelXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, true);
-        buffer.write('">\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet2);
+        buffer.write('">\r\n    <a class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('prev-decade-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 2);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
-        buffer.write(callRet5, true);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="', 0);
-        var id6 = scope.resolve(['previousDecadeLabel'], 0);
-        buffer.write(id6, true);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet5);
+        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        var id6 = scope.resolve(['previousDecadeLabel']);
+        buffer.writeEscaped(id6);
+        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
         var option7 = { escape: 1 };
         var params8 = [];
         params8.push('decade-select');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 9);
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 9);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
-        buffer.write(callRet9, true);
-        buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="', 0);
-        var id10 = scope.resolve(['decadeSelectLabel'], 0);
-        buffer.write(id10, true);
-        buffer.write('">\r\n            <span class="', 0);
+        buffer.writeEscaped(callRet9);
+        buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
+        var id10 = scope.resolve(['decadeSelectLabel']);
+        buffer.writeEscaped(id10);
+        buffer.write('">\r\n            <span class="');
         var option11 = { escape: 1 };
         var params12 = [];
         params12.push('decade-select-content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 0, 14);
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 14);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
         }
-        buffer.write(callRet13, true);
-        buffer.write('">\r\n                ', 0);
-        var id14 = scope.resolve(['startYear'], 0);
-        buffer.write(id14, true);
-        buffer.write('-', 0);
-        var id15 = scope.resolve(['endYear'], 0);
-        buffer.write(id15, true);
-        buffer.write('\r\n            </span>\r\n        <span class="', 0);
+        buffer.writeEscaped(callRet13);
+        buffer.write('">\r\n                ');
+        var id14 = scope.resolve(['startYear']);
+        buffer.writeEscaped(id14);
+        buffer.write('-');
+        var id15 = scope.resolve(['endYear']);
+        buffer.writeEscaped(id15);
+        buffer.write('\r\n            </span>\r\n        <span class="');
         var option16 = { escape: 1 };
         var params17 = [];
         params17.push('decade-select-arrow');
         option16.params = params17;
         var callRet18;
-        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 17);
+        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 17);
         if (callRet18 && callRet18.isBuffer) {
             buffer = callRet18;
             callRet18 = undefined;
         }
-        buffer.write(callRet18, true);
-        buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet18);
+        buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
         var option19 = { escape: 1 };
         var params20 = [];
         params20.push('next-decade-btn');
         option19.params = params20;
         var callRet21;
-        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 20);
+        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 20);
         if (callRet21 && callRet21.isBuffer) {
             buffer = callRet21;
             callRet21 = undefined;
         }
-        buffer.write(callRet21, true);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="', 0);
-        var id22 = scope.resolve(['nextDecadeLabel'], 0);
-        buffer.write(id22, true);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="', 0);
+        buffer.writeEscaped(callRet21);
+        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        var id22 = scope.resolve(['nextDecadeLabel']);
+        buffer.writeEscaped(id22);
+        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
         var option23 = { escape: 1 };
         var params24 = [];
         params24.push('body');
         option23.params = params24;
         var callRet25;
-        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 0, 27);
+        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 27);
         if (callRet25 && callRet25.isBuffer) {
             buffer = callRet25;
             callRet25 = undefined;
         }
-        buffer.write(callRet25, true);
-        buffer.write('">\r\n    <table class="', 0);
+        buffer.writeEscaped(callRet25);
+        buffer.write('">\r\n    <table class="');
         var option26 = { escape: 1 };
         var params27 = [];
         params27.push('table');
         option26.params = params27;
         var callRet28;
-        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 0, 28);
+        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 28);
         if (callRet28 && callRet28.isBuffer) {
             buffer = callRet28;
             callRet28 = undefined;
         }
-        buffer.write(callRet28, true);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="', 0);
+        buffer.writeEscaped(callRet28);
+        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
         var option29 = { escape: 1 };
         var params30 = [];
         params30.push('tbody');
         option29.params = params30;
         var callRet31;
-        callRet31 = callFnUtil(tpl, scope, option29, buffer, ['getBaseCssClasses'], 0, 29);
+        callRet31 = callFnUtil(tpl, scope, option29, buffer, ['getBaseCssClasses'], 29);
         if (callRet31 && callRet31.isBuffer) {
             buffer = callRet31;
             callRet31 = undefined;
         }
-        buffer.write(callRet31, true);
-        buffer.write('">\r\n        ', 0);
+        buffer.writeEscaped(callRet31);
+        buffer.write('">\r\n        ');
         var option32 = {};
         var params33 = [];
         params33.push('./years-xtpl');
@@ -1590,8 +1646,8 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
             buffer = callRet34;
             callRet34 = undefined;
         }
-        buffer.write(callRet34, false);
-        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
+        buffer.write(callRet34);
+        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1600,87 +1656,101 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function monthsXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('');
         var option0 = { escape: 1 };
         var params1 = [];
-        var id2 = scope.resolve(['months'], 0);
+        var id2 = scope.resolve(['months']);
         params1.push(id2);
         option0.params = params1;
         option0.fn = function (scope, buffer) {
-            buffer.write('\r\n<tr role="row">\r\n    ', 0);
+            buffer.write('\r\n<tr role="row">\r\n    ');
             var option3 = { escape: 1 };
             var params4 = [];
-            var id6 = scope.resolve(['xindex'], 0);
+            var id6 = scope.resolve(['xindex']);
             var id5 = scope.resolve([
                     'months',
                     id6
-                ], 0);
+                ]);
             params4.push(id5);
             option3.params = params4;
             option3.fn = function (scope, buffer) {
-                buffer.write('\r\n    <td role="gridcell"\r\n        title="', 0);
-                var id7 = scope.resolve(['title'], 0);
-                buffer.write(id7, true);
-                buffer.write('"\r\n        class="', 0);
+                buffer.write('\r\n    <td role="gridcell"\r\n        title="');
+                var id7 = scope.resolve(['title']);
+                buffer.writeEscaped(id7);
+                buffer.write('"\r\n        class="');
                 var option8 = { escape: 1 };
                 var params9 = [];
                 params9.push('cell');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 0, 6);
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 6);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
                 }
-                buffer.write(callRet10, true);
-                buffer.write('\r\n        ', 0);
+                buffer.writeEscaped(callRet10);
+                buffer.write('\r\n        ');
                 var option11 = { escape: 1 };
                 var params12 = [];
-                var id13 = scope.resolve(['month'], 0);
+                var id13 = scope.resolve(['month']);
                 var exp15 = id13;
-                var id14 = scope.resolve(['value'], 0);
+                var id14 = scope.resolve(['value']);
                 exp15 = id13 === id14;
                 params12.push(exp15);
                 option11.params = params12;
                 option11.fn = function (scope, buffer) {
-                    buffer.write('\r\n        ', 0);
+                    buffer.write('\r\n        ');
                     var option16 = { escape: 1 };
                     var params17 = [];
                     params17.push('selected-cell');
                     option16.params = params17;
                     var callRet18;
-                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 0, 8);
+                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 8);
                     if (callRet18 && callRet18.isBuffer) {
                         buffer = callRet18;
                         callRet18 = undefined;
                     }
-                    buffer.write(callRet18, true);
-                    buffer.write('\r\n        ', 0);
+                    buffer.writeEscaped(callRet18);
+                    buffer.write('\r\n        ');
                     return buffer;
                 };
                 buffer = ifCommand.call(tpl, scope, option11, buffer, 7);
-                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="', 0);
+                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                 var option19 = { escape: 1 };
                 var params20 = [];
                 params20.push('month');
                 option19.params = params20;
                 var callRet21;
-                callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 0, 14);
+                callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 14);
                 if (callRet21 && callRet21.isBuffer) {
                     buffer = callRet21;
                     callRet21 = undefined;
                 }
-                buffer.write(callRet21, true);
-                buffer.write('">\r\n            ', 0);
-                var id22 = scope.resolve(['content'], 0);
-                buffer.write(id22, true);
-                buffer.write('\r\n        </a>\r\n    </td>\r\n    ', 0);
+                buffer.writeEscaped(callRet21);
+                buffer.write('">\r\n            ');
+                var id22 = scope.resolve(['content']);
+                buffer.writeEscaped(id22);
+                buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
                 return buffer;
             };
             buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-            buffer.write('\r\n</tr>\r\n', 0);
+            buffer.write('\r\n</tr>\r\n');
             return buffer;
         };
         buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
@@ -1692,129 +1762,143 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
     /* Compiled By XTemplate */
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function monthPanelXtpl(scope, buffer, undefined) {
-        var tpl = this, nativeCommands = tpl.root.nativeCommands, utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'], callCommandUtil = utils['callCommand'], rangeCommand = nativeCommands['range'], eachCommand = nativeCommands['each'], withCommand = nativeCommands['with'], ifCommand = nativeCommands['if'], setCommand = nativeCommands['set'], includeCommand = nativeCommands['include'], parseCommand = nativeCommands['parse'], extendCommand = nativeCommands['extend'], blockCommand = nativeCommands['block'], macroCommand = nativeCommands['macro'], debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="', 0);
+        var tpl = this;
+        var nativeCommands = tpl.root.nativeCommands;
+        var utils = tpl.root.utils;
+        var callFnUtil = utils['callFn'];
+        var callCommandUtil = utils['callCommand'];
+        var rangeCommand = nativeCommands['range'];
+        var eachCommand = nativeCommands['each'];
+        var withCommand = nativeCommands['with'];
+        var ifCommand = nativeCommands['if'];
+        var setCommand = nativeCommands['set'];
+        var includeCommand = nativeCommands['include'];
+        var parseCommand = nativeCommands['parse'];
+        var extendCommand = nativeCommands['extend'];
+        var blockCommand = nativeCommands['block'];
+        var macroCommand = nativeCommands['macro'];
+        var debuggerCommand = nativeCommands['debugger'];
+        buffer.write('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 0, 1);
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
-        buffer.write(callRet2, true);
-        buffer.write('">\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet2);
+        buffer.write('">\r\n    <a class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('prev-year-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 0, 2);
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 2);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
-        buffer.write(callRet5, true);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="', 0);
-        var id6 = scope.resolve(['previousYearLabel'], 0);
-        buffer.write(id6, true);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet5);
+        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        var id6 = scope.resolve(['previousYearLabel']);
+        buffer.writeEscaped(id6);
+        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
         var option7 = { escape: 1 };
         var params8 = [];
         params8.push('year-select');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 0, 9);
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 9);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
-        buffer.write(callRet9, true);
-        buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="', 0);
-        var id10 = scope.resolve(['yearSelectLabel'], 0);
-        buffer.write(id10, true);
-        buffer.write('">\r\n        <span class="', 0);
+        buffer.writeEscaped(callRet9);
+        buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
+        var id10 = scope.resolve(['yearSelectLabel']);
+        buffer.writeEscaped(id10);
+        buffer.write('">\r\n        <span class="');
         var option11 = { escape: 1 };
         var params12 = [];
         params12.push('year-select-content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 0, 14);
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 14);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
         }
-        buffer.write(callRet13, true);
-        buffer.write('">', 0);
-        var id14 = scope.resolve(['year'], 0);
-        buffer.write(id14, true);
-        buffer.write('</span>\r\n        <span class="', 0);
+        buffer.writeEscaped(callRet13);
+        buffer.write('">');
+        var id14 = scope.resolve(['year']);
+        buffer.writeEscaped(id14);
+        buffer.write('</span>\r\n        <span class="');
         var option15 = { escape: 1 };
         var params16 = [];
         params16.push('year-select-arrow');
         option15.params = params16;
         var callRet17;
-        callRet17 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 0, 15);
+        callRet17 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 15);
         if (callRet17 && callRet17.isBuffer) {
             buffer = callRet17;
             callRet17 = undefined;
         }
-        buffer.write(callRet17, true);
-        buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="', 0);
+        buffer.writeEscaped(callRet17);
+        buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
         var option18 = { escape: 1 };
         var params19 = [];
         params19.push('next-year-btn');
         option18.params = params19;
         var callRet20;
-        callRet20 = callFnUtil(tpl, scope, option18, buffer, ['getBaseCssClasses'], 0, 18);
+        callRet20 = callFnUtil(tpl, scope, option18, buffer, ['getBaseCssClasses'], 18);
         if (callRet20 && callRet20.isBuffer) {
             buffer = callRet20;
             callRet20 = undefined;
         }
-        buffer.write(callRet20, true);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="', 0);
-        var id21 = scope.resolve(['nextYearLabel'], 0);
-        buffer.write(id21, true);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="', 0);
+        buffer.writeEscaped(callRet20);
+        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        var id21 = scope.resolve(['nextYearLabel']);
+        buffer.writeEscaped(id21);
+        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
         var option22 = { escape: 1 };
         var params23 = [];
         params23.push('body');
         option22.params = params23;
         var callRet24;
-        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 0, 25);
+        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 25);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
         }
-        buffer.write(callRet24, true);
-        buffer.write('">\r\n    <table class="', 0);
+        buffer.writeEscaped(callRet24);
+        buffer.write('">\r\n    <table class="');
         var option25 = { escape: 1 };
         var params26 = [];
         params26.push('table');
         option25.params = params26;
         var callRet27;
-        callRet27 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses'], 0, 26);
+        callRet27 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses'], 26);
         if (callRet27 && callRet27.isBuffer) {
             buffer = callRet27;
             callRet27 = undefined;
         }
-        buffer.write(callRet27, true);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="', 0);
+        buffer.writeEscaped(callRet27);
+        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
         var option28 = { escape: 1 };
         var params29 = [];
         params29.push('tbody');
         option28.params = params29;
         var callRet30;
-        callRet30 = callFnUtil(tpl, scope, option28, buffer, ['getBaseCssClasses'], 0, 27);
+        callRet30 = callFnUtil(tpl, scope, option28, buffer, ['getBaseCssClasses'], 27);
         if (callRet30 && callRet30.isBuffer) {
             buffer = callRet30;
             callRet30 = undefined;
         }
-        buffer.write(callRet30, true);
-        buffer.write('">\r\n        ', 0);
+        buffer.writeEscaped(callRet30);
+        buffer.write('">\r\n        ');
         var option31 = {};
         var params32 = [];
         params32.push('./months-xtpl');
@@ -1826,8 +1910,8 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
             buffer = callRet33;
             callRet33 = undefined;
         }
-        buffer.write(callRet33, false);
-        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>', 0);
+        buffer.write(callRet33);
+        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

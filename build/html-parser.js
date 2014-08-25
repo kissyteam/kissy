@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:03
+build time: Aug 22 16:06
 */
 KISSY.add("html-parser","html-parser/dtd,html-parser/lexer/lexer,html-parser/parser,html-parser/writer/basic,html-parser/writer/beautify,html-parser/writer/minify,html-parser/writer/filter,html-parser/nodes/cdata,html-parser/nodes/comment,html-parser/nodes/tag,html-parser/nodes/text,html-parser/nodes/node".split(","),function(m,b,p,o){var m=b("html-parser/dtd"),p=b("html-parser/lexer/lexer"),a=b("html-parser/parser"),h=b("html-parser/writer/basic"),k=b("html-parser/writer/beautify"),i=b("html-parser/writer/minify"),
 e=b("html-parser/writer/filter"),l=b("html-parser/nodes/cdata"),n=b("html-parser/nodes/comment"),c=b("html-parser/nodes/tag"),d=b("html-parser/nodes/text");o.exports={CData:l,Comment:n,Node:b("html-parser/nodes/node"),Tag:c,Text:d,Lexer:p,Parser:a,BasicWriter:h,BeautifyWriter:k,MinifyWriter:i,Filter:e,DTD:m,serialize:function(c,j){var g=new h;c.writeHtml(g,j);return g.getHtml()},parse:function(c){return(new a(c)).parse()}}});

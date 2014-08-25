@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 13:55
+build time: Aug 22 16:04
 */
 /*
 combined modules:
@@ -937,7 +937,7 @@ KISSY.add('dom/base/create', [
             node.innerHTML = '';
             return;
         } catch (e) {
-        }    // SVG/strict elements don't support innerHTML/canHaveChildren, and OBJECT/APPLET elements in quirks node have canHaveChildren=false
+        }
         // innerHTML is readOnly (e.g. TABLE (sub)elements in quirks mode)
         // Fall through (saves bytes)
         // SVG/strict elements don't support innerHTML/canHaveChildren, and OBJECT/APPLET elements in quirks node have canHaveChildren=false
@@ -964,12 +964,12 @@ KISSY.add('dom/base/create', [
             }
         }
     }
-    util.mix(Dom, /**
+    util.mix(Dom, {
+        /**
      * @override KISSY.DOM
      * @class
      * @singleton
      */
-    {
         /**
          * Creates Dom elements on the fly from the provided string of raw HTML.
          * @param {String|HTMLElement} html A string of HTML to create on the fly.
@@ -1866,12 +1866,12 @@ KISSY.add('dom/base/offset', [
     var util = require('util');
     var Dom = require('./api');
     var win = window, UA = require('ua'), doc = win.document, NodeType = Dom.NodeType, docElem = doc && doc.documentElement, getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
-    util.mix(Dom, /**
+    util.mix(Dom, {
+        /**
      * @override KISSY.DOM
      * @class
      * @singleton
      */
-    {
         /**
          * Get the current coordinates of the first element in the set of matched elements, relative to the document.
          * or
@@ -2716,8 +2716,8 @@ KISSY.add('dom/base/style', [
                 val = hook.set(elem, val);
             }
             if (val !== undefined) {
-                // ie 无效值报错
                 try {
+                    // ie 无效值报错
                     // EMPTY will unset style!
                     elStyle[name] = val;
                 } catch (e) {

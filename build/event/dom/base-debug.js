@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:02
+build time: Aug 22 16:05
 */
 /*
 combined modules:
@@ -608,9 +608,9 @@ KISSY.add('event/dom/base/observable', [
                 cur = eventPath[++eventPathIndex];
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
             if (!onlyHandlers && !event.isDefaultPrevented()) {
-                // now all browser support click
-                // https://developer.mozilla.org/en-US/docs/Dom/element.click
                 try {
+                    // now all browser support click
+                    // https://developer.mozilla.org/en-US/docs/Dom/element.click
                     // execute default action on dom node
                     // exclude window
                     if (currentTarget[eventType] && !util.isWindow(currentTarget)) {
@@ -1480,12 +1480,12 @@ KISSY.add('event/dom/base/object', [
  */
 });
 KISSY.add('event/dom/base/key-codes', [], function (S, require, exports, module) {
-    /**
+    var
+        /**
  * @ignore
  * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
-    var
         /**
  * @enum {Number} KISSY.Event.DomEvent.KeyCode
  * @alias KISSY.Event.KeyCode

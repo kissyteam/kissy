@@ -7,22 +7,14 @@
 
     <target name="build">
         <subant target="" failonerror="true"
-                buildpath="${kissy.src.dir}/loader"
-                inheritall="false"/>
-        <subant target="" failonerror="true"
                 buildpath="${kissy.src.dir}/util/"
-                inheritall="false"/>
-        <subant target="" failonerror="true"
-                buildpath="${kissy.src.dir}/xtemplate/-"
                 inheritall="false"/>
 
         <subant target="build" failonerror="true" inheritall="false">
             <fileset dir="${kissy.src.dir}"
                      excludes="
                      build.xml,
-                     loader/build.xml,
                      util/build.xml,
-                     xtemplate/-/build.xml,
                      meta/build.xml"
                      includes="**/build.xml"/>
         </subant>

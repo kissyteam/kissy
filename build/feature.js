@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Jul 18 14:03
+build time: Aug 22 16:06
 */
 KISSY.add("feature",["ua"],function(j,r,w,s){function t(a,b){return b.toUpperCase()}function k(a){-1!==a.indexOf("-")&&(a=a.replace(u,t));if(a in c)return c[a];if(!h||a in h)c[a]={propertyName:a,propertyNamePrefix:""};else{for(var b=a.charAt(0).toUpperCase()+a.slice(1),d,g=0;g<v;g++){var e=n[g];d=e+b;d in h&&(c[a]={propertyName:d,propertyNamePrefix:e})}c[a]=c[a]||null}return c[a]}var e=window,j=r("ua"),n=["Webkit","Moz","O","ms"],v=n.length,i=e.document||{},l,m,d,b=i&&i.documentElement,h,o=!0,p=!1,
 q="ontouchstart"in i&&!j.phantomjs,c={},f=j.ieMode;b&&(b.querySelector&&8!==f&&(p=!0),h=b.style,o="classList"in b,l="msPointerEnabled"in navigator,m="pointerEnabled"in navigator);var u=/-([a-z])/gi;s.exports={isMsPointerSupported:function(){return l},isPointerSupported:function(){return m},isTouchEventSupported:function(){return q},isTouchGestureSupported:function(){return q||m||l},isDeviceMotionSupported:function(){return!!e.DeviceMotionEvent},isHashChangeSupported:function(){return"onhashchange"in
