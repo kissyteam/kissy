@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:07
+build time: Aug 25 18:31
 */
 /*
 combined modules:
@@ -261,7 +261,7 @@ KISSY.add('node/base', [
             return all.length ? all.slice(0, 1) : null;
         }
     });
-    Node.DomEvent = DomEvent;
+    Node.Event = DomEvent;
     Node.Dom = Dom;
     module.exports = Node;    /*
  Notes:

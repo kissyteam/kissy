@@ -6,7 +6,6 @@
 
 var $ = require('node');
 var Control = require('component/control');
-
 var KeyCode = $.Event.KeyCode;
 /**
  * KISSY Button.

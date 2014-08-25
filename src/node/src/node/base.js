@@ -251,7 +251,7 @@ util.mix(Node, {
     }
 });
 
-Node.DomEvent = DomEvent;
+Node.Event = DomEvent;
 
 Node.Dom = Dom;
 
