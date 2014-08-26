@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:09
+build time: Aug 26 16:11
 */
 /*
 combined modules:
@@ -701,6 +701,10 @@ KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function tabXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -716,44 +720,50 @@ KISSY.add('tabs/tab-xtpl', [], function (S, require, exports, module) {
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('content');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">');
+        buffer.append('">');
         var id3 = scope.resolve(['content']);
         buffer.write(id3);
-        buffer.write('</div>\r\n');
+        buffer.append('</div>\r\n');
         var option4 = { escape: 1 };
         var params5 = [];
         var id6 = scope.resolve(['closable']);
         params5.push(id6);
         option4.params = params5;
         option4.fn = function (scope, buffer) {
-            buffer.write('\r\n<span class="');
+            buffer.append('\r\n<span class="');
             var option7 = { escape: 1 };
             var params8 = [];
             params8.push('close');
             option7.params = params8;
             var callRet9;
-            callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 3);
+            pos.line = 3;
+            pos.col = 33;
+            callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses']);
             if (callRet9 && callRet9.isBuffer) {
                 buffer = callRet9;
                 callRet9 = undefined;
             }
             buffer.writeEscaped(callRet9);
-            buffer.write('">close</span>\r\n');
+            buffer.append('">close</span>\r\n');
             return buffer;
         };
-        buffer = ifCommand.call(tpl, scope, option4, buffer, 2);
+        pos.line = 2;
+        pos.col = 5;
+        buffer = ifCommand.call(tpl, scope, option4, buffer);
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

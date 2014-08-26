@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:07
+build time: Aug 26 16:09
 */
 KISSY.add("io","io/form-serializer,io/base,util,io/xhr-transport,io/script-transport,io/jsonp,io/form,io/iframe-transport,io/methods".split(","),function(k,a,n,l){function g(a,c,e,f,j){if(typeof c==="function"){f=e;e=c;c=void 0}return d({type:j||"get",url:a,data:c,success:e,dataType:f})}var k=a("io/form-serializer"),d=a("io/base"),n=a("util");a("io/xhr-transport");a("io/script-transport");a("io/jsonp");a("io/form");a("io/iframe-transport");a("io/methods");n.mix(d,{serialize:k.serialize,getFormData:k.getFormData,
 get:g,post:function(a,d,e,f){if(typeof d==="function"){f=e;e=d;d=void 0}return g(a,d,e,f,"post")},jsonp:function(a,d,e){if(typeof d==="function"){e=d;d=void 0}return g(a,d,e,"jsonp")},getScript:a.load,getJSON:function(a,d,e){if(typeof d==="function"){e=d;d=void 0}return g(a,d,e,"json")},upload:function(a,c,e,f,j){if(typeof e==="function"){j=f;f=e;e=void 0}return d({url:a,type:"post",dataType:j,form:c,data:e,success:f})}});l.exports=d});

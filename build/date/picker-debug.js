@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:04
+build time: Aug 26 16:05
 */
 /*
 combined modules:
@@ -1037,6 +1037,10 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function decadePanelXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1052,116 +1056,132 @@ KISSY.add('date/picker/decade-panel/decade-panel-xtpl', ['./decades-xtpl'], func
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">\r\n    <a class="');
+        buffer.append('">\r\n    <a class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('prev-century-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 2);
+        pos.line = 2;
+        pos.col = 34;
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses']);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
         buffer.writeEscaped(callRet5);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        buffer.append('"\r\n       href="#"\r\n       role="button"\r\n       title="');
         var id6 = scope.resolve(['previousCenturyLabel']);
         buffer.writeEscaped(id6);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n    <div class="');
+        buffer.append('"\r\n       hidefocus="on">\r\n    </a>\r\n    <div class="');
         var option7 = { escape: 1 };
         var params8 = [];
         params8.push('century');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 8);
+        pos.line = 8;
+        pos.col = 36;
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses']);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
         buffer.writeEscaped(callRet9);
-        buffer.write('">\r\n                ');
+        buffer.append('">\r\n                ');
         var id10 = scope.resolve(['startYear']);
         buffer.writeEscaped(id10);
-        buffer.write('-');
+        buffer.append('-');
         var id11 = scope.resolve(['endYear']);
         buffer.writeEscaped(id11);
-        buffer.write('\r\n    </div>\r\n    <a class="');
+        buffer.append('\r\n    </div>\r\n    <a class="');
         var option12 = { escape: 1 };
         var params13 = [];
         params13.push('next-century-btn');
         option12.params = params13;
         var callRet14;
-        callRet14 = callFnUtil(tpl, scope, option12, buffer, ['getBaseCssClasses'], 11);
+        pos.line = 11;
+        pos.col = 34;
+        callRet14 = callFnUtil(tpl, scope, option12, buffer, ['getBaseCssClasses']);
         if (callRet14 && callRet14.isBuffer) {
             buffer = callRet14;
             callRet14 = undefined;
         }
         buffer.writeEscaped(callRet14);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        buffer.append('"\r\n       href="#"\r\n       role="button"\r\n       title="');
         var id15 = scope.resolve(['nextCenturyLabel']);
         buffer.writeEscaped(id15);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
+        buffer.append('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
         var option16 = { escape: 1 };
         var params17 = [];
         params17.push('body');
         option16.params = params17;
         var callRet18;
-        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 18);
+        pos.line = 18;
+        pos.col = 32;
+        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses']);
         if (callRet18 && callRet18.isBuffer) {
             buffer = callRet18;
             callRet18 = undefined;
         }
         buffer.writeEscaped(callRet18);
-        buffer.write('">\r\n    <table class="');
+        buffer.append('">\r\n    <table class="');
         var option19 = { escape: 1 };
         var params20 = [];
         params20.push('table');
         option19.params = params20;
         var callRet21;
-        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 19);
+        pos.line = 19;
+        pos.col = 38;
+        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses']);
         if (callRet21 && callRet21.isBuffer) {
             buffer = callRet21;
             callRet21 = undefined;
         }
         buffer.writeEscaped(callRet21);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
+        buffer.append('" cellspacing="0" role="grid">\r\n        <tbody class="');
         var option22 = { escape: 1 };
         var params23 = [];
         params23.push('tbody');
         option22.params = params23;
         var callRet24;
-        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 20);
+        pos.line = 20;
+        pos.col = 42;
+        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses']);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
         }
         buffer.writeEscaped(callRet24);
-        buffer.write('">\r\n        ');
+        buffer.append('">\r\n        ');
         var option25 = {};
         var params26 = [];
         params26.push('./decades-xtpl');
         option25.params = params26;
         require('./decades-xtpl');
         var callRet27;
-        callRet27 = includeCommand.call(tpl, scope, option25, buffer, 21);
+        pos.line = 21;
+        pos.col = 19;
+        callRet27 = includeCommand.call(tpl, scope, option25, buffer);
         if (callRet27 && callRet27.isBuffer) {
             buffer = callRet27;
             callRet27 = undefined;
         }
         buffer.write(callRet27);
-        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
+        buffer.append('\r\n        </tbody>\r\n    </table>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1171,6 +1191,10 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function decadesXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1186,14 +1210,14 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('');
+        buffer.append('');
         var option0 = { escape: 1 };
         var params1 = [];
         var id2 = scope.resolve(['decades']);
         params1.push(id2);
         option0.params = params1;
         option0.fn = function (scope, buffer) {
-            buffer.write('\r\n<tr role="row">\r\n    ');
+            buffer.append('\r\n<tr role="row">\r\n    ');
             var option3 = { escape: 1 };
             var params4 = [];
             var id6 = scope.resolve(['xindex']);
@@ -1204,19 +1228,21 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
             params4.push(id5);
             option3.params = params4;
             option3.fn = function (scope, buffer) {
-                buffer.write('\r\n    <td role="gridcell"\r\n        class="');
+                buffer.append('\r\n    <td role="gridcell"\r\n        class="');
                 var option7 = { escape: 1 };
                 var params8 = [];
                 params8.push('cell');
                 option7.params = params8;
                 var callRet9;
-                callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 5);
+                pos.line = 5;
+                pos.col = 35;
+                callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses']);
                 if (callRet9 && callRet9.isBuffer) {
                     buffer = callRet9;
                     callRet9 = undefined;
                 }
                 buffer.writeEscaped(callRet9);
-                buffer.write('\r\n        ');
+                buffer.append('\r\n        ');
                 var option10 = { escape: 1 };
                 var params11 = [];
                 var id12 = scope.resolve(['startDecade']);
@@ -1234,23 +1260,27 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                 params11.push(exp18);
                 option10.params = params11;
                 option10.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ');
+                    buffer.append('\r\n         ');
                     var option19 = { escape: 1 };
                     var params20 = [];
                     params20.push('selected-cell');
                     option19.params = params20;
                     var callRet21;
-                    callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 7);
+                    pos.line = 7;
+                    pos.col = 29;
+                    callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses']);
                     if (callRet21 && callRet21.isBuffer) {
                         buffer = callRet21;
                         callRet21 = undefined;
                     }
                     buffer.writeEscaped(callRet21);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option10, buffer, 6);
-                buffer.write('\r\n        ');
+                pos.line = 6;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option10, buffer);
+                buffer.append('\r\n        ');
                 var option22 = { escape: 1 };
                 var params23 = [];
                 var id24 = scope.resolve(['startDecade']);
@@ -1260,23 +1290,27 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                 params23.push(exp26);
                 option22.params = params23;
                 option22.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ');
+                    buffer.append('\r\n         ');
                     var option27 = { escape: 1 };
                     var params28 = [];
                     params28.push('last-century-cell');
                     option27.params = params28;
                     var callRet29;
-                    callRet29 = callFnUtil(tpl, scope, option27, buffer, ['getBaseCssClasses'], 10);
+                    pos.line = 10;
+                    pos.col = 29;
+                    callRet29 = callFnUtil(tpl, scope, option27, buffer, ['getBaseCssClasses']);
                     if (callRet29 && callRet29.isBuffer) {
                         buffer = callRet29;
                         callRet29 = undefined;
                     }
                     buffer.writeEscaped(callRet29);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option22, buffer, 9);
-                buffer.write('\r\n        ');
+                pos.line = 9;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option22, buffer);
+                buffer.append('\r\n        ');
                 var option30 = { escape: 1 };
                 var params31 = [];
                 var id32 = scope.resolve(['endDecade']);
@@ -1286,48 +1320,58 @@ KISSY.add('date/picker/decade-panel/decades-xtpl', [], function (S, require, exp
                 params31.push(exp34);
                 option30.params = params31;
                 option30.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ');
+                    buffer.append('\r\n         ');
                     var option35 = { escape: 1 };
                     var params36 = [];
                     params36.push('next-century-cell');
                     option35.params = params36;
                     var callRet37;
-                    callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 13);
+                    pos.line = 13;
+                    pos.col = 29;
+                    callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses']);
                     if (callRet37 && callRet37.isBuffer) {
                         buffer = callRet37;
                         callRet37 = undefined;
                     }
                     buffer.writeEscaped(callRet37);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option30, buffer, 12);
-                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
+                pos.line = 12;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option30, buffer);
+                buffer.append('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                 var option38 = { escape: 1 };
                 var params39 = [];
                 params39.push('decade');
                 option38.params = params39;
                 var callRet40;
-                callRet40 = callFnUtil(tpl, scope, option38, buffer, ['getBaseCssClasses'], 19);
+                pos.line = 19;
+                pos.col = 38;
+                callRet40 = callFnUtil(tpl, scope, option38, buffer, ['getBaseCssClasses']);
                 if (callRet40 && callRet40.isBuffer) {
                     buffer = callRet40;
                     callRet40 = undefined;
                 }
                 buffer.writeEscaped(callRet40);
-                buffer.write('">\r\n            ');
+                buffer.append('">\r\n            ');
                 var id41 = scope.resolve(['startDecade']);
                 buffer.writeEscaped(id41);
-                buffer.write('-');
+                buffer.append('-');
                 var id42 = scope.resolve(['endDecade']);
                 buffer.writeEscaped(id42);
-                buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
+                buffer.append('\r\n        </a>\r\n    </td>\r\n    ');
                 return buffer;
             };
-            buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-            buffer.write('\r\n</tr>\r\n');
+            pos.line = 3;
+            pos.col = 12;
+            buffer = eachCommand.call(tpl, scope, option3, buffer);
+            buffer.append('\r\n</tr>\r\n');
             return buffer;
         };
-        buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
+        pos.line = 1;
+        pos.col = 9;
+        buffer = eachCommand.call(tpl, scope, option0, buffer);
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1338,6 +1382,10 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function yearsXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1353,14 +1401,14 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('');
+        buffer.append('');
         var option0 = { escape: 1 };
         var params1 = [];
         var id2 = scope.resolve(['years']);
         params1.push(id2);
         option0.params = params1;
         option0.fn = function (scope, buffer) {
-            buffer.write('\r\n<tr role="row">\r\n    ');
+            buffer.append('\r\n<tr role="row">\r\n    ');
             var option3 = { escape: 1 };
             var params4 = [];
             var id6 = scope.resolve(['xindex']);
@@ -1371,22 +1419,24 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
             params4.push(id5);
             option3.params = params4;
             option3.fn = function (scope, buffer) {
-                buffer.write('\r\n    <td role="gridcell"\r\n        title="');
+                buffer.append('\r\n    <td role="gridcell"\r\n        title="');
                 var id7 = scope.resolve(['title']);
                 buffer.writeEscaped(id7);
-                buffer.write('"\r\n        class="');
+                buffer.append('"\r\n        class="');
                 var option8 = { escape: 1 };
                 var params9 = [];
                 params9.push('cell');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 6);
+                pos.line = 6;
+                pos.col = 35;
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses']);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
                 }
                 buffer.writeEscaped(callRet10);
-                buffer.write('\r\n        ');
+                buffer.append('\r\n        ');
                 var option11 = { escape: 1 };
                 var params12 = [];
                 var id13 = scope.resolve(['content']);
@@ -1396,23 +1446,27 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                 params12.push(exp15);
                 option11.params = params12;
                 option11.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ');
+                    buffer.append('\r\n         ');
                     var option16 = { escape: 1 };
                     var params17 = [];
                     params17.push('selected-cell');
                     option16.params = params17;
                     var callRet18;
-                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 8);
+                    pos.line = 8;
+                    pos.col = 29;
+                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses']);
                     if (callRet18 && callRet18.isBuffer) {
                         buffer = callRet18;
                         callRet18 = undefined;
                     }
                     buffer.writeEscaped(callRet18);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option11, buffer, 7);
-                buffer.write('\r\n        ');
+                pos.line = 7;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option11, buffer);
+                buffer.append('\r\n        ');
                 var option19 = { escape: 1 };
                 var params20 = [];
                 var id21 = scope.resolve(['content']);
@@ -1422,23 +1476,27 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                 params20.push(exp23);
                 option19.params = params20;
                 option19.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ');
+                    buffer.append('\r\n         ');
                     var option24 = { escape: 1 };
                     var params25 = [];
                     params25.push('last-decade-cell');
                     option24.params = params25;
                     var callRet26;
-                    callRet26 = callFnUtil(tpl, scope, option24, buffer, ['getBaseCssClasses'], 11);
+                    pos.line = 11;
+                    pos.col = 29;
+                    callRet26 = callFnUtil(tpl, scope, option24, buffer, ['getBaseCssClasses']);
                     if (callRet26 && callRet26.isBuffer) {
                         buffer = callRet26;
                         callRet26 = undefined;
                     }
                     buffer.writeEscaped(callRet26);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option19, buffer, 10);
-                buffer.write('\r\n        ');
+                pos.line = 10;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option19, buffer);
+                buffer.append('\r\n        ');
                 var option27 = { escape: 1 };
                 var params28 = [];
                 var id29 = scope.resolve(['content']);
@@ -1448,45 +1506,55 @@ KISSY.add('date/picker/year-panel/years-xtpl', [], function (S, require, exports
                 params28.push(exp31);
                 option27.params = params28;
                 option27.fn = function (scope, buffer) {
-                    buffer.write('\r\n         ');
+                    buffer.append('\r\n         ');
                     var option32 = { escape: 1 };
                     var params33 = [];
                     params33.push('next-decade-cell');
                     option32.params = params33;
                     var callRet34;
-                    callRet34 = callFnUtil(tpl, scope, option32, buffer, ['getBaseCssClasses'], 14);
+                    pos.line = 14;
+                    pos.col = 29;
+                    callRet34 = callFnUtil(tpl, scope, option32, buffer, ['getBaseCssClasses']);
                     if (callRet34 && callRet34.isBuffer) {
                         buffer = callRet34;
                         callRet34 = undefined;
                     }
                     buffer.writeEscaped(callRet34);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option27, buffer, 13);
-                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
+                pos.line = 13;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option27, buffer);
+                buffer.append('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                 var option35 = { escape: 1 };
                 var params36 = [];
                 params36.push('year');
                 option35.params = params36;
                 var callRet37;
-                callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses'], 20);
+                pos.line = 20;
+                pos.col = 38;
+                callRet37 = callFnUtil(tpl, scope, option35, buffer, ['getBaseCssClasses']);
                 if (callRet37 && callRet37.isBuffer) {
                     buffer = callRet37;
                     callRet37 = undefined;
                 }
                 buffer.writeEscaped(callRet37);
-                buffer.write('">\r\n            ');
+                buffer.append('">\r\n            ');
                 var id38 = scope.resolve(['content']);
                 buffer.writeEscaped(id38);
-                buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
+                buffer.append('\r\n        </a>\r\n    </td>\r\n    ');
                 return buffer;
             };
-            buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-            buffer.write('\r\n</tr>\r\n');
+            pos.line = 3;
+            pos.col = 12;
+            buffer = eachCommand.call(tpl, scope, option3, buffer);
+            buffer.append('\r\n</tr>\r\n');
             return buffer;
         };
-        buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
+        pos.line = 1;
+        pos.col = 9;
+        buffer = eachCommand.call(tpl, scope, option0, buffer);
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1496,6 +1564,10 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function yearPanelXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1511,143 +1583,163 @@ KISSY.add('date/picker/year-panel/year-panel-xtpl', ['./years-xtpl'], function (
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">\r\n    <a class="');
+        buffer.append('">\r\n    <a class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('prev-decade-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 2);
+        pos.line = 2;
+        pos.col = 34;
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses']);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
         buffer.writeEscaped(callRet5);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        buffer.append('"\r\n       href="#"\r\n       role="button"\r\n       title="');
         var id6 = scope.resolve(['previousDecadeLabel']);
         buffer.writeEscaped(id6);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
+        buffer.append('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
         var option7 = { escape: 1 };
         var params8 = [];
         params8.push('decade-select');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 9);
+        pos.line = 9;
+        pos.col = 34;
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses']);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
         buffer.writeEscaped(callRet9);
-        buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
+        buffer.append('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
         var id10 = scope.resolve(['decadeSelectLabel']);
         buffer.writeEscaped(id10);
-        buffer.write('">\r\n            <span class="');
+        buffer.append('">\r\n            <span class="');
         var option11 = { escape: 1 };
         var params12 = [];
         params12.push('decade-select-content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 14);
+        pos.line = 14;
+        pos.col = 45;
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses']);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
         }
         buffer.writeEscaped(callRet13);
-        buffer.write('">\r\n                ');
+        buffer.append('">\r\n                ');
         var id14 = scope.resolve(['startYear']);
         buffer.writeEscaped(id14);
-        buffer.write('-');
+        buffer.append('-');
         var id15 = scope.resolve(['endYear']);
         buffer.writeEscaped(id15);
-        buffer.write('\r\n            </span>\r\n        <span class="');
+        buffer.append('\r\n            </span>\r\n        <span class="');
         var option16 = { escape: 1 };
         var params17 = [];
         params17.push('decade-select-arrow');
         option16.params = params17;
         var callRet18;
-        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 17);
+        pos.line = 17;
+        pos.col = 41;
+        callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses']);
         if (callRet18 && callRet18.isBuffer) {
             buffer = callRet18;
             callRet18 = undefined;
         }
         buffer.writeEscaped(callRet18);
-        buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
+        buffer.append('">x</span>\r\n    </a>\r\n\r\n    <a class="');
         var option19 = { escape: 1 };
         var params20 = [];
         params20.push('next-decade-btn');
         option19.params = params20;
         var callRet21;
-        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 20);
+        pos.line = 20;
+        pos.col = 34;
+        callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses']);
         if (callRet21 && callRet21.isBuffer) {
             buffer = callRet21;
             callRet21 = undefined;
         }
         buffer.writeEscaped(callRet21);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        buffer.append('"\r\n       href="#"\r\n       role="button"\r\n       title="');
         var id22 = scope.resolve(['nextDecadeLabel']);
         buffer.writeEscaped(id22);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
+        buffer.append('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
         var option23 = { escape: 1 };
         var params24 = [];
         params24.push('body');
         option23.params = params24;
         var callRet25;
-        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses'], 27);
+        pos.line = 27;
+        pos.col = 32;
+        callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses']);
         if (callRet25 && callRet25.isBuffer) {
             buffer = callRet25;
             callRet25 = undefined;
         }
         buffer.writeEscaped(callRet25);
-        buffer.write('">\r\n    <table class="');
+        buffer.append('">\r\n    <table class="');
         var option26 = { escape: 1 };
         var params27 = [];
         params27.push('table');
         option26.params = params27;
         var callRet28;
-        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses'], 28);
+        pos.line = 28;
+        pos.col = 38;
+        callRet28 = callFnUtil(tpl, scope, option26, buffer, ['getBaseCssClasses']);
         if (callRet28 && callRet28.isBuffer) {
             buffer = callRet28;
             callRet28 = undefined;
         }
         buffer.writeEscaped(callRet28);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
+        buffer.append('" cellspacing="0" role="grid">\r\n        <tbody class="');
         var option29 = { escape: 1 };
         var params30 = [];
         params30.push('tbody');
         option29.params = params30;
         var callRet31;
-        callRet31 = callFnUtil(tpl, scope, option29, buffer, ['getBaseCssClasses'], 29);
+        pos.line = 29;
+        pos.col = 42;
+        callRet31 = callFnUtil(tpl, scope, option29, buffer, ['getBaseCssClasses']);
         if (callRet31 && callRet31.isBuffer) {
             buffer = callRet31;
             callRet31 = undefined;
         }
         buffer.writeEscaped(callRet31);
-        buffer.write('">\r\n        ');
+        buffer.append('">\r\n        ');
         var option32 = {};
         var params33 = [];
         params33.push('./years-xtpl');
         option32.params = params33;
         require('./years-xtpl');
         var callRet34;
-        callRet34 = includeCommand.call(tpl, scope, option32, buffer, 30);
+        pos.line = 30;
+        pos.col = 19;
+        callRet34 = includeCommand.call(tpl, scope, option32, buffer);
         if (callRet34 && callRet34.isBuffer) {
             buffer = callRet34;
             callRet34 = undefined;
         }
         buffer.write(callRet34);
-        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
+        buffer.append('\r\n        </tbody>\r\n    </table>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1657,6 +1749,10 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function monthsXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1672,14 +1768,14 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('');
+        buffer.append('');
         var option0 = { escape: 1 };
         var params1 = [];
         var id2 = scope.resolve(['months']);
         params1.push(id2);
         option0.params = params1;
         option0.fn = function (scope, buffer) {
-            buffer.write('\r\n<tr role="row">\r\n    ');
+            buffer.append('\r\n<tr role="row">\r\n    ');
             var option3 = { escape: 1 };
             var params4 = [];
             var id6 = scope.resolve(['xindex']);
@@ -1690,22 +1786,24 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
             params4.push(id5);
             option3.params = params4;
             option3.fn = function (scope, buffer) {
-                buffer.write('\r\n    <td role="gridcell"\r\n        title="');
+                buffer.append('\r\n    <td role="gridcell"\r\n        title="');
                 var id7 = scope.resolve(['title']);
                 buffer.writeEscaped(id7);
-                buffer.write('"\r\n        class="');
+                buffer.append('"\r\n        class="');
                 var option8 = { escape: 1 };
                 var params9 = [];
                 params9.push('cell');
                 option8.params = params9;
                 var callRet10;
-                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses'], 6);
+                pos.line = 6;
+                pos.col = 35;
+                callRet10 = callFnUtil(tpl, scope, option8, buffer, ['getBaseCssClasses']);
                 if (callRet10 && callRet10.isBuffer) {
                     buffer = callRet10;
                     callRet10 = undefined;
                 }
                 buffer.writeEscaped(callRet10);
-                buffer.write('\r\n        ');
+                buffer.append('\r\n        ');
                 var option11 = { escape: 1 };
                 var params12 = [];
                 var id13 = scope.resolve(['month']);
@@ -1715,45 +1813,55 @@ KISSY.add('date/picker/month-panel/months-xtpl', [], function (S, require, expor
                 params12.push(exp15);
                 option11.params = params12;
                 option11.fn = function (scope, buffer) {
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     var option16 = { escape: 1 };
                     var params17 = [];
                     params17.push('selected-cell');
                     option16.params = params17;
                     var callRet18;
-                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses'], 8);
+                    pos.line = 8;
+                    pos.col = 28;
+                    callRet18 = callFnUtil(tpl, scope, option16, buffer, ['getBaseCssClasses']);
                     if (callRet18 && callRet18.isBuffer) {
                         buffer = callRet18;
                         callRet18 = undefined;
                     }
                     buffer.writeEscaped(callRet18);
-                    buffer.write('\r\n        ');
+                    buffer.append('\r\n        ');
                     return buffer;
                 };
-                buffer = ifCommand.call(tpl, scope, option11, buffer, 7);
-                buffer.write('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
+                pos.line = 7;
+                pos.col = 14;
+                buffer = ifCommand.call(tpl, scope, option11, buffer);
+                buffer.append('\r\n        ">\r\n        <a hidefocus="on"\r\n           href="#"\r\n           unselectable="on"\r\n           class="');
                 var option19 = { escape: 1 };
                 var params20 = [];
                 params20.push('month');
                 option19.params = params20;
                 var callRet21;
-                callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses'], 14);
+                pos.line = 14;
+                pos.col = 38;
+                callRet21 = callFnUtil(tpl, scope, option19, buffer, ['getBaseCssClasses']);
                 if (callRet21 && callRet21.isBuffer) {
                     buffer = callRet21;
                     callRet21 = undefined;
                 }
                 buffer.writeEscaped(callRet21);
-                buffer.write('">\r\n            ');
+                buffer.append('">\r\n            ');
                 var id22 = scope.resolve(['content']);
                 buffer.writeEscaped(id22);
-                buffer.write('\r\n        </a>\r\n    </td>\r\n    ');
+                buffer.append('\r\n        </a>\r\n    </td>\r\n    ');
                 return buffer;
             };
-            buffer = eachCommand.call(tpl, scope, option3, buffer, 3);
-            buffer.write('\r\n</tr>\r\n');
+            pos.line = 3;
+            pos.col = 12;
+            buffer = eachCommand.call(tpl, scope, option3, buffer);
+            buffer.append('\r\n</tr>\r\n');
             return buffer;
         };
-        buffer = eachCommand.call(tpl, scope, option0, buffer, 1);
+        pos.line = 1;
+        pos.col = 9;
+        buffer = eachCommand.call(tpl, scope, option0, buffer);
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1763,6 +1871,10 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function monthPanelXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1778,140 +1890,160 @@ KISSY.add('date/picker/month-panel/month-panel-xtpl', ['./months-xtpl'], functio
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('header');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">\r\n    <a class="');
+        buffer.append('">\r\n    <a class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('prev-year-btn');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 2);
+        pos.line = 2;
+        pos.col = 34;
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses']);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
         buffer.writeEscaped(callRet5);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        buffer.append('"\r\n       href="#"\r\n       role="button"\r\n       title="');
         var id6 = scope.resolve(['previousYearLabel']);
         buffer.writeEscaped(id6);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
+        buffer.append('"\r\n       hidefocus="on">\r\n    </a>\r\n\r\n    <a class="');
         var option7 = { escape: 1 };
         var params8 = [];
         params8.push('year-select');
         option7.params = params8;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses'], 9);
+        pos.line = 9;
+        pos.col = 34;
+        callRet9 = callFnUtil(tpl, scope, option7, buffer, ['getBaseCssClasses']);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
         buffer.writeEscaped(callRet9);
-        buffer.write('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
+        buffer.append('"\r\n       role="button"\r\n       href="#"\r\n       hidefocus="on"\r\n       title="');
         var id10 = scope.resolve(['yearSelectLabel']);
         buffer.writeEscaped(id10);
-        buffer.write('">\r\n        <span class="');
+        buffer.append('">\r\n        <span class="');
         var option11 = { escape: 1 };
         var params12 = [];
         params12.push('year-select-content');
         option11.params = params12;
         var callRet13;
-        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses'], 14);
+        pos.line = 14;
+        pos.col = 41;
+        callRet13 = callFnUtil(tpl, scope, option11, buffer, ['getBaseCssClasses']);
         if (callRet13 && callRet13.isBuffer) {
             buffer = callRet13;
             callRet13 = undefined;
         }
         buffer.writeEscaped(callRet13);
-        buffer.write('">');
+        buffer.append('">');
         var id14 = scope.resolve(['year']);
         buffer.writeEscaped(id14);
-        buffer.write('</span>\r\n        <span class="');
+        buffer.append('</span>\r\n        <span class="');
         var option15 = { escape: 1 };
         var params16 = [];
         params16.push('year-select-arrow');
         option15.params = params16;
         var callRet17;
-        callRet17 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 15);
+        pos.line = 15;
+        pos.col = 41;
+        callRet17 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses']);
         if (callRet17 && callRet17.isBuffer) {
             buffer = callRet17;
             callRet17 = undefined;
         }
         buffer.writeEscaped(callRet17);
-        buffer.write('">x</span>\r\n    </a>\r\n\r\n    <a class="');
+        buffer.append('">x</span>\r\n    </a>\r\n\r\n    <a class="');
         var option18 = { escape: 1 };
         var params19 = [];
         params19.push('next-year-btn');
         option18.params = params19;
         var callRet20;
-        callRet20 = callFnUtil(tpl, scope, option18, buffer, ['getBaseCssClasses'], 18);
+        pos.line = 18;
+        pos.col = 34;
+        callRet20 = callFnUtil(tpl, scope, option18, buffer, ['getBaseCssClasses']);
         if (callRet20 && callRet20.isBuffer) {
             buffer = callRet20;
             callRet20 = undefined;
         }
         buffer.writeEscaped(callRet20);
-        buffer.write('"\r\n       href="#"\r\n       role="button"\r\n       title="');
+        buffer.append('"\r\n       href="#"\r\n       role="button"\r\n       title="');
         var id21 = scope.resolve(['nextYearLabel']);
         buffer.writeEscaped(id21);
-        buffer.write('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
+        buffer.append('"\r\n       hidefocus="on">\r\n    </a>\r\n</div>\r\n<div class="');
         var option22 = { escape: 1 };
         var params23 = [];
         params23.push('body');
         option22.params = params23;
         var callRet24;
-        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses'], 25);
+        pos.line = 25;
+        pos.col = 32;
+        callRet24 = callFnUtil(tpl, scope, option22, buffer, ['getBaseCssClasses']);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
         }
         buffer.writeEscaped(callRet24);
-        buffer.write('">\r\n    <table class="');
+        buffer.append('">\r\n    <table class="');
         var option25 = { escape: 1 };
         var params26 = [];
         params26.push('table');
         option25.params = params26;
         var callRet27;
-        callRet27 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses'], 26);
+        pos.line = 26;
+        pos.col = 38;
+        callRet27 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses']);
         if (callRet27 && callRet27.isBuffer) {
             buffer = callRet27;
             callRet27 = undefined;
         }
         buffer.writeEscaped(callRet27);
-        buffer.write('" cellspacing="0" role="grid">\r\n        <tbody class="');
+        buffer.append('" cellspacing="0" role="grid">\r\n        <tbody class="');
         var option28 = { escape: 1 };
         var params29 = [];
         params29.push('tbody');
         option28.params = params29;
         var callRet30;
-        callRet30 = callFnUtil(tpl, scope, option28, buffer, ['getBaseCssClasses'], 27);
+        pos.line = 27;
+        pos.col = 42;
+        callRet30 = callFnUtil(tpl, scope, option28, buffer, ['getBaseCssClasses']);
         if (callRet30 && callRet30.isBuffer) {
             buffer = callRet30;
             callRet30 = undefined;
         }
         buffer.writeEscaped(callRet30);
-        buffer.write('">\r\n        ');
+        buffer.append('">\r\n        ');
         var option31 = {};
         var params32 = [];
         params32.push('./months-xtpl');
         option31.params = params32;
         require('./months-xtpl');
         var callRet33;
-        callRet33 = includeCommand.call(tpl, scope, option31, buffer, 28);
+        pos.line = 28;
+        pos.col = 19;
+        callRet33 = includeCommand.call(tpl, scope, option31, buffer);
         if (callRet33 && callRet33.isBuffer) {
             buffer = callRet33;
             callRet33 = undefined;
         }
         buffer.write(callRet33);
-        buffer.write('\r\n        </tbody>\r\n    </table>\r\n</div>');
+        buffer.append('\r\n        </tbody>\r\n    </table>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

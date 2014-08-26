@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:08
+build time: Aug 26 16:10
 */
 KISSY.add("scroll-view/base","anim/timer,component/container,component/extension/content-box,node,feature,util".split(","),function(o,e,p,s){function t(){var a=this.el,c=a.scrollTop,b=a.scrollLeft;c&&this.set("scrollTop",c+this.get("scrollTop"));b&&this.set("scrollLeft",b+this.get("scrollLeft"));a.scrollTop=a.scrollLeft=0}function u(a,c){a.scrollView.set(c.prop,c.val)}var v=e("anim/timer"),o=e("component/container"),p=e("component/extension/content-box"),m=e("node"),i=m.Event.KeyCode,j=e("feature"),
 q=j.getCssVendorInfo("transform"),k=Math.floor,n,r=j.isTransform3dSupported(),j=!!q,w=e("util"),e={initializer:function(){this.scrollAnims=[]},bindUI:function(){this.$el.on("mousewheel",this.handleMouseWheel,this).on("scroll",t,this)},syncUI:function(){this.sync()},sync:function(){var a=this.el,c=this.contentEl,b=Math.max(c.offsetHeight,c.scrollHeight),c=Math.max(c.offsetWidth,c.scrollWidth);this.set("dimension",{scrollHeight:b,scrollWidth:c,clientWidth:a.clientWidth,clientHeight:a.clientHeight})},

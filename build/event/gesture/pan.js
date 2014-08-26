@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:06
+build time: Aug 26 16:08
 */
 KISSY.add("event/gesture/pan",["event/gesture/util","event/dom/base","util"],function(h,g,e,n){function m(b,c){var a=b.lastTouches[0],f=c.timeStamp;f-b.lastTime>o&&(b.lastPos={pageX:a.pageX,pageY:a.pageY},b.lastTime=f)}function k(b,c,a){var f=b.startPos,a=a||{},d=b.lastTouches[0];a.which=1;a.pageX=d.pageX;a.pageY=d.pageY;a.originalEvent=c.originalEvent;a.deltaX=d.pageX-f.pageX;a.deltaY=d.pageY-f.pageY;a.startTime=b.startTime;a.startPos=b.startPos;a.gestureType=c.gestureType;a.direction=b.direction;
 return a}function i(){}var e=g("event/gesture/util"),h=e.addEvent,l=g("event/dom/base"),e=e.SingleTouch,o=300,j=document;g("util").extend(i,e,{start:function(){i.superclass.start.apply(this,arguments);var b=this.lastTouches[0];this.lastTime=this.startTime;this.dragTarget=b.target;this.startPos=this.lastPos={pageX:b.pageX,pageY:b.pageY};this.direction=null},move:function(b){i.superclass.move.apply(this,arguments);if(this.isStarted)m(this,b),l.fire(this.dragTarget,"pan",k(this,b));else{var c=b,a=this.lastTouches[0],

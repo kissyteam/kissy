@@ -2513,7 +2513,7 @@ var KISSY = (function () {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:09
+build time: Aug 26 16:11
 */
 /*
 combined modules:
@@ -2903,7 +2903,7 @@ KISSY.add('ua', [], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:06
+build time: Aug 26 16:08
 */
 /*
 combined modules:
@@ -3086,7 +3086,7 @@ KISSY.add('feature', ['ua'], function (S, require, exports, module) {
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:09
+build time: Aug 26 16:11
 */
 /**
  * @ignore

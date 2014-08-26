@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:03
+build time: Aug 26 16:05
 */
 KISSY.add("date/gregorian",["util","./gregorian/utils","i18n!date","./gregorian/const"],function(w,s,o,y){function e(a,b){var c=g.makeArray(arguments);"object"===typeof a?(b=a,a=b.timezoneOffset):3<=c.length&&(a=b=null);this.locale=b=b||n;this.fields=[];this.time=void 0;this.timezoneOffset=a||b.timezoneOffset;this.firstDayOfWeek=b.firstDayOfWeek;this.minimalDaysInFirstWeek=b.minimalDaysInFirstWeek;this.fieldsComputed=!1;3<=arguments.length&&this.set.apply(this,c)}function x(a){var b=a.fields,c=t(b[h],
 b[j]);b[m]>c&&a.set(m,c)}function t(a,b){return z(a)?J[b]:K[b]}function l(a,b,c){var d=b+6-q(b+6-a.firstDayOfWeek,7);d-b>=a.minimalDaysInFirstWeek&&(d-=7);return G((c-d)/7)+1}var g=s("util"),k=parseInt,i=s("./gregorian/utils"),n=s("i18n!date"),w=s("./gregorian/const");g.mix(e,w);g.mix(e,{Utils:i,isLeapYear:i.isLeapYear,YEAR:1,MONTH:2,DAY_OF_MONTH:3,HOUR_OF_DAY:4,MINUTES:5,SECONDS:6,MILLISECONDS:7,WEEK_OF_YEAR:8,WEEK_OF_MONTH:9,DAY_OF_YEAR:10,DAY_OF_WEEK:11,DAY_OF_WEEK_IN_MONTH:12,AM:0,PM:1});var h=

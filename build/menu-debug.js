@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:07
+build time: Aug 26 16:09
 */
 /*
 combined modules:
@@ -424,6 +424,10 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function checkMenuitemXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -439,34 +443,38 @@ KISSY.add('menu/check-menuitem-xtpl', [], function (S, require, exports, module)
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('checkbox');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">\r\n</div>\r\n<div class="');
+        buffer.append('">\r\n</div>\r\n<div class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('content');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 3);
+        pos.line = 3;
+        pos.col = 32;
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses']);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
         buffer.writeEscaped(callRet5);
-        buffer.write('">');
+        buffer.append('">');
         var id6 = scope.resolve(['content']);
         buffer.write(id6);
-        buffer.write('</div>');
+        buffer.append('</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -547,6 +555,10 @@ KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module)
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function radioMenuitemXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -562,34 +574,38 @@ KISSY.add('menu/radio-menuitem-xtpl', [], function (S, require, exports, module)
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('radio');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">\r\n</div>\r\n<div class="');
+        buffer.append('">\r\n</div>\r\n<div class="');
         var option3 = { escape: 1 };
         var params4 = [];
         params4.push('content');
         option3.params = params4;
         var callRet5;
-        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses'], 3);
+        pos.line = 3;
+        pos.col = 32;
+        callRet5 = callFnUtil(tpl, scope, option3, buffer, ['getBaseCssClasses']);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
         buffer.writeEscaped(callRet5);
-        buffer.write('">');
+        buffer.append('">');
         var id6 = scope.resolve(['content']);
         buffer.write(id6);
-        buffer.write('</div>');
+        buffer.append('</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -841,6 +857,10 @@ KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function submenuXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -856,25 +876,27 @@ KISSY.add('menu/submenu-xtpl', [], function (S, require, exports, module) {
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('content');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">');
+        buffer.append('">');
         var id3 = scope.resolve(['content']);
         buffer.write(id3);
-        buffer.write('</div>\r\n<span class="');
+        buffer.append('</div>\r\n<span class="');
         var id4 = scope.resolve(['prefixCls']);
         buffer.writeEscaped(id4);
-        buffer.write('submenu-arrow">\u25BA</span>');
+        buffer.append('submenu-arrow">\u25BA</span>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

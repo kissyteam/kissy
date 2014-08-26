@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:08
+build time: Aug 26 16:10
 */
 /*
 combined modules:
@@ -454,6 +454,10 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function scrollbarXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -469,7 +473,7 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         var id2 = scope.resolve(['axis']);
@@ -478,13 +482,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params1.push(exp3);
         option0.params = params1;
         var callRet4;
-        callRet4 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet4 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet4 && callRet4.isBuffer) {
             buffer = callRet4;
             callRet4 = undefined;
         }
         buffer.writeEscaped(callRet4);
-        buffer.write('">\r\n    <a href="javascript:void(\'up\')">up</a>\r\n</div>\r\n<div class="');
+        buffer.append('">\r\n    <a href="javascript:void(\'up\')">up</a>\r\n</div>\r\n<div class="');
         var option5 = { escape: 1 };
         var params6 = [];
         var id7 = scope.resolve(['axis']);
@@ -493,13 +499,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params6.push(exp8);
         option5.params = params6;
         var callRet9;
-        callRet9 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses'], 4);
+        pos.line = 4;
+        pos.col = 32;
+        callRet9 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses']);
         if (callRet9 && callRet9.isBuffer) {
             buffer = callRet9;
             callRet9 = undefined;
         }
         buffer.writeEscaped(callRet9);
-        buffer.write('">\r\n    <a href="javascript:void(\'down\')">down</a>\r\n</div>\r\n<div class="');
+        buffer.append('">\r\n    <a href="javascript:void(\'down\')">down</a>\r\n</div>\r\n<div class="');
         var option10 = { escape: 1 };
         var params11 = [];
         var id12 = scope.resolve(['axis']);
@@ -508,13 +516,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params11.push(exp13);
         option10.params = params11;
         var callRet14;
-        callRet14 = callFnUtil(tpl, scope, option10, buffer, ['getBaseCssClasses'], 7);
+        pos.line = 7;
+        pos.col = 32;
+        callRet14 = callFnUtil(tpl, scope, option10, buffer, ['getBaseCssClasses']);
         if (callRet14 && callRet14.isBuffer) {
             buffer = callRet14;
             callRet14 = undefined;
         }
         buffer.writeEscaped(callRet14);
-        buffer.write('">\r\n<div class="');
+        buffer.append('">\r\n<div class="');
         var option15 = { escape: 1 };
         var params16 = [];
         var id17 = scope.resolve(['axis']);
@@ -523,13 +533,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params16.push(exp18);
         option15.params = params16;
         var callRet19;
-        callRet19 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses'], 8);
+        pos.line = 8;
+        pos.col = 32;
+        callRet19 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses']);
         if (callRet19 && callRet19.isBuffer) {
             buffer = callRet19;
             callRet19 = undefined;
         }
         buffer.writeEscaped(callRet19);
-        buffer.write('">\r\n<div class="');
+        buffer.append('">\r\n<div class="');
         var option20 = { escape: 1 };
         var params21 = [];
         var id22 = scope.resolve(['axis']);
@@ -538,13 +550,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params21.push(exp23);
         option20.params = params21;
         var callRet24;
-        callRet24 = callFnUtil(tpl, scope, option20, buffer, ['getBaseCssClasses'], 9);
+        pos.line = 9;
+        pos.col = 32;
+        callRet24 = callFnUtil(tpl, scope, option20, buffer, ['getBaseCssClasses']);
         if (callRet24 && callRet24.isBuffer) {
             buffer = callRet24;
             callRet24 = undefined;
         }
         buffer.writeEscaped(callRet24);
-        buffer.write('">\r\n</div>\r\n<div class="');
+        buffer.append('">\r\n</div>\r\n<div class="');
         var option25 = { escape: 1 };
         var params26 = [];
         var id27 = scope.resolve(['axis']);
@@ -553,13 +567,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params26.push(exp28);
         option25.params = params26;
         var callRet29;
-        callRet29 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses'], 11);
+        pos.line = 11;
+        pos.col = 32;
+        callRet29 = callFnUtil(tpl, scope, option25, buffer, ['getBaseCssClasses']);
         if (callRet29 && callRet29.isBuffer) {
             buffer = callRet29;
             callRet29 = undefined;
         }
         buffer.writeEscaped(callRet29);
-        buffer.write('">\r\n</div>\r\n<div class="');
+        buffer.append('">\r\n</div>\r\n<div class="');
         var option30 = { escape: 1 };
         var params31 = [];
         var id32 = scope.resolve(['axis']);
@@ -568,13 +584,15 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', [], function (S, requir
         params31.push(exp33);
         option30.params = params31;
         var callRet34;
-        callRet34 = callFnUtil(tpl, scope, option30, buffer, ['getBaseCssClasses'], 13);
+        pos.line = 13;
+        pos.col = 32;
+        callRet34 = callFnUtil(tpl, scope, option30, buffer, ['getBaseCssClasses']);
         if (callRet34 && callRet34.isBuffer) {
             buffer = callRet34;
             callRet34 = undefined;
         }
         buffer.writeEscaped(callRet34);
-        buffer.write('">\r\n</div>\r\n</div>\r\n</div>');
+        buffer.append('">\r\n</div>\r\n</div>\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

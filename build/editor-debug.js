@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 12:07
+build time: Aug 26 16:07
 */
 /*
 combined modules:
@@ -1146,6 +1146,10 @@ KISSY.add('editor/iframe-content-xtpl', [], function (S, require, exports, modul
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function iframeContentXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1161,25 +1165,25 @@ KISSY.add('editor/iframe-content-xtpl', [], function (S, require, exports, modul
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<!doctype html>\r\n<html>\r\n<head>');
+        buffer.append('<!doctype html>\r\n<html>\r\n<head>');
         var id0 = scope.resolve(['doctype']);
         buffer.write(id0);
-        buffer.write('\r\n    <title>');
+        buffer.append('\r\n    <title>');
         var id1 = scope.resolve(['title']);
         buffer.write(id1);
-        buffer.write('</title>\r\n    ');
+        buffer.append('</title>\r\n    ');
         var id2 = scope.resolve(['style']);
         buffer.write(id2);
-        buffer.write('\r\n    ');
+        buffer.append('\r\n    ');
         var id3 = scope.resolve(['links']);
         buffer.write(id3);
-        buffer.write('\r\n    </head> \r\n<body class="ks-editor">\r\n');
+        buffer.append('\r\n    </head> \r\n<body class="ks-editor">\r\n');
         var id4 = scope.resolve(['data']);
         buffer.write(id4);
-        buffer.write('\r\n');
+        buffer.append('\r\n');
         var id5 = scope.resolve(['script']);
         buffer.write(id5);
-        buffer.write('\r\n</body> \r\n</html>');
+        buffer.append('\r\n</body> \r\n</html>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
@@ -1312,6 +1316,10 @@ KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function renderXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -1327,61 +1335,67 @@ KISSY.add('editor/render-xtpl', [], function (S, require, exports, module) {
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var id0 = scope.resolve(['prefixCls']);
         buffer.writeEscaped(id0);
-        buffer.write('editor-tools">\r\n\r\n</div>\r\n\r\n<!--\r\n//johanbrook.com/browsers/native-momentum-scrolling-ios-5/\r\nios \u4E0D\u80FD\u653E\u5728 iframe \u4E0A\uFF01\r\n-->\r\n\r\n<div class="');
+        buffer.append('editor-tools">\r\n\r\n</div>\r\n\r\n<!--\r\n//johanbrook.com/browsers/native-momentum-scrolling-ios-5/\r\nios \u4E0D\u80FD\u653E\u5728 iframe \u4E0A\uFF01\r\n-->\r\n\r\n<div class="');
         var id1 = scope.resolve(['prefixCls']);
         buffer.writeEscaped(id1);
-        buffer.write('editor-textarea-wrap"\r\n\r\n');
+        buffer.append('editor-textarea-wrap"\r\n\r\n');
         var option2 = { escape: 1 };
         var params3 = [];
         var id4 = scope.resolve(['mobile']);
         params3.push(id4);
         option2.params = params3;
         option2.fn = function (scope, buffer) {
-            buffer.write('\r\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\r\n');
+            buffer.append('\r\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\r\n');
             return buffer;
         };
-        buffer = ifCommand.call(tpl, scope, option2, buffer, 12);
-        buffer.write('\r\n>\r\n\r\n<textarea class="');
+        pos.line = 12;
+        pos.col = 6;
+        buffer = ifCommand.call(tpl, scope, option2, buffer);
+        buffer.append('\r\n>\r\n\r\n<textarea class="');
         var id5 = scope.resolve(['prefixCls']);
         buffer.writeEscaped(id5);
-        buffer.write('editor-textarea"\r\n\r\n');
+        buffer.append('editor-textarea"\r\n\r\n');
         var option6 = { escape: 1 };
         var params7 = [];
         var id8 = scope.resolve(['textareaAttrs']);
         params7.push(id8);
         option6.params = params7;
         option6.fn = function (scope, buffer) {
-            buffer.write('\r\n');
+            buffer.append('\r\n');
             var id9 = scope.resolve(['xindex']);
             buffer.writeEscaped(id9);
-            buffer.write('="');
+            buffer.append('="');
             var id10 = scope.resolve(['this']);
             buffer.writeEscaped(id10);
-            buffer.write('"\r\n');
+            buffer.append('"\r\n');
             return buffer;
         };
-        buffer = eachCommand.call(tpl, scope, option6, buffer, 19);
-        buffer.write('\r\n\r\n');
+        pos.line = 19;
+        pos.col = 8;
+        buffer = eachCommand.call(tpl, scope, option6, buffer);
+        buffer.append('\r\n\r\n');
         var option11 = { escape: 1 };
         var params12 = [];
         var id13 = scope.resolve(['mode']);
         params12.push(id13);
         option11.params = params12;
         option11.fn = function (scope, buffer) {
-            buffer.write('\r\nstyle="display:none"\r\n');
+            buffer.append('\r\nstyle="display:none"\r\n');
             return buffer;
         };
-        buffer = ifCommand.call(tpl, scope, option11, buffer, 23);
-        buffer.write('\r\n\r\n>');
+        pos.line = 23;
+        pos.col = 6;
+        buffer = ifCommand.call(tpl, scope, option11, buffer);
+        buffer.append('\r\n\r\n>');
         var id14 = scope.resolve(['data']);
         buffer.writeEscaped(id14);
-        buffer.write('</textarea>\r\n\r\n</div>\r\n\r\n<div class="');
+        buffer.append('</textarea>\r\n\r\n</div>\r\n\r\n<div class="');
         var id15 = scope.resolve(['prefixCls']);
         buffer.writeEscaped(id15);
-        buffer.write('editor-status">\r\n\r\n</div>\r\n');
+        buffer.append('editor-status">\r\n\r\n</div>\r\n');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

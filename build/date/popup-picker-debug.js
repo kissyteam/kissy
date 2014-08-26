@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:04
+build time: Aug 26 16:06
 */
 /*
 combined modules:
@@ -46,6 +46,10 @@ KISSY.add('date/popup-picker/render-xtpl', ['date/picker-xtpl'], function (S, re
     /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
     module.exports = function renderXtpl(scope, buffer, undefined) {
         var tpl = this;
+        var pos = tpl.pos = {
+                line: 1,
+                col: 1
+            };
         var nativeCommands = tpl.root.nativeCommands;
         var utils = tpl.root.utils;
         var callFnUtil = utils['callFn'];
@@ -61,32 +65,36 @@ KISSY.add('date/popup-picker/render-xtpl', ['date/picker-xtpl'], function (S, re
         var blockCommand = nativeCommands['block'];
         var macroCommand = nativeCommands['macro'];
         var debuggerCommand = nativeCommands['debugger'];
-        buffer.write('<div class="');
+        buffer.append('<div class="');
         var option0 = { escape: 1 };
         var params1 = [];
         params1.push('content');
         option0.params = params1;
         var callRet2;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses'], 1);
+        pos.line = 1;
+        pos.col = 33;
+        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
         if (callRet2 && callRet2.isBuffer) {
             buffer = callRet2;
             callRet2 = undefined;
         }
         buffer.writeEscaped(callRet2);
-        buffer.write('">\r\n    ');
+        buffer.append('">\r\n    ');
         var option3 = {};
         var params4 = [];
         params4.push('date/picker-xtpl');
         option3.params = params4;
         require('date/picker-xtpl');
         var callRet5;
-        callRet5 = includeCommand.call(tpl, scope, option3, buffer, 2);
+        pos.line = 2;
+        pos.col = 15;
+        callRet5 = includeCommand.call(tpl, scope, option3, buffer);
         if (callRet5 && callRet5.isBuffer) {
             buffer = callRet5;
             callRet5 = undefined;
         }
         buffer.write(callRet5);
-        buffer.write('\r\n</div>');
+        buffer.append('\r\n</div>');
         return buffer;
     };
     module.exports.TPL_NAME = module.name;
