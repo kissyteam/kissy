@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:05
+build time: Aug 26 12:07
 */
 /*
 combined modules:
@@ -21,6 +21,7 @@ KISSY.add('event/dom/base', [
     './base/object',
     './base/key-codes',
     './base/special-events',
+    './base/utils',
     './base/mouseenter',
     'util'
 ], function (S, require, exports, module) {
@@ -33,6 +34,7 @@ KISSY.add('event/dom/base', [
     var DomEventObject = require('./base/object');
     var KeyCode = require('./base/key-codes');
     var Special = require('./base/special-events');
+    var Utils = require('./base/utils');
     require('./base/mouseenter');
     var util = require('util');
     module.exports = util.merge({
@@ -40,7 +42,8 @@ KISSY.add('event/dom/base', [
         remove: DomEvent.detach,
         KeyCode: KeyCode,
         Special: Special,
-        Object: DomEventObject
+        Object: DomEventObject,
+        Utils: Utils
     }, DomEvent);
 });
 KISSY.add('event/dom/base/dom-event', [

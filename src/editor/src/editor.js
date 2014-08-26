@@ -63,6 +63,9 @@ function adjustHeight(self, height) {
     textareaEl.css(HEIGHT, height);
 }
 
+var EDITOR_CONSTRUCTOR = 'Editor' + (+new Date());
+window[EDITOR_CONSTRUCTOR] = Editor;
+
 Editor.addMembers({
     initializer: function () {
         var self = this;
@@ -1099,7 +1102,7 @@ function prepareIFrameHTML(id, customStyle, customLink, data) {
                 // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
                 // 否则下面的 parent.KISSY.Editor._initIframe 不能执行
                 ($(window).isCustomDomain() ? ('document.domain="' + document.domain + '";') : '') +
-                'parent.KISSY.require(\'editor\')._initIframe("' + id + '");' +
+                'parent.' + EDITOR_CONSTRUCTOR + '._initIframe("' + id + '");' +
                 '</script>') :
             ''
     });

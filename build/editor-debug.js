@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:05
+build time: Aug 26 12:07
 */
 /*
 combined modules:
@@ -83,6 +83,8 @@ KISSY.add('editor', [
         textareaEl.parent().css(HEIGHT, height);
         textareaEl.css(HEIGHT, height);
     }
+    var EDITOR_CONSTRUCTOR = 'Editor' + +new Date();
+    window[EDITOR_CONSTRUCTOR] = Editor;
     Editor.addMembers({
         initializer: function () {
             var self = this;
@@ -1021,7 +1023,7 @@ KISSY.add('editor', [
             // 确保iframe确实载入成功,过早的话 document.domain 会出现无法访问
             '<script id="ke_active_script">' + // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
             // 否则下面的 parent.KISSY.Editor._initIframe 不能执行
-            ($(window).isCustomDomain() ? 'document.domain="' + document.domain + '";' : '') + 'parent.KISSY.require(\'editor\')._initIframe("' + id + '");' + '</script>' : ''
+            ($(window).isCustomDomain() ? 'document.domain="' + document.domain + '";' : '') + 'parent.' + EDITOR_CONSTRUCTOR + '._initIframe("' + id + '");' + '</script>' : ''
         });
     }
     function setUpIFrame(self, data) {

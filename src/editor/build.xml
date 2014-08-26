@@ -1,4 +1,4 @@
-<project name="editor.build" default="build-all" basedir=".">
+<project name="editor.build" default="build" basedir=".">
     <property name="component.name" value="editor"/>
     <import file="../common.xml"/>
 </project>

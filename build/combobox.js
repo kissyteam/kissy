@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:02
+build time: Aug 26 12:06
 */
 KISSY.add("combobox",["combobox/control","combobox/local-data-source","combobox/remote-data-source"],function(j,g,o,m){j=g("combobox/control");o=g("combobox/local-data-source");g=g("combobox/remote-data-source");j.LocalDataSource=o;j.RemoteDataSource=g;m.exports=j});
 KISSY.add("combobox/control","util,logger-manager,node,component/control,./combobox-xtpl,menu".split(","),function(j,g,o,m){function f(d){for(var a=0;a<d.length;a++)if(!d[a].get("disabled"))return d[a];return null}function b(){t(this)}function u(){var d=this;setTimeout(function(){n(d)},0)}function k(){this.focus();n(this)}function i(){this.setCurrentValue(this.getCurrentValue(),{force:1})}function l(d){var q;q=this.get("menu");if(!d||q===d.target){var d=this.get("input"),h=q.get("el");q=q.get("contentEl");

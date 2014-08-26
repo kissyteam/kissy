@@ -2322,6 +2322,7 @@ modulex.add('i18n', {
 var KISSY = (function () {
     var S = {};
     var slice = [].slice;
+    S.require = modulex.require;
     S.Env = modulex.Env;
     S.Config = modulex.Config;
     S.config = modulex.config;

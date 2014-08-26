@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 22 16:02
+build time: Aug 26 12:06
 */
 KISSY.add("component/control","util,node,event/gesture/basic,event/gesture/tap,./control/manager,base,./control/render-xtpl,ua,feature,xtemplate/runtime".split(","),function(l,k,m,n){function i(a){a||(a=[""]);typeof a==="string"&&(a=a.split(/\s+/));return a}function f(a,b,j){for(var c="",d=0,h=j.length,b=a+b;d<h;d++){a=(a=j[d])?"-"+a:a;c=c+(" "+b+a)}return c}function g(a){typeof a==="number"&&(a=a+"px");return a}function e(a,b){return this.root.config.control.getBaseCssClasses(b&&b.params&&b.params[0])}
 function c(a,b){return this.root.config.control.getBaseCssClass(b.params[0])}var h=k("util"),r=k("node"),d=k("event/gesture/basic"),p=k("event/gesture/tap"),o=k("./control/manager"),s=k("base"),v=k("./control/render-xtpl"),w=k("ua"),m=k("feature"),l=s.prototype.__getHook,t=m.isTouchGestureSupported(),m=h.noop,x=k("xtemplate/runtime"),u=h.trim,y=document,q=n.exports=s.extend({isControl:true,bindInternal:m,syncInternal:m,initializer:function(){var a,b,j=this.getAttrs();this.renderData={};this.childrenElSelectors=

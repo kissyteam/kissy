@@ -7,6 +7,7 @@ var DomEvent = require('./base/dom-event');
 var DomEventObject = require('./base/object');
 var KeyCode = require('./base/key-codes');
 var Special = require('./base/special-events');
+var Utils = require('./base/utils');
 require('./base/mouseenter');
 var util = require('util');
 module.exports = util.merge({
@@ -14,5 +15,6 @@ module.exports = util.merge({
     remove: DomEvent.detach,
     KeyCode: KeyCode,
     Special: Special,
-    Object: DomEventObject
+    Object: DomEventObject,
+    Utils: Utils
 }, DomEvent);
