@@ -19,11 +19,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Wed, 27 Aug 2014 05:56:31 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Wed, 27 Aug 2014 06:33:37 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Wed, 27 Aug 2014 05:56:31 GMT',
+        __BUILD_TIME: 'Wed, 27 Aug 2014 06:33:37 GMT',
 
         /**
          * modulex Environment.
@@ -44,17 +44,17 @@ var modulex = (function (undefined) {
          * @member modulex
          */
         Config: {
-            debug: '',
+            debug: '@DEBUG@',
             packages: {},
             fns: {}
         },
 
         /**
          * The version of the library.
-         * NOTICE: '1.1.2' will replace with current version when compressing.
+         * NOTICE: '1.1.3' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.1.2',
+        version: '1.1.3',
 
         /**
          * set modulex configuration
@@ -86,7 +86,7 @@ var modulex = (function (undefined) {
          *     @example
          *     modulex.config({
          *      combine: true,
-         *      base: '',
+         *      base: '.',
          *      packages: {
          *          'gallery': {
          *              base: 'http://a.tbcdn.cn/s/modulex/gallery/'
@@ -176,7 +176,7 @@ var modulex = (function (undefined) {
     }
 
     var config = {};
-    if ('') {
+    if ('@DEBUG@') {
         config = {
             excludes: [
                 {
@@ -208,7 +208,7 @@ var modulex = (function (undefined) {
          * @param {String} [logger] the logger of the the message (opt)
          */
         log: function (msg, cat, logger) {
-            if ('') {
+            if ('@DEBUG@') {
                 var matched = 1;
                 if (logger) {
                     var list, i, l, level, minLevel, maxLevel, reg;
@@ -267,7 +267,7 @@ var modulex = (function (undefined) {
          * Throws error message.
          */
         error: function (msg) {
-            if ('') {
+            if ('@DEBUG@') {
                 // with stack info!
                 throw msg instanceof  Error ? msg : new Error(msg);
             }
@@ -1556,7 +1556,7 @@ var modulex = (function (undefined) {
                     mod = undefined;
                 } else if (oldIE) {
                     startLoadModName = mod.name;
-                    if ('') {
+                    if ('@DEBUG@') {
                         startLoadModTime = +new Date();
                     }
                     config.attrs = {
@@ -1675,7 +1675,7 @@ var modulex = (function (undefined) {
 
     var debugRemoteModules;
 
-    if ('') {
+    if ('@DEBUG@') {
         debugRemoteModules = function (rss) {
             each(rss, function (rs) {
                 var ms = [];
@@ -1740,7 +1740,7 @@ var modulex = (function (undefined) {
             // load css first to avoid page blink
             if (comboUrls.css) {
                 loadScripts(comboUrls.css, function (success, error) {
-                    if ('') {
+                    if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
 
@@ -1767,7 +1767,7 @@ var modulex = (function (undefined) {
             // jss css download in parallel
             if (comboUrls.js) {
                 loadScripts(comboUrls.js, function (success) {
-                    if ('') {
+                    if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
 
@@ -1798,7 +1798,7 @@ var modulex = (function (undefined) {
                 modStatus, stackDepth;
             var self = this;
 
-            if ('') {
+            if ('@DEBUG@') {
                 stack = stack || [];
             }
             ret = ret || [];
@@ -1814,7 +1814,7 @@ var modulex = (function (undefined) {
                     continue;
                 }
 
-                if ('') {
+                if ('@DEBUG@') {
                     stackDepth = stack.length;
                 }
 
@@ -1836,7 +1836,7 @@ var modulex = (function (undefined) {
                     self.wait(mod);
                 }
 
-                if ('') {
+                if ('@DEBUG@') {
                     // do not use indexOf, poor performance in ie8
                     if (stack[m]) {
                         mx.log('find cyclic dependency between mods: ' + stack, 'warn');
@@ -1850,7 +1850,7 @@ var modulex = (function (undefined) {
 
                 self.calculate(mod.getNormalizedRequiredModules(), errorList, stack, cache, ret);
                 cache[m] = 1;
-                if ('') {
+                if ('@DEBUG@') {
                     for (var si = stackDepth; si < stack.length; si++) {
                         stack[stack[si]] = 0;
                     }
@@ -2204,7 +2204,7 @@ var modulex = (function (undefined) {
                 ++tryCount;
                 var errorList = [];
                 var start;
-                if ('') {
+                if ('@DEBUG@') {
                     start = +new Date();
                 }
                 unloadedMods = loader.calculate(unloadedMods, errorList);
@@ -2216,7 +2216,7 @@ var modulex = (function (undefined) {
                         return e.name;
                     }), 'error');
                     if (error) {
-                        if ('') {
+                        if ('@DEBUG@') {
                             error.apply(mx, errorList);
                         } else {
                             try {
@@ -2232,7 +2232,7 @@ var modulex = (function (undefined) {
                 } else if (loader.isCompleteLoading()) {
                     Utils.attachModules(normalizedMods);
                     if (success) {
-                        if ('') {
+                        if ('@DEBUG@') {
                             success.apply(mx, Utils.getModulesExports(mods));
                         } else {
                             try {
@@ -2297,7 +2297,8 @@ var modulex = (function (undefined) {
     });
     mx.config('packages', {
         core: {
-            filter: mx.Config.debug ? 'debug' : ''
+            filter: mx.Config.debug ? 'debug' : '',
+            base: '.'
         }
     });
     // ejecta
