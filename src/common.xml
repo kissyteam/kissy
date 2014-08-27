@@ -386,8 +386,7 @@
     copyright,
     fill-var,
     fix-cr-lf,
-    clear,
-    build-node">
+    clear">
     </target>
 
     <target name="build-all" depends="check-src">

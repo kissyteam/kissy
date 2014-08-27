@@ -46,6 +46,13 @@
             <path location="${bower.dir}/modulex/build/modulex-nodejs.js"/>
             <path location="${kissy.src.dir}/loader/src/loader.js"/>
         </concat>
+        <replaceregexp match="@VERSION@"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${kissy.build.dir}" includes="seed.js,seed-debug.js,seed-nodejs.js"/>
+        </replaceregexp>
     </target>
 
     <!--jshint all js-->

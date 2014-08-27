@@ -1,7 +1,10 @@
 /* exported KISSY */
 /*jshint -W079 */
 var KISSY = (function () {
-    var S = {};
+    var S = {
+        version: '@VERSION@'
+    };
+
     var slice = [].slice;
     S.require = modulex.require;
     S.Env = modulex.Env;
