@@ -920,7 +920,7 @@ KISSY.add(function(S, require) {
     getElementsByClassName = function(el, match) {
   _$jscoverage['/base/selector.js'].functionData[2]++;
   _$jscoverage['/base/selector.js'].lineData[45]++;
-  el.getElementsByClassName(match);
+  return el.getElementsByClassName(match);
 };
   }
   _$jscoverage['/base/selector.js'].lineData[49]++;

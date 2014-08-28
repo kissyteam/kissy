@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: Aug 28 13:29
+build time: Aug 28 13:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1650,7 +1650,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     }
   }else {
     getElementsByClassName = function(el, match) {
-      el.getElementsByClassName(match)
+      return el.getElementsByClassName(match)
     }
   }
   function queryEach(f) {

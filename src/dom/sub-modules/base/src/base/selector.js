@@ -42,7 +42,7 @@ KISSY.add(function (S, require) {
         };
     } else {
         getElementsByClassName = function (el, match) {
-            el.getElementsByClassName(match);
+            return el.getElementsByClassName(match);
         };
     }
 
