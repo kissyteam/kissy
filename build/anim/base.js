@@ -1,5 +1,5 @@
 /*
-Copyright 2014, KISSY v1.47
+Copyright 2014, KISSY v1.48
 MIT Licensed
 build time: May 22 12:15
 */
