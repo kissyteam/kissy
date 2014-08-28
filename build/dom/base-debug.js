@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:06
+build time: Aug 28 13:39
 */
 /*
 combined modules:
@@ -2907,7 +2907,24 @@ KISSY.add('dom/base/selector', [
  */
     var Dom = require('./api');
     var util = require('util');
-    var doc = document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = 'getElementsByClassName' in doc, isArray = util.isArray, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = ' ', push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = util.trim;
+    var doc = document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = 'getElementsByClassName' in doc, isArray = util.isArray, getElementsByClassName, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = ' ', push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = util.trim;
+    if (!supportGetElementsByClassName) {
+        getElementsByClassName = function (el, match) {
+            var result = [], elements = el.getElementsByTagName('*'), i, elem;
+            match = ' ' + match + ' ';
+            for (i = 0; i < elements.length; i++) {
+                elem = elements[i];
+                if ((' ' + (elem.className || elem.getAttribute('class')) + ' ').indexOf(match) > -1) {
+                    result.push(elem);
+                }
+            }
+            return result;
+        };
+    } else {
+        getElementsByClassName = function (el, match) {
+            return el.getElementsByClassName(match);
+        };
+    }
     function queryEach(f) {
         var self = this, l = self.length, i;
         for (i = 0; i < l; i++) {
@@ -2941,7 +2958,7 @@ KISSY.add('dom/base/selector', [
     }
     function makeClassMatch(className) {
         return function (elem) {
-            return elem.getElementsByClassName(className);
+            return getElementsByClassName(elem, className);
         };
     }
     function makeTagMatch(tagName) {
@@ -2965,9 +2982,9 @@ KISSY.add('dom/base/selector', [
                 // shortcut
                 if (selector === 'body') {
                     ret = [doc.body];
-                } else if (rClassSelector.test(selector) && supportGetElementsByClassName) {
+                } else if (rClassSelector.test(selector)) {
                     // .cls
-                    ret = makeArray(doc.getElementsByClassName(RegExp.$1));
+                    ret = makeArray(getElementsByClassName(doc, RegExp.$1));
                 } else if (rTagIdSelector.test(selector)) {
                     // tag#id
                     el = Dom._getElementById(RegExp.$2, doc);
@@ -2979,7 +2996,7 @@ KISSY.add('dom/base/selector', [
                 } else if (rTagSelector.test(selector)) {
                     // tag
                     ret = makeArray(doc.getElementsByTagName(selector));
-                } else if (isSimpleSelector(selector) && supportGetElementsByClassName) {
+                } else if (isSimpleSelector(selector)) {
                     // #id tag, #id .cls...
                     var parts = selector.split(/\s+/), partsLen, parents = contexts, parentIndex, parentsLen;
                     for (i = 0, partsLen = parts.length; i < partsLen; i++) {

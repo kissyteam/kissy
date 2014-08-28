@@ -15,6 +15,7 @@ var doc = document,
         docElem.msMatchesSelector,
     supportGetElementsByClassName = 'getElementsByClassName' in doc,
     isArray = util.isArray,
+    getElementsByClassName,
     makeArray = util.makeArray,
     isDomNodeList = Dom.isDomNodeList,
     SPACE = ' ',
@@ -25,6 +26,26 @@ var doc = document,
     rTagIdSelector = /^([\w-]+)#([\w-]+)$/,
     rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
     trim = util.trim;
+
+if (!supportGetElementsByClassName) {
+    getElementsByClassName = function (el, match) {
+        var result = [],
+            elements = el.getElementsByTagName('*'),
+            i, elem;
+        match = ' ' + match + ' ';
+        for (i = 0; i < elements.length; i++) {
+            elem = elements[i];
+            if ((' ' + (elem.className || elem.getAttribute('class')) + ' ').indexOf(match) > -1) {
+                result.push(elem);
+            }
+        }
+        return result;
+    };
+} else {
+    getElementsByClassName = function (el, match) {
+        return el.getElementsByClassName(match);
+    };
+}
 
 function queryEach(f) {
     var self = this,
@@ -65,7 +86,7 @@ function makeIdMatch(id) {
 
 function makeClassMatch(className) {
     return function (elem) {
-        return elem.getElementsByClassName(className);
+        return getElementsByClassName(elem, className);
     };
 }
 
@@ -100,9 +121,9 @@ function query(selector, context) {
             // shortcut
             if (selector === 'body') {
                 ret = [doc.body];
-            } else if (rClassSelector.test(selector) && supportGetElementsByClassName) {
+            } else if (rClassSelector.test(selector)) {
                 // .cls
-                ret = makeArray(doc.getElementsByClassName(RegExp.$1));
+                ret = makeArray(getElementsByClassName(doc, RegExp.$1));
             } else if (rTagIdSelector.test(selector)) {
                 // tag#id
                 el = Dom._getElementById(RegExp.$2, doc);
@@ -114,7 +135,7 @@ function query(selector, context) {
             } else if (rTagSelector.test(selector)) {
                 // tag
                 ret = makeArray(doc.getElementsByTagName(selector));
-            } else if (isSimpleSelector(selector) && supportGetElementsByClassName) {
+            } else if (isSimpleSelector(selector)) {
                 // #id tag, #id .cls...
                 var parts = selector.split(/\s+/),
                     partsLen,
