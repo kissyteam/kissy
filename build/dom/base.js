@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: Aug 28 13:26
+build time: Aug 28 13:29
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1634,8 +1634,8 @@ KISSY.add("dom/base/style", ["./api", "ua"], function(S, require) {
 });
 KISSY.add("dom/base/selector", ["./api"], function(S, require) {
   var Dom = require("./api");
-  var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = "getElementsByClassName" in doc, getElementsByClassName = doc.getElementsByClassName, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, 
-  rTagSelector = /^([\w-])+$/, rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
+  var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = "getElementsByClassName" in doc, getElementsByClassName, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, 
+  rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
   if(!supportGetElementsByClassName) {
     getElementsByClassName = function(el, match) {
       var result = [], elements = el.getElementsByTagName("*"), i, elem;
@@ -1647,6 +1647,10 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
         }
       }
       return result
+    }
+  }else {
+    getElementsByClassName = function(el, match) {
+      el.getElementsByClassName(match)
     }
   }
   function queryEach(f) {

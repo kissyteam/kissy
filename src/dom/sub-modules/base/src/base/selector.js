@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
             docElem.oMatchesSelector ||
             docElem.msMatchesSelector,
         supportGetElementsByClassName = 'getElementsByClassName' in doc,
-        getElementsByClassName = doc.getElementsByClassName,
+        getElementsByClassName,
         isArray = S.isArray,
         makeArray = S.makeArray,
         isDomNodeList = Dom.isDomNodeList,
@@ -39,6 +39,10 @@ KISSY.add(function (S, require) {
                 }
             }
             return result;
+        };
+    } else {
+        getElementsByClassName = function (el, match) {
+            el.getElementsByClassName(match);
         };
     }
 
