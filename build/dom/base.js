@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: Jul 23 14:31
+build time: Aug 28 13:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1634,8 +1634,21 @@ KISSY.add("dom/base/style", ["./api", "ua"], function(S, require) {
 });
 KISSY.add("dom/base/selector", ["./api"], function(S, require) {
   var Dom = require("./api");
-  var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = "getElementsByClassName" in doc, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = 
-  /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
+  var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = "getElementsByClassName" in doc, getElementsByClassName = doc.getElementsByClassName, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, 
+  rTagSelector = /^([\w-])+$/, rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
+  if(!supportGetElementsByClassName) {
+    getElementsByClassName = function(el, match) {
+      var result = [], elements = el.getElementsByTagName("*"), i, elem;
+      match = " " + match + " ";
+      for(i = 0;i < elements.length;i++) {
+        elem = elements[i];
+        if((" " + (elem.className || elem.getAttribute("class")) + " ").indexOf(match) > -1) {
+          result.push(elem)
+        }
+      }
+      return result
+    }
+  }
   function queryEach(f) {
     var self = this, l = self.length, i;
     for(i = 0;i < l;i++) {
@@ -1671,7 +1684,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
   }
   function makeClassMatch(className) {
     return function(elem) {
-      return elem.getElementsByClassName(className)
+      return getElementsByClassName(elem, className)
     }
   }
   function makeTagMatch(tagName) {
@@ -1694,8 +1707,8 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
           if(selector === "body") {
             ret = [doc.body]
           }else {
-            if(rClassSelector.test(selector) && supportGetElementsByClassName) {
-              ret = makeArray(doc.getElementsByClassName(RegExp.$1))
+            if(rClassSelector.test(selector)) {
+              ret = makeArray(getElementsByClassName(doc, RegExp.$1))
             }else {
               if(rTagIdSelector.test(selector)) {
                 el = Dom._getElementById(RegExp.$2, doc);
@@ -1708,7 +1721,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
                   if(rTagSelector.test(selector)) {
                     ret = makeArray(doc.getElementsByTagName(selector))
                   }else {
-                    if(isSimpleSelector(selector) && supportGetElementsByClassName) {
+                    if(isSimpleSelector(selector)) {
                       var parts = selector.split(/\s+/), partsLen, parents = contexts, parentIndex, parentsLen;
                       for(i = 0, partsLen = parts.length;i < partsLen;i++) {
                         parts[i] = makeMatch(parts[i])
