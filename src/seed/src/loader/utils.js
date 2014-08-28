@@ -290,7 +290,7 @@
                 // compatible and efficiency
                 // KISSY.add(function(S,undefined){})
                 var require;
-                if (module.requires && module.requires.length) {
+                if (module.cjs) {
                     require = S.bind(module.require, module);
                 }
                 // 需要解开 index，相对路径

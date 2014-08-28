@@ -60,9 +60,9 @@
             var self = this,
                 packageName = self.name;
             return self.getBase() + (
-                packageName && !self.isIgnorePackageNameInUri() ?
-                    (packageName + '/') :
-                    ''
+                    packageName && !self.isIgnorePackageNameInUri() ?
+                (packageName + '/') :
+                ''
                 );
         },
 
@@ -159,6 +159,30 @@
         module.waitedCallbacks = [];
     }
 
+    function makeArray(arr) {
+        var ret = [];
+        for (var i = 0; i < arr.length; i++) {
+            ret[i] = arr[i];
+        }
+        return ret;
+    }
+
+    function wrapUse(fn) {
+        if (typeof fn === 'function') {
+            fn = {
+                success: fn
+            };
+        }
+        if (fn && fn.success) {
+            var original = fn.success;
+            fn.success = function () {
+                original.apply(this, makeArray(arguments).slice(1));
+            };
+            fn.sync = 1;
+            return fn;
+        }
+    }
+
     Module.prototype = {
         kissy: 1,
 
@@ -195,7 +219,20 @@
          * @returns {*} required module exports
          */
         require: function (moduleName) {
-            return S.require(moduleName, this.name);
+            var self = this;
+            if (typeof moduleName === 'string') {
+                return S.require(moduleName, this.name);
+            } else {
+                var mods = moduleName;
+                for (var i = 0; i < mods.length; i++) {
+                    mods[i] = self.resolveByName(mods[i]);
+                }
+                var args = makeArray(arguments);
+                args[0] = mods;
+                args[1] = wrapUse(args[1]);
+                S.use.apply(S, args);
+            }
+
         },
 
         wait: function (callback) {

@@ -327,7 +327,7 @@ _$jscoverage['/meta/modules.js'].lineData[3]++;
   _$jscoverage['/meta/modules.js'].lineData[21]++;
   config({
   'anim/transition': {
-  requires: ['dom', 'event/dom', 'anim/base']}});
+  requires: ['dom', 'anim/base']}});
   _$jscoverage['/meta/modules.js'].lineData[25]++;
   config({
   'attribute': {

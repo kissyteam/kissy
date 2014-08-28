@@ -272,7 +272,7 @@ function visit1_102_1(result) {
   _$jscoverage['/base/object.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/object.js'].lineData[6]++;
-KISSY.add(function(S, undefined) {
+KISSY.add(function(S) {
   _$jscoverage['/base/object.js'].functionData[0]++;
   _$jscoverage['/base/object.js'].lineData[7]++;
   var returnFalse = function() {

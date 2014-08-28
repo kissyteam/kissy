@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: May 22 12:27
+build time: Aug 28 12:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -80,7 +80,7 @@ KISSY.add("event/base/utils", [], function(S) {
     return new RegExp(groups.split(".").join(".*\\.") + "(?:\\.|$)")
   }}
 });
-KISSY.add("event/base/object", [], function(S, undefined) {
+KISSY.add("event/base/object", [], function(S) {
   var returnFalse = function() {
     return false
   }, returnTrue = function() {
@@ -111,7 +111,7 @@ KISSY.add("event/base/object", [], function(S, undefined) {
   }};
   return EventObject
 });
-KISSY.add("event/base/observer", [], function(S, undefined) {
+KISSY.add("event/base/observer", [], function(S) {
   function Observer(cfg) {
     S.mix(this, cfg)
   }

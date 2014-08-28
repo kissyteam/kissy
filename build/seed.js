@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: Aug 18 16:36
+build time: Aug 28 13:00
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140818163546' will replace with current timestamp when compressing.
+         * NOTICE: '20140828130018' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140818163546',
+        __BUILD_TIME: '20140828130018',
 
         /**
          * KISSY Environment.
@@ -118,10 +118,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.46' will replace with current version when compressing.
+         * NOTICE: '1.47' will replace with current version when compressing.
          * @type {String}
          */
-        version:'1.47',
+        version: '1.47',
 
         /**
          * set KISSY configuration
@@ -3919,7 +3919,7 @@ var KISSY = (function (undefined) {
                 // compatible and efficiency
                 // KISSY.add(function(S,undefined){})
                 var require;
-                if (module.requires && module.requires.length) {
+                if (module.cjs) {
                     require = S.bind(module.require, module);
                 }
                 // 需要解开 index，相对路径
@@ -4165,9 +4165,9 @@ var KISSY = (function (undefined) {
             var self = this,
                 packageName = self.name;
             return self.getBase() + (
-                packageName && !self.isIgnorePackageNameInUri() ?
-                    (packageName + '/') :
-                    ''
+                    packageName && !self.isIgnorePackageNameInUri() ?
+                (packageName + '/') :
+                ''
                 );
         },
 
@@ -4264,6 +4264,30 @@ var KISSY = (function (undefined) {
         module.waitedCallbacks = [];
     }
 
+    function makeArray(arr) {
+        var ret = [];
+        for (var i = 0; i < arr.length; i++) {
+            ret[i] = arr[i];
+        }
+        return ret;
+    }
+
+    function wrapUse(fn) {
+        if (typeof fn === 'function') {
+            fn = {
+                success: fn
+            };
+        }
+        if (fn && fn.success) {
+            var original = fn.success;
+            fn.success = function () {
+                original.apply(this, makeArray(arguments).slice(1));
+            };
+            fn.sync = 1;
+            return fn;
+        }
+    }
+
     Module.prototype = {
         kissy: 1,
 
@@ -4300,7 +4324,20 @@ var KISSY = (function (undefined) {
          * @returns {*} required module exports
          */
         require: function (moduleName) {
-            return S.require(moduleName, this.name);
+            var self = this;
+            if (typeof moduleName === 'string') {
+                return S.require(moduleName, this.name);
+            } else {
+                var mods = moduleName;
+                for (var i = 0; i < mods.length; i++) {
+                    mods[i] = self.resolveByName(mods[i]);
+                }
+                var args = makeArray(arguments);
+                args[0] = mods;
+                args[1] = wrapUse(args[1]);
+                S.use.apply(S, args);
+            }
+
         },
 
         wait: function (callback) {
@@ -5594,7 +5631,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140818163546';
+    var TIMESTAMP = '20140828130018';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
