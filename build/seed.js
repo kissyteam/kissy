@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: Aug 28 13:00
+build time: Aug 28 13:17
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140828130018' will replace with current timestamp when compressing.
+         * NOTICE: '20140828131714' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140828130018',
+        __BUILD_TIME: '20140828131714',
 
         /**
          * KISSY Environment.
@@ -3919,7 +3919,7 @@ var KISSY = (function (undefined) {
                 // compatible and efficiency
                 // KISSY.add(function(S,undefined){})
                 var require;
-                if (module.cjs) {
+                if (module.cjs && factory.length > 1) {
                     require = S.bind(module.require, module);
                 }
                 // 需要解开 index，相对路径
@@ -5631,7 +5631,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140828130018';
+    var TIMESTAMP = '20140828131714';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

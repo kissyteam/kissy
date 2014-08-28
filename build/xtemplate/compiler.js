@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.47
 MIT Licensed
-build time: May 22 12:31
+build time: Aug 28 13:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: May 22 12:31
  xtemplate/compiler
 */
 
-KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
+KISSY.add("xtemplate/compiler/parser", [], function() {
   var parser = {}, S = KISSY, GrammarConst = {SHIFT_TYPE:1, REDUCE_TYPE:2, ACCEPT_TYPE:0, TYPE_INDEX:0, PRODUCTION_INDEX:1, TO_INDEX:2};
   var Lexer = function(cfg) {
     var self = this;
