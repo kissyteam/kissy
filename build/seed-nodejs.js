@@ -2425,7 +2425,7 @@ var KISSY = (function () {
         function wrapped() {
             var args = slice.call(arguments, 0);
             args.unshift(S);
-            fn.apply(this, args);
+            return fn.apply(this, args);
         }
 
         wrapped.toString = function () {
