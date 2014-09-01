@@ -14,7 +14,19 @@ function build(component, components) {
     });
 }
 
+function builds(cs) {
+    cs.forEach(function (c) {
+        build(c);
+    });
+}
+
+//function builds2(cs) {
+//    cs.forEach(function (c) {
+//        build(c[0], c[1]);
+//    });
+//}
+
 build('xtemplate', ['xtemplate', 'xtemplate/runtime']);
-build('util');
+builds(['util', 'querystring']);
 
 console.log('done');

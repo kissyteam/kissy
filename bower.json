@@ -15,7 +15,8 @@
     "devDependencies": {
         "modulex": "modulex#master",
         "xtemplate": "xtemplate#master",
-        "util": "modulex-util#master"
+        "util": "modulex-util#master",
+        "querystring":"modulex-querystring#master"
     },
     "ignore": [
         "**/*",
