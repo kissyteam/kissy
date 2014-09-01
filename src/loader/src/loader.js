@@ -10,13 +10,13 @@ var KISSY = (function () {
     S.Env = modulex.Env;
     S.Config = modulex.Config;
     S.config = modulex.config;
-    S.log = modulex.log;
-    S.error = modulex.error;
-    S.getLogger = modulex.getLogger;
+    S.log = console.log;
+    S.error = function (str) {
+        if (modulex.Config.debug) {
+            throw new Error(str);
+        }
+    };
     S.nodeRequire = modulex.nodeRequire;
-    S.getModule = modulex.getModule;
-    S.getPackage = modulex.getPackage;
-    S.Loader = modulex.Loader;
 
     function wrap(fn) {
         function wrapped() {
@@ -184,7 +184,3 @@ var KISSY = (function () {
 
     return S;
 })();
-
-
-
-
