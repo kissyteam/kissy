@@ -27,6 +27,6 @@ function builds(cs) {
 //}
 
 build('xtemplate', ['xtemplate', 'xtemplate/runtime']);
-builds(['util', 'querystring']);
+builds(['util', 'querystring', 'path']);
 
 console.log('done');

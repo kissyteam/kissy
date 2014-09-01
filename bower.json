@@ -16,7 +16,8 @@
         "modulex": "modulex#master",
         "xtemplate": "xtemplate#master",
         "util": "modulex-util#master",
-        "querystring":"modulex-querystring#master"
+        "querystring":"modulex-querystring#master",
+        "path":"modulex-path#master"
     },
     "ignore": [
         "**/*",
