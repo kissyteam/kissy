@@ -14,7 +14,8 @@
     "license": "MIT",
     "devDependencies": {
         "modulex": "modulex#master",
-        "xtemplate": "xtemplate#master"
+        "xtemplate": "xtemplate#master",
+        "util": "modulex-util#master"
     },
     "ignore": [
         "**/*",
