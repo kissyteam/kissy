@@ -22,7 +22,8 @@
         "json":"modulex-json#master",
         "url":"modulex-url#master",
         "html-parser":"modulex-html-parser#master",
-        "ua":"modulex-ua#master"
+        "ua":"modulex-ua#master",
+        "logger-manager":"logger-manager#master"
     },
     "ignore": [
         "**/*",
