@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.48
 MIT Licensed
-build time: Aug 28 13:17
+build time: Sep 4 10:31
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140828131714' will replace with current timestamp when compressing.
+         * NOTICE: '20140904103117' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140828131714',
+        __BUILD_TIME: '20140904103117',
 
         /**
          * KISSY Environment.
@@ -118,10 +118,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.47' will replace with current version when compressing.
+         * NOTICE: '1.48' will replace with current version when compressing.
          * @type {String}
          */
-        version:'1.48',
+        version: '1.48',
 
         /**
          * set KISSY configuration
@@ -1956,14 +1956,18 @@ var KISSY = (function (undefined) {
     function flush() {
         var i = 0, item;
         while ((item = queue[i++])) {
-            try {
+            if ('@DEBUG@') {
                 item();
-            } catch (e) {
-                S.log(e.stack || e, 'error');
-                /*jshint loopfunc:true*/
-                setTimeout(function () {
-                    throw e;
-                }, 0);
+            } else {
+                try {
+                    item();
+                } catch (e) {
+                    S.log(e.stack || e, 'error');
+                    /*jshint loopfunc:true*/
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
             }
         }
         if (i > 1) {
@@ -5499,7 +5503,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140828131714';
+    var TIMESTAMP = '20140904103117';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

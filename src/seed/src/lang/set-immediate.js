@@ -14,14 +14,18 @@
     function flush() {
         var i = 0, item;
         while ((item = queue[i++])) {
-            try {
+            if ('@DEBUG@') {
                 item();
-            } catch (e) {
-                S.log(e.stack || e, 'error');
-                /*jshint loopfunc:true*/
-                setTimeout(function () {
-                    throw e;
-                }, 0);
+            } else {
+                try {
+                    item();
+                } catch (e) {
+                    S.log(e.stack || e, 'error');
+                    /*jshint loopfunc:true*/
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
             }
         }
         if (i > 1) {
@@ -46,7 +50,6 @@
     var requestFlush;
     if (typeof setImmediate === 'function') {
         requestFlush = function () {
-
             setImmediate(flush);
         };
     } else if (typeof process !== 'undefined' && typeof  process.nextTick === 'function') {
