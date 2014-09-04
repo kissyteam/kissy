@@ -257,7 +257,7 @@ describe("anim-simple", function () {
     });
 
     it('support different easing for different property', function () {
-        if (KISSY.getModule('anim').getAlias()[0] === 'anim/transition') {
+        if (modulex.getModule('anim').getAlias()[0] === 'anim/transition') {
             // native does not support easing as function
             return;
         }
