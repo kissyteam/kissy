@@ -26,11 +26,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Thu, 04 Sep 2014 10:17:32 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Thu, 04 Sep 2014 12:00:18 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Thu, 04 Sep 2014 10:17:32 GMT',
+        __BUILD_TIME: 'Thu, 04 Sep 2014 12:00:18 GMT',
 
         /**
          * modulex Environment.
@@ -929,7 +929,9 @@ var modulex = (function (undefined) {
         if (index !== -1) {
             var pluginId = id.substring(0, index);
             id = id.substring(index + 1);
-            var Plugin = createModule(pluginId).initRecursive().getExports() || {};
+            var pluginMod = createModule(pluginId);
+            pluginMod.initRecursive();
+            var Plugin = pluginMod.getExports() || {};
             if (Plugin.alias) {
                 id = Plugin.alias(mx, id, pluginId);
             }
