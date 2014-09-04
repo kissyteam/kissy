@@ -203,7 +203,7 @@ module.exports = Button.extend([ContentBox], {
     // 禁用时关闭已显示菜单
     _onSetDisabled: function (v) {
         this.callSuper(v);
-        if (!v) {
+        if (v) {
             this.set('collapsed', true);
         }
     },
