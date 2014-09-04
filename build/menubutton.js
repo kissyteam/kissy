@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.49
 MIT Licensed
-build time: May 27 14:15
+build time: Sep 4 19:28
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -149,7 +149,7 @@ KISSY.add("menubutton/control", ["node", "button", "./render"], function(S, requ
     var menu = this.get("menu");
     return menu.get("rendered") && menu.getChildAt(index)
   }, _onSetDisabled:function(v) {
-    if(!v) {
+    if(v) {
       this.set("collapsed", true)
     }
   }, destructor:function() {

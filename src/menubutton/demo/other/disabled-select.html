@@ -1,0 +1,40 @@
+<script src="/kissy/build/seed.js" ></script>
+<script src="/kissy/src/package.js"></script>
+<link rel="stylesheet" type="text/css" href="http://docs.kissyui.com/1.4/source/raw/demo/menu/assets/c2c-ui.css">
+<select name="decorateSelect" id="decorateSelect">
+    <option value="-1">请选择</option>
+    <option value="1">北京</option>
+    <option value="2">上海</option>
+    <option value="3">天津</option>
+    <option value="4">南京</option>
+    <option value="5">杭州</option>
+    <option value="6">其他</option>
+</select>
+<script>
+    KISSY.use("menubutton", function (S, MenuButton) {
+        (function () {
+            // 调用 Select.decorate 接口替换已有的 select 元素
+            var select = MenuButton.Select.decorate('#decorateSelect', {
+                width: 200,
+                prefixCls: "c2c-",
+                disabled: true,
+                // 设置对齐方式, 与普通的 Align 大体一致
+                // 该配置同菜单配置项
+                menu: {
+                    align: {
+                        offset: [0, -1]
+                    },
+                    height: 150,
+                    elStyle: {
+                        overflow: "auto",
+                        overflowX: "hidden"
+                    }
+                }
+            });
+
+            select.on("click", function (e) {
+                alert('当前值为: ' + select.get("value"));
+            });
+        })();
+    });
+</script>

@@ -180,7 +180,7 @@ KISSY.add(function (S, require) {
 
         // 禁用时关闭已显示菜单
         _onSetDisabled: function (v) {
-            if(!v){
+            if(v){
                 this.set('collapsed', true);
             }
         },

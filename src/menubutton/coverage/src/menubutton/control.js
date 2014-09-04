@@ -405,7 +405,7 @@ function visit22_237_1(result) {
 function visit21_236_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['236'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menubutton/control.js'].branchData['183'][1].init(16, 2, '!v');
+}_$jscoverage['/menubutton/control.js'].branchData['183'][1].init(16, 1, 'v');
 function visit20_183_1(result) {
   _$jscoverage['/menubutton/control.js'].branchData['183'][1].ranCondition(result);
   return result;
@@ -651,7 +651,7 @@ KISSY.add(function(S, require) {
   _onSetDisabled: function(v) {
   _$jscoverage['/menubutton/control.js'].functionData[10]++;
   _$jscoverage['/menubutton/control.js'].lineData[183]++;
-  if (visit20_183_1(!v)) {
+  if (visit20_183_1(v)) {
     _$jscoverage['/menubutton/control.js'].lineData[184]++;
     this.set('collapsed', true);
   }
