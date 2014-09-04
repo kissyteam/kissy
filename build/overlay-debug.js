@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:09
+build time: Sep 4 20:29
 */
 /*
 combined modules:
@@ -963,136 +963,137 @@ KISSY.add('overlay/dialog-xtpl', ['./overlay-xtpl'], function (S, require, expor
         var params1 = [];
         params1.push('./overlay-xtpl');
         option0.params = params1;
-        require('./overlay-xtpl');
-        var callRet2;
+        var module2 = require('./overlay-xtpl');
+        option0.params[0] = module2.TPL_NAME;
+        var callRet3;
         pos.line = 1;
         pos.col = 11;
-        callRet2 = extendCommand.call(tpl, scope, option0, buffer);
-        if (callRet2 && callRet2.isBuffer) {
-            buffer = callRet2;
-            callRet2 = undefined;
+        callRet3 = extendCommand.call(tpl, scope, option0, buffer);
+        if (callRet3 && callRet3.isBuffer) {
+            buffer = callRet3;
+            callRet3 = undefined;
         }
-        buffer.write(callRet2);
+        buffer.write(callRet3);
         buffer.append('\r\n');
-        var option3 = { escape: 1 };
-        var params4 = [];
-        params4.push('ks-overlay-content');
-        option3.params = params4;
-        option3.fn = function (scope, buffer) {
+        var option4 = { escape: 1 };
+        var params5 = [];
+        params5.push('ks-overlay-content');
+        option4.params = params5;
+        option4.fn = function (scope, buffer) {
             buffer.append('\r\n    <div class="');
-            var option5 = { escape: 1 };
-            var params6 = [];
-            params6.push('header');
-            option5.params = params6;
-            var callRet7;
+            var option6 = { escape: 1 };
+            var params7 = [];
+            params7.push('header');
+            option6.params = params7;
+            var callRet8;
             pos.line = 3;
             pos.col = 36;
-            callRet7 = callFnUtil(tpl, scope, option5, buffer, ['getBaseCssClasses']);
-            if (callRet7 && callRet7.isBuffer) {
-                buffer = callRet7;
-                callRet7 = undefined;
+            callRet8 = callFnUtil(tpl, scope, option6, buffer, ['getBaseCssClasses']);
+            if (callRet8 && callRet8.isBuffer) {
+                buffer = callRet8;
+                callRet8 = undefined;
             }
-            buffer.writeEscaped(callRet7);
+            buffer.writeEscaped(callRet8);
             buffer.append('"\r\n         style="\r\n');
-            var option8 = { escape: 1 };
-            var params9 = [];
-            var id10 = scope.resolve(['headerStyle']);
-            params9.push(id10);
-            option8.params = params9;
-            option8.fn = function (scope, buffer) {
+            var option9 = { escape: 1 };
+            var params10 = [];
+            var id11 = scope.resolve(['headerStyle']);
+            params10.push(id11);
+            option9.params = params10;
+            option9.fn = function (scope, buffer) {
                 buffer.append('\r\n ');
-                var id11 = scope.resolve(['xindex']);
-                buffer.writeEscaped(id11);
-                buffer.append(':');
-                var id12 = scope.resolve(['this']);
+                var id12 = scope.resolve(['xindex']);
                 buffer.writeEscaped(id12);
+                buffer.append(':');
+                var id13 = scope.resolve(['this']);
+                buffer.writeEscaped(id13);
                 buffer.append(';\r\n');
                 return buffer;
             };
             pos.line = 5;
             pos.col = 8;
-            buffer = eachCommand.call(tpl, scope, option8, buffer);
+            buffer = eachCommand.call(tpl, scope, option9, buffer);
             buffer.append('\r\n">');
-            var id13 = scope.resolve(['headerContent']);
-            buffer.write(id13);
+            var id14 = scope.resolve(['headerContent']);
+            buffer.write(id14);
             buffer.append('</div>\r\n\r\n    <div class="');
-            var option14 = { escape: 1 };
-            var params15 = [];
-            params15.push('body');
-            option14.params = params15;
-            var callRet16;
+            var option15 = { escape: 1 };
+            var params16 = [];
+            params16.push('body');
+            option15.params = params16;
+            var callRet17;
             pos.line = 10;
             pos.col = 36;
-            callRet16 = callFnUtil(tpl, scope, option14, buffer, ['getBaseCssClasses']);
-            if (callRet16 && callRet16.isBuffer) {
-                buffer = callRet16;
-                callRet16 = undefined;
+            callRet17 = callFnUtil(tpl, scope, option15, buffer, ['getBaseCssClasses']);
+            if (callRet17 && callRet17.isBuffer) {
+                buffer = callRet17;
+                callRet17 = undefined;
             }
-            buffer.writeEscaped(callRet16);
+            buffer.writeEscaped(callRet17);
             buffer.append('"\r\n         style="\r\n');
-            var option17 = { escape: 1 };
-            var params18 = [];
-            var id19 = scope.resolve(['bodyStyle']);
-            params18.push(id19);
-            option17.params = params18;
-            option17.fn = function (scope, buffer) {
+            var option18 = { escape: 1 };
+            var params19 = [];
+            var id20 = scope.resolve(['bodyStyle']);
+            params19.push(id20);
+            option18.params = params19;
+            option18.fn = function (scope, buffer) {
                 buffer.append('\r\n ');
-                var id20 = scope.resolve(['xindex']);
-                buffer.writeEscaped(id20);
-                buffer.append(':');
-                var id21 = scope.resolve(['this']);
+                var id21 = scope.resolve(['xindex']);
                 buffer.writeEscaped(id21);
+                buffer.append(':');
+                var id22 = scope.resolve(['this']);
+                buffer.writeEscaped(id22);
                 buffer.append(';\r\n');
                 return buffer;
             };
             pos.line = 12;
             pos.col = 8;
-            buffer = eachCommand.call(tpl, scope, option17, buffer);
+            buffer = eachCommand.call(tpl, scope, option18, buffer);
             buffer.append('\r\n">');
-            var id22 = scope.resolve(['bodyContent']);
-            buffer.write(id22);
+            var id23 = scope.resolve(['bodyContent']);
+            buffer.write(id23);
             buffer.append('</div>\r\n\r\n    <div class="');
-            var option23 = { escape: 1 };
-            var params24 = [];
-            params24.push('footer');
-            option23.params = params24;
-            var callRet25;
+            var option24 = { escape: 1 };
+            var params25 = [];
+            params25.push('footer');
+            option24.params = params25;
+            var callRet26;
             pos.line = 17;
             pos.col = 36;
-            callRet25 = callFnUtil(tpl, scope, option23, buffer, ['getBaseCssClasses']);
-            if (callRet25 && callRet25.isBuffer) {
-                buffer = callRet25;
-                callRet25 = undefined;
+            callRet26 = callFnUtil(tpl, scope, option24, buffer, ['getBaseCssClasses']);
+            if (callRet26 && callRet26.isBuffer) {
+                buffer = callRet26;
+                callRet26 = undefined;
             }
-            buffer.writeEscaped(callRet25);
+            buffer.writeEscaped(callRet26);
             buffer.append('"\r\n         style="\r\n');
-            var option26 = { escape: 1 };
-            var params27 = [];
-            var id28 = scope.resolve(['footerStyle']);
-            params27.push(id28);
-            option26.params = params27;
-            option26.fn = function (scope, buffer) {
+            var option27 = { escape: 1 };
+            var params28 = [];
+            var id29 = scope.resolve(['footerStyle']);
+            params28.push(id29);
+            option27.params = params28;
+            option27.fn = function (scope, buffer) {
                 buffer.append('\r\n ');
-                var id29 = scope.resolve(['xindex']);
-                buffer.writeEscaped(id29);
-                buffer.append(':');
-                var id30 = scope.resolve(['this']);
+                var id30 = scope.resolve(['xindex']);
                 buffer.writeEscaped(id30);
+                buffer.append(':');
+                var id31 = scope.resolve(['this']);
+                buffer.writeEscaped(id31);
                 buffer.append(';\r\n');
                 return buffer;
             };
             pos.line = 19;
             pos.col = 8;
-            buffer = eachCommand.call(tpl, scope, option26, buffer);
+            buffer = eachCommand.call(tpl, scope, option27, buffer);
             buffer.append('\r\n">');
-            var id31 = scope.resolve(['footerContent']);
-            buffer.write(id31);
+            var id32 = scope.resolve(['footerContent']);
+            buffer.write(id32);
             buffer.append('</div>\r\n    <div tabindex="0"></div>\r\n');
             return buffer;
         };
         pos.line = 2;
         pos.col = 9;
-        buffer = blockCommand.call(tpl, scope, option3, buffer);
+        buffer = blockCommand.call(tpl, scope, option4, buffer);
         return buffer;
     };
     module.exports.TPL_NAME = module.name;

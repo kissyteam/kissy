@@ -86,12 +86,12 @@ function compileModule(modName, codes, requires) {
         return;
     }
     codes[modName] = '';
-    var mod = S.getModule(modName);
+    var mod = S.modulex.getModule(modName);
     // xtemplate -> xtemplate/runtime
-    if (mod.getPackage().name === 'core' || !fs.existsSync(mod.getUrl())) {
+    if (mod.getPackage().name === 'core' || !fs.existsSync(mod.getUri())) {
         return;
     }
-    var code = fs.readFileSync(mod.getUrl());
+    var code = fs.readFileSync(mod.getUri());
 
     var ast = esprima.parse(code, {
         attachComment: true

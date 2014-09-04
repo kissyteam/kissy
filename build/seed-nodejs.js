@@ -2488,5 +2488,7 @@ var KISSY = (function () {
         global.KISSY = S;
     }
 
+    S.modulex = modulex;
+
     return S;
 })();
