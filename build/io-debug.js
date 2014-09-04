@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:09
+build time: Sep 4 18:16
 */
 /*
 combined modules:
@@ -1299,7 +1299,7 @@ KISSY.add('io/xdr-flash-transport', [
         send: function () {
             var self = this, io = self.io, c = io.config, xdr = c.xdr || {};
             if (!xdr.src) {
-                xdr.src = require.resolve('./assets/io.swf');
+                xdr.src = require.toUrl('./assets/io.swf');
             }    // 不提供则使用 cdn 默认的 flash
             // 不提供则使用 cdn 默认的 flash
             _swf(xdr.src, 1, 1);    // 简便起见，用轮训

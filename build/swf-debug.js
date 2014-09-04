@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:11
+build time: Sep 4 18:16
 */
 /*
 combined modules:
@@ -193,7 +193,7 @@ KISSY.add('swf', [
             /**
          * @ignore
          */
-            expressInstall: { value: require.resolve(swfUrl) },
+            expressInstall: { value: require.toUrl(swfUrl) },
             /**
          * new swf 's url
          * @cfg {String} src

@@ -1073,7 +1073,7 @@ function fixByBindIframeDoc(self) {
 function prepareIFrameHTML(id, customStyle, customLink, data) {
     var links = '';
     var i;
-    var innerCssFile = require.resolve('editor/assets/iframe.css');
+    var innerCssFile = require.toUrl('editor/assets/iframe.css');
     customLink = customLink.concat([]);
     customLink.unshift(innerCssFile);
     for (i = 0; i < customLink.length; i++) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:07
+build time: Sep 4 18:16
 */
 /*
 combined modules:
@@ -1001,7 +1001,7 @@ KISSY.add('editor', [
     function prepareIFrameHTML(id, customStyle, customLink, data) {
         var links = '';
         var i;
-        var innerCssFile = require.resolve('editor/assets/iframe.css');
+        var innerCssFile = require.toUrl('editor/assets/iframe.css');
         customLink = customLink.concat([]);
         customLink.unshift(innerCssFile);
         for (i = 0; i < customLink.length; i++) {

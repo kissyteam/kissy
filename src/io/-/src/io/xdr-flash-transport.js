@@ -53,7 +53,7 @@ util.augment(XdrFlashTransport, {
             c = io.config,
             xdr = c.xdr || {};
         if (!xdr.src) {
-            xdr.src = require.resolve('./assets/io.swf');
+            xdr.src = require.toUrl('./assets/io.swf');
         }
         // 不提供则使用 cdn 默认的 flash
         _swf(xdr.src, 1, 1);
