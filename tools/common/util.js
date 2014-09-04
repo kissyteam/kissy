@@ -1,1 +1,1 @@
-module.exports = require('../../src/util/src/util');
+module.exports = require('modulex-util');
