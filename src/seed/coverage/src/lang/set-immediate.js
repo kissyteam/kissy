@@ -253,23 +253,23 @@ if (! _$jscoverage['/lang/set-immediate.js']) {
   _$jscoverage['/lang/set-immediate.js'].lineData[50] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[51] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[52] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[54] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[53] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[55] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[56] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[57] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[58] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[60] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[63] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[59] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[62] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[65] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[66] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[67] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[68] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[69] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[71] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[74] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[70] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[73] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[75] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[76] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[77] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[78] = 0;
+  _$jscoverage['/lang/set-immediate.js'].lineData[82] = 0;
   _$jscoverage['/lang/set-immediate.js'].lineData[83] = 0;
-  _$jscoverage['/lang/set-immediate.js'].lineData[84] = 0;
 }
 if (! _$jscoverage['/lang/set-immediate.js'].functionData) {
   _$jscoverage['/lang/set-immediate.js'].functionData = [];
@@ -296,28 +296,28 @@ if (! _$jscoverage['/lang/set-immediate.js'].branchData) {
   _$jscoverage['/lang/set-immediate.js'].branchData['44'][1] = new BranchData();
   _$jscoverage['/lang/set-immediate.js'].branchData['51'] = [];
   _$jscoverage['/lang/set-immediate.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'] = [];
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'][2] = new BranchData();
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'][3] = new BranchData();
-  _$jscoverage['/lang/set-immediate.js'].branchData['60'] = [];
-  _$jscoverage['/lang/set-immediate.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'] = [];
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'][2] = new BranchData();
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'][3] = new BranchData();
+  _$jscoverage['/lang/set-immediate.js'].branchData['59'] = [];
+  _$jscoverage['/lang/set-immediate.js'].branchData['59'][1] = new BranchData();
 }
-_$jscoverage['/lang/set-immediate.js'].branchData['60'][1].init(1316, 37, 'typeof MessageChannel !== \'undefined\'');
-function visit286_60_1(result) {
-  _$jscoverage['/lang/set-immediate.js'].branchData['60'][1].ranCondition(result);
+_$jscoverage['/lang/set-immediate.js'].branchData['59'][1].init(1315, 37, 'typeof MessageChannel !== \'undefined\'');
+function visit286_59_1(result) {
+  _$jscoverage['/lang/set-immediate.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/set-immediate.js'].branchData['56'][3].init(1172, 39, 'typeof process.nextTick === \'function\'');
-function visit285_56_3(result) {
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'][3].ranCondition(result);
+}_$jscoverage['/lang/set-immediate.js'].branchData['55'][3].init(1171, 39, 'typeof process.nextTick === \'function\'');
+function visit285_55_3(result) {
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'][3].ranCondition(result);
   return result;
-}_$jscoverage['/lang/set-immediate.js'].branchData['56'][2].init(1138, 30, 'typeof process !== \'undefined\'');
-function visit284_56_2(result) {
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'][2].ranCondition(result);
+}_$jscoverage['/lang/set-immediate.js'].branchData['55'][2].init(1137, 30, 'typeof process !== \'undefined\'');
+function visit284_55_2(result) {
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'][2].ranCondition(result);
   return result;
-}_$jscoverage['/lang/set-immediate.js'].branchData['56'][1].init(1138, 73, 'typeof process !== \'undefined\' && typeof process.nextTick === \'function\'');
-function visit283_56_1(result) {
-  _$jscoverage['/lang/set-immediate.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/lang/set-immediate.js'].branchData['55'][1].init(1137, 73, 'typeof process !== \'undefined\' && typeof process.nextTick === \'function\'');
+function visit283_55_1(result) {
+  _$jscoverage['/lang/set-immediate.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['51'][1].init(1002, 34, 'typeof setImmediate === \'function\'');
 function visit282_51_1(result) {
@@ -402,52 +402,52 @@ function visit278_17_1(result) {
     _$jscoverage['/lang/set-immediate.js'].lineData[52]++;
     requestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[4]++;
-  _$jscoverage['/lang/set-immediate.js'].lineData[54]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[53]++;
   setImmediate(flush);
 };
   } else {
-    _$jscoverage['/lang/set-immediate.js'].lineData[56]++;
-    if (visit283_56_1(visit284_56_2(typeof process !== 'undefined') && visit285_56_3(typeof process.nextTick === 'function'))) {
-      _$jscoverage['/lang/set-immediate.js'].lineData[57]++;
+    _$jscoverage['/lang/set-immediate.js'].lineData[55]++;
+    if (visit283_55_1(visit284_55_2(typeof process !== 'undefined') && visit285_55_3(typeof process.nextTick === 'function'))) {
+      _$jscoverage['/lang/set-immediate.js'].lineData[56]++;
       requestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[5]++;
-  _$jscoverage['/lang/set-immediate.js'].lineData[58]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[57]++;
   process.nextTick(flush);
 };
     } else {
-      _$jscoverage['/lang/set-immediate.js'].lineData[60]++;
-      if (visit286_60_1(typeof MessageChannel !== 'undefined')) {
-        _$jscoverage['/lang/set-immediate.js'].lineData[63]++;
+      _$jscoverage['/lang/set-immediate.js'].lineData[59]++;
+      if (visit286_59_1(typeof MessageChannel !== 'undefined')) {
+        _$jscoverage['/lang/set-immediate.js'].lineData[62]++;
         var channel = new MessageChannel();
-        _$jscoverage['/lang/set-immediate.js'].lineData[66]++;
+        _$jscoverage['/lang/set-immediate.js'].lineData[65]++;
         channel.port1.onmessage = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[6]++;
-  _$jscoverage['/lang/set-immediate.js'].lineData[67]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[66]++;
   requestFlush = realRequestFlush;
-  _$jscoverage['/lang/set-immediate.js'].lineData[68]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[67]++;
   channel.port1.onmessage = flush;
-  _$jscoverage['/lang/set-immediate.js'].lineData[69]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[68]++;
   flush();
 };
-        _$jscoverage['/lang/set-immediate.js'].lineData[71]++;
+        _$jscoverage['/lang/set-immediate.js'].lineData[70]++;
         var realRequestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[7]++;
-  _$jscoverage['/lang/set-immediate.js'].lineData[74]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[73]++;
   channel.port2.postMessage(0);
 };
-        _$jscoverage['/lang/set-immediate.js'].lineData[76]++;
+        _$jscoverage['/lang/set-immediate.js'].lineData[75]++;
         requestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[8]++;
-  _$jscoverage['/lang/set-immediate.js'].lineData[77]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[76]++;
   setTimeout(flush, 0);
-  _$jscoverage['/lang/set-immediate.js'].lineData[78]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[77]++;
   realRequestFlush();
 };
       } else {
-        _$jscoverage['/lang/set-immediate.js'].lineData[83]++;
+        _$jscoverage['/lang/set-immediate.js'].lineData[82]++;
         requestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[9]++;
-  _$jscoverage['/lang/set-immediate.js'].lineData[84]++;
+  _$jscoverage['/lang/set-immediate.js'].lineData[83]++;
   setTimeout(flush, 0);
 };
       }

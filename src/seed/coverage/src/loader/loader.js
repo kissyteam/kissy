@@ -245,7 +245,7 @@ if (! _$jscoverage['/loader/loader.js']) {
   _$jscoverage['/loader/loader.js'].lineData[47] = 0;
   _$jscoverage['/loader/loader.js'].lineData[49] = 0;
   _$jscoverage['/loader/loader.js'].lineData[70] = 0;
-  _$jscoverage['/loader/loader.js'].lineData[86] = 0;
+  _$jscoverage['/loader/loader.js'].lineData[87] = 0;
   _$jscoverage['/loader/loader.js'].lineData[94] = 0;
   _$jscoverage['/loader/loader.js'].lineData[96] = 0;
   _$jscoverage['/loader/loader.js'].lineData[98] = 0;
@@ -330,7 +330,7 @@ _$jscoverage['/loader/loader.js'].branchData['169'][1].init(17, 10, 'moduleName'
 function visit478_169_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/loader.js'].branchData['151'][1].init(2462, 4, 'sync');
+}_$jscoverage['/loader/loader.js'].branchData['151'][1].init(2439, 4, 'sync');
 function visit477_151_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['151'][1].ranCondition(result);
   return result;
@@ -358,7 +358,7 @@ function visit472_121_1(result) {
 function visit471_119_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/loader.js'].branchData['94'][1].init(247, 24, 'S.isPlainObject(success)');
+}_$jscoverage['/loader/loader.js'].branchData['94'][1].init(224, 24, 'S.isPlainObject(success)');
 function visit470_94_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['94'][1].ranCondition(result);
   return result;
@@ -420,10 +420,10 @@ function visit469_28_1(result) {
   _$jscoverage['/loader/loader.js'].lineData[70]++;
   ComboLoader.add(name, factory, cfg, S, arguments.length);
 }, 
-  use: function(modNames, success) {
+  use: function(modNames, success, error) {
   _$jscoverage['/loader/loader.js'].functionData[7]++;
-  _$jscoverage['/loader/loader.js'].lineData[86]++;
-  var normalizedModNames, loader, error, sync, tryCount = 0, finalSuccess, waitingModules = new WaitingModules(loadReady);
+  _$jscoverage['/loader/loader.js'].lineData[87]++;
+  var normalizedModNames, loader, sync, tryCount = 0, finalSuccess, waitingModules = new WaitingModules(loadReady);
   _$jscoverage['/loader/loader.js'].lineData[94]++;
   if (visit470_94_1(S.isPlainObject(success))) {
     _$jscoverage['/loader/loader.js'].lineData[96]++;

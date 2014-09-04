@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var    logger = S.getLogger('s/loader');
+    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
 
@@ -74,6 +74,7 @@
          * @param {String|String[]} modNames moduleNames. 1-n modules to bind(use comma to separate)
          * @param {Function} success callback function executed
          * when KISSY has the required functionality.
+         * @param {Function} error callback
          * @param {KISSY} success.S KISSY instance
          * @param success.x... modules exports
          * @member KISSY
@@ -82,10 +83,9 @@
          *      // loads and attached overlay,dd and its dependencies
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
-        use: function (modNames, success) {
+        use: function (modNames, success, error) {
             var normalizedModNames,
                 loader,
-                error,
                 sync,
                 tryCount = 0,
                 finalSuccess,

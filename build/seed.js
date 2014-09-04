@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.49
 MIT Licensed
-build time: Sep 4 10:31
+build time: Sep 4 19:12
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140904103117' will replace with current timestamp when compressing.
+         * NOTICE: '20140904191134' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140904103117',
+        __BUILD_TIME: '20140904191134',
 
         /**
          * KISSY Environment.
@@ -118,10 +118,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.48' will replace with current version when compressing.
+         * NOTICE: '1.49' will replace with current version when compressing.
          * @type {String}
          */
-        version:'1.49',
+        version: '1.49',
 
         /**
          * set KISSY configuration
@@ -1992,7 +1992,6 @@ var KISSY = (function (undefined) {
     var requestFlush;
     if (typeof setImmediate === 'function') {
         requestFlush = function () {
-
             setImmediate(flush);
         };
     } else if (typeof process !== 'undefined' && typeof  process.nextTick === 'function') {
@@ -5450,7 +5449,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var    logger = S.getLogger('s/loader');
+    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
 
@@ -5520,6 +5519,7 @@ var KISSY = (function (undefined) {
          * @param {String|String[]} modNames moduleNames. 1-n modules to bind(use comma to separate)
          * @param {Function} success callback function executed
          * when KISSY has the required functionality.
+         * @param {Function} error callback
          * @param {KISSY} success.S KISSY instance
          * @param success.x... modules exports
          * @member KISSY
@@ -5528,10 +5528,9 @@ var KISSY = (function (undefined) {
          *      // loads and attached overlay,dd and its dependencies
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
-        use: function (modNames, success) {
+        use: function (modNames, success, error) {
             var normalizedModNames,
                 loader,
-                error,
                 sync,
                 tryCount = 0,
                 finalSuccess,
@@ -5635,7 +5634,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140904103117';
+    var TIMESTAMP = '20140904191134';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
