@@ -26,11 +26,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Thu, 04 Sep 2014 12:00:18 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Fri, 05 Sep 2014 03:39:48 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Thu, 04 Sep 2014 12:00:18 GMT',
+        __BUILD_TIME: 'Fri, 05 Sep 2014 03:39:48 GMT',
 
         /**
          * modulex Environment.
@@ -1328,7 +1328,7 @@ var modulex = (function (undefined) {
                 }
             });
             return undefined;
-        } else if (!config) {
+        } else if (config === false) {
             Config.packages = {
                 core: packages.core
             };
